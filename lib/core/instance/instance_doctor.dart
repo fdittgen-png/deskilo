@@ -26,7 +26,7 @@ import 'management_api.dart';
 import 'schema_compatibility.dart';
 
 /// #3489 -- findings the panel words from the ARB catalogue.
-enum DoctorWords { stuckAccounts }
+enum DoctorWords { stuckAccounts, installationHeld }
 
 /// How serious a finding is. [alarm] means people are affected right now.
 enum DoctorLevel { ok, warn, alarm }
@@ -39,6 +39,7 @@ class DoctorFinding {
     this.detail, {
     this.count,
     this.words,
+    this.facts = const [],
   });
 
   /// #3489 -- the words of a finding whose title carries a count, as data:
@@ -46,6 +47,10 @@ class DoctorFinding {
   /// [title] stays the English the operator's command line prints. Null for a
   /// finding still worded by [title] and [detail] alone.
   final DoctorWords? words;
+
+  /// The numbers [words] is worded from (workspaces and members for
+  /// [DoctorWords.installationHeld]).
+  final List<int> facts;
 
   final DoctorLevel level;
   final String title;

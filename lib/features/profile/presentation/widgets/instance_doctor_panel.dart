@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/instance/instance_bundle_asset.dart';
 import '../../../../core/instance/instance_doctor.dart';
+import '../../../../core/instance/instance_security_checks.dart' show heldInEnglish;
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -101,7 +102,7 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
                     ? Icons.error_outline
                     : Icons.warning_amber_outlined),
                 title: Text(_title(l10n, f)),
-                subtitle: Text(f.detail.replaceAll(RegExp(r'\n\s+'), '\n')),
+                subtitle: Text(_detail(l10n, f).replaceAll(RegExp(r'\n\s+'), '\n')),
               ),
             if (passed.isNotEmpty)
               ExpansionTile(
@@ -111,10 +112,20 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
                   for (final f in passed)
                     ListTile(
                       dense: true,
-                      title: Text(f.title),
-                      subtitle: Text(f.detail),
+                      title: Text(_title(l10n, f)),
+                      subtitle: Text(_detail(l10n, f)),
                     ),
                 ],
+              ),
+            if (findings != null)
+              Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.sm),
+                child: Text(
+                  key: const ValueKey('instance-doctor-footer'),
+                  problems.isEmpty
+                      ? l10n.instanceDoctorAllHealthy
+                      : l10n.instanceDoctorNeedsHuman(problems.length),
+                ),
               ),
             if (_error case final error?)
               Text(error, style: TextStyle(color: theme.colorScheme.error)),
@@ -139,5 +150,16 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
 /// finding carries typed [DoctorWords], else the title as the doctor wrote it.
 String _title(AppLocalizations l10n, DoctorFinding f) => switch (f.words) {
   DoctorWords.stuckAccounts => l10n.instanceDoctorStuckTitle(f.count ?? 0),
-  null => f.title,
+  DoctorWords.installationHeld || null => f.title,
 };
+
+/// A finding's detail in the member's language: the held phrase of an
+/// installation is the one wording taken from the catalogue (the rest of the
+/// sentence is the operator's English until #3489's second PR).
+String _detail(AppLocalizations l10n, DoctorFinding f) =>
+    f.words == DoctorWords.installationHeld && f.facts.length == 2
+    ? f.detail.replaceFirst(
+        heldInEnglish(f.facts[0], f.facts[1]),
+        l10n.instanceDoctorHeld(f.facts[0], f.facts[1]),
+      )
+    : f.detail;

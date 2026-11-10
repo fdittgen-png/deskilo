@@ -254,6 +254,12 @@ select to_jsonb(i) -> 'roles' as roles,
   from public.installation_identity i;
 ''';
 
+/// What an installation holds, as the operator's command line prints it; the
+/// panel words the same two numbers from `instanceDoctorHeld`.
+String heldInEnglish(int workspaces, int members) =>
+    '${Intl.plural(workspaces, one: '$workspaces workspace', other: '$workspaces workspaces', locale: 'en')}, '
+    '${Intl.plural(members, one: '$members member', other: '$members members', locale: 'en')}';
+
 /// #2561 — the roles the operator declared, and the one state that must
 /// never be: a personal home holding workspaces or members.
 List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
@@ -270,8 +276,8 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
   int count(String key) => int.tryParse('${row[key] ?? 0}') ?? 0;
   final workspaces = count('workspaces');
   final members = count('members');
-  final held = '${Intl.plural(workspaces, one: '$workspaces workspace', other: '$workspaces workspaces', locale: 'en')}, '
-      '${Intl.plural(members, one: '$members member', other: '$members members', locale: 'en')}';
+  final held = heldInEnglish(workspaces, members);
+  final facts = [workspaces, members];
   if (raw == null) {
     return [
       DoctorFinding(
@@ -280,6 +286,8 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
         'the schema predates the roles column; the installation behaves as '
             'combined (personal home and workspace host) — $held.\n'
             '        Fix: dart run tool/instance.dart install --ref <ref>',
+        words: DoctorWords.installationHeld,
+        facts: facts,
       ),
     ];
   }
@@ -306,6 +314,8 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
             'the rows arrived around it: inspect before anyone relies on '
             'this host.',
         count: workspaces + members,
+        words: DoctorWords.installationHeld,
+        facts: facts,
       ),
     ];
   }
@@ -316,7 +326,8 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
           : 'personal home';
   return [
     DoctorFinding(DoctorLevel.ok, 'Installation roles',
-        '$kind (${roles.join(', ')}) — $held'),
+        '$kind (${roles.join(', ')}) — $held',
+        words: DoctorWords.installationHeld, facts: facts),
     ..._checkPersonalHome(row, isPersonalHome: roles.contains('personal_home')),
   ];
 }
