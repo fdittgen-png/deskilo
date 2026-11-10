@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -94,7 +95,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     // #2360 — a decided change of rate comes prefilled.
     final planned = vatPlannedChangeFor(
         ref.read(currentWorkspaceProvider).value?.countryCode ?? '',
-        double.tryParse(draft.percent.text.trim().replaceAll(',', '.')) ?? -1,
+        parseDecimalInput(draft.percent.text, grouping: false)?.toDouble() ?? -1,
         on: now);
     final percent = TextEditingController(
         text: planned == null ? '' : vatPercentText(planned.toPercent));
@@ -103,7 +104,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     final ok = await showVatChangeByLawDialog(context,
         index: index, percent: percent, date: date);
     if (ok != true || !mounted) return;
-    final pct = double.tryParse(percent.text.trim().replaceAll(',', '.'));
+    final pct = parseDecimalInput(percent.text, grouping: false)?.toDouble();
     final day = date.text.trim();
     final parsed = RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(day)
         ? DateTime.tryParse(day)
@@ -152,7 +153,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       final label = draft.label.text.trim();
       // Both separators: a French keyboard types a comma.
       final percent =
-          double.tryParse(draft.percent.text.trim().replaceAll(',', '.'));
+          parseDecimalInput(draft.percent.text, grouping: false)?.toDouble();
       if (label.isEmpty ||
           percent == null ||
           percent < 0 ||

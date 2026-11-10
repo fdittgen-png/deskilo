@@ -10,6 +10,7 @@
 // invoice went out.
 
 import '../i18n/workspace_currency.dart';
+import 'decimal_input.dart';
 
 /// Major-unit editor display of [minor]: whole amounts without decimals
 /// ('150'), fractional ones at the currency's own precision ('12.50').
@@ -21,13 +22,19 @@ String centsToMajor(int minor) {
   return (minor / per).toStringAsFixed(WorkspaceCurrency.minorDigits);
 }
 
-/// Parses a user-typed major-unit amount ('12', '12.5', '12,50') to the
-/// currency's minor units. Empty input reads as 0 (editors treat blank as
-/// free); malformed or negative input returns null.
-int? parseCentsInput(String raw) {
-  final trimmed = raw.trim();
-  if (trimmed.isEmpty) return 0;
-  final value = double.tryParse(trimmed.replaceAll(',', '.'));
-  if (value == null || value < 0) return null;
+/// #3487 — a user-typed major-unit amount ('12', '12.5', '12,50',
+/// '1.234,56', '1 234,56') in the currency's minor units, read by the one
+/// decimal input parser in the member's format locale. Empty input reads as
+/// 0 (editors treat blank as free); malformed or negative input returns
+/// null.
+int? parseMinorInput(String raw, {String? locale}) {
+  if (raw.trim().isEmpty) return 0;
+  final value = parseDecimalInput(
+    raw,
+    locale: locale,
+    allowNegative: false,
+    threeDecimals: WorkspaceCurrency.minorDigits >= 3,
+  );
+  if (value == null) return null;
   return (value * WorkspaceCurrency.minorPerMajor).round();
 }

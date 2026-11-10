@@ -58,7 +58,7 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
     // A blank price is no price, not a free service: a free one is a typed 0.
     final price = _price.text.trim().isEmpty
         ? null
-        : parseCentsInput(_price.text);
+        : parseMinorInput(_price.text);
     if (name.isEmpty || price == null) {
       AppSnack.error(context, l10n.setupServicesInvalid);
       return;

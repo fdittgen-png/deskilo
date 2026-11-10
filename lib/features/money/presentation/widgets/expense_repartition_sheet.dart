@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
@@ -81,7 +82,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
 
   int? get _cents {
     // #1140 — the currency's own minor digits, never a literal 100.
-    final cents = parseCentsInput(_amount.text);
+    final cents = parseMinorInput(_amount.text);
     if (cents == null || cents <= 0) return null;
     return _reverse ? -cents : cents;
   }
@@ -103,7 +104,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
                       .value
                       ?.usedHalfDays ??
                   0,
-              customWeight: num.tryParse(_weightOf(m.id).text.trim()) ?? 0,
+              customWeight: parseDecimalInput(_weightOf(m.id).text, grouping: false) ?? 0,
             ),
       ];
 

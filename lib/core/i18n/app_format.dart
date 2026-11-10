@@ -3,6 +3,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+import '../format/cents.dart';
+import '../format/decimal_input.dart';
 import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'format_prefs.dart';
@@ -104,6 +106,15 @@ class AppFormat {
   /// rates with `percentText` instead.
   String rate(double percent) =>
       '${NumberFormat.decimalPattern(locale).format(percent)} %';
+
+  /// #3487 — the number a member typed, in this locale's separators
+  /// (`parseDecimalInput`); [grouping] off for a rate, a weight or a
+  /// quantity.
+  num? parseNumber(String raw, {bool grouping = true}) =>
+      parseDecimalInput(raw, locale: locale, grouping: grouping);
+
+  /// #3487 — a typed amount in minor units (`parseMinorInput`).
+  int? parseMinor(String raw) => parseMinorInput(raw, locale: locale);
 
   // ── dates and times ──────────────────────────────────────────────
 

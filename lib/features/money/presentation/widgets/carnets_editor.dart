@@ -41,7 +41,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
   Future<void> _add() async {
     final name = _name.text.trim();
     final halfDays = int.tryParse(_halfDays.text.trim());
-    final price = parseCentsInput(_price.text);
+    final price = parseMinorInput(_price.text);
     final validityRaw = _validity.text.trim();
     final validity = validityRaw.isEmpty ? null : int.tryParse(validityRaw);
     if (name.isEmpty ||

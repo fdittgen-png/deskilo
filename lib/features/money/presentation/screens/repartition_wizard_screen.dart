@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -64,7 +65,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
 
   int? get _cents {
     // #1140 — the currency's own minor digits, never a literal 100.
-    final c = parseCentsInput(_amount.text);
+    final c = parseMinorInput(_amount.text);
     return (c == null || c == 0) ? null : c;
   }
 
@@ -308,7 +309,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: l10n.repartitionWizardWeight, isDense: true),
                 onChanged: (v) => setState(() => _rule = rule.copyWith(
-                    weights: {...rule.weights, m.id: num.tryParse(v.trim()) ?? 0})),
+                    weights: {...rule.weights, m.id: parseDecimalInput(v, grouping: false) ?? 0})),
               ),
             ),
           ],

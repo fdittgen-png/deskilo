@@ -63,7 +63,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
 
   int? get _cents {
     // #1140 — the currency's own minor digits, never a literal 100.
-    final c = parseCentsInput(_amount.text);
+    final c = parseMinorInput(_amount.text);
     return (c == null || c <= 0) ? null : c;
   }
 

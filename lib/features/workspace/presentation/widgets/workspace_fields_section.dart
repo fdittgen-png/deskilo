@@ -13,6 +13,7 @@
 // messages live in the ARB and the decision does not.
 import 'package:flutter/material.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -140,7 +141,7 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
     if (trimmed.isEmpty) return null;
     return switch (field.type) {
       WorkspaceFieldType.integer => int.tryParse(trimmed) ?? trimmed,
-      WorkspaceFieldType.decimal => num.tryParse(trimmed) ?? trimmed,
+      WorkspaceFieldType.decimal => parseDecimalInput(trimmed) ?? trimmed,
       _ => trimmed,
     };
   }

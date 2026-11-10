@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1140 — after #1077 every amount an editor reads or shows goes through
-// `parseCentsInput` / `centsToMajor`, which know the currency's minor
+// `parseMinorInput` / `centsToMajor`, which know the currency's minor
 // digits. A hand-rolled `* 100` stores ¥1000 as ¥100,000.
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,7 +16,7 @@ void main() {
           RegExp(r'[A-Za-z_!)\]] / 100\)').hasMatch(line),
     ).where((h) => !h.contains('zoom') && !h.contains('.w!.value')).toList();
     expect(hits, isEmpty,
-        reason: 'use parseCentsInput / centsToMajor (lib/core/format/cents.dart):'
+        reason: 'use parseMinorInput / centsToMajor (lib/core/format/cents.dart):'
             '\n${hits.join('\n')}');
   });
 }
