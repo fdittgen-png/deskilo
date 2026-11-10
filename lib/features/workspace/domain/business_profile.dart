@@ -12,7 +12,7 @@ import '../../../core/settings/settings.dart';
 const String businessKindKey = 'business.kind';
 
 /// The setting holding the further kinds, comma-separated.
-const String businessMoreKindsKey = 'business.more_kinds';
+const String _businessMoreKindsKey = 'business.more_kinds';
 
 @immutable
 class BusinessProfile {
@@ -30,7 +30,7 @@ class BusinessProfile {
     return BusinessProfile(
       kind: primary,
       moreKinds: [
-        for (final code in read(businessMoreKindsKey, SettingDefaults.businessMoreKinds).split(','))
+        for (final code in read(_businessMoreKindsKey, SettingDefaults.businessMoreKinds).split(','))
           if (code.trim().isNotEmpty && code.trim() != primary) code.trim(),
       ],
     );
