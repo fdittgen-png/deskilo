@@ -6959,6 +6959,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryBookmark => 'Bookmark';
 
   @override
+  String get discoveryClearSearch => 'Clear search';
+
+  @override
+  String discoveryDirectoriesDidNotAnswer(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count directories did not answer.',
+      one: 'One directory did not answer.',
+    );
+    return '$_temp0 These results may be incomplete.';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -7005,6 +7019,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'More directories could not be loaded.';
 
   @override
+  String discoveryNoMatchTitle(String query) {
+    return 'Nothing found for “$query”';
+  }
+
+  @override
   String get discoveryNoSaved => 'No places saved on this device yet.';
 
   @override
@@ -7028,6 +7047,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String discoverySourceFailed(String source) {
     return '$source did not answer. The places already shown stay.';
   }
+
+  @override
+  String get discoveryStartBody => 'Type a city, a service or a name.';
+
+  @override
+  String get discoveryStartTitle => 'What are you looking for?';
 
   @override
   String get discoveryTitle => 'Discover workspaces';
@@ -20079,10 +20104,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalDirectoryShowMore => 'Show more';
 
   @override
-  String get portalDirectoryUnavailable =>
-      'Some directories could not be reached. Results are incomplete.';
-
-  @override
   String get portalDirectoryUnverified =>
       'This workspace cannot be verified right now.';
 
@@ -20138,9 +20159,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get portalNoLongerPublished =>
       'This workspace is no longer published.';
-
-  @override
-  String get portalNoWorkspaces => 'No published workspaces found.';
 
   @override
   String get portalOpenMe => 'Me: my account and my spaces';

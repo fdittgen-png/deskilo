@@ -184,6 +184,8 @@ void main() {
       for (final id in ['b0', 'b1', 'b2']) {
         expect(find.byKey(_row(_b, id)), findsOneWidget, reason: id);
       }
+      await tester.tap(find.byKey(const ValueKey('directory-details')));
+      await tester.pumpAndSettle();
       expect(
         find.text(
           'Places loaded: 8 · shown: 8 · directories answering: 2 of 2',
@@ -210,6 +212,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(_row(_a, 'a0')), findsOneWidget);
     expect(find.byKey(_row(_b, 'b0')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('directory-details')));
+    await tester.pumpAndSettle();
     expect(
       find.text('Places loaded: 1 · shown: 1 · directories answering: 1 of 2'),
       findsOneWidget,

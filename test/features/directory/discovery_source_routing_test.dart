@@ -300,7 +300,12 @@ void main() {
       );
       directory.refuse = false;
       await tester.tap(
-        find.byKey(const ValueKey('directory-portal-directory-unavailable-2')),
+        find.descendant(
+          of: find.byKey(
+            const ValueKey('directory-portal-directory-unavailable-2'),
+          ),
+          matching: find.byKey(const ValueKey('inline-banner-action')),
+        ),
       );
       await tester.pumpAndSettle();
       expect(

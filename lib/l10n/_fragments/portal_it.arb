@@ -34,8 +34,6 @@
   "portalList": "Elenco",
   "portalMap": "Mappa",
   "portalSearch": "Cerca spazi",
-  "portalDirectoryUnavailable": "Alcune directory non sono raggiungibili. I risultati sono incompleti.",
-  "portalNoWorkspaces": "Nessuno spazio pubblicato trovato.",
   "portalNoLongerPublished": "Questo spazio non è più pubblicato.",
   "portalDirectoryIncompatible": "Alcuni spazi richiedono una versione più recente dell’app e non vengono mostrati.",
   "portalActionNotNegotiated": "Questa azione non è disponibile tra questa app e quel server. Aggiornare l’app può aiutare.",

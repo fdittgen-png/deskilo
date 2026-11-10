@@ -6991,6 +6991,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discoveryBookmark => 'Guardar';
 
   @override
+  String get discoveryClearSearch => 'Borrar la búsqueda';
+
+  @override
+  String discoveryDirectoriesDidNotAnswer(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count directorios no respondieron.',
+      one: 'Un directorio no respondió.',
+    );
+    return '$_temp0 Estos resultados pueden estar incompletos.';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -7040,6 +7054,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudieron cargar más directorios.';
 
   @override
+  String discoveryNoMatchTitle(String query) {
+    return 'No se encontró nada para «$query»';
+  }
+
+  @override
   String get discoveryNoSaved =>
       'Todavía no hay espacios guardados en este dispositivo.';
 
@@ -7064,6 +7083,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String discoverySourceFailed(String source) {
     return '$source no respondió. Los lugares ya mostrados se mantienen.';
   }
+
+  @override
+  String get discoveryStartBody =>
+      'Escriba una ciudad, un servicio o un nombre.';
+
+  @override
+  String get discoveryStartTitle => '¿Qué busca?';
 
   @override
   String get discoveryTitle => 'Descubrir espacios';
@@ -20226,10 +20252,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalDirectoryShowMore => 'Mostrar más';
 
   @override
-  String get portalDirectoryUnavailable =>
-      'Algunos directorios no están disponibles. Los resultados están incompletos.';
-
-  @override
   String get portalDirectoryUnverified =>
       'Este espacio no se puede verificar en este momento.';
 
@@ -20284,9 +20306,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get portalNoLongerPublished => 'Este espacio ya no está publicado.';
-
-  @override
-  String get portalNoWorkspaces => 'No se encontraron espacios publicados.';
 
   @override
   String get portalOpenMe => 'Yo: mi cuenta y mis espacios';

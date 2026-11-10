@@ -11,6 +11,10 @@ enum InlineBannerSeverity {
 
   /// Neutral context note — muted `surfaceContainerHighest` colors.
   info,
+
+  /// Part of what is shown is missing, the rest is fine (#3545): a
+  /// directory that did not answer, beside the results that did.
+  warning,
 }
 
 /// Layout constants of [InlineBanner] — pinned by test, not free-floating
@@ -64,6 +68,10 @@ class InlineBanner extends StatelessWidget {
       InlineBannerSeverity.info => (
           scheme.surfaceContainerHighest,
           scheme.onSurfaceVariant,
+        ),
+      InlineBannerSeverity.warning => (
+          scheme.tertiaryContainer,
+          scheme.onTertiaryContainer,
         ),
     };
     return Container(

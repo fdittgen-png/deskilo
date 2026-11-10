@@ -1,0 +1,7 @@
+{
+  "discoveryStartTitle": "¿Qué busca?",
+  "discoveryStartBody": "Escriba una ciudad, un servicio o un nombre.",
+  "discoveryNoMatchTitle": "No se encontró nada para «{query}»",
+  "discoveryClearSearch": "Borrar la búsqueda",
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{Un directorio no respondió.} other{{count} directorios no respondieron.}} Estos resultados pueden estar incompletos."
+}
