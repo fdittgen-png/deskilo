@@ -17,6 +17,10 @@ import 'lint_sources.dart';
 /// Files allowed to call `setFeatureFlags` with a map that is NOT a
 /// toggle delta. May only shrink.
 const _exceptions = <String, String>{
+  'lib/features/workspace/application/business_kind_commands.dart':
+      'a kind\'s proposal (#3550): the delta comes from proposalFor, not from '
+          'a toggle — each key with the parents it needs, a feature needing '
+          'consent only when ticked — and goes with the read-set it was planned on',
   'lib/features/workspace/application/process_activation.dart':
       'the ONE process write (#1329, ADR 0027): the delta comes from the '
           '#1326 resolver, not from a toggle, and goes with the read-set '
