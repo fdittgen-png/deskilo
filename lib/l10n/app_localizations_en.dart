@@ -18085,7 +18085,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String moneyDueIn(int days) {
-    return 'Due in $days days';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Due in $days days',
+      one: 'Due in 1 day',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -18145,7 +18151,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String moneyOverdueBy(int days) {
-    return 'Overdue by $days days';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Overdue by $days days',
+      one: 'Overdue by 1 day',
+      zero: 'Due today',
+    );
+    return '$_temp0';
   }
 
   @override

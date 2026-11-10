@@ -466,8 +466,8 @@
     "description": "Shown as a text in invoice overview (money)."
   },
   "moneyOpenInvoicesSummary": "{count} open · {amount} due",
-  "moneyDueIn": "Due in {days} days",
-  "moneyOverdueBy": "Overdue by {days} days",
+  "moneyDueIn": "{days, plural, =1{Due in 1 day} other{Due in {days} days}}",
+  "moneyOverdueBy": "{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}",
   "moneyNothingOpen": "Nothing open — you are up to date.",
   "@moneyNothingOpen": {
     "description": "Shown as a text in invoice overview (money)."

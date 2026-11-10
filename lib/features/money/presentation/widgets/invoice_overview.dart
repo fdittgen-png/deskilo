@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../domain/dunning.dart';
+import '../../domain/invoice_due.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_providers.dart';
@@ -36,8 +37,12 @@ class InvoiceExposure {
   bool get isEmpty => open.isEmpty;
 
   /// Days until (positive) or past (negative) the term of [invoice].
-  int daysToTerm(Invoice invoice, DateTime now) =>
-      termDays - now.difference(invoice.issuedAt).inDays;
+  int daysToTerm(Invoice invoice, DateTime now) => invoiceDue(
+    dueOn: invoice.dueOn,
+    issuedAt: invoice.issuedAt,
+    termDays: termDays,
+    now: now,
+  ).daysToTerm;
 
   static InvoiceExposure of({
     required Iterable<Invoice> invoices,
@@ -59,10 +64,13 @@ class InvoiceExposure {
     open.sort((a, b) => a.issuedAt.compareTo(b.issuedAt));
     final overdue = [
       for (final i in open)
-        // #1913 — the frozen due date wins; older invoices keep the term.
-        if (i.dueOn != null
-            ? !DateTime(now.year, now.month, now.day).isBefore(i.dueOn!)
-            : now.difference(i.issuedAt).inDays >= rules.firstAfterDays)
+        // #3285 — the one due rule: the frozen date wins, the due day counts.
+        if (invoiceDue(
+          dueOn: i.dueOn,
+          issuedAt: i.issuedAt,
+          termDays: rules.firstAfterDays,
+          now: now,
+        ).overdue)
           i,
     ];
     return InvoiceExposure(

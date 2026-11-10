@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
-import '../../../core/time/calendar_days.dart';
 import '../../events/domain/workspace_event.dart';
 import '../domain/dunning.dart';
+import '../domain/invoice_due.dart';
 import 'invoice_status.dart';
 
 /// #812 — the four steps every invoice walks through, in order. The same
@@ -282,6 +282,8 @@ class InvoiceJourney {
         _openMove(lifecycle, facts),
     };
     final count = reminder?.count ?? 0;
+    final due = invoiceDue(dueOn: invoice.dueOn, issuedAt: invoice.issuedAt,
+        termDays: rules.firstAfterDays, now: now);
     return InvoiceJourney(
       lifecycle: lifecycle,
       move: move,
@@ -291,13 +293,8 @@ class InvoiceJourney {
       // from this moment, at this moment. A Duration loses or gains an
       // hour across a clock change, and this date is printed on the
       // document and starts the dunning clock.
-      // #1913 — the due date frozen at issue wins; an invoice from before
-      // 0331 keeps the date its document always printed.
-      dueOn: invoice.dueOn ??
-          addCalendarDays(invoice.issuedAt, rules.firstAfterDays),
-      daysToTerm: invoice.dueOn != null
-          ? calendarDaysBetween(now, invoice.dueOn!)
-          : rules.firstAfterDays - calendarDaysBetween(invoice.issuedAt, now),
+      dueOn: due.dueOn,
+      daysToTerm: due.daysToTerm,
       reminderDue: remaining > 0 &&
               !settled &&
               (lifecycle == InvoiceLifecycle.open ||
