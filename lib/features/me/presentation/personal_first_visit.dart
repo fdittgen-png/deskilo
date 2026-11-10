@@ -14,9 +14,8 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../directory/providers/messenger_providers.dart';
-import '../../money/providers/finance_overview_provider.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -32,6 +31,7 @@ import 'kit/me_row.dart';
 import 'kit/me_section_label.dart';
 import 'kit/me_status_chip.dart';
 import 'me_shell.dart';
+import 'personal_overview_attention.dart';
 
 /// A space of this server, of a linked one, or one my account names
 /// elsewhere is not "nothing" (#2563).
@@ -88,29 +88,7 @@ HomeState homeStateOf(WidgetRef ref) {
       : (composition.visible.isNotEmpty ? true : (next.complete ? false : null));
 
   // Nothing waiting: no unpaid document, undecided request or unread message.
-  final documents = ref.watch(financeOverviewProvider);
-  final inbox = ref.watch(messengerInboxProvider);
-  final owed = documents.value
-      ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
-      .outstanding;
-  final items = owed == null || inbox.value == null || refs == null
-      ? null
-      : attentionItems(
-          documents: [
-            for (final d in owed)
-              OwedDocument(
-                id: d.id,
-                workspaceId: d.workspaceId,
-                workspaceName: d.workspaceName,
-                number: d.number,
-                remainingCents: d.remainingCents,
-                currency: d.currency,
-                overdue: d.overdueAt(now),
-              ),
-          ],
-          refs: refs,
-          inbox: inbox.value,
-        );
+  final items = attentionItemsOf(ref, now, refs);
 
   final standing = next?.commitment != null;
   final bool? firstVisit = spaceFact == null || next == null || items == null
@@ -148,8 +126,8 @@ IconData _stepIcon(StartedStep step) => switch (step) {
 
 /// The card of the four first steps: a finished one is checked, the next is
 /// bold, the others quiet.
-class GettingStartedCard extends StatelessWidget {
-  const GettingStartedCard({super.key, required this.facts});
+class FirstStepsCard extends StatelessWidget {
+  const FirstStepsCard({super.key, required this.facts});
 
   final Map<StartedStep, bool?> facts;
 
@@ -213,13 +191,27 @@ class GettingStartedCard extends StatelessWidget {
 const String _discoverFocus = '/me/discover?focus=search';
 
 /// The first visit.
-class PersonalFirstVisit extends ConsumerWidget {
+class PersonalFirstVisit extends ConsumerStatefulWidget {
   const PersonalFirstVisit({super.key, required this.facts});
 
   final Map<StartedStep, bool?> facts;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PersonalFirstVisit> createState() => _FirstVisitState();
+}
+
+class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
+  /// The search field only opens Discover; its controller is never typed in.
+  final _search = TextEditingController();
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final tokens = PersonalTheme.of(context);
@@ -258,16 +250,15 @@ class PersonalFirstVisit extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              TextField(
+              AppTextField(
                 key: const ValueKey('me-first-visit-search'),
+                controller: _search,
+                label: '',
                 readOnly: true,
                 onTap: discover,
-                decoration: InputDecoration(
-                  hintText: l10n.meFindPlaceHint,
-                  prefixIcon: const Icon(Icons.search),
-                  filled: true,
-                  fillColor: tokens.surface,
-                ),
+                hint: l10n.meFindPlaceHint,
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
               ),
               const SizedBox(height: AppSpacing.sm),
               Align(
@@ -298,26 +289,34 @@ class PersonalFirstVisit extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        GettingStartedCard(facts: facts),
+        FirstStepsCard(facts: widget.facts),
         const SizedBox(height: AppSpacing.md),
-        Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              '${l10n.meRunASpace} ',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: tokens.secondaryText,
-              ),
+        TextButton(
+          key: const ValueKey('me-first-visit-run'),
+          style: TextButton.styleFrom(
+            alignment: AlignmentDirectional.centerStart,
+            minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+            tapTargetSize: MaterialTapTargetSize.padded,
+          ),
+          onPressed: () => context.push('/onboarding'),
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: '${l10n.meRunASpace} ',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: tokens.secondaryText,
+                  ),
+                ),
+                TextSpan(
+                  text: l10n.meRunASpaceAction,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: tokens.primary,
+                  ),
+                ),
+              ],
             ),
-            TextButton(
-              key: const ValueKey('me-first-visit-run'),
-              style: TextButton.styleFrom(
-                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
-              ),
-              onPressed: () => context.push('/onboarding'),
-              child: Text(l10n.meRunASpaceAction),
-            ),
-          ],
+          ),
         ),
       ],
     );

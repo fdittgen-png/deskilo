@@ -29,6 +29,7 @@ import '../../money/presentation/my_finances_route.dart';
 import '../../money/providers/finance_overview_provider.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_overview.dart';
+import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
 import 'personal_overview_sections.dart';
 
@@ -50,6 +51,37 @@ class _CoverageNote extends StatelessWidget {
       style: Theme.of(context).textTheme.bodySmall
           ?.copyWith(color: PersonalTheme.of(context).warning),
     ),
+  );
+}
+
+/// What waits for me, or null while a source is not read yet: the first visit
+/// decides "nothing here" from the same sources the section shows.
+List<AttentionItem>? attentionItemsOf(
+  WidgetRef ref,
+  DateTime now,
+  PersonalWorkspaceRefs? refs,
+) {
+  final documents = ref.watch(financeOverviewProvider);
+  final inbox = ref.watch(messengerInboxProvider);
+  final owed = documents.value
+      ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
+      .outstanding;
+  if (owed == null || inbox.value == null || refs == null) return null;
+  return attentionItems(
+    documents: [
+      for (final d in owed)
+        OwedDocument(
+          id: d.id,
+          workspaceId: d.workspaceId,
+          workspaceName: d.workspaceName,
+          number: d.number,
+          remainingCents: d.remainingCents,
+          currency: d.currency,
+          overdue: d.overdueAt(now),
+        ),
+    ],
+    refs: refs,
+    inbox: inbox.value,
   );
 }
 

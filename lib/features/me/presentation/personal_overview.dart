@@ -123,7 +123,7 @@ class PersonalOverview extends StatelessWidget {
                       _Header(expanded: expanded),
                       const SizedBox(height: _columnGap),
                       if (settled && !startedComplete(home.facts)) ...[
-                        GettingStartedCard(facts: home.facts),
+                        FirstStepsCard(facts: home.facts),
                         const SizedBox(height: _columnGap),
                       ],
                       ...sections,

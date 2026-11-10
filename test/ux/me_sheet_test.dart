@@ -19,7 +19,28 @@ import 'package:flutter_test/flutter_test.dart';
 import '../features/me/me_app.dart';
 import 'me_screens.dart';
 
+/// The Material icon font of the Flutter SDK running the test, found by
+/// walking up from the tester executable; null when it is not there (the
+/// sheet then shows empty squares for icons).
+File? _materialIcons() {
+  var dir = File(Platform.resolvedExecutable).parent;
+  for (var i = 0; i < 8; i++) {
+    final f = File('${dir.path}/material_fonts/MaterialIcons-Regular.otf');
+    if (f.existsSync()) return f;
+    final g = File('${dir.path}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf');
+    if (g.existsSync()) return g;
+    dir = dir.parent;
+  }
+  return null;
+}
+
 Future<void> _loadRoboto() async {
+  final icons = _materialIcons();
+  if (icons != null) {
+    final iconLoader = FontLoader('MaterialIcons')
+      ..addFont(Future.value(ByteData.sublistView(icons.readAsBytesSync())));
+    await iconLoader.load();
+  }
   final loader = FontLoader('Roboto')
     ..addFont(rootBundle.load('assets/fonts/Roboto-Regular.ttf'))
     ..addFont(rootBundle.load('assets/fonts/Roboto-Bold.ttf'));

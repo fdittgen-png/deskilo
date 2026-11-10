@@ -33,13 +33,11 @@ const List<double> _scales = [1.0, 1.3];
 const Map<String, Map<String, int>> _known = {
   'account|empty': {'target under 48 dp': 12, 'unnamed control': 12},
   'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
-  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 8, 'unnamed control': 8},
   'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
-  'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 8},
-  'home|populated': {'overflow or exception': 6, 'target under 48 dp': 6},
-  'spaces|empty': {'target under 48 dp': 6},
-  'spaces|one source failed': {'a failed source is not said': 12, 'target under 48 dp': 4},
-  'spaces|populated': {'target under 48 dp': 4},
+  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6, 'unnamed control': 8},
+  'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 6},
+  'home|populated': {'overflow or exception': 6, 'target under 48 dp': 4},
+  'spaces|one source failed': {'a failed source is not said': 12},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {
@@ -117,7 +115,10 @@ void main() {
                 messenger: scenario.messenger,
                 timeZoneMode: TimeZoneMode.workspace,
                 clock: FixedClock(meGuardNow),
-                size: Size(width, width < 600 ? 900 : 800),
+                // Tall enough that no row is cut by the viewport: a clipped row's
+                // semantics rect is shorter than the row and would read as a
+                // target under 48 dp.
+                size: Size(width, width < 600 ? 2200 : 1100),
                 extraOverrides: scenario.overrides,
               );
               await goTo(tester, router, screen.route);

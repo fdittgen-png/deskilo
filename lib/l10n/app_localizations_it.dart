@@ -17183,7 +17183,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meFindPlaceNearMe => 'Cerca vicino a me';
 
   @override
-  String get meFindPlaceTitle => 'Trova un posto vicino a te';
+  String get meFindPlaceTitle => 'Trovi un posto nelle vicinanze';
 
   @override
   String get meFindSpace => 'Trova uno spazio';
