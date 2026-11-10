@@ -5,7 +5,8 @@
 // at text scale 1.0 and 1.3, in light and dark, must:
 //   * not overflow or throw;
 //   * show at most one FilledButton (tonal ones are not counted) at phone width;
-//   * give every button a 48 dp target and an accessible name;
+//   * give every tappable semantics node (buttons, icon buttons, rows, list
+//     tiles) a 48 x 48 dp target and a name (label, value or tooltip);
 //   * show an enabled action in its "empty" state;
 //   * show a notice AND a result row in its "one source failed" state;
 //   * never print the sum of two currencies' amounts (the EUR + CHF fixture).
@@ -14,6 +15,7 @@
 // fails. The list only falls: each of steps A-F of #3545 lowers it for the
 // screens it touches, and it is EMPTY when step F closes #3545.
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../features/me/me_app.dart';
@@ -26,20 +28,20 @@ const List<double> _scales = [1.0, 1.3];
 /// What today's screens still do wrong: `<screen>|<state>` -> rule -> cells.
 /// Only falls (#3545).
 const Map<String, Map<String, int>> _known = {
-  'account|empty': {'unnamed button': 12},
-  'account|populated': {'unnamed button': 12},
-  'data|empty': {'unnamed button': 12, 'overflow or exception': 1},
-  'data|populated': {'unnamed button': 12, 'overflow or exception': 2},
-  'discover|empty': {'unnamed button': 12, 'overflow or exception': 1},
-  'discover|populated': {'unnamed button': 12, 'overflow or exception': 1},
-  'home|empty': {'unnamed button': 12, 'overflow or exception': 1},
-  'home|one source failed': {'unnamed button': 12, 'overflow or exception': 5},
-  'home|populated': {'unnamed button': 12, 'overflow or exception': 5},
-  'messages|empty': {'unnamed button': 12, 'overflow or exception': 1},
-  'messages|populated': {'unnamed button': 12, 'overflow or exception': 1},
-  'spaces|empty': {'unnamed button': 12, 'overflow or exception': 1},
-  'spaces|one source failed': {'unnamed button': 12, 'a failed source is not said': 12, 'overflow or exception': 1},
-  'spaces|populated': {'unnamed button': 12, 'overflow or exception': 1},
+  'account|empty': {'target under 48 dp': 12, 'unnamed control': 12},
+  'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
+  'data|empty': {'overflow or exception': 1, 'target under 48 dp': 4, 'unnamed control': 8},
+  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 8, 'unnamed control': 8},
+  'discover|empty': {'overflow or exception': 1},
+  'discover|populated': {'overflow or exception': 1},
+  'home|empty': {'overflow or exception': 1, 'target under 48 dp': 2},
+  'home|one source failed': {'overflow or exception': 5, 'target under 48 dp': 4},
+  'home|populated': {'overflow or exception': 5, 'target under 48 dp': 6},
+  'messages|empty': {'overflow or exception': 1},
+  'messages|populated': {'overflow or exception': 1},
+  'spaces|empty': {'overflow or exception': 1, 'target under 48 dp': 6},
+  'spaces|one source failed': {'a failed source is not said': 12, 'overflow or exception': 1, 'target under 48 dp': 4},
+  'spaces|populated': {'overflow or exception': 1, 'target under 48 dp': 4},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {
@@ -49,6 +51,35 @@ bool _isFilled(WidgetTester tester, Element element) {
   final background = button.defaultStyleOf(element).backgroundColor?.resolve({});
   final custom = button.style?.backgroundColor?.resolve({});
   return (custom ?? background) == scheme.primary;
+}
+
+/// Every node of the semantics tree that can be tapped, with its size and
+/// whether it is named.
+List<({Size size, bool named})> _tappable(WidgetTester tester) {
+  // ignore: deprecated_member_use
+  final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
+  final out = <({Size size, bool named})>[];
+  void walk(SemanticsNode node) {
+    final data = node.getSemanticsData();
+    final tappable = data.hasAction(SemanticsAction.tap) &&
+        !data.flagsCollection.isHidden &&
+        !node.isInvisible;
+    if (tappable) {
+      out.add((
+        size: node.rect.size,
+        named: data.label.trim().isNotEmpty ||
+            data.value.trim().isNotEmpty ||
+            data.tooltip.trim().isNotEmpty,
+      ));
+    }
+    node.visitChildren((child) {
+      walk(child);
+      return true;
+    });
+  }
+
+  if (root != null) walk(root);
+  return out;
 }
 
 Iterable<Element> _visibleFilled(WidgetTester tester) => find
@@ -61,6 +92,7 @@ void main() {
   for (final screen in meScreens) {
     for (final state in screen.states.entries) {
       testWidgets('${screen.id} · ${state.key}', (tester) async {
+        final semantics = tester.ensureSemantics();
         final problems = <String, Set<String>>{};
         void flag(String rule, String tag) =>
             problems.putIfAbsent(rule, () => {}).add(tag);
@@ -91,19 +123,19 @@ void main() {
               if (width < 600 && _visibleFilled(tester).length > 1) {
                 flag('more than one filled button', tag);
               }
-              for (final button in find
-                  .byWidgetPredicate((w) => w is ButtonStyleButton)
-                  .hitTestable()
-                  .evaluate()) {
-                final size = tester.getSize(find.byWidget(button.widget));
-                if (size.height < 48 - 0.5) flag('target under 48 dp', tag);
-                final label = tester.getSemantics(find.byWidget(button.widget)).label;
-                if (label.trim().isEmpty) flag('unnamed button', tag);
+              for (final node in _tappable(tester)) {
+                if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
+                  flag('target under 48 dp', tag);
+                }
+                if (!node.named) flag('unnamed control', tag);
               }
               if (state.key == 'empty') {
                 final actions = find
                     .byWidgetPredicate(
-                      (w) => w is ButtonStyleButton && w.onPressed != null,
+                      (w) =>
+                          (w is ButtonStyleButton && w.onPressed != null) ||
+                          (w is InkWell && w.onTap != null) ||
+                          (w is ListTile && w.onTap != null),
                     )
                     .hitTestable();
                 if (actions.evaluate().isEmpty && screen.id != 'messages') {
@@ -131,6 +163,7 @@ void main() {
         final actual = {
           for (final e in problems.entries) e.key: e.value.length,
         };
+        semantics.dispose();
         expect(
           actual,
           _known['${screen.id}|${state.key}'] ?? const <String, int>{},
