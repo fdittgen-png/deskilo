@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3159 (0701): the IT and ES issuing gates lift per workspace once the
+-- #3159 (0701, 0702): the IT and ES issuing gates lift per workspace once the
 -- national channel's acceptance is recorded. Before it an Italian or Spanish
 -- seller is refused (`seller_country_unsupported`); after a synthetic
 -- accepted receipt of the SdI it is not, a second Italian workspace still is,
@@ -7,7 +7,7 @@
 -- the table takes no insert from authenticated and the recorder is the
 -- service role's only. Rolled back.
 begin;
-select plan(13);
+select plan(19);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000003159'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -74,6 +74,40 @@ select is(public.record_national_channel_acceptance_v1('00000000-0000-4000-8000-
 select ok(not pg_temp.refused('b1','c1','IT'), 'that Italian seller issues once the SdI accepted');
 select ok(pg_temp.refused('b2','c2','IT'), 'another Italian workspace stays refused: the gate lifts per workspace');
 select ok(pg_temp.refused('b3','c3','ES'), 'Spain stays refused until Verifactu accepts');
+
+-- 0702: the channel's own answer records the acceptance
+insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
+                             currency, member_name, workspace_name, issuer_name, signature, issued_at)
+select ('00000000-0000-4000-8000-0000003159'||w)::uuid, ('00000000-0000-4000-8000-0000003159'||ws)::uuid,
+       ('00000000-0000-4000-8000-0000003159'||m)::uuid, ('00000000-0000-4000-8000-0000003159'||m)::uuid,
+       'T-'||w, 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now()
+  from (values ('d2','b2','c2'), ('d3','b3','c3')) v(w, ws, m);
+insert into public.invoice_transmissions (id, workspace_id, invoice_id, provider, status, environment)
+values ('00000000-0000-4000-8000-0000003159e2', '00000000-0000-4000-8000-0000003159b2',
+        '00000000-0000-4000-8000-0000003159d2', 'it_sdi', 'failed', 'uat');
+update public.invoice_transmissions set status = 'rejected' where id = '00000000-0000-4000-8000-0000003159e2';
+select ok(pg_temp.refused('b2','c2','IT'), 'a failed then rejected SdI answer keeps the gate shut');
+update public.invoice_transmissions set status = 'accepted', external_id = 'SDI-1'
+ where id = '00000000-0000-4000-8000-0000003159e2';
+select ok(not pg_temp.refused('b2','c2','IT'), 'an accepted SdI transmission opens the gate');
+select is((select environment from public.national_channel_acceptances
+            where workspace_id = '00000000-0000-4000-8000-0000003159b2'),
+          'sandbox', 'a uat transmission is a sandbox acceptance, and the row says so');
+
+insert into public.verifactu_records (id, workspace_id, invoice_id, kind, chain_position, issuer_nif,
+                                      invoice_number, issue_date, generated_at, huella)
+values ('00000000-0000-4000-8000-0000003159f3', '00000000-0000-4000-8000-0000003159b3',
+        '00000000-0000-4000-8000-0000003159d3', 'alta', 1, 'B12345678', 'T-d3', '10-11-2026',
+        '2026-11-10T10:00:00+01:00', repeat('A', 64));
+update public.verifactu_records set submission_status = 'rejected'
+ where id = '00000000-0000-4000-8000-0000003159f3';
+select ok(pg_temp.refused('b3','c3','ES'), 'a rejected Verifactu record keeps the gate shut');
+update public.verifactu_records set submission_status = 'accepted'
+ where id = '00000000-0000-4000-8000-0000003159f3';
+select ok(not pg_temp.refused('b3','c3','ES'), 'an accepted Verifactu record opens the gate');
+select is((select channel from public.national_channel_acceptances
+            where workspace_id = '00000000-0000-4000-8000-0000003159b3'),
+          'es_verifactu', 'it is recorded as Verifactu''s');
 
 select * from finish();
 rollback;
