@@ -17,16 +17,12 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/features/money/application/receivables.dart::DoNextKind':
-      '#3587 step 2 — the invoicing home reads it',
-  'lib/features/money/application/receivables.dart::Receivable':
-      '#3587 step 2 — the invoicing home reads it',
-  'lib/features/money/application/receivables.dart::ReceivableStage':
-      '#3587 step 2 — the invoicing home reads it',
-  'lib/features/money/application/receivables.dart::Tally':
-      '#3587 step 2 — the invoicing home reads it',
   'lib/features/money/application/receivables.dart::invoiceStatusOf':
-      '#3587 step 2 — the invoicing home reads it',
+      '#3587 R1-c — the invoice rows say it in words',
+  'lib/features/money/application/receivables_answers.dart::OwedBucket':
+      '#3587 R1-c — the owed card filters the list by it',
+  'lib/features/money/application/receivables_answers.dart::owedBucketOf':
+      '#3587 R1-c — the owed card filters the list by it',
 };
 
 void main() {
