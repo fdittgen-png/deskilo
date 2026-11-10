@@ -75,8 +75,11 @@ Future<void> _tap(WidgetTester tester, String key) async {
 /// Applies, saying yes when switching something off asks first.
 Future<void> _apply(WidgetTester tester) async {
   await _tap(tester, 'setup-levels-apply');
-  if (find.byKey(const ValueKey('setup-levels-confirm-off-yes')).evaluate()
-      case [_, ...]) {
+  // An Iterable never matches a list pattern: ask whether it is empty.
+  if (find
+      .byKey(const ValueKey('setup-levels-confirm-off-yes'))
+      .evaluate()
+      .isNotEmpty) {
     await _tap(tester, 'setup-levels-confirm-off-yes');
   }
 }

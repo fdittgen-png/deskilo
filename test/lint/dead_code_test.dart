@@ -22,8 +22,6 @@ const Map<String, String> _allowed = {
   // first setup step) shows it and writes it on confirm.
   'lib/features/workspace/domain/business_kind_proposal.dart::proposalFor':
       '#3550 PR 2b — the kind chooser shows the proposal and writes it on confirm',
-  'lib/features/workspace/domain/business_kind_proposal.dart::BusinessKindProposal':
-      '#3550 PR 2b — the kind chooser shows the proposal and writes it on confirm',
   'lib/features/me/presentation/kit/me_card.dart::MeCard':
       '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
   'lib/features/me/presentation/kit/me_notice.dart::MeNotice':

@@ -54,10 +54,10 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
       'simple',
       features: {
         // #3550 — a business with places books them from the first level,
-        // with the place features that sat in other processes' levels.
+        // with the place features that sat in other processes' levels and
+        // are on for a new space (a level counts as reached only when all
+        // its features are on).
         WorkspaceFeature.placeBooking,
-        WorkspaceFeature.guestParticipation,
-        WorkspaceFeature.planMemberPhotos,
         WorkspaceFeature.singleRoomLevelNames,
         WorkspaceFeature.placeFeedback,
         WorkspaceFeature.workingHours,
@@ -75,6 +75,9 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
     SetupLevel(
       'resources',
       features: {
+        // #3550 — place features a new space starts without.
+        WorkspaceFeature.guestParticipation,
+        WorkspaceFeature.planMemberPhotos,
         WorkspaceFeature.levelBooking,
         WorkspaceFeature.meetingRooms,
         WorkspaceFeature.parking,
