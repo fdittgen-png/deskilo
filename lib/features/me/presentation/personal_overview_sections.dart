@@ -23,6 +23,7 @@ import '../application/personal_commitments.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_commitment.dart';
 import 'commitment_words.dart';
+import 'kit/me_status_chip.dart';
 import 'me_data_tab.dart';
 
 /// One section of the Overview: a titled surface, never a button itself.
@@ -199,9 +200,9 @@ class _NextBody extends ConsumerWidget {
         if (!next.reading && (commitment != null || !next.complete))
           Align(
             alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
+            child: FilledButton(
               key: const ValueKey('me-overview-next-view'),
-              style: TextButton.styleFrom(
+              style: FilledButton.styleFrom(
                 minimumSize: const Size(0, PersonalShellMetrics.minTarget),
               ),
               onPressed: () =>
@@ -254,9 +255,11 @@ class _Commitment extends StatelessWidget {
             Expanded(
               child: Text(place, style: theme.textTheme.titleMedium?.strong),
             ),
-            Text(
-              commitmentStateWords(l10n, c.state),
-              style: theme.textTheme.labelLarge,
+            MeStatusChip(
+              kind: c.state == CommitmentState.ongoing
+                  ? MeChipKind.ok
+                  : MeChipKind.neutral,
+              label: commitmentStateWords(l10n, c.state),
             ),
           ],
         ),
