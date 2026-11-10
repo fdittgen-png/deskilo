@@ -14158,6 +14158,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicePageMatch => 'Conciliar el pago';
 
   @override
+  String get invoicePageMatchRefused =>
+      'El pago no se pudo conciliar con esta factura.';
+
+  @override
   String get invoicePageMoreCancel => 'Anular esta factura, emitida por error';
 
   @override

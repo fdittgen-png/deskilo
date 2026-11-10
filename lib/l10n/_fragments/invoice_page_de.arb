@@ -94,5 +94,7 @@
   "invoicePageConfirmedMatched": "Zahlung bestätigt und dieser Rechnung zugeordnet.",
   "@invoicePageConfirmedMatched": {"description": "#3587 R1-d message after Confirm when the payment settled the invoice"},
   "invoicePageConfirmedAwaitsApproval": "Zahlung bestätigt. Die Zuordnung wartet auf eine zweite Freigabe.",
-  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"}
+  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
+  "invoicePageMatchRefused": "Die Zahlung konnte dieser Rechnung nicht zugeordnet werden.",
+  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"}
 }

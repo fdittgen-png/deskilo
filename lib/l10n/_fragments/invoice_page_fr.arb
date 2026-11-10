@@ -94,5 +94,7 @@
   "invoicePageConfirmedMatched": "Paiement confirmé et rapproché de cette facture.",
   "@invoicePageConfirmedMatched": {"description": "#3587 R1-d message after Confirm when the payment settled the invoice"},
   "invoicePageConfirmedAwaitsApproval": "Paiement confirmé. Le rapprochement attend une seconde validation.",
-  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"}
+  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
+  "invoicePageMatchRefused": "Le paiement n’a pas pu être rapproché de cette facture.",
+  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"}
 }

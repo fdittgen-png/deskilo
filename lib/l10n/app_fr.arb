@@ -8937,6 +8937,10 @@
   "@invoicePageMatch": {
     "description": "#3587 R1-d bottom bar"
   },
+  "invoicePageMatchRefused": "Le paiement n’a pas pu être rapproché de cette facture.",
+  "@invoicePageMatchRefused": {
+    "description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"
+  },
   "invoicePageMoreCancel": "Annuler cette facture, émise par erreur",
   "@invoicePageMoreCancel": {
     "description": "#3587 R1-d More: corrections"

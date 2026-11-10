@@ -14192,6 +14192,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicePageMatch => 'Rapprocher le paiement';
 
   @override
+  String get invoicePageMatchRefused =>
+      'Le paiement n’a pas pu être rapproché de cette facture.';
+
+  @override
   String get invoicePageMoreCancel => 'Annuler cette facture, émise par erreur';
 
   @override

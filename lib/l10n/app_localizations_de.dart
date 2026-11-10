@@ -14185,6 +14185,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicePageMatch => 'Zahlung zuordnen';
 
   @override
+  String get invoicePageMatchRefused =>
+      'Die Zahlung konnte dieser Rechnung nicht zugeordnet werden.';
+
+  @override
   String get invoicePageMoreCancel =>
       'Diese Rechnung stornieren, irrtümlich ausgestellt';
 

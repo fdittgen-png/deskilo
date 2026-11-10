@@ -14053,6 +14053,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePageMatch => 'Match the payment';
 
   @override
+  String get invoicePageMatchRefused =>
+      'The payment could not be matched to this invoice.';
+
+  @override
   String get invoicePageMoreCancel => 'Cancel this invoice, issued by mistake';
 
   @override

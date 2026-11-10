@@ -7,7 +7,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_journey_view.dart';
@@ -21,9 +20,7 @@ final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
     rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
     now: ref.watch(clockProvider).now(),
     // The business's calendar day, from the workspace's own context.
-    dayOf:
-        ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf ??
-        (DateTime d) => DateTime(d.year, d.month, d.day),
+    dayOf: ref.watch(invoicingBusinessProvider).dayOf,
     eventFactsOf: ref.watch(invoiceEventFactsProvider),
     transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {},
     held: {...?ref.watch(dunningHoldsProvider).value?.keys},

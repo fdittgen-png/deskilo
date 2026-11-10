@@ -14160,6 +14160,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicePageMatch => 'Abbina il pagamento';
 
   @override
+  String get invoicePageMatchRefused =>
+      'Il pagamento non è stato abbinato a questa fattura.';
+
+  @override
   String get invoicePageMoreCancel =>
       'Annulla questa fattura, emessa per errore';
 

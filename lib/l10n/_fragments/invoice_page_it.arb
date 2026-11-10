@@ -94,5 +94,7 @@
   "invoicePageConfirmedMatched": "Pagamento confermato e abbinato a questa fattura.",
   "@invoicePageConfirmedMatched": {"description": "#3587 R1-d message after Confirm when the payment settled the invoice"},
   "invoicePageConfirmedAwaitsApproval": "Pagamento confermato. L’abbinamento attende una seconda approvazione.",
-  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"}
+  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
+  "invoicePageMatchRefused": "Il pagamento non è stato abbinato a questa fattura.",
+  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"}
 }

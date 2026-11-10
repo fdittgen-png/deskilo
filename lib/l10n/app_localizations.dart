@@ -23338,6 +23338,12 @@ abstract class AppLocalizations {
   /// **'Match the payment'**
   String get invoicePageMatch;
 
+  /// #3587 R1-d when the match after a confirmation is refused and the server gave no words
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be matched to this invoice.'**
+  String get invoicePageMatchRefused;
+
   /// #3587 R1-d More: corrections
   ///
   /// In en, this message translates to:

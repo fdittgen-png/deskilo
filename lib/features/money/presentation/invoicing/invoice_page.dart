@@ -12,33 +12,27 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/data/server_error.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_card.dart';
-import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/kit/story.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/confirmed_payment.dart';
 import '../../application/receivables.dart';
 import '../../domain/dunning.dart';
-import '../../domain/invoice_line_text.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
-import '../report_strings_l10n.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
 import '../widgets/invoice_journey_view.dart';
+import 'invoice_page_parts.dart';
 import 'invoicing_reads.dart';
-import 'invoicing_words.dart';
 
 /// Opens [invoiceId]'s page over the current one (a phone, a narrow
 /// window), full screen.
@@ -68,10 +62,9 @@ class InvoicePage extends ConsumerWidget {
     final read = ref.watch(invoicingReaderProvider).read([invoice]);
     final r = read.isEmpty ? null : read.first;
     // The business's calendar day, from the workspace's own context.
-    final now = ref.watch(clockProvider).now();
-    final today =
-        ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf(now) ??
-        DateTime(now.year, now.month, now.day);
+    final today = ref
+        .watch(invoicingBusinessProvider)
+        .dayOf(ref.watch(clockProvider).now());
     final rules =
         ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     final mode = rules.automatic ? ReminderMode.automatic : ReminderMode.byHand;
@@ -81,7 +74,7 @@ class InvoicePage extends ConsumerWidget {
         automaticallyImplyLeading: onClose == null,
         title: Text(l.invoicePageTitle(invoice.number)),
         actions: [
-          _More(invoice: invoice, receivable: r),
+          InvoiceMoreMenu(invoice: invoice, receivable: r),
           if (onClose != null)
             IconButton(
               key: const ValueKey('invoice-page-close'),
@@ -98,7 +91,7 @@ class InvoicePage extends ConsumerWidget {
         padding: AppSpacing.mdAll,
         children: [
           if (r != null) ...[
-            _Summary(invoice: invoice, receivable: r, today: today),
+            InvoiceSummaryCard(invoice: invoice, receivable: r, today: today),
             const SizedBox(height: AppSpacing.md),
             KitCard(
               key: const ValueKey('invoice-page-story'),
@@ -113,9 +106,9 @@ class InvoicePage extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.md),
           ],
-          _Lines(invoice: invoice),
+          InvoiceLinesCard(invoice: invoice),
           const SizedBox(height: AppSpacing.md),
-          _Pdf(invoice: invoice),
+          InvoicePdfCard(invoice: invoice),
         ],
       ),
     );
@@ -201,52 +194,47 @@ class InvoicePage extends ConsumerWidget {
         .declaration;
     final amount = declared?.amountCents ?? 0;
     if (amount != r.openMinor) return ConfirmOutcome.confirmedOnly;
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    try {
-      final ledger = await ref
-          .read(memberAccountQueriesProvider)
-          .fetchLedger(invoice.memberId);
-      final consumed = {
-        for (final m in matches.values) ?m.paymentLedgerId,
-        if (workspace != null)
+    final business = ref.read(invoicingBusinessProvider);
+    var outcome = ConfirmOutcome.confirmedOnly;
+    final done = await runGuarded(
+      context,
+      domain: 'money',
+      message: 'match after confirmation failed',
+      errorText: context.l10n.invoicePageMatchRefused,
+      action: () async {
+        final ledger = await ref
+            .read(memberAccountQueriesProvider)
+            .fetchLedger(invoice.memberId);
+        final consumed = {
+          for (final m in matches.values) ?m.paymentLedgerId,
           ...await ref
               .read(invoiceQueriesProvider)
-              .fetchConsumedPaymentIds(workspace.id),
-      };
-      final payment = confirmedPaymentFor(
-        ledger,
-        customerId: invoice.memberId,
-        amountCents: amount,
-        invoiceCurrency: invoice.currency,
-        accountCurrency: workspace?.currencyCode ?? '',
-        consumed: consumed,
-      );
-      if (payment == null) return ConfirmOutcome.confirmedOnly;
-      await ref
-          .read(invoiceCommandsProvider)
-          .matchInvoice(
-            invoiceId: invoice.id,
-            paymentLedgerId: payment,
-            resolution: 'exact',
-          );
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-        'money',
-        'match after confirmation refused',
-        error: e,
-        stackTrace: st,
-      );
-      if (context.mounted) {
-        AppSnack.error(
-          context,
-          serverErrorMessage(e) ?? context.l10n.workspaceGenericError,
+              .fetchConsumedPaymentIds(business.id),
+        };
+        final payment = confirmedPaymentFor(
+          ledger,
+          customerId: invoice.memberId,
+          amountCents: amount,
+          invoiceCurrency: invoice.currency,
+          accountCurrency: business.currency,
+          consumed: consumed,
         );
-      }
+        if (payment == null) return;
+        await ref
+            .read(invoiceCommandsProvider)
+            .matchInvoice(
+              invoiceId: invoice.id,
+              paymentLedgerId: payment,
+              resolution: 'exact',
+            );
+        outcome = ConfirmOutcome.matched;
+      },
+    );
+    ref
+      ..invalidate(invoiceMatchesProvider)
+      ..invalidate(invoicesProvider);
+    if (!done || outcome == ConfirmOutcome.confirmedOnly) {
       return ConfirmOutcome.confirmedOnly;
-    } finally {
-      ref
-        ..invalidate(invoiceMatchesProvider)
-        ..invalidate(invoicesProvider);
     }
     // The match as the server now has it: settled, or waiting for its
     // second approval (0067).
@@ -331,283 +319,15 @@ class InvoicePage extends ConsumerWidget {
       InvoiceAction.fix => filled(
         'invoice-page-einvoice',
         l.invoicePageMoreEInvoice,
-        () => _run(context, ref, sheet.InvoiceAction.eInvoice, invoice),
+        () => InvoicePageActions.run(
+          context,
+          ref,
+          sheet.InvoiceAction.eInvoice,
+          invoice,
+        ),
       ),
       _ => null,
     };
     return button == null ? null : BottomActionBar(actions: [button]);
-  }
-}
-
-/// Runs one of the invoice's existing actions with the page's context.
-Future<void> _run(
-  BuildContext context,
-  WidgetRef ref,
-  sheet.InvoiceAction action,
-  Invoice invoice,
-) => runInvoiceAction(
-  context,
-  ref,
-  action,
-  invoice,
-  countryCode: ref.read(currentWorkspaceProvider).value?.countryCode ?? '',
-);
-
-/// Who, how much is open of the total, and the status in words.
-class _Summary extends StatelessWidget {
-  const _Summary({
-    required this.invoice,
-    required this.receivable,
-    required this.today,
-  });
-
-  final Invoice invoice;
-  final Receivable receivable;
-  final DateTime today;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final theme = Theme.of(context);
-    final format = appFormatOf(context);
-    final r = receivable;
-    final money = format.moneyIn(r.currency);
-    final status = invoiceStatusOf(r, today);
-    final paid = r.stage == ReceivableStage.paid;
-    final total = money.formatMinor(r.totalMinor.abs());
-    final due = r.dueOn;
-    return KitCard(
-      key: const ValueKey('invoice-page-summary'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: AppSpacing.sm,
-        children: [
-          Text(r.customerName, style: theme.textTheme.titleSmall),
-          Wrap(
-            spacing: AppSpacing.md,
-            runSpacing: AppSpacing.sm,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                paid ? total : money.formatMinor(r.openMinor),
-                style: theme.textTheme.headlineMedium?.emphasised.copyWith(
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
-              ),
-              StatusChip(
-                label: statusWordsOf(l, format, r, status),
-                tone: statusToneOf(status.kind),
-              ),
-            ],
-          ),
-          Text(
-            paid
-                ? l.invoicePagePaidInFull
-                : due == null
-                ? l.invoicePageOpenOfUndated(total)
-                : l.invoicePageOpenOf(
-                    total,
-                    format.dates(DateShape.monthDay).format(due),
-                  ),
-            style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// What was invoiced, line by line, in the words the PDF uses.
-class _Lines extends StatelessWidget {
-  const _Lines({required this.invoice});
-
-  final Invoice invoice;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final format = appFormatOf(context);
-    final words = reportStringsFor(context);
-    final money = format.moneyIn(invoice.currency);
-    return KitCard(
-      key: const ValueKey('invoice-page-lines'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: AppSpacing.sm,
-        children: [
-          KitLabel(l.invoicePageInvoiced),
-          for (final line in invoice.lines)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppSpacing.md,
-              children: [
-                Expanded(
-                  child: Text(
-                    invoiceLineText(words, line, period: invoice.period),
-                  ),
-                ),
-                Text(
-                  money.formatMinor(line.amountCents),
-                  style: const TextStyle(
-                    fontFeatures: [FontFeature.tabularFigures()],
-                  ),
-                ),
-              ],
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The document as the customer received it.
-class _Pdf extends ConsumerWidget {
-  const _Pdf({required this.invoice});
-
-  final Invoice invoice;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l = context.l10n;
-    final theme = Theme.of(context);
-    return KitCard(
-      key: const ValueKey('invoice-page-pdf'),
-      child: Row(
-        spacing: AppSpacing.md,
-        children: [
-          Icon(Icons.description_outlined, color: theme.colorScheme.primary),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l.invoicePagePdf, style: theme.textTheme.titleSmall),
-                Text(
-                  l.invoicePagePdfHint,
-                  style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
-                ),
-              ],
-            ),
-          ),
-          TextButton(
-            key: const ValueKey('invoice-page-view'),
-            onPressed: () =>
-                _run(context, ref, sheet.InvoiceAction.quickView, invoice),
-            child: Text(l.invoicePageView),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Every other action of the invoice, in worded sections: the document,
-/// the reminders, the corrections (section 4 of the final design).
-class _More extends ConsumerWidget {
-  const _More({required this.invoice, required this.receivable});
-
-  final Invoice invoice;
-  final Receivable? receivable;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l = context.l10n;
-    final r = receivable;
-    final outstanding = r?.isOutstanding ?? false;
-    // Corrections a document still accepts: replace or cancel an open one
-    // nothing has been matched to; write off what a part payment left.
-    final open =
-        r != null && r.stage == ReceivableStage.open && !r.paymentPending;
-    final partly = r?.stage == ReceivableStage.partlyPaid;
-    final entries = <(String, String?, VoidCallback?)>[
-      ('invoice-more-document', l.invoicePageMoreDocument, null),
-      (
-        'invoice-more-view',
-        l.invoicePageMoreQuickView,
-        () => _run(context, ref, sheet.InvoiceAction.quickView, invoice),
-      ),
-      (
-        'invoice-more-download',
-        l.invoicePageMoreDownload,
-        () => _run(context, ref, sheet.InvoiceAction.downloadPdf, invoice),
-      ),
-      (
-        'invoice-more-share',
-        l.invoicePageMoreShare,
-        () => _run(context, ref, sheet.InvoiceAction.sharePdf, invoice),
-      ),
-      (
-        'invoice-more-einvoice',
-        l.invoicePageMoreEInvoice,
-        () => _run(context, ref, sheet.InvoiceAction.eInvoice, invoice),
-      ),
-      if (outstanding) ...[
-        ('invoice-more-reminders', l.invoicePageMoreReminders, null),
-        (
-          'invoice-more-hold',
-          r!.onHold ? l.invoicePageMoreRelease : l.invoicePageMoreHold,
-          () => _run(context, ref, sheet.InvoiceAction.dunningHold, invoice),
-        ),
-      ],
-      if (open || partly) ...[
-        ('invoice-more-corrections', l.invoicePageMoreCorrections, null),
-        if (open) ...[
-          (
-            'invoice-more-replace',
-            l.invoicePageMoreReplace,
-            () => _run(context, ref, sheet.InvoiceAction.replace, invoice),
-          ),
-          (
-            'invoice-more-cancel',
-            l.invoicePageMoreCancel,
-            () =>
-                _run(context, ref, sheet.InvoiceAction.markErroneous, invoice),
-          ),
-        ],
-        if (partly)
-          (
-            'invoice-more-writeoff',
-            l.invoicePageMoreWriteOff,
-            () => requestInvoiceWriteoffDialog(context, ref, invoice),
-          ),
-      ],
-    ];
-    return PopupMenuButton<int>(
-      key: const ValueKey('invoice-page-more'),
-      tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
-      onSelected: (i) => entries[i].$3?.call(),
-      itemBuilder: (_) => [
-        for (final (i, e) in entries.indexed)
-          if (e.$3 == null)
-            PopupMenuItem<int>(
-              key: ValueKey(e.$1),
-              enabled: false,
-              height: 32,
-              child: Text(
-                e.$2!.toUpperCase(),
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
-            )
-          else
-            PopupMenuItem<int>(
-              key: ValueKey(e.$1),
-              value: i,
-              child: Text(e.$2!),
-            ),
-      ],
-      child: ConstrainedBox(
-        // The worded button is a whole target, not just its words.
-        constraints: const BoxConstraints(minHeight: 48),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(MaterialLocalizations.of(context).moreButtonTooltip),
-              const Icon(Icons.arrow_drop_down),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

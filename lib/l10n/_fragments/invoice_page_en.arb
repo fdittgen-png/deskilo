@@ -94,5 +94,7 @@
   "invoicePageConfirmedMatched": "Payment confirmed and matched to this invoice.",
   "@invoicePageConfirmedMatched": {"description": "#3587 R1-d message after Confirm when the payment settled the invoice"},
   "invoicePageConfirmedAwaitsApproval": "Payment confirmed. The match waits for a second approval.",
-  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"}
+  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
+  "invoicePageMatchRefused": "The payment could not be matched to this invoice.",
+  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"}
 }

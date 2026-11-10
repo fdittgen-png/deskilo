@@ -8937,6 +8937,10 @@
   "@invoicePageMatch": {
     "description": "#3587 R1-d bottom bar"
   },
+  "invoicePageMatchRefused": "Die Zahlung konnte dieser Rechnung nicht zugeordnet werden.",
+  "@invoicePageMatchRefused": {
+    "description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"
+  },
   "invoicePageMoreCancel": "Diese Rechnung stornieren, irrtümlich ausgestellt",
   "@invoicePageMoreCancel": {
     "description": "#3587 R1-d More: corrections"
