@@ -72,16 +72,24 @@ void main() {
     );
   });
 
-  group('the view size does not leak into the next test', () {
-    var firstSize = Size.zero;
-    testWidgets('sets a phone size', (t) async {
-      await pumpApp(t, const _Probe(), size: const Size(360, 640));
-      firstSize = t.view.physicalSize;
-      expect(firstSize, const Size(360, 640));
+  testWidgets('the view size and pixel ratio are restored by pumpApp\'s own '
+      'cleanup, in this case alone', (t) async {
+    final defaultSize = t.view.physicalSize;
+    final defaultRatio = t.view.devicePixelRatio;
+    // Registered BEFORE pumpApp, so it runs AFTER the helper's own teardown
+    // callbacks (they run in reverse order): it observes what they left.
+    addTearDown(() {
+      expect(t.view.physicalSize, defaultSize, reason: 'the size was not reset');
+      expect(
+        t.view.devicePixelRatio,
+        defaultRatio,
+        reason: 'the pixel ratio was not reset',
+      );
     });
-    testWidgets('sees the default again', (t) async {
-      expect(firstSize, const Size(360, 640));
-      expect(t.view.physicalSize, isNot(const Size(360, 640)));
-    });
+    await pumpApp(t, const _Probe(), size: const Size(360, 640), pixelRatio: 2);
+    expect(t.view.physicalSize, const Size(720, 1280));
+    expect(t.view.devicePixelRatio, 2);
+    expect(const Size(720, 1280), isNot(defaultSize));
+    expect(defaultRatio, isNot(2));
   });
 }
