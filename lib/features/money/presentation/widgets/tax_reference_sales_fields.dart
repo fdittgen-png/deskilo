@@ -6,6 +6,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -18,7 +19,7 @@ List<SalesTaxComponent>? parseSalesTaxComponents(String text) {
     final parts = line.split(',').map((p) => p.trim()).toList();
     final pct = parts.length < 3
         ? null
-        : double.tryParse(parts.last.replaceAll(',', '.'));
+        : parseDecimalInput(parts.last, grouping: false)?.toDouble();
     if (pct == null || pct < 0 || pct > 20 || parts.first.isEmpty) return null;
     out.add(
       SalesTaxComponent(

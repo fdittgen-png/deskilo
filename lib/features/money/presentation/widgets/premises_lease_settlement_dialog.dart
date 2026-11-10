@@ -51,7 +51,7 @@ class _SettlementDialogState extends ConsumerState<_SettlementDialog> {
 
   Future<void> _save() async {
     final today = ref.read(clockProvider).now();
-    final cents = parseCentsInput(_billed.text);
+    final cents = parseMinorInput(_billed.text);
     final from = _from;
     final to = _to;
     final due = _due ?? to;

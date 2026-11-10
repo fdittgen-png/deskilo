@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
@@ -399,9 +400,9 @@ Future<void> showPriceNegotiationSheet(
     final t = raw.trim().replaceAll(',', '.');
     if (t.isEmpty) return null;
     // #1140 — the currency's own minor digits, never a literal 100.
-    return parseCentsInput(t);
+    return parseMinorInput(t);
   }
-  final discountPct = double.tryParse(discount.text.trim().replaceAll(',', '.'));
+  final discountPct = parseDecimalInput(discount.text, grouping: false)?.toDouble();
   final feeCents = cents(fee.text);
   final overageCents = cents(overage.text);
   final items = <String, Map<String, int>>{};

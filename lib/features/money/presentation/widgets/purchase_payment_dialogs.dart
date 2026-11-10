@@ -69,7 +69,7 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
   }
 
   ReimbursementCommand? _command() {
-    final cents = parseCentsInput(_amount.text);
+    final cents = parseMinorInput(_amount.text);
     if (cents == null ||
         cents <= 0 ||
         cents > widget.claim.remainingCents) {

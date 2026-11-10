@@ -131,15 +131,15 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
   }
 
   RoomRentalCommand? _command() {
-    final cost = parseCentsInput(_cost.text.isEmpty ? '0' : _cost.text);
-    final fee = _fee.text.trim().isEmpty ? null : parseCentsInput(_fee.text);
+    final cost = parseMinorInput(_cost.text.isEmpty ? '0' : _cost.text);
+    final fee = _fee.text.trim().isEmpty ? null : parseMinorInput(_fee.text);
     final supplier = _supplierId;
     final from = _from;
     final entryFees = <RoomFee>[];
     for (final e in _all ? const <RoomAudienceEntry>[] : _entries) {
       final text = _entryFees[roomAudienceFeeKey(e)]?.text.trim() ?? '';
       if (text.isEmpty) continue;
-      final cents = parseCentsInput(text);
+      final cents = parseMinorInput(text);
       if (cents == null) return null;
       entryFees.add(
         RoomFee(unit: RoomFeeUnit.halfDay, feeCents: cents, audience: e),
