@@ -3,22 +3,18 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
-import '../../../../core/help/help_anchors.dart';
-import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import '../vat_price_label.dart';
-import '../widgets/vat_rate_field.dart';
+import '../widgets/service_sheet.dart';
 
 /// Owner-only consumable-service catalog editor (#123): name and price
 /// are configurable; services are deactivated, never deleted (bill lines
@@ -30,62 +26,15 @@ class ServicesScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref, {
     ServiceItem? service,
-  }) async {
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
-    final l10n = context.l10n;
-
-    // AWAIT the rates: a cached `.value` is null the first time the sheet
-    // opens, which would hide the VAT field exactly when it is needed.
-    List<VatRate> rates;
-    try {
-      rates = await ref.read(vatRatesProvider.future);
-    } on Object catch (e, st) {
-      TraceLogger.instance
-          .warn('money', 'vat rates fetch failed', error: e, stackTrace: st);
-      rates = const [];
-    }
-    if (!context.mounted) return;
-    final result = await showAppSheet<_ServiceDraft>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => _ServiceSheet(service: service, rates: rates),
-    );
-    if (result == null || !context.mounted) return;
-
-    if (!await runGuarded(
-      context,
-      domain: 'money',
-      message: 'service save failed',
-      errorText: l10n.workspaceGenericError,
-      action: () async {
-        final repo = ref.read(commercialTermsProvider);
-        if (service == null) {
-          await repo.createService(
-            workspace.id,
-            name: result.name,
-            priceCents: result.priceCents,
-            vatRateId: result.vatRateId,
-            supplyClass: result.supplyClass,
-          );
-        } else {
-          await repo.updateService(
-            service.id,
-            name: result.name,
-            priceCents: result.priceCents,
-            active: result.active,
-            vatRateId: result.vatRateId,
-            supplyClass: result.supplyClass,
-          );
-        }
-      },
-    )) {
-      return;
-    }
-    ref
-      ..invalidate(allServicesProvider)
-      ..invalidate(servicesProvider);
-  }
+  }) => ServiceEditor.open(
+    context,
+    ref,
+    service: service,
+    categories: [
+      for (final s in ref.read(allServicesProvider).value ?? const <ServiceItem>[])
+        s.category,
+    ],
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,53 +65,25 @@ class ServicesScreen extends ConsumerWidget {
             // #1181 — the add button overlays this list; it ends above it.
             padding: const EdgeInsets.only(bottom: kFabSafeBottom),
             children: [
-              for (final service in services)
-                ListTile(
-                  key: ValueKey('services-price-vat-included-${service.id}'),
-                  leading: Icon(
-                    service.active
-                        ? Icons.local_cafe_outlined
-                        : Icons.do_not_disturb_on_outlined,
-                    color: service.active ? null : inactiveColor,
-                  ),
-                  title: Text(
-                    service.name,
-                    style: service.active
-                        ? null
-                        : TextStyle(color: inactiveColor),
-                  ),
-                  // #537 — a gross price under a VAT-charging regime
-                  // NAMES its tax: the service's own rate, or the
-                  // workspace default when it has none.
-                  subtitle: Builder(builder: (context) {
-                    final price =
-                        currency.formatMinor(service.priceCents);
-                    final rate = vatRateSuffix(
-                      chargesVat: chargesVat,
-                      rates: vatRates,
-                      vatRateId: service.vatRateId,
-                      format: appFormatOf(context),
-                    );
-                    final vatLabel = rate == null
-                        ? null
-                        : (l10n.priceVatIncluded(rate));
-                    // #731 — the shelf count for a supply.
-                    final stock = service.stock == null
-                        ? null
-                        : service.stock == 0
-                            ? (l10n.serviceOutOfStock)
-                            : (l10n.serviceStockCount(service.stock!));
-                    return Text([
-                      price,
-                      ?vatLabel,
-                      ?stock,
-                    ].join(' · '));
-                  }),
-                  trailing: service.active
-                      ? null
-                      : Text(l10n.servicesInactive),
-                  onTap: () => _editSheet(context, ref, service: service),
+              // #3552 — grouped by category, the uncategorised last.
+              for (final group in groupServicesByCategory(services)) ...[
+                FormSection(
+                  title: group.category.isEmpty
+                      ? l10n.servicesOtherCategory
+                      : group.category,
+                  children: [
+                    for (final service in group.services)
+                      _ServiceTile(
+                        service: service,
+                        chargesVat: chargesVat,
+                        vatRates: vatRates,
+                        currency: currency,
+                        inactiveColor: inactiveColor,
+                        onTap: () => _editSheet(context, ref, service: service),
+                      ),
+                  ],
                 ),
+              ],
             ],
           ),
         AsyncError() => Center(
@@ -176,157 +97,64 @@ class ServicesScreen extends ConsumerWidget {
   }
 }
 
-class _ServiceDraft {
-  const _ServiceDraft({
-    required this.name,
-    required this.priceCents,
-    required this.active,
-    required this.vatRateId,
-    required this.supplyClass,
+/// One service: its price (with the VAT it includes), its duration, its
+/// stock, and whether it is inactive.
+class _ServiceTile extends StatelessWidget {
+  const _ServiceTile({
+    required this.service,
+    required this.chargesVat,
+    required this.vatRates,
+    required this.currency,
+    required this.inactiveColor,
+    required this.onTap,
   });
 
-  final String name;
-  final int priceCents;
-  final bool active;
-
-  /// '' = the workspace's default rate.
-  final String vatRateId;
-
-  /// #2354 — where the service is supplied for VAT.
-  final SupplyClass supplyClass;
-}
-
-class _ServiceSheet extends StatefulWidget {
-  const _ServiceSheet({this.service, this.rates = const []});
-
-  final ServiceItem? service;
-  final List<VatRate> rates;
-
-  @override
-  State<_ServiceSheet> createState() => _ServiceSheetState();
-}
-
-class _ServiceSheetState extends State<_ServiceSheet> {
-  late final TextEditingController _name;
-  late final TextEditingController _price;
-  late bool _active;
-  late String _vatRateId;
-  late SupplyClass _supplyClass;
-
-  @override
-  void initState() {
-    super.initState();
-    final service = widget.service;
-    _name = TextEditingController(text: service?.name ?? '');
-    _price = TextEditingController(
-      text: service == null ? '' : centsToMajor(service.priceCents),
-    );
-    _active = service?.active ?? true;
-    _vatRateId = service?.vatRateId ?? '';
-    _supplyClass = service?.supplyClass ?? SupplyClass.property;
-  }
-
-  @override
-  void dispose() {
-    _name.dispose();
-    _price.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    final name = _name.text.trim();
-    final price = appFormatOf(context).parseMinor(_price.text);
-    if (name.isEmpty || price == null) return;
-    Navigator.of(context).pop(
-      _ServiceDraft(
-        name: name,
-        priceCents: price,
-        active: _active,
-        vatRateId: _vatRateId,
-        supplyClass: _supplyClass,
-      ),
-    );
-  }
+  final ServiceItem service;
+  final bool chargesVat;
+  final List<VatRate> vatRates;
+  final MoneyFormat currency;
+  final Color inactiveColor;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Padding(
-      // #210: sheet gutter unified onto the xl token like every other
-      // modal edit sheet (was 16).
-      padding: EdgeInsets.only(
-        left: AppSpacing.xl,
-        right: AppSpacing.xl,
-        top: AppSpacing.xl,
-        bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+    final rate = vatRateSuffix(
+      chargesVat: chargesVat,
+      rates: vatRates,
+      vatRateId: service.vatRateId,
+      format: appFormatOf(context),
+    );
+    // #731 — the shelf count for a supply.
+    final stock = service.stock == null
+        ? null
+        : service.stock == 0
+        ? l10n.serviceOutOfStock
+        : l10n.serviceStockCount(service.stock!);
+    final minutes = service.durationMinutes;
+    return ListTile(
+      key: ValueKey('services-price-vat-included-${service.id}'),
+      leading: Icon(
+        service.active
+            ? Icons.local_cafe_outlined
+            : Icons.do_not_disturb_on_outlined,
+        color: service.active ? null : inactiveColor,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Text(
-                widget.service == null
-                    ? (l10n.servicesNew)
-                    : (l10n.servicesEdit),
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              HelpDot(
-                l10n.helpHintMoneyPaymentsTipSupplyTopic,
-                anchor: HelpAnchor.serviceOverview,
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _name,
-            autofocus: widget.service == null,
-            maxLength: 80,
-            decoration: InputDecoration(
-              labelText: l10n.servicesName,
-            ),
-          ),
-          TextField(
-            controller: _price,
-            keyboardType:
-                const TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(
-              labelText: l10n.servicesPrice,
-              // #537 — kill the net-or-gross ambiguity at the input.
-              helperText: l10n.priceGrossHint,
-            ),
-          ),
-          // The price stays what the member pays; the rate only decides
-          // how much of it is tax.
-          VatRateField(
-            key: const ValueKey('services-vat-rate-field'),
-            rates: widget.rates,
-            value: _vatRateId,
-            onChanged: (id) => setState(() => _vatRateId = id),
-          ),
-          // #2354 — the place of supply: a desk is taxed where it stands.
-          SupplyClassField(
-            key: const ValueKey('services-supply-class-field'),
-            value: _supplyClass,
-            onChanged: (supply) => setState(() => _supplyClass = supply),
-          ),
-          if (widget.service != null)
-            SwitchListTile(
-              key: const ValueKey('services-active'),
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.servicesActive),
-              value: _active,
-              onChanged: (v) => setState(() => _active = v),
-            ),
-          const SizedBox(height: 8),
-          FilledButton(
-            key: const ValueKey('services-save'),
-            onPressed: _submit,
-            child: Text(l10n.commonSave),
-          ),
-        ],
+      title: Text(
+        service.name,
+        style: service.active ? null : TextStyle(color: inactiveColor),
       ),
+      // #537 — a gross price under a VAT-charging regime NAMES its tax.
+      subtitle: Text(
+        [
+          currency.formatMinor(service.priceCents),
+          if (rate != null) l10n.priceVatIncluded(rate),
+          if (minutes != null) l10n.servicesDurationShort(minutes),
+          ?stock,
+        ].join(' · '),
+      ),
+      trailing: service.active ? null : Text(l10n.servicesInactive),
+      onTap: onTap,
     );
   }
 }

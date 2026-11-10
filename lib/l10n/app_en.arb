@@ -34200,6 +34200,43 @@
   "@servicesActive": {
     "description": "Label of the activate/deactivate switch in the edit sheet"
   },
+  "servicesCategory": "Category",
+  "@servicesCategory": {
+    "description": "#3552 the service editor: the group the service is listed under"
+  },
+  "servicesDescription": "Description",
+  "@servicesDescription": {
+    "description": "#3552 the service editor: what a stranger reads about the service"
+  },
+  "servicesDuration": "Duration (minutes)",
+  "@servicesDuration": {
+    "description": "#3552 the service editor: how long the service takes, in minutes"
+  },
+  "servicesDurationHint": "Leave blank if it is not time-based.",
+  "@servicesDurationHint": {
+    "description": "#3552 the duration field's hint: blank means not time-based"
+  },
+  "servicesDurationRange": "Between {min} and {max} minutes.",
+  "@servicesDurationRange": {
+    "description": "#3552 the duration field's error: the allowed range",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "@servicesDurationShort": {
+    "description": "#3552 the services list: a duration in minutes, short",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "servicesEdit": "Edit service",
   "@servicesEdit": {
     "description": "Sheet title when editing an existing service"
@@ -34220,9 +34257,17 @@
   "@servicesNew": {
     "description": "FAB tooltip and sheet title when creating a service"
   },
+  "servicesOtherCategory": "Other services",
+  "@servicesOtherCategory": {
+    "description": "#3552 the services list: the heading of services without a category"
+  },
   "servicesPrice": "Price",
   "@servicesPrice": {
     "description": "Label of the service price field (major currency units)"
+  },
+  "servicesPublic": "Show on our public page",
+  "@servicesPublic": {
+    "description": "#3552 the service editor: whether the service is shown on the public page"
   },
   "servicesTitle": "Services",
   "@servicesTitle": {

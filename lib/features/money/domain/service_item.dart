@@ -73,3 +73,33 @@ class ServiceDetails {
     'is_public': isPublic,
   };
 }
+
+/// #3552 — services grouped by their category, categories in alphabetical
+/// order and the uncategorised ('' category) last; within a group by
+/// sortOrder, then by name.
+List<({String category, List<ServiceItem> services})> groupServicesByCategory(
+  Iterable<ServiceItem> services,
+) {
+  final groups = <String, List<ServiceItem>>{};
+  for (final s in services) {
+    (groups[s.category.trim()] ??= []).add(s);
+  }
+  final keys = groups.keys.toList()
+    ..sort((a, b) {
+      if (a.isEmpty != b.isEmpty) return a.isEmpty ? 1 : -1;
+      return a.toLowerCase().compareTo(b.toLowerCase());
+    });
+  return [
+    for (final k in keys)
+      (
+        category: k,
+        services: groups[k]!
+          ..sort((a, b) {
+            final byOrder = a.sortOrder.compareTo(b.sortOrder);
+            return byOrder != 0
+                ? byOrder
+                : a.name.toLowerCase().compareTo(b.name.toLowerCase());
+          }),
+      ),
+  ];
+}
