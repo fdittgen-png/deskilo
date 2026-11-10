@@ -16,6 +16,7 @@ import '../../../features/money/domain/room_rental.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_sales.dart';
+import '../../text/collation.dart';
 import 'room_rental_repository.dart';
 
 class DemoSalesKpiRepository implements SalesKpiRepository {
@@ -148,7 +149,7 @@ class DemoSalesKpiRepository implements SalesKpiRepository {
               ?_room(rental, first, last, inRange, money),
         ]..sort((a, b) {
           final c = (b.marginMinor ?? 0).compareTo(a.marginMinor ?? 0);
-          return c != 0 ? c : a.name.compareTo(b.name);
+          return c != 0 ? c : compareNames(a.name, b.name);
         });
     int sum(int? Function(RoomMargin r) f) =>
         rows.fold<int>(0, (s, r) => s + (f(r) ?? 0));

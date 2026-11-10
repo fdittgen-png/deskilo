@@ -17,6 +17,7 @@ import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_items.dart';
+import '../../text/collation.dart';
 import 'purchase_repository.dart';
 
 class DemoItemKpiRepository implements ItemKpiRepository {
@@ -299,7 +300,7 @@ class DemoItemKpiRepository implements ItemKpiRepository {
     }
     return by.values.toList()..sort((a, b) {
       final c = b.premium.compareTo(a.premium);
-      return c != 0 ? c : a.name.compareTo(b.name);
+      return c != 0 ? c : compareNames(a.name, b.name);
     });
   }
 }

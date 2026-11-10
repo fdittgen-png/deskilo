@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import '../../../text/collation.dart';
 import '../money_repository.dart';
 
 /// #2591 — the demo's fee bands, levels, services, packages and negotiations,
@@ -58,7 +59,7 @@ class DemoCommercialTerms implements CommercialTermsRepository {
     bool includeInactive = false,
   }) async =>
       _m.services.where((s) => includeInactive || s.active).toList()
-        ..sort((a, b) => a.name.compareTo(b.name));
+        ..sort((a, b) => compareNames(a.name, b.name));
 
   @override
   Future<ServiceItem> createService(

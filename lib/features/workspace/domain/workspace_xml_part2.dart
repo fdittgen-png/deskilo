@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
 part of 'workspace_xml.dart';
 
 
@@ -39,7 +40,7 @@ String buildWorkspaceXml({
   final sortedAccessories = List.of(accessories)
     ..sort((a, b) {
       final bySortOrder = a.sortOrder.compareTo(b.sortOrder);
-      return bySortOrder != 0 ? bySortOrder : a.name.compareTo(b.name);
+      return bySortOrder != 0 ? bySortOrder : compareNames(a.name, b.name);
     });
 
   final builder = XmlBuilder()

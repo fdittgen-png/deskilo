@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../text/collation.dart';
 
 /// How the spaces of Me › Home are sorted. [byHand] is the order the person
 /// set themselves.
@@ -104,7 +105,7 @@ class SpacePrefs {
     final base = arrange(keys);
     if (sort == SpaceSort.byHand) return base;
     int byName(String a, String b) =>
-        nameOf(a).toLowerCase().compareTo(nameOf(b).toLowerCase());
+        compareNames(nameOf(a), nameOf(b));
     final out = [...base];
     switch (sort) {
       case SpaceSort.byHand:

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:xml/xml.dart';
 
+import '../../../core/text/collation.dart';
 import '../../plan/domain/accessory.dart';
 import '../../plan/domain/floor_plan.dart';
 import '../../plan/domain/grid_geometry.dart';

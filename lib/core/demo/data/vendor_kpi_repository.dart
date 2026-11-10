@@ -12,6 +12,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_vendors.dart';
+import '../../text/collation.dart';
 import 'purchase_order_repository.dart';
 import 'purchase_repository.dart';
 import 'vendor_delivery_figure.dart';
@@ -269,7 +270,7 @@ class DemoVendorKpiRepository implements VendorKpiRepository {
               ),
           ]..sort((a, b) {
             final k = b.due.compareTo(a.due);
-            return k != 0 ? k : a.name.compareTo(b.name);
+            return k != 0 ? k : compareNames(a.name, b.name);
           }),
     );
   }
@@ -319,7 +320,7 @@ class DemoVendorKpiRepository implements VendorKpiRepository {
               ),
           ]..sort((a, b) {
             final k = b.documents.compareTo(a.documents);
-            return k != 0 ? k : a.name.compareTo(b.name);
+            return k != 0 ? k : compareNames(a.name, b.name);
           }),
     );
   }

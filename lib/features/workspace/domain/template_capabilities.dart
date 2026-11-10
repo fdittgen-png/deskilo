@@ -15,6 +15,7 @@
 // rows are argued with in unit tests, and the gallery, the comparison
 // screen and the XLSX export (#1660/#1661) consume the same results.
 import 'package:meta/meta.dart';
+import '../../../core/text/collation.dart';
 import 'template_inspection.dart';
 import 'template_preview.dart';
 import 'workspace_feature.dart';
@@ -501,9 +502,8 @@ List<TemplateMatch> matchTemplates(
     ));
   }
   out.sort((a, b) {
-    final s = b.score.compareTo(a.score);
-    if (s != 0) return s;
-    final n = a.inspection.name.toLowerCase().compareTo(b.inspection.name.toLowerCase());
+    final s = b.score.compareTo(a.score); if (s != 0) return s;
+    final n = compareNames(a.inspection.name, b.inspection.name);
     return n != 0 ? n : a.inspection.templateId.compareTo(b.inspection.templateId);
   });
   return out;

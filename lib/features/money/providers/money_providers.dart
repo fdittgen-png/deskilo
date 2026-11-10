@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/text/collation.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/trace/traced.dart';
@@ -517,7 +518,7 @@ Future<InvoicingOverview> invoicingOverview(Ref ref) async {
   ]))
       .whereType<ToInvoiceEntry>()
       .toList()
-    ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    ..sort((a, b) => compareNames(a.name, b.name));
 
   // 0067/#504 — the lifecycle is EXPLICIT: an invoice stays open until
   // FULLY settled. A pending match awaits its quorum here; a standing

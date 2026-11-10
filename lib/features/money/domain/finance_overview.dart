@@ -6,6 +6,8 @@
 // own currency — pages and currencies are never summed together.
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/text/collation.dart';
 import 'account_activity.dart';
 import 'finance_hosts.dart';
 
@@ -367,7 +369,7 @@ class FinanceOverview {
 
   static List<(String, String)> _byName(Map<String, String> seen) =>
       [for (final e in seen.entries) (e.key, e.value)]
-        ..sort((a, b) => a.$2.toLowerCase().compareTo(b.$2.toLowerCase()));
+        ..sort((a, b) => compareNames(a.$2, b.$2));
 
   /// Only [workspaceId]'s documents; every workspace when it is null. A
   /// reminder follows its invoice.
