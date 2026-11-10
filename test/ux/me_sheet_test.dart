@@ -10,6 +10,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:deskilo/core/time/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +43,7 @@ void main() {
             workspace: scenario.workspace,
             accountActivity: scenario.documents,
             size: const Size(390, 844),
+            clock: FixedClock(meGuardNow),
             extraOverrides: scenario.overrides,
           );
           await goTo(tester, router, screen.route);

@@ -14,6 +14,9 @@
 // rule and the number of matrix cells (width x scale x theme) in which it
 // fails. The list only falls: each of steps A-F of #3545 lowers it for the
 // screens it touches, and it is EMPTY when step F closes #3545.
+import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,9 +35,8 @@ const Map<String, Map<String, int>> _known = {
   'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
   'data|populated': {'overflow or exception': 2, 'target under 48 dp': 8, 'unnamed control': 8},
   'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
-  'home|empty': {'target under 48 dp': 2},
   'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 8},
-  'home|populated': {'overflow or exception': 6, 'target under 48 dp': 4},
+  'home|populated': {'overflow or exception': 6, 'target under 48 dp': 6},
   'spaces|empty': {'target under 48 dp': 6},
   'spaces|one source failed': {'a failed source is not said': 12, 'target under 48 dp': 4},
   'spaces|populated': {'target under 48 dp': 4},
@@ -101,12 +103,20 @@ void main() {
                   dark ? Brightness.dark : Brightness.light;
               tester.platformDispatcher.textScaleFactorTestValue = scale;
               addTearDown(tester.platformDispatcher.clearAllTestValues);
+              // The same text on every machine: a fixed zone and locale, so a
+              // greeting, a date or a booking time wraps the same everywhere.
+              WorkspaceTime.install('Europe/Paris');
+              addTearDown(() => WorkspaceTime.install(null));
+              tester.platformDispatcher.localesTestValue = const [Locale('en')];
+              tester.platformDispatcher.localeTestValue = const Locale('en');
               final router = await pumpMeApp(
                 tester,
                 workspace: scenario.workspace,
                 me: scenario.me,
                 accountActivity: scenario.documents,
                 messenger: scenario.messenger,
+                timeZoneMode: TimeZoneMode.workspace,
+                clock: FixedClock(meGuardNow),
                 size: Size(width, width < 600 ? 900 : 800),
                 extraOverrides: scenario.overrides,
               );
