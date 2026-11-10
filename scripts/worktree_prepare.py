@@ -17,7 +17,7 @@ import sys
 from urllib.parse import unquote, urljoin, urlparse
 
 SESSION_CONTEXT = (
-    "Deskilo execution: read issue #2596 and its latest corrections, then only "
+    "Deskilo execution: read issue #3542 and its latest corrections, then only "
     "the selected leaf and current .agent-work claims. Keep at most two active "
     "coding workstreams; preserve an existing claim. Finish the current real "
     "consumer and its success/refusal/recovery tests before unrelated breadth. "
