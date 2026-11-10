@@ -1,14 +1,44 @@
 {
   "inviteSectionTitle": "Invite someone",
+  "@inviteSectionTitle": {
+    "description": "Shown as a button or chip label in workspace code screen (workspace), and 2 other places."
+  },
   "inviteViaWhatsapp": "WhatsApp",
+  "@inviteViaWhatsapp": {
+    "description": "Shown as a button or chip label in invite sheet (workspace)."
+  },
   "inviteViaSms": "SMS",
+  "@inviteViaSms": {
+    "description": "Shown as a button or chip label in invite sheet (workspace)."
+  },
   "inviteViaShare": "Share…",
+  "@inviteViaShare": {
+    "description": "Shown as a button or chip label in invite sheet (workspace)."
+  },
   "inviteFirstNameLabel": "First name (optional)",
+  "@inviteFirstNameLabel": {
+    "description": "Shown as the label of a field in invite sheet (workspace)."
+  },
   "inviteLastNameLabel": "Last name (optional)",
+  "@inviteLastNameLabel": {
+    "description": "Shown as the label of a field in invite sheet (workspace)."
+  },
   "invitePhoneLabel": "Phone (optional, with country code)",
+  "@invitePhoneLabel": {
+    "description": "Shown as the label of a field in invite sheet (workspace)."
+  },
   "inviteLanguageLabel": "Message language",
+  "@inviteLanguageLabel": {
+    "description": "Shown as a text in setup invite step (workspace), and 1 other place."
+  },
   "inviteSendFailed": "Could not open the app for sending. The message was copied instead.",
+  "@inviteSendFailed": {
+    "description": "Shown as a text in invite sheet (workspace)."
+  },
   "inviteCreateFailed": "Could not create the invitation. Check your connection and try again.",
+  "@inviteCreateFailed": {
+    "description": "Shown as the error under a field in workspace code screen (workspace), and 1 other place."
+  },
   "invitationDefaultTemplate": "Hi{firstName}! You're invited to join our coworking space \"{workspaceName}\" on DesKilo.\n\n1. Download the app:\n{downloadUrl}\n\n2. Open it, create your account (e-mail + password) and sign in.\n\n3. Choose \"Join a workspace\" and enter your personal invitation code:\n{workspaceId}\n(invitation link: {inviteLink})\n\nTip: simply copy this whole message and paste it into the app — the code is found automatically. Your code is personal, single-use and valid for 14 days.\n\nSee you soon at {workspaceName}!",
   "@invitationDefaultTemplate": {
     "description": "Default invitation message; firstName is '' or ' Name'",
@@ -31,6 +61,9 @@
     }
   },
   "invitationTemplateTitle": "Invitation message",
+  "@invitationTemplateTitle": {
+    "description": "Shown as a text in workspace settings parameters (workspace), and 1 other place."
+  },
   "invitationTemplateHelp": "Sent when you invite someone via WhatsApp, SMS, or share. Leave empty to use the built-in message in the chosen language. Available tags:",
   "@invitationTemplateHelp": {
     "description": "Help above the tag list"
@@ -44,9 +77,27 @@
     "description": "Hint in the template editor"
   },
   "workspaceInvitePasteHint": "Paste the whole invitation message — the ID is found automatically.",
+  "@workspaceInvitePasteHint": {
+    "description": "Shown as the helper line under a field in onboarding join form (workspace)."
+  },
   "workspaceInviteCodeInvalid": "No workspace ID found — paste the invitation or type the ID.",
+  "@workspaceInviteCodeInvalid": {
+    "description": "Shown as a text in onboarding join form (workspace)."
+  },
   "inviteAlsoProdTitle": "Also give access to production",
+  "@inviteAlsoProdTitle": {
+    "description": "Shown as a title in invite sheet (workspace)."
+  },
   "inviteAlsoProdSubtitle": "They join the test space either way. The role still has to allow production access.",
+  "@inviteAlsoProdSubtitle": {
+    "description": "Shown as the line under a title in invite sheet (workspace)."
+  },
   "featureMemberEnvironmentsTitle": "Choose the environments a person is activated on",
-  "featureMemberEnvironmentsDesc": "When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access."
+  "@featureMemberEnvironmentsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
+  "featureMemberEnvironmentsDesc": "When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.",
+  "@featureMemberEnvironmentsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  }
 }

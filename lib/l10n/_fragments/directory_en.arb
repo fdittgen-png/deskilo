@@ -90,10 +90,20 @@
     "description": "Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead"
   },
   "memberPageEmailAction": "E-mail",
+  "@memberPageEmailAction": {
+    "description": "Shown as a button or chip label in member activity tiles (members)."
+  },
   "memberPageAddService": "Add a service",
+  "@memberPageAddService": {
+    "description": "Shown as a button or chip label in member activity tiles (members)."
+  },
   "memberPageNone": "None",
+  "@memberPageNone": {
+    "description": "Shown as a text in member admin tiles (members)."
+  },
   "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
   "@memberPageWorkspaceDefaultValue": {
+    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -101,15 +111,40 @@
     }
   },
   "memberPageLevelTitle": "Whole-space bookings",
+  "@memberPageLevelTitle": {
+    "description": "Shown as a title in member activity tiles (members)."
+  },
   "memberPageGroupMembership": "Membership",
+  "@memberPageGroupMembership": {
+    "description": "Shown as a text in member page (members)."
+  },
   "memberPageGroupBooking": "Booking rules",
+  "@memberPageGroupBooking": {
+    "description": "Shown as a text in member page (members)."
+  },
   "memberPageGroupBilling": "Billing",
+  "@memberPageGroupBilling": {
+    "description": "Shown as a text in member page (members)."
+  },
   "memberPageGroupAccess": "Badges & access",
+  "@memberPageGroupAccess": {
+    "description": "Shown as a text in member page (members)."
+  },
   "memberPageManageHeading": "Manage",
+  "@memberPageManageHeading": {
+    "description": "Shown as a text in member page (members)."
+  },
   "memberPageStatusActive": "Active",
+  "@memberPageStatusActive": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "memberPageNeverSeen": "Not seen yet",
+  "@memberPageNeverSeen": {
+    "description": "Shown as a text in member header cards (members)."
+  },
   "memberPageYou": "{name} (you)",
   "@memberPageYou": {
+    "description": "Shown as a text in member header cards (members). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -118,6 +153,7 @@
   },
   "memberPageSince": "Member since {date}",
   "@memberPageSince": {
+    "description": "Shown as a text in member header cards (members). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -126,6 +162,7 @@
   },
   "memberPageCheckedIn": "Checked in · {seat} · since {time}",
   "@memberPageCheckedIn": {
+    "description": "Shown as a text in member header cards (members). Placeholders: {seat} (String), {time} (String).",
     "placeholders": {
       "seat": {
         "type": "String"
@@ -137,6 +174,7 @@
   },
   "memberPageReservedNow": "Reserved now · {seat} · until {time}",
   "@memberPageReservedNow": {
+    "description": "Shown as a text in member header cards (members). Placeholders: {seat} (String), {time} (String).",
     "placeholders": {
       "seat": {
         "type": "String"
@@ -148,11 +186,15 @@
   },
   "memberPageNext": "Next: {label}",
   "@memberPageNext": {
+    "description": "Shown as a text in member header cards (members). Placeholders: {label} (String).",
     "placeholders": {
       "label": {
         "type": "String"
       }
     }
   },
-  "memberPageNowHeading": "Right now"
+  "memberPageNowHeading": "Right now",
+  "@memberPageNowHeading": {
+    "description": "Shown as a text in member header cards (members)."
+  }
 }

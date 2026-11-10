@@ -1,18 +1,55 @@
 {
   "accountActivityTitle": "My consumption and payments",
+  "@accountActivityTitle": {
+    "description": "Shown as a text in account portal entry (directory), and 2 other places."
+  },
   "accountPaymentsTitle": "Payments",
+  "@accountPaymentsTitle": {
+    "description": "Shown as a text in account activity screen (money)."
+  },
   "accountActivityScope": "All your profiles on this server, including previous memberships. Currencies are shown separately.",
+  "@accountActivityScope": {
+    "description": "Shown as a text in account activity screen (money)."
+  },
   "accountActivityEmpty": "No records to display.",
+  "@accountActivityEmpty": {
+    "description": "Shown as a text in account activity screen (money), and 2 other places."
+  },
   "accountActivityFailed": "Could not load your financial history. Tap to retry.",
+  "@accountActivityFailed": {
+    "description": "Shown as a text in account activity screen (money), and 2 other places."
+  },
   "accountPaymentConfirmed": "Payment confirmed",
+  "@accountPaymentConfirmed": {
+    "description": "Shown as a text in account activity screen (money), and 1 other place."
+  },
   "accountInvoiceVoided": "Invoice voided",
+  "@accountInvoiceVoided": {
+    "description": "Shown as a text in account activity screen (money), and 1 other place."
+  },
   "accountInvoiceRegrouped": "Included in a settlement invoice",
+  "@accountInvoiceRegrouped": {
+    "description": "Shown as a text in account activity screen (money), and 1 other place."
+  },
   "accountInvoiceIssued": "Invoice issued",
+  "@accountInvoiceIssued": {
+    "description": "Shown as a text in account activity screen (money)."
+  },
   "accountUsageCorrected": "Corrected billable usage",
+  "@accountUsageCorrected": {
+    "description": "Shown as a text in account activity screen (money)."
+  },
   "accountUsageMinutes": "{minutes} minutes",
   "accountPaymentPreference": "Preferred online payment",
+  "@accountPaymentPreference": {
+    "description": "Shown as the label of a field in personal payment provider (money)."
+  },
   "accountPaymentAsk": "Choose at checkout",
+  "@accountPaymentAsk": {
+    "description": "Shown as a text in personal payment provider (money)."
+  },
   "@accountUsageMinutes": {
+    "description": "Shown as a text in account activity screen (money), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
       "minutes": {
         "type": "int"

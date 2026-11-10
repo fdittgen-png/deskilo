@@ -5238,17 +5238,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarGroupMoney => 'Money';
 
   @override
-  String calendarItemCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count items',
-      one: '1 item',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get calendarKindCheckIn => 'Check-ins';
 
   @override
@@ -16012,11 +16001,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.';
 
   @override
-  String libraryApplyConfirmTitle(String name) {
-    return 'Apply « $name »?';
-  }
-
-  @override
   String get libraryCarriesSettings => 'with its settings';
 
   @override
@@ -26067,11 +26051,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settlementRegroups => 'This invoice regroups';
-
-  @override
-  String settlementRegroupsNumbers(String numbers) {
-    return 'Regroups $numbers';
-  }
 
   @override
   String get settlementSettledBy =>

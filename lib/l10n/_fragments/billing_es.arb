@@ -116,14 +116,6 @@
   },
   "settlementDocumentationOnly": "Solo documentación: toda operación se hace en la factura de reagrupación.",
   "settlementSourcePdf": "PDF (reagrupada)",
-  "settlementRegroupsNumbers": "Reagrupa {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "invoicePdfSettledIn": "Reagrupada en {number}",
   "@invoicePdfSettledIn": {
     "placeholders": {

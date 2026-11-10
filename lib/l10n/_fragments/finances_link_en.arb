@@ -1,9 +1,19 @@
 {
   "financesAllSpaces": "All spaces",
+  "@financesAllSpaces": {
+    "description": "Shown as a button or chip label in my finances parts (money)."
+  },
   "financesLinkTitle": "Your finances across spaces",
+  "@financesLinkTitle": {
+    "description": "Shown as a text in my finances link card (money)."
+  },
   "financesLinkBody": "Your invoices, reminders and payments from every space are together in Me › My finances.",
+  "@financesLinkBody": {
+    "description": "Shown as a text in my finances link card (money)."
+  },
   "financesLinkAction": "Open for {space}",
   "@financesLinkAction": {
+    "description": "Shown as a text in my finances link card (money). Placeholders: {space} (String).",
     "placeholders": {
       "space": {
         "type": "String"

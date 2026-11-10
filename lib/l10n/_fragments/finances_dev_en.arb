@@ -1,3 +1,6 @@
 {
-  "financesDevSection": "Development spaces — test data, not counted above"
+  "financesDevSection": "Development spaces — test data, not counted above",
+  "@financesDevSection": {
+    "description": "Shown as a text in my finances parts (money)."
+  }
 }

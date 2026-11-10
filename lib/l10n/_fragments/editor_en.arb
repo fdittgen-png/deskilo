@@ -249,10 +249,25 @@
     "description": "Hint in the seat sheet when the workspace accessory catalog is empty"
   },
   "editorSeatNfcLabel": "NFC/RFID tag",
+  "@editorSeatNfcLabel": {
+    "description": "Shown as the label of a field in seat properties sheet (editor)."
+  },
   "editorSeatNfcHelp": "Tag uid in hex — leave empty for no tag.",
+  "@editorSeatNfcHelp": {
+    "description": "Shown as the helper line under a field in seat properties sheet (editor)."
+  },
   "editorSeatNfcRead": "Read a tag now",
+  "@editorSeatNfcRead": {
+    "description": "Shown as a tooltip in seat properties sheet (editor)."
+  },
   "editorSeatNfcReadFailed": "Could not start the tag reader.",
+  "@editorSeatNfcReadFailed": {
+    "description": "Shown as a text in seat properties sheet (editor)."
+  },
   "editorSeatNfcDuplicate": "This tag is already linked to another chair.",
+  "@editorSeatNfcDuplicate": {
+    "description": "Shown as a text in seat properties sheet (editor)."
+  },
   "editorDeleteElementConfirmAudit": "Delete this element? Anything placed on it is removed too. Bookings that reference it keep a text snapshot for audits; open bookings are cancelled.",
   "@editorDeleteElementConfirmAudit": {
     "description": "#587 delete despite reservations — audit substitution warning"

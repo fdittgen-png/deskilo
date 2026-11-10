@@ -59,14 +59,6 @@
   "libraryPublishNothing": "Scelga almeno un gruppo.",
   "libraryCustomizedHere": "Personalizzato qui",
   "libraryApply": "Applica a questo spazio",
-  "libraryApplyConfirmTitle": "Applicare « {name} »?",
-  "@libraryApplyConfirmTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "libraryApplyConfirmBody": "La pianta viene aggiunta o aggiornata per nome, e le impostazioni del modello vengono unite. Nulla di ciò che ha già viene rimosso.",
   "libraryApplied": "Modello applicato.",
   "librarySave": "Salva questo spazio come modello",

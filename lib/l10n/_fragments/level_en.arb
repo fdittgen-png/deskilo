@@ -1,17 +1,56 @@
 {
   "levelReserveButton": "Reserve level",
+  "@levelReserveButton": {
+    "description": "Shown as a text in lexicon defaults (core), and 1 other place."
+  },
   "levelReserveTitle": "Reserve the whole level",
+  "@levelReserveTitle": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelPermissionTile": "Level reservations",
+  "@levelPermissionTile": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelPermissionAllowed": "May reserve a whole desk, office or level",
+  "@levelPermissionAllowed": {
+    "description": "Shown as a text in workspace settings reports (workspace), and 2 other places."
+  },
   "levelPermissionDenied": "May not reserve a whole desk, office or level",
+  "@levelPermissionDenied": {
+    "description": "Shown as a text in members screen (workspace), and 1 other place."
+  },
   "levelBookableToggle": "Bookable as a whole",
+  "@levelBookableToggle": {
+    "description": "Shown as a text in workspace configuration report strings (workspace), and 4 other places."
+  },
   "levelBookableDesc": "The whole floor can be reserved as one booking.",
+  "@levelBookableDesc": {
+    "description": "Shown as the line under a title in editor screen (editor)."
+  },
   "levelPriceLabel": "Price per half-day",
+  "@levelPriceLabel": {
+    "description": "Shown as a text in space scan (reservations), and 3 other places."
+  },
   "levelAssignMember": "For member",
+  "@levelAssignMember": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelAssignMyself": "Myself",
+  "@levelAssignMyself": {
+    "description": "Shown as a text in booking sheet (reservations), and 1 other place."
+  },
   "levelSupplementLabel": "Level reservations",
+  "@levelSupplementLabel": {
+    "description": "Shown as a text in report strings l10n (money), and 1 other place."
+  },
   "levelNotAllowed": "You are not allowed to reserve a whole desk, office or level.",
+  "@levelNotAllowed": {
+    "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
   "levelConflict": "The level has reservations in that period.",
+  "@levelConflict": {
+    "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
   "bookingNotAllowedError": "You may not make reservations in this space. Ask an owner to let members book.",
   "@bookingNotAllowedError": {
     "description": "Refusal when the member does not hold makeReservations (#3269)"
@@ -33,7 +72,13 @@
     "description": "Refusal when the officeLevelReservations feature is off (#412)"
   },
   "levelDetail": "Whole level",
+  "@levelDetail": {
+    "description": "Shown as a text in lexicon defaults (core), and 1 other place."
+  },
   "kioskLevelButton": "This level",
+  "@kioskLevelButton": {
+    "description": "Shown as a button or chip label in kiosk screen (kiosk)."
+  },
   "officeSupplementLabel": "Office reservations",
   "@officeSupplementLabel": {
     "description": "Bill line: sum of whole-office reservation prices this period (0057)"
@@ -59,14 +104,29 @@
     "description": "Level row booking-state subtitle in the editor (#466)"
   },
   "bookingPastError": "This booking lies entirely in the past.",
+  "@bookingPastError": {
+    "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
   "bookingWalkUpTodayError": "A walk-up check-in must start today.",
+  "@bookingWalkUpTodayError": {
+    "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
   "bookingOutsideHoursError": "Bookings must stay within the working hours.",
+  "@bookingOutsideHoursError": {
+    "description": "Shown as a text in booking error text (reservations)."
+  },
   "bookingOutsideOffError": "Bookings outside the opening hours are not allowed.",
+  "@bookingOutsideOffError": {
+    "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
   "bookingOutsideWalkUpError": "Outside the opening hours only a spontaneous check-in is possible — booking ahead is not.",
   "@bookingOutsideWalkUpError": {
     "description": "#634 - refusal under the walkup_only outside-hours mode"
   },
   "bookingSameDayError": "A booking ends on the day it starts — book the next day separately.",
+  "@bookingSameDayError": {
+    "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
   "bookingMembershipPaused": "Your membership is paused — an administrator reactivates it in Members.",
   "@bookingMembershipPaused": {
     "description": "Refusal when create_reservation answers 'not an active member' (#1030)"

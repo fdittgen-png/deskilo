@@ -1,13 +1,32 @@
 {
   "@@locale": "en",
   "featureWorkspaceLibraryTitle": "Workspace library",
+  "@featureWorkspaceLibraryTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureWorkspaceLibraryDesc": "Save this space's floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.",
+  "@featureWorkspaceLibraryDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "libraryTitle": "Workspace library",
+  "@libraryTitle": {
+    "description": "Shown as a title in workspace settings screen (workspace), and 1 other place."
+  },
   "libraryStartFrom": "Start from the library",
+  "@libraryStartFrom": {
+    "description": "Shown as a title in workspace library screen (workspace)."
+  },
   "libraryYours": "Your templates",
+  "@libraryYours": {
+    "description": "Shown as a title in workspace library screen (workspace)."
+  },
   "libraryEmpty": "Nothing here yet. Save this space as a template, or wait for someone to share one with you.",
+  "@libraryEmpty": {
+    "description": "Shown as a title in template gallery (workspace)."
+  },
   "libraryCounts": "{levels} levels · {desks} desks · {seats} seats",
   "@libraryCounts": {
+    "description": "Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).",
     "placeholders": {
       "levels": {
         "type": "int"
@@ -198,28 +217,60 @@
     "description": "Template apply preview: this workspace changed the group since it last applied the same template (#1280)"
   },
   "libraryApply": "Apply to this space",
-  "libraryApplyConfirmTitle": "Apply « {name} »?",
-  "@libraryApplyConfirmTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
+  "@libraryApply": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "libraryApplyConfirmBody": "The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.",
+  "@libraryApplyConfirmBody": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "libraryApplied": "Template applied.",
+  "@libraryApplied": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "librarySave": "Save this space as a template",
+  "@librarySave": {
+    "description": "Shown as the line under a title in workspace settings screen (workspace), and 2 other places."
+  },
   "librarySaveName": "Template name",
+  "@librarySaveName": {
+    "description": "Shown as the label of a field in save template sheet (workspace)."
+  },
   "librarySaveDescription": "Description (optional)",
+  "@librarySaveDescription": {
+    "description": "Shown as the label of a field in save template sheet (workspace)."
+  },
   "librarySaved": "Saved to your templates.",
+  "@librarySaved": {
+    "description": "Shown as a text in save template sheet (workspace)."
+  },
   "libraryVisibility": "Who may see it",
+  "@libraryVisibility": {
+    "description": "Shown as a text in save template sheet (workspace)."
+  },
   "libraryVisibilityPrivate": "Only me",
+  "@libraryVisibilityPrivate": {
+    "description": "Shown as a text in workspace library screen (workspace), and 2 other places."
+  },
   "libraryVisibilityShared": "People I invite",
+  "@libraryVisibilityShared": {
+    "description": "Shown as a text in workspace library screen (workspace), and 3 other places."
+  },
   "libraryVisibilityPublic": "Everyone (the library)",
+  "@libraryVisibilityPublic": {
+    "description": "Shown as a text in workspace library screen (workspace), and 3 other places."
+  },
   "libraryVisibilityBuiltin": "Built in",
+  "@libraryVisibilityBuiltin": {
+    "description": "Shown as a text in template card (workspace)."
+  },
   "libraryShare": "Share…",
+  "@libraryShare": {
+    "description": "Shown as a text in workspace library screen (workspace)."
+  },
   "libraryShareTitle": "Share « {name} »",
   "@libraryShareTitle": {
+    "description": "Shown as a text in template share sheet (workspace). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -227,12 +278,28 @@
     }
   },
   "libraryShareHint": "Invite by e-mail. The invitation works the moment that address signs in — nothing is revealed about whether it already has an account.",
+  "@libraryShareHint": {
+    "description": "Shown as a text in template share sheet (workspace)."
+  },
   "libraryShareEmail": "E-mail address",
+  "@libraryShareEmail": {
+    "description": "Shown as the label of a field in template share sheet (workspace)."
+  },
   "libraryShareAdd": "Invite",
+  "@libraryShareAdd": {
+    "description": "Shown as a text in template share sheet (workspace)."
+  },
   "libraryShareNobody": "Nobody invited yet.",
+  "@libraryShareNobody": {
+    "description": "Shown as a text in template share sheet (workspace)."
+  },
   "libraryDelete": "Delete template",
+  "@libraryDelete": {
+    "description": "Shown as a text in workspace library screen (workspace), and 1 other place."
+  },
   "libraryDeleteConfirm": "Delete « {name} »? People you shared it with lose access.",
   "@libraryDeleteConfirm": {
+    "description": "Shown as the body of a dialog in workspace library screen (workspace). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -273,8 +340,17 @@
     }
   },
   "onboardingStartFrom": "Start from",
+  "@onboardingStartFrom": {
+    "description": "Shown as a button or chip label in onboarding screen (workspace), and 2 other places."
+  },
   "onboardingStartEmpty": "Empty space",
+  "@onboardingStartEmpty": {
+    "description": "Shown as a title in onboarding screen (workspace), and 1 other place."
+  },
   "onboardingStartEmptyDesc": "Draw your own plan from a blank canvas.",
+  "@onboardingStartEmptyDesc": {
+    "description": "Shown as the line under a title in template empty space (workspace)."
+  },
   "libraryProcessOn": "{feature} on",
   "@libraryProcessOn": {
     "description": "Template apply preview (#1330): a feature the group switches on, under its process",

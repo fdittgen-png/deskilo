@@ -3366,14 +3366,6 @@
   "calendarGroupActivity": "Hinweise & Nachrichten",
   "calendarGroupBookings": "Buchungen & Anwesenheit",
   "calendarGroupMoney": "Finanzen",
-  "calendarItemCount": "{count, plural, =1{1 Eintrag} other{{count} Einträge}}",
-  "@calendarItemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "calendarKindCheckIn": "Check-ins",
   "@calendarKindCheckIn": {
     "description": "#718/#719 - calendar hub"
@@ -10463,14 +10455,6 @@
   "libraryApply": "Auf diesen Raum anwenden",
   "libraryApplyChanges": "{count, plural, =0{Nichts ausgewählt} =1{1 Änderung anwenden} other{{count} Änderungen anwenden}}",
   "libraryApplyConfirmBody": "Der Grundriss wird nach Namen hinzugefügt oder aktualisiert, und die Einstellungen der Vorlage werden zusammengeführt. Nichts Vorhandenes wird entfernt.",
-  "libraryApplyConfirmTitle": "« {name} » anwenden?",
-  "@libraryApplyConfirmTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "libraryCarriesSettings": "mit ihren Einstellungen",
   "libraryConfirmSensitive": "Das ändert: {groups}. Anwenden?",
   "libraryCounts": "{levels} Ebenen · {desks} Tische · {seats} Plätze",
@@ -16984,14 +16968,6 @@
     }
   },
   "settlementRegroups": "Diese Rechnung fasst zusammen",
-  "settlementRegroupsNumbers": "Fasst {numbers} zusammen",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "settlementSettledBy": "In eine andere Rechnung zusammengefasst — diese ist das, was geschuldet und angemahnt wird.",
   "settlementSourcePdf": "PDF (zusammengefasst)",
   "settlementStepPick": "Rechnungen wählen",

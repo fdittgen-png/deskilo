@@ -11,7 +11,10 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-const _redundantCeiling = 188;
+// 188 when recorded (#3541); 225 once #3543 gave each dictionary entry its
+// own key (setup steps, export columns, report parts reuse common words).
+// The consolidation of #3486 lowers it.
+const _redundantCeiling = 225;
 
 Map<String, Object?> _arb(String locale) =>
     jsonDecode(File('lib/l10n/app_$locale.arb').readAsStringSync())

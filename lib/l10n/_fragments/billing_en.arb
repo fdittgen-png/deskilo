@@ -249,18 +249,54 @@
     "description": "Provider button/label: Wero paid through Mollie's checkout (0048)"
   },
   "billingRulesTitle": "Invoice schedule",
+  "@billingRulesTitle": {
+    "description": "Shown as a title in workspace settings parameters (workspace), and 3 other places."
+  },
   "billingRulesSubtitle": "When subscription and end-of-month invoices go out",
+  "@billingRulesSubtitle": {
+    "description": "Shown as the line under a title in workspace settings parameters (workspace)."
+  },
   "billingRulesSaved": "Invoice schedule saved.",
+  "@billingRulesSaved": {
+    "description": "Shown as a text in billing rules dialog (money)."
+  },
   "billingSubscriptionSection": "Subscription, in advance",
+  "@billingSubscriptionSection": {
+    "description": "Shown as a text in billing rules dialog (money)."
+  },
   "billingSubscriptionAuto": "Issue automatically",
+  "@billingSubscriptionAuto": {
+    "description": "Shown as a title in billing rules dialog (money)."
+  },
   "billingSubscriptionOff": "Switch on “Subscription invoices” in Features to use this.",
+  "@billingSubscriptionOff": {
+    "description": "Shown as a text in billing rules dialog (money)."
+  },
   "billingAdvanceDays": "Days before the month starts",
+  "@billingAdvanceDays": {
+    "description": "Shown as a text in billing rules dialog (money)."
+  },
   "billingSubscriptionWhen": "Issued on {day} for {month}",
   "billingUsageSection": "The month just finished",
+  "@billingUsageSection": {
+    "description": "Shown as a text in billing rules dialog (money)."
+  },
   "billingUsageAuto": "Issue automatically",
+  "@billingUsageAuto": {
+    "description": "Shown as a title in billing rules dialog (money)."
+  },
   "billingUsageOff": "Switch on “End-of-month invoices” in Features to use this.",
+  "@billingUsageOff": {
+    "description": "Shown as a text in billing rules dialog (money)."
+  },
   "billingUsageWhenZero": "Also when there is nothing to pay",
+  "@billingUsageWhenZero": {
+    "description": "Shown as a title in billing rules dialog (money)."
+  },
   "billingUsageWhenZeroHint": "Sends a document reading zero, as confirmation that the subscription covered the whole month.",
+  "@billingUsageWhenZeroHint": {
+    "description": "Shown as the line under a title in billing rules dialog (money)."
+  },
   "@billingSubscriptionWhen": {
     "description": "Invoice schedule: when a subscription invoice goes out and the month it charges (#802)",
     "placeholders": {
@@ -273,16 +309,43 @@
     }
   },
   "invoiceKindSubscription": "Subscription, in advance",
+  "@invoiceKindSubscription": {
+    "description": "Shown as a text in invoice status (money)."
+  },
   "invoiceKindUsage": "The month's extras",
+  "@invoiceKindUsage": {
+    "description": "Shown as a text in invoice status (money)."
+  },
   "invoiceKindSettlement": "Regrouped invoices",
+  "@invoiceKindSettlement": {
+    "description": "Shown as a text in invoice status (money)."
+  },
   "invoiceKindFull": "Whole month",
+  "@invoiceKindFull": {
+    "description": "Shown as a text in invoice status (money)."
+  },
   "settlementRegroups": "This invoice regroups",
+  "@settlementRegroups": {
+    "description": "Shown as a text in invoice detail sections (money)."
+  },
   "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
+  "@settlementVatNote": {
+    "description": "Shown as a text in invoice detail sections (money)."
+  },
   "settlementSettledBy": "Regrouped into another invoice — that one is what is owed and chased.",
+  "@settlementSettledBy": {
+    "description": "Shown as a text in invoice detail sheet (money)."
+  },
   "settlementAction": "Regroup into one invoice",
+  "@settlementAction": {
+    "description": "Shown as a text in invoices screen (money), and 2 other places."
+  },
   "settlementConfirm": "{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}",
   "settlementDone": "Regrouped into {number}.",
   "settlementNeedsTwo": "Pick at least two open invoices of the same member.",
+  "@settlementNeedsTwo": {
+    "description": "Shown as a text in settlement sheet (money)."
+  },
   "@settlementConfirm": {
     "description": "Confirm regrouping N invoices into one (#804)",
     "placeholders": {
@@ -295,6 +358,7 @@
     }
   },
   "@settlementDone": {
+    "description": "Shown as a text in settlement sheet (money). Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -303,6 +367,7 @@
   },
   "settlementFoldedIn": "Regrouped in {number}",
   "@settlementFoldedIn": {
+    "description": "Shown as the line under a title in open invoice card (money), and 1 other place. Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -310,17 +375,16 @@
     }
   },
   "settlementDocumentationOnly": "Documentation only — every operation happens on the regrouping invoice.",
+  "@settlementDocumentationOnly": {
+    "description": "Shown as a text in invoice actions (money), and 1 other place."
+  },
   "settlementSourcePdf": "PDF (regrouped)",
-  "settlementRegroupsNumbers": "Regroups {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
+  "@settlementSourcePdf": {
+    "description": "Shown as a tooltip in open invoice card (money)."
   },
   "invoicePdfSettledIn": "Regrouped in {number}",
   "@invoicePdfSettledIn": {
+    "description": "Shown as a text in invoice documents (money), and 2 other places. Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -329,6 +393,7 @@
   },
   "settlementPaidThrough": "Paid through {number}",
   "@settlementPaidThrough": {
+    "description": "Shown as the line under a title in open invoice card (money). Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -336,10 +401,20 @@
     }
   },
   "settlementAnnexTitle": "Attach the regrouped invoices?",
+  "@settlementAnnexTitle": {
+    "description": "Shown as a title in invoice pdf actions (money)."
+  },
   "settlementAnnexAlone": "This invoice only",
+  "@settlementAnnexAlone": {
+    "description": "Shown as a text in invoice pdf actions (money)."
+  },
   "settlementAnnexWith": "Attach them",
+  "@settlementAnnexWith": {
+    "description": "Shown as a text in invoice pdf actions (money)."
+  },
   "settlementAnnexBody": "{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}",
   "@settlementAnnexBody": {
+    "description": "Shown as the body of a dialog in invoice pdf actions (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"

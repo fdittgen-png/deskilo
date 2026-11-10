@@ -1462,14 +1462,24 @@
     }
   },
   "eventTypeInvoiceReminder": "Payment reminder",
+  "@eventTypeInvoiceReminder": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "eventInvoiceReminderLine": "Reminder {level}: invoice {number} — {amount} still due",
   "dunningAutomatic": "Automatic reminders",
+  "@dunningAutomatic": {
+    "description": "Shown as a title in dunning rules dialog (money)."
+  },
   "dunningAutomaticHint": "Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.",
+  "@dunningAutomaticHint": {
+    "description": "Shown as the line under a title in dunning rules dialog (money)."
+  },
   "paymentRemindersWhen": "When it runs: each morning on the server, where the installation schedules jobs (pg_cron); otherwise when an administrator opens Money. Your server operator knows which applies.",
   "@paymentRemindersWhen": {
     "description": "#2332: when automatic payment reminders run"
   },
   "@eventInvoiceReminderLine": {
+    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -1483,8 +1493,12 @@
     }
   },
   "eventTypePriceNegotiation": "Price negotiation",
+  "@eventTypePriceNegotiation": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "eventPriceNegotiationLine": "{actor} proposes a deal for {member}: {terms}",
   "@eventPriceNegotiationLine": {
+    "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {member} (String), {terms} (String).",
     "placeholders": {
       "actor": {
         "type": "String"
@@ -1499,6 +1513,7 @@
   },
   "eventPriceNegotiationItems": "{count, plural, =1{1 item} other{{count} items}}",
   "@eventPriceNegotiationItems": {
+    "description": "Shown as a text in event lines (events). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1506,15 +1521,40 @@
     }
   },
   "journeyStateDone": "Completed",
+  "@journeyStateDone": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStateCurrent": "Current step",
+  "@journeyStateCurrent": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStateUpcoming": "Upcoming",
+  "@journeyStateUpcoming": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStateCancelled": "Cancelled",
+  "@journeyStateCancelled": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStepIssued": "Issued",
+  "@journeyStepIssued": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStepPayment": "Payment",
+  "@journeyStepPayment": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStepConfirmation": "Confirmation",
+  "@journeyStepConfirmation": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStepClosed": "Closed",
+  "@journeyStepClosed": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyIssuerMemberPays": "Waiting for {name}'s payment of {amount} — due {date}",
   "@journeyIssuerMemberPays": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {date} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1529,6 +1569,7 @@
   },
   "journeyIssuerMemberPaysOverdue": "{name} owes {amount} — overdue by {days} days",
   "@journeyIssuerMemberPaysOverdue": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {days} (int).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1543,6 +1584,7 @@
   },
   "journeyIssuerMemberPaysRemainder": "{name} still owes {amount} after a partial payment",
   "@journeyIssuerMemberPaysRemainder": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1554,6 +1596,7 @@
   },
   "journeyIssuerAdminConfirms": "{name} declared a payment of {amount} — another admin confirms it in Events",
   "@journeyIssuerAdminConfirms": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1565,6 +1608,7 @@
   },
   "journeyIssuerMemberConfirms": "A payment of {amount} was recorded — {name} confirms it in Events",
   "@journeyIssuerMemberConfirms": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1576,6 +1620,7 @@
   },
   "journeyIssuerMatches": "A payment of {amount} is registered — match it to this invoice",
   "@journeyIssuerMatches": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1583,9 +1628,16 @@
     }
   },
   "journeyValidatorsMatch": "Payment matched — awaiting the validators' decision",
+  "@journeyValidatorsMatch": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyValidatorsWriteoff": "Write-off of the remainder requested — awaiting the validators",
+  "@journeyValidatorsWriteoff": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyIssuerRefunds": "Credit note — refund {amount} to {name} and record it",
   "@journeyIssuerRefunds": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1596,8 +1648,12 @@
     }
   },
   "journeyIssuerReplaces": "Cancelled — issue the replacement",
+  "@journeyIssuerReplaces": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyMemberPays": "Your move: pay {amount} by {date}",
   "@journeyMemberPays": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {date} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1609,6 +1665,7 @@
   },
   "journeyMemberPaysOverdue": "Your move: pay {amount} — overdue by {days} days",
   "@journeyMemberPaysOverdue": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {days} (int).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1620,6 +1677,7 @@
   },
   "journeyMemberPaysRemainder": "Your move: pay the remaining {amount}",
   "@journeyMemberPaysRemainder": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1628,6 +1686,7 @@
   },
   "journeyMemberDeclared": "You declared {amount} — the workspace is confirming it",
   "@journeyMemberDeclared": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1636,6 +1695,7 @@
   },
   "journeyMemberConfirms": "Your move: confirm the payment of {amount} recorded for you, in Events",
   "@journeyMemberConfirms": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1644,6 +1704,7 @@
   },
   "journeyMemberRegistered": "Your payment of {amount} is registered — the workspace matches it to this invoice",
   "@journeyMemberRegistered": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1651,9 +1712,16 @@
     }
   },
   "journeyMemberValidators": "Payment matched — awaiting validation",
+  "@journeyMemberValidators": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyMemberWriteoff": "The workspace asked to cancel the remainder — awaiting validation",
+  "@journeyMemberWriteoff": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyMemberRefund": "The workspace owes you {amount} — nothing to pay",
   "@journeyMemberRefund": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1661,8 +1729,12 @@
     }
   },
   "journeyMemberReplaces": "Cancelled — a replacement follows",
+  "@journeyMemberReplaces": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyClosedPaid": "Paid on {date} — closed",
   "@journeyClosedPaid": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -1671,6 +1743,7 @@
   },
   "journeyClosedRemainder": "Closed — remainder cancelled on {date}",
   "@journeyClosedRemainder": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -1679,6 +1752,7 @@
   },
   "journeyClosedRefunded": "Refunded on {date} — closed",
   "@journeyClosedRefunded": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -1687,6 +1761,7 @@
   },
   "journeyClosedReplaced": "Cancelled — replaced by {number}",
   "@journeyClosedReplaced": {
+    "description": "Shown as a text in invoice journey view (money). Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -1694,12 +1769,28 @@
     }
   },
   "journeyClosedSettled": "Regrouped into another invoice — that one is owed and chased",
+  "@journeyClosedSettled": {
+    "description": "Shown as a text in invoice journey view (money)."
+  },
   "journeyStageIssue": "To issue",
+  "@journeyStageIssue": {
+    "description": "Shown as a button or chip label in invoice stage strip (money)."
+  },
   "journeyStageCollect": "To collect",
+  "@journeyStageCollect": {
+    "description": "Shown as a button or chip label in invoice stage strip (money)."
+  },
   "journeyStageConfirm": "To confirm",
+  "@journeyStageConfirm": {
+    "description": "Shown as a button or chip label in invoice stage strip (money)."
+  },
   "journeyStageClosed": "Closed",
+  "@journeyStageClosed": {
+    "description": "Shown as a button or chip label in invoice stage strip (money)."
+  },
   "journeyOverdueCount": "{count} overdue",
   "@journeyOverdueCount": {
+    "description": "Shown as a text in invoice stage strip (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1707,22 +1798,68 @@
     }
   },
   "journeyStageStripLabel": "The invoicing process: issue, collect, confirm, close",
+  "@journeyStageStripLabel": {
+    "description": "Shown as a button or chip label in invoice stage strip (money)."
+  },
   "journeyHowButton": "How it works",
+  "@journeyHowButton": {
+    "description": "Shown as a button or chip label in invoice overview (money)."
+  },
   "journeyHowTitle": "How invoicing works",
+  "@journeyHowTitle": {
+    "description": "Shown as a text in invoices screen (money), and 2 other places."
+  },
   "journeyHowIntro": "Four steps, the same for every invoice. Each one says whose move it is.",
+  "@journeyHowIntro": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowWorkspaceLabel": "Workspace",
+  "@journeyHowWorkspaceLabel": {
+    "description": "Shown as a button or chip label in invoice process sheet (money)."
+  },
   "journeyHowMemberLabel": "Member",
+  "@journeyHowMemberLabel": {
+    "description": "Shown as a button or chip label in invoice process sheet (money)."
+  },
   "journeyHowIssuedWorkspace": "Issues the invoice from the month's tracked data — numbered, signed, immutable — and shares the PDF or sends the e-invoice.",
+  "@journeyHowIssuedWorkspace": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowIssuedMember": "Finds it on the Invoices face: positions, balance, due date.",
+  "@journeyHowIssuedMember": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowPaymentWorkspace": "Waits for the money. Past the term it sends the reminder levels it configured — by hand or automatically.",
+  "@journeyHowPaymentWorkspace": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowPaymentMember": "Pays online (settled at once) or by transfer, then records the payment so the workspace knows.",
+  "@journeyHowPaymentMember": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowConfirmationWorkspace": "Another admin confirms the declared payment; the issuer then matches the registered payment to the invoice (Mark as paid) — a validation rule may hand the match to the validators. Paid more? A credit note. Paid less? Partially paid, the rest owed until paid or written off.",
+  "@journeyHowConfirmationWorkspace": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowConfirmationMember": "Nothing to do — unless the workspace recorded the payment for them: then they confirm it in Events.",
+  "@journeyHowConfirmationMember": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowClosedWorkspace": "Paid, remainder cancelled or refunded: the invoice moves to the archive. A wrong invoice is marked erroneous and replaced — before payment, never after.",
+  "@journeyHowClosedWorkspace": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyHowClosedMember": "The month reads settled and the invoice stays readable forever: quick view, PDF, share.",
+  "@journeyHowClosedMember": {
+    "description": "Shown as a text in invoice process sheet (money)."
+  },
   "journeyTimelineTitle": "Timeline",
+  "@journeyTimelineTitle": {
+    "description": "Shown as a text in invoice detail sections (money)."
+  },
   "journeyPrimaryRemind": "Send reminder {level}",
   "@journeyPrimaryRemind": {
+    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int).",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1730,8 +1867,12 @@
     }
   },
   "journeyPrimaryConfirmInEvents": "Open Events",
+  "@journeyPrimaryConfirmInEvents": {
+    "description": "Shown as a text in open invoice act view (money)."
+  },
   "journeyOutstanding": "{amount} outstanding",
   "@journeyOutstanding": {
+    "description": "Shown as a text in invoice stage strip (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1739,17 +1880,48 @@
     }
   },
   "reportEditorTitle": "Report editor",
+  "@reportEditorTitle": {
+    "description": "Shown as a title in workspace reports (workspace), and 1 other place."
+  },
   "reportDesignerUndo": "Undo",
+  "@reportDesignerUndo": {
+    "description": "Shown as a text in report history controls (money)."
+  },
   "reportDesignerRedo": "Redo",
+  "@reportDesignerRedo": {
+    "description": "Shown as a text in report history controls (money)."
+  },
   "reportDesignerDiscardTitle": "Leave without saving?",
+  "@reportDesignerDiscardTitle": {
+    "description": "Shown as a title in wizard navigation (core), and 1 other place."
+  },
   "reportDesignerDiscardBody": "Your changes to the templates are not saved.",
+  "@reportDesignerDiscardBody": {
+    "description": "Shown as the body of a dialog in report editor dialogs (money)."
+  },
   "reportDesignerDiscard": "Discard",
+  "@reportDesignerDiscard": {
+    "description": "Shown as a text in wizard navigation (core), and 1 other place."
+  },
   "reportDesignerKeepEditing": "Keep editing",
+  "@reportDesignerKeepEditing": {
+    "description": "Shown as a text in wizard navigation (core), and 1 other place."
+  },
   "reportDesignerReplaceTitle": "Replace the current layout?",
+  "@reportDesignerReplaceTitle": {
+    "description": "Shown as a title in report editor dialogs (money)."
+  },
   "reportDesignerReplaceBody": "The bands of this document are replaced. Undo brings them back.",
+  "@reportDesignerReplaceBody": {
+    "description": "Shown as the body of a dialog in report editor dialogs (money)."
+  },
   "reportDesignerReplace": "Replace",
+  "@reportDesignerReplace": {
+    "description": "Shown as a text in report editor dialogs (money)."
+  },
   "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
   "@reportDesignerPages": {
+    "description": "Shown as a text in report page designer (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1758,6 +1930,7 @@
   },
   "reportDesignerError": "The template does not render — {message}",
   "@reportDesignerError": {
+    "description": "Shown as a text in report page designer (money), and 1 other place. Placeholders: {message} (String).",
     "placeholders": {
       "message": {
         "type": "String"
@@ -1765,55 +1938,200 @@
     }
   },
   "reportDesignerInsert": "Insert element",
+  "@reportDesignerInsert": {
+    "description": "Shown as a tooltip in report visual editor (money), and 1 other place."
+  },
   "reportDesignerFields": "Fields",
+  "@reportDesignerFields": {
+    "description": "Shown as a text in report field picker (money), and 1 other place."
+  },
   "reportDesignerFieldsSearch": "Search a field",
+  "@reportDesignerFieldsSearch": {
+    "description": "Shown as the hint inside a field in report field picker (money)."
+  },
   "reportDesignerMoveTo": "Move to band",
+  "@reportDesignerMoveTo": {
+    "description": "Shown as a tooltip in report visual editor (money)."
+  },
   "reportDesignerDrag": "Drag to reorder",
+  "@reportDesignerDrag": {
+    "description": "Shown as a message in report visual editor (money)."
+  },
   "reportImageSize": "Size",
+  "@reportImageSize": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageSizeSmall": "Small",
+  "@reportImageSizeSmall": {
+    "description": "Shown as a button or chip label in report visual editor actions (money)."
+  },
   "reportImageSizeMedium": "Medium",
+  "@reportImageSizeMedium": {
+    "description": "Shown as a button or chip label in report visual editor actions (money)."
+  },
   "reportImageSizeLarge": "Large",
+  "@reportImageSizeLarge": {
+    "description": "Shown as a button or chip label in report visual editor actions (money)."
+  },
   "reportImageAlign": "Alignment",
+  "@reportImageAlign": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignLeft": "Left",
+  "@reportImageAlignLeft": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignCenter": "Centre",
+  "@reportImageAlignCenter": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignRight": "Right",
+  "@reportImageAlignRight": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportTemplateLangOverridden": "Own template",
+  "@reportTemplateLangOverridden": {
+    "description": "Shown as a tooltip in report template toolbar (money)."
+  },
   "reportTemplateLangInherits": "Inherits the default",
+  "@reportTemplateLangInherits": {
+    "description": "Shown as a tooltip in report template toolbar (money)."
+  },
   "reportTemplateClearOverlay": "Use the default for this language",
+  "@reportTemplateClearOverlay": {
+    "description": "Shown as a button or chip label in report template toolbar (money)."
+  },
   "reportDocCoa": "Chart of accounts",
+  "@reportDocCoa": {
+    "description": "Shown as a text in report kind labels (money)."
+  },
   "reportDocBadges": "Member badges",
+  "@reportDocBadges": {
+    "description": "Shown as a text in report kind labels (money)."
+  },
   "reportDocSpaceCodes": "Space QR cards",
+  "@reportDocSpaceCodes": {
+    "description": "Shown as a text in report kind labels (money)."
+  },
   "reportFieldGroupDocument": "Document",
+  "@reportFieldGroupDocument": {
+    "description": "Shown as a text in report field picker (money)."
+  },
   "reportFieldGroupMember": "Member & workspace",
+  "@reportFieldGroupMember": {
+    "description": "Shown as a text in report field picker (money)."
+  },
   "reportFieldGroupMoney": "Amounts",
+  "@reportFieldGroupMoney": {
+    "description": "Shown as a text in report field picker (money)."
+  },
   "reportFieldGroupLegal": "Legal mentions",
+  "@reportFieldGroupLegal": {
+    "description": "Shown as a text in report field picker (money)."
+  },
   "reportFieldGroupLoops": "Lines & VAT loops",
+  "@reportFieldGroupLoops": {
+    "description": "Shown as a text in report field picker (money)."
+  },
   "reportDesignerSideBySide": "Design and preview side by side",
+  "@reportDesignerSideBySide": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "wizardTitle": "Invoicing wizard",
+  "@wizardTitle": {
+    "description": "Shown as a title in invoicing wizard screen (money)."
+  },
   "invoiceWizardAction": "Month-close wizard",
+  "@invoiceWizardAction": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardCardHint": "Issue, send, remind, register and validate payments, match and close — one guided process.",
+  "@wizardCardHint": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "wizardRunStart": "Start of month",
+  "@wizardRunStart": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardRunEnd": "End of month",
+  "@wizardRunEnd": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardRunStartHint": "The subscriptions members pay ahead: issue them for the coming month, send them, plan the reminders — then the payment side.",
+  "@wizardRunStartHint": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardRunEndHint": "What the month that just ended cost: usage, consumption and extra charges. Issue, send, remind — then register, validate and match the payments, and close.",
+  "@wizardRunEndHint": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardStepReview": "Review",
+  "@wizardStepReview": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepIssue": "Issue",
+  "@wizardStepIssue": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepSend": "Send",
+  "@wizardStepSend": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepRemind": "Remind",
+  "@wizardStepRemind": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepPayments": "Payments",
+  "@wizardStepPayments": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepMatch": "Match",
+  "@wizardStepMatch": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepClose": "Close",
+  "@wizardStepClose": {
+    "description": "Shown as a text in wizard context (money)."
+  },
   "wizardStepSummary": "Summary",
+  "@wizardStepSummary": {
+    "description": "Shown as a text in wizard context (money), and 1 other place."
+  },
   "wizardNext": "Next",
+  "@wizardNext": {
+    "description": "Shown as a button or chip label in wizard scaffold (core)."
+  },
   "wizardBack": "Back",
+  "@wizardBack": {
+    "description": "Shown as a button or chip label in wizard scaffold (core)."
+  },
   "wizardFinish": "Finish",
+  "@wizardFinish": {
+    "description": "Shown as a button or chip label in wizard scaffold (core), and 1 other place."
+  },
   "wizardReviewToIssue": "To issue",
+  "@wizardReviewToIssue": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardReviewIssued": "Already issued",
+  "@wizardReviewIssued": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardReviewOpen": "Open invoices",
+  "@wizardReviewOpen": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardReviewOverdue": "Reminders due",
+  "@wizardReviewOverdue": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardReviewPending": "Payments to validate",
+  "@wizardReviewPending": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardPeriodLabel": "Period: {period}",
   "@wizardPeriodLabel": {
+    "description": "Shown as a text in wizard steps issue (money). Placeholders: {period} (String).",
     "placeholders": {
       "period": {
         "type": "String"
@@ -1821,9 +2139,16 @@
     }
   },
   "wizardIssueHint": "Untick a member to leave them out of this batch. Members already covered are shown as done.",
+  "@wizardIssueHint": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardIssueNothing": "Nothing to issue for this period.",
+  "@wizardIssueNothing": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardIssuedChip": "Issued {number}",
   "@wizardIssuedChip": {
+    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -1832,6 +2157,7 @@
   },
   "wizardIssueAll": "{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}",
   "@wizardIssueAll": {
+    "description": "Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1840,6 +2166,7 @@
   },
   "wizardIssueFailed": "Could not issue for {name}.",
   "@wizardIssueFailed": {
+    "description": "Shown as a text in wizard steps issue (money), and 1 other place. Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -1847,13 +2174,32 @@
     }
   },
   "wizardSendHint": "Hand each invoice to its member — share the PDF, or download it to send it your own way.",
+  "@wizardSendHint": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardSendNone": "No invoice of this run to send yet.",
+  "@wizardSendNone": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardSendShare": "Share the PDF",
+  "@wizardSendShare": {
+    "description": "Shown as a tooltip in wizard steps issue (money)."
+  },
   "wizardSendDownload": "Download the PDF",
+  "@wizardSendDownload": {
+    "description": "Shown as a tooltip in wizard steps issue (money)."
+  },
   "wizardRemindHint": "Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.",
+  "@wizardRemindHint": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardRemindNone": "No reminder is due by your rules.",
+  "@wizardRemindNone": {
+    "description": "Shown as a text in wizard steps issue (money)."
+  },
   "wizardRemindLevel": "reminder {level}",
   "@wizardRemindLevel": {
+    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int).",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1862,6 +2208,7 @@
   },
   "wizardRemindAll": "{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}",
   "@wizardRemindAll": {
+    "description": "Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1869,15 +2216,40 @@
     }
   },
   "wizardRemindOne": "Reminder letter",
+  "@wizardRemindOne": {
+    "description": "Shown as a tooltip in wizard steps issue (money)."
+  },
   "wizardPaymentsHint": "What members declared waits for your confirmation below. A payment that reached the account without a declaration is registered here — the member then confirms it.",
+  "@wizardPaymentsHint": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardPaymentsNone": "No declared payment waits for you.",
+  "@wizardPaymentsNone": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardPaymentAccept": "Confirm",
+  "@wizardPaymentAccept": {
+    "description": "Shown as a tooltip in wizard steps payments (money)."
+  },
   "wizardPaymentReject": "Reject",
+  "@wizardPaymentReject": {
+    "description": "Shown as a tooltip in wizard steps payments (money)."
+  },
   "wizardMatchHint": "An invoice is paid once a real payment is matched to it. Rows with credit on the member's account are ready.",
+  "@wizardMatchHint": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardMatchNone": "Every invoice is paid or closed.",
+  "@wizardMatchNone": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardMatchPending": "Awaiting validation",
+  "@wizardMatchPending": {
+    "description": "Shown as a text in wizard steps payments (money), and 1 other place."
+  },
   "wizardMatchCredit": "Credit available: {amount}",
   "@wizardMatchCredit": {
+    "description": "Shown as a text in wizard steps payments (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1885,11 +2257,24 @@
     }
   },
   "wizardMatchNoCredit": "No payment on the account yet",
+  "@wizardMatchNoCredit": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardMatchAction": "Match",
+  "@wizardMatchAction": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardCloseHint": "A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.",
+  "@wizardCloseHint": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardCloseNone": "Nothing to regroup, write off or refund.",
+  "@wizardCloseNone": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardSettle": "Regroup {count}",
   "@wizardSettle": {
+    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1897,48 +2282,172 @@
     }
   },
   "wizardWriteoff": "Write off",
+  "@wizardWriteoff": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardRefund": "Refund",
+  "@wizardRefund": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardSummaryHint": "What this run did",
+  "@wizardSummaryHint": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyIssued": "Invoices issued",
+  "@wizardTallyIssued": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyShared": "PDFs shared or downloaded",
+  "@wizardTallyShared": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyReminded": "Reminders sent",
+  "@wizardTallyReminded": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyDecided": "Payments confirmed or rejected",
+  "@wizardTallyDecided": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyRegistered": "Payments registered",
+  "@wizardTallyRegistered": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyMatched": "Invoices matched",
+  "@wizardTallyMatched": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallySettled": "Regroupings",
+  "@wizardTallySettled": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyWriteoffs": "Write-offs requested",
+  "@wizardTallyWriteoffs": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyRefunds": "Refunds",
+  "@wizardTallyRefunds": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTallyNothing": "Nothing was changed.",
+  "@wizardTallyNothing": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTodoHeading": "Still open — whose move",
+  "@wizardTodoHeading": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardTodoNone": "Nothing left open.",
+  "@wizardTodoNone": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardWhoYou": "You",
+  "@wizardWhoYou": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "wizardWhoValidators": "Validators",
+  "@wizardWhoValidators": {
+    "description": "Shown as a text in wizard steps payments (money)."
+  },
   "registerPaymentTitle": "Register a payment",
+  "@registerPaymentTitle": {
+    "description": "Shown as a title in register payment sheet (money), and 1 other place."
+  },
   "registerPaymentHint": "A payment that reached the workspace — the member confirms it, then it can be matched to an invoice.",
+  "@registerPaymentHint": {
+    "description": "Shown as a text in register payment sheet (money)."
+  },
   "registerPaymentMember": "Member",
+  "@registerPaymentMember": {
+    "description": "Shown as the label of a field in register payment sheet (money)."
+  },
   "registerPaymentAmount": "Amount",
+  "@registerPaymentAmount": {
+    "description": "Shown as the label of a field in register payment sheet (money)."
+  },
   "registerPaymentMethod": "Method",
+  "@registerPaymentMethod": {
+    "description": "Shown as the label of a field in register payment sheet (money)."
+  },
   "registerPaymentDate": "Paid on",
+  "@registerPaymentDate": {
+    "description": "Shown as a title in register payment sheet (money)."
+  },
   "registerPaymentNote": "Note",
+  "@registerPaymentNote": {
+    "description": "Shown as the label of a field in register payment sheet (money)."
+  },
   "registerPaymentSubmit": "Register",
+  "@registerPaymentSubmit": {
+    "description": "Shown as a text in register payment sheet (money)."
+  },
   "registerPaymentDone": "Payment registered — the member confirms it from their side.",
+  "@registerPaymentDone": {
+    "description": "Shown as a text in register payment sheet (money)."
+  },
   "repartitionAction": "Distribute an expense",
+  "@repartitionAction": {
+    "description": "Shown as a text in invoices screen (money)."
+  },
   "repartitionTitle": "Distribute an expense",
+  "@repartitionTitle": {
+    "description": "Shown as a title in expense repartition sheet (money)."
+  },
   "repartitionHint": "Split a shared cost over the members. The shares land as lines on each member's next usage invoice; a reversal gives the money back as credit notes.",
+  "@repartitionHint": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionTitleField": "What for",
+  "@repartitionTitleField": {
+    "description": "Shown as the label of a field in expense repartition sheet (money)."
+  },
   "repartitionAmount": "Total amount",
+  "@repartitionAmount": {
+    "description": "Shown as the label of a field in expense repartition sheet (money)."
+  },
   "repartitionReverse": "Reversal — give back as credit notes",
+  "@repartitionReverse": {
+    "description": "Shown as a title in expense repartition sheet (money)."
+  },
   "repartitionMethod": "Split by",
+  "@repartitionMethod": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionMethodEqual": "Equal",
+  "@repartitionMethodEqual": {
+    "description": "Shown as a button or chip label in expense repartition sheet (money)."
+  },
   "repartitionMethodSubscription": "Subscription",
+  "@repartitionMethodSubscription": {
+    "description": "Shown as a button or chip label in expense repartition sheet (money)."
+  },
   "repartitionMethodUsage": "Usage",
+  "@repartitionMethodUsage": {
+    "description": "Shown as a button or chip label in expense repartition sheet (money)."
+  },
   "repartitionMethodCustom": "Custom key",
+  "@repartitionMethodCustom": {
+    "description": "Shown as a button or chip label in expense repartition sheet (money)."
+  },
   "repartitionPeriod": "Lands on",
+  "@repartitionPeriod": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionWeight": "Key",
+  "@repartitionWeight": {
+    "description": "Shown as the label of a field in expense repartition sheet (money)."
+  },
   "repartitionPreview": "Shares",
+  "@repartitionPreview": {
+    "description": "Shown as a button or chip label in expense repartition sheet (money), and 1 other place."
+  },
   "repartitionNoShares": "Nobody carries a share — check the key.",
+  "@repartitionNoShares": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionSum": "{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}",
   "@repartitionSum": {
+    "description": "Shown as a text in expense repartition sheet (money). Placeholders: {count} (int), {amount} (String).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1949,14 +2458,41 @@
     }
   },
   "repartitionSubmit": "Book the shares",
+  "@repartitionSubmit": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionFiled": "Shares booked — they appear on the next usage invoice.",
+  "@repartitionFiled": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionFiledPending": "Shares filed — they book once validated.",
+  "@repartitionFiledPending": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionHistory": "Distributions",
+  "@repartitionHistory": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionHistoryEmpty": "No distribution yet.",
+  "@repartitionHistoryEmpty": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionStatusPending": "Awaiting validation",
+  "@repartitionStatusPending": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionStatusConfirmed": "Booked",
+  "@repartitionStatusConfirmed": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionStatusRejected": "Rejected",
+  "@repartitionStatusRejected": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "repartitionStatusExpired": "Expired",
+  "@repartitionStatusExpired": {
+    "description": "Shown as a text in expense repartition sheet (money)."
+  },
   "reportDesignFileTypeLabel": "JSON",
   "@reportDesignFileTypeLabel": {
     "description": "#864 - file type in the design import picker"

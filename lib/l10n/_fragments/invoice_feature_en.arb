@@ -1,4 +1,10 @@
 {
   "invoiceIssuingUnavailable": "Invoice creation unavailable",
-  "invoiceFeatureDisabled": "This invoice type is disabled in this workspace. Existing invoices and statements remain available."
+  "@invoiceIssuingUnavailable": {
+    "description": "Shown as a text in invoice issue block text (money)."
+  },
+  "invoiceFeatureDisabled": "This invoice type is disabled in this workspace. Existing invoices and statements remain available.",
+  "@invoiceFeatureDisabled": {
+    "description": "Shown as a text in invoice missing sales tax (money), and 2 other places."
+  }
 }

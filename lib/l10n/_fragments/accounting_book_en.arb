@@ -182,11 +182,29 @@
     }
   },
   "bookRoleSuppliers": "Suppliers",
+  "@bookRoleSuppliers": {
+    "description": "Shown as a text in book chart sheet (money)."
+  },
   "bookRoleVatPending": "Output tax not yet due",
+  "@bookRoleVatPending": {
+    "description": "Shown as a text in book chart sheet (money)."
+  },
   "bookRoleWriteOff": "Bad debts written off",
+  "@bookRoleWriteOff": {
+    "description": "Shown as a text in book chart sheet (money)."
+  },
   "bookRoleCashDiscount": "Discounts granted",
+  "@bookRoleCashDiscount": {
+    "description": "Shown as a text in book chart sheet (money)."
+  },
   "bookRoleClearing": "Payment provider (in transit)",
+  "@bookRoleClearing": {
+    "description": "Shown as a text in book chart sheet (money)."
+  },
   "bookRoleFees": "Payment provider fees",
+  "@bookRoleFees": {
+    "description": "Shown as a text in book chart sheet (money)."
+  },
   "bookRoleFixedAssets": "Fixed assets (equipment)",
   "@bookRoleFixedAssets": {
     "description": "#2573 posting role of a purchase line that is not an operating cost"

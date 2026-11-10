@@ -59,14 +59,6 @@
   "libraryPublishNothing": "Choisissez au moins un groupe.",
   "libraryCustomizedHere": "Personnalisé ici",
   "libraryApply": "Appliquer à cet espace",
-  "libraryApplyConfirmTitle": "Appliquer « {name} » ?",
-  "@libraryApplyConfirmTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "libraryApplyConfirmBody": "Le plan est ajouté ou mis à jour par nom, et les réglages que porte le modèle sont fusionnés. Rien de ce que vous avez déjà n'est supprimé.",
   "libraryApplied": "Modèle appliqué.",
   "librarySave": "Enregistrer cet espace comme modèle",

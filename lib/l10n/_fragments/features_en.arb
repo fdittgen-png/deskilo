@@ -169,9 +169,21 @@
     "description": "One-line description under the NFC-badges switch"
   },
   "featureLevelBooking": "Desk, office & level reservations",
+  "@featureLevelBooking": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureLevelBookingDesc": "Reserve a whole desk, office or floor as one booking, priced per half-day. Grant the right per member.",
+  "@featureLevelBookingDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureAdminLevelAssign": "Admins can assign levels",
+  "@featureAdminLevelAssign": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureAdminLevelAssignDesc": "Admins assign level reservations to members. The owner always can.",
+  "@featureAdminLevelAssignDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureKioskMode": "Kiosk mode",
   "@featureKioskMode": {
     "description": "Feature toggle: the wall-tablet module (0043)"
@@ -238,11 +250,29 @@
     "description": "Description under the data-export feature toggle (#395)."
   },
   "featureWorkingHours": "Working hours",
+  "@featureWorkingHours": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureWorkingHoursDesc": "Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.",
+  "@featureWorkingHoursDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureInvoicePdfTemplate": "Invoice PDF template",
+  "@featureInvoicePdfTemplate": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureInvoicePdfTemplateDesc": "Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.",
+  "@featureInvoicePdfTemplateDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureMemberNotifications": "Member notifications",
+  "@featureMemberNotifications": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureMemberNotificationsDesc": "Messaging between members: private and group conversations, read receipts, links to a reservation or a space; admins can notify all admins, owner included.",
+  "@featureMemberNotificationsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureDunning": "Payment reminders",
   "@featureDunning": {
     "description": "Feature-registry completeness (#502)"
@@ -284,19 +314,61 @@
     "description": "Feature-registry completeness (#598)"
   },
   "featureBookingPoliciesTitle": "Booking policies",
+  "@featureBookingPoliciesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureBookingPoliciesDesc": "Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.",
+  "@featureBookingPoliciesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureNfcSeatTagsTitle": "NFC/RFID chair tags",
+  "@featureNfcSeatTagsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureNfcSeatTagsDesc": "A physical NFC/RFID tag on a chair resolves to its seat like the printed QR card; owners fill the tag field by tapping the chip.",
+  "@featureNfcSeatTagsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureQrBadgesTitle": "QR badges",
+  "@featureQrBadgesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureQrBadgesDesc": "Printable QR badge cards for the kiosk, beside the NFC/RFID cards.",
+  "@featureQrBadgesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureFormHelpHintsTitle": "Help hints",
+  "@featureFormHelpHintsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureFormHelpHintsDesc": "A dismissible tip carousel on every main screen, and a small ? beside every parameter and entry field — one tap opens the guide at the right section. Restorable from Settings.",
+  "@featureFormHelpHintsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureUiAnimationsTitle": "Interface animations",
+  "@featureUiAnimationsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureUiAnimationsDesc": "Smooth transitions and state animations across the app. Off means every change is instant; the device's reduced-motion setting always wins.",
+  "@featureUiAnimationsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureKioskMemberPhotosTitle": "Member photos at the kiosk",
+  "@featureKioskMemberPhotosTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureKioskMemberPhotosDesc": "The kiosk receipt shows the member's profile photo — the visual wrong-badge check.",
+  "@featureKioskMemberPhotosDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featurePlanMemberPhotosTitle": "Member photos on the plan",
+  "@featurePlanMemberPhotosTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featurePlanMemberPhotosDesc": "Occupied seats on the Plan tab and Reserve hub show the occupant's profile photo instead of the initial.",
+  "@featurePlanMemberPhotosDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureBadgeSignInTitle": "Sign in with a badge",
   "@featureBadgeSignInTitle": {
     "description": "#662 - feature registry entry"
@@ -338,24 +410,81 @@
     "description": "#718/#719"
   },
   "featureFinanceFacesTitle": "Statement, payments, invoices, documents",
+  "@featureFinanceFacesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureFinanceFacesDesc": "My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.",
+  "@featureFinanceFacesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featurePaymentRemindersTitle": "Automatic payment reminders",
+  "@featurePaymentRemindersTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featurePaymentRemindersDesc": "Open invoices past the configured term get their reminder levels automatically — an alert in the member's feed and a push, once a day. Off: reminders stay a manual action.",
+  "@featurePaymentRemindersDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureSupplyExpensesTitle": "Supplies from expenses",
+  "@featureSupplyExpensesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureSupplyExpensesDesc": "An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.",
+  "@featureSupplyExpensesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureValidationScopesTitle": "Validators by role or person",
+  "@featureValidationScopesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureValidationScopesDesc": "Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.",
+  "@featureValidationScopesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featurePriceNegotiationsTitle": "Price negotiations",
+  "@featurePriceNegotiationsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featurePriceNegotiationsDesc": "The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.",
+  "@featurePriceNegotiationsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureScheduledExpensesTitle": "Scheduled expenses",
+  "@featureScheduledExpensesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureUniqueMonogramsTitle": "Distinct avatar initials",
+  "@featureUniqueMonogramsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureMessageGesturesTitle": "Swipe to quote or take back",
+  "@featureMessageGesturesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureSubscriptionInvoicesTitle": "Subscription invoices",
+  "@featureSubscriptionInvoicesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
+  "@featureSubscriptionInvoicesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureUsageInvoicesTitle": "End-of-month invoices",
+  "@featureUsageInvoicesTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureUsageInvoicesDesc": "Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.",
+  "@featureUsageInvoicesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureInvoiceSettlementTitle": "Regroup invoices",
+  "@featureInvoiceSettlementTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureInvoiceSettlementDesc": "Several of a member's open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.",
+  "@featureInvoiceSettlementDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureAlsoEnabled": "Also switched on: {features}",
   "featureAlsoEnables": "Switching this on also enables {features}",
   "featureHeldBack": "Waiting on the feature above — switch that on and this one works again.",
@@ -379,26 +508,89 @@
     "description": "Subtitle note: the feature is on but its parent is off (#800)"
   },
   "featureMessageGesturesDesc": "Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.",
+  "@featureMessageGesturesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureUniqueMonogramsDesc": "An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.",
+  "@featureUniqueMonogramsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureScheduledExpensesDesc": "Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.",
+  "@featureScheduledExpensesDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureInvoiceJourneyTitle": "The journey of an invoice",
+  "@featureInvoiceJourneyTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureInvoiceJourneyDesc": "Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers' hub adds a stage strip with live counts and a How-it-works explainer.",
+  "@featureInvoiceJourneyDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureBookingGateTitle": "Booking gate",
+  "@featureBookingGateTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureBookingGateDesc": "Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.",
+  "@featureBookingGateDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureCalendarViewsTitle": "Calendar views",
+  "@featureCalendarViewsTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureCalendarViewsDesc": "The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.",
+  "@featureCalendarViewsDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureMessagesHubTitle": "Messages, reworked",
+  "@featureMessagesHubTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureMessagesHubDesc": "One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.",
+  "@featureMessagesHubDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureReportDesignerTitle": "Report designer",
+  "@featureReportDesignerTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureReportDesignerDesc": "The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.",
+  "@featureReportDesignerDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureMemberPageTitle": "Member page",
+  "@featureMemberPageTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureMemberPageDesc": "One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.",
+  "@featureMemberPageDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureInvoicingWizardTitle": "Invoicing wizard",
+  "@featureInvoicingWizardTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureInvoicingWizardDesc": "One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.",
+  "@featureInvoicingWizardDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureExpenseRepartitionTitle": "Shared expenses",
+  "@featureExpenseRepartitionTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureExpenseRepartitionDesc": "A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.",
+  "@featureExpenseRepartitionDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureSettlementFoldTitle": "Regrouped invoices fold",
+  "@featureSettlementFoldTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureSettlementFoldDesc": "Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.",
+  "@featureSettlementFoldDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "featureValidationChainTitle": "Chained validations",
   "@featureValidationChainTitle": {
     "description": "#840 - feature title"
@@ -440,9 +632,21 @@
     "description": "#864 - feature description"
   },
   "featureTierCore": "Core",
+  "@featureTierCore": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "featureTierCoreDesc": "What every space needs. On from the first day.",
+  "@featureTierCoreDesc": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "featureTierPlatform": "Platform",
+  "@featureTierPlatform": {
+    "description": "Shown as a text in feature tile (workspace)."
+  },
   "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "@featureTierPlatformDesc": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "featureMaturityUnreviewed": "Unreviewed",
   "@featureMaturityUnreviewed": {
     "description": "#1850 maturity badge: nobody has assessed this feature against evidence yet"

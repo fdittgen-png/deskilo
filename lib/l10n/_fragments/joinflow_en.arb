@@ -1,9 +1,19 @@
 {
   "eventTypeMemberJoin": "New member",
+  "@eventTypeMemberJoin": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "memberStatusPending": "Pending",
+  "@memberStatusPending": {
+    "description": "Shown as a text in member labels (workspace), and 2 other places."
+  },
   "pendingApprovalTitle": "Workspace membership awaiting approval",
+  "@pendingApprovalTitle": {
+    "description": "Shown as a title in pending approval screen (workspace)."
+  },
   "pendingApprovalBody": "You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.",
   "@pendingApprovalBody": {
+    "description": "Shown as a text in pending approval screen (workspace). Placeholders: {workspace} (String).",
     "placeholders": {
       "workspace": {
         "type": "String"
@@ -11,10 +21,31 @@
     }
   },
   "pendingApprovalRefresh": "Check again",
+  "@pendingApprovalRefresh": {
+    "description": "Shown as a tooltip in workspace applications screen (workspace), and 1 other place."
+  },
   "memberApprove": "Approve membership",
+  "@memberApprove": {
+    "description": "Shown as a text in members screen (workspace), and 1 other place."
+  },
   "memberRejectJoin": "Reject membership",
+  "@memberRejectJoin": {
+    "description": "Shown as a text in members screen (workspace), and 3 other places."
+  },
   "workspaceConfigInvitations": "Invitations",
+  "@workspaceConfigInvitations": {
+    "description": "Shown as a text in workspace configuration report strings (workspace)."
+  },
   "workspaceConfigInvitationCustom": "Custom invitation message configured",
+  "@workspaceConfigInvitationCustom": {
+    "description": "Shown as a text in workspace configuration report strings (workspace)."
+  },
   "workspaceConfigInvitationDefault": "Built-in invitation message (all languages)",
-  "workspaceConfigInvitationSingleUse": "Personal invitation codes are single-use and expire after 14 days; new members need admin approval"
+  "@workspaceConfigInvitationDefault": {
+    "description": "Shown as a text in workspace configuration report strings (workspace)."
+  },
+  "workspaceConfigInvitationSingleUse": "Personal invitation codes are single-use and expire after 14 days; new members need admin approval",
+  "@workspaceConfigInvitationSingleUse": {
+    "description": "Shown as a text in workspace configuration report strings (workspace)."
+  }
 }

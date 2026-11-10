@@ -78,13 +78,37 @@
     "description": "Booking error when the server rejects a non-full-day window under full-day granularity (0032)"
   },
   "availabilityGranularityHours": "Real hours (exact from–to, half/full days as shortcuts)",
+  "@availabilityGranularityHours": {
+    "description": "Shown as a text in space act form (reservations), and 2 other places."
+  },
   "availabilityWorkHoursTitle": "Working hours",
+  "@availabilityWorkHoursTitle": {
+    "description": "Shown as a text in workspace configuration report strings (workspace), and 2 other places."
+  },
   "availabilityWorkHoursDescription": "The half-day and full-day windows everywhere — reservations, check-in and invoicing — follow these hours.",
+  "@availabilityWorkHoursDescription": {
+    "description": "Shown as a text in availability sections (workspace)."
+  },
   "availabilityWorkStart": "Day starts",
+  "@availabilityWorkStart": {
+    "description": "Shown as a title in availability sections (workspace), and 1 other place."
+  },
   "availabilityHalfBoundary": "Half-day boundary",
+  "@availabilityHalfBoundary": {
+    "description": "Shown as a title in availability sections (workspace), and 1 other place."
+  },
   "availabilityWorkEnd": "Day ends",
+  "@availabilityWorkEnd": {
+    "description": "Shown as a title in availability sections (workspace), and 1 other place."
+  },
   "availabilityHalfDayHours": "Hours billed as a half day",
+  "@availabilityHalfDayHours": {
+    "description": "Shown as a title in availability sections (workspace)."
+  },
   "availabilityFullDayHours": "Hours billed as a full day",
+  "@availabilityFullDayHours": {
+    "description": "Shown as a title in availability sections (workspace)."
+  },
   "availabilityHourOption": "{count} h",
   "@availabilityHourOption": {
     "description": "Dropdown option: a whole-hour count (#446)",
@@ -95,27 +119,69 @@
     }
   },
   "availabilityWorkHoursInvalid": "The day must run start < half-day boundary < end.",
+  "@availabilityWorkHoursInvalid": {
+    "description": "Shown as a text in availability actions (workspace)."
+  },
   "availabilityPoliciesTitle": "Booking policies",
+  "@availabilityPoliciesTitle": {
+    "description": "Shown as a text in availability policies (workspace)."
+  },
   "policyAllowPastTitle": "Allow past bookings",
+  "@policyAllowPastTitle": {
+    "description": "Shown as a title in availability policies (workspace)."
+  },
   "policyAllowPastDesc": "Members may record a booking that already ended (backfill).",
+  "@policyAllowPastDesc": {
+    "description": "Shown as the line under a title in availability policies (workspace)."
+  },
   "policyAdminCheckoutTitle": "Admins may check members out",
+  "@policyAdminCheckoutTitle": {
+    "description": "Shown as a title in availability policies (workspace)."
+  },
   "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
+  "@policyAdminCheckoutDesc": {
+    "description": "Shown as the line under a title in availability policies (workspace)."
+  },
   "policyOutsideHoursTitle": "Outside the opening hours",
+  "@policyOutsideHoursTitle": {
+    "description": "Shown as a title in availability policies (workspace)."
+  },
   "policyOutsideHoursDesc": "What may happen outside the working day — one answer, on every granularity. A booking that touches the working hours is an ordinary booking.",
   "@policyOutsideHoursDesc": {
     "description": "#634 - helper text above the four outside-hours options"
   },
   "policyOutsideHoursOff": "Off",
+  "@policyOutsideHoursOff": {
+    "description": "Shown as a title in availability policies (workspace)."
+  },
   "policyOutsideHoursOffDesc": "Nothing outside the hours: no booking ahead, no walk-up, and a booking running past the day end is refused too.",
+  "@policyOutsideHoursOffDesc": {
+    "description": "Shown as the line under a title in availability policies (workspace)."
+  },
   "policyOutsideHoursWalkUp": "Spontaneous only",
   "policyOutsideHoursWalkUpDesc": "Walk-up check-ins stay possible, evening overtime included; booking ahead outside the hours is refused.",
+  "@policyOutsideHoursWalkUpDesc": {
+    "description": "Shown as the line under a title in availability policies (workspace)."
+  },
   "@policyOutsideHoursWalkUp": {
     "description": "#634 - outside-hours option: walk-ups yes, booking ahead no"
   },
   "policyOutsideHoursFree": "Free",
+  "@policyOutsideHoursFree": {
+    "description": "Shown as a title in availability policies (workspace)."
+  },
   "policyOutsideHoursFreeDesc": "Allowed, never counted and never charged — pure presence information.",
+  "@policyOutsideHoursFreeDesc": {
+    "description": "Shown as the line under a title in availability policies (workspace)."
+  },
   "policyOutsideHoursCharged": "Charged",
+  "@policyOutsideHoursCharged": {
+    "description": "Shown as a title in availability policies (workspace)."
+  },
   "policyOutsideHoursChargedDesc": "Allowed and counted like ordinary usage — except on a day the member already holds a regular booking.",
+  "@policyOutsideHoursChargedDesc": {
+    "description": "Shown as the line under a title in availability policies (workspace)."
+  },
   "policySimultaneousTitle": "Simultaneous reservations per member",
   "@policySimultaneousTitle": {
     "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"

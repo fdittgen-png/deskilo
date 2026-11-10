@@ -273,25 +273,80 @@
     "description": "#709 - the money section of a profile could not be read"
   },
   "inboxAlertsTab": "Alerts",
+  "@inboxAlertsTab": {
+    "description": "Shown as a text in shell tabs (app), and 1 other place."
+  },
   "inboxFilterAll": "All",
+  "@inboxFilterAll": {
+    "description": "Shown as a text in inbox header (directory)."
+  },
   "inboxFilterUnread": "Unread",
+  "@inboxFilterUnread": {
+    "description": "Shown as a text in inbox header (directory), and 1 other place."
+  },
   "inboxFilterArchived": "Archived",
+  "@inboxFilterArchived": {
+    "description": "Shown as a text in inbox header (directory)."
+  },
   "inboxNoUnread": "Nothing unread — you are up to date.",
+  "@inboxNoUnread": {
+    "description": "Shown as a text in unified inbox view (directory)."
+  },
   "inboxNoArchived": "No archived conversations.",
+  "@inboxNoArchived": {
+    "description": "Shown as a text in unified inbox view (directory)."
+  },
   "conversationPin": "Pin to top",
+  "@conversationPin": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationUnpin": "Unpin",
+  "@conversationUnpin": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationMute": "Mute notifications",
+  "@conversationMute": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationUnmute": "Unmute",
+  "@conversationUnmute": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationMarkUnread": "Mark as unread",
+  "@conversationMarkUnread": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationArchive": "Archive",
+  "@conversationArchive": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationUnarchive": "Restore from archive",
+  "@conversationUnarchive": {
+    "description": "Shown as a title in unified inbox view (directory)."
+  },
   "conversationArchived": "Conversation archived.",
+  "@conversationArchived": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "conversationMutedBadge": "Muted",
+  "@conversationMutedBadge": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "conversationLoadEarlier": "Load earlier messages",
+  "@conversationLoadEarlier": {
+    "description": "Shown as a button or chip label in conversation thread (workspace), and 1 other place."
+  },
   "conversationToday": "Today",
+  "@conversationToday": {
+    "description": "Shown as a text in conversation day separator (workspace)."
+  },
   "composerAttach": "Attach a reference",
+  "@composerAttach": {
+    "description": "Shown as a tooltip in member note composer (workspace)."
+  },
   "composerCharsLeft": "{count, plural, =1{1 character left} other{{count} characters left}}",
   "@composerCharsLeft": {
+    "description": "Shown as a field counter in member note composer (workspace). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -299,11 +354,29 @@
     }
   },
   "composerDraftKept": "Draft kept",
+  "@composerDraftKept": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
+  "@newConversationTapToOpen": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "newConversationGroupSwitch": "Group",
+  "@newConversationGroupSwitch": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "inboxRetry": "Try again",
+  "@inboxRetry": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
+  "@memberNoteDeleteRead": {
+    "description": "Shown as a text in conversation bubble (workspace)."
+  },
   "memberNoteDeleteNotMine": "Only the sender can take a message back.",
+  "@memberNoteDeleteNotMine": {
+    "description": "Shown as a text in conversation bubble (workspace)."
+  },
   "noteRefFilterLabel": "Filter",
   "@noteRefFilterLabel": {
     "description": "#842 - label of the filter field in a reference picker"
@@ -365,11 +438,29 @@
     "description": "#842 - there is nothing of that kind to reference"
   },
   "featureMemberOriginTitle": "How each member got here",
+  "@featureMemberOriginTitle": {
+    "description": "Shown as a text in feature names (workspace)."
+  },
   "featureMemberOriginDesc": "A discreet line on a member saying how their membership began: founded the space, joined by invitation, or had the profile created for them. It is not a status.",
+  "@featureMemberOriginDesc": {
+    "description": "Shown as a text in feature copy (workspace)."
+  },
   "memberOriginFounder": "Founded this space",
+  "@memberOriginFounder": {
+    "description": "Shown as a text in member contact card (members)."
+  },
   "memberOriginInvited": "Joined by invitation",
+  "@memberOriginInvited": {
+    "description": "Shown as a text in member contact card (members)."
+  },
   "memberOriginDelegated": "Profile created by an admin",
+  "@memberOriginDelegated": {
+    "description": "Shown as a text in member contact card (members)."
+  },
   "memberOriginHeading": "How this membership began",
+  "@memberOriginHeading": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "inboxMessengerDoor": "Open my messenger",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"

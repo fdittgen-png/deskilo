@@ -33,7 +33,13 @@
     "description": "#1916 invoice essentials: invoiceEssentialsRefused"
   },
   "invoiceMissingSellerCountry": "The workspace country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app",
+  "@invoiceMissingSellerCountry": {
+    "description": "Shown as a text in invoice missing sales tax (money)."
+  },
   "invoiceMissingVatRate": "A VAT rate in force for the workspace's default rate (it would bill 0 %)",
+  "@invoiceMissingVatRate": {
+    "description": "Shown as a text in invoice missing sales tax (money)."
+  },
   "invoiceMissingVatZeroLine": "A VAT rate for every charge: a charge is billed at 0 % with no export, exemption or reverse charge explaining it",
   "invoiceMissingVatNotRegistered": "No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory",
   "@invoiceMissingVatZeroLine": {
@@ -43,7 +49,13 @@
     "description": "#1917 essentials key vat_charged_not_registered (0393)"
   },
   "invoiceMissingVatTreatment": "Reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.",
+  "@invoiceMissingVatTreatment": {
+    "description": "Shown as a text in invoice missing sales tax (money)."
+  },
   "invoiceExternalIssuingTitle": "Issue this invoice outside the app",
+  "@invoiceExternalIssuingTitle": {
+    "description": "Shown as a text in invoice issue block text (money)."
+  },
   "invoiceMissingSellerTaxNumber": "The workspace's VAT number or tax number (the registration field holds the Steuernummer or the NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"

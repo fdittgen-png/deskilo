@@ -3366,14 +3366,6 @@
   "calendarGroupActivity": "Alertes et messages",
   "calendarGroupBookings": "Réservations et présence",
   "calendarGroupMoney": "Finances",
-  "calendarItemCount": "{count, plural, =1{1 élément} other{{count} éléments}}",
-  "@calendarItemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "calendarKindCheckIn": "Pointages",
   "@calendarKindCheckIn": {
     "description": "#718/#719 - calendar hub"
@@ -10463,14 +10455,6 @@
   "libraryApply": "Appliquer à cet espace",
   "libraryApplyChanges": "{count, plural, =0{Rien de sélectionné} =1{Appliquer 1 changement} other{Appliquer {count} changements}}",
   "libraryApplyConfirmBody": "Le plan est ajouté ou mis à jour par nom, et les réglages que porte le modèle sont fusionnés. Rien de ce que vous avez déjà n'est supprimé.",
-  "libraryApplyConfirmTitle": "Appliquer « {name} » ?",
-  "@libraryApplyConfirmTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "libraryCarriesSettings": "avec ses réglages",
   "libraryConfirmSensitive": "Cela modifie : {groups}. Appliquer ?",
   "libraryCounts": "{levels} niveaux · {desks} tables · {seats} places",
@@ -16984,14 +16968,6 @@
     }
   },
   "settlementRegroups": "Cette facture regroupe",
-  "settlementRegroupsNumbers": "Regroupe {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "settlementSettledBy": "Regroupée dans une autre facture — c’est celle-là qui est due et relancée.",
   "settlementSourcePdf": "PDF (regroupée)",
   "settlementStepPick": "Choisir les factures",

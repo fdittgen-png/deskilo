@@ -1,8 +1,26 @@
 {
   "messageRequestsTitle": "Message requests",
+  "@messageRequestsTitle": {
+    "description": "Shown as a text in message requests card (directory)."
+  },
   "messageRequestsHint": "These people are outside the ones you chose to be reachable by. They are not told what you decide.",
+  "@messageRequestsHint": {
+    "description": "Shown as a text in message requests card (directory)."
+  },
   "requestAccept": "Accept",
+  "@requestAccept": {
+    "description": "Shown as a text in message requests card (directory)."
+  },
   "requestIgnore": "Ignore",
+  "@requestIgnore": {
+    "description": "Shown as a text in message requests card (directory)."
+  },
   "requestBlock": "Block",
-  "messengerRefusedRequestPending": "Your first message is waiting for an answer."
+  "@requestBlock": {
+    "description": "Shown as a text in message requests card (directory)."
+  },
+  "messengerRefusedRequestPending": "Your first message is waiting for an answer.",
+  "@messengerRefusedRequestPending": {
+    "description": "Shown as a text in refusal text (directory)."
+  }
 }

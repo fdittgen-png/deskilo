@@ -1,11 +1,27 @@
 {
   "blockedPeopleTitle": "Blocked people",
+  "@blockedPeopleTitle": {
+    "description": "Shown as a title in blocked people card (me)."
+  },
   "blockedPeopleEmpty": "You have not blocked anyone.",
+  "@blockedPeopleEmpty": {
+    "description": "Shown as the line under a title in blocked people card (me)."
+  },
   "blockedPeopleHint": "A blocked person cannot see you or write to you, and you cannot see or reach them.",
+  "@blockedPeopleHint": {
+    "description": "Shown as a text in blocked people card (me)."
+  },
   "unblockAction": "Unblock",
+  "@unblockAction": {
+    "description": "Shown as a text in blocked people card (me)."
+  },
   "blockPersonAction": "Block this person",
+  "@blockPersonAction": {
+    "description": "Shown as a text in block person (directory), and 1 other place."
+  },
   "blockPersonConfirm": "Block {name}? Neither of you will see or reach the other. You can undo this in Me.",
   "@blockPersonConfirm": {
+    "description": "Shown as the body of a dialog in block person (directory). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -13,5 +29,11 @@
     }
   },
   "blockPersonDone": "Blocked.",
-  "unblockDone": "Unblocked."
+  "@blockPersonDone": {
+    "description": "Shown as a text in block person (directory)."
+  },
+  "unblockDone": "Unblocked.",
+  "@unblockDone": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  }
 }
