@@ -28695,6 +28695,18 @@ abstract class AppLocalizations {
   /// **'My places'**
   String get meMySpaces;
 
+  /// #3545 D: the one filled action of Next up when nothing is booked: opens the places to book in
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get meNextBook;
+
+  /// #3545 D: Next up, nothing booked in the window; the filled Book action follows
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked this week.'**
+  String get meNextNothingWeek;
+
   /// Empty state body on the Me home when the person has no space.
   ///
   /// In en, this message translates to:

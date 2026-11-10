@@ -18,11 +18,12 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/personal_kit/me_notice.dart';
 import '../application/personal_commitments.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_commitment.dart';
 import 'commitment_words.dart';
+import 'kit/me_status_chip.dart';
 import 'me_data_tab.dart';
 
 /// One section of the Overview: a titled surface, never a button itself.
@@ -96,11 +97,10 @@ class SourceUnavailable extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: InlineBanner(
-      icon: Icons.cloud_off_outlined,
+    child: MeNotice(
       text: text,
-      actionLabel: context.l10n.commonRetry,
-      onAction: onRetry,
+      retryLabel: context.l10n.commonRetry,
+      onRetry: onRetry,
     ),
   );
 }
@@ -182,32 +182,13 @@ class _NextBody extends ConsumerWidget {
         if (next.reading)
           const SectionLoading(key: ValueKey('me-overview-next-loading'))
         else if (commitment != null)
-          _Commitment(commitment: commitment, format: format)
+          _Commitment(commitment: commitment, format: format, checkIn: composer.checkIn)
         else if (next.complete)
-          Text(
-            l10n.meOverviewNextNone(
-              format.date(window.from),
-              format.date(window.lastDay),
-            ),
-            key: const ValueKey('me-overview-next-none'),
-          )
+          const _NothingBooked(key: ValueKey('me-overview-next-none'))
         else if (next.failed.isEmpty)
           Text(
             l10n.meOverviewNextNotYet,
             key: const ValueKey('me-overview-next-not-yet'),
-          ),
-        if (!next.reading && (commitment != null || !next.complete))
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              key: const ValueKey('me-overview-next-view'),
-              style: TextButton.styleFrom(
-                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
-              ),
-              onPressed: () =>
-                  context.go(meDataRoute(view: MeDataView.reservations)),
-              child: Text(l10n.meOverviewView),
-            ),
           ),
       ],
     );
@@ -217,10 +198,15 @@ class _NextBody extends ConsumerWidget {
 /// One commitment: what and where, its day and hours in its business's own
 /// zone (named when it is not the device's), and where it stands.
 class _Commitment extends StatelessWidget {
-  const _Commitment({required this.commitment, required this.format});
+  const _Commitment({
+    required this.commitment,
+    required this.format,
+    required this.checkIn,
+  });
 
   final PersonalCommitment commitment;
   final AppFormat format;
+  final Future<void> Function(String source, String id) checkIn;
 
   @override
   Widget build(BuildContext context) {
@@ -254,9 +240,11 @@ class _Commitment extends StatelessWidget {
             Expanded(
               child: Text(place, style: theme.textTheme.titleMedium?.strong),
             ),
-            Text(
-              commitmentStateWords(l10n, c.state),
-              style: theme.textTheme.labelLarge,
+            MeStatusChip(
+              kind: c.state == CommitmentState.ongoing
+                  ? MeChipKind.ok
+                  : MeChipKind.neutral,
+              label: commitmentStateWords(l10n, c.state),
             ),
           ],
         ),
@@ -270,6 +258,90 @@ class _Commitment extends StatelessWidget {
           style: secondary,
         ),
         if (showZone) Text(l10n.meOverviewNextZone(zone), style: secondary),
+        const SizedBox(height: AppSpacing.sm),
+        Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: _NextAction(commitment: c, checkIn: checkIn),
+        ),
+      ],
+    );
+  }
+}
+
+/// The one filled action of Next up: "Check in" while the window is open
+/// (and it checks in), else "Details" (the booking, in My reservations).
+class _NextAction extends StatefulWidget {
+  const _NextAction({required this.commitment, required this.checkIn});
+
+  final PersonalCommitment commitment;
+  final Future<void> Function(String source, String id) checkIn;
+
+  @override
+  State<_NextAction> createState() => _NextActionState();
+}
+
+class _NextActionState extends State<_NextAction> {
+  bool _busy = false;
+
+  Future<void> _checkIn() async {
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final l10n = context.l10n;
+    final c = widget.commitment;
+    setState(() => _busy = true);
+    var done = false;
+    try {
+      await widget.checkIn(c.source, c.id);
+      done = true;
+    } on Object {
+      // The host's refusal is said in words; My reservations says why.
+    }
+    messenger?.showSnackBar(SnackBar(
+      content: Text(done
+          ? l10n.myReservationsCheckInDone
+          : l10n.myReservationsActionFailed),
+    ));
+    if (mounted) setState(() => _busy = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final open = widget.commitment.canCheckIn;
+    return FilledButton(
+      key: const ValueKey('me-overview-next-action'),
+      style: FilledButton.styleFrom(
+        minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+      ),
+      onPressed: _busy
+          ? null
+          : open
+              ? _checkIn
+              : () => context.go(meDataRoute(view: MeDataView.reservations)),
+      child: Text(open ? l10n.myReservationsCheckIn : l10n.bookingOpenDetails),
+    );
+  }
+}
+
+/// Nothing booked in the window: one quiet sentence and the one filled
+/// action, which opens the places to book in (the Places tab; its rows
+/// book one space each).
+class _NothingBooked extends StatelessWidget {
+  const _NothingBooked({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Row(
+      children: [
+        Expanded(child: Text(l10n.meNextNothingWeek)),
+        FilledButton(
+          key: const ValueKey('me-overview-next-book'),
+          style: FilledButton.styleFrom(
+            minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+          ),
+          onPressed: () => context.go('/me/spaces'),
+          child: Text(l10n.meNextBook),
+        ),
       ],
     );
   }

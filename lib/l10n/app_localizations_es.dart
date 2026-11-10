@@ -17423,6 +17423,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meMySpaces => 'Mis lugares';
 
   @override
+  String get meNextBook => 'Reservar';
+
+  @override
+  String get meNextNothingWeek => 'Nada reservado esta semana.';
+
+  @override
   String get meNoSpaceBody =>
       'Busque uno cerca de usted, únase con un código de invitación o cree el suyo.';
 

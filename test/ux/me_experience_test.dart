@@ -35,8 +35,6 @@ const Map<String, Map<String, int>> _known = {
   'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
   'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
   'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6, 'unnamed control': 8},
-  'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 6},
-  'home|populated': {'overflow or exception': 6, 'target under 48 dp': 6},
   'spaces|one source failed': {'a failed source is not said': 12},
 };
 

@@ -10792,6 +10792,8 @@
   "meLinkedUnavailable": "{host} n'a pas répondu : cette liste peut être incomplète.",
   "meManageSpaces": "Gérer mes espaces",
   "meMySpaces": "Mes lieux",
+  "meNextBook": "Réserver",
+  "meNextNothingWeek": "Rien de réservé cette semaine.",
   "meNoSpaceBody": "Trouvez-en un près de chez vous, rejoignez-en un avec un code d'invitation ou créez le vôtre.",
   "meNoSpaceTitle": "Vous n'êtes encore dans aucun espace",
   "meOverviewAttentionApplication": "Votre demande pour rejoindre {name} est en attente.",
