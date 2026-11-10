@@ -14166,6 +14166,175 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get invoicePageClose => 'Fermer';
+
+  @override
+  String get invoicePageConfirm => 'Confirmer le paiement';
+
+  @override
+  String get invoicePageConfirmed => 'Paiement confirmé.';
+
+  @override
+  String get invoicePageConfirmedAwaitsApproval =>
+      'Paiement confirmé. Le rapprochement attend une seconde validation.';
+
+  @override
+  String get invoicePageConfirmedMatched =>
+      'Paiement confirmé et rapproché de cette facture.';
+
+  @override
+  String get invoicePageInvoiced => 'Facturé';
+
+  @override
+  String get invoicePageMarkedNotReceived => 'Marqué comme non reçu.';
+
+  @override
+  String get invoicePageMatch => 'Rapprocher le paiement';
+
+  @override
+  String get invoicePageMoreCancel => 'Annuler cette facture, émise par erreur';
+
+  @override
+  String get invoicePageMoreCorrections => 'Corrections';
+
+  @override
+  String get invoicePageMoreDocument => 'Document';
+
+  @override
+  String get invoicePageMoreDownload => 'Télécharger le PDF';
+
+  @override
+  String get invoicePageMoreEInvoice => 'Facture électronique';
+
+  @override
+  String get invoicePageMoreHold => 'Suspendre les relances';
+
+  @override
+  String get invoicePageMoreQuickView => 'Voir le PDF';
+
+  @override
+  String get invoicePageMoreRelease => 'Lever la suspension';
+
+  @override
+  String get invoicePageMoreReminders => 'Relances';
+
+  @override
+  String get invoicePageMoreReplace =>
+      'Corriger par une facture de remplacement';
+
+  @override
+  String get invoicePageMoreShare => 'Partager le PDF';
+
+  @override
+  String get invoicePageMoreWriteOff => 'Passer le reste en perte';
+
+  @override
+  String get invoicePageNotReceived => 'Non reçu';
+
+  @override
+  String get invoicePageNowApproval => 'Attend une seconde validation';
+
+  @override
+  String get invoicePageNowCustomer =>
+      'En attente de la confirmation du client';
+
+  @override
+  String get invoicePageNowDeclared => 'Vérifiez votre banque, puis confirmez';
+
+  @override
+  String invoicePageNowDue(String date) {
+    return 'Échéance le $date';
+  }
+
+  @override
+  String get invoicePageNowEveryReminder =>
+      'Toutes les relances sont envoyées. Appelez, suspendez ou passez en perte.';
+
+  @override
+  String get invoicePageNowHold =>
+      'Suspendue : aucune relance ne part tant que vous ne la libérez pas';
+
+  @override
+  String get invoicePageNowRefund => 'L’entreprise doit ce remboursement';
+
+  @override
+  String get invoicePageNowRejected =>
+      'La facture électronique a été rejetée : corrigez-la et renvoyez-la';
+
+  @override
+  String invoicePageNowReminder(int level) {
+    return 'La relance $level est due';
+  }
+
+  @override
+  String get invoicePageNowToMatch =>
+      'Un paiement est sur le compte : rapprochez-le';
+
+  @override
+  String get invoicePageNowWaiting => 'En attente du paiement';
+
+  @override
+  String invoicePageOpenOf(String total, String date) {
+    return 'restant sur $total · échéance $date';
+  }
+
+  @override
+  String invoicePageOpenOfUndated(String total) {
+    return 'restant sur $total';
+  }
+
+  @override
+  String get invoicePagePaidInFull => 'Payée en totalité';
+
+  @override
+  String get invoicePagePdf => 'PDF de la facture';
+
+  @override
+  String get invoicePagePdfHint => 'tel que le client l’a reçu';
+
+  @override
+  String get invoicePageRefund => 'Enregistrer le remboursement';
+
+  @override
+  String invoicePageShareReminder(int level) {
+    return 'Partager la relance $level';
+  }
+
+  @override
+  String invoicePageStoryDeclared(String customer) {
+    return '$customer dit avoir payé';
+  }
+
+  @override
+  String get invoicePageStoryDue => 'Échéance';
+
+  @override
+  String get invoicePageStoryIssued =>
+      'Émise · le client la voit dans son compte';
+
+  @override
+  String get invoicePageStoryPaid => 'Payée';
+
+  @override
+  String invoicePageStoryReminder(int level) {
+    return 'Relance $level envoyée';
+  }
+
+  @override
+  String invoicePageTitle(String number) {
+    return 'Facture $number';
+  }
+
+  @override
+  String get invoicePageToday => 'Aujourd’hui';
+
+  @override
+  String get invoicePageView => 'Voir';
+
+  @override
+  String get invoicePageWhatHappened => 'Ce qui s’est passé';
+
+  @override
   String get invoicePdfActivity => 'Mouvements & paiements';
 
   @override

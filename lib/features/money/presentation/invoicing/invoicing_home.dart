@@ -95,6 +95,7 @@ class InvoicingHome extends StatefulWidget {
     this.searchOpen = false,
     this.filter,
     this.legalNotes,
+    this.wide,
   });
 
   final InvoicingHomeData data;
@@ -108,6 +109,11 @@ class InvoicingHome extends StatefulWidget {
 
   /// The legal notices, collapsed under one line; null when there are none.
   final List<Widget>? legalNotes;
+
+  /// Whether the home lays itself out for a wide window, decided by the
+  /// screen from the width it is given (an invoice panel beside the list
+  /// must not turn the tables into phone lines); null: from its own width.
+  final bool? wide;
 
   @override
   State<InvoicingHome> createState() => _InvoicingHomeState();
@@ -143,7 +149,8 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       valueListenable: _filter,
       builder: (context, filter, _) => LayoutBuilder(
         builder: (context, box) {
-          final wide = box.maxWidth >= kWideNavigationMinWidth;
+          final wide =
+              widget.wide ?? box.maxWidth >= kWideNavigationMinWidth;
           final owed = _owedCard(context, filter);
           final todo = _todoCard(context);
           return CustomScrollView(

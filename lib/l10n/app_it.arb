@@ -8905,6 +8905,241 @@
       }
     }
   },
+  "invoicePageClose": "Chiudi",
+  "@invoicePageClose": {
+    "description": "#3587 R1-d closes the side panel"
+  },
+  "invoicePageConfirm": "Conferma il pagamento",
+  "@invoicePageConfirm": {
+    "description": "#3587 R1-d bottom bar"
+  },
+  "invoicePageConfirmed": "Pagamento confermato.",
+  "@invoicePageConfirmed": {
+    "description": "#3587 R1-d message after Confirm"
+  },
+  "invoicePageConfirmedAwaitsApproval": "Pagamento confermato. L’abbinamento attende una seconda approvazione.",
+  "@invoicePageConfirmedAwaitsApproval": {
+    "description": "#3587 R1-d message after Confirm when the match needs a second approval"
+  },
+  "invoicePageConfirmedMatched": "Pagamento confermato e abbinato a questa fattura.",
+  "@invoicePageConfirmedMatched": {
+    "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
+  },
+  "invoicePageInvoiced": "Fatturato",
+  "@invoicePageInvoiced": {
+    "description": "#3587 R1-d the lines card's label"
+  },
+  "invoicePageMarkedNotReceived": "Segnato come non ricevuto.",
+  "@invoicePageMarkedNotReceived": {
+    "description": "#3587 R1-d message after Not received"
+  },
+  "invoicePageMatch": "Abbina il pagamento",
+  "@invoicePageMatch": {
+    "description": "#3587 R1-d bottom bar"
+  },
+  "invoicePageMoreCancel": "Annulla questa fattura, emessa per errore",
+  "@invoicePageMoreCancel": {
+    "description": "#3587 R1-d More: corrections"
+  },
+  "invoicePageMoreCorrections": "Correzioni",
+  "@invoicePageMoreCorrections": {
+    "description": "#3587 R1-d More: section"
+  },
+  "invoicePageMoreDocument": "Documento",
+  "@invoicePageMoreDocument": {
+    "description": "#3587 R1-d More: section"
+  },
+  "invoicePageMoreDownload": "Scarica il PDF",
+  "@invoicePageMoreDownload": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreEInvoice": "Fattura elettronica",
+  "@invoicePageMoreEInvoice": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreHold": "Sospendi i solleciti",
+  "@invoicePageMoreHold": {
+    "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreQuickView": "Vedi il PDF",
+  "@invoicePageMoreQuickView": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreRelease": "Togli la sospensione",
+  "@invoicePageMoreRelease": {
+    "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreReminders": "Solleciti",
+  "@invoicePageMoreReminders": {
+    "description": "#3587 R1-d More: section"
+  },
+  "invoicePageMoreReplace": "Correggi con una fattura sostitutiva",
+  "@invoicePageMoreReplace": {
+    "description": "#3587 R1-d More: corrections"
+  },
+  "invoicePageMoreShare": "Condividi il PDF",
+  "@invoicePageMoreShare": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreWriteOff": "Stralcia il resto",
+  "@invoicePageMoreWriteOff": {
+    "description": "#3587 R1-d More: corrections"
+  },
+  "invoicePageNotReceived": "Non ricevuto",
+  "@invoicePageNotReceived": {
+    "description": "#3587 R1-d bottom bar"
+  },
+  "invoicePageNowApproval": "Attende una seconda approvazione",
+  "@invoicePageNowApproval": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowCustomer": "In attesa della conferma del cliente",
+  "@invoicePageNowCustomer": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowDeclared": "Controlli la banca, poi confermi",
+  "@invoicePageNowDeclared": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowDue": "Scade il {date}",
+  "@invoicePageNowDue": {
+    "description": "#3587 R1-d story's now line",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageNowEveryReminder": "Tutti i solleciti sono inviati. Chiami, sospenda o stralci.",
+  "@invoicePageNowEveryReminder": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowHold": "Sospesa: nessun sollecito parte finché non la libera",
+  "@invoicePageNowHold": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowRefund": "L’attività deve questo rimborso",
+  "@invoicePageNowRefund": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowRejected": "La fattura elettronica è stata respinta: la corregga e la reinvii",
+  "@invoicePageNowRejected": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowReminder": "Il sollecito {level} è dovuto",
+  "@invoicePageNowReminder": {
+    "description": "#3587 R1-d story's now line",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageNowToMatch": "C’è un pagamento sul conto: lo abbini",
+  "@invoicePageNowToMatch": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowWaiting": "In attesa del pagamento",
+  "@invoicePageNowWaiting": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageOpenOf": "da pagare su {total} · scade {date}",
+  "@invoicePageOpenOf": {
+    "description": "#3587 R1-d under the amount",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageOpenOfUndated": "da pagare su {total}",
+  "@invoicePageOpenOfUndated": {
+    "description": "#3587 R1-d under the amount, no due date",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePagePaidInFull": "Pagata per intero",
+  "@invoicePagePaidInFull": {
+    "description": "#3587 R1-d under the amount of a paid invoice"
+  },
+  "invoicePagePdf": "PDF della fattura",
+  "@invoicePagePdf": {
+    "description": "#3587 R1-d the document card"
+  },
+  "invoicePagePdfHint": "come l’ha ricevuto il cliente",
+  "@invoicePagePdfHint": {
+    "description": "#3587 R1-d the document card's line"
+  },
+  "invoicePageRefund": "Registra il rimborso",
+  "@invoicePageRefund": {
+    "description": "#3587 R1-d bottom bar on a credit note"
+  },
+  "invoicePageShareReminder": "Condividi il sollecito {level}",
+  "@invoicePageShareReminder": {
+    "description": "#3587 R1-d bottom bar",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageStoryDeclared": "{customer} dice di averla pagata",
+  "@invoicePageStoryDeclared": {
+    "description": "#3587 R1-d story line",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageStoryDue": "Scadenza",
+  "@invoicePageStoryDue": {
+    "description": "#3587 R1-d story line"
+  },
+  "invoicePageStoryIssued": "Emessa · il cliente la vede nel suo account",
+  "@invoicePageStoryIssued": {
+    "description": "#3587 R1-d story line; no e-mail is sent in release 1"
+  },
+  "invoicePageStoryPaid": "Pagata",
+  "@invoicePageStoryPaid": {
+    "description": "#3587 R1-d story line"
+  },
+  "invoicePageStoryReminder": "Sollecito {level} inviato",
+  "@invoicePageStoryReminder": {
+    "description": "#3587 R1-d story line",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageTitle": "Fattura {number}",
+  "@invoicePageTitle": {
+    "description": "#3587 R1-d the invoice page's title",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageToday": "Oggi",
+  "@invoicePageToday": {
+    "description": "#3587 R1-d the story's last line's day"
+  },
+  "invoicePageView": "Vedi",
+  "@invoicePageView": {
+    "description": "#3587 R1-d opens the PDF"
+  },
+  "invoicePageWhatHappened": "Cosa è successo",
+  "@invoicePageWhatHappened": {
+    "description": "#3587 R1-d the story card's label"
+  },
   "invoicePdfActivity": "Movimenti e pagamenti",
   "invoicePdfAnnex": "Allegato — dettagli",
   "invoicePdfAttendance": "Presenze",

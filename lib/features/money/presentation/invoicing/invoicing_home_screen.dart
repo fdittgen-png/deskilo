@@ -18,6 +18,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -28,15 +30,16 @@ import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_proforma.dart';
-import '../invoice_status.dart';
 import '../widgets/dunning_rules_dialog.dart';
-import '../widgets/invoice_detail_sheet.dart' hide InvoiceAction;
 import '../widgets/invoice_form_sheet.dart';
-import '../widgets/invoice_journey_view.dart';
 import '../widgets/invoicing_dashboard.dart';
+import 'invoice_page.dart';
 import 'invoicing_home.dart';
 import 'invoicing_list.dart';
-import 'receivables_adapter.dart';
+import 'invoicing_reads.dart';
+
+/// The width of the invoice panel beside the list on a desk window.
+const double _panelWidth = 440;
 
 /// What the screen read: the receivables, the invoices by id, their matches.
 typedef _Read = ({
@@ -72,6 +75,17 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   final _filter = ValueNotifier(InvoicingFilter.open);
   var _searchOpen = false;
 
+  /// The invoice open in the panel beside the list (a desk window).
+  String? _selected;
+
+  /// The screen's width is a desk's: an invoice opens beside the list. Read
+  /// from the constraints the app's frame gives, never from the window.
+  bool _desk = false;
+
+  /// The screen's width is a wide window's: the cards side by side, the
+  /// lists as tables.
+  bool _wide = false;
+
   @override
   void dispose() {
     _filter.dispose();
@@ -101,11 +115,37 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           _moreMenu(context),
         ],
       ),
-      body: switch (invoices) {
-        AsyncData(:final value) => _home(context, value),
-        AsyncError() => _home(context, const [], failedInvoices: true),
-        _ => const LoadingView(),
-      },
+      body: LayoutBuilder(
+        builder: (context, box) {
+          _desk = box.maxWidth >= PersonalShellMetrics.sidebarMinWidth;
+          _wide = box.maxWidth >= kWideNavigationMinWidth;
+          final home = switch (invoices) {
+            AsyncData(:final value) => _home(context, value),
+            AsyncError() => _home(context, const [], failedInvoices: true),
+            _ => const LoadingView(),
+          };
+          final selected = _desk ? _selected : null;
+          // A desk keeps the invoice open beside the list. The list stays
+          // the same widget whether a panel is open or not, so its view,
+          // filter and search survive opening an invoice.
+          return Row(
+            children: [
+              Expanded(child: home),
+              if (selected != null) ...[
+                const VerticalDivider(width: 1),
+                SizedBox(
+                  width: _panelWidth,
+                  child: InvoicePage(
+                    key: ValueKey('invoicing-panel-$selected'),
+                    invoiceId: selected,
+                    onClose: () => setState(() => _selected = null),
+                  ),
+                ),
+              ],
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -139,7 +179,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           ),
       ],
       // Worded, so the title bar never shows an unnamed icon.
-      child: Padding(
+      child: ConstrainedBox(
+        // The worded button is a whole target, not just its words.
+        constraints: const BoxConstraints(minHeight: 48),
+        child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -148,6 +191,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             const Icon(Icons.arrow_drop_down),
           ],
         ),
+      ),
       ),
     );
   }
@@ -176,16 +220,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       to: DateTime(today.year, today.month + 1, 0),
     );
     final received = ref.watch(receivedPaymentsProvider(window));
-    final reader = ReceivablesReader(
-      matches: matches,
-      reminders: reminders.value ?? const {},
-      rules: rules,
-      now: now,
-      dayOf: dayOf,
-      eventFactsOf: ref.watch(invoiceEventFactsProvider),
-      transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {},
-      held: {...?ref.watch(dunningHoldsProvider).value?.keys},
-    );
+    final reader = ref.watch(invoicingReaderProvider);
     final receivables = reader.read(invoices);
     final period = overview.value?.period;
     final currency = workspace?.currencyCode ?? '';
@@ -223,6 +258,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       searchOpen: _searchOpen,
       filter: _filter,
       legalNotes: widget.legalNotes,
+      wide: _wide,
       actions: InvoicingHomeActions(
         onOpenInvoice: (id) => _open(byId[id], matches),
         onOpenCustomer: (customerId) => _open(
@@ -269,36 +305,14 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     return theirs.isEmpty ? '' : theirs.first.invoiceId;
   }
 
-  Future<void> _open(
-    Invoice? invoice,
-    Map<String, InvoiceMatch> matches,
-  ) async {
+  /// Opens [invoice]: beside the list on a desk, as a page otherwise.
+  Future<void> _open(Invoice? invoice, Map<String, InvoiceMatch> _) async {
     if (invoice == null) return;
-    final reminders = ref.read(invoiceRemindersProvider).value ?? const {};
-    final match = matches[invoice.id];
-    await showInvoiceDetailSheet(
-      context,
-      ref: ref,
-      view: InvoiceDetailView(
-        invoice: invoice,
-        match: match,
-        settledByNumber: settledByNumberOf(
-          invoice,
-          ref.read(invoicesProvider).value ?? const [],
-        ),
-        canIssue: true,
-        isEu: widget.isEu,
-        reminder: reminders[invoice.id],
-        showMemberName: widget.showMemberNames,
-        transmission: ref.read(invoiceTransmissionsProvider).value?[invoice.id],
-        journey: readInvoiceJourney(
-          ref,
-          invoice,
-          match: match,
-          reminder: reminders[invoice.id],
-        ),
-      ),
-    );
+    if (_desk) {
+      setState(() => _selected = invoice.id);
+      return;
+    }
+    await openInvoicePage(context, invoice.id);
   }
 
   Future<void> _customerAction(

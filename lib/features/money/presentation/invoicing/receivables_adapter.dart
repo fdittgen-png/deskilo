@@ -17,7 +17,7 @@ import '../invoice_status.dart';
 /// the customer's own declaration ([journeyFactsOf], [declarationOf]).
 typedef InvoiceEventFacts = ({
   InvoiceJourneyFacts journey,
-  ({String eventId, DateTime paidOn})? declaration,
+  ({String eventId, DateTime paidOn, int amountCents})? declaration,
 });
 
 /// Reads invoices as receivables with what the screen has loaded: their

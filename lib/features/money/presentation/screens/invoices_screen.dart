@@ -211,7 +211,10 @@ Widget _memberMenu(BuildContext context, List<MoreEntry> entries) =>
             ),
           ),
       ],
-      child: Padding(
+      child: ConstrainedBox(
+        // The worded button is a whole target, not just its words.
+        constraints: const BoxConstraints(minHeight: 48),
+        child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -220,6 +223,7 @@ Widget _memberMenu(BuildContext context, List<MoreEntry> entries) =>
             const Icon(Icons.arrow_drop_down),
           ],
         ),
+      ),
       ),
     );
 
