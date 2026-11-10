@@ -22,7 +22,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/screens/invoices.dart' show pumpInvoices;
+import '../../helpers/screens/invoices.dart'
+    show openInvoice, pumpInvoices, showInvoicesByInvoice;
 import '../../helpers/test_workspace_context.dart';
 
 /// Two open invoices of member-1 regrouped into one.
@@ -120,20 +121,24 @@ void main() {
     expect(csv, isNot(contains(settlement.number)));
   });
 
-  testWidgets('the hub lists the settlement with its sources nested under '
-      'it — PDF only — and no source card of its own', (tester) async {
+  testWidgets('the home lists the settlement as open and its sources as '
+      'closed, each source reading where it went with its PDF only',
+      (tester) async {
     final s = await _settledMoney();
     await pumpInvoices(tester, money: s.money);
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(ValueKey('invoice-open-${s.settlement}')), findsOneWidget);
-    expect(find.byKey(ValueKey('invoice-open-${s.a}')), findsNothing);
-    expect(find.byKey(ValueKey('invoice-open-${s.b}')), findsNothing);
-    expect(find.byKey(ValueKey('invoice-folded-${s.a}')), findsOneWidget);
-    expect(find.byKey(ValueKey('invoice-folded-pdf-${s.a}')), findsOneWidget);
-    expect(find.byKey(ValueKey('invoice-remind-${s.a}')), findsNothing);
-    expect(find.byKey(ValueKey('invoice-match-${s.a}')), findsNothing);
+    // #3587 — the open invoices, one line per invoice.
+    await showInvoicesByInvoice(tester);
+    expect(find.byKey(ValueKey('invoicing-row-${s.settlement}')),
+        findsOneWidget);
+    expect(find.byKey(ValueKey('invoicing-row-${s.a}')), findsNothing);
+    expect(find.byKey(ValueKey('invoicing-row-${s.b}')), findsNothing);
+    // A source is on the closed list; its sheet says where it went and
+    // keeps the PDF, never a reminder or a match.
+    await openInvoice(tester, s.a);
     expect(find.textContaining('Regrouped in INV-2026-9999'), findsWidgets);
+    expect(find.byKey(ValueKey('invoice-download-${s.a}')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-match-action')), findsNothing);
   });
 
   testWidgets('with the flag off the sources stay peers', (tester) async {
@@ -144,10 +149,9 @@ void main() {
       workspace: FakeWorkspaceRepository.withWorkspace(
           featureFlags: const {'settlementFold': false}),
     );
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(ValueKey('invoice-open-${s.a}')), findsOneWidget);
-    expect(find.byKey(ValueKey('invoice-folded-${s.a}')), findsNothing);
+    // #3587 — the source stays an open invoice of its own.
+    await showInvoicesByInvoice(tester);
+    expect(find.byKey(ValueKey('invoicing-row-${s.a}')), findsOneWidget);
   });
 
   testWidgets('the member sees the settlement with its sources under it, '

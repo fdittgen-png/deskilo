@@ -13,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices, seededMoney;
 
 ValidationPolicy _twoValidators() => const ValidationPolicy(
       id: 'p1',
@@ -35,9 +35,9 @@ Future<({FakeMoneyRepository money, FakeEventRepository events, String id})>
   await pumpInvoices(tester, money: money, events: events);
   final invoice = money.invoices.single;
   final payId = money.seedPayment('member-1', invoice.totalCents);
-  await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(ValueKey('invoice-match-${invoice.id}')));
+  // #3587 — matched from the invoice's sheet, opened from the home.
+  await openInvoice(tester, invoice.id);
+  await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
   await tester.pumpAndSettle();
@@ -69,10 +69,7 @@ void main() {
       decidedAt: kTestNow,
     ));
 
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(ValueKey('invoice-open-${r.id}')));
-    await tester.pumpAndSettle();
+    await openInvoice(tester, r.id);
 
     expect(find.byType(ValidationTrail), findsOneWidget);
     expect(find.text('Validation trail'), findsOneWidget);
@@ -88,10 +85,7 @@ void main() {
       (tester) async {
     final money = await seededMoney();
     await pumpInvoices(tester, money: money, events: FakeEventRepository());
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(ValueKey('invoice-${money.invoices.single.id}')));
-    await tester.pumpAndSettle();
+    await openInvoice(tester, money.invoices.single.id);
     expect(find.byType(ValidationTrail), findsNothing);
   });
 }

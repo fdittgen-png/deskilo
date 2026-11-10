@@ -14500,11 +14500,359 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicesEmpty => 'Ancora nessuna fattura.';
 
   @override
-  String get invoicingBanner =>
-      'Sta emettendo e sollecitando le fatture di tutto lo spazio. Le sue fatture e i suoi pagamenti sono in Io › Le mie finanze.';
+  String get invoicingActionConfirm => 'Conferma';
+
+  @override
+  String get invoicingActionMatch => 'Abbina';
+
+  @override
+  String get invoicingActionRemind => 'Sollecita';
+
+  @override
+  String get invoicingCaughtUp => 'È tutto in ordine.';
+
+  @override
+  String get invoicingColCustomer => 'Cliente';
+
+  @override
+  String get invoicingColDue => 'Scadenza';
+
+  @override
+  String get invoicingColInvoice => 'Fattura';
+
+  @override
+  String get invoicingColInvoices => 'Fatture';
+
+  @override
+  String get invoicingColOldest => 'La più vecchia';
+
+  @override
+  String get invoicingColOpen => 'Da pagare';
+
+  @override
+  String get invoicingColOwes => 'Deve';
+
+  @override
+  String get invoicingColStatus => 'Stato';
+
+  @override
+  String invoicingCountLine(String customers, String invoices) {
+    return '$customers · $invoices';
+  }
+
+  @override
+  String invoicingCustomerCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count clienti',
+      one: '1 cliente',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDaysLate(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days giorni di ritardo',
+      one: '1 giorno di ritardo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDueIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Scade tra $days giorni',
+      one: 'Scade tra 1 giorno',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDueOn(String date) {
+    return 'scade $date';
+  }
+
+  @override
+  String get invoicingEmptyBody =>
+      'Emetta la sua prima fattura, o fatturi il mese quando c’è utilizzo da fatturare.';
+
+  @override
+  String get invoicingEmptyNew => 'Nuova fattura';
+
+  @override
+  String get invoicingEmptyTitle => 'Ancora nessuna fattura';
+
+  @override
+  String get invoicingEveryReminderSent => 'tutti i solleciti inviati';
+
+  @override
+  String get invoicingFilterOpen => 'Aperte';
+
+  @override
+  String get invoicingFilterOverdue => 'Scadute';
+
+  @override
+  String get invoicingFilterPaid => 'Pagate';
+
+  @override
+  String get invoicingFilterToConfirm => 'Da confermare';
+
+  @override
+  String invoicingInvoiceCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fatture',
+      one: '1 fattura',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingInvoicedIn(String month) {
+    return 'Fatturato a $month';
+  }
+
+  @override
+  String get invoicingLegalNotes => 'Note legali';
+
+  @override
+  String get invoicingMoreHow => 'Come funziona la fatturazione';
+
+  @override
+  String get invoicingMoreMine => 'Le mie fatture';
+
+  @override
+  String get invoicingMorePaid => 'Fatture pagate e chiuse';
+
+  @override
+  String get invoicingMoreRegister => 'Registro delle fatture';
+
+  @override
+  String get invoicingMoreRegroup => 'Raggruppare le fatture in una';
+
+  @override
+  String get invoicingMoreReminderRules => 'Regole di sollecito';
+
+  @override
+  String get invoicingMoreSettings => 'Impostazioni delle fatture';
+
+  @override
+  String get invoicingMoreTemplate => 'Modello PDF della fattura';
+
+  @override
+  String get invoicingNew => 'Nuova';
+
+  @override
+  String get invoicingNothingHere => 'Niente qui.';
+
+  @override
+  String invoicingNothingMatches(String query) {
+    return 'Niente corrisponde a «$query».';
+  }
+
+  @override
+  String get invoicingNothingOverdue => 'Niente è scaduto.';
+
+  @override
+  String get invoicingNothingToConfirm => 'Nessun pagamento la attende.';
+
+  @override
+  String get invoicingOwed => 'Da incassare';
+
+  @override
+  String get invoicingOwedNotYetDue => 'Non ancora scaduto';
+
+  @override
+  String get invoicingOwedOverdue => 'Scaduto';
+
+  @override
+  String get invoicingOwedToConfirm => 'Da confermare';
+
+  @override
+  String invoicingReceivedIn(String month) {
+    return 'Incassato a $month';
+  }
+
+  @override
+  String get invoicingRemindersAutomatic =>
+      'I solleciti partono da soli, nell’app.';
+
+  @override
+  String get invoicingRemindersByHand => 'I solleciti si condividono a mano.';
+
+  @override
+  String get invoicingRules => 'Regole';
+
+  @override
+  String get invoicingSearch => 'Cerca';
+
+  @override
+  String get invoicingSearchHint => 'Un cliente o un numero';
+
+  @override
+  String invoicingSourceFailed(String source) {
+    return '$source non si è potuto leggere.';
+  }
+
+  @override
+  String get invoicingSourcePayments => 'Lo storico dei pagamenti';
+
+  @override
+  String get invoicingSourceReminders => 'Lo storico dei solleciti';
+
+  @override
+  String get invoicingSourceToInvoice => 'Il mese da fatturare';
+
+  @override
+  String get invoicingStatusAwaitingCustomer =>
+      'In attesa della conferma del cliente';
+
+  @override
+  String get invoicingStatusCancelled => 'Annullata';
+
+  @override
+  String get invoicingStatusCredited => 'Accreditata';
+
+  @override
+  String get invoicingStatusDraft => 'Bozza';
+
+  @override
+  String get invoicingStatusDueToday => 'Scade oggi';
+
+  @override
+  String invoicingStatusEveryReminderSent(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days giorni di ritardo',
+      one: '1 giorno di ritardo',
+    );
+    return '$_temp0 · tutti i solleciti inviati';
+  }
+
+  @override
+  String get invoicingStatusNoDueDate => 'Senza scadenza';
+
+  @override
+  String get invoicingStatusOnHold => 'Sospesa';
+
+  @override
+  String invoicingStatusPaid(String date) {
+    return 'Pagata il $date';
+  }
+
+  @override
+  String get invoicingStatusPaidUndated => 'Pagata';
+
+  @override
+  String invoicingStatusPartlyPaid(String amount) {
+    return 'Pagata in parte · $amount da pagare';
+  }
+
+  @override
+  String get invoicingStatusRefundOwed => 'Rimborso dovuto';
+
+  @override
+  String get invoicingStatusRefunded => 'Rimborsata';
+
+  @override
+  String invoicingStatusRegrouped(String number) {
+    return 'Raggruppata in $number';
+  }
+
+  @override
+  String get invoicingStatusRejected => 'Fattura elettronica respinta';
+
+  @override
+  String invoicingStatusReminderSent(int days, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days giorni di ritardo',
+      one: '1 giorno di ritardo',
+    );
+    return '$_temp0 · sollecito $level inviato';
+  }
+
+  @override
+  String invoicingStatusSaysPaid(String date) {
+    return 'Dice di aver pagato il $date';
+  }
+
+  @override
+  String get invoicingStatusSaysPaidUndated => 'Dice di aver pagato';
+
+  @override
+  String get invoicingStatusSecondApproval =>
+      'Attende una seconda approvazione';
+
+  @override
+  String get invoicingStatusToMatch => 'Pagamento ricevuto · da abbinare';
+
+  @override
+  String get invoicingTitle => 'Fatture';
+
+  @override
+  String get invoicingTodo => 'Da fare';
+
+  @override
+  String get invoicingTodoConfirm => 'Confermare i pagamenti';
+
+  @override
+  String get invoicingTodoDrafts => 'Emettere le bozze';
+
+  @override
+  String get invoicingTodoDueDate => 'Fissare una scadenza';
+
+  @override
+  String get invoicingTodoFix => 'Correggi';
+
+  @override
+  String get invoicingTodoMatch => 'Abbinare i pagamenti';
+
+  @override
+  String invoicingTodoMonth(String month) {
+    return 'Fatturare $month';
+  }
+
+  @override
+  String get invoicingTodoRefunds => 'Pagare i rimborsi';
+
+  @override
+  String invoicingTodoRejected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fatture elettroniche sono state respinte',
+      one: '1 fattura elettronica è stata respinta',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoicingTodoReminders => 'Condividere i solleciti a mano';
+
+  @override
+  String get invoicingTodoReview => 'Vedi';
 
   @override
   String get invoicingTools => 'Strumenti di fatturazione';
+
+  @override
+  String get invoicingTryAgain => 'Riprova';
+
+  @override
+  String get invoicingViewCustomers => 'Clienti';
+
+  @override
+  String get invoicingViewInvoices => 'Fatture';
 
   @override
   String journalBlocked(String roles) {

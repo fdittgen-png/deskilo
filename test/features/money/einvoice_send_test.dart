@@ -21,6 +21,7 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../../helpers/real_async.dart';
+import '../../helpers/screens/invoices.dart' show openInvoice, showPaidInvoices;
 import '../../helpers/test_workspace_context.dart';
 
 /// A workspace with a complete legal identity — otherwise the export
@@ -72,8 +73,8 @@ Future<FakeMoneyRepository> _pumpArchive(
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
-  await tester.pumpAndSettle();
+  // #3587 — the archived (paid) invoice is on the home's Paid list.
+  await showPaidInvoices(tester);
   return money;
 }
 
@@ -108,8 +109,7 @@ Future<FakeMoneyRepository> _seeded() async {
 }
 
 Future<void> _openEInvoiceSheet(WidgetTester tester, String id) async {
-  await tester.tap(find.byKey(ValueKey('invoice-$id')));
-  await tester.pumpAndSettle();
+  await openInvoice(tester, id);
   await tester.tap(find.byKey(const ValueKey('invoice-einvoice-action')));
   await tester.pumpAndSettle();
 }
@@ -125,7 +125,9 @@ void main() {
       money: await _seeded(),
       contextReady: false,
     );
-    await tester.tap(find.byKey(ValueKey('invoice-${money.invoices.single.id}')));
+    await tester.tap(
+      find.byKey(ValueKey('invoicing-row-${money.invoices.single.id}')),
+    );
     await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('invoice-einvoice-action')), findsNothing);
 

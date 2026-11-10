@@ -356,53 +356,6 @@ class InvoiceJourney {
   }
 }
 
-/// The issuer's four stages, for the hub's strip: what the open list
-/// holds, split by whose move it is.
-typedef InvoiceStageCounts = ({
-  int toIssue,
-  int toCollect,
-  int toCollectCents,
-  int overdue,
-  int toConfirm,
-  int closed,
-});
-
-/// Folds the journeys of every open invoice into the stage counts. A
-/// credit note to refund counts as a confirmation-side move (the issuer
-/// acts), never as money to collect.
-InvoiceStageCounts stageCountsOf({
-  required int toIssue,
-  required Iterable<InvoiceJourney> open,
-  required int closed,
-}) {
-  var toCollect = 0;
-  var toCollectCents = 0;
-  var overdue = 0;
-  var toConfirm = 0;
-  for (final journey in open) {
-    switch (journey.move) {
-      case InvoiceMove.memberPays:
-      case InvoiceMove.memberPaysRemainder:
-        toCollect++;
-        toCollectCents += journey.remainingCents;
-        if (journey.overdue) overdue++;
-      case InvoiceMove.none:
-      case InvoiceMove.issuerReplaces:
-        break;
-      default:
-        toConfirm++;
-    }
-  }
-  return (
-    toIssue: toIssue,
-    toCollect: toCollect,
-    toCollectCents: toCollectCents,
-    overdue: overdue,
-    toConfirm: toConfirm,
-    closed: closed,
-  );
-}
-
 /// #1913 — what is still owed on [invoice]: the whole total while open or
 /// while a payment awaits validation (a pending payment does not make
 /// the balance disappear), the remainder after a confirmed partial

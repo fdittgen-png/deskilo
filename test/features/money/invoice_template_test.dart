@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/navigation.dart' show tapInvoicingTool;
-import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices, seededMoney;
 
 const _data = <String, Object?>{
   'number': 'INV-1',
@@ -314,9 +314,11 @@ void main() {
     );
 
     final invoice = money.invoices.single;
+    // #3587 — an issuer downloads from the invoice's sheet.
+    await openInvoice(tester, invoice.id);
     await tester.runAsync(() async {
       await tester
-          .tap(find.byKey(ValueKey('invoice-download-row-${invoice.id}')));
+          .tap(find.byKey(ValueKey('invoice-download-${invoice.id}')));
       await tester.pump();
     });
     await tester.pumpAndSettle();

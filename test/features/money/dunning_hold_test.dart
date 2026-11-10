@@ -10,13 +10,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/screens/invoices.dart';
 
-/// An OPEN invoice lives on the Open tab, not in the archive.
-Future<void> _openOpenInvoice(WidgetTester tester, String id) async {
-  await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(ValueKey('invoice-open-$id')));
-  await tester.pumpAndSettle();
-}
+/// An OPEN invoice's sheet, from the invoicing home (#3587).
+Future<void> _openOpenInvoice(WidgetTester tester, String id) =>
+    openInvoice(tester, id);
 
 void main() {
   testWidgets('hold with a reason, see it, release it', (tester) async {

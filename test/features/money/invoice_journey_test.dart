@@ -16,6 +16,7 @@ import 'package:deskilo/features/money/presentation/widgets/invoice_journey_view
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -23,6 +24,7 @@ import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/screens/invoices.dart' show invoicingRow;
 
 Invoice _invoice({
   String id = 'inv-1',
@@ -323,35 +325,6 @@ void main() {
       expect(j.remainingCents, 0);
       expect(j.reminderDue, isNull);
     });
-
-    test('the stage counts split the open list by whose move it is', () {
-      final counts = stageCountsOf(
-        toIssue: 6,
-        closed: 12,
-        open: [
-          _journey(_invoice(id: 'a')),
-          _journey(
-            _invoice(
-              id: 'b',
-              issuedAt: kTestNow.subtract(const Duration(days: 30)),
-            ),
-          ),
-          _journey(
-            _invoice(id: 'c'),
-            events: [_payment(id: 'e', status: EventStatus.pending)],
-          ),
-          _journey(_invoice(id: 'd'), match: _match(status: 'pending')),
-          _journey(_invoice(id: 'e', totalCents: -1000)),
-          _journey(_invoice(id: 'f', voided: true)),
-        ],
-      );
-      expect(counts.toIssue, 6);
-      expect(counts.toCollect, 2);
-      expect(counts.toCollectCents, 50000);
-      expect(counts.overdue, 1);
-      expect(counts.toConfirm, 3);
-      expect(counts.closed, 12);
-    });
   });
 
   group('on screen', () {
@@ -414,53 +387,80 @@ void main() {
       return id;
     }
 
+    /// #3587 — the home's line of [id] (one line per invoice), tapped:
+    /// the detail sheet, where the journey and the actions live now.
+    Future<void> openFromHome(WidgetTester tester, String id) async {
+      await tester.tap(await invoicingRow(tester, id));
+      await tester.pumpAndSettle();
+    }
+
+    /// The owed card's legend line of [bucket], whatever the currency.
+    Finder owedBucket(String bucket) => find.byWidgetPredicate((w) {
+          final key = w.key;
+          return key is ValueKey<String> &&
+              key.value.startsWith('invoicing-owed-') &&
+              key.value.endsWith('-$bucket');
+        });
+
     testWidgets(
-        'the hub: a stage strip over the tabs, the journey bar and the '
-        'move on every open card, and no labelled button while the '
+        'the home: an open invoice is owed, not yet due; its sheet carries '
+        'the journey bar and the move, and no labelled button while the '
         'issuer has nothing to do', (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money);
       await pump(tester, money: money);
 
-      // The four stages, with their counts.
-      for (final stage in ['issue', 'collect', 'confirm', 'closed']) {
-        expect(find.byKey(ValueKey('invoice-stage-$stage')), findsOneWidget);
-      }
-      expect(find.textContaining('outstanding'), findsOneWidget);
+      // #3587 — the owed card in place of the stage strip.
+      expect(owedBucket('notYetDue'), findsOneWidget);
+      expect(owedBucket('overdue'), findsNothing);
+      expect(owedBucket('toConfirm'), findsNothing);
 
-      // Tapping To collect lands on the Open tab.
-      await tester.tap(find.byKey(const ValueKey('invoice-stage-collect')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(ValueKey('invoice-open-$id')), findsOneWidget);
-      expect(find.byKey(const ValueKey('invoice-journey-bar')), findsOneWidget);
-      expect(find.byKey(const ValueKey('invoice-move-line')), findsOneWidget);
-      expect(find.textContaining("Waiting for"), findsOneWidget);
-      expect(find.textContaining('due'), findsWidgets);
-      // Nothing is expected from the issuer yet: the one frequent verb is
-      // named, the rest are icons.
-      expect(find.text('Send a reminder'), findsNothing);
-      expect(find.text('Mark as paid'), findsOneWidget);
-      expect(find.byKey(ValueKey('invoice-match-$id')), findsOneWidget);
-      expect(find.byKey(ValueKey('invoice-remind-$id')), findsOneWidget);
+      await openFromHome(tester, id);
+      expect(find.byKey(const ValueKey('invoice-journey-bar')), findsWidgets);
+      expect(find.byKey(const ValueKey('invoice-move-line')), findsWidgets);
+      expect(find.textContaining('Waiting for'), findsWidgets);
+      // Nothing is expected from the issuer yet: the verbs are offered,
+      // none of them as the filled (expected) button.
+      expect(find.byKey(const ValueKey('invoice-match-action')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-remind-action')),
+          findsOneWidget);
+      expect(
+        find.ancestor(
+          of: find.text('Send a reminder'),
+          matching: find.byType(FilledButton),
+        ),
+        findsNothing,
+      );
+      expect(
+        find.ancestor(
+          of: find.text('Mark as paid'),
+          matching: find.byType(FilledButton),
+        ),
+        findsNothing,
+      );
     });
 
     testWidgets(
-        'past the term the expected move is the reminder: ONE labelled '
-        'button with the reminder\'s level, same key, and it records',
-        (tester) async {
+        'past the term the invoice is overdue: the customer line offers '
+        'Remind, and it records the reminder', (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money, ageDays: 20);
       await pump(tester, money: money);
-      await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-      await tester.pumpAndSettle();
 
-      expect(find.textContaining('overdue by 6 days'), findsOneWidget);
-      expect(find.text('Send reminder 1'), findsOneWidget);
-      // The strip counts it as overdue.
-      expect(find.text('1 overdue'), findsOneWidget);
+      // #3587 — the owed card counts it overdue (the strip's "1 overdue").
+      expect(owedBucket('overdue'), findsOneWidget);
+      final action = find.byKey(
+        ValueKey('invoicing-customer-action-${money.invoices.single.memberId}'),
+      );
+      await tester.ensureVisible(action);
+      expect(
+        find.descendant(of: action, matching: find.text('Remind')),
+        findsOneWidget,
+      );
 
       await tester.runAsync(() async {
-        await tester.tap(find.byKey(ValueKey('invoice-remind-$id')));
+        await tester.tap(action);
         await tester.pumpAndSettle();
       });
       await tester.pumpAndSettle();
@@ -468,21 +468,18 @@ void main() {
     });
 
     testWidgets(
-        'a payment the member declared: the card says another admin '
-        'confirms it and offers Events; the strip counts it To confirm',
-        (tester) async {
+        'a payment the member declared: the home counts it To confirm and '
+        'its sheet says another admin confirms it', (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money);
       final events = FakeEventRepository()
         ..events.add(_payment(id: 'e1', status: EventStatus.pending));
       await pump(tester, money: money, events: events);
-      expect(find.byKey(const ValueKey('invoice-stage-confirm')), findsOneWidget);
+      // #3587 — the owed card's To confirm in place of the strip's.
+      expect(owedBucket('toConfirm'), findsOneWidget);
 
-      await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('another admin confirms'), findsOneWidget);
-      expect(find.byKey(ValueKey('invoice-events-$id')), findsOneWidget);
-      expect(find.text('Open Events'), findsOneWidget);
+      await openFromHome(tester, id);
+      expect(find.textContaining('another admin confirms'), findsWidgets);
     });
 
     testWidgets(
@@ -493,11 +490,13 @@ void main() {
       final events = FakeEventRepository()
         ..events.add(_payment(id: 'e1', status: EventStatus.confirmed));
       await pump(tester, money: money, events: events);
-      await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-      await tester.pumpAndSettle();
-      expect(find.textContaining('match it to this invoice'), findsOneWidget);
-      expect(find.text('Mark as paid'), findsOneWidget);
-      expect(find.byKey(ValueKey('invoice-match-$id')), findsOneWidget);
+      await openFromHome(tester, id);
+      expect(find.textContaining('match it to this invoice'), findsWidgets);
+      expect(
+        tester.widget(find.byKey(const ValueKey('invoice-match-action'))),
+        isA<FilledButton>(),
+        reason: 'the expected move is the filled button',
+      );
     });
 
     testWidgets('How invoicing works: four steps, both sides, from the hub',
@@ -522,10 +521,7 @@ void main() {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money, ageDays: 20);
       await pump(tester, money: money);
-      await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(ValueKey('invoice-open-$id')));
-      await tester.pumpAndSettle();
+      await openFromHome(tester, id);
 
       expect(find.byKey(const ValueKey('invoice-detail-number')), findsOneWidget);
       expect(find.byKey(const ValueKey('invoice-journey-bar')), findsWidgets);
@@ -570,7 +566,7 @@ void main() {
       expect(find.textContaining('Your move'), findsNothing);
     });
 
-    testWidgets('flag OFF: the plain chips, no bar, no strip, no explainer',
+    testWidgets('flag OFF: the plain chips, no bar, no move, no explainer',
         (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money);
@@ -589,12 +585,16 @@ void main() {
       await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
       await tester.tap(find.byKey(const ValueKey('invoices-button')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('invoice-process-help')), findsNothing);
-      expect(find.byKey(const ValueKey('invoice-stage-collect')), findsNothing);
-      await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+      await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
       await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('invoice-process-help')), findsNothing);
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      await openFromHome(tester, id);
       expect(find.byKey(const ValueKey('invoice-move-line')), findsNothing);
-      expect(find.byKey(ValueKey('invoice-match-$id')), findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-journey-bar')), findsNothing);
+      expect(find.byKey(const ValueKey('invoice-match-action')),
+          findsOneWidget);
     });
   });
 

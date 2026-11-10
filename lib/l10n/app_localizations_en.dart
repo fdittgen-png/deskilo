@@ -14391,11 +14391,358 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicesEmpty => 'No invoices yet.';
 
   @override
-  String get invoicingBanner =>
-      'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.';
+  String get invoicingActionConfirm => 'Confirm';
+
+  @override
+  String get invoicingActionMatch => 'Match';
+
+  @override
+  String get invoicingActionRemind => 'Remind';
+
+  @override
+  String get invoicingCaughtUp => 'You are all caught up.';
+
+  @override
+  String get invoicingColCustomer => 'Customer';
+
+  @override
+  String get invoicingColDue => 'Due';
+
+  @override
+  String get invoicingColInvoice => 'Invoice';
+
+  @override
+  String get invoicingColInvoices => 'Invoices';
+
+  @override
+  String get invoicingColOldest => 'Oldest';
+
+  @override
+  String get invoicingColOpen => 'Open';
+
+  @override
+  String get invoicingColOwes => 'Owes';
+
+  @override
+  String get invoicingColStatus => 'Status';
+
+  @override
+  String invoicingCountLine(String customers, String invoices) {
+    return '$customers · $invoices';
+  }
+
+  @override
+  String invoicingCustomerCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count customers',
+      one: '1 customer',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDaysLate(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days late',
+      one: '1 day late',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDueIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Due in $days days',
+      one: 'Due in 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDueOn(String date) {
+    return 'due $date';
+  }
+
+  @override
+  String get invoicingEmptyBody =>
+      'Issue your first invoice, or invoice the month when there is usage to bill.';
+
+  @override
+  String get invoicingEmptyNew => 'New invoice';
+
+  @override
+  String get invoicingEmptyTitle => 'No invoices yet';
+
+  @override
+  String get invoicingEveryReminderSent => 'every reminder sent';
+
+  @override
+  String get invoicingFilterOpen => 'Open';
+
+  @override
+  String get invoicingFilterOverdue => 'Overdue';
+
+  @override
+  String get invoicingFilterPaid => 'Paid';
+
+  @override
+  String get invoicingFilterToConfirm => 'To confirm';
+
+  @override
+  String invoicingInvoiceCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices',
+      one: '1 invoice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingInvoicedIn(String month) {
+    return 'Invoiced in $month';
+  }
+
+  @override
+  String get invoicingLegalNotes => 'Legal notes';
+
+  @override
+  String get invoicingMoreHow => 'How invoicing works';
+
+  @override
+  String get invoicingMoreMine => 'My own invoices';
+
+  @override
+  String get invoicingMorePaid => 'Paid and closed invoices';
+
+  @override
+  String get invoicingMoreRegister => 'Invoice register';
+
+  @override
+  String get invoicingMoreRegroup => 'Regroup invoices into one';
+
+  @override
+  String get invoicingMoreReminderRules => 'Reminder rules';
+
+  @override
+  String get invoicingMoreSettings => 'Invoice settings';
+
+  @override
+  String get invoicingMoreTemplate => 'Invoice PDF template';
+
+  @override
+  String get invoicingNew => 'New';
+
+  @override
+  String get invoicingNothingHere => 'Nothing here.';
+
+  @override
+  String invoicingNothingMatches(String query) {
+    return 'Nothing matches “$query”.';
+  }
+
+  @override
+  String get invoicingNothingOverdue => 'Nothing is overdue.';
+
+  @override
+  String get invoicingNothingToConfirm => 'No payment waits for you.';
+
+  @override
+  String get invoicingOwed => 'Owed to you';
+
+  @override
+  String get invoicingOwedNotYetDue => 'Not yet due';
+
+  @override
+  String get invoicingOwedOverdue => 'Overdue';
+
+  @override
+  String get invoicingOwedToConfirm => 'To confirm';
+
+  @override
+  String invoicingReceivedIn(String month) {
+    return 'Received in $month';
+  }
+
+  @override
+  String get invoicingRemindersAutomatic =>
+      'Reminders go out by themselves, in the app.';
+
+  @override
+  String get invoicingRemindersByHand => 'Reminders are shared by hand.';
+
+  @override
+  String get invoicingRules => 'Rules';
+
+  @override
+  String get invoicingSearch => 'Search';
+
+  @override
+  String get invoicingSearchHint => 'A customer or a number';
+
+  @override
+  String invoicingSourceFailed(String source) {
+    return '$source could not be read.';
+  }
+
+  @override
+  String get invoicingSourcePayments => 'Payment history';
+
+  @override
+  String get invoicingSourceReminders => 'Reminder history';
+
+  @override
+  String get invoicingSourceToInvoice => 'The month to invoice';
+
+  @override
+  String get invoicingStatusAwaitingCustomer =>
+      'Waiting for the customer to confirm';
+
+  @override
+  String get invoicingStatusCancelled => 'Cancelled';
+
+  @override
+  String get invoicingStatusCredited => 'Credited';
+
+  @override
+  String get invoicingStatusDraft => 'Draft';
+
+  @override
+  String get invoicingStatusDueToday => 'Due today';
+
+  @override
+  String invoicingStatusEveryReminderSent(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days late',
+      one: '1 day late',
+    );
+    return '$_temp0 · every reminder sent';
+  }
+
+  @override
+  String get invoicingStatusNoDueDate => 'No due date';
+
+  @override
+  String get invoicingStatusOnHold => 'On hold';
+
+  @override
+  String invoicingStatusPaid(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String get invoicingStatusPaidUndated => 'Paid';
+
+  @override
+  String invoicingStatusPartlyPaid(String amount) {
+    return 'Partly paid · $amount open';
+  }
+
+  @override
+  String get invoicingStatusRefundOwed => 'Refund owed';
+
+  @override
+  String get invoicingStatusRefunded => 'Refunded';
+
+  @override
+  String invoicingStatusRegrouped(String number) {
+    return 'Regrouped in $number';
+  }
+
+  @override
+  String get invoicingStatusRejected => 'E-invoice rejected';
+
+  @override
+  String invoicingStatusReminderSent(int days, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days late',
+      one: '1 day late',
+    );
+    return '$_temp0 · reminder $level sent';
+  }
+
+  @override
+  String invoicingStatusSaysPaid(String date) {
+    return 'Says paid $date';
+  }
+
+  @override
+  String get invoicingStatusSaysPaidUndated => 'Says it is paid';
+
+  @override
+  String get invoicingStatusSecondApproval => 'Waits for a second approval';
+
+  @override
+  String get invoicingStatusToMatch => 'Payment received · to match';
+
+  @override
+  String get invoicingTitle => 'Invoices';
+
+  @override
+  String get invoicingTodo => 'To do';
+
+  @override
+  String get invoicingTodoConfirm => 'Confirm payments';
+
+  @override
+  String get invoicingTodoDrafts => 'Issue drafts';
+
+  @override
+  String get invoicingTodoDueDate => 'Set a due date';
+
+  @override
+  String get invoicingTodoFix => 'Fix';
+
+  @override
+  String get invoicingTodoMatch => 'Match payments';
+
+  @override
+  String invoicingTodoMonth(String month) {
+    return 'Invoice $month';
+  }
+
+  @override
+  String get invoicingTodoRefunds => 'Pay out refunds';
+
+  @override
+  String invoicingTodoRejected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count e-invoices were rejected',
+      one: '1 e-invoice was rejected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoicingTodoReminders => 'Share reminders by hand';
+
+  @override
+  String get invoicingTodoReview => 'Review';
 
   @override
   String get invoicingTools => 'Invoicing tools';
+
+  @override
+  String get invoicingTryAgain => 'Try again';
+
+  @override
+  String get invoicingViewCustomers => 'Customers';
+
+  @override
+  String get invoicingViewInvoices => 'Invoices';
 
   @override
   String journalBlocked(String roles) {

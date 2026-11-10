@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices, seededMoney;
 
 void main() {
   final issued = DateTime.utc(2026, 7);
@@ -127,16 +127,24 @@ void main() {
     );
     final invoice = money.invoices.single;
 
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
+    // #3587 — the home counts the invoice overdue and its sheet leads
+    // with the due reminder.
     expect(
-      find.byKey(ValueKey('invoice-dunning-due-${invoice.id}')),
+      find.byWidgetPredicate((w) =>
+          w.key is ValueKey<String> &&
+          (w.key! as ValueKey<String>).value.startsWith('invoicing-owed-') &&
+          (w.key! as ValueKey<String>).value.endsWith('-overdue')),
       findsOneWidget,
+    );
+    await openInvoice(tester, invoice.id);
+    expect(
+      tester.widget(find.byKey(const ValueKey('invoice-remind-action'))),
+      isA<FilledButton>(),
+      reason: 'the due reminder is the expected move',
     );
 
     await tester.runAsync(() async {
-      await tester
-          .tap(find.byKey(ValueKey('invoice-remind-${invoice.id}')));
+      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
       await tester.pump();
     });
     await tester.pumpAndSettle();

@@ -69,10 +69,7 @@ void main() {
     final invoice = money.invoices.single;
     await money.remindInvoice(invoice.id);
     await pumpInvoices(tester, money: money);
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(ValueKey('invoice-open-${invoice.id}')));
-    await tester.pumpAndSettle();
+    await openInvoice(tester, invoice.id);
 
     final history = find.byKey(const ValueKey('invoice-reminder-evidence'));
     await tester.ensureVisible(history);

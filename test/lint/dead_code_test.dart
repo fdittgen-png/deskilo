@@ -18,42 +18,14 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/core/ui/kit/customer_row.dart::CustomerHeader':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/filter_chips.dart::FilterChips':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/kit_card.dart::QuietLine':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/owed_card.dart::OwedCard':
-      '#3587 R1-c — the invoicing home and its pages read it',
   'lib/core/ui/kit/result_page.dart::ResultPage':
-      '#3587 R1-c — the invoicing home and its pages read it',
+      '#3587 R1-d/R1-e/R1-f — the invoice page and the flows read it',
   'lib/core/ui/kit/select_row.dart::SelectRow':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/split_bar.dart::LegendToggle':
-      '#3587 R1-c — the invoicing home and its pages read it',
+      '#3587 R1-d/R1-e/R1-f — the invoice page and the flows read it',
   'lib/core/ui/kit/story.dart::Story':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/todo_card.dart::TodoCard':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/todo_row.dart::TodoRow':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/two_line_row.dart::TwoLineRow':
-      '#3587 R1-c — the invoicing home and its pages read it',
+      '#3587 R1-d/R1-e/R1-f — the invoice page and the flows read it',
   'lib/features/money/application/receivables.dart::actionOf':
-      '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/application/receivables_answers.dart::customerRowsOf':
-      '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/application/receivables_answers.dart::monthOf':
-      '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/application/receivables_answers.dart::owedOf':
-      '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/application/receivables_answers.dart::todoOf':
-      '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/presentation/invoice_journey.dart::declarationOf':
-      '#3587 R1-c — the invoicing home reads it',
-  'lib/features/money/presentation/invoicing/receivables_adapter.dart::ReceivablesReader':
-      '#3587 R1-c — the invoicing home reads it',
+      '#3587 R1-d — the invoice page names its one action with it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
