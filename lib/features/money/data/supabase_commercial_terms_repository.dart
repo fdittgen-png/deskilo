@@ -258,5 +258,10 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     vatRateId: row['vat_rate_id'] as String? ?? '',
     stock: row['stock'] as int?,
     supplyClass: SupplyClass.fromWire(row['supply_class'] as String?),
+    description: row['description'] as String? ?? '',
+    durationMinutes: row['duration_minutes'] as int?,
+    category: row['category'] as String? ?? '',
+    isPublic: row['is_public'] as bool? ?? false,
+    sortOrder: row['sort_order'] as int? ?? 0,
   );
 }

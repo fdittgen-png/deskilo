@@ -16,6 +16,7 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
+import 'workspace_excel_services.dart';
 import 'workspace_overview_sheets.dart';
 
 /// The data export's workbook (#395): one tab per dataset, one row per
@@ -314,12 +315,8 @@ class _ExcelExport {
         ],
   ]);
 
-  XlsxSheet _servicecatalog() =>
-      XlsxSheet(name: 'Service catalog', rows: [
-    ['id', 'name', 'price', 'currency', 'active'],
-    for (final s in services)
-      [s.id, s.name, major(s.priceCents), workspace.currencyCode, s.active],
-  ]);
+  XlsxSheet _servicecatalog() => serviceCatalogSheet(
+      services, currency: workspace.currencyCode, major: major);
 
   XlsxSheet _invoices() =>
       XlsxSheet(name: 'Invoices', totals: 'total', rows: [
