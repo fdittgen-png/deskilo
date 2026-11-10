@@ -105,7 +105,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
               helper: widget.vatShare(draft.feeCents),
               keyboardType: amount,
               onChanged: (raw) {
-                draft.feeCents = parseCentsInput(raw);
+                draft.feeCents = parseMinorInput(raw);
                 widget.onEdited();
               },
             ),
@@ -120,7 +120,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
               helper: widget.vatShare(draft.overageCents),
               keyboardType: amount,
               onChanged: (raw) {
-                draft.overageCents = parseCentsInput(raw);
+                draft.overageCents = parseMinorInput(raw);
                 widget.onEdited();
               },
             ),

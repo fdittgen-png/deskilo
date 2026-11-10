@@ -18,6 +18,7 @@ Future<List<WorkspaceField>> pumpEditor(
   WidgetTester tester, {
   WorkspaceField? initial,
   String workspaceLocale = 'en',
+  Locale? locale,
 }) async {
   // The editor is a tall sheet; a short viewport puts Save off-screen
   // and every tap on it misses. The height is the test's, not the
@@ -31,6 +32,7 @@ Future<List<WorkspaceField>> pumpEditor(
   final saved = <WorkspaceField>[];
   await tester.pumpWidget(
     MaterialApp(
+      locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(
@@ -220,5 +222,27 @@ void main() {
     );
     await tester.pump();
     expect(saveEnabled(tester), isTrue);
+  });
+
+  testWidgets('#3487 a German keyboard types the largest number as 0,5',
+      (tester) async {
+    final saved = await pumpEditor(
+      tester,
+      locale: const Locale('de'),
+      initial: const WorkspaceField(
+        id: 'f',
+        key: 'share',
+        type: WorkspaceFieldType.decimal,
+        labels: {'en': 'Share'},
+      ),
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('question-editor-sheet-editor-max-length')),
+      '0,5',
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(QuestionEditorSheet.saveKey));
+    await tester.pumpAndSettle();
+    expect(saved.single.validation['max'], 0.5);
   });
 }

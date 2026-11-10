@@ -60,7 +60,7 @@ Future<void> showExpenseSheet(
   if (!context.mounted) return;
   final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields['deductible']);
   void prefillUnit() {
-    final cents = parseCentsInput(fields['amount'].text) ?? 0;
+    final cents = parseMinorInput(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
     if (cents > 0 && qty > 0) {
       fields['supplyUnit'].text = centsToMajor((cents + qty - 1) ~/ qty); // #1140

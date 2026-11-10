@@ -155,7 +155,7 @@ class _VersionForm {
         !taken.any(left.contains);
   }
 
-  double? get percent => double.tryParse(fields.text('percent').replaceAll(',', '.'));
+  double? get percent => parseRateInput(fields.text('percent'));
 
   /// The small values: a duty and a retention clock (both begin on a day),
   /// and a country of the creation catalogue.
