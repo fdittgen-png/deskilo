@@ -17,6 +17,8 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/core/ui/kit/status_chip.dart::statusColorsOf':
+      '#3587 R1-c — the owed card colours its bar with it',
   'lib/features/money/application/receivables.dart::invoiceStatusOf':
       '#3587 R1-c — the invoice rows say it in words',
   'lib/features/money/application/receivables_answers.dart::OwedBucket':

@@ -2648,6 +2648,7 @@ const Set<String> uiKeys = {
   'reset-password',
   'reset-primary',
   'resource-kind',
+  'result-done',
   'retention-clocks',
   'retention-clocks-close',
   'retention-clocks-dialog',
