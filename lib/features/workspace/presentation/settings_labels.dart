@@ -94,6 +94,8 @@ String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
 /// CRA authorisation of a Canadian space.
 String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'records.hosting_country' => l10n.settingLabelRecordsHostingCountry,
+      'business.kind' => l10n.settingLabelBusinessKind,
+      'business.more_kinds' => l10n.settingLabelBusinessMoreKinds,
       'records.cra_authorisation_reference' => l10n.settingLabelRecordsCraReference,
       'security.badge_pin_min_length' => l10n.settingLabelSecurityBadgePinMinLength,
       'security.badge_workspace_failure_limit' => l10n.settingLabelSecurityBadgeWorkspaceFailureLimit,
@@ -198,6 +200,8 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bank.import_max_lines' => l10n.settingHintBankImportMaxLines,
       'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
       'records.hosting_country' => l10n.settingHintRecordsHostingCountry,
+      'business.kind' => l10n.settingHintBusinessKind,
+      'business.more_kinds' => l10n.settingHintBusinessMoreKinds,
       'records.cra_authorisation_reference' => l10n.settingHintRecordsCraReference,
       'security.badge_pin_min_length' => l10n.settingHintSecurityBadgePinMinLength,
       'security.badge_workspace_failure_limit' => l10n.settingHintSecurityBadgeWorkspaceFailureLimit,
@@ -235,6 +239,7 @@ String settingGroupLabel(AppLocalizations l10n, String group) => switch (group) 
       'kpi' => l10n.settingGroupKpi,
       'personal' => l10n.settingGroupPersonal,
       'records' => l10n.settingGroupRecords,
+      'business' => l10n.settingGroupBusiness,
       'region' => l10n.settingGroupRegion,
       _ => group,
     };

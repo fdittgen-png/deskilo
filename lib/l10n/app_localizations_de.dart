@@ -25464,6 +25464,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingGroupBooking => 'Buchung und Check-in';
 
   @override
+  String get settingGroupBusiness => 'Geschäft';
+
+  @override
   String get settingGroupDirectory => 'Mitgliederverzeichnis';
 
   @override
@@ -25582,6 +25585,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingHintBookingWalkUpWindowMinutes =>
       'Dauer des Aufenthalts, der spontan mit Ausweis oder Raumcode auf einem Minutenraster gebucht wird.';
+
+  @override
+  String get settingHintBusinessKind =>
+      'Was das Geschäft ist: ein Coworking-Space, ein Studio, eine Praxis, ein Salon oder ein anderes Dienstleistungsgeschäft. Sie schlägt die Funktionen und Begriffe vor, die es braucht; ein Coworking-Space bleibt, wie er war.';
+
+  @override
+  String get settingHintBusinessMoreKinds =>
+      'Weitere Arten, die das Geschäft neben der Hauptart ist, falls zutreffend.';
 
   @override
   String get settingHintCalendarRangeDays =>
@@ -25860,6 +25871,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelBookingWalkUpWindowMinutes => 'Spontaner Aufenthalt';
+
+  @override
+  String get settingLabelBusinessKind => 'Art des Geschäfts';
+
+  @override
+  String get settingLabelBusinessMoreKinds => 'Auch eine Art des Geschäfts';
 
   @override
   String get settingLabelCalendarRangeDays => 'Kalenderzeitraum';

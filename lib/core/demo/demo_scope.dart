@@ -39,6 +39,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_setting_seed.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
@@ -307,7 +308,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       ...demoCityCommerceOverrides(fixture, main.purchasing, main.books, main.lease, main.assets), // #2358, #2567, #2573
-      taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider))), // #2477 #2484 in memory
+      taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider), seed: demoSettingSeed)), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]), ...demoNoBackendOverrides(), // #3235
       _demoPersonalContext, demoWorkspaceContext(_kDemoInstallationId), savedPlacesStoreProvider.overrideWithValue(fixture.prefs.savedPlaces), discoveryViewStoreProvider.overrideWithValue(fixture.prefs.discoveryView), // #2555 — the persona at the fictional installation; saved pages in the session

@@ -25217,6 +25217,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingGroupBooking => 'Booking and check-in';
 
   @override
+  String get settingGroupBusiness => 'Business';
+
+  @override
   String get settingGroupDirectory => 'Member directory';
 
   @override
@@ -25335,6 +25338,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingHintBookingWalkUpWindowMinutes =>
       'Length of the stay booked on the spot with a badge or a space code on a minute grid.';
+
+  @override
+  String get settingHintBusinessKind =>
+      'What the business is: a coworking space, a studio, a practice, a salon or another service business. It proposes the features and words it needs; a coworking space keeps everything as it was.';
+
+  @override
+  String get settingHintBusinessMoreKinds =>
+      'Further kinds the business also is, if any, besides the main one.';
 
   @override
   String get settingHintCalendarRangeDays =>
@@ -25611,6 +25622,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelBookingWalkUpWindowMinutes => 'On-the-spot stay';
+
+  @override
+  String get settingLabelBusinessKind => 'Kind of business';
+
+  @override
+  String get settingLabelBusinessMoreKinds => 'Also a kind of business';
 
   @override
   String get settingLabelCalendarRangeDays => 'Calendar range';

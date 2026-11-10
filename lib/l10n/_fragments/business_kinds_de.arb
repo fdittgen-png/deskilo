@@ -1,0 +1,7 @@
+{
+  "settingGroupBusiness": "Geschäft",
+  "settingLabelBusinessKind": "Art des Geschäfts",
+  "settingHintBusinessKind": "Was das Geschäft ist: ein Coworking-Space, ein Studio, eine Praxis, ein Salon oder ein anderes Dienstleistungsgeschäft. Sie schlägt die Funktionen und Begriffe vor, die es braucht; ein Coworking-Space bleibt, wie er war.",
+  "settingLabelBusinessMoreKinds": "Auch eine Art des Geschäfts",
+  "settingHintBusinessMoreKinds": "Weitere Arten, die das Geschäft neben der Hauptart ist, falls zutreffend."
+}

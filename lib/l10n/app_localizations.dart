@@ -42375,6 +42375,12 @@ abstract class AppLocalizations {
   /// **'Booking and check-in'**
   String get settingGroupBooking;
 
+  /// Settings editor: the name of the group holding the business settings (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get settingGroupBusiness;
+
   /// #2486 settings: Settings group title.
   ///
   /// In en, this message translates to:
@@ -42572,6 +42578,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Length of the stay booked on the spot with a badge or a space code on a minute grid.'**
   String get settingHintBookingWalkUpWindowMinutes;
+
+  /// Settings editor: the hint under the business kind setting (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'What the business is: a coworking space, a studio, a practice, a salon or another service business. It proposes the features and words it needs; a coworking space keeps everything as it was.'**
+  String get settingHintBusinessKind;
+
+  /// Settings editor: the hint under the further kinds setting (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Further kinds the business also is, if any, besides the main one.'**
+  String get settingHintBusinessMoreKinds;
 
   /// #2487 settings: Setting hint.
   ///
@@ -43010,6 +43028,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On-the-spot stay'**
   String get settingLabelBookingWalkUpWindowMinutes;
+
+  /// Settings editor: the label of the setting that says what kind of business the workspace is (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of business'**
+  String get settingLabelBusinessKind;
+
+  /// Settings editor: the label of the setting listing further kinds of the business (#3549).
+  ///
+  /// In en, this message translates to:
+  /// **'Also a kind of business'**
+  String get settingLabelBusinessMoreKinds;
 
   /// #2487 settings: Setting label.
   ///
