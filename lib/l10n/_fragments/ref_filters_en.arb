@@ -1,16 +1,47 @@
 {
   "refFilterMore": "Filters",
+  "@refFilterMore": {
+    "description": "Shown as the tooltip in ref picker sheet (workspace), and 1 other place."
+  },
   "refFilterAll": "All",
+  "@refFilterAll": {
+    "description": "Shown as the label in ref picker sheet (workspace)."
+  },
   "refFilterClear": "Clear filters",
+  "@refFilterClear": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refFilterSort": "Sort",
+  "@refFilterSort": {
+    "description": "Shown as the tooltip in ref picker sheet (workspace)."
+  },
   "refSortNewest": "Newest first",
+  "@refSortNewest": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refSortOldest": "Oldest first",
+  "@refSortOldest": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refSortAmountHigh": "Highest amount",
+  "@refSortAmountHigh": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refSortAmountLow": "Lowest amount",
+  "@refSortAmountLow": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refFilterReset": "Reset",
+  "@refFilterReset": {
+    "description": "Shown as the text in ref picker filters panel (workspace)."
+  },
   "refFilterAmount": "Amount",
+  "@refFilterAmount": {
+    "description": "Shown as the label in ref picker sheet (workspace), and 1 other place."
+  },
   "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
+    "description": "Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -19,6 +50,7 @@
   },
   "refFilterFindIn": "Find in {facet}",
   "@refFilterFindIn": {
+    "description": "Shown as the hint of a field in ref picker filters panel (workspace). Placeholders: {facet} (String).",
     "placeholders": {
       "facet": {
         "type": "String"
@@ -26,16 +58,55 @@
     }
   },
   "refFacetStatus": "Status",
+  "@refFacetStatus": {
+    "description": "Shown as the text in note record choices (workspace), and 1 other place."
+  },
   "refFacetPerson": "Person",
+  "@refFacetPerson": {
+    "description": "Shown as the text in note record choices (workspace), and 1 other place."
+  },
   "refFacetMonth": "Month",
+  "@refFacetMonth": {
+    "description": "Shown as the text in note record choices (workspace), and 2 other places."
+  },
   "refFacetType": "Type",
+  "@refFacetType": {
+    "description": "Shown as the text in note record choices (workspace), and 1 other place."
+  },
   "refFacetWorkspace": "Workspace",
+  "@refFacetWorkspace": {
+    "description": "Not shown in the app; read by 0 tests or tools."
+  },
   "refStatusOpen": "Open (unpaid)",
+  "@refStatusOpen": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusPaid": "Paid",
+  "@refStatusPaid": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusCancelled": "Cancelled",
+  "@refStatusCancelled": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusRefunded": "Refunded",
+  "@refStatusRefunded": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refTypeInvoice": "Invoice",
+  "@refTypeInvoice": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refTypeCreditNote": "Credit note",
+  "@refTypeCreditNote": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusPending": "Pending",
-  "refStatusDecided": "Decided"
+  "@refStatusPending": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
+  "refStatusDecided": "Decided",
+  "@refStatusDecided": {
+    "description": "Shown as the label in note record choices (workspace)."
+  }
 }

@@ -1,8 +1,20 @@
 {
   "uxNavPeople": "People & access",
+  "@uxNavPeople": {
+    "description": "Shown as the text in shell drawer (app)."
+  },
   "uxNavSales": "Sales & collections",
+  "@uxNavSales": {
+    "description": "Shown as the text in shell drawer (app), and 1 other place."
+  },
   "uxNavFinance": "Cash & accounting",
+  "@uxNavFinance": {
+    "description": "Shown as the text in shell drawer (app)."
+  },
   "uxNavWorkspace": "Workspace setup",
+  "@uxNavWorkspace": {
+    "description": "Shown as the text in shell drawer (app)."
+  },
   "uxNavReporting": "Reporting",
   "@uxNavReporting": {
     "description": "#2313 the menu group that holds every report and the business analytics"

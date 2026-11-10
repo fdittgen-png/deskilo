@@ -1,66 +1,240 @@
 {
   "portalActionFailed": "Could not save this change. Please try again.",
+  "@portalActionFailed": {
+    "description": "Shown as the text in message reach sheet (workspace), and 22 other places."
+  },
   "portalConnect": "Connect a server",
+  "@portalConnect": {
+    "description": "Shown as the tooltip in connections screen (directory), and 1 other place."
+  },
   "portalConnections": "Connected servers",
+  "@portalConnections": {
+    "description": "Shown as the tooltip in account messenger screen (directory), and 3 other places."
+  },
   "portalDisconnect": "Disconnect",
+  "@portalDisconnect": {
+    "description": "Shown as the tooltip in connections screen (directory)."
+  },
   "portalConnectionFailed": "Could not connect. Check this server and your sign-in details.",
+  "@portalConnectionFailed": {
+    "description": "Shown as the error text of a field in connections screen (directory), and 2 other places."
+  },
   "portalConnectionsHint": "Each server uses its own sign-in. Disconnecting removes its saved access from this account on this device.",
+  "@portalConnectionsHint": {
+    "description": "Shown as the text in connections screen (directory)."
+  },
   "portalEmailCode": "Email sign-in code",
+  "@portalEmailCode": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "portalUseCode": "Use an email code",
+  "@portalUseCode": {
+    "description": "Shown as the title in connection dialog (directory)."
+  },
   "portalSendCode": "Send sign-in code",
+  "@portalSendCode": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
+  "@portalSourceUnavailable": {
+    "description": "Shown as the text in account messenger sections (directory), and 5 other places."
+  },
   "portalDiscover": "Find a workspace",
+  "@portalDiscover": {
+    "description": "Shown as the label in auth form sections (auth), and 2 other places."
+  },
   "portalRegisterDirectory": "Link a server to the global directory",
+  "@portalRegisterDirectory": {
+    "description": "Shown as the title in directory link dialog (directory), and 1 other place."
+  },
   "portalPublication": "Public workspace page",
+  "@portalPublication": {
+    "description": "Shown as the title in workspace settings screen (workspace), and 1 other place."
+  },
   "portalPublished": "Visible in the public directory",
+  "@portalPublished": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalPreview": "External view",
+  "@portalPreview": {
+    "description": "Shown as the title in public workspace view (directory)."
+  },
   "portalSavePreview": "Save and preview the external view",
+  "@portalSavePreview": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalDescription": "Description",
+  "@portalDescription": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalAddress": "Public address",
+  "@portalAddress": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalEmail": "Public email",
+  "@portalEmail": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalPhone": "Public phone",
+  "@portalPhone": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalWebsite": "Website",
+  "@portalWebsite": {
+    "description": "Shown as the text in public workspace view (directory), and 2 other places."
+  },
   "portalImage": "Identity image URL",
+  "@portalImage": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalPublicPlan": "Public floor plan",
+  "@portalPublicPlan": {
+    "description": "Shown as the text in public workspace view (directory), and 1 other place."
+  },
   "portalPlans": "Plans and prices",
-  "portalLatitude": "Latitude",
-  "portalLongitude": "Longitude",
+  "@portalPlans": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalAssociation": "Association",
+  "@portalAssociation": {
+    "description": "Shown as the text in public workspace view (directory), and 3 other places."
+  },
   "portalCompany": "Company",
+  "@portalCompany": {
+    "description": "Shown as the text in public workspace view (directory), and 3 other places."
+  },
   "portalPerson": "Private host",
+  "@portalPerson": {
+    "description": "Shown as the text in public workspace view (directory), and 3 other places."
+  },
   "portalOwner": "Owner",
+  "@portalOwner": {
+    "description": "Shown as the text in public workspace view (directory), and 1 other place."
+  },
   "portalAdmin": "Administrator",
+  "@portalAdmin": {
+    "description": "Shown as the text in public workspace view (directory), and 1 other place."
+  },
   "portalChat": "Chat",
+  "@portalChat": {
+    "description": "Shown as the tooltip in public workspace view (directory)."
+  },
   "portalRequestProfile": "Request a workspace profile",
+  "@portalRequestProfile": {
+    "description": "Shown as the text in space offers (directory)."
+  },
   "portalRequestSent": "Request sent. The workspace will review your profile.",
+  "@portalRequestSent": {
+    "description": "Shown as the text in public workspace view (directory)."
+  },
   "portalList": "List",
+  "@portalList": {
+    "description": "Shown as the tooltip in directory screen (directory), and 1 other place."
+  },
   "portalMap": "Map",
+  "@portalMap": {
+    "description": "Shown as the tooltip in directory screen (directory)."
+  },
   "portalSearch": "Search workspaces",
+  "@portalSearch": {
+    "description": "Shown as the label of a field in directory screen (directory), and 1 other place."
+  },
   "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
+  "@portalDirectoryUnavailable": {
+    "description": "Shown as the text in discovery list view (directory), and 2 other places."
+  },
   "portalNoWorkspaces": "No published workspaces found.",
+  "@portalNoWorkspaces": {
+    "description": "Shown as the text in discovery list view (directory), and 1 other place."
+  },
   "portalNoLongerPublished": "This workspace is no longer published.",
+  "@portalNoLongerPublished": {
+    "description": "Shown as the text in public workspace view (directory)."
+  },
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
+  "@portalDirectoryIncompatible": {
+    "description": "Shown as the text in discovery list view (directory), and 1 other place."
+  },
   "portalActionNotNegotiated": "This action is not available between this app and that server. Updating the app may help.",
+  "@portalActionNotNegotiated": {
+    "description": "Shown as the text in public workspace view (directory)."
+  },
   "portalMoreDirectories": "More directories",
+  "@portalMoreDirectories": {
+    "description": "Shown as the text in discovery list view (directory)."
+  },
   "portalMessenger": "Account messenger",
-  "portalThisServer": "This server",
+  "@portalMessenger": {
+    "description": "Shown as the title in account messenger screen (directory), and 1 other place."
+  },
   "portalAvailable": "Let users find and message my account",
+  "@portalAvailable": {
+    "description": "Shown as the title in account messenger screen (directory)."
+  },
   "portalFindPeople": "Find available people",
+  "@portalFindPeople": {
+    "description": "Shown as the tooltip in create group screen (directory), and 4 other places."
+  },
   "portalEmployed": "Employed by this workspace",
+  "@portalEmployed": {
+    "description": "Shown as the title in member employment tile (directory)."
+  },
   "portalEmploymentHint": "Employment does not change access or subscriptions. Salary payments are not enabled.",
+  "@portalEmploymentHint": {
+    "description": "Shown as the text in member employment tile (directory)."
+  },
   "portalAdminVisible": "Show me as a public administrator",
+  "@portalAdminVisible": {
+    "description": "Shown as the title in admin visibility tile (directory)."
+  },
   "featurePublicListings": "Public workspace listing",
+  "@featurePublicListings": {
+    "description": "Shown as the text in feature names (workspace)."
+  },
   "featurePublicListingsDesc": "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.",
+  "@featurePublicListingsDesc": {
+    "description": "Shown as the text in feature copy (workspace)."
+  },
   "portalFollowsWorkspace": "From workspace information",
+  "@portalFollowsWorkspace": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalCustomised": "Customised",
+  "@portalCustomised": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalUseWorkspaceInfo": "Use workspace information",
+  "@portalUseWorkspaceInfo": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalResetAll": "Reset all public data to workspace information",
+  "@portalResetAll": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalResetAllBody": "The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.",
+  "@portalResetAllBody": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalResetAllConfirm": "Reset",
+  "@portalResetAllConfirm": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalReachableHeading": "People you can write to",
+  "@portalReachableHeading": {
+    "description": "Shown as the text in reachable directory (directory)."
+  },
   "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
+  "@portalReachableEmpty": {
+    "description": "Shown as the text in reachable directory (directory), and 1 other place."
+  },
   "portalGroupsHeading": "Groups",
+  "@portalGroupsHeading": {
+    "description": "Shown as the text in reachable directory (directory), and 1 other place."
+  },
   "portalRecipientHint": "Type a name: suggestions appear from the first letter",
+  "@portalRecipientHint": {
+    "description": "Shown as the hint of a field in recipient typeahead (directory)."
+  },
   "portalDirectoryCount": "{name} ({count})",
   "@portalDirectoryCount": {
     "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)",
@@ -74,6 +248,9 @@
     }
   },
   "portalSuggestionGroup": "Group",
+  "@portalSuggestionGroup": {
+    "description": "Shown as the text in recipient typeahead (directory)."
+  },
   "portalWriteTo": "Write to {name}",
   "@portalWriteTo": {
     "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",

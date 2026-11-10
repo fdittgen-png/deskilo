@@ -1,9 +1,30 @@
 {
   "uxMoneyStatementScope": "Monthly detail for the selected period.",
+  "@uxMoneyStatementScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyPaymentsScope": "Monthly balance · Overdue invoices from all periods.",
+  "@uxMoneyPaymentsScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyInvoicesScope": "Your invoices in this workspace · All periods.",
+  "@uxMoneyInvoicesScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyUsageScope": "Bookings and consumption for the selected month.",
+  "@uxMoneyUsageScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyDocumentsScope": "Monthly reports and your current agreement.",
+  "@uxMoneyDocumentsScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyAllPeriods": "All periods · Credit, open invoices and refunds.",
-  "uxMoneyWorkspaceTools": "Workspace finance tools"
+  "@uxMoneyAllPeriods": {
+    "description": "Shown as the text in account card (money)."
+  },
+  "uxMoneyWorkspaceTools": "Workspace finance tools",
+  "@uxMoneyWorkspaceTools": {
+    "description": "Shown as the title in money faces view (money)."
+  }
 }

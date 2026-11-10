@@ -1,8 +1,26 @@
 {
   "wizardStepCompleted": "Completed",
+  "@wizardStepCompleted": {
+    "description": "Shown as the text in wizard progress (core)."
+  },
   "wizardStepSkipped": "Skipped — suggested settings",
+  "@wizardStepSkipped": {
+    "description": "Shown as the text in wizard progress (core)."
+  },
   "wizardStepUnavailable": "Not available yet",
+  "@wizardStepUnavailable": {
+    "description": "Shown as the text in wizard progress (core)."
+  },
   "wizardSubmitting": "Submitting",
+  "@wizardSubmitting": {
+    "description": "Shown as the text in wizard scaffold (core)."
+  },
   "onboardingUnconfirmed": "The result could not be confirmed. Your entries are kept. Retry to check the same request.",
-  "onboardingDiscardDraft": "Your entries will be lost. This does not cancel a request already sent."
+  "@onboardingUnconfirmed": {
+    "description": "Shown as the text in onboarding screen (workspace)."
+  },
+  "onboardingDiscardDraft": "Your entries will be lost. This does not cancel a request already sent.",
+  "@onboardingDiscardDraft": {
+    "description": "Shown as the text in onboarding screen (workspace)."
+  }
 }

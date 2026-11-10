@@ -39,6 +39,7 @@
   "planCheckInOpensAt": "Check-in opens at {time}",
   "planCheckInOpensOn": "Check-in opens on {date}",
   "@planCheckInOpensOn": {
+    "description": "Shown as the text in check in sheets (plan). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"

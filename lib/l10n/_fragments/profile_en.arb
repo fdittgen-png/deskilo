@@ -97,7 +97,13 @@
     "description": "Admin settings entry to the invoicing hub (#478)"
   },
   "defaultPeriodTitle": "Default booking period",
+  "@defaultPeriodTitle": {
+    "description": "Shown as the title in settings screen (profile), and 1 other place."
+  },
   "defaultPeriodNone": "No preference (full day)",
+  "@defaultPeriodNone": {
+    "description": "Shown as the text in settings screen (profile), and 1 other place."
+  },
   "privacyTitle": "Privacy & data",
   "@privacyTitle": {
     "description": "#719 - privacy & data"
@@ -160,37 +166,104 @@
     "description": "#719 - privacy & data"
   },
   "consentTitle": "Your data, your rights",
+  "@consentTitle": {
+    "description": "Shown as the text in help tips (core), and 2 other places."
+  },
   "consentIntro": "Before you use DesKilo, here is what the app does with your data, who can see it and what you can do about it. Two minutes; it is all there is.",
+  "@consentIntro": {
+    "description": "Shown as the text in consent screen (profile)."
+  },
   "consentWhatTitle": "What DesKilo processes",
+  "@consentWhatTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhatBody": "Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server's notice: who runs it, where the data is and who receives it.",
+  "@consentWhatBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentNotTitle": "What DesKilo never does",
+  "@consentNotTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentNotBody": "No tracking, no analytics, no advertising, no sale of data. Your data goes to nobody except the recipients named here and in the server's notice. The F-Droid build has no Google services at all.",
+  "@consentNotBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhoTitle": "Who can see what",
+  "@consentWhoTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhoBody": "Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.",
+  "@consentWhoBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhoBodyPublic": "A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.",
   "@consentWhoBodyPublic": {
     "description": "#3485 The second half of the consent text on who sees what: the public profile (kept apart so no message passes 600 characters)."
   },
   "consentMessagesTitle": "Messages",
+  "@consentMessagesTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentMessagesBody": "Only the people in a conversation can open it: the two of you, the members of a group or, when you write to a space, the hosts the app names before you send. A space's owners and admins cannot read your conversations. Messages are not end-to-end encrypted: they are stored on the server the conversation lives on — another server's, after you confirm, when you write to someone there — and whoever runs that server can technically reach them.",
+  "@consentMessagesBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentPushTitle": "Push notifications",
+  "@consentPushTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentPushBody": "Optional, and outbound. When the server's operator has set push up, your space uses it and it is on for this device, this device's address and each notification go to the push service (Firebase Cloud Messaging, which hands notifications for Apple devices on to Apple). A notification only says something generic, such as \"You have a new message\": no names, no times, no message text. Switch it off in Settings → Privacy & data; the app keeps working and nothing more is sent to this device.",
+  "@consentPushBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentControllerTitle": "Who is responsible",
+  "@consentControllerTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentControllerBody": "Each space is run by its owner — your community — who decides members, prices and payment providers. Each server is run by its operator: the shared reference server by Florian Dittgen (Germany), a community's own server by whoever runs it. The app is free software (AGPL-3.0-or-later), published by Florian Dittgen. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider's terms.",
+  "@consentControllerBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRetentionTitle": "How long",
+  "@consentRetentionTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRetentionBody": "As long as you are a member. When you leave a space and erase, your messages in that space go, and your profile goes with your last space. Accounting records stay for the legal retention period: the ledger by identifier, invoices as they were issued.",
+  "@consentRetentionBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRightsTitle": "Your rights",
+  "@consentRightsTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRightsBody": "Access, rectification, export (art. 20), erasure (art. 17) and objection — each is a button in Settings → Privacy & data. For anything else: fdittgen@gmail.com. You may withdraw this consent by leaving the workspace and erasing your data at any time.",
+  "@consentRightsBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentReviewTitle": "Read it again anytime",
+  "@consentReviewTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentReviewBody": "This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the online user guide. A change of the text asks for your acceptance again.",
+  "@consentReviewBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentCheckbox": "I have read this and I accept how DesKilo handles my data.",
+  "@consentCheckbox": {
+    "description": "Shown as the title in consent screen (profile)."
+  },
   "consentAccept": "Accept and continue",
+  "@consentAccept": {
+    "description": "Shown as the text in consent screen (profile)."
+  },
   "consentVersion": "Version",
+  "@consentVersion": {
+    "description": "Shown as the text in consent screen (profile), and 1 other place."
+  },
   "consentAcceptedOn": "Accepted on {date} ({version})",
-  "consentReadInHelp": "Read in the help",
-  "consentReadOnWiki": "Read in the online guide",
-  "consentReviewHint": "The text you accepted, with the date — read it again anytime.",
   "@consentAcceptedOn": {
+    "description": "Shown as the text in consent screen (profile). Placeholders: {date} (String), {version} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -200,15 +273,50 @@
       }
     }
   },
+  "consentReadInHelp": "Read in the help",
+  "@consentReadInHelp": {
+    "description": "Shown as the label in consent screen (profile)."
+  },
+  "consentReadOnWiki": "Read in the online guide",
+  "@consentReadOnWiki": {
+    "description": "Shown as the label in consent screen (profile)."
+  },
+  "consentReviewHint": "The text you accepted, with the date — read it again anytime.",
+  "@consentReviewHint": {
+    "description": "Shown as the subtitle in privacy screen (profile)."
+  },
   "backendServerTitle": "Server",
+  "@backendServerTitle": {
+    "description": "Shown as the title in backend screen (profile), and 1 other place."
+  },
   "backendServerDefault": "The app's own server ({host})",
+  "@backendServerDefault": {
+    "description": "Shown as the text in backend screen (profile), and 1 other place."
+  },
   "backendServerCustom": "Your own server ({host})",
-  "backendServerHint": "By default this app uses its own server. If your community runs its own Supabase project, enter it here — the app then stores everything there.",
+  "@backendServerCustom": {
+    "description": "Shown as the text in backend screen (profile), and 1 other place."
+  },
   "backendUrlLabel": "Project URL",
+  "@backendUrlLabel": {
+    "description": "Shown as the label in directory link dialog (directory), and 2 other places."
+  },
   "backendKeyLabel": "Publishable key",
+  "@backendKeyLabel": {
+    "description": "Shown as the label in directory link dialog (directory), and 2 other places."
+  },
   "backendServerRestartHint": "The app signs you out and applies the change on the next start.",
+  "@backendServerRestartHint": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendServerReset": "Use the app's server",
+  "@backendServerReset": {
+    "description": "Shown as the text in server facts card (profile), and 1 other place."
+  },
   "backendOwnServer": "Your own server",
+  "@backendOwnServer": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendProjectRef": "Your Supabase project {ref}",
   "@backendProjectRef": {
     "description": "#1309 Server screen",
@@ -219,8 +327,17 @@
     }
   },
   "backendOwnership": "Your Supabase organization owns it. DesKilo keeps no access to it.",
+  "@backendOwnership": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendOwnershipOther": "Whoever runs this server owns it. DesKilo keeps no access to it.",
+  "@backendOwnershipOther": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendOpenDashboard": "Open in Supabase",
+  "@backendOpenDashboard": {
+    "description": "Shown as the label in server facts card (profile)."
+  },
   "backendVersionCurrent": "Up to date (schema {version})",
   "@backendVersionCurrent": {
     "description": "#1309 Server screen",
@@ -240,8 +357,17 @@
     }
   },
   "backendVersionBehindHow": "Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.",
+  "@backendVersionBehindHow": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendVersionAhead": "The server is newer than this app — update the app when you can",
+  "@backendVersionAhead": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendVersionUnknown": "The version could not be checked right now",
+  "@backendVersionUnknown": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendLastOk": "Last successful test: {time}",
   "@backendLastOk": {
     "description": "#1309 Server screen",
@@ -252,33 +378,117 @@
     }
   },
   "backendResetDeviceOnly": "This changes this device only and never touches your Supabase project.",
+  "@backendResetDeviceOnly": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendFullCheckTitle": "Run a full check",
+  "@backendFullCheckTitle": {
+    "description": "Shown as the title in server full check (profile)."
+  },
   "backendFullCheckHint": "Paste a personal access token for this check. It is used for this check only and never stored.",
+  "@backendFullCheckHint": {
+    "description": "Shown as the text in server full check (profile)."
+  },
   "backendFullCheckUseToken": "Use this token",
+  "@backendFullCheckUseToken": {
+    "description": "Shown as the label in server full check (profile)."
+  },
   "backendServerSaved": "Saved. Close and reopen the app to use the new server.",
+  "@backendServerSaved": {
+    "description": "Shown as the text in backend screen (profile), and 1 other place."
+  },
   "backendErrorUrlEmpty": "Enter the project URL.",
+  "@backendErrorUrlEmpty": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlNotHttps": "The URL must start with https://.",
+  "@backendErrorUrlNotHttps": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlNoHost": "That is not a complete address.",
+  "@backendErrorUrlNoHost": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyEmpty": "Enter the publishable key.",
+  "@backendErrorKeyEmpty": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyNotSupabase": "That is not a Supabase publishable key (sb_publishable_…).",
+  "@backendErrorKeyNotSupabase": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendCurrentTitle": "This device uses",
+  "@backendCurrentTitle": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendHowTitle": "Use your own server",
+  "@backendHowTitle": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep1": "Create a project at supabase.com (the free tier is enough to start).",
+  "@backendStep1": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep2": "Install the app's schema: run the SQL files in supabase/migrations from the source repository, in order.",
+  "@backendStep2": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep3": "In the Supabase dashboard, open Project Settings → API keys and copy the Project URL and the publishable key.",
+  "@backendStep3": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep4": "Paste them below, test the connection, and save. Members join the same instance by scanning the QR above.",
+  "@backendStep4": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendScan": "Scan a server QR",
+  "@backendScan": {
+    "description": "Shown as the label in backend candidate form (profile), and 1 other place."
+  },
   "backendScanNothing": "That QR is not a DesKilo server code.",
+  "@backendScanNothing": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendShare": "Share this server",
+  "@backendShare": {
+    "description": "Shown as the tooltip in backend screen (profile), and 1 other place."
+  },
   "backendShareHint": "Members scan this in Settings → Server to point their app at the same instance.",
+  "@backendShareHint": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendPaste": "Paste",
+  "@backendPaste": {
+    "description": "Shown as the tooltip in backend candidate form (profile)."
+  },
   "backendTest": "Test the connection",
+  "@backendTest": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendTesting": "Testing…",
+  "@backendTesting": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendTestOk": "Reached it — the app's schema is there.",
+  "@backendTestOk": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestUnreachable": "Could not reach that address. Check the URL and your network.",
+  "@backendTestUnreachable": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestBadKey": "Reached it, but the key was refused. Copy the publishable key again from Project Settings → API keys.",
+  "@backendTestBadKey": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestSchemaMissing": "Reached it, but the DesKilo tables are missing — run the migrations from supabase/migrations on that project first.",
+  "@backendTestSchemaMissing": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendCopyLink": "Copy",
+  "@backendCopyLink": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "profilesUnavailable": "Your workspaces could not be loaded.",
   "@profilesUnavailable": {
     "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
@@ -288,13 +498,37 @@
     "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
   },
   "backendModeDefault": "Use DesKilo's service",
+  "@backendModeDefault": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeConnect": "Connect an existing organization",
+  "@backendModeConnect": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeOperator": "Set up a server (operators)",
+  "@backendModeOperator": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeDefaultHint": "DesKilo's own service needs no setup. Members of an organization that runs its own server use its code instead.",
+  "@backendModeDefaultHint": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeConnectHint": "Scan or paste the server code your organization gave you. You never need an administrator key.",
+  "@backendModeConnectHint": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendServerInUse": "In use on this device",
+  "@backendServerInUse": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendDescriptorLabel": "Server code",
+  "@backendDescriptorLabel": {
+    "description": "Shown as the label in backend candidate form (profile)."
+  },
   "backendDescriptorInvalid": "That is not a valid DesKilo server code.",
+  "@backendDescriptorInvalid": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendDescriptorNamed": "Named \"{label}\" by whoever shared it — not verified.",
   "@backendDescriptorNamed": {
     "placeholders": {
@@ -314,7 +548,13 @@
     "description": "#1651 Server screen"
   },
   "backendSaveNeedsTest": "Test the connection first. Only a verified server can be saved.",
+  "@backendSaveNeedsTest": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendTestAttention": "Reached it, but the answer could not be classified. Check the server before using it.",
+  "@backendTestAttention": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendFacets": "Reached: {reachable} · Key accepted: {key} · Schema: {schema} · Version: {version}",
   "@backendFacets": {
     "placeholders": {
@@ -334,17 +574,53 @@
     "description": "#1651 Server screen"
   },
   "backendFacetYes": "yes",
+  "@backendFacetYes": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendFacetNo": "no",
+  "@backendFacetNo": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendFacetUnknown": "unknown",
+  "@backendFacetUnknown": {
+    "description": "Shown as the text in backend settings (core), and 1 other place."
+  },
   "backendVersionShortCurrent": "current",
+  "@backendVersionShortCurrent": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendVersionShortBehind": "older",
+  "@backendVersionShortBehind": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendVersionShortAhead": "newer",
+  "@backendVersionShortAhead": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlNotCanonical": "Use only the project's address (https://host), without a path, a query or credentials.",
+  "@backendErrorUrlNotCanonical": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeySecret": "That is a secret key, not a publishable one. Never share it: rotate it in Project Settings → API keys, then paste the publishable key here.",
+  "@backendErrorKeySecret": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyPersonalToken": "That is a personal access token. It stays with its owner — paste the project's publishable key here.",
+  "@backendErrorKeyPersonalToken": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyUserToken": "That is a session or identity token, not a project key. Paste the project's publishable key here.",
+  "@backendErrorKeyUserToken": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyConnectionString": "That is a database connection string. It never leaves the server — paste the project's publishable key here.",
+  "@backendErrorKeyConnectionString": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendPendingTitle": "Saved for the next start",
+  "@backendPendingTitle": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendPendingBody": "This session still runs on {active}. {saved} takes over when you close and reopen the app.",
   "@backendPendingBody": {
     "placeholders": {
@@ -358,7 +634,13 @@
     "description": "#1651 Server screen"
   },
   "backendPendingUndo": "Undo",
+  "@backendPendingUndo": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendPendingUndone": "Undone — the previous server is back.",
+  "@backendPendingUndone": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "privacyEraseTarget": "This erases your data in {space} only. Your other spaces and other installations keep their own records.",
   "@privacyEraseTarget": {
     "description": "#2558 account rights: exact target and retention honesty",

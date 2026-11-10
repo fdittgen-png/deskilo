@@ -1,6 +1,7 @@
 {
   "visibilityWidenConfirm": "Show your {field} to: {audience}? They will be able to see it.",
   "@visibilityWidenConfirm": {
+    "description": "Shown as the text in visibility flow (me). Placeholders: {field} (String), {audience} (String).",
     "placeholders": {
       "field": {
         "type": "String"
@@ -10,5 +11,8 @@
       }
     }
   },
-  "visibilityWidenAction": "Widen"
+  "visibilityWidenAction": "Widen",
+  "@visibilityWidenAction": {
+    "description": "Shown as the text in visibility flow (me)."
+  }
 }

@@ -1,3 +1,6 @@
 {
-  "reportPresetProfessional": "Professional"
+  "reportPresetProfessional": "Professional",
+  "@reportPresetProfessional": {
+    "description": "Shown as the text in report defaults (money)."
+  }
 }

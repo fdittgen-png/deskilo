@@ -48,5 +48,11 @@
     "description": "#3074 the plan's drawn shapes: decorKitchen"
   },
   "editorWallSaved": "Wall drawn",
-  "editorWallUndo": "Undo"
+  "@editorWallSaved": {
+    "description": "Shown as the text in level canvas flows (editor)."
+  },
+  "editorWallUndo": "Undo",
+  "@editorWallUndo": {
+    "description": "Shown as the label in level canvas flows (editor)."
+  }
 }

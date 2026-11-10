@@ -1545,6 +1545,9 @@
     "description": "Sign-in screen: secondary link to the Server screen (#1650); the wizard on that screen covers setting one up"
   },
   "authContinueWith": "or continue with",
+  "@authContinueWith": {
+    "description": "Shown as the text in auth form sections (auth)."
+  },
   "authDisplayNameLabel": "Display name",
   "@authDisplayNameLabel": {
     "description": "Label of the display-name input field (sign-up only)"
@@ -1700,6 +1703,7 @@
   },
   "authSocialUnavailable": "{provider} sign-in is not available yet — the server has not enabled it.",
   "@authSocialUnavailable": {
+    "description": "Shown as the text in linked accounts screen (auth), and 1 other place. Placeholders: {provider} (String).",
     "placeholders": {
       "provider": {
         "type": "String"
@@ -1869,9 +1873,21 @@
     "description": "Shown as a title in availability sections (workspace), and 1 other place."
   },
   "backendCopyLink": "Copy",
+  "@backendCopyLink": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendCurrentTitle": "This device uses",
+  "@backendCurrentTitle": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendDescriptorInvalid": "That is not a valid DesKilo server code.",
+  "@backendDescriptorInvalid": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendDescriptorLabel": "Server code",
+  "@backendDescriptorLabel": {
+    "description": "Shown as the label in backend candidate form (profile)."
+  },
   "backendDescriptorNamed": "Named \"{label}\" by whoever shared it — not verified.",
   "@backendDescriptorNamed": {
     "placeholders": {
@@ -1891,18 +1907,57 @@
     "description": "#1651 Server screen"
   },
   "backendErrorKeyConnectionString": "That is a database connection string. It never leaves the server — paste the project's publishable key here.",
+  "@backendErrorKeyConnectionString": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyEmpty": "Enter the publishable key.",
+  "@backendErrorKeyEmpty": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyNotSupabase": "That is not a Supabase publishable key (sb_publishable_…).",
+  "@backendErrorKeyNotSupabase": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyPersonalToken": "That is a personal access token. It stays with its owner — paste the project's publishable key here.",
+  "@backendErrorKeyPersonalToken": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeySecret": "That is a secret key, not a publishable one. Never share it: rotate it in Project Settings → API keys, then paste the publishable key here.",
+  "@backendErrorKeySecret": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorKeyUserToken": "That is a session or identity token, not a project key. Paste the project's publishable key here.",
+  "@backendErrorKeyUserToken": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlEmpty": "Enter the project URL.",
+  "@backendErrorUrlEmpty": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlNoHost": "That is not a complete address.",
+  "@backendErrorUrlNoHost": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlNotCanonical": "Use only the project's address (https://host), without a path, a query or credentials.",
+  "@backendErrorUrlNotCanonical": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendErrorUrlNotHttps": "The URL must start with https://.",
+  "@backendErrorUrlNotHttps": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendFacetNo": "no",
+  "@backendFacetNo": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendFacetUnknown": "unknown",
+  "@backendFacetUnknown": {
+    "description": "Shown as the text in backend settings (core), and 1 other place."
+  },
   "backendFacetYes": "yes",
+  "@backendFacetYes": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendFacets": "Reached: {reachable} · Key accepted: {key} · Schema: {schema} · Version: {version}",
   "@backendFacets": {
     "placeholders": {
@@ -1922,10 +1977,25 @@
     "description": "#1651 Server screen"
   },
   "backendFullCheckHint": "Paste a personal access token for this check. It is used for this check only and never stored.",
+  "@backendFullCheckHint": {
+    "description": "Shown as the text in server full check (profile)."
+  },
   "backendFullCheckTitle": "Run a full check",
+  "@backendFullCheckTitle": {
+    "description": "Shown as the title in server full check (profile)."
+  },
   "backendFullCheckUseToken": "Use this token",
+  "@backendFullCheckUseToken": {
+    "description": "Shown as the label in server full check (profile)."
+  },
   "backendHowTitle": "Use your own server",
+  "@backendHowTitle": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendKeyLabel": "Publishable key",
+  "@backendKeyLabel": {
+    "description": "Shown as the label in directory link dialog (directory), and 2 other places."
+  },
   "backendLastOk": "Last successful test: {time}",
   "@backendLastOk": {
     "description": "#1309 Server screen",
@@ -1936,15 +2006,45 @@
     }
   },
   "backendModeConnect": "Connect an existing organization",
+  "@backendModeConnect": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeConnectHint": "Scan or paste the server code your organization gave you. You never need an administrator key.",
+  "@backendModeConnectHint": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeDefault": "Use DesKilo's service",
+  "@backendModeDefault": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeDefaultHint": "DesKilo's own service needs no setup. Members of an organization that runs its own server use its code instead.",
+  "@backendModeDefaultHint": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendModeOperator": "Set up a server (operators)",
+  "@backendModeOperator": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendOpenDashboard": "Open in Supabase",
+  "@backendOpenDashboard": {
+    "description": "Shown as the label in server facts card (profile)."
+  },
   "backendOwnServer": "Your own server",
+  "@backendOwnServer": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendOwnership": "Your Supabase organization owns it. DesKilo keeps no access to it.",
+  "@backendOwnership": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendOwnershipOther": "Whoever runs this server owns it. DesKilo keeps no access to it.",
+  "@backendOwnershipOther": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendPaste": "Paste",
+  "@backendPaste": {
+    "description": "Shown as the tooltip in backend candidate form (profile)."
+  },
   "backendPendingBody": "This session still runs on {active}. {saved} takes over when you close and reopen the app.",
   "@backendPendingBody": {
     "placeholders": {
@@ -1958,8 +2058,17 @@
     "description": "#1651 Server screen"
   },
   "backendPendingTitle": "Saved for the next start",
+  "@backendPendingTitle": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendPendingUndo": "Undo",
+  "@backendPendingUndo": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendPendingUndone": "Undone — the previous server is back.",
+  "@backendPendingUndone": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendProjectRef": "Your Supabase project {ref}",
   "@backendProjectRef": {
     "description": "#1309 Server screen",
@@ -1970,40 +2079,117 @@
     }
   },
   "backendResetDeviceOnly": "This changes this device only and never touches your Supabase project.",
+  "@backendResetDeviceOnly": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendSaveNeedsTest": "Test the connection first. Only a verified server can be saved.",
+  "@backendSaveNeedsTest": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendScan": "Scan a server QR",
+  "@backendScan": {
+    "description": "Shown as the label in backend candidate form (profile), and 1 other place."
+  },
   "backendScanNothing": "That QR is not a DesKilo server code.",
+  "@backendScanNothing": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendServerCustom": "Your own server ({host})",
+  "@backendServerCustom": {
+    "description": "Shown as the text in backend screen (profile), and 1 other place."
+  },
   "backendServerDefault": "The app's own server ({host})",
-  "backendServerHint": "By default this app uses its own server. If your community runs its own Supabase project, enter it here — the app then stores everything there.",
+  "@backendServerDefault": {
+    "description": "Shown as the text in backend screen (profile), and 1 other place."
+  },
   "backendServerInUse": "In use on this device",
+  "@backendServerInUse": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendServerReset": "Use the app's server",
+  "@backendServerReset": {
+    "description": "Shown as the text in server facts card (profile), and 1 other place."
+  },
   "backendServerRestartHint": "The app signs you out and applies the change on the next start.",
+  "@backendServerRestartHint": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendServerSaved": "Saved. Close and reopen the app to use the new server.",
+  "@backendServerSaved": {
+    "description": "Shown as the text in backend screen (profile), and 1 other place."
+  },
   "backendServerTitle": "Server",
+  "@backendServerTitle": {
+    "description": "Shown as the title in backend screen (profile), and 1 other place."
+  },
   "backendShare": "Share this server",
+  "@backendShare": {
+    "description": "Shown as the tooltip in backend screen (profile), and 1 other place."
+  },
   "backendShareHint": "Members scan this in Settings → Server to point their app at the same instance.",
+  "@backendShareHint": {
+    "description": "Shown as the text in backend screen (profile)."
+  },
   "backendStep1": "Create a project at supabase.com (the free tier is enough to start).",
+  "@backendStep1": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep2": "Install the app's schema: run the SQL files in supabase/migrations from the source repository, in order.",
+  "@backendStep2": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep3": "In the Supabase dashboard, open Project Settings → API keys and copy the Project URL and the publishable key.",
+  "@backendStep3": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendStep4": "Paste them below, test the connection, and save. Members join the same instance by scanning the QR above.",
+  "@backendStep4": {
+    "description": "Shown as the text in backend how to (profile)."
+  },
   "backendTest": "Test the connection",
+  "@backendTest": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendTestAhead": "Reached it. Its schema is newer than this app — it works, and a newer app is available.",
   "@backendTestAhead": {
     "description": "#1312 Connection test result: schema newer than the app"
   },
   "backendTestAttention": "Reached it, but the answer could not be classified. Check the server before using it.",
+  "@backendTestAttention": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestBadKey": "Reached it, but the key was refused. Copy the publishable key again from Project Settings → API keys.",
+  "@backendTestBadKey": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestBehind": "Reached it, but its DesKilo schema is older than this app needs. Update the server before using it.",
   "@backendTestBehind": {
     "description": "#1312 Connection test result: schema older than the app"
   },
   "backendTestOk": "Reached it — the app's schema is there.",
+  "@backendTestOk": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestSchemaMissing": "Reached it, but the DesKilo tables are missing — run the migrations from supabase/migrations on that project first.",
+  "@backendTestSchemaMissing": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTestUnreachable": "Could not reach that address. Check the URL and your network.",
+  "@backendTestUnreachable": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendTesting": "Testing…",
+  "@backendTesting": {
+    "description": "Shown as the text in backend candidate form (profile)."
+  },
   "backendUrlLabel": "Project URL",
+  "@backendUrlLabel": {
+    "description": "Shown as the label in directory link dialog (directory), and 2 other places."
+  },
   "backendVersionAhead": "The server is newer than this app — update the app when you can",
+  "@backendVersionAhead": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendVersionBehind": "Needs an update: this app needs schema {version}",
   "@backendVersionBehind": {
     "description": "#1309 Server screen",
@@ -2014,6 +2200,9 @@
     }
   },
   "backendVersionBehindHow": "Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.",
+  "@backendVersionBehindHow": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "backendVersionCurrent": "Up to date (schema {version})",
   "@backendVersionCurrent": {
     "description": "#1309 Server screen",
@@ -2024,9 +2213,21 @@
     }
   },
   "backendVersionShortAhead": "newer",
+  "@backendVersionShortAhead": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendVersionShortBehind": "older",
+  "@backendVersionShortBehind": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendVersionShortCurrent": "current",
+  "@backendVersionShortCurrent": {
+    "description": "Shown as the text in backend settings (core)."
+  },
   "backendVersionUnknown": "The version could not be checked right now",
+  "@backendVersionUnknown": {
+    "description": "Shown as the text in server facts card (profile)."
+  },
   "badgeAuthEnabledHint": "Off by default: a badge that checks you in does not log you in until you say so.",
   "@badgeAuthEnabledHint": {
     "description": "#662 - badge sign-in"
@@ -6415,8 +6616,12 @@
     }
   },
   "bookingGateBlocked": "Not bookable as chosen",
+  "@bookingGateBlocked": {
+    "description": "Shown as the text in booking sheet (reservations), and 2 other places."
+  },
   "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
   "@bookingHorizonError": {
+    "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {days} (int).",
     "placeholders": {
       "days": {
         "type": "int"
@@ -6610,6 +6815,7 @@
   },
   "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
   "@bookingTooLongError": {
+    "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -6618,6 +6824,7 @@
   },
   "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
   "@bookingTooShortError": {
+    "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -7772,8 +7979,12 @@
     "description": "Shown as a text in connections screen (directory)."
   },
   "consentAccept": "Accept and continue",
+  "@consentAccept": {
+    "description": "Shown as the text in consent screen (profile)."
+  },
   "consentAcceptedOn": "Accepted on {date} ({version})",
   "@consentAcceptedOn": {
+    "description": "Shown as the text in consent screen (profile). Placeholders: {date} (String), {version} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -7784,38 +7995,113 @@
     }
   },
   "consentCheckbox": "I have read this and I accept how DesKilo handles my data.",
+  "@consentCheckbox": {
+    "description": "Shown as the title in consent screen (profile)."
+  },
   "consentControllerBody": "Each space is run by its owner — your community — who decides members, prices and payment providers. Each server is run by its operator: the shared reference server by Florian Dittgen (Germany), a community's own server by whoever runs it. The app is free software (AGPL-3.0-or-later), published by Florian Dittgen. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider's terms.",
+  "@consentControllerBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentControllerTitle": "Who is responsible",
+  "@consentControllerTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentIntro": "Before you use DesKilo, here is what the app does with your data, who can see it and what you can do about it. Two minutes; it is all there is.",
+  "@consentIntro": {
+    "description": "Shown as the text in consent screen (profile)."
+  },
   "consentMessagesBody": "Only the people in a conversation can open it: the two of you, the members of a group or, when you write to a space, the hosts the app names before you send. A space's owners and admins cannot read your conversations. Messages are not end-to-end encrypted: they are stored on the server the conversation lives on — another server's, after you confirm, when you write to someone there — and whoever runs that server can technically reach them.",
+  "@consentMessagesBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentMessagesTitle": "Messages",
+  "@consentMessagesTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentNotBody": "No tracking, no analytics, no advertising, no sale of data. Your data goes to nobody except the recipients named here and in the server's notice. The F-Droid build has no Google services at all.",
+  "@consentNotBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentNotTitle": "What DesKilo never does",
+  "@consentNotTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentPushBody": "Optional, and outbound. When the server's operator has set push up, your space uses it and it is on for this device, this device's address and each notification go to the push service (Firebase Cloud Messaging, which hands notifications for Apple devices on to Apple). A notification only says something generic, such as \"You have a new message\": no names, no times, no message text. Switch it off in Settings → Privacy & data; the app keeps working and nothing more is sent to this device.",
+  "@consentPushBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentPushTitle": "Push notifications",
+  "@consentPushTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentReadInHelp": "Read in the help",
+  "@consentReadInHelp": {
+    "description": "Shown as the label in consent screen (profile)."
+  },
   "consentReadOnWiki": "Read in the online guide",
+  "@consentReadOnWiki": {
+    "description": "Shown as the label in consent screen (profile)."
+  },
   "consentRetentionBody": "As long as you are a member. When you leave a space and erase, your messages in that space go, and your profile goes with your last space. Accounting records stay for the legal retention period: the ledger by identifier, invoices as they were issued.",
+  "@consentRetentionBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRetentionTitle": "How long",
+  "@consentRetentionTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentReviewBody": "This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the online user guide. A change of the text asks for your acceptance again.",
+  "@consentReviewBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentReviewHint": "The text you accepted, with the date — read it again anytime.",
+  "@consentReviewHint": {
+    "description": "Shown as the subtitle in privacy screen (profile)."
+  },
   "consentReviewTitle": "Read it again anytime",
+  "@consentReviewTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRightsBody": "Access, rectification, export (art. 20), erasure (art. 17) and objection — each is a button in Settings → Privacy & data. For anything else: fdittgen@gmail.com. You may withdraw this consent by leaving the workspace and erasing your data at any time.",
+  "@consentRightsBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentRightsTitle": "Your rights",
+  "@consentRightsTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentTitle": "Your data, your rights",
+  "@consentTitle": {
+    "description": "Shown as the text in help tips (core), and 2 other places."
+  },
   "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
   "@consentUnavailable": {
     "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"
   },
   "consentVersion": "Version",
+  "@consentVersion": {
+    "description": "Shown as the text in consent screen (profile), and 1 other place."
+  },
   "consentWhatBody": "Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server's notice: who runs it, where the data is and who receives it.",
+  "@consentWhatBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhatTitle": "What DesKilo processes",
+  "@consentWhatTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhoBody": "Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.",
+  "@consentWhoBody": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consentWhoBodyPublic": "A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.",
   "@consentWhoBodyPublic": {
     "description": "#3485 The second half of the consent text on who sees what: the public profile (kept apart so no message passes 600 characters)."
   },
   "consentWhoTitle": "Who can see what",
+  "@consentWhoTitle": {
+    "description": "Shown as the text in privacy policy (core)."
+  },
   "consumptionAdd": "Add consumption",
   "@consumptionAdd": {
     "description": "Button + sheet title recording my own consumed services (#129)"
@@ -8019,11 +8305,17 @@
     "description": "#2454 country change"
   },
   "countryNameAT": "Austria",
+  "@countryNameAT": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameAU": "Australia",
   "@countryNameAU": {
     "description": "#713 - region name in the format picker"
   },
   "countryNameBE": "Belgium",
+  "@countryNameBE": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameBG": "Bulgaria",
   "@countryNameBG": {
     "description": "#711 - globalization"
@@ -8033,6 +8325,9 @@
     "description": "#713 - region name in the format picker"
   },
   "countryNameCH": "Switzerland",
+  "@countryNameCH": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameCY": "Cyprus",
   "@countryNameCY": {
     "description": "#711 - globalization"
@@ -8054,12 +8349,21 @@
     "description": "#711 - globalization"
   },
   "countryNameES": "Spain",
+  "@countryNameES": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameFI": "Finland",
   "@countryNameFI": {
     "description": "#711 - globalization"
   },
   "countryNameFR": "France",
+  "@countryNameFR": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameGB": "United Kingdom",
+  "@countryNameGB": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameGR": "Greece",
   "@countryNameGR": {
     "description": "#711 - globalization"
@@ -8077,6 +8381,9 @@
     "description": "#711 - globalization"
   },
   "countryNameIT": "Italy",
+  "@countryNameIT": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameJP": "Japan",
   "@countryNameJP": {
     "description": "#713 - region name in the format picker"
@@ -8086,6 +8393,9 @@
     "description": "#711 - globalization"
   },
   "countryNameLU": "Luxembourg",
+  "@countryNameLU": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameLV": "Latvia",
   "@countryNameLV": {
     "description": "#711 - globalization"
@@ -8099,6 +8409,9 @@
     "description": "#713 - region name in the format picker"
   },
   "countryNameNL": "Netherlands",
+  "@countryNameNL": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameNO": "Norway",
   "@countryNameNO": {
     "description": "#713 - region name in the format picker"
@@ -8108,6 +8421,9 @@
     "description": "#711 - globalization"
   },
   "countryNamePT": "Portugal",
+  "@countryNamePT": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameRO": "Romania",
   "@countryNameRO": {
     "description": "#711 - globalization"
@@ -8125,6 +8441,9 @@
     "description": "#711 - globalization"
   },
   "countryNameUS": "United States",
+  "@countryNameUS": {
+    "description": "Shown as the text in country names (core)."
+  },
   "courtesyHint": "Printed before your name on documents. \"None\" prints the name alone.",
   "@courtesyHint": {
     "description": "#912 courtesy title: courtesyHint"
@@ -8609,7 +8928,13 @@
     "description": "#3074 the plan's drawn shapes: decorWindow"
   },
   "defaultPeriodNone": "No preference (full day)",
+  "@defaultPeriodNone": {
+    "description": "Shown as the text in settings screen (profile), and 1 other place."
+  },
   "defaultPeriodTitle": "Default booking period",
+  "@defaultPeriodTitle": {
+    "description": "Shown as the title in settings screen (profile), and 1 other place."
+  },
   "demoEntryAction": "Explore the demo workspace",
   "@demoEntryAction": {
     "description": "#1379 demo entry: demoEntryAction"
@@ -10257,7 +10582,13 @@
     "description": "Canvas tool: select/inspect elements, pan and zoom"
   },
   "editorWallSaved": "Wall drawn",
+  "@editorWallSaved": {
+    "description": "Shown as the text in level canvas flows (editor)."
+  },
   "editorWallUndo": "Undo",
+  "@editorWallUndo": {
+    "description": "Shown as the label in level canvas flows (editor)."
+  },
   "einvoiceConfigClear": "Remove the platform",
   "@einvoiceConfigClear": {
     "description": "Button: forget the platform"
@@ -10988,6 +11319,7 @@
   },
   "eventPrivacyIncident": "A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}",
   "@eventPrivacyIncident": {
+    "description": "Shown as the text in event lines (events). Placeholders: {kind} (String), {note} (String).",
     "placeholders": {
       "kind": {
         "type": "String"
@@ -11236,6 +11568,9 @@
     "description": "Event type label / filter chip"
   },
   "eventTypePaymentInstructionsChange": "Bank account change",
+  "@eventTypePaymentInstructionsChange": {
+    "description": "Shown as the text in event labels (events)."
+  },
   "eventTypePaymentTermsChange": "Payment conditions",
   "@eventTypePaymentTermsChange": {
     "description": "#881 member payment conditions: eventTypePaymentTermsChange"
@@ -11245,6 +11580,9 @@
     "description": "Shown as a text in event labels (events)."
   },
   "eventTypePrivacyIncident": "Privacy incident",
+  "@eventTypePrivacyIncident": {
+    "description": "Shown as the text in event labels (events)."
+  },
   "eventTypeQuota": "Extra half-days",
   "@eventTypeQuota": {
     "description": "Event-type label for quota-extension requests (0031): feed filter chip + validation policy card"
@@ -13549,7 +13887,13 @@
     "description": "#1274 public holidays: the feature switch title"
   },
   "featurePublicListings": "Public workspace listing",
+  "@featurePublicListings": {
+    "description": "Shown as the text in feature names (workspace)."
+  },
   "featurePublicListingsDesc": "Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.",
+  "@featurePublicListingsDesc": {
+    "description": "Shown as the text in feature copy (workspace)."
+  },
   "featurePurchaseAnalyticsDesc": "What the space owes its suppliers, has to reimburse its members, still has to review and has paid out, on the analytics page, from the purchase records themselves. Off: the purchases stay as they are and the analytics page shows no purchase figure.",
   "@featurePurchaseAnalyticsDesc": {
     "description": "#2582 purchase analytics"
@@ -15189,7 +15533,13 @@
     "description": "#1867 live guide host"
   },
   "guideHostDestination": "Step destination",
+  "@guideHostDestination": {
+    "description": "Shown as the label of a field in guide draft screen (task_recorder)."
+  },
   "guideHostDestinationMissing": "Choose the page this step refers to in the guide editor.",
+  "@guideHostDestinationMissing": {
+    "description": "Shown as the text in guide step text (task_recorder), and 5 other places."
+  },
   "guideHostDoAction": "Next: {action}.",
   "@guideHostDoAction": {
     "description": "#1867 live guide host",
@@ -15216,7 +15566,6 @@
       }
     }
   },
-  "guideHostGoToPage": "Go to page",
   "guideHostInstruction": "Read this, then mark it done.",
   "@guideHostInstruction": {
     "description": "#1867 live guide host"
@@ -17599,6 +17948,9 @@
     "description": "Explainer under the admin invite QR"
   },
   "inviteAdminNewCode": "New administrator code",
+  "@inviteAdminNewCode": {
+    "description": "Shown as the label in workspace code screen (workspace), and 1 other place."
+  },
   "inviteAlsoProdSubtitle": "They join the test space either way. The role still has to allow production access.",
   "@inviteAlsoProdSubtitle": {
     "description": "Shown as the line under a title in invite sheet (workspace)."
@@ -20859,10 +21211,25 @@
     "description": "Warning shown for the VAT-registered regime"
   },
   "legendBlocked": "Blocked",
+  "@legendBlocked": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendClosed": "Closed day",
+  "@legendClosed": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendFree": "Free",
+  "@legendFree": {
+    "description": "Shown as the text in lexicon defaults (core), and 5 other places."
+  },
   "legendMine": "Mine",
+  "@legendMine": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendOccupied": "Checked in",
+  "@legendOccupied": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendProfileFull": "Every state",
   "@legendProfileFull": {
     "description": "#1281: legendProfileFull"
@@ -20884,6 +21251,9 @@
     "description": "#1281: legendProfileTitle"
   },
   "legendReserved": "Reserved",
+  "@legendReserved": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendUnavailable": "Unavailable",
   "@legendUnavailable": {
     "description": "#1281: legendUnavailable"
@@ -21333,11 +21703,29 @@
     "description": "Shown as a title in workspace library screen (workspace)."
   },
   "linkedAccountsIntro": "Sign into this account with any linked identity. The available providers depend on your server.",
+  "@linkedAccountsIntro": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsLink": "Link",
+  "@linkedAccountsLink": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsLinkStarted": "Continue in the browser to finish linking.",
+  "@linkedAccountsLinkStarted": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsLinked": "Linked",
+  "@linkedAccountsLinked": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsTitle": "Linked accounts",
+  "@linkedAccountsTitle": {
+    "description": "Shown as the title in linked accounts screen (auth), and 1 other place."
+  },
   "linkedAccountsUnlink": "Unlink",
+  "@linkedAccountsUnlink": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
   "@listCoversSeats": {
     "description": "#1825 — what a whole-space reservation includes: its seats",
@@ -25357,6 +25745,9 @@
     "description": "#1636 onboarding_creation"
   },
   "onboardingDiscardDraft": "Your entries will be lost. This does not cancel a request already sent.",
+  "@onboardingDiscardDraft": {
+    "description": "Shown as the text in onboarding screen (workspace)."
+  },
   "onboardingIntentChanged": "Your earlier request may already have been created. Retry it exactly as it was sent before changing anything.",
   "@onboardingIntentChanged": {
     "description": "#1636 onboarding_creation"
@@ -25473,6 +25864,9 @@
     "description": "App-bar title of the first-run onboarding screen"
   },
   "onboardingUnconfirmed": "The result could not be confirmed. Your entries are kept. Retry to check the same request.",
+  "@onboardingUnconfirmed": {
+    "description": "Shown as the text in onboarding screen (workspace)."
+  },
   "onboardingUseSuggested": "Use the suggested settings",
   "@onboardingUseSuggested": {
     "description": "#1303 staged onboarding: onboardingUseSuggested"
@@ -26181,7 +26575,13 @@
     "description": "Permission label (#513)"
   },
   "permManageNegotiations": "Manage commercial agreements",
+  "@permManageNegotiations": {
+    "description": "Shown as the text in roles screen labels (workspace)."
+  },
   "permManagePrivacy": "Handle personal data and rights requests",
+  "@permManagePrivacy": {
+    "description": "Shown as the text in roles screen labels (workspace)."
+  },
   "permManagePurchases": "Capture supplier bills",
   "@permManagePurchases": {
     "description": "#2573 purchases"
@@ -26247,6 +26647,9 @@
     "description": "everyday permission"
   },
   "permViewNegotiations": "View commercial agreements",
+  "@permViewNegotiations": {
+    "description": "Shown as the text in roles screen labels (workspace)."
+  },
   "permViewPersonalData": "Read members' personal data",
   "@permViewPersonalData": {
     "description": "#982 permission catalog: permViewPersonalData"
@@ -26256,11 +26659,25 @@
     "description": "Permission label (#513)"
   },
   "personalBirthday": "Birthday",
+  "@personalBirthday": {
+    "description": "Shown as the text in birthday field (profile), and 2 other places."
+  },
   "personalBirthdayClear": "Remove the birthday",
+  "@personalBirthdayClear": {
+    "description": "Shown as the tooltip in birthday field (profile)."
+  },
   "personalBirthdayHelp": "Only you, people allowed to see members' personal data and the workspace's privacy admin can read it. Someone who only issues invoices cannot.",
-  "personalBirthdayInvalid": "A birthday cannot be in the future or before 1900.",
+  "@personalBirthdayHelp": {
+    "description": "Shown as the helper text of a field in birthday field (profile)."
+  },
   "personalBirthdayPick": "Choose a date",
+  "@personalBirthdayPick": {
+    "description": "Shown as the text in birthday field (profile)."
+  },
   "personalBirthdaySaveFailed": "Your details were saved, but the birthday could not be.",
+  "@personalBirthdaySaveFailed": {
+    "description": "Shown as the error text of a field in personal info screen (profile)."
+  },
   "personalInfoCity": "City",
   "@personalInfoCity": {
     "description": "#886 personal-information form / feature: personalInfoCity"
@@ -26461,6 +26878,7 @@
   },
   "planCheckInOpensOn": "Check-in opens on {date}",
   "@planCheckInOpensOn": {
+    "description": "Shown as the text in check in sheets (plan). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -26481,6 +26899,7 @@
   },
   "planCheckOutFor": "Check out {name}",
   "@planCheckOutFor": {
+    "description": "Shown as the title in check in sheets (plan). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -26865,24 +27284,69 @@
     "description": "#628 - title of the workspace-wide simultaneous-reservations stepper"
   },
   "portalActionFailed": "Could not save this change. Please try again.",
+  "@portalActionFailed": {
+    "description": "Shown as the text in message reach sheet (workspace), and 22 other places."
+  },
   "portalActionNotNegotiated": "This action is not available between this app and that server. Updating the app may help.",
+  "@portalActionNotNegotiated": {
+    "description": "Shown as the text in public workspace view (directory)."
+  },
   "portalAddress": "Public address",
+  "@portalAddress": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalAdmin": "Administrator",
+  "@portalAdmin": {
+    "description": "Shown as the text in public workspace view (directory), and 1 other place."
+  },
   "portalAdminVisible": "Show me as a public administrator",
+  "@portalAdminVisible": {
+    "description": "Shown as the title in admin visibility tile (directory)."
+  },
   "portalAssociation": "Association",
+  "@portalAssociation": {
+    "description": "Shown as the text in public workspace view (directory), and 3 other places."
+  },
   "portalAvailable": "Let users find and message my account",
+  "@portalAvailable": {
+    "description": "Shown as the title in account messenger screen (directory)."
+  },
   "portalChat": "Chat",
+  "@portalChat": {
+    "description": "Shown as the tooltip in public workspace view (directory)."
+  },
   "portalCompany": "Company",
+  "@portalCompany": {
+    "description": "Shown as the text in public workspace view (directory), and 3 other places."
+  },
   "portalConnect": "Connect a server",
+  "@portalConnect": {
+    "description": "Shown as the tooltip in connections screen (directory), and 1 other place."
+  },
   "portalConnectionFailed": "Could not connect. Check this server and your sign-in details.",
+  "@portalConnectionFailed": {
+    "description": "Shown as the error text of a field in connections screen (directory), and 2 other places."
+  },
   "portalConnections": "Connected servers",
+  "@portalConnections": {
+    "description": "Shown as the tooltip in account messenger screen (directory), and 3 other places."
+  },
   "portalConnectionsHint": "Each server uses its own sign-in. Disconnecting removes its saved access from this account on this device.",
+  "@portalConnectionsHint": {
+    "description": "Shown as the text in connections screen (directory)."
+  },
   "portalCopyEmail": "Copy the e-mail",
   "@portalCopyEmail": {
     "description": "Button on a public space page: copy its e-mail address."
   },
   "portalCustomised": "Customised",
+  "@portalCustomised": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalDescription": "Description",
+  "@portalDescription": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalDirectoryCount": "{name} ({count})",
   "@portalDirectoryCount": {
     "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)",
@@ -26896,6 +27360,9 @@
     }
   },
   "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
+  "@portalDirectoryIncompatible": {
+    "description": "Shown as the text in discovery list view (directory), and 1 other place."
+  },
   "portalDirectoryPartial": "Some of your workspaces cannot be verified right now; their people are not listed.",
   "@portalDirectoryPartial": {
     "description": "#2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts."
@@ -26905,69 +27372,189 @@
     "description": "#2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory."
   },
   "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
+  "@portalDirectoryUnavailable": {
+    "description": "Shown as the text in discovery list view (directory), and 2 other places."
+  },
   "portalDirectoryUnverified": "This workspace cannot be verified right now.",
   "@portalDirectoryUnverified": {
     "description": "#2472 personal directory: Shown inside one workspace section whose membership fact lapsed."
   },
   "portalDisconnect": "Disconnect",
+  "@portalDisconnect": {
+    "description": "Shown as the tooltip in connections screen (directory)."
+  },
   "portalDiscover": "Find a workspace",
+  "@portalDiscover": {
+    "description": "Shown as the label in auth form sections (auth), and 2 other places."
+  },
   "portalEmail": "Public email",
+  "@portalEmail": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalEmailCode": "Email sign-in code",
+  "@portalEmailCode": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "portalEmailCopied": "E-mail copied",
   "@portalEmailCopied": {
     "description": "Confirmation after copying the space's e-mail."
   },
   "portalEmployed": "Employed by this workspace",
+  "@portalEmployed": {
+    "description": "Shown as the title in member employment tile (directory)."
+  },
   "portalEmploymentHint": "Employment does not change access or subscriptions. Salary payments are not enabled.",
+  "@portalEmploymentHint": {
+    "description": "Shown as the text in member employment tile (directory)."
+  },
   "portalEnterSpace": "Enter",
   "@portalEnterSpace": {
     "description": "Button on a public space page for a member: enter the space."
   },
   "portalFindPeople": "Find available people",
+  "@portalFindPeople": {
+    "description": "Shown as the tooltip in create group screen (directory), and 4 other places."
+  },
   "portalFollowsWorkspace": "From workspace information",
+  "@portalFollowsWorkspace": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalGroupsHeading": "Groups",
+  "@portalGroupsHeading": {
+    "description": "Shown as the text in reachable directory (directory), and 1 other place."
+  },
   "portalImage": "Identity image URL",
-  "portalLatitude": "Latitude",
+  "@portalImage": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalList": "List",
-  "portalLongitude": "Longitude",
+  "@portalList": {
+    "description": "Shown as the tooltip in directory screen (directory), and 1 other place."
+  },
   "portalMap": "Map",
+  "@portalMap": {
+    "description": "Shown as the tooltip in directory screen (directory)."
+  },
   "portalMessenger": "Account messenger",
+  "@portalMessenger": {
+    "description": "Shown as the title in account messenger screen (directory), and 1 other place."
+  },
   "portalMoreDirectories": "More directories",
+  "@portalMoreDirectories": {
+    "description": "Shown as the text in discovery list view (directory)."
+  },
   "portalNoLongerPublished": "This workspace is no longer published.",
+  "@portalNoLongerPublished": {
+    "description": "Shown as the text in public workspace view (directory)."
+  },
   "portalNoWorkspaces": "No published workspaces found.",
+  "@portalNoWorkspaces": {
+    "description": "Shown as the text in discovery list view (directory), and 1 other place."
+  },
   "portalOpenMe": "Me: my account and my spaces",
   "@portalOpenMe": {
     "description": "Menu item on the account menu (globe) that opens the Me layer."
   },
   "portalOwner": "Owner",
+  "@portalOwner": {
+    "description": "Shown as the text in public workspace view (directory), and 1 other place."
+  },
   "portalPerson": "Private host",
+  "@portalPerson": {
+    "description": "Shown as the text in public workspace view (directory), and 3 other places."
+  },
   "portalPersonHidden": "Person",
   "@portalPersonHidden": {
     "description": "#2472 personal directory: Name of a person in the new-discussion directory who does not show their name to you."
   },
   "portalPhone": "Public phone",
+  "@portalPhone": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalPlans": "Plans and prices",
+  "@portalPlans": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalPreview": "External view",
+  "@portalPreview": {
+    "description": "Shown as the title in public workspace view (directory)."
+  },
   "portalPublicPlan": "Public floor plan",
+  "@portalPublicPlan": {
+    "description": "Shown as the text in public workspace view (directory), and 1 other place."
+  },
   "portalPublication": "Public workspace page",
+  "@portalPublication": {
+    "description": "Shown as the title in workspace settings screen (workspace), and 1 other place."
+  },
   "portalPublished": "Visible in the public directory",
+  "@portalPublished": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalReachableEmpty": "No one is reachable yet. Search by name to find people.",
+  "@portalReachableEmpty": {
+    "description": "Shown as the text in reachable directory (directory), and 1 other place."
+  },
   "portalReachableHeading": "People you can write to",
+  "@portalReachableHeading": {
+    "description": "Shown as the text in reachable directory (directory)."
+  },
   "portalRecipientHint": "Type a name: suggestions appear from the first letter",
+  "@portalRecipientHint": {
+    "description": "Shown as the hint of a field in recipient typeahead (directory)."
+  },
   "portalRegisterDirectory": "Link a server to the global directory",
+  "@portalRegisterDirectory": {
+    "description": "Shown as the title in directory link dialog (directory), and 1 other place."
+  },
   "portalRequestProfile": "Request a workspace profile",
+  "@portalRequestProfile": {
+    "description": "Shown as the text in space offers (directory)."
+  },
   "portalRequestSent": "Request sent. The workspace will review your profile.",
+  "@portalRequestSent": {
+    "description": "Shown as the text in public workspace view (directory)."
+  },
   "portalResetAll": "Reset all public data to workspace information",
+  "@portalResetAll": {
+    "description": "Shown as the text in public page editor (directory), and 1 other place."
+  },
   "portalResetAllBody": "The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.",
+  "@portalResetAllBody": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalResetAllConfirm": "Reset",
+  "@portalResetAllConfirm": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalSavePreview": "Save and preview the external view",
+  "@portalSavePreview": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalSearch": "Search workspaces",
+  "@portalSearch": {
+    "description": "Shown as the label of a field in directory screen (directory), and 1 other place."
+  },
   "portalSendCode": "Send sign-in code",
+  "@portalSendCode": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "portalSourceUnavailable": "A server is unavailable. This overview is incomplete. Tap to retry.",
+  "@portalSourceUnavailable": {
+    "description": "Shown as the text in account messenger sections (directory), and 5 other places."
+  },
   "portalSuggestionGroup": "Group",
-  "portalThisServer": "This server",
+  "@portalSuggestionGroup": {
+    "description": "Shown as the text in recipient typeahead (directory)."
+  },
   "portalUseCode": "Use an email code",
+  "@portalUseCode": {
+    "description": "Shown as the title in connection dialog (directory)."
+  },
   "portalUseWorkspaceInfo": "Use workspace information",
+  "@portalUseWorkspaceInfo": {
+    "description": "Shown as the text in public page editor (directory)."
+  },
   "portalVisibilityLink": "Who can find and message me",
   "@portalVisibilityLink": {
     "description": "Row in the account messenger leading to the visibility card in Me."
@@ -26977,6 +27564,9 @@
     "description": "Subtitle: where that choice is made."
   },
   "portalWebsite": "Website",
+  "@portalWebsite": {
+    "description": "Shown as the text in public workspace view (directory), and 2 other places."
+  },
   "portalWriteTo": "Write to {name}",
   "@portalWriteTo": {
     "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",
@@ -26987,9 +27577,21 @@
     }
   },
   "preferencesSaveFailed": "Could not save your preferences. Please try again.",
+  "@preferencesSaveFailed": {
+    "description": "Shown as the error text of a field in preference scope controls (profile), and 4 other places."
+  },
   "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
+  "@preferencesScopeHint": {
+    "description": "Shown as the subtitle in preference scope controls (profile)."
+  },
   "preferencesUseDefaults": "Use my defaults",
+  "@preferencesUseDefaults": {
+    "description": "Shown as the text in preference scope controls (profile)."
+  },
   "preferencesWorkspaceOnly": "Only for this workspace",
+  "@preferencesWorkspaceOnly": {
+    "description": "Shown as the title in preference scope controls (profile)."
+  },
   "priceGrossHint": "Gross price — what the member pays; VAT is part of it.",
   "@priceGrossHint": {
     "description": "Helper under price inputs clarifying gross-inclusive pricing (#537)"
@@ -27005,6 +27607,7 @@
   },
   "privacyAdminActionFailed": "The server refused: {reason}",
   "@privacyAdminActionFailed": {
+    "description": "Shown as the text in privacy admin sheets (members). Placeholders: {reason} (String).",
     "placeholders": {
       "reason": {
         "type": "String"
@@ -27012,15 +27615,40 @@
     }
   },
   "privacyAdminBasis": "Why it is kept",
+  "@privacyAdminBasis": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminComplete": "Complete",
+  "@privacyAdminComplete": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminDetails": "Details (optional)",
+  "@privacyAdminDetails": {
+    "description": "Shown as the label in privacy admin sheets (members)."
+  },
   "privacyAdminEmpty": "No rights request yet.",
+  "@privacyAdminEmpty": {
+    "description": "Shown as the text in privacy admin screen (members)."
+  },
   "privacyAdminExtend": "Extend the deadline",
+  "@privacyAdminExtend": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminExtendReason": "Reason for the extension (at least 10 characters)",
+  "@privacyAdminExtendReason": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminIncidentIntro": "The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.",
+  "@privacyAdminIncidentIntro": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyAdminIncidentNote": "What happened (optional, 1000 characters at most)",
+  "@privacyAdminIncidentNote": {
+    "description": "Shown as the label in privacy admin sheets (members)."
+  },
   "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
   "@privacyAdminIncidentRecorded": {
+    "description": "Shown as the message in privacy admin sheets (members). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -27028,16 +27656,44 @@
     }
   },
   "privacyAdminIncidentSend": "Record and tell them",
+  "@privacyAdminIncidentSend": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyAdminIncidentTitle": "Record a privacy incident",
+  "@privacyAdminIncidentTitle": {
+    "description": "Shown as the label in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminIntro": "The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.",
+  "@privacyAdminIntro": {
+    "description": "Shown as the subtitle in privacy screen (profile), and 1 other place."
+  },
   "privacyAdminKind": "Kind of request",
+  "@privacyAdminKind": {
+    "description": "Shown as the label of a field in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminLoadFailed": "The requests could not be read.",
+  "@privacyAdminLoadFailed": {
+    "description": "Shown as the text in privacy admin screen (members)."
+  },
   "privacyAdminMember": "Member",
+  "@privacyAdminMember": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminOpenTile": "Personal data and rights requests",
+  "@privacyAdminOpenTile": {
+    "description": "Shown as the title in privacy screen (profile)."
+  },
   "privacyAdminOutcomeKind": "What happened to the data",
+  "@privacyAdminOutcomeKind": {
+    "description": "Shown as the label of a field in privacy admin sheets (members)."
+  },
   "privacyAdminPeriod": "For how long",
+  "@privacyAdminPeriod": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminReceivedOn": "Received on {date}",
   "@privacyAdminReceivedOn": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place. Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -27045,11 +27701,29 @@
     }
   },
   "privacyAdminRecord": "Record a request",
+  "@privacyAdminRecord": {
+    "description": "Shown as the label in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminRefusalReason": "Reason for the refusal (at least 10 characters)",
+  "@privacyAdminRefusalReason": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminRefuse": "Refuse",
+  "@privacyAdminRefuse": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminSave": "Save",
+  "@privacyAdminSave": {
+    "description": "Shown as the text in privacy admin sheets (members), and 3 other places."
+  },
   "privacyAdminStore": "Where (a store or a list)",
+  "@privacyAdminStore": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminTitle": "Personal data and rights requests",
+  "@privacyAdminTitle": {
+    "description": "Shown as the title in privacy admin screen (members)."
+  },
   "privacyErase": "Leave this workspace and erase my data",
   "@privacyErase": {
     "description": "#719 - privacy & data"
@@ -27114,8 +27788,17 @@
     "description": "#719 - privacy & data"
   },
   "privacyIncidentDataBreach": "A data breach",
+  "@privacyIncidentDataBreach": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyIncidentOther": "Another incident",
+  "@privacyIncidentOther": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyIncidentWrongInvoice": "A wrong invoice",
+  "@privacyIncidentWrongInvoice": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyIntro": "Your data is never tracked or sold, and is readable only by the roles the rules below name; where it is hosted is in this installation's privacy notice. These are your rights under the GDPR — each one is a button.",
   "@privacyIntro": {
     "description": "#719 - privacy & data"
@@ -27180,11 +27863,29 @@
     }
   },
   "privacyOutcomeCorrected": "Corrected",
+  "@privacyOutcomeCorrected": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeFailed": "Could not be done",
+  "@privacyOutcomeFailed": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomePendingExternal": "Still open elsewhere",
+  "@privacyOutcomePendingExternal": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeRemoved": "Removed",
+  "@privacyOutcomeRemoved": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeRestricted": "Restricted",
+  "@privacyOutcomeRestricted": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeRetained": "Kept (with a reason)",
+  "@privacyOutcomeRetained": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyPolicy": "Privacy policy",
   "@privacyPolicy": {
     "description": "#719 - privacy & data"
@@ -27202,6 +27903,9 @@
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
   "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
+  "@privacySelfServiceOff": {
+    "description": "Shown as the text in refusal text (core), and 3 other places."
+  },
   "privacySpaceNotice": "This space's privacy notice",
   "@privacySpaceNotice": {
     "description": "#1914 privacy notice: privacySpaceNotice"
@@ -27273,7 +27977,13 @@
     }
   },
   "processBillingPayments": "Billing & payments",
+  "@processBillingPayments": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processBillingPaymentsDesc": "Turn activity into invoices and reconcile what is owed.",
+  "@processBillingPaymentsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processBlockedIntro": "{feature} is still needed by: {features}",
   "@processBlockedIntro": {
     "description": "#1329 the process change preview and apply",
@@ -27313,9 +28023,21 @@
     "description": "#1329 the process change preview and apply"
   },
   "processCoordination": "Calendar & coordination",
+  "@processCoordination": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processCoordinationDesc": "Coordinate activity, messages and decisions.",
+  "@processCoordinationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processDocumentsInformation": "Documents & information",
+  "@processDocumentsInformation": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processDocumentsInformationDesc": "Create, share and export workspace information.",
+  "@processDocumentsInformationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processFeatureCount": "{enabled} of {total} features on",
   "@processFeatureCount": {
     "description": "#1327 the process-first overview of the Features screen",
@@ -27372,13 +28094,25 @@
     }
   },
   "processIntegrations": "Integrations & automation",
+  "@processIntegrations": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processIntegrationsDesc": "Deliver notifications and documents through external services.",
+  "@processIntegrationsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processKeepDependants": "Switch off anyway, keep their settings",
   "@processKeepDependants": {
     "description": "#1329 the process change preview and apply"
   },
   "processMembershipCommerce": "Membership commerce",
+  "@processMembershipCommerce": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processMembershipCommerceDesc": "Set service prices and member agreements.",
+  "@processMembershipCommerceDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processNeededBy": "needed by {features}",
   "@processNeededBy": {
     "description": "#1329 the process change preview and apply",
@@ -27402,7 +28136,13 @@
     }
   },
   "processOperations": "Operations & administration",
+  "@processOperations": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processOperationsDesc": "Maintain configuration and the application experience.",
+  "@processOperationsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processRemoveDependants": "{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}",
   "@processRemoveDependants": {
     "description": "#1329 the process change preview and apply",
@@ -27413,7 +28153,13 @@
     }
   },
   "processReservationsUsage": "Reservations & usage",
+  "@processReservationsUsage": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processReservationsUsageDesc": "Reserve capacity and track its use.",
+  "@processReservationsUsageDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processSearchLabel": "Search processes and features",
   "@processSearchLabel": {
     "description": "#1327 the process-first overview of the Features screen"
@@ -27465,7 +28211,13 @@
     }
   },
   "processSpaceManagement": "Space management",
+  "@processSpaceManagement": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processSpaceManagementDesc": "Organize the places members can use and when they open.",
+  "@processSpaceManagementDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processStateActive": "Active",
   "@processStateActive": {
     "description": "#1327 the process-first overview of the Features screen"
@@ -27511,7 +28263,13 @@
     "description": "#1329 the process change preview and apply"
   },
   "processWorkspaceAccess": "Workspace & access",
+  "@processWorkspaceAccess": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processWorkspaceAccessDesc": "Manage membership, roles and access to the space.",
+  "@processWorkspaceAccessDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "profilePhotoChoose": "Choose a photo",
   "@profilePhotoChoose": {
     "description": "Action in the photo sheet: pick an image from the device."
@@ -27593,11 +28351,17 @@
     "description": "#937 platform owner: profilesCopyEmail"
   },
   "profilesDefault": "Default at startup",
+  "@profilesDefault": {
+    "description": "Shown as the text in profiles screen (profile)."
+  },
   "profilesEmailCopied": "E-mail copied.",
   "@profilesEmailCopied": {
     "description": "#937 platform owner: profilesEmailCopied"
   },
   "profilesMakeDefault": "Use as default at startup",
+  "@profilesMakeDefault": {
+    "description": "Shown as the text in profiles screen (profile)."
+  },
   "profilesNotMember": "Not a member · {count, plural, one{1 member} other{{count} members}}",
   "@profilesNotMember": {
     "description": "#937 platform owner: profilesNotMember",
@@ -27659,9 +28423,21 @@
     }
   },
   "provenanceProductDefault": "Product default",
+  "@provenanceProductDefault": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "provenanceResetToDefault": "Reset to product default",
+  "@provenanceResetToDefault": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "provenanceResetToTemplate": "Reset to template",
+  "@provenanceResetToTemplate": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "provenanceWorkspaceSetting": "Workspace setting",
+  "@provenanceWorkspaceSetting": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "publicHolidaysAction": "Add public holidays",
   "@publicHolidaysAction": {
     "description": "#1274 the action that opens the holiday preview"
@@ -27722,19 +28498,61 @@
     "description": "#1274 the year field label"
   },
   "publicPersonUnavailable": "This profile is not public.",
+  "@publicPersonUnavailable": {
+    "description": "Shown as the title in public person screen (me)."
+  },
   "publicProfileCopied": "Link copied.",
+  "@publicProfileCopied": {
+    "description": "Shown as the text in public profile tile (me)."
+  },
   "publicProfileCopy": "Copy the link",
+  "@publicProfileCopy": {
+    "description": "Shown as the tooltip in public profile tile (me)."
+  },
   "publicProfileOff": "Off: people who are not signed in see nothing of you.",
+  "@publicProfileOff": {
+    "description": "Shown as the text in public profile tile (me)."
+  },
   "publicProfileOn": "Anyone with the link reads your name, profession and bio.",
+  "@publicProfileOn": {
+    "description": "Shown as the text in public profile tile (me)."
+  },
   "publicProfilePublishAction": "Publish",
+  "@publicProfilePublishAction": {
+    "description": "Shown as the text in public profile tile (me)."
+  },
   "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
+  "@publicProfilePublishBody": {
+    "description": "Shown as the text in public profile tile (me)."
+  },
   "publicProfilePublishTitle": "Publish a public profile?",
+  "@publicProfilePublishTitle": {
+    "description": "Shown as the text in public profile tile (me)."
+  },
   "publicProfileTitle": "Public profile",
+  "@publicProfileTitle": {
+    "description": "Shown as the title in public profile tile (me), and 1 other place."
+  },
   "purchaseApprovalEvidenceUnavailable": "Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.",
+  "@purchaseApprovalEvidenceUnavailable": {
+    "description": "Shown as the text in purchases sheet (money)."
+  },
   "purchaseApprovalFxSame": "The bill is in the workspace currency.",
+  "@purchaseApprovalFxSame": {
+    "description": "Shown as the text in purchase exchange rate (money)."
+  },
   "purchaseApprovalFxUnavailable": "The exchange rate is unavailable in this approval view.",
+  "@purchaseApprovalFxUnavailable": {
+    "description": "Shown as the text in purchase exchange rate (money)."
+  },
   "purchaseApprovalReceiptsUnavailable": "Pending receipts could not be loaded.",
+  "@purchaseApprovalReceiptsUnavailable": {
+    "description": "Shown as the text in purchase approvals screen (money)."
+  },
   "purchaseApprovalVisibleReceipts": "Pending member receipts you can view",
+  "@purchaseApprovalVisibleReceipts": {
+    "description": "Shown as the text in purchase approvals screen (money)."
+  },
   "purchaseApprovalsEmpty": "No supplier bills await your approval.",
   "@purchaseApprovalsEmpty": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
@@ -29410,15 +30228,40 @@
     "description": "#2378 records location"
   },
   "refFacetMonth": "Month",
+  "@refFacetMonth": {
+    "description": "Shown as the text in note record choices (workspace), and 2 other places."
+  },
   "refFacetPerson": "Person",
+  "@refFacetPerson": {
+    "description": "Shown as the text in note record choices (workspace), and 1 other place."
+  },
   "refFacetStatus": "Status",
+  "@refFacetStatus": {
+    "description": "Shown as the text in note record choices (workspace), and 1 other place."
+  },
   "refFacetType": "Type",
+  "@refFacetType": {
+    "description": "Shown as the text in note record choices (workspace), and 1 other place."
+  },
   "refFacetWorkspace": "Workspace",
+  "@refFacetWorkspace": {
+    "description": "Not shown in the app; read by 0 tests or tools."
+  },
   "refFilterAll": "All",
+  "@refFilterAll": {
+    "description": "Shown as the label in ref picker sheet (workspace)."
+  },
   "refFilterAmount": "Amount",
+  "@refFilterAmount": {
+    "description": "Shown as the label in ref picker sheet (workspace), and 1 other place."
+  },
   "refFilterClear": "Clear filters",
+  "@refFilterClear": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refFilterFindIn": "Find in {facet}",
   "@refFilterFindIn": {
+    "description": "Shown as the hint of a field in ref picker filters panel (workspace). Placeholders: {facet} (String).",
     "placeholders": {
       "facet": {
         "type": "String"
@@ -29426,9 +30269,16 @@
     }
   },
   "refFilterMore": "Filters",
+  "@refFilterMore": {
+    "description": "Shown as the tooltip in ref picker sheet (workspace), and 1 other place."
+  },
   "refFilterReset": "Reset",
+  "@refFilterReset": {
+    "description": "Shown as the text in ref picker filters panel (workspace)."
+  },
   "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
+    "description": "Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -29436,18 +30286,57 @@
     }
   },
   "refFilterSort": "Sort",
+  "@refFilterSort": {
+    "description": "Shown as the tooltip in ref picker sheet (workspace)."
+  },
   "refSortAmountHigh": "Highest amount",
+  "@refSortAmountHigh": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refSortAmountLow": "Lowest amount",
+  "@refSortAmountLow": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refSortNewest": "Newest first",
+  "@refSortNewest": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refSortOldest": "Oldest first",
+  "@refSortOldest": {
+    "description": "Shown as the text in ref picker sheet (workspace)."
+  },
   "refStatusCancelled": "Cancelled",
+  "@refStatusCancelled": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusDecided": "Decided",
+  "@refStatusDecided": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusOpen": "Open (unpaid)",
+  "@refStatusOpen": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusPaid": "Paid",
+  "@refStatusPaid": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusPending": "Pending",
+  "@refStatusPending": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refStatusRefunded": "Refunded",
+  "@refStatusRefunded": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refTypeCreditNote": "Credit note",
+  "@refTypeCreditNote": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refTypeInvoice": "Invoice",
+  "@refTypeInvoice": {
+    "description": "Shown as the label in note record choices (workspace)."
+  },
   "refusalAccountingClosed": "This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.",
   "@refusalAccountingClosed": {
     "description": "#2370 Refusal (DKA02): the accounting connection was revoked, or it already delivered and its token cannot change."
@@ -30660,6 +31549,9 @@
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportImagesLoadFailed": "Could not load report images. Try again.",
+  "@reportImagesLoadFailed": {
+    "description": "Shown as the label in report image picker (money)."
+  },
   "reportImagesTitle": "Report images",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -30813,6 +31705,9 @@
     "description": "Report UX: presets, quick preview, download (#474)"
   },
   "reportPresetProfessional": "Professional",
+  "@reportPresetProfessional": {
+    "description": "Shown as the text in report defaults (money)."
+  },
   "reportPresetSimple": "Simple",
   "@reportPresetSimple": {
     "description": "Legal invoice mentions (#480)"
@@ -31067,6 +31962,9 @@
     "description": "Snackbar after an own reservation's window was edited (0033)"
   },
   "reserveAvailabilityUnavailable": "Availability could not be loaded completely, so no seat is shown as free. Retry to see it.",
+  "@reserveAvailabilityUnavailable": {
+    "description": "Shown as the text in availability unavailable banner (core)."
+  },
   "reserveBackToNow": "Back to now",
   "@reserveBackToNow": {
     "description": "#2016 Reserve time choice: reserveBackToNow"
@@ -31076,6 +31974,9 @@
     "description": "Snackbar when creating a reservation from the Reserve hub fails for a generic reason (#208)"
   },
   "reserveClosedShort": "Closed",
+  "@reserveClosedShort": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"
@@ -31160,6 +32061,9 @@
     }
   },
   "reserveStaleRetry": "Retry",
+  "@reserveStaleRetry": {
+    "description": "Shown as the text in availability unavailable banner (core), and 1 other place."
+  },
   "reserveViewMenu": "View",
   "@reserveViewMenu": {
     "description": "Name of the Reserve hub control that opens the list of views: Plan, Day, Week, Month (#1301)"
@@ -32080,6 +32984,9 @@
     "description": "#2872 setup guide: title of the sample data card, shown only in a test space"
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
+  "@scanCameraWebUnavailable": {
+    "description": "Shown as the text in space scan sheet (reservations), and 1 other place."
+  },
   "scanJoinHelp": "Point the camera at the invitation QR — you see the workspace before you join.",
   "@scanJoinHelp": {
     "description": "Join-QR scanner: helper line under the camera (#572)"
@@ -32354,6 +33261,7 @@
   },
   "seriesPreviewBookOthers": "{count, plural, =1{Book the other date} other{Book the other {count} dates}}",
   "@seriesPreviewBookOthers": {
+    "description": "Shown as the text in series preview dialog (reservations). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -32365,24 +33273,69 @@
     "description": "Series preview (#2575): heading above the dates that would fail"
   },
   "seriesPreviewNone": "None of these dates can be booked.",
+  "@seriesPreviewNone": {
+    "description": "Shown as the text in series preview dialog (reservations)."
+  },
   "seriesSkippedTitle": "Skipped (already taken):",
   "@seriesSkippedTitle": {
     "description": "Heading above the list of conflicted series instances"
   },
   "serverChoiceExistingTitle": "A server that already exists",
+  "@serverChoiceExistingTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceIntro": "This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.",
+  "@serverChoiceIntro": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceNewBody": "Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.",
+  "@serverChoiceNewBody": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceNewTitle": "A new server of your own",
+  "@serverChoiceNewTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceReferenceAction": "Use the reference server",
+  "@serverChoiceReferenceAction": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceReferenceBody": "Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.",
+  "@serverChoiceReferenceBody": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceReferenceTitle": "The reference server",
+  "@serverChoiceReferenceTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceTitle": "Choose your server",
+  "@serverChoiceTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverConnectIntro": "Join a server where you already have an account, or create a new one.",
+  "@serverConnectIntro": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "serverConnectNoAccount": "No account there yet? Use this server on this device and sign up there.",
+  "@serverConnectNoAccount": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "serverConnectNoCode": "The clipboard holds no server code.",
+  "@serverConnectNoCode": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "serverConnectPasteCode": "Paste a server code",
+  "@serverConnectPasteCode": {
+    "description": "Shown as the label in connection dialog (directory)."
+  },
   "serverConnectReference": "Reference server",
+  "@serverConnectReference": {
+    "description": "Shown as the label in connection dialog (directory)."
+  },
   "serverConnectUseHere": "Use on this device",
+  "@serverConnectUseHere": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "serverReferenceLabel": "reference server ({host})",
   "@serverReferenceLabel": {
     "description": "Shown as a text in server label (core). Placeholders: {host} (String).",
@@ -32754,6 +33707,9 @@
     "description": "#3098 settings: Setting hint."
   },
   "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
+  "@settingHintPrivacyMemberSelfService": {
+    "description": "Shown as the text in settings labels (workspace)."
+  },
   "settingHintPurchaseItemCostMethod": "average: every approved purchase of the item up to the end of the period, weighed by its units. last: the latest purchase dated by then. It changes no document, only the margin figures.",
   "@settingHintPurchaseItemCostMethod": {
     "description": "#3294 step 4 items on purchase lines"
@@ -33043,6 +33999,9 @@
     "description": "#3098 settings: Setting label."
   },
   "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
+  "@settingLabelPrivacyMemberSelfService": {
+    "description": "Shown as the text in settings labels (workspace)."
+  },
   "settingLabelPurchaseItemCostMethod": "How an item's unit cost is read in the margins",
   "@settingLabelPurchaseItemCostMethod": {
     "description": "#3294 step 4 items on purchase lines"
@@ -35804,6 +36763,9 @@
     }
   },
   "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat.",
+  "@spaceAlreadyCheckedInHere": {
+    "description": "Shown as the text in space act sheet (reservations), and 1 other place."
+  },
   "spaceBackToMe": "Back to Me",
   "@spaceBackToMe": {
     "description": "Row and avatar tooltip in a space: return to the Me layer."
@@ -35813,11 +36775,29 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceCardInfoLabel": "Information on the card",
+  "@spaceCardInfoLabel": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceCardInfoWorkspace": "Workspace",
+  "@spaceCardInfoWorkspace": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceCardSizeLabel": "Card size",
+  "@spaceCardSizeLabel": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceCardSizeLarge": "Large",
+  "@spaceCardSizeLarge": {
+    "description": "Shown as the text in space codes options dialog (workspace), and 1 other place."
+  },
   "spaceCardSizeMedium": "Medium",
+  "@spaceCardSizeMedium": {
+    "description": "Shown as the text in space codes options dialog (workspace), and 1 other place."
+  },
   "spaceCardSizeSmall": "Small",
+  "@spaceCardSizeSmall": {
+    "description": "Shown as the text in space codes options dialog (workspace), and 1 other place."
+  },
   "spaceChipTooltip": "Switch space",
   "@spaceChipTooltip": {
     "description": "Tooltip on the chip naming the current space: it opens the switcher."
@@ -35831,7 +36811,13 @@
     "description": "Workspace-settings tile printing the per-space QR sheet"
   },
   "spaceFavoriteAdd": "Add to favorites",
+  "@spaceFavoriteAdd": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceFavoriteRemove": "Remove from favorites",
+  "@spaceFavoriteRemove": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceHostedOn": "Server: {server}",
   "@spaceHostedOn": {
     "description": "Shown as a text in space row controls (me). Placeholders: {server} (String).",
@@ -35871,7 +36857,13 @@
     }
   },
   "spaceMoveDown": "Move down",
+  "@spaceMoveDown": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceMoveUp": "Move up",
+  "@spaceMoveUp": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceNotBookable": "This space is not set up for whole-space reservations.",
   "@spaceNotBookable": {
     "description": "Space sheet explainer when the office/level is not bookable or the feature is off"
@@ -35882,6 +36874,7 @@
   },
   "spaceOptions": "Options for {name}",
   "@spaceOptions": {
+    "description": "Shown as the tooltip in space row controls (me). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -35889,7 +36882,13 @@
     }
   },
   "spaceQrSizeLabel": "QR code size",
+  "@spaceQrSizeLabel": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceRatingClear": "No rating",
+  "@spaceRatingClear": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceScanField": "Code",
   "@spaceScanField": {
     "description": "Label of the typed space-code input"
@@ -35903,6 +36902,9 @@
     "description": "Inline error when the scanned/typed payload is foreign or belongs to another workspace"
   },
   "spaceScanNfcHint": "…or hold the phone to a chair's NFC tag.",
+  "@spaceScanNfcHint": {
+    "description": "Shown as the text in space scan sheet (reservations)."
+  },
   "spaceScanTitle": "Scan a space code",
   "@spaceScanTitle": {
     "description": "Title of the space-QR scanner sheet and tooltip of the hub scan button"
@@ -35912,6 +36914,9 @@
     "description": "Error when a stale card references a deleted desk/office/level"
   },
   "spaceScanUnknownTag": "This tag is not linked to any chair.",
+  "@spaceScanUnknownTag": {
+    "description": "Shown as the text in space scan sheet (reservations)."
+  },
   "spaceSeatTaken": "Taken",
   "@spaceSeatTaken": {
     "description": "Subtitle of an occupied seat row in the space sheet"
@@ -35989,49 +36994,181 @@
     "description": "#934 workspace status / repartition wizard: statusTo"
   },
   "subprocessAttendance": "Attendance & usage",
+  "@subprocessAttendance": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessAttendanceDesc": "Record attendance and close check-ins at day end.",
+  "@subprocessAttendanceDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessAvailability": "Opening days & hours",
+  "@subprocessAvailability": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessAvailabilityDesc": "Define working hours and generate closure days.",
+  "@subprocessAvailabilityDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessCalendar": "Calendar views",
+  "@subprocessCalendar": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessCalendarDesc": "See reservations and pending decisions over time.",
+  "@subprocessCalendarDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessCollection": "Payment collection",
+  "@subprocessCollection": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessCollectionDesc": "Collect payments and follow up overdue invoices.",
+  "@subprocessCollectionDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessCommunication": "Member communication",
+  "@subprocessCommunication": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessCommunicationDesc": "Exchange messages and keep track of updates.",
+  "@subprocessCommunicationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessConfiguration": "Configuration & deployment",
+  "@subprocessConfiguration": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessConfigurationDesc": "Transfer configuration, use templates and manage instances.",
+  "@subprocessConfigurationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessDecisions": "Decisions & approvals",
+  "@subprocessDecisions": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessDecisionsDesc": "Review actions and record the required approvals.",
+  "@subprocessDecisionsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessDelivery": "External delivery",
+  "@subprocessDelivery": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessDeliveryDesc": "Connect push, WhatsApp and electronic invoice delivery.",
+  "@subprocessDeliveryDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessDocuments": "Document publication",
+  "@subprocessDocuments": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessDocumentsDesc": "Publish documents and produce printable files.",
+  "@subprocessDocumentsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessExpenses": "Shared expenses",
+  "@subprocessExpenses": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessExpensesDesc": "Share costs, replenish supplies and schedule recurring expenses.",
+  "@subprocessExpensesDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessExperience": "Application experience",
+  "@subprocessExperience": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessExperienceDesc": "Adjust help, navigation and display preferences.",
+  "@subprocessExperienceDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessInvoicing": "Invoicing",
+  "@subprocessInvoicing": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessInvoicingDesc": "Issue and follow immutable invoices through settlement.",
+  "@subprocessInvoicingDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPeople": "People & membership",
+  "@subprocessPeople": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPeopleDesc": "Identify members and manage their membership and permissions.",
+  "@subprocessPeopleDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPhysicalAccess": "Physical access",
+  "@subprocessPhysicalAccess": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPhysicalAccessDesc": "Use badges, seat tags and the shared check-in kiosk.",
+  "@subprocessPhysicalAccessDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPresentation": "Space presentation",
+  "@subprocessPresentation": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPresentationDesc": "Help members recognize people and places on the plan.",
+  "@subprocessPresentationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPricing": "Services & pricing",
+  "@subprocessPricing": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPricingDesc": "Price services and accessories and agree member terms.",
+  "@subprocessPricingDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPrivacy": "Personal data access & exports",
+  "@subprocessPrivacy": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPrivacyDesc": "Inspect access to personal data and export records.",
+  "@subprocessPrivacyDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessRecords": "Financial records",
+  "@subprocessRecords": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessRecordsDesc": "Understand balances, payments and member statements.",
+  "@subprocessRecordsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessReportDesign": "Report design",
+  "@subprocessReportDesign": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessReportDesignDesc": "Design reports and maintain their text and layouts.",
+  "@subprocessReportDesignDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessReservations": "Booking desks & spaces",
+  "@subprocessReservations": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessReservationsDesc": "Book seats or whole spaces under the workspace rules.",
+  "@subprocessReservationsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessStructure": "Space structure",
+  "@subprocessStructure": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessStructureDesc": "Manage sites and the availability of plan objects.",
+  "@subprocessStructureDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessTax": "VAT management",
+  "@subprocessTax": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessTaxDesc": "Maintain VAT groups, rates and declarations.",
+  "@subprocessTaxDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "supplierFieldEdited": "Edited by you",
   "@supplierFieldEdited": {
     "description": "#2863 supplier lookup"
@@ -36491,15 +37628,40 @@
     "description": "#2354 place of supply: supplyClassProperty"
   },
   "supportChanged": "The context changed. Prepare a new preview.",
+  "@supportChanged": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportDay": "Last 24 hours",
+  "@supportDay": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportDemo": "Demo: simulated local context",
+  "@supportDemo": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportFailed": "Could not prepare support details. Try again.",
+  "@supportFailed": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportHour": "Last hour",
+  "@supportHour": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportPrepare": "Prepare preview",
+  "@supportPrepare": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportPrivacy": "Only this device’s bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded. Unknown checks are unavailable; an operator can run doctor --support-json separately. Files you share cannot be revoked.",
+  "@supportPrivacy": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportSaved": "Saved locally",
+  "@supportSaved": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportSize": "Preview: {bytes} bytes",
   "@supportSize": {
+    "description": "Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).",
     "placeholders": {
       "bytes": {
         "type": "int",
@@ -36508,6 +37670,9 @@
     }
   },
   "supportTitle": "Support details",
+  "@supportTitle": {
+    "description": "Shown as the title in support bundle screen (help), and 1 other place."
+  },
   "symbolHint": "A round mark of one or two letters on a colour, unique to this workspace — or use a photo below instead.",
   "@symbolHint": {
     "description": "workspace symbol"
@@ -37111,11 +38276,17 @@
     "description": "#1866 task export (Word document): ValueNo"
   },
   "taskExportValueOff": "off",
+  "@taskExportValueOff": {
+    "description": "Shown as the text in task export labels (task_recorder), and 1 other place."
+  },
   "taskExportValueOffline": "no connection",
   "@taskExportValueOffline": {
     "description": "#1866 task export (Word document): ValueOffline"
   },
   "taskExportValueOn": "on",
+  "@taskExportValueOn": {
+    "description": "Shown as the text in task export labels (task_recorder), and 1 other place."
+  },
   "taskExportValueOnce": "once",
   "@taskExportValueOnce": {
     "description": "#1866 task export (Word document): ValueOnce"
@@ -37158,6 +38329,7 @@
   },
   "taskExportValueRedacted": "not kept ({length} characters)",
   "@taskExportValueRedacted": {
+    "description": "Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).",
     "placeholders": {
       "length": {
         "type": "int"
@@ -37467,7 +38639,13 @@
     "description": "#1865 task recorder: taskRecorderAddNote"
   },
   "taskRecorderCaptureValues": "Capture values (for issue reports)",
+  "@taskRecorderCaptureValues": {
+    "description": "Shown as the text in task recorder screen (task_recorder)."
+  },
   "taskRecorderCaptureValuesHint": "Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.",
+  "@taskRecorderCaptureValuesHint": {
+    "description": "Shown as the text in task recorder screen (task_recorder)."
+  },
   "taskRecorderCompletenessComplete": "Complete",
   "@taskRecorderCompletenessComplete": {
     "description": "#1865 task recorder: taskRecorderCompletenessComplete"
@@ -37527,6 +38705,9 @@
     "description": "#1865 task recorder: taskRecorderEndLimitReached"
   },
   "taskRecorderEndReferenceMissing": "Stopped: the current form could not be identified. Open a supported page and start again.",
+  "@taskRecorderEndReferenceMissing": {
+    "description": "Shown as the text in task export labels (task_recorder), and 2 other places."
+  },
   "taskRecorderEndScopeChanged": "Ended: the account or workspace changed",
   "@taskRecorderEndScopeChanged": {
     "description": "#1865 task recorder: taskRecorderEndScopeChanged"
@@ -37552,8 +38733,17 @@
     "description": "#1865 task recorder: taskRecorderExportPreview"
   },
   "taskRecorderExportValuesBody": "It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.",
+  "@taskRecorderExportValuesBody": {
+    "description": "Shown as the text in recording export (task_recorder)."
+  },
   "taskRecorderExportValuesConfirm": "Save anyway",
+  "@taskRecorderExportValuesConfirm": {
+    "description": "Shown as the text in recording export (task_recorder)."
+  },
   "taskRecorderExportValuesTitle": "This recording contains values",
+  "@taskRecorderExportValuesTitle": {
+    "description": "Shown as the text in recording export (task_recorder)."
+  },
   "taskRecorderFieldAccessories": "accessories",
   "@taskRecorderFieldAccessories": {
     "description": "#1865 task recorder: taskRecorderFieldAccessories"
@@ -38070,6 +39260,9 @@
     "description": "#1865 task recorder: taskRecorderValueWithheld"
   },
   "taskRecorderValuesOn": "Values are being captured",
+  "@taskRecorderValuesOn": {
+    "description": "Shown as the text in task recorder screen (task_recorder)."
+  },
   "taskWizardAddGuide": "Add a guide",
   "@taskWizardAddGuide": {
     "description": "Task wizard: taskWizardAddGuide"
@@ -39530,9 +40723,16 @@
     }
   },
   "uxAdvancedSection": "Advanced",
+  "@uxAdvancedSection": {
+    "description": "Shown as the text in me account tab (me)."
+  },
   "uxAlertsFilterEmpty": "No updates match these filters.",
+  "@uxAlertsFilterEmpty": {
+    "description": "Shown as the text in events screen (events)."
+  },
   "uxAttentionSummary": "{updates} new updates · {pending} awaiting your decision",
   "@uxAttentionSummary": {
+    "description": "Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).",
     "placeholders": {
       "updates": {
         "type": "int"
@@ -39543,57 +40743,189 @@
     }
   },
   "uxBookingChargePending": "The charge and allowance used depend on the member’s plan and are settled on the statement.",
+  "@uxBookingChargePending": {
+    "description": "Shown as the text in booking review summary (reservations)."
+  },
   "uxBookingCheckInHelp": "Also mark me present when confirming this reservation.",
+  "@uxBookingCheckInHelp": {
+    "description": "Shown as the subtitle in booking sheet (reservations)."
+  },
   "uxBookingFor": "Booking for",
+  "@uxBookingFor": {
+    "description": "Shown as the text in booking review summary (reservations)."
+  },
   "uxBookingModesHelp": "Reserve keeps the selected window. Check in now switches to the current window and marks you present.",
+  "@uxBookingModesHelp": {
+    "description": "Shown as the text in booking sheet (reservations)."
+  },
   "uxBookingResourceUnavailable": "Resource unavailable",
+  "@uxBookingResourceUnavailable": {
+    "description": "Shown as the text in calendar booking title (calendar)."
+  },
   "uxDeviceTime": "Your time",
+  "@uxDeviceTime": {
+    "description": "Shown as the text in booking window summary (reservations)."
+  },
   "uxFinanceAlerts": "Finance alerts",
+  "@uxFinanceAlerts": {
+    "description": "Shown as the title in money attention body (money)."
+  },
   "uxFinanceAlertsFailed": "Could not open finance alerts. Please try again.",
+  "@uxFinanceAlertsFailed": {
+    "description": "Shown as the error text of a field in money attention body (money)."
+  },
   "uxLinkedReference": "Linked resource",
+  "@uxLinkedReference": {
+    "description": "Shown as the text in inbox header (directory)."
+  },
   "uxManageResource": "Manage resource",
+  "@uxManageResource": {
+    "description": "Shown as the title in booking review summary (reservations)."
+  },
   "uxMoneyAllPeriods": "All periods · Credit, open invoices and refunds.",
+  "@uxMoneyAllPeriods": {
+    "description": "Shown as the text in account card (money)."
+  },
   "uxMoneyDocumentsScope": "Monthly reports and your current agreement.",
+  "@uxMoneyDocumentsScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyInvoicesScope": "Your invoices in this workspace · All periods.",
+  "@uxMoneyInvoicesScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyPaymentsScope": "Monthly balance · Overdue invoices from all periods.",
+  "@uxMoneyPaymentsScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyStatementScope": "Monthly detail for the selected period.",
+  "@uxMoneyStatementScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyUsageScope": "Bookings and consumption for the selected month.",
+  "@uxMoneyUsageScope": {
+    "description": "Shown as the text in money faces view (money)."
+  },
   "uxMoneyWorkspaceTools": "Workspace finance tools",
+  "@uxMoneyWorkspaceTools": {
+    "description": "Shown as the title in money faces view (money)."
+  },
   "uxMyBookings": "My bookings",
+  "@uxMyBookings": {
+    "description": "Shown as the label in calendar kind chips (calendar)."
+  },
   "uxNavFinance": "Cash & accounting",
+  "@uxNavFinance": {
+    "description": "Shown as the text in shell drawer (app)."
+  },
   "uxNavPeople": "People & access",
+  "@uxNavPeople": {
+    "description": "Shown as the text in shell drawer (app)."
+  },
   "uxNavReporting": "Reporting",
   "@uxNavReporting": {
     "description": "#2313 the menu group that holds every report and the business analytics"
   },
   "uxNavSales": "Sales & collections",
+  "@uxNavSales": {
+    "description": "Shown as the text in shell drawer (app), and 1 other place."
+  },
   "uxNavWorkspace": "Workspace setup",
+  "@uxNavWorkspace": {
+    "description": "Shown as the text in shell drawer (app)."
+  },
   "uxOpenWorkspace": "Open workspace",
+  "@uxOpenWorkspace": {
+    "description": "Shown as the text in linked spaces section (me), and 1 other place."
+  },
   "uxPreferencesSection": "Preferences",
+  "@uxPreferencesSection": {
+    "description": "Shown as the text in me account tab (me)."
+  },
   "uxPrivacySection": "Privacy",
+  "@uxPrivacySection": {
+    "description": "Shown as the text in me account tab (me)."
+  },
   "uxProfileAccount": "Profile & account",
+  "@uxProfileAccount": {
+    "description": "Shown as the text in me shell (me), and 1 other place."
+  },
   "uxProfileChooseEnvironment": "Choose an environment",
   "@uxProfileChooseEnvironment": {
     "description": "Shown as a text in pair card (profile)."
   },
   "uxProfileSection": "Profile",
+  "@uxProfileSection": {
+    "description": "Shown as the text in me account tab (me), and 1 other place."
+  },
   "uxRealSpaceHint": "Real bookings and invoices",
+  "@uxRealSpaceHint": {
+    "description": "Shown as the text in development banner (app), and 1 other place."
+  },
   "uxRealWorkspace": "Workspace",
+  "@uxRealWorkspace": {
+    "description": "Shown as the text in development banner (app), and 1 other place."
+  },
   "uxReportsFinance": "Financial reports",
+  "@uxReportsFinance": {
+    "description": "Shown as the text in shell drawer entries (app), and 1 other place."
+  },
   "uxReportsHint": "Financial reports, workspace documents and exports",
+  "@uxReportsHint": {
+    "description": "Shown as the subtitle in workspace settings parameters (workspace), and 1 other place."
+  },
   "uxReportsTemplates": "Templates",
+  "@uxReportsTemplates": {
+    "description": "Shown as the text in shell drawer entries (app), and 1 other place."
+  },
   "uxReportsTitle": "Reports",
+  "@uxReportsTitle": {
+    "description": "Shown as the title in workspace settings screen (workspace), and 2 other places."
+  },
   "uxReportsWorkspace": "Workspace documents",
+  "@uxReportsWorkspace": {
+    "description": "Shown as the text in help tips (core), and 2 other places."
+  },
   "uxResetFilters": "Reset filters",
+  "@uxResetFilters": {
+    "description": "Shown as the tooltip in calendar kind chips (calendar)."
+  },
   "uxSettingsPersonal": "My settings",
+  "@uxSettingsPersonal": {
+    "description": "Shown as the text in settings screen (profile)."
+  },
   "uxSettingsSpace": "Manage workspace",
+  "@uxSettingsSpace": {
+    "description": "Shown as the text in settings screen (profile)."
+  },
   "uxTestSpace": "Test space",
+  "@uxTestSpace": {
+    "description": "Shown as the text in linked spaces section (me), and 2 other places."
+  },
   "uxTestSpaceHint": "Test space: practice bookings and invoices",
+  "@uxTestSpaceHint": {
+    "description": "Shown as the text in development banner (app), and 3 other places."
+  },
   "uxWorkspaceAppearance": "Appearance & wording",
+  "@uxWorkspaceAppearance": {
+    "description": "Shown as the title in workspace settings parameters (workspace)."
+  },
   "uxWorkspaceCommunity": "Community & invitations",
+  "@uxWorkspaceCommunity": {
+    "description": "Shown as the title in workspace settings parameters (workspace)."
+  },
   "uxWorkspaceGeneral": "General details",
+  "@uxWorkspaceGeneral": {
+    "description": "Shown as the title in workspace settings parameters (workspace)."
+  },
   "uxWorkspaceTime": "Workspace time",
+  "@uxWorkspaceTime": {
+    "description": "Shown as the text in booking window summary (reservations)."
+  },
   "uxWorkspaceTools": "Templates & data",
+  "@uxWorkspaceTools": {
+    "description": "Shown as the title in workspace settings screen (workspace)."
+  },
   "validationAdminsMay": "Admins may validate",
   "@validationAdminsMay": {
     "description": "Switch label: whether admins may validate at all (off = owner only)"
@@ -41189,6 +42521,9 @@
     "description": "#2558 privacy: the personal home lacks the checked privacy writer (incomplete deployment); nothing was written"
   },
   "visibilityWidenAction": "Widen",
+  "@visibilityWidenAction": {
+    "description": "Shown as the text in visibility flow (me)."
+  },
   "visibilityWidenAdded": "Added: {spaces}",
   "@visibilityWidenAdded": {
     "description": "#2558 widening confirmation: chosen spaces added",
@@ -41201,6 +42536,7 @@
   },
   "visibilityWidenConfirm": "Show your {field} to: {audience}? They will be able to see it.",
   "@visibilityWidenConfirm": {
+    "description": "Shown as the text in visibility flow (me). Placeholders: {field} (String), {audience} (String).",
     "placeholders": {
       "field": {
         "type": "String"
@@ -41560,6 +42896,9 @@
     "description": "Shown as a text in wizard context (money)."
   },
   "wizardStepCompleted": "Completed",
+  "@wizardStepCompleted": {
+    "description": "Shown as the text in wizard progress (core)."
+  },
   "wizardStepIssue": "Issue",
   "@wizardStepIssue": {
     "description": "Shown as a text in wizard context (money)."
@@ -41585,12 +42924,21 @@
     "description": "Shown as a text in wizard context (money)."
   },
   "wizardStepSkipped": "Skipped — suggested settings",
+  "@wizardStepSkipped": {
+    "description": "Shown as the text in wizard progress (core)."
+  },
   "wizardStepSummary": "Summary",
   "@wizardStepSummary": {
     "description": "Shown as a text in wizard context (money), and 1 other place."
   },
   "wizardStepUnavailable": "Not available yet",
+  "@wizardStepUnavailable": {
+    "description": "Shown as the text in wizard progress (core)."
+  },
   "wizardSubmitting": "Submitting",
+  "@wizardSubmitting": {
+    "description": "Shown as the text in wizard scaffold (core)."
+  },
   "wizardSummaryHint": "What this run did",
   "@wizardSummaryHint": {
     "description": "Shown as a text in wizard steps payments (money)."
@@ -41788,12 +43136,33 @@
     "description": "Workspace-settings field: postal address printed on invoices"
   },
   "workspaceCodeCopied": "Copied",
+  "@workspaceCodeCopied": {
+    "description": "Shown as the text in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeCopy": "Copy ID",
+  "@workspaceCodeCopy": {
+    "description": "Shown as the text in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeEdit": "Change workspace ID",
+  "@workspaceCodeEdit": {
+    "description": "Shown as the title in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeExplainer": "Coworkers scan this QR code — or type the ID — to join this workspace.",
+  "@workspaceCodeExplainer": {
+    "description": "Shown as the text in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeHint": "4–20 letters or digits, unique",
+  "@workspaceCodeHint": {
+    "description": "Shown as the text in workspace code screen (workspace)."
+  },
   "workspaceCodeLabel": "Workspace ID",
+  "@workspaceCodeLabel": {
+    "description": "Shown as the label of a field in workspace code screen (workspace)."
+  },
   "workspaceCodeRejected": "That ID was rejected — it must be 4–20 letters or digits and not already taken.",
+  "@workspaceCodeRejected": {
+    "description": "Shown as the error text of a field in workspace code screen (workspace)."
+  },
   "workspaceCodeSharePng": "Share as PNG",
   "@workspaceCodeSharePng": {
     "description": "Button exporting the workspace QR as a PNG via the share sheet (#112)"
@@ -42031,6 +43400,9 @@
     "description": "Body of the reset confirmation dialog explaining exactly what is deleted vs kept, and that it is irreversible."
   },
   "workspaceSettingsConflict": "Someone changed these settings while you were editing. Nothing was saved; your changes are still here.",
+  "@workspaceSettingsConflict": {
+    "description": "Shown as the text in workspace settings screen (workspace)."
+  },
   "workspaceSettingsCurrencyHelper": "Defaults from the country — override if your community bills in another currency.",
   "@workspaceSettingsCurrencyHelper": {
     "description": "Helper under the currency field on the workspace settings screen (#153)."

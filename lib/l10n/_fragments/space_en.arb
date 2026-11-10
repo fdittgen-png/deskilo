@@ -57,12 +57,33 @@
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
   "spaceCardSizeLabel": "Card size",
+  "@spaceCardSizeLabel": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceQrSizeLabel": "QR code size",
+  "@spaceQrSizeLabel": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceCardSizeSmall": "Small",
+  "@spaceCardSizeSmall": {
+    "description": "Shown as the text in space codes options dialog (workspace), and 1 other place."
+  },
   "spaceCardSizeMedium": "Medium",
+  "@spaceCardSizeMedium": {
+    "description": "Shown as the text in space codes options dialog (workspace), and 1 other place."
+  },
   "spaceCardSizeLarge": "Large",
+  "@spaceCardSizeLarge": {
+    "description": "Shown as the text in space codes options dialog (workspace), and 1 other place."
+  },
   "spaceCardInfoLabel": "Information on the card",
+  "@spaceCardInfoLabel": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceCardInfoWorkspace": "Workspace",
+  "@spaceCardInfoWorkspace": {
+    "description": "Shown as the text in space codes options dialog (workspace)."
+  },
   "spaceMessageReserver": "Message {name}",
   "@spaceMessageReserver": {
     "description": "Action opening the conversation with the member whose reservation blocks the tapped/scanned space (#622)",
@@ -84,5 +105,8 @@
   "@spaceManageMyBooking": {
     "description": "#670 - whole-space sheet"
   },
-  "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat."
+  "spaceAlreadyCheckedInHere": "You are already checked in here. Choose Check out to leave the seat.",
+  "@spaceAlreadyCheckedInHere": {
+    "description": "Shown as the text in space act sheet (reservations), and 1 other place."
+  }
 }

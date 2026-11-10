@@ -84,6 +84,9 @@
     }
   },
   "reserveStaleRetry": "Retry",
+  "@reserveStaleRetry": {
+    "description": "Shown as the text in availability unavailable banner (core), and 1 other place."
+  },
   "reserveDayView": "Day",
   "@reserveDayView": {
     "description": "Reserve hub view segment showing the selected day's per-seat timeline (#208)"
@@ -105,7 +108,13 @@
     "description": "Snackbar when creating a reservation from the Reserve hub fails for a generic reason (#208)"
   },
   "spaceScanNfcHint": "…or hold the phone to a chair's NFC tag.",
+  "@spaceScanNfcHint": {
+    "description": "Shown as the text in space scan sheet (reservations)."
+  },
   "spaceScanUnknownTag": "This tag is not linked to any chair.",
+  "@spaceScanUnknownTag": {
+    "description": "Shown as the text in space scan sheet (reservations)."
+  },
   "bookingCheckedInUntil": "Checked in until {until}.",
   "@bookingCheckedInUntil": {
     "description": "#663 - check-in confirmation without a space name",
@@ -150,6 +159,7 @@
   },
   "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
   "@bookingHorizonError": {
+    "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {days} (int).",
     "placeholders": {
       "days": {
         "type": "int"
@@ -158,6 +168,7 @@
   },
   "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
   "@bookingTooShortError": {
+    "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -166,6 +177,7 @@
   },
   "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
   "@bookingTooLongError": {
+    "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -173,9 +185,21 @@
     }
   },
   "legendFree": "Free",
+  "@legendFree": {
+    "description": "Shown as the text in lexicon defaults (core), and 5 other places."
+  },
   "legendReserved": "Reserved",
+  "@legendReserved": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendOccupied": "Checked in",
+  "@legendOccupied": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendMine": "Mine",
+  "@legendMine": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendUnavailable": "Unavailable",
   "@legendUnavailable": {
     "description": "#1281: legendUnavailable"
@@ -201,10 +225,20 @@
     "description": "#1281: legendProfileFullDesc"
   },
   "legendBlocked": "Blocked",
+  "@legendBlocked": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "legendClosed": "Closed day",
+  "@legendClosed": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "reserveClosedShort": "Closed",
+  "@reserveClosedShort": {
+    "description": "Shown as the text in lexicon defaults (core), and 3 other places."
+  },
   "planCheckOutFor": "Check out {name}",
   "@planCheckOutFor": {
+    "description": "Shown as the title in check in sheets (plan). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -212,8 +246,17 @@
     }
   },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
+  "@scanCameraWebUnavailable": {
+    "description": "Shown as the text in space scan sheet (reservations), and 1 other place."
+  },
   "bookingGateBlocked": "Not bookable as chosen",
+  "@bookingGateBlocked": {
+    "description": "Shown as the text in booking sheet (reservations), and 2 other places."
+  },
   "reserveAvailabilityUnavailable": "Availability could not be loaded completely, so no seat is shown as free. Retry to see it.",
+  "@reserveAvailabilityUnavailable": {
+    "description": "Shown as the text in availability unavailable banner (core)."
+  },
   "bookingRecordedPastSpaceWhen": "Recorded {space}: {when}. That period is already over, so it is kept as a past visit.",
   "@bookingRecordedPastSpaceWhen": {
     "description": "Booking confirmation when the booked period had already ended today: the booking is recorded as a past visit",

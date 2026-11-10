@@ -1,6 +1,18 @@
 {
   "uxWorkspaceGeneral": "General details",
+  "@uxWorkspaceGeneral": {
+    "description": "Shown as the title in workspace settings parameters (workspace)."
+  },
   "uxWorkspaceCommunity": "Community & invitations",
+  "@uxWorkspaceCommunity": {
+    "description": "Shown as the title in workspace settings parameters (workspace)."
+  },
   "uxWorkspaceAppearance": "Appearance & wording",
-  "uxWorkspaceTools": "Templates & data"
+  "@uxWorkspaceAppearance": {
+    "description": "Shown as the title in workspace settings parameters (workspace)."
+  },
+  "uxWorkspaceTools": "Templates & data",
+  "@uxWorkspaceTools": {
+    "description": "Shown as the title in workspace settings screen (workspace)."
+  }
 }

@@ -4,7 +4,6 @@
   "personalBirthdayHelp": "Possono leggerla solo lei, le persone autorizzate a vedere i dati personali dei membri e l'amministratore dei dati personali dello spazio. Chi si limita a emettere fatture no.",
   "personalBirthdayPick": "Scegli una data",
   "personalBirthdayClear": "Rimuovi la data di nascita",
-  "personalBirthdayInvalid": "Una data di nascita non può essere nel futuro né prima del 1900.",
   "personalBirthdaySaveFailed": "Le sue informazioni sono state salvate, ma non la data di nascita.",
   "privacyAdminTitle": "Dati personali e richieste di diritti",
   "privacyAdminIntro": "Le richieste dei membri sui loro dati personali e gli incidenti che registra. Ogni richiesta riceve risposta entro un mese di calendario.",

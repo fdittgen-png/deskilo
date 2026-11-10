@@ -1,11 +1,15 @@
 {
   "permManagePrivacy": "Handle personal data and rights requests",
+  "@permManagePrivacy": {
+    "description": "Shown as the text in roles screen labels (workspace)."
+  },
   "eventTypePrivacyIncident": "Privacy incident",
+  "@eventTypePrivacyIncident": {
+    "description": "Shown as the text in event labels (events)."
+  },
   "eventPrivacyIncident": "A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}",
-  "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
-  "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
-  "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
   "@eventPrivacyIncident": {
+    "description": "Shown as the text in event lines (events). Placeholders: {kind} (String), {note} (String).",
     "placeholders": {
       "kind": {
         "type": "String"
@@ -14,5 +18,17 @@
         "type": "String"
       }
     }
+  },
+  "settingLabelPrivacyMemberSelfService": "Members export and erase their own data directly",
+  "@settingLabelPrivacyMemberSelfService": {
+    "description": "Shown as the text in settings labels (workspace)."
+  },
+  "settingHintPrivacyMemberSelfService": "true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.",
+  "@settingHintPrivacyMemberSelfService": {
+    "description": "Shown as the text in settings labels (workspace)."
+  },
+  "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
+  "@privacySelfServiceOff": {
+    "description": "Shown as the text in refusal text (core), and 3 other places."
   }
 }

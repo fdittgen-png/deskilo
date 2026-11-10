@@ -1,5 +1,14 @@
 {
   "uxFinanceAlerts": "Finance alerts",
+  "@uxFinanceAlerts": {
+    "description": "Shown as the title in money attention body (money)."
+  },
   "uxFinanceAlertsFailed": "Could not open finance alerts. Please try again.",
-  "uxAlertsFilterEmpty": "No updates match these filters."
+  "@uxFinanceAlertsFailed": {
+    "description": "Shown as the error text of a field in money attention body (money)."
+  },
+  "uxAlertsFilterEmpty": "No updates match these filters.",
+  "@uxAlertsFilterEmpty": {
+    "description": "Shown as the text in events screen (events)."
+  }
 }

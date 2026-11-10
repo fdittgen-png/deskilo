@@ -1,3 +1,6 @@
 {
-  "reportImagesLoadFailed": "Could not load report images. Try again."
+  "reportImagesLoadFailed": "Could not load report images. Try again.",
+  "@reportImagesLoadFailed": {
+    "description": "Shown as the label in report image picker (money)."
+  }
 }

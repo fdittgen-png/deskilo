@@ -1,20 +1,48 @@
 {
   "supportTitle": "Support details",
+  "@supportTitle": {
+    "description": "Shown as the title in support bundle screen (help), and 1 other place."
+  },
   "supportPrivacy": "Only this device’s bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded. Unknown checks are unavailable; an operator can run doctor --support-json separately. Files you share cannot be revoked.",
+  "@supportPrivacy": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportHour": "Last hour",
+  "@supportHour": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportDay": "Last 24 hours",
+  "@supportDay": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportPrepare": "Prepare preview",
+  "@supportPrepare": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
   "supportSize": "Preview: {bytes} bytes",
-  "supportSaved": "Saved locally",
-  "supportChanged": "The context changed. Prepare a new preview.",
-  "supportFailed": "Could not prepare support details. Try again.",
-  "supportDemo": "Demo: simulated local context",
   "@supportSize": {
+    "description": "Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).",
     "placeholders": {
       "bytes": {
         "type": "int",
         "format": "decimalPattern"
       }
     }
+  },
+  "supportSaved": "Saved locally",
+  "@supportSaved": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
+  "supportChanged": "The context changed. Prepare a new preview.",
+  "@supportChanged": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
+  "supportFailed": "Could not prepare support details. Try again.",
+  "@supportFailed": {
+    "description": "Shown as the text in support bundle screen (help)."
+  },
+  "supportDemo": "Demo: simulated local context",
+  "@supportDemo": {
+    "description": "Shown as the text in support bundle screen (help)."
   }
 }

@@ -1970,7 +1970,7 @@ abstract class AppLocalizations {
   /// **'Connect an organisation\'s server'**
   String get authConnectServer;
 
-  /// No description provided for @authContinueWith.
+  /// Shown as the text in auth form sections (auth).
   ///
   /// In en, this message translates to:
   /// **'or continue with'**
@@ -2186,7 +2186,7 @@ abstract class AppLocalizations {
   /// **'Create account'**
   String get authSignUpTitle;
 
-  /// No description provided for @authSocialUnavailable.
+  /// Shown as the text in linked accounts screen (auth), and 1 other place. Placeholders: {provider} (String).
   ///
   /// In en, this message translates to:
   /// **'{provider} sign-in is not available yet — the server has not enabled it.'**
@@ -2420,25 +2420,25 @@ abstract class AppLocalizations {
   /// **'Day starts'**
   String get availabilityWorkStart;
 
-  /// No description provided for @backendCopyLink.
+  /// Shown as the text in backend screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Copy'**
   String get backendCopyLink;
 
-  /// No description provided for @backendCurrentTitle.
+  /// Shown as the text in backend screen (profile).
   ///
   /// In en, this message translates to:
   /// **'This device uses'**
   String get backendCurrentTitle;
 
-  /// No description provided for @backendDescriptorInvalid.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'That is not a valid DesKilo server code.'**
   String get backendDescriptorInvalid;
 
-  /// No description provided for @backendDescriptorLabel.
+  /// Shown as the label in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Server code'**
@@ -2456,79 +2456,79 @@ abstract class AppLocalizations {
   /// **'Destination: {host}'**
   String backendDestination(String host);
 
-  /// No description provided for @backendErrorKeyConnectionString.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'That is a database connection string. It never leaves the server — paste the project\'s publishable key here.'**
   String get backendErrorKeyConnectionString;
 
-  /// No description provided for @backendErrorKeyEmpty.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Enter the publishable key.'**
   String get backendErrorKeyEmpty;
 
-  /// No description provided for @backendErrorKeyNotSupabase.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'That is not a Supabase publishable key (sb_publishable_…).'**
   String get backendErrorKeyNotSupabase;
 
-  /// No description provided for @backendErrorKeyPersonalToken.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'That is a personal access token. It stays with its owner — paste the project\'s publishable key here.'**
   String get backendErrorKeyPersonalToken;
 
-  /// No description provided for @backendErrorKeySecret.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'That is a secret key, not a publishable one. Never share it: rotate it in Project Settings → API keys, then paste the publishable key here.'**
   String get backendErrorKeySecret;
 
-  /// No description provided for @backendErrorKeyUserToken.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'That is a session or identity token, not a project key. Paste the project\'s publishable key here.'**
   String get backendErrorKeyUserToken;
 
-  /// No description provided for @backendErrorUrlEmpty.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Enter the project URL.'**
   String get backendErrorUrlEmpty;
 
-  /// No description provided for @backendErrorUrlNoHost.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'That is not a complete address.'**
   String get backendErrorUrlNoHost;
 
-  /// No description provided for @backendErrorUrlNotCanonical.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Use only the project\'s address (https://host), without a path, a query or credentials.'**
   String get backendErrorUrlNotCanonical;
 
-  /// No description provided for @backendErrorUrlNotHttps.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'The URL must start with https://.'**
   String get backendErrorUrlNotHttps;
 
-  /// No description provided for @backendFacetNo.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'no'**
   String get backendFacetNo;
 
-  /// No description provided for @backendFacetUnknown.
+  /// Shown as the text in backend settings (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'unknown'**
   String get backendFacetUnknown;
 
-  /// No description provided for @backendFacetYes.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'yes'**
@@ -2545,31 +2545,31 @@ abstract class AppLocalizations {
     String version,
   );
 
-  /// No description provided for @backendFullCheckHint.
+  /// Shown as the text in server full check (profile).
   ///
   /// In en, this message translates to:
   /// **'Paste a personal access token for this check. It is used for this check only and never stored.'**
   String get backendFullCheckHint;
 
-  /// No description provided for @backendFullCheckTitle.
+  /// Shown as the title in server full check (profile).
   ///
   /// In en, this message translates to:
   /// **'Run a full check'**
   String get backendFullCheckTitle;
 
-  /// No description provided for @backendFullCheckUseToken.
+  /// Shown as the label in server full check (profile).
   ///
   /// In en, this message translates to:
   /// **'Use this token'**
   String get backendFullCheckUseToken;
 
-  /// No description provided for @backendHowTitle.
+  /// Shown as the text in backend how to (profile).
   ///
   /// In en, this message translates to:
   /// **'Use your own server'**
   String get backendHowTitle;
 
-  /// No description provided for @backendKeyLabel.
+  /// Shown as the label in directory link dialog (directory), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Publishable key'**
@@ -2581,61 +2581,61 @@ abstract class AppLocalizations {
   /// **'Last successful test: {time}'**
   String backendLastOk(String time);
 
-  /// No description provided for @backendModeConnect.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Connect an existing organization'**
   String get backendModeConnect;
 
-  /// No description provided for @backendModeConnectHint.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Scan or paste the server code your organization gave you. You never need an administrator key.'**
   String get backendModeConnectHint;
 
-  /// No description provided for @backendModeDefault.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Use DesKilo\'s service'**
   String get backendModeDefault;
 
-  /// No description provided for @backendModeDefaultHint.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'DesKilo\'s own service needs no setup. Members of an organization that runs its own server use its code instead.'**
   String get backendModeDefaultHint;
 
-  /// No description provided for @backendModeOperator.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Set up a server (operators)'**
   String get backendModeOperator;
 
-  /// No description provided for @backendOpenDashboard.
+  /// Shown as the label in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'Open in Supabase'**
   String get backendOpenDashboard;
 
-  /// No description provided for @backendOwnServer.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'Your own server'**
   String get backendOwnServer;
 
-  /// No description provided for @backendOwnership.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'Your Supabase organization owns it. DesKilo keeps no access to it.'**
   String get backendOwnership;
 
-  /// No description provided for @backendOwnershipOther.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'Whoever runs this server owns it. DesKilo keeps no access to it.'**
   String get backendOwnershipOther;
 
-  /// No description provided for @backendPaste.
+  /// Shown as the tooltip in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Paste'**
@@ -2647,19 +2647,19 @@ abstract class AppLocalizations {
   /// **'This session still runs on {active}. {saved} takes over when you close and reopen the app.'**
   String backendPendingBody(String active, String saved);
 
-  /// No description provided for @backendPendingTitle.
+  /// Shown as the text in backend screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Saved for the next start'**
   String get backendPendingTitle;
 
-  /// No description provided for @backendPendingUndo.
+  /// Shown as the text in backend screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Undo'**
   String get backendPendingUndo;
 
-  /// No description provided for @backendPendingUndone.
+  /// Shown as the text in backend screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Undone — the previous server is back.'**
@@ -2671,115 +2671,109 @@ abstract class AppLocalizations {
   /// **'Your Supabase project {ref}'**
   String backendProjectRef(String ref);
 
-  /// No description provided for @backendResetDeviceOnly.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'This changes this device only and never touches your Supabase project.'**
   String get backendResetDeviceOnly;
 
-  /// No description provided for @backendSaveNeedsTest.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Test the connection first. Only a verified server can be saved.'**
   String get backendSaveNeedsTest;
 
-  /// No description provided for @backendScan.
+  /// Shown as the label in backend candidate form (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Scan a server QR'**
   String get backendScan;
 
-  /// No description provided for @backendScanNothing.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'That QR is not a DesKilo server code.'**
   String get backendScanNothing;
 
-  /// No description provided for @backendServerCustom.
+  /// Shown as the text in backend screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Your own server ({host})'**
   String backendServerCustom(Object host);
 
-  /// No description provided for @backendServerDefault.
+  /// Shown as the text in backend screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'The app\'s own server ({host})'**
   String backendServerDefault(Object host);
 
-  /// No description provided for @backendServerHint.
-  ///
-  /// In en, this message translates to:
-  /// **'By default this app uses its own server. If your community runs its own Supabase project, enter it here — the app then stores everything there.'**
-  String get backendServerHint;
-
-  /// No description provided for @backendServerInUse.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'In use on this device'**
   String get backendServerInUse;
 
-  /// No description provided for @backendServerReset.
+  /// Shown as the text in server facts card (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Use the app\'s server'**
   String get backendServerReset;
 
-  /// No description provided for @backendServerRestartHint.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'The app signs you out and applies the change on the next start.'**
   String get backendServerRestartHint;
 
-  /// No description provided for @backendServerSaved.
+  /// Shown as the text in backend screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Saved. Close and reopen the app to use the new server.'**
   String get backendServerSaved;
 
-  /// No description provided for @backendServerTitle.
+  /// Shown as the title in backend screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Server'**
   String get backendServerTitle;
 
-  /// No description provided for @backendShare.
+  /// Shown as the tooltip in backend screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Share this server'**
   String get backendShare;
 
-  /// No description provided for @backendShareHint.
+  /// Shown as the text in backend screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Members scan this in Settings → Server to point their app at the same instance.'**
   String get backendShareHint;
 
-  /// No description provided for @backendStep1.
+  /// Shown as the text in backend how to (profile).
   ///
   /// In en, this message translates to:
   /// **'Create a project at supabase.com (the free tier is enough to start).'**
   String get backendStep1;
 
-  /// No description provided for @backendStep2.
+  /// Shown as the text in backend how to (profile).
   ///
   /// In en, this message translates to:
   /// **'Install the app\'s schema: run the SQL files in supabase/migrations from the source repository, in order.'**
   String get backendStep2;
 
-  /// No description provided for @backendStep3.
+  /// Shown as the text in backend how to (profile).
   ///
   /// In en, this message translates to:
   /// **'In the Supabase dashboard, open Project Settings → API keys and copy the Project URL and the publishable key.'**
   String get backendStep3;
 
-  /// No description provided for @backendStep4.
+  /// Shown as the text in backend how to (profile).
   ///
   /// In en, this message translates to:
   /// **'Paste them below, test the connection, and save. Members join the same instance by scanning the QR above.'**
   String get backendStep4;
 
-  /// No description provided for @backendTest.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Test the connection'**
@@ -2791,13 +2785,13 @@ abstract class AppLocalizations {
   /// **'Reached it. Its schema is newer than this app — it works, and a newer app is available.'**
   String get backendTestAhead;
 
-  /// No description provided for @backendTestAttention.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Reached it, but the answer could not be classified. Check the server before using it.'**
   String get backendTestAttention;
 
-  /// No description provided for @backendTestBadKey.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Reached it, but the key was refused. Copy the publishable key again from Project Settings → API keys.'**
@@ -2809,37 +2803,37 @@ abstract class AppLocalizations {
   /// **'Reached it, but its DesKilo schema is older than this app needs. Update the server before using it.'**
   String get backendTestBehind;
 
-  /// No description provided for @backendTestOk.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Reached it — the app\'s schema is there.'**
   String get backendTestOk;
 
-  /// No description provided for @backendTestSchemaMissing.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Reached it, but the DesKilo tables are missing — run the migrations from supabase/migrations on that project first.'**
   String get backendTestSchemaMissing;
 
-  /// No description provided for @backendTestUnreachable.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'Could not reach that address. Check the URL and your network.'**
   String get backendTestUnreachable;
 
-  /// No description provided for @backendTesting.
+  /// Shown as the text in backend candidate form (profile).
   ///
   /// In en, this message translates to:
   /// **'Testing…'**
   String get backendTesting;
 
-  /// No description provided for @backendUrlLabel.
+  /// Shown as the label in directory link dialog (directory), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Project URL'**
   String get backendUrlLabel;
 
-  /// No description provided for @backendVersionAhead.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'The server is newer than this app — update the app when you can'**
@@ -2851,7 +2845,7 @@ abstract class AppLocalizations {
   /// **'Needs an update: this app needs schema {version}'**
   String backendVersionBehind(int version);
 
-  /// No description provided for @backendVersionBehindHow.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.'**
@@ -2863,25 +2857,25 @@ abstract class AppLocalizations {
   /// **'Up to date (schema {version})'**
   String backendVersionCurrent(int version);
 
-  /// No description provided for @backendVersionShortAhead.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'newer'**
   String get backendVersionShortAhead;
 
-  /// No description provided for @backendVersionShortBehind.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'older'**
   String get backendVersionShortBehind;
 
-  /// No description provided for @backendVersionShortCurrent.
+  /// Shown as the text in backend settings (core).
   ///
   /// In en, this message translates to:
   /// **'current'**
   String get backendVersionShortCurrent;
 
-  /// No description provided for @backendVersionUnknown.
+  /// Shown as the text in server facts card (profile).
   ///
   /// In en, this message translates to:
   /// **'The version could not be checked right now'**
@@ -8064,13 +8058,13 @@ abstract class AppLocalizations {
   /// **'Checked in until {until}.'**
   String bookingCheckedInUntil(String until);
 
-  /// No description provided for @bookingGateBlocked.
+  /// Shown as the text in booking sheet (reservations), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Not bookable as chosen'**
   String get bookingGateBlocked;
 
-  /// No description provided for @bookingHorizonError.
+  /// Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
   /// **'Too far ahead — bookings are open {days} days in advance.'**
@@ -8298,13 +8292,13 @@ abstract class AppLocalizations {
   /// **'This space, or a space it belongs to, is already reserved in that period.'**
   String get bookingSpaceChainTaken;
 
-  /// No description provided for @bookingTooLongError.
+  /// Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).
   ///
   /// In en, this message translates to:
   /// **'Too long — a booking lasts at most {minutes} minutes.'**
   String bookingTooLongError(int minutes);
 
-  /// No description provided for @bookingTooShortError.
+  /// Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).
   ///
   /// In en, this message translates to:
   /// **'Too short — a booking lasts at least {minutes} minutes.'**
@@ -9726,133 +9720,133 @@ abstract class AppLocalizations {
   /// **'Verify again'**
   String get connectionVerifyAgain;
 
-  /// No description provided for @consentAccept.
+  /// Shown as the text in consent screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Accept and continue'**
   String get consentAccept;
 
-  /// No description provided for @consentAcceptedOn.
+  /// Shown as the text in consent screen (profile). Placeholders: {date} (String), {version} (String).
   ///
   /// In en, this message translates to:
   /// **'Accepted on {date} ({version})'**
   String consentAcceptedOn(String date, String version);
 
-  /// No description provided for @consentCheckbox.
+  /// Shown as the title in consent screen (profile).
   ///
   /// In en, this message translates to:
   /// **'I have read this and I accept how DesKilo handles my data.'**
   String get consentCheckbox;
 
-  /// No description provided for @consentControllerBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Each space is run by its owner — your community — who decides members, prices and payment providers. Each server is run by its operator: the shared reference server by Florian Dittgen (Germany), a community\'s own server by whoever runs it. The app is free software (AGPL-3.0-or-later), published by Florian Dittgen. Online payments go through the provider the owner enabled (PayPal, Stripe, Mollie, Wero) under that provider\'s terms.'**
   String get consentControllerBody;
 
-  /// No description provided for @consentControllerTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Who is responsible'**
   String get consentControllerTitle;
 
-  /// No description provided for @consentIntro.
+  /// Shown as the text in consent screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Before you use DesKilo, here is what the app does with your data, who can see it and what you can do about it. Two minutes; it is all there is.'**
   String get consentIntro;
 
-  /// No description provided for @consentMessagesBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Only the people in a conversation can open it: the two of you, the members of a group or, when you write to a space, the hosts the app names before you send. A space\'s owners and admins cannot read your conversations. Messages are not end-to-end encrypted: they are stored on the server the conversation lives on — another server\'s, after you confirm, when you write to someone there — and whoever runs that server can technically reach them.'**
   String get consentMessagesBody;
 
-  /// No description provided for @consentMessagesTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Messages'**
   String get consentMessagesTitle;
 
-  /// No description provided for @consentNotBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'No tracking, no analytics, no advertising, no sale of data. Your data goes to nobody except the recipients named here and in the server\'s notice. The F-Droid build has no Google services at all.'**
   String get consentNotBody;
 
-  /// No description provided for @consentNotTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'What DesKilo never does'**
   String get consentNotTitle;
 
-  /// No description provided for @consentPushBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Optional, and outbound. When the server\'s operator has set push up, your space uses it and it is on for this device, this device\'s address and each notification go to the push service (Firebase Cloud Messaging, which hands notifications for Apple devices on to Apple). A notification only says something generic, such as \"You have a new message\": no names, no times, no message text. Switch it off in Settings → Privacy & data; the app keeps working and nothing more is sent to this device.'**
   String get consentPushBody;
 
-  /// No description provided for @consentPushTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Push notifications'**
   String get consentPushTitle;
 
-  /// No description provided for @consentReadInHelp.
+  /// Shown as the label in consent screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Read in the help'**
   String get consentReadInHelp;
 
-  /// No description provided for @consentReadOnWiki.
+  /// Shown as the label in consent screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Read in the online guide'**
   String get consentReadOnWiki;
 
-  /// No description provided for @consentRetentionBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'As long as you are a member. When you leave a space and erase, your messages in that space go, and your profile goes with your last space. Accounting records stay for the legal retention period: the ledger by identifier, invoices as they were issued.'**
   String get consentRetentionBody;
 
-  /// No description provided for @consentRetentionTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'How long'**
   String get consentRetentionTitle;
 
-  /// No description provided for @consentReviewBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'This text stays available in Settings → Privacy & data, in the in-app help (Privacy) and in the online user guide. A change of the text asks for your acceptance again.'**
   String get consentReviewBody;
 
-  /// No description provided for @consentReviewHint.
+  /// Shown as the subtitle in privacy screen (profile).
   ///
   /// In en, this message translates to:
   /// **'The text you accepted, with the date — read it again anytime.'**
   String get consentReviewHint;
 
-  /// No description provided for @consentReviewTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Read it again anytime'**
   String get consentReviewTitle;
 
-  /// No description provided for @consentRightsBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Access, rectification, export (art. 20), erasure (art. 17) and objection — each is a button in Settings → Privacy & data. For anything else: fdittgen@gmail.com. You may withdraw this consent by leaving the workspace and erasing your data at any time.'**
   String get consentRightsBody;
 
-  /// No description provided for @consentRightsTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Your rights'**
   String get consentRightsTitle;
 
-  /// No description provided for @consentTitle.
+  /// Shown as the text in help tips (core), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Your data, your rights'**
@@ -9864,25 +9858,25 @@ abstract class AppLocalizations {
   /// **'Your account could not be loaded, so there is nothing to accept yet.'**
   String get consentUnavailable;
 
-  /// No description provided for @consentVersion.
+  /// Shown as the text in consent screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Version'**
   String get consentVersion;
 
-  /// No description provided for @consentWhatBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server\'s notice: who runs it, where the data is and who receives it.'**
   String get consentWhatBody;
 
-  /// No description provided for @consentWhatTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'What DesKilo processes'**
   String get consentWhatTitle;
 
-  /// No description provided for @consentWhoBody.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Access follows roles and is enforced on the server: bookings are visible to the space (the floor plan shows occupancy); your finances and your commercial agreement only to you, the owners and the admins holding the matching permission. Each item of your profile is shown only to the audience you pick under Who sees me; nothing is public unless you choose it.'**
@@ -9894,7 +9888,7 @@ abstract class AppLocalizations {
   /// **'A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.'**
   String get consentWhoBodyPublic;
 
-  /// No description provided for @consentWhoTitle.
+  /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
   /// **'Who can see what'**
@@ -10176,7 +10170,7 @@ abstract class AppLocalizations {
   /// **'Change the country?'**
   String get countryChangeTitle;
 
-  /// No description provided for @countryNameAT.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Austria'**
@@ -10188,7 +10182,7 @@ abstract class AppLocalizations {
   /// **'Australia'**
   String get countryNameAU;
 
-  /// No description provided for @countryNameBE.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Belgium'**
@@ -10206,7 +10200,7 @@ abstract class AppLocalizations {
   /// **'Canada'**
   String get countryNameCA;
 
-  /// No description provided for @countryNameCH.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Switzerland'**
@@ -10242,7 +10236,7 @@ abstract class AppLocalizations {
   /// **'Estonia'**
   String get countryNameEE;
 
-  /// No description provided for @countryNameES.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Spain'**
@@ -10254,13 +10248,13 @@ abstract class AppLocalizations {
   /// **'Finland'**
   String get countryNameFI;
 
-  /// No description provided for @countryNameFR.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'France'**
   String get countryNameFR;
 
-  /// No description provided for @countryNameGB.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'United Kingdom'**
@@ -10290,7 +10284,7 @@ abstract class AppLocalizations {
   /// **'Ireland'**
   String get countryNameIE;
 
-  /// No description provided for @countryNameIT.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Italy'**
@@ -10308,7 +10302,7 @@ abstract class AppLocalizations {
   /// **'Lithuania'**
   String get countryNameLT;
 
-  /// No description provided for @countryNameLU.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Luxembourg'**
@@ -10332,7 +10326,7 @@ abstract class AppLocalizations {
   /// **'Mexico'**
   String get countryNameMX;
 
-  /// No description provided for @countryNameNL.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Netherlands'**
@@ -10350,7 +10344,7 @@ abstract class AppLocalizations {
   /// **'Poland'**
   String get countryNamePL;
 
-  /// No description provided for @countryNamePT.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'Portugal'**
@@ -10380,7 +10374,7 @@ abstract class AppLocalizations {
   /// **'Slovakia'**
   String get countryNameSK;
 
-  /// No description provided for @countryNameUS.
+  /// Shown as the text in country names (core).
   ///
   /// In en, this message translates to:
   /// **'United States'**
@@ -10962,13 +10956,13 @@ abstract class AppLocalizations {
   /// **'Window'**
   String get decorWindow;
 
-  /// No description provided for @defaultPeriodNone.
+  /// Shown as the text in settings screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'No preference (full day)'**
   String get defaultPeriodNone;
 
-  /// No description provided for @defaultPeriodTitle.
+  /// Shown as the title in settings screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Default booking period'**
@@ -13218,13 +13212,13 @@ abstract class AppLocalizations {
   /// **'Select'**
   String get editorToolSelect;
 
-  /// No description provided for @editorWallSaved.
+  /// Shown as the text in level canvas flows (editor).
   ///
   /// In en, this message translates to:
   /// **'Wall drawn'**
   String get editorWallSaved;
 
-  /// No description provided for @editorWallUndo.
+  /// Shown as the label in level canvas flows (editor).
   ///
   /// In en, this message translates to:
   /// **'Undo'**
@@ -14044,7 +14038,7 @@ abstract class AppLocalizations {
   /// **'{actor} proposes a deal for {member}: {terms}'**
   String eventPriceNegotiationLine(String actor, String member, String terms);
 
-  /// No description provided for @eventPrivacyIncident.
+  /// Shown as the text in event lines (events). Placeholders: {kind} (String), {note} (String).
   ///
   /// In en, this message translates to:
   /// **'A privacy incident was recorded: {kind, select, data_breach{a data breach} wrong_invoice{a wrong invoice} other{another incident}}. {note}'**
@@ -14254,7 +14248,7 @@ abstract class AppLocalizations {
   /// **'Payment'**
   String get eventTypePayment;
 
-  /// No description provided for @eventTypePaymentInstructionsChange.
+  /// Shown as the text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Bank account change'**
@@ -14272,7 +14266,7 @@ abstract class AppLocalizations {
   /// **'Price negotiation'**
   String get eventTypePriceNegotiation;
 
-  /// No description provided for @eventTypePrivacyIncident.
+  /// Shown as the text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Privacy incident'**
@@ -17536,13 +17530,13 @@ abstract class AppLocalizations {
   /// **'Public holidays'**
   String get featurePublicHolidaysTitle;
 
-  /// No description provided for @featurePublicListings.
+  /// Shown as the text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Public workspace listing'**
   String get featurePublicListings;
 
-  /// No description provided for @featurePublicListingsDesc.
+  /// Shown as the text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Publish only the workspace details and plans you choose, with visible owners and optional administrator contacts.'**
@@ -19648,13 +19642,13 @@ abstract class AppLocalizations {
   /// **'Guide completed.'**
   String get guideHostCompleted;
 
-  /// No description provided for @guideHostDestination.
+  /// Shown as the label of a field in guide draft screen (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'Step destination'**
   String get guideHostDestination;
 
-  /// No description provided for @guideHostDestinationMissing.
+  /// Shown as the text in guide step text (task_recorder), and 5 other places.
   ///
   /// In en, this message translates to:
   /// **'Choose the page this step refers to in the guide editor.'**
@@ -19683,12 +19677,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fill in “{label}”, then leave the field.'**
   String guideHostFillLabel(String label);
-
-  /// No description provided for @guideHostGoToPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to page'**
-  String get guideHostGoToPage;
 
   /// #1867 live guide host
   ///
@@ -22606,7 +22594,7 @@ abstract class AppLocalizations {
   /// **'This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.'**
   String get inviteAdminExplainer;
 
-  /// No description provided for @inviteAdminNewCode.
+  /// Shown as the label in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'New administrator code'**
@@ -26499,31 +26487,31 @@ abstract class AppLocalizations {
   /// **'This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.'**
   String get legalIdentityVatWarning;
 
-  /// No description provided for @legendBlocked.
+  /// Shown as the text in lexicon defaults (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Blocked'**
   String get legendBlocked;
 
-  /// No description provided for @legendClosed.
+  /// Shown as the text in lexicon defaults (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Closed day'**
   String get legendClosed;
 
-  /// No description provided for @legendFree.
+  /// Shown as the text in lexicon defaults (core), and 5 other places.
   ///
   /// In en, this message translates to:
   /// **'Free'**
   String get legendFree;
 
-  /// No description provided for @legendMine.
+  /// Shown as the text in lexicon defaults (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Mine'**
   String get legendMine;
 
-  /// No description provided for @legendOccupied.
+  /// Shown as the text in lexicon defaults (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Checked in'**
@@ -26559,7 +26547,7 @@ abstract class AppLocalizations {
   /// **'What the plan tells apart'**
   String get legendProfileTitle;
 
-  /// No description provided for @legendReserved.
+  /// Shown as the text in lexicon defaults (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Reserved'**
@@ -27111,37 +27099,37 @@ abstract class AppLocalizations {
   /// **'Your templates'**
   String get libraryYours;
 
-  /// No description provided for @linkedAccountsIntro.
+  /// Shown as the text in linked accounts screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Sign into this account with any linked identity. The available providers depend on your server.'**
   String get linkedAccountsIntro;
 
-  /// No description provided for @linkedAccountsLink.
+  /// Shown as the text in linked accounts screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Link'**
   String get linkedAccountsLink;
 
-  /// No description provided for @linkedAccountsLinkStarted.
+  /// Shown as the text in linked accounts screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Continue in the browser to finish linking.'**
   String get linkedAccountsLinkStarted;
 
-  /// No description provided for @linkedAccountsLinked.
+  /// Shown as the text in linked accounts screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Linked'**
   String get linkedAccountsLinked;
 
-  /// No description provided for @linkedAccountsTitle.
+  /// Shown as the title in linked accounts screen (auth), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Linked accounts'**
   String get linkedAccountsTitle;
 
-  /// No description provided for @linkedAccountsUnlink.
+  /// Shown as the text in linked accounts screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Unlink'**
@@ -32337,7 +32325,7 @@ abstract class AppLocalizations {
   /// **'Enter a currency code the app supports, such as EUR'**
   String get onboardingCurrencyUnknown;
 
-  /// No description provided for @onboardingDiscardDraft.
+  /// Shown as the text in onboarding screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Your entries will be lost. This does not cancel a request already sent.'**
@@ -32493,7 +32481,7 @@ abstract class AppLocalizations {
   /// **'Welcome to DesKilo'**
   String get onboardingTitle;
 
-  /// No description provided for @onboardingUnconfirmed.
+  /// Shown as the text in onboarding screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'The result could not be confirmed. Your entries are kept. Retry to check the same request.'**
@@ -33419,13 +33407,13 @@ abstract class AppLocalizations {
   /// **'Manage members'**
   String get permManageMembers;
 
-  /// No description provided for @permManageNegotiations.
+  /// Shown as the text in roles screen labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'Manage commercial agreements'**
   String get permManageNegotiations;
 
-  /// No description provided for @permManagePrivacy.
+  /// Shown as the text in roles screen labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'Handle personal data and rights requests'**
@@ -33527,7 +33515,7 @@ abstract class AppLocalizations {
   /// **'See their own account and invoices'**
   String get permViewMyMoney;
 
-  /// No description provided for @permViewNegotiations.
+  /// Shown as the text in roles screen labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'View commercial agreements'**
@@ -33545,37 +33533,31 @@ abstract class AppLocalizations {
   /// **'Edit workspace settings'**
   String get permWorkspaceSettings;
 
-  /// No description provided for @personalBirthday.
+  /// Shown as the text in birthday field (profile), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Birthday'**
   String get personalBirthday;
 
-  /// No description provided for @personalBirthdayClear.
+  /// Shown as the tooltip in birthday field (profile).
   ///
   /// In en, this message translates to:
   /// **'Remove the birthday'**
   String get personalBirthdayClear;
 
-  /// No description provided for @personalBirthdayHelp.
+  /// Shown as the helper text of a field in birthday field (profile).
   ///
   /// In en, this message translates to:
   /// **'Only you, people allowed to see members\' personal data and the workspace\'s privacy admin can read it. Someone who only issues invoices cannot.'**
   String get personalBirthdayHelp;
 
-  /// No description provided for @personalBirthdayInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'A birthday cannot be in the future or before 1900.'**
-  String get personalBirthdayInvalid;
-
-  /// No description provided for @personalBirthdayPick.
+  /// Shown as the text in birthday field (profile).
   ///
   /// In en, this message translates to:
   /// **'Choose a date'**
   String get personalBirthdayPick;
 
-  /// No description provided for @personalBirthdaySaveFailed.
+  /// Shown as the error text of a field in personal info screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Your details were saved, but the birthday could not be.'**
@@ -33821,7 +33803,7 @@ abstract class AppLocalizations {
   /// **'Check-in opens at {time}'**
   String planCheckInOpensAt(String time);
 
-  /// No description provided for @planCheckInOpensOn.
+  /// Shown as the text in check in sheets (plan). Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Check-in opens on {date}'**
@@ -33845,7 +33827,7 @@ abstract class AppLocalizations {
   /// **'Check out'**
   String get planCheckOutButton;
 
-  /// No description provided for @planCheckOutFor.
+  /// Shown as the title in check in sheets (plan). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Check out {name}'**
@@ -34319,79 +34301,79 @@ abstract class AppLocalizations {
   /// **'Simultaneous reservations per member'**
   String get policySimultaneousTitle;
 
-  /// No description provided for @portalActionFailed.
+  /// Shown as the text in message reach sheet (workspace), and 22 other places.
   ///
   /// In en, this message translates to:
   /// **'Could not save this change. Please try again.'**
   String get portalActionFailed;
 
-  /// No description provided for @portalActionNotNegotiated.
+  /// Shown as the text in public workspace view (directory).
   ///
   /// In en, this message translates to:
   /// **'This action is not available between this app and that server. Updating the app may help.'**
   String get portalActionNotNegotiated;
 
-  /// No description provided for @portalAddress.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Public address'**
   String get portalAddress;
 
-  /// No description provided for @portalAdmin.
+  /// Shown as the text in public workspace view (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Administrator'**
   String get portalAdmin;
 
-  /// No description provided for @portalAdminVisible.
+  /// Shown as the title in admin visibility tile (directory).
   ///
   /// In en, this message translates to:
   /// **'Show me as a public administrator'**
   String get portalAdminVisible;
 
-  /// No description provided for @portalAssociation.
+  /// Shown as the text in public workspace view (directory), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Association'**
   String get portalAssociation;
 
-  /// No description provided for @portalAvailable.
+  /// Shown as the title in account messenger screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Let users find and message my account'**
   String get portalAvailable;
 
-  /// No description provided for @portalChat.
+  /// Shown as the tooltip in public workspace view (directory).
   ///
   /// In en, this message translates to:
   /// **'Chat'**
   String get portalChat;
 
-  /// No description provided for @portalCompany.
+  /// Shown as the text in public workspace view (directory), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Company'**
   String get portalCompany;
 
-  /// No description provided for @portalConnect.
+  /// Shown as the tooltip in connections screen (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Connect a server'**
   String get portalConnect;
 
-  /// No description provided for @portalConnectionFailed.
+  /// Shown as the error text of a field in connections screen (directory), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Could not connect. Check this server and your sign-in details.'**
   String get portalConnectionFailed;
 
-  /// No description provided for @portalConnections.
+  /// Shown as the tooltip in account messenger screen (directory), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Connected servers'**
   String get portalConnections;
 
-  /// No description provided for @portalConnectionsHint.
+  /// Shown as the text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Each server uses its own sign-in. Disconnecting removes its saved access from this account on this device.'**
@@ -34403,13 +34385,13 @@ abstract class AppLocalizations {
   /// **'Copy the e-mail'**
   String get portalCopyEmail;
 
-  /// No description provided for @portalCustomised.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Customised'**
   String get portalCustomised;
 
-  /// No description provided for @portalDescription.
+  /// Shown as the text in public page editor (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Description'**
@@ -34421,7 +34403,7 @@ abstract class AppLocalizations {
   /// **'{name} ({count})'**
   String portalDirectoryCount(String name, int count);
 
-  /// No description provided for @portalDirectoryIncompatible.
+  /// Shown as the text in discovery list view (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Some workspaces need a newer version of the app and are not shown.'**
@@ -34439,7 +34421,7 @@ abstract class AppLocalizations {
   /// **'Show more'**
   String get portalDirectoryShowMore;
 
-  /// No description provided for @portalDirectoryUnavailable.
+  /// Shown as the text in discovery list view (directory), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Some directories could not be reached. Results are incomplete.'**
@@ -34451,25 +34433,25 @@ abstract class AppLocalizations {
   /// **'This workspace cannot be verified right now.'**
   String get portalDirectoryUnverified;
 
-  /// No description provided for @portalDisconnect.
+  /// Shown as the tooltip in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Disconnect'**
   String get portalDisconnect;
 
-  /// No description provided for @portalDiscover.
+  /// Shown as the label in auth form sections (auth), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Find a workspace'**
   String get portalDiscover;
 
-  /// No description provided for @portalEmail.
+  /// Shown as the text in public page editor (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Public email'**
   String get portalEmail;
 
-  /// No description provided for @portalEmailCode.
+  /// Shown as the text in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Email sign-in code'**
@@ -34481,13 +34463,13 @@ abstract class AppLocalizations {
   /// **'E-mail copied'**
   String get portalEmailCopied;
 
-  /// No description provided for @portalEmployed.
+  /// Shown as the title in member employment tile (directory).
   ///
   /// In en, this message translates to:
   /// **'Employed by this workspace'**
   String get portalEmployed;
 
-  /// No description provided for @portalEmploymentHint.
+  /// Shown as the text in member employment tile (directory).
   ///
   /// In en, this message translates to:
   /// **'Employment does not change access or subscriptions. Salary payments are not enabled.'**
@@ -34499,73 +34481,61 @@ abstract class AppLocalizations {
   /// **'Enter'**
   String get portalEnterSpace;
 
-  /// No description provided for @portalFindPeople.
+  /// Shown as the tooltip in create group screen (directory), and 4 other places.
   ///
   /// In en, this message translates to:
   /// **'Find available people'**
   String get portalFindPeople;
 
-  /// No description provided for @portalFollowsWorkspace.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'From workspace information'**
   String get portalFollowsWorkspace;
 
-  /// No description provided for @portalGroupsHeading.
+  /// Shown as the text in reachable directory (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Groups'**
   String get portalGroupsHeading;
 
-  /// No description provided for @portalImage.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Identity image URL'**
   String get portalImage;
 
-  /// No description provided for @portalLatitude.
-  ///
-  /// In en, this message translates to:
-  /// **'Latitude'**
-  String get portalLatitude;
-
-  /// No description provided for @portalList.
+  /// Shown as the tooltip in directory screen (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'List'**
   String get portalList;
 
-  /// No description provided for @portalLongitude.
-  ///
-  /// In en, this message translates to:
-  /// **'Longitude'**
-  String get portalLongitude;
-
-  /// No description provided for @portalMap.
+  /// Shown as the tooltip in directory screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Map'**
   String get portalMap;
 
-  /// No description provided for @portalMessenger.
+  /// Shown as the title in account messenger screen (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Account messenger'**
   String get portalMessenger;
 
-  /// No description provided for @portalMoreDirectories.
+  /// Shown as the text in discovery list view (directory).
   ///
   /// In en, this message translates to:
   /// **'More directories'**
   String get portalMoreDirectories;
 
-  /// No description provided for @portalNoLongerPublished.
+  /// Shown as the text in public workspace view (directory).
   ///
   /// In en, this message translates to:
   /// **'This workspace is no longer published.'**
   String get portalNoLongerPublished;
 
-  /// No description provided for @portalNoWorkspaces.
+  /// Shown as the text in discovery list view (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'No published workspaces found.'**
@@ -34577,13 +34547,13 @@ abstract class AppLocalizations {
   /// **'Me: my account and my spaces'**
   String get portalOpenMe;
 
-  /// No description provided for @portalOwner.
+  /// Shown as the text in public workspace view (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Owner'**
   String get portalOwner;
 
-  /// No description provided for @portalPerson.
+  /// Shown as the text in public workspace view (directory), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Private host'**
@@ -34595,139 +34565,133 @@ abstract class AppLocalizations {
   /// **'Person'**
   String get portalPersonHidden;
 
-  /// No description provided for @portalPhone.
+  /// Shown as the text in public page editor (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Public phone'**
   String get portalPhone;
 
-  /// No description provided for @portalPlans.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Plans and prices'**
   String get portalPlans;
 
-  /// No description provided for @portalPreview.
+  /// Shown as the title in public workspace view (directory).
   ///
   /// In en, this message translates to:
   /// **'External view'**
   String get portalPreview;
 
-  /// No description provided for @portalPublicPlan.
+  /// Shown as the text in public workspace view (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Public floor plan'**
   String get portalPublicPlan;
 
-  /// No description provided for @portalPublication.
+  /// Shown as the title in workspace settings screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Public workspace page'**
   String get portalPublication;
 
-  /// No description provided for @portalPublished.
+  /// Shown as the text in public page editor (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Visible in the public directory'**
   String get portalPublished;
 
-  /// No description provided for @portalReachableEmpty.
+  /// Shown as the text in reachable directory (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'No one is reachable yet. Search by name to find people.'**
   String get portalReachableEmpty;
 
-  /// No description provided for @portalReachableHeading.
+  /// Shown as the text in reachable directory (directory).
   ///
   /// In en, this message translates to:
   /// **'People you can write to'**
   String get portalReachableHeading;
 
-  /// No description provided for @portalRecipientHint.
+  /// Shown as the hint of a field in recipient typeahead (directory).
   ///
   /// In en, this message translates to:
   /// **'Type a name: suggestions appear from the first letter'**
   String get portalRecipientHint;
 
-  /// No description provided for @portalRegisterDirectory.
+  /// Shown as the title in directory link dialog (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Link a server to the global directory'**
   String get portalRegisterDirectory;
 
-  /// No description provided for @portalRequestProfile.
+  /// Shown as the text in space offers (directory).
   ///
   /// In en, this message translates to:
   /// **'Request a workspace profile'**
   String get portalRequestProfile;
 
-  /// No description provided for @portalRequestSent.
+  /// Shown as the text in public workspace view (directory).
   ///
   /// In en, this message translates to:
   /// **'Request sent. The workspace will review your profile.'**
   String get portalRequestSent;
 
-  /// No description provided for @portalResetAll.
+  /// Shown as the text in public page editor (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Reset all public data to workspace information'**
   String get portalResetAll;
 
-  /// No description provided for @portalResetAllBody.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'The public values of every field that has workspace information are replaced by it. Fields without a workspace counterpart keep what you typed.'**
   String get portalResetAllBody;
 
-  /// No description provided for @portalResetAllConfirm.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Reset'**
   String get portalResetAllConfirm;
 
-  /// No description provided for @portalSavePreview.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Save and preview the external view'**
   String get portalSavePreview;
 
-  /// No description provided for @portalSearch.
+  /// Shown as the label of a field in directory screen (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Search workspaces'**
   String get portalSearch;
 
-  /// No description provided for @portalSendCode.
+  /// Shown as the text in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Send sign-in code'**
   String get portalSendCode;
 
-  /// No description provided for @portalSourceUnavailable.
+  /// Shown as the text in account messenger sections (directory), and 5 other places.
   ///
   /// In en, this message translates to:
   /// **'A server is unavailable. This overview is incomplete. Tap to retry.'**
   String get portalSourceUnavailable;
 
-  /// No description provided for @portalSuggestionGroup.
+  /// Shown as the text in recipient typeahead (directory).
   ///
   /// In en, this message translates to:
   /// **'Group'**
   String get portalSuggestionGroup;
 
-  /// No description provided for @portalThisServer.
-  ///
-  /// In en, this message translates to:
-  /// **'This server'**
-  String get portalThisServer;
-
-  /// No description provided for @portalUseCode.
+  /// Shown as the title in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Use an email code'**
   String get portalUseCode;
 
-  /// No description provided for @portalUseWorkspaceInfo.
+  /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
   /// **'Use workspace information'**
@@ -34745,7 +34709,7 @@ abstract class AppLocalizations {
   /// **'Chosen in Me, under Who sees me.'**
   String get portalVisibilityLinkBody;
 
-  /// No description provided for @portalWebsite.
+  /// Shown as the text in public workspace view (directory), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Website'**
@@ -34757,25 +34721,25 @@ abstract class AppLocalizations {
   /// **'Write to {name}'**
   String portalWriteTo(String name);
 
-  /// No description provided for @preferencesSaveFailed.
+  /// Shown as the error text of a field in preference scope controls (profile), and 4 other places.
   ///
   /// In en, this message translates to:
   /// **'Could not save your preferences. Please try again.'**
   String get preferencesSaveFailed;
 
-  /// No description provided for @preferencesScopeHint.
+  /// Shown as the subtitle in preference scope controls (profile).
   ///
   /// In en, this message translates to:
   /// **'Language, appearance and regional formats. Off: edit my defaults.'**
   String get preferencesScopeHint;
 
-  /// No description provided for @preferencesUseDefaults.
+  /// Shown as the text in preference scope controls (profile).
   ///
   /// In en, this message translates to:
   /// **'Use my defaults'**
   String get preferencesUseDefaults;
 
-  /// No description provided for @preferencesWorkspaceOnly.
+  /// Shown as the title in preference scope controls (profile).
   ///
   /// In en, this message translates to:
   /// **'Only for this workspace'**
@@ -34793,157 +34757,157 @@ abstract class AppLocalizations {
   /// **'incl. VAT {rate}'**
   String priceVatIncluded(String rate);
 
-  /// No description provided for @privacyAdminActionFailed.
+  /// Shown as the text in privacy admin sheets (members). Placeholders: {reason} (String).
   ///
   /// In en, this message translates to:
   /// **'The server refused: {reason}'**
   String privacyAdminActionFailed(String reason);
 
-  /// No description provided for @privacyAdminBasis.
+  /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Why it is kept'**
   String get privacyAdminBasis;
 
-  /// No description provided for @privacyAdminComplete.
+  /// Shown as the text in privacy admin screen (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Complete'**
   String get privacyAdminComplete;
 
-  /// No description provided for @privacyAdminDetails.
+  /// Shown as the label in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Details (optional)'**
   String get privacyAdminDetails;
 
-  /// No description provided for @privacyAdminEmpty.
+  /// Shown as the text in privacy admin screen (members).
   ///
   /// In en, this message translates to:
   /// **'No rights request yet.'**
   String get privacyAdminEmpty;
 
-  /// No description provided for @privacyAdminExtend.
+  /// Shown as the text in privacy admin screen (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Extend the deadline'**
   String get privacyAdminExtend;
 
-  /// No description provided for @privacyAdminExtendReason.
+  /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Reason for the extension (at least 10 characters)'**
   String get privacyAdminExtendReason;
 
-  /// No description provided for @privacyAdminIncidentIntro.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.'**
   String get privacyAdminIncidentIntro;
 
-  /// No description provided for @privacyAdminIncidentNote.
+  /// Shown as the label in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'What happened (optional, 1000 characters at most)'**
   String get privacyAdminIncidentNote;
 
-  /// No description provided for @privacyAdminIncidentRecorded.
+  /// Shown as the message in privacy admin sheets (members). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}'**
   String privacyAdminIncidentRecorded(int count);
 
-  /// No description provided for @privacyAdminIncidentSend.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Record and tell them'**
   String get privacyAdminIncidentSend;
 
-  /// No description provided for @privacyAdminIncidentTitle.
+  /// Shown as the label in privacy admin screen (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Record a privacy incident'**
   String get privacyAdminIncidentTitle;
 
-  /// No description provided for @privacyAdminIntro.
+  /// Shown as the subtitle in privacy screen (profile), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.'**
   String get privacyAdminIntro;
 
-  /// No description provided for @privacyAdminKind.
+  /// Shown as the label of a field in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Kind of request'**
   String get privacyAdminKind;
 
-  /// No description provided for @privacyAdminLoadFailed.
+  /// Shown as the text in privacy admin screen (members).
   ///
   /// In en, this message translates to:
   /// **'The requests could not be read.'**
   String get privacyAdminLoadFailed;
 
-  /// No description provided for @privacyAdminMember.
+  /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Member'**
   String get privacyAdminMember;
 
-  /// No description provided for @privacyAdminOpenTile.
+  /// Shown as the title in privacy screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Personal data and rights requests'**
   String get privacyAdminOpenTile;
 
-  /// No description provided for @privacyAdminOutcomeKind.
+  /// Shown as the label of a field in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'What happened to the data'**
   String get privacyAdminOutcomeKind;
 
-  /// No description provided for @privacyAdminPeriod.
+  /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'For how long'**
   String get privacyAdminPeriod;
 
-  /// No description provided for @privacyAdminReceivedOn.
+  /// Shown as the text in privacy admin screen (members), and 1 other place. Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Received on {date}'**
   String privacyAdminReceivedOn(String date);
 
-  /// No description provided for @privacyAdminRecord.
+  /// Shown as the label in privacy admin screen (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Record a request'**
   String get privacyAdminRecord;
 
-  /// No description provided for @privacyAdminRefusalReason.
+  /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Reason for the refusal (at least 10 characters)'**
   String get privacyAdminRefusalReason;
 
-  /// No description provided for @privacyAdminRefuse.
+  /// Shown as the text in privacy admin screen (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Refuse'**
   String get privacyAdminRefuse;
 
-  /// No description provided for @privacyAdminSave.
+  /// Shown as the text in privacy admin sheets (members), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Save'**
   String get privacyAdminSave;
 
-  /// No description provided for @privacyAdminStore.
+  /// Shown as the text in privacy admin sheets (members), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Where (a store or a list)'**
   String get privacyAdminStore;
 
-  /// No description provided for @privacyAdminTitle.
+  /// Shown as the title in privacy admin screen (members).
   ///
   /// In en, this message translates to:
   /// **'Personal data and rights requests'**
@@ -35021,19 +34985,19 @@ abstract class AppLocalizations {
   /// **'My DesKilo data export'**
   String get privacyExportShareText;
 
-  /// No description provided for @privacyIncidentDataBreach.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'A data breach'**
   String get privacyIncidentDataBreach;
 
-  /// No description provided for @privacyIncidentOther.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Another incident'**
   String get privacyIncidentOther;
 
-  /// No description provided for @privacyIncidentWrongInvoice.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'A wrong invoice'**
@@ -35099,37 +35063,37 @@ abstract class AppLocalizations {
   /// **'Transfer safeguard: {mechanism}'**
   String privacyNoticeTransfer(String mechanism);
 
-  /// No description provided for @privacyOutcomeCorrected.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Corrected'**
   String get privacyOutcomeCorrected;
 
-  /// No description provided for @privacyOutcomeFailed.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Could not be done'**
   String get privacyOutcomeFailed;
 
-  /// No description provided for @privacyOutcomePendingExternal.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Still open elsewhere'**
   String get privacyOutcomePendingExternal;
 
-  /// No description provided for @privacyOutcomeRemoved.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Removed'**
   String get privacyOutcomeRemoved;
 
-  /// No description provided for @privacyOutcomeRestricted.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Restricted'**
   String get privacyOutcomeRestricted;
 
-  /// No description provided for @privacyOutcomeRetained.
+  /// Shown as the text in privacy admin sheets (members).
   ///
   /// In en, this message translates to:
   /// **'Kept (with a reason)'**
@@ -35159,7 +35123,7 @@ abstract class AppLocalizations {
   /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
   String get privacyPushOnDeviceHint;
 
-  /// No description provided for @privacySelfServiceOff.
+  /// Shown as the text in refusal text (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'This workspace handles data requests itself. File a rights request and the personal data admin will answer it.'**
@@ -35255,13 +35219,13 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 feature changed.} other{{count} features changed.}}'**
   String processApplied(int count);
 
-  /// No description provided for @processBillingPayments.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Billing & payments'**
   String get processBillingPayments;
 
-  /// No description provided for @processBillingPaymentsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Turn activity into invoices and reconcile what is owed.'**
@@ -35297,25 +35261,25 @@ abstract class AppLocalizations {
   /// **'Someone changed the features meanwhile. This is the updated preview — check it again.'**
   String get processConflict;
 
-  /// No description provided for @processCoordination.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Calendar & coordination'**
   String get processCoordination;
 
-  /// No description provided for @processCoordinationDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Coordinate activity, messages and decisions.'**
   String get processCoordinationDesc;
 
-  /// No description provided for @processDocumentsInformation.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Documents & information'**
   String get processDocumentsInformation;
 
-  /// No description provided for @processDocumentsInformationDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Create, share and export workspace information.'**
@@ -35369,13 +35333,13 @@ abstract class AppLocalizations {
   /// **'in {process}'**
   String processInProcess(String process);
 
-  /// No description provided for @processIntegrations.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Integrations & automation'**
   String get processIntegrations;
 
-  /// No description provided for @processIntegrationsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Deliver notifications and documents through external services.'**
@@ -35387,13 +35351,13 @@ abstract class AppLocalizations {
   /// **'Switch off anyway, keep their settings'**
   String get processKeepDependants;
 
-  /// No description provided for @processMembershipCommerce.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Membership commerce'**
   String get processMembershipCommerce;
 
-  /// No description provided for @processMembershipCommerceDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Set service prices and member agreements.'**
@@ -35417,13 +35381,13 @@ abstract class AppLocalizations {
   /// **'Switched off: {features}'**
   String processOffNote(String features);
 
-  /// No description provided for @processOperations.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Operations & administration'**
   String get processOperations;
 
-  /// No description provided for @processOperationsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Maintain configuration and the application experience.'**
@@ -35435,13 +35399,13 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}'**
   String processRemoveDependants(int count);
 
-  /// No description provided for @processReservationsUsage.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reservations & usage'**
   String get processReservationsUsage;
 
-  /// No description provided for @processReservationsUsageDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reserve capacity and track its use.'**
@@ -35507,13 +35471,13 @@ abstract class AppLocalizations {
   /// **'Switch on {name}'**
   String processSheetTitleOn(String name);
 
-  /// No description provided for @processSpaceManagement.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Space management'**
   String get processSpaceManagement;
 
-  /// No description provided for @processSpaceManagementDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Organize the places members can use and when they open.'**
@@ -35573,13 +35537,13 @@ abstract class AppLocalizations {
   /// **'The change was written, but the app could not confirm it. Close and reopen the features to see the current state.'**
   String get processUnconfirmed;
 
-  /// No description provided for @processWorkspaceAccess.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace & access'**
   String get processWorkspaceAccess;
 
-  /// No description provided for @processWorkspaceAccessDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Manage membership, roles and access to the space.'**
@@ -35705,7 +35669,7 @@ abstract class AppLocalizations {
   /// **'Copy e-mail'**
   String get profilesCopyEmail;
 
-  /// No description provided for @profilesDefault.
+  /// Shown as the text in profiles screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Default at startup'**
@@ -35717,7 +35681,7 @@ abstract class AppLocalizations {
   /// **'E-mail copied.'**
   String get profilesEmailCopied;
 
-  /// No description provided for @profilesMakeDefault.
+  /// Shown as the text in profiles screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Use as default at startup'**
@@ -35783,25 +35747,25 @@ abstract class AppLocalizations {
   /// **'From template «{name}»'**
   String provenanceFromTemplate(String name);
 
-  /// No description provided for @provenanceProductDefault.
+  /// Shown as the text in work hours provenance row (workspace).
   ///
   /// In en, this message translates to:
   /// **'Product default'**
   String get provenanceProductDefault;
 
-  /// No description provided for @provenanceResetToDefault.
+  /// Shown as the text in work hours provenance row (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reset to product default'**
   String get provenanceResetToDefault;
 
-  /// No description provided for @provenanceResetToTemplate.
+  /// Shown as the text in work hours provenance row (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reset to template'**
   String get provenanceResetToTemplate;
 
-  /// No description provided for @provenanceWorkspaceSetting.
+  /// Shown as the text in work hours provenance row (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace setting'**
@@ -35873,85 +35837,85 @@ abstract class AppLocalizations {
   /// **'Year'**
   String get publicHolidaysYear;
 
-  /// No description provided for @publicPersonUnavailable.
+  /// Shown as the title in public person screen (me).
   ///
   /// In en, this message translates to:
   /// **'This profile is not public.'**
   String get publicPersonUnavailable;
 
-  /// No description provided for @publicProfileCopied.
+  /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Link copied.'**
   String get publicProfileCopied;
 
-  /// No description provided for @publicProfileCopy.
+  /// Shown as the tooltip in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Copy the link'**
   String get publicProfileCopy;
 
-  /// No description provided for @publicProfileOff.
+  /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Off: people who are not signed in see nothing of you.'**
   String get publicProfileOff;
 
-  /// No description provided for @publicProfileOn.
+  /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Anyone with the link reads your name, profession and bio.'**
   String get publicProfileOn;
 
-  /// No description provided for @publicProfilePublishAction.
+  /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Publish'**
   String get publicProfilePublishAction;
 
-  /// No description provided for @publicProfilePublishBody.
+  /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.'**
   String get publicProfilePublishBody;
 
-  /// No description provided for @publicProfilePublishTitle.
+  /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
   /// **'Publish a public profile?'**
   String get publicProfilePublishTitle;
 
-  /// No description provided for @publicProfileTitle.
+  /// Shown as the title in public profile tile (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Public profile'**
   String get publicProfileTitle;
 
-  /// No description provided for @purchaseApprovalEvidenceUnavailable.
+  /// Shown as the text in purchases sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.'**
   String get purchaseApprovalEvidenceUnavailable;
 
-  /// No description provided for @purchaseApprovalFxSame.
+  /// Shown as the text in purchase exchange rate (money).
   ///
   /// In en, this message translates to:
   /// **'The bill is in the workspace currency.'**
   String get purchaseApprovalFxSame;
 
-  /// No description provided for @purchaseApprovalFxUnavailable.
+  /// Shown as the text in purchase exchange rate (money).
   ///
   /// In en, this message translates to:
   /// **'The exchange rate is unavailable in this approval view.'**
   String get purchaseApprovalFxUnavailable;
 
-  /// No description provided for @purchaseApprovalReceiptsUnavailable.
+  /// Shown as the text in purchase approvals screen (money).
   ///
   /// In en, this message translates to:
   /// **'Pending receipts could not be loaded.'**
   String get purchaseApprovalReceiptsUnavailable;
 
-  /// No description provided for @purchaseApprovalVisibleReceipts.
+  /// Shown as the text in purchase approvals screen (money).
   ///
   /// In en, this message translates to:
   /// **'Pending member receipts you can view'**
@@ -38139,151 +38103,151 @@ abstract class AppLocalizations {
   /// **'Not declared by the operator of this installation: the app states no location'**
   String get recordsLocationUndeclared;
 
-  /// No description provided for @refFacetMonth.
+  /// Shown as the text in note record choices (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Month'**
   String get refFacetMonth;
 
-  /// No description provided for @refFacetPerson.
+  /// Shown as the text in note record choices (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Person'**
   String get refFacetPerson;
 
-  /// No description provided for @refFacetStatus.
+  /// Shown as the text in note record choices (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Status'**
   String get refFacetStatus;
 
-  /// No description provided for @refFacetType.
+  /// Shown as the text in note record choices (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Type'**
   String get refFacetType;
 
-  /// No description provided for @refFacetWorkspace.
+  /// Not shown in the app; read by 0 tests or tools.
   ///
   /// In en, this message translates to:
   /// **'Workspace'**
   String get refFacetWorkspace;
 
-  /// No description provided for @refFilterAll.
+  /// Shown as the label in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'All'**
   String get refFilterAll;
 
-  /// No description provided for @refFilterAmount.
+  /// Shown as the label in ref picker sheet (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Amount'**
   String get refFilterAmount;
 
-  /// No description provided for @refFilterClear.
+  /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Clear filters'**
   String get refFilterClear;
 
-  /// No description provided for @refFilterFindIn.
+  /// Shown as the hint of a field in ref picker filters panel (workspace). Placeholders: {facet} (String).
   ///
   /// In en, this message translates to:
   /// **'Find in {facet}'**
   String refFilterFindIn(String facet);
 
-  /// No description provided for @refFilterMore.
+  /// Shown as the tooltip in ref picker sheet (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Filters'**
   String get refFilterMore;
 
-  /// No description provided for @refFilterReset.
+  /// Shown as the text in ref picker filters panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reset'**
   String get refFilterReset;
 
-  /// No description provided for @refFilterShow.
+  /// Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{Show 1 result} other{Show {count} results}}'**
   String refFilterShow(int count);
 
-  /// No description provided for @refFilterSort.
+  /// Shown as the tooltip in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Sort'**
   String get refFilterSort;
 
-  /// No description provided for @refSortAmountHigh.
+  /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Highest amount'**
   String get refSortAmountHigh;
 
-  /// No description provided for @refSortAmountLow.
+  /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Lowest amount'**
   String get refSortAmountLow;
 
-  /// No description provided for @refSortNewest.
+  /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Newest first'**
   String get refSortNewest;
 
-  /// No description provided for @refSortOldest.
+  /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Oldest first'**
   String get refSortOldest;
 
-  /// No description provided for @refStatusCancelled.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get refStatusCancelled;
 
-  /// No description provided for @refStatusDecided.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Decided'**
   String get refStatusDecided;
 
-  /// No description provided for @refStatusOpen.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Open (unpaid)'**
   String get refStatusOpen;
 
-  /// No description provided for @refStatusPaid.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Paid'**
   String get refStatusPaid;
 
-  /// No description provided for @refStatusPending.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Pending'**
   String get refStatusPending;
 
-  /// No description provided for @refStatusRefunded.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Refunded'**
   String get refStatusRefunded;
 
-  /// No description provided for @refTypeCreditNote.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Credit note'**
   String get refTypeCreditNote;
 
-  /// No description provided for @refTypeInvoice.
+  /// Shown as the label in note record choices (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invoice'**
@@ -40023,7 +39987,7 @@ abstract class AppLocalizations {
   /// **'No image yet — upload your logo, a stamp or a signature and reference it with ![name].'**
   String get reportImagesEmpty;
 
-  /// No description provided for @reportImagesLoadFailed.
+  /// Shown as the label in report image picker (money).
   ///
   /// In en, this message translates to:
   /// **'Could not load report images. Try again.'**
@@ -40257,7 +40221,7 @@ abstract class AppLocalizations {
   /// **'Formal letter'**
   String get reportPresetFormalLetter;
 
-  /// No description provided for @reportPresetProfessional.
+  /// Shown as the text in report defaults (money).
   ///
   /// In en, this message translates to:
   /// **'Professional'**
@@ -40635,7 +40599,7 @@ abstract class AppLocalizations {
   /// **'Reservation updated.'**
   String get reservationUpdatedSnack;
 
-  /// No description provided for @reserveAvailabilityUnavailable.
+  /// Shown as the text in availability unavailable banner (core).
   ///
   /// In en, this message translates to:
   /// **'Availability could not be loaded completely, so no seat is shown as free. Retry to see it.'**
@@ -40653,7 +40617,7 @@ abstract class AppLocalizations {
   /// **'Could not reserve — the seat may have just been taken.'**
   String get reserveBookingFailed;
 
-  /// No description provided for @reserveClosedShort.
+  /// Shown as the text in lexicon defaults (core), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Closed'**
@@ -40761,7 +40725,7 @@ abstract class AppLocalizations {
   /// **'Offline — availability as of {time}. A seat shown free may have been taken since.'**
   String reserveStaleAvailability(String time);
 
-  /// No description provided for @reserveStaleRetry.
+  /// Shown as the text in availability unavailable banner (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Retry'**
@@ -41841,7 +41805,7 @@ abstract class AppLocalizations {
   /// **'Sample data'**
   String get sampleDataTitle;
 
-  /// No description provided for @scanCameraWebUnavailable.
+  /// Shown as the text in space scan sheet (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).'**
@@ -42195,7 +42159,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 booking created} other{{count} bookings created}}'**
   String seriesBookedCount(int count);
 
-  /// No description provided for @seriesPreviewBookOthers.
+  /// Shown as the text in series preview dialog (reservations). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{Book the other date} other{Book the other {count} dates}}'**
@@ -42207,7 +42171,7 @@ abstract class AppLocalizations {
   /// **'These dates cannot be booked:'**
   String get seriesPreviewFailing;
 
-  /// No description provided for @seriesPreviewNone.
+  /// Shown as the text in series preview dialog (reservations).
   ///
   /// In en, this message translates to:
   /// **'None of these dates can be booked.'**
@@ -42219,85 +42183,85 @@ abstract class AppLocalizations {
   /// **'Skipped (already taken):'**
   String get seriesSkippedTitle;
 
-  /// No description provided for @serverChoiceExistingTitle.
+  /// Shown as the title in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'A server that already exists'**
   String get serverChoiceExistingTitle;
 
-  /// No description provided for @serverChoiceIntro.
+  /// Shown as the text in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.'**
   String get serverChoiceIntro;
 
-  /// No description provided for @serverChoiceNewBody.
+  /// Shown as the text in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.'**
   String get serverChoiceNewBody;
 
-  /// No description provided for @serverChoiceNewTitle.
+  /// Shown as the title in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'A new server of your own'**
   String get serverChoiceNewTitle;
 
-  /// No description provided for @serverChoiceReferenceAction.
+  /// Shown as the text in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Use the reference server'**
   String get serverChoiceReferenceAction;
 
-  /// No description provided for @serverChoiceReferenceBody.
+  /// Shown as the text in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.'**
   String get serverChoiceReferenceBody;
 
-  /// No description provided for @serverChoiceReferenceTitle.
+  /// Shown as the title in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'The reference server'**
   String get serverChoiceReferenceTitle;
 
-  /// No description provided for @serverChoiceTitle.
+  /// Shown as the title in server choice screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Choose your server'**
   String get serverChoiceTitle;
 
-  /// No description provided for @serverConnectIntro.
+  /// Shown as the text in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Join a server where you already have an account, or create a new one.'**
   String get serverConnectIntro;
 
-  /// No description provided for @serverConnectNoAccount.
+  /// Shown as the text in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'No account there yet? Use this server on this device and sign up there.'**
   String get serverConnectNoAccount;
 
-  /// No description provided for @serverConnectNoCode.
+  /// Shown as the text in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'The clipboard holds no server code.'**
   String get serverConnectNoCode;
 
-  /// No description provided for @serverConnectPasteCode.
+  /// Shown as the label in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Paste a server code'**
   String get serverConnectPasteCode;
 
-  /// No description provided for @serverConnectReference.
+  /// Shown as the label in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Reference server'**
   String get serverConnectReference;
 
-  /// No description provided for @serverConnectUseHere.
+  /// Shown as the text in connection dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Use on this device'**
@@ -42819,7 +42783,7 @@ abstract class AppLocalizations {
   /// **'Minutes the app must have been out of sight (in the background, a hidden tab, a sleeping kiosk) before it re-reads everything it shows when it comes back. Switching windows never re-reads; a lost live connection always does.'**
   String get settingHintPresenceResyncAfterAwayMinutes;
 
-  /// No description provided for @settingHintPrivacyMemberSelfService.
+  /// Shown as the text in settings labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'true: a member can export and erase their own data from the app. false: they file a rights request, which the personal data admin handles. Owners and the personal data admin are never blocked, and filing a request is always open.'**
@@ -43257,7 +43221,7 @@ abstract class AppLocalizations {
   /// **'Re-read after being away'**
   String get settingLabelPresenceResyncAfterAwayMinutes;
 
-  /// No description provided for @settingLabelPrivacyMemberSelfService.
+  /// Shown as the text in settings labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'Members export and erase their own data directly'**
@@ -46670,7 +46634,7 @@ abstract class AppLocalizations {
   /// **'Your net turnover this year ({turnover}) has passed the small-business limit of {limit}: the exemption ends with this year, so charge VAT from the new year.'**
   String smallBusinessPassedNextYear(String turnover, String limit);
 
-  /// No description provided for @spaceAlreadyCheckedInHere.
+  /// Shown as the text in space act sheet (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'You are already checked in here. Choose Check out to leave the seat.'**
@@ -46688,37 +46652,37 @@ abstract class AppLocalizations {
   /// **'You already hold this space for that period.'**
   String get spaceBlockedByYou;
 
-  /// No description provided for @spaceCardInfoLabel.
+  /// Shown as the text in space codes options dialog (workspace).
   ///
   /// In en, this message translates to:
   /// **'Information on the card'**
   String get spaceCardInfoLabel;
 
-  /// No description provided for @spaceCardInfoWorkspace.
+  /// Shown as the text in space codes options dialog (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace'**
   String get spaceCardInfoWorkspace;
 
-  /// No description provided for @spaceCardSizeLabel.
+  /// Shown as the text in space codes options dialog (workspace).
   ///
   /// In en, this message translates to:
   /// **'Card size'**
   String get spaceCardSizeLabel;
 
-  /// No description provided for @spaceCardSizeLarge.
+  /// Shown as the text in space codes options dialog (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Large'**
   String get spaceCardSizeLarge;
 
-  /// No description provided for @spaceCardSizeMedium.
+  /// Shown as the text in space codes options dialog (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Medium'**
   String get spaceCardSizeMedium;
 
-  /// No description provided for @spaceCardSizeSmall.
+  /// Shown as the text in space codes options dialog (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Small'**
@@ -46742,13 +46706,13 @@ abstract class AppLocalizations {
   /// **'Space QR codes (PDF)'**
   String get spaceCodesTitle;
 
-  /// No description provided for @spaceFavoriteAdd.
+  /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Add to favorites'**
   String get spaceFavoriteAdd;
 
-  /// No description provided for @spaceFavoriteRemove.
+  /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Remove from favorites'**
@@ -46796,13 +46760,13 @@ abstract class AppLocalizations {
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
 
-  /// No description provided for @spaceMoveDown.
+  /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Move down'**
   String get spaceMoveDown;
 
-  /// No description provided for @spaceMoveUp.
+  /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Move up'**
@@ -46820,19 +46784,19 @@ abstract class AppLocalizations {
   /// **'This space is not set up for whole booking — the owner enables \"Bookable as a whole\" on it in the editor.'**
   String get spaceNotWholeBookable;
 
-  /// No description provided for @spaceOptions.
+  /// Shown as the tooltip in space row controls (me). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Options for {name}'**
   String spaceOptions(String name);
 
-  /// No description provided for @spaceQrSizeLabel.
+  /// Shown as the text in space codes options dialog (workspace).
   ///
   /// In en, this message translates to:
   /// **'QR code size'**
   String get spaceQrSizeLabel;
 
-  /// No description provided for @spaceRatingClear.
+  /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'No rating'**
@@ -46856,7 +46820,7 @@ abstract class AppLocalizations {
   /// **'Not a space code of this workspace.'**
   String get spaceScanInvalid;
 
-  /// No description provided for @spaceScanNfcHint.
+  /// Shown as the text in space scan sheet (reservations).
   ///
   /// In en, this message translates to:
   /// **'…or hold the phone to a chair\'s NFC tag.'**
@@ -46874,7 +46838,7 @@ abstract class AppLocalizations {
   /// **'This code does not match any space here anymore.'**
   String get spaceScanUnknown;
 
-  /// No description provided for @spaceScanUnknownTag.
+  /// Shown as the text in space scan sheet (reservations).
   ///
   /// In en, this message translates to:
   /// **'This tag is not linked to any chair.'**
@@ -46994,265 +46958,265 @@ abstract class AppLocalizations {
   /// **'To'**
   String get statusTo;
 
-  /// No description provided for @subprocessAttendance.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Attendance & usage'**
   String get subprocessAttendance;
 
-  /// No description provided for @subprocessAttendanceDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Record attendance and close check-ins at day end.'**
   String get subprocessAttendanceDesc;
 
-  /// No description provided for @subprocessAvailability.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Opening days & hours'**
   String get subprocessAvailability;
 
-  /// No description provided for @subprocessAvailabilityDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Define working hours and generate closure days.'**
   String get subprocessAvailabilityDesc;
 
-  /// No description provided for @subprocessCalendar.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Calendar views'**
   String get subprocessCalendar;
 
-  /// No description provided for @subprocessCalendarDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'See reservations and pending decisions over time.'**
   String get subprocessCalendarDesc;
 
-  /// No description provided for @subprocessCollection.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Payment collection'**
   String get subprocessCollection;
 
-  /// No description provided for @subprocessCollectionDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Collect payments and follow up overdue invoices.'**
   String get subprocessCollectionDesc;
 
-  /// No description provided for @subprocessCommunication.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Member communication'**
   String get subprocessCommunication;
 
-  /// No description provided for @subprocessCommunicationDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Exchange messages and keep track of updates.'**
   String get subprocessCommunicationDesc;
 
-  /// No description provided for @subprocessConfiguration.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Configuration & deployment'**
   String get subprocessConfiguration;
 
-  /// No description provided for @subprocessConfigurationDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Transfer configuration, use templates and manage instances.'**
   String get subprocessConfigurationDesc;
 
-  /// No description provided for @subprocessDecisions.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Decisions & approvals'**
   String get subprocessDecisions;
 
-  /// No description provided for @subprocessDecisionsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Review actions and record the required approvals.'**
   String get subprocessDecisionsDesc;
 
-  /// No description provided for @subprocessDelivery.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'External delivery'**
   String get subprocessDelivery;
 
-  /// No description provided for @subprocessDeliveryDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Connect push, WhatsApp and electronic invoice delivery.'**
   String get subprocessDeliveryDesc;
 
-  /// No description provided for @subprocessDocuments.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Document publication'**
   String get subprocessDocuments;
 
-  /// No description provided for @subprocessDocumentsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Publish documents and produce printable files.'**
   String get subprocessDocumentsDesc;
 
-  /// No description provided for @subprocessExpenses.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Shared expenses'**
   String get subprocessExpenses;
 
-  /// No description provided for @subprocessExpensesDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Share costs, replenish supplies and schedule recurring expenses.'**
   String get subprocessExpensesDesc;
 
-  /// No description provided for @subprocessExperience.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Application experience'**
   String get subprocessExperience;
 
-  /// No description provided for @subprocessExperienceDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Adjust help, navigation and display preferences.'**
   String get subprocessExperienceDesc;
 
-  /// No description provided for @subprocessInvoicing.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invoicing'**
   String get subprocessInvoicing;
 
-  /// No description provided for @subprocessInvoicingDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Issue and follow immutable invoices through settlement.'**
   String get subprocessInvoicingDesc;
 
-  /// No description provided for @subprocessPeople.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'People & membership'**
   String get subprocessPeople;
 
-  /// No description provided for @subprocessPeopleDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Identify members and manage their membership and permissions.'**
   String get subprocessPeopleDesc;
 
-  /// No description provided for @subprocessPhysicalAccess.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Physical access'**
   String get subprocessPhysicalAccess;
 
-  /// No description provided for @subprocessPhysicalAccessDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Use badges, seat tags and the shared check-in kiosk.'**
   String get subprocessPhysicalAccessDesc;
 
-  /// No description provided for @subprocessPresentation.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Space presentation'**
   String get subprocessPresentation;
 
-  /// No description provided for @subprocessPresentationDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Help members recognize people and places on the plan.'**
   String get subprocessPresentationDesc;
 
-  /// No description provided for @subprocessPricing.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Services & pricing'**
   String get subprocessPricing;
 
-  /// No description provided for @subprocessPricingDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Price services and accessories and agree member terms.'**
   String get subprocessPricingDesc;
 
-  /// No description provided for @subprocessPrivacy.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Personal data access & exports'**
   String get subprocessPrivacy;
 
-  /// No description provided for @subprocessPrivacyDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Inspect access to personal data and export records.'**
   String get subprocessPrivacyDesc;
 
-  /// No description provided for @subprocessRecords.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Financial records'**
   String get subprocessRecords;
 
-  /// No description provided for @subprocessRecordsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Understand balances, payments and member statements.'**
   String get subprocessRecordsDesc;
 
-  /// No description provided for @subprocessReportDesign.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Report design'**
   String get subprocessReportDesign;
 
-  /// No description provided for @subprocessReportDesignDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Design reports and maintain their text and layouts.'**
   String get subprocessReportDesignDesc;
 
-  /// No description provided for @subprocessReservations.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Booking desks & spaces'**
   String get subprocessReservations;
 
-  /// No description provided for @subprocessReservationsDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Book seats or whole spaces under the workspace rules.'**
   String get subprocessReservationsDesc;
 
-  /// No description provided for @subprocessStructure.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Space structure'**
   String get subprocessStructure;
 
-  /// No description provided for @subprocessStructureDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Manage sites and the availability of plan objects.'**
   String get subprocessStructureDesc;
 
-  /// No description provided for @subprocessTax.
+  /// Shown as the title in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'VAT management'**
   String get subprocessTax;
 
-  /// No description provided for @subprocessTaxDesc.
+  /// Shown as the text in process names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Maintain VAT groups, rates and declarations.'**
@@ -47810,61 +47774,61 @@ abstract class AppLocalizations {
   /// **'Connected with the premises'**
   String get supplyClassProperty;
 
-  /// No description provided for @supportChanged.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'The context changed. Prepare a new preview.'**
   String get supportChanged;
 
-  /// No description provided for @supportDay.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Last 24 hours'**
   String get supportDay;
 
-  /// No description provided for @supportDemo.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Demo: simulated local context'**
   String get supportDemo;
 
-  /// No description provided for @supportFailed.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Could not prepare support details. Try again.'**
   String get supportFailed;
 
-  /// No description provided for @supportHour.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Last hour'**
   String get supportHour;
 
-  /// No description provided for @supportPrepare.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Prepare preview'**
   String get supportPrepare;
 
-  /// No description provided for @supportPrivacy.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Only this device’s bounded event counts and known checks are included. Identities, server addresses, credentials, business records and raw logs are excluded. Unknown checks are unavailable; an operator can run doctor --support-json separately. Files you share cannot be revoked.'**
   String get supportPrivacy;
 
-  /// No description provided for @supportSaved.
+  /// Shown as the text in support bundle screen (help).
   ///
   /// In en, this message translates to:
   /// **'Saved locally'**
   String get supportSaved;
 
-  /// No description provided for @supportSize.
+  /// Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).
   ///
   /// In en, this message translates to:
   /// **'Preview: {bytes} bytes'**
   String supportSize(int bytes);
 
-  /// No description provided for @supportTitle.
+  /// Shown as the title in support bundle screen (help), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Support details'**
@@ -48650,7 +48614,7 @@ abstract class AppLocalizations {
   /// **'no'**
   String get taskExportValueNo;
 
-  /// No description provided for @taskExportValueOff.
+  /// Shown as the text in task export labels (task_recorder), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'off'**
@@ -48662,7 +48626,7 @@ abstract class AppLocalizations {
   /// **'no connection'**
   String get taskExportValueOffline;
 
-  /// No description provided for @taskExportValueOn.
+  /// Shown as the text in task export labels (task_recorder), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'on'**
@@ -48728,7 +48692,7 @@ abstract class AppLocalizations {
   /// **'a quota'**
   String get taskExportValueQuota;
 
-  /// No description provided for @taskExportValueRedacted.
+  /// Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).
   ///
   /// In en, this message translates to:
   /// **'not kept ({length} characters)'**
@@ -49160,13 +49124,13 @@ abstract class AppLocalizations {
   /// **'Add a note'**
   String get taskRecorderAddNote;
 
-  /// No description provided for @taskRecorderCaptureValues.
+  /// Shown as the text in task recorder screen (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'Capture values (for issue reports)'**
   String get taskRecorderCaptureValues;
 
-  /// No description provided for @taskRecorderCaptureValuesHint.
+  /// Shown as the text in task recorder screen (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.'**
@@ -49244,7 +49208,7 @@ abstract class AppLocalizations {
   /// **'Ended: a limit was reached'**
   String get taskRecorderEndLimitReached;
 
-  /// No description provided for @taskRecorderEndReferenceMissing.
+  /// Shown as the text in task export labels (task_recorder), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Stopped: the current form could not be identified. Open a supported page and start again.'**
@@ -49286,19 +49250,19 @@ abstract class AppLocalizations {
   /// **'What the file will contain'**
   String get taskRecorderExportPreview;
 
-  /// No description provided for @taskRecorderExportValuesBody.
+  /// Shown as the text in recording export (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.'**
   String get taskRecorderExportValuesBody;
 
-  /// No description provided for @taskRecorderExportValuesConfirm.
+  /// Shown as the text in recording export (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'Save anyway'**
   String get taskRecorderExportValuesConfirm;
 
-  /// No description provided for @taskRecorderExportValuesTitle.
+  /// Shown as the text in recording export (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'This recording contains values'**
@@ -50030,7 +49994,7 @@ abstract class AppLocalizations {
   /// **'not recorded'**
   String get taskRecorderValueWithheld;
 
-  /// No description provided for @taskRecorderValuesOn.
+  /// Shown as the text in task recorder screen (task_recorder).
   ///
   /// In en, this message translates to:
   /// **'Values are being captured'**
@@ -52052,139 +52016,139 @@ abstract class AppLocalizations {
   /// **'was {before}'**
   String usageWas(String before);
 
-  /// No description provided for @uxAdvancedSection.
+  /// Shown as the text in me account tab (me).
   ///
   /// In en, this message translates to:
   /// **'Advanced'**
   String get uxAdvancedSection;
 
-  /// No description provided for @uxAlertsFilterEmpty.
+  /// Shown as the text in events screen (events).
   ///
   /// In en, this message translates to:
   /// **'No updates match these filters.'**
   String get uxAlertsFilterEmpty;
 
-  /// No description provided for @uxAttentionSummary.
+  /// Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).
   ///
   /// In en, this message translates to:
   /// **'{updates} new updates · {pending} awaiting your decision'**
   String uxAttentionSummary(int updates, int pending);
 
-  /// No description provided for @uxBookingChargePending.
+  /// Shown as the text in booking review summary (reservations).
   ///
   /// In en, this message translates to:
   /// **'The charge and allowance used depend on the member’s plan and are settled on the statement.'**
   String get uxBookingChargePending;
 
-  /// No description provided for @uxBookingCheckInHelp.
+  /// Shown as the subtitle in booking sheet (reservations).
   ///
   /// In en, this message translates to:
   /// **'Also mark me present when confirming this reservation.'**
   String get uxBookingCheckInHelp;
 
-  /// No description provided for @uxBookingFor.
+  /// Shown as the text in booking review summary (reservations).
   ///
   /// In en, this message translates to:
   /// **'Booking for'**
   String get uxBookingFor;
 
-  /// No description provided for @uxBookingModesHelp.
+  /// Shown as the text in booking sheet (reservations).
   ///
   /// In en, this message translates to:
   /// **'Reserve keeps the selected window. Check in now switches to the current window and marks you present.'**
   String get uxBookingModesHelp;
 
-  /// No description provided for @uxBookingResourceUnavailable.
+  /// Shown as the text in calendar booking title (calendar).
   ///
   /// In en, this message translates to:
   /// **'Resource unavailable'**
   String get uxBookingResourceUnavailable;
 
-  /// No description provided for @uxDeviceTime.
+  /// Shown as the text in booking window summary (reservations).
   ///
   /// In en, this message translates to:
   /// **'Your time'**
   String get uxDeviceTime;
 
-  /// No description provided for @uxFinanceAlerts.
+  /// Shown as the title in money attention body (money).
   ///
   /// In en, this message translates to:
   /// **'Finance alerts'**
   String get uxFinanceAlerts;
 
-  /// No description provided for @uxFinanceAlertsFailed.
+  /// Shown as the error text of a field in money attention body (money).
   ///
   /// In en, this message translates to:
   /// **'Could not open finance alerts. Please try again.'**
   String get uxFinanceAlertsFailed;
 
-  /// No description provided for @uxLinkedReference.
+  /// Shown as the text in inbox header (directory).
   ///
   /// In en, this message translates to:
   /// **'Linked resource'**
   String get uxLinkedReference;
 
-  /// No description provided for @uxManageResource.
+  /// Shown as the title in booking review summary (reservations).
   ///
   /// In en, this message translates to:
   /// **'Manage resource'**
   String get uxManageResource;
 
-  /// No description provided for @uxMoneyAllPeriods.
+  /// Shown as the text in account card (money).
   ///
   /// In en, this message translates to:
   /// **'All periods · Credit, open invoices and refunds.'**
   String get uxMoneyAllPeriods;
 
-  /// No description provided for @uxMoneyDocumentsScope.
+  /// Shown as the text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Monthly reports and your current agreement.'**
   String get uxMoneyDocumentsScope;
 
-  /// No description provided for @uxMoneyInvoicesScope.
+  /// Shown as the text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Your invoices in this workspace · All periods.'**
   String get uxMoneyInvoicesScope;
 
-  /// No description provided for @uxMoneyPaymentsScope.
+  /// Shown as the text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Monthly balance · Overdue invoices from all periods.'**
   String get uxMoneyPaymentsScope;
 
-  /// No description provided for @uxMoneyStatementScope.
+  /// Shown as the text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Monthly detail for the selected period.'**
   String get uxMoneyStatementScope;
 
-  /// No description provided for @uxMoneyUsageScope.
+  /// Shown as the text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Bookings and consumption for the selected month.'**
   String get uxMoneyUsageScope;
 
-  /// No description provided for @uxMoneyWorkspaceTools.
+  /// Shown as the title in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Workspace finance tools'**
   String get uxMoneyWorkspaceTools;
 
-  /// No description provided for @uxMyBookings.
+  /// Shown as the label in calendar kind chips (calendar).
   ///
   /// In en, this message translates to:
   /// **'My bookings'**
   String get uxMyBookings;
 
-  /// No description provided for @uxNavFinance.
+  /// Shown as the text in shell drawer (app).
   ///
   /// In en, this message translates to:
   /// **'Cash & accounting'**
   String get uxNavFinance;
 
-  /// No description provided for @uxNavPeople.
+  /// Shown as the text in shell drawer (app).
   ///
   /// In en, this message translates to:
   /// **'People & access'**
@@ -52196,37 +52160,37 @@ abstract class AppLocalizations {
   /// **'Reporting'**
   String get uxNavReporting;
 
-  /// No description provided for @uxNavSales.
+  /// Shown as the text in shell drawer (app), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Sales & collections'**
   String get uxNavSales;
 
-  /// No description provided for @uxNavWorkspace.
+  /// Shown as the text in shell drawer (app).
   ///
   /// In en, this message translates to:
   /// **'Workspace setup'**
   String get uxNavWorkspace;
 
-  /// No description provided for @uxOpenWorkspace.
+  /// Shown as the text in linked spaces section (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Open workspace'**
   String get uxOpenWorkspace;
 
-  /// No description provided for @uxPreferencesSection.
+  /// Shown as the text in me account tab (me).
   ///
   /// In en, this message translates to:
   /// **'Preferences'**
   String get uxPreferencesSection;
 
-  /// No description provided for @uxPrivacySection.
+  /// Shown as the text in me account tab (me).
   ///
   /// In en, this message translates to:
   /// **'Privacy'**
   String get uxPrivacySection;
 
-  /// No description provided for @uxProfileAccount.
+  /// Shown as the text in me shell (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Profile & account'**
@@ -52238,109 +52202,109 @@ abstract class AppLocalizations {
   /// **'Choose an environment'**
   String get uxProfileChooseEnvironment;
 
-  /// No description provided for @uxProfileSection.
+  /// Shown as the text in me account tab (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get uxProfileSection;
 
-  /// No description provided for @uxRealSpaceHint.
+  /// Shown as the text in development banner (app), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Real bookings and invoices'**
   String get uxRealSpaceHint;
 
-  /// No description provided for @uxRealWorkspace.
+  /// Shown as the text in development banner (app), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Workspace'**
   String get uxRealWorkspace;
 
-  /// No description provided for @uxReportsFinance.
+  /// Shown as the text in shell drawer entries (app), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Financial reports'**
   String get uxReportsFinance;
 
-  /// No description provided for @uxReportsHint.
+  /// Shown as the subtitle in workspace settings parameters (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Financial reports, workspace documents and exports'**
   String get uxReportsHint;
 
-  /// No description provided for @uxReportsTemplates.
+  /// Shown as the text in shell drawer entries (app), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Templates'**
   String get uxReportsTemplates;
 
-  /// No description provided for @uxReportsTitle.
+  /// Shown as the title in workspace settings screen (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Reports'**
   String get uxReportsTitle;
 
-  /// No description provided for @uxReportsWorkspace.
+  /// Shown as the text in help tips (core), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Workspace documents'**
   String get uxReportsWorkspace;
 
-  /// No description provided for @uxResetFilters.
+  /// Shown as the tooltip in calendar kind chips (calendar).
   ///
   /// In en, this message translates to:
   /// **'Reset filters'**
   String get uxResetFilters;
 
-  /// No description provided for @uxSettingsPersonal.
+  /// Shown as the text in settings screen (profile).
   ///
   /// In en, this message translates to:
   /// **'My settings'**
   String get uxSettingsPersonal;
 
-  /// No description provided for @uxSettingsSpace.
+  /// Shown as the text in settings screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Manage workspace'**
   String get uxSettingsSpace;
 
-  /// No description provided for @uxTestSpace.
+  /// Shown as the text in linked spaces section (me), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Test space'**
   String get uxTestSpace;
 
-  /// No description provided for @uxTestSpaceHint.
+  /// Shown as the text in development banner (app), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Test space: practice bookings and invoices'**
   String get uxTestSpaceHint;
 
-  /// No description provided for @uxWorkspaceAppearance.
+  /// Shown as the title in workspace settings parameters (workspace).
   ///
   /// In en, this message translates to:
   /// **'Appearance & wording'**
   String get uxWorkspaceAppearance;
 
-  /// No description provided for @uxWorkspaceCommunity.
+  /// Shown as the title in workspace settings parameters (workspace).
   ///
   /// In en, this message translates to:
   /// **'Community & invitations'**
   String get uxWorkspaceCommunity;
 
-  /// No description provided for @uxWorkspaceGeneral.
+  /// Shown as the title in workspace settings parameters (workspace).
   ///
   /// In en, this message translates to:
   /// **'General details'**
   String get uxWorkspaceGeneral;
 
-  /// No description provided for @uxWorkspaceTime.
+  /// Shown as the text in booking window summary (reservations).
   ///
   /// In en, this message translates to:
   /// **'Workspace time'**
   String get uxWorkspaceTime;
 
-  /// No description provided for @uxWorkspaceTools.
+  /// Shown as the title in workspace settings screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Templates & data'**
@@ -54362,7 +54326,7 @@ abstract class AppLocalizations {
   /// **'Your personal home cannot save this setting yet: the people who run it need to update it. Nothing was changed.'**
   String get visibilityUnsupported;
 
-  /// No description provided for @visibilityWidenAction.
+  /// Shown as the text in visibility flow (me).
   ///
   /// In en, this message translates to:
   /// **'Widen'**
@@ -54374,7 +54338,7 @@ abstract class AppLocalizations {
   /// **'Added: {spaces}'**
   String visibilityWidenAdded(String spaces);
 
-  /// No description provided for @visibilityWidenConfirm.
+  /// Shown as the text in visibility flow (me). Placeholders: {field} (String), {audience} (String).
   ///
   /// In en, this message translates to:
   /// **'Show your {field} to: {audience}? They will be able to see it.'**
@@ -54812,7 +54776,7 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get wizardStepClose;
 
-  /// No description provided for @wizardStepCompleted.
+  /// Shown as the text in wizard progress (core).
   ///
   /// In en, this message translates to:
   /// **'Completed'**
@@ -54854,7 +54818,7 @@ abstract class AppLocalizations {
   /// **'Send'**
   String get wizardStepSend;
 
-  /// No description provided for @wizardStepSkipped.
+  /// Shown as the text in wizard progress (core).
   ///
   /// In en, this message translates to:
   /// **'Skipped — suggested settings'**
@@ -54866,13 +54830,13 @@ abstract class AppLocalizations {
   /// **'Summary'**
   String get wizardStepSummary;
 
-  /// No description provided for @wizardStepUnavailable.
+  /// Shown as the text in wizard progress (core).
   ///
   /// In en, this message translates to:
   /// **'Not available yet'**
   String get wizardStepUnavailable;
 
-  /// No description provided for @wizardSubmitting.
+  /// Shown as the text in wizard scaffold (core).
   ///
   /// In en, this message translates to:
   /// **'Submitting'**
@@ -55160,43 +55124,43 @@ abstract class AppLocalizations {
   /// **'Workspace address'**
   String get workspaceAddressLabel;
 
-  /// No description provided for @workspaceCodeCopied.
+  /// Shown as the text in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Copied'**
   String get workspaceCodeCopied;
 
-  /// No description provided for @workspaceCodeCopy.
+  /// Shown as the text in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Copy ID'**
   String get workspaceCodeCopy;
 
-  /// No description provided for @workspaceCodeEdit.
+  /// Shown as the title in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Change workspace ID'**
   String get workspaceCodeEdit;
 
-  /// No description provided for @workspaceCodeExplainer.
+  /// Shown as the text in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Coworkers scan this QR code — or type the ID — to join this workspace.'**
   String get workspaceCodeExplainer;
 
-  /// No description provided for @workspaceCodeHint.
+  /// Shown as the text in workspace code screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'4–20 letters or digits, unique'**
   String get workspaceCodeHint;
 
-  /// No description provided for @workspaceCodeLabel.
+  /// Shown as the label of a field in workspace code screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace ID'**
   String get workspaceCodeLabel;
 
-  /// No description provided for @workspaceCodeRejected.
+  /// Shown as the error text of a field in workspace code screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'That ID was rejected — it must be 4–20 letters or digits and not already taken.'**
@@ -55526,7 +55490,7 @@ abstract class AppLocalizations {
   /// **'This permanently deletes every reservation, all money and ledger entries, the activity feed, and the entire floor plan — floors, rooms, tables, seats and images. Workspace settings, fee bands, availability, features, catalogs and members are kept. This cannot be undone.'**
   String get workspaceResetWarning;
 
-  /// No description provided for @workspaceSettingsConflict.
+  /// Shown as the text in workspace settings screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Someone changed these settings while you were editing. Nothing was saved; your changes are still here.'**

@@ -1,15 +1,54 @@
 {
   "uxOpenWorkspace": "Open workspace",
+  "@uxOpenWorkspace": {
+    "description": "Shown as the text in linked spaces section (me), and 1 other place."
+  },
   "uxTestSpace": "Test space",
+  "@uxTestSpace": {
+    "description": "Shown as the text in linked spaces section (me), and 2 other places."
+  },
   "uxRealWorkspace": "Workspace",
+  "@uxRealWorkspace": {
+    "description": "Shown as the text in development banner (app), and 1 other place."
+  },
   "uxRealSpaceHint": "Real bookings and invoices",
+  "@uxRealSpaceHint": {
+    "description": "Shown as the text in development banner (app), and 1 other place."
+  },
   "uxTestSpaceHint": "Test space: practice bookings and invoices",
+  "@uxTestSpaceHint": {
+    "description": "Shown as the text in development banner (app), and 3 other places."
+  },
   "uxProfileAccount": "Profile & account",
+  "@uxProfileAccount": {
+    "description": "Shown as the text in me shell (me), and 1 other place."
+  },
   "uxProfileSection": "Profile",
+  "@uxProfileSection": {
+    "description": "Shown as the text in me account tab (me), and 1 other place."
+  },
   "uxPrivacySection": "Privacy",
+  "@uxPrivacySection": {
+    "description": "Shown as the text in me account tab (me)."
+  },
   "uxPreferencesSection": "Preferences",
+  "@uxPreferencesSection": {
+    "description": "Shown as the text in me account tab (me)."
+  },
   "uxAdvancedSection": "Advanced",
+  "@uxAdvancedSection": {
+    "description": "Shown as the text in me account tab (me)."
+  },
   "uxMyBookings": "My bookings",
+  "@uxMyBookings": {
+    "description": "Shown as the label in calendar kind chips (calendar)."
+  },
   "uxBookingResourceUnavailable": "Resource unavailable",
-  "uxResetFilters": "Reset filters"
+  "@uxBookingResourceUnavailable": {
+    "description": "Shown as the text in calendar booking title (calendar)."
+  },
+  "uxResetFilters": "Reset filters",
+  "@uxResetFilters": {
+    "description": "Shown as the tooltip in calendar kind chips (calendar)."
+  }
 }

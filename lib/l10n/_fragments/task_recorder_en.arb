@@ -960,11 +960,29 @@
     "description": "#1884 recorder: taskRecorderTargetDefaultRule"
   },
   "taskRecorderCaptureValues": "Capture values (for issue reports)",
+  "@taskRecorderCaptureValues": {
+    "description": "Shown as the text in task recorder screen (task_recorder)."
+  },
   "taskRecorderCaptureValuesHint": "Also keeps what you type and choose — text, numbers, dates, switches — so a developer can reproduce the problem from the file. Passwords, payment details, e-mail addresses, phone numbers and other personal contact data are never kept. Share the file only with people who should see what you entered.",
+  "@taskRecorderCaptureValuesHint": {
+    "description": "Shown as the text in task recorder screen (task_recorder)."
+  },
   "taskRecorderValuesOn": "Values are being captured",
+  "@taskRecorderValuesOn": {
+    "description": "Shown as the text in task recorder screen (task_recorder)."
+  },
   "taskRecorderExportValuesTitle": "This recording contains values",
+  "@taskRecorderExportValuesTitle": {
+    "description": "Shown as the text in recording export (task_recorder)."
+  },
   "taskRecorderExportValuesBody": "It holds what was typed and chosen during the recording. Check it before sharing, and share it only with people who should see that.",
+  "@taskRecorderExportValuesBody": {
+    "description": "Shown as the text in recording export (task_recorder)."
+  },
   "taskRecorderExportValuesConfirm": "Save anyway",
+  "@taskRecorderExportValuesConfirm": {
+    "description": "Shown as the text in recording export (task_recorder)."
+  },
   "taskRecorderNameLabel": "Name this task",
   "taskRecorderNameHint": "Optional. Left empty, the recording is named after the time you start it.",
   "taskRecorderDefaultName": "Task recorded {when}",

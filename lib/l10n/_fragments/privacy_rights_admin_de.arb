@@ -4,7 +4,6 @@
   "personalBirthdayHelp": "Nur Sie, Personen mit Einsicht in die persönlichen Daten der Mitglieder und die Datenschutzverantwortlichen des Arbeitsbereichs können es lesen. Wer nur Rechnungen stellt, kann es nicht.",
   "personalBirthdayPick": "Datum wählen",
   "personalBirthdayClear": "Geburtstag entfernen",
-  "personalBirthdayInvalid": "Ein Geburtstag kann nicht in der Zukunft oder vor 1900 liegen.",
   "personalBirthdaySaveFailed": "Ihre Angaben wurden gespeichert, der Geburtstag jedoch nicht.",
   "privacyAdminTitle": "Persönliche Daten und Rechteanfragen",
   "privacyAdminIntro": "Die Anfragen der Mitglieder zu ihren persönlichen Daten und die Vorfälle, die Sie erfassen. Jede Anfrage wird innerhalb eines Kalendermonats beantwortet.",

@@ -1,9 +1,30 @@
 {
   "uxWorkspaceTime": "Workspace time",
+  "@uxWorkspaceTime": {
+    "description": "Shown as the text in booking window summary (reservations)."
+  },
   "uxDeviceTime": "Your time",
+  "@uxDeviceTime": {
+    "description": "Shown as the text in booking window summary (reservations)."
+  },
   "uxBookingFor": "Booking for",
+  "@uxBookingFor": {
+    "description": "Shown as the text in booking review summary (reservations)."
+  },
   "uxBookingChargePending": "The charge and allowance used depend on the member’s plan and are settled on the statement.",
+  "@uxBookingChargePending": {
+    "description": "Shown as the text in booking review summary (reservations)."
+  },
   "uxBookingModesHelp": "Reserve keeps the selected window. Check in now switches to the current window and marks you present.",
+  "@uxBookingModesHelp": {
+    "description": "Shown as the text in booking sheet (reservations)."
+  },
   "uxBookingCheckInHelp": "Also mark me present when confirming this reservation.",
-  "uxManageResource": "Manage resource"
+  "@uxBookingCheckInHelp": {
+    "description": "Shown as the subtitle in booking sheet (reservations)."
+  },
+  "uxManageResource": "Manage resource",
+  "@uxManageResource": {
+    "description": "Shown as the title in booking review summary (reservations)."
+  }
 }

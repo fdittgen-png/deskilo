@@ -1,16 +1,58 @@
 {
   "serverChoiceTitle": "Choose your server",
+  "@serverChoiceTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceIntro": "This version of DesKilo comes without a server. Choose where your spaces live. You can change it later in Settings → Advanced → Server.",
+  "@serverChoiceIntro": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceReferenceTitle": "The reference server",
+  "@serverChoiceReferenceTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceReferenceBody": "Run by the author of DesKilo on the same free software as every other server. It also hosts the global directory of spaces.",
+  "@serverChoiceReferenceBody": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceReferenceAction": "Use the reference server",
+  "@serverChoiceReferenceAction": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverChoiceExistingTitle": "A server that already exists",
+  "@serverChoiceExistingTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceNewTitle": "A new server of your own",
+  "@serverChoiceNewTitle": {
+    "description": "Shown as the title in server choice screen (profile)."
+  },
   "serverChoiceNewBody": "Create a free Supabase project and let the app install everything DesKilo needs on it: the schema, the functions and the sign-in rules.",
+  "@serverChoiceNewBody": {
+    "description": "Shown as the text in server choice screen (profile)."
+  },
   "serverConnectIntro": "Join a server where you already have an account, or create a new one.",
+  "@serverConnectIntro": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "serverConnectReference": "Reference server",
+  "@serverConnectReference": {
+    "description": "Shown as the label in connection dialog (directory)."
+  },
   "serverConnectPasteCode": "Paste a server code",
+  "@serverConnectPasteCode": {
+    "description": "Shown as the label in connection dialog (directory)."
+  },
   "serverConnectNoCode": "The clipboard holds no server code.",
+  "@serverConnectNoCode": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
   "serverConnectNoAccount": "No account there yet? Use this server on this device and sign up there.",
-  "serverConnectUseHere": "Use on this device"
+  "@serverConnectNoAccount": {
+    "description": "Shown as the text in connection dialog (directory)."
+  },
+  "serverConnectUseHere": "Use on this device",
+  "@serverConnectUseHere": {
+    "description": "Shown as the text in connection dialog (directory)."
+  }
 }
