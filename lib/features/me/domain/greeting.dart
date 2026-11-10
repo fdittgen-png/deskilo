@@ -13,8 +13,11 @@ GreetingPart greetingPartAt(DateTime wall) => wall.hour < 12
     ? GreetingPart.afternoon
     : GreetingPart.evening;
 
-/// The first word of [displayName]; null when the account has none.
-String? firstNameOf(String? displayName) {
-  final words = (displayName ?? '').trim().split(RegExp(r'\s+'));
-  return words.first.isEmpty ? null : words.first;
+/// The first name of an account: the one its identity states, else the first
+/// word of its display name; null when it has neither.
+String? firstNameOf({String? firstName, String? displayName}) {
+  final stated = (firstName ?? '').trim();
+  if (stated.isNotEmpty) return stated;
+  final word = (displayName ?? '').trim().split(RegExp(r'\s+')).first;
+  return word.isEmpty ? null : word;
 }

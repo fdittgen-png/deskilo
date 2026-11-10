@@ -23667,14 +23667,6 @@
   "@meTabMessages": {
     "description": "Me layer bottom tab: the person's messages."
   },
-  "meTabOverview": "Home",
-  "@meTabOverview": {
-    "description": "#2552 first destination of the personal shell: the person's overview."
-  },
-  "meTabOverviewShort": "Home",
-  "@meTabOverviewShort": {
-    "description": "#2552 the Overview destination on a phone's bottom bar (FR: Accueil)."
-  },
   "meTabSpacesShort": "Places",
   "@meTabSpacesShort": {
     "description": "#2552 the My spaces destination on a phone's bottom bar."

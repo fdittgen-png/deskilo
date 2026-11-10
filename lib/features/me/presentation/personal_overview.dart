@@ -143,7 +143,11 @@ class _Header extends ConsumerWidget {
     final tokens = PersonalTheme.of(context);
     final format = ref.watch(appFormatProvider);
     final now = ref.watch(clockProvider).now();
-    final name = firstNameOf(ref.watch(myProfileProvider).value?.displayName);
+    final profile = ref.watch(myProfileProvider).value;
+    final name = firstNameOf(
+      firstName: profile?.identity.firstName,
+      displayName: profile?.displayName,
+    );
     final greeting = name == null
         ? l10n.meGreetingNoName
         : switch (greetingPartAt(format.wall(now))) {

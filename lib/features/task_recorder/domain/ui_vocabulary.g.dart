@@ -9548,8 +9548,6 @@ const Set<String> uiLabelKeys = {
   'meTabHome',
   'meTabMe',
   'meTabMessages',
-  'meTabOverview',
-  'meTabOverviewShort',
   'meTabSpacesShort',
   'meUtilityAccount',
   'meUtilityHelp',

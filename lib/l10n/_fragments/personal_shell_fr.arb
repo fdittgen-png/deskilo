@@ -1,8 +1,6 @@
 {
   "featurePersonalShellTitle": "Interface personnelle (cinq destinations)",
   "featurePersonalShellDesc": "Moi en cinq destinations : Vue d’ensemble, Mes espaces, Découvrir, Messages et Mes données, avec une barre latérale sur une fenêtre large, un rail sur une fenêtre moyenne et une barre sur un téléphone. Désactivée, Moi garde ses quatre onglets.",
-  "meTabOverview": "Accueil",
-  "meTabOverviewShort": "Accueil",
   "meTabSpacesShort": "Lieux",
   "meTabData": "Mes données",
   "meTabDataShort": "Données",

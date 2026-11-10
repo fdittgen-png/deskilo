@@ -17965,12 +17965,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meTabMessages => 'Messages';
 
   @override
-  String get meTabOverview => 'Accueil';
-
-  @override
-  String get meTabOverviewShort => 'Accueil';
-
-  @override
   String get meTabSpacesShort => 'Lieux';
 
   @override

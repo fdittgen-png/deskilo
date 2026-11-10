@@ -17948,12 +17948,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meTabMessages => 'Nachrichten';
 
   @override
-  String get meTabOverview => 'Start';
-
-  @override
-  String get meTabOverviewShort => 'Start';
-
-  @override
   String get meTabSpacesShort => 'Orte';
 
   @override

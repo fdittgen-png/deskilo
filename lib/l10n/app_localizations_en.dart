@@ -17784,12 +17784,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meTabMessages => 'Messages';
 
   @override
-  String get meTabOverview => 'Home';
-
-  @override
-  String get meTabOverviewShort => 'Home';
-
-  @override
   String get meTabSpacesShort => 'Places';
 
   @override
