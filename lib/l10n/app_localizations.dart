@@ -45743,7 +45743,7 @@ abstract class AppLocalizations {
   /// #3545 F: the line under the actions of a space's public page: what asking to join shares
   ///
   /// In en, this message translates to:
-  /// **'Nothing is shared until you ask. Then they see your name and photo, nothing else.'**
+  /// **'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.'**
   String get spacePreviewPrivacy;
 
   /// Shown as the text in space codes options dialog (workspace).

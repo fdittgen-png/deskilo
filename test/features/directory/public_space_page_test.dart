@@ -91,7 +91,7 @@ void main() {
       expect(find.byType(FilledButton), findsOneWidget);
       expect(
         find.text(
-          'Nothing is shared until you ask. Then they see your name and photo, nothing else.',
+          'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.',
         ),
         findsOneWidget,
       );

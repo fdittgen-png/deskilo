@@ -249,7 +249,7 @@
     }
   },
   "spaceMessageSpace": "Send a message",
-  "spacePreviewPrivacy": "Nothing is shared until you ask. Then they see your name and photo, nothing else.",
+  "spacePreviewPrivacy": "When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.",
   "@spaceMessageSpace": {
     "description": "#3545 F: the outlined action of a space's public page that writes to its hosts"
   },
