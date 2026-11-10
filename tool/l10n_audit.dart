@@ -28,8 +28,9 @@ String buildAudit() {
     ..writeln()
     ..writeln("Every string in `lib/` that reaches a member's eyes and does "
         "NOT come from `AppLocalizations` (#1365). The repository's idiom is "
-        "`l10n?.someKey ?? 'English fallback'`, so a literal is listed only "
-        "when nothing hands it a localized value first.")
+        "`context.l10n.someKey`: the localizations are never null (#2388), "
+        "so a literal is listed only when nothing hands it a localized value "
+        "first.")
     ..writeln()
     ..writeln("Positions read: $positions, the text of $widgets, a tooltip's "
         "message, the four snack helpers and a semantics label. Keys, paths, "
