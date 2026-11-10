@@ -180,7 +180,7 @@ final biModuleViews = <String, BiModuleView>{
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
         l10n.biFinanceInvoicedBasis(
-              '${k.invoices}',
+              k.invoices,
               biMoneyCell(k.creditNotesMinor, locale, k.currency),
             ),
       null => '',
@@ -193,7 +193,7 @@ final biModuleViews = <String, BiModuleView>{
     value: biMoneyCell,
     basis: (m, l10n, locale) => m.unknown ? '' : switch (_finance(m)) {
       final k? =>
-        l10n.biFinanceCollectedBasis('${k.matches}'),
+        l10n.biFinanceCollectedBasis(k.matches),
       null => '',
     },
     notes: (m, l10n, locale) => _financeNotes(m, l10n, false),
@@ -330,7 +330,7 @@ class BiModuleSection extends ConsumerWidget {
       if (reasons.contains(BiUnsupported.grouping))
         l10n.biRefusedGrouping,
       if (budget)
-        l10n.biRefusedBudget('$biGroupBudget'),
+        l10n.biRefusedBudget(biGroupBudget),
     ].join(' '),
     key: const ValueKey('bi-refused'),
   );

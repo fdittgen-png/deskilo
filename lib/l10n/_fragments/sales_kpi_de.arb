@@ -13,7 +13,7 @@
   "biSalesKindAdjustment": "Korrekturen",
   "biSalesKindOther": "Sonstiges",
   "biSalesServiceTitle": "Umsatz nach Leistung",
-  "biSalesServiceBasis": "{count} Leistungen und Pakete",
+  "biSalesServiceBasis": "{count, plural, =1{1 Leistung und Paket} other{{count} Leistungen und Pakete}}",
   "biSalesServiceDefinition": "Die Leistungs- und Paketpositionen der Rechnungen des Zeitraums, netto, nach der Bezeichnung, unter der sie verkauft wurden.",
   "biSalesNoDescription": "Ohne Bezeichnung",
   "biSalesRoomTitle": "Marge der angemieteten Räume",
@@ -21,5 +21,5 @@
   "biSalesRoomDefinition": "Für jeden Raum, den der Space anmietet: was seine Buchungen netto eingebracht haben, abzüglich der eigenen Kosten des Raums (seine im Zeitraum fällige Miete oder seine Kosten je Nutzung mal die Nutzungen). Weitere Kosten werden dem Raum nicht zugerechnet: Das ist eine Marge, kein Gewinn.",
   "biSalesRoomLine": "{room}: berechnet {charges}, Kosten {cost}, {uses} Buchungen",
   "biSalesRoomsOff": "Der Space mietet keine Räume an: Aktivieren Sie angemietete Räume, um ihre Marge zu sehen",
-  "biSalesNetUnknown": "{count} Verkaufspositionen haben keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus"
+  "biSalesNetUnknown": "{count, plural, =1{1 Verkaufsposition hat keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus} other{{count} Verkaufspositionen haben keinen lesbaren Mehrwertsteuersatz: Ihr Netto ist unbekannt und bleibt aus dem Netto heraus}}"
 }

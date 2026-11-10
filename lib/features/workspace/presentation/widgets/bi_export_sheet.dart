@@ -361,7 +361,7 @@ class _BiExportSheetState extends ConsumerState<_BiExportSheet> {
         key: const ValueKey('bi-export-digest'),
       ),
       if (snapshot.plan.leftOut.isNotEmpty)
-        Text(l10n.biExportLeftOut('${snapshot.plan.leftOut.length}')),
+        Text(l10n.biExportLeftOut(snapshot.plan.leftOut.length)),
       Text(
         l10n.biExportRecallNote,
         style: Theme.of(context).textTheme.bodySmall,

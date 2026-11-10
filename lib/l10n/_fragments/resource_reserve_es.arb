@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "reserveRoomFor": "Sala de reuniones · {count} personas",
+  "reserveRoomFor": "{count, plural, =1{Sala de reuniones · 1 persona} other{Sala de reuniones · {count} personas}}",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
     "placeholders": {

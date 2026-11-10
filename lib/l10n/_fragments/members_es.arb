@@ -257,7 +257,7 @@
   "conversationLoadEarlier": "Cargar mensajes anteriores",
   "conversationToday": "Hoy",
   "composerAttach": "Adjuntar una referencia",
-  "composerCharsLeft": "{count} caracteres restantes",
+  "composerCharsLeft": "{count, plural, =1{1 carácter restante} other{{count} caracteres restantes}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {

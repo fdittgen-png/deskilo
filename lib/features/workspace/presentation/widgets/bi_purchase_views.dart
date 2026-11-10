@@ -73,9 +73,9 @@ BiModuleView _costView(
     if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
     if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
     if (_cost(m) case final k? when k.unresolvedLines > 0)
-      l10n.biCostsUnresolved('${k.unresolvedLines}'),
+      l10n.biCostsUnresolved(k.unresolvedLines),
     if (_cost(m) case final k? when k.unqualifiedLines > 0)
-      l10n.biCostsUnqualified('${k.unqualifiedLines}'),
+      l10n.biCostsUnqualified(k.unqualifiedLines),
     if (m.unknown && m.reasons.contains('asset_register_off'))
       l10n.biAssetsRegisterOff,
     if (m.unknown && m.reasons.contains('book_coverage_incomplete'))
@@ -119,7 +119,7 @@ final _allocationView = BiModuleView(
         biMoneyCell(k.unallocatedMinor, locale, k.currency),
       ),
     if (_allocation(m) case final k? when k.conflictingLines > 0)
-      l10n.biAllocationConflicts('${k.conflictingLines}'),
+      l10n.biAllocationConflicts(k.conflictingLines),
     l10n.biAllocationNotBilled,
   ],
   details: (m, l10n, locale) => [
@@ -160,7 +160,7 @@ final purchaseModuleViews = <String, BiModuleView>{
   'cash.recorded_outflows': _purchaseView(
     (l10n) => l10n.biCashOutflowsTitle,
     (l10n) => l10n.biCashOutflowsDefinition,
-    basis: (k, l10n, locale) => l10n.biCashOutflowsBasis('${k.outflows}'),
+    basis: (k, l10n, locale) => l10n.biCashOutflowsBasis(k.outflows),
     always: (l10n) => l10n.biCashNotBankBalance,
   ),
   'purchases.operating_costs': _costView(

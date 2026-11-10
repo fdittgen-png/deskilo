@@ -324,7 +324,7 @@
       }
     }
   },
-  "invoiceIssuedCount": "{count} invoices issued.",
+  "invoiceIssuedCount": "{count, plural, =1{1 invoice issued.} other{{count} invoices issued.}}",
   "@invoiceIssuedCount": {
     "description": "Snackbar after the invoice-all sweep",
     "placeholders": {
@@ -415,7 +415,7 @@
   "@invoiceStatusOpen": {
     "description": "Lifecycle chip: issued, still waiting for its payment"
   },
-  "invoiceCountShown": "{count} invoices",
+  "invoiceCountShown": "{count, plural, =1{1 invoice} other{{count} invoices}}",
   "@invoiceCountShown": {
     "description": "Archive: how many invoices the current filters show",
     "placeholders": {
@@ -486,7 +486,7 @@
   "@invoiceRunningMonth": {
     "description": "Issue sheet warning when the picked month is the current one (0067)"
   },
-  "invoiceIssueAllConfirm": "Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.",
+  "invoiceIssueAllConfirm": "{count, plural, =1{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}",
   "@invoiceIssueAllConfirm": {
     "description": "Confirm dialog of the invoice-all sweep",
     "placeholders": {
@@ -1497,7 +1497,7 @@
       }
     }
   },
-  "eventPriceNegotiationItems": "{count} items",
+  "eventPriceNegotiationItems": "{count, plural, =1{1 item} other{{count} items}}",
   "@eventPriceNegotiationItems": {
     "placeholders": {
       "count": {

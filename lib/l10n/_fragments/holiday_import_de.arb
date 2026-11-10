@@ -36,7 +36,7 @@
       }
     }
   },
-  "holidayImportConfirm": "{count} Schließtage importieren",
+  "holidayImportConfirm": "{count, plural, =1{1 Schließtag importieren} other{{count} Schließtage importieren}}",
   "@holidayImportConfirm": {
     "description": "#2051 open-data holiday import",
     "placeholders": {

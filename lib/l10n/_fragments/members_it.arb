@@ -257,7 +257,7 @@
   "conversationLoadEarlier": "Carica messaggi precedenti",
   "conversationToday": "Oggi",
   "composerAttach": "Allega un riferimento",
-  "composerCharsLeft": "{count} caratteri rimasti",
+  "composerCharsLeft": "{count, plural, =1{1 carattere rimasto} other{{count} caratteri rimasti}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {

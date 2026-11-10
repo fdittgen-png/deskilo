@@ -4,7 +4,7 @@
   "biVendorDeliveryDefinition": "Gli ordini inviati nel periodo. Un ordine ricevuto è in tempo quando la sua ultima ricezione è entro la data prevista. Un ordine senza data prevista, o ancora atteso, non è né in tempo né in ritardo.",
   "biVendorDeliveryLead": "Giorni dall'invio all'ultima ricezione: mediana {median}, 90° percentile {p90}",
   "biVendorDeliveryDelay": "Rispetto alla data prevista (negativo = in anticipo): mediana {median}, 90° percentile {p90}",
-  "biVendorDeliveryCohortLine": "{cohort}: {count} ordini",
+  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort}: 1 ordine} other{{cohort}: {count} ordini}}",
   "biVendorDeliveryLine": "{name}: {onTime} in tempo, {late} in ritardo, su {orders} ordini",
   "biVendorDeliveryOnTime": "Ricevuto in tempo",
   "biVendorDeliveryLate": "Ricevuto in ritardo",

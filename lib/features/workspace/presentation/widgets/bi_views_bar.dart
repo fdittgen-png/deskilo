@@ -225,7 +225,7 @@ class _ViewsMenu {
           onOpen(v, check.query!);
           if (v.withheld > 0) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(l10n.biViewWithheld('${v.withheld}'))),
+              SnackBar(content: Text(l10n.biViewWithheld(v.withheld))),
             );
           }
           if (check.incompatibleCards.isNotEmpty) {
@@ -233,7 +233,7 @@ class _ViewsMenu {
               SnackBar(
                 content: Text(
                   l10n.biViewCardsIncompatible(
-                    '${check.incompatibleCards.length}',
+                    check.incompatibleCards.length,
                   ),
                 ),
               ),

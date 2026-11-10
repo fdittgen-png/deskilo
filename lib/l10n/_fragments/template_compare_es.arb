@@ -15,7 +15,7 @@
   "compareMissing": "No está en esta plantilla",
   "compareUnknown": "Desconocido",
   "compareNotCarried": "No se transporta",
-  "compareLimit": "Se pueden comparar hasta {count} plantillas. Quite una primero.",
+  "compareLimit": "{count, plural, =1{Solo se puede comparar 1 plantilla. Quite una primero.} other{Se pueden comparar hasta {count} plantillas. Quite una primero.}}",
   "compareOpen": "Comparar ({count})",
   "compareAdd": "Añadir a la comparación",
   "compareRemove": "Quitar de la comparación",

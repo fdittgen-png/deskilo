@@ -50,7 +50,7 @@ final overviewModuleViews = <String, BiModuleView>{
     value: biMoneyCell,
     basis: (m, l10n, locale) => switch (_figure(m)) {
       final f? => l10n.overviewOverdueBasis(
-        '${f.count}',
+        f.count,
         '${f.unknownDueCount}',
         '${f.heldCount}',
       ),

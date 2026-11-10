@@ -100,12 +100,12 @@
       }
     }
   },
-  "biViewWithheld": "{count} figures of this view are not shown: you may not read them.",
+  "biViewWithheld": "{count, plural, =1{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   }

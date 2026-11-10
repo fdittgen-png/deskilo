@@ -178,7 +178,7 @@ Future<void> exportBiPdf(
     if (left > 0 && context.mounted) {
       AppSnack.error(
         context,
-        l10n.biCardsUnavailable('$left'),
+        l10n.biCardsUnavailable(left),
       );
     }
   } on Object catch (e, st) {

@@ -193,5 +193,5 @@
   "instanceDoctorRunAgain": "Controlla di nuovo",
   "instanceDoctorProtected": "Protetto",
   "instanceDoctorAttention": "Richiede attenzione",
-  "instanceDoctorPassed": "{count} controlli superati"
+  "instanceDoctorPassed": "{count, plural, =1{1 controllo superato} other{{count} controlli superati}}"
 }

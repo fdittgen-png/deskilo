@@ -88,7 +88,7 @@
   "@usageMemberAll": {
     "description": "#833 - member filter: no narrowing"
   },
-  "usagePrepareBanner": "{count} bookings of this month are not recorded yet, so this list may be incomplete.",
+  "usagePrepareBanner": "{count, plural, =1{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {

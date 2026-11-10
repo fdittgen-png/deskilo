@@ -3,21 +3,21 @@
   "@handoffTitle": {
     "description": "#1640 accountant_handoff"
   },
-  "handoffIncluded": "{count} document(s) in the file",
+  "handoffIncluded": "{count, plural, =1{1 document in the file} other{{count} document(s) in the file}}",
   "@handoffIncluded": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "handoffExcludedSettlements": "{count} settlement summary(ies) left out: their invoices are already listed",
+  "handoffExcludedSettlements": "{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summary(ies) left out: their invoices are already listed}}",
   "@handoffExcludedSettlements": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },

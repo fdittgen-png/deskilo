@@ -86,7 +86,7 @@ final vendorModuleViews = <String, BiModuleView>{
     title: (l10n) => l10n.biVendorCategoryTitle,
     value: biMoneyCell,
     basis: (m, l10n, locale) => switch (_kpi(m)) {
-      final k? => l10n.biVendorCategoryBasis('${k.categoryCount}'),
+      final k? => l10n.biVendorCategoryBasis(k.categoryCount),
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
@@ -121,7 +121,7 @@ final vendorModuleViews = <String, BiModuleView>{
           if (k.cohorts[c] case final f? when f.count > 0)
             l10n.biVendorCohortLine(
               _cohortName(c, l10n),
-              '${f.count}',
+              f.count,
               biMoneyCell(f.minor, locale, k.currency),
             ),
         for (final v in k.punctuality)
@@ -155,7 +155,7 @@ final vendorModuleViews = <String, BiModuleView>{
     notes: (m, l10n, locale) => [
       ..._notes(m, l10n),
       if (_kpi(m) case final k? when k.lagUndated > 0)
-        l10n.biVendorLagUndated('${k.lagUndated}'),
+        l10n.biVendorLagUndated(k.lagUndated),
     ],
     details: (m, l10n, locale) => [l10n.biVendorLagDefinition],
   ),
@@ -190,7 +190,7 @@ final vendorModuleViews = <String, BiModuleView>{
           if ((k.deliveryCohorts[c] ?? 0) > 0)
             l10n.biVendorDeliveryCohortLine(
               _deliveryCohortName(c, l10n),
-              '${k.deliveryCohorts[c]}',
+              k.deliveryCohorts[c] ?? 0,
             ),
         for (final v in k.deliveries)
           l10n.biVendorDeliveryLine(

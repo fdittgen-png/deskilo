@@ -1,7 +1,7 @@
 {
   "templateWidenTitle": "¿Hacer esta plantilla legible para: {audience}?",
-  "templateWidenCount": "{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.",
-  "templateWidenExcluded": "{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).",
+  "templateWidenCount": "{count, plural, =1{1 ajuste pasa a ser legible, tal como lo contiene ahora la plantilla.} other{{count} ajustes pasan a ser legibles, tal como los contiene ahora la plantilla.}}",
+  "templateWidenExcluded": "{count, plural, =1{1 tipo de valor nunca sale con ella (datos bancarios, sedes, direcciones…).} other{{count} tipos de valores nunca salen con ella (datos bancarios, sedes, direcciones…).}}",
   "templateWidenConfirm": "Hacer legible",
   "templateProfileFull": "Perfil de configuración completo",
   "templateProfileSelected": "Grupos elegidos: {chosen} de {total}",

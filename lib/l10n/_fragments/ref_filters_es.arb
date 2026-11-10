@@ -9,7 +9,7 @@
   "refSortAmountLow": "Importe más bajo",
   "refFilterReset": "Restablecer",
   "refFilterAmount": "Importe",
-  "refFilterShow": "Mostrar {count} resultados",
+  "refFilterShow": "{count, plural, =1{Mostrar 1 resultado} other{Mostrar {count} resultados}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {

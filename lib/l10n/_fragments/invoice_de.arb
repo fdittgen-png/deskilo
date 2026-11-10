@@ -123,7 +123,7 @@
       }
     }
   },
-  "invoiceIssuedCount": "{count} Rechnungen ausgestellt.",
+  "invoiceIssuedCount": "{count, plural, =1{1 Rechnung ausgestellt.} other{{count} Rechnungen ausgestellt.}}",
   "@invoiceIssuedCount": {
     "placeholders": {
       "count": {
@@ -171,7 +171,7 @@
   "invoiceMatchPickPayment": "Registrierte Zahlung auswählen",
   "invoiceMatchNoPayments": "Keine registrierte Zahlung zum Abgleich — zuerst erfassen oder bestätigen.",
   "invoiceStatusOpen": "Offen",
-  "invoiceCountShown": "{count} Rechnungen",
+  "invoiceCountShown": "{count, plural, =1{1 Rechnung} other{{count} Rechnungen}}",
   "@invoiceCountShown": {
     "placeholders": {
       "count": {
@@ -222,7 +222,7 @@
   },
   "invoicePickMember": "Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.",
   "invoiceRunningMonth": "Dieser Monat läuft noch — seine Positionen können sich noch ändern, und ein Monat lässt sich nur einmal abrechnen.",
-  "invoiceIssueAllConfirm": "{count} Rechnungen für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.",
+  "invoiceIssueAllConfirm": "{count, plural, =1{1 Rechnung für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.} other{{count} Rechnungen für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.}}",
   "@invoiceIssueAllConfirm": {
     "placeholders": {
       "count": {
@@ -779,7 +779,7 @@
   },
   "eventTypePriceNegotiation": "Preisverhandlung",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
-  "eventPriceNegotiationItems": "{count} Artikel",
+  "eventPriceNegotiationItems": "{count, plural, =1{1 Artikel} other{{count} Artikel}}",
   "journeyStateDone": "Abgeschlossen",
   "journeyStateCurrent": "Aktueller Schritt",
   "journeyStateUpcoming": "Ausstehend",

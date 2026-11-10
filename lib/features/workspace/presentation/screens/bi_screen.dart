@@ -153,7 +153,7 @@ class BiScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                 child: Text(
-                  l10n.biCardsUnavailable('$unavailable'),
+                  l10n.biCardsUnavailable(unavailable),
                   key: const ValueKey('bi-cards-unavailable'),
                 ),
               ),

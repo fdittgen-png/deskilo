@@ -1,6 +1,6 @@
 {
   "@@locale": "de",
-  "reserveRoomFor": "Besprechungsraum · {count} Personen",
+  "reserveRoomFor": "{count, plural, =1{Besprechungsraum · 1 Person} other{Besprechungsraum · {count} Personen}}",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
     "placeholders": {

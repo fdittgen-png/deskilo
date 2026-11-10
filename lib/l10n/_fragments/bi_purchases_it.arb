@@ -52,12 +52,12 @@
   "@biCashOutflowsDefinition": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count} pagamenti",
+  "biCashOutflowsBasis": "{count, plural, =1{1 pagamento} other{{count} pagamenti}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -101,21 +101,21 @@
   "@biContributionNotProfit": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnresolved": "{count} righe non classificate sono escluse.",
+  "biCostsUnresolved": "{count, plural, =1{1 riga non classificata è esclusa.} other{{count} righe non classificate sono escluse.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "biCostsUnqualified": "{count} righe la cui imposta detraibile non è qualificata contano per l'importo lordo.",
+  "biCostsUnqualified": "{count, plural, =1{1 riga la cui imposta detraibile non è qualificata conta per l'importo lordo.} other{{count} righe la cui imposta detraibile non è qualificata contano per l'importo lordo.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -134,7 +134,7 @@
   "biAllocationDefinition": "I costi operativi dei mesi, ripartiti tra piani e uffici secondo la regola in vigore alla data di ciascun documento, con il metodo del resto maggiore al centesimo. Diretto, condiviso e non ripartito danno sempre i costi operativi.",
   "biAllocationBasis": "{direct} diretto, {shared} condiviso, {unallocated} non ripartito",
   "biAllocationUnallocated": "{amount} non è ripartito da alcuna regola: resta non ripartito, mai diviso in parti uguali.",
-  "biAllocationConflicts": "{count} righe sono rivendicate da due regole e restano non ripartite finché restano entrambe.",
+  "biAllocationConflicts": "{count, plural, =1{1 riga è rivendicata da due regole e resta non ripartita finché restano entrambe.} other{{count} righe sono rivendicate da due regole e restano non ripartite finché restano entrambe.}}",
   "biAllocationNotBilled": "Un'analisi: nessun membro viene addebitato e nessun documento o registrazione cambia.",
   "biAllocationRevisions": "Ripartito da: {rules}",
   "biAllocationRevision": "{basis} (revisione {revision})",

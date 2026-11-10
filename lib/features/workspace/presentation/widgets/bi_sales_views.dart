@@ -17,7 +17,7 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
   if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
   if (m.reasons.contains('external_rooms_off')) l10n.biSalesRoomsOff,
   if (_kpi(m) case final k? when k.netUnknownLines > 0)
-    l10n.biSalesNetUnknown('${k.netUnknownLines}'),
+    l10n.biSalesNetUnknown(k.netUnknownLines),
 ];
 
 /// The name of a kind of invoice line.
@@ -57,7 +57,7 @@ final salesModuleViews = <String, BiModuleView>{
     title: (l10n) => l10n.biSalesServiceTitle,
     value: biMoneyCell,
     basis: (m, l10n, locale) => switch (_kpi(m)) {
-      final k? => l10n.biSalesServiceBasis('${k.serviceCount}'),
+      final k? => l10n.biSalesServiceBasis(k.serviceCount),
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),

@@ -25,7 +25,7 @@
       }
     }
   },
-  "moneyOverage": "Overage ({count} extra half-days)",
+  "moneyOverage": "{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}",
   "@moneyOverage": {
     "description": "Statement line for usage beyond the included quota",
     "placeholders": {
@@ -139,7 +139,7 @@
   "plansEditorEdit": "Edit plan",
   "plansEditorInactive": "Inactive",
   "plansEditorUnlimited": "unlimited half-days",
-  "plansEditorQuota": "{count} half-days",
+  "plansEditorQuota": "{count, plural, =1{1 half-day} other{{count} half-days}}",
   "plansEditorPerExtra": "{price}/extra half-day",
   "planNameLabel": "Name",
   "planBaseFeeLabel": "Monthly base fee",
@@ -615,10 +615,42 @@
   "scheduleWeekly": "weekly",
   "scheduleMonthly": "monthly",
   "scheduleYearly": "yearly",
-  "scheduleEveryDays": "every {count} days",
-  "scheduleEveryWeeks": "every {count} weeks",
-  "scheduleEveryMonths": "every {count} months",
-  "scheduleTimes": "{count} times",
+  "scheduleEveryDays": "{count, plural, =1{every day} other{every {count} days}}",
+  "@scheduleEveryDays": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scheduleEveryWeeks": "{count, plural, =1{every week} other{every {count} weeks}}",
+  "@scheduleEveryWeeks": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scheduleEveryMonths": "{count, plural, =1{every month} other{every {count} months}}",
+  "@scheduleEveryMonths": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scheduleTimes": "{count, plural, =1{1 time} other{{count} times}}",
+  "@scheduleTimes": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scheduleUntil": "until {date}",
   "scheduleNextDue": "next: {date}",
   "occurrenceRejected": "The validators rejected it — adjust the amount or the description and resend.",
