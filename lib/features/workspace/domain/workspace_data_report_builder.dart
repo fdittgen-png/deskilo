@@ -5,6 +5,7 @@
 // with the workbook's own rules (what a confirmed payment is, what a ledger
 // row does to a balance), so every total it prints is the sum of the
 // workbook's column for the same rows.
+import '../../../core/text/collation.dart';
 import '../../../core/time/workspace_time.dart';
 import 'member.dart';
 import 'workspace_data_report.dart';
@@ -61,7 +62,7 @@ DataReportTable _members(WorkspaceExportDetails d) {
   final members = [...d.members]
     ..sort(
       (a, b) =>
-          _name(d, a.id).toLowerCase().compareTo(_name(d, b.id).toLowerCase()),
+          compareNames(_name(d, a.id), _name(d, b.id)),
     );
   return DataReportTable(
     key: 'members',
@@ -238,7 +239,7 @@ DataReportTable _balances(WorkspaceExportDetails d) {
   }
   final ids = byMember.keys.toList()
     ..sort(
-      (a, b) => _name(d, a).toLowerCase().compareTo(_name(d, b).toLowerCase()),
+      (a, b) => compareNames(_name(d, a), _name(d, b)),
     );
   int sum(int i) => byMember.values.fold(0, (s, c) => s + c[i]);
   return DataReportTable(
@@ -294,7 +295,7 @@ DataReportTable _purchases(List<DataReportPurchase> purchases) {
 
 DataReportTable _suppliers(List<DataReportSupplier> suppliers) {
   final sorted = [...suppliers]
-    ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    ..sort((a, b) => compareNames(a.name, b.name));
   return DataReportTable(
     key: 'suppliers',
     columns: const [

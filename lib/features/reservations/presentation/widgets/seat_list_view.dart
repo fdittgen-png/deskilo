@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -133,7 +134,7 @@ class SeatListView extends ConsumerWidget {
   // #1825 — the structure the member reserves in: each office, its
   // desks, each desk's seats; seats with no desk last. A desk or office
   // with no seat still shows when it can be reserved as a whole.
-  int _byName(String a, String b) => a.toLowerCase().compareTo(b.toLowerCase());
+  int _byName(String a, String b) => compareNames(a, b);
 
   String _contextOf(Seat seat, String? levelName, bool byLevel) {
     final desk = plan.desks.where((d) => d.id == seat.deskId).firstOrNull;

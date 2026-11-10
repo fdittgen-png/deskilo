@@ -20,6 +20,7 @@
 library;
 
 import 'package:meta/meta.dart';
+import '../../../core/text/collation.dart';
 
 /// Longest monogram this will letter its way up to. Past this the
 /// numbers take over: four glyphs in a small circle stop being readable,
@@ -99,7 +100,7 @@ Map<String, String> assignMonograms(
       if (aJoined != null && bJoined == null) return -1;
       if (aJoined == null && bJoined != null) return 1;
       final byName =
-          a.value.toLowerCase().compareTo(b.value.toLowerCase());
+          compareNames(a.value, b.value);
       return byName != 0 ? byName : a.key.compareTo(b.key);
     });
 

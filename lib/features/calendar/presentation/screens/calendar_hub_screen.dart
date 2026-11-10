@@ -10,6 +10,7 @@ import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -627,7 +628,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   Future<void> _pickMember(Map<String, String> names, String? myId) async {
     final l10n = context.l10n;
     final entries = names.entries.toList()
-      ..sort((a, b) => a.value.toLowerCase().compareTo(b.value.toLowerCase()));
+      ..sort((a, b) => compareNames(a.value, b.value));
     final picked = await showAppSheet<String?>(
       context: context,
       builder: (_) => SafeArea(

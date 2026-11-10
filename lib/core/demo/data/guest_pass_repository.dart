@@ -15,6 +15,7 @@ import '../../../features/money/domain/guest_pass.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/plan/domain/seat.dart';
 import '../../../features/workspace/domain/member.dart';
+import '../../text/collation.dart';
 import 'money/demo_member_account_commands.dart';
 import 'money_repository.dart';
 import 'reservation_repository.dart';
@@ -49,7 +50,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
 
   @override
   Future<List<GuestPassOffer>> offers(String workspaceId) async =>
-      [...offerList]..sort((a, b) => a.name.compareTo(b.name));
+      [...offerList]..sort((a, b) => compareNames(a.name, b.name));
 
   @override
   Future<List<GuestPassPlace>> places(String workspaceId) async => [
