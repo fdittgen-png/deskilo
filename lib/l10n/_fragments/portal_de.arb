@@ -58,6 +58,9 @@
   "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
   "portalDirectoryCount": "{name} ({count})",
   "portalWriteTo": "{name} schreiben",
-  "spaceMessageSpace": "Dem Raum schreiben",
-  "spacePreviewPrivacy": "Mit dem Raum wird nichts geteilt, bevor Sie Ihre Anfrage senden."
+  "spaceMessageSpace": "Nachricht senden",
+  "spacePreviewPrivacy": "Nichts wird geteilt, bevor Sie anfragen. Dann sehen die Betreiber Ihren Namen und Ihr Foto, sonst nichts.",
+  "spaceRunByCompany": "Betrieben von einem Unternehmen",
+  "spaceRunByAssociation": "Betrieben von einem Verein",
+  "spaceRunByPerson": "Betrieben von einer Privatperson"
 }

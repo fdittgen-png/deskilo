@@ -17273,7 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Nachricht an {name}",
-  "spaceMessageSpace": "Dem Raum schreiben",
+  "spaceMessageSpace": "Nachricht senden",
   "spaceMoveDown": "Nach unten",
   "spaceMoveUp": "Nach oben",
   "spaceNotBookable": "Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.",
@@ -17286,9 +17286,12 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Mit dem Raum wird nichts geteilt, bevor Sie Ihre Anfrage senden.",
+  "spacePreviewPrivacy": "Nichts wird geteilt, bevor Sie anfragen. Dann sehen die Betreiber Ihren Namen und Ihr Foto, sonst nichts.",
   "spaceQrSizeLabel": "Größe des QR-Codes",
   "spaceRatingClear": "Keine Bewertung",
+  "spaceRunByAssociation": "Betrieben von einem Verein",
+  "spaceRunByCompany": "Betrieben von einem Unternehmen",
+  "spaceRunByPerson": "Betrieben von einer Privatperson",
   "spaceScanField": "Code",
   "spaceScanHint": "Kamera auf die Karte eines Platzes, Tischs, Büros oder einer Etage richten — oder den Code eintippen.",
   "spaceScanInvalid": "Kein Raumcode dieses Workspace.",

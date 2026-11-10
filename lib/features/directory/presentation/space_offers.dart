@@ -42,19 +42,20 @@ class SpaceOffers extends ConsumerWidget {
     final signedIn = ref.watch(authStateProvider).value != null;
     // A membership can only be recognised on this server: the page's id
     // is that server's own workspace id.
-    final here = signedIn &&
+    final here =
+        signedIn &&
         workspace.source == ref.watch(connectedInstallationsProvider).origin;
     final mine = here
         ? (ref.watch(myWorkspacesProvider).value ?? const <Workspace>[])
-            .where((w) => w.id == workspace.id)
-            .firstOrNull
+              .where((w) => w.id == workspace.id)
+              .firstOrNull
         : null;
     final email = workspace.text('email').trim();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-      child: Wrap(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.sm,
         children: [
           if (mine != null)
             FilledButton.icon(
@@ -67,9 +68,7 @@ class SpaceOffers extends ConsumerWidget {
             FilledButton.icon(
               key: const ValueKey('portal-request-membership'),
               icon: const Icon(Icons.person_add_outlined),
-              label: Text(
-                l.portalRequestProfile,
-              ),
+              label: Text(l.portalRequestProfile),
               onPressed: onRequest,
             ),
           ?secondary,

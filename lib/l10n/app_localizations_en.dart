@@ -27504,7 +27504,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get spaceMessageSpace => 'Message the space';
+  String get spaceMessageSpace => 'Send a message';
 
   @override
   String get spaceMoveDown => 'Move down';
@@ -27527,13 +27527,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Nothing is shared with the space until you send your request.';
+      'Nothing is shared until you ask. Then they see your name and photo, nothing else.';
 
   @override
   String get spaceQrSizeLabel => 'QR code size';
 
   @override
   String get spaceRatingClear => 'No rating';
+
+  @override
+  String get spaceRunByAssociation => 'Run by an association';
+
+  @override
+  String get spaceRunByCompany => 'Run by a company';
+
+  @override
+  String get spaceRunByPerson => 'Run by a person';
 
   @override
   String get spaceScanField => 'Code';

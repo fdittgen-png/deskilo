@@ -58,6 +58,9 @@
   "portalRecipientHint": "Tapez un nom : des suggestions apparaissent dès la première lettre",
   "portalDirectoryCount": "{name} ({count})",
   "portalWriteTo": "Écrire à {name}",
-  "spaceMessageSpace": "Écrire à l'espace",
-  "spacePreviewPrivacy": "Rien n'est partagé avec l'espace avant l'envoi de votre demande."
+  "spaceMessageSpace": "Envoyer un message",
+  "spacePreviewPrivacy": "Rien n'est partagé avant votre demande. Ensuite, l'espace voit votre nom et votre photo, rien d'autre.",
+  "spaceRunByCompany": "Géré par une entreprise",
+  "spaceRunByAssociation": "Géré par une association",
+  "spaceRunByPerson": "Géré par un particulier"
 }

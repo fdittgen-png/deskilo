@@ -17273,7 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Escribir a {name}",
-  "spaceMessageSpace": "Escribir al espacio",
+  "spaceMessageSpace": "Enviar un mensaje",
   "spaceMoveDown": "Bajar",
   "spaceMoveUp": "Subir",
   "spaceNotBookable": "Este espacio no está configurado para reservas completas.",
@@ -17286,9 +17286,12 @@
       }
     }
   },
-  "spacePreviewPrivacy": "No se comparte nada con el espacio hasta que envíe su solicitud.",
+  "spacePreviewPrivacy": "No se comparte nada hasta que lo solicite. Entonces ven su nombre y su foto, nada más.",
   "spaceQrSizeLabel": "Tamaño del código QR",
   "spaceRatingClear": "Sin valoración",
+  "spaceRunByAssociation": "Gestionado por una asociación",
+  "spaceRunByCompany": "Gestionado por una empresa",
+  "spaceRunByPerson": "Gestionado por una persona",
   "spaceScanField": "Código",
   "spaceScanHint": "Apunte la cámara a la tarjeta de un puesto, mesa, oficina o planta — o escriba su código.",
   "spaceScanInvalid": "No es un código de espacio de este espacio de trabajo.",

@@ -45707,7 +45707,7 @@ abstract class AppLocalizations {
   /// #3545 F: the outlined action of a space's public page that writes to its hosts
   ///
   /// In en, this message translates to:
-  /// **'Message the space'**
+  /// **'Send a message'**
   String get spaceMessageSpace;
 
   /// Shown as the text in space row controls (me), and 1 other place.
@@ -45743,7 +45743,7 @@ abstract class AppLocalizations {
   /// #3545 F: the line under the actions of a space's public page: what asking to join shares
   ///
   /// In en, this message translates to:
-  /// **'Nothing is shared with the space until you send your request.'**
+  /// **'Nothing is shared until you ask. Then they see your name and photo, nothing else.'**
   String get spacePreviewPrivacy;
 
   /// Shown as the text in space codes options dialog (workspace).
@@ -45757,6 +45757,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No rating'**
   String get spaceRatingClear;
+
+  /// #3545 F: who runs a space, plain text under its address
+  ///
+  /// In en, this message translates to:
+  /// **'Run by an association'**
+  String get spaceRunByAssociation;
+
+  /// #3545 F: who runs a space, plain text under its address
+  ///
+  /// In en, this message translates to:
+  /// **'Run by a company'**
+  String get spaceRunByCompany;
+
+  /// #3545 F: who runs a space, plain text under its address
+  ///
+  /// In en, this message translates to:
+  /// **'Run by a person'**
+  String get spaceRunByPerson;
 
   /// Label of the typed space-code input
   ///

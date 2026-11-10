@@ -67,29 +67,31 @@ void main() {
           )
           .dy;
       final address = tester.getTopLeft(k('public-workspace-address')).dy;
-      final kind = tester.getTopLeft(find.text('Company')).dy;
+      final install = tester.getTopLeft(k('public-workspace-installation')).dy;
+      final kind = tester.getTopLeft(k('public-workspace-run-by')).dy;
       final ask = tester.getTopLeft(k('portal-request-membership')).dy;
       final message = tester.getTopLeft(k('write-to-hosts')).dy;
       final privacy = tester.getTopLeft(k('public-workspace-privacy')).dy;
       expect(
-        [initial, name, address, kind, ask, message, privacy],
+        [initial, name, address, install, kind, ask, message, privacy],
         orderedEquals(
           [
-            ...[initial, name, address, kind, ask, message, privacy],
+            ...[initial, name, address, install, kind, ask, message, privacy],
           ]..sort(),
         ),
       );
       expect(find.text('Ask to join'), findsOneWidget);
-      expect(find.text('Message the space'), findsOneWidget);
+      expect(find.text('Send a message'), findsOneWidget);
+      expect(find.text('Run by a company'), findsOneWidget);
       expect(
-        find.textContaining('host.example'),
-        findsNothing,
-        reason: 'never the server',
+        find.text('host.example'),
+        findsOneWidget,
+        reason: 'the installation the place comes from, under the address',
       );
       expect(find.byType(FilledButton), findsOneWidget);
       expect(
         find.text(
-          'Nothing is shared with the space until you send your request.',
+          'Nothing is shared until you ask. Then they see your name and photo, nothing else.',
         ),
         findsOneWidget,
       );

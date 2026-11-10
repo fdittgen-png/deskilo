@@ -248,12 +248,24 @@
       }
     }
   },
-  "spaceMessageSpace": "Message the space",
-  "spacePreviewPrivacy": "Nothing is shared with the space until you send your request.",
+  "spaceMessageSpace": "Send a message",
+  "spacePreviewPrivacy": "Nothing is shared until you ask. Then they see your name and photo, nothing else.",
   "@spaceMessageSpace": {
     "description": "#3545 F: the outlined action of a space's public page that writes to its hosts"
   },
   "@spacePreviewPrivacy": {
     "description": "#3545 F: the line under the actions of a space's public page: what asking to join shares"
+  },
+  "spaceRunByCompany": "Run by a company",
+  "spaceRunByAssociation": "Run by an association",
+  "spaceRunByPerson": "Run by a person",
+  "@spaceRunByCompany": {
+    "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "@spaceRunByAssociation": {
+    "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "@spaceRunByPerson": {
+    "description": "#3545 F: who runs a space, plain text under its address"
   }
 }

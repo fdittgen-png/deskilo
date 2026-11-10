@@ -8,6 +8,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/theme/personal_theme.dart';
 import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
@@ -57,6 +58,8 @@ PublicWorkspace _card(String id, String name, [Map<String, dynamic>? more]) =>
 
 final _atelier = _card('1', 'Atelier Nord', {
   'description': 'A quiet studio with six desks and a meeting room.',
+  'email': 'hello@ateliernord.example',
+  'phone': '+33 4 67 00 00 00',
   'address': '12 rue Haute, 34120 Pézenas',
   'host_type': 'company',
 });
@@ -108,7 +111,9 @@ void main() {
                 directory: state.value(),
               ),
               if (state.key == 'one-directory-failed')
-                discoveryListingProvider.overrideWith2((_) => _PartlyAnswered()),
+                discoveryListingProvider.overrideWith2(
+                  (_) => _PartlyAnswered(),
+                ),
             ],
             child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -167,13 +172,12 @@ void main() {
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            theme: ThemeData(colorSchemeSeed: Colors.deepPurple),
-            darkTheme: ThemeData(
-              colorSchemeSeed: Colors.deepPurple,
-              brightness: Brightness.dark,
+            theme: personalThemeFrom(ThemeData()),
+            darkTheme: personalThemeFrom(
+              ThemeData(brightness: Brightness.dark),
             ),
             themeMode: dark ? ThemeMode.dark : ThemeMode.light,
-            home: PublicWorkspaceView(workspace: _atelier),
+            home: PublicWorkspaceView(workspace: _atelier, personal: true),
           ),
         ),
       );

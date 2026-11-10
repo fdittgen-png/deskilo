@@ -346,7 +346,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Alice'), findsOneWidget);
       expect(find.text('Owner'), findsOneWidget);
-      expect(find.text('Private host'), findsOneWidget);
+      expect(find.text('Run by a person'), findsOneWidget);
     },
   );
   testWidgets(
