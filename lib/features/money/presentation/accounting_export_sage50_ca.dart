@@ -6,7 +6,6 @@
 // reference.
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
-import '../../../core/vat/tax_reference_active.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/sage50_ca_journal.dart';
 import 'accounting_export_journal.dart';
@@ -24,7 +23,7 @@ extension Sage50CaAccountingExports on AccountingExportRun {
         final result = buildSage50CaJournal(
           read.postings,
           comment: (p) => '${p.documentNumber} ${postingKindLabel(l10n, p.kind)}',
-          split: sage50CaTaxSplit(ActiveTaxReference.current),
+          split: sage50CaTaxSplit(taxReference, country: country),
         );
         return switch (result) {
           Sage50CaFile(:final content) => JournalFile(content),

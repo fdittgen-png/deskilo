@@ -63,7 +63,7 @@ final _postings = [
 Sage50CaJournal _build() => buildSage50CaJournal(
   _postings,
   comment: (p) => '${p.documentNumber} ${p.kind.wire}',
-  split: sage50CaTaxSplit(ActiveTaxReference.current),
+  split: sage50CaTaxSplit(ActiveTaxReference.current, country: 'CA'),
 );
 
 void main() {

@@ -25,17 +25,15 @@
 // The sales-invoice `.IMP` layout is a separate format whose public
 // specification is missing (the knowledge base article 10032); this file does
 // not write it.
-import 'dart:math' as math;
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 /// The longest source (cheque or invoice number) the format takes.
-const int sage50CaSourceLength = 20;
+const int _sourceLength = 20;
 
 /// The longest comment of a transaction header.
-const int sage50CaCommentLength = 75;
+const int _commentLength = 75;
 
 /// One tax of a tax line, as the TAXD line states it. Amounts are minor units
 /// of the book's currency, positive.
@@ -77,7 +75,7 @@ final class Sage50CaFile extends Sage50CaJournal {
 final class Sage50CaRefused extends Sage50CaJournal {
   const Sage50CaRefused(this.sourceTooLong, this.unusableAccounts);
 
-  /// Document numbers over [sage50CaSourceLength] characters.
+  /// Document numbers over [_sourceLength] characters.
   final List<String> sourceTooLong;
 
   /// Account codes that are empty or hold a comma, a quote or a line break.
@@ -101,15 +99,6 @@ const Set<BookRole> _baseRoles = {
 };
 
 int _net(PostingLine l) => l.debit.minor - l.credit.minor;
-
-String _money(int minor, int exponent) {
-  final scale = math.pow(10, exponent).toInt();
-  final abs = minor.abs();
-  final text = exponent == 0
-      ? '$abs'
-      : '${abs ~/ scale}.${(abs % scale).toString().padLeft(exponent, '0')}';
-  return minor < 0 ? '-$text' : text;
-}
 
 String _quoted(String text, [int? max]) {
   final clean = text.replaceAll('"', "'").replaceAll(RegExp(r'[\r\n]+'), ' ');
@@ -141,11 +130,11 @@ List<String> _taxLines(Posting p, Sage50CaTaxSplit split) {
     final natural = sales ? _net(line) < 0 : _net(line) > 0;
     final sign = natural ? 1 : -1;
     for (final part in split(p, line, base.abs())) {
-      final exp = line.debit.exponent;
+      final cur = line.debit.currency;
       details.add(
         'TAXD,${line.accountCode},${_quoted(part.name)},${_quoted(part.code)},'
-        '${_money(sign * part.baseMinor, exp)},'
-        '${_money(sign * part.taxMinor, exp)},${_money(0, exp)}',
+        '${minorToText(sign * part.baseMinor, cur)},'
+        '${minorToText(sign * part.taxMinor, cur)},${minorToText(0, cur)}',
       );
     }
   }
@@ -154,7 +143,7 @@ List<String> _taxLines(Posting p, Sage50CaTaxSplit split) {
 }
 
 /// The journal of [postings]. [comment] words a transaction (at most
-/// [sage50CaCommentLength] characters are written); [split] names the taxes of
+/// [_commentLength] characters are written); [split] names the taxes of
 /// a tax line.
 Sage50CaJournal buildSage50CaJournal(
   List<Posting> postings, {
@@ -163,7 +152,7 @@ Sage50CaJournal buildSage50CaJournal(
 }) {
   final tooLong = <String>{
     for (final p in postings)
-      if (p.documentNumber.length > sage50CaSourceLength) p.documentNumber,
+      if (p.documentNumber.length > _sourceLength) p.documentNumber,
   };
   final badAccounts = <String>{
     for (final p in postings)
@@ -178,11 +167,11 @@ Sage50CaJournal buildSage50CaJournal(
     lines
       ..add(
         '${_date(p.date)},${_quoted(p.documentNumber)},'
-        '${_quoted(comment(p), sage50CaCommentLength)}',
+        '${_quoted(comment(p), _commentLength)}',
       )
       ..addAll(_taxLines(p, split));
     for (final l in p.lines) {
-      lines.add('${l.accountCode},${_money(_net(l), l.debit.exponent)}');
+      lines.add('${l.accountCode},${minorToText(_net(l), l.debit.currency)}');
     }
   }
   return Sage50CaFile(lines.isEmpty ? '' : '${lines.join('\r\n')}\r\n');
@@ -191,17 +180,17 @@ Sage50CaJournal buildSage50CaJournal(
 /// How far (in percentage points) the tax over the base may sit from a rate
 /// of the tax reference before the line is left unsplit: a rounded cent on a
 /// small base moves the ratio, a different rate moves it by more.
-const double sage50CaRateTolerance = 0.1;
+const double _rateTolerance = 0.1;
 
 /// The taxes of a Canadian tax line, read from the tax reference. A rate
 /// group names no single rate in Canada (13 % and 14.975 % share one), so the
 /// rate is the one of the country's rate rows nearest to the line's tax over
-/// its base, within [sage50CaRateTolerance]; the `rate_component` rows then
+/// its base, within [_rateTolerance]; the `rate_component` rows then
 /// split it (GST + QST in Québec, one HST in Ontario). A line with no such
 /// rate gets no part.
 Sage50CaTaxSplit sage50CaTaxSplit(
   TaxReferenceSet reference, {
-  String country = 'CA',
+  required String country,
 }) {
   return (posting, line, baseMinor) {
     if (baseMinor == 0) return const [];
@@ -214,7 +203,7 @@ Sage50CaTaxSplit sage50CaTaxSplit(
       final value = row.value;
       if (value is! RateValue) continue;
       final off = (value.percent - actual).abs();
-      if (off <= sage50CaRateTolerance &&
+      if (off <= _rateTolerance &&
           (percent == null || off < (percent - actual).abs())) {
         percent = value.percent;
       }

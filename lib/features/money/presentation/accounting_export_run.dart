@@ -237,10 +237,8 @@ class AccountingExportRun {
         await safTFinancialExport();
       case ExportKind.genericJournal:
         await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
-      case ExportKind.bcJournal:
-        await bcJournalExport(stem: 'business central');
-      case ExportKind.sage50CaJournal:
-        await sage50CaJournalExport(stem: 'sage 50 journal');
+      case ExportKind.bcJournal: await bcJournalExport(stem: 'business central');
+      case ExportKind.sage50CaJournal: await sage50CaJournalExport(stem: 'sage 50 journal');
     }
   }
 
