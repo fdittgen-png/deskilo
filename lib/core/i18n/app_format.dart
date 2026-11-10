@@ -85,6 +85,17 @@ class AppFormat {
   MoneyFormat moneyIn(String? code) =>
       moneyFormat(code ?? currencyCode, locale: locale, spaceAlphabetic: true);
 
+  /// The money formatter of a personal surface (Me): an amount beside the
+  /// amounts of other businesses, each in the currency of its own record.
+  /// It names the currency without doubt (`USD 120.00` and `CAD 120.00`,
+  /// never two `$120.00`: a symbol several currencies share is spelled as
+  /// the code) and it never
+  /// reads a missing code as the open business's currency or as the
+  /// platform's default: [code] is the record's own, or nothing is shown
+  /// beside the number.
+  MoneyFormat moneyNamed(String code) =>
+      MoneyFormat(code, locale: locale, spaceAlphabetic: true, distinct: true);
+
   /// #3484 — plain numbers in the member's format locale: `1 234,5` in
   /// fr_FR; [decimals] fixes the fraction digits.
   NumberFormat numbers({int? decimals}) => decimals == null

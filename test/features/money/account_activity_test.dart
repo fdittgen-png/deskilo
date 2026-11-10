@@ -149,7 +149,9 @@ void main() {
     expect(find.text('Office 1'), findsOneWidget);
     expect(find.text('Office 2'), findsOneWidget);
     expect(find.textContaining('€'), findsOneWidget);
-    expect(find.textContaining(r'$'), findsOneWidget);
+    // #3599 — a dollar sign names seven currencies: the history says USD.
+    expect(find.textContaining('USD'), findsOneWidget);
+    expect(find.textContaining(r'$'), findsNothing);
     await auth.signOut();
     await tester.pumpAndSettle();
     expect(find.text('Office 1'), findsNothing);

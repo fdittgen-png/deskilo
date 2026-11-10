@@ -14732,6 +14732,10 @@
   "@financesStateClosed": {
     "description": "Me › Finances"
   },
+  "financesStateCreditOpen": "Credit not used yet",
+  "@financesStateCreditOpen": {
+    "description": "#3599 Me › Finances: the payment state of a credit note nothing was matched to yet. It is money due to me, so it never says Unpaid."
+  },
   "financesStatePaid": "Paid",
   "@financesStatePaid": {
     "description": "Me › Finances"
@@ -14747,6 +14751,10 @@
   "financesTypeCreditNote": "Credit note",
   "@financesTypeCreditNote": {
     "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."
+  },
+  "financesYourCredit": "Your credit",
+  "@financesYourCredit": {
+    "description": "#3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them."
   },
   "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
   "@gebuevProcedureAccessBody": {

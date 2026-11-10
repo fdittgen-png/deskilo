@@ -68,7 +68,7 @@ List<AttentionItem>? attentionItemsOf(
   final inbox = ref.watch(messengerInboxProvider);
   final owed = documents.value
       ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
-      .outstanding;
+      .payable;
   if (owed == null || inbox.value == null || refs == null) return null;
   return attentionItems(
     documents: [
@@ -106,7 +106,7 @@ class NeedsAttentionSection extends ConsumerWidget {
     // Me is production: a development space's test documents never count.
     final owed = documents.value
         ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
-        .outstanding;
+        .payable;
     // A refresh keeps what was read before; a failure says so beside it.
     final items = attentionItems(
       documents: owed == null
@@ -285,7 +285,10 @@ class _Amount extends ConsumerWidget {
         showLabel: l10n.financesShowAmount,
         hideLabel: l10n.financesHideAmount,
         child: Text(
-          ref.watch(appFormatProvider).money(d.remainingCents, currency: d.currency),
+          ref
+              .watch(appFormatProvider)
+              .moneyNamed(d.currency)
+              .formatMinor(d.remainingCents),
         ),
       ),
     );
@@ -308,11 +311,14 @@ class FinanceGlance extends ConsumerWidget {
         .watch(financeOverviewProvider)
         .value
         ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider));
-    if (data == null || data.outstanding.isEmpty) {
+    // A credit a business holds for me is nothing to pay: the line shows
+    // only while an invoice is owed (#3599).
+    final owed = data?.owedByCurrency ?? const <String, int>{};
+    if (data == null || owed.isEmpty) {
       return const SizedBox.shrink();
     }
     final now = ref.watch(clockProvider).now();
-    final overdue = data.outstanding.where((i) => i.overdueAt(now)).length;
+    final overdue = data.payable.where((i) => i.overdueAt(now)).length;
     final scheme = Theme.of(context).colorScheme;
     final tone = overdue > 0 ? scheme.error : scheme.primary;
     final strong = Theme.of(context).textTheme.titleSmall?.strong;
@@ -346,7 +352,7 @@ class FinanceGlance extends ConsumerWidget {
                         spacing: AppSpacing.xs,
                         children: [
                           Text(l10n.meFinanceGlanceOwed, style: strong),
-                          for (final e in data.owedByCurrency.entries)
+                          for (final e in owed.entries)
                             PrivateValue(
                               revealKey: ValueKey(
                                 'me-home-finance-glance-amount-${e.key}',
@@ -356,7 +362,9 @@ class FinanceGlance extends ConsumerWidget {
                               showLabel: l10n.financesShowAmount,
                               hideLabel: l10n.financesHideAmount,
                               child: Text(
-                                appFormatOf(context).moneyIn(e.key).formatMinor(e.value),
+                                appFormatOf(context)
+                                    .moneyNamed(e.key)
+                                    .formatMinor(e.value),
                                 style: strong,
                               ),
                             ),

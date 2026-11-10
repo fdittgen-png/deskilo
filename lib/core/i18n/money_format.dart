@@ -14,14 +14,20 @@ import '../settings/setting_defaults.g.dart';
 /// minor digits, and offers [formatMinor] so a caller hands over what
 /// it has — the stored integer — and never divides.
 class MoneyFormat {
-  MoneyFormat(this.code, {required String? locale, this.spaceAlphabetic = false})
-      : _format = NumberFormat.currency(
+  MoneyFormat(
+    this.code, {
+    required String? locale,
+    this.spaceAlphabetic = false,
+    bool distinct = false,
+  }) : _format = NumberFormat.currency(
           locale: locale,
           name: code,
-          symbol: NumberFormat.simpleCurrency(
-            locale: locale,
-            name: code,
-          ).currencySymbol,
+          symbol: distinct
+              ? _distinctSymbol(code, locale: locale)
+              : NumberFormat.simpleCurrency(
+                  locale: locale,
+                  name: code,
+                ).currencySymbol,
           decimalDigits: Currencies.minorDigits(code),
         );
 
@@ -62,6 +68,9 @@ final RegExp _alphabetic = RegExp(r'^[A-Za-z]{3}$');
 /// a glyph symbol (€, £, $) and everything else stays as the locale spelled
 /// it. Only when [spaceAlphabetic].
 String _spaced(String formatted, String symbol, {required bool spaceAlphabetic}) {
+  // No symbol at all (a record that names no currency): the number alone,
+  // without the gap the locale left for one.
+  if (symbol.isEmpty) return formatted.trim();
   if (!spaceAlphabetic || !_alphabetic.hasMatch(symbol)) return formatted;
   final at = formatted.indexOf(symbol);
   if (at < 0) return formatted;
@@ -78,6 +87,30 @@ String _spaced(String formatted, String symbol, {required bool spaceAlphabetic})
 /// build their own `NumberFormat`.
 String spaceAlphabeticSymbol(String formatted, String symbol) =>
     _spaced(formatted, symbol, spaceAlphabetic: true);
+
+/// The symbol that names [code] beside amounts of other currencies: what a
+/// personal surface shows, where the documents of businesses in different
+/// countries sit in one list. A dollar sign is the symbol of seven of the
+/// currencies a business may pick, `kr` of four and `¥` of two, so
+/// `$120.00` from a studio in Toronto and from a desk in Austin read as the
+/// same money. A symbol another selectable currency shares, and any code
+/// the kernel does not list, is spelled as its ISO code; a symbol only one
+/// currency carries (`€`, `£`, `zł`) stays. Never the reader's own
+/// currency as an exception: which dollar is "theirs" follows the format
+/// locale, and that follows the business they last opened.
+String _distinctSymbol(String code, {required String? locale}) =>
+    _distinctSymbols.putIfAbsent((locale, code), () {
+      if (!Currencies.selectable.contains(code)) return code;
+      String narrow(String c) =>
+          NumberFormat.simpleCurrency(locale: locale, name: c).currencySymbol;
+      final own = narrow(code);
+      final shared = Currencies.selectable.any(
+        (other) => other != code && narrow(other) == own,
+      );
+      return shared ? code : own;
+    });
+
+final Map<(String?, String), String> _distinctSymbols = {};
 
 /// The one-liner the sweep replaced `NumberFormat.simpleCurrency(name:)`
 /// with. Null or empty code reads as the registry's default currency (the

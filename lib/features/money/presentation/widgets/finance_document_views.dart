@@ -29,9 +29,12 @@ import 'own_finance_export_menu.dart';
 /// From this width on, the documents are rows; below it, cards.
 const double _rowsMinWidth = 800;
 
-/// The payment state, as the server derived it.
-String _paymentState(AppLocalizations l10n, FinanceState state) =>
-    switch (state) {
+/// The payment state, as the server derived it. A credit note nothing was
+/// matched to is not an unpaid debt of mine: it is a credit not used yet.
+String _paymentState(AppLocalizations l10n, FinanceInvoice invoice) =>
+    switch (invoice.state) {
+      FinanceState.open when invoice.isCreditNote =>
+        l10n.financesStateCreditOpen,
       FinanceState.open => l10n.financesStateUnpaid,
       FinanceState.awaitingValidation => l10n.financesAwaitingValidation,
       FinanceState.partiallyPaid => l10n.financesPartlyPaid,
@@ -212,13 +215,15 @@ class _FinanceDocument extends ConsumerWidget {
               ? l10n.financesTypeCreditNote
               : l10n.invoicePdfTitle,
         ),
-        _StateChip(_paymentState(l10n, invoice.state)),
+        _StateChip(_paymentState(l10n, invoice)),
         if (invoice.reminderCount > 0 && invoice.state.owed)
           _StateChip(l10n.financesRemindedTimes(invoice.reminderCount)),
       ],
     );
     final amount = Text(
-      appFormatOf(context).moneyIn(invoice.currency).formatMinor(_shownAmount(invoice)),
+      appFormatOf(context)
+          .moneyNamed(invoice.currency)
+          .formatMinor(_shownAmount(invoice)),
       textAlign: TextAlign.end,
       style: theme.textTheme.titleSmall?.strong.copyWith(
         color: overdue ? scheme.error : null,

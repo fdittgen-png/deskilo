@@ -18520,6 +18520,12 @@ abstract class AppLocalizations {
   /// **'Closed'**
   String get financesStateClosed;
 
+  /// #3599 Me › Finances: the payment state of a credit note nothing was matched to yet. It is money due to me, so it never says Unpaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit not used yet'**
+  String get financesStateCreditOpen;
+
   /// Me › Finances
   ///
   /// In en, this message translates to:
@@ -18543,6 +18549,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit note'**
   String get financesTypeCreditNote;
+
+  /// #3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them.
+  ///
+  /// In en, this message translates to:
+  /// **'Your credit'**
+  String get financesYourCredit;
 
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
