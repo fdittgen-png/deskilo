@@ -7108,9 +7108,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoveryStartTitle => 'Wonach suchen Sie?';
 
   @override
-  String get discoveryTitle => 'Arbeitsräume entdecken';
-
-  @override
   String get discoveryView => 'Ansehen';
 
   @override

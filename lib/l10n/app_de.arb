@@ -4697,7 +4697,6 @@
   "discoverySourceFailed": "{source} hat nicht geantwortet. Die bereits angezeigten Orte bleiben.",
   "discoveryStartBody": "Geben Sie eine Stadt, eine Leistung oder einen Namen ein.",
   "discoveryStartTitle": "Wonach suchen Sie?",
-  "discoveryTitle": "Arbeitsräume entdecken",
   "discoveryView": "Ansehen",
   "documentsAdd": "Dokument hinzufügen",
   "@documentsAdd": {

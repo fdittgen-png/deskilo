@@ -85,7 +85,7 @@ void main() {
     expect(find.text('What are you looking for?'), findsOneWidget);
     directory.fail = false;
     await tester.tap(
-      find.descendant(of: banner, matching: _key('inline-banner-action')),
+      find.descendant(of: banner, matching: _key('me-notice-retry')),
     );
     await tester.pumpAndSettle();
     expect(banner, findsNothing);

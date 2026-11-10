@@ -9478,10 +9478,6 @@
   "@discoveryStartTitle": {
     "description": "#3545 Discover start state: the title shown before a search when no place is loaded."
   },
-  "discoveryTitle": "Discover workspaces",
-  "@discoveryTitle": {
-    "description": "Shown as a title in directory screen (directory)."
-  },
   "discoveryView": "View",
   "@discoveryView": {
     "description": "Shown as a text in demo scope (core), and 1 other place."

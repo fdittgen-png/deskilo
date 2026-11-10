@@ -7092,9 +7092,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discoveryStartTitle => '¿Qué busca?';
 
   @override
-  String get discoveryTitle => 'Descubrir espacios';
-
-  @override
   String get discoveryView => 'Ver';
 
   @override

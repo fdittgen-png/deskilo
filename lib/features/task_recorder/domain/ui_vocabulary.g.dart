@@ -6915,7 +6915,6 @@ const Set<String> uiLabelKeys = {
   'discoveryShowAllLoaded',
   'discoveryStartBody',
   'discoveryStartTitle',
-  'discoveryTitle',
   'discoveryView',
   'documentsAdd',
   'documentsCategoryFinance',

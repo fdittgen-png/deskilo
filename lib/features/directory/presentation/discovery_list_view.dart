@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/empty_state.dart';
-import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/motion.dart';
+import '../../../core/ui/personal_kit/me_notice.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
@@ -237,22 +237,29 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
   /// A directory that did not answer is one line with its Retry beside the
   /// results that loaded -- never instead of them; the counts and the names
   /// are for whoever asks: behind Details.
-  List<Widget> _notices(int loaded, int shown) {
+  List<Widget> _notices() {
     final l = context.l10n;
     final refused = results.refused;
     return [
       if (refused.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-          child: InlineBanner(
+          child: MeNotice(
             key: const ValueKey('directory-portal-directory-unavailable'),
-            icon: Icons.cloud_off_outlined,
-            severity: InlineBannerSeverity.warning,
             text: l.discoveryDirectoriesDidNotAnswer(refused.length),
-            actionLabel: l.commonRetry,
-            onAction: () => ref.invalidate(discoveryListingProvider(query)),
+            retryLabel: l.commonRetry,
+            onRetry: () => ref.invalidate(discoveryListingProvider(query)),
           ),
         ),
+    ];
+  }
+
+  /// Details, at the END of the list: the counts and the names of the
+  /// directories that did not answer, for whoever asks.
+  List<Widget> _detailsAtEnd(int loaded, int shown) {
+    final l = context.l10n;
+    final refused = results.refused;
+    return [
       Align(
         alignment: AlignmentDirectional.centerStart,
         child: TextButton.icon(
@@ -317,7 +324,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
       controller: _scroll,
       padding: AppSpacing.mdAll,
       children: [
-        ..._notices(loaded.length, shown),
+        ..._notices(),
         // A card this version cannot interpret is not shown; its
         // installation is named, the rest still is.
         if (results.incompatible.isNotEmpty)
@@ -354,6 +361,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
           ?_footer(context, ref, s),
         ],
         ?_moreSources(context, ref),
+        ..._detailsAtEnd(loaded.length, shown),
       ],
     );
   }

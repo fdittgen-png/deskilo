@@ -441,7 +441,6 @@ Map<String, _Getter> _part1() => {
   'developerTitle': (l) => l.developerTitle,
   'directoryLinkStateLinkable': (l) => l.directoryLinkStateLinkable,
   'discoveryNoSaved': (l) => l.discoveryNoSaved,
-  'discoveryTitle': (l) => l.discoveryTitle,
   'documentsCategoryFinance': (l) => l.documentsCategoryFinance,
   'documentsCategoryOther': (l) => l.documentsCategoryOther,
   'documentsRoleLabel': (l) => l.documentsRoleLabel,

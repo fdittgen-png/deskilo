@@ -4,8 +4,8 @@
 // one button of at least 48 dp with its accessible name, the notice offers its
 // Retry, and the hero card wears primary / onPrimary.
 import 'package:deskilo/core/theme/personal_theme.dart';
-import 'package:deskilo/features/me/presentation/kit/me_card.dart';
-import 'package:deskilo/features/me/presentation/kit/me_notice.dart';
+import 'package:deskilo/core/ui/personal_kit/me_card.dart';
+import 'package:deskilo/core/ui/personal_kit/me_notice.dart';
 import 'package:deskilo/features/me/presentation/kit/me_quiet_line.dart';
 import 'package:deskilo/features/me/presentation/kit/me_row.dart';
 import 'package:deskilo/features/me/presentation/kit/me_section_label.dart';

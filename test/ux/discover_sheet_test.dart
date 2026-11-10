@@ -8,8 +8,10 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
+import 'package:deskilo/features/directory/providers/discovery_listing_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -27,7 +29,9 @@ File? _materialIcons() {
   for (var i = 0; i < 8; i++) {
     final f = File('${dir.path}/material_fonts/MaterialIcons-Regular.otf');
     if (f.existsSync()) return f;
-    final g = File('${dir.path}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf');
+    final g = File(
+      '${dir.path}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+    );
     if (g.existsSync()) return g;
     dir = dir.parent;
   }
@@ -47,8 +51,32 @@ Future<void> _loadRoboto() async {
   await loader.load();
 }
 
-PublicWorkspace _card(String id, String name) =>
-    PublicWorkspace(id, 'https://a.example', 'k', {'name': name});
+PublicWorkspace _card(String id, String name, [Map<String, dynamic>? more]) =>
+    PublicWorkspace(id, 'https://a.example', 'k', {'name': name, ...?more});
+
+final _atelier = _card('1', 'Atelier Nord', {
+  'address': '12 rue Haute, 34120 Pézenas',
+  'host_type': 'company',
+});
+final _studio = _card('2', 'Studio Sud', {
+  'address': '4 place Neuve, 75002 Paris',
+  'host_type': 'association',
+});
+
+/// Two places loaded and one directory that did not answer.
+class _PartlyAnswered extends DiscoveryListing {
+  @override
+  Future<DiscoveryResults> build(String query) async => DiscoveryResults(
+    sources: [
+      SourceListing(
+        const DirectorySource('https://a.example', 'k'),
+        status: SourceStatus.ready,
+        cards: [_atelier, _studio],
+      ),
+    ],
+    refused: const ['https://dead.example'],
+  );
+}
 
 void main() {
   final enabled = Platform.environment['ME_SHEET'] == '1';
@@ -57,10 +85,12 @@ void main() {
     final out = Directory('build/discover_sheet')..createSync(recursive: true);
     final states = <String, FakeDirectoryRepository Function()>{
       'start': FakeDirectoryRepository.new,
-      'results': () => FakeDirectoryRepository()
-        ..cards.addAll([_card('1', 'Atelier Nord'), _card('2', 'Studio Sud')]),
-      'directory-failed': () => FakeDirectoryRepository()..fail = true,
-      'no-match': () => FakeDirectoryRepository()..cards.add(_card('1', 'Atelier Nord')),
+      'results': () =>
+          FakeDirectoryRepository()..cards.addAll([_atelier, _studio]),
+      'one-directory-failed': () =>
+          FakeDirectoryRepository()..cards.addAll([_atelier, _studio]),
+      'all-failed': () => FakeDirectoryRepository()..fail = true,
+      'no-match': () => FakeDirectoryRepository()..cards.add(_atelier),
     };
     for (final state in states.entries) {
       for (final dark in [false, true]) {
@@ -70,10 +100,14 @@ void main() {
         await tester.pumpWidget(
           ProviderScope(
             key: UniqueKey(),
-            overrides: standardTestOverrides(
-              auth: FakeAuthRepository.signedIn(),
-              directory: state.value(),
-            ),
+            overrides: [
+              ...standardTestOverrides(
+                auth: FakeAuthRepository.signedIn(),
+                directory: state.value(),
+              ),
+              if (state.key == 'one-directory-failed')
+                discoveryListingProvider.overrideWith2((_) => _PartlyAnswered()),
+            ],
             child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
@@ -93,7 +127,9 @@ void main() {
             find.byKey(const ValueKey('directory-portal-search-2')),
             'zzzz',
           );
-          await tester.tap(find.byKey(const ValueKey('directory-portal-search')));
+          await tester.tap(
+            find.byKey(const ValueKey('directory-portal-search')),
+          );
           await tester.pumpAndSettle();
         }
         final target = tester.firstRenderObject<RenderRepaintBoundary>(
@@ -103,8 +139,9 @@ void main() {
         final bytes = await tester.runAsync(
           () => image!.toByteData(format: ui.ImageByteFormat.png),
         );
-        File('${out.path}/discover--${state.key}--${dark ? 'dark' : 'light'}.png')
-            .writeAsBytesSync(bytes!.buffer.asUint8List());
+        File(
+          '${out.path}/discover--${state.key}--${dark ? 'dark' : 'light'}.png',
+        ).writeAsBytesSync(bytes!.buffer.asUint8List());
       }
     }
     tester.view.resetPhysicalSize();

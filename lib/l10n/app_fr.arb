@@ -4697,7 +4697,6 @@
   "discoverySourceFailed": "{source} n’a pas répondu. Les lieux déjà affichés restent.",
   "discoveryStartBody": "Saisissez une ville, un service ou un nom.",
   "discoveryStartTitle": "Que cherchez-vous ?",
-  "discoveryTitle": "Découvrir des espaces",
   "discoveryView": "Voir",
   "documentsAdd": "Ajouter un document",
   "@documentsAdd": {

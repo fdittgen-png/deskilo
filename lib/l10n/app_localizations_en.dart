@@ -7055,9 +7055,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryStartTitle => 'What are you looking for?';
 
   @override
-  String get discoveryTitle => 'Discover workspaces';
-
-  @override
   String get discoveryView => 'View';
 
   @override

@@ -11616,12 +11616,6 @@ abstract class AppLocalizations {
   /// **'What are you looking for?'**
   String get discoveryStartTitle;
 
-  /// Shown as a title in directory screen (directory).
-  ///
-  /// In en, this message translates to:
-  /// **'Discover workspaces'**
-  String get discoveryTitle;
-
   /// Shown as a text in demo scope (core), and 1 other place.
   ///
   /// In en, this message translates to:

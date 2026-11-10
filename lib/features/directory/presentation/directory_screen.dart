@@ -10,8 +10,9 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/empty_state.dart';
-import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/personal_kit/me_filled_field.dart';
+import '../../../core/ui/personal_kit/me_notice.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
@@ -103,20 +104,22 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     final l = context.l10n;
     return Padding(
       padding: AppSpacing.mdAll,
-      child: TextField(
-        key: const ValueKey('directory-portal-search-2'),
-        controller: _search,
-        autofocus: widget.focusSearch,
-        decoration: InputDecoration(
-          hintText: l.meFindPlaceHint,
-          suffixIcon: IconButton(
-            key: const ValueKey('directory-portal-search'),
-            tooltip: l.portalSearch,
-            icon: const Icon(Icons.search),
-            onPressed: () => _submit(_search.text),
+      child: MeFilledField(
+        child: TextField(
+          key: const ValueKey('directory-portal-search-2'),
+          controller: _search,
+          autofocus: widget.focusSearch,
+          decoration: InputDecoration(
+            hintText: l.meFindPlaceHint,
+            suffixIcon: IconButton(
+              key: const ValueKey('directory-portal-search'),
+              tooltip: l.portalSearch,
+              icon: const Icon(Icons.search),
+              onPressed: () => _submit(_search.text),
+            ),
           ),
+          onSubmitted: _submit,
         ),
-        onSubmitted: _submit,
       ),
     );
   }
@@ -273,13 +276,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
       children: [
         Padding(
           padding: AppSpacing.mdAll,
-          child: InlineBanner(
+          child: MeNotice(
             key: const ValueKey('directory-portal-directory-unavailable-2'),
-            icon: Icons.cloud_off_outlined,
-            severity: InlineBannerSeverity.warning,
             text: l.discoveryDirectoriesDidNotAnswer(1),
-            actionLabel: l.commonRetry,
-            onAction: retry,
+            retryLabel: l.commonRetry,
+            onRetry: retry,
           ),
         ),
         EmptyState(
@@ -329,7 +330,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         automaticallyImplyLeading: !widget.embedded,
         title: widget.embedded
             ? null
-            : Text(l.discoveryTitle),
+            : Text(l.meTabDiscover),
         actions: [
           IconButton(
             key: const ValueKey('directory-portal-list'),

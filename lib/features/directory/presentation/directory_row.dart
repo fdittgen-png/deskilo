@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/server_label.dart';
+import '../../../core/ui/personal_kit/me_card.dart';
+import '../domain/place_summary.dart';
 import '../domain/public_workspace.dart';
 import 'saved_place_button.dart';
 
@@ -34,64 +36,73 @@ class DirectoryRow extends StatelessWidget {
     final theme = Theme.of(context);
     final w = workspace;
     final id = '${w.source}/${w.id}';
-    final place = [
-      w.text('address'),
-      if (w.source.isNotEmpty) serverLabel(l, w.source),
-    ].where((part) => part.isNotEmpty).join(' · ');
-    final offer = switch (w.text('host_type')) {
+    // The town and the kind, when the space published them -- never the host
+    // it is served from.
+    final kind = switch (w.text('host_type')) {
       'association' => l.portalAssociation,
       'company' => l.portalCompany,
-      _ => l.portalPerson,
+      _ => '',
     };
+    final place = [
+      cityOfAddress(w.text('address')),
+      kind,
+    ].where((part) => part.isNotEmpty).join(' · ');
     final description = w.text('description');
     final muted = theme.textTheme.bodyMedium?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
     );
-    return Card(
+    return Padding(
       key: ValueKey('directory-row-$id'),
-      color: selected ? theme.colorScheme.secondaryContainer : null,
-      child: Padding(
-        padding: AppSpacing.lgAll,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MergeSemantics(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: BoxDecoration(
+          borderRadius: AppRadius.xlAll,
+          border: selected
+              ? Border.all(color: theme.colorScheme.primary, width: 2)
+              : null,
+        ),
+        child: MeCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MergeSemantics(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(w.name, style: theme.textTheme.titleMedium),
+                    if (place.isNotEmpty) Text(place, style: muted),
+                    if (description.isNotEmpty)
+                      Text(
+                        description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Wrap(
+                spacing: AppSpacing.sm,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  Text(w.name, style: theme.textTheme.titleMedium),
-                  if (place.isNotEmpty) Text(place, style: muted),
-                  Text(offer, style: theme.textTheme.bodySmall),
-                  if (description.isNotEmpty)
-                    Text(
-                      description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  SavedPlaceButton(workspace: w, iconOnly: true),
+                  FilledButton.tonalIcon(
+                    key: ValueKey('directory-view-$id'),
+                    icon: const Icon(Icons.arrow_forward),
+                    label: Text(l.discoveryView),
+                    onPressed: onView,
+                  ),
+                  IconButton(
+                    key: ValueKey('directory-locate-$id'),
+                    tooltip: l.directoryLocate,
+                    icon: const Icon(Icons.location_on_outlined),
+                    onPressed: onLocate,
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Wrap(
-              spacing: AppSpacing.sm,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                SavedPlaceButton(workspace: w),
-                FilledButton.tonalIcon(
-                  key: ValueKey('directory-view-$id'),
-                  icon: const Icon(Icons.arrow_forward),
-                  label: Text(l.discoveryView),
-                  onPressed: onView,
-                ),
-                IconButton(
-                  key: ValueKey('directory-locate-$id'),
-                  tooltip: l.directoryLocate,
-                  icon: const Icon(Icons.location_on_outlined),
-                  onPressed: onLocate,
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
