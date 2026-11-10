@@ -16,6 +16,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -139,23 +141,7 @@ List<Widget> expenseVatFields({
   final words = vatWords(l10n);
   return [
     const FormGap(),
-    DropdownButtonFormField<double?>(
-      key: ValueKey('$keyPrefix-vat-rate'),
-      initialValue: choice.percent,
-      decoration: InputDecoration(labelText: words.expenseVatRate),
-      items: [
-        DropdownMenuItem<double?>(child: Text(words.expenseVatNone)),
-        for (final p in percents)
-          DropdownMenuItem<double?>(
-            value: p,
-            child: Text(_percentLabel(l10n, p)),
-          ),
-      ],
-      onChanged: (v) {
-        choice.percent = v;
-        refresh();
-      },
-    ),
+    _rateField(l10n, percents, choice, refresh, keyPrefix),
     if (choice.percent != null) ...[
       const FormGap(),
       AppTextField(
@@ -255,5 +241,36 @@ String _deductibleHelper(
   final split = vatInputSplit(gross, percent, pct);
   return words.expenseVatDeductibleAmount(
     currency.formatMinor(split.deductibleCents),
+  );
+}
+
+/// The rate picker, with the help symbol of the expense's VAT (#3527).
+Widget _rateField(
+  AppLocalizations l10n,
+  List<double> percents,
+  ExpenseVatChoice choice,
+  VoidCallback refresh,
+  String keyPrefix,
+) {
+  final words = vatWords(l10n);
+  return DropdownButtonFormField<double?>(
+    key: ValueKey('$keyPrefix-vat-rate'),
+    initialValue: choice.percent,
+    decoration: InputDecoration(
+      labelText: words.expenseVatRate,
+      suffixIcon: HelpDot(
+        words.expenseVatRate,
+        anchor: HelpAnchor.moneyExpenseVat,
+      ),
+    ),
+    items: [
+      DropdownMenuItem<double?>(child: Text(words.expenseVatNone)),
+      for (final p in percents)
+        DropdownMenuItem<double?>(value: p, child: Text(_percentLabel(l10n, p))),
+    ],
+    onChanged: (v) {
+      choice.percent = v;
+      refresh();
+    },
   );
 }

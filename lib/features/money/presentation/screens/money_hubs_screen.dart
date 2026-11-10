@@ -9,6 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/help/help_anchors.dart';
+import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../widgets/add_purchase_button.dart';
@@ -26,7 +28,12 @@ class PurchasesHubScreen extends ConsumerWidget {
     final data = MoneyViewData.gates(ref);
     final doors = MoneyActionSet.purchaseDoors(context, ref, data);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.hubPurchasesTitle)),
+      appBar: AppBar(
+        title: Text(l10n.hubPurchasesTitle),
+        actions: [
+          HelpDot(l10n.hubPurchasesTitle, anchor: HelpAnchor.moneyPurchases),
+        ],
+      ),
       body: ListView(
         key: const ValueKey('purchases-hub'),
         padding: AppSpacing.mdAll,
@@ -62,7 +69,12 @@ class SalesHubScreen extends ConsumerWidget {
       MoneyViewData.gates(ref),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.hubSalesTitle)),
+      appBar: AppBar(
+        title: Text(context.l10n.hubSalesTitle),
+        actions: [
+          HelpDot(context.l10n.hubSalesTitle, anchor: HelpAnchor.moneySales),
+        ],
+      ),
       body: ListView(
         key: const ValueKey('sales-hub'),
         padding: AppSpacing.mdAll,
@@ -86,7 +98,10 @@ class CashHubScreen extends ConsumerWidget {
       MoneyViewData.gates(ref),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.hubCashTitle)),
+      appBar: AppBar(
+        title: Text(l10n.hubCashTitle),
+        actions: [HelpDot(l10n.hubCashTitle, anchor: HelpAnchor.moneyCash)],
+      ),
       body: ListView(
         key: const ValueKey('cash-hub'),
         padding: AppSpacing.mdAll,
