@@ -17045,6 +17045,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meFinanceGlanceOwed => 'To pay:';
 
   @override
+  String get meFindPlaceBrowse => 'Browse places';
+
+  @override
+  String get meFindPlaceHint => 'Yoga, a desk, a massage…';
+
+  @override
+  String get meFindPlaceTitle => 'Find a place near you';
+
+  @override
   String get meFindSpace => 'Find a space';
 
   @override
@@ -17104,6 +17113,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meHomeTitle => 'Home';
+
+  @override
+  String get meInvitationBody => 'Join the place that invited you';
+
+  @override
+  String get meInvitationTitle => 'I have an invitation code';
 
   @override
   String get meJoinSpace => 'Join with a code';
@@ -17287,6 +17302,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your workspaces elsewhere could not be read.';
 
   @override
+  String get meRunASpace => 'Run a business yourself?';
+
+  @override
+  String get meRunASpaceAction => 'Set it up';
+
+  @override
   String get meSectionMine => 'My history and data';
 
   @override
@@ -17331,6 +17352,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meSpacesSearch => 'Search my spaces';
 
   @override
+  String get meStartedAccount => 'Create your account';
+
+  @override
+  String get meStartedBooking => 'Make your first booking';
+
+  @override
+  String get meStartedDone => 'Done';
+
+  @override
+  String meStartedLeft(int count, String next) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count steps left · $next',
+      one: 'One step left · $next',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meStartedNext => 'Next';
+
+  @override
+  String get meStartedProfile => 'Add your name and photo';
+
+  @override
+  String get meStartedSpace => 'Find a place';
+
+  @override
+  String get meStartedTitle => 'Getting started';
+
+  @override
   String get meTabData => 'My data';
 
   @override
@@ -17353,6 +17406,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meUtilityHelp => 'Help and assistant';
+
+  @override
+  String get meWelcomeSubtitle => 'What are you looking for?';
+
+  @override
+  String meWelcomeTitle(String name) {
+    return 'Welcome, $name';
+  }
 
   @override
   String get meWhereSpacesLive => 'Where my spaces live';

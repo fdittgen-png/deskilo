@@ -18,8 +18,8 @@ Lessons by topic, with their incidents: [reference.md](reference.md).
 
 ## 0. Before code
 - A GitHub issue exists. Programme selection (what to take next) lives only in
-  [#2596](https://github.com/fdittgen-png/deskilo/issues/2596); #1447 keeps the
-  existing-community pilot/release qualification. Read the selected issue, its later
+  [#3542](https://github.com/fdittgen-png/deskilo/issues/3542) (the v2 queue; v1's
+  #2596 and #1447 are closed). Read the selected issue, its later
   corrections and the current claims, not the whole backlog. An already-decomposed
   issue is implemented as it stands; `epic-triage` is only for work that is NOT yet
   a scoped issue and whose size is genuinely unclear. Run `git log origin/master --grep '#N'`
