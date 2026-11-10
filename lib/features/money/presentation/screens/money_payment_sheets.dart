@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
@@ -47,7 +47,7 @@ class MoneySheets {
     );
     if (submitted != true || !_context.mounted) return;
 
-    final cents = parseMinorInput(draft.amount.text);
+    final cents = appFormatOf(_context).parseMinor(draft.amount.text);
     if (cents == null || cents <= 0) return;
     if (!await runGuarded(
       _context,

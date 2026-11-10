@@ -93,7 +93,7 @@ void main() {
     );
     await answer;
     expect(find.byKey(const ValueKey('series-preview-dialog')), findsOneWidget);
-    expect(find.text('Tue, Jan 5'), findsOneWidget);
+    expect(find.text('Tue 5 Jan'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('series-preview-cancel')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('series-preview-dialog')), findsNothing);

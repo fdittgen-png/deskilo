@@ -5,8 +5,9 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -137,13 +138,12 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   /// WHEN the money moved.
   Widget _dateTile(BuildContext context, AppLocalizations l10n) {
     final today = _draft.today;
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
     return ListTile(
       key: const ValueKey('payment-date-tile'),
       contentPadding: EdgeInsets.zero,
       leading: const Icon(Icons.event_outlined),
       title: Text(l10n.moneyPaymentDateLabel),
-      subtitle: Text(DateFormat.yMMMd(locale).format(_draft.paidOn)),
+      subtitle: Text(appFormatOf(context).dates(DateShape.date).format(_draft.paidOn)),
       onTap: () async {
         final picked = await showDatePicker(
           context: context,
@@ -160,14 +160,13 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   /// WHICH month it settles — the bill and the invoice this credit lands on.
   Widget _periodTile(BuildContext context, AppLocalizations l10n) {
     final today = _draft.today;
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
     return ListTile(
       key: const ValueKey('payment-period-tile'),
       contentPadding: EdgeInsets.zero,
       leading: const Icon(Icons.calendar_month_outlined),
       title: Text(l10n.moneyPaymentPeriodLabel),
       subtitle: Text(
-        DateFormat.yMMMM(locale).format(_draft.periodMonth),
+        appFormatOf(context).dates(DateShape.monthYear).format(_draft.periodMonth),
         key: const ValueKey('payment-period-label'),
       ),
       trailing: Row(mainAxisSize: MainAxisSize.min, children: [

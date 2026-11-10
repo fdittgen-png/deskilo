@@ -6,9 +6,9 @@
 // resembles another statement's is a duplicate; which payment reported as
 // made a movement out reconciles, and why that reconciliation is undone.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/bank/bank_match.dart';
@@ -86,7 +86,7 @@ class _BankMatchDialogState extends State<BankMatchDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final money = moneyFormat(widget.line.currency);
+    final money = appFormatOf(context).moneyIn(widget.line.currency);
     final invoice = _invoice;
     final paid = widget.line.amountCents;
     Widget option(OpenInvoice i, String? why) => RadioListTile<String>(
@@ -231,8 +231,8 @@ class _BankOutDialogState extends State<_BankOutDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final money = moneyFormat(widget.line.currency);
-    final day = DateFormat.yMMMd(Localizations.localeOf(context).toString());
+    final money = appFormatOf(context).moneyIn(widget.line.currency);
+    final day = appFormatOf(context).dates(DateShape.date);
     final candidates = widget.line.outgoingCandidates;
     return AlertDialog(
       title: Text(l10n.bankOutTitle),

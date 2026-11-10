@@ -83,7 +83,7 @@ const _invoiceLegal = {'seller_country': 'FR', 'vat_exigibility': 'invoice'};
 
 final _generatedAt = DateTime.utc(2027, 1, 5, 9, 7, 3);
 final _l10n = lookupAppLocalizations(const Locale('en'));
-final _words = reportStringsOf(_l10n);
+final _words = reportStringsOf(_l10n, formatLocale: null);
 String _lineText(InvoiceLine line) => invoiceLineText(_words, line);
 
 final _localBook = BookProfile(

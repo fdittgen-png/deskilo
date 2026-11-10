@@ -7,8 +7,9 @@
 // manageBilling may edit; the server checks it again.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -57,7 +58,6 @@ class CostAllocationRulesDialog extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) return const SizedBox.shrink();
     final rules = ref.watch(allocationRulesProvider(workspace.id));
-    final locale = Localizations.localeOf(context).toString();
     Future<void> edit(AllocationRule? rule, {bool retire = false}) =>
         showDialog<void>(
           context: context,
@@ -90,7 +90,7 @@ class CostAllocationRulesDialog extends ConsumerWidget {
                     [
                       l10n.allocationRuleSummary(
                         rule.basis,
-                        DateFormat.yMd(locale).format(rule.effectiveFrom),
+                        appFormatOf(context).dates(DateShape.numeric).format(rule.effectiveFrom),
                         '${rule.revision}',
                       ),
                       if (rule.retired) l10n.allocationRuleRetired,
@@ -344,7 +344,7 @@ class _RuleFormState extends ConsumerState<_RuleForm> {
                 key: const ValueKey('allocation-from'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n.allocationRuleFrom),
-                subtitle: Text(DateFormat.yMd(locale).format(_from)),
+                subtitle: Text(appFormatOf(context).dates(DateShape.numeric).format(_from)),
                 trailing: const Icon(Icons.event),
                 onTap: () async {
                   final day = await showDatePicker(

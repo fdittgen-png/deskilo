@@ -4,8 +4,9 @@
 // subscription and the consumed services, and the line they share with
 // [BillView]'s other cards.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../workspace/domain/overage_policy.dart';
@@ -63,9 +64,7 @@ class BillInvoiceCard extends StatelessWidget {
             const SizedBox(height: 4),
             BillLine(
               label: l10n.billInvoiceTotal,
-              detail: DateFormat.yMMMd(
-                Localizations.maybeLocaleOf(context)?.toString(),
-              ).format(invoice.issuedAt.toLocal()),
+              detail: appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(invoice.issuedAt)),
               value: money(invoice.totalCents),
             ),
             if (paid != 0 &&
@@ -114,8 +113,7 @@ class BillEntitlementCard extends StatelessWidget {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context).textTheme;
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
-    final fmt = NumberFormat.decimalPattern(locale)..maximumFractionDigits = 1;
+    final fmt = appFormatOf(context).numbers()..maximumFractionDigits = 1;
     String days(int halfDays) => fmt.format(halfDays / 2);
 
     final cap = statement.capHalfDays;
@@ -232,7 +230,7 @@ class BillSubscriptionCard extends StatelessWidget {
           children: [
             BillLine(
               label: subscriptionLabel(
-                reportStringsOf(l10n),
+                reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
                 statement.subscriptionPct,
                 association: association,
                 month: monthNameOf(l10n.localeName, statement.period),

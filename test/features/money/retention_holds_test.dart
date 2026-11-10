@@ -121,7 +121,7 @@ void main() {
         ('books', 'site-south', 'tax audit 2026'),
       );
       expect(find.text('tax audit 2026'), findsOneWidget);
-      expect(find.text('Books · South · since Oct 26, 2026'), findsOneWidget);
+      expect(find.text('Books · South · since 26 Oct 2026'), findsOneWidget);
 
       await _tap(
         tester,
@@ -156,7 +156,7 @@ void main() {
     await _open(tester, permissions: {'viewFinances'}, repository: repo);
     expect(find.text('dispute with a supplier'), findsOneWidget);
     expect(
-      find.text('Every kind of record · Every issuer · since Oct 2, 2026'),
+      find.text('Every kind of record · Every issuer · since 2 Oct 2026'),
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('retention-hold-place')), findsNothing);

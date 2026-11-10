@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../format/cents.dart';
 import '../format/decimal_input.dart';
 import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'format_prefs.dart';
+import 'money_format.dart';
 
 /// THE formatting seam (#711): every number, amount, date and time a
 /// member reads goes through here, in THEIR format locale, with the
@@ -69,6 +71,23 @@ class AppFormat {
     ).format(Currencies.toMajor(minor, code));
   }
 
+  /// #3484 — the money formatter of [code] (the workspace's when null) in the
+  /// member's format locale, for a screen that formats many amounts or hands
+  /// the formatter on. Documents name their own locale with `moneyFormat`.
+  MoneyFormat moneyIn(String? code) => moneyFormat(code ?? currencyCode, locale: locale);
+
+  /// #3484 — plain numbers in the member's format locale: `1 234,5` in
+  /// fr_FR; [decimals] fixes the fraction digits.
+  NumberFormat numbers({int? decimals}) => decimals == null
+      ? NumberFormat.decimalPattern(locale)
+      : NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: decimals);
+
+  /// #3484 — a fraction as a percentage in the member's format locale
+  /// (`0.25` → `25 %` in fr_FR); [decimals] fixes the fraction digits.
+  NumberFormat percents({int? decimals}) => decimals == null
+      ? NumberFormat.percentPattern(locale)
+      : NumberFormat.decimalPercentPattern(locale: locale, decimalDigits: decimals);
+
   String _symbol(String code) =>
       NumberFormat.simpleCurrency(locale: locale, name: code).currencySymbol;
 
@@ -82,6 +101,12 @@ class AppFormat {
   String percent(num fraction) =>
       NumberFormat.percentPattern(locale).format(fraction);
 
+  /// #3484 — a tax rate given in percent (`20` is 20 %): '20 %', '5,5 %'
+  /// (fr_FR), '7.7 %' (de_CH); a whole rate without decimals. Files print
+  /// rates with `percentText` instead.
+  String rate(double percent) =>
+      '${NumberFormat.decimalPattern(locale).format(percent)} %';
+
   /// #3487 — the number a member typed, in this locale's separators
   /// (`parseDecimalInput`); [grouping] off for a rate, a weight or a
   /// quantity.
@@ -92,6 +117,40 @@ class AppFormat {
   int? parseMinor(String raw) => parseMinorInput(raw, locale: locale);
 
   // ── dates and times ──────────────────────────────────────────────
+
+  /// #3484 — [instant] on the wall clock the reader asked for (the
+  /// workspace's, or the device's): what a screen shows, compares by day or
+  /// hands to a picker. Replaces `.toLocal()` and `WorkspaceTime.display`,
+  /// and keeps the latter's rule: a zone-carrying value (a workspace-anchored
+  /// window is a [tz.TZDateTime]) already reads in its own wall clock and
+  /// passes through — "Morning until 13:00" says 13:00 on a device hours away.
+  DateTime wall(DateTime instant) =>
+      instant is tz.TZDateTime ? instant : _wall(instant);
+
+  /// #3484 — the date shape [shape] in the member's format locale. It formats
+  /// the value it is given as it is: an instant goes through [wall] first, a
+  /// calendar date or a wall-clock value does not.
+  DateFormat dates(DateShape shape) => switch (shape) {
+        DateShape.day => DateFormat.d(locale),
+        DateShape.weekday => DateFormat.E(locale),
+        DateShape.weekdayLong => DateFormat.EEEE(locale),
+        DateShape.monthShort => DateFormat.MMM(locale),
+        DateShape.month => DateFormat.MMMM(locale),
+        DateShape.monthDay => DateFormat.MMMd(locale),
+        DateShape.weekdayMonthDay => DateFormat.MMMEd(locale),
+        DateShape.numeric => DateFormat.yMd(locale),
+        DateShape.monthYearShort => DateFormat.yMMM(locale),
+        DateShape.date => DateFormat.yMMMd(locale),
+        DateShape.weekdayDate => DateFormat.yMMMEd(locale),
+        DateShape.monthYear => DateFormat.yMMMM(locale),
+        DateShape.longDate => DateFormat.yMMMMd(locale),
+        DateShape.fullDate => DateFormat.yMMMMEEEEd(locale),
+      };
+
+  /// #3484 — a date shape and the time, as one label: the date of [instant]
+  /// on the reader's wall clock and its time under their clock preference.
+  String datesAndTime(DateShape shape, DateTime instant) =>
+      '${dates(shape).format(_wall(instant))} ${time(instant)}';
 
   /// The wall-clock the reader asked for: the workspace's, or the
   /// device's with a zone label wherever the two differ.
@@ -118,7 +177,7 @@ class AppFormat {
   /// preference and nothing else; [time] would shift it by the zone.
   String wallTime(DateTime wall) => switch (clock) {
         ClockPref.h24 => DateFormat.Hm(locale).format(wall),
-        ClockPref.h12 => DateFormat.jm('en_US').format(wall),
+        ClockPref.h12 => DateFormat('h:mm a', locale).format(wall),
         ClockPref.auto => DateFormat.jm(locale).format(wall),
       };
 
@@ -126,7 +185,7 @@ class AppFormat {
     final wall = _wall(instant);
     return switch (clock) {
       ClockPref.h24 => DateFormat.Hm(locale).format(wall),
-      ClockPref.h12 => DateFormat.jm('en_US').format(wall),
+      ClockPref.h12 => DateFormat('h:mm a', locale).format(wall),
       ClockPref.auto => DateFormat.jm(locale).format(wall),
     };
   }
@@ -188,4 +247,23 @@ String defaultFormatLocale(String uiLanguage, String workspaceCountry) {
     (l) => l.startsWith('${uiLanguage}_'),
     orElse: () => 'en_GB',
   );
+}
+
+/// #3484 — the date shapes the screens use; each names its ICU skeleton
+/// (`date` is `yMMMd`: `28 Aug 2026` in en, `28 août 2026` in fr).
+enum DateShape {
+  day,
+  weekday,
+  weekdayLong,
+  monthShort,
+  month,
+  monthDay,
+  weekdayMonthDay,
+  numeric,
+  monthYearShort,
+  date,
+  weekdayDate,
+  monthYear,
+  longDate,
+  fullDate,
 }

@@ -27,11 +27,11 @@ final _groupingChars = RegExp('[   \'’]');
 final _body = RegExp(r'^[0-9.,]+$');
 final _groupsOfThree = RegExp(r'^[0-9]{1,3}([.,][0-9]{3})+$');
 
-/// The decimal and grouping symbols of [locale] (or of `Intl.defaultLocale`,
-/// which the format seam sets to the member's format locale), English ones
-/// for a locale the number data does not know.
-({String decimal, String group}) _symbolsOf([String? locale]) {
-  final name = Intl.canonicalizedLocale(locale ?? Intl.getCurrentLocale());
+/// The decimal and grouping symbols of [locale] (the member's format locale,
+/// `AppFormat.locale`), English ones for a locale the number data does not
+/// know.
+({String decimal, String group}) _symbolsOf(String locale) {
+  final name = Intl.canonicalizedLocale(locale);
   final known = numberFormatSymbols.containsKey(name) ||
       numberFormatSymbols.containsKey(Intl.shortLocale(name));
   final symbols = NumberFormat.decimalPattern(known ? name : 'en').symbols;
@@ -58,8 +58,13 @@ num? parseDecimalInput(
     text = text.substring(1);
   }
   if (!_body.hasMatch(text)) return null;
+  if (grouping && locale == null) {
+    // #3484 — grouping depends on the locale, and there is no global one to
+    // fall back on: the caller names it (`AppFormat.parseNumber`).
+    throw ArgumentError.notNull('locale');
+  }
   final normal = grouping
-      ? _grouped(text, _symbolsOf(locale).group, threeDecimals)
+      ? _grouped(text, _symbolsOf(locale!).group, threeDecimals)
       : _ungrouped(text);
   if (normal == null) return null;
   final value = double.tryParse(normal);

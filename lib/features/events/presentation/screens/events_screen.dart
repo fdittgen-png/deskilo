@@ -3,9 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -124,7 +124,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       FeedGrouping.type =>
         notificationCategoryLabel(l10n, group.key as NotificationCategory),
       FeedGrouping.date =>
-        DateFormat.yMMMEd().format(group.key as DateTime),
+        appFormatOf(context).dates(DateShape.weekdayDate).format(group.key as DateTime),
       FeedGrouping.user => names[group.key] ?? '',
       FeedGrouping.none => '',
     };
@@ -394,7 +394,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         const <String, List<EventDecision>>{};
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const [];
-    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     // #687 — MESSAGES ARE NOT NOTIFICATIONS ANY MORE.
     //
     // They were mixed into this feed because there was nowhere else for

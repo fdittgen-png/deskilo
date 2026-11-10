@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('the defaults are the English ARB, field for field', () {
     const d = ReportStrings();
-    final en = reportStringsOf(AppLocalizationsEn());
+    final en = reportStringsOf(AppLocalizationsEn(), formatLocale: null);
     expect(d.paymentTermsDefault, en.paymentTermsDefault);
     expect(d.latePenaltyDefault, en.latePenaltyDefault);
     expect(d.recoveryDefault, en.recoveryDefault);
@@ -52,7 +52,7 @@ void main() {
   });
 
   test('a French bundle reaches every field — nothing stays English', () {
-    final fr = reportStringsOf(AppLocalizationsFr(), dateLocale: 'fr');
+    final fr = reportStringsOf(AppLocalizationsFr(), dateLocale: 'fr', formatLocale: null);
     const d = ReportStrings();
     expect(fr.localeName, 'fr');
     expect(fr.dateLocale, 'fr');
@@ -90,7 +90,7 @@ void main() {
     const line = InvoiceLine(
         kind: 'subscription', label: '100', amountCents: 10000);
     expect(invoiceLineText(const ReportStrings(), line), 'Subscription 100%');
-    expect(invoiceLineText(reportStringsOf(AppLocalizationsFr()), line),
+    expect(invoiceLineText(reportStringsOf(AppLocalizationsFr(), formatLocale: null), line),
         AppLocalizationsFr().billSubscription(100));
   });
 }

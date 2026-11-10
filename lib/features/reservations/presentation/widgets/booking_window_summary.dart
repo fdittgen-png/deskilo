@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -47,7 +47,7 @@ class BookingWindowSummary extends StatelessWidget {
               toMinutes == hoursConfig.endMinutes
         ? words.reserveFullDayChip
         : null;
-    final dates = DateFormat.yMMMEd(format.locale).format(day);
+    final dates = format.dates(DateShape.weekdayDate).format(day);
     final hours = '${format.wallTime(start)}–${format.wallTime(end)}';
     final zone = timezone ?? window.start.timeZoneName;
     final personalZone = format.zoneSuffix(window.start);

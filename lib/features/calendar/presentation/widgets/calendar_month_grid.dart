@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -51,7 +52,7 @@ class CalendarMonthGrid extends StatelessWidget {
     final daysInMonth = DateUtils.getDaysInMonth(month.year, month.month);
     final leading = DateTime(month.year, month.month).weekday - 1;
     final rows = ((leading + daysInMonth) / 7).ceil();
-    final weekdayFormat = DateFormat.E(locale);
+    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
     return Padding(
       key: const ValueKey('calendar-month-grid'),
       padding: AppSpacing.smH,

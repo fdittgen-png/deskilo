@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'calendar_item_row.dart';
@@ -40,7 +41,7 @@ class CalendarWeekStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context);
-    final weekdayFormat = DateFormat.E(locale);
+    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
     return Padding(
       key: const ValueKey('calendar-week-strip'),
       padding: AppSpacing.smH,

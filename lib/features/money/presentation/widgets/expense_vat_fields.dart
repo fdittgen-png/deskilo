@@ -12,12 +12,13 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -117,13 +118,13 @@ Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
   if (workspace == null) return null;
   return (
     percents: await expenseVatPercents(ref, workspace.vatRegime),
-    currency: moneyFormat(workspace.currencyCode),
+    currency: ref.read(appFormatProvider).moneyIn(workspace.currencyCode),
   );
 }
 
 /// « 20 % », in the reader's number format.
-String expenseVatPercentLabel(AppLocalizations l10n, double percent) =>
-    _percentLabel(l10n, percent);
+String expenseVatPercentLabel(AppFormat format, double percent) =>
+    format.rate(percent);
 
 /// The fields, keyed `<keyPrefix>-vat-rate`, `-vat-deductible`,
 /// `-vat-asset` and, where the choice offers it, `-vat-acquisition`;
@@ -141,7 +142,7 @@ List<Widget> expenseVatFields({
   final words = vatWords(l10n);
   return [
     const FormGap(),
-    _rateField(l10n, percents, choice, refresh, keyPrefix),
+    _rateField(l10n, currency, percents, choice, refresh, keyPrefix),
     if (choice.percent != null) ...[
       const FormGap(),
       AppTextField(
@@ -206,8 +207,8 @@ List<Widget> _flagSwitches(
 ];
 
 /// « 20 % », in the reader's number format.
-String _percentLabel(AppLocalizations l10n, double percent) =>
-    '${NumberFormat.decimalPattern(l10n.localeName).format(percent)} %';
+String _percentLabel(MoneyFormat currency, double percent) =>
+    AppFormat(locale: currency.locale, currencyCode: currency.code).rate(percent);
 
 /// The hint, and once amount and share are typed, the deductible VAT
 /// they make (`vatInputSplit`, the server's rounding); for an acquisition
@@ -220,7 +221,7 @@ String _deductibleHelper(
   ExpenseVatChoice choice,
 ) {
   final words = vatWords(l10n);
-  final gross = parseMinorInput(amount);
+  final gross = parseMinorInput(amount, locale: currency.locale);
   final pct = choice.sharePct;
   final percent = choice.percent;
   if (gross == null ||
@@ -247,6 +248,7 @@ String _deductibleHelper(
 /// The rate picker, with the help symbol of the expense's VAT (#3527).
 Widget _rateField(
   AppLocalizations l10n,
+  MoneyFormat currency,
   List<double> percents,
   ExpenseVatChoice choice,
   VoidCallback refresh,
@@ -266,7 +268,7 @@ Widget _rateField(
     items: [
       DropdownMenuItem<double?>(child: Text(words.expenseVatNone)),
       for (final p in percents)
-        DropdownMenuItem<double?>(value: p, child: Text(_percentLabel(l10n, p))),
+        DropdownMenuItem<double?>(value: p, child: Text(_percentLabel(currency, p))),
     ],
     onChanged: (v) {
       choice.percent = v;

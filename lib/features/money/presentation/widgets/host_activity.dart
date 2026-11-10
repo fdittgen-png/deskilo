@@ -6,9 +6,9 @@
 // others stay; the personal home's own installation is the home's list.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -150,10 +150,8 @@ String _line(
     'regrouped' => l10n.accountInvoiceRegrouped,
     _ => '',
   },
-  DateFormat.yMMMd(
-    Localizations.localeOf(context).toLanguageTag(),
-  ).format(entry.occurredAt.toLocal()),
+  appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(entry.occurredAt)),
   if (entry.amountCents case final amount?)
-    moneyFormat(entry.currency).formatMinor(amount),
+    appFormatOf(context).moneyIn(entry.currency).formatMinor(amount),
   if (entry.minutes case final minutes?) l10n.accountUsageMinutes(minutes),
 ].where((s) => s.isNotEmpty).join(' · ');

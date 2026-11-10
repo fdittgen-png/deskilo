@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/i18n/app_format.dart';
@@ -256,11 +255,9 @@ String? eventQuorumProgress(
 String eventWhen(WorkspaceEvent event, AppFormat format) {
   final start = event.payloadStart;
   final end = event.payloadEnd;
-  final created = DateFormat.MMMd().add_Hm().format(
-        event.createdAt.toLocal(),
-      );
+  final created = format.datesAndTime(DateShape.monthDay, event.createdAt);
   if (start == null || end == null) return created;
-  final range = '${DateFormat.MMMEd().format(start.toLocal())} '
+  final range = '${format.dates(DateShape.weekdayMonthDay).format(format.wall(start))} '
       '${format.time(start)}–'
       '${format.time(end)}';
   return '$range · $created';

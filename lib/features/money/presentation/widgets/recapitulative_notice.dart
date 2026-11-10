@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -40,9 +41,7 @@ class RecapitulativeNotice extends ConsumerWidget {
     final count = lines
         .where((l) => l.period == period)
         .fold(0, (sum, l) => sum + l.invoices);
-    final month = DateFormat.yMMMM(
-      Localizations.localeOf(context).toLanguageTag(),
-    ).format(DateTime.parse('$period-01'));
+    final month = appFormatOf(context).dates(DateShape.monthYear).format(DateTime.parse('$period-01'));
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: InlineBanner(

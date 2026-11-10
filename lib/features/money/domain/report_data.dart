@@ -288,8 +288,8 @@ Map<String, Object?> invoiceReportData(
   /// #1916 — the member's stated capacity, for an unissued document.
   String? memberCapacity,
 }) {
-  final currency = moneyFormat(invoice.currency);
-  final dateFormat = DateFormat.yMMMd(strings.dateLocale);
+  final currency = moneyFormat(invoice.currency, locale: strings.formatLocale);
+  final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   // #870 — an association's positions are participations, not
   // subscriptions; the same word everywhere the document is produced.
   final association = InvoiceLegal.fromJson(
@@ -318,7 +318,7 @@ Map<String, Object?> invoiceReportData(
     'usage_sites': usageSitesOf(invoice),
     'member': invoice.clientName,
     'number': invoice.number,
-    'period': invoicePeriodLabelOf(strings.dateLocale, invoice),
+    'period': invoicePeriodLabelOf(strings.documentDateLocale, invoice),
     // #1002 — the month's name and the year on their own, for a designed
     // label such as « {{ period_month }} 100 % ».
     'period_month': monthNameOf(strings.localeName, invoice.period),

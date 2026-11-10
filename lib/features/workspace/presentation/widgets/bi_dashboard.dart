@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/active_settings.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -41,7 +42,7 @@ class BiDashboard extends ConsumerWidget {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) return const SizedBox.shrink();
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
+    final locale = appFormatOf(context).locale;
     final theme = Theme.of(context);
     final grain = result.period.grain;
     final seriesAsync = ref.watch(

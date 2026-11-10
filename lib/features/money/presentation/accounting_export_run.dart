@@ -76,7 +76,7 @@ class AccountingExportRun {
     this.invoices, {
     required this.label,
   }) : l10n = context.l10n,
-       words = reportStringsOf(context.l10n),
+       words = reportStringsOf(context.l10n, formatLocale: null), // its texts carry no amount or date
        association = ref.read(sellerIsAssociationProvider);
 
   final BuildContext context;

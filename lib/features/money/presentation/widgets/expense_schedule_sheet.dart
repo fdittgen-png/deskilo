@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -70,7 +72,7 @@ Future<void> showExpenseSchedulesSheet(
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
-  final dates = DateFormat.yMMMd();
+  final dates = appFormatOf(context).dates(DateShape.date);
   await showAppSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -219,7 +221,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return false;
-  final dates = DateFormat.yMMMd();
+  final dates = appFormatOf(context).dates(DateShape.date);
   final title = TextEditingController();
   final amount = TextEditingController();
   final description = TextEditingController();
@@ -363,7 +365,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
     ),
   );
   if (submitted != true || !context.mounted) return false;
-  final cents = parseMinorInput(amount.text);
+  final cents = appFormatOf(context).parseMinor(amount.text);
   // #1449 — the command refuses it and writes nothing; the sheet says so.
   if (!isSchedulable(title: title.text, amountCents: cents)) {
     AppSnack.error(
@@ -445,11 +447,11 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
     final l10n = context.l10n;
     final o = widget.occurrence;
     final scheduled = o.scheduledAmountCents;
-    final cents = parseMinorInput(_amount.text);
+    final cents = appFormatOf(context).parseMinor(_amount.text);
     final rejected = o.status == OccurrenceStatus.rejected;
     // #1449 — the rule the command applies, read here to show the field.
     final explain = needsExplanation(o, cents);
-    final dates = DateFormat.yMMMd();
+    final dates = appFormatOf(context).dates(DateShape.date);
     final scheme = Theme.of(context).colorScheme;
     return Card(
       key: ValueKey('occurrence-${o.id}'),
@@ -546,7 +548,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
       action: () async {
         answer = await ref.read(expenseScheduleCommandProvider).answer(
               occurrence: widget.occurrence,
-              amountCents: parseMinorInput(_amount.text),
+              amountCents: appFormatOf(context).parseMinor(_amount.text),
               reason: _reason.text,
             );
       },

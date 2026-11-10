@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/clock.dart';
@@ -295,7 +296,7 @@ class ReservationDetailActions {
     } else {
       final picked = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(r.endsAt)),
+        initialTime: TimeOfDay.fromDateTime(appFormatOf(context).wall(r.endsAt)),
       );
       if (picked == null || !context.mounted) return;
       newEnd = _snappedOnDay(day, picked, granularity);
@@ -329,7 +330,7 @@ class ReservationDetailActions {
     } else {
       final picked = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(r.endsAt)),
+        initialTime: TimeOfDay.fromDateTime(appFormatOf(context).wall(r.endsAt)),
       );
       if (picked == null || !context.mounted) return;
       newEnd = _snappedOnDay(day, picked, granularity);

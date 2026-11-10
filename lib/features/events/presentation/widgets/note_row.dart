@@ -3,8 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -55,9 +56,7 @@ class NoteRow extends ConsumerWidget {
             ? (l10n.memberNoteToAllAdmins)
             : (l10n.memberNoteTo(names[note.toMemberId] ?? '')))
         : (l10n.memberNoteReceived(names[note.fromMemberId] ?? ''));
-    final when = DateFormat.MMMd()
-        .add_Hm()
-        .format(note.createdAt.toLocal());
+    final when = appFormatOf(context).datesAndTime(DateShape.monthDay, note.createdAt);
     final canDelete = sentByMe || !note.isBroadcast;
     final canReply = !sentByMe;
     final tile = ListTile(

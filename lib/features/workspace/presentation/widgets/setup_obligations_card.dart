@@ -8,10 +8,10 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/country_names.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -29,9 +29,7 @@ class SetupObligationsCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final today = isoDay(ref.watch(clockProvider).now());
-    final dates = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final format = appFormatOf(context);
     // #2561 L4 -- the rows of the selected workspace's own installation, as
     // its context captured them.
     final obligations = setupObligations(
@@ -58,7 +56,7 @@ class SetupObligationsCard extends ConsumerWidget {
             for (final (i, o) in obligations.indexed) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
-                _text(l10n, o, today, dates),
+                _text(l10n, o, today, format),
                 key: ValueKey('setup-obligation-$i'),
               ),
               Text(
@@ -79,12 +77,12 @@ class SetupObligationsCard extends ConsumerWidget {
     AppLocalizations l10n,
     SetupObligation o,
     String today,
-    DateFormat dates,
+    AppFormat format,
   ) {
     if (o.kind == SetupObligationKind.vatThreshold) {
       return l10n.setupObligationThreshold(
         o.detail,
-        moneyFormat(o.currency).formatMinor(o.cents!),
+        format.moneyIn(o.currency).formatMinor(o.cents!),
       );
     }
     final duty = switch (o.detail) {
@@ -96,7 +94,7 @@ class SetupObligationsCard extends ConsumerWidget {
       _ => o.detail,
     };
     final from = o.from!;
-    final date = dates.format(DateTime.parse(from));
+    final date = format.dates(DateShape.date).format(DateTime.parse(from));
     return from.compareTo(today) <= 0
         ? l10n.eInvoiceMandateSince(date, duty)
         : l10n.eInvoiceMandateFrom(date, duty);

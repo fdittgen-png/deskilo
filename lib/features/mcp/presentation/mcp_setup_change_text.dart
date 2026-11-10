@@ -4,7 +4,6 @@
 // make the same change: the opening days and hours, the closure days, a
 // number series. The person confirms exactly the server's proposal: every
 // field it changes, from its current value to the new one.
-import 'package:intl/intl.dart';
 
 import '../../../core/i18n/app_format.dart';
 import '../../../core/l10n/payment_instructions_labels.dart';
@@ -31,7 +30,7 @@ class McpSetupChangeText {
         for (final day in days)
           if (DateTime.tryParse('$day') case final date?)
             // A calendar day, not an instant: no zone to convert.
-            DateFormat.yMMMd(_format.locale).format(date),
+            _format.dates(DateShape.date).format(date),
     ].join(', '),
     'number_sequence' => _journal('${target['journal']}'),
     _ => null,
@@ -96,7 +95,7 @@ class McpSetupChangeText {
       if (value is List)
         for (final d in value.whereType<num>())
           // 1 January 2024 was a Monday: ISO weekday d is the d-th.
-          DateFormat.E(_format.locale).format(DateTime(2024, 1, d.toInt())),
+          _format.dates(DateShape.weekday).format(DateTime(2024, 1, d.toInt())),
     ].join(', '),
     'work_start_minutes' || 'half_boundary_minutes' || 'work_end_minutes'
         when value is num =>

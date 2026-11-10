@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -146,7 +146,7 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
                   : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
             ),
             subtitle: p.category.isEmpty ? null : Text(p.category),
-            trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+            trailing: Text(appFormatOf(context).moneyIn(p.currency).formatMinor(p.grossCents)),
             onTap: () async {
               await showPurchaseForDecision(context, widget.workspaceId, p.id);
               if (mounted) _restart();
@@ -205,7 +205,7 @@ class _VisiblePendingReceipts extends ConsumerWidget {
                   ? purchaseKindLabel(l10n, p.kind)
                   : '${purchaseKindLabel(l10n, p.kind)} · ${p.reference}',
             ),
-            trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+            trailing: Text(appFormatOf(context).moneyIn(p.currency).formatMinor(p.grossCents)),
             onTap: () => showPurchaseDetail(context, workspaceId, p.id),
           ),
       ],

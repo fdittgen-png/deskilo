@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import '../../../core/i18n/app_format.dart';
+
 /// The VAT annotation a GROSS price should carry on catalogue surfaces
 /// (#537): "· TVA 20 % incl." — resolved from the item's own rate, or
 /// the workspace default when the item has none. Null (no annotation)
@@ -10,16 +12,12 @@ String? vatRateSuffix({
   required bool chargesVat,
   required List<VatRate> rates,
   required String vatRateId,
+  required AppFormat format,
 }) {
   if (!chargesVat) return null;
   final rate = vatRateId.isEmpty
       ? rates.where((r) => r.isDefault && r.active).firstOrNull
       : rates.where((r) => r.id == vatRateId).firstOrNull;
   if (rate == null || rate.percent <= 0) return null;
-  return _vatPercentText(rate.percent);
+  return format.rate(rate.percent);
 }
-
-/// "20 %" / "5,5 %"-style rate text (decimal only when needed).
-String _vatPercentText(double percent) => percent == percent.roundToDouble()
-    ? '${percent.toStringAsFixed(0)} %'
-    : '$percent %';

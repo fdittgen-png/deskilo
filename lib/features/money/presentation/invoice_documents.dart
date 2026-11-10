@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/files/file_names.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
@@ -282,6 +283,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final proforma = options.proforma;
   final template = options.template;
   final workspace = options.workspace;
+  // #3484 — read before the awaits: the document's amounts spell in it.
+  final formatLocale = appFormatOf(context).locale;
   final periodLabel = invoicePeriodLabel(context, invoice);
   final reportData = invoiceReportData(
     reportStringsFor(context),
@@ -356,7 +359,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final association = InvoiceLegal.fromJson(
     workspace?.invoiceLegal ?? const {},
   ).isAssociation;
-  final words = reportStringsOf(l10n);
+  final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
     addressWindow: _addressWindowOf(options, features),
@@ -366,7 +369,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         association: association, period: invoice.period),
     activityText: (entry) => annexEntryText(words, entry),
     strings: strings,
-    money: moneyFormat(invoice.currency).formatMinor,
+    money: moneyFormat(invoice.currency, locale: formatLocale).formatMinor,
     dateLabel: dateFormat.format(invoice.issuedAt),
     // The stored title is the raw period ('2026-07'); the document reads
     // the month like a human would.
@@ -399,7 +402,7 @@ String facturXmlOf(
   required TaxReferenceSet reference,
 }) {
   final association = ref.read(sellerIsAssociationProvider);
-  final words = reportStringsOf(context.l10n);
+  final words = reportStringsOf(context.l10n, formatLocale: appFormatOf(context).locale);
   return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: seller,
     buyer: buyer,

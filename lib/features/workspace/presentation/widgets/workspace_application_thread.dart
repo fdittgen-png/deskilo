@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -173,7 +174,7 @@ class _ThreadState extends ConsumerState<WorkspaceApplicationThread> {
                               Text(
                                 MaterialLocalizations.of(
                                   context,
-                                ).formatShortDate(message.createdAt.toLocal()),
+                                ).formatShortDate(appFormatOf(context).wall(message.createdAt)),
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

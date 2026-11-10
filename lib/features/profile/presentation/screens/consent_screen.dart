@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/entry_intents.dart';
 import '../../../../app/route_classes.dart';
 import '../../../../core/help/guide_site.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/privacy/privacy_policy.dart';
@@ -89,7 +90,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   Text(
                     l10n.consentAcceptedOn(
                             MaterialLocalizations.of(context)
-                                .formatMediumDate(acceptedAt.toLocal()),
+                                .formatMediumDate(appFormatOf(context).wall(acceptedAt)),
                             profile?.privacyAcceptedVersion ?? ''),
                     key: const ValueKey('consent-accepted-on'),
                     style: theme.textTheme.bodySmall

@@ -10,7 +10,6 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../core/badge/app_badge.dart';
 import '../../core/i18n/format_controller.dart';
@@ -274,7 +273,7 @@ void _scheduleCheckInReminders(WidgetRef ref, AppLocalizations l10n) {
       final member = await ref.read(myMemberProvider.future);
       if (member == null) return;
       final targets = await ref.read(targetNamesProvider.future);
-      final timeFormat = DateFormat.Hm();
+      final format = ref.read(appFormatProvider);
       final reminders = upcomingCheckInReminders(
         reservations: upcoming,
         myMemberId: member.id,
@@ -288,7 +287,7 @@ void _scheduleCheckInReminders(WidgetRef ref, AppLocalizations l10n) {
         // and what the plan shows. `toLocal()` is the device's clock,
         // and #711 made the workspace's the default everywhere else.
         bodyOf: (target, startsAt) {
-          final at = timeFormat.format(WorkspaceTime.wall(startsAt));
+          final at = format.time(startsAt);
           return l10n.reminderBody(target, at);
         },
       );

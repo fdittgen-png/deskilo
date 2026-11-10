@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -41,7 +42,7 @@ class OnlinePaymentStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    final currency = moneyFormat(currencyCode);
+    final currency = appFormatOf(context).moneyIn(currencyCode);
     return Card(
       key: const ValueKey('online-payment-status-card'),
       child: Column(

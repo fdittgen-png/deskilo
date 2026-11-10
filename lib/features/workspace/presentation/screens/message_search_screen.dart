@@ -3,8 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/debouncer.dart';
@@ -174,7 +175,7 @@ class _MessageSearchScreenState extends ConsumerState<_MessageSearchScreen> {
                         ),
                         subtitle: Text(
                           '${names[note.fromMemberId] ?? ''} · '
-                          '${DateFormat.yMMMd().format(note.createdAt.toLocal())}',
+                          '${appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(note.createdAt))}',
                         ),
                         // A message with no conversation is a pre-0125
                         // note or an admin broadcast — it has no thread

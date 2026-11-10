@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -95,7 +95,7 @@ class ServicesScreen extends ConsumerWidget {
         ref.watch(currentWorkspaceProvider).value?.vatRegime ==
             'vat_registered';
     final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
-    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final inactiveColor = Theme.of(context).disabledColor;
 
     return Scaffold(
@@ -141,6 +141,7 @@ class ServicesScreen extends ConsumerWidget {
                       chargesVat: chargesVat,
                       rates: vatRates,
                       vatRateId: service.vatRateId,
+                      format: appFormatOf(context),
                     );
                     final vatLabel = rate == null
                         ? null
@@ -234,7 +235,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
 
   void _submit() {
     final name = _name.text.trim();
-    final price = parseMinorInput(_price.text);
+    final price = appFormatOf(context).parseMinor(_price.text);
     if (name.isEmpty || price == null) return;
     Navigator.of(context).pop(
       _ServiceDraft(

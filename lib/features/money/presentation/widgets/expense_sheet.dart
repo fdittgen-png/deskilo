@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -60,14 +61,14 @@ Future<void> showExpenseSheet(
   if (!context.mounted) return;
   final vat = ExpenseVatChoice.of(ref, workspace.countryCode, fields['deductible']);
   void prefillUnit() {
-    final cents = parseMinorInput(fields['amount'].text) ?? 0;
+    final cents = appFormatOf(context).parseMinor(fields['amount'].text) ?? 0;
     final qty = int.tryParse(fields['supplyQuantity'].text) ?? 0;
     if (cents > 0 && qty > 0) {
       fields['supplyUnit'].text = centsToMajor((cents + qty - 1) ~/ qty); // #1140
     }
   }
 
-  ExpenseDraft draft() => ExpenseDraft(
+  ExpenseDraft draft() => ExpenseDraft(locale: appFormatOf(context).locale,
     amount: fields['amount'].text,
     category: category,
     description: fields['description'].text,

@@ -65,7 +65,7 @@ class WorkspaceLocaleFields extends ConsumerWidget {
             DropdownMenuItem(
               value: code,
               child: Text(
-                '$code · ${moneyFormat(code).currencySymbol}',
+                '$code · ${moneyFormat(code, locale: Localizations.maybeLocaleOf(context)?.toString()).currencySymbol}',
               ),
             ),
         ],

@@ -99,7 +99,7 @@ void main() {
       expect(
         find.descendant(
           of: summary,
-          matching: find.text(moneyFormat(e.key).formatMinor(e.value)),
+          matching: find.text(moneyFormat(e.key, locale: null).formatMinor(e.value)),
         ),
         findsOneWidget,
         reason: 'the ${e.key} amount to pay, in the summary',

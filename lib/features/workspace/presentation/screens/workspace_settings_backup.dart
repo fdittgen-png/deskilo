@@ -9,6 +9,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_saver.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/share/file_sharer.dart';
@@ -117,7 +118,7 @@ class WorkspaceSettingsBackup {
         // #671 — cover wording and images come from report management.
         final cover = await batchCover(context, ref, docId: 'space_codes', data: {
           'workspace': workspace.name,
-          'issued': DateFormat.yMMMMd().format(ref.read(clockProvider).now()),
+          'issued': DateFormat.yMMMMd(ref.read(appFormatProvider).locale).format(ref.read(clockProvider).now()),
         });
         if (!context.mounted || cover == null) return;
         // #1277 — capture localized space nouns before reading the entries.

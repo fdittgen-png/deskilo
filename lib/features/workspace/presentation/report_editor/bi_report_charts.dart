@@ -15,8 +15,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/active_settings.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -103,9 +103,7 @@ class BiBars extends StatelessWidget {
         );
       }
       final total = known.fold<num>(0, (s, r) => s + valueOf(r)!);
-      final share = NumberFormat.percentPattern(
-        Localizations.localeOf(context).toString(),
-      );
+      final share = appFormatOf(context).percents();
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

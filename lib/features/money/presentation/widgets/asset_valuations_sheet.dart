@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -234,7 +234,7 @@ class _RowsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final money = moneyFormat(batch.currency);
+    final money = appFormatOf(context).moneyIn(batch.currency);
     final rows = ref.watch(
       assetValuationRowsProvider((workspaceId: workspaceId, batchId: batch.id)),
     );

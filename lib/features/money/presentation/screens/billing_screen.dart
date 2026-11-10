@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -316,7 +316,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     if (workspace == null) return;
     final name = _pkgName.text.trim();
     final days = int.tryParse(_pkgDays.text.trim());
-    final price = parseMinorInput(_pkgPrice.text);
+    final price = appFormatOf(context).parseMinor(_pkgPrice.text);
     if (name.isEmpty || days == null || days < 1 || price == null) return;
     if (!await _run(
       'package create failed',
@@ -413,7 +413,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final chargesVat = workspace?.vatRegime == 'vat_registered';
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
-    final currencySymbol = moneyFormat(workspace?.currencyCode).currencySymbol;
+    final currencySymbol = appFormatOf(context).moneyIn(workspace?.currencyCode).currencySymbol;
     final fields = ListView(
       padding: const EdgeInsets.all(16),
       children: [

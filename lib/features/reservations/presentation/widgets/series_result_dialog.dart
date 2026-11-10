@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../domain/reservation_repository.dart';
@@ -15,7 +16,7 @@ Future<void> showSeriesResultDialog(
   SeriesResult result,
 ) {
   final l10n = context.l10n;
-  final dateFormat = DateFormat.MMMEd();
+  final dateFormat = appFormatOf(context).dates(DateShape.weekdayMonthDay);
   return showDialog<void>(
     context: context,
     builder: (context) => AlertDialog(

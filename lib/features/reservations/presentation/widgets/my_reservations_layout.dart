@@ -6,7 +6,6 @@
 // status, actions. Each row keeps its times on its workspace's wall clock.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -195,7 +194,7 @@ class MyReservationTableRow extends ConsumerWidget {
 /// A day of the workspace's calendar, already a wall date: formatted as
 /// it is, never shifted by another zone.
 String myReservationDay(AppFormat format, DateTime day) =>
-    DateFormat.MMMEd(format.locale).format(day);
+    format.dates(DateShape.weekdayMonthDay).format(day);
 
 /// The icon of what a booking holds (#2554 C2 reuses it on the Overview).
 IconData myReservationKindIcon(MyReservationPlaceKind kind) => switch (kind) {

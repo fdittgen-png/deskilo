@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -36,7 +37,7 @@ class CapacityEvidence extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
+    final locale = appFormatOf(context).locale;
     final theme = Theme.of(context);
     final future = !kpi.from.isBefore(kpi.computedAt);
     final closed = !kpi.to.isAfter(kpi.computedAt);

@@ -8,8 +8,8 @@
 // plain sentences, as they will meet them when they book.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -246,9 +246,7 @@ class _Stepper extends StatelessWidget {
               : null,
         ),
         Text(
-          NumberFormat.decimalPattern(
-            Localizations.localeOf(context).toLanguageTag(),
-          ).format(value),
+          appFormatOf(context).numbers().format(value),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         IconButton(

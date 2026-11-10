@@ -7,7 +7,6 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../../core/i18n/app_format.dart';
@@ -70,7 +69,7 @@ class SetupBasicsPreview extends ConsumerWidget {
         _Sample(
           id: 'date',
           label: l10n.setupBasicsPreviewDate,
-          value: DateFormat.yMMMMEEEEd(format.locale).format(naive),
+          value: format.dates(DateShape.fullDate).format(naive),
         ),
         _Sample(
           id: 'time',

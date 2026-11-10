@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
@@ -156,7 +157,7 @@ class InvoicesScreen extends ConsumerWidget {
   Widget _hub(BuildContext context, WidgetRef ref, _HubFacts facts,
       {required Widget tools, required Widget archive}) {
     final l10n = context.l10n;
-    final currency = moneyFormat(facts.currencyCode);
+    final currency = appFormatOf(context).moneyIn(facts.currencyCode);
     return DefaultTabController(
       length: 3,
       child: Scaffold(

@@ -3,7 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -42,7 +42,7 @@ class SmallBusinessNotice extends ConsumerWidget {
     if (alerts.isEmpty) return const SizedBox.shrink();
     final l10n = context.l10n;
     final alert = alerts.first;
-    final money = moneyFormat(currency);
+    final money = appFormatOf(context).moneyIn(currency);
     final (turnoverText, limit) = (
       money.formatMinor(alert.turnoverCents),
       money.formatMinor(alert.threshold.cents),

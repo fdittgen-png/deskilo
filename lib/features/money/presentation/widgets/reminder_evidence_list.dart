@@ -7,8 +7,9 @@
 // payment.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -50,9 +51,7 @@ class ReminderEvidenceList extends ConsumerWidget {
     if (evidence == null || evidence.isEmpty) return const SizedBox.shrink();
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final date = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final date = appFormatOf(context).dates(DateShape.date);
     return Column(
       key: const ValueKey('invoice-reminder-evidence'),
       crossAxisAlignment: CrossAxisAlignment.start,

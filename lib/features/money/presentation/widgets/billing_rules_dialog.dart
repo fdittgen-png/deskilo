@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -85,10 +86,9 @@ class _BillingDialogState extends ConsumerState<_BillingDialog> {
     final now = ref.read(clockProvider).now();
     final nextMonth = DateTime(now.year, now.month + 1);
     final issue = subscriptionIssueDay(nextMonth, _rules);
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
     return l10n.billingSubscriptionWhen(
-          DateFormat.MMMd(locale).format(issue),
-          DateFormat.MMMM(locale).format(nextMonth),
+          appFormatOf(context).dates(DateShape.monthDay).format(issue),
+          appFormatOf(context).dates(DateShape.month).format(nextMonth),
         );
   }
 

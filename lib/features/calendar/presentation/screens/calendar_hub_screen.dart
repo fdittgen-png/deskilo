@@ -4,10 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
@@ -485,7 +485,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
           return '${format.shortDate(WorkspaceTime.at(s.weekStart.year, s.weekStart.month, s.weekStart.day, 12))}'
               ' – ${format.shortDate(WorkspaceTime.at(end.year, end.month, end.day, 12))}';
         }(),
-      CalendarView.month => DateFormat.yMMMM(format.locale).format(s.anchor),
+      CalendarView.month => format.dates(DateShape.monthYear).format(s.anchor),
     };
     return Row(children: [
       IconButton(

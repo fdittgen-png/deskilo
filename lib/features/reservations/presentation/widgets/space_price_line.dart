@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -42,7 +42,7 @@ class SpacePriceLine extends ConsumerWidget {
               .value
         : null;
     final style = Theme.of(context).textTheme.bodySmall;
-    final money = offer == null ? null : moneyFormat(offer.currency);
+    final money = offer == null ? null : appFormatOf(context).moneyIn(offer.currency);
     final until = offer?.availableUntil;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

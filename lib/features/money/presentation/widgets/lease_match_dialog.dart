@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -67,7 +67,7 @@ class _MatchDialogState extends ConsumerState<_MatchDialog> {
   });
 
   Future<void> _save(PurchaseDetail detail) async {
-    final cents = parseMinorInput(_amount.text);
+    final cents = appFormatOf(context).parseMinor(_amount.text);
     if (cents == null || cents <= 0 || cents > widget.occurrence.remainingCents) {
       setState(() => _invalid = true);
       return;
@@ -106,7 +106,7 @@ class _MatchDialogState extends ConsumerState<_MatchDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
-    final money = moneyFormat(widget.currencyCode);
+    final money = appFormatOf(context).moneyIn(widget.currencyCode);
     final bills = [
       for (final p in ref.watch(purchasesProvider(widget.workspaceId)).value ??
           const <PurchaseSummary>[])

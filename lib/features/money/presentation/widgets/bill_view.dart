@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -85,7 +85,7 @@ class BillView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currency = moneyFormat(currencyCode);
+    final currency = appFormatOf(context).moneyIn(currencyCode);
 
     final sections = buildBillSections(
       period: statement.period,
@@ -322,9 +322,7 @@ class _CreditsCard extends StatelessWidget {
                 label: entry.description.isEmpty
                     ? _label(l10n, entry)
                     : entry.description,
-                detail: DateFormat.yMMMd(
-                  Localizations.maybeLocaleOf(context)?.toString(),
-                ).format(entry.on.toLocal()),
+                detail: appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(entry.on)),
                 value: '+${money(entry.amountCents)}',
               ),
           ],

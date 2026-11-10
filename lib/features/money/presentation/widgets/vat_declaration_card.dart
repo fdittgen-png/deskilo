@@ -5,9 +5,10 @@
 // passes in. Moved whole from vat_declarations_screen.dart.
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../application/vat_declaration_rows.dart';
@@ -33,7 +34,7 @@ class VatDeclarationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final dateFormat = DateFormat.yMMMd();
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     final declaration = row.declaration;
     return Card(
   key: ValueKey(

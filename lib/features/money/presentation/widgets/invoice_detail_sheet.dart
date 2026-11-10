@@ -2,8 +2,9 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -321,9 +322,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
   /// profile (0060) — and the issuer's notes on it.
   List<Widget> _snapshot(BuildContext context, InvoiceDetailFacts facts) {
     final l10n = context.l10n;
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     return [
       _line(context, '${l10n.invoicePdfIssuedOn} '
           '${dateFormat.format(invoice.issuedAt)}'

@@ -13,8 +13,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -182,7 +183,7 @@ class _Obligations extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final today = ref.watch(clockProvider).now();
-    final dates = DateFormat.yMMMd(Localizations.localeOf(context).toString());
+    final dates = appFormatOf(context).dates(DateShape.date);
     final duties = mandatesFor(countryCode);
     // Until the workspace's own tax reference is ready nothing is refused.
     final reference = watchWorkspaceTaxReference(ref);

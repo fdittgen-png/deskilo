@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -63,7 +64,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
   Widget _body(AppLocalizations l10n, Workspace workspace) {
     final offers = ref.watch(guestPassOffersProvider(workspace.id));
     final held = {for (final p in ref.watch(myPermissionsProvider)) p.wireName};
-    final currency = MoneyFormat(workspace.currencyCode);
+    final currency = appFormatOf(context).moneyIn(workspace.currencyCode);
     final list = offers.value;
     if (list == null) return const LoadingView();
     final draft = _draft;
@@ -200,7 +201,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
     FieldErrors check() {
       final problems = guestPassOfferProblems(
         fields['name'].text,
-        parseMinorInput(fields['price'].text),
+        appFormatOf(context).parseMinor(fields['price'].text),
       );
       return {
         if (problems.contains(GuestPassOfferProblem.name))
@@ -229,7 +230,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
                   id: offer?.id,
                   name: fields['name'].text.trim(),
                   unit: unit,
-                  priceCents: parseMinorInput(fields['price'].text)!,
+                  priceCents: appFormatOf(context).parseMinor(fields['price'].text)!,
                   vatRateId: offer?.vatRateId,
                   active: active,
                 ),

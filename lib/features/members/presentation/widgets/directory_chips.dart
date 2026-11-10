@@ -51,9 +51,9 @@ Widget? directoryPresenceChip(
 /// knows one — "Tue 21 · 09:00 · A1".
 String _directoryUpcomingLabel(
     AppFormat format, Reservation reservation, String seatName) {
-  final local = reservation.startsAt.toLocal();
+  final local = format.wall(reservation.startsAt);
   final day =
-      '${DateFormat.E().format(local)} ${DateFormat.d().format(local)}';
+      '${format.dates(DateShape.weekday).format(local)} ${format.dates(DateShape.day).format(local)}';
   final when = '$day · ${format.time(reservation.startsAt)}';
   return seatName.isEmpty ? when : '$when · $seatName';
 }

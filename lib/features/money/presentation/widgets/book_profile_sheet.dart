@@ -3,8 +3,9 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -199,7 +200,6 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toLanguageTag();
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final sites = ref.watch(sitesProvider).value ?? const <Site>[];
     final today = ref.watch(clockProvider).now();
@@ -217,7 +217,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
             draft.issuerSiteId,
             draft.effectiveFrom,
           );
-    final dates = DateFormat.yMMMd(locale);
+    final dates = appFormatOf(context).dates(DateShape.date);
     final year = draft == null || problems.isNotEmpty
         ? null
         : fiscalYearOf(draft, draft.effectiveFrom);
@@ -325,7 +325,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
                         DropdownMenuItem(
                           value: m,
                           child: Text(
-                            DateFormat.MMMM(locale).format(DateTime(2026, m)),
+                            appFormatOf(context).dates(DateShape.month).format(DateTime(2026, m)),
                           ),
                         ),
                     ],
@@ -410,12 +410,11 @@ class BookProfileSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toLanguageTag();
     final profiles = ref.watch(bookProfilesProvider).value ?? const [];
     final sites = {
       for (final s in ref.watch(sitesProvider).value ?? const <Site>[]) s.id: s,
     };
-    final dates = DateFormat.yMMMd(locale);
+    final dates = appFormatOf(context).dates(DateShape.date);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

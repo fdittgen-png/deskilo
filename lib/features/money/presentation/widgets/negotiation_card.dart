@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
@@ -44,9 +45,7 @@ class NegotiationCard extends ConsumerWidget {
     final pending = value.pending;
     final services = ref.watch(servicesProvider).value ?? const <ServiceItem>[];
     final packages = ref.watch(packagesProvider).value ?? const <Package>[];
-    final monthFormat = DateFormat.yMMMM(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final monthFormat = appFormatOf(context).dates(DateShape.monthYear);
 
     final defaultLabel = l10n.negotiationDefaultColumn;
     final mineLabel = l10n.negotiationMineColumn;
@@ -400,7 +399,7 @@ Future<void> showPriceNegotiationSheet(
     final t = raw.trim().replaceAll(',', '.');
     if (t.isEmpty) return null;
     // #1140 — the currency's own minor digits, never a literal 100.
-    return parseMinorInput(t);
+    return appFormatOf(context).parseMinor(t);
   }
   final discountPct = parseDecimalInput(discount.text, grouping: false)?.toDouble();
   final feeCents = cents(fee.text);
@@ -490,9 +489,7 @@ class MemberNegotiationTile extends ConsumerWidget {
         ref,
         memberId: memberId,
         memberName: memberName,
-        currency: moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency,
-        ),
+        currency: appFormatOf(context).moneyIn(ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency),
         readOnly: !canManage,
       ),
     );

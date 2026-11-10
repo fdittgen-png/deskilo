@@ -8,8 +8,8 @@
 // else. They stay dumb: a value in, a callback out; every write goes
 // through the screen.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -151,8 +151,7 @@ class SimultaneousTile extends StatelessWidget {
                 : null,
           ),
           Text(
-            NumberFormat.decimalPattern(
-                    Localizations.localeOf(context).toLanguageTag())
+            appFormatOf(context).numbers()
                 .format(value),
             style: Theme.of(context).textTheme.titleMedium,
           ),

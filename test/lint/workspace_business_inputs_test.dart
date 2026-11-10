@@ -53,7 +53,7 @@ const _clean = <String>[
 ];
 
 /// RATCHET: files reading the calendar statics. Only falls.
-const _calendarBudget = 55;
+const _calendarBudget = 50;
 
 /// RATCHET: files reading the tax reference static. Only falls.
 /// 2026-10-26 (#2363): 21 -> 22, `money/domain/stamp_duty.dart`: the Italian
