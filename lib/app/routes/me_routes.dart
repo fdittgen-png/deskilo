@@ -175,7 +175,12 @@ StatefulShellRoute _personalShell(RouteEnv env) =>
             GoRoute(
               path: MeTab.discover.path,
               builder: (context, state) => _kept(
-                  MeTab.discover, const DirectoryScreen(embedded: true)),
+                MeTab.discover,
+                DirectoryScreen(
+                  embedded: true,
+                  focusSearch: state.uri.queryParameters['focus'] == 'search',
+                ),
+              ),
             ),
           ],
         ),

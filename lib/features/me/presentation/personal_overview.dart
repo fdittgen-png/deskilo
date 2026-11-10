@@ -36,12 +36,12 @@ import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_spaces_view.dart';
+import '../domain/getting_started.dart';
 import '../domain/greeting.dart';
-import '../domain/my_spaces.dart';
-import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
 import '../providers/space_prefs_provider.dart';
 import 'me_shell.dart';
+import 'personal_first_visit.dart';
 import 'personal_overview_attention.dart';
 import 'personal_overview_sections.dart';
 import 'personal_space_card.dart';
@@ -80,48 +80,64 @@ class PersonalOverview extends StatelessWidget {
               final expanded = _overviewExpanded(
                 constraints.maxWidth - 2 * AppSpacing.screenGutter,
               );
-              final sections = expanded
-                  ? [
-                      Row(
-                        key: const ValueKey('me-overview-expanded'),
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                NextCommitmentSection(expanded: expanded),
-                                const SizedBox(height: _columnGap),
-                                _SpacesSection(expanded: expanded),
-                              ],
-                            ),
+              return Consumer(
+                builder: (context, ref, _) {
+                  final home = homeStateOf(ref);
+                  final sections = expanded
+                      ? [
+                          Row(
+                            key: const ValueKey('me-overview-expanded'),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  children: [
+                                    NextCommitmentSection(expanded: expanded),
+                                    const SizedBox(height: _columnGap),
+                                    _SpacesSection(expanded: expanded),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: _columnGap),
+                              Expanded(
+                                child: NeedsAttentionSection(expanded: expanded),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: _columnGap),
-                          Expanded(
-                            child: NeedsAttentionSection(expanded: expanded),
-                          ),
-                        ],
-                      ),
-                    ]
-                  : [
-                      NextCommitmentSection(expanded: expanded),
+                        ]
+                      : [
+                          NextCommitmentSection(expanded: expanded),
+                          const SizedBox(height: _columnGap),
+                          NeedsAttentionSection(expanded: expanded),
+                          const SizedBox(height: _columnGap),
+                          _SpacesSection(expanded: expanded),
+                        ];
+                  // The first visit replaces the sections; the checklist
+                  // also tops the normal Home until the four steps are done.
+                  final settled = home.facts.values.every((v) => v != null);
+                  final children = <Widget>[
+                    if (home.firstVisit == true)
+                      PersonalFirstVisit(facts: home.facts)
+                    else ...[
+                      _Header(expanded: expanded),
                       const SizedBox(height: _columnGap),
-                      NeedsAttentionSection(expanded: expanded),
-                      const SizedBox(height: _columnGap),
-                      _SpacesSection(expanded: expanded),
-                    ];
-              final children = <Widget>[
-                _Header(expanded: expanded),
-                const SizedBox(height: _columnGap),
-                ...sections,
-                const _DiscoverJoinEntry(),
-                const SizedBox(height: AppSpacing.xl),
-              ];
-              return ListView.builder(
-                key: const ValueKey('me-home-list'),
-                padding: AppSpacing.gutterAll,
-                itemCount: children.length,
-                itemBuilder: (context, i) => children[i],
+                      if (settled && !startedComplete(home.facts)) ...[
+                        GettingStartedCard(facts: home.facts),
+                        const SizedBox(height: _columnGap),
+                      ],
+                      ...sections,
+                      const _DiscoverJoinEntry(),
+                    ],
+                    const SizedBox(height: AppSpacing.xl),
+                  ];
+                  return ListView.builder(
+                    key: const ValueKey('me-home-list'),
+                    padding: AppSpacing.gutterAll,
+                    itemCount: children.length,
+                    itemBuilder: (context, i) => children[i],
+                  );
+                },
               );
             },
           ),
@@ -181,18 +197,6 @@ class _Header extends ConsumerWidget {
   }
 }
 
-/// A space of this server, of a linked one, or one my account names
-/// elsewhere is not "nothing" (#2563); this server's own spaces come from
-/// its list, as everywhere else on Me.
-bool _noSpace(
-  PersonalWorkspaceRefs refs,
-  List<Workspace> local,
-  List<LinkedServerSpaces> linked,
-) =>
-    refs.beyondLocalSpaces.isEmpty &&
-    local.isEmpty &&
-    linked.every((s) => s.spaces.isEmpty);
-
 /// The first spaces of My spaces, and the way to all of them. With no
 /// space at all, the ways to one lead.
 class _SpacesSection extends ConsumerWidget {
@@ -208,7 +212,7 @@ class _SpacesSection extends ConsumerWidget {
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
     final failed = answer.hasError && !answer.isLoading;
     final refs = failed ? null : refsOfCurrentAccount(answer);
-    final nothing = refs != null && _noSpace(refs, local, linked);
+    final nothing = refs != null && noSpaceAtAll(refs, local, linked);
     final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
     // Favourites first, then the spaces I entered most recently here.
     final preview = refs == null
@@ -275,7 +279,7 @@ class _DiscoverJoinEntry extends ConsumerWidget {
     final refs = refsOfCurrentAccount(ref.watch(personalWorkspaceRefsProvider));
     final local = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
-    if (refs == null || _noSpace(refs, local, linked)) return const SizedBox.shrink();
+    if (refs == null || noSpaceAtAll(refs, local, linked)) return const SizedBox.shrink();
     return const Padding(
       key: ValueKey('me-overview-discover-join'),
       padding: EdgeInsets.only(top: AppSpacing.lg),

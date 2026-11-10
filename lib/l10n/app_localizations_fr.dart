@@ -17215,6 +17215,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meFinanceGlanceOwed => 'À payer :';
 
   @override
+  String get meFindPlaceHint => 'Un poste, du yoga, un massage… ou un nom';
+
+  @override
+  String get meFindPlaceNearMe => 'Chercher près de moi';
+
+  @override
+  String get meFindPlaceTitle => 'Trouver un lieu près de chez vous';
+
+  @override
   String get meFindSpace => 'Trouver un espace';
 
   @override
@@ -17274,6 +17283,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meHomeTitle => 'Accueil';
+
+  @override
+  String get meInvitationBody => 'Rejoignez le lieu qui vous a invité';
+
+  @override
+  String get meInvitationTitle => 'J\'ai un code d\'invitation';
 
   @override
   String get meJoinSpace => 'Rejoindre avec un code';
@@ -17460,6 +17475,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vos espaces ailleurs n\'ont pas pu être lus.';
 
   @override
+  String get meRunASpace => 'Vous dirigez vous-même une activité ?';
+
+  @override
+  String get meRunASpaceAction => 'Configurer';
+
+  @override
   String get meSectionMine => 'Mon historique et mes données';
 
   @override
@@ -17504,6 +17525,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meSpacesSearch => 'Rechercher mes espaces';
 
   @override
+  String get meStartedAccount => 'Créer votre compte';
+
+  @override
+  String get meStartedBooking => 'Faire votre première réservation';
+
+  @override
+  String get meStartedDone => 'Fait';
+
+  @override
+  String get meStartedNext => 'Suivant';
+
+  @override
+  String get meStartedProfile => 'Ajouter votre nom et votre photo';
+
+  @override
+  String get meStartedSpace => 'Trouver un lieu';
+
+  @override
+  String get meStartedTitle => 'Premiers pas';
+
+  @override
   String get meTabData => 'Mes données';
 
   @override
@@ -17526,6 +17568,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meUtilityHelp => 'Aide et assistant';
+
+  @override
+  String get meWelcomeSubtitle => 'Que cherchez-vous ?';
+
+  @override
+  String meWelcomeTitle(String name) {
+    return 'Bienvenue, $name';
+  }
 
   @override
   String get meWhereSpacesLive => 'Où vivent mes espaces';
