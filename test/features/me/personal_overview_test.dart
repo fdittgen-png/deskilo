@@ -9,11 +9,15 @@
 // while the other sections stay), recovery (Try again reads them), a
 // searched period that holds nothing, and the 2:1 layout when wide.
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/privacy/privacy_policy.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/me/application/personal_overview.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
+import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations_composition.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -23,6 +27,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/my_finances_screen.dart' show invoice;
 import 'me_app.dart';
@@ -152,7 +157,50 @@ Future<GoRouter> _pump(
   return router;
 }
 
+/// The Home greeting at [hour] for a person named [name] ('' = none yet).
+Future<void> _greeting(WidgetTester tester, int hour, String name) async {
+  final profile = FakeProfileRepository(
+    profiles: [
+      Profile(
+        id: 'user-1',
+        displayName: name,
+        privacyAcceptedVersion: kPrivacyPolicyVersion,
+        privacyAcceptedAt: DateTime.utc(2026, 8, 30),
+      ),
+    ],
+  );
+  final router = await pumpMeApp(
+    tester,
+    workspace: twoSpaces(),
+    size: const Size(420, 2600),
+    profile: profile,
+    timeZoneMode: TimeZoneMode.device,
+    clock: FixedClock(DateTime(kTestNow.year, kTestNow.month, kTestNow.day, hour)),
+    extraOverrides: <Override>[personalShellEnabledProvider.overrideWithValue(true)],
+  );
+  await goTo(tester, router, '/me');
+}
+
 void main() {
+  group('the greeting', () {
+    for (final (hour, wording) in [
+      (8, 'Good morning, Ada'),
+      (14, 'Good afternoon, Ada'),
+      (20, 'Good evening, Ada'),
+    ]) {
+      testWidgets('at $hour:00 says "$wording" and the date', (tester) async {
+        await _greeting(tester, hour, 'Ada Lovelace');
+        expect(find.text(wording), findsOneWidget);
+        expect(_key('me-overview-date'), findsOneWidget);
+      });
+    }
+
+    testWidgets('without a name it welcomes', (tester) async {
+      await _greeting(tester, 8, '');
+      expect(find.text('Welcome'), findsOneWidget);
+    });
+  });
+
   group('the next commitment', () {
     MyReservationsComposition composed(
       List<MyReservationItem> a, {
@@ -330,7 +378,7 @@ void main() {
         workspace: spaces,
       );
 
-      expect(find.text('Your day, in one place'), findsOneWidget);
+      expect(_key('me-overview-greeting'), findsOneWidget);
       expect(_key('me-overview-expanded'), findsNothing);
       expect(_key('me-overview-next-inst-b-soon'), findsOneWidget);
       expect(find.text('Desk soon'), findsOneWidget);

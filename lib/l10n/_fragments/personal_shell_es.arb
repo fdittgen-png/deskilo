@@ -1,8 +1,6 @@
 {
   "featurePersonalShellTitle": "Interfaz personal (cinco destinos)",
   "featurePersonalShellDesc": "Yo en cinco destinos: Resumen, Mis espacios, Descubrir, Mensajes y Mis datos, con una barra lateral en una ventana ancha, un riel en una mediana y una barra en el teléfono. Desactivada, Yo conserva sus cuatro pestañas.",
-  "meTabOverview": "Inicio",
-  "meTabOverviewShort": "Inicio",
   "meTabSpacesShort": "Lugares",
   "meTabData": "Mis datos",
   "meTabDataShort": "Datos",

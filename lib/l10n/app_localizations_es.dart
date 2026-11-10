@@ -17162,6 +17162,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meFindSpace => 'Buscar un espacio';
 
   @override
+  String meGreetingAfternoon(String name) {
+    return 'Buenas tardes, $name';
+  }
+
+  @override
+  String meGreetingEvening(String name) {
+    return 'Buenas noches, $name';
+  }
+
+  @override
+  String meGreetingMorning(String name) {
+    return 'Buenos días, $name';
+  }
+
+  @override
+  String get meGreetingNoName => 'Le damos la bienvenida';
+
+  @override
   String get meGroupAdd => 'Nuevo grupo';
 
   @override
@@ -17258,7 +17276,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meManageSpaces => 'Gestionar mis espacios';
 
   @override
-  String get meMySpaces => 'Mis espacios';
+  String get meMySpaces => 'Mis lugares';
 
   @override
   String get meNoSpaceBody =>
@@ -17320,7 +17338,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get meOverviewAttentionNone => 'Nada requiere su atención.';
+  String get meOverviewAttentionNone => 'Nada le espera por ahora.';
 
   @override
   String get meOverviewAttentionOpenConversation => 'Abrir';
@@ -17329,7 +17347,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meOverviewAttentionOverdue => 'Vencido';
 
   @override
-  String get meOverviewAttentionTitle => 'Requiere su atención';
+  String get meOverviewAttentionTitle => 'Le espera';
 
   @override
   String get meOverviewAttentionViewDocument => 'Ver el documento';
@@ -17349,7 +17367,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ninguna reserva próxima entre las leídas hasta ahora.';
 
   @override
-  String get meOverviewNextTitle => 'Próximo compromiso';
+  String get meOverviewNextTitle => 'A continuación';
 
   @override
   String get meOverviewNextUnavailable => 'No se han podido leer sus reservas.';
@@ -17358,13 +17376,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String meOverviewNextZone(String zone) {
     return 'Horas en $zone';
   }
-
-  @override
-  String get meOverviewSubtitle =>
-      'Su próxima reserva, lo que le espera y sus espacios.';
-
-  @override
-  String get meOverviewTitle => 'Su día, en un solo lugar';
 
   @override
   String get meOverviewView => 'Ver';
@@ -17451,16 +17462,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meTabMe => 'Yo';
 
   @override
-  String get meTabOverview => 'Resumen';
+  String get meTabSpacesShort => 'Lugares';
 
   @override
-  String get meTabOverviewShort => 'Resumen';
-
-  @override
-  String get meTabSpacesShort => 'Espacios';
-
-  @override
-  String get meUtilityAccount => 'Confidencialidad y cuenta';
+  String get meUtilityAccount => 'Privacidad y cuenta';
 
   @override
   String get meUtilityHelp => 'Ayuda y asistente';

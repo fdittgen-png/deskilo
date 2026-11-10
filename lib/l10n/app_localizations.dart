@@ -28773,18 +28773,6 @@ abstract class AppLocalizations {
   /// **'Me'**
   String get meTabMe;
 
-  /// #2552 first destination of the personal shell: the person's overview.
-  ///
-  /// In en, this message translates to:
-  /// **'Home'**
-  String get meTabOverview;
-
-  /// #2552 the Overview destination on a phone's bottom bar (FR: Accueil).
-  ///
-  /// In en, this message translates to:
-  /// **'Home'**
-  String get meTabOverviewShort;
-
   /// #2552 the My spaces destination on a phone's bottom bar.
   ///
   /// In en, this message translates to:

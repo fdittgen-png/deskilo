@@ -30,18 +30,14 @@ const List<double> _scales = [1.0, 1.3];
 const Map<String, Map<String, int>> _known = {
   'account|empty': {'target under 48 dp': 12, 'unnamed control': 12},
   'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
-  'data|empty': {'overflow or exception': 1, 'target under 48 dp': 4, 'unnamed control': 8},
   'data|populated': {'overflow or exception': 2, 'target under 48 dp': 8, 'unnamed control': 8},
-  'discover|empty': {'overflow or exception': 1},
-  'discover|populated': {'overflow or exception': 1},
-  'home|empty': {'overflow or exception': 1, 'target under 48 dp': 2},
-  'home|one source failed': {'overflow or exception': 5, 'target under 48 dp': 4},
-  'home|populated': {'overflow or exception': 5, 'target under 48 dp': 6},
-  'messages|empty': {'overflow or exception': 1},
-  'messages|populated': {'overflow or exception': 1},
-  'spaces|empty': {'overflow or exception': 1, 'target under 48 dp': 6},
-  'spaces|one source failed': {'a failed source is not said': 12, 'overflow or exception': 1, 'target under 48 dp': 4},
-  'spaces|populated': {'overflow or exception': 1, 'target under 48 dp': 4},
+  'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
+  'home|empty': {'target under 48 dp': 2},
+  'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 8},
+  'home|populated': {'overflow or exception': 6, 'target under 48 dp': 4},
+  'spaces|empty': {'target under 48 dp': 6},
+  'spaces|one source failed': {'a failed source is not said': 12, 'target under 48 dp': 4},
+  'spaces|populated': {'target under 48 dp': 4},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {

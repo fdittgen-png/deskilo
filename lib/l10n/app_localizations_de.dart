@@ -17194,6 +17194,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meFindSpace => 'Space finden';
 
   @override
+  String meGreetingAfternoon(String name) {
+    return 'Guten Tag, $name';
+  }
+
+  @override
+  String meGreetingEvening(String name) {
+    return 'Guten Abend, $name';
+  }
+
+  @override
+  String meGreetingMorning(String name) {
+    return 'Guten Morgen, $name';
+  }
+
+  @override
+  String get meGreetingNoName => 'Willkommen';
+
+  @override
   String get meGroupAdd => 'Neue Gruppe';
 
   @override
@@ -17290,7 +17308,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meManageSpaces => 'Meine Spaces verwalten';
 
   @override
-  String get meMySpaces => 'Meine Spaces';
+  String get meMySpaces => 'Meine Orte';
 
   @override
   String get meNoSpaceBody =>
@@ -17352,7 +17370,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get meOverviewAttentionNone => 'Nichts wartet auf Sie.';
+  String get meOverviewAttentionNone => 'Im Moment wartet nichts auf Sie.';
 
   @override
   String get meOverviewAttentionOpenConversation => 'Öffnen';
@@ -17381,7 +17399,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine anstehende Buchung unter den bisher gelesenen.';
 
   @override
-  String get meOverviewNextTitle => 'Nächster Termin';
+  String get meOverviewNextTitle => 'Als Nächstes';
 
   @override
   String get meOverviewNextUnavailable =>
@@ -17391,13 +17409,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String meOverviewNextZone(String zone) {
     return 'Zeiten in $zone';
   }
-
-  @override
-  String get meOverviewSubtitle =>
-      'Ihre nächste Buchung, was auf Sie wartet, und Ihre Spaces.';
-
-  @override
-  String get meOverviewTitle => 'Ihr Tag, an einem Ort';
 
   @override
   String get meOverviewView => 'Ansehen';
@@ -17484,16 +17495,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meTabMe => 'Ich';
 
   @override
-  String get meTabOverview => 'Überblick';
+  String get meTabSpacesShort => 'Orte';
 
   @override
-  String get meTabOverviewShort => 'Überblick';
-
-  @override
-  String get meTabSpacesShort => 'Spaces';
-
-  @override
-  String get meUtilityAccount => 'Vertraulichkeit und Konto';
+  String get meUtilityAccount => 'Privatsphäre und Konto';
 
   @override
   String get meUtilityHelp => 'Hilfe und Assistent';
