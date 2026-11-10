@@ -19,13 +19,17 @@ import '../../tool/dead_code/scan.dart';
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
   'lib/features/money/application/receivables.dart::actionFor':
-      '#3587 step 2 — the invoicing home reads it',
-  'lib/features/money/application/receivables.dart::customerBalancesOf':
-      '#3587 step 2 — the invoicing home reads it',
-  'lib/features/money/application/receivables.dart::doNextOf':
-      '#3587 step 2 — the invoicing home reads it',
-  'lib/features/money/application/receivables.dart::figuresOf':
-      '#3587 step 2 — the invoicing home reads it',
+      '#3587 R1-c — the invoicing home reads it',
+  'lib/features/money/application/receivables_answers.dart::customerRowsOf':
+      '#3587 R1-c — the invoicing home reads it',
+  'lib/features/money/application/receivables_answers.dart::monthOf':
+      '#3587 R1-c — the invoicing home reads it',
+  'lib/features/money/application/receivables_answers.dart::owedOf':
+      '#3587 R1-c — the invoicing home reads it',
+  'lib/features/money/application/receivables_answers.dart::todoOf':
+      '#3587 R1-c — the invoicing home reads it',
+  'lib/features/money/presentation/invoicing/receivables_adapter.dart::receivablesOf':
+      '#3587 R1-c — the invoicing home reads it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

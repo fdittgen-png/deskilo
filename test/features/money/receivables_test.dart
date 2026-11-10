@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3587 step 1 — the owner's invoicing read models: every status, the one
-// action per status, the four figures, "Do next" and its order, customer
-// balances, and two currencies never summed.
+// #3587 — the owner's invoicing read models: every status, its precedence
+// over the payment's own steps, and the one action per status. The answers
+// built on them are in receivables_answers_test.dart.
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,6 +21,9 @@ Receivable _r({
   DateTime? due,
   bool noDue = false,
   bool declared = false,
+  bool toMatch = false,
+  bool approval = false,
+  bool customerConfirms = false,
   bool hold = false,
   bool failed = false,
   int sent = 0,
@@ -40,6 +43,9 @@ Receivable _r({
       : (due ?? DateTime(2026, 11, 20)),
   stage: stage,
   paymentDeclared: declared,
+  paymentToMatch: toMatch,
+  awaitingSecondApproval: approval,
+  awaitingCustomerConfirmation: customerConfirms,
   onHold: hold,
   sendFailed: failed,
   remindersSent: sent,
@@ -107,6 +113,32 @@ void main() {
       );
       expect(
         _status(_r(due: late, hold: true, failed: true)).kind,
+        InvoiceStatusKind.couldNotBeSent,
+      );
+    });
+
+    test('the payment\'s own steps, in order, and each outranks a hold', () {
+      final late = DateTime(2026, 11, 2);
+      InvoiceStatusKind kind(Receivable r) => _status(r).kind;
+      expect(
+        kind(_r(due: late, hold: true, declared: true, approval: true)),
+        InvoiceStatusKind.paymentDeclared,
+      );
+      expect(
+        kind(_r(due: late, hold: true, approval: true, toMatch: true)),
+        InvoiceStatusKind.awaitingSecondApproval,
+      );
+      expect(
+        kind(_r(due: late, toMatch: true, customerConfirms: true)),
+        InvoiceStatusKind.paymentToMatch,
+      );
+      expect(
+        kind(_r(due: late, hold: true, customerConfirms: true, dueLevel: 1)),
+        InvoiceStatusKind.awaitingCustomer,
+      );
+      // A hold stops the reminder that would be due.
+      expect(
+        kind(_r(due: late, hold: true, dueLevel: 1)),
         InvoiceStatusKind.onHold,
       );
     });
@@ -133,9 +165,7 @@ void main() {
     final r = _r(noDue: true);
     expect(_status(r).kind, InvoiceStatusKind.noDueDate);
     expect(actionFor(_status(r)), InvoiceAction.open);
-    final f = figuresOf([r], today: _today);
-    expect(f.awaitingPayment, const Tally(1, {'EUR': 10000}));
-    expect(f.overdue, Tally.empty);
+    expect(r.isLateOn(_today), isFalse);
   });
 
   test('one action per status', () {
@@ -152,6 +182,10 @@ void main() {
       InvoiceAction.confirmPayment,
     );
     expect(
+      actionFor(const InvoiceStatus(InvoiceStatusKind.paymentToMatch)),
+      InvoiceAction.match,
+    );
+    expect(
       actionFor(const InvoiceStatus(InvoiceStatusKind.couldNotBeSent)),
       InvoiceAction.fix,
     );
@@ -163,135 +197,12 @@ void main() {
       InvoiceStatusKind.partlyPaid,
       InvoiceStatusKind.paid,
       InvoiceStatusKind.onHold,
+      InvoiceStatusKind.awaitingSecondApproval,
+      InvoiceStatusKind.awaitingCustomer,
       InvoiceStatusKind.cancelled,
       InvoiceStatusKind.credited,
     ]) {
       expect(actionFor(InvoiceStatus(k)), InvoiceAction.open, reason: '$k');
     }
-  });
-
-  group('the four figures', () {
-    test('two currencies are never added', () {
-      final f = figuresOf(
-        [
-          _r(id: 'a', due: DateTime(2026, 11, 2)),
-          _r(id: 'b', currency: 'CHF', open: 8000, due: DateTime(2026, 11, 2)),
-          _r(id: 'c', open: 2500),
-          _r(
-            id: 'd',
-            currency: 'CHF',
-            total: 3000,
-            open: 0,
-            stage: ReceivableStage.paid,
-            paidOn: DateTime(2026, 11, 3),
-          ),
-          _r(
-            id: 'e',
-            total: 900,
-            open: 0,
-            stage: ReceivableStage.paid,
-            paidOn: DateTime(2026, 10, 31),
-          ),
-        ],
-        toInvoice: [(customerId: 'c9', currency: 'EUR', amountMinor: 5000)],
-        today: _today,
-      );
-      expect(f.overdue, const Tally(2, {'EUR': 10000, 'CHF': 8000}));
-      expect(f.awaitingPayment, const Tally(1, {'EUR': 2500}));
-      // Paid this month counts November only, in the business's calendar.
-      expect(f.paidThisMonth, const Tally(1, {'CHF': 3000}));
-      expect(f.toInvoice, const Tally(1, {'EUR': 5000}));
-    });
-
-    test('a draft, a cancelled and a credited invoice count in none', () {
-      final f = figuresOf([
-        _r(stage: ReceivableStage.draft),
-        _r(stage: ReceivableStage.cancelled),
-        _r(stage: ReceivableStage.credited),
-      ], today: _today);
-      expect(f.overdue, Tally.empty);
-      expect(f.awaitingPayment, Tally.empty);
-      expect(f.paidThisMonth, Tally.empty);
-    });
-  });
-
-  test(
-    '"Do next" keeps the issue\'s order and only what has something to do',
-    () {
-      final late = DateTime(2026, 11, 2);
-      final next = doNextOf(
-        [
-          _r(
-            id: 'd',
-            stage: ReceivableStage.draft,
-            issued: DateTime(2026, 10, 20),
-          ),
-          _r(id: 'f', due: late, failed: true),
-          _r(id: 'p', due: late, declared: true),
-          _r(id: 'r1', due: late, dueLevel: 1, open: 1000),
-          _r(id: 'r2', due: late, dueLevel: 2, currency: 'CHF', open: 2000),
-          _r(
-            id: 'fresh',
-            stage: ReceivableStage.draft,
-            issued: DateTime(2026, 11, 8),
-          ),
-        ],
-        toInvoice: [(customerId: 'c9', currency: 'EUR', amountMinor: 5000)],
-        today: _today,
-      );
-      expect(
-        [for (final n in next) n.kind],
-        [
-          DoNextKind.invoiceTheMonth,
-          DoNextKind.sendReminders,
-          DoNextKind.confirmPayments,
-          DoNextKind.fixSending,
-          DoNextKind.issueDrafts,
-        ],
-      );
-      expect(next[1].tally, const Tally(2, {'EUR': 1000, 'CHF': 2000}));
-      // Every draft counts, however recent.
-      expect(next[4].tally.count, 2);
-      expect(doNextOf([_r()], today: _today), isEmpty);
-    },
-  );
-
-  test('customer balances: open and overdue per currency, the oldest age, '
-      'the most overdue first', () {
-    final balances = customerBalancesOf([
-      _r(
-        id: 'a1',
-        customer: 'a',
-        open: 1000,
-        issued: DateTime(2026, 9),
-        due: DateTime(2026, 10),
-      ),
-      _r(
-        id: 'a2',
-        customer: 'a',
-        currency: 'CHF',
-        open: 700,
-        issued: DateTime(2026, 11),
-      ),
-      _r(
-        id: 'b1',
-        customer: 'b',
-        name: 'Bea',
-        open: 5000,
-        issued: DateTime(2026, 11, 5),
-      ),
-      _r(
-        id: 'c1',
-        customer: 'c',
-        name: 'Cy',
-        stage: ReceivableStage.paid,
-        open: 0,
-      ),
-    ], today: _today);
-    expect([for (final b in balances) b.customerName], ['Ada', 'Bea']);
-    expect(balances.first.open, const Tally(2, {'EUR': 1000, 'CHF': 700}));
-    expect(balances.first.overdue, const Tally(1, {'EUR': 1000}));
-    expect(balances.first.oldestDays, 70);
-    expect(balances.last.overdue, Tally.empty);
   });
 }
