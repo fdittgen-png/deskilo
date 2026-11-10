@@ -33,7 +33,7 @@
     "milestone": "bookable",
     "route": "/setup/step/places",
     "evidence": "places",
-    "feature": null,
+    "feature": "placeBooking",
     "required": true,
     "depends_on": [
       "basics"
@@ -366,7 +366,7 @@
     "milestone": "live",
     "route": "/reserve",
     "evidence": "first_booking",
-    "feature": null,
+    "feature": "placeBooking",
     "required": true,
     "depends_on": [
       "places",

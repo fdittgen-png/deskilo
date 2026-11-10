@@ -28,7 +28,6 @@ import '../helpers/router_paths.dart';
 /// Each names why no flag may own it; its sub-options keep their flags.
 const Map<String, String> _structural = {
   '/messages': 'the landing and fallback route; pending requests arrive here',
-  '/reserve': "the product's home and its core function",
   '/plan': 'alias of /reserve',
   '/pending': 'the waiting room exists before a membership, so no flag is read',
   '/workspace-code': 'joining by invitation is infrastructure (#917, #1652)',
@@ -36,9 +35,6 @@ const Map<String, String> _structural = {
   '/workspace-settings': 'the identity every money and date rule reads',
   '/reports': 'its documents section is part of workspace settings (#2301)',
   '/members': 'admission and roles cannot be managed without it',
-  '/editor': 'the plan is what every booking books',
-  '/editor/level/:levelId': 'a level of the plan, as /editor',
-  '/availability': 'the server always enforces opening days and closures',
   '/validation': 'admission and every pending request run through it',
   '/settings/assistants':
       'narrows assistant exposure; not behind mcpAccess (#1826)',

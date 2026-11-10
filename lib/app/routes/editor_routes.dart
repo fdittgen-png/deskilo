@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/editor/presentation/screens/editor_screen.dart';
 import '../../features/editor/presentation/screens/level_canvas_screen.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -19,6 +20,8 @@ List<RouteBase> editorRoutes(RouteEnv env) {
       // #2137 — the owner, or whoever holds manageSites (0363).
       redirect: env.guard(
         const RouteAccess(
+          // #3550 — no places, no plan to edit.
+          features: [WorkspaceFeature.placeBooking],
           permission: WorkspacePermission.manageSites,
           bypass: RoleBypass.owner,
         ),

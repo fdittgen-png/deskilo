@@ -77,6 +77,13 @@ class DrawerEntries {
   // given it through a role finds the way there.
   bool may(WorkspacePermission p) => permissions.contains(p);
 
+  /// #3550 — a place entry: the places are on, [p] is held and, when named,
+  /// [also] is on too.
+  bool mayOnPlaces(WorkspacePermission p, [WorkspaceFeature? also]) =>
+      features.contains(WorkspaceFeature.placeBooking) &&
+      may(p) &&
+      (also == null || features.contains(also));
+
   List<DrawerEntry> navigation() {
     return <DrawerEntry>[
       if (may(WorkspacePermission.makeReservations))
@@ -257,7 +264,7 @@ class DrawerEntries {
           () => go('/members'),
           route: '/members',
         ),
-      if (may(WorkspacePermission.workspaceSettings))
+      if (mayOnPlaces(WorkspacePermission.workspaceSettings))
         DrawerEntry(
           'drawer-availability',
           Icons.event_busy_outlined,
@@ -320,8 +327,10 @@ class DrawerEntries {
           () => go('/services'),
           route: '/services',
         ),
-      if (may(WorkspacePermission.manageServices) &&
-          features.contains(WorkspaceFeature.accessorySupplements))
+      if (mayOnPlaces(
+        WorkspacePermission.manageServices,
+        WorkspaceFeature.accessorySupplements,
+      ))
         DrawerEntry(
           'drawer-accessories',
           Icons.chair_outlined,
@@ -347,7 +356,7 @@ class DrawerEntries {
           route: '/features',
         ),
       // #2137 — editing the plan is delegable through manageSites.
-      if (may(WorkspacePermission.manageSites))
+      if (mayOnPlaces(WorkspacePermission.manageSites))
         DrawerEntry(
           'drawer-editor',
           Icons.design_services_outlined,
