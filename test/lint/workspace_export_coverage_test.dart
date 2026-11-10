@@ -216,6 +216,10 @@ const Map<String, String> _notExported = {
   'provider_settlement_costs':
       '#3504 -- the costs a payment provider kept in a settlement, as it reported them: '
           'the provider issues and keeps them; the payout they belong to is a provider_payouts row',
+  'national_channel_acceptances':
+      '#3159 — the receipt of a national e-invoicing channel (SdI, Verifactu) that '
+          'accepted a submission of the space: the channel issues and keeps it; it '
+          'only opens the issuing gate of this server',
   'provider_payouts':
       '#2380 — the payouts a payment provider reported: the provider issues and keeps '
           'them; the payments they carried are exported as ledger rows',
