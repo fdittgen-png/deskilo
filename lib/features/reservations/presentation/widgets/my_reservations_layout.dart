@@ -202,6 +202,7 @@ IconData myReservationKindIcon(MyReservationPlaceKind kind) => switch (kind) {
   MyReservationPlaceKind.desk => Icons.desk_outlined,
   MyReservationPlaceKind.office => Icons.meeting_room_outlined,
   MyReservationPlaceKind.level => Icons.layers_outlined,
+  MyReservationPlaceKind.other => Icons.place_outlined,
 };
 
 /// What a booking holds, in words.
@@ -213,6 +214,8 @@ String myReservationKindWords(
   MyReservationPlaceKind.desk => l10n.myReservationsKindDesk,
   MyReservationPlaceKind.office => l10n.myReservationsKindOffice,
   MyReservationPlaceKind.level => l10n.myReservationsKindLevel,
+  // A kind this version does not know has no word: the row shows its label.
+  MyReservationPlaceKind.other => '',
 };
 
 /// Where a booking stands, in words.
