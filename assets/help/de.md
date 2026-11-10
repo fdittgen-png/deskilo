@@ -408,6 +408,31 @@ Sie sind in einem Space und möchten einen Bildschirm erreichen. Alles liegt in 
 
 **Siehe auch:** [Navigationsstil](help:user.profile.settings.navigation) · [Ich: Ihr Zuhause und Ihre Spaces](help:user.me.home)
 
+### Der Überblick über den Raum
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie öffnen den Raum und möchten zuerst sehen, was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.
+
+<!-- image: user-start-workspace-overview -->
+
+**Schritte**
+
+1. Öffnen Sie [Überblick](app:/workspace-overview).
+2. Lesen Sie **Zu erledigen**: was auf Sie wartet, und eine Zeile, die die Anfragen zählt, über die im Raum noch niemand entschieden hat. „Nichts wartet auf Sie“ heißt, dass nichts ansteht.
+3. Lesen Sie **Kennzahlen**, gruppiert nach **Kapazität**, **Verkauf**, **Einkauf**, **Geld** und **Personen**. Tippen Sie auf eine Kachel, um zu öffnen, woher ihre Zahl kommt.
+4. Tippen Sie auf **Anpassen**, um die gewünschten Kacheln in Ihrer Reihenfolge anzuheften.
+5. Tippen Sie auf **Alle Kennzahlen** für die vollständige Analyseseite.
+
+**Gut zu wissen**
+
+- Sie sehen nur die Zahlen, die Ihre Rolle lesen darf. Eine Zahl, die nicht gelesen werden konnte, zeigt **Nicht verfügbar**, nie null.
+- **Aktive Mitgliedschaften** zählt Mitgliedschaften, nicht Personen. **Überfällige Forderungen** lässt Rechnungen ohne nachgewiesene Fälligkeit oder in der Warteschleife weg und zählt sie getrennt. Beides sind Zahlen von heute: Es wird kein Verlauf aufbewahrt.
+- **Anpassen** braucht das Recht, die Zahlen des Raums zu lesen, und den Berichtsdesigner.
+- Der Inhaber schaltet die Seite unter den Funktionen als **Überblick über den Raum** ein. Ist sie aus, bleiben die Aufmerksamkeitsliste und die Analyseseite, wie sie sind.
+
+**Siehe auch:** [Sich zurechtfinden](help:user.start.navigation)
+
 ### Die Karte „Erste Schritte“ und die Tipps
 
 **Zielgruppe:** Alle
@@ -2509,6 +2534,28 @@ Sie haben etwas für den Raum bezahlt und möchten, dass der Workspace es Ihnen 
 
 **Siehe auch:** [Eine Ausgabe genehmigen oder ablehnen](help:user.money.expense.approve)
 
+### Die Umsatzsteuer einer Ausgabe
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Eine Ausgabe enthält Umsatzsteuer, und der Raum soll den richtigen Teil davon abziehen.
+
+**Schritte**
+
+1. Wählen Sie im Ausgabenformular, oder in **Geplante Ausgaben**, die **Umsatzsteuer auf diese Ausgabe**: einen Satz, oder **Ohne Umsatzsteuer**.
+2. Geben Sie den **Abziehbarer Anteil (%)** ein: 100, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.
+3. Schalten Sie **Ein Anlagegut** ein für Ausstattung, die der Raum behält und abschreibt.
+4. Für eine im Ausland gekaufte Leistung ohne Steuer Ihres Landes schalten Sie **Bei einem Lieferanten im Ausland gekauft** ein. Der eingegebene Betrag ist dann die Bemessungsgrundlage: Der Raum schuldet darauf die Bezugsteuer und zieht seinen Anteil ab.
+
+**Gut zu wissen**
+
+- Die Felder erscheinen, wenn der Raum umsatzsteuerpflichtig ist und **Vorsteuer** eingeschaltet ist.
+- **Bei einem Lieferanten im Ausland gekauft** erscheint nur, wenn die Abrechnung Ihres Landes ein Feld für diese Steuer hat, zum Beispiel die Schweizer Abrechnung (Ziffer 383).
+- Eine geplante Ausgabe fragt einmal, und jedes Vorkommen übernimmt die Antwort.
+- Die abziehbare Steuer zählt im Monat, in dem die Ausgabe genehmigt wird.
+
+**Siehe auch:** [Eine Ausgabe einreichen](help:user.money.expense) · [Die Schweizer Abrechnung: Ziffern 205 und 383](help:user.money.vat.ch-return)
+
 ### Eine Ausgabe genehmigen oder ablehnen
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -2531,6 +2578,125 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 - **Finanzmeldungen** in Finanzen erscheint nur, wenn die Funktion **Ereignis-Tab** eingeschaltet ist.
 
 **Siehe auch:** [Finanzmeldungen](help:user.money.alerts)
+
+### Die Seite Verkauf
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten alles, was der Raum verkauft und in Rechnung stellt, an einem Ort finden.
+
+<!-- image: user-money-sales -->
+
+**Schritte**
+
+1. Öffnen Sie [Verkauf](app:/money/sales), oder tippen Sie in [Meine Finanzen](app:/money) auf **Verkauf**.
+2. Tippen Sie auf **Leistungen**, um zu ändern, was Mitglieder kaufen können. Die Zeile erscheint, wenn Sie die Leistungen verwalten dürfen.
+3. Tippen Sie auf **Rechnungen**, um Rechnungen auszustellen und zu verfolgen.
+4. Tippen Sie auf **Gästepässe** für die am Empfang verkauften Pässe, wenn der Raum welche verkauft.
+5. Tippen Sie auf **Rechnungsregister** für die Liste aller ausgestellten Rechnungen, oder auf **Tarife und Pakete**, um die Preise zu ändern. **Tarife und Pakete** erscheint, wenn Sie die Abrechnungsregeln verwalten dürfen.
+
+**Gut zu wissen**
+
+- Jede Zeile öffnet den Bildschirm, den sie immer geöffnet hat, mit denselben Rechten. Die Seite fasst sie nur zusammen.
+- Die Seite erscheint, wenn die Rechnungsstellung im Raum eingeschaltet ist und Sie Administrator:in sind.
+
+**Siehe auch:** [Rechnungsstellung im Überblick](help:user.money.invoicing) · [Die Seite Einkauf und Einkauf / Ausgabe hinzufügen](help:user.money.purchases)
+
+### Die Seite Einkauf und Einkauf / Ausgabe hinzufügen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie haben etwas für den Raum gekauft, oder ein Lieferant hat eine Rechnung geschickt, und Sie möchten es erfassen.
+
+<!-- image: user-money-purchases -->
+
+**Schritte**
+
+1. Öffnen Sie [Einkauf](app:/money/purchases), oder tippen Sie in [Meine Finanzen](app:/money) auf **Einkauf**.
+2. Tippen Sie auf **Einkauf / Ausgabe hinzufügen**.
+3. Wenn Sie Lieferantenrechnungen erfassen dürfen, beantworten Sie **Wer hat bezahlt?**:
+   - **Ich habe selbst bezahlt**: Das Ausgabenformular öffnet sich. Nach der Genehmigung schuldet der Raum Ihnen den Betrag.
+   - **Noch nicht bezahlt**: eine Lieferantenrechnung, die der Raum noch bezahlen muss.
+   - **Der Raum hat schon bezahlt**: Erfassen Sie die Rechnung. Nach der Genehmigung erfassen Sie ihre Zahlung unter **Zu zahlen**.
+4. Füllen Sie das Formular aus, das sich öffnet, und speichern Sie es.
+
+**Gut zu wissen**
+
+- Ohne das Recht, Lieferantenrechnungen zu erfassen, entfällt die Frage, und das Ausgabenformular öffnet sich.
+- Die übrigen Schaltflächen der Seite öffnen **Lieferanten**, **Einkäufe** (die Liste der Einkaufsbelege), den Mietvertrag, die Ausstattung und die angemieteten Räume, jeweils wenn der Raum sie nutzt.
+- **Einkäufe** listet Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, jeweils ein Beleg. Die Reiter heißen **Belege** und **Zu zahlen**.
+
+**Siehe auch:** [Eine Ausgabe einreichen](help:user.money.expense) · [Eine Lieferantenrechnung, von der Erfassung bis zur Genehmigung](help:user.money.purchases.bills)
+
+### Eine Lieferantenrechnung, von der Erfassung bis zur Genehmigung
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Lieferant hat eine Rechnung geschickt, und der Raum soll sie schulden, mit der Genehmigung einer zweiten Person.
+
+**Schritte**
+
+1. Tippen Sie in **Einkäufe** auf **Lieferantenrechnung hinzufügen**, oder nutzen Sie **Einkauf / Ausgabe hinzufügen**.
+2. Wählen Sie den **Lieferant** und geben Sie die **Rechnungsnummer**, die Positionen und den Betrag **Gesamt** ein. Eine unvollständig gespeicherte Rechnung bleibt ein Entwurf: „Ein Entwurf: Reichen Sie ihn zur Genehmigung ein, wenn er vollständig ist.“
+3. Tippen Sie auf **Zur Genehmigung einreichen**.
+4. Eine andere Person öffnet [Lieferantenrechnungen zur Genehmigung](app:/money/purchases/approvals) und tippt auf **Genehmigen**, oder auf **Ablehnen** mit Begründung.
+5. Nach der Genehmigung schuldet der Raum dem Lieferanten die Rechnung, bis sie bezahlt ist.
+
+**Gut zu wissen**
+
+- Eine Rechnung braucht ihren Lieferanten und einen Betrag, bevor sie eingereicht werden kann.
+- Wer eine Rechnung eingereicht hat, kann nicht über sie entscheiden. In den Einstellungen des Raums erlaubt **Rechnungen, die eine Person freigeben darf, unter (Währungseinheiten)** dieser Person, kleine Rechnungen zu genehmigen, wenn sie Ausgaben genehmigen darf. 0 behält die Regel bei, dass eine andere Person jede Rechnung genehmigt. Ablehnen braucht immer eine andere Person.
+- Jeder Beleg zeigt seine Genehmigung, seine Begleichung (**Unbezahlt**, **Teilweise beglichen**, **Beglichen**, **Nichts geschuldet**) und seinen Buchhaltungsstand getrennt.
+- Eine Rechnung zu erfassen braucht **Lieferantenrechnungen erfassen**. Über sie zu entscheiden braucht **Ausgaben genehmigen**.
+
+**Siehe auch:** [Was der Raum schuldet: Zu zahlen](help:user.money.purchases.to-pay) · [Lieferantensalden](help:user.money.suppliers.balance)
+
+### Was der Raum schuldet: Zu zahlen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was der Raum noch schuldet, und erfassen, was bezahlt wurde.
+
+**Schritte**
+
+1. Öffnen Sie in **Einkäufe** den Reiter **Zu zahlen**, oder öffnen Sie [Geld](app:/money/cash) und tippen Sie auf **Zu zahlen**.
+2. Lesen Sie **Lieferanten geschuldet** für genehmigte Rechnungen und **Den Mitgliedern geschuldet** für die Erstattungen genehmigter Belege.
+3. Tippen Sie in einer Zeile auf **Zahlung erfassen**. Geben Sie den **Gezahlter Betrag**, das Datum (**Bezahlt am**), die **Zahlungsart** und, wenn Sie möchten, eine **Referenz (optional)** ein.
+4. Für ein Mitglied, das dem Raum ebenfalls Geld schuldet, tippen Sie stattdessen auf **Mit einer Rechnung verrechnen**. Wählen Sie die **Rechnung**: Die Forderung begleicht diese offene Rechnung, statt ausgezahlt zu werden.
+5. Um eine Lieferantengutschrift anzuwenden, tippen Sie bei der Gutschrift auf **Auf die Rechnung anwenden**.
+
+**Gut zu wissen**
+
+- Erfassen Sie nur Geld, das tatsächlich gezahlt wurde. Die Zahlung wird von Ihnen gemeldet; die Bank bestätigt sie nicht.
+- Eine falsche Zahlung wird nie gelöscht. Tippen Sie auf **Stornieren** und nennen Sie den Grund. Eine Zahlung, die schon einer Rechnung zugeordnet ist, kann nicht storniert werden.
+- Eine Verrechnung lässt Umsatz und Umsatzsteuer der Rechnung unverändert; nur ihre Zahlung wird erklärt.
+- Eine Gutschrift wendet eine andere Person an als die, die sie erfasst hat, und zwar auf eine genehmigte Rechnung desselben Lieferanten, die noch mindestens diesen Betrag schuldet.
+- In den Einstellungen des Raums bedeutet **Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)**: Eine Zahlung ab diesem Betrag kann nicht von der Person erfasst werden, die die bezahlte Rechnung genehmigt hat. 0 schaltet die Regel aus.
+- Eine Zahlung zu erfassen braucht **Zahlungen an Mitglieder erfassen**; eine Verrechnung braucht **Rechnungen ausstellen & Zahlungen zuordnen**.
+
+**Siehe auch:** [Die Seite Geld](help:user.money.cash)
+
+### Die Seite Geld
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten das erfasste Geld sehen, das hereinkam und hinausging, und was noch zu zahlen ist.
+
+<!-- image: user-money-cash -->
+
+**Schritte**
+
+1. Öffnen Sie [Geld](app:/money/cash), oder tippen Sie in [Meine Finanzen](app:/money) auf **Geld**.
+2. Tippen Sie auf **Ein- und Ausgänge nach Monat** für die erfassten Zahlungen, Monat für Monat.
+3. Tippen Sie auf **Zu zahlen** für das, was der Raum noch schuldet.
+4. Tippen Sie auf **Kontoauszüge**, um einen Auszug zu importieren und seine Zeilen zuzuordnen, wenn der Raum sie nutzt.
+
+**Gut zu wissen**
+
+- Die Seite zeigt erfasste Zahlungen, keinen abgestimmten Kontostand.
+- Sie erscheint für Administrator:innen, wenn der Raumstatus oder der Einkauf eingeschaltet ist.
+
+**Siehe auch:** [Was der Raum schuldet: Zu zahlen](help:user.money.purchases.to-pay)
 
 ### Lieferantensalden
 
@@ -4842,6 +5008,28 @@ Eine Gruppe sagt, um welche Art von Satz es sich handelt, damit die Rechnung ihn
 
 **Siehe auch:** [Die Sätze festlegen](help:user.money.vat.rates)
 
+### Die Schweizer Abrechnung: Ziffern 205 und 383
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ihr Raum ist in der Schweiz, und Sie möchten die optierten Leistungen und die Bezugsteuer in den richtigen Ziffern haben.
+
+**Schritte**
+
+1. Schalten Sie in [Rechtliche Identität & E-Rechnung](app:/legal-identity) unter **Vermietung und Option (Schweiz)** **Wir vermieten nur Räume** ein, wenn Sie Räume ohne Dienstleistungen vermieten. Schalten Sie dann **Wir haben optiert (Art. 22 MWSTG)** ein, wenn Sie optiert haben, und geben Sie **Option wirksam ab (JJJJ-MM-TT)** ein.
+2. Erfassen Sie eine im Ausland gekaufte Ausgabe mit eingeschaltetem **Bei einem Lieferanten im Ausland gekauft**.
+3. Öffnen Sie [Umsatzsteuer-Voranmeldung](app:/vat-declarations) und bereiten Sie die Periode vor.
+4. Laden Sie **MWST-Abrechnung, eCH-0217-XML (Upload ins ePortal)** herunter und laden Sie die Datei im ePortal hoch.
+
+**Gut zu wissen**
+
+- Ziffer 205 ist der Teil Ihres Umsatzes (Ziffer 200), der eine reine Vermietung ist und versteuert wird, weil Sie optiert haben. Die Liegenschaftszeilen der Rechnung bestimmen diesen Teil. Die Abrechnung zählt ihn weiterhin in Ziffer 200.
+- Ziffer 383 ist die Bezugsteuer. Sie wird als geschuldete Steuer deklariert, und ihr abziehbarer Anteil zählt zur Vorsteuer. Sie gehört nicht zum Umsatz.
+- In der eCH-0217-Datei stehen die optierten Leistungen als `opted`, die Bezugsteuer als ein Element `acquisitionTax` je Satz.
+- Wer als Betreiber:in die Felder in **Steuer-Referenzdaten** bearbeitet, nennt die zusätzlichen Zeilen eines Felds in **Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)**. Ziffer 383 trägt `acquisition`.
+
+**Siehe auch:** [Die Umsatzsteuer-Voranmeldung vorbereiten](help:user.money.vat.declaration) · [Die Umsatzsteuer einer Ausgabe](help:user.money.expenses.vat)
+
 ### Einen Satz per Gesetz ändern
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
@@ -5393,6 +5581,46 @@ Sie übergeben Ihrer Buchhaltung die Rechnungen und Zahlungen des Jahres.
 - Bei einigen Formaten steht der Hinweis, dass DesKilo in Ihrem Land keine zertifizierte Software ist.
 
 **Siehe auch:** [Steuerkonto](help:user.money.vat.account) · [Das Rechnungsregister](help:user.invoicing.register)
+
+### Übertragungen: die digitale Verbindung zu Ihrem Buchhaltungssystem
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie führen Ihre Umsatzsteueraufzeichnungen in einem anderen Buchhaltungssystem und müssen zeigen, wie die Zahlen dorthin gelangt sind, zum Beispiel für das britische Making Tax Digital.
+
+**Schritte**
+
+1. Öffnen Sie [Buchhaltung & MwSt](app:/money/accounting) und tippen Sie auf **Buchhaltungssysteme**.
+2. Lesen Sie **Übertragungen**: jede ausgegebene Datei und jedes an eine Verbindung gelieferte Dokument der Periode, jeweils mit dem SHA-256 des Übertragenen.
+3. Geben Sie die **Buchhaltungs-CSV** an Ihre Steuerberatung. Ihr `report.json` zitiert die Übertragungsliste des Jahres.
+
+**Gut zu wissen**
+
+- Eine digitale Verbindung ist eine in **Übertragungen** erfasste Datei oder Lieferung über eine Verbindung. Zahlen von Hand in das andere System abzutippen, ist keine digitale Verbindung.
+- Der SHA-256 belegt, dass die Datei, die das andere System erhielt, die von DesKilo ausgegebene ist.
+- Eine leere Liste sagt: „In diesem Zeitraum wurde nichts übergeben oder übermittelt.“
+
+**Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export) · [Wo die Aufzeichnungen aufbewahrt werden](help:user.invoicing.records-location)
+
+### Wo die Aufzeichnungen aufbewahrt werden
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in · Betreiber:in
+
+Manche Länder schreiben vor, wo ein Unternehmen seine Bücher aufbewahrt, und Sie möchten wissen, was die App zu Ihren angibt.
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](app:/legal-identity) und gehen Sie zum Abschnitt **Buchführung**.
+2. Lesen Sie **Wo die Aufzeichnungen aufbewahrt werden**, neben den Aufbewahrungsfristen.
+3. Für ein kanadisches Unternehmen, dessen Aufzeichnungen außerhalb Kanadas liegen, tragen Sie **CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas** in den Einstellungen des Raums unter **Aufbewahrungsort der Aufzeichnungen** ein.
+
+**Gut zu wissen**
+
+- Der oder die Betreiber:in der Installation gibt **Land, in dem diese Installation ihre Daten aufbewahrt** an, wie es der Hosting-Vertrag nennt. Die App errät es nie. Ist es nicht angegeben, sagt die Kachel das und nennt keinen Ort.
+- Kanada verlangt die Bücher in Kanada, außer die CRA genehmigt einen anderen Ort; Deutschland verlangt elektronische Bücher in der EU. Die Kachel warnt, wenn das angegebene Land nicht passt.
+- Ein britisches, irisches, kanadisches oder US-Archiv enthält seine Tabellen mit einer `tables/README.txt`, die jede Tabelle und Spalte auf Englisch beschreibt und sagt, wo die Aufzeichnungen aufbewahrt werden.
+
+**Siehe auch:** [Übertragungen: die digitale Verbindung zu Ihrem Buchhaltungssystem](help:user.invoicing.transfers)
 
 ### Neue Buchhaltungsarbeit stoppen
 

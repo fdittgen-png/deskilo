@@ -365,6 +365,32 @@ Sie sind in einem Space und möchten einen Bildschirm erreichen. Alles liegt in 
 
 **Siehe auch:** [Navigationsstil](help:user.profile.settings.navigation) · [Ich: Ihr Zuhause und Ihre Spaces](help:user.me.home)
 
+<!-- anchor: user.start.workspace-overview -->
+### Der Überblick über den Raum
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie öffnen den Raum und möchten zuerst sehen, was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.
+
+<!-- image: user-start-workspace-overview -->
+
+**Schritte**
+
+1. Öffnen Sie [Überblick](app:/workspace-overview).
+2. Lesen Sie **Zu erledigen**: was auf Sie wartet, und eine Zeile, die die Anfragen zählt, über die im Raum noch niemand entschieden hat. „Nichts wartet auf Sie“ heißt, dass nichts ansteht.
+3. Lesen Sie **Kennzahlen**, gruppiert nach **Kapazität**, **Verkauf**, **Einkauf**, **Geld** und **Personen**. Tippen Sie auf eine Kachel, um zu öffnen, woher ihre Zahl kommt.
+4. Tippen Sie auf **Anpassen**, um die gewünschten Kacheln in Ihrer Reihenfolge anzuheften.
+5. Tippen Sie auf **Alle Kennzahlen** für die vollständige Analyseseite.
+
+**Gut zu wissen**
+
+- Sie sehen nur die Zahlen, die Ihre Rolle lesen darf. Eine Zahl, die nicht gelesen werden konnte, zeigt **Nicht verfügbar**, nie null.
+- **Aktive Mitgliedschaften** zählt Mitgliedschaften, nicht Personen. **Überfällige Forderungen** lässt Rechnungen ohne nachgewiesene Fälligkeit oder in der Warteschleife weg und zählt sie getrennt. Beides sind Zahlen von heute: Es wird kein Verlauf aufbewahrt.
+- **Anpassen** braucht das Recht, die Zahlen des Raums zu lesen, und den Berichtsdesigner.
+- Der Inhaber schaltet die Seite unter den Funktionen als **Überblick über den Raum** ein. Ist sie aus, bleiben die Aufmerksamkeitsliste und die Analyseseite, wie sie sind.
+
+**Siehe auch:** [Sich zurechtfinden](help:user.start.navigation)
+
 <!-- anchor: user.start.get-started -->
 ### Die Karte „Erste Schritte“ und die Tipps
 

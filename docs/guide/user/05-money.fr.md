@@ -283,6 +283,29 @@ Vous avez payé quelque chose pour l'espace et vous voulez que l'espace vous rem
 
 **Voir aussi:** [Approuver ou refuser une dépense](help:user.money.expense.approve)
 
+<!-- anchor: user.money.expenses.vat -->
+### La TVA d'une dépense
+
+**Public:** Membre · Administrateur·rice · Propriétaire
+
+Une dépense contient de la TVA, et vous voulez que l'espace en déduise la bonne part.
+
+**Étapes**
+
+1. Dans le formulaire de dépense, ou dans **Dépenses programmées**, choisissez la **TVA sur cette dépense** : un taux, ou **Sans TVA**.
+2. Saisissez la **Part déductible (%)** : 100, sauf si une partie de la dépense est privée ou sert une activité exonérée.
+3. Activez **Une immobilisation** pour un équipement que l'espace garde et amortit.
+4. Pour un service acheté à l'étranger sans TVA de votre pays, activez **Acheté auprès d'un fournisseur à l'étranger**. Le montant saisi est alors la base : l'espace doit l'impôt sur les acquisitions sur ce montant et en déduit sa part.
+
+**Bon à savoir**
+
+- Les champs apparaissent quand l'espace est assujetti à la TVA et que **TVA déductible** est activée.
+- **Acheté auprès d'un fournisseur à l'étranger** n'apparaît que si la déclaration de votre pays a une case pour cet impôt, par exemple le décompte suisse (chiffre 383).
+- Une dépense programmée pose la question une fois, et chaque occurrence reprend la réponse.
+- La TVA déductible compte dans le mois où la dépense est approuvée.
+
+**Voir aussi:** [Soumettre une dépense](help:user.money.expense) · [Le décompte suisse : chiffres 205 et 383](help:user.money.vat.ch-return)
+
 <!-- anchor: user.money.expense.approve -->
 ### Approuver ou refuser une dépense
 
@@ -306,6 +329,130 @@ Une dépense attend et vous décidez si l'espace la paie.
 - **Alertes financières** dans Finances n'apparaît que lorsque la fonction **Onglet Événements** est activée.
 
 **Voir aussi:** [Les alertes financières](help:user.money.alerts)
+
+<!-- anchor: user.money.sales -->
+### La page Ventes
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez trouver au même endroit tout ce que l'espace vend et facture.
+
+<!-- image: user-money-sales -->
+
+**Étapes**
+
+1. Ouvrez [Ventes](app:/money/sales), ou touchez **Ventes** dans [Mes finances](app:/money).
+2. Touchez **Services** pour changer ce que les membres peuvent acheter. La ligne apparaît si vous pouvez gérer les services.
+3. Touchez **Factures** pour émettre et suivre les factures.
+4. Touchez **Pass invités** pour les pass vendus à l'accueil, si l'espace en vend.
+5. Touchez **Registre des factures** pour la liste de toutes les factures émises, ou **Tarifs et forfaits** pour changer les prix. **Tarifs et forfaits** apparaît si vous pouvez gérer les règles de facturation.
+
+**Bon à savoir**
+
+- Chaque ligne ouvre l'écran qu'elle a toujours ouvert, avec les mêmes droits. La page ne fait que les rassembler.
+- La page apparaît quand la facturation est activée dans l'espace et que vous êtes administrateur·rice.
+
+**Voir aussi:** [La facturation en un coup d'œil](help:user.money.invoicing) · [La page Achats et Ajouter un achat / une dépense](help:user.money.purchases)
+
+<!-- anchor: user.money.purchases -->
+### La page Achats et Ajouter un achat / une dépense
+
+**Public:** Membre · Administrateur·rice · Propriétaire
+
+Vous avez acheté quelque chose pour l'espace, ou un fournisseur a envoyé une facture, et vous voulez l'enregistrer.
+
+<!-- image: user-money-purchases -->
+
+**Étapes**
+
+1. Ouvrez [Achats](app:/money/purchases), ou touchez **Achats** dans [Mes finances](app:/money).
+2. Touchez **Ajouter un achat / une dépense**.
+3. Si vous pouvez saisir les factures fournisseur, répondez à **Qui a payé ?** :
+   - **J'ai payé moi-même** : le formulaire de dépense s'ouvre. Une fois la dépense approuvée, l'espace vous la doit.
+   - **Pas encore payé** : une facture fournisseur que l'espace doit encore payer.
+   - **L'espace a déjà payé** : saisissez la facture. Une fois approuvée, enregistrez son paiement depuis **À payer**.
+4. Remplissez le formulaire qui s'ouvre et enregistrez-le.
+
+**Bon à savoir**
+
+- Sans le droit de saisir les factures fournisseur, la question est sautée et le formulaire de dépense s'ouvre.
+- Les autres boutons de la page ouvrent **Fournisseurs**, **Achats** (la liste des pièces d'achat), le bail, l'équipement et les salles louées, chacun quand l'espace s'en sert.
+- **Achats** liste les factures fournisseur et les justificatifs que les membres ont payés pour l'espace, une pièce chacun. Les onglets sont **Documents** et **À payer**.
+
+**Voir aussi:** [Soumettre une dépense](help:user.money.expense) · [Une facture fournisseur, de la saisie à l'approbation](help:user.money.purchases.bills)
+
+<!-- anchor: user.money.purchases.bills -->
+### Une facture fournisseur, de la saisie à l'approbation
+
+**Public:** Administrateur·rice · Propriétaire
+
+Un fournisseur a envoyé une facture et vous voulez que l'espace la doive, avec l'approbation d'une seconde personne.
+
+**Étapes**
+
+1. Dans **Achats**, touchez **Ajouter une facture fournisseur**, ou passez par **Ajouter un achat / une dépense**.
+2. Choisissez le **Fournisseur** et saisissez le **Numéro de facture**, les lignes et le **Total**. Une facture enregistrée incomplète reste un brouillon : « Un brouillon : envoyez-le pour approbation une fois complet. »
+3. Touchez **Envoyer pour approbation**.
+4. Une autre personne ouvre [Factures fournisseurs à approuver](app:/money/purchases/approvals) et touche **Approuver**, ou **Refuser** en donnant la raison.
+5. Une fois approuvée, la facture est due au fournisseur jusqu'à son paiement.
+
+**Bon à savoir**
+
+- Une facture a besoin de son fournisseur et d'un montant avant d'être envoyée.
+- La personne qui a envoyé une facture ne peut pas la décider. Dans les paramètres de l'espace, **Factures qu'une seule personne peut approuver en dessous de (unités monétaires)** lui permet d'approuver les petites factures, si elle peut approuver les dépenses. 0 garde la règle : une autre personne approuve chaque facture. Un refus demande toujours une autre personne.
+- Chaque pièce montre à part son approbation, son règlement (**Non réglé**, **Réglé en partie**, **Réglé**, **Rien de dû**) et son état comptable.
+- Saisir une facture demande **Saisir les factures fournisseur**. La décider demande **Approuver les dépenses**.
+
+**Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay) · [Soldes des fournisseurs](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.to-pay -->
+### Ce que l'espace doit : À payer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce que l'espace doit encore, et enregistrer ce qui a été payé.
+
+**Étapes**
+
+1. Dans **Achats**, ouvrez l'onglet **À payer**, ou ouvrez [Trésorerie](app:/money/cash) et touchez **À payer**.
+2. Lisez **Dû aux fournisseurs** pour les factures approuvées et **Dû aux membres** pour les remboursements des justificatifs approuvés.
+3. Touchez **Enregistrer le paiement** sur une ligne. Saisissez le **Montant versé**, la date (**Payé le**), le **Mode de paiement** et, si vous le souhaitez, une **Référence (facultatif)**.
+4. Pour un membre qui doit aussi de l'argent à l'espace, touchez plutôt **Compenser avec une facture**. Choisissez la **Facture** : la créance règle cette facture ouverte au lieu d'être versée.
+5. Pour appliquer un avoir fournisseur, touchez **Appliquer à sa facture** sur l'avoir.
+
+**Bon à savoir**
+
+- N'enregistrez que de l'argent réellement versé. Le paiement est déclaré par vous ; il n'est pas confirmé par la banque.
+- Un paiement erroné n'est jamais supprimé. Touchez **Annuler** et donnez la raison. Un paiement déjà appliqué à une facture ne peut pas être annulé.
+- Une compensation garde les ventes et la TVA de la facture ; seul son paiement est expliqué.
+- Un avoir est appliqué par une autre personne que celle qui l'a saisi, à une facture approuvée du même fournisseur qui doit encore au moins ce montant.
+- Dans les paramètres de l'espace, **Paiements enregistrés par une seconde personne à partir de (unités monétaires)** signifie qu'un paiement d'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu'il paie. 0 désactive la règle.
+- Enregistrer un paiement demande **Enregistrer les paiements aux membres** ; une compensation demande **Émettre les factures et rapprocher les paiements**.
+
+**Voir aussi:** [La page Trésorerie](help:user.money.cash)
+
+<!-- anchor: user.money.cash -->
+### La page Trésorerie
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir l'argent enregistré en entrée et en sortie, et ce qui reste à payer.
+
+<!-- image: user-money-cash -->
+
+**Étapes**
+
+1. Ouvrez [Trésorerie](app:/money/cash), ou touchez **Trésorerie** dans [Mes finances](app:/money).
+2. Touchez **Entrées et sorties par mois** pour les paiements enregistrés, mois par mois.
+3. Touchez **À payer** pour ce que l'espace doit encore.
+4. Touchez **Relevés bancaires** pour importer un relevé et rapprocher ses lignes, si l'espace s'en sert.
+
+**Bon à savoir**
+
+- La page montre des paiements enregistrés, pas un solde bancaire rapproché.
+- Elle apparaît pour les administrateur·rices quand l'état de l'espace ou les achats sont activés.
+
+**Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay)
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Soldes des fournisseurs

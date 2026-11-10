@@ -365,6 +365,32 @@ Un account può appartenere a molti spazi. Ogni spazio le dà un profilo: il suo
 
 **Vedi anche:** [Stile di navigazione](help:user.profile.settings.navigation) · [Io: la sua casa e i suoi spazi](help:user.me.home)
 
+<!-- anchor: user.start.workspace-overview -->
+### La panoramica dello spazio
+
+**Destinatari:** Amministratore · Proprietario
+
+Apre lo spazio e vuole vedere prima ciò che La aspetta, poi le cifre che può leggere.
+
+<!-- image: user-start-workspace-overview -->
+
+**Passaggi**
+
+1. Apra [Panoramica](app:/workspace-overview).
+2. Legga **Da fare**: ciò che La aspetta, e una riga che conta le richieste che nessuno ha ancora deciso nello spazio. «Niente la aspetta» significa che non c'è nulla.
+3. Legga **Indicatori chiave**, raggruppati in **Capacità**, **Vendite**, **Acquisti**, **Cassa** e **Persone**. Tocchi un riquadro per aprire il punto da cui viene la sua cifra.
+4. Tocchi **Personalizzi** per fissare i riquadri che vuole, nel Suo ordine.
+5. Tocchi **Tutti gli indicatori** per la pagina di analisi completa.
+
+**Da sapere**
+
+- Vede solo le cifre che il Suo ruolo può leggere. Una cifra che non è stato possibile leggere mostra **Non disponibile**, mai zero.
+- **Iscrizioni attive** conta iscrizioni, non persone. **Crediti scaduti** esclude le fatture senza scadenza provata o in sospeso e le conta a parte. Sono cifre di oggi: non se ne conserva lo storico.
+- **Personalizzi** richiede il diritto di leggere le cifre dello spazio e il designer dei report.
+- Il proprietario attiva la pagina come **Panoramica dello spazio** tra le funzioni. Disattivata, l'elenco delle attenzioni e la pagina di analisi restano come sono.
+
+**Vedi anche:** [Orientarsi nell'app](help:user.start.navigation)
+
 <!-- anchor: user.start.get-started -->
 ### La scheda Primi passi e i suggerimenti
 

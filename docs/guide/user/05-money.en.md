@@ -283,6 +283,29 @@ You paid something for the space and you want the workspace to reimburse you.
 
 **See also:** [Approve or decline an expense](help:user.money.expense.approve)
 
+<!-- anchor: user.money.expenses.vat -->
+### The VAT of an expense
+
+**Audience:** Member · Administrator · Owner
+
+An expense carries VAT, and you want the space to deduct the right part of it.
+
+**Steps**
+
+1. In the expense form, or in **Scheduled expenses**, choose **VAT on this expense**: a rate, or **No VAT**.
+2. Enter the **Deductible share (%)**: 100 unless part of the expense is private or serves an exempt activity.
+3. Turn on **A fixed asset** for equipment the space keeps and depreciates.
+4. For a service bought abroad that carries no VAT of your country, turn on **Bought from a supplier abroad**. The amount you typed is then the base: the space owes the acquisition tax on it and deducts its share.
+
+**Good to know**
+
+- The fields appear when the space is VAT-registered and **Input VAT** is switched on.
+- **Bought from a supplier abroad** appears only where your country's return has a box for that tax, for example the Swiss return (Ziffer 383).
+- A scheduled expense asks once, and every occurrence carries the answer.
+- The deductible VAT counts in the month the expense is approved.
+
+**See also:** [Submit an expense](help:user.money.expense) · [The Swiss return: Ziffern 205 and 383](help:user.money.vat.ch-return)
+
 <!-- anchor: user.money.expense.approve -->
 ### Approve or decline an expense
 
@@ -306,6 +329,130 @@ An expense is waiting and you decide whether the workspace pays it.
 - **Finance alerts** in Money appears when the **Events tab** feature is on.
 
 **See also:** [Finance alerts](help:user.money.alerts)
+
+<!-- anchor: user.money.sales -->
+### The Sales page
+
+**Audience:** Administrator · Owner
+
+You want everything the space sells and invoices in one place.
+
+<!-- image: user-money-sales -->
+
+**Steps**
+
+1. Open [Sales](app:/money/sales), or tap **Sales** in [My finances](app:/money).
+2. Tap **Services** to change what members can buy. It is shown when you may manage the services.
+3. Tap **Invoices** to issue and follow the invoices.
+4. Tap **Guest passes** for the passes sold at the desk, when the space sells them.
+5. Tap **Invoice register** for the list of every invoice issued, or **Pricing & packages** to change the prices. **Pricing & packages** is shown when you may manage the billing rules.
+
+**Good to know**
+
+- Each line opens the screen it always opened, with the same rights. The page only gathers them.
+- The page appears when invoicing is switched on in the space and you are an administrator.
+
+**See also:** [Invoicing at a glance](help:user.money.invoicing) · [The Purchases page](help:user.money.purchases)
+
+<!-- anchor: user.money.purchases -->
+### The Purchases page and Add purchase / expense
+
+**Audience:** Member · Administrator · Owner
+
+You bought something for the space, or a supplier sent a bill, and you want to record it.
+
+<!-- image: user-money-purchases -->
+
+**Steps**
+
+1. Open [Purchases](app:/money/purchases), or tap **Purchases** in [My finances](app:/money).
+2. Tap **Add purchase / expense**.
+3. If you may capture supplier bills, answer **Who paid?**:
+   - **I paid personally**: the expense form opens. Once approved, the space owes it to you.
+   - **Not paid yet**: a supplier bill the space still has to pay.
+   - **The space already paid**: capture the bill. Once it is approved, record its payment from **To pay**.
+4. Fill in the form that opens and save it.
+
+**Good to know**
+
+- Without the right to capture supplier bills, the question is skipped and the expense form opens.
+- The other buttons on the page open **Suppliers**, **Purchases** (the list of purchase documents), the lease, the equipment and the rented rooms, each when the space uses it.
+- **Purchases** lists supplier bills and the receipts members paid for the space, one document each. The tabs are **Documents** and **To pay**.
+
+**See also:** [Submit an expense](help:user.money.expense) · [A supplier bill, from capture to approval](help:user.money.purchases.bills)
+
+<!-- anchor: user.money.purchases.bills -->
+### A supplier bill, from capture to approval
+
+**Audience:** Administrator · Owner
+
+A supplier sent a bill and you want the space to owe it, with a second person's approval.
+
+**Steps**
+
+1. In **Purchases**, tap **Add supplier bill**, or use **Add purchase / expense**.
+2. Choose the **Supplier** and enter the **Invoice number**, the lines and the **Total**. A bill saved incomplete stays a draft: "A draft: send it for approval when it is complete."
+3. Tap **Send for approval**.
+4. Another person opens [Supplier bills to approve](app:/money/purchases/approvals) and taps **Approve**, or **Reject** with the reason.
+5. Once approved, the bill is owed to the supplier until it is paid.
+
+**Good to know**
+
+- A bill needs its supplier and an amount before it can be sent.
+- The person who sent a bill cannot decide it. In the workspace settings, **Bills one person may approve below (currency units)** lets that person approve small bills, if they may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.
+- Each document shows its approval, its settlement (**Unpaid**, **Partly settled**, **Settled**, **Nothing owed**) and its accounting state apart.
+- Capturing a bill needs **Capture supplier bills**. Deciding one needs **Approve expenses**.
+
+**See also:** [What the space owes: To pay](help:user.money.purchases.to-pay) · [Supplier balances](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.to-pay -->
+### What the space owes: To pay
+
+**Audience:** Administrator · Owner
+
+You want to see what the space still owes, and record what was paid.
+
+**Steps**
+
+1. In **Purchases**, open the **To pay** tab, or open [Cash](app:/money/cash) and tap **To pay**.
+2. Read **Owed to suppliers** for approved bills and **Owed to members** for the reimbursements of approved receipts.
+3. Tap **Record payment** on a line. Enter the **Amount paid**, the date (**Paid on**), the **Method** and, if you wish, a **Reference (optional)**.
+4. For a member who also owes the space, tap **Offset against an invoice** instead. Choose the **Invoice**: the claim settles that open invoice rather than being paid out.
+5. To apply a supplier credit note, tap **Apply to its bill** on the credit note.
+
+**Good to know**
+
+- Record only money that was actually paid. The payment is reported by you; it is not confirmed by the bank.
+- A wrong payment is never deleted. Tap **Reverse** and state the reason. A payment already applied to an invoice cannot be reversed.
+- An offset keeps the invoice's sales and VAT; only its payment is explained.
+- A credit note is applied by another person than the one who captured it, to an approved bill of the same supplier that still owes at least that much.
+- In the workspace settings, **Payments a second person records from (currency units)** means a payment of at least that amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.
+- Recording a payment needs **Record payments to members**; an offset needs **Issue invoices & match payments**.
+
+**See also:** [The Cash page](help:user.money.cash)
+
+<!-- anchor: user.money.cash -->
+### The Cash page
+
+**Audience:** Administrator · Owner
+
+You want to see the money recorded in and out, and what is still to pay.
+
+<!-- image: user-money-cash -->
+
+**Steps**
+
+1. Open [Cash](app:/money/cash), or tap **Cash** in [My finances](app:/money).
+2. Tap **Money in and out by month** for the recorded payments month by month.
+3. Tap **To pay** for what the space still owes.
+4. Tap **Bank statements** to import a statement and match its lines, when the space uses them.
+
+**Good to know**
+
+- The page shows recorded payments, not a reconciled bank balance.
+- It appears for administrators when the workspace status or purchases are switched on.
+
+**See also:** [What the space owes: To pay](help:user.money.purchases.to-pay)
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Supplier balances

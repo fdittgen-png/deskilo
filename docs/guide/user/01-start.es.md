@@ -365,6 +365,32 @@ Usted está en un espacio y quiere llegar a una pantalla. Todo está en un únic
 
 **Véase también:** [Estilo de navegación](help:user.profile.settings.navigation) · [Yo: su inicio y sus espacios](help:user.me.home)
 
+<!-- anchor: user.start.workspace-overview -->
+### El resumen del espacio
+
+**Público:** Administrador/a · Propietario
+
+Abre el espacio y quiere ver primero lo que le espera, y después las cifras que puede leer.
+
+<!-- image: user-start-workspace-overview -->
+
+**Pasos**
+
+1. Abra [Resumen](app:/workspace-overview).
+2. Lea **Pendiente**: lo que le espera, y una línea que cuenta las solicitudes que nadie ha decidido todavía en el espacio. «Nada le espera» significa que no hay nada.
+3. Lea **Indicadores clave**, agrupados en **Capacidad**, **Ventas**, **Compras**, **Tesorería** y **Personas**. Toque un mosaico para abrir el lugar de donde viene su cifra.
+4. Toque **Personalizar** para fijar los mosaicos que quiera, en su orden.
+5. Toque **Todos los indicadores** para la página de análisis completa.
+
+**Conviene saber**
+
+- Solo ve las cifras que su rol puede leer. Una cifra que no pudo leerse muestra **No disponible**, nunca cero.
+- **Membresías activas** cuenta membresías, no personas. **Cobros vencidos** deja fuera las facturas sin vencimiento probado o en espera y las cuenta aparte. Ambas son cifras de hoy: no se guarda historial.
+- **Personalizar** requiere el derecho a leer las cifras del espacio y el diseñador de informes.
+- El propietario activa la página como **Resumen del espacio** entre las funciones. Desactivada, la lista de atención y la página de análisis siguen como están.
+
+**Véase también:** [Orientarse en la app](help:user.start.navigation)
+
 <!-- anchor: user.start.get-started -->
 ### La tarjeta Primeros pasos y los consejos
 

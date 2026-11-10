@@ -556,6 +556,29 @@ Un groupe dit de quel type de taux il s'agit, pour que la facture le range dans 
 
 **Voir aussi:** [Définir les taux](help:user.money.vat.rates)
 
+<!-- anchor: user.money.vat.ch-return -->
+### Le décompte suisse : chiffres 205 et 383
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Votre espace est en Suisse, et vous voulez les prestations pour lesquelles vous avez opté et l'impôt sur les acquisitions dans les bonnes cases.
+
+**Étapes**
+
+1. Dans [Identité légale et facturation électronique](app:/legal-identity), sous **Location et option (Suisse)**, activez **Nous ne louons que des locaux nus** si vous louez des locaux sans services. Activez ensuite **Nous avons opté (art. 22 LTVA)** si vous avez opté, et saisissez **Option effective dès (AAAA-MM-JJ)**.
+2. Enregistrez une dépense achetée à l'étranger avec **Acheté auprès d'un fournisseur à l'étranger** activé.
+3. Ouvrez [Déclaration de TVA](app:/vat-declarations) et préparez la période.
+4. Téléchargez **Décompte TVA, XML eCH-0217 (téléversement ePortal)** et déposez-le sur l'ePortal.
+
+**Bon à savoir**
+
+- Le chiffre 205 est la part de votre chiffre d'affaires (chiffre 200) qui est une location nue imposée parce que vous avez opté. Les lignes immobilières de la facture donnent cette part. Le décompte la compte toujours dans le chiffre 200.
+- Le chiffre 383 est l'impôt sur les acquisitions. Il est déclaré comme impôt dû, et sa part déductible compte avec l'impôt préalable. Il ne fait pas partie du chiffre d'affaires.
+- Dans le fichier eCH-0217, les prestations optées sont écrites `opted`, et l'impôt sur les acquisitions un élément `acquisitionTax` par taux.
+- Un·e opérateur·rice qui modifie les cases dans **Données de référence fiscales** nomme les lignes supplémentaires d'une case dans **Autres catégories de lignes qu'elle additionne (séparées par des virgules, p. ex. acquisition)**. Le chiffre 383 porte `acquisition`.
+
+**Voir aussi:** [Préparer la déclaration de TVA](help:user.money.vat.declaration) · [La TVA d'une dépense](help:user.money.expenses.vat)
+
 <!-- anchor: user.money.vat.change-by-law -->
 ### Changer un taux par la loi
 
@@ -1132,6 +1155,48 @@ Vous remettez à votre comptable les factures et les paiements de l'année.
 - Certains formats précisent que DesKilo n'est pas un logiciel certifié dans votre pays.
 
 **Voir aussi:** [Compte de TVA](help:user.money.vat.account) · [Le registre des factures](help:user.invoicing.register)
+
+<!-- anchor: user.invoicing.transfers -->
+### Transferts : le lien numérique vers votre système comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous tenez vos registres de TVA dans un autre système comptable, et vous devez montrer comment les chiffres y sont arrivés, par exemple pour le Making Tax Digital britannique.
+
+**Étapes**
+
+1. Ouvrez [Comptabilité et TVA](app:/money/accounting) et touchez **Systèmes comptables**.
+2. Lisez **Transferts** : chaque fichier remis et chaque document livré à une connexion sur la période, chacun avec le SHA-256 de ce qui a été transmis.
+3. Remettez le **CSV comptable** à votre comptable. Son `report.json` cite la liste des Transferts de l'année.
+
+**Bon à savoir**
+
+- Un lien numérique est un fichier ou une livraison par connexion enregistré dans **Transferts**. Recopier des chiffres à la main dans l'autre système n'est pas un lien numérique.
+- Le SHA-256 prouve que le fichier reçu par l'autre système est celui que DesKilo a remis.
+- Une liste vide indique « Rien n'a été remis ni envoyé dans cette période. »
+
+**Voir aussi:** [Exports comptables](help:user.invoicing.accounting-export) · [Où les registres sont conservés](help:user.invoicing.records-location)
+
+<!-- anchor: user.invoicing.records-location -->
+### Où les registres sont conservés
+
+**Public:** Propriétaire · Administrateur·rice facturation · Opérateur·rice
+
+Certains pays disent où une entreprise conserve ses livres, et vous voulez savoir ce que l'application indique pour la vôtre.
+
+**Étapes**
+
+1. Ouvrez [Identité légale et facturation électronique](app:/legal-identity) et allez à la section **Livre comptable**.
+2. Lisez **Où les registres sont conservés**, à côté des durées de conservation.
+3. Pour une entreprise canadienne dont les registres sont conservés hors du Canada, saisissez **Autorisation de l'ARC de conserver les registres hors du Canada** dans les paramètres de l'espace, sous **Lieu de conservation des registres**.
+
+**Bon à savoir**
+
+- L'opérateur·rice de l'installation déclare **Pays où cette installation conserve ses données**, comme le contrat d'hébergement l'indique. L'application ne le devine jamais. Non déclaré, la tuile le dit et n'indique aucun lieu.
+- Le Canada fait conserver les livres au Canada sauf autorisation de l'ARC ; l'Allemagne fait conserver les livres électroniques dans l'UE. La tuile avertit quand le pays déclaré ne convient pas.
+- Une archive britannique, irlandaise, canadienne ou américaine contient ses tables avec un `tables/README.txt` qui décrit en anglais chaque table et chaque colonne, et dit où les registres sont conservés.
+
+**Voir aussi:** [Transferts : le lien numérique vers votre système comptable](help:user.invoicing.transfers)
 
 <!-- anchor: user.invoicing.accounting-state -->
 ### Arrêter le nouveau travail comptable

@@ -283,6 +283,29 @@ Ha pagato qualcosa per lo spazio e vuole che lo spazio Le rimborsi la somma.
 
 **Vedi anche:** [Approvare o rifiutare una spesa](help:user.money.expense.approve)
 
+<!-- anchor: user.money.expenses.vat -->
+### L'IVA di una spesa
+
+**Destinatari:** Membro · Amministratore · Proprietario
+
+Una spesa contiene IVA, e vuole che lo spazio ne detragga la parte giusta.
+
+**Passaggi**
+
+1. Nel modulo della spesa, o in **Spese programmate**, scelga l'**IVA su questa spesa**: un'aliquota, oppure **Senza IVA**.
+2. Inserisca la **Quota detraibile (%)**: 100, salvo che una parte della spesa sia privata o serva un'attività esente.
+3. Attivi **Un bene strumentale** per un'attrezzatura che lo spazio conserva e ammortizza.
+4. Per un servizio acquistato all'estero senza l'imposta del Suo paese, attivi **Acquistato da un fornitore all'estero**. L'importo inserito è allora la base: lo spazio deve su di esso l'imposta sull'acquisto e ne detrae la sua quota.
+
+**Da sapere**
+
+- I campi compaiono quando lo spazio è soggetto all'IVA e **IVA a credito** è attiva.
+- **Acquistato da un fornitore all'estero** compare solo se la dichiarazione del Suo paese ha una casella per questa imposta, per esempio il rendiconto svizzero (cifra 383).
+- Una spesa programmata lo chiede una volta, e ogni occorrenza ne riprende la risposta.
+- L'IVA detraibile conta nel mese in cui la spesa viene approvata.
+
+**Vedi anche:** [Inviare una spesa](help:user.money.expense) · [Il rendiconto svizzero: cifre 205 e 383](help:user.money.vat.ch-return)
+
 <!-- anchor: user.money.expense.approve -->
 ### Approvare o rifiutare una spesa
 
@@ -306,6 +329,130 @@ Una spesa è in attesa e Lei decide se lo spazio la paga.
 - **Avvisi finanziari** in Finanze compare solo quando la funzione **Scheda Eventi** è attiva.
 
 **Vedi anche:** [Avvisi finanziari](help:user.money.alerts)
+
+<!-- anchor: user.money.sales -->
+### La pagina Vendite
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
+
+<!-- image: user-money-sales -->
+
+**Passaggi**
+
+1. Apra [Vendite](app:/money/sales), oppure tocchi **Vendite** in [Le mie finanze](app:/money).
+2. Tocchi **Servizi** per cambiare ciò che i soci possono acquistare. La riga compare se può gestire i servizi.
+3. Tocchi **Fatture** per emettere e seguire le fatture.
+4. Tocchi **Pass ospite** per i pass venduti all'accoglienza, se lo spazio li vende.
+5. Tocchi **Registro fatture** per l'elenco di tutte le fatture emesse, oppure **Tariffe e pacchetti** per cambiare i prezzi. **Tariffe e pacchetti** compare se può gestire le regole di fatturazione.
+
+**Da sapere**
+
+- Ogni riga apre la schermata che ha sempre aperto, con gli stessi diritti. La pagina si limita a raccoglierle.
+- La pagina compare quando la fatturazione è attiva nello spazio e Lei è amministratore.
+
+**Vedi anche:** [La fatturazione in sintesi](help:user.money.invoicing) · [La pagina Acquisti e Aggiungi acquisto / spesa](help:user.money.purchases)
+
+<!-- anchor: user.money.purchases -->
+### La pagina Acquisti e Aggiungi acquisto / spesa
+
+**Destinatari:** Membro · Amministratore · Proprietario
+
+Ha comprato qualcosa per lo spazio, o un fornitore ha mandato una fattura, e vuole registrarla.
+
+<!-- image: user-money-purchases -->
+
+**Passaggi**
+
+1. Apra [Acquisti](app:/money/purchases), oppure tocchi **Acquisti** in [Le mie finanze](app:/money).
+2. Tocchi **Aggiungi acquisto / spesa**.
+3. Se può registrare le fatture dei fornitori, risponda a **Chi ha pagato?**:
+   - **Ho pagato io**: si apre il modulo della spesa. Una volta approvata, lo spazio Le deve l'importo.
+   - **Non ancora pagato**: una fattura fornitore che lo spazio deve ancora pagare.
+   - **Lo spazio ha già pagato**: registri la fattura. Una volta approvata, registri il suo pagamento da **Da pagare**.
+4. Compili il modulo che si apre e lo salvi.
+
+**Da sapere**
+
+- Senza il diritto di registrare le fatture dei fornitori, la domanda viene saltata e si apre il modulo della spesa.
+- Gli altri pulsanti della pagina aprono **Fornitori**, **Acquisti** (l'elenco dei documenti di acquisto), la locazione, le attrezzature e le sale prese in affitto, ciascuno quando lo spazio lo usa.
+- **Acquisti** elenca le fatture dei fornitori e le ricevute che i soci hanno pagato per lo spazio, un documento ciascuna. Le schede sono **Documenti** e **Da pagare**.
+
+**Vedi anche:** [Inviare una spesa](help:user.money.expense) · [Una fattura fornitore, dalla registrazione all'approvazione](help:user.money.purchases.bills)
+
+<!-- anchor: user.money.purchases.bills -->
+### Una fattura fornitore, dalla registrazione all'approvazione
+
+**Destinatari:** Amministratore · Proprietario
+
+Un fornitore ha mandato una fattura e vuole che lo spazio la debba, con l'approvazione di una seconda persona.
+
+**Passaggi**
+
+1. In **Acquisti**, tocchi **Aggiungi fattura fornitore**, oppure usi **Aggiungi acquisto / spesa**.
+2. Scelga il **Fornitore** e inserisca il **Numero di fattura**, le righe e il **Totale**. Una fattura salvata incompleta resta una bozza: «Una bozza: la invii all'approvazione quando è completa.»
+3. Tocchi **Invia all'approvazione**.
+4. Un'altra persona apre [Fatture fornitori da approvare](app:/money/purchases/approvals) e tocca **Approva**, oppure **Rifiuta** indicando il motivo.
+5. Una volta approvata, la fattura è dovuta al fornitore finché non viene pagata.
+
+**Da sapere**
+
+- Una fattura ha bisogno del suo fornitore e di un importo prima di poter essere inviata.
+- Chi ha inviato una fattura non può deciderla. Nelle impostazioni dello spazio, **Fatture che una sola persona può approvare sotto (unità monetarie)** permette a quella persona di approvare le fatture piccole, se può approvare le spese. 0 mantiene la regola che un'altra persona approva ogni fattura. Il rifiuto richiede sempre un'altra persona.
+- Ogni documento mostra separatamente la sua approvazione, il suo saldo (**Non pagato**, **Saldato in parte**, **Saldato**, **Nulla di dovuto**) e il suo stato contabile.
+- Registrare una fattura richiede **Registrare le fatture dei fornitori**. Deciderla richiede **Approvare le spese**.
+
+**Vedi anche:** [Ciò che lo spazio deve: Da pagare](help:user.money.purchases.to-pay) · [Saldi dei fornitori](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.to-pay -->
+### Ciò che lo spazio deve: Da pagare
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole vedere ciò che lo spazio deve ancora e registrare ciò che è stato pagato.
+
+**Passaggi**
+
+1. In **Acquisti**, apra la scheda **Da pagare**, oppure apra [Cassa](app:/money/cash) e tocchi **Da pagare**.
+2. Legga **Dovuto ai fornitori** per le fatture approvate e **Dovuto ai soci** per i rimborsi delle ricevute approvate.
+3. Tocchi **Registra pagamento** su una riga. Inserisca l'**Importo pagato**, la data (**Pagato il**), il **Metodo** e, se vuole, un **Riferimento (facoltativo)**.
+4. Per un socio che deve anche denaro allo spazio, tocchi invece **Compensa con una fattura**. Scelga la **Fattura**: il credito salda quella fattura aperta invece di essere pagato.
+5. Per applicare una nota di credito del fornitore, tocchi **Applica alla sua fattura** sulla nota di credito.
+
+**Da sapere**
+
+- Registri solo il denaro effettivamente pagato. Il pagamento è dichiarato da Lei; la banca non lo conferma.
+- Un pagamento errato non viene mai cancellato. Tocchi **Storna** e indichi il motivo. Un pagamento già applicato a una fattura non può essere stornato.
+- Una compensazione mantiene le vendite e l'IVA della fattura; ne spiega solo il pagamento.
+- Una nota di credito viene applicata da una persona diversa da chi l'ha registrata, a una fattura approvata dello stesso fornitore che deve ancora almeno quell'importo.
+- Nelle impostazioni dello spazio, **Pagamenti registrati da una seconda persona a partire da (unità monetarie)** significa che un pagamento di almeno quell'importo non può essere registrato dalla persona che ha approvato la fattura che paga. 0 disattiva la regola.
+- Registrare un pagamento richiede **Registrare i pagamenti ai soci**; una compensazione richiede **Emettere fatture e riconciliare pagamenti**.
+
+**Vedi anche:** [La pagina Cassa](help:user.money.cash)
+
+<!-- anchor: user.money.cash -->
+### La pagina Cassa
+
+**Destinatari:** Amministratore · Proprietario
+
+Vuole vedere il denaro registrato in entrata e in uscita, e ciò che resta da pagare.
+
+<!-- image: user-money-cash -->
+
+**Passaggi**
+
+1. Apra [Cassa](app:/money/cash), oppure tocchi **Cassa** in [Le mie finanze](app:/money).
+2. Tocchi **Entrate e uscite per mese** per i pagamenti registrati, mese per mese.
+3. Tocchi **Da pagare** per ciò che lo spazio deve ancora.
+4. Tocchi **Estratti conto** per importare un estratto e riconciliarne le righe, se lo spazio li usa.
+
+**Da sapere**
+
+- La pagina mostra pagamenti registrati, non un saldo bancario riconciliato.
+- Compare per gli amministratori quando lo stato dello spazio o gli acquisti sono attivi.
+
+**Vedi anche:** [Ciò che lo spazio deve: Da pagare](help:user.money.purchases.to-pay)
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldi dei fornitori

@@ -365,6 +365,32 @@ You are in a space and want to reach a screen. Everything is in one menu, and a 
 
 **See also:** [Navigation style](help:user.profile.settings.navigation) · [Me: your home and your spaces](help:user.me.home)
 
+<!-- anchor: user.start.workspace-overview -->
+### The workspace overview
+
+**Audience:** Administrator · Owner
+
+You open the space and want to see first what needs you, then the figures you may read.
+
+<!-- image: user-start-workspace-overview -->
+
+**Steps**
+
+1. Open [Overview](app:/workspace-overview).
+2. Read **Needs attention**: what waits for you, and a line counting the requests nobody in the space has decided yet. "Nothing needs you" means there is nothing.
+3. Read **Key indicators**, grouped as **Capacity**, **Sales**, **Purchases**, **Cash** and **People**. Tap a tile to open where its figure comes from.
+4. Tap **Customize** to pin the tiles you want, in your order.
+5. Tap **All indicators** for the full analytics page.
+
+**Good to know**
+
+- You see only the figures your role may read. A figure that could not be read shows **Not available**, never zero.
+- **Active memberships** counts memberships, not people. **Overdue receivables** leaves out invoices with no proven due date or on hold and counts them apart. Both are today's figures: no history is kept.
+- **Customize** needs the right to read the workspace figures and the report designer.
+- The owner switches the page on as **Workspace overview** among the features. Off, the attention list and the analytics page stay as they are.
+
+**See also:** [Find your way around](help:user.start.navigation)
+
 <!-- anchor: user.start.get-started -->
 ### The Get started card and the tips
 
