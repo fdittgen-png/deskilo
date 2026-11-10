@@ -64,7 +64,7 @@ String statusWordsOf(
     InvoiceStatusKind.awaitingSecondApproval => l.invoicingStatusSecondApproval,
     InvoiceStatusKind.onHold => l.invoicingStatusOnHold,
     InvoiceStatusKind.eInvoiceRejected => l.invoicingStatusRejected,
-    InvoiceStatusKind.noDueDate => l.invoicingStatusNoDueDate,
+    InvoiceStatusKind.noDueDate => l.biCustomerCohortUnknownDue,
     InvoiceStatusKind.partlyPaid => l.invoicingStatusPartlyPaid(
       format.moneyIn(r.currency).formatMinor(s.number),
     ),

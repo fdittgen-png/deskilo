@@ -84,7 +84,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final invoices = ref.watch(invoicesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.invoicingTitle),
+        title: Text(l.featureInvoicing),
         actions: [
           IconButton(
             key: const ValueKey('invoicing-search'),

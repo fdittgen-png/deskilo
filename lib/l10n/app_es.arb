@@ -9201,10 +9201,6 @@
   "@invoicingColInvoice": {
     "description": "#3587 table column"
   },
-  "invoicingColInvoices": "Facturas",
-  "@invoicingColInvoices": {
-    "description": "#3587 table column"
-  },
   "invoicingColOldest": "La más antigua",
   "@invoicingColOldest": {
     "description": "#3587 table column: the oldest invoice's state"
@@ -9297,10 +9293,6 @@
   "@invoicingFilterPaid": {
     "description": "#3587 list filter: paid and closed"
   },
-  "invoicingFilterToConfirm": "Por confirmar",
-  "@invoicingFilterToConfirm": {
-    "description": "#3587 list filter"
-  },
   "invoicingInvoiceCount": "{count, plural, =1{1 factura} other{{count} facturas}}",
   "@invoicingInvoiceCount": {
     "description": "#3587 how many invoices",
@@ -9341,10 +9333,6 @@
   },
   "invoicingMoreRegroup": "Agrupar facturas en una",
   "@invoicingMoreRegroup": {
-    "description": "#3587 More menu"
-  },
-  "invoicingMoreReminderRules": "Reglas de recordatorio",
-  "@invoicingMoreReminderRules": {
     "description": "#3587 More menu"
   },
   "invoicingMoreSettings": "Ajustes de facturas",
@@ -9391,10 +9379,6 @@
   "invoicingOwedOverdue": "Vencido",
   "@invoicingOwedOverdue": {
     "description": "#3587 owed bucket"
-  },
-  "invoicingOwedToConfirm": "Por confirmar",
-  "@invoicingOwedToConfirm": {
-    "description": "#3587 owed bucket: money on its way"
   },
   "invoicingReceivedIn": "Cobrado en {month}",
   "@invoicingReceivedIn": {
@@ -9474,10 +9458,6 @@
         "type": "int"
       }
     }
-  },
-  "invoicingStatusNoDueDate": "Sin vencimiento",
-  "@invoicingStatusNoDueDate": {
-    "description": "#3587 status"
   },
   "invoicingStatusOnHold": "En pausa",
   "@invoicingStatusOnHold": {
@@ -9559,10 +9539,6 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
-  "invoicingTitle": "Facturas",
-  "@invoicingTitle": {
-    "description": "#3587 the invoicing home's title"
-  },
   "invoicingTodo": "Pendiente",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -9628,10 +9604,6 @@
   "invoicingViewCustomers": "Clientes",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
-  },
-  "invoicingViewInvoices": "Facturas",
-  "@invoicingViewInvoices": {
-    "description": "#3587 list view: one line per invoice"
   },
   "journalBlocked": "Asigne primero estos roles en el plan de cuentas: {roles}",
   "journalFecMissingRate": "Estos documentos están en otra moneda que la contabilidad y no tienen un tipo de cambio registrado; el FEC no se ha generado: {documents}",

@@ -23974,12 +23974,6 @@ abstract class AppLocalizations {
   /// **'Invoice'**
   String get invoicingColInvoice;
 
-  /// #3587 table column
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get invoicingColInvoices;
-
   /// #3587 table column: the oldest invoice's state
   ///
   /// In en, this message translates to:
@@ -24076,12 +24070,6 @@ abstract class AppLocalizations {
   /// **'Paid'**
   String get invoicingFilterPaid;
 
-  /// #3587 list filter
-  ///
-  /// In en, this message translates to:
-  /// **'To confirm'**
-  String get invoicingFilterToConfirm;
-
   /// #3587 how many invoices
   ///
   /// In en, this message translates to:
@@ -24129,12 +24117,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Regroup invoices into one'**
   String get invoicingMoreRegroup;
-
-  /// #3587 More menu
-  ///
-  /// In en, this message translates to:
-  /// **'Reminder rules'**
-  String get invoicingMoreReminderRules;
 
   /// #3587 More menu
   ///
@@ -24195,12 +24177,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Overdue'**
   String get invoicingOwedOverdue;
-
-  /// #3587 owed bucket: money on its way
-  ///
-  /// In en, this message translates to:
-  /// **'To confirm'**
-  String get invoicingOwedToConfirm;
 
   /// #3587 the month's figure: money received
   ///
@@ -24301,12 +24277,6 @@ abstract class AppLocalizations {
   /// #3587 status
   ///
   /// In en, this message translates to:
-  /// **'No due date'**
-  String get invoicingStatusNoDueDate;
-
-  /// #3587 status
-  ///
-  /// In en, this message translates to:
   /// **'On hold'**
   String get invoicingStatusOnHold;
 
@@ -24381,12 +24351,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment received · to match'**
   String get invoicingStatusToMatch;
-
-  /// #3587 the invoicing home's title
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get invoicingTitle;
 
   /// #3587 the To do card's heading
   ///
@@ -24471,12 +24435,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customers'**
   String get invoicingViewCustomers;
-
-  /// #3587 list view: one line per invoice
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get invoicingViewInvoices;
 
   /// Journal export (#2370): roles the posting engine could not resolve
   ///

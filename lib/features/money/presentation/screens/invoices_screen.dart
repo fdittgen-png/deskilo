@@ -144,7 +144,7 @@ List<MoreEntry> _moreEntries(
       (
         'invoice-dunning-settings',
         Icons.rule_outlined,
-        l10n.invoicingMoreReminderRules,
+        l10n.dunningSettingsTitle,
         () => showDunningRulesDialog(context, ref),
       ),
     if (settingsOn)

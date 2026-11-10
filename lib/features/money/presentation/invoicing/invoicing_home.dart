@@ -228,7 +228,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
     };
     final labels = {
       OwedBucket.notYetDue: l.invoicingOwedNotYetDue,
-      OwedBucket.toConfirm: l.invoicingOwedToConfirm,
+      OwedBucket.toConfirm: l.journeyStageConfirm,
       OwedBucket.overdue: l.invoicingOwedOverdue,
     };
     final owed = owedOf(data.receivables, data.today);

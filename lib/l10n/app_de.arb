@@ -9201,10 +9201,6 @@
   "@invoicingColInvoice": {
     "description": "#3587 table column"
   },
-  "invoicingColInvoices": "Rechnungen",
-  "@invoicingColInvoices": {
-    "description": "#3587 table column"
-  },
   "invoicingColOldest": "Älteste",
   "@invoicingColOldest": {
     "description": "#3587 table column: the oldest invoice's state"
@@ -9297,10 +9293,6 @@
   "@invoicingFilterPaid": {
     "description": "#3587 list filter: paid and closed"
   },
-  "invoicingFilterToConfirm": "Zu bestätigen",
-  "@invoicingFilterToConfirm": {
-    "description": "#3587 list filter"
-  },
   "invoicingInvoiceCount": "{count, plural, =1{1 Rechnung} other{{count} Rechnungen}}",
   "@invoicingInvoiceCount": {
     "description": "#3587 how many invoices",
@@ -9341,10 +9333,6 @@
   },
   "invoicingMoreRegroup": "Rechnungen zu einer zusammenfassen",
   "@invoicingMoreRegroup": {
-    "description": "#3587 More menu"
-  },
-  "invoicingMoreReminderRules": "Mahnregeln",
-  "@invoicingMoreReminderRules": {
     "description": "#3587 More menu"
   },
   "invoicingMoreSettings": "Rechnungseinstellungen",
@@ -9391,10 +9379,6 @@
   "invoicingOwedOverdue": "Überfällig",
   "@invoicingOwedOverdue": {
     "description": "#3587 owed bucket"
-  },
-  "invoicingOwedToConfirm": "Zu bestätigen",
-  "@invoicingOwedToConfirm": {
-    "description": "#3587 owed bucket: money on its way"
   },
   "invoicingReceivedIn": "Eingegangen im {month}",
   "@invoicingReceivedIn": {
@@ -9474,10 +9458,6 @@
         "type": "int"
       }
     }
-  },
-  "invoicingStatusNoDueDate": "Ohne Fälligkeit",
-  "@invoicingStatusNoDueDate": {
-    "description": "#3587 status"
   },
   "invoicingStatusOnHold": "Angehalten",
   "@invoicingStatusOnHold": {
@@ -9559,10 +9539,6 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
-  "invoicingTitle": "Rechnungen",
-  "@invoicingTitle": {
-    "description": "#3587 the invoicing home's title"
-  },
   "invoicingTodo": "Zu tun",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -9628,10 +9604,6 @@
   "invoicingViewCustomers": "Kunden",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
-  },
-  "invoicingViewInvoices": "Rechnungen",
-  "@invoicingViewInvoices": {
-    "description": "#3587 list view: one line per invoice"
   },
   "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}",
   "journalFecMissingRate": "Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der FEC wurde nicht erstellt: {documents}",
