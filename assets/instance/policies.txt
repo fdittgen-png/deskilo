@@ -516,3 +516,5 @@ storage.objects.floor_plans_update
 storage.objects.floor_plans_update_sites
 storage.objects.mcp_delegated_deny
 storage.objects.personal_native_session
+public.national_channel_acceptances.mcp_delegated_deny
+public.national_channel_acceptances.national_channel_acceptances_select
