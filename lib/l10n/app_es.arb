@@ -16803,6 +16803,7 @@
   "setupLevelNameAssistantOff": "Desactivado",
   "setupLevelNameAssistantOn": "Activado",
   "setupLevelNameBookingsMeasured": "Uso medido",
+  "setupLevelNameBookingsNone": "Sin plazas",
   "setupLevelNameBookingsResources": "Salas y recursos",
   "setupLevelNameBookingsSimple": "Plazas compartidas",
   "setupLevelNameCommunityBasic": "Básico",

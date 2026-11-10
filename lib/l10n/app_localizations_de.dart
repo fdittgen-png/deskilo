@@ -26418,6 +26418,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelNameBookingsMeasured => 'Gemessene Nutzung';
 
   @override
+  String get setupLevelNameBookingsNone => 'Keine Plätze';
+
+  @override
   String get setupLevelNameBookingsResources => 'Räume und Ressourcen';
 
   @override

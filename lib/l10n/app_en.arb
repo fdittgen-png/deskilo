@@ -34511,6 +34511,10 @@
   "@setupLevelNameBookingsMeasured": {
     "description": "#3485 setupLevelName: the label for case 'bookings_measured'."
   },
+  "setupLevelNameBookingsNone": "No places",
+  "@setupLevelNameBookingsNone": {
+    "description": "#3550 setupLevelName: the label for case 'bookings_none' — a business without places to book."
+  },
   "setupLevelNameBookingsResources": "Rooms and resources",
   "@setupLevelNameBookingsResources": {
     "description": "#3485 setupLevelName: the label for case 'bookings_resources'."
