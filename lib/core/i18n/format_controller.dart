@@ -11,7 +11,6 @@ import '../locale/device_locale.dart';
 import '../locale/locale_controller.dart';
 import '../settings/region_defaults.dart';
 import '../settings/setting_defaults.g.dart';
-import '../time/workspace_time.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
 import 'workspace_currency.dart';
