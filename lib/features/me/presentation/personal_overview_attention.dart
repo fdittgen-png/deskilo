@@ -240,13 +240,15 @@ class _AttentionRow extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
-          TextButton(
-            key: ValueKey('me-overview-action-${item.key}'),
-            style: TextButton.styleFrom(
-              minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+          Flexible(
+            child: TextButton(
+              key: ValueKey('me-overview-action-${item.key}'),
+              style: TextButton.styleFrom(
+                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+              ),
+              onPressed: onAction,
+              child: Text(action, textAlign: TextAlign.center),
             ),
-            onPressed: onAction,
-            child: Text(action),
           ),
         ],
       ),

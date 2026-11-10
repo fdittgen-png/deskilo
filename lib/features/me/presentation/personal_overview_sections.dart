@@ -18,7 +18,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/personal_kit/me_notice.dart';
 import '../application/personal_commitments.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_commitment.dart';
@@ -97,11 +97,10 @@ class SourceUnavailable extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: InlineBanner(
-      icon: Icons.cloud_off_outlined,
+    child: MeNotice(
       text: text,
-      actionLabel: context.l10n.commonRetry,
-      onAction: onRetry,
+      retryLabel: context.l10n.commonRetry,
+      onRetry: onRetry,
     ),
   );
 }
@@ -190,19 +189,6 @@ class _NextBody extends ConsumerWidget {
           Text(
             l10n.meOverviewNextNotYet,
             key: const ValueKey('me-overview-next-not-yet'),
-          ),
-        if (!next.reading && commitment == null && !next.complete)
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              key: const ValueKey('me-overview-next-view'),
-              style: TextButton.styleFrom(
-                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
-              ),
-              onPressed: () =>
-                  context.go(meDataRoute(view: MeDataView.reservations)),
-              child: Text(l10n.meOverviewView),
-            ),
           ),
       ],
     );

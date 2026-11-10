@@ -1915,7 +1915,6 @@ const Set<String> uiKeys = {
   'me-overview-next-none',
   'me-overview-next-not-yet',
   'me-overview-next-unavailable',
-  'me-overview-next-view',
   'me-overview-spaces',
   'me-overview-spaces-loading',
   'me-overview-spaces-unavailable',
