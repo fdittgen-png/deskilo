@@ -2793,6 +2793,107 @@ Vuole vedere ciò che lo spazio deve ancora e registrare ciò che è stato pagat
 
 **Vedi anche:** [La pagina Cassa](#la-pagina-cassa)
 
+<!-- anchor: user.money.purchases.lease -->
+### Il contratto di locazione dei locali
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Lo spazio prende in affitto i suoi locali, e vuole registrare una sola volta il canone e le spese che deve, con la loro storia.
+
+<!-- image: user-money-purchases-lease -->
+
+**Passaggi**
+
+1. Apra [Acquisti](https://fdittgen-png.github.io/deskilo/#/money/purchases) e tocchi **Contratto di locazione**.
+2. Tocchi **Aggiungi un contratto**. Scelga il **Locatore (un fornitore)**, scriva i **Locali (indirizzo)** e la data di **Inizio**. Aggiunga **Fisso fino al**, **Preavviso in mesi**, il **Deposito** e una **Indicizzazione (nota)** se il contratto li prevede.
+3. In **Canone e spese**, tocchi **Nuovo importo**. Scelga la **Voce** (**Canone**, **Anticipo spese** o **Altra voce**), l'**Importo**, la frequenza (**Pagamento**) e il giorno di inizio (**Dal**).
+4. Quando il canone cambia, aggiunga un **Nuovo importo** dalla sua data. Sostituisce l'importo in vigore; il precedente resta nella storia.
+5. Per terminare il contratto, tocchi **Dare disdetta**. Inserisca **Disdetta data il**, **Il contratto termina il** e **Perché termina?**.
+6. Quando il locatore fattura le spese dell'anno, tocchi **Conguagliare le spese**. Inserisca il periodo, l'**Importo fatturato** e il giorno di pagamento (**Scadenza il**).
+
+**Da sapere**
+
+- Registri prima il locatore come fornitore.
+- Dopo la disdetta, gli importi programmati si fermano al giorno in cui il contratto termina. Le scadenze già presentate restano.
+- Un conguaglio detrae gli anticipi pagati nel periodo: un saldo è dovuto nel giorno scelto, un'eccedenza è registrata come credito. Un periodo si conguaglia una sola volta.
+- Registrare il contratto richiede **Registrare il contratto di locazione**; lo spazio deve avere attivato **Contratto di locazione dei locali**.
+
+**Vedi anche:** [Le scadenze del canone e le fatture che le coprono](#le-scadenze-del-canone-e-le-fatture-che-le-coprono) · [Saldi dei fornitori](#saldi-dei-fornitori)
+
+<!-- anchor: user.money.purchases.commitments -->
+### Le scadenze del canone e le fatture che le coprono
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Il contratto o una sala in affitto attende un canone ogni mese, e vuole abbinare ogni mese alla fattura del locatore, senza contare il costo due volte.
+
+**Passaggi**
+
+1. In **Contratto di locazione** o **Sale in affitto**, tocchi **Scadenze**.
+2. Legga ogni mese: **Atteso**, **Parzialmente abbinato** o **Abbinato**.
+3. Tocchi **Abbina una fattura** su un mese. Scelga la **Fattura** e la **Riga della fattura**, e inserisca l'**Importo coperto**.
+4. Se la fattura differisce da ciò che il mese attende, tocchi **Accetta la differenza** e scriva **Perché la fattura è diversa**.
+5. Un abbinamento errato si annulla con **Annulla** e il suo motivo.
+
+**Da sapere**
+
+- Una fattura abbinata a un mese sostituisce l'attesa di quel mese; non aggiunge mai un secondo costo.
+- Si abbinano solo fatture fornitore del locatore in attesa o approvate, fino a quanto il mese attende ancora.
+- Una differenza accettata va ai validatori: nulla cambia finché non decidono.
+
+**Vedi anche:** [Il contratto di locazione dei locali](#il-contratto-di-locazione-dei-locali) · [Sale in affitto](#sale-in-affitto)
+
+<!-- anchor: user.money.purchases.rented-rooms -->
+### Sale in affitto
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Lo spazio prende in affitto sale da un locatore, e vuole che i membri le prenotino solo durante l'affitto, e solo quelli che sceglie Lei.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Passaggi**
+
+1. Nella planimetria, segni il piano come in affitto: sotto **Piani** compare «Piano in affitto: le sue sale si prenotano solo all'interno di una locazione».
+2. Apra [Acquisti](https://fdittgen-png.github.io/deskilo/#/money/purchases), tocchi **Sale in affitto** e poi **Affittare questa sala** su una sala.
+3. Scelga il **Locatore**, il **Primo giorno** e, se l'affitto termina, l'**Ultimo giorno (facoltativo)**. Inserisca il **Costo mensile per lo spazio** e la **Tariffa per mezza giornata per un membro (facoltativa)**.
+4. Scelga chi può prenotare: **Aperta a tutti i membri**, oppure **Aperta anche a questi membri**, **Aperta anche a questi ruoli** o **Aperta anche a questi piani**, ciascuno con la propria tariffa se vuole.
+5. Metta lo **Stato** su **Attivo: prenotabile** e tocchi **Salva**.
+
+**Da sapere**
+
+- Una sala in affitto si prenota solo nel periodo dell'affitto, e solo dalle persone scelte. Nessun altro la vede.
+- Finché lo stato è **Bozza: non prenotabile**, nessuno può prenotarla. Una volta **Terminato** l'affitto, la sala non è prenotabile fino a un nuovo affitto.
+- Il costo mensile compare in **Scadenze**, da abbinare alle fatture del locatore.
+- Gestire le sale in affitto richiede **Gestire sedi e modificare la planimetria**; lo spazio deve avere attivato **Sale in affitto**.
+
+**Vedi anche:** [Le scadenze del canone e le fatture che le coprono](#le-scadenze-del-canone-e-le-fatture-che-le-coprono)
+
+<!-- anchor: user.money.purchases.equipment -->
+### Il registro delle attrezzature
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Lo spazio ha acquistato un'attrezzatura durevole, e vuole registrarla e trattarla come decide il Suo commercialista.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Passaggi**
+
+1. Sull'acquisto, classifichi la riga come attrezzatura durevole.
+2. Apra [Acquisti](https://fdittgen-png.github.io/deskilo/#/money/purchases), tocchi **Attrezzature** e poi **Registra un'attrezzatura**. Scelga la **Riga d'acquisto** e dia il **Nome dell'attrezzatura**.
+3. Tocchi **Decidi il trattamento**. Scelga **Capitalizza come attrezzatura** o **Imputa a costo**, scriva il **Fondamento della decisione** e aggiunga **In uso dal** solo se lo sa.
+4. Per conservare le cifre del Suo commercialista, tocchi **Valutazioni del commercialista** e **Importare un file** (o **Inserire un bene**). Controlli l'anteprima e tocchi **Conferma**.
+
+**Da sapere**
+
+- Ogni attrezzatura mostra il suo stato: **In attesa di trattamento**, **Capitalizzata, in uso**, **Imputata a costo** o **Dismessa**.
+- Il costo è noto quando la quota di IVA detraibile dell'acquisto è qualificata.
+- Le valutazioni sono solo documentazione: non se ne registra nulla, e una cifra vuota resta sconosciuta. Un lotto successivo sostituisce il precedente e dice perché.
+- Registrare richiede **Registrare le fatture dei fornitori**; decidere il trattamento e le valutazioni richiedono **Gestire tariffe e regole di fatturazione** e **Consultare le finanze dello spazio**.
+
+**Vedi anche:** [Una fattura fornitore, dalla registrazione all'approvazione](#una-fattura-fornitore-dalla-registrazione-allapprovazione)
+
 <!-- anchor: user.money.cash -->
 ### La pagina Cassa
 
@@ -5938,6 +6039,30 @@ Guarda come funziona lo spazio.
 - Il periodo in corso è parziale; le sue cifre cambiano ancora.
 
 **Vedi anche:** [La schermata Fatturazione](#la-schermata-fatturazione)
+
+<!-- anchor: user.invoicing.bi-costs -->
+### Costi, scadenze e costi condivisi nell'analisi
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole il lato acquisti dell'analisi: ciò che lo spazio ha speso, deve ancora e prevede ancora di pagare, e come i costi condivisi ricadono su ogni risorsa.
+
+**Passaggi**
+
+1. Apra [Analisi aziendale](https://fdittgen-png.github.io/deskilo/#/bi) e scelga i mesi.
+2. Legga **Costi operativi (registrati)**, **Fatturato meno costi operativi registrati**, **Ammortamenti contabili (registrati)** e **Attrezzature acquistate (capitalizzate)**.
+3. Legga **Pagato (registrato)**, **Ancora da fatturare (contratti)** e **Previsto da pagare (dovuto + contratti)** per la cassa.
+4. Legga **Costi condivisi per risorsa**, e tocchi **Regole di ripartizione** per dire come una categoria di acquisto si ripartisce su piani e uffici.
+5. In una regola, scelga la **Categoria di acquisto** (o **Una riga di acquisto**), i **Pesi (numeri interi; vuoto o 0: nessuna quota)**, la **Base (perché questi pesi)** e **In vigore dal**, poi salvi. **Ferma la regola** la termina da questo mese.
+
+**Da sapere**
+
+- Le cifre dicono che cosa contano. **Fatturato meno costi operativi registrati** non è un utile: non contiene ammortamenti, stipendi né spese bancarie. **Pagato (registrato)** sono pagamenti registrati, non un saldo bancario riconciliato.
+- Gli ammortamenti sono noti solo se i valori contabili confermati dal Suo commercialista coprono esattamente i mesi scelti; altrimenti sono sconosciuti, mai 0.
+- Un costo che nessuna regola ripartisce resta non attribuito, mai diviso in parti uguali. La ripartizione è un'analisi: nessun membro viene fatturato e nessun documento cambia.
+- Le regole di ripartizione richiedono **Gestire tariffe e regole di fatturazione**.
+
+**Vedi anche:** [Analisi aziendale](#analisi-aziendale) · [Il registro delle attrezzature](#il-registro-delle-attrezzature)
 
 <!-- anchor: user.advanced.overview -->
 ## Avanzate

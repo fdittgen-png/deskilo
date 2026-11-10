@@ -1241,3 +1241,27 @@ Sie sehen sich an, wie der Workspace abschneidet.
 - Der laufende Zeitraum ist unvollständig; seine Zahlen ändern sich noch.
 
 **Siehe auch:** [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub)
+
+<!-- anchor: user.invoicing.bi-costs -->
+### Kosten, Fälligkeiten und geteilte Kosten in der Analyse
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten die Einkaufsseite der Analyse: was der Raum ausgegeben hat, noch schuldet und noch zu zahlen erwartet, und wie geteilte Kosten auf jede Ressource fallen.
+
+**Schritte**
+
+1. Öffnen Sie [Geschäftsanalyse](app:/bi) und wählen Sie die Monate.
+2. Lesen Sie **Betriebsaufwand (erfasst)**, **Fakturiert abzüglich erfasstem Betriebsaufwand**, **Bilanzielle Abschreibungen (erfasst)** und **Angeschaffte Ausstattung (aktiviert)**.
+3. Lesen Sie **Ausgezahlt (erfasst)**, **Noch abzurechnen (Verträge)** und **Voraussichtlich zu zahlen (offen + Verträge)** für die Geldseite.
+4. Lesen Sie **Geteilte Kosten nach Ressource** und tippen Sie auf **Verteilungsregeln**, um festzulegen, wie eine Einkaufskategorie auf Etagen und Büros verteilt wird.
+5. Wählen Sie in einer Regel die **Einkaufskategorie** (oder **Eine Einkaufszeile**), die **Gewichte (ganze Zahlen; leer oder 0: kein Anteil)**, die **Grundlage (warum diese Gewichte)** und **Gültig ab**, dann speichern. **Regel beenden** beendet sie ab diesem Monat.
+
+**Gut zu wissen**
+
+- Die Zahlen sagen, was sie zählen. **Fakturiert abzüglich erfasstem Betriebsaufwand** ist kein Gewinn: Abschreibungen, Löhne und Bankgebühren fehlen. **Ausgezahlt (erfasst)** sind erfasste Zahlungen, kein abgestimmter Kontostand.
+- Abschreibungen sind nur bekannt, wenn bestätigte Buchwerte Ihrer Steuerberatung genau die gewählten Monate abdecken; sonst unbekannt, nie 0.
+- Kosten, die keine Regel verteilt, bleiben unverteilt, nie gleichmäßig geteilt. Die Verteilung ist eine Analyse: Kein Mitglied wird belastet und kein Beleg ändert sich.
+- Verteilungsregeln brauchen **Tarife und Abrechnungsregeln verwalten**.
+
+**Siehe auch:** [Business-Analysen](help:user.invoicing.bi) · [Das Anlagenverzeichnis](help:user.money.purchases.equipment)
