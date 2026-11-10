@@ -34,8 +34,6 @@
   "portalList": "Liste",
   "portalMap": "Karte",
   "portalSearch": "Workspaces suchen",
-  "portalDirectoryUnavailable": "Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.",
-  "portalNoWorkspaces": "Keine veröffentlichten Workspaces gefunden.",
   "portalNoLongerPublished": "Dieser Workspace ist nicht mehr veröffentlicht.",
   "portalDirectoryIncompatible": "Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.",
   "portalActionNotNegotiated": "Diese Aktion ist zwischen dieser App und diesem Server nicht verfügbar. Ein App-Update kann helfen.",

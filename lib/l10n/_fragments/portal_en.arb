@@ -139,14 +139,6 @@
   "@portalSearch": {
     "description": "Shown as the label of a field in directory screen (directory), and 1 other place."
   },
-  "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
-  "@portalDirectoryUnavailable": {
-    "description": "Shown as the text in discovery list view (directory), and 2 other places."
-  },
-  "portalNoWorkspaces": "No published workspaces found.",
-  "@portalNoWorkspaces": {
-    "description": "Shown as the text in discovery list view (directory), and 1 other place."
-  },
   "portalNoLongerPublished": "This workspace is no longer published.",
   "@portalNoLongerPublished": {
     "description": "Shown as the text in public workspace view (directory)."

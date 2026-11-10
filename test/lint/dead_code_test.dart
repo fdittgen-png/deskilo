@@ -18,8 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/features/me/presentation/kit/me_notice.dart::MeNotice':
-      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
   'lib/features/me/presentation/kit/me_quiet_line.dart::MeQuietLine':
       '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
   // The workbook's sources as data: the export coverage lint reads them now,

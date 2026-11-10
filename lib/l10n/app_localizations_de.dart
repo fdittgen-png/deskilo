@@ -7100,6 +7100,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoveryBookmark => 'Merken';
 
   @override
+  String get discoveryClearSearch => 'Suche löschen';
+
+  @override
+  String discoveryDirectoriesDidNotAnswer(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Verzeichnisse haben nicht geantwortet.',
+      one: 'Ein Verzeichnis hat nicht geantwortet.',
+    );
+    return '$_temp0 Die Ergebnisse können unvollständig sein.';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -7147,6 +7161,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Weitere Verzeichnisse konnten nicht geladen werden.';
 
   @override
+  String discoveryNoMatchTitle(String query) {
+    return 'Nichts gefunden für „$query“';
+  }
+
+  @override
   String get discoveryNoSaved =>
       'Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.';
 
@@ -7173,7 +7192,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get discoveryTitle => 'Arbeitsräume entdecken';
+  String get discoveryStartBody =>
+      'Geben Sie eine Stadt, eine Leistung oder einen Namen ein.';
+
+  @override
+  String get discoveryStartTitle => 'Wonach suchen Sie?';
 
   @override
   String get discoveryView => 'Ansehen';
@@ -20374,10 +20397,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalDirectoryShowMore => 'Mehr anzeigen';
 
   @override
-  String get portalDirectoryUnavailable =>
-      'Einige Verzeichnisse sind nicht erreichbar. Die Ergebnisse sind unvollständig.';
-
-  @override
   String get portalDirectoryUnverified =>
       'Dieser Space kann gerade nicht bestätigt werden.';
 
@@ -20433,10 +20452,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get portalNoLongerPublished =>
       'Dieser Workspace ist nicht mehr veröffentlicht.';
-
-  @override
-  String get portalNoWorkspaces =>
-      'Keine veröffentlichten Workspaces gefunden.';
 
   @override
   String get portalOpenMe => 'Ich: mein Konto und meine Spaces';

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/personal_theme.dart';
-import 'me_kit_metrics.dart';
+import '../../../../core/ui/personal_kit/me_kit_metrics.dart';
 
 class MeQuietLine extends StatelessWidget {
   const MeQuietLine(this.text, {super.key, this.icon = Icons.check_circle_outline});

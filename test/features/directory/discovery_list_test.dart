@@ -118,7 +118,7 @@ void main() {
       await _show(tester, store: store);
       await tester.tap(find.byKey(_bookmark(_one)));
       await tester.pump();
-      expect(find.text('Saved on this device'), findsOneWidget);
+      expect(find.byTooltip('Remove bookmark'), findsOneWidget);
       expect(store.byNamespace.keys, [_namespace('user-1')]);
       expect(
         store.byNamespace[_namespace('user-1')]!.map((p) => (p.source, p.id)),
@@ -131,8 +131,8 @@ void main() {
         store: store,
         auth: FakeAuthRepository(userId: 'user-2'),
       );
-      expect(find.text('Saved on this device'), findsNothing);
-      expect(find.text('Bookmark'), findsNWidgets(3));
+      expect(find.byTooltip('Remove bookmark'), findsNothing);
+      expect(find.byTooltip('Bookmark'), findsNWidgets(3));
       expect(await store.read(_namespace('user-2')), isEmpty);
       expect(
         store.byNamespace.keys,
@@ -157,11 +157,11 @@ void main() {
       expect(
         find.descendant(
           of: find.byKey(_row(_two)),
-          matching: find.text('Saved on this device'),
+          matching: find.byTooltip('Remove bookmark'),
         ),
         findsOneWidget,
       );
-      expect(find.text('Saved on this device'), findsOneWidget);
+      expect(find.byTooltip('Remove bookmark'), findsOneWidget);
 
       await tester.tap(find.byKey(const ValueKey('directory-saved-filter')));
       await tester.pump();
@@ -200,7 +200,7 @@ void main() {
       expect(
         find.descendant(
           of: find.byKey(_row(_one)),
-          matching: find.text('Saved on this device'),
+          matching: find.byTooltip('Remove bookmark'),
         ),
         findsOneWidget,
       );

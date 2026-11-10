@@ -1,8 +1,4 @@
 {
-  "discoveryTitle": "Discover workspaces",
-  "@discoveryTitle": {
-    "description": "Shown as a title in directory screen (directory)."
-  },
   "discoveryBookmark": "Bookmark",
   "@discoveryBookmark": {
     "description": "Shown as a tooltip in saved place button (directory), and 1 other place."

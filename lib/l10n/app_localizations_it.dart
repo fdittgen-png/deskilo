@@ -7085,6 +7085,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get discoveryBookmark => 'Salva';
 
   @override
+  String get discoveryClearSearch => 'Cancella la ricerca';
+
+  @override
+  String discoveryDirectoriesDidNotAnswer(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count elenchi non hanno risposto.',
+      one: 'Un elenco non ha risposto.',
+    );
+    return '$_temp0 Questi risultati potrebbero essere incompleti.';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -7132,6 +7146,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile caricare altre directory.';
 
   @override
+  String discoveryNoMatchTitle(String query) {
+    return 'Nessun risultato per «$query»';
+  }
+
+  @override
   String get discoveryNoSaved =>
       'Nessuno spazio salvato su questo dispositivo per ora.';
 
@@ -7158,7 +7177,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get discoveryTitle => 'Scoprire spazi';
+  String get discoveryStartBody => 'Digiti una città, un servizio o un nome.';
+
+  @override
+  String get discoveryStartTitle => 'Che cosa cerca?';
 
   @override
   String get discoveryView => 'Vedi';
@@ -20349,10 +20371,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalDirectoryShowMore => 'Mostra altro';
 
   @override
-  String get portalDirectoryUnavailable =>
-      'Alcune directory non sono raggiungibili. I risultati sono incompleti.';
-
-  @override
   String get portalDirectoryUnverified =>
       'Questo spazio non può essere verificato in questo momento.';
 
@@ -20407,9 +20425,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get portalNoLongerPublished => 'Questo spazio non è più pubblicato.';
-
-  @override
-  String get portalNoWorkspaces => 'Nessuno spazio pubblicato trovato.';
 
   @override
   String get portalOpenMe => 'Io: il mio account e i miei spazi';

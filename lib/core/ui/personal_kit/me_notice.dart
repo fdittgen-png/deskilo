@@ -4,7 +4,7 @@
 // source that failed is said here, beside the results that loaded.
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/personal_theme.dart';
+import '../../theme/personal_theme.dart';
 import 'me_kit_metrics.dart';
 
 class MeNotice extends StatelessWidget {

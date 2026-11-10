@@ -99,7 +99,7 @@ Future<void> _show(
 bool _saved(WidgetTester tester, PublicWorkspace w) => find
     .descendant(
       of: find.byKey(ValueKey('directory-row-${w.source}/${w.id}')),
-      matching: find.text('Saved on this device'),
+      matching: find.byTooltip('Remove bookmark'),
     )
     .evaluate()
     .isNotEmpty;

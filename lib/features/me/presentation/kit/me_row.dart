@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/personal_theme.dart';
-import 'me_kit_metrics.dart';
+import '../../../../core/ui/personal_kit/me_kit_metrics.dart';
 
 class MeRow extends StatelessWidget {
   const MeRow({
