@@ -148,6 +148,7 @@
   "user.workspace.availability.limits": "Booking limits",
   "user.features.processes": "Switch whole processes on or off",
   "user.features.switch": "A feature switch",
+  "user.workspace.settings.business-kind": "What kind of business is it?",
   "user.workspace.settings.country": "Country",
   "user.workspace.settings.currency-timezone": "Currency and time zone",
   "user.workspace.settings.language": "Workspace language",

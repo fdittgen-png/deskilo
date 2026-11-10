@@ -477,6 +477,31 @@ Usted quiere activar o desactivar una sola función.
 
 **Véase también:** [Activar o desactivar procesos enteros](help:user.features.processes)
 
+<!-- anchor: user.workspace.settings.business-kind -->
+### ¿Qué tipo de negocio es?
+
+**Público:** Propietario · Administrador/a con el permiso
+
+Lleva un estudio, una consulta o un salón en lugar de un espacio de coworking y quiere que la aplicación se adapte. La guía de configuración lo pregunta en su primer paso; aquí puede cambiarlo más tarde.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Pasos**
+
+1. Abra [Espacio](app:/workspace-settings).
+2. Toque **¿Qué tipo de negocio es?**, elija un tipo y, si el negocio es varias cosas, marque otros tipos debajo (opcional).
+3. Lea lo que **Activa** y **Desactiva** y toque **Guardar**.
+
+**Conviene saber**
+
+- La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.
+- Un tipo sin plazas desactiva todo lo relativo a plazas — asientos, plano, quiosco, salas. **Mostrar todo** lista cada función.
+- Nada cambia hasta **Guardar**; **Cancelar** lo deja todo como está. Elegir un tipo más tarde vuelve a proponer y nunca cambia nada en silencio.
+- Una función aún no estable solo se activa si la marca; si no, actívela más tarde en **Funciones**.
+- El coworking no propone nada, y desactivar las plazas no borra nada: vuelva a activarlas y el plano y las reservas regresan.
+
+**Véase también:** [Funciones](help:user.features.processes)
+
 <!-- anchor: user.workspace.settings.country -->
 ### País
 

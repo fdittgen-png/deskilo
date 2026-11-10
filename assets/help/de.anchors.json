@@ -148,6 +148,7 @@
   "user.workspace.availability.limits": "Buchungsgrenzen",
   "user.features.processes": "Ganze Prozesse ein- oder ausschalten",
   "user.features.switch": "Ein Funktionsschalter",
+  "user.workspace.settings.business-kind": "Was für ein Unternehmen ist es?",
   "user.workspace.settings.country": "Land",
   "user.workspace.settings.currency-timezone": "Währung und Zeitzone",
   "user.workspace.settings.language": "Sprache des Arbeitsbereichs",

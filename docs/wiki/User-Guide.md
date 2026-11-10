@@ -3467,6 +3467,31 @@ You want to turn one single feature on or off.
 
 **See also:** [Switch whole processes on or off](#switch-whole-processes-on-or-off)
 
+<!-- anchor: user.workspace.settings.business-kind -->
+### What kind of business is it?
+
+**Audience:** Owner · Administrator with the permission
+
+You run a studio, a practice or a salon rather than a coworking space, and want the app to match. The setup guide asks it on its first step; you can change it here later.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Steps**
+
+1. Open [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings).
+2. Tap **What kind of business is it?**, choose a kind and, if the business is several things, tick further kinds below (optional).
+3. Read what it **Switches on** and **Switches off**, then tap **Save**.
+
+**Good to know**
+
+- Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.
+- A kind without places switches off everything about places — seats, the floor plan, the kiosk, rooms. **Show all** lists every feature.
+- Nothing changes until **Save**; **Cancel** leaves everything as it is. Choosing a kind later proposes again and never switches anything silently.
+- A feature not yet reviewed as stable is switched on only if you tick it; switch it on later in **Features** otherwise.
+- Coworking proposes nothing, and switching places off deletes nothing: switch them on again and the floor plan and bookings are back.
+
+**See also:** [Features](#switch-whole-processes-on-or-off)
+
 <!-- anchor: user.workspace.settings.country -->
 ### Country
 

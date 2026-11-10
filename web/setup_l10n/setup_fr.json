@@ -750,5 +750,14 @@
  "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
  "retUsRule": "La règle de conservation s'applique",
  "badgeFailureLimit": "Échecs de connexion par badge de l’espace",
- "badgeFailureLimitHint": "Après ce nombre d’échecs de PIN dans l’espace, la connexion par badge est suspendue pendant la fenêtre de blocage et les propriétaires reçoivent une alerte. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut. Le XML conserve cette réponse ; saisissez-la dans l’application."
+ "badgeFailureLimitHint": "Après ce nombre d’échecs de PIN dans l’espace, la connexion par badge est suspendue pendant la fenêtre de blocage et les propriétaires reçoivent une alerte. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut. Le XML conserve cette réponse ; saisissez-la dans l’application.",
+ "identityBusinessKind": "Genre d’activité",
+ "identityBusinessKindHint": "À choisir dans l’application, à la première étape : il propose les fonctions dont ce genre d’activité a besoin.",
+ "businessKind_coworking": "Espace de coworking",
+ "businessKind_studio": "Studio — cours et ateliers",
+ "businessKind_practice": "Cabinet — rendez-vous",
+ "businessKind_salon": "Salon — beauté, coiffure, tatouage",
+ "businessKind_service": "Autre entreprise de services",
+ "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)",
+ "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique."
 }

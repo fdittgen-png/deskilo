@@ -444,6 +444,7 @@ void main() {
           m.group(1)!: m.group(2)!,
       };
       expect(dest, {
+        'businessKind': 'app',
         'name': 'app',
         'environment': 'app',
         'network': 'app',

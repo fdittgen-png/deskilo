@@ -148,6 +148,7 @@
   "user.workspace.availability.limits": "Limites de réservation",
   "user.features.processes": "Activer ou désactiver des processus entiers",
   "user.features.switch": "Un interrupteur de fonctionnalité",
+  "user.workspace.settings.business-kind": "Quel genre d’activité est-ce ?",
   "user.workspace.settings.country": "Pays",
   "user.workspace.settings.currency-timezone": "Devise et fuseau horaire",
   "user.workspace.settings.language": "Langue de l'espace",
