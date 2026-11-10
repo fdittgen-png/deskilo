@@ -98,7 +98,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final invoices = ref.watch(invoicesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.invoicingTitle),
+        title: Text(l.featureInvoicing),
         actions: [
           IconButton(
             key: const ValueKey('invoicing-search'),
@@ -383,33 +383,39 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final currency = format.moneyIn(currencyCode ?? '');
     await showDialog<void>(
       context: context,
-      builder: (page) => Dialog.fullscreen(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              l.invoicingTodoMonth(
-                period == null
-                    ? ''
-                    : format.dates(DateShape.month).format(_monthOf(period)),
+      builder: (_) => Dialog.fullscreen(
+        // Its own messenger: what the month says is said once, here, not
+        // also on the home under it.
+        child: ScaffoldMessenger(
+          child: Builder(
+            builder: (page) => Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  l.invoicingTodoMonth(
+                    period == null
+                        ? ''
+                        : format.dates(DateShape.month).format(_monthOf(period)),
+                  ),
+                ),
+              ),
+              body: ToInvoiceTab(
+                currency: currency,
+                onIssue: (memberId, p) =>
+                    showInvoiceIssueSheet(page, ref, memberId: memberId, period: p),
+                onIssueAll: (entries, p) =>
+                    issueInvoicesForAll(page, ref, entries, p, currency),
+                onProforma: (memberId, p) async {
+                  final invoice = await proformaForMonth(
+                    ref,
+                    memberId: memberId,
+                    period: p,
+                  );
+                  if (invoice != null && page.mounted) {
+                    await shareProforma(page, ref, invoice);
+                  }
+                },
               ),
             ),
-          ),
-          body: ToInvoiceTab(
-            currency: currency,
-            onIssue: (memberId, p) =>
-                showInvoiceIssueSheet(page, ref, memberId: memberId, period: p),
-            onIssueAll: (entries, p) =>
-                issueInvoicesForAll(page, ref, entries, p, currency),
-            onProforma: (memberId, p) async {
-              final invoice = await proformaForMonth(
-                ref,
-                memberId: memberId,
-                period: p,
-              );
-              if (invoice != null && page.mounted) {
-                await shareProforma(page, ref, invoice);
-              }
-            },
           ),
         ),
       ),

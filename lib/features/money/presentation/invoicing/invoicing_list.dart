@@ -184,7 +184,7 @@ class InvoicingList extends StatelessWidget {
                     label: switch (f) {
                       InvoicingFilter.open => l.invoicingFilterOpen,
                       InvoicingFilter.overdue => l.invoicingFilterOverdue,
-                      InvoicingFilter.toConfirm => l.invoicingFilterToConfirm,
+                      InvoicingFilter.toConfirm => l.journeyStageConfirm,
                       _ => l.invoicingFilterPaid,
                     },
                     key: ValueKey('invoicing-filter-${f.name}'),
@@ -225,7 +225,7 @@ class InvoicingList extends StatelessWidget {
                       ViewToggleOption(
                         value: InvoicingView.invoices,
                         icon: Icons.receipt_long_outlined,
-                        label: l.invoicingViewInvoices,
+                        label: l.featureInvoicing,
                       ),
                     ],
                   ),
@@ -245,7 +245,7 @@ class InvoicingList extends StatelessWidget {
       if (wide)
         CustomerHeader(
           customer: l.invoicingColCustomer,
-          invoices: l.invoicingColInvoices,
+          invoices: l.featureInvoicing,
           oldest: l.invoicingColOldest,
           owes: l.invoicingColOwes,
         ),

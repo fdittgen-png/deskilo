@@ -19315,10 +19315,6 @@
   "@invoicingColInvoice": {
     "description": "#3587 table column"
   },
-  "invoicingColInvoices": "Invoices",
-  "@invoicingColInvoices": {
-    "description": "#3587 table column"
-  },
   "invoicingColOldest": "Oldest",
   "@invoicingColOldest": {
     "description": "#3587 table column: the oldest invoice's state"
@@ -19411,10 +19407,6 @@
   "@invoicingFilterPaid": {
     "description": "#3587 list filter: paid and closed"
   },
-  "invoicingFilterToConfirm": "To confirm",
-  "@invoicingFilterToConfirm": {
-    "description": "#3587 list filter"
-  },
   "invoicingInvoiceCount": "{count, plural, =1{1 invoice} other{{count} invoices}}",
   "@invoicingInvoiceCount": {
     "description": "#3587 how many invoices",
@@ -19455,10 +19447,6 @@
   },
   "invoicingMoreRegroup": "Regroup invoices into one",
   "@invoicingMoreRegroup": {
-    "description": "#3587 More menu"
-  },
-  "invoicingMoreReminderRules": "Reminder rules",
-  "@invoicingMoreReminderRules": {
     "description": "#3587 More menu"
   },
   "invoicingMoreSettings": "Invoice settings",
@@ -19505,10 +19493,6 @@
   "invoicingOwedOverdue": "Overdue",
   "@invoicingOwedOverdue": {
     "description": "#3587 owed bucket"
-  },
-  "invoicingOwedToConfirm": "To confirm",
-  "@invoicingOwedToConfirm": {
-    "description": "#3587 owed bucket: money on its way"
   },
   "invoicingReceivedIn": "Received in {month}",
   "@invoicingReceivedIn": {
@@ -19588,10 +19572,6 @@
         "type": "int"
       }
     }
-  },
-  "invoicingStatusNoDueDate": "No due date",
-  "@invoicingStatusNoDueDate": {
-    "description": "#3587 status"
   },
   "invoicingStatusOnHold": "On hold",
   "@invoicingStatusOnHold": {
@@ -19673,10 +19653,6 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
-  "invoicingTitle": "Invoices",
-  "@invoicingTitle": {
-    "description": "#3587 the invoicing home's title"
-  },
   "invoicingTodo": "To do",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -19742,10 +19718,6 @@
   "invoicingViewCustomers": "Customers",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
-  },
-  "invoicingViewInvoices": "Invoices",
-  "@invoicingViewInvoices": {
-    "description": "#3587 list view: one line per invoice"
   },
   "journalBlocked": "Map these roles in the book chart first: {roles}",
   "@journalBlocked": {

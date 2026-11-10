@@ -14719,9 +14719,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingColInvoice => 'Rechnung';
 
   @override
-  String get invoicingColInvoices => 'Rechnungen';
-
-  @override
   String get invoicingColOldest => 'Älteste';
 
   @override
@@ -14799,9 +14796,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingFilterPaid => 'Bezahlt';
 
   @override
-  String get invoicingFilterToConfirm => 'Zu bestätigen';
-
-  @override
   String invoicingInvoiceCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -14836,9 +14830,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingMoreRegroup => 'Rechnungen zu einer zusammenfassen';
 
   @override
-  String get invoicingMoreReminderRules => 'Mahnregeln';
-
-  @override
   String get invoicingMoreSettings => 'Rechnungseinstellungen';
 
   @override
@@ -14869,9 +14860,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicingOwedOverdue => 'Überfällig';
-
-  @override
-  String get invoicingOwedToConfirm => 'Zu bestätigen';
 
   @override
   String invoicingReceivedIn(String month) {
@@ -14936,9 +14924,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get invoicingStatusNoDueDate => 'Ohne Fälligkeit';
-
-  @override
   String get invoicingStatusOnHold => 'Angehalten';
 
   @override
@@ -14994,9 +14979,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingStatusToMatch => 'Zahlung eingegangen · zuzuordnen';
 
   @override
-  String get invoicingTitle => 'Rechnungen';
-
-  @override
   String get invoicingTodo => 'Zu tun';
 
   @override
@@ -15047,9 +15029,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicingViewCustomers => 'Kunden';
-
-  @override
-  String get invoicingViewInvoices => 'Rechnungen';
 
   @override
   String journalBlocked(String roles) {

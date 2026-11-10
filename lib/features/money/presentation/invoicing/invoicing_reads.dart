@@ -8,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
 import '../../domain/dunning.dart';
+import '../../providers/bank_statement_providers.dart'
+    show WorkspaceFeature, enabledFeaturesSyncProvider;
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_journey_view.dart';
 import 'receivables_adapter.dart';
@@ -24,5 +26,8 @@ final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
     eventFactsOf: ref.watch(invoiceEventFactsProvider),
     transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {},
     held: {...?ref.watch(dunningHoldsProvider).value?.keys},
+    fold: ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.settlementFold),
   ),
 );
