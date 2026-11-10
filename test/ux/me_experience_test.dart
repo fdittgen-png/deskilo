@@ -31,10 +31,8 @@ const List<double> _scales = [1.0, 1.3];
 /// What today's screens still do wrong: `<screen>|<state>` -> rule -> cells.
 /// Only falls (#3545).
 const Map<String, Map<String, int>> _known = {
-  'account|empty': {'target under 48 dp': 12, 'unnamed control': 12},
-  'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
-  'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
-  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6, 'unnamed control': 8},
+  'data|empty': {'target under 48 dp': 4},
+  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6},
   'spaces|one source failed': {'a failed source is not said': 12},
 };
 
@@ -58,7 +56,14 @@ List<({Size size, bool named})> _tappable(WidgetTester tester) {
     final tappable = data.hasAction(SemanticsAction.tap) &&
         !data.flagsCollection.isHidden &&
         !node.isInvisible;
-    if (tappable) {
+    // A switch inside its list tile is the tile's own control: the tile (the
+    // named parent with the same tap) is the target a person meets.
+    final parent = node.parent?.getSemanticsData();
+    final insideNamedTap = parent != null &&
+        parent.hasAction(SemanticsAction.tap) &&
+        parent.label.trim().isNotEmpty &&
+        data.label.trim().isEmpty;
+    if (tappable && !insideNamedTap) {
       out.add((
         size: node.rect.size,
         named: data.label.trim().isNotEmpty ||
@@ -116,7 +121,7 @@ void main() {
                 // Tall enough that no row is cut by the viewport: a clipped row's
                 // semantics rect is shorter than the row and would read as a
                 // target under 48 dp.
-                size: Size(width, width < 600 ? 3000 : 1100),
+                size: Size(width, 5000),
                 extraOverrides: scenario.overrides,
               );
               await goTo(tester, router, screen.route);
