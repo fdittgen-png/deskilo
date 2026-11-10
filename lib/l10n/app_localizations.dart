@@ -43169,7 +43169,7 @@ abstract class AppLocalizations {
   /// #2870 setup steps: setupPlacesCounts
   ///
   /// In en, this message translates to:
-  /// **'{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}'**
+  /// **'{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}'**
   String setupPlacesCounts(int rooms, int desks, int seats);
 
   /// #2870 setup steps: setupPlacesEmpty

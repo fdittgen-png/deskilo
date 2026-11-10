@@ -26035,18 +26035,21 @@ class AppLocalizationsEn extends AppLocalizations {
       locale: localeName,
       other: '$rooms rooms',
       one: '1 room',
+      zero: 'no rooms',
     );
     String _temp1 = intl.Intl.pluralLogic(
       desks,
       locale: localeName,
       other: '$desks desks',
       one: '1 desk',
+      zero: 'no desks',
     );
     String _temp2 = intl.Intl.pluralLogic(
       seats,
       locale: localeName,
       other: '$seats seats',
       one: '1 seat',
+      zero: 'no seats',
     );
     return '$_temp0 · $_temp1 · $_temp2';
   }

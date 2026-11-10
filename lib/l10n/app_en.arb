@@ -31029,7 +31029,7 @@
   "@setupPaymentsSaveFailed": {
     "description": "#2871 setup run steps: setupPaymentsSaveFailed"
   },
-  "setupPlacesCounts": "{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
+  "setupPlacesCounts": "{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}",
   "@setupPlacesCounts": {
     "description": "#2870 setup steps: setupPlacesCounts",
     "placeholders": {

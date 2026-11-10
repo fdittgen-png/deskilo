@@ -17010,7 +17010,7 @@
   "setupPaymentsPreviewEmpty": "Los miembros no ven ninguna instrucción de pago hasta que usted rellene una.",
   "setupPaymentsPreviewNote": "En un extracto pendiente, debajo de lo que debe el miembro:",
   "setupPaymentsSaveFailed": "No se pudieron guardar las instrucciones de pago. Inténtelo de nuevo.",
-  "setupPlacesCounts": "{rooms, plural, =1{1 sala} other{{rooms} salas}} · {desks, plural, =1{1 mesa} other{{desks} mesas}} · {seats, plural, =1{1 puesto} other{{seats} puestos}}",
+  "setupPlacesCounts": "{rooms, plural, =0{ninguna sala} =1{1 sala} other{{rooms} salas}} · {desks, plural, =0{ninguna mesa} =1{1 mesa} other{{desks} mesas}} · {seats, plural, =0{ningún puesto} =1{1 puesto} other{{seats} puestos}}",
   "setupPlacesEmpty": "Todavía no hay plazas. Dibuje las salas, las mesas y los puestos en el editor, o empiece con una plantilla.",
   "setupPlacesFromTemplate": "Empezar con una plantilla",
   "setupPlacesOpenEditor": "Abrir el editor",

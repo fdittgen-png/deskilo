@@ -26283,18 +26283,21 @@ class AppLocalizationsIt extends AppLocalizations {
       locale: localeName,
       other: '$rooms sale',
       one: '1 sala',
+      zero: 'nessuna sala',
     );
     String _temp1 = intl.Intl.pluralLogic(
       desks,
       locale: localeName,
       other: '$desks scrivanie',
       one: '1 scrivania',
+      zero: 'nessuna scrivania',
     );
     String _temp2 = intl.Intl.pluralLogic(
       seats,
       locale: localeName,
       other: '$seats postazioni',
       one: '1 postazione',
+      zero: 'nessuna postazione',
     );
     return '$_temp0 · $_temp1 · $_temp2';
   }
