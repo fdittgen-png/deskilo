@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #1077 — `Currencies.selectable` offers JPY, KRW and ISK, which have NO
-// minor unit: 1 yen is 1 yen, not 100 of anything. `parseCentsInput` and
+// minor unit: 1 yen is 1 yen, not 100 of anything. `parseMinorInput` and
 // `centsToMajor` hardcoded 100 anyway, while `Currencies.minorPerMajor`
 // existed for exactly this and was already used by `formatMinor`.
 //
@@ -21,7 +21,7 @@ void main() {
     setUp(() => WorkspaceCurrency.install('JPY'));
 
     test('5000 yen is stored as 5000, not 500 000', () {
-      expect(parseCentsInput('5000'), 5000);
+      expect(parseMinorInput('5000'), 5000);
     });
 
     test('and reads back as the same 5000', () {
@@ -30,7 +30,7 @@ void main() {
 
     test('the round trip is the identity', () {
       for (final typed in ['1', '250', '5000', '123456']) {
-        expect(centsToMajor(parseCentsInput(typed)!), typed);
+        expect(centsToMajor(parseMinorInput(typed)!), typed);
       }
     });
   });
@@ -39,7 +39,7 @@ void main() {
     setUp(() => WorkspaceCurrency.install('BHD'));
 
     test('12.5 is 12 500 fils', () {
-      expect(parseCentsInput('12.5'), 12500);
+      expect(parseMinorInput('12.5'), 12500);
     });
   });
 
@@ -47,14 +47,14 @@ void main() {
     setUp(() => WorkspaceCurrency.install('EUR'));
 
     test('12,50 is 1250 cents and reads back as 12.50', () {
-      expect(parseCentsInput('12,50'), 1250);
+      expect(parseMinorInput('12,50'), 1250);
       expect(centsToMajor(1250), '12.50');
       expect(centsToMajor(15000), '150');
     });
   });
 
   test('with nothing installed the euro grain is the safe default', () {
-    expect(parseCentsInput('12.50'), 1250);
+    expect(parseMinorInput('12.50'), 1250);
     expect(centsToMajor(1250), '12.50');
   });
 }

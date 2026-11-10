@@ -234,7 +234,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
 
   void _submit() {
     final name = _name.text.trim();
-    final price = parseCentsInput(_price.text);
+    final price = parseMinorInput(_price.text);
     if (name.isEmpty || price == null) return;
     Navigator.of(context).pop(
       _ServiceDraft(
