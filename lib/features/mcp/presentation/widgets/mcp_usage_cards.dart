@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -12,9 +11,7 @@ import '../../providers/mcp_providers.dart';
 import '../mcp_operation_labels.dart';
 
 /// A count in the reader's number format.
-String _count(BuildContext context, int n) => NumberFormat.decimalPattern(
-  Localizations.maybeLocaleOf(context)?.toString(),
-).format(n);
+String _count(BuildContext context, int n) => appFormatOf(context).numbers().format(n);
 
 /// #1630 — the workspace's assistant use over the last 30 days, for its
 /// owner: four counts and the busiest services. Counts only: no person

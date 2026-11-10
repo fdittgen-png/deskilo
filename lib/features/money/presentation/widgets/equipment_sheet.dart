@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -177,7 +177,7 @@ class _AssetCard extends StatelessWidget {
             Text(
               cost == null
                   ? l10n.equipmentCostUnknown
-                  : l10n.equipmentCost(moneyFormat(asset.currency).formatMinor(cost)),
+                  : l10n.equipmentCost(appFormatOf(context).moneyIn(asset.currency).formatMinor(cost)),
               key: ValueKey('equipment-cost-${asset.id}'),
             ),
             if (asset.supplierName.isNotEmpty || asset.originalReference.isNotEmpty)

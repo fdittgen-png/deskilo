@@ -13,7 +13,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/session/session_source.dart';
@@ -212,7 +211,7 @@ class _Outstanding extends ConsumerWidget {
                   const SizedBox(height: 4),
                   for (final e in data.owedByCurrency.entries)
                     Text(
-                      moneyFormat(e.key).formatMinor(e.value),
+                      appFormatOf(context).moneyIn(e.key).formatMinor(e.value),
                       style: theme.textTheme.headlineSmall?.strong.copyWith(
                         color: overdue > 0 ? theme.colorScheme.error : null,
                       ),
@@ -425,7 +424,7 @@ class _Payments extends ConsumerWidget {
                       ].join(' · ')),
                       trailing: e.amountCents == null
                           ? null
-                          : Text(moneyFormat(e.currency).formatMinor(e.amountCents!)),
+                          : Text(appFormatOf(context).moneyIn(e.currency).formatMinor(e.amountCents!)),
                     ),
                   ),
                   ),

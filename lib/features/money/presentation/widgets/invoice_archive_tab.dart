@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -255,7 +254,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                           full: all
                               .where((i) => i.id == source.invoiceId)
                               .firstOrNull,
-                          currency: moneyFormat(invoice.currency),
+                          currency: appFormatOf(context).moneyIn(invoice.currency),
                         ),
                     ],
                   );
@@ -406,7 +405,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     required String replacedByNumber,
     required DateFormat dateFormat,
   }) {
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     final status = invoiceLifecycleOf(invoice, match);
     return Card(
       child: ListTile(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -129,7 +129,7 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
-    final money = moneyFormat(widget.claim.currency);
+    final money = appFormatOf(context).moneyIn(widget.claim.currency);
     return AlertDialog(
       title: Text(l10n.purchasesPayTitle),
       content: SingleChildScrollView(

@@ -488,9 +488,7 @@ class MemberNegotiationTile extends ConsumerWidget {
         ref,
         memberId: memberId,
         memberName: memberName,
-        currency: moneyFormat(
-          ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency,
-        ),
+        currency: appFormatOf(context).moneyIn(ref.read(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency),
         readOnly: !canManage,
       ),
     );

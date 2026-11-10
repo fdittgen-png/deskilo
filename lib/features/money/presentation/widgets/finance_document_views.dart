@@ -15,7 +15,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -219,7 +218,7 @@ class _FinanceDocument extends ConsumerWidget {
       ],
     );
     final amount = Text(
-      moneyFormat(invoice.currency).formatMinor(_shownAmount(invoice)),
+      appFormatOf(context).moneyIn(invoice.currency).formatMinor(_shownAmount(invoice)),
       textAlign: TextAlign.end,
       style: theme.textTheme.titleSmall?.strong.copyWith(
         color: overdue ? scheme.error : null,

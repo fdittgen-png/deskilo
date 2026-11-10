@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -116,7 +117,7 @@ class LeaseCommitmentsView extends ConsumerWidget {
     final reason = await _askReason(
       context,
       title: l10n.leaseVarianceTitle(
-        moneyFormat(currencyCode).formatMinor(match.lineUnallocatedCents),
+        appFormatOf(context).moneyIn(currencyCode).formatMinor(match.lineUnallocatedCents),
       ),
       label: l10n.leaseVarianceReason,
       action: l10n.leaseVarianceAccept,
@@ -186,7 +187,7 @@ class LeaseCommitmentsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final money = moneyFormat(currencyCode);
+    final money = appFormatOf(context).moneyIn(currencyCode);
     final page = ref.watch(leaseCommitmentsProvider(_key));
     return SheetShell(
       title: l10n.leaseCommitments,

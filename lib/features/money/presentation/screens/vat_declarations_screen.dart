@@ -8,14 +8,12 @@ import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
@@ -119,9 +117,9 @@ class _VatDeclarationsScreenState
       disclaimer: '${_basisNote(l10n, reference)} '
           '${l10n.vatDeclDisclaimer}',
       statusLabel: _statusLabel(l10n, declaration),
-      rate: (value) => '${NumberFormat.decimalPattern(l10n.localeName).format(value)} %',
+      rate: (value) => '${appFormatOf(context).numbers().format(value)} %',
       lineNote: (line) => _lineNote(l10n, line),
-      money: moneyFormat(declaration.currency, locale: l10n.localeName).formatMinor,
+      money: appFormatOf(context).moneyIn(declaration.currency).formatMinor,
       date: dateFormat.format,
     );
   }

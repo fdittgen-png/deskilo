@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -169,7 +168,7 @@ class _StatusBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final currency = moneyFormat(status.currency);
+    final currency = appFormatOf(context).moneyIn(status.currency);
     Widget row(String label, int cents, {bool negative = false, Key? key}) =>
         ListTile(
           key: key,

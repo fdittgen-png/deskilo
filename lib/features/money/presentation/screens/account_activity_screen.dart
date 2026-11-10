@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -124,7 +123,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                         appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(entry.occurredAt)),
                                         if (entry.amountCents
                                             case final amount?)
-                                          moneyFormat(entry.currency)
+                                          appFormatOf(context).moneyIn(entry.currency)
                                               .formatMinor(amount),
                                         if (entry.minutes case final minutes?)
                                           l10n.accountUsageMinutes(minutes),

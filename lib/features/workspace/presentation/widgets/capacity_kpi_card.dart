@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -54,7 +55,7 @@ class _CapacityKpiCardState extends ConsumerState<CapacityKpiCard> {
     if (!on || !may || workspace == null) return const SizedBox.shrink();
 
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
+    final locale = appFormatOf(context).locale;
     final theme = Theme.of(context);
     final provider = seatCapacityMonthProvider(
       workspace.id,
@@ -151,7 +152,7 @@ class _Figure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
+    final locale = appFormatOf(context).locale;
     final theme = Theme.of(context);
     final ratio = kpi.utilisation;
     final value = ratio == null

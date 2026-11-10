@@ -34,6 +34,9 @@ class MoneyFormat {
   /// A MAJOR-unit number — kept for callers that already hold one.
   String format(num major) => _format.format(major);
 
+  /// The locale it spells amounts in.
+  String get locale => _format.locale;
+
   String get currencySymbol => _format.currencySymbol;
 
   String get currencyName => _format.currencyName ?? code;

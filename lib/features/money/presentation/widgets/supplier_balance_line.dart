@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -55,14 +55,14 @@ class SupplierBalanceLine extends ConsumerWidget {
           for (final balance in balances) ...[
             Text(
               l10n.suppliersOutstanding(
-                moneyFormat(balance.currency)
+                appFormatOf(context).moneyIn(balance.currency)
                     .formatMinor(balance.remainingCents),
               ),
             ),
             if (balance.heldCents != 0)
               Text(
                 l10n.suppliersHeld(
-                  moneyFormat(balance.currency).formatMinor(balance.heldCents),
+                  appFormatOf(context).moneyIn(balance.currency).formatMinor(balance.heldCents),
                 ),
               ),
           ],

@@ -12,9 +12,10 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -114,13 +115,13 @@ Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
   if (workspace == null) return null;
   return (
     percents: await expenseVatPercents(ref, workspace.vatRegime),
-    currency: moneyFormat(workspace.currencyCode),
+    currency: ref.read(appFormatProvider).moneyIn(workspace.currencyCode),
   );
 }
 
 /// « 20 % », in the reader's number format.
-String expenseVatPercentLabel(AppLocalizations l10n, double percent) =>
-    _percentLabel(l10n, percent);
+String expenseVatPercentLabel(AppFormat format, double percent) =>
+    format.rate(percent);
 
 /// The fields, keyed `<keyPrefix>-vat-rate`, `-vat-deductible`,
 /// `-vat-asset` and, where the choice offers it, `-vat-acquisition`;
@@ -147,7 +148,7 @@ List<Widget> expenseVatFields({
         for (final p in percents)
           DropdownMenuItem<double?>(
             value: p,
-            child: Text(_percentLabel(l10n, p)),
+            child: Text(_percentLabel(currency, p)),
           ),
       ],
       onChanged: (v) {
@@ -219,8 +220,8 @@ List<Widget> _flagSwitches(
 ];
 
 /// « 20 % », in the reader's number format.
-String _percentLabel(AppLocalizations l10n, double percent) =>
-    '${NumberFormat.decimalPattern(l10n.localeName).format(percent)} %';
+String _percentLabel(MoneyFormat currency, double percent) =>
+    AppFormat(locale: currency.locale, currencyCode: currency.code).rate(percent);
 
 /// The hint, and once amount and share are typed, the deductible VAT
 /// they make (`vatInputSplit`, the server's rounding); for an acquisition

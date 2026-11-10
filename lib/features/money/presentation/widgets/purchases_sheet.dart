@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -219,7 +219,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
               if (p.category.isNotEmpty) p.category,
             ].join(' · '),
           ),
-          trailing: Text(moneyFormat(p.currency).formatMinor(p.grossCents)),
+          trailing: Text(appFormatOf(context).moneyIn(p.currency).formatMinor(p.grossCents)),
           onTap: () => _showDetailSheet(context, workspaceId, p.id, widget),
         ),
     ];
@@ -370,7 +370,7 @@ class _PurchaseDetailView extends ConsumerWidget {
       );
     }
     final s = detail.summary;
-    final money = moneyFormat(s.currency);
+    final money = appFormatOf(context).moneyIn(s.currency);
     final supplier = detail.supplierName == null
         ? l10n.purchasesNoSupplier
         : '${detail.supplierNumber} · ${detail.supplierName}';

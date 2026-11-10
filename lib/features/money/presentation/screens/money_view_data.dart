@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../events/domain/workspace_event.dart';
@@ -39,6 +41,7 @@ class MoneyViewData {
     required this.onlineAttempts,
     required this.account,
     required this.features,
+    required this.format,
   });
 
   factory MoneyViewData.watch(WidgetRef ref, String period) {
@@ -46,6 +49,7 @@ class MoneyViewData {
     final statementAsync = ref.watch(myStatementProvider(period));
     return MoneyViewData._(
       workspace: ref.watch(currentWorkspaceProvider).value,
+    format: ref.watch(appFormatProvider),
       member: member,
       statementAsync: statementAsync,
       // #510 — once an invoice covers the browsed month, the DOCUMENT
@@ -74,6 +78,7 @@ class MoneyViewData {
   /// nothing of the month is read.
   factory MoneyViewData.gates(WidgetRef ref) => MoneyViewData._(
     workspace: ref.watch(currentWorkspaceProvider).value,
+    format: ref.watch(appFormatProvider),
     member: ref.watch(myMemberProvider).value,
     statementAsync: const AsyncValue.data(null),
     settlement: null,
@@ -166,7 +171,10 @@ class MoneyViewData {
 
   String get currencyCode => workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
 
-  MoneyFormat get currency => moneyFormat(currencyCode);
+  /// #3484 — the member's formats, for the amounts this view prints.
+  final AppFormat format;
+
+  MoneyFormat get currency => format.moneyIn(currencyCode);
 
   /// The online-payment card above the bill, when an attempt is pending.
   List<Widget> get attemptsCard => [

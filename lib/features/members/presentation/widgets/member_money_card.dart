@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
@@ -66,7 +65,7 @@ class MemberMoneyCard extends ConsumerWidget {
 
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currencyCode = workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
-    final currency = moneyFormat(currencyCode);
+    final currency = appFormatOf(context).moneyIn(currencyCode);
 
     final accountAsync = ref.watch(memberAccountProvider(memberId));
     final invoicesAsync = ref.watch(memberInvoicesProvider(memberId));

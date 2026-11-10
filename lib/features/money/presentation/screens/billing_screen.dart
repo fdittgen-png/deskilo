@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -413,7 +413,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final chargesVat = workspace?.vatRegime == 'vat_registered';
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
-    final currencySymbol = moneyFormat(workspace?.currencyCode).currencySymbol;
+    final currencySymbol = appFormatOf(context).moneyIn(workspace?.currencyCode).currencySymbol;
     final fields = ListView(
       padding: const EdgeInsets.all(16),
       children: [

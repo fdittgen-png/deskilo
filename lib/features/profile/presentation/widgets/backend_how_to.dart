@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -74,9 +74,7 @@ class BackendHowTo extends ConsumerWidget {
                     // The step NUMBER — a numeral, not prose: formatted
                     // like every other number in the app.
                     child: Text(
-                      NumberFormat.decimalPattern(
-                        Localizations.localeOf(context).toString(),
-                      ).format(i + 1),
+                      appFormatOf(context).numbers().format(i + 1),
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ),

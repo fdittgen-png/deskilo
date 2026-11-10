@@ -57,8 +57,26 @@ const _allowed = <String, String>{
       "a document: the configuration report prints its generation date",
   'lib/features/workspace/presentation/widgets/badge_manager_dialog.dart':
       "a document: the badge sheet's cover prints its issue date",
+  'lib/features/workspace/presentation/widgets/bi_customer_views.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/bi_dashboard_content.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
   'lib/features/workspace/presentation/widgets/bi_export.dart':
       "a document: the analytics export's issue date prints in the document's locale",
+  'lib/features/workspace/presentation/widgets/bi_module_section.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/bi_overview_views.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/bi_purchase_views.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/bi_toolbar.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/bi_vendor_views.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/capacity_evidence.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
+  'lib/features/workspace/presentation/widgets/capacity_kpi_card.dart':
+      "BI renderers shared by the screens and the printed export: they format in the locale they are handed, and every screen hands them the member's format locale (appFormatOf(context).locale)",
   'lib/features/workspace/presentation/widgets/holiday_import_sheet.dart':
       "a machine key: the ISO day a holiday is matched by, never shown",
   'lib/features/workspace/presentation/widgets/member_note_composer.dart':
@@ -69,11 +87,12 @@ const _allowed = <String, String>{
       "a document: the workspace data report prints in the document's locale",
 };
 
-/// The recorded ceilings (#3484, measured on this branch's base).
+/// The ceilings: 0 since #3484's sweeps (recorded before them: DateFormat. 141,
+/// NumberFormat. 31, moneyFormat( 93, .toLocal() 42, WorkspaceTime.display 8).
 const _ceilings = <String, int>{
-  'DateFormat.': 15,
-  'NumberFormat.': 24,
-  'moneyFormat(': 81,
+  'DateFormat.': 0,
+  'NumberFormat.': 0,
+  'moneyFormat(': 0,
   '.toLocal()': 0,
   'WorkspaceTime.display': 0,
 };

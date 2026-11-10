@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'format_prefs.dart';
+import 'money_format.dart';
 
 /// THE formatting seam (#711): every number, amount, date and time a
 /// member reads goes through here, in THEIR format locale, with the
@@ -66,6 +67,23 @@ class AppFormat {
       decimalDigits: whole ? 0 : digits,
     ).format(Currencies.toMajor(minor, code));
   }
+
+  /// #3484 — the money formatter of [code] (the workspace's when null) in the
+  /// member's format locale, for a screen that formats many amounts or hands
+  /// the formatter on. Documents name their own locale with `moneyFormat`.
+  MoneyFormat moneyIn(String? code) => moneyFormat(code ?? currencyCode, locale: locale);
+
+  /// #3484 — plain numbers in the member's format locale: `1 234,5` in
+  /// fr_FR; [decimals] fixes the fraction digits.
+  NumberFormat numbers({int? decimals}) => decimals == null
+      ? NumberFormat.decimalPattern(locale)
+      : NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: decimals);
+
+  /// #3484 — a fraction as a percentage in the member's format locale
+  /// (`0.25` → `25 %` in fr_FR); [decimals] fixes the fraction digits.
+  NumberFormat percents({int? decimals}) => decimals == null
+      ? NumberFormat.percentPattern(locale)
+      : NumberFormat.decimalPercentPattern(locale: locale, decimalDigits: decimals);
 
   String _symbol(String code) =>
       NumberFormat.simpleCurrency(locale: locale, name: code).currencySymbol;
@@ -143,7 +161,7 @@ class AppFormat {
   /// preference and nothing else; [time] would shift it by the zone.
   String wallTime(DateTime wall) => switch (clock) {
         ClockPref.h24 => DateFormat.Hm(locale).format(wall),
-        ClockPref.h12 => DateFormat.jm('en_US').format(wall),
+        ClockPref.h12 => DateFormat('h:mm a', locale).format(wall),
         ClockPref.auto => DateFormat.jm(locale).format(wall),
       };
 
@@ -151,7 +169,7 @@ class AppFormat {
     final wall = _wall(instant);
     return switch (clock) {
       ClockPref.h24 => DateFormat.Hm(locale).format(wall),
-      ClockPref.h12 => DateFormat.jm('en_US').format(wall),
+      ClockPref.h12 => DateFormat('h:mm a', locale).format(wall),
       ClockPref.auto => DateFormat.jm(locale).format(wall),
     };
   }

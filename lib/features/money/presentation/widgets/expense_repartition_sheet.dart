@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -155,7 +155,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final currency = moneyFormat(workspace?.currencyCode);
+    final currency = appFormatOf(context).moneyIn(workspace?.currencyCode);
     final members = ref.watch(workspaceMembersProvider).value ?? const [];
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final pool = _members(members, names);

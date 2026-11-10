@@ -108,7 +108,7 @@ class _InvoiceRegisterScreenState
     // #2365 — the accountant: reads the finances and exports, issues nothing.
     final canExport = permissions.contains(WorkspacePermission.exportData) &&
         (canIssue || permissions.contains(WorkspacePermission.viewFinances));
-    final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final dateFormat = appFormatOf(context).dates(DateShape.numeric);
 
     return Scaffold(

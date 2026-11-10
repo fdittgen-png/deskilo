@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -57,8 +57,8 @@ class PurchaseClaimsSection extends ConsumerWidget {
           ListTile(
             key: ValueKey('purchase-claim-${o.id}'),
             contentPadding: EdgeInsets.zero,
-            title: Text(claimStatusLabel(l10n, o)),
-            trailing: Text(moneyFormat(o.currency).formatMinor(o.amountCents)),
+            title: Text(claimStatusLabel(l10n, o, appFormatOf(context))),
+            trailing: Text(appFormatOf(context).moneyIn(o.currency).formatMinor(o.amountCents)),
           ),
           for (final a in o.allocations)
             ListTile(
@@ -68,21 +68,21 @@ class PurchaseClaimsSection extends ConsumerWidget {
               title: Text(
                 a.isCredit
                     ? l10n.purchasesCreditLine(
-                        moneyFormat(o.currency).formatMinor(a.amountCents),
+                        appFormatOf(context).moneyIn(o.currency).formatMinor(a.amountCents),
                         a.reference,
                       )
                     : a.isOffset
                     ? l10n.purchasesOffsetLine(
-                        moneyFormat(o.currency).formatMinor(a.amountCents),
+                        appFormatOf(context).moneyIn(o.currency).formatMinor(a.amountCents),
                         a.reference,
                       )
                     : a.isReversal
                     ? l10n.purchasesReversalLine(
-                        moneyFormat(o.currency)
+                        appFormatOf(context).moneyIn(o.currency)
                             .formatMinor(a.amountCents.abs()),
                       )
                     : l10n.purchasesPaymentLine(
-                        moneyFormat(o.currency).formatMinor(a.amountCents),
+                        appFormatOf(context).moneyIn(o.currency).formatMinor(a.amountCents),
                         a.paidOn == null
                             ? ''
                             : material.formatMediumDate(a.paidOn!),

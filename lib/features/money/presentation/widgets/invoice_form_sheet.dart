@@ -72,7 +72,7 @@ Future<void> showInvoiceIssueSheet(
         for (final member in members)
           (id: member.id, name: names[member.id] ?? ''),
       ],
-      currency: moneyFormat(workspace.currencyCode),
+      currency: appFormatOf(context).moneyIn(workspace.currencyCode),
       preview: (memberId, period) => repo.previewInvoice(
         workspaceId: workspace.id,
         memberId: memberId,

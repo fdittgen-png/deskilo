@@ -4,7 +4,6 @@
 // subscription and the consumed services, and the line they share with
 // [BillView]'s other cards.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -114,8 +113,7 @@ class BillEntitlementCard extends StatelessWidget {
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context).textTheme;
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
-    final fmt = NumberFormat.decimalPattern(locale)..maximumFractionDigits = 1;
+    final fmt = appFormatOf(context).numbers()..maximumFractionDigits = 1;
     String days(int halfDays) => fmt.format(halfDays / 2);
 
     final cap = statement.capHalfDays;

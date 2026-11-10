@@ -394,7 +394,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         const <String, List<EventDecision>>{};
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const [];
-    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     // #687 — MESSAGES ARE NOT NOTIFICATIONS ANY MORE.
     //
     // They were mixed into this feed because there was nowhere else for

@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -18,7 +19,11 @@ import 'purchase_payment_dialogs.dart';
 
 /// "Open · 50.00 remaining", "Applied to invoice N", "On hold": where a claim
 /// stands, in words the person can act on.
-String claimStatusLabel(AppLocalizations l10n, PurchaseObligation o) {
+String claimStatusLabel(
+  AppLocalizations l10n,
+  PurchaseObligation o,
+  AppFormat format,
+) {
   if (o.state == ObligationState.cancelled) return l10n.purchasesClaimCancelled;
   if (o.state == ObligationState.held) return l10n.purchasesClaimHeld;
   final invoice = o.appliedInvoice;
@@ -26,7 +31,7 @@ String claimStatusLabel(AppLocalizations l10n, PurchaseObligation o) {
     return l10n.purchasesClaimApplied(invoice.number);
   }
   return l10n.purchasesClaimOpen(
-    moneyFormat(o.currency).formatMinor(o.remainingCents),
+    format.moneyIn(o.currency).formatMinor(o.remainingCents),
   );
 }
 
@@ -133,16 +138,14 @@ class PurchasePayablesView extends ConsumerWidget {
                 [
                   purchaseKindLabel(l10n, r.purchase.kind),
                   if (r.purchase.category.isNotEmpty) r.purchase.category,
-                  claimStatusLabel(l10n, r.obligation),
+                  claimStatusLabel(l10n, r.obligation, appFormatOf(context)),
                 ].join(' · '),
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    moneyFormat(
-                      r.obligation.currency,
-                    ).formatMinor(r.obligation.amountCents),
+                    appFormatOf(context).moneyIn(r.obligation.currency).formatMinor(r.obligation.amountCents),
                   ),
                   if (canPay && r.obligation.payable && !r.obligation.mine)
                     IconButton(

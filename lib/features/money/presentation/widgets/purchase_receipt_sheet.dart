@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
@@ -294,7 +295,7 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
         for (final p in percents)
           DropdownMenuItem(
             value: p,
-            child: Text(expenseVatPercentLabel(l10n, p)),
+            child: Text(expenseVatPercentLabel(appFormatOf(context), p)),
           ),
       ],
       onChanged: (v) {

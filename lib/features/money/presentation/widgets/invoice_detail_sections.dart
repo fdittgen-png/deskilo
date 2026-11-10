@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -73,7 +72,7 @@ class InvoiceDetailSections {
   List<Widget> amounts(BuildContext context, {required bool association}) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     return [
       // The positions, exactly as the PDF prints them.
       for (final (i, position) in invoice.lines.indexed)
@@ -149,7 +148,7 @@ class InvoiceDetailSections {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     Widget line(String text) => _detailLine(theme, text);
     return [
       const Divider(height: AppSpacing.xl),
@@ -217,7 +216,7 @@ class InvoiceDetailSections {
   List<Widget> timeline(BuildContext context, InvoiceMatch? standingMatch) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     final dateFormat = appFormatOf(context).dates(DateShape.date);
     Widget line(String text) => _detailLine(theme, text);
     final sent = transmission;

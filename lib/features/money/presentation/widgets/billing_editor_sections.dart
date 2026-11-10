@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/package.dart';
@@ -181,7 +180,7 @@ class BillingPackageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final price = moneyFormat(currencyCode).formatMinor(package.priceCents);
+    final price = appFormatOf(context).moneyIn(currencyCode).formatMinor(package.priceCents);
     final summary = l10n.billingPackageSummary(package.days, price);
     final rate = vatRateSuffix(
       chargesVat: chargesVat,

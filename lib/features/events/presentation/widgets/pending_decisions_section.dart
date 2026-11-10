@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/event_sources.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
@@ -82,8 +81,7 @@ class PendingDecisionsSection extends ConsumerWidget {
         const <String, List<EventDecision>>{};
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const <ValidationPolicy>[];
-    final currency = moneyFormat(
-        ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final format = ref.watch(appFormatProvider);
     return Column(
       key: const ValueKey('pending-decisions'),
