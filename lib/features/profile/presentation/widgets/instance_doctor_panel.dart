@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/instance/instance_bundle_asset.dart';
 import '../../../../core/instance/instance_doctor.dart';
+import '../../../../core/instance/instance_security_checks.dart' show heldInEnglish;
 import '../../../../core/instance/management_api.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// #1308 S3 — runs the doctor on a project and shows what it found:
 /// *Protected* or *Attention required*, problems first, passed checks
@@ -99,8 +101,8 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
                 leading: Icon(f.level == DoctorLevel.alarm
                     ? Icons.error_outline
                     : Icons.warning_amber_outlined),
-                title: Text(f.title),
-                subtitle: Text(f.detail.replaceAll(RegExp(r'\n\s+'), '\n')),
+                title: Text(_title(l10n, f)),
+                subtitle: Text(_detail(l10n, f).replaceAll(RegExp(r'\n\s+'), '\n')),
               ),
             if (passed.isNotEmpty)
               ExpansionTile(
@@ -110,10 +112,20 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
                   for (final f in passed)
                     ListTile(
                       dense: true,
-                      title: Text(f.title),
-                      subtitle: Text(f.detail),
+                      title: Text(_title(l10n, f)),
+                      subtitle: Text(_detail(l10n, f)),
                     ),
                 ],
+              ),
+            if (findings != null)
+              Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.sm),
+                child: Text(
+                  key: const ValueKey('instance-doctor-footer'),
+                  problems.isEmpty
+                      ? l10n.instanceDoctorAllHealthy
+                      : l10n.instanceDoctorNeedsHuman(problems.length),
+                ),
               ),
             if (_error case final error?)
               Text(error, style: TextStyle(color: theme.colorScheme.error)),
@@ -132,4 +144,88 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
       ),
     );
   }
+}
+
+/// A probe's name in the member's language.
+String _probe(AppLocalizations l10n, DoctorProbe probe) => switch (probe) {
+  DoctorProbe.auth => l10n.instanceDoctorProbeAuth,
+  DoctorProbe.signups => l10n.instanceDoctorProbeSignups,
+  DoctorProbe.schema => l10n.instanceDoctorProbeSchema,
+  DoctorProbe.security => l10n.instanceDoctorProbeSecurity,
+  DoctorProbe.policies => l10n.instanceDoctorProbePolicies,
+  DoctorProbe.storage => l10n.instanceDoctorProbeStorage,
+  DoctorProbe.hardening => l10n.instanceDoctorProbeHardening,
+  DoctorProbe.roles => l10n.instanceDoctorProbeRoles,
+};
+
+/// A finding's title in the member's language: the catalogue's wording where
+/// the finding is typed, else the title as the doctor wrote it.
+String _title(AppLocalizations l10n, DoctorFinding f) {
+  final facts = f.facts;
+  return switch (f.words) {
+    null || DoctorWords.installationHeld => f.title,
+    DoctorWords.stuckAccounts => l10n.instanceDoctorStuckTitle(f.count ?? 0),
+    DoctorWords.probeFailed => l10n.instanceDoctorProbeFailedTitle(
+      _probe(l10n, facts[0] as DoctorProbe),
+    ),
+    DoctorWords.signupsNobodyConfirmed => l10n.instanceDoctorSignupsNobodyTitle,
+    DoctorWords.schemaNoVersion => l10n.instanceDoctorSchemaNoVersionTitle,
+    DoctorWords.policyDriftSkipped =>
+      l10n.instanceDoctorPolicyDriftSkippedTitle,
+    DoctorWords.policiesMatch => l10n.instanceDoctorPoliciesMatchTitle,
+    DoctorWords.storageScoped => l10n.instanceDoctorStorageScopedTitle,
+    DoctorWords.guardRealtime => l10n.instanceDoctorGuardRealtimeTitle,
+    DoctorWords.guardDefiner => l10n.instanceDoctorGuardDefinerTitle,
+    DoctorWords.guardAnonView => l10n.instanceDoctorGuardAnonViewTitle,
+    DoctorWords.guardSecretGrants => l10n.instanceDoctorGuardSecretGrantsTitle,
+    DoctorWords.guardPublicBucket => l10n.instanceDoctorGuardPublicBucketTitle,
+    DoctorWords.rolesUndeclared => l10n.instanceDoctorRolesUndeclaredTitle,
+    DoctorWords.rolesUnknown => l10n.instanceDoctorRolesUnknownTitle,
+  };
+}
+
+/// A finding's detail in the member's language. The held phrase of an
+/// installation is worded from `instanceDoctorHeld`; the sentences the doctor
+/// still writes itself stay as it wrote them.
+String _detail(AppLocalizations l10n, DoctorFinding f) {
+  final facts = f.facts;
+  return switch (f.words) {
+    null || DoctorWords.stuckAccounts => f.detail,
+    DoctorWords.installationHeld when facts.length == 2 => f.detail.replaceFirst(
+      heldInEnglish(facts[0] as int, facts[1] as int),
+      l10n.instanceDoctorHeld(facts[0] as int, facts[1] as int),
+    ),
+    DoctorWords.installationHeld => f.detail,
+    DoctorWords.probeFailed => l10n.instanceDoctorProbeFailedDetail(
+      facts[1] as int,
+      '${facts[2]}',
+    ),
+    DoctorWords.signupsNobodyConfirmed =>
+      l10n.instanceDoctorSignupsNobodyDetail(facts[0] as int),
+    DoctorWords.schemaNoVersion => l10n.instanceDoctorSchemaNoVersionDetail(
+      facts[0] as int,
+      facts[1] as int,
+    ),
+    DoctorWords.policyDriftSkipped =>
+      l10n.instanceDoctorPolicyDriftSkippedDetail,
+    DoctorWords.policiesMatch =>
+      l10n.instanceDoctorPoliciesMatchDetail(facts[0] as int),
+    DoctorWords.storageScoped =>
+      l10n.instanceDoctorStorageScopedDetail(facts[0] as int),
+    DoctorWords.guardRealtime =>
+      l10n.instanceDoctorGuardRealtimeDetail('${facts[0]}'),
+    DoctorWords.guardDefiner =>
+      l10n.instanceDoctorGuardDefinerDetail('${facts[0]}'),
+    DoctorWords.guardAnonView =>
+      l10n.instanceDoctorGuardAnonViewDetail('${facts[0]}'),
+    DoctorWords.guardSecretGrants =>
+      l10n.instanceDoctorGuardSecretGrantsDetail('${facts[0]}'),
+    DoctorWords.guardPublicBucket =>
+      l10n.instanceDoctorGuardPublicBucketDetail('${facts[0]}'),
+    DoctorWords.rolesUndeclared => l10n.instanceDoctorRolesUndeclaredDetail(
+      l10n.instanceDoctorHeld(facts[0] as int, facts[1] as int),
+    ),
+    DoctorWords.rolesUnknown =>
+      l10n.instanceDoctorRolesUnknownDetail('${facts[0]}'),
+  };
 }

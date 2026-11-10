@@ -12383,11 +12383,88 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get instanceDoctorAllHealthy =>
+      'Tout ce qui a été vérifié est en bonne santé.';
+
+  @override
   String get instanceDoctorAttention => 'Attention requise';
+
+  @override
+  String instanceDoctorGuardAnonViewDetail(String names) {
+    return '$names\n        Sans security_invoker, la vue lit avec les droits du propriétaire et contourne les politiques des tables sous-jacentes.';
+  }
+
+  @override
+  String get instanceDoctorGuardAnonViewTitle =>
+      'Une vue lisible par anon s\'exécute comme son propriétaire';
+
+  @override
+  String instanceDoctorGuardDefinerDetail(String names) {
+    return '$names\n        Elle s\'exécute en tant que propriétaire ; un search_path non fixé laisse l\'appelant décider quelle table désignent ses noms non qualifiés.';
+  }
+
+  @override
+  String get instanceDoctorGuardDefinerTitle =>
+      'Une fonction SECURITY DEFINER n\'a pas de search_path fixe';
+
+  @override
+  String instanceDoctorGuardPublicBucketDetail(String names) {
+    return '$names\n        Un bucket public sert chaque objet à quiconque possède l\'URL, quelles que soient les politiques.';
+  }
+
+  @override
+  String get instanceDoctorGuardPublicBucketTitle =>
+      'Un bucket de stockage est public';
+
+  @override
+  String instanceDoctorGuardRealtimeDetail(String names) {
+    return '$names\n        Le temps réel rejoue les changements de lignes aux abonnés selon les mêmes politiques ; une table sans elles publie pour tout le monde.';
+  }
+
+  @override
+  String get instanceDoctorGuardRealtimeTitle =>
+      'Une table publiée en temps réel n\'est pas protégée';
+
+  @override
+  String instanceDoctorGuardSecretGrantsDetail(String names) {
+    return '$names\n        Les identifiants de paiement et de facture électronique, la configuration push et les tentatives de badge sont lus par le serveur, jamais par un client.';
+  }
+
+  @override
+  String get instanceDoctorGuardSecretGrantsTitle =>
+      'Une table contenant des secrets accorde des droits à un rôle d\'API';
+
+  @override
+  String instanceDoctorHeld(int workspaces, int members) {
+    String _temp0 = intl.Intl.pluralLogic(
+      workspaces,
+      locale: localeName,
+      other: '$workspaces espaces de travail',
+      one: '1 espace de travail',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      members,
+      locale: localeName,
+      other: '$members membres',
+      one: '1 membre',
+    );
+    return '$_temp0, $_temp1';
+  }
 
   @override
   String get instanceDoctorIntro =>
       'Avant que cet appareil l\'utilise, le contrôle de sécurité doit passer : une alarme garde le bouton désactivé jusqu\'à correction.';
+
+  @override
+  String instanceDoctorNeedsHuman(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count constats demandent une personne.',
+      one: '1 constat demande une personne.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String instanceDoctorPassed(int count) {
@@ -12401,13 +12478,134 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String instanceDoctorPoliciesMatchDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count politiques, exactement l\'ensemble que créent les migrations',
+      one: '1 politique, exactement l\'ensemble que créent les migrations',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorPoliciesMatchTitle =>
+      'Les politiques correspondent aux migrations';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedDetail =>
+      'la liste attendue est vide — assets/instance/policies.txt n\'a pas été lu, la dérive ne peut donc pas être jugée';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedTitle =>
+      'Dérive des politiques non vérifiée';
+
+  @override
+  String get instanceDoctorProbeAuth => 'Configuration de l\'authentification';
+
+  @override
+  String instanceDoctorProbeFailedDetail(int status, String message) {
+    return 'Supabase a répondu $status : $message\n        Les autres contrôles se sont exécutés sans elle.';
+  }
+
+  @override
+  String instanceDoctorProbeFailedTitle(String probe) {
+    return 'La requête « $probe » a échoué';
+  }
+
+  @override
+  String get instanceDoctorProbeHardening => 'Durcissement';
+
+  @override
+  String get instanceDoctorProbePolicies => 'Politiques';
+
+  @override
+  String get instanceDoctorProbeRoles => 'Rôles de l\'installation';
+
+  @override
+  String get instanceDoctorProbeSchema => 'Schéma';
+
+  @override
+  String get instanceDoctorProbeSecurity => 'Sécurité';
+
+  @override
+  String get instanceDoctorProbeSignups => 'Inscriptions';
+
+  @override
+  String get instanceDoctorProbeStorage => 'Périmètre du stockage';
+
+  @override
   String get instanceDoctorProtected => 'Protégé';
+
+  @override
+  String instanceDoctorRolesUndeclaredDetail(String held) {
+    return 'le schéma précède la colonne des rôles ; l\'installation se comporte comme combinée (domicile personnel et hôte d\'espaces) — $held.\n        Correctif : dart run tool/instance.dart install --ref <ref>';
+  }
+
+  @override
+  String get instanceDoctorRolesUndeclaredTitle =>
+      'Rôles de l\'installation non déclarés';
+
+  @override
+  String instanceDoctorRolesUnknownDetail(String roles) {
+    return '$roles\n        Seuls personal_home et workspace_host existent ; operator_set_installation_roles écrit un ensemble valide.';
+  }
+
+  @override
+  String get instanceDoctorRolesUnknownTitle =>
+      'Les rôles de l\'installation ne sont pas un ensemble connu';
 
   @override
   String get instanceDoctorRun => 'Lancer le contrôle de sécurité';
 
   @override
   String get instanceDoctorRunAgain => 'Vérifier à nouveau';
+
+  @override
+  String instanceDoctorSchemaNoVersionDetail(int tables, int required) {
+    return '$tables tables existent, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige $required. L\'installation la met à niveau à partir de ce qu\'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d\'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>';
+  }
+
+  @override
+  String get instanceDoctorSchemaNoVersionTitle =>
+      'Le schéma n\'a pas de version';
+
+  @override
+  String instanceDoctorSignupsNobodyDetail(int created) {
+    return '$created inscrits, 0 confirmé. L\'inscription n\'est pas seulement lente — personne ne l\'a terminée.\n        Vérifiez d\'abord l\'URL du site ci-dessus : c\'est celle du lien de l\'e-mail.';
+  }
+
+  @override
+  String get instanceDoctorSignupsNobodyTitle =>
+      'Personne n\'a confirmé depuis sept jours';
+
+  @override
+  String instanceDoctorStorageScopedDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count politiques de lecture, chacune nommant le dossier propriétaire du fichier',
+      one: '1 politique de lecture, qui nomme le dossier propriétaire du fichier',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorStorageScopedTitle =>
+      'Les lectures du stockage sont circonscrites';
+
+  @override
+  String instanceDoctorStuckTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count comptes ne peuvent pas entrer',
+      one: '1 compte ne peut pas entrer',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get instanceDoneIntro =>

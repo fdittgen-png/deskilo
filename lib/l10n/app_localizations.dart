@@ -19942,11 +19942,83 @@ abstract class AppLocalizations {
   /// **'Deploy the functions: payments, e-invoices, push, badges ({count}).'**
   String instanceDeployFunctions(int count);
 
+  /// #3489 Instance doctor report footer when nothing is wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything checked is healthy.'**
+  String get instanceDoctorAllHealthy;
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'Attention required'**
   String get instanceDoctorAttention;
+
+  /// #3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.'**
+  String instanceDoctorGuardAnonViewDetail(String names);
+
+  /// #3489 Doctor alarm: a view readable by anon runs as its owner.
+  ///
+  /// In en, this message translates to:
+  /// **'A view readable by anon runs as its owner'**
+  String get instanceDoctorGuardAnonViewTitle;
+
+  /// #3489 Detail of the alarm: a definer function has no fixed search_path; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        It runs as the owner; an unpinned search_path lets a caller decide which table its unqualified names mean.'**
+  String instanceDoctorGuardDefinerDetail(String names);
+
+  /// #3489 Doctor alarm: a definer function has no fixed search_path.
+  ///
+  /// In en, this message translates to:
+  /// **'A SECURITY DEFINER function has no fixed search_path'**
+  String get instanceDoctorGuardDefinerTitle;
+
+  /// #3489 Detail of the alarm: a storage bucket is public; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        A public bucket serves every object to anyone with the URL, whatever the policies say.'**
+  String instanceDoctorGuardPublicBucketDetail(String names);
+
+  /// #3489 Doctor alarm: a storage bucket is public.
+  ///
+  /// In en, this message translates to:
+  /// **'A storage bucket is public'**
+  String get instanceDoctorGuardPublicBucketTitle;
+
+  /// #3489 Detail of the alarm: a realtime-published table is unprotected; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        Realtime replays row changes to subscribers through the same policies; a table without them publishes to everyone.'**
+  String instanceDoctorGuardRealtimeDetail(String names);
+
+  /// #3489 Doctor alarm: a realtime-published table is unprotected.
+  ///
+  /// In en, this message translates to:
+  /// **'A realtime-published table is unprotected'**
+  String get instanceDoctorGuardRealtimeTitle;
+
+  /// #3489 Detail of the alarm: a table holding secrets grants to an API role; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        Payment and e-invoice credentials, push configuration and badge attempts are read by the server, never by a client.'**
+  String instanceDoctorGuardSecretGrantsDetail(String names);
+
+  /// #3489 Doctor alarm: a table holding secrets grants to an API role.
+  ///
+  /// In en, this message translates to:
+  /// **'A table holding secrets grants to an API role'**
+  String get instanceDoctorGuardSecretGrantsTitle;
+
+  /// #3489 Instance doctor: what an installation holds, in workspaces and members.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}'**
+  String instanceDoctorHeld(int workspaces, int members);
 
   /// #1308 instance wizard doctor and token
   ///
@@ -19954,17 +20026,131 @@ abstract class AppLocalizations {
   /// **'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.'**
   String get instanceDoctorIntro;
 
+  /// #3489 Instance doctor report footer: how many findings are problems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}'**
+  String instanceDoctorNeedsHuman(int count);
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 check passed} other{{count} checks passed}}'**
   String instanceDoctorPassed(int count);
 
+  /// #3489 Detail: number of policies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}'**
+  String instanceDoctorPoliciesMatchDetail(int count);
+
+  /// #3489 Policies equal the migrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Policies match the migrations'**
+  String get instanceDoctorPoliciesMatchTitle;
+
+  /// #3489 Detail: the expected policy list is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'the expected list is empty — assets/instance/policies.txt was not read, so drift cannot be judged'**
+  String get instanceDoctorPolicyDriftSkippedDetail;
+
+  /// #3489 Policy drift could not be judged.
+  ///
+  /// In en, this message translates to:
+  /// **'Policy drift not checked'**
+  String get instanceDoctorPolicyDriftSkippedTitle;
+
+  /// #3489 Doctor probe name: auth configuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Auth configuration'**
+  String get instanceDoctorProbeAuth;
+
+  /// #3489 Detail of a failed probe.
+  ///
+  /// In en, this message translates to:
+  /// **'Supabase answered {status}: {message}\n        The other checks ran without it.'**
+  String instanceDoctorProbeFailedDetail(int status, String message);
+
+  /// #3489 A doctor probe failed; {probe} is its name.
+  ///
+  /// In en, this message translates to:
+  /// **'{probe} query failed'**
+  String instanceDoctorProbeFailedTitle(String probe);
+
+  /// #3489 Doctor probe name: hardening.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardening'**
+  String get instanceDoctorProbeHardening;
+
+  /// #3489 Doctor probe name: policies.
+  ///
+  /// In en, this message translates to:
+  /// **'Policies'**
+  String get instanceDoctorProbePolicies;
+
+  /// #3489 Doctor probe name: installation roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation roles'**
+  String get instanceDoctorProbeRoles;
+
+  /// #3489 Doctor probe name: schema.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema'**
+  String get instanceDoctorProbeSchema;
+
+  /// #3489 Doctor probe name: security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get instanceDoctorProbeSecurity;
+
+  /// #3489 Doctor probe name: sign-ups.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-ups'**
+  String get instanceDoctorProbeSignups;
+
+  /// #3489 Doctor probe name: storage scoping.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage scoping'**
+  String get instanceDoctorProbeStorage;
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'Protected'**
   String get instanceDoctorProtected;
+
+  /// #3489 Detail: roles column missing; {held} is the instanceDoctorHeld phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'the schema predates the roles column; the installation behaves as combined (personal home and workspace host) — {held}.\n        Fix: dart run tool/instance.dart install --ref <ref>'**
+  String instanceDoctorRolesUndeclaredDetail(String held);
+
+  /// #3489 The installation did not declare its roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation roles not declared'**
+  String get instanceDoctorRolesUndeclaredTitle;
+
+  /// #3489 Detail: the declared roles.
+  ///
+  /// In en, this message translates to:
+  /// **'{roles}\n        Only personal_home and workspace_host exist; operator_set_installation_roles writes a valid set.'**
+  String instanceDoctorRolesUnknownDetail(String roles);
+
+  /// #3489 The declared roles are not a known set.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation roles are not a known set'**
+  String get instanceDoctorRolesUnknownTitle;
 
   /// #1308 instance wizard doctor and token
   ///
@@ -19977,6 +20163,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Check again'**
   String get instanceDoctorRunAgain;
+
+  /// #3489 Detail: tables exist but no schema version.
+  ///
+  /// In en, this message translates to:
+  /// **'{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>'**
+  String instanceDoctorSchemaNoVersionDetail(int tables, int required);
+
+  /// #3489 The schema records no version.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema has no version'**
+  String get instanceDoctorSchemaNoVersionTitle;
+
+  /// #3489 Detail: sign-ups but no confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'{created} signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.'**
+  String instanceDoctorSignupsNobodyDetail(int created);
+
+  /// #3489 Nobody confirmed a sign-up in seven days.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has confirmed in seven days'**
+  String get instanceDoctorSignupsNobodyTitle;
+
+  /// #3489 Detail: number of storage read policies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}'**
+  String instanceDoctorStorageScopedDetail(int count);
+
+  /// #3489 Storage reads are scoped to folders.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage reads are scoped'**
+  String get instanceDoctorStorageScopedTitle;
+
+  /// #3489 Instance doctor: accounts unconfirmed for over a day.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}'**
+  String instanceDoctorStuckTitle(int count);
 
   /// #977 instance wizard: instanceDoneIntro
   ///
