@@ -387,7 +387,11 @@ void main() {
       );
       expect(
         alsoEnabledWith(
-          raw: const {WorkspaceFeature.kioskMode, WorkspaceFeature.nfcBadges},
+          raw: const {
+            WorkspaceFeature.placeBooking,
+            WorkspaceFeature.kioskMode,
+            WorkspaceFeature.nfcBadges,
+          },
           feature: WorkspaceFeature.badgeSignIn,
         ),
         isEmpty,
