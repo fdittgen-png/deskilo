@@ -261,7 +261,7 @@ class _InvoiceRegisterScreenState
             ],
             onChanged: (value) => setState(() => _year = value),
             decoration: InputDecoration(
-              labelText: l10n.invoiceRegisterYear,
+              labelText: l10n.numberSequenceDateYear,
             ),
           ),
         ),
@@ -281,7 +281,7 @@ class _InvoiceRegisterScreenState
               onTap: () => setState(() => _newestFirst = !_newestFirst),
               child: Row(children: [
                 Text(
-                  l10n.invoiceRegisterDate,
+                  l10n.numberSequenceDatePart,
                   style: theme.textTheme.labelMedium?.copyWith(color: muted),
                 ),
                 Icon(

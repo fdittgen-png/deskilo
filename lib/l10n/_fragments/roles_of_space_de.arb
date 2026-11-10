@@ -20,10 +20,6 @@
   "@rolesOfSpaceInactive": {
     "description": "#1528 the roles of a space: rolesOfSpaceInactive"
   },
-  "roleEditorKey": "Schlüssel",
-  "@roleEditorKey": {
-    "description": "#1528 the roles of a space: roleEditorKey"
-  },
   "roleEditorKeyHelp": "Kleinbuchstaben, Ziffern und Unterstriche. Er ändert sich nie: die Personen mit der Rolle hängen daran.",
   "@roleEditorKeyHelp": {
     "description": "#1528 the roles of a space: roleEditorKeyHelp"

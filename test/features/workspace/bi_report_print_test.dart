@@ -51,7 +51,7 @@ void main() {
       expect(lines[_en.biPrintDateBasis], contains('booked time'));
       expect(lines[_en.biPrintDateBasis], contains('month of the invoice'));
       expect(lines[_en.biPrintCurrency], 'CHF, EUR');
-      expect(lines[_en.biPrintFilters], 'none');
+      expect(lines[_en.refFilterMore], 'none');
       expect(lines[_en.biPrintSnapshot], fixtureHash.substring(0, 12));
       expect(doc.qualification, _en.biPrintPartial);
       expect(doc.management, _en.biPrintManagement);

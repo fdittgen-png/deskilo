@@ -5,7 +5,6 @@
   "carnetsEmpty": "Aún no hay bonos.",
   "carnetName": "Nombre",
   "carnetHalfDays": "Medias jornadas",
-  "carnetPrice": "Precio",
   "carnetValidity": "Validez (meses, vacío = no caduca)",
   "carnetAdd": "Añadir bono",
   "carnetSummary": "{halfDays} medias jornadas · {price}",

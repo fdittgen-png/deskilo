@@ -78,7 +78,7 @@ enum MeTab {
     home => l10n.meTabHome,
     spaces => l10n.meMySpaces,
     discover => l10n.meTabDiscover,
-    messages => l10n.meTabMessages,
+    messages => l10n.messagesTitle,
     data => l10n.meTabData,
     me => l10n.uxProfileAccount,
   };

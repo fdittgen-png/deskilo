@@ -136,10 +136,6 @@
   "@biPrintCurrency": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biPrintFilters": "Filter",
-  "@biPrintFilters": {
-    "description": "#2581 analytical report print layout and exports"
-  },
   "biPrintNoFilters": "keine",
   "@biPrintNoFilters": {
     "description": "#2581 analytical report print layout and exports"

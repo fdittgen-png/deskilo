@@ -20,10 +20,6 @@
   "@questionsInactive": {
     "description": "#1288 the question editor: questionsInactive"
   },
-  "questionEditorKey": "Schlüssel",
-  "@questionEditorKey": {
-    "description": "#1288 the question editor: questionEditorKey"
-  },
   "questionEditorKeyHelp": "Kleinbuchstaben, Ziffern und Unterstriche. Er ändert sich nie: die Antworten hängen daran.",
   "@questionEditorKeyHelp": {
     "description": "#1288 the question editor: questionEditorKeyHelp"

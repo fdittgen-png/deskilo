@@ -24,10 +24,6 @@
   "@leaseAdd": {
     "description": "#2569 premises lease"
   },
-  "leaseEdit": "Modifier",
-  "@leaseEdit": {
-    "description": "#2569 premises lease"
-  },
   "leaseEmpty": "Aucun bail enregistré.",
   "@leaseEmpty": {
     "description": "#2569 premises lease"
@@ -38,10 +34,6 @@
   },
   "leaseSaved": "Enregistré",
   "@leaseSaved": {
-    "description": "#2569 premises lease"
-  },
-  "leaseStatusDraft": "Brouillon",
-  "@leaseStatusDraft": {
     "description": "#2569 premises lease"
   },
   "leaseStatusActive": "En cours",
@@ -214,10 +206,6 @@
   },
   "leaseInvalid": "Choisissez le bailleur, nommez les locaux et fixez la date de début.",
   "@leaseInvalid": {
-    "description": "#2569 premises lease"
-  },
-  "leaseSave": "Enregistrer",
-  "@leaseSave": {
     "description": "#2569 premises lease"
   },
   "leaseRefused": "Non enregistré. Vérifiez le bailleur, les dates et que le bail n’est pas déjà résilié.",
@@ -558,10 +546,6 @@
   },
   "equipmentLoadFailed": "Les équipements n'ont pas pu être chargés.",
   "@equipmentLoadFailed": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentSaved": "Enregistré.",
-  "@equipmentSaved": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Enregistrer un équipement",

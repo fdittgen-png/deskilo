@@ -269,7 +269,7 @@ class McpCopyBlock extends StatelessWidget {
             onPressed: () async {
               await Clipboard.setData(ClipboardData(text: text));
               if (context.mounted) {
-                AppSnack.success(context, l10n.mcpConnectCopied);
+                AppSnack.success(context, l10n.paymentCopied);
               }
             },
           ),

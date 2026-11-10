@@ -139,7 +139,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
                   key: const ValueKey('pending-refresh'),
                   onPressed: _checking ? null : _check,
                   icon: const Icon(Icons.refresh),
-                  label: Text(l10n.pendingApprovalRefresh),
+                  label: Text(l10n.invoiceIssueCheckAgain),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Wrap(

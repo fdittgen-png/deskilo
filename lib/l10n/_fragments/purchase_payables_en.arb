@@ -4,10 +4,6 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTabToPay": "To pay",
-  "@purchasesTabToPay": {
-    "description": "#2574 purchase payables"
-  },
   "purchasesToPayIntro": "What the space still owes for approved purchases. A member's claim is the credit their approved receipt already booked; it is applied once an invoice carries it. Recording payments and offsets comes in a later step.",
   "@purchasesToPayIntro": {
     "description": "#2574 purchase payables"
@@ -22,10 +18,6 @@
   },
   "purchasesOwedEmpty": "Nothing is owed here.",
   "@purchasesOwedEmpty": {
-    "description": "#2574 purchase payables"
-  },
-  "purchasesClaimYou": "You",
-  "@purchasesClaimYou": {
     "description": "#2574 purchase payables"
   },
   "purchasesClaimOwedTo": "Owed to {name}",

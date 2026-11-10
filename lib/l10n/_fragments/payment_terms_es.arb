@@ -56,10 +56,6 @@
   "@paymentTermsRequestHint": {
     "description": "#881 member payment conditions: paymentTermsRequestHint"
   },
-  "paymentTermsReason": "Motivo (opcional)",
-  "@paymentTermsReason": {
-    "description": "#881 member payment conditions: paymentTermsReason"
-  },
   "paymentTermsRequested": "Cambio solicitado — pendiente de validación",
   "@paymentTermsRequested": {
     "description": "#881 member payment conditions: paymentTermsRequested"

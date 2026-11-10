@@ -24,7 +24,6 @@
   "taskRecorderAddNote": "Ajouter une note",
   "taskRecorderNoteHint": "Vos propres mots, gardés tels que vous les écrivez",
   "taskRecorderRecording": "Enregistrement en cours",
-  "taskRecorderPaused": "En pause",
   "taskRecorderIndicator": "{count, plural, =1{Enregistrement d'une tâche : 1 étape} other{Enregistrement d'une tâche : {count} étapes}}",
   "taskRecorderMyRecordings": "Mes enregistrements sur cet appareil",
   "taskRecorderNoRecordings": "Aucun enregistrement sur cet appareil.",

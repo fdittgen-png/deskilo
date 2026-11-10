@@ -247,10 +247,6 @@
       }
     }
   },
-  "portalSuggestionGroup": "Group",
-  "@portalSuggestionGroup": {
-    "description": "Shown as the text in recipient typeahead (directory)."
-  },
   "portalWriteTo": "Write to {name}",
   "@portalWriteTo": {
     "description": "Screen-reader label of a person or group suggested while typing in the new-discussion search (#2472)",

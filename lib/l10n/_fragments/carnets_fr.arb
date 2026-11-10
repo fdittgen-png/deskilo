@@ -5,7 +5,6 @@
   "carnetsEmpty": "Aucun carnet pour l'instant.",
   "carnetName": "Nom",
   "carnetHalfDays": "Demi-journées",
-  "carnetPrice": "Prix",
   "carnetValidity": "Validité (mois, vide = n'expire jamais)",
   "carnetAdd": "Ajouter un carnet",
   "carnetSummary": "{halfDays} demi-journées · {price}",

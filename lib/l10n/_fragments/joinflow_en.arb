@@ -20,10 +20,6 @@
       }
     }
   },
-  "pendingApprovalRefresh": "Check again",
-  "@pendingApprovalRefresh": {
-    "description": "Shown as a tooltip in workspace applications screen (workspace), and 1 other place."
-  },
   "memberApprove": "Approve membership",
   "@memberApprove": {
     "description": "Shown as a text in members screen (workspace), and 1 other place."

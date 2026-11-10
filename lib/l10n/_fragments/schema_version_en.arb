@@ -21,10 +21,6 @@
   "@schemaUpdateMember": {
     "description": "#1312 What a member who does not run the server should do"
   },
-  "schemaUpdateRetry": "Check again",
-  "@schemaUpdateRetry": {
-    "description": "#1312 Button that asks the server its version again"
-  },
   "schemaUpdateServer": "Server settings",
   "@schemaUpdateServer": {
     "description": "#1312 Button opening Settings → Server"

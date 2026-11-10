@@ -154,12 +154,12 @@ class _SequenceCardState extends ConsumerState<NumberSequenceCard> {
   }
 
   String _journalLabel(AppLocalizations l10n) => switch (_draft.journal) {
-    'invoice' => l10n.numberSequenceJournalInvoice,
+    'invoice' => l10n.featureInvoicing,
     'credit_note' => l10n.numberSequenceJournalCreditNote,
     'vat_declaration' =>
       l10n.numberSequenceJournalVatDeclaration,
     'member' => l10n.numberSequenceJournalMember,
-    'payment' => l10n.numberSequenceJournalPayment,
+    'payment' => l10n.invoicePdfPayments,
     _ => _draft.journal,
   };
 

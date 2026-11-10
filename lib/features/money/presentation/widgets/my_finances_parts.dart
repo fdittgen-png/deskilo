@@ -285,7 +285,7 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
                   value: type,
                   child: Text(switch (type) {
                     FinanceDocType.all => l10n.financesTypeAll,
-                    FinanceDocType.invoice => l10n.financesTypeInvoice,
+                    FinanceDocType.invoice => l10n.invoicePdfTitle,
                     FinanceDocType.creditNote => l10n.financesTypeCreditNote,
                   }),
                 ),

@@ -60,10 +60,6 @@
   "@taxRefCountry": {
     "description": "#2477 tax reference: Field: country of a reference value."
   },
-  "taxRefKey": "Schlüssel",
-  "@taxRefKey": {
-    "description": "#2477 tax reference: Field: key naming a value within a country."
-  },
   "taxRefLabel": "Bezeichnung",
   "@taxRefLabel": {
     "description": "#2477 tax reference: Field: label of a rate."

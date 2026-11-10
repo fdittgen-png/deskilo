@@ -195,7 +195,7 @@ class _SettingTile extends ConsumerWidget {
       context,
       AppFormSheet(
         title: settingLabel(l10n, d.key),
-        submitLabel: l10n.settingSave,
+        submitLabel: l10n.commonSave,
         submitKey: const ValueKey('setting-save'),
         onDispose: fields.dispose,
         validate: () {
@@ -222,7 +222,7 @@ class _SettingTile extends ConsumerWidget {
             key: const ValueKey('setting-value'),
             controller: fields['value'],
             fieldKey: 'value',
-            label: l10n.settingValueField,
+            label: l10n.biPrintColValue,
             suffixText: settingUnitLabel(l10n, d.unit),
             keyboardType: TextInputType.text,
             maxLength: d.type == SettingType.text ? d.max?.toInt() : null,

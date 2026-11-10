@@ -89,10 +89,6 @@
   "@valuationConfirm": {
     "description": "#2576 accountant valuations"
   },
-  "valuationUnknown": "unbekannt",
-  "@valuationUnknown": {
-    "description": "#2576 accountant valuations"
-  },
   "valuationFigure": "{label}: {value}",
   "@valuationFigure": {
     "description": "#2576 accountant valuations",

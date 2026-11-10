@@ -20,10 +20,6 @@
   "@reportTextsAdd": {
     "description": "#880 report texts: reportTextsAdd"
   },
-  "reportTextsKey": "Chiave",
-  "@reportTextsKey": {
-    "description": "#880 report texts: reportTextsKey"
-  },
   "reportTextsKeyHint": "Lettere, cifre e trattini bassi, es. saluto",
   "@reportTextsKeyHint": {
     "description": "#880 report texts: reportTextsKeyHint"

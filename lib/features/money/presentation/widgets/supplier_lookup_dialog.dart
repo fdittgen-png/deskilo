@@ -329,7 +329,7 @@ class _SupplierLookupDialogState extends ConsumerState<_SupplierLookupDialog> {
               isExpanded: true,
               initialValue: countries.contains(_country) ? _country : null,
               decoration: InputDecoration(
-                labelText: l10n.supplierLookupCountry,
+                labelText: l10n.workspaceCountryLabel,
                 errorText: _countryError,
               ),
               items: [

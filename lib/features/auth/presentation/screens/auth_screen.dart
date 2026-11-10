@@ -268,7 +268,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 ),
                 textInputAction: TextInputAction.next,
                 validator: (v) => (v == null || v.trim().isEmpty)
-                    ? (l10n.authFieldRequired)
+                    ? (l10n.taxRefRequired)
                     : null,
               ),
               const SizedBox(height: 12),
@@ -283,7 +283,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               autofillHints: const [AutofillHints.email],
               textInputAction: TextInputAction.next,
               validator: (v) => (v == null || !v.contains('@'))
-                  ? (l10n.authFieldRequired)
+                  ? (l10n.taxRefRequired)
                   : null,
             ),
             const SizedBox(height: 12),
@@ -323,7 +323,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       ? (l10n.authPasswordTooShort)
                       : null
                   : (v == null || v.isEmpty)
-                      ? (l10n.authFieldRequired)
+                      ? (l10n.taxRefRequired)
                       : null,
             ),
             if (!_isSignUp)

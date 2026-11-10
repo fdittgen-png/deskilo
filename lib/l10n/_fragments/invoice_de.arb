@@ -7,7 +7,6 @@
   "invoiceIssueDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.",
   "invoiceActionUnknownBody": "Die Anfrage wurde gesendet, aber die Antwort kam nicht an – sie wurde möglicherweise schon ausgeführt. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu finden.",
   "invoiceActionDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde nichts geändert.",
-  "invoicesTitle": "Rechnungen",
   "invoicesEmpty": "Noch keine Rechnungen.",
   "invoiceCreate": "Neue Rechnung",
   "invoiceMemberLabel": "Mitglied",
@@ -47,8 +46,6 @@
   "invoiceLineAdjustment": "Anpassung",
   "invoiceFilterAllMembers": "Alle Mitglieder",
   "invoiceFilterAllMonths": "Alle Monate",
-  "invoiceFilterMonthLabel": "Monat",
-  "invoiceSortTooltip": "Sortieren",
   "invoiceSortNewest": "Neueste zuerst",
   "invoiceSortByMember": "Nach Mitglied",
   "invoiceSortByMonth": "Nach Monat",
@@ -307,12 +304,10 @@
   "legalIdentityVatId": "Umsatzsteuer-ID",
   "legalIdentityLegalId": "Registernummer",
   "legalIdentityExemptionReason": "Grund der Steuerbefreiung",
-  "legalIdentityStreet": "Straße",
   "legalIdentityCity": "Stadt",
   "legalIdentityPostalCode": "Postleitzahl",
   "legalIdentitySaved": "Rechtliche Identität gespeichert.",
   "legalIdentityVatWarning": "Dieser Space verlangt Mehrwertsteuer, es gilt aber kein Standardsatz: Es kann keine Rechnung ausgestellt werden, bis Sie einen anlegen. Sätze bearbeiten Sie bei eingeschalteter „USt-Verwaltung“.",
-  "addressCountryLabel": "Land",
   "addressVatIdLabel": "Umsatzsteuer-ID (wenn Sie als Unternehmen abrechnen)",
   "invoiceProformaAction": "Proforma-Rechnung",
   "invoicePdfProforma": "Proforma",
@@ -321,7 +316,6 @@
   "invoicePdfCopy": "Kopie",
   "invoiceStatusPartiallyPaid": "Teilweise bezahlt",
   "invoiceRegisterTitle": "Rechnungsregister",
-  "invoiceRegisterDate": "Datum",
   "invoiceRegisterName": "Name",
   "invoiceRegisterAmount": "Betrag",
   "invoiceRegisterTotal": "Gesamt",
@@ -373,7 +367,6 @@
   "einvoiceConfigTokenSet": "Ein Token ist gespeichert (neues eingeben, um es zu ersetzen).",
   "invoiceAccountingExport": "Buchhaltungsexport",
   "invoiceAccountingExportEmpty": "Für diesen Zeitraum gibt es nichts zu exportieren.",
-  "invoiceRegisterYear": "Jahr",
   "invoiceRegisterAllYears": "Alle Jahre",
   "invoiceExportSafT": "SAF-T (XML, international)",
   "invoiceExportFec": "FEC (Frankreich, im Prüfungsfall verlangt)",
@@ -382,7 +375,6 @@
   "fecAccountsIntro": "Ein FEC besteht aus Buchungen und braucht daher Kontonummern. Dies sind die Standardkonten des französischen Kontenrahmens — ersetzen Sie sie durch die Ihrer Buchhaltung.",
   "fecAccountCustomers": "Kunden",
   "fecAccountRevenue": "Erlöse",
-  "fecAccountBank": "Bank",
   "fecMissingSiren": "Der FEC-Dateiname enthält die Registernummer — tragen Sie sie zuerst unter Rechtliche Identität ein.",
   "invoiceEInvoiceStaleIdentity": "Ihre rechtliche Identität ist jetzt vollständig, diese Rechnung wurde aber vorher signiert und behält, womit sie ausgestellt wurde. Als fehlerhaft markieren und eine Ersatzrechnung ausstellen, damit sie die neue Identität trägt.",
   "einvoiceConfigUnavailable": "Die Plattform-Einstellungen konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.",
@@ -433,7 +425,6 @@
   "dunningBetweenDays": "Tage zwischen den Mahnungen",
   "dunningSaved": "Mahnregeln gespeichert.",
   "dunningDueChip": "Mahnstufe {level} fällig",
-  "invoiceTemplateDocInvoice": "Rechnung",
   "invoiceTemplateDocReminder": "Mahnung {level}",
   "reportPreviewZoomIn": "Vergrößern",
   "reportPreviewZoomOut": "Verkleinern",
@@ -593,10 +584,6 @@
   "@reportLineSection": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLineText": "Text",
-  "@reportLineText": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
   "reportLineSmall": "Kleingedrucktes",
   "@reportLineSmall": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -615,10 +602,6 @@
   },
   "reportLineSpacer": "Abstand",
   "@reportLineSpacer": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLineImage": "Bild",
-  "@reportLineImage": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportLineColumns": "Spalten Anfang/Ende",
@@ -732,10 +715,6 @@
   "@invoicePdfCreditNote": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceStatusRefunded": "Erstattet",
-  "@invoiceStatusRefunded": {
-    "description": "Negative invoices are credit notes the workspace refunds (#508)"
-  },
   "invoiceRefundLabel": "Zu erstatten",
   "@invoiceRefundLabel": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
@@ -785,7 +764,6 @@
   "journeyStateUpcoming": "Ausstehend",
   "journeyStateCancelled": "Storniert",
   "journeyStepIssued": "Ausgestellt",
-  "journeyStepPayment": "Zahlung",
   "journeyStepConfirmation": "Bestätigung",
   "journeyStepClosed": "Abgeschlossen",
   "journeyIssuerMemberPays": "Warten auf die Zahlung von {name}: {amount} — fällig {date}",
@@ -1044,14 +1022,9 @@
   "reportDesignerFieldsSearch": "Feld suchen",
   "reportDesignerMoveTo": "In Band verschieben",
   "reportDesignerDrag": "Ziehen zum Umsortieren",
-  "reportImageSize": "Größe",
   "reportImageSizeSmall": "Klein",
   "reportImageSizeMedium": "Mittel",
   "reportImageSizeLarge": "Groß",
-  "reportImageAlign": "Ausrichtung",
-  "reportImageAlignLeft": "Links",
-  "reportImageAlignCenter": "Mitte",
-  "reportImageAlignRight": "Rechts",
   "reportTemplateLangOverridden": "Eigene Vorlage",
   "reportTemplateLangInherits": "Erbt den Standard",
   "reportTemplateClearOverlay": "Für diese Sprache den Standard verwenden",
@@ -1063,10 +1036,8 @@
   "reportFieldGroupMoney": "Beträge",
   "reportFieldGroupLegal": "Pflichtangaben",
   "reportFieldGroupLoops": "Schleifen Positionen & MwSt.",
-  "reportDesignerSideBySide": "Entwurf und Vorschau nebeneinander",
   "wizardTitle": "Rechnungsassistent",
   "invoiceWizardAction": "Monatsabschluss-Assistent",
-  "wizardCardHint": "Ausstellen, versenden, mahnen, Zahlungen erfassen und bestätigen, zuordnen und abschließen — ein geführter Prozess.",
   "wizardRunStart": "Monatsanfang",
   "wizardRunEnd": "Monatsende",
   "wizardRunStartHint": "Die im Voraus bezahlten Abonnements: für den kommenden Monat ausstellen, versenden, Mahnungen planen — dann die Zahlungsseite.",
@@ -1075,8 +1046,6 @@
   "wizardStepIssue": "Ausstellen",
   "wizardStepSend": "Versenden",
   "wizardStepRemind": "Mahnen",
-  "wizardStepPayments": "Zahlungen",
-  "wizardStepMatch": "Zuordnen",
   "wizardStepClose": "Abschließen",
   "wizardStepSummary": "Zusammenfassung",
   "wizardNext": "Weiter",
@@ -1160,7 +1129,6 @@
     }
   },
   "wizardMatchNoCredit": "Noch keine Zahlung auf dem Konto",
-  "wizardMatchAction": "Zuordnen",
   "wizardCloseHint": "Ein Mitglied mit mehreren offenen Rechnungen kann EINE bezahlen; bei einer teilweise bezahlten kann der Rest abgeschrieben werden; eine Gutschrift wird erstattet. Jedes läuft über die Bestätigung.",
   "wizardCloseNone": "Nichts zusammenzufassen, abzuschreiben oder zu erstatten.",
   "wizardSettle": "{count} zusammenfassen",
@@ -1186,7 +1154,6 @@
   "wizardTallyNothing": "Nichts wurde geändert.",
   "wizardTodoHeading": "Noch offen — wer ist am Zug",
   "wizardTodoNone": "Nichts mehr offen.",
-  "wizardWhoYou": "Sie",
   "wizardWhoValidators": "Prüfer",
   "registerPaymentTitle": "Zahlung erfassen",
   "registerPaymentHint": "Eine Zahlung, die beim Workspace eingegangen ist — das Mitglied bestätigt sie, dann kann sie einer Rechnung zugeordnet werden.",
@@ -1194,7 +1161,6 @@
   "registerPaymentAmount": "Betrag",
   "registerPaymentMethod": "Zahlungsart",
   "registerPaymentDate": "Bezahlt am",
-  "registerPaymentNote": "Notiz",
   "registerPaymentSubmit": "Erfassen",
   "registerPaymentDone": "Zahlung erfasst — das Mitglied bestätigt sie von seiner Seite.",
   "repartitionAction": "Ausgabe verteilen",
@@ -1347,10 +1313,6 @@
         "type": "String"
       }
     }
-  },
-  "retentionClassInvoice": "Rechnungen",
-  "@retentionClassInvoice": {
-    "description": "#2571 retention clocks"
   },
   "retentionClassBooks": "Bücher",
   "@retentionClassBooks": {

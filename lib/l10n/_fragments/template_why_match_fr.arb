@@ -7,7 +7,6 @@
   "capabilityStateUnspecified": "Non défini par ce modèle",
   "capabilityStateLocalInput": "Demande d’abord une valeur locale",
   "capabilityStateIncompatible": "Inapplicable ici",
-  "capabilityStateUnknown": "Inconnu",
   "templateRequire": "Exiger : {capability}",
   "templateRequirementRemove": "Retirer l’exigence",
   "templateRequirementsReset": "Réinitialiser",

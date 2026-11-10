@@ -198,7 +198,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
             _option(
               sheetContext,
               key: 'auto',
-              label: l10n.regionalFollowLanguage,
+              label: l10n.vatTreatmentAuto,
               selected: prefs.formatLocale.isEmpty,
             ),
             for (final tag in kFormatLocales)

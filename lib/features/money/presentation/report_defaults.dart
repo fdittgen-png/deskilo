@@ -306,7 +306,7 @@ ReportBands _defaultStatementBands(AppLocalizations l10n) =>
 ReportBands _statementPresetBands(AppLocalizations l10n, String id) {
   const lines = '{% for line in lines %}'
       '{{ line.label }} | {{ line.amount }}\n{% endfor %}';
-  final balance = '= ${l10n.billBalance} | {{ total }}';
+  final balance = '= ${l10n.bookReportBalance} | {{ total }}';
   switch (id) {
     case 'simple':
       return ReportBands(
@@ -376,7 +376,7 @@ ReportBands _defaultPaymentsBands(AppLocalizations l10n) =>
             '= ${l10n.reportPaymentsPeriodTotal} | {{ validated_total }}\n'
             '{% if pending_payments_total != "" %}${l10n.reportPendingPayments} | {{ pending_payments_total }}\n{% endif %}'
             '{% if pending_expenses_total != "" %}${l10n.reportPendingExpenses} | {{ pending_expenses_total }}\n{% endif %}'
-            '= ${l10n.billBalance} | {{ total }}');
+            '= ${l10n.bookReportBalance} | {{ total }}');
 
 /// The WORKSPACE STATUS (#934): what the workspace invoiced, collected,
 /// reimbursed and shared out over a range of months, then the same per
@@ -478,7 +478,7 @@ ReportBands _simpleDocPresetBands(
   String? totalsLine,
 }) {
   final totals =
-      totalsLine ?? '= ${l10n.billBalance} | {{ total }}';
+      totalsLine ?? '= ${l10n.bookReportBalance} | {{ total }}';
   const lines = '{% for line in lines %}'
       '{{ line.label }} | {{ line.amount }}\n{% endfor %}';
   switch (id) {

@@ -8,7 +8,6 @@
   "federationStageOpening": "Abriendo el inicio de sesión…",
   "federationStageWaiting": "Esperando el inicio de sesión en su navegador…",
   "federationStageCompleting": "Completando el inicio de sesión…",
-  "federationCancel": "Cancelar",
   "federationRetry": "Reintentar",
   "federationClose": "Cerrar",
   "federationActionExistingAccount": "Iniciar sesión en mi cuenta existente",

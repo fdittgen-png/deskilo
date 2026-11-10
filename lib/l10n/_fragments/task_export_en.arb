@@ -218,10 +218,6 @@
   "@taskExportActionUnknown": {
     "description": "#1866 task export (Word document): ActionUnknown"
   },
-  "taskExportFieldDateRelation": "Date",
-  "@taskExportFieldDateRelation": {
-    "description": "#1866 task export (Word document): FieldDateRelation"
-  },
   "taskExportFieldPeriod": "Period",
   "@taskExportFieldPeriod": {
     "description": "#1866 task export (Word document): FieldPeriod"
@@ -257,10 +253,6 @@
   "taskExportFieldTime": "Time",
   "@taskExportFieldTime": {
     "description": "#1866 task export (Word document): FieldTime"
-  },
-  "taskExportFieldAccessories": "Accessories",
-  "@taskExportFieldAccessories": {
-    "description": "#1866 task export (Word document): FieldAccessories"
   },
   "taskExportFieldUnknown": "a field this version cannot describe",
   "@taskExportFieldUnknown": {
@@ -562,10 +554,6 @@
   "@taskExportSceneConfirm": {
     "description": "#1876 storyboard and illustrations: SceneConfirm"
   },
-  "taskExportSceneCancel": "Cancel",
-  "@taskExportSceneCancel": {
-    "description": "#1876 storyboard and illustrations: SceneCancel"
-  },
   "taskExportSceneProvenance": "Illustration recreated from the recording, not a screenshot",
   "@taskExportSceneProvenance": {
     "description": "#1876 storyboard and illustrations: SceneProvenance"
@@ -589,14 +577,6 @@
   "taskExportStoryboardApprove": "Approve illustration",
   "@taskExportStoryboardApprove": {
     "description": "#1876 storyboard and illustrations: StoryboardApprove"
-  },
-  "taskExportStoryboardMoveUp": "Move up",
-  "@taskExportStoryboardMoveUp": {
-    "description": "#1876 storyboard and illustrations: StoryboardMoveUp"
-  },
-  "taskExportStoryboardMoveDown": "Move down",
-  "@taskExportStoryboardMoveDown": {
-    "description": "#1876 storyboard and illustrations: StoryboardMoveDown"
   },
   "taskExportStoryboardSourceScene": "Recreated illustration (not a screenshot)",
   "@taskExportStoryboardSourceScene": {

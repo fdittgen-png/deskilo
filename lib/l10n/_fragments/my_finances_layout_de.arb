@@ -1,7 +1,6 @@
 {
   "@@locale": "de",
   "financesStateUnpaid": "Unbezahlt",
-  "financesTypeInvoice": "Rechnung",
   "financesTypeCreditNote": "Gutschrift",
   "financesTypeAll": "Alle Dokumente",
   "financesPeriodAll": "Alle Zeiträume",

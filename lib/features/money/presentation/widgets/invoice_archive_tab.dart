@@ -329,13 +329,13 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                 ],
                 onChanged: (value) => setState(() => _filterPeriod = value),
                 decoration: InputDecoration(
-                  labelText: l10n.invoiceFilterMonthLabel,
+                  labelText: l10n.reserveMonthView,
                 ),
               ),
             ),
             PopupMenuButton<_InvoiceSort>(
               key: const ValueKey('invoice-sort'),
-              tooltip: l10n.invoiceSortTooltip,
+              tooltip: l10n.meSortTooltip,
               icon: const Icon(Icons.sort),
               initialValue: _sort,
               onSelected: (value) => setState(() => _sort = value),

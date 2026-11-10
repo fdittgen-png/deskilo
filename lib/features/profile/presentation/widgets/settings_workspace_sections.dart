@@ -83,7 +83,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-billing-reports'),
         leading: const Icon(Icons.receipt_long_outlined),
-        title: Text(l10n.invoicesManage),
+        title: Text(l10n.featureInvoicing),
         onTap: () => context.push('/invoices'),
       ),
     // #925 — one screen for every number series.
@@ -158,7 +158,7 @@ List<Widget> workspaceSettingsTiles(
       ListTile(
         key: const ValueKey('settings-sites'),
         leading: const Icon(Icons.location_city_outlined),
-        title: Text(l10n.sitesTitle),
+        title: Text(l10n.featureMultiSite),
         subtitle: Text(l10n.sitesSubtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
         onTap: () => context.push('/settings/sites'),

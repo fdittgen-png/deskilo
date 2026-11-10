@@ -154,10 +154,6 @@
   "@biEditorVisualDescription": {
     "description": "#2580 BI report editor"
   },
-  "biEditorText": "Texto",
-  "@biEditorText": {
-    "description": "#2580 BI report editor"
-  },
   "biEditorFigure": "Cifra",
   "@biEditorFigure": {
     "description": "#2580 BI report editor"
@@ -192,10 +188,6 @@
   },
   "biEditorKindTable": "Tabla",
   "@biEditorKindTable": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorKindText": "Texto",
-  "@biEditorKindText": {
     "description": "#2580 BI report editor"
   },
   "biEditorGrouping": "Agrupado por",
@@ -252,10 +244,6 @@
   },
   "biEditorSourceNoteToggle": "Nota de fuente",
   "@biEditorSourceNoteToggle": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorPalette": "Colores",
-  "@biEditorPalette": {
     "description": "#2580 BI report editor"
   },
   "biEditorPaletteStandard": "Los colores de la app",
@@ -350,10 +338,6 @@
   },
   "biEditorDelete": "Eliminar",
   "@biEditorDelete": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorFilters": "Filtros",
-  "@biEditorFilters": {
     "description": "#2580 BI report editor"
   },
   "biEditorNoFilters": "Sin filtro: cada cifra muestra todo lo que sus derechos permiten.",

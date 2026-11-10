@@ -16,7 +16,7 @@ String biVisualKindLabel(AppLocalizations l10n, BiVisualType type) =>
       BiVisualType.bar => l10n.biEditorKindBar,
       BiVisualType.stackedBar => l10n.biEditorKindStackedBar,
       BiVisualType.table => l10n.biEditorKindTable,
-      BiVisualType.text => l10n.biEditorKindText,
+      BiVisualType.text => l10n.taxRefText,
     };
 
 String biUnitLabel(AppLocalizations l10n, String unit) => switch (unit) {

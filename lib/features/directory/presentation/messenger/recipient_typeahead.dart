@@ -187,7 +187,7 @@ class _Suggestions extends StatelessWidget {
   Widget _row(BuildContext context, Recipient r, bool selected) {
     final l = context.l10n;
     final detail = r.isGroup
-        ? l.portalSuggestionGroup
+        ? l.taxRefGroup
         : r.workspaces.join(', ');
     return Semantics(
       button: true,

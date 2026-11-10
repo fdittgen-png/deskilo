@@ -378,8 +378,8 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
       switch (kind) {
         NoteRecordKind.alert => l10n.noteRefAlert,
         NoteRecordKind.validation => l10n.noteRefValidation,
-        NoteRecordKind.invoice => l10n.noteRefInvoice,
-        NoteRecordKind.payment => l10n.noteRefPayment,
+        NoteRecordKind.invoice => l10n.invoicePdfTitle,
+        NoteRecordKind.payment => l10n.eventTypePayment,
         NoteRecordKind.refund => l10n.noteRefRefund,
       };
 

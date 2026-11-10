@@ -12,6 +12,5 @@
   "purchaseOrderMailSenderName": "Nome del mittente",
   "purchaseOrderMailKey": "Chiave API di Resend",
   "purchaseOrderMailKeyKept": "Una chiave è salvata. Lascia vuoto per mantenerla; non viene più mostrata.",
-  "purchaseOrderMailInvalid": "Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API",
-  "purchaseOrderMailSave": "Salva"
+  "purchaseOrderMailInvalid": "Un indirizzo del mittente, un nome senza < > o virgolette e, al primo salvataggio, la chiave API"
 }

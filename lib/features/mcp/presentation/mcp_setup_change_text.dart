@@ -138,7 +138,7 @@ class McpSetupChangeText {
     'credit_note' => _l10n.numberSequenceJournalCreditNote,
     'vat_declaration' => _l10n.numberSequenceJournalVatDeclaration,
     'member' => _l10n.numberSequenceJournalMember,
-    'payment' => _l10n.numberSequenceJournalPayment,
-    _ => _l10n.numberSequenceJournalInvoice,
+    'payment' => _l10n.invoicePdfPayments,
+    _ => _l10n.featureInvoicing,
   };
 }

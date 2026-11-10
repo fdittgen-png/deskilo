@@ -333,7 +333,7 @@ void main() {
     // The DE clocks of the reference: invoices 8 years, books 10,
     // correspondence 6, each from the end of the fiscal year.
     for (final (label, years) in [
-      (_de.retentionClassInvoice, 8),
+      (_de.featureInvoicing, 8),
       (_de.retentionClassBooks, 10),
       (_de.retentionClassCorrespondence, 6),
     ]) {

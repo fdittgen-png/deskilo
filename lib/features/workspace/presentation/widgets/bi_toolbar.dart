@@ -222,9 +222,9 @@ class BiToolbar extends StatelessWidget {
             items: [
               for (final g in BiGrain.values)
                 _item(context, g, switch (g) {
-                  BiGrain.month => l10n.biGrainMonth,
+                  BiGrain.month => l10n.reserveMonthView,
                   BiGrain.quarter => l10n.biGrainQuarter,
-                  BiGrain.year => l10n.biGrainYear,
+                  BiGrain.year => l10n.numberSequenceDateYear,
                 }, supported: modules.any((m) => m.grains.contains(g))),
             ],
             onSelected: (g) => onChanged(query.copyWith(grain: g)),
@@ -380,13 +380,13 @@ class _CardsDialogState extends State<_CardsDialog> {
                   children: [
                     IconButton(
                       key: ValueKey('bi-card-up-$id'),
-                      tooltip: l10n.biCardUp,
+                      tooltip: l10n.spaceMoveUp,
                       icon: const Icon(Icons.arrow_upward),
                       onPressed: i == 0 ? null : () => _move(i, -1),
                     ),
                     IconButton(
                       key: ValueKey('bi-card-down-$id'),
-                      tooltip: l10n.biCardDown,
+                      tooltip: l10n.spaceMoveDown,
                       icon: const Icon(Icons.arrow_downward),
                       onPressed: i == _order.length - 1
                           ? null

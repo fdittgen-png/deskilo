@@ -7,10 +7,6 @@
   "@meGroupOther": {
     "description": "Shown as a text in me spaces list (me)."
   },
-  "meGroupName": "Group name",
-  "@meGroupName": {
-    "description": "Shown as a title in group name dialog (me)."
-  },
   "meGroupAdd": "New group",
   "@meGroupAdd": {
     "description": "Shown as a title in me spaces list (me), and 1 other place."

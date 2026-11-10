@@ -255,5 +255,5 @@ String _mcpStateLabel(AppLocalizations l10n, Enum state) =>
       'signInWithGoogle' =>
         l10n.mcpStateGoogleOtherSession,
       'linkGoogle' => l10n.mcpStateGoogleMissing,
-      _ => l10n.mcpStateUnavailable,
+      _ => l10n.compareUnknown,
     };

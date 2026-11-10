@@ -71,14 +71,14 @@ class BiFilterPane extends ConsumerWidget {
     ];
     return Semantics(
       container: true,
-      label: l10n.biEditorFilters,
+      label: l10n.refFilterMore,
       child: Padding(
         padding: const EdgeInsets.only(bottom: AppSpacing.sm),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.biEditorFilters,
+              l10n.refFilterMore,
               style: Theme.of(context).textTheme.labelLarge,
             ),
             if (chips.isEmpty)

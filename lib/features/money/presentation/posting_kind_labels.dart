@@ -9,7 +9,7 @@ import '../../../l10n/app_localizations.dart';
 /// The words of [kind].
 String postingKindLabel(AppLocalizations l10n, PostingKind kind) =>
     switch (kind) {
-      PostingKind.invoice => l10n.acctKindInvoice,
+      PostingKind.invoice => l10n.invoicePdfTitle,
       PostingKind.creditNote => l10n.acctKindCreditNote,
       PostingKind.receipt => l10n.acctKindReceipt,
       PostingKind.refund => l10n.acctKindRefund,

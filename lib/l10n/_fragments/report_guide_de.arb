@@ -89,10 +89,6 @@
   "@reportFieldGroupUsage": {
     "description": "#966 report guide: reportFieldGroupUsage"
   },
-  "reportFieldGroupSites": "Standorte",
-  "@reportFieldGroupSites": {
-    "description": "#966 report guide: reportFieldGroupSites"
-  },
   "reportFieldGroupStatus": "Raumstatus",
   "@reportFieldGroupStatus": {
     "description": "#966 report guide: reportFieldGroupStatus"

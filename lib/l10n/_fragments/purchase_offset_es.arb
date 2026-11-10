@@ -12,10 +12,6 @@
   "@purchasesOffsetHint": {
     "description": "#2574 claim offset"
   },
-  "purchasesOffsetInvoice": "Factura",
-  "@purchasesOffsetInvoice": {
-    "description": "#2574 claim offset"
-  },
   "purchasesOffsetNone": "Este miembro no tiene facturas abiertas que saldar.",
   "@purchasesOffsetNone": {
     "description": "#2574 claim offset"

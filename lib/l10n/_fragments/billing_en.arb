@@ -143,10 +143,6 @@
   "@billingPackageDays": {
     "description": "Label of the new-package day-count field"
   },
-  "billingPackagePrice": "Price",
-  "@billingPackagePrice": {
-    "description": "Label of the new-package price field"
-  },
   "billingAddPackage": "Add package",
   "@billingAddPackage": {
     "description": "Tooltip of the add-package button"
@@ -199,10 +195,6 @@
   "payConfigSecretSet": "Set — leave blank to keep",
   "@payConfigSecretSet": {
     "description": "Helper under a secret field that already holds a value"
-  },
-  "payConfigSaved": "Saved.",
-  "@payConfigSaved": {
-    "description": "Snackbar after saving a provider's config"
   },
   "payConfigRemove": "Remove",
   "@payConfigRemove": {

@@ -58,7 +58,7 @@ Future<void> showRecordRequestSheet(
     context,
     AppFormSheet(
       title: l10n.privacyAdminRecord,
-      submitLabel: l10n.privacyAdminSave,
+      submitLabel: l10n.commonSave,
       submitKey: const ValueKey('privacy-admin-record-save'),
       onDispose: fields.dispose,
       validate: () => {
@@ -144,7 +144,7 @@ Future<void> showExtendSheet(BuildContext context, RightsRequest request) {
     context,
     AppFormSheet(
       title: l10n.privacyAdminExtend,
-      submitLabel: l10n.privacyAdminSave,
+      submitLabel: l10n.commonSave,
       submitKey: const ValueKey('privacy-admin-extend-save'),
       onDispose: fields.dispose,
       validate: () => {
@@ -177,7 +177,7 @@ Future<void> showRefuseSheet(BuildContext context, RightsRequest request) {
     context,
     AppFormSheet(
       title: l10n.privacyAdminRefuse,
-      submitLabel: l10n.privacyAdminSave,
+      submitLabel: l10n.commonSave,
       submitKey: const ValueKey('privacy-admin-refuse-save'),
       onDispose: fields.dispose,
       validate: () => {
@@ -230,7 +230,7 @@ Future<void> showCompleteSheet(BuildContext context, RightsRequest request) {
     context,
     AppFormSheet(
       title: l10n.privacyAdminComplete,
-      submitLabel: l10n.privacyAdminSave,
+      submitLabel: l10n.commonSave,
       submitKey: const ValueKey('privacy-admin-complete-save'),
       onDispose: fields.dispose,
       validate: () => {

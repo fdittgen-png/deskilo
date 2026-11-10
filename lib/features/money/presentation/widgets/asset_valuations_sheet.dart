@@ -239,7 +239,7 @@ class _RowsView extends ConsumerWidget {
       assetValuationRowsProvider((workspaceId: workspaceId, batchId: batch.id)),
     );
     String fig(int? v) =>
-        v == null ? l10n.valuationUnknown : money.formatMinor(v);
+        v == null ? l10n.biPrintUnknown : money.formatMinor(v);
     return SheetShell(
       title: l10n.valuationShowRows,
       children: [

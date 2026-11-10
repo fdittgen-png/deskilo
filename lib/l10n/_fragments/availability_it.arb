@@ -4,7 +4,6 @@
   "availabilityOpenWeekdays": "Giorni di apertura",
   "availabilityClosureDays": "Giorni di chiusura",
   "availabilityAddClosure": "Aggiungi giorno di chiusura",
-  "availabilityClosureReason": "Motivo (facoltativo)",
   "availabilityLastOpenDay": "Almeno un giorno della settimana deve restare aperto.",
   "availabilityNoClosures": "Nessun giorno di chiusura.",
   "availabilityGranularityTitle": "Granularità delle prenotazioni",
@@ -28,7 +27,6 @@
   "availabilityFullDayHours": "Ore fatturate come giornata intera",
   "availabilityHourOption": "{count} h",
   "availabilityWorkHoursInvalid": "Deve valere: inizio < limite di mezza giornata < fine.",
-  "availabilityPoliciesTitle": "Regole di prenotazione",
   "policyAllowPastTitle": "Consenti prenotazioni passate",
   "policyAllowPastDesc": "I membri possono registrare una prenotazione già terminata.",
   "policyAdminCheckoutTitle": "Gli amministratori possono fare il check-out dei membri",
@@ -45,10 +43,6 @@
   "policyOutsideHoursChargedDesc": "Consentito e contato come uso normale, salvo nei giorni in cui il membro ha già una prenotazione normale.",
   "policySimultaneousTitle": "Prenotazioni simultanee per membro",
   "policySimultaneousDesc": "Quante prenotazioni sovrapposte può avere un membro. 1 mantiene un solo posto alla volta.",
-  "policyLimitsTitle": "Limiti di prenotazione",
-  "@policyLimitsTitle": {
-    "description": "#649 - section header for the three numeric booking limits"
-  },
   "policyLimitsDesc": "Con quanto anticipo si può prenotare e quale durata è accettata. Valgono su ogni granularità.",
   "@policyLimitsDesc": {
     "description": "#649 - subtitle of the booking-limits section"

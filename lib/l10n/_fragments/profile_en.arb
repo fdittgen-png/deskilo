@@ -88,10 +88,6 @@
   "@profilePhotoSaveFailed": {
     "description": "Error snackbar when uploading or removing the photo fails."
   },
-  "profilePhotoFileType": "Image",
-  "@profilePhotoFileType": {
-    "description": "File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity."
-  },
   "settingsBillingReports": "Billing & reports",
   "@settingsBillingReports": {
     "description": "Admin settings entry to the invoicing hub (#478)"
@@ -200,10 +196,6 @@
   "consentWhoBodyPublic": "A public profile stays off until you publish it: then anyone with the link reads your name, profession and bio — never your contact details, presence or spaces — until you withdraw it. Settings → Privacy & data names the people and lists who actually looked.",
   "@consentWhoBodyPublic": {
     "description": "#3485 The second half of the consent text on who sees what: the public profile (kept apart so no message passes 600 characters)."
-  },
-  "consentMessagesTitle": "Messages",
-  "@consentMessagesTitle": {
-    "description": "Shown as the text in privacy policy (core)."
   },
   "consentMessagesBody": "Only the people in a conversation can open it: the two of you, the members of a group or, when you write to a space, the hosts the app names before you send. A space's owners and admins cannot read your conversations. Messages are not end-to-end encrypted: they are stored on the server the conversation lives on — another server's, after you confirm, when you write to someone there — and whoever runs that server can technically reach them.",
   "@consentMessagesBody": {
@@ -580,10 +572,6 @@
   "backendFacetNo": "no",
   "@backendFacetNo": {
     "description": "Shown as the text in backend settings (core)."
-  },
-  "backendFacetUnknown": "unknown",
-  "@backendFacetUnknown": {
-    "description": "Shown as the text in backend settings (core), and 1 other place."
   },
   "backendVersionShortCurrent": "current",
   "@backendVersionShortCurrent": {

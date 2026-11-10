@@ -19,7 +19,6 @@
   "reserveDayView": "Giorno",
   "reserveWeekView": "Settimana",
   "reserveFullDayChip": "Giornata intera",
-  "reservePickDateTooltip": "Scegli una data",
   "reserveBookingFailed": "Prenotazione non riuscita — il posto potrebbe essere appena stato occupato.",
   "spaceScanNfcHint": "…oppure avvicini il telefono al tag NFC di una sedia.",
   "spaceScanUnknownTag": "Questo tag non è collegato a nessuna sedia.",

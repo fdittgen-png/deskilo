@@ -123,7 +123,7 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
     if (!mounted) return;
     switch (result?.status) {
       case PolicySaveStatus.saved || PolicySaveStatus.replayed:
-        AppSnack.success(context, l10n.assistantSetupSaved);
+        AppSnack.success(context, l10n.billingSaved);
       case PolicySaveStatus.stale || PolicySaveStatus.conflict:
         AppSnack.error(
           context,

@@ -233,7 +233,7 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
               ),
             LeaseDateButton(
               fieldKey: 'room-rent-from',
-              label: l10n.roomRentFieldFrom,
+              label: l10n.bookPeriodsFrom,
               value: _from,
               first: DateTime(now.year - 5),
               last: DateTime(now.year + 30),
@@ -318,7 +318,7 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
         FilledButton(
           key: const ValueKey('room-rent-save'),
           onPressed: _save,
-          child: Text(l10n.roomRentSave),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

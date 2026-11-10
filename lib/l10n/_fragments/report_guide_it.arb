@@ -89,10 +89,6 @@
   "@reportFieldGroupUsage": {
     "description": "#966 report guide: reportFieldGroupUsage"
   },
-  "reportFieldGroupSites": "Sedi",
-  "@reportFieldGroupSites": {
-    "description": "#966 report guide: reportFieldGroupSites"
-  },
   "reportFieldGroupStatus": "Situazione dello spazio",
   "@reportFieldGroupStatus": {
     "description": "#966 report guide: reportFieldGroupStatus"

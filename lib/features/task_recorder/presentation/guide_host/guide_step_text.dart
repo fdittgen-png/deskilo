@@ -125,7 +125,7 @@ String guideDestinationLabel(AppLocalizations l10n, String route) {
   if (uri.path == '/me') {
     final tab = switch (uri.queryParameters['tab']) {
       'discover' => l10n.meTabDiscover,
-      'messages' => l10n.meTabMessages,
+      'messages' => l10n.messagesTitle,
       'me' => l10n.meGroupProfile,
       _ => l10n.meTabHome,
     };

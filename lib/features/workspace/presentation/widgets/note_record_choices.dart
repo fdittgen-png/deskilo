@@ -101,7 +101,7 @@ Future<NoteRecordChoices> noteRecordChoices(
           at: created,
           facets: {
             'status': event.isPending
-                ? (id: 'pending', label: l10n.refStatusPending)
+                ? (id: 'pending', label: l10n.memberStatusPending)
                 : (id: 'decided', label: l10n.refStatusDecided),
             'type': (
               id: event.type.name,
@@ -117,7 +117,7 @@ Future<NoteRecordChoices> noteRecordChoices(
         facet('status', l10n.refFacetStatus, quick: true),
         facet('type', l10n.refFacetType),
         facet('person', l10n.refFacetPerson),
-        facet('month', l10n.refFacetMonth),
+        facet('month', l10n.reserveMonthView),
       ];
     case NoteRecordKind.invoice:
     case NoteRecordKind.refund:
@@ -167,7 +167,7 @@ Future<NoteRecordChoices> noteRecordChoices(
                     id: 'credit_note',
                     label: l10n.refTypeCreditNote,
                   )
-                : (id: 'invoice', label: l10n.refTypeInvoice),
+                : (id: 'invoice', label: l10n.invoicePdfTitle),
             if (person.isNotEmpty) 'person': (id: invoice.memberId, label: person),
             'month': invoice.period != null
                 ? (id: invoice.period!, label: invoice.period!)
@@ -178,7 +178,7 @@ Future<NoteRecordChoices> noteRecordChoices(
       facets = [
         facet('status', l10n.refFacetStatus, quick: true),
         facet('person', l10n.refFacetPerson),
-        facet('month', l10n.refFacetMonth),
+        facet('month', l10n.reserveMonthView),
         facet('type', l10n.refFacetType),
       ];
     case NoteRecordKind.payment:
@@ -195,7 +195,7 @@ Future<NoteRecordChoices> noteRecordChoices(
         // opens on, and two payments in one month share it.
         if (!seen.add(entry.period)) continue;
         String label(AppLocalizations strings) =>
-            '${strings.noteRefPayment} · '
+            '${strings.eventTypePayment} · '
             '${entry.period} · ${money.formatMinor(entry.amountCents)}';
         baked[entry.period] = label(bakedL10n);
         candidates.add(refCandidate(
@@ -209,7 +209,7 @@ Future<NoteRecordChoices> noteRecordChoices(
         ));
       }
       formatAmount = money.formatMinor;
-      facets = [facet('month', l10n.refFacetMonth, quick: true)];
+      facets = [facet('month', l10n.reserveMonthView, quick: true)];
   }
   return (
     candidates: candidates,

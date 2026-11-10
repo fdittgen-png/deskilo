@@ -47,7 +47,7 @@ class BirthdayField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final text = value == null
-        ? l10n.personalBirthdayPick
+        ? l10n.purchasesPickDate
         : appFormatOf(context).dates(DateShape.longDate).format(value!);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),

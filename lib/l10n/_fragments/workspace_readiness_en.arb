@@ -167,10 +167,6 @@
   "@readinessReasonStaleExport": {
     "description": "#1636 workspace_readiness recovery evidence"
   },
-  "readinessActorOwner": "You",
-  "@readinessActorOwner": {
-    "description": "#1636 workspace_readiness"
-  },
   "readinessActorOperator": "The server operator",
   "@readinessActorOperator": {
     "description": "#1636 workspace_readiness"

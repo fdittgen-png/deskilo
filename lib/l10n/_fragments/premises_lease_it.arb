@@ -24,10 +24,6 @@
   "@leaseAdd": {
     "description": "#2569 premises lease"
   },
-  "leaseEdit": "Modifica",
-  "@leaseEdit": {
-    "description": "#2569 premises lease"
-  },
   "leaseEmpty": "Nessun contratto registrato.",
   "@leaseEmpty": {
     "description": "#2569 premises lease"
@@ -38,10 +34,6 @@
   },
   "leaseSaved": "Salvato",
   "@leaseSaved": {
-    "description": "#2569 premises lease"
-  },
-  "leaseStatusDraft": "Bozza",
-  "@leaseStatusDraft": {
     "description": "#2569 premises lease"
   },
   "leaseStatusActive": "In corso",
@@ -214,10 +206,6 @@
   },
   "leaseInvalid": "Scegli il locatore, indica i locali e imposta la data di inizio.",
   "@leaseInvalid": {
-    "description": "#2569 premises lease"
-  },
-  "leaseSave": "Salva",
-  "@leaseSave": {
     "description": "#2569 premises lease"
   },
   "leaseRefused": "Non salvato. Controlla il locatore, le date e che il contratto non sia già terminato.",
@@ -558,10 +546,6 @@
   },
   "equipmentLoadFailed": "Impossibile caricare le attrezzature.",
   "@equipmentLoadFailed": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentSaved": "Salvato.",
-  "@equipmentSaved": {
     "description": "#2576 equipment register"
   },
   "equipmentRegister": "Registra un'attrezzatura",

@@ -40,10 +40,6 @@
   "@bookReportJournalSales": {
     "description": "Book reports (#2376): the sales journal"
   },
-  "bookReportJournalBank": "Bank",
-  "@bookReportJournalBank": {
-    "description": "Book reports (#2376): the bank journal"
-  },
   "bookReportJournalPurchases": "Purchases",
   "@bookReportJournalPurchases": {
     "description": "Book reports (#2376): the purchases journal"

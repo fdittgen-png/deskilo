@@ -50,7 +50,6 @@
   "bankMatchNoInvoice": "No hay ninguna factura abierta en esta moneda.",
   "bankMatchConfirm": "Confirmar",
   "bankMatchFailed": "No se ha podido conciliar el movimiento. No se ha cambiado nada.",
-  "bankLineSaved": "Guardado.",
   "bankReviewTitle": "¿Ya importado?",
   "bankReviewBody": "Otro extracto contiene un movimiento con el mismo día, importe y datos, y el banco no dio identificador a ninguno de los dos. Consérvelo si se trata de un segundo pago.",
   "bankReviewKeep": "Conservarlo",

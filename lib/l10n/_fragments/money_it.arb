@@ -5,7 +5,6 @@
   "moneyUsageUnlimited": "{used} mezze giornate usate",
   "moneyOverage": "{count, plural, =1{Eccedenza (1 mezza giornata extra)} other{Eccedenza ({count} mezze giornate extra)}}",
   "moneyCredits": "Pagamenti e crediti",
-  "moneyBalance": "Saldo",
   "moneyStatementSettled": "Saldato",
   "moneyStatementOpen": "Aperto",
   "moneyRecordPayment": "Registra un pagamento",
@@ -18,9 +17,7 @@
   "ledgerCategorySubscription": "Abbonamento",
   "ledgerCategoryOverage": "Eccedenza",
   "ledgerCategoryExpense": "Rimborso spesa",
-  "ledgerCategoryPayment": "Pagamento",
   "ledgerCategoryAdjustment": "Rettifica",
-  "ledgerCategoryService": "Servizio",
   "moneySubmitExpense": "Invia una spesa",
   "moneyExpenseCategoryLabel": "Categoria",
   "moneyDescriptionLabel": "Descrizione",
@@ -97,10 +94,6 @@
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
-  "vatDeclInvoices": "Fatture",
-  "@vatDeclInvoices": {
-    "description": "Invoice-count column"
-  },
   "vatDeclTotals": "Totali",
   "@vatDeclTotals": {
     "description": "Totals row"
@@ -128,10 +121,6 @@
   "vatDeclEmpty": "Nessuna dichiarazione — scelga un periodo e generi la prima.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
-  },
-  "vatDeclDraft": "Bozza",
-  "@vatDeclDraft": {
-    "description": "Draft status chip"
   },
   "vatDeclPrepared": "Preparata",
   "@vatDeclPrepared": {
@@ -281,10 +270,7 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
-  "moneyFacePayments": "Pagamenti",
-  "moneyFaceInvoices": "Fatture",
   "moneyNoInvoicesYet": "Nessuna fattura ancora — lo spazio fattura il mese una volta chiuso.",
-  "moneyFaceStatement": "Estratto",
   "moneyFaceDocuments": "Documenti",
   "moneyOverdueBanner": "{count} scadute — {amount} da regolare",
   "moneyPayNow": "Paga ora",
@@ -293,19 +279,16 @@
   "moneyDueIn": "Scade tra {days} giorni",
   "moneyOverdueBy": "Scaduta da {days} giorni",
   "moneyNothingOpen": "Niente di aperto — è in regola.",
-  "moneyDocumentLibrary": "Biblioteca documenti",
   "moneyStatementPdf": "Estratto del mese (PDF)",
   "moneyRemindedTimes": "Sollecitata ×{count}",
   "expenseSupplyToggle": "È una scorta per lo spazio",
   "expenseSupplyHint": "Capsule di caffè, sacchetti per aspirapolvere… Una volta convalidato, l'articolo va sullo scaffale come servizio consumabile: chi lo usa lo paga.",
   "expenseSupplyItem": "Articolo",
   "expenseSupplyNewItem": "Nuovo articolo",
-  "expenseSupplyQuantity": "Quantità",
   "expenseSupplyUnitPrice": "Prezzo unitario (quanto costa un consumo)",
   "expenseSupplyUnitPriceHint": "Precompilato con importo ÷ quantità; arrotondi se vuole.",
   "serviceStockCount": "{count} in scorta",
   "serviceOutOfStock": "Esaurito",
-  "serviceOutOfStockHint": "Niente più sullo scaffale — la prossima scorta lo rifornisce.",
   "negotiationCardTitle": "I miei prezzi negoziati",
   "negotiationOnTariff": "È alla tariffa dello spazio.",
   "negotiationPending": "Delle condizioni attendono convalida.",
@@ -318,8 +301,6 @@
   "negotiationWhoCanSee": "Chi può vederlo",
   "negotiationProposeTitle": "Negoziazione di prezzo",
   "negotiationProposeHint": "Lasci un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.",
-  "negotiationNote": "Nota",
-  "negotiationValidFrom": "Si applica da",
   "negotiationSubmit": "Proponi per la convalida",
   "negotiationProposed": "Condizioni proposte — in attesa di convalida.",
   "negotiationPendingBadge": "in attesa di convalida",
@@ -381,7 +362,6 @@
   "moneySectionPurchases": "Acquisti e contabilità",
   "hubPurchasesTitle": "Acquisti",
   "hubPurchasesSubtitle": "Ciò che lo spazio acquista e deve: spese, fatture fornitori, fornitori, locazione, attrezzature",
-  "hubSalesTitle": "Vendite",
   "hubSalesSubtitle": "Ciò che lo spazio vende e fattura: servizi, fatture, fatturazione",
   "hubCashTitle": "Cassa",
   "hubCashSubtitle": "Entrate e uscite registrate, e ciò che resta da pagare",

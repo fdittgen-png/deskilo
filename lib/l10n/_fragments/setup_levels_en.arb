@@ -47,10 +47,6 @@
   "@setupQuestionOrganised": {
     "description": "#3485 setupQuestion: the label for case 'organised'."
   },
-  "setupProcessNameBookings": "Bookings",
-  "@setupProcessNameBookings": {
-    "description": "#3485 setupProcessName: the label for case 'bookings'."
-  },
   "setupProcessNameCommunity": "Community",
   "@setupProcessNameCommunity": {
     "description": "#3485 setupProcessName: the label for case 'community'."
@@ -58,10 +54,6 @@
   "setupProcessNameMoney": "Money",
   "@setupProcessNameMoney": {
     "description": "#3485 setupProcessName: the label for case 'money'."
-  },
-  "setupProcessNamePayments": "Payments",
-  "@setupProcessNamePayments": {
-    "description": "#3485 setupProcessName: the label for case 'payments'."
   },
   "setupProcessNameTax": "Tax",
   "@setupProcessNameTax": {
@@ -78,10 +70,6 @@
   "setupProcessNameOperations": "Operations",
   "@setupProcessNameOperations": {
     "description": "#3485 setupProcessName: the label for case 'operations'."
-  },
-  "setupProcessNameAssistant": "Assistant",
-  "@setupProcessNameAssistant": {
-    "description": "#3485 setupProcessName: the label for case 'assistant'."
   },
   "setupLevelNameBookingsSimple": "Shared places",
   "@setupLevelNameBookingsSimple": {
@@ -110,10 +98,6 @@
   "setupLevelNameMoneyStatements": "Statements",
   "@setupLevelNameMoneyStatements": {
     "description": "#3485 setupLevelName: the label for case 'money_statements'."
-  },
-  "setupLevelNameMoneyInvoices": "Invoices",
-  "@setupLevelNameMoneyInvoices": {
-    "description": "#3485 setupLevelName: the label for case 'money_invoices'."
   },
   "setupLevelNamePaymentsOff": "By transfer",
   "@setupLevelNamePaymentsOff": {

@@ -350,7 +350,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ListTile(
               key: const ValueKey('settings-documents'),
               leading: const Icon(Icons.folder_open_outlined),
-              title: Text(l10n.documentsTitle),
+              title: Text(l10n.featureDocuments),
               onTap: () => context.push('/documents'),
             ),
           // Kiosk escape hatch (0056, field report: "cannot be undone"):

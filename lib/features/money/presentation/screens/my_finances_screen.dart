@@ -69,7 +69,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n.financesTitle),
+          title: Text(l10n.tabMoney),
           actions: [const InvoiceProcessHelpButton(),
             if (overview.hasValue) OwnFinanceExportMenu(overview: all)], // #2557 C3
           bottom: AppTabBar.bottom(
@@ -80,7 +80,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                   key: const ValueKey('finances-tab-outstanding'), badge: owed),
               AppTab(l10n.financesPaid,
                   key: const ValueKey('finances-tab-paid')),
-              AppTab(l10n.financesPayments,
+              AppTab(l10n.invoicePdfPayments,
                   key: const ValueKey('finances-tab-payments')),
               AppTab(l10n.financesReminders,
                   key: const ValueKey('finances-tab-reminders'),
@@ -206,7 +206,7 @@ class _Outstanding extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.financesToPay,
+                  Text(l10n.cashHubToPay,
                       style: theme.textTheme.labelLarge),
                   const SizedBox(height: 4),
                   for (final e in data.owedByCurrency.entries)

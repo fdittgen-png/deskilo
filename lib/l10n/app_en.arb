@@ -16,14 +16,6 @@
   "@a11yIncrease": {
     "description": "Tooltip on a stepper button that raises a number by one."
   },
-  "a11yMoveDown": "Move down",
-  "@a11yMoveDown": {
-    "description": "Tooltip on the button that moves a report line one place later."
-  },
-  "a11yMoveUp": "Move up",
-  "@a11yMoveUp": {
-    "description": "Tooltip on the button that moves a report line one place earlier."
-  },
   "a11yRecentre": "Fit the plan to the screen",
   "@a11yRecentre": {
     "description": "Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235)."
@@ -287,10 +279,6 @@
   "accountPaymentPreference": "Preferred online payment",
   "@accountPaymentPreference": {
     "description": "Shown as the label of a field in personal payment provider (money)."
-  },
-  "accountPaymentsTitle": "Payments",
-  "@accountPaymentsTitle": {
-    "description": "Shown as a text in account activity screen (money)."
   },
   "accountRefundDue": "Refund due from the workspace",
   "@accountRefundDue": {
@@ -635,10 +623,6 @@
   },
   "acctKindExpense": "Expense",
   "@acctKindExpense": {
-    "description": "#2370 Transfers list: the kind of document event a line carried."
-  },
-  "acctKindInvoice": "Invoice",
-  "@acctKindInvoice": {
     "description": "#2370 Transfers list: the kind of document event a line carried."
   },
   "acctKindMemberReceipt": "Member's receipt",
@@ -1034,10 +1018,6 @@
   "@acctWhoUnknown": {
     "description": "#2370 Transfers list: the person who made a file is no longer known."
   },
-  "addressCountryLabel": "Country",
-  "@addressCountryLabel": {
-    "description": "Country field on the member address sheet"
-  },
   "addressNone": "No address",
   "@addressNone": {
     "description": "Subtitle while no address is stored"
@@ -1253,10 +1233,6 @@
   "@archiveSwissNeedsExportLog": {
     "description": "#2377 The Swiss archive refused: no export log is kept (neither book periods nor accounting systems on)."
   },
-  "assistantPrefix": "Assistant",
-  "@assistantPrefix": {
-    "description": "#872 one wizard idiom: assistantPrefix"
-  },
   "assistantSetupActorConfigurer": "Who: someone who manages this workspace's configuration",
   "@assistantSetupActorConfigurer": {
     "description": "#1827 Assistant setup: assistantSetupActorConfigurer"
@@ -1419,10 +1395,6 @@
   "@assistantSetupReview": {
     "description": "#1827 Assistant setup: assistantSetupReview"
   },
-  "assistantSetupSaved": "Saved.",
-  "@assistantSetupSaved": {
-    "description": "#1827 Assistant setup: assistantSetupSaved"
-  },
   "assistantSetupStale": "Someone changed the offer meanwhile. Review it and try again.",
   "@assistantSetupStale": {
     "description": "#1827 Assistant setup: assistantSetupStale"
@@ -1559,10 +1531,6 @@
   "authEmailNotConfirmed": "Confirm your e-mail address first: open the message we sent you, then sign in.",
   "@authEmailNotConfirmed": {
     "description": "Inline refusal when the account exists but its address was never confirmed"
-  },
-  "authFieldRequired": "Required",
-  "@authFieldRequired": {
-    "description": "Validation message for an empty mandatory field"
   },
   "authForgotPassword": "Forgot password?",
   "@authForgotPassword": {
@@ -1767,10 +1735,6 @@
   "@availabilityClosureDays": {
     "description": "Section header above the list of one-off closure days"
   },
-  "availabilityClosureReason": "Reason (optional)",
-  "@availabilityClosureReason": {
-    "description": "Label of the optional reason field when adding a closure day"
-  },
   "availabilityFullDayHours": "Hours billed as a full day",
   "@availabilityFullDayHours": {
     "description": "Shown as a title in availability sections (workspace)."
@@ -1843,10 +1807,6 @@
   "availabilityOpenWeekdays": "Open weekdays",
   "@availabilityOpenWeekdays": {
     "description": "Section header above the seven weekday chips"
-  },
-  "availabilityPoliciesTitle": "Booking policies",
-  "@availabilityPoliciesTitle": {
-    "description": "Shown as a text in availability policies (workspace)."
   },
   "availabilityTitle": "Availability",
   "@availabilityTitle": {
@@ -1949,10 +1909,6 @@
   "backendFacetNo": "no",
   "@backendFacetNo": {
     "description": "Shown as the text in backend settings (core)."
-  },
-  "backendFacetUnknown": "unknown",
-  "@backendFacetUnknown": {
-    "description": "Shown as the text in backend settings (core), and 1 other place."
   },
   "backendFacetYes": "yes",
   "@backendFacetYes": {
@@ -2671,10 +2627,6 @@
   "@bankLineReview": {
     "description": "#2380 Movement status: it resembles a movement of another statement."
   },
-  "bankLineSaved": "Saved.",
-  "@bankLineSaved": {
-    "description": "#2380 Snack: the decision on a movement is saved."
-  },
   "bankLineSuggested": "Suggested: {number} ({why})",
   "@bankLineSuggested": {
     "description": "#2380 Movement: the suggested invoice and why.",
@@ -3151,14 +3103,6 @@
   "@biBookingBasis": {
     "description": "Shown as a text in capacity evidence (workspace)."
   },
-  "biCardDown": "Move down",
-  "@biCardDown": {
-    "description": "#1924 finance KPI / #1923 analyses picker"
-  },
-  "biCardUp": "Move up",
-  "@biCardUp": {
-    "description": "#1924 finance KPI / #1923 analyses picker"
-  },
   "biCards": "Analyses shown",
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
@@ -3220,10 +3164,6 @@
   },
   "biColumnChange": "Change",
   "@biColumnChange": {
-    "description": "#1923 B Web-BI toolbar and module section"
-  },
-  "biColumnValue": "Value",
-  "@biColumnValue": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
   "biCommitmentsBasis": "{overdue} overdue, {upcoming} not yet due",
@@ -3853,10 +3793,6 @@
       }
     }
   },
-  "biEditorFilters": "Filters",
-  "@biEditorFilters": {
-    "description": "#2580 BI report editor"
-  },
   "biEditorFormat": "Number format",
   "@biEditorFormat": {
     "description": "#2580 BI report editor"
@@ -3936,10 +3872,6 @@
   },
   "biEditorKindTable": "Table",
   "@biEditorKindTable": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorKindText": "Text",
-  "@biEditorKindText": {
     "description": "#2580 BI report editor"
   },
   "biEditorLater": "Later",
@@ -4047,10 +3979,6 @@
   },
   "biEditorPagesAndVisuals": "Pages and visuals",
   "@biEditorPagesAndVisuals": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorPalette": "Colours",
-  "@biEditorPalette": {
     "description": "#2580 BI report editor"
   },
   "biEditorPaletteContrast": "High contrast",
@@ -4265,10 +4193,6 @@
   },
   "biEditorSourceNoteToggle": "Source note",
   "@biEditorSourceNoteToggle": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorText": "Text",
-  "@biEditorText": {
     "description": "#2580 BI report editor"
   },
   "biEditorTitle": "Report editor",
@@ -4559,16 +4483,8 @@
   "@biGrain": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
-  "biGrainMonth": "Month",
-  "@biGrainMonth": {
-    "description": "#1923 B Web-BI toolbar and module section"
-  },
   "biGrainQuarter": "Quarter",
   "@biGrainQuarter": {
-    "description": "#1923 B Web-BI toolbar and module section"
-  },
-  "biGrainYear": "Year",
-  "@biGrainYear": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
   "biGroupBy": "Group by",
@@ -4798,10 +4714,6 @@
   "biPrintFigures": "Figures",
   "@biPrintFigures": {
     "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
-  },
-  "biPrintFilters": "Filters",
-  "@biPrintFilters": {
-    "description": "#2581 analytical report print layout and exports"
   },
   "biPrintFooter": "Footer line",
   "@biPrintFooter": {
@@ -5778,10 +5690,6 @@
   "@biViewRename": {
     "description": "#1923 C Web-BI saved views"
   },
-  "biViewSave": "Save",
-  "@biViewSave": {
-    "description": "#1923 C Web-BI saved views"
-  },
   "biViewSaveAs": "Save as a new view…",
   "@biViewSaveAs": {
     "description": "#1923 C Web-BI saved views"
@@ -5846,10 +5754,6 @@
   "billAccessorySupplements": "Accessory supplements",
   "@billAccessorySupplements": {
     "description": "Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing"
-  },
-  "billBalance": "Balance",
-  "@billBalance": {
-    "description": "Bill footer label; the bold period total renders trailing"
   },
   "billCreditNoteCard": "Credit note {number}",
   "@billCreditNoteCard": {
@@ -6063,10 +5967,6 @@
   "billingPackageName": "Name",
   "@billingPackageName": {
     "description": "Label of the new-package name field"
-  },
-  "billingPackagePrice": "Price",
-  "@billingPackagePrice": {
-    "description": "Label of the new-package price field"
   },
   "billingPackageSummary": "{days} days · {price}",
   "@billingPackageSummary": {
@@ -6452,10 +6352,6 @@
   "bookReportGrandTotal": "Grand total",
   "@bookReportGrandTotal": {
     "description": "Book reports (#2376): the grand total row"
-  },
-  "bookReportJournalBank": "Bank",
-  "@bookReportJournalBank": {
-    "description": "Book reports (#2376): the bank journal"
   },
   "bookReportJournalOther": "Miscellaneous",
   "@bookReportJournalOther": {
@@ -7061,21 +6957,9 @@
   "@calendarKindEvent": {
     "description": "#718/#719 - calendar hub"
   },
-  "calendarKindInvoice": "Invoices",
-  "@calendarKindInvoice": {
-    "description": "#718/#719 - calendar hub"
-  },
   "calendarKindLease": "Lease dates",
   "@calendarKindLease": {
     "description": "#2569 lease reminders"
-  },
-  "calendarKindMessage": "Messages",
-  "@calendarKindMessage": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindPayment": "Payments",
-  "@calendarKindPayment": {
-    "description": "#718/#719 - calendar hub"
   },
   "calendarKindReminder": "Reminders",
   "@calendarKindReminder": {
@@ -7241,10 +7125,6 @@
   "@calendarViewAlerts": {
     "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
   },
-  "calendarViewMonth": "Month",
-  "@calendarViewMonth": {
-    "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
-  },
   "calendarViewWeek": "Week",
   "@calendarViewWeek": {
     "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
@@ -7315,10 +7195,6 @@
   },
   "capabilityStateLocalInput": "Needs a local value first",
   "@capabilityStateLocalInput": {
-    "description": "#1660 template_why_match"
-  },
-  "capabilityStateUnknown": "Unknown",
-  "@capabilityStateUnknown": {
     "description": "#1660 template_why_match"
   },
   "capabilityStateUnspecified": "Not set by this template",
@@ -7487,10 +7363,6 @@
   "carnetName": "Name",
   "@carnetName": {
     "description": "#1279 carnets: carnetName"
-  },
-  "carnetPrice": "Price",
-  "@carnetPrice": {
-    "description": "#1279 carnets: carnetPrice"
   },
   "carnetSell": "Sell a carnet",
   "@carnetSell": {
@@ -7902,10 +7774,6 @@
       }
     }
   },
-  "composerDraftKept": "Draft kept",
-  "@composerDraftKept": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "composerMention": "Mention someone",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
@@ -8014,10 +7882,6 @@
   "@consentMessagesBody": {
     "description": "Shown as the text in privacy policy (core)."
   },
-  "consentMessagesTitle": "Messages",
-  "@consentMessagesTitle": {
-    "description": "Shown as the text in privacy policy (core)."
-  },
   "consentNotBody": "No tracking, no analytics, no advertising, no sale of data. Your data goes to nobody except the recipients named here and in the server's notice. The F-Droid build has no Google services at all.",
   "@consentNotBody": {
     "description": "Shown as the text in privacy policy (core)."
@@ -8123,10 +7987,6 @@
   "@consumptionPeriodLabel": {
     "description": "Label of the billing-period input; prefilled with the current month"
   },
-  "consumptionQuantity": "Quantity",
-  "@consumptionQuantity": {
-    "description": "Label of the quantity stepper (1–999)"
-  },
   "consumptionRecorded": "Consumption recorded — waiting for confirmation.",
   "@consumptionRecorded": {
     "description": "Snackbar after submitting; the charge stays pending until confirmed"
@@ -8147,10 +8007,6 @@
   "@consumptionRefusedStock": {
     "description": "#1449 consumption_refusals"
   },
-  "consumptionService": "Service",
-  "@consumptionService": {
-    "description": "Label of the service dropdown in the consumption sheet"
-  },
   "conversationAddPeople": "Add people",
   "@conversationAddPeople": {
     "description": "#687 - messaging centre"
@@ -8163,10 +8019,6 @@
   "@conversationArchive": {
     "description": "Shown as a title in unified inbox view (directory)."
   },
-  "conversationArchived": "Conversation archived.",
-  "@conversationArchived": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "conversationChoose": "Choose a conversation",
   "@conversationChoose": {
     "description": "#2556 conversation pane: The thread pane beside the inbox before a conversation is opened (wide layout)."
@@ -8178,14 +8030,6 @@
   "conversationEmpty": "No messages yet — say hello!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
-  },
-  "conversationGroup": "Group",
-  "@conversationGroup": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationGroupInfo": "Group",
-  "@conversationGroupInfo": {
-    "description": "#687 - messaging centre"
   },
   "conversationLeave": "Leave group",
   "@conversationLeave": {
@@ -8227,10 +8071,6 @@
   "conversationMute": "Mute notifications",
   "@conversationMute": {
     "description": "Shown as a title in unified inbox view (directory)."
-  },
-  "conversationMutedBadge": "Muted",
-  "@conversationMutedBadge": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "conversationPin": "Pin to top",
   "@conversationPin": {
@@ -8278,10 +8118,6 @@
   },
   "conversationYesterday": "Yesterday",
   "@conversationYesterday": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationYou": "You",
-  "@conversationYou": {
     "description": "#687 - messaging centre"
   },
   "countryChangeBody": "In {country} these features are not available and stop working: {features}. Their switches are kept: they return if you change the country back.",
@@ -8593,14 +8429,6 @@
   "@dataReportColumnAttended": {
     "description": "#3485 dataReportColumn: the label for case 'attended'."
   },
-  "dataReportColumnBalance": "Balance",
-  "@dataReportColumnBalance": {
-    "description": "#3485 dataReportColumn: the label for case 'balance'."
-  },
-  "dataReportColumnBookings": "Bookings",
-  "@dataReportColumnBookings": {
-    "description": "#3485 dataReportColumn: the label for case 'bookings'."
-  },
   "dataReportColumnCancelled": "Cancelled",
   "@dataReportColumnCancelled": {
     "description": "#3485 dataReportColumn: the label for case 'cancelled'."
@@ -8620,10 +8448,6 @@
   "dataReportColumnHours": "Hours",
   "@dataReportColumnHours": {
     "description": "#3485 dataReportColumn: the label for case 'hours'."
-  },
-  "dataReportColumnMonth": "Month",
-  "@dataReportColumnMonth": {
-    "description": "#3485 dataReportColumn: the label for case 'month'."
   },
   "dataReportColumnOpen": "Open",
   "@dataReportColumnOpen": {
@@ -8652,10 +8476,6 @@
   "dataReportFailed": "The data report could not be made. Try again in a moment.",
   "@dataReportFailed": {
     "description": "#2862 data report: the report could not be made"
-  },
-  "dataReportNo": "No",
-  "@dataReportNo": {
-    "description": "#2862 data report: dataReportNo"
   },
   "dataReportNone": "Nothing recorded",
   "@dataReportNone": {
@@ -8692,10 +8512,6 @@
   "dataReportTitle": "Workspace data report",
   "@dataReportTitle": {
     "description": "#2862 data report: dataReportTitle"
-  },
-  "dataReportYes": "Yes",
-  "@dataReportYes": {
-    "description": "#2862 data report: dataReportYes"
   },
   "datevAccountLength": "Account length (Sachkontenlänge)",
   "@datevAccountLength": {
@@ -9070,21 +8886,9 @@
       }
     }
   },
-  "deployEntityAccessories": "Accessories",
-  "@deployEntityAccessories": {
-    "description": "#988/#990 deployments: deployEntityAccessories"
-  },
   "deployEntityBookingRules": "Booking rules",
   "@deployEntityBookingRules": {
     "description": "#988/#990 deployments: deployEntityBookingRules"
-  },
-  "deployEntityBranding": "Colours",
-  "@deployEntityBranding": {
-    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
-  },
-  "deployEntityClosureDays": "Closure days",
-  "@deployEntityClosureDays": {
-    "description": "#988/#990 deployments: deployEntityClosureDays"
   },
   "deployEntityCreditProducts": "Prepaid carnets on sale",
   "@deployEntityCreditProducts": {
@@ -9118,10 +8922,6 @@
   "@deployEntityInvitations": {
     "description": "#988/#990 deployments: deployEntityInvitations"
   },
-  "deployEntityPackages": "Packages",
-  "@deployEntityPackages": {
-    "description": "#988/#990 deployments: deployEntityPackages"
-  },
   "deployEntityPaymentInstructions": "Payment instructions",
   "@deployEntityPaymentInstructions": {
     "description": "#1010 deploy entity: payment instructions"
@@ -9137,10 +8937,6 @@
   "deployEntityServices": "Services",
   "@deployEntityServices": {
     "description": "#988/#990 deployments: deployEntityServices"
-  },
-  "deployEntitySites": "Sites",
-  "@deployEntitySites": {
-    "description": "#988/#990 deployments: deployEntitySites"
   },
   "deployEntityTariffs": "Tariffs",
   "@deployEntityTariffs": {
@@ -9672,10 +9468,6 @@
   "@documentsCategoryGuides": {
     "description": "Workspace document library (#500)"
   },
-  "documentsCategoryLabel": "Category",
-  "@documentsCategoryLabel": {
-    "description": "Workspace document library (#500)"
-  },
   "documentsCategoryMinutes": "Meeting minutes",
   "@documentsCategoryMinutes": {
     "description": "Workspace document library (#500)"
@@ -9718,10 +9510,6 @@
   },
   "documentsRoleOwner": "Owners only",
   "@documentsRoleOwner": {
-    "description": "Workspace document library (#500)"
-  },
-  "documentsTitle": "Document library",
-  "@documentsTitle": {
     "description": "Workspace document library (#500)"
   },
   "documentsTitleLabel": "Title",
@@ -10169,10 +9957,6 @@
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
   },
-  "editorAccessoriesLabel": "Accessories",
-  "@editorAccessoriesLabel": {
-    "description": "Label above the seat sheet's accessory chips (workspace catalog)"
-  },
   "editorAddLevel": "Add level",
   "@editorAddLevel": {
     "description": "FAB label / dialog title for creating a level (floor)"
@@ -10465,10 +10249,6 @@
   "@editorResourceKindTitle": {
     "description": "#2631 resource_editor: editorResourceKindTitle"
   },
-  "editorResourceRoom": "Meeting room",
-  "@editorResourceRoom": {
-    "description": "#2631 resource_editor: editorResourceRoom"
-  },
   "editorResourceSeat": "Seat",
   "@editorResourceSeat": {
     "description": "#2631 resource_editor: editorResourceSeat"
@@ -10476,14 +10256,6 @@
   "editorRoomCapacityLabel": "Capacity (people)",
   "@editorRoomCapacityLabel": {
     "description": "#2631 resource_editor: editorRoomCapacityLabel"
-  },
-  "editorRoomNameDefault": "Room",
-  "@editorRoomNameDefault": {
-    "description": "#2631 resource_editor: editorRoomNameDefault"
-  },
-  "editorRoomProperties": "Meeting room",
-  "@editorRoomProperties": {
-    "description": "#2631 resource_editor: editorRoomProperties"
   },
   "editorRotate": "Rotate",
   "@editorRotate": {
@@ -10935,10 +10707,6 @@
   },
   "equipmentRegisterTitle": "Register equipment",
   "@equipmentRegisterTitle": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentSaved": "Saved.",
-  "@equipmentSaved": {
     "description": "#2576 equipment register"
   },
   "equipmentSource": "{supplier} · {reference}",
@@ -11698,10 +11466,6 @@
   "@eventsFilterAll": {
     "description": "Type filter chip showing every event type"
   },
-  "eventsMessagesHeader": "Messages",
-  "@eventsMessagesHeader": {
-    "description": "Member-notes inbox on the Events screen (#460)"
-  },
   "eventsPendingHeader": "Waiting for your confirmation",
   "@eventsPendingHeader": {
     "description": "Header above pinned pending-confirmation cards (spec §8)"
@@ -11753,10 +11517,6 @@
   "expenseSupplyNewItem": "New item",
   "@expenseSupplyNewItem": {
     "description": "Shown as a text in expense sheet (money), and 1 other place."
-  },
-  "expenseSupplyQuantity": "Quantity",
-  "@expenseSupplyQuantity": {
-    "description": "Shown as a button or chip label in expense sheet (money)."
   },
   "expenseSupplyToggle": "This is a supply for the space",
   "@expenseSupplyToggle": {
@@ -11919,17 +11679,9 @@
   "@exportColumnNameBookableAsWhole": {
     "description": "#3485 exportColumnName: the label for case 'bookable_as_whole'."
   },
-  "exportColumnNameBySystem": "Automatic",
-  "@exportColumnNameBySystem": {
-    "description": "#3485 exportColumnName: the label for case 'by_system'."
-  },
   "exportColumnNameCapacity": "Capacity",
   "@exportColumnNameCapacity": {
     "description": "#3485 exportColumnName: the label for case 'capacity'."
-  },
-  "exportColumnNameCategory": "Category",
-  "@exportColumnNameCategory": {
-    "description": "#3485 exportColumnName: the label for case 'category'."
   },
   "exportColumnNameChair": "Chair",
   "@exportColumnNameChair": {
@@ -11958,10 +11710,6 @@
   "exportColumnNameCompany": "Company",
   "@exportColumnNameCompany": {
     "description": "#3485 exportColumnName: the label for case 'company'."
-  },
-  "exportColumnNameCountry": "Country",
-  "@exportColumnNameCountry": {
-    "description": "#3485 exportColumnName: the label for case 'country'."
   },
   "exportColumnNameCreatedAt": "Recorded on",
   "@exportColumnNameCreatedAt": {
@@ -12047,10 +11795,6 @@
   "@exportColumnNameId": {
     "description": "#3485 exportColumnName: the label for case 'id'."
   },
-  "exportColumnNameInvoice": "Invoice",
-  "@exportColumnNameInvoice": {
-    "description": "#3485 exportColumnName: the label for case 'invoice'."
-  },
   "exportColumnNameIssuedAt": "Issued on",
   "@exportColumnNameIssuedAt": {
     "description": "#3485 exportColumnName: the label for case 'issued_at'."
@@ -12127,14 +11871,6 @@
   "@exportColumnNameNumber": {
     "description": "#3485 exportColumnName: the label for case 'number'."
   },
-  "exportColumnNameOccurredOn": "Date",
-  "@exportColumnNameOccurredOn": {
-    "description": "#3485 exportColumnName: the label for case 'occurred_on'."
-  },
-  "exportColumnNameOffice": "Room",
-  "@exportColumnNameOffice": {
-    "description": "#3485 exportColumnName: the label for case 'office'."
-  },
   "exportColumnNameOn": "On",
   "@exportColumnNameOn": {
     "description": "#3485 exportColumnName: the label for case 'on'."
@@ -12175,10 +11911,6 @@
   "@exportColumnNamePostalCode": {
     "description": "#3485 exportColumnName: the label for case 'postal_code'."
   },
-  "exportColumnNamePrice": "Price",
-  "@exportColumnNamePrice": {
-    "description": "#3485 exportColumnName: the label for case 'price'."
-  },
   "exportColumnNameProcess": "Process",
   "@exportColumnNameProcess": {
     "description": "#3485 exportColumnName: the label for case 'process'."
@@ -12186,10 +11918,6 @@
   "exportColumnNameProvider": "Provider",
   "@exportColumnNameProvider": {
     "description": "#3485 exportColumnName: the label for case 'provider'."
-  },
-  "exportColumnNameQuantity": "Quantity",
-  "@exportColumnNameQuantity": {
-    "description": "#3485 exportColumnName: the label for case 'quantity'."
   },
   "exportColumnNameRecordedAt": "Recorded on",
   "@exportColumnNameRecordedAt": {
@@ -12247,10 +11975,6 @@
   "@exportColumnNameStatus": {
     "description": "#3485 exportColumnName: the label for case 'status'."
   },
-  "exportColumnNameStreet": "Street",
-  "@exportColumnNameStreet": {
-    "description": "#3485 exportColumnName: the label for case 'street'."
-  },
   "exportColumnNameSubject": "Concerns",
   "@exportColumnNameSubject": {
     "description": "#3485 exportColumnName: the label for case 'subject'."
@@ -12274,10 +11998,6 @@
   "exportColumnNameType": "Type",
   "@exportColumnNameType": {
     "description": "#3485 exportColumnName: the label for case 'type'."
-  },
-  "exportColumnNameValue": "Value",
-  "@exportColumnNameValue": {
-    "description": "#3485 exportColumnName: the label for case 'value'."
   },
   "exportColumnNameVat": "VAT",
   "@exportColumnNameVat": {
@@ -12310,10 +12030,6 @@
   "exportColumnNameVoidedAt": "Cancelled on",
   "@exportColumnNameVoidedAt": {
     "description": "#3485 exportColumnName: the label for case 'voided_at'."
-  },
-  "exportColumnNameWhatsapp": "WhatsApp",
-  "@exportColumnNameWhatsapp": {
-    "description": "#3485 exportColumnName: the label for case 'whatsapp'."
   },
   "exportColumnNameWidth": "Width",
   "@exportColumnNameWidth": {
@@ -12367,10 +12083,6 @@
   "@exportSheetNameAbout": {
     "description": "#3485 exportSheetName: the label for case 'about'."
   },
-  "exportSheetNameAccessories": "Accessories",
-  "@exportSheetNameAccessories": {
-    "description": "#3485 exportSheetName: the label for case 'accessories'."
-  },
   "exportSheetNameAssetValuationBatches": "Asset valuations",
   "@exportSheetNameAssetValuationBatches": {
     "description": "#3485 exportSheetName: the label for case 'asset_valuation_batches'."
@@ -12387,10 +12099,6 @@
   "@exportSheetNameBookMappings": {
     "description": "#3485 exportSheetName: the label for case 'book_mappings'."
   },
-  "exportSheetNameBookPeriods": "Accounting periods",
-  "@exportSheetNameBookPeriods": {
-    "description": "#3485 exportSheetName: the label for case 'book_periods'."
-  },
   "exportSheetNameBookProfiles": "Book profiles",
   "@exportSheetNameBookProfiles": {
     "description": "#3485 exportSheetName: the label for case 'book_profiles'."
@@ -12402,10 +12110,6 @@
   "exportSheetNameCheckIns": "Attendance",
   "@exportSheetNameCheckIns": {
     "description": "#3485 exportSheetName: the label for case 'check_ins'."
-  },
-  "exportSheetNameClosureDays": "Closure days",
-  "@exportSheetNameClosureDays": {
-    "description": "#3485 exportSheetName: the label for case 'closure_days'."
   },
   "exportSheetNameCreditProducts": "Carnet types",
   "@exportSheetNameCreditProducts": {
@@ -12467,10 +12171,6 @@
   "@exportSheetNameInvoiceReminders": {
     "description": "#3485 exportSheetName: the label for case 'invoice_reminders'."
   },
-  "exportSheetNameInvoices": "Invoices",
-  "@exportSheetNameInvoices": {
-    "description": "#3485 exportSheetName: the label for case 'invoices'."
-  },
   "exportSheetNameLeaseSettlements": "Lease settlements",
   "@exportSheetNameLeaseSettlements": {
     "description": "#3485 exportSheetName: the label for case 'lease_settlements'."
@@ -12510,14 +12210,6 @@
   "exportSheetNameOverview": "Overview",
   "@exportSheetNameOverview": {
     "description": "#3485 exportSheetName: the label for case 'overview'."
-  },
-  "exportSheetNamePackages": "Packages",
-  "@exportSheetNamePackages": {
-    "description": "#3485 exportSheetName: the label for case 'packages'."
-  },
-  "exportSheetNamePayments": "Payments",
-  "@exportSheetNamePayments": {
-    "description": "#3485 exportSheetName: the label for case 'payments'."
   },
   "exportSheetNamePlanImages": "Plan images",
   "@exportSheetNamePlanImages": {
@@ -12571,10 +12263,6 @@
   "@exportSheetNameQuotaExtensions": {
     "description": "#3485 exportSheetName: the label for case 'quota_extensions'."
   },
-  "exportSheetNameReservations": "Bookings",
-  "@exportSheetNameReservations": {
-    "description": "#3485 exportSheetName: the label for case 'reservations'."
-  },
   "exportSheetNameRightsRequests": "Privacy requests",
   "@exportSheetNameRightsRequests": {
     "description": "#3485 exportSheetName: the label for case 'rights_requests'."
@@ -12606,14 +12294,6 @@
   "exportSheetNameSettingValues": "Settings",
   "@exportSheetNameSettingValues": {
     "description": "#3485 exportSheetName: the label for case 'setting_values'."
-  },
-  "exportSheetNameSites": "Sites",
-  "@exportSheetNameSites": {
-    "description": "#3485 exportSheetName: the label for case 'sites'."
-  },
-  "exportSheetNameSuppliers": "Suppliers",
-  "@exportSheetNameSuppliers": {
-    "description": "#3485 exportSheetName: the label for case 'suppliers'."
   },
   "exportSheetNameTaxExemptionCertificates": "Exemption certificates",
   "@exportSheetNameTaxExemptionCertificates": {
@@ -12658,10 +12338,6 @@
   "exportSheetNameWorkspaceRoleMembers": "Role holders",
   "@exportSheetNameWorkspaceRoleMembers": {
     "description": "#3485 exportSheetName: the label for case 'workspace_role_members'."
-  },
-  "exportSheetNameWorkspaceRoles": "Roles",
-  "@exportSheetNameWorkspaceRoles": {
-    "description": "#3485 exportSheetName: the label for case 'workspace_roles'."
   },
   "exportUncertifiedSoftware": "Built to the published spec, but DesKilo is not certified software in this country — check with your accountant whether that is required of you.",
   "@exportUncertifiedSoftware": {
@@ -12751,10 +12427,6 @@
   "@exportValueNameFounder": {
     "description": "#3485 exportValueName: the label for case 'founder'."
   },
-  "exportValueNameFull": "Invoice",
-  "@exportValueNameFull": {
-    "description": "#3485 exportValueName: the label for case 'full'."
-  },
   "exportValueNameInvited": "Invited",
   "@exportValueNameInvited": {
     "description": "#3485 exportValueName: the label for case 'invited'."
@@ -12766,10 +12438,6 @@
   "exportValueNameN": "North",
   "@exportValueNameN": {
     "description": "#3485 exportValueName: the label for case 'n'."
-  },
-  "exportValueNameNone": "No",
-  "@exportValueNameNone": {
-    "description": "#3485 exportValueName: the label for case 'none'."
   },
   "exportValueNameOverage": "Over quota",
   "@exportValueNameOverage": {
@@ -12787,21 +12455,9 @@
   "@exportValueNamePassive": {
     "description": "#3485 exportValueName: the label for case 'passive'."
   },
-  "exportValueNamePaused": "Paused",
-  "@exportValueNamePaused": {
-    "description": "#3485 exportValueName: the label for case 'paused'."
-  },
   "exportValueNamePayg": "Pay as you go",
   "@exportValueNamePayg": {
     "description": "#3485 exportValueName: the label for case 'payg'."
-  },
-  "exportValueNamePayment": "Payment",
-  "@exportValueNamePayment": {
-    "description": "#3485 exportValueName: the label for case 'payment'."
-  },
-  "exportValueNamePending": "Pending",
-  "@exportValueNamePending": {
-    "description": "#3485 exportValueName: the label for case 'pending'."
   },
   "exportValueNameRefund": "Refund",
   "@exportValueNameRefund": {
@@ -12834,10 +12490,6 @@
   "exportValueNameSeat": "Seat",
   "@exportValueNameSeat": {
     "description": "#3485 exportValueName: the label for case 'seat'."
-  },
-  "exportValueNameService": "Service",
-  "@exportValueNameService": {
-    "description": "#3485 exportValueName: the label for case 'service'."
   },
   "exportValueNameSettlement": "Settlement",
   "@exportValueNameSettlement": {
@@ -14191,21 +13843,9 @@
   "@featureTaskRecorderTitle": {
     "description": "#1865 task recorder: the feature's name"
   },
-  "featureTierCore": "Core",
-  "@featureTierCore": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "featureTierCoreDesc": "What every space needs. On from the first day.",
-  "@featureTierCoreDesc": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "featureTierPlatform": "Platform",
   "@featureTierPlatform": {
     "description": "Shown as a text in feature tile (workspace)."
-  },
-  "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
-  "@featureTierPlatformDesc": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "featureUiAnimationsDesc": "Smooth transitions and state animations across the app. Off means every change is instant; the device's reduced-motion setting always wins.",
   "@featureUiAnimationsDesc": {
@@ -14407,10 +14047,6 @@
   "@featuresViewSwitches": {
     "description": "#1327 the process-first overview of the Features screen"
   },
-  "fecAccountBank": "Bank",
-  "@fecAccountBank": {
-    "description": "Field label: the cash account"
-  },
   "fecAccountCustomers": "Customers",
   "@fecAccountCustomers": {
     "description": "Field label: the receivable account"
@@ -14481,10 +14117,6 @@
   "federationActionReviewServer": "Review server",
   "@federationActionReviewServer": {
     "description": "#1648 Next action when the server is incompatible: open the server screen."
-  },
-  "federationCancel": "Cancel",
-  "@federationCancel": {
-    "description": "#1648 Abandons the pending Deskilo sign-in; the previous context stays."
   },
   "federationClose": "Close",
   "@federationClose": {
@@ -14683,10 +14315,6 @@
   "fileExportKeepHint": "A private copy inside the app. It does not appear in Files.",
   "@fileExportKeepHint": {
     "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
-  },
-  "fileExportShare": "Share…",
-  "@fileExportShare": {
-    "description": "iPhone Export… row: hand the file to the system share sheet"
   },
   "fileExportShareHint": "The system sheet: Save to Files when it is offered, Mail, AirDrop or another app.",
   "@fileExportShareHint": {
@@ -14902,10 +14530,6 @@
   "@financesPartlyPaid": {
     "description": "Me › Finances"
   },
-  "financesPayments": "Payments",
-  "@financesPayments": {
-    "description": "Me › Finances"
-  },
   "financesPaymentsMoreFailed": "{host} did not answer for more payments. Tap to try again.",
   "@financesPaymentsMoreFailed": {
     "description": "#2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay",
@@ -14971,21 +14595,9 @@
   "@financesStatePaid": {
     "description": "Me › Finances"
   },
-  "financesStateRefunded": "Refunded",
-  "@financesStateRefunded": {
-    "description": "Me › Finances"
-  },
   "financesStateUnpaid": "Unpaid",
   "@financesStateUnpaid": {
     "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
-  },
-  "financesTitle": "My finances",
-  "@financesTitle": {
-    "description": "Me › Finances"
-  },
-  "financesToPay": "To pay",
-  "@financesToPay": {
-    "description": "Me › Finances"
   },
   "financesTypeAll": "All documents",
   "@financesTypeAll": {
@@ -14994,10 +14606,6 @@
   "financesTypeCreditNote": "Credit note",
   "@financesTypeCreditNote": {
     "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."
-  },
-  "financesTypeInvoice": "Invoice",
-  "@financesTypeInvoice": {
-    "description": "#2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter)."
   },
   "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
   "@gebuevProcedureAccessBody": {
@@ -15283,20 +14891,8 @@
   "@groupMakeAdmin": {
     "description": "workspace groups: rename, description, admins, info"
   },
-  "groupName": "Group name",
-  "@groupName": {
-    "description": "messenger: creating a group of people"
-  },
   "groupNeedsPeople": "Add at least one person.",
   "@groupNeedsPeople": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNew": "New group",
-  "@groupNew": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNewTitle": "New group",
-  "@groupNewTitle": {
     "description": "messenger: creating a group of people"
   },
   "groupPeople": "People in the group",
@@ -15333,10 +14929,6 @@
   },
   "guestPassChoose": "Pass",
   "@guestPassChoose": {
-    "description": "#3308 guest passes sold at the desk"
-  },
-  "guestPassDay": "First day",
-  "@guestPassDay": {
     "description": "#3308 guest passes sold at the desk"
   },
   "guestPassDays": "Days",
@@ -15875,10 +15467,6 @@
   "@helpHintAvailability": {
     "description": "Shown as a text in help tips (core)."
   },
-  "helpHintAvailabilityTopic": "Availability",
-  "@helpHintAvailabilityTopic": {
-    "description": "Shown as a text in help tips (core), and 2 other places."
-  },
   "helpHintBadges": "Issue a printable QR badge or register an NFC card; revoke lost badges any time.",
   "@helpHintBadges": {
     "description": "Shown as a text in help tips (core)."
@@ -15963,10 +15551,6 @@
   "@helpHintMessagesTip5": {
     "description": "#695 - messaging help hints"
   },
-  "helpHintMessagesTopic": "Messages",
-  "@helpHintMessagesTopic": {
-    "description": "#695 - messaging help hints"
-  },
   "helpHintMoney": "Your monthly bill: browse months with the arrows; pay, export or share from here.",
   "@helpHintMoney": {
     "description": "Shown as a text in help tips (core)."
@@ -15987,10 +15571,6 @@
   "@helpHintMoneyInvoicesTip2Topic": {
     "description": "Shown as the topic of a help symbol in dunning rules dialog (money), and 1 other place."
   },
-  "helpHintMoneyInvoicesTopic": "Invoices",
-  "@helpHintMoneyInvoicesTopic": {
-    "description": "Shown as a text in help tips (core)."
-  },
   "helpHintMoneyPayments": "Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.",
   "@helpHintMoneyPayments": {
     "description": "Shown as a text in help tips (core)."
@@ -16003,16 +15583,8 @@
   "@helpHintMoneyPaymentsTipSupplyTopic": {
     "description": "Shown as the topic of a help symbol in services screen (money)."
   },
-  "helpHintMoneyPaymentsTopic": "Payment",
-  "@helpHintMoneyPaymentsTopic": {
-    "description": "Shown as a text in help tips (core), and 1 other place."
-  },
   "helpHintMoneyStatement": "The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.",
   "@helpHintMoneyStatement": {
-    "description": "Shown as a text in help tips (core)."
-  },
-  "helpHintMoneyStatementTopic": "Statement",
-  "@helpHintMoneyStatementTopic": {
     "description": "Shown as a text in help tips (core)."
   },
   "helpHintMoneyTopic": "Money",
@@ -16095,10 +15667,6 @@
   "@helpTopicBookingLimits": {
     "description": "Shown as the topic of a help symbol in availability policies (workspace)."
   },
-  "helpTopicBookingPolicies": "Booking policies",
-  "@helpTopicBookingPolicies": {
-    "description": "Shown as the topic of a help symbol in availability policies (workspace), and 3 other places."
-  },
   "helpTopicDeployment": "Deploying",
   "@helpTopicDeployment": {
     "description": "Guide-heading needle for the deployment help symbols (#1022)"
@@ -16119,10 +15687,6 @@
   "@helpTopicInstances": {
     "description": "Shown as the topic of a help symbol in new instance screen (profile)."
   },
-  "helpTopicKiosk": "Kiosk mode",
-  "@helpTopicKiosk": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "helpTopicLegalIdentity": "Legal identity",
   "@helpTopicLegalIdentity": {
     "description": "Shown as the topic of a help symbol in legal identity screen (money), and 3 other places."
@@ -16134,10 +15698,6 @@
   "helpTopicReportEditor": "report editor",
   "@helpTopicReportEditor": {
     "description": "Shown as the topic of a help symbol in invoice template sheet (money), and 1 other place."
-  },
-  "helpTopicReportLayout": "Positioned layouts",
-  "@helpTopicReportLayout": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "helpTopicScheduledExpenses": "Scheduled expenses",
   "@helpTopicScheduledExpenses": {
@@ -16158,10 +15718,6 @@
   "helpTopicVat": "VAT",
   "@helpTopicVat": {
     "description": "Shown as a dialog in member vat treatment (workspace), and 10 other places."
-  },
-  "helpTopicWindowEnvelope": "The window-envelope contract",
-  "@helpTopicWindowEnvelope": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "helpTopicWorkingHours": "Working hours",
   "@helpTopicWorkingHours": {
@@ -16497,10 +16053,6 @@
   "@hubSalesSubtitle": {
     "description": "#2577 the sales and purchases pages"
   },
-  "hubSalesTitle": "Sales",
-  "@hubSalesTitle": {
-    "description": "#2577 the sales and purchases pages"
-  },
   "identityConnectBrowser": "The browser could not be opened.",
   "@identityConnectBrowser": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: The system browser could not be launched."
@@ -16695,10 +16247,6 @@
         "type": "int"
       }
     }
-  },
-  "inboxRetry": "Try again",
-  "@inboxRetry": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "inboxShowOlder": "Show older conversations",
   "@inboxShowOlder": {
@@ -17158,10 +16706,6 @@
   },
   "instanceDoctorRun": "Run the security check",
   "@instanceDoctorRun": {
-    "description": "#1308 instance wizard doctor and token"
-  },
-  "instanceDoctorRunAgain": "Check again",
-  "@instanceDoctorRunAgain": {
     "description": "#1308 instance wizard doctor and token"
   },
   "instanceDoctorSchemaNoVersionDetail": "{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
@@ -18007,16 +17551,8 @@
   "@inviteSendFailed": {
     "description": "Shown as a text in invite sheet (workspace)."
   },
-  "inviteViaShare": "Share…",
-  "@inviteViaShare": {
-    "description": "Shown as a button or chip label in invite sheet (workspace)."
-  },
   "inviteViaSms": "SMS",
   "@inviteViaSms": {
-    "description": "Shown as a button or chip label in invite sheet (workspace)."
-  },
-  "inviteViaWhatsapp": "WhatsApp",
-  "@inviteViaWhatsapp": {
     "description": "Shown as a button or chip label in invite sheet (workspace)."
   },
   "invoiceAccountingExport": "Accounting export",
@@ -18333,10 +17869,6 @@
   "invoiceFilterClear": "Clear filters",
   "@invoiceFilterClear": {
     "description": "Archive: back to the unfiltered list"
-  },
-  "invoiceFilterMonthLabel": "Month",
-  "@invoiceFilterMonthLabel": {
-    "description": "Archive month filter label"
   },
   "invoiceFilterNoMatch": "No invoice matches these filters.",
   "@invoiceFilterNoMatch": {
@@ -19028,10 +18560,6 @@
   "@invoiceRegisterAmount": {
     "description": "Register column header"
   },
-  "invoiceRegisterDate": "Date",
-  "@invoiceRegisterDate": {
-    "description": "Register column header, and its sort control"
-  },
   "invoiceRegisterName": "Name",
   "@invoiceRegisterName": {
     "description": "Register column header: the member for an issuer, the invoice number for a member"
@@ -19059,10 +18587,6 @@
   "invoiceRegisterTotal": "Total",
   "@invoiceRegisterTotal": {
     "description": "Register footer: sum of the listed invoices"
-  },
-  "invoiceRegisterYear": "Year",
-  "@invoiceRegisterYear": {
-    "description": "Register filter: which fiscal year the register shows"
   },
   "invoiceRemainingLabel": "Remaining",
   "@invoiceRemainingLabel": {
@@ -19216,10 +18740,6 @@
   "@invoiceSortNewest": {
     "description": "Sort: newest issued first (default)"
   },
-  "invoiceSortTooltip": "Sort",
-  "@invoiceSortTooltip": {
-    "description": "Archive sort menu tooltip"
-  },
   "invoiceStatusOpen": "Open",
   "@invoiceStatusOpen": {
     "description": "Lifecycle chip: issued, still waiting for its payment"
@@ -19227,10 +18747,6 @@
   "invoiceStatusPartiallyPaid": "Partially paid",
   "@invoiceStatusPartiallyPaid": {
     "description": "Lifecycle chip: matched to a payment that did not cover the whole invoice"
-  },
-  "invoiceStatusRefunded": "Refunded",
-  "@invoiceStatusRefunded": {
-    "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
   "invoiceStatusRemainderCancelled": "Partially paid · remainder cancelled",
   "@invoiceStatusRemainderCancelled": {
@@ -19284,10 +18800,6 @@
   "invoiceTemplateBodyLabel": "Body band (the invoice lines)",
   "@invoiceTemplateBodyLabel": {
     "description": "Invoice report editor (#470)"
-  },
-  "invoiceTemplateDocInvoice": "Invoice",
-  "@invoiceTemplateDocInvoice": {
-    "description": "Mahnwesen / reminder letters (#472)"
   },
   "invoiceTemplateDocReminder": "Reminder {level}",
   "@invoiceTemplateDocReminder": {
@@ -19395,24 +18907,8 @@
   "@invoicesEmpty": {
     "description": "Empty state of the invoice archive"
   },
-  "invoicesManage": "Invoices",
-  "@invoicesManage": {
-    "description": "#871 the Money tab row that opens invoice management (the billing hub)"
-  },
-  "invoicesTitle": "Invoices",
-  "@invoicesTitle": {
-    "description": "The invoice archive screen title and its Money entry button (0060)"
-  },
   "invoicingBanner": "You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.",
   "@invoicingBanner": {
-    "description": "invoicing hub vs my finances"
-  },
-  "invoicingHubTitle": "Invoices",
-  "@invoicingHubTitle": {
-    "description": "invoicing hub vs my finances"
-  },
-  "invoicingMyFinances": "My finances",
-  "@invoicingMyFinances": {
     "description": "invoicing hub vs my finances"
   },
   "invoicingTools": "Invoicing tools",
@@ -19851,10 +19347,6 @@
   },
   "journeyStepIssued": "Issued",
   "@journeyStepIssued": {
-    "description": "Shown as a text in invoice journey view (money)."
-  },
-  "journeyStepPayment": "Payment",
-  "@journeyStepPayment": {
     "description": "Shown as a text in invoice journey view (money)."
   },
   "journeyTimelineTitle": "Timeline",
@@ -20385,10 +19877,6 @@
   "@kioskClosedToday": {
     "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
   },
-  "kioskConfirmAction": "Confirm",
-  "@kioskConfirmAction": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "kioskDone": "Done — you're all set.",
   "@kioskDone": {
     "description": "Success snackbar after a kiosk operation; the member is signed out already"
@@ -20444,14 +19932,6 @@
   "kioskPresentBadgeNext": "Present the badge",
   "@kioskPresentBadgeNext": {
     "description": "Kiosk period step continue button — leads to the badge prompt"
-  },
-  "kioskRejectAction": "Reject",
-  "@kioskRejectAction": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "kioskReserve": "Reserve",
-  "@kioskReserve": {
-    "description": "Kiosk seat action: reserve the seat for today's window"
   },
   "kioskReserveAndCheckIn": "Reserve & check in",
   "@kioskReserveAndCheckIn": {
@@ -20622,10 +20102,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseEdit": "Edit",
-  "@leaseEdit": {
-    "description": "#2569 premises lease"
   },
   "leaseEmpty": "No lease recorded.",
   "@leaseEmpty": {
@@ -20894,10 +20370,6 @@
   "@leaseRefused": {
     "description": "#2569 premises lease"
   },
-  "leaseSave": "Save",
-  "@leaseSave": {
-    "description": "#2569 premises lease"
-  },
   "leaseSaved": "Saved",
   "@leaseSaved": {
     "description": "#2569 premises lease"
@@ -20986,10 +20458,6 @@
   },
   "leaseStatusActive": "Running",
   "@leaseStatusActive": {
-    "description": "#2569 premises lease"
-  },
-  "leaseStatusDraft": "Draft",
-  "@leaseStatusDraft": {
     "description": "#2569 premises lease"
   },
   "leaseStatusEnded": "Ended",
@@ -21130,14 +20598,6 @@
   "@ledgerCategoryOverage": {
     "description": "Ledger entry category"
   },
-  "ledgerCategoryPayment": "Payment",
-  "@ledgerCategoryPayment": {
-    "description": "Ledger entry category"
-  },
-  "ledgerCategoryService": "Service",
-  "@ledgerCategoryService": {
-    "description": "Ledger entry category for confirmed service charges (#129)"
-  },
   "ledgerCategorySubscription": "Subscription",
   "@ledgerCategorySubscription": {
     "description": "Ledger entry category"
@@ -21189,10 +20649,6 @@
   "legalIdentitySaved": "Legal identity saved.",
   "@legalIdentitySaved": {
     "description": "Snackbar after saving the legal identity"
-  },
-  "legalIdentityStreet": "Street",
-  "@legalIdentityStreet": {
-    "description": "Street field label"
   },
   "legalIdentitySubtitle": "VAT regime, registration numbers and the workspace's default payment conditions",
   "@legalIdentitySubtitle": {
@@ -21258,10 +20714,6 @@
   "@legendUnavailable": {
     "description": "#1281: legendUnavailable"
   },
-  "levelAssignMember": "For member",
-  "@levelAssignMember": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "levelAssignMyself": "Myself",
   "@levelAssignMyself": {
     "description": "Shown as a text in booking sheet (reservations), and 1 other place."
@@ -21298,10 +20750,6 @@
   "@levelPermissionDenied": {
     "description": "Shown as a text in members screen (workspace), and 1 other place."
   },
-  "levelPermissionTile": "Level reservations",
-  "@levelPermissionTile": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "levelPriceLabel": "Price per half-day",
   "@levelPriceLabel": {
     "description": "Shown as a text in space scan (reservations), and 3 other places."
@@ -21314,17 +20762,9 @@
   "@levelReserveButton": {
     "description": "Shown as a text in lexicon defaults (core), and 1 other place."
   },
-  "levelReserveTitle": "Reserve the whole level",
-  "@levelReserveTitle": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "levelSupplementLabel": "Level reservations",
   "@levelSupplementLabel": {
     "description": "Shown as a text in report strings l10n (money), and 1 other place."
-  },
-  "libraryApplied": "Template applied.",
-  "@libraryApplied": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "libraryAppliedChanges": "{count, plural, =1{1 change applied.} other{{count} changes applied.}}",
   "@libraryAppliedChanges": {
@@ -21335,10 +20775,6 @@
       }
     }
   },
-  "libraryApply": "Apply to this space",
-  "@libraryApply": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "libraryApplyChanges": "{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}",
   "@libraryApplyChanges": {
     "description": "Template apply preview (#1280): libraryApplyChanges",
@@ -21347,10 +20783,6 @@
         "type": "int"
       }
     }
-  },
-  "libraryApplyConfirmBody": "The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.",
-  "@libraryApplyConfirmBody": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "libraryCarriesSettings": "with its settings",
   "@libraryCarriesSettings": {
@@ -21885,10 +21317,6 @@
   "@mcpAssistantsUnavailable": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpCancel": "Cancel",
-  "@mcpCancel": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
   "mcpConfirmAccept": "Confirm",
   "@mcpConfirmAccept": {
     "description": "#1619 mcp_confirmation"
@@ -22125,10 +21553,6 @@
   "mcpConnectCodeStep2": "In Claude Code, type /mcp, choose deskilo and then Authenticate. A browser opens to sign in and pick this workspace.",
   "@mcpConnectCodeStep2": {
     "description": "#2145 Connect an assistant: mcpConnectCodeStep2"
-  },
-  "mcpConnectCopied": "Copied.",
-  "@mcpConnectCopied": {
-    "description": "#2145 Connect an assistant: mcpConnectCopied"
   },
   "mcpConnectCopyRequest": "Copy a request to send",
   "@mcpConnectCopyRequest": {
@@ -22865,14 +22289,6 @@
   "@mcpPolicyFeatureOff": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpPolicySave": "Save",
-  "@mcpPolicySave": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
-  "mcpPolicySaved": "Saved.",
-  "@mcpPolicySaved": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
   "mcpPolicyStale": "Someone changed these settings meanwhile. Review the current settings and save again.",
   "@mcpPolicyStale": {
     "description": "#1626 #1627 #1628 mcp_settings"
@@ -23020,10 +22436,6 @@
   "mcpStateRevoked": "Expired or withdrawn",
   "@mcpStateRevoked": {
     "description": "#1625 MCP status: mcpStateRevoked"
-  },
-  "mcpStateUnavailable": "Unknown",
-  "@mcpStateUnavailable": {
-    "description": "#1625 MCP status: mcpStateUnavailable"
   },
   "mcpStateUnlinked": "Not confirmed",
   "@mcpStateUnlinked": {
@@ -23277,10 +22689,6 @@
   "meGroupMove": "Move to group…",
   "@meGroupMove": {
     "description": "Shown as a text in space row controls (me)."
-  },
-  "meGroupName": "Group name",
-  "@meGroupName": {
-    "description": "Shown as a title in group name dialog (me)."
   },
   "meGroupOther": "Other",
   "@meGroupOther": {
@@ -23604,10 +23012,6 @@
       }
     }
   },
-  "meSpaceOpen": "Open",
-  "@meSpaceOpen": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "meSpacePending": "Waiting for approval",
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."
@@ -23639,10 +23043,6 @@
   "meTabMe": "Me",
   "@meTabMe": {
     "description": "Me layer bottom tab and title: the person's own account."
-  },
-  "meTabMessages": "Messages",
-  "@meTabMessages": {
-    "description": "Me layer bottom tab: the person's messages."
   },
   "meTabOverview": "Overview",
   "@meTabOverview": {
@@ -23765,10 +23165,6 @@
   "memberMakeMember": "Take back the Administrator role",
   "@memberMakeMember": {
     "description": "Owner action demoting an admin to a regular member (0035)"
-  },
-  "memberMessagesAction": "Messages",
-  "@memberMessagesAction": {
-    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
   },
   "memberMoneySettled": "Nothing outstanding.",
   "@memberMoneySettled": {
@@ -23894,10 +23290,6 @@
   "@memberOriginGuest": {
     "description": "#3308 a customer record made by a guest pass sale"
   },
-  "memberOriginHeading": "How this membership began",
-  "@memberOriginHeading": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "memberOriginInvited": "Joined by invitation",
   "@memberOriginInvited": {
     "description": "Shown as a text in member contact card (members)."
@@ -23996,10 +23388,6 @@
       }
     }
   },
-  "memberPageStatusActive": "Active",
-  "@memberPageStatusActive": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
   "@memberPageWorkspaceDefaultValue": {
     "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).",
@@ -24021,10 +23409,6 @@
   "memberPause": "Pause membership",
   "@memberPause": {
     "description": "Member sheet action: pause an active membership (formerly a hidden long-press)"
-  },
-  "memberPayments": "Payments",
-  "@memberPayments": {
-    "description": "#704 - the money section of a member profile"
   },
   "memberPlanShare": "Plan {pct}%",
   "@memberPlanShare": {
@@ -24095,10 +23479,6 @@
   "memberRolesNone": "No role: everything a member can do.",
   "@memberRolesNone": {
     "description": "#2085 giving roles: memberRolesNone"
-  },
-  "memberRolesTitle": "Roles",
-  "@memberRolesTitle": {
-    "description": "#2085 giving roles: memberRolesTitle"
   },
   "memberRolesWhatTheyCanDo": "What they can do here",
   "@memberRolesWhatTheyCanDo": {
@@ -24205,10 +23585,6 @@
   "@messageSearchHint": {
     "description": "#687 - messaging search"
   },
-  "messageSearchMessages": "Messages",
-  "@messageSearchMessages": {
-    "description": "#687 - messaging search"
-  },
   "messageSearchNothing": "Nothing matched.",
   "@messageSearchNothing": {
     "description": "#687 - messaging search"
@@ -24237,10 +23613,6 @@
   "@messengerContextAccount": {
     "description": "Context label of a person-to-person account conversation (#1824)"
   },
-  "messengerContextGroup": "Group",
-  "@messengerContextGroup": {
-    "description": "messenger: a group of people"
-  },
   "messengerContextInquiryIn": "Inquiry to {space}",
   "@messengerContextInquiryIn": {
     "description": "Context label of an inquiry an outside person wrote to a space the reader hosts (#1824)",
@@ -24268,10 +23640,6 @@
       }
     }
   },
-  "messengerCopied": "Copied.",
-  "@messengerCopied": {
-    "description": "messenger: reactions, stars, edits"
-  },
   "messengerCopy": "Copy text",
   "@messengerCopy": {
     "description": "messenger: reactions, stars, edits"
@@ -24291,10 +23659,6 @@
   "messengerDelivered": "Delivered",
   "@messengerDelivered": {
     "description": "Screen-reader label of the delivered receipt on my message (#1824)"
-  },
-  "messengerEdit": "Edit",
-  "@messengerEdit": {
-    "description": "messenger: reactions, stars, edits"
   },
   "messengerEditFailed": "This message could not be edited — the 15 minutes may be over.",
   "@messengerEditFailed": {
@@ -24611,10 +23975,6 @@
   "@moneyAmountLabel": {
     "description": "Label of the payment amount input"
   },
-  "moneyBalance": "Balance",
-  "@moneyBalance": {
-    "description": "Statement bottom line; negative = member owes"
-  },
   "moneyBaseFee": "Base subscription",
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"
@@ -24626,10 +23986,6 @@
   "moneyDescriptionLabel": "Description",
   "@moneyDescriptionLabel": {
     "description": "Label of the expense description input"
-  },
-  "moneyDocumentLibrary": "Document library",
-  "@moneyDocumentLibrary": {
-    "description": "Shown as a button or chip label in documents face (money)."
   },
   "moneyDueIn": "Due in {days} days",
   "@moneyDueIn": {
@@ -24650,18 +24006,6 @@
   },
   "moneyFaceDocuments": "Documents",
   "@moneyFaceDocuments": {
-    "description": "Shown as a text in money faces view (money)."
-  },
-  "moneyFaceInvoices": "Invoices",
-  "@moneyFaceInvoices": {
-    "description": "Shown as a text in money faces view (money)."
-  },
-  "moneyFacePayments": "Payments",
-  "@moneyFacePayments": {
-    "description": "Shown as a text in money faces view (money)."
-  },
-  "moneyFaceStatement": "Statement",
-  "@moneyFaceStatement": {
     "description": "Shown as a text in money faces view (money)."
   },
   "moneyFaceUsage": "Usage",
@@ -25262,10 +24606,6 @@
   "@negotiationMineColumn": {
     "description": "Shown as a text in negotiation card (money)."
   },
-  "negotiationNote": "Note",
-  "@negotiationNote": {
-    "description": "Shown as the label of a field in negotiation card (money)."
-  },
   "negotiationOccupation": "Occupation",
   "@negotiationOccupation": {
     "description": "Shown as a text in negotiation card (money), and 1 other place."
@@ -25319,17 +24659,9 @@
   "@negotiationSubmit": {
     "description": "Shown as a text in negotiation card (money)."
   },
-  "negotiationValidFrom": "Applies from",
-  "@negotiationValidFrom": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "negotiationWhoCanSee": "Who can see this",
   "@negotiationWhoCanSee": {
     "description": "Shown as a button or chip label in negotiation card (money)."
-  },
-  "newConversationGroupSwitch": "Group",
-  "@newConversationGroupSwitch": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "newConversationNoMembers": "Nobody else here yet.",
   "@newConversationNoMembers": {
@@ -25343,20 +24675,12 @@
   "@newConversationStart": {
     "description": "#687 - messaging centre"
   },
-  "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
-  "@newConversationTapToOpen": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "newConversationTitle": "New conversation",
   "@newConversationTitle": {
     "description": "#687 - messaging centre"
   },
   "newGroupCreate": "Create group",
   "@newGroupCreate": {
-    "description": "#687 - messaging centre"
-  },
-  "newGroupName": "Group name",
-  "@newGroupName": {
     "description": "#687 - messaging centre"
   },
   "newGroupNameTaken": "A group with that name already exists here. Pick another.",
@@ -25476,10 +24800,6 @@
   "@noteRefGone": {
     "description": "Tapping a message reservation reference whose target was deleted (#523)"
   },
-  "noteRefInvoice": "Invoice",
-  "@noteRefInvoice": {
-    "description": "#842 - attach-menu entry: reference an invoice"
-  },
   "noteRefNoReservations": "No upcoming reservations to link.",
   "@noteRefNoReservations": {
     "description": "Reservation picker when the sender has nothing upcoming (#523)"
@@ -25487,10 +24807,6 @@
   "noteRefNone": "Nothing to reference yet.",
   "@noteRefNone": {
     "description": "#842 - there is nothing of that kind to reference"
-  },
-  "noteRefPayment": "Payment",
-  "@noteRefPayment": {
-    "description": "#842 - attach-menu entry: reference a payment"
   },
   "noteRefPickAlert": "Which alert?",
   "@noteRefPickAlert": {
@@ -25556,10 +24872,6 @@
   "@notifGroupBy": {
     "description": "Shown as a text in events filter bar (events)."
   },
-  "notifGroupByDate": "Date",
-  "@notifGroupByDate": {
-    "description": "Shown as a text in events filter bar (events)."
-  },
   "notifGroupByType": "Type",
   "@notifGroupByType": {
     "description": "Shown as a text in events filter bar (events)."
@@ -25620,17 +24932,9 @@
   "@numberSequenceJournalCreditNote": {
     "description": "#925 number sequences: numberSequenceJournalCreditNote"
   },
-  "numberSequenceJournalInvoice": "Invoices",
-  "@numberSequenceJournalInvoice": {
-    "description": "#925 number sequences: numberSequenceJournalInvoice"
-  },
   "numberSequenceJournalMember": "Members",
   "@numberSequenceJournalMember": {
     "description": "#928 number-sequence adopters: numberSequenceJournalMember"
-  },
-  "numberSequenceJournalPayment": "Payments",
-  "@numberSequenceJournalPayment": {
-    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
   },
   "numberSequenceJournalVatDeclaration": "VAT declarations",
   "@numberSequenceJournalVatDeclaration": {
@@ -25944,10 +25248,6 @@
   "@overviewGroupPurchases": {
     "description": "#2583 the workspace overview"
   },
-  "overviewGroupSales": "Sales",
-  "@overviewGroupSales": {
-    "description": "#2583 the workspace overview"
-  },
   "overviewIndicators": "Key indicators",
   "@overviewIndicators": {
     "description": "#2583 the workspace overview"
@@ -26109,10 +25409,6 @@
   "payConfigRemoved": "Removed.",
   "@payConfigRemoved": {
     "description": "Snackbar after removing a provider's config"
-  },
-  "payConfigSaved": "Saved.",
-  "@payConfigSaved": {
-    "description": "Snackbar after saving a provider's config"
   },
   "payConfigSecretSet": "Set — leave blank to keep",
   "@payConfigSecretSet": {
@@ -26393,10 +25689,6 @@
   "@paymentTermsOverridden": {
     "description": "#881 member payment conditions: paymentTermsOverridden"
   },
-  "paymentTermsReason": "Reason (optional)",
-  "@paymentTermsReason": {
-    "description": "#881 member payment conditions: paymentTermsReason"
-  },
   "paymentTermsRequestHint": "Leave a field empty to keep the workspace's wording for it. The change applies once validated.",
   "@paymentTermsRequestHint": {
     "description": "#881 member payment conditions: paymentTermsRequestHint"
@@ -26438,10 +25730,6 @@
       }
     }
   },
-  "pendingApprovalRefresh": "Check again",
-  "@pendingApprovalRefresh": {
-    "description": "Shown as a tooltip in workspace applications screen (workspace), and 1 other place."
-  },
   "pendingApprovalTitle": "Workspace membership awaiting approval",
   "@pendingApprovalTitle": {
     "description": "Shown as a title in pending approval screen (workspace)."
@@ -26470,10 +25758,6 @@
   "pendingStillWaiting": "Still awaiting approval.",
   "@pendingStillWaiting": {
     "description": "Shown as a text in pending approval screen (workspace)."
-  },
-  "pendingSwitchWorkspace": "Switch workspace",
-  "@pendingSwitchWorkspace": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "percentValue": "{value}%",
   "@percentValue": {
@@ -26670,10 +25954,6 @@
   "@personalBirthdayHelp": {
     "description": "Shown as the helper text of a field in birthday field (profile)."
   },
-  "personalBirthdayPick": "Choose a date",
-  "@personalBirthdayPick": {
-    "description": "Shown as the text in birthday field (profile)."
-  },
   "personalBirthdaySaveFailed": "Your details were saved, but the birthday could not be.",
   "@personalBirthdaySaveFailed": {
     "description": "Shown as the error text of a field in personal info screen (profile)."
@@ -26685,10 +25965,6 @@
   "personalInfoCompany": "Company (optional)",
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
-  },
-  "personalInfoCountry": "Country",
-  "@personalInfoCountry": {
-    "description": "#886 personal-information form / feature: personalInfoCountry"
   },
   "personalInfoEmail": "E-mail for documents",
   "@personalInfoEmail": {
@@ -26721,10 +25997,6 @@
   "personalInfoPreview": "On your documents",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
-  },
-  "personalInfoSave": "Save",
-  "@personalInfoSave": {
-    "description": "#886 personal-information form: save button"
   },
   "personalInfoSaved": "Personal information saved",
   "@personalInfoSaved": {
@@ -27206,10 +26478,6 @@
   "@policyLimitsDesc": {
     "description": "#649 - subtitle of the booking-limits section"
   },
-  "policyLimitsTitle": "Booking limits",
-  "@policyLimitsTitle": {
-    "description": "#649 - section header for the three numeric booking limits"
-  },
   "policyMaxDurationDesc": "The longest booking accepted. A booking ends on the day it starts, so a full day is the ceiling.",
   "@policyMaxDurationDesc": {
     "description": "#649 - max_duration_minutes explanation"
@@ -27543,10 +26811,6 @@
   "@portalSourceUnavailable": {
     "description": "Shown as the text in account messenger sections (directory), and 5 other places."
   },
-  "portalSuggestionGroup": "Group",
-  "@portalSuggestionGroup": {
-    "description": "Shown as the text in recipient typeahead (directory)."
-  },
   "portalUseCode": "Use an email code",
   "@portalUseCode": {
     "description": "Shown as the title in connection dialog (directory)."
@@ -27711,10 +26975,6 @@
   "privacyAdminRefuse": "Refuse",
   "@privacyAdminRefuse": {
     "description": "Shown as the text in privacy admin screen (members), and 1 other place."
-  },
-  "privacyAdminSave": "Save",
-  "@privacyAdminSave": {
-    "description": "Shown as the text in privacy admin sheets (members), and 3 other places."
   },
   "privacyAdminStore": "Where (a store or a list)",
   "@privacyAdminStore": {
@@ -28274,10 +27534,6 @@
   "@profilePhotoChoose": {
     "description": "Action in the photo sheet: pick an image from the device."
   },
-  "profilePhotoFileType": "Image",
-  "@profilePhotoFileType": {
-    "description": "File-picker type label when choosing a profile photo; the word is identical across locales but the key exists for parity."
-  },
   "profilePhotoNone": "Tap to add a photo",
   "@profilePhotoNone": {
     "description": "Subtitle of the Photo entry when the member has no photo yet."
@@ -28451,10 +27707,6 @@
       }
     }
   },
-  "publicHolidaysCountry": "Country",
-  "@publicHolidaysCountry": {
-    "description": "#1274 the country field label"
-  },
   "publicHolidaysCreated": "{count, plural, =1{1 closure day created} other{{count} closure days created}}",
   "@publicHolidaysCreated": {
     "description": "#1274 how many closure days were written",
@@ -28492,10 +27744,6 @@
   "publicHolidaysSheetTitle": "Public holidays",
   "@publicHolidaysSheetTitle": {
     "description": "#1274 the preview sheet's title"
-  },
-  "publicHolidaysYear": "Year",
-  "@publicHolidaysYear": {
-    "description": "#1274 the year field label"
   },
   "publicPersonUnavailable": "This profile is not public.",
   "@publicPersonUnavailable": {
@@ -28718,10 +27966,6 @@
   "@purchaseOrderMailKeyKept": {
     "description": "#3307 purchase order e-mail"
   },
-  "purchaseOrderMailSave": "Save",
-  "@purchaseOrderMailSave": {
-    "description": "#3307 purchase order e-mail"
-  },
   "purchaseOrderMailSender": "Sender address (a verified domain at Resend)",
   "@purchaseOrderMailSender": {
     "description": "#3307 purchase order e-mail"
@@ -28780,10 +28024,6 @@
   },
   "purchaseOrderPrint": "Print",
   "@purchaseOrderPrint": {
-    "description": "#3307 purchase orders"
-  },
-  "purchaseOrderQuantity": "Quantity",
-  "@purchaseOrderQuantity": {
     "description": "#3307 purchase orders"
   },
   "purchaseOrderReceive": "Record a delivery",
@@ -28884,10 +28124,6 @@
   },
   "purchaseOrderStateCancelled": "Cancelled",
   "@purchaseOrderStateCancelled": {
-    "description": "#3307 purchase orders"
-  },
-  "purchaseOrderStateDraft": "Draft",
-  "@purchaseOrderStateDraft": {
     "description": "#3307 purchase orders"
   },
   "purchaseOrderStatePartlyReceived": "Partly received",
@@ -29057,10 +28293,6 @@
         "type": "String"
       }
     }
-  },
-  "purchasesClaimYou": "You",
-  "@purchasesClaimYou": {
-    "description": "#2574 purchase payables"
   },
   "purchasesClaimsTitle": "Reimbursement",
   "@purchasesClaimsTitle": {
@@ -29281,10 +28513,6 @@
   "@purchasesOffsetHint": {
     "description": "#2574 claim offset"
   },
-  "purchasesOffsetInvoice": "Invoice",
-  "@purchasesOffsetInvoice": {
-    "description": "#2574 claim offset"
-  },
   "purchasesOffsetLine": "Offset · {amount} · {invoice}",
   "@purchasesOffsetLine": {
     "description": "#2574 claim offset",
@@ -29387,10 +28615,6 @@
   },
   "purchasesPaymentReversed": "Reversed",
   "@purchasesPaymentReversed": {
-    "description": "#2574 purchase payments"
-  },
-  "purchasesPayments": "Payments",
-  "@purchasesPayments": {
     "description": "#2574 purchase payments"
   },
   "purchasesPickDate": "Choose a date",
@@ -29555,10 +28779,6 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTabToPay": "To pay",
-  "@purchasesTabToPay": {
-    "description": "#2574 purchase payables"
-  },
   "purchasesTaxField": "Tax included (empty if the bill does not state it)",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
@@ -29718,10 +28938,6 @@
   "questionEditorContexts": "Where it is asked",
   "@questionEditorContexts": {
     "description": "#1288 the question editor: questionEditorContexts"
-  },
-  "questionEditorKey": "Key",
-  "@questionEditorKey": {
-    "description": "#1288 the question editor: questionEditorKey"
   },
   "questionEditorKeyHelp": "Lower-case letters, digits and underscores. It never changes: the answers point at it.",
   "@questionEditorKeyHelp": {
@@ -29904,10 +29120,6 @@
   },
   "readinessActorOperator": "The server operator",
   "@readinessActorOperator": {
-    "description": "#1636 workspace_readiness"
-  },
-  "readinessActorOwner": "You",
-  "@readinessActorOwner": {
     "description": "#1636 workspace_readiness"
   },
   "readinessAll": "All sections ({ready} of {total} ready)",
@@ -30165,10 +29377,6 @@
   "@recordedPaymentsTitle": {
     "description": "Screen title: the payments behind the collected figure"
   },
-  "recordedPaymentsUnnamed": "Payment",
-  "@recordedPaymentsUnnamed": {
-    "description": "Row title when a payment names neither an invoice nor a payer"
-  },
   "recordingPrivacyBadge": "Filming mode — invented people",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
@@ -30227,10 +29435,6 @@
   "@recordsLocationUndeclared": {
     "description": "#2378 records location"
   },
-  "refFacetMonth": "Month",
-  "@refFacetMonth": {
-    "description": "Shown as the text in note record choices (workspace), and 2 other places."
-  },
   "refFacetPerson": "Person",
   "@refFacetPerson": {
     "description": "Shown as the text in note record choices (workspace), and 1 other place."
@@ -30285,10 +29489,6 @@
       }
     }
   },
-  "refFilterSort": "Sort",
-  "@refFilterSort": {
-    "description": "Shown as the tooltip in ref picker sheet (workspace)."
-  },
   "refSortAmountHigh": "Highest amount",
   "@refSortAmountHigh": {
     "description": "Shown as the text in ref picker sheet (workspace)."
@@ -30321,20 +29521,12 @@
   "@refStatusPaid": {
     "description": "Shown as the label in note record choices (workspace)."
   },
-  "refStatusPending": "Pending",
-  "@refStatusPending": {
-    "description": "Shown as the label in note record choices (workspace)."
-  },
   "refStatusRefunded": "Refunded",
   "@refStatusRefunded": {
     "description": "Shown as the label in note record choices (workspace)."
   },
   "refTypeCreditNote": "Credit note",
   "@refTypeCreditNote": {
-    "description": "Shown as the label in note record choices (workspace)."
-  },
-  "refTypeInvoice": "Invoice",
-  "@refTypeInvoice": {
     "description": "Shown as the label in note record choices (workspace)."
   },
   "refusalAccountingClosed": "This connection is closed for this: it was revoked, or it has already delivered. Revoke it and connect again. Nothing was saved.",
@@ -30421,10 +29613,6 @@
   "@regionalDeviceZoneHint": {
     "description": "#711 - globalization"
   },
-  "regionalFollowLanguage": "Automatic",
-  "@regionalFollowLanguage": {
-    "description": "#711 - globalization"
-  },
   "regionalFormatLocale": "Numbers & dates",
   "@regionalFormatLocale": {
     "description": "#711 - globalization"
@@ -30464,10 +29652,6 @@
   },
   "registerPaymentMethod": "Method",
   "@registerPaymentMethod": {
-    "description": "Shown as the label of a field in register payment sheet (money)."
-  },
-  "registerPaymentNote": "Note",
-  "@registerPaymentNote": {
     "description": "Shown as the label of a field in register payment sheet (money)."
   },
   "registerPaymentSubmit": "Register",
@@ -30656,10 +29840,6 @@
   "repartitionPeriod": "Lands on",
   "@repartitionPeriod": {
     "description": "Shown as a text in expense repartition sheet (money)."
-  },
-  "repartitionPeriodLabel": "Month",
-  "@repartitionPeriodLabel": {
-    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
   },
   "repartitionPreview": "Shares",
   "@repartitionPreview": {
@@ -30947,10 +30127,6 @@
   "@reportDesignerReplaceTitle": {
     "description": "Shown as a title in report editor dialogs (money)."
   },
-  "reportDesignerSideBySide": "Design and preview side by side",
-  "@reportDesignerSideBySide": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "reportDesignerUndo": "Undo",
   "@reportDesignerUndo": {
     "description": "Shown as a text in report history controls (money)."
@@ -31062,10 +30238,6 @@
   "reportFieldGroupSeller": "Seller",
   "@reportFieldGroupSeller": {
     "description": "#966 report guide: reportFieldGroupSeller"
-  },
-  "reportFieldGroupSites": "Sites",
-  "@reportFieldGroupSites": {
-    "description": "#966 report guide: reportFieldGroupSites"
   },
   "reportFieldGroupStatus": "Workspace status",
   "@reportFieldGroupStatus": {
@@ -31480,22 +30652,6 @@
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
   },
-  "reportImageAlign": "Alignment",
-  "@reportImageAlign": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "reportImageAlignCenter": "Centre",
-  "@reportImageAlignCenter": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "reportImageAlignLeft": "Left",
-  "@reportImageAlignLeft": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "reportImageAlignRight": "Right",
-  "@reportImageAlignRight": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "reportImageForbidden": "Not allowed to read this image",
   "@reportImageForbidden": {
     "description": "#2586 report image failure"
@@ -31519,10 +30675,6 @@
   "reportImageRetry": "Retry reading the image",
   "@reportImageRetry": {
     "description": "#2586 report image failure"
-  },
-  "reportImageSize": "Size",
-  "@reportImageSize": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "reportImageSizeLarge": "Large",
   "@reportImageSizeLarge": {
@@ -31620,10 +30772,6 @@
   "@reportLineDivider": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLineImage": "Image",
-  "@reportLineImage": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
   "reportLineLogic": "Logic",
   "@reportLineLogic": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -31642,10 +30790,6 @@
   },
   "reportLineSpacer": "Spacing",
   "@reportLineSpacer": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLineText": "Text",
-  "@reportLineText": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportLineTitle": "Title",
@@ -31795,10 +30939,6 @@
   "reportTextsInherited": "Default language",
   "@reportTextsInherited": {
     "description": "#880 report texts: reportTextsInherited"
-  },
-  "reportTextsKey": "Key",
-  "@reportTextsKey": {
-    "description": "#880 report texts: reportTextsKey"
   },
   "reportTextsKeyExists": "This key already exists.",
   "@reportTextsKeyExists": {
@@ -32017,10 +31157,6 @@
   "@reserveParkingStandard": {
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
-  "reservePickDateTooltip": "Choose a date",
-  "@reservePickDateTooltip": {
-    "description": "Tooltip of the calendar icon at the end of the Reserve hub's date strip, opening a date picker for days beyond the pills (#208)"
-  },
   "reservePlanLoading": "Loading the plan…",
   "@reservePlanLoading": {
     "description": "#3068 the label of the plan skeleton on Reserve"
@@ -32078,10 +31214,6 @@
   },
   "retentionClassCorrespondence": "Correspondence",
   "@retentionClassCorrespondence": {
-    "description": "#2571 retention clocks"
-  },
-  "retentionClassInvoice": "Invoices",
-  "@retentionClassInvoice": {
     "description": "#2571 retention clocks"
   },
   "retentionClassVoucher": "Vouchers",
@@ -32463,10 +31595,6 @@
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
-  "roleEditorKey": "Key",
-  "@roleEditorKey": {
-    "description": "#1528 the roles of a space: roleEditorKey"
-  },
   "roleEditorKeyHelp": "Lower-case letters, digits and underscores. It never changes: the people who hold the role point at it.",
   "@roleEditorKeyHelp": {
     "description": "#1528 the roles of a space: roleEditorKeyHelp"
@@ -32693,10 +31821,6 @@
   "@roomRentFieldFee": {
     "description": "#2568 rented rooms"
   },
-  "roomRentFieldFrom": "First day",
-  "@roomRentFieldFrom": {
-    "description": "#2568 rented rooms"
-  },
   "roomRentFieldLessor": "Lessor",
   "@roomRentFieldLessor": {
     "description": "#2568 rented rooms"
@@ -32768,10 +31892,6 @@
   },
   "roomRentRent": "Rent this room",
   "@roomRentRent": {
-    "description": "#2568 rented rooms"
-  },
-  "roomRentSave": "Save",
-  "@roomRentSave": {
     "description": "#2568 rented rooms"
   },
   "roomRentSaved": "Rental saved",
@@ -32869,14 +31989,6 @@
   },
   "saftSmallBusinessLabel": "Small business (§ 6 (1) Z 27 UStG)",
   "@saftSmallBusinessLabel": {
-    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
-  },
-  "saftSmallBusinessNo": "No",
-  "@saftSmallBusinessNo": {
-    "description": "#2379 the Austrian SAF-T AT header facts asked at export"
-  },
-  "saftSmallBusinessYes": "Yes",
-  "@saftSmallBusinessYes": {
     "description": "#2379 the Austrian SAF-T AT header facts asked at export"
   },
   "saftStandardAccountsIntro": "Confirm the account of the Austrian standard chart (Einheitskontenrahmen) each book account is written under. A suggestion comes from the account's role; check it: not every account of a role belongs on the same standard account.",
@@ -33201,10 +32313,6 @@
   "@schemaUpdateOperator": {
     "description": "#1312 What the person running the server should do; the command stays untranslated"
   },
-  "schemaUpdateRetry": "Check again",
-  "@schemaUpdateRetry": {
-    "description": "#1312 Button that asks the server its version again"
-  },
   "schemaUpdateServer": "Server settings",
   "@schemaUpdateServer": {
     "description": "#1312 Button opening Settings → Server"
@@ -33348,10 +32456,6 @@
   "serviceOutOfStock": "Out of stock",
   "@serviceOutOfStock": {
     "description": "Shown as a text in services screen (money), and 1 other place."
-  },
-  "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
-  "@serviceOutOfStockHint": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "serviceStockCount": "{count} in stock",
   "@serviceStockCount": {
@@ -34145,10 +33249,6 @@
       }
     }
   },
-  "settingSave": "Save",
-  "@settingSave": {
-    "description": "#2484 settings: Save button."
-  },
   "settingSaved": "Setting saved",
   "@settingSaved": {
     "description": "#2484 settings: Snackbar."
@@ -34236,10 +33336,6 @@
   "settingUnitYears": "years",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
-  },
-  "settingValueField": "Value",
-  "@settingValueField": {
-    "description": "#2484 settings: Field label."
   },
   "settingVersionLine": "{value} {unit} · from {from}",
   "@settingVersionLine": {
@@ -35403,10 +34499,6 @@
   "@setupLevelNameCommunityOrganised": {
     "description": "#3485 setupLevelName: the label for case 'community_organised'."
   },
-  "setupLevelNameMoneyInvoices": "Invoices",
-  "@setupLevelNameMoneyInvoices": {
-    "description": "#3485 setupLevelName: the label for case 'money_invoices'."
-  },
   "setupLevelNameMoneyNone": "No money",
   "@setupLevelNameMoneyNone": {
     "description": "#3485 setupLevelName: the label for case 'money_none'."
@@ -36068,14 +35160,6 @@
       }
     }
   },
-  "setupProcessNameAssistant": "Assistant",
-  "@setupProcessNameAssistant": {
-    "description": "#3485 setupProcessName: the label for case 'assistant'."
-  },
-  "setupProcessNameBookings": "Bookings",
-  "@setupProcessNameBookings": {
-    "description": "#3485 setupProcessName: the label for case 'bookings'."
-  },
   "setupProcessNameCommunity": "Community",
   "@setupProcessNameCommunity": {
     "description": "#3485 setupProcessName: the label for case 'community'."
@@ -36087,10 +35171,6 @@
   "setupProcessNameOperations": "Operations",
   "@setupProcessNameOperations": {
     "description": "#3485 setupProcessName: the label for case 'operations'."
-  },
-  "setupProcessNamePayments": "Payments",
-  "@setupProcessNamePayments": {
-    "description": "#3485 setupProcessName: the label for case 'payments'."
   },
   "setupProcessNamePresentation": "Presentation",
   "@setupProcessNamePresentation": {
@@ -36341,10 +35421,6 @@
   "@setupStateNameReady": {
     "description": "#3485 setupStateName: the label for case 'ready'."
   },
-  "setupStateNameUnknown": "Unknown",
-  "@setupStateNameUnknown": {
-    "description": "#3485 setupStateName: the label for case 'unknown'."
-  },
   "setupStepDone": "Done",
   "@setupStepDone": {
     "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."
@@ -36537,10 +35613,6 @@
   "@setupStepTitleLegalIdentity": {
     "description": "#3485 setupStepTitle: the label for case 'legal_identity'."
   },
-  "setupStepTitleLimits": "Booking limits",
-  "@setupStepTitleLimits": {
-    "description": "#3485 setupStepTitle: the label for case 'limits'."
-  },
   "setupStepTitleLook": "Colours and wording",
   "@setupStepTitleLook": {
     "description": "#3485 setupStepTitle: the label for case 'look'."
@@ -36705,10 +35777,6 @@
   "sitesSubtitle": "Addresses, the levels at each, and who calls which home",
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
-  },
-  "sitesTitle": "Sites",
-  "@sitesTitle": {
-    "description": "#945 sites: sitesTitle"
   },
   "smallBusinessCheckFigure": "This limit is the last one verified: check the current figure with your tax office.",
   "@smallBusinessCheckFigure": {
@@ -37199,10 +36267,6 @@
   "@supplierLookupContinueManually": {
     "description": "#2863 supplier lookup"
   },
-  "supplierLookupCountry": "Country",
-  "@supplierLookupCountry": {
-    "description": "#2863 supplier lookup"
-  },
   "supplierLookupCountryMissing": "Choose the supplier's country.",
   "@supplierLookupCountryMissing": {
     "description": "#2863 supplier lookup"
@@ -37467,10 +36531,6 @@
   "@suppliersFieldPostalCode": {
     "description": "#2567 suppliers"
   },
-  "suppliersFieldStreet": "Street",
-  "@suppliersFieldStreet": {
-    "description": "#2567 suppliers"
-  },
   "suppliersFieldTaxId": "Tax identifier (VAT number with country prefix)",
   "@suppliersFieldTaxId": {
     "description": "#2567 suppliers"
@@ -37601,10 +36661,6 @@
   },
   "suppliersTaxVerified": "Tax identifier verified",
   "@suppliersTaxVerified": {
-    "description": "#2567 suppliers"
-  },
-  "suppliersTitle": "Suppliers",
-  "@suppliersTitle": {
     "description": "#2567 suppliers"
   },
   "suppliersViewPayables": "View supplier payables",
@@ -37839,17 +36895,9 @@
       }
     }
   },
-  "taskExportFieldAccessories": "Accessories",
-  "@taskExportFieldAccessories": {
-    "description": "#1866 task export (Word document): FieldAccessories"
-  },
   "taskExportFieldCheckIn": "Check in",
   "@taskExportFieldCheckIn": {
     "description": "#1866 task export (Word document): FieldCheckIn"
-  },
-  "taskExportFieldDateRelation": "Date",
-  "@taskExportFieldDateRelation": {
-    "description": "#1866 task export (Word document): FieldDateRelation"
   },
   "taskExportFieldForWhom": "For whom",
   "@taskExportFieldForWhom": {
@@ -38115,10 +37163,6 @@
   "@taskExportSceneBookingTitle": {
     "description": "#1876 storyboard and illustrations: SceneBookingTitle"
   },
-  "taskExportSceneCancel": "Cancel",
-  "@taskExportSceneCancel": {
-    "description": "#1876 storyboard and illustrations: SceneCancel"
-  },
   "taskExportSceneConfirm": "Confirm",
   "@taskExportSceneConfirm": {
     "description": "#1876 storyboard and illustrations: SceneConfirm"
@@ -38170,14 +37214,6 @@
   "taskExportStoryboardLeftOut": "Step left out by the reviewer.",
   "@taskExportStoryboardLeftOut": {
     "description": "#1876 storyboard and illustrations: StoryboardLeftOut"
-  },
-  "taskExportStoryboardMoveDown": "Move down",
-  "@taskExportStoryboardMoveDown": {
-    "description": "#1876 storyboard and illustrations: StoryboardMoveDown"
-  },
-  "taskExportStoryboardMoveUp": "Move up",
-  "@taskExportStoryboardMoveUp": {
-    "description": "#1876 storyboard and illustrations: StoryboardMoveUp"
   },
   "taskExportStoryboardOrderRefused": "A result cannot come before the command it answers.",
   "@taskExportStoryboardOrderRefused": {
@@ -38884,10 +37920,6 @@
   "@taskRecorderPause": {
     "description": "#1865 task recorder: taskRecorderPause"
   },
-  "taskRecorderPaused": "Paused",
-  "@taskRecorderPaused": {
-    "description": "#1865 task recorder: taskRecorderPaused"
-  },
   "taskRecorderProtectedAuthentication": "sign-in",
   "@taskRecorderProtectedAuthentication": {
     "description": "#1865 task recorder: taskRecorderProtectedAuthentication"
@@ -39525,10 +38557,6 @@
       }
     }
   },
-  "taxCertRequired": "Required",
-  "@taxCertRequired": {
-    "description": "#2362 sales tax: taxCertRequired"
-  },
   "taxCertSave": "Save certificate",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"
@@ -39784,10 +38812,6 @@
   "taxRefInvoiceOption": "Option for the invoice date",
   "@taxRefInvoiceOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
-  },
-  "taxRefKey": "Key",
-  "@taxRefKey": {
-    "description": "#2477 tax reference: Field: key naming a value within a country."
   },
   "taxRefLabel": "Label",
   "@taxRefLabel": {
@@ -40552,10 +39576,6 @@
   "@unblockAction": {
     "description": "Shown as a text in blocked people card (me)."
   },
-  "unblockDone": "Unblocked.",
-  "@unblockDone": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "unsavedChangesBody": "What you changed on this page is not saved yet.",
   "@unsavedChangesBody": {
     "description": "#3072 body of the leave-with-unsaved-changes question"
@@ -41002,10 +40022,6 @@
   "@validationOwnerSelfShort": {
     "description": "#840 - summary chip when the owner exception is on"
   },
-  "validationPickPersons": "Pick the persons",
-  "@validationPickPersons": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "validationRequiredCount": "Required validations",
   "@validationRequiredCount": {
     "description": "Label of the 1–10 stepper for how many accepts confirm a pending event; also prefixes the count in the card summary"
@@ -41119,10 +40135,6 @@
   "validationTrailTitle": "Validation trail",
   "@validationTrailTitle": {
     "description": "#841 - heading of the ordered decision trail on a document"
-  },
-  "validationWorkflowBookings": "Bookings",
-  "@validationWorkflowBookings": {
-    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
   },
   "validationWorkflowBookingsStake": "Until it is accepted, the seat stays as it was.",
   "@validationWorkflowBookingsStake": {
@@ -41516,10 +40528,6 @@
   "@valuationTitle": {
     "description": "#2576 accountant valuations"
   },
-  "valuationUnknown": "unknown",
-  "@valuationUnknown": {
-    "description": "#2576 accountant valuations"
-  },
   "vatAccountField": "VAT account",
   "@vatAccountField": {
     "description": "FEC account for collected VAT"
@@ -41621,10 +40629,6 @@
   "vatDeclDisclaimer": "Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
-  },
-  "vatDeclDraft": "Draft",
-  "@vatDeclDraft": {
-    "description": "Draft status chip"
   },
   "vatDeclEdiTva": "EDI-TVA file (CA3)",
   "@vatDeclEdiTva": {
@@ -41729,10 +40733,6 @@
   "vatDeclInputVat": "Deductible VAT",
   "@vatDeclInputVat": {
     "description": "#2357 input VAT: vatDeclInputVat"
-  },
-  "vatDeclInvoices": "Invoices",
-  "@vatDeclInvoices": {
-    "description": "Invoice-count column"
   },
   "vatDeclLipeXml": "LIPE XML (periodic VAT settlement)",
   "@vatDeclLipeXml": {
@@ -41910,10 +40910,6 @@
   "vatGroupIntermediate": "Intermediate",
   "@vatGroupIntermediate": {
     "description": "#947 VAT groups: vatGroupIntermediate"
-  },
-  "vatGroupLabel": "Group",
-  "@vatGroupLabel": {
-    "description": "#947 VAT groups: vatGroupLabel"
   },
   "vatGroupNotSubject": "Not subject",
   "@vatGroupNotSubject": {
@@ -42687,10 +41683,6 @@
   "@wizardBack": {
     "description": "Shown as a button or chip label in wizard scaffold (core)."
   },
-  "wizardCardHint": "Issue, send, remind, register and validate payments, match and close — one guided process.",
-  "@wizardCardHint": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "wizardCloseHint": "A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.",
   "@wizardCloseHint": {
     "description": "Shown as a text in wizard steps payments (money)."
@@ -42737,10 +41729,6 @@
         "type": "String"
       }
     }
-  },
-  "wizardMatchAction": "Match",
-  "@wizardMatchAction": {
-    "description": "Shown as a text in wizard steps payments (money)."
   },
   "wizardMatchCredit": "Credit available: {amount}",
   "@wizardMatchCredit": {
@@ -42903,14 +41891,6 @@
   "@wizardStepIssue": {
     "description": "Shown as a text in wizard context (money)."
   },
-  "wizardStepMatch": "Match",
-  "@wizardStepMatch": {
-    "description": "Shown as a text in wizard context (money)."
-  },
-  "wizardStepPayments": "Payments",
-  "@wizardStepPayments": {
-    "description": "Shown as a text in wizard context (money)."
-  },
   "wizardStepRemind": "Remind",
   "@wizardStepRemind": {
     "description": "Shown as a text in wizard context (money)."
@@ -42997,10 +41977,6 @@
   },
   "wizardWhoValidators": "Validators",
   "@wizardWhoValidators": {
-    "description": "Shown as a text in wizard steps payments (money)."
-  },
-  "wizardWhoYou": "You",
-  "@wizardWhoYou": {
     "description": "Shown as a text in wizard steps payments (money)."
   },
   "wizardWriteoff": "Write off",
@@ -43170,10 +42146,6 @@
   "workspaceCodeTitle": "Workspace ID & QR",
   "@workspaceCodeTitle": {
     "description": "Owner screen + settings entry: workspace ID with QR (#88)"
-  },
-  "workspaceConfigAvailability": "Availability",
-  "@workspaceConfigAvailability": {
-    "description": "Configuration PDF section: open weekdays and closure days."
   },
   "workspaceConfigBookableWhole": "bookable as a whole",
   "@workspaceConfigBookableWhole": {

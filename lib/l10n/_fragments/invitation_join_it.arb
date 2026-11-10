@@ -34,6 +34,5 @@
   "pendingLastChecked": "Ultimo controllo {time}",
   "pendingNotUpdated": "Stato non aggiornato — server non raggiungibile. La sua richiesta resta invariata.",
   "pendingStillWaiting": "Ancora in attesa di approvazione.",
-  "pendingSwitchWorkspace": "Cambia spazio",
   "pendingHelp": "Aiuto"
 }

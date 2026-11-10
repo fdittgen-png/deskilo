@@ -5,7 +5,6 @@
   "moneyUsageUnlimited": "{used} medias jornadas usadas",
   "moneyOverage": "{count, plural, =1{Exceso (1 media jornada extra)} other{Exceso ({count} medias jornadas extra)}}",
   "moneyCredits": "Pagos y créditos",
-  "moneyBalance": "Saldo",
   "moneyStatementSettled": "Al día",
   "moneyStatementOpen": "Pendiente",
   "moneyRecordPayment": "Registrar un pago",
@@ -18,9 +17,7 @@
   "ledgerCategorySubscription": "Suscripción",
   "ledgerCategoryOverage": "Exceso",
   "ledgerCategoryExpense": "Reembolso de gasto",
-  "ledgerCategoryPayment": "Pago",
   "ledgerCategoryAdjustment": "Ajuste",
-  "ledgerCategoryService": "Servicio",
   "moneySubmitExpense": "Enviar un gasto",
   "moneyExpenseCategoryLabel": "Categoría",
   "moneyDescriptionLabel": "Descripción",
@@ -97,10 +94,6 @@
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
-  "vatDeclInvoices": "Facturas",
-  "@vatDeclInvoices": {
-    "description": "Invoice-count column"
-  },
   "vatDeclTotals": "Totales",
   "@vatDeclTotals": {
     "description": "Totals row"
@@ -128,10 +121,6 @@
   "vatDeclEmpty": "Aún no hay declaraciones — elija un periodo y genere la primera.",
   "@vatDeclEmpty": {
     "description": "Empty state of the declarations list"
-  },
-  "vatDeclDraft": "Borrador",
-  "@vatDeclDraft": {
-    "description": "Draft status chip"
   },
   "vatDeclPrepared": "Preparada",
   "@vatDeclPrepared": {
@@ -281,10 +270,7 @@
   "@paymentCopied": {
     "description": "#711 - globalization"
   },
-  "moneyFacePayments": "Pagos",
-  "moneyFaceInvoices": "Facturas",
   "moneyNoInvoicesYet": "Aún no hay factura — el espacio factura el mes una vez cerrado.",
-  "moneyFaceStatement": "Extracto",
   "moneyFaceDocuments": "Documentos",
   "moneyOverdueBanner": "{count} vencidas — {amount} por liquidar",
   "moneyPayNow": "Pagar ahora",
@@ -293,19 +279,16 @@
   "moneyDueIn": "Vence en {days} días",
   "moneyOverdueBy": "Vencida hace {days} días",
   "moneyNothingOpen": "Nada abierto — está al día.",
-  "moneyDocumentLibrary": "Biblioteca de documentos",
   "moneyStatementPdf": "Extracto del mes (PDF)",
   "moneyRemindedTimes": "Recordada ×{count}",
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyHint": "Cápsulas de café, bolsas de aspiradora… Una vez validado, el artículo pasa al estante como servicio consumible: quien lo usa lo paga.",
   "expenseSupplyItem": "Artículo",
   "expenseSupplyNewItem": "Artículo nuevo",
-  "expenseSupplyQuantity": "Cantidad",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
   "serviceStockCount": "{count} en stock",
   "serviceOutOfStock": "Agotado",
-  "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone.",
   "negotiationCardTitle": "Mis precios negociados",
   "negotiationOnTariff": "Está en la tarifa del espacio.",
   "negotiationPending": "Unas condiciones esperan validación.",
@@ -318,8 +301,6 @@
   "negotiationWhoCanSee": "Quién puede verlo",
   "negotiationProposeTitle": "Negociación de precios",
   "negotiationProposeHint": "Deje un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.",
-  "negotiationNote": "Nota",
-  "negotiationValidFrom": "Se aplica desde",
   "negotiationSubmit": "Proponer para validación",
   "negotiationProposed": "Condiciones propuestas — pendientes de validación.",
   "negotiationPendingBadge": "pendiente de validación",
@@ -381,7 +362,6 @@
   "moneySectionPurchases": "Compras y contabilidad",
   "hubPurchasesTitle": "Compras",
   "hubPurchasesSubtitle": "Lo que el espacio compra y debe: gastos, facturas de proveedores, proveedores, arrendamiento, equipos",
-  "hubSalesTitle": "Ventas",
   "hubSalesSubtitle": "Lo que el espacio vende y factura: servicios, facturas, facturación",
   "hubCashTitle": "Tesorería",
   "hubCashSubtitle": "Entradas y salidas registradas, y lo que queda por pagar",

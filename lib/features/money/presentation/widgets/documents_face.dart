@@ -65,7 +65,7 @@ class DocumentsFaceActions extends StatelessWidget {
           key: const ValueKey('document-library-button'),
           onPressed: () => context.push('/documents'),
           icon: const Icon(Icons.folder_open_outlined),
-          label: fittedLabel(l10n.moneyDocumentLibrary),
+          label: fittedLabel(l10n.featureDocuments),
         ),
     ];
     return Column(

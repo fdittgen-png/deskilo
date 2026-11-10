@@ -190,7 +190,6 @@
   "instanceRevokeToken": "Sie können das Zugriffstoken jetzt widerrufen: DesKilo hat keine Kopie behalten.",
   "instanceDoctorIntro": "Bevor dieses Gerät sie nutzt, muss die Sicherheitsprüfung bestehen: ein Alarm hält die Schaltfläche gesperrt, bis er behoben ist.",
   "instanceDoctorRun": "Sicherheitsprüfung starten",
-  "instanceDoctorRunAgain": "Erneut prüfen",
   "instanceDoctorProtected": "Geschützt",
   "instanceDoctorAttention": "Handlungsbedarf",
   "instanceDoctorPassed": "{count, plural, =1{1 Prüfung bestanden} other{{count} Prüfungen bestanden}}"

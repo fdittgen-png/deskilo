@@ -1,22 +1,42 @@
 {
   "@@locale": "fr",
   "suppliersOutstanding": "Solde dû : {amount}",
-  "@suppliersOutstanding": {"description": "#3070 supplier outstanding balance", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersNoOutstanding": "Aucun solde dû",
-  "@suppliersNoOutstanding": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBalanceUnavailable": "Solde indisponible",
-  "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersViewPayables": "Voir les dettes fournisseur",
-  "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersPayablesUnavailable": "Dettes indisponibles",
-  "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
+  },
   "suppliersHeld": "En attente : {amount}",
-  "@suppliersHeld": {"description": "#3070 portion of the supplier balance on hold", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersLoadMore": "Charger plus",
-  "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
-  "suppliersTitle": "Fournisseurs",
-  "@suppliersTitle": {
-    "description": "#2567 suppliers"
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
   },
   "suppliersIntro": "Les bénéficiaires de vos achats. Un fournisseur est reconnu par un identifiant fiscal vérifié, jamais par son seul nom.",
   "@suppliersIntro": {
@@ -65,10 +85,6 @@
   },
   "suppliersFieldGroup": "C’est un identifiant de groupe TVA",
   "@suppliersFieldGroup": {
-    "description": "#2567 suppliers"
-  },
-  "suppliersFieldStreet": "Rue",
-  "@suppliersFieldStreet": {
     "description": "#2567 suppliers"
   },
   "suppliersFieldPostalCode": "Code postal",

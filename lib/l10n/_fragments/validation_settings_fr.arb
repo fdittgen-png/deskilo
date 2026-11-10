@@ -1,6 +1,5 @@
 {
   "@@locale": "fr",
-  "validationWorkflowBookings": "Réservations",
   "validationWorkflowPeople": "Personnes et rôles",
   "validationWorkflowMoneyStake": "Tant que ce n'est pas accepté, le montant ne compte sur aucun relevé.",
   "validationWorkflowBookingsStake": "Tant que ce n'est pas accepté, la place reste telle quelle.",

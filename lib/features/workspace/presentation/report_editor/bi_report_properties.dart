@@ -164,7 +164,7 @@ class _VisualProperties extends ConsumerWidget {
           BiSyncedField(
             key: ValueKey('bi-prop-text-$id'),
             value: visual.text ?? '',
-            label: l10n.biEditorText,
+            label: l10n.taxRefText,
             maxLength: BiReportVisual.maxText,
             maxLines: 4,
             onChanged: (t) {
@@ -337,7 +337,7 @@ class _Presentation extends StatelessWidget {
         toggle('note', l10n.biEditorSourceNoteToggle, value: style.note),
         BiChoiceField<String>(
           key: ValueKey('bi-prop-palette-$id'),
-          label: l10n.biEditorPalette,
+          label: l10n.coloursTitle,
           value: style.palette,
           choices: BiVisualStyle.palettes.toList(),
           name: (p) => switch (p) {

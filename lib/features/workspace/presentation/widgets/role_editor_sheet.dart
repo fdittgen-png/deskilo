@@ -125,7 +125,7 @@ class _RoleEditorSheetState extends State<RoleEditorSheet> {
                   controller: _key,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: l10n.roleEditorKey,
+                    labelText: l10n.repartitionWeight,
                     helperText: l10n.roleEditorKeyHelp,
                     helperMaxLines: 3,
                   ),

@@ -16,10 +16,6 @@
   "@assistantSetupAllDone": {
     "description": "#1827 Assistant setup: assistantSetupAllDone"
   },
-  "assistantSetupSaved": "Saved.",
-  "@assistantSetupSaved": {
-    "description": "#1827 Assistant setup: assistantSetupSaved"
-  },
   "assistantSetupStale": "Someone changed the offer meanwhile. Review it and try again.",
   "@assistantSetupStale": {
     "description": "#1827 Assistant setup: assistantSetupStale"

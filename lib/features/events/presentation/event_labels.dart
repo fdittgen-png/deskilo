@@ -62,7 +62,7 @@ String notificationCategoryLabel(
 ) {
   return switch (category) {
     NotificationCategory.messages =>
-      l10n.eventsMessagesHeader,
+      l10n.messagesTitle,
     NotificationCategory.reservations =>
       l10n.eventTypeReservation,
     NotificationCategory.checkIns =>

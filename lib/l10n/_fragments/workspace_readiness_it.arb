@@ -52,7 +52,6 @@
   "readinessReasonNoEvidence": "Nessuna esportazione o ripristino registrato",
   "readinessReasonRecentExport": "È registrata un’esportazione recente",
   "readinessReasonStaleExport": "L’ultima esportazione registrata è precedente alla finestra dell’esportazione recente",
-  "readinessActorOwner": "Lei",
   "readinessActorOperator": "L’operatore del server",
   "readinessActor": "Chi: {who}",
   "readinessAreaAssistant": "Accesso degli assistenti (facoltativo)",

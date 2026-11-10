@@ -4,10 +4,6 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTabToPay": "Zu zahlen",
-  "@purchasesTabToPay": {
-    "description": "#2574 purchase payables"
-  },
   "purchasesToPayIntro": "Was der Space für genehmigte Einkäufe noch schuldet. Der Anspruch eines Mitglieds ist die Gutschrift, die sein genehmigter Beleg bereits gebucht hat; sie gilt als angewendet, sobald eine Rechnung sie enthält. Zahlungen und Verrechnungen folgen in einem späteren Schritt.",
   "@purchasesToPayIntro": {
     "description": "#2574 purchase payables"
@@ -22,10 +18,6 @@
   },
   "purchasesOwedEmpty": "Hier ist nichts offen.",
   "@purchasesOwedEmpty": {
-    "description": "#2574 purchase payables"
-  },
-  "purchasesClaimYou": "Sie",
-  "@purchasesClaimYou": {
     "description": "#2574 purchase payables"
   },
   "purchasesClaimOwedTo": "Geschuldet an {name}",

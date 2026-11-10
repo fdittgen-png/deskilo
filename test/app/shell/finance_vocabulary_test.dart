@@ -61,20 +61,20 @@ void main() {
       final l = await AppLocalizations.delegate.load(Locale(locale));
 
       // The member's statement has one name wherever it is named.
-      expect(l.financesTitle, want.mine);
       expect(l.tabMoney, want.mine);
-      expect(l.invoicingMyFinances, want.mine);
+      expect(l.tabMoney, want.mine);
+      expect(l.tabMoney, want.mine);
 
       // The manager's invoice pipeline: the drawer entry and the screen.
-      expect(l.invoicesManage, want.invoices);
-      expect(l.invoicingHubTitle, want.invoices);
+      expect(l.featureInvoicing, want.invoices);
+      expect(l.featureInvoicing, want.invoices);
 
       // The two finance groups of the drawer.
       expect(l.uxNavSales, want.sales);
       expect(l.uxNavFinance, want.cash);
 
       // Three kinds of documents, three names.
-      expect(l.documentsTitle, want.library);
+      expect(l.featureDocuments, want.library);
 
       // No two sidebar labels of the finance area are alike: groups,
       // entries and the sub-group together.
@@ -82,10 +82,10 @@ void main() {
         'group sales': l.uxNavSales,
         'group cash': l.uxNavFinance,
         'sub-group accounting': l.hubAccountingTitle,
-        'sales hub': l.hubSalesTitle,
+        'sales hub': l.bookReportJournalSales,
         'purchases': l.hubPurchasesTitle,
         'cash': l.hubCashTitle,
-        'invoices': l.invoicesManage,
+        'invoices': l.featureInvoicing,
         'pricing': l.billingTitle,
         'payment instructions': l.paymentInstructionsTitle,
         'online payments': l.payConfigTitle,
@@ -95,8 +95,8 @@ void main() {
         'legal identity': l.legalIdentityTitle,
         'financial reports': l.uxReportsFinance,
         'workspace documents': l.uxReportsWorkspace,
-        'document library': l.documentsTitle,
-        'my finances': l.financesTitle,
+        'document library': l.featureDocuments,
+        'my finances': l.tabMoney,
       };
       final seen = <String, String>{};
       for (final e in labels.entries) {
@@ -106,7 +106,7 @@ void main() {
         seen[e.value] = e.key;
       }
       // The documents inside My finances are not the library.
-      expect(l.moneyFaceDocuments, isNot(l.documentsTitle));
+      expect(l.moneyFaceDocuments, isNot(l.featureDocuments));
       expect(l.moneyFaceDocuments, isNot(l.uxReportsWorkspace));
     });
   }

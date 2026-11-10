@@ -8,10 +8,6 @@
   "@featureMultiSiteDesc": {
     "description": "#945 sites: featureMultiSiteDesc"
   },
-  "sitesTitle": "Sites",
-  "@sitesTitle": {
-    "description": "#945 sites: sitesTitle"
-  },
   "sitesSubtitle": "Addresses, the levels at each, and who calls which home",
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"

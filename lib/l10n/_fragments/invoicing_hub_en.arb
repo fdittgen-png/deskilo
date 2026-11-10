@@ -1,8 +1,4 @@
 {
-  "invoicingHubTitle": "Invoices",
-  "@invoicingHubTitle": {
-    "description": "invoicing hub vs my finances"
-  },
   "myInvoicesTitle": "My invoices",
   "@myInvoicesTitle": {
     "description": "invoicing hub vs my finances"
@@ -13,10 +9,6 @@
   },
   "invoicingBanner": "You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.",
   "@invoicingBanner": {
-    "description": "invoicing hub vs my finances"
-  },
-  "invoicingMyFinances": "My finances",
-  "@invoicingMyFinances": {
     "description": "invoicing hub vs my finances"
   },
   "memberInvoicesBanner": "All your invoices and payments, from every workspace, are in Me › My finances.",

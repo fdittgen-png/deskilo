@@ -44,10 +44,6 @@
   "@mcpConnectOperatorRequest": {
     "description": "#2145 Connect an assistant: mcpConnectOperatorRequest"
   },
-  "mcpConnectCopied": "Copied.",
-  "@mcpConnectCopied": {
-    "description": "#2145 Connect an assistant: mcpConnectCopied"
-  },
   "mcpConnectStepGoogle": "Google sign-in",
   "@mcpConnectStepGoogle": {
     "description": "#2145 Connect an assistant: mcpConnectStepGoogle"

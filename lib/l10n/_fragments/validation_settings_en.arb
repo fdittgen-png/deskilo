@@ -1,9 +1,5 @@
 {
   "@@locale": "en",
-  "validationWorkflowBookings": "Bookings",
-  "@validationWorkflowBookings": {
-    "description": "#1221 the validation screen, grouped by the process a rule interrupts"
-  },
   "validationWorkflowPeople": "People and roles",
   "@validationWorkflowPeople": {
     "description": "#1221 the validation screen, grouped by the process a rule interrupts"

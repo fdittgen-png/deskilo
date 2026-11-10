@@ -23,10 +23,6 @@
   "@carnetHalfDays": {
     "description": "#1279 carnets: carnetHalfDays"
   },
-  "carnetPrice": "Price",
-  "@carnetPrice": {
-    "description": "#1279 carnets: carnetPrice"
-  },
   "carnetValidity": "Valid for (months, empty = never expires)",
   "@carnetValidity": {
     "description": "#1279 carnets: carnetValidity"

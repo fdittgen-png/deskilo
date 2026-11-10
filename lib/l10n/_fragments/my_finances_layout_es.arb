@@ -1,7 +1,6 @@
 {
   "@@locale": "es",
   "financesStateUnpaid": "No pagada",
-  "financesTypeInvoice": "Factura",
   "financesTypeCreditNote": "Nota de crédito",
   "financesTypeAll": "Todos los documentos",
   "financesPeriodAll": "Todos los periodos",

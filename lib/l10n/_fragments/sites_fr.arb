@@ -8,10 +8,6 @@
   "@featureMultiSiteDesc": {
     "description": "#945 sites: featureMultiSiteDesc"
   },
-  "sitesTitle": "Sites",
-  "@sitesTitle": {
-    "description": "#945 sites: sitesTitle"
-  },
   "sitesSubtitle": "Adresses, étages de chaque site, et site de rattachement de chacun",
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"

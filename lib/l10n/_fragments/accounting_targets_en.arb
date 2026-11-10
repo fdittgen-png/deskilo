@@ -299,10 +299,6 @@
   "@acctMapRemoteName": {
     "description": "#2370 Mapping dialog field: the name in the system, optional."
   },
-  "acctKindInvoice": "Invoice",
-  "@acctKindInvoice": {
-    "description": "#2370 Transfers list: the kind of document event a line carried."
-  },
   "acctKindCreditNote": "Credit note",
   "@acctKindCreditNote": {
     "description": "#2370 Transfers list: the kind of document event a line carried."

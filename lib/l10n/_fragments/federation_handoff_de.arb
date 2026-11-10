@@ -8,7 +8,6 @@
   "federationStageOpening": "Anmeldung wird geöffnet…",
   "federationStageWaiting": "Warten auf die Anmeldung im Browser…",
   "federationStageCompleting": "Anmeldung wird abgeschlossen…",
-  "federationCancel": "Abbrechen",
   "federationRetry": "Erneut versuchen",
   "federationClose": "Schließen",
   "federationActionExistingAccount": "Bei meinem bestehenden Konto anmelden",

@@ -377,7 +377,7 @@ class _BiReportPanelState extends ConsumerState<BiReportPanel> {
                   onPressed: _dirty && _visuals.isNotEmpty && !_conflict
                       ? _save
                       : null,
-                  child: Text(l10n.biViewSave),
+                  child: Text(l10n.commonSave),
                 ),
               ],
             ),

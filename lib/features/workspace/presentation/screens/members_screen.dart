@@ -373,7 +373,7 @@ class _MemberSheetTiles {
       MemberSheetAction.messages => (
         'members-action-messages-action',
         Icons.chat_outlined,
-        l10n.memberMessagesAction,
+        l10n.messagesTitle,
         () => openDirectConversation(context, ref, memberId: member.id),
       ),
       // New-member validation (0052): a pending membership offers the

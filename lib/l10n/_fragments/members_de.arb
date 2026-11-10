@@ -43,10 +43,6 @@
   "@noteRefWholeLevel": {
     "description": "Space picker: the level-as-a-whole entry suffix (#523)"
   },
-  "memberMessagesAction": "Nachrichten",
-  "@memberMessagesAction": {
-    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
-  },
   "conversationEmpty": "Noch keine Nachrichten — sagen Sie hallo!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
@@ -59,20 +55,12 @@
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
   },
-  "conversationGroup": "Gruppe",
-  "@conversationGroup": {
-    "description": "#687 - messaging centre"
-  },
   "conversationUnknownMember": "Mitglied",
   "@conversationUnknownMember": {
     "description": "#687 - messaging centre"
   },
   "conversationYesterday": "Gestern",
   "@conversationYesterday": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationYou": "Sie",
-  "@conversationYou": {
     "description": "#687 - messaging centre"
   },
   "messagesTitle": "Nachrichten",
@@ -108,16 +96,8 @@
   "@newConversationNoMembers": {
     "description": "#687 - messaging centre"
   },
-  "newGroupName": "Gruppenname",
-  "@newGroupName": {
-    "description": "#687 - messaging centre"
-  },
   "newGroupCreate": "Gruppe erstellen",
   "@newGroupCreate": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationGroupInfo": "Gruppe",
-  "@conversationGroupInfo": {
     "description": "#687 - messaging centre"
   },
   "conversationAddPeople": "Mitglieder hinzufügen",
@@ -164,10 +144,6 @@
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
   },
-  "messageSearchMessages": "Nachrichten",
-  "@messageSearchMessages": {
-    "description": "#687 - messaging search"
-  },
   "messageSearchTitle": "Suchen",
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
@@ -199,10 +175,6 @@
   },
   "memberMonthInProgress": "Dieser Monat",
   "@memberMonthInProgress": {
-    "description": "#704 - the money section of a member profile"
-  },
-  "memberPayments": "Zahlungen",
-  "@memberPayments": {
     "description": "#704 - the money section of a member profile"
   },
   "memberInvoiceOpen": "{amount} offen",
@@ -252,8 +224,6 @@
   "conversationMarkUnread": "Als ungelesen markieren",
   "conversationArchive": "Archivieren",
   "conversationUnarchive": "Aus dem Archiv holen",
-  "conversationArchived": "Unterhaltung archiviert.",
-  "conversationMutedBadge": "Stumm",
   "conversationLoadEarlier": "Frühere Nachrichten laden",
   "conversationToday": "Heute",
   "composerAttach": "Verweis anhängen",
@@ -265,10 +235,6 @@
       }
     }
   },
-  "composerDraftKept": "Entwurf behalten",
-  "newConversationTapToOpen": "Tippen Sie auf eine Person, um den Chat zu öffnen; schalten Sie Gruppe ein, um mehrere zu wählen.",
-  "newConversationGroupSwitch": "Gruppe",
-  "inboxRetry": "Erneut versuchen",
   "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
   "memberNoteDeleteNotMine": "Nur der Absender kann eine Nachricht zurücknehmen.",
   "noteRefFilterLabel": "Filtern",
@@ -276,8 +242,6 @@
   "noteRefFilterEmpty": "Keine Treffer.",
   "noteRefAlert": "Hinweis",
   "noteRefValidation": "Freigabe",
-  "noteRefInvoice": "Rechnung",
-  "noteRefPayment": "Zahlung",
   "noteRefRefund": "Erstattung",
   "noteRefPickAlert": "Welcher Hinweis?",
   "noteRefPickValidation": "Welche Freigabe?",
@@ -289,7 +253,6 @@
   "memberOriginFounder": "Hat diesen Raum gegründet",
   "memberOriginInvited": "Per Einladung beigetreten",
   "memberOriginDelegated": "Profil von einem Admin angelegt",
-  "memberOriginHeading": "Wie diese Mitgliedschaft begann",
   "inboxMessengerDoor": "Meine Nachrichten öffnen",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
@@ -312,14 +275,6 @@
   },
   "messengerCopy": "Text kopieren",
   "@messengerCopy": {
-    "description": "messenger: reactions, stars, edits"
-  },
-  "messengerCopied": "Kopiert.",
-  "@messengerCopied": {
-    "description": "messenger: reactions, stars, edits"
-  },
-  "messengerEdit": "Bearbeiten",
-  "@messengerEdit": {
     "description": "messenger: reactions, stars, edits"
   },
   "messengerEdited": "bearbeitet",
@@ -401,22 +356,6 @@
   "composerMention": "Jemanden erwähnen",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
-  },
-  "messengerContextGroup": "Gruppe",
-  "@messengerContextGroup": {
-    "description": "messenger: a group of people"
-  },
-  "groupNew": "Neue Gruppe",
-  "@groupNew": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNewTitle": "Neue Gruppe",
-  "@groupNewTitle": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupName": "Gruppenname",
-  "@groupName": {
-    "description": "messenger: creating a group of people"
   },
   "groupCreate": "Gruppe erstellen",
   "@groupCreate": {

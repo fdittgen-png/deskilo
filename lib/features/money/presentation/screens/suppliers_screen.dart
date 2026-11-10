@@ -43,8 +43,8 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
         (held.contains('viewFinances') || held.contains(purchaseManagePermission));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.suppliersTitle),
-        actions: [HelpDot(l10n.suppliersTitle, anchor: HelpAnchor.moneySupplierBalance)],
+        title: Text(l10n.bookRoleSuppliers),
+        actions: [HelpDot(l10n.bookRoleSuppliers, anchor: HelpAnchor.moneySupplierBalance)],
       ),
       body: workspace == null
           ? const SizedBox.shrink()

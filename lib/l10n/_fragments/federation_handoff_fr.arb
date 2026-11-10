@@ -8,7 +8,6 @@
   "federationStageOpening": "Ouverture de la connexion…",
   "federationStageWaiting": "En attente de la connexion dans votre navigateur…",
   "federationStageCompleting": "Finalisation de la connexion…",
-  "federationCancel": "Annuler",
   "federationRetry": "Réessayer",
   "federationClose": "Fermer",
   "federationActionExistingAccount": "Me connecter à mon compte existant",

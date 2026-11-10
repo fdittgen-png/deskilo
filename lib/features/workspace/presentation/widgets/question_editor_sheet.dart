@@ -223,7 +223,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                   controller: _key,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    labelText: l10n.questionEditorKey,
+                    labelText: l10n.repartitionWeight,
                     helperText: l10n.questionEditorKeyHelp,
                     helperMaxLines: 3,
                   ),

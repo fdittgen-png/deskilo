@@ -60,7 +60,6 @@
   "commonCancel": "Annuler",
   "commonSave": "Enregistrer",
   "commonDelete": "Supprimer",
-  "editorAccessoriesLabel": "Accessoires",
   "editorNoAccessories": "Aucun accessoire pour l'instant — ajoutez-les dans Réglages → Accessoires.",
   "editorSeatNfcLabel": "Tag NFC/RFID",
   "editorSeatNfcHelp": "UID du tag en hexadécimal — laisser vide pour aucun tag.",

@@ -20,10 +20,6 @@
   "@reportTextsAdd": {
     "description": "#880 report texts: reportTextsAdd"
   },
-  "reportTextsKey": "Key",
-  "@reportTextsKey": {
-    "description": "#880 report texts: reportTextsKey"
-  },
   "reportTextsKeyHint": "Letters, digits and underscores, e.g. greeting",
   "@reportTextsKeyHint": {
     "description": "#880 report texts: reportTextsKeyHint"

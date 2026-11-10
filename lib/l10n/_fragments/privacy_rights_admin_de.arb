@@ -2,7 +2,6 @@
   "@@locale": "de",
   "personalBirthday": "Geburtstag",
   "personalBirthdayHelp": "Nur Sie, Personen mit Einsicht in die persönlichen Daten der Mitglieder und die Datenschutzverantwortlichen des Arbeitsbereichs können es lesen. Wer nur Rechnungen stellt, kann es nicht.",
-  "personalBirthdayPick": "Datum wählen",
   "personalBirthdayClear": "Geburtstag entfernen",
   "personalBirthdaySaveFailed": "Ihre Angaben wurden gespeichert, der Geburtstag jedoch nicht.",
   "privacyAdminTitle": "Persönliche Daten und Rechteanfragen",
@@ -35,7 +34,6 @@
   "privacyAdminBasis": "Warum aufbewahrt",
   "privacyAdminPeriod": "Wie lange",
   "privacyAdminRefusalReason": "Grund der Ablehnung (mindestens 10 Zeichen)",
-  "privacyAdminSave": "Speichern",
   "privacyAdminActionFailed": "Der Server hat abgelehnt: {reason}",
   "@privacyAdminActionFailed": {
     "placeholders": {

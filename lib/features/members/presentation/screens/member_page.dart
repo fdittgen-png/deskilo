@@ -243,7 +243,7 @@ class _MemberPageBody extends ConsumerWidget {
             IconButton(
               key: const ValueKey('member-page-message'),
               icon: const Icon(Icons.chat_bubble_outline),
-              tooltip: l10n.memberMessagesAction,
+              tooltip: l10n.messagesTitle,
               onPressed: () =>
                   openDirectConversation(context, ref, memberId: member.id),
             ),
@@ -286,7 +286,7 @@ class _MemberPageBody extends ConsumerWidget {
           ),
           // #2085 — the one place a member is given a role.
           if (sections.contains(MemberPageSection.roles))
-            _MemberSection('roles', l10n.memberRolesTitle, [
+            _MemberSection('roles', l10n.rolesTitle, [
               MemberRolesCard(member: member, name: name),
             ], showHeading: false),
           if (groups.isNotEmpty)

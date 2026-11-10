@@ -68,10 +68,6 @@
   "@helpHintAvailability": {
     "description": "Shown as a text in help tips (core)."
   },
-  "helpHintAvailabilityTopic": "Availability",
-  "@helpHintAvailabilityTopic": {
-    "description": "Shown as a text in help tips (core), and 2 other places."
-  },
   "helpHintFeatures": "Switch workspace functionality on or off — every member's app follows immediately.",
   "@helpHintFeatures": {
     "description": "Shown as a text in help tips (core)."
@@ -139,10 +135,6 @@
   "@helpHintMoneyPayments": {
     "description": "Shown as a text in help tips (core)."
   },
-  "helpHintMoneyPaymentsTopic": "Payment",
-  "@helpHintMoneyPaymentsTopic": {
-    "description": "Shown as a text in help tips (core), and 1 other place."
-  },
   "helpHintMoneyPaymentsTip3Topic": "online payments",
   "@helpHintMoneyPaymentsTip3Topic": {
     "description": "Shown as the topic of a help symbol in payment config screen (money)."
@@ -151,16 +143,8 @@
   "@helpHintMoneyStatement": {
     "description": "Shown as a text in help tips (core)."
   },
-  "helpHintMoneyStatementTopic": "Statement",
-  "@helpHintMoneyStatementTopic": {
-    "description": "Shown as a text in help tips (core)."
-  },
   "helpHintMoneyInvoices": "Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.",
   "@helpHintMoneyInvoices": {
-    "description": "Shown as a text in help tips (core)."
-  },
-  "helpHintMoneyInvoicesTopic": "Invoices",
-  "@helpHintMoneyInvoicesTopic": {
     "description": "Shown as a text in help tips (core)."
   },
   "helpHintMoneyInvoicesTip2Topic": "Automatic payment reminders",
@@ -215,10 +199,6 @@
   "@helpTopicSettings": {
     "description": "Shown as a text in settings screen (profile), and 17 other places."
   },
-  "helpTopicKiosk": "Kiosk mode",
-  "@helpTopicKiosk": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "helpTopicBilling": "Billing",
   "@helpTopicBilling": {
     "description": "Shown as the topic of a help symbol in billing editor sections (money)."
@@ -226,10 +206,6 @@
   "helpTopicWorkingHours": "Working hours",
   "@helpTopicWorkingHours": {
     "description": "Shown as the topic of a help symbol in availability sections (workspace), and 1 other place."
-  },
-  "helpTopicBookingPolicies": "Booking policies",
-  "@helpTopicBookingPolicies": {
-    "description": "Shown as the topic of a help symbol in availability policies (workspace), and 3 other places."
   },
   "helpTopicBookingLimits": "Booking limits",
   "@helpTopicBookingLimits": {
@@ -242,14 +218,6 @@
   "helpTopicServer": "your own server",
   "@helpTopicServer": {
     "description": "Shown as the topic of a help symbol in server choice screen (profile), and 3 other places."
-  },
-  "helpTopicReportLayout": "Positioned layouts",
-  "@helpTopicReportLayout": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "helpTopicWindowEnvelope": "The window-envelope contract",
-  "@helpTopicWindowEnvelope": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "helpTopicTrace": "The trace",
   "@helpTopicTrace": {

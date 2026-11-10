@@ -65,9 +65,9 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                           value: kind,
                           child: Text(switch (kind) {
                             AccountActivityKind.invoices =>
-                              l10n.invoicesTitle,
+                              l10n.featureInvoicing,
                             AccountActivityKind.payments =>
-                              l10n.accountPaymentsTitle,
+                              l10n.invoicePdfPayments,
                             AccountActivityKind.usage =>
                               l10n.usageTitle,
                           }),

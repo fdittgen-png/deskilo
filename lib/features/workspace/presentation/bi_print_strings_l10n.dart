@@ -46,7 +46,7 @@ BiPrintStrings biPrintStringsOf(
       dateBasis: l10n.biPrintDateBasis,
       figures: l10n.biPrintFigures,
       currency: l10n.biPrintCurrency,
-      filters: l10n.biPrintFilters,
+      filters: l10n.refFilterMore,
       noFilters: l10n.biPrintNoFilters,
       computed: l10n.biPrintComputed,
       snapshot: l10n.biPrintSnapshot,

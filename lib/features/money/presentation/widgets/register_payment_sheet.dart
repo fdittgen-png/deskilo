@@ -187,7 +187,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     key: const ValueKey('register-payment-note'),
                     controller: _note,
                     decoration: InputDecoration(
-                        labelText: l10n.registerPaymentNote),
+                        labelText: l10n.invoiceMatchNoteLabel),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   FilledButton(

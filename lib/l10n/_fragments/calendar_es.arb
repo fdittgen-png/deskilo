@@ -88,18 +88,6 @@
   "@calendarKindEvent": {
     "description": "#718/#719 - calendar hub"
   },
-  "calendarKindMessage": "Mensajes",
-  "@calendarKindMessage": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindInvoice": "Facturas",
-  "@calendarKindInvoice": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindPayment": "Pagos",
-  "@calendarKindPayment": {
-    "description": "#718/#719 - calendar hub"
-  },
   "calendarKindConsumption": "Consumos",
   "@calendarKindConsumption": {
     "description": "#718/#719 - calendar hub"
@@ -173,7 +161,6 @@
   "accessRuleNegotiations": "Usted, los propietarios y los admins de finanzas: {people}. Cada lectura por otra persona queda registrada abajo.",
   "calendarViewAgenda": "Agenda",
   "calendarViewWeek": "Semana",
-  "calendarViewMonth": "Mes",
   "calendarToday": "Hoy",
   "calendarTomorrow": "Mañana",
   "calendarYesterday": "Ayer",

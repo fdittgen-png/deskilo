@@ -299,7 +299,7 @@ class _CreditsCard extends StatelessWidget {
         l10n.ledgerCategoryExpense,
       LedgerCategory.adjustment =>
         l10n.ledgerCategoryAdjustment,
-      _ => l10n.ledgerCategoryPayment,
+      _ => l10n.eventTypePayment,
     };
   }
 
@@ -361,7 +361,7 @@ class _BalanceFooter extends StatelessWidget {
         .titleMedium
         ?.copyWith(fontWeight: FontWeight.bold, color: color);
     final content = <Widget>[
-            Text(l10n.billBalance, style: prominent
+            Text(l10n.bookReportBalance, style: prominent
                 ? Theme.of(context).textTheme.titleMedium : style),
             Chip(
               label: Text(

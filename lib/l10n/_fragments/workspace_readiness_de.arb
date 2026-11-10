@@ -52,7 +52,6 @@
   "readinessReasonNoEvidence": "Noch kein Export und keine Wiederherstellung erfasst",
   "readinessReasonRecentExport": "Ein aktueller Export ist erfasst",
   "readinessReasonStaleExport": "Der letzte erfasste Export ist älter als das Zeitfenster für aktuelle Exporte",
-  "readinessActorOwner": "Sie",
   "readinessActorOperator": "Der Serverbetreiber",
   "readinessActor": "Wer: {who}",
   "readinessAreaAssistant": "Assistentenzugang (optional)",

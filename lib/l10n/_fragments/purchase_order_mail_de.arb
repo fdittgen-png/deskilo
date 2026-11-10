@@ -12,6 +12,5 @@
   "purchaseOrderMailSenderName": "Absendername",
   "purchaseOrderMailKey": "Resend-API-Schlüssel",
   "purchaseOrderMailKeyKept": "Ein Schlüssel ist gespeichert. Leer lassen, um ihn zu behalten; er wird nie wieder angezeigt.",
-  "purchaseOrderMailInvalid": "Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel",
-  "purchaseOrderMailSave": "Speichern"
+  "purchaseOrderMailInvalid": "Eine Absenderadresse, ein Name ohne < > oder Anführungszeichen und beim ersten Speichern der API-Schlüssel"
 }

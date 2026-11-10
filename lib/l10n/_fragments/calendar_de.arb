@@ -88,18 +88,6 @@
   "@calendarKindEvent": {
     "description": "#718/#719 - calendar hub"
   },
-  "calendarKindMessage": "Nachrichten",
-  "@calendarKindMessage": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindInvoice": "Rechnungen",
-  "@calendarKindInvoice": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindPayment": "Zahlungen",
-  "@calendarKindPayment": {
-    "description": "#718/#719 - calendar hub"
-  },
   "calendarKindConsumption": "Verbrauch",
   "@calendarKindConsumption": {
     "description": "#718/#719 - calendar hub"
@@ -173,7 +161,6 @@
   "accessRuleNegotiations": "Sie, die Inhaber und die Finanz-Admins: {people}. Jeder Zugriff durch jemand anderen steht unten im Protokoll.",
   "calendarViewAgenda": "Agenda",
   "calendarViewWeek": "Woche",
-  "calendarViewMonth": "Monat",
   "calendarToday": "Heute",
   "calendarTomorrow": "Morgen",
   "calendarYesterday": "Gestern",

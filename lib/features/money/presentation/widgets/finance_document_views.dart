@@ -36,7 +36,7 @@ String _paymentState(AppLocalizations l10n, FinanceState state) =>
       FinanceState.awaitingValidation => l10n.financesAwaitingValidation,
       FinanceState.partiallyPaid => l10n.financesPartlyPaid,
       FinanceState.paid => l10n.financesStatePaid,
-      FinanceState.refunded => l10n.financesStateRefunded,
+      FinanceState.refunded => l10n.refStatusRefunded,
       FinanceState.closed => l10n.financesStateClosed,
     };
 
@@ -210,7 +210,7 @@ class _FinanceDocument extends ConsumerWidget {
         _StateChip(
           invoice.isCreditNote
               ? l10n.financesTypeCreditNote
-              : l10n.financesTypeInvoice,
+              : l10n.invoicePdfTitle,
         ),
         _StateChip(_paymentState(l10n, invoice.state)),
         if (invoice.reminderCount > 0 && invoice.state.owed)

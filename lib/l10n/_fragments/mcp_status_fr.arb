@@ -21,7 +21,6 @@
   "mcpStateCurrent": "Donné",
   "mcpStateAvailable": "Joignable",
   "mcpStateIncompatible": "Version incompatible",
-  "mcpStateUnavailable": "Inconnu",
   "mcpNextLinkIdentity": "Prochaine étape : confirmez votre identité pour les assistants sur cette base — un geste ci-dessous.",
   "mcpNextRequestEligibility": "Prochaine étape : vous demandez l'approbation aux administrateurs de cette base de données.",
   "mcpNextAwaitEligibility": "Prochaine étape : un administrateur de la base de données statue sur votre demande.",

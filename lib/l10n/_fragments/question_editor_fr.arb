@@ -20,10 +20,6 @@
   "@questionsInactive": {
     "description": "#1288 the question editor: questionsInactive"
   },
-  "questionEditorKey": "Clé",
-  "@questionEditorKey": {
-    "description": "#1288 the question editor: questionEditorKey"
-  },
   "questionEditorKeyHelp": "Minuscules, chiffres et tirets bas. Elle ne change jamais : les réponses s'y rattachent.",
   "@questionEditorKeyHelp": {
     "description": "#1288 the question editor: questionEditorKeyHelp"

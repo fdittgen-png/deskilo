@@ -96,7 +96,7 @@ class VatDeclarationCard extends StatelessWidget {
           '${l10n.vatDeclVat} '
           '${centsToMajor(declaration.totalVatCents)} ${declaration.currency} · '
           '${declaration.invoiceCount} '
-          '${l10n.vatDeclInvoices}',
+          '${l10n.featureInvoicing}',
           style: theme.textTheme.bodyMedium
               ?.copyWith(
                   fontWeight:

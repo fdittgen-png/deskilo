@@ -65,10 +65,6 @@
   "@purchasesPaySaved": {
     "description": "#2574 purchase payments"
   },
-  "purchasesPayments": "Zahlungen",
-  "@purchasesPayments": {
-    "description": "#2574 purchase payments"
-  },
   "purchasesPaymentLine": "{amount} · {date} · {method}",
   "@purchasesPaymentLine": {
     "description": "#2574 purchase payments",

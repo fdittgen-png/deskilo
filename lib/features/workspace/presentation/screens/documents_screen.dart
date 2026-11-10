@@ -79,7 +79,7 @@ class DocumentsScreen extends ConsumerWidget {
                     labelText: l10n.documentsTitleLabel,
                     counterText: '',
                     suffixIcon: HelpDot(l10n.helpTopicDocumentLibrary,
-                      anchor: HelpAnchor.documentsTitle,
+                      anchor: HelpAnchor.featureDocuments,
                     ),
                   ),
                 ),
@@ -141,7 +141,7 @@ class DocumentsScreen extends ConsumerWidget {
                           setState(() => category = v ?? category),
                       decoration: InputDecoration(
                         labelText:
-                            l10n.documentsCategoryLabel,
+                            l10n.moneyExpenseCategoryLabel,
                       ),
                     ),
                   ),
@@ -280,7 +280,7 @@ class DocumentsScreen extends ConsumerWidget {
         .contains(WorkspacePermission.manageDocuments);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.documentsTitle),
+        title: Text(l10n.featureDocuments),
       ),
       floatingActionButton: canCurate
           ? FloatingActionButton(

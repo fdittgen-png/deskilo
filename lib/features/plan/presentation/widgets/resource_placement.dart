@@ -106,7 +106,7 @@ Future<PlacedResource?> chooseNewResource(
         SimpleDialogOption(
           key: const ValueKey('editor-resource-room'),
           onPressed: () => Navigator.of(context).pop(ResourceKind.room),
-          child: Text(l10n.editorResourceRoom),
+          child: Text(l10n.reserveMeetingRoom),
         ),
       ],
     ),
@@ -119,7 +119,7 @@ Future<PlacedResource?> chooseNewResource(
         parking: null,
         capacity: _defaultRoomCapacity,
       ),
-      namePrefix: l10n.editorRoomNameDefault,
+      namePrefix: l10n.exportValueNameRoom,
     ),
     _ => seat,
   };

@@ -33,7 +33,6 @@
   "memberPageGroupBilling": "Facturación",
   "memberPageGroupAccess": "Tarjetas y acceso",
   "memberPageManageHeading": "Gestionar",
-  "memberPageStatusActive": "Activo",
   "memberPageNeverSeen": "Nunca visto",
   "memberPageYou": "{name} (usted)",
   "@memberPageYou": {

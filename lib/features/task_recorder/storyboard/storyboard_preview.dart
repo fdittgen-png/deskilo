@@ -213,14 +213,14 @@ class _FrameTile extends StatelessWidget {
                         : (v) => onChanged((s) => s.setApproved(index, approved: v)),
                   ),
                 IconButton(
-                  tooltip: l.taskExportStoryboardMoveUp,
+                  tooltip: l.spaceMoveUp,
                   icon: const Icon(Icons.arrow_upward),
                   onPressed: index == 0
                       ? null
                       : () => onChanged((s) => s.move(index, index - 1)),
                 ),
                 IconButton(
-                  tooltip: l.taskExportStoryboardMoveDown,
+                  tooltip: l.spaceMoveDown,
                   icon: const Icon(Icons.arrow_downward),
                   onPressed: last
                       ? null
