@@ -1429,6 +1429,7 @@ const Set<String> uiKeys = {
   'instance-deploy-functions',
   'instance-doctor',
   'instance-doctor-attention',
+  'instance-doctor-footer',
   'instance-doctor-protected',
   'instance-doctor-run',
   'instance-done-step-copy',
