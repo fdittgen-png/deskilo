@@ -225,7 +225,7 @@ class _AccessorySheetState extends State<_AccessorySheet> {
 
   void _submit() {
     final name = _name.text.trim();
-    final supplement = parseCentsInput(_supplement.text);
+    final supplement = parseMinorInput(_supplement.text);
     if (name.isEmpty || supplement == null) return;
     Navigator.of(context).pop(
       _AccessoryDraft(

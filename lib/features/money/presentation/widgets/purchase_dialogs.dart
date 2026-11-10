@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -72,9 +73,9 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   }
 
   PurchaseBillDraft? _draft() {
-    final gross = parseCentsInput(_gross.text);
+    final gross = parseMinorInput(_gross.text);
     final taxText = _tax.text.trim();
-    final tax = taxText.isEmpty ? null : parseCentsInput(taxText);
+    final tax = taxText.isEmpty ? null : parseMinorInput(taxText);
     if (gross == null || gross <= 0) return null;
     if (taxText.isNotEmpty && (tax == null || tax > gross)) return null;
     // Another currency than the space's is captured with its rate.
@@ -82,9 +83,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     // #3294 — an item is bought in a quantity above zero.
     PurchaseItem? item;
     if (_item.itemId case final id?) {
-      final quantity = double.tryParse(
-        _item.quantity.trim().replaceAll(',', '.'),
-      );
+      final quantity = parseDecimalInput(_item.quantity, grouping: false)?.toDouble();
       if (quantity == null || quantity <= 0) return null;
       item = PurchaseItem(
         serviceId: id,

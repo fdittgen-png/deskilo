@@ -200,7 +200,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
     FieldErrors check() {
       final problems = guestPassOfferProblems(
         fields['name'].text,
-        parseCentsInput(fields['price'].text),
+        parseMinorInput(fields['price'].text),
       );
       return {
         if (problems.contains(GuestPassOfferProblem.name))
@@ -229,7 +229,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
                   id: offer?.id,
                   name: fields['name'].text.trim(),
                   unit: unit,
-                  priceCents: parseCentsInput(fields['price'].text)!,
+                  priceCents: parseMinorInput(fields['price'].text)!,
                   vatRateId: offer?.vatRateId,
                   active: active,
                 ),
