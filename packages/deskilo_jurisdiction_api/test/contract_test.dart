@@ -57,8 +57,8 @@ void main() {
   test('a validation result is ok or lists stable codes', () {
     expect(const ValidationResult.ok().isOk, isTrue);
     final refused = ValidationResult.refused([
-      ValidationIssue('period'),
-      ValidationIssue('taxNumber', field: 'facts.taxNumber'),
+      const ValidationIssue('period'),
+      const ValidationIssue('taxNumber', field: 'facts.taxNumber'),
     ]);
     expect(refused.isOk, isFalse);
     expect(refused.codes, ['period', 'taxNumber']);

@@ -18,12 +18,12 @@ TaskGuide _guide() => TaskGuide(
       kind: GuideStepKind.perform,
       action: Inspection.check,
     ),
-    GuideStep(
+    const GuideStep(
       id: 'g3',
       kind: GuideStepKind.perform,
       action: Inspection.submit,
-      expectedOutcomes: const {Inspection.reportFiled},
-      recovery: const [
+      expectedOutcomes: {Inspection.reportFiled},
+      recovery: [
         GuideStep(id: 'g3r1', kind: GuideStepKind.instruction, text: 'Fix.'),
       ],
     ),
@@ -237,7 +237,7 @@ void main() {
     );
 
     test('a recorded step becomes a request only when it is an action', () {
-      final action = RecordedStep(
+      final action = const RecordedStep(
         seq: 1,
         segment: 0,
         elapsedMs: 0,
@@ -247,7 +247,7 @@ void main() {
         actionVersion: 1,
       );
       expect(ReplayRequest.fromStep(action)!.action, Inspection.check);
-      final note = RecordedStep(
+      final note = const RecordedStep(
         seq: 2,
         segment: 0,
         elapsedMs: 0,

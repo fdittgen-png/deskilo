@@ -33,13 +33,11 @@ const List<double> _scales = [1.0, 1.3];
 const Map<String, Map<String, int>> _known = {
   'account|empty': {'target under 48 dp': 12, 'unnamed control': 12},
   'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
-  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 8, 'unnamed control': 8},
   'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
-  'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 8},
+  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6, 'unnamed control': 8},
+  'home|one source failed': {'overflow or exception': 6, 'target under 48 dp': 6},
   'home|populated': {'overflow or exception': 6, 'target under 48 dp': 6},
-  'spaces|empty': {'target under 48 dp': 6},
-  'spaces|one source failed': {'a failed source is not said': 12, 'target under 48 dp': 4},
-  'spaces|populated': {'target under 48 dp': 4},
+  'spaces|one source failed': {'a failed source is not said': 12},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {
@@ -117,7 +115,10 @@ void main() {
                 messenger: scenario.messenger,
                 timeZoneMode: TimeZoneMode.workspace,
                 clock: FixedClock(meGuardNow),
-                size: Size(width, width < 600 ? 900 : 800),
+                // Tall enough that no row is cut by the viewport: a clipped row's
+                // semantics rect is shorter than the row and would read as a
+                // target under 48 dp.
+                size: Size(width, width < 600 ? 2200 : 1100),
                 extraOverrides: scenario.overrides,
               );
               await goTo(tester, router, screen.route);
@@ -163,6 +164,38 @@ void main() {
                   flag('a sum of two currencies', tag);
                 }
               }
+            }
+          }
+        }
+        // The tall viewport above keeps rows from being cut; a real phone is
+        // 390 x 844. One pass there looks at vertical overflow and nothing else.
+        for (final dark in [false, true]) {
+          for (final scale in _scales) {
+            tester.platformDispatcher.platformBrightnessTestValue =
+                dark ? Brightness.dark : Brightness.light;
+            tester.platformDispatcher.textScaleFactorTestValue = scale;
+            WorkspaceTime.install('Europe/Paris');
+            final router = await pumpMeApp(
+              tester,
+              workspace: scenario.workspace,
+              me: scenario.me,
+              accountActivity: scenario.documents,
+              messenger: scenario.messenger,
+              timeZoneMode: TimeZoneMode.workspace,
+              clock: FixedClock(meGuardNow),
+              size: const Size(390, 844),
+              extraOverrides: scenario.overrides,
+            );
+            await goTo(tester, router, screen.route);
+            var thrown = false;
+            while (tester.takeException() != null) {
+              thrown = true;
+            }
+            if (thrown) {
+              flag(
+                'overflow at phone height',
+                '390 x 844 px, x$scale, ${dark ? 'dark' : 'light'}',
+              );
             }
           }
         }

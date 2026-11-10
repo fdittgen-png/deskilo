@@ -26,9 +26,17 @@ import 'map_disclosure_dialog.dart';
 import 'public_workspace_view.dart';
 
 class DirectoryScreen extends ConsumerStatefulWidget {
-  const DirectoryScreen({super.key, this.embedded = false});
+  const DirectoryScreen({
+    super.key,
+    this.embedded = false,
+    this.focusSearch = false,
+  });
 
   final bool embedded;
+
+  /// The search box takes focus when the screen opens (#3545: Home sends a
+  /// person here to type or look, never to an empty list).
+  final bool focusSearch;
   @override
   ConsumerState<DirectoryScreen> createState() => _DirectoryState();
 }
@@ -96,6 +104,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
       child: TextField(
         key: const ValueKey('directory-portal-search-2'),
         controller: _search,
+        autofocus: widget.focusSearch,
         decoration: InputDecoration(
           labelText: l.portalSearch,
           suffixIcon: IconButton(

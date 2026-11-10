@@ -11,10 +11,10 @@ void main() {
   test('a row, a table, a box, columns and a zone refuse mutation', () {
     final row = LayoutRow([const LayoutCell('a')]);
     final table = LayoutTable(columns: [const LayoutColumn()], rows: [row]);
-    final box = LayoutBox([LayoutText('x'), table]);
+    final box = LayoutBox([const LayoutText('x'), table]);
     final columns = LayoutColumns([
-      [LayoutText('left')],
-      [LayoutText('right')],
+      [const LayoutText('left')],
+      [const LayoutText('right')],
     ]);
     final zone = LayoutZone(children: [box, columns]);
 
@@ -23,23 +23,23 @@ void main() {
     expect(() => table.columns.add(const LayoutColumn()), throwsUnsupportedError);
     expect(() => box.children.removeLast(), throwsUnsupportedError);
     expect(() => columns.columns.add([]), throwsUnsupportedError);
-    expect(() => columns.columns.first.add(LayoutText('y')), throwsUnsupportedError,
+    expect(() => columns.columns.first.add(const LayoutText('y')), throwsUnsupportedError,
         reason: 'the nested column list is frozen too');
-    expect(() => zone.children.add(LayoutRule()), throwsUnsupportedError);
+    expect(() => zone.children.add(const LayoutRule()), throwsUnsupportedError);
   });
 
   test('editing the list a caller kept does not change the document', () {
     final cells = [const LayoutCell('a')];
-    final kids = <LayoutElement>[LayoutText('x')];
-    final left = <LayoutElement>[LayoutText('l')];
+    final kids = <LayoutElement>[const LayoutText('x')];
+    final left = <LayoutElement>[const LayoutText('l')];
     final row = LayoutRow(cells);
     final box = LayoutBox(kids);
     final columns = LayoutColumns([left]);
     final zone = LayoutZone(children: kids);
 
     cells.add(const LayoutCell('b'));
-    kids.add(LayoutRule());
-    left.add(LayoutRule());
+    kids.add(const LayoutRule());
+    left.add(const LayoutRule());
 
     expect(row.cells, hasLength(1));
     expect(box.children, hasLength(1));
@@ -51,7 +51,7 @@ void main() {
     final doc = LayoutDocument();
     expect(doc.header.isEmpty, isTrue);
     expect(doc.body.children, isEmpty);
-    expect(() => doc.body.children.add(LayoutRule()), throwsUnsupportedError);
+    expect(() => doc.body.children.add(const LayoutRule()), throwsUnsupportedError);
     expect(identical(doc.header, LayoutZone.empty), isTrue);
   });
 
