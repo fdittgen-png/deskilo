@@ -8916,7 +8916,7 @@
   "invoiceMonthResultSubtitle": "{count, plural, =1{Der Kunde sieht sie jetzt in seinem Konto und erhält eine Benachrichtigung.} other{Jeder Kunde sieht sie jetzt in seinem Konto und erhält eine Benachrichtigung.}}",
   "invoiceMonthResultTitle": "{count, plural, =1{1 Rechnung ausgestellt} other{{count} Rechnungen ausgestellt}}",
   "invoiceMonthRetry": "Für diese wiederholen",
-  "invoiceMonthSelected": "{count} von {total} ausgewählt · {amount}",
+  "invoiceMonthSelected": "{count, plural, =1{1 von {total} ausgewählt · {amount}} other{{count} von {total} ausgewählt · {amount}}}",
   "invoiceMonthStays": "Was nicht erledigt wurde, bleibt unter „Zu erledigen“.",
   "invoiceMonthTitle": "{month} abrechnen",
   "invoiceMonthUnknown": "Nicht bestätigt: Sie könnte existieren. Erneut prüfen.",

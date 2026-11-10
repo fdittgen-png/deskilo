@@ -18638,7 +18638,7 @@
   "@invoiceMonthRetry": {
     "description": "#3587 R1-e: retry only the customers the server refused"
   },
-  "invoiceMonthSelected": "{count} of {total} selected · {amount}",
+  "invoiceMonthSelected": "{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}",
   "@invoiceMonthSelected": {
     "description": "#3587 R1-e: how many customers are selected of those listed, and their total",
     "placeholders": {

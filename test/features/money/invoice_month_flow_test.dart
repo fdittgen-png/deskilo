@@ -28,6 +28,9 @@ const _entries = <ToInvoiceEntry>[
 
 Finder _key(String k) => find.byKey(ValueKey(k));
 
+/// Lets the flow's reads and writes finish.
+Future<void> _settle(WidgetTester tester) => tester.pumpAndSettle();
+
 /// The money fake whose dry run says what the test set.
 class _Repo extends FakeMoneyRepository {
   final Map<String, List<String>> missing = {};
@@ -103,7 +106,7 @@ void main() {
         workspace: FakeWorkspaceRepository.withWorkspace(),
       ),
     );
-    await tester.pumpAndSettle();
+    await _settle(tester);
   }
 
   testWidgets('every customer is ticked; the one filled action says how many '
@@ -119,7 +122,7 @@ void main() {
       reason: 'the rule is said before issuing',
     );
     await tester.tap(_key('invoice-month-select-ben'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.text('Issue 1 invoice · €120.00'), findsOneWidget);
     expect(find.textContaining('1 OF 2 SELECTED'), findsOneWidget);
     expect(tester.takeException(), isNull);
@@ -130,10 +133,10 @@ void main() {
   ) async {
     await pump(tester);
     await tester.tap(_key('invoice-month-all'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.textContaining('0 OF 2 SELECTED'), findsOneWidget);
     await tester.tap(_key('invoice-month-all'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.textContaining('2 OF 2 SELECTED'), findsOneWidget);
   });
 
@@ -142,7 +145,7 @@ void main() {
   ) async {
     await pump(tester);
     await tester.tap(_key('invoice-month-issue'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.text('2 invoices issued'), findsOneWidget);
     expect(find.text('Issued'), findsNWidgets(2));
     expect(
@@ -167,14 +170,14 @@ void main() {
       expect(find.text('1 needs a fix'), findsOneWidget);
       expect(find.text('Issue 1 invoice · €120.00'), findsOneWidget);
       await tester.tap(_key('invoice-month-select-ben'));
-      await tester.pumpAndSettle();
+      await _settle(tester);
       expect(
         find.text('Issue 1 invoice · €120.00'),
         findsOneWidget,
         reason: 'a row that needs a fix cannot be ticked',
       );
       await tester.tap(_key('invoice-month-issue'));
-      await tester.pumpAndSettle();
+      await _settle(tester);
       expect(repo.invoices, hasLength(1), reason: 'only Anna was issued');
     });
 
@@ -187,7 +190,7 @@ void main() {
       // The details are completed while the person is away.
       repo.missing.clear();
       await tester.tap(_key('invoice-month-fix-ben'));
-      await tester.pumpAndSettle();
+      await _settle(tester);
       expect(fixedCustomers, ['ben']);
       expect(_key('invoice-month-fix-ben'), findsNothing);
       expect(find.text('Issue 2 invoices · €165.50'), findsOneWidget);
@@ -208,7 +211,7 @@ void main() {
     expect(bar.onPressed, isNull, reason: 'nothing can be issued yet');
     repo.missing.clear();
     await tester.tap(_key('invoice-month-business-fix'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(fixedBusiness, 1);
     expect(_key('invoice-month-business-notice'), findsNothing);
     final again = tester.widget<FilledButton>(_key('invoice-month-issue'));
@@ -222,7 +225,7 @@ void main() {
     expect(_key('invoice-month-status-ben'), findsNothing);
     expect(find.text('Issue 2 invoices · €165.50'), findsOneWidget);
     await tester.tap(_key('invoice-month-issue'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(repo.invoices, hasLength(2));
   });
 
@@ -236,7 +239,7 @@ void main() {
     );
     await pump(tester);
     await tester.tap(_key('invoice-month-issue'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.text('1 of 2 invoices issued'), findsOneWidget);
     expect(find.text('Not done'), findsOneWidget);
     expect(find.text('Anna Alder'), findsOneWidget);
@@ -268,7 +271,7 @@ void main() {
       await pump(tester, size: Size(width, 3000));
       expect(guardProblems(tester, width: width), isEmpty);
       await tester.tap(_key('invoice-month-issue'));
-      await tester.pumpAndSettle();
+      await _settle(tester);
       expect(guardProblems(tester, width: width), isEmpty);
       semantics.dispose();
     });
@@ -283,7 +286,7 @@ void main() {
     await pump(tester);
     await writeSheet(tester, sheet: 'invoice-month', name: 'review-fix');
     await tester.tap(_key('invoice-month-issue'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await writeSheet(tester, sheet: 'invoice-month', name: 'result');
   });
 
@@ -296,7 +299,7 @@ void main() {
     );
     await pump(tester);
     await tester.tap(_key('invoice-month-issue'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await writeSheet(tester, sheet: 'invoice-month', name: 'result-partial');
   });
 

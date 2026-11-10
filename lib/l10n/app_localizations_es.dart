@@ -14223,7 +14223,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String invoiceMonthSelected(int count, int total, String amount) {
-    return '$count de $total seleccionados · $amount';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count de $total seleccionados · $amount',
+      one: '1 de $total seleccionado · $amount',
+    );
+    return '$_temp0';
   }
 
   @override

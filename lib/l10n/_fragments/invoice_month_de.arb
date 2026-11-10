@@ -13,7 +13,7 @@
   "invoiceMonthRetry": "Für diese wiederholen",
   "invoiceMonthCheckAgain": "Erneut prüfen",
   "invoiceMonthDone": "Fertig",
-  "invoiceMonthSelected": "{count} von {total} ausgewählt · {amount}",
+  "invoiceMonthSelected": "{count, plural, =1{1 von {total} ausgewählt · {amount}} other{{count} von {total} ausgewählt · {amount}}}",
   "invoiceMonthIssue": "{count, plural, =0{Rechnungen ausstellen} =1{1 Rechnung ausstellen · {amount}} other{{count} Rechnungen ausstellen · {amount}}}",
   "invoiceMonthNeedsFix": "Muss ergänzt werden",
   "invoiceMonthNeedsFixCount": "{count, plural, =1{1 muss ergänzt werden} other{{count} müssen ergänzt werden}}",

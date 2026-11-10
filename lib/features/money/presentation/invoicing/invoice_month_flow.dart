@@ -244,6 +244,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
                 ),
               const SizedBox(height: AppSpacing.sm),
               MonthAllRow(
+                key: const ValueKey('invoice-month-all'),
                 label: l10n.invoiceMonthAll,
                 value: allValue,
                 onTap: _state.busy || free.isEmpty

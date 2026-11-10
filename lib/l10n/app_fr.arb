@@ -8916,7 +8916,7 @@
   "invoiceMonthResultSubtitle": "{count, plural, =1{Le client la voit maintenant dans son compte et reçoit une notification.} other{Chaque client la voit maintenant dans son compte et reçoit une notification.}}",
   "invoiceMonthResultTitle": "{count, plural, =1{1 facture émise} other{{count} factures émises}}",
   "invoiceMonthRetry": "Réessayer pour celles-ci",
-  "invoiceMonthSelected": "{count} sur {total} sélectionnés · {amount}",
+  "invoiceMonthSelected": "{count, plural, =1{1 sur {total} sélectionné · {amount}} other{{count} sur {total} sélectionnés · {amount}}}",
   "invoiceMonthStays": "Ce qui n'a pas été fait reste dans « À faire ».",
   "invoiceMonthTitle": "Facturer {month}",
   "invoiceMonthUnknown": "Non confirmée : elle existe peut-être. Vérifiez à nouveau.",

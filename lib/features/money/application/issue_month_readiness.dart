@@ -8,11 +8,13 @@
 //
 // A read that fails is "unknown", never "ready" and never "blocked": the row
 // stays selectable and the server still refuses at issue time, in words.
+import 'package:meta/meta.dart';
+
 import '../domain/invoice_queries.dart';
 
 /// How many customers are read at once: a courtesy to the server, not a
 /// setting.
-const int monthReadinessConcurrency = 4;
+const int _monthReadinessConcurrency = 4;
 
 /// What is known of one customer.
 sealed class LineReadiness {
@@ -20,6 +22,7 @@ sealed class LineReadiness {
 }
 
 /// Nothing stops the invoice.
+@visibleForTesting
 final class ReadinessReady extends LineReadiness {
   const ReadinessReady();
 }
@@ -103,7 +106,7 @@ Future<void> readMonthReadiness({
   required String period,
   required List<String> memberIds,
   required void Function(String memberId, LineReadiness readiness) onEach,
-  int concurrency = monthReadinessConcurrency,
+  int concurrency = _monthReadinessConcurrency,
 }) async {
   final queue = List.of(memberIds);
   Future<void> worker() async {

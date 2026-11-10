@@ -23401,7 +23401,7 @@ abstract class AppLocalizations {
   /// #3587 R1-e: how many customers are selected of those listed, and their total
   ///
   /// In en, this message translates to:
-  /// **'{count} of {total} selected · {amount}'**
+  /// **'{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}'**
   String invoiceMonthSelected(int count, int total, String amount);
 
   /// #3587 R1-e: where what was not issued stays

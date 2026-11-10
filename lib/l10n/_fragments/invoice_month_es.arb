@@ -13,7 +13,7 @@
   "invoiceMonthRetry": "Reintentar para estas",
   "invoiceMonthCheckAgain": "Comprobar de nuevo",
   "invoiceMonthDone": "Hecho",
-  "invoiceMonthSelected": "{count} de {total} seleccionados · {amount}",
+  "invoiceMonthSelected": "{count, plural, =1{1 de {total} seleccionado · {amount}} other{{count} de {total} seleccionados · {amount}}}",
   "invoiceMonthIssue": "{count, plural, =0{Emitir facturas} =1{Emitir 1 factura · {amount}} other{Emitir {count} facturas · {amount}}}",
   "invoiceMonthNeedsFix": "Hay que completarlo",
   "invoiceMonthNeedsFixCount": "{count, plural, =1{1 por completar} other{{count} por completar}}",

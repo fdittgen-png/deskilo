@@ -25,7 +25,7 @@ class _Queries implements InvoiceQueries {
   }) async {
     running++;
     if (running > peak) peak = running;
-    await Future<void>.delayed(const Duration(milliseconds: 5));
+    await Future<void>.delayed(Duration.zero);
     running--;
     if (failing.contains(memberId)) throw StateError('offline');
     return missing[memberId] ?? const [];
@@ -90,7 +90,7 @@ void main() {
   test('reads run a bounded number at a time', () async {
     final q = _Queries();
     await _read(q, [for (var i = 0; i < 12; i++) 'm$i']);
-    expect(q.peak, lessThanOrEqualTo(monthReadinessConcurrency));
+    expect(q.peak, lessThanOrEqualTo(4), reason: 'the named bound of the reads');
     expect(q.peak, greaterThan(1), reason: 'and more than one at once');
   });
 }

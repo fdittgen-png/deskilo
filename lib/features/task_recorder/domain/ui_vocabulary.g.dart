@@ -1574,6 +1574,7 @@ const Set<String> uiKeys = {
   'invoice-member-dropdown',
   'invoice-missing-essentials',
   'invoice-month-all',
+  'invoice-month-all-toggle',
   'invoice-month-business-fix',
   'invoice-month-business-notice',
   'invoice-month-issue',

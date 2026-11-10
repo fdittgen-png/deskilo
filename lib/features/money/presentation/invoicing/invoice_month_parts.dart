@@ -4,6 +4,7 @@
 // notice, the select-all line and the words of what is missing.
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../widgets/invoice_missing_sales_tax.dart';
@@ -32,7 +33,7 @@ class MonthBusinessNotice extends StatelessWidget {
       key: const ValueKey('invoice-month-business-notice'),
       decoration: BoxDecoration(
         color: scheme.tertiaryContainer,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.sm),
@@ -80,14 +81,15 @@ class MonthAllRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-    key: const ValueKey('invoice-month-all'),
     button: true,
     checked: value ?? false,
     mixed: value == null,
     label: label,
     excludeSemantics: true,
+    // recorder-key-exempt: the semantics of the row; its InkWell carries the key.
     onTap: onTap,
     child: InkWell(
+      key: const ValueKey('invoice-month-all-toggle'),
       onTap: onTap,
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: 48),
