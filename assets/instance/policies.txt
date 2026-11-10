@@ -67,6 +67,9 @@ public.book_mappings.mcp_delegated_deny
 public.book_periods.book_periods_select
 public.book_periods.mcp_delegated_deny
 public.book_profiles.mcp_delegated_deny
+public.business_kinds.business_kinds_select
+public.business_kinds.mcp_delegated_deny
+public.business_kinds.personal_native_session
 public.capability_states.capability_states_select
 public.capability_states.mcp_delegated_deny
 public.charging_stations.charging_stations_select

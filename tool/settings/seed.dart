@@ -35,6 +35,44 @@ typedef SettingSeed = ({
 /// created a row, so a later migration's block holds only its own rows.
 final List<({SettingSeed row, String since})> settingSeeds = [
   (
+    since: 'business_kinds',
+    row: (
+      key: 'business.kind',
+      type: 'text',
+      defaultValue: 'coworking',
+      min: null,
+      max: 32,
+      unit: '',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'manageConfiguration',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'business kinds (#3549)',
+      note: 'What kind of business the workspace is, as a code of public.business_kinds (coworking, studio, practice, salon, service). It proposes the features and words a business needs; coworking keeps every existing workspace as it was.',
+    ),
+  ),
+  (
+    since: 'business_kinds',
+    row: (
+      key: 'business.more_kinds',
+      type: 'text',
+      defaultValue: '',
+      min: null,
+      max: 200,
+      unit: '',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'manageConfiguration',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'business kinds (#3549)',
+      note: 'Further kinds the business also is, as comma-separated codes of public.business_kinds, never the primary one again. Empty means one kind only.',
+    ),
+  ),
+  (
     since: 'settings_registry',
     row: (
       key: 'dunning.first_after_days',

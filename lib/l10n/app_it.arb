@@ -15861,6 +15861,7 @@
   "@settingGroupBooking": {
     "description": "#2486 settings: Settings group title."
   },
+  "settingGroupBusiness": "Attività",
   "settingGroupDirectory": "Elenco dei membri",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -15960,6 +15961,8 @@
   "@settingHintBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintBusinessKind": "Che cos'è l'attività: uno spazio di coworking, uno studio, uno studio professionale, un salone o un'altra attività di servizi. Propone le funzioni e le parole di cui ha bisogno; uno spazio di coworking resta com'era.",
+  "settingHintBusinessMoreKinds": "Altri tipi che l'attività è anche, se ce ne sono, oltre a quello principale.",
   "settingHintCalendarRangeDays": "Fissato dalla piattaforma: il periodo più lungo che una richiesta del calendario può chiedere. Delimita la richiesta.",
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -16144,6 +16147,8 @@
   "@settingLabelBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelBusinessKind": "Tipo di attività",
+  "settingLabelBusinessMoreKinds": "Anche un tipo di attività",
   "settingLabelCalendarRangeDays": "Periodo del calendario",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."

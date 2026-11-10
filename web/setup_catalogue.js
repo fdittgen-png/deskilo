@@ -1568,7 +1568,9 @@ window.SETUP_LEVELS={
       "customFields",
       "guestParticipation"
      ],
-     "needs": {}
+     "needs": {
+      "bookings": "simple"
+     }
     }
    ]
   },
@@ -1733,7 +1735,9 @@ window.SETUP_LEVELS={
       "uniqueMonograms",
       "singleRoomLevelNames"
      ],
-     "needs": {}
+     "needs": {
+      "bookings": "simple"
+     }
     },
     {
      "id": "branded",
@@ -1774,7 +1778,9 @@ window.SETUP_LEVELS={
       "setupGuide",
       "dataReport"
      ],
-     "needs": {}
+     "needs": {
+      "bookings": "simple"
+     }
     },
     {
      "id": "insight",

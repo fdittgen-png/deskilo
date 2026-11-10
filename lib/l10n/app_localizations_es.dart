@@ -24743,6 +24743,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingGroupBooking => 'Reserva y registro de llegada';
 
   @override
+  String get settingGroupBusiness => 'Negocio';
+
+  @override
   String get settingGroupDirectory => 'Directorio de miembros';
 
   @override
@@ -24861,6 +24864,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingHintBookingWalkUpWindowMinutes =>
       'Duración de la estancia reservada en el momento con una credencial o un código de espacio en una cuadrícula de minutos.';
+
+  @override
+  String get settingHintBusinessKind =>
+      'Qué es el negocio: un espacio de coworking, un estudio, una consulta, un salón u otro negocio de servicios. Propone las funciones y las palabras que necesita; un espacio de coworking lo conserva todo como estaba.';
+
+  @override
+  String get settingHintBusinessMoreKinds =>
+      'Otros tipos que el negocio también es, si los hay, además del principal.';
 
   @override
   String get settingHintCalendarRangeDays =>
@@ -25145,6 +25156,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingLabelBookingWalkUpWindowMinutes => 'Estancia inmediata';
+
+  @override
+  String get settingLabelBusinessKind => 'Tipo de negocio';
+
+  @override
+  String get settingLabelBusinessMoreKinds => 'También un tipo de negocio';
 
   @override
   String get settingLabelCalendarRangeDays => 'Periodo del calendario';

@@ -32546,6 +32546,10 @@
   "@settingGroupBooking": {
     "description": "#2486 settings: Settings group title."
   },
+  "settingGroupBusiness": "Business",
+  "@settingGroupBusiness": {
+    "description": "Settings editor: the name of the group holding the business settings (#3549)."
+  },
   "settingGroupDirectory": "Member directory",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -32677,6 +32681,14 @@
   "settingHintBookingWalkUpWindowMinutes": "Length of the stay booked on the spot with a badge or a space code on a minute grid.",
   "@settingHintBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting hint."
+  },
+  "settingHintBusinessKind": "What the business is: a coworking space, a studio, a practice, a salon or another service business. It proposes the features and words it needs; a coworking space keeps everything as it was.",
+  "@settingHintBusinessKind": {
+    "description": "Settings editor: the hint under the business kind setting (#3549)."
+  },
+  "settingHintBusinessMoreKinds": "Further kinds the business also is, if any, besides the main one.",
+  "@settingHintBusinessMoreKinds": {
+    "description": "Settings editor: the hint under the further kinds setting (#3549)."
   },
   "settingHintCalendarRangeDays": "Fixed by the platform: the longest range one calendar request may ask for. It bounds the query.",
   "@settingHintCalendarRangeDays": {
@@ -32969,6 +32981,14 @@
   "settingLabelBookingWalkUpWindowMinutes": "On-the-spot stay",
   "@settingLabelBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting label."
+  },
+  "settingLabelBusinessKind": "Kind of business",
+  "@settingLabelBusinessKind": {
+    "description": "Settings editor: the label of the setting that says what kind of business the workspace is (#3549)."
+  },
+  "settingLabelBusinessMoreKinds": "Also a kind of business",
+  "@settingLabelBusinessMoreKinds": {
+    "description": "Settings editor: the label of the setting listing further kinds of the business (#3549)."
   },
   "settingLabelCalendarRangeDays": "Calendar range",
   "@settingLabelCalendarRangeDays": {

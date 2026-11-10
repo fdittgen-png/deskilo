@@ -46,6 +46,10 @@ abstract final class SettingDefaults {
   static const int bookingWalkUpFloorMinutes = 15;
   /// `booking.walk_up_window_minutes`
   static const int bookingWalkUpWindowMinutes = 240;
+  /// `business.kind`
+  static const String businessKind = 'coworking';
+  /// `business.more_kinds`
+  static const String businessMoreKinds = '';
   /// `calendar.range_days`
   static const int calendarRangeDays = 400;
   /// `directory.geocoder_url`
