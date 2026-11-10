@@ -1,7 +1,7 @@
 {
   "handoffTitle": "Vor dem Speichern",
-  "handoffIncluded": "{count} Beleg(e) in der Datei",
-  "handoffExcludedSettlements": "{count} Sammelabrechnung(en) ausgelassen: ihre Rechnungen stehen bereits in der Datei",
+  "handoffIncluded": "{count, plural, =1{1 Beleg in der Datei} other{{count} Beleg(e) in der Datei}}",
+  "handoffExcludedSettlements": "{count, plural, =1{1 Sammelabrechnung ausgelassen: ihre Rechnungen stehen bereits in der Datei} other{{count} Sammelabrechnung(en) ausgelassen: ihre Rechnungen stehen bereits in der Datei}}",
   "handoffIssued": "Ausgestellt",
   "handoffVoided": "Storniert",
   "handoffPayments": "Bezahlt: {confirmed} bestätigt, {pending} ausstehend",

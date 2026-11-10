@@ -52,12 +52,12 @@
   "@biCashOutflowsDefinition": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count} pagos",
+  "biCashOutflowsBasis": "{count, plural, =1{1 pago} other{{count} pagos}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -101,21 +101,21 @@
   "@biContributionNotProfit": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnresolved": "Se excluyen {count} líneas que nadie clasificó.",
+  "biCostsUnresolved": "{count, plural, =1{Se excluye 1 línea que nadie clasificó.} other{Se excluyen {count} líneas que nadie clasificó.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "biCostsUnqualified": "{count} líneas cuyo impuesto deducible no está calificado cuentan por su importe bruto.",
+  "biCostsUnqualified": "{count, plural, =1{1 línea cuyo impuesto deducible no está calificado cuenta por su importe bruto.} other{{count} líneas cuyo impuesto deducible no está calificado cuentan por su importe bruto.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -134,7 +134,7 @@
   "biAllocationDefinition": "Los gastos de explotación de los meses, repartidos entre plantas y oficinas según la regla vigente en la fecha de cada documento, por el mayor resto al céntimo. Directo, compartido y sin repartir suman siempre los gastos de explotación.",
   "biAllocationBasis": "{direct} directo, {shared} compartido, {unallocated} sin repartir",
   "biAllocationUnallocated": "{amount} no lo reparte ninguna regla: queda sin repartir, nunca dividido a partes iguales.",
-  "biAllocationConflicts": "{count} líneas las reclaman dos reglas y quedan sin repartir mientras sigan ambas.",
+  "biAllocationConflicts": "{count, plural, =1{1 línea la reclaman dos reglas y queda sin repartir mientras sigan ambas.} other{{count} líneas las reclaman dos reglas y quedan sin repartir mientras sigan ambas.}}",
   "biAllocationNotBilled": "Un análisis: no se factura a ningún miembro y no cambia ningún documento ni asiento.",
   "biAllocationRevisions": "Repartido por: {rules}",
   "biAllocationRevision": "{basis} (revisión {revision})",

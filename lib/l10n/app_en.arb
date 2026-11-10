@@ -2726,12 +2726,12 @@
       }
     }
   },
-  "biAllocationConflicts": "{count} lines are claimed by two rules and stay unallocated until one of them goes.",
+  "biAllocationConflicts": "{count, plural, =1{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}",
   "@biAllocationConflicts": {
     "description": "#2582 cost allocation",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -2882,12 +2882,12 @@
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biCardsUnavailable": "{count} analyses of this view are not available to you and are left out.",
+  "biCardsUnavailable": "{count, plural, =1{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -2895,12 +2895,12 @@
   "@biCashNotBankBalance": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count} payments",
+  "biCashOutflowsBasis": "{count, plural, =1{1 payment} other{{count} payments}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -3066,21 +3066,21 @@
   "@biCostsOperatingTitle": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnqualified": "{count} lines whose recoverable tax is not qualified count at their gross.",
+  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at their gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "biCostsUnresolved": "{count} lines nobody classified are left out.",
+  "biCostsUnresolved": "{count, plural, =1{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -3109,7 +3109,7 @@
   "@biCustomerCohortLate": {
     "description": "#3294 customer analytics"
   },
-  "biCustomerCohortLine": "{cohort}: {count} invoices, {amount}",
+  "biCustomerCohortLine": "{count, plural, =1{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}",
   "@biCustomerCohortLine": {
     "description": "#3294 customer analytics",
     "placeholders": {
@@ -3117,7 +3117,7 @@
         "type": "String"
       },
       "count": {
-        "type": "String"
+        "type": "int"
       },
       "amount": {
         "type": "String"
@@ -3874,12 +3874,12 @@
   "@biEditorResetSelection": {
     "description": "#2580 BI report editor"
   },
-  "biEditorRows": "{count} rows",
+  "biEditorRows": "{count, plural, =1{1 row} other{{count} rows}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -4103,12 +4103,12 @@
   "@biExportFormatXlsx": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biExportLeftOut": "{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.",
+  "biExportLeftOut": "{count, plural, =1{1 card is not in this export: its figure, filters or grouping is not one an export answers yet.} other{{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.}}",
   "@biExportLeftOut": {
     "description": "#2581 analytical report print layout and exports",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -4157,12 +4157,12 @@
   "@biFinanceCollected": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biFinanceCollectedBasis": "From {count} payments matched to invoices",
+  "biFinanceCollectedBasis": "{count, plural, =1{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}",
   "@biFinanceCollectedBasis": {
     "description": "#1924 finance KPI / #1923 analyses picker",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -4191,12 +4191,12 @@
   "@biFinanceInvoiced": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biFinanceInvoicedBasis": "From {count} invoices; credit notes {credit}, shown apart",
+  "biFinanceInvoicedBasis": "{count, plural, =1{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}",
   "@biFinanceInvoicedBasis": {
     "description": "#1924 finance KPI / #1923 analyses picker",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       },
       "credit": {
         "type": "String"
@@ -4332,30 +4332,30 @@
   "@biItemProductTitle": {
     "description": "#3294 step 4 items on purchase lines"
   },
-  "biItemUncosted": "{count} products sold were never bought: they have no cost and are left out of the cost and margin",
+  "biItemUncosted": "{count, plural, =1{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}",
   "@biItemUncosted": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "biItemUnresolved": "{count} purchase lines name a supply only by its text: they are not matched to an item and are left out",
+  "biItemUnresolved": "{count, plural, =1{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}",
   "@biItemUnresolved": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "biItemVendorBasis": "{count} suppliers",
+  "biItemVendorBasis": "{count, plural, =1{1 supplier} other{{count} suppliers}}",
   "@biItemVendorBasis": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -4717,12 +4717,12 @@
   "biRecordedPast": "Past period · current records",
   "biRecordedPresent": "Current period · includes future dates",
   "biRefresh": "Refresh data",
-  "biRefusedBudget": "There are more than {count} groups; choose no grouping.",
+  "biRefusedBudget": "{count, plural, =1{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}",
   "@biRefusedBudget": {
     "description": "#1923 B Web-BI toolbar and module section",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -4911,12 +4911,12 @@
   "@biSalesKindTitle": {
     "description": "#3294 step 3 sales analytics"
   },
-  "biSalesNetUnknown": "{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net",
+  "biSalesNetUnknown": "{count, plural, =1{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}",
   "@biSalesNetUnknown": {
     "description": "#3294 step 3 sales analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -4972,12 +4972,12 @@
   "@biSalesRoomsOff": {
     "description": "#3294 step 3 sales analytics"
   },
-  "biSalesServiceBasis": "{count} services and packages",
+  "biSalesServiceBasis": "{count, plural, =1{1 service and package} other{{count} services and packages}}",
   "@biSalesServiceBasis": {
     "description": "#3294 step 3 sales analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -5061,12 +5061,12 @@
   "@biUnavailable": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
-  "biVendorCategoryBasis": "{count} categories",
+  "biVendorCategoryBasis": "{count, plural, =1{1 category} other{{count} categories}}",
   "@biVendorCategoryBasis": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -5082,7 +5082,7 @@
   "@biVendorCohortLate": {
     "description": "#3294 step 2 vendor analytics"
   },
-  "biVendorCohortLine": "{cohort}: {count} bills, {amount}",
+  "biVendorCohortLine": "{count, plural, =1{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}",
   "@biVendorCohortLine": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
@@ -5090,7 +5090,7 @@
         "type": "String"
       },
       "count": {
-        "type": "String"
+        "type": "int"
       },
       "amount": {
         "type": "String"
@@ -5156,7 +5156,7 @@
       }
     }
   },
-  "biVendorDeliveryCohortLine": "{cohort}: {count} orders",
+  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort}: 1 order} other{{cohort}: {count} orders}}",
   "@biVendorDeliveryCohortLine": {
     "description": "#3294 step 5 vendor delivery analytics",
     "placeholders": {
@@ -5164,7 +5164,7 @@
         "type": "String"
       },
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -5269,12 +5269,12 @@
   "@biVendorLagTitle": {
     "description": "#3294 step 2 vendor analytics"
   },
-  "biVendorLagUndated": "{count} bills carry no supplier date or no received date and are left out",
+  "biVendorLagUndated": "{count, plural, =1{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}",
   "@biVendorLagUndated": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -5359,12 +5359,12 @@
       }
     }
   },
-  "biViewCardsIncompatible": "{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.",
+  "biViewCardsIncompatible": "{count, plural, =1{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}",
   "@biViewCardsIncompatible": {
     "description": "#2578 saved-view cards saved for another metric version",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -5491,12 +5491,12 @@
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
   },
-  "biViewWithheld": "{count} figures of this view are not shown: you may not read them.",
+  "biViewWithheld": "{count, plural, =1{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -6581,7 +6581,7 @@
   "calendarGroupActivity": "Alerts & messages",
   "calendarGroupBookings": "Bookings & presence",
   "calendarGroupMoney": "Money",
-  "calendarItemCount": "{count} items",
+  "calendarItemCount": "{count, plural, =1{1 item} other{{count} items}}",
   "@calendarItemCount": {
     "placeholders": {
       "count": {
@@ -7344,12 +7344,12 @@
   "@compareInherits": {
     "description": "#1660 template_compare"
   },
-  "compareLimit": "Up to {count} templates can be compared. Remove one first.",
+  "compareLimit": "{count, plural, =1{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}",
   "@compareLimit": {
     "description": "#1660 template_compare",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -7407,7 +7407,7 @@
     "description": "#1660 template_compare"
   },
   "composerAttach": "Attach a reference",
-  "composerCharsLeft": "{count} characters left",
+  "composerCharsLeft": "{count, plural, =1{1 character left} other{{count} characters left}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {
@@ -10244,7 +10244,7 @@
     }
   },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
-  "eventExpenseRepartitionLine": "{actor} distributes “{title}” — {amount} over {count} members",
+  "eventExpenseRepartitionLine": "{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}",
   "@eventExpenseRepartitionLine": {
     "placeholders": {
       "actor": {
@@ -10413,7 +10413,7 @@
       }
     }
   },
-  "eventPriceNegotiationItems": "{count} items",
+  "eventPriceNegotiationItems": "{count, plural, =1{1 item} other{{count} items}}",
   "@eventPriceNegotiationItems": {
     "placeholders": {
       "count": {
@@ -12541,7 +12541,7 @@
       }
     }
   },
-  "fieldProblemTooLong": "At most {count} characters.",
+  "fieldProblemTooLong": "{count, plural, =1{At most 1 character.} other{At most {count} characters.}}",
   "@fieldProblemTooLong": {
     "description": "#1288 custom fields: fieldProblemTooLong",
     "placeholders": {
@@ -12550,7 +12550,7 @@
       }
     }
   },
-  "fieldProblemTooShort": "At least {count} characters.",
+  "fieldProblemTooShort": "{count, plural, =1{At least 1 character.} other{At least {count} characters.}}",
   "@fieldProblemTooShort": {
     "description": "#1288 custom fields: fieldProblemTooShort",
     "placeholders": {
@@ -13647,21 +13647,21 @@
       }
     }
   },
-  "handoffExcludedSettlements": "{count} settlement summary(ies) left out: their invoices are already listed",
+  "handoffExcludedSettlements": "{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summary(ies) left out: their invoices are already listed}}",
   "@handoffExcludedSettlements": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "handoffIncluded": "{count} document(s) in the file",
+  "handoffIncluded": "{count, plural, =1{1 document in the file} other{{count} document(s) in the file}}",
   "@handoffIncluded": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -14104,7 +14104,7 @@
   "@holidayImportAction": {
     "description": "#2051 open-data holiday import"
   },
-  "holidayImportConfirm": "Import {count} closure days",
+  "holidayImportConfirm": "{count, plural, =1{Import 1 closure day} other{Import {count} closure days}}",
   "@holidayImportConfirm": {
     "description": "#2051 open-data holiday import",
     "placeholders": {
@@ -14599,15 +14599,105 @@
       }
     }
   },
+  "instanceDoctorAllHealthy": "Everything checked is healthy.",
+  "@instanceDoctorAllHealthy": {
+    "description": "#3489 Instance doctor report footer when nothing is wrong."
+  },
   "instanceDoctorAttention": "Attention required",
   "@instanceDoctorAttention": {
     "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorGuardAnonViewDetail": "{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.",
+  "@instanceDoctorGuardAnonViewDetail": {
+    "description": "#3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardAnonViewTitle": "A view readable by anon runs as its owner",
+  "@instanceDoctorGuardAnonViewTitle": {
+    "description": "#3489 Doctor alarm: a view readable by anon runs as its owner."
+  },
+  "instanceDoctorGuardDefinerDetail": "{names}\n        It runs as the owner; an unpinned search_path lets a caller decide which table its unqualified names mean.",
+  "@instanceDoctorGuardDefinerDetail": {
+    "description": "#3489 Detail of the alarm: a definer function has no fixed search_path; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardDefinerTitle": "A SECURITY DEFINER function has no fixed search_path",
+  "@instanceDoctorGuardDefinerTitle": {
+    "description": "#3489 Doctor alarm: a definer function has no fixed search_path."
+  },
+  "instanceDoctorGuardPublicBucketDetail": "{names}\n        A public bucket serves every object to anyone with the URL, whatever the policies say.",
+  "@instanceDoctorGuardPublicBucketDetail": {
+    "description": "#3489 Detail of the alarm: a storage bucket is public; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardPublicBucketTitle": "A storage bucket is public",
+  "@instanceDoctorGuardPublicBucketTitle": {
+    "description": "#3489 Doctor alarm: a storage bucket is public."
+  },
+  "instanceDoctorGuardRealtimeDetail": "{names}\n        Realtime replays row changes to subscribers through the same policies; a table without them publishes to everyone.",
+  "@instanceDoctorGuardRealtimeDetail": {
+    "description": "#3489 Detail of the alarm: a realtime-published table is unprotected; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardRealtimeTitle": "A realtime-published table is unprotected",
+  "@instanceDoctorGuardRealtimeTitle": {
+    "description": "#3489 Doctor alarm: a realtime-published table is unprotected."
+  },
+  "instanceDoctorGuardSecretGrantsDetail": "{names}\n        Payment and e-invoice credentials, push configuration and badge attempts are read by the server, never by a client.",
+  "@instanceDoctorGuardSecretGrantsDetail": {
+    "description": "#3489 Detail of the alarm: a table holding secrets grants to an API role; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardSecretGrantsTitle": "A table holding secrets grants to an API role",
+  "@instanceDoctorGuardSecretGrantsTitle": {
+    "description": "#3489 Doctor alarm: a table holding secrets grants to an API role."
+  },
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}",
+  "@instanceDoctorHeld": {
+    "description": "#3489 Instance doctor: what an installation holds, in workspaces and members.",
+    "placeholders": {
+      "workspaces": {
+        "type": "int"
+      },
+      "members": {
+        "type": "int"
+      }
+    }
   },
   "instanceDoctorIntro": "Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.",
   "@instanceDoctorIntro": {
     "description": "#1308 instance wizard doctor and token"
   },
-  "instanceDoctorPassed": "{count} checks passed",
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}",
+  "@instanceDoctorNeedsHuman": {
+    "description": "#3489 Instance doctor report footer: how many findings are problems.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorPassed": "{count, plural, =1{1 check passed} other{{count} checks passed}}",
   "@instanceDoctorPassed": {
     "description": "#1308 instance wizard doctor and token",
     "placeholders": {
@@ -14616,9 +14706,109 @@
       }
     }
   },
+  "instanceDoctorPoliciesMatchDetail": "{count, plural, =1{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}",
+  "@instanceDoctorPoliciesMatchDetail": {
+    "description": "#3489 Detail: number of policies.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorPoliciesMatchTitle": "Policies match the migrations",
+  "@instanceDoctorPoliciesMatchTitle": {
+    "description": "#3489 Policies equal the migrations."
+  },
+  "instanceDoctorPolicyDriftSkippedDetail": "the expected list is empty — assets/instance/policies.txt was not read, so drift cannot be judged",
+  "@instanceDoctorPolicyDriftSkippedDetail": {
+    "description": "#3489 Detail: the expected policy list is empty."
+  },
+  "instanceDoctorPolicyDriftSkippedTitle": "Policy drift not checked",
+  "@instanceDoctorPolicyDriftSkippedTitle": {
+    "description": "#3489 Policy drift could not be judged."
+  },
+  "instanceDoctorProbeAuth": "Auth configuration",
+  "@instanceDoctorProbeAuth": {
+    "description": "#3489 Doctor probe name: auth configuration."
+  },
+  "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
+  "@instanceDoctorProbeFailedDetail": {
+    "description": "#3489 Detail of a failed probe.",
+    "placeholders": {
+      "status": {
+        "type": "int"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorProbeFailedTitle": "{probe} query failed",
+  "@instanceDoctorProbeFailedTitle": {
+    "description": "#3489 A doctor probe failed; {probe} is its name.",
+    "placeholders": {
+      "probe": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorProbeHardening": "Hardening",
+  "@instanceDoctorProbeHardening": {
+    "description": "#3489 Doctor probe name: hardening."
+  },
+  "instanceDoctorProbePolicies": "Policies",
+  "@instanceDoctorProbePolicies": {
+    "description": "#3489 Doctor probe name: policies."
+  },
+  "instanceDoctorProbeRoles": "Installation roles",
+  "@instanceDoctorProbeRoles": {
+    "description": "#3489 Doctor probe name: installation roles."
+  },
+  "instanceDoctorProbeSchema": "Schema",
+  "@instanceDoctorProbeSchema": {
+    "description": "#3489 Doctor probe name: schema."
+  },
+  "instanceDoctorProbeSecurity": "Security",
+  "@instanceDoctorProbeSecurity": {
+    "description": "#3489 Doctor probe name: security."
+  },
+  "instanceDoctorProbeSignups": "Sign-ups",
+  "@instanceDoctorProbeSignups": {
+    "description": "#3489 Doctor probe name: sign-ups."
+  },
+  "instanceDoctorProbeStorage": "Storage scoping",
+  "@instanceDoctorProbeStorage": {
+    "description": "#3489 Doctor probe name: storage scoping."
+  },
   "instanceDoctorProtected": "Protected",
   "@instanceDoctorProtected": {
     "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorRolesUndeclaredDetail": "the schema predates the roles column; the installation behaves as combined (personal home and workspace host) — {held}.\n        Fix: dart run tool/instance.dart install --ref <ref>",
+  "@instanceDoctorRolesUndeclaredDetail": {
+    "description": "#3489 Detail: roles column missing; {held} is the instanceDoctorHeld phrase.",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorRolesUndeclaredTitle": "Installation roles not declared",
+  "@instanceDoctorRolesUndeclaredTitle": {
+    "description": "#3489 The installation did not declare its roles."
+  },
+  "instanceDoctorRolesUnknownDetail": "{roles}\n        Only personal_home and workspace_host exist; operator_set_installation_roles writes a valid set.",
+  "@instanceDoctorRolesUnknownDetail": {
+    "description": "#3489 Detail: the declared roles.",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorRolesUnknownTitle": "Installation roles are not a known set",
+  "@instanceDoctorRolesUnknownTitle": {
+    "description": "#3489 The declared roles are not a known set."
   },
   "instanceDoctorRun": "Run the security check",
   "@instanceDoctorRun": {
@@ -14627,6 +14817,57 @@
   "instanceDoctorRunAgain": "Check again",
   "@instanceDoctorRunAgain": {
     "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorSchemaNoVersionDetail": "{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "@instanceDoctorSchemaNoVersionDetail": {
+    "description": "#3489 Detail: tables exist but no schema version.",
+    "placeholders": {
+      "tables": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorSchemaNoVersionTitle": "Schema has no version",
+  "@instanceDoctorSchemaNoVersionTitle": {
+    "description": "#3489 The schema records no version."
+  },
+  "instanceDoctorSignupsNobodyDetail": "{created} signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.",
+  "@instanceDoctorSignupsNobodyDetail": {
+    "description": "#3489 Detail: sign-ups but no confirmation.",
+    "placeholders": {
+      "created": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorSignupsNobodyTitle": "Nobody has confirmed in seven days",
+  "@instanceDoctorSignupsNobodyTitle": {
+    "description": "#3489 Nobody confirmed a sign-up in seven days."
+  },
+  "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}",
+  "@instanceDoctorStorageScopedDetail": {
+    "description": "#3489 Detail: number of storage read policies.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorStorageScopedTitle": "Storage reads are scoped",
+  "@instanceDoctorStorageScopedTitle": {
+    "description": "#3489 Storage reads are scoped to folders."
+  },
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}",
+  "@instanceDoctorStuckTitle": {
+    "description": "#3489 Instance doctor: accounts unconfirmed for over a day.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "instanceDoneIntro": "The instance is ready. Use it on this device, then share the server QR from the Server screen so members join the same one.",
   "@instanceDoneIntro": {
@@ -15385,7 +15626,7 @@
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
   },
-  "invoiceCountShown": "{count} invoices",
+  "invoiceCountShown": "{count, plural, =1{1 invoice} other{{count} invoices}}",
   "@invoiceCountShown": {
     "description": "Archive: how many invoices the current filters show",
     "placeholders": {
@@ -15764,7 +16005,7 @@
   "@invoiceIssueAll": {
     "description": "Sweep button: issue for every listed member"
   },
-  "invoiceIssueAllConfirm": "Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.",
+  "invoiceIssueAllConfirm": "{count, plural, =1{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}",
   "@invoiceIssueAllConfirm": {
     "description": "Confirm dialog of the invoice-all sweep",
     "placeholders": {
@@ -15807,7 +16048,7 @@
   "@invoiceIssued": {
     "description": "Snackbar after an invoice was issued"
   },
-  "invoiceIssuedCount": "{count} invoices issued.",
+  "invoiceIssuedCount": "{count, plural, =1{1 invoice issued.} other{{count} invoices issued.}}",
   "@invoiceIssuedCount": {
     "description": "Snackbar after the invoice-all sweep",
     "placeholders": {
@@ -17572,7 +17813,7 @@
   "@leaseNoticeTitle": {
     "description": "#2569 premises lease"
   },
-  "leaseOccurrencesAfter": "{count} occurrences were already presented for a date after the end.",
+  "leaseOccurrencesAfter": "{count, plural, =1{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {
@@ -21090,7 +21331,7 @@
     }
   },
   "moneyOpenInvoicesTitle": "Open invoices",
-  "moneyOverage": "Overage ({count} extra half-days)",
+  "moneyOverage": "{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}",
   "@moneyOverage": {
     "description": "Statement line for usage beyond the included quota",
     "placeholders": {
@@ -22233,12 +22474,12 @@
   "@overviewNoPinned": {
     "description": "#2583 C2 overview layout"
   },
-  "overviewOverdueBasis": "{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart",
+  "overviewOverdueBasis": "{count, plural, =1{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}",
   "@overviewOverdueBasis": {
     "description": "#2583 the overview's own figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       },
       "unknown": {
         "type": "String"
@@ -23318,7 +23559,7 @@
       }
     }
   },
-  "plansEditorQuota": "{count} half-days",
+  "plansEditorQuota": "{count, plural, =1{1 half-day} other{{count} half-days}}",
   "@plansEditorQuota": {
     "description": "Quota summary",
     "placeholders": {
@@ -23825,7 +24066,7 @@
       }
     }
   },
-  "processApplied": "{count} features changed.",
+  "processApplied": "{count, plural, =1{1 feature changed.} other{{count} features changed.}}",
   "@processApplied": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -23852,7 +24093,7 @@
   "@processChangeFailed": {
     "description": "#1329 the process change preview and apply"
   },
-  "processConfirmOff": "Switch off {count} features",
+  "processConfirmOff": "{count, plural, =1{Switch off 1 feature} other{Switch off {count} features}}",
   "@processConfirmOff": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -23861,7 +24102,7 @@
       }
     }
   },
-  "processConfirmOn": "Switch on {count} features",
+  "processConfirmOn": "{count, plural, =1{Switch on 1 feature} other{Switch on {count} features}}",
   "@processConfirmOn": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -23965,7 +24206,7 @@
   },
   "processOperations": "Operations & administration",
   "processOperationsDesc": "Maintain configuration and the application experience.",
-  "processRemoveDependants": "Also switch off the {count} dependants",
+  "processRemoveDependants": "{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}",
   "@processRemoveDependants": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -24228,7 +24469,7 @@
   "@publicHolidaysAction": {
     "description": "#1274 the action that opens the holiday preview"
   },
-  "publicHolidaysConfirm": "Create {count} closure days",
+  "publicHolidaysConfirm": "{count, plural, =1{Create 1 closure day} other{Create {count} closure days}}",
   "@publicHolidaysConfirm": {
     "description": "#1274 confirm creating the previewed days",
     "placeholders": {
@@ -24241,7 +24482,7 @@
   "@publicHolidaysCountry": {
     "description": "#1274 the country field label"
   },
-  "publicHolidaysCreated": "{count} closure days created",
+  "publicHolidaysCreated": "{count, plural, =1{1 closure day created} other{{count} closure days created}}",
   "@publicHolidaysCreated": {
     "description": "#1274 how many closure days were written",
     "placeholders": {
@@ -25989,7 +26230,7 @@
   },
   "refFilterMore": "Filters",
   "refFilterReset": "Reset",
-  "refFilterShow": "Show {count} results",
+  "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {
@@ -27470,7 +27711,7 @@
   "@reservePlanLoading": {
     "description": "#3068 the label of the plan skeleton on Reserve"
   },
-  "reserveRoomFor": "Meeting room · {count} people",
+  "reserveRoomFor": "{count, plural, =1{Meeting room · 1 person} other{Meeting room · {count} people}}",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
     "placeholders": {
@@ -28075,7 +28316,7 @@
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
   },
-  "roomRentAudienceNamed": "Open to {count} chosen entries",
+  "roomRentAudienceNamed": "{count, plural, =1{Open to 1 chosen entry} other{Open to {count} chosen entries}}",
   "@roomRentAudienceNamed": {
     "description": "#2568 rented rooms",
     "placeholders": {
@@ -28441,10 +28682,34 @@
   "scheduleCancel": "End this schedule",
   "scheduleDaily": "daily",
   "scheduleEndsOn": "Until (optional)",
-  "scheduleEveryDays": "every {count} days",
+  "scheduleEveryDays": "{count, plural, =1{every day} other{every {count} days}}",
+  "@scheduleEveryDays": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scheduleEveryLabel": "Every",
-  "scheduleEveryMonths": "every {count} months",
-  "scheduleEveryWeeks": "every {count} weeks",
+  "scheduleEveryMonths": "{count, plural, =1{every month} other{every {count} months}}",
+  "@scheduleEveryMonths": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scheduleEveryWeeks": "{count, plural, =1{every week} other{every {count} weeks}}",
+  "@scheduleEveryWeeks": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scheduleMissingFields": "Name and amount are needed.",
   "scheduleMonthly": "monthly",
   "scheduleNew": "Schedule a recurring expense",
@@ -28460,7 +28725,15 @@
   "scheduleStatusRejected": "Rejected",
   "scheduleSubmit": "Schedule it",
   "scheduleSupplierLabel": "Supplier it pays (optional)",
-  "scheduleTimes": "{count} times",
+  "scheduleTimes": "{count, plural, =1{1 time} other{{count} times}}",
+  "@scheduleTimes": {
+    "description": "#3485 Schedule interval or repetition count (ICU plural).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scheduleTimesLabel": "Repetitions (empty = until the end date)",
   "scheduleTitleLabel": "What (e.g. Internet)",
   "scheduleUnitDays": "days",
@@ -29580,7 +29853,7 @@
   },
   "settlementAnnexTitle": "Attach the regrouped invoices?",
   "settlementAnnexWith": "Attach them",
-  "settlementConfirm": "Regroup {count} invoices into one of {amount}?",
+  "settlementConfirm": "{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}",
   "@settlementConfirm": {
     "description": "Confirm regrouping N invoices into one (#804)",
     "placeholders": {
@@ -31029,7 +31302,7 @@
   "@setupPaymentsSaveFailed": {
     "description": "#2871 setup run steps: setupPaymentsSaveFailed"
   },
-  "setupPlacesCounts": "{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
+  "setupPlacesCounts": "{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}",
   "@setupPlacesCounts": {
     "description": "#2870 setup steps: setupPlacesCounts",
     "placeholders": {
@@ -33182,7 +33455,7 @@
   "@taskRecorderDisclosureTitle": {
     "description": "#1865 task recorder: taskRecorderDisclosureTitle"
   },
-  "taskRecorderEditedNote": "Edited copy: {count} steps left out. The recording on this device is unchanged.",
+  "taskRecorderEditedNote": "{count, plural, =1{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}",
   "@taskRecorderEditedNote": {
     "description": "#1865 task recorder: taskRecorderEditedNote",
     "placeholders": {
@@ -33247,7 +33520,7 @@
   "@taskRecorderFieldTime": {
     "description": "#1865 task recorder: taskRecorderFieldTime"
   },
-  "taskRecorderIndicator": "Recording a task: {count} steps",
+  "taskRecorderIndicator": "{count, plural, =1{Recording a task: 1 step} other{Recording a task: {count} steps}}",
   "@taskRecorderIndicator": {
     "description": "#1865 task recorder: taskRecorderIndicator",
     "placeholders": {
@@ -33461,7 +33734,7 @@
   "@taskRecorderStartFailed": {
     "description": "#1865 task recorder: taskRecorderStartFailed"
   },
-  "taskRecorderStepCount": "{count} steps",
+  "taskRecorderStepCount": "{count, plural, =1{1 step} other{{count} steps}}",
   "@taskRecorderStepCount": {
     "description": "#1865 task recorder: taskRecorderStepCount",
     "placeholders": {
@@ -34561,21 +34834,21 @@
   "@templateWidenConfirm": {
     "description": "#1658 template_widen"
   },
-  "templateWidenCount": "{count} settings become readable, exactly as the template holds them now.",
+  "templateWidenCount": "{count, plural, =1{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}",
   "@templateWidenCount": {
     "description": "#1658 template_widen",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "templateWidenExcluded": "{count} kinds of value never leave with it (bank details, sites, addresses…).",
+  "templateWidenExcluded": "{count, plural, =1{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}",
   "@templateWidenExcluded": {
     "description": "#1658 template_widen",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -35117,7 +35390,7 @@
   "@usagePrepareAction": {
     "description": "#2590 usage preparation"
   },
-  "usagePrepareBanner": "{count} bookings of this month are not recorded yet, so this list may be incomplete.",
+  "usagePrepareBanner": "{count, plural, =1{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {

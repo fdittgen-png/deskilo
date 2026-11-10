@@ -1,0 +1,243 @@
+{
+  "instanceDoctorStuckTitle": "{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}",
+  "@instanceDoctorStuckTitle": {
+    "description": "#3489 Instance doctor: accounts unconfirmed for over a day.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorNeedsHuman": "{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}",
+  "@instanceDoctorNeedsHuman": {
+    "description": "#3489 Instance doctor report footer: how many findings are problems.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorAllHealthy": "Everything checked is healthy.",
+  "@instanceDoctorAllHealthy": {
+    "description": "#3489 Instance doctor report footer when nothing is wrong."
+  },
+  "instanceDoctorHeld": "{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}",
+  "@instanceDoctorHeld": {
+    "description": "#3489 Instance doctor: what an installation holds, in workspaces and members.",
+    "placeholders": {
+      "workspaces": {
+        "type": "int"
+      },
+      "members": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorProbeAuth": "Auth configuration",
+  "@instanceDoctorProbeAuth": {
+    "description": "#3489 Doctor probe name: auth configuration."
+  },
+  "instanceDoctorProbeSignups": "Sign-ups",
+  "@instanceDoctorProbeSignups": {
+    "description": "#3489 Doctor probe name: sign-ups."
+  },
+  "instanceDoctorProbeSchema": "Schema",
+  "@instanceDoctorProbeSchema": {
+    "description": "#3489 Doctor probe name: schema."
+  },
+  "instanceDoctorProbeSecurity": "Security",
+  "@instanceDoctorProbeSecurity": {
+    "description": "#3489 Doctor probe name: security."
+  },
+  "instanceDoctorProbePolicies": "Policies",
+  "@instanceDoctorProbePolicies": {
+    "description": "#3489 Doctor probe name: policies."
+  },
+  "instanceDoctorProbeStorage": "Storage scoping",
+  "@instanceDoctorProbeStorage": {
+    "description": "#3489 Doctor probe name: storage scoping."
+  },
+  "instanceDoctorProbeHardening": "Hardening",
+  "@instanceDoctorProbeHardening": {
+    "description": "#3489 Doctor probe name: hardening."
+  },
+  "instanceDoctorProbeRoles": "Installation roles",
+  "@instanceDoctorProbeRoles": {
+    "description": "#3489 Doctor probe name: installation roles."
+  },
+  "instanceDoctorProbeFailedTitle": "{probe} query failed",
+  "@instanceDoctorProbeFailedTitle": {
+    "description": "#3489 A doctor probe failed; {probe} is its name.",
+    "placeholders": {
+      "probe": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
+  "@instanceDoctorProbeFailedDetail": {
+    "description": "#3489 Detail of a failed probe.",
+    "placeholders": {
+      "status": {
+        "type": "int"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorSignupsNobodyTitle": "Nobody has confirmed in seven days",
+  "@instanceDoctorSignupsNobodyTitle": {
+    "description": "#3489 Nobody confirmed a sign-up in seven days."
+  },
+  "instanceDoctorSignupsNobodyDetail": "{created} signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.",
+  "@instanceDoctorSignupsNobodyDetail": {
+    "description": "#3489 Detail: sign-ups but no confirmation.",
+    "placeholders": {
+      "created": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorSchemaNoVersionTitle": "Schema has no version",
+  "@instanceDoctorSchemaNoVersionTitle": {
+    "description": "#3489 The schema records no version."
+  },
+  "instanceDoctorSchemaNoVersionDetail": "{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "@instanceDoctorSchemaNoVersionDetail": {
+    "description": "#3489 Detail: tables exist but no schema version.",
+    "placeholders": {
+      "tables": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorPolicyDriftSkippedTitle": "Policy drift not checked",
+  "@instanceDoctorPolicyDriftSkippedTitle": {
+    "description": "#3489 Policy drift could not be judged."
+  },
+  "instanceDoctorPolicyDriftSkippedDetail": "the expected list is empty — assets/instance/policies.txt was not read, so drift cannot be judged",
+  "@instanceDoctorPolicyDriftSkippedDetail": {
+    "description": "#3489 Detail: the expected policy list is empty."
+  },
+  "instanceDoctorPoliciesMatchTitle": "Policies match the migrations",
+  "@instanceDoctorPoliciesMatchTitle": {
+    "description": "#3489 Policies equal the migrations."
+  },
+  "instanceDoctorPoliciesMatchDetail": "{count, plural, =1{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}",
+  "@instanceDoctorPoliciesMatchDetail": {
+    "description": "#3489 Detail: number of policies.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorStorageScopedTitle": "Storage reads are scoped",
+  "@instanceDoctorStorageScopedTitle": {
+    "description": "#3489 Storage reads are scoped to folders."
+  },
+  "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}",
+  "@instanceDoctorStorageScopedDetail": {
+    "description": "#3489 Detail: number of storage read policies.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorGuardRealtimeTitle": "A realtime-published table is unprotected",
+  "@instanceDoctorGuardRealtimeTitle": {
+    "description": "#3489 Doctor alarm: a realtime-published table is unprotected."
+  },
+  "instanceDoctorGuardRealtimeDetail": "{names}\n        Realtime replays row changes to subscribers through the same policies; a table without them publishes to everyone.",
+  "@instanceDoctorGuardRealtimeDetail": {
+    "description": "#3489 Detail of the alarm: a realtime-published table is unprotected; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardDefinerTitle": "A SECURITY DEFINER function has no fixed search_path",
+  "@instanceDoctorGuardDefinerTitle": {
+    "description": "#3489 Doctor alarm: a definer function has no fixed search_path."
+  },
+  "instanceDoctorGuardDefinerDetail": "{names}\n        It runs as the owner; an unpinned search_path lets a caller decide which table its unqualified names mean.",
+  "@instanceDoctorGuardDefinerDetail": {
+    "description": "#3489 Detail of the alarm: a definer function has no fixed search_path; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardAnonViewTitle": "A view readable by anon runs as its owner",
+  "@instanceDoctorGuardAnonViewTitle": {
+    "description": "#3489 Doctor alarm: a view readable by anon runs as its owner."
+  },
+  "instanceDoctorGuardAnonViewDetail": "{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.",
+  "@instanceDoctorGuardAnonViewDetail": {
+    "description": "#3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardSecretGrantsTitle": "A table holding secrets grants to an API role",
+  "@instanceDoctorGuardSecretGrantsTitle": {
+    "description": "#3489 Doctor alarm: a table holding secrets grants to an API role."
+  },
+  "instanceDoctorGuardSecretGrantsDetail": "{names}\n        Payment and e-invoice credentials, push configuration and badge attempts are read by the server, never by a client.",
+  "@instanceDoctorGuardSecretGrantsDetail": {
+    "description": "#3489 Detail of the alarm: a table holding secrets grants to an API role; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorGuardPublicBucketTitle": "A storage bucket is public",
+  "@instanceDoctorGuardPublicBucketTitle": {
+    "description": "#3489 Doctor alarm: a storage bucket is public."
+  },
+  "instanceDoctorGuardPublicBucketDetail": "{names}\n        A public bucket serves every object to anyone with the URL, whatever the policies say.",
+  "@instanceDoctorGuardPublicBucketDetail": {
+    "description": "#3489 Detail of the alarm: a storage bucket is public; {names} lists the objects.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorRolesUndeclaredTitle": "Installation roles not declared",
+  "@instanceDoctorRolesUndeclaredTitle": {
+    "description": "#3489 The installation did not declare its roles."
+  },
+  "instanceDoctorRolesUndeclaredDetail": "the schema predates the roles column; the installation behaves as combined (personal home and workspace host) — {held}.\n        Fix: dart run tool/instance.dart install --ref <ref>",
+  "@instanceDoctorRolesUndeclaredDetail": {
+    "description": "#3489 Detail: roles column missing; {held} is the instanceDoctorHeld phrase.",
+    "placeholders": {
+      "held": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorRolesUnknownTitle": "Installation roles are not a known set",
+  "@instanceDoctorRolesUnknownTitle": {
+    "description": "#3489 The declared roles are not a known set."
+  },
+  "instanceDoctorRolesUnknownDetail": "{roles}\n        Only personal_home and workspace_host exist; operator_set_installation_roles writes a valid set.",
+  "@instanceDoctorRolesUnknownDetail": {
+    "description": "#3489 Detail: the declared roles.",
+    "placeholders": {
+      "roles": {
+        "type": "String"
+      }
+    }
+  }
+}

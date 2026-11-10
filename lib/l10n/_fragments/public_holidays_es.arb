@@ -100,7 +100,7 @@
       }
     }
   },
-  "publicHolidaysConfirm": "Crear {count} días de cierre",
+  "publicHolidaysConfirm": "{count, plural, =1{Crear 1 día de cierre} other{Crear {count} días de cierre}}",
   "@publicHolidaysConfirm": {
     "description": "#1274 confirm creating the previewed days",
     "placeholders": {
@@ -113,7 +113,7 @@
   "@publicHolidaysNothingToCreate": {
     "description": "#1274 nothing left to create"
   },
-  "publicHolidaysCreated": "{count} días de cierre creados",
+  "publicHolidaysCreated": "{count, plural, =1{1 día de cierre creado} other{{count} días de cierre creados}}",
   "@publicHolidaysCreated": {
     "description": "#1274 how many closure days were written",
     "placeholders": {

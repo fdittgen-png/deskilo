@@ -100,12 +100,12 @@
       }
     }
   },
-  "biViewWithheld": "{count} chiffres de cette vue ne sont pas affichés : vous n'avez pas le droit de les lire.",
+  "biViewWithheld": "{count, plural, =1{1 chiffre de cette vue n'est pas affiché : vous n'avez pas le droit de le lire.} other{{count} chiffres de cette vue ne sont pas affichés : vous n'avez pas le droit de les lire.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   }

@@ -3,7 +3,7 @@
   "biCustomerPaymentBasis": "{onTime} von {settled} beglichenen Rechnungen bis zur Fälligkeit bezahlt",
   "biCustomerPaymentDefinition": "Die Rechnungen, die im Zeitraum fällig werden, jede in genau einer Gruppe. Eine beglichene Rechnung ist pünktlich, wenn ihre letzte Zahlung spätestens am Fälligkeitstag als bezahlt gemeldet wurde: das Wertstellungsdatum der Bank, wenn eine abgeglichene Zeile die Zahlung erklärt, sonst das erfasste Zahlungsdatum, nie der Tag der Zuordnung. Beträge sind das, was die Rechnungen schulden, einschließlich MwSt.",
   "biCustomerDelay": "Tage von der Fälligkeit bis zur Zahlung: Median {median}, 90. Perzentil {p90}, nach Betrag gewichtet {weighted} (negativ: früher)",
-  "biCustomerCohortLine": "{cohort}: {count} Rechnungen, {amount}",
+  "biCustomerCohortLine": "{count, plural, =1{{cohort}: 1 Rechnung, {amount}} other{{cohort}: {count} Rechnungen, {amount}}}",
   "biCustomerCohortOnTime": "Pünktlich bezahlt",
   "biCustomerCohortLate": "Verspätet bezahlt",
   "biCustomerCohortUndated": "Ohne Zahlungsdatum beglichen",

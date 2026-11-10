@@ -17,39 +17,17 @@
 // Every signal needed was already in the project — the auth config and
 // four rows of `auth.users`. This is the thing that reads them.
 
+import 'package:intl/intl.dart';
+
+import '../diagnostics/doctor_english.dart';
+import 'doctor_finding.dart';
 import 'instance_auth_check.dart';
 import 'instance_builder.dart';
 import 'instance_security_checks.dart';
 import 'management_api.dart';
 import 'schema_compatibility.dart';
 
-/// How serious a finding is. [alarm] means people are affected right now.
-enum DoctorLevel { ok, warn, alarm }
-
-/// One thing the doctor looked at.
-class DoctorFinding {
-  const DoctorFinding(this.level, this.title, this.detail, {this.count});
-
-  final DoctorLevel level;
-  final String title;
-
-  /// #1313 — how many objects the finding is about, when it is about a
-  /// list of them. The scheduled run publishes this number and not the
-  /// names: its log is public.
-  final int? count;
-
-  /// What was found and, when something is wrong, what to do about it.
-  final String detail;
-
-  bool get isProblem => level != DoctorLevel.ok;
-
-  @override
-  String toString() => '${switch (level) {
-        DoctorLevel.ok => 'ok   ',
-        DoctorLevel.warn => 'warn ',
-        DoctorLevel.alarm => 'ALARM',
-      }}  $title\n        $detail';
-}
+export 'doctor_finding.dart';
 
 /// Reads a live project and says whether people can actually sign in.
 class InstanceDoctor {
@@ -80,34 +58,34 @@ class InstanceDoctor {
     Set<String> expectedPolicies = const {},
   }) async =>
       [
-        ...await _probe('Auth configuration',
+        ...await _probe(DoctorProbe.auth,
             () async => checkAuthConfig(await api.authConfig(ref), expectedAuth: expectedAuth)),
-        ...await _probe('Sign-ups',
+        ...await _probe(DoctorProbe.signups,
             () async => checkSignups(await api.query(ref, signupHealthSql))),
         ...await _probe(
-            'Schema',
+            DoctorProbe.schema,
             () async => checkSchema(await api.query(ref, schemaHealthSql),
                 required: required, bundleMigrations: bundleMigrations)),
-        ...await _probe('Security',
+        ...await _probe(DoctorProbe.security,
             () async => checkSecurity(await api.query(ref, securityHealthSql))),
         // #1313 — structural, read-only, and the only check that can see a
         // policy no migration created: a replay cannot contain one.
         ...await _probe(
-            'Policies',
+            DoctorProbe.policies,
             () async => checkPolicyDrift(
                 await api.query(ref, policyDriftSql), expectedPolicies)),
         ...await _probe(
-            'Storage scoping',
+            DoctorProbe.storage,
             () async =>
                 checkStorageScoping(await api.query(ref, storageReadPolicySql))),
-        ...await _probe('Hardening',
+        ...await _probe(DoctorProbe.hardening,
             () async => checkGuards(await api.query(ref, guardHealthSql))),
-        ...await _probe('Installation roles',
+        ...await _probe(DoctorProbe.roles,
             () async => checkInstallationRoles(await api.query(ref, installationRolesSql))),
       ];
 
   Future<List<DoctorFinding>> _probe(
-    String what,
+    DoctorProbe probe,
     Future<List<DoctorFinding>> Function() ask,
   ) async {
     try {
@@ -118,11 +96,10 @@ class InstanceDoctor {
       // trace-exempt: an unauthorized answer is rethrown with its stack; any other becomes a finding the report prints.
       if (e.unauthorized) Error.throwWithStackTrace(e, st);
       return [
-        DoctorFinding(
+        DoctorFinding.typed(
           DoctorLevel.alarm,
-          '$what query failed',
-          'Supabase answered ${e.status}: ${e.message}\n'
-              '        The other checks ran without it.',
+          DoctorWords.probeFailed,
+          facts: [probe, e.status, e.message],
         ),
       ];
     }
@@ -233,13 +210,10 @@ select
 
     // The invariant that broke: people kept arriving, nobody got in.
     if (created > 0 && confirmed == 0) {
-      findings.add(DoctorFinding(
+      findings.add(DoctorFinding.typed(
         DoctorLevel.alarm,
-        'Nobody has confirmed in seven days',
-        '$created signed up, 0 confirmed. Sign-up is not merely slow — no '
-            'one has completed it.\n'
-            '        Check the Site URL above first: that is what the mail '
-            'links to.',
+        DoctorWords.signupsNobodyConfirmed,
+        facts: [created],
       ));
     } else {
       findings.add(DoctorFinding(DoctorLevel.ok, 'Sign-ups (7 days)',
@@ -249,10 +223,15 @@ select
     if (stuck > 0) {
       findings.add(DoctorFinding(
         stuck > 2 ? DoctorLevel.alarm : DoctorLevel.warn,
-        '$stuck account${stuck == 1 ? '' : 's'} cannot get in',
+        Intl.plural(stuck,
+            one: '$stuck account cannot get in',
+            other: '$stuck accounts cannot get in',
+            locale: 'en'),
         'unconfirmed for more than 24 h; the oldest for $oldestHours h.\n'
             '        These are people who tried. They will not try again '
             'unprompted.',
+        count: stuck,
+        words: DoctorWords.stuckAccounts,
       ));
     } else {
       findings.add(const DoctorFinding(
@@ -307,15 +286,10 @@ select
     }
     if (marker == null) {
       return [
-        DoctorFinding(
+        DoctorFinding.typed(
           DoctorLevel.alarm,
-          'Schema has no version',
-          '$tables tables exist, but no schema version: this instance '
-              'predates migration 0226, so it is behind an app that needs '
-              '$required. The install upgrades it from what it recorded.\n'
-              '$install\n'
-              '        If it cannot tell where to resume, first: '
-              'dart run tool/instance.dart record --ref <ref> --through <NNNN>',
+          DoctorWords.schemaNoVersion,
+          facts: [tables, required],
         ),
       ];
     }
@@ -458,7 +432,7 @@ String doctorReport(
   buffer
     ..writeln()
     ..writeln(problems == 0
-      ? 'Everything checked is healthy.'
-      : '$problems finding${problems == 1 ? '' : 's'} need a human.');
+      ? doctorHealthyEnglish
+      : doctorNeedsHumanEnglish(problems));
   return buffer.toString();
 }

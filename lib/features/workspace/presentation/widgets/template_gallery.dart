@@ -172,7 +172,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       if (_shortlist.any((s) => s.id == t.id)) {
         _shortlist.removeWhere((s) => s.id == t.id);
       } else if (_shortlist.length >= maxShortlist) {
-        AppSnack.info(context, l10n.compareLimit('$maxShortlist'));
+        AppSnack.info(context, l10n.compareLimit(maxShortlist));
       } else {
         _shortlist.add(t);
       }

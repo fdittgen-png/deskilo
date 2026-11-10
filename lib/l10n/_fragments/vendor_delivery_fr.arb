@@ -4,7 +4,7 @@
   "biVendorDeliveryDefinition": "Les commandes envoyées dans la période. Une commande reçue est à temps quand sa dernière réception est à la date prévue ou avant. Une commande sans date prévue, ou encore attendue, n'est ni à temps ni en retard.",
   "biVendorDeliveryLead": "Jours entre l'envoi et la dernière réception : médiane {median}, 90e centile {p90}",
   "biVendorDeliveryDelay": "Par rapport à la date prévue (négatif = en avance) : médiane {median}, 90e centile {p90}",
-  "biVendorDeliveryCohortLine": "{cohort} : {count} commandes",
+  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort} : 1 commande} other{{cohort} : {count} commandes}}",
   "biVendorDeliveryLine": "{name} : {onTime} à temps, {late} en retard, sur {orders} commandes",
   "biVendorDeliveryOnTime": "Reçue à temps",
   "biVendorDeliveryLate": "Reçue en retard",

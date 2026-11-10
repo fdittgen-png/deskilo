@@ -100,12 +100,12 @@
       }
     }
   },
-  "biViewWithheld": "{count} Kennzahlen dieser Ansicht werden nicht angezeigt: Sie dürfen sie nicht lesen.",
+  "biViewWithheld": "{count, plural, =1{1 Kennzahl dieser Ansicht wird nicht angezeigt: Sie dürfen sie nicht lesen.} other{{count} Kennzahlen dieser Ansicht werden nicht angezeigt: Sie dürfen sie nicht lesen.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   }

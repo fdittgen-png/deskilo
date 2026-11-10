@@ -62,7 +62,7 @@
   "biRefusedGrain": "Cette analyse n’est pas proposée pour cette durée de période.",
   "biRefusedComparison": "Cette analyse ne peut pas faire cette comparaison.",
   "biRefusedGrouping": "Cette analyse ne peut pas être regroupée ainsi.",
-  "biRefusedBudget": "Il y a plus de {count} groupes ; choisissez « Sans regroupement ».",
+  "biRefusedBudget": "{count, plural, =1{Il y a plus de 1 groupe ; choisissez « Sans regroupement ».} other{Il y a plus de {count} groupes ; choisissez « Sans regroupement ».}}",
   "biComparedNotRecorded": "{period} n’a pas été enregistré (l’historique commence le {since}) ; pas de comparaison.",
   "biComparedPartial": "{period} n’est enregistré qu’en partie.",
   "biExposureDiffers": "Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.",
@@ -101,14 +101,14 @@
   "biViewForbidden": "Vous ne pouvez pas modifier cette vue.",
   "biViewInvalid": "Ce nom ou cette vue ne peut pas être enregistré.",
   "biViewUnreadable": "Cette vue ne peut pas être ouverte ici : elle a été enregistrée sous une forme que cette version ne lit pas, ou aucune de ses analyses ne vous est accessible.",
-  "biCardsUnavailable": "{count} analyses de cette vue ne vous sont pas accessibles et sont omises.",
+  "biCardsUnavailable": "{count, plural, =1{1 analyse de cette vue ne vous est pas accessible et est omise.} other{{count} analyses de cette vue ne vous sont pas accessibles et sont omises.}}",
   "biCards": "Analyses affichées",
   "biCardUp": "Monter",
   "biCardDown": "Descendre",
   "biFinanceInvoiced": "Facturé",
   "biFinanceCollected": "Encaissé",
-  "biFinanceInvoicedBasis": "Sur {count} factures ; avoirs {credit}, montrés à part",
-  "biFinanceCollectedBasis": "Sur {count} paiements rapprochés de factures",
+  "biFinanceInvoicedBasis": "{count, plural, =1{Sur 1 facture ; avoirs {credit}, montrés à part} other{Sur {count} factures ; avoirs {credit}, montrés à part}}",
+  "biFinanceCollectedBasis": "{count, plural, =1{Sur 1 paiement rapproché de factures} other{Sur {count} paiements rapprochés de factures}}",
   "biFinanceCurrencyMix": "Cette période contient des montants dans une autre devise ; des devises différentes ne s’additionnent pas, aucun montant n’est donc affiché.",
   "biFinanceNotExact": "Un montant est trop grand pour être affiché exactement ; il n’est donc pas affiché.",
   "biFinancePartial": "La période n’est pas terminée : ces chiffres vont encore changer.",
@@ -121,5 +121,5 @@
   "biFinanceLastChange": "Dernière modification de la source : {date}",
   "biFinanceComputed": "Calculé le {date}",
   "biIncompatible": "Le serveur définit désormais cet indicateur autrement que ne le connaît cette version de l'application : mettez l'application à jour pour le voir.",
-  "biViewCardsIncompatible": "{count} analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens."
+  "biViewCardsIncompatible": "{count, plural, =1{1 analyse de cette vue a été enregistrée quand son indicateur avait un autre sens ; elle est omise plutôt que montrées avec un autre sens.} other{{count} analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens.}}"
 }

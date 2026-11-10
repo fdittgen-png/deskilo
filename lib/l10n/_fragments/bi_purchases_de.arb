@@ -52,12 +52,12 @@
   "@biCashOutflowsDefinition": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count} Zahlungen",
+  "biCashOutflowsBasis": "{count, plural, =1{1 Zahlung} other{{count} Zahlungen}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -101,21 +101,21 @@
   "@biContributionNotProfit": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnresolved": "{count} nicht eingestufte Positionen bleiben außen vor.",
+  "biCostsUnresolved": "{count, plural, =1{1 nicht eingestufte Position bleibt außen vor.} other{{count} nicht eingestufte Positionen bleiben außen vor.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
-  "biCostsUnqualified": "{count} Positionen ohne eingestufte abziehbare Steuer zählen mit ihrem Bruttobetrag.",
+  "biCostsUnqualified": "{count, plural, =1{1 Position ohne eingestufte abziehbare Steuer zählt mit ihrem Bruttobetrag.} other{{count} Positionen ohne eingestufte abziehbare Steuer zählen mit ihrem Bruttobetrag.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -134,7 +134,7 @@
   "biAllocationDefinition": "Die Betriebskosten der Monate, auf Ebenen und Büros verteilt nach der Regel, die am Datum jedes Belegs galt, nach größtem Rest auf den Cent genau. Direkt, geteilt und nicht verteilt ergeben immer die Betriebskosten.",
   "biAllocationBasis": "{direct} direkt, {shared} geteilt, {unallocated} nicht verteilt",
   "biAllocationUnallocated": "{amount} verteilt keine Regel: bleibt nicht verteilt, nie gleichmäßig aufgeteilt.",
-  "biAllocationConflicts": "{count} Zeilen beanspruchen zwei Regeln; sie bleiben nicht verteilt, bis eine davon endet.",
+  "biAllocationConflicts": "{count, plural, =1{1 Zeile beansprucht zwei Regeln; sie bleibt nicht verteilt, bis eine davon endet.} other{{count} Zeilen beanspruchen zwei Regeln; sie bleiben nicht verteilt, bis eine davon endet.}}",
   "biAllocationNotBilled": "Eine Auswertung: kein Mitglied wird belastet, kein Beleg und keine Buchung ändert sich.",
   "biAllocationRevisions": "Verteilt durch: {rules}",
   "biAllocationRevision": "{basis} (Fassung {revision})",

@@ -287,7 +287,7 @@ void main() {
       final m = salesMeasure(k, 'sales.revenue_by_kind');
       expect(
         biModuleViews['sales.revenue_by_kind']!.notes(m, l10n, 'en'),
-        contains(l10n.biSalesNetUnknown('2')),
+        contains(l10n.biSalesNetUnknown(2)),
       );
     });
 

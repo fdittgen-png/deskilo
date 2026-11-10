@@ -86,7 +86,7 @@
   "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
   "settlementSettledBy": "In eine andere Rechnung zusammengefasst — diese ist das, was geschuldet und angemahnt wird.",
   "settlementAction": "Zu einer Rechnung zusammenfassen",
-  "settlementConfirm": "{count} Rechnungen zu einer über {amount} zusammenfassen?",
+  "settlementConfirm": "{count, plural, =1{1 Rechnung zu einer über {amount} zusammenfassen?} other{{count} Rechnungen zu einer über {amount} zusammenfassen?}}",
   "settlementDone": "Zusammengefasst in {number}.",
   "settlementNeedsTwo": "Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.",
   "@settlementConfirm": {

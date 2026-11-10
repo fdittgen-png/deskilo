@@ -3874,8 +3874,8 @@ abstract class AppLocalizations {
   /// #2582 cost allocation
   ///
   /// In en, this message translates to:
-  /// **'{count} lines are claimed by two rules and stay unallocated until one of them goes.'**
-  String biAllocationConflicts(String count);
+  /// **'{count, plural, =1{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}'**
+  String biAllocationConflicts(int count);
 
   /// #2582 cost allocation
   ///
@@ -4078,8 +4078,8 @@ abstract class AppLocalizations {
   /// #1923 C Web-BI saved views
   ///
   /// In en, this message translates to:
-  /// **'{count} analyses of this view are not available to you and are left out.'**
-  String biCardsUnavailable(String count);
+  /// **'{count, plural, =1{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}'**
+  String biCardsUnavailable(int count);
 
   /// #2582 purchase analytics
   ///
@@ -4090,8 +4090,8 @@ abstract class AppLocalizations {
   /// #2582 purchase analytics
   ///
   /// In en, this message translates to:
-  /// **'{count} payments'**
-  String biCashOutflowsBasis(String count);
+  /// **'{count, plural, =1{1 payment} other{{count} payments}}'**
+  String biCashOutflowsBasis(int count);
 
   /// #2582 purchase analytics
   ///
@@ -4282,14 +4282,14 @@ abstract class AppLocalizations {
   /// #2582 cost figures
   ///
   /// In en, this message translates to:
-  /// **'{count} lines whose recoverable tax is not qualified count at their gross.'**
-  String biCostsUnqualified(String count);
+  /// **'{count, plural, =1{1 line whose recoverable tax is not qualified counts at their gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}'**
+  String biCostsUnqualified(int count);
 
   /// #2582 cost figures
   ///
   /// In en, this message translates to:
-  /// **'{count} lines nobody classified are left out.'**
-  String biCostsUnresolved(String count);
+  /// **'{count, plural, =1{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}'**
+  String biCostsUnresolved(int count);
 
   /// #2581 analytical report print layout and exports
   ///
@@ -4336,8 +4336,8 @@ abstract class AppLocalizations {
   /// #3294 customer analytics
   ///
   /// In en, this message translates to:
-  /// **'{cohort}: {count} invoices, {amount}'**
-  String biCustomerCohortLine(String cohort, String count, String amount);
+  /// **'{count, plural, =1{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}'**
+  String biCustomerCohortLine(String cohort, int count, String amount);
 
   /// #3294 customer analytics
   ///
@@ -5257,8 +5257,8 @@ abstract class AppLocalizations {
   /// #2580 BI report editor
   ///
   /// In en, this message translates to:
-  /// **'{count} rows'**
-  String biEditorRows(String count);
+  /// **'{count, plural, =1{1 row} other{{count} rows}}'**
+  String biEditorRows(int count);
 
   /// #2580 BI report editor
   ///
@@ -5527,8 +5527,8 @@ abstract class AppLocalizations {
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
-  /// **'{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.'**
-  String biExportLeftOut(String count);
+  /// **'{count, plural, =1{1 card is not in this export: its figure, filters or grouping is not one an export answers yet.} other{{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.}}'**
+  String biExportLeftOut(int count);
 
   /// Business analytics dashboard: biExportPdf
   ///
@@ -5593,8 +5593,8 @@ abstract class AppLocalizations {
   /// #1924 finance KPI / #1923 analyses picker
   ///
   /// In en, this message translates to:
-  /// **'From {count} payments matched to invoices'**
-  String biFinanceCollectedBasis(String count);
+  /// **'{count, plural, =1{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}'**
+  String biFinanceCollectedBasis(int count);
 
   /// #1924 finance KPI / #1923 analyses picker
   ///
@@ -5629,8 +5629,8 @@ abstract class AppLocalizations {
   /// #1924 finance KPI / #1923 analyses picker
   ///
   /// In en, this message translates to:
-  /// **'From {count} invoices; credit notes {credit}, shown apart'**
-  String biFinanceInvoicedBasis(String count, String credit);
+  /// **'{count, plural, =1{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}'**
+  String biFinanceInvoicedBasis(int count, String credit);
 
   /// #1924 finance KPI / #1923 analyses picker
   ///
@@ -5797,20 +5797,20 @@ abstract class AppLocalizations {
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count} products sold were never bought: they have no cost and are left out of the cost and margin'**
-  String biItemUncosted(String count);
+  /// **'{count, plural, =1{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}'**
+  String biItemUncosted(int count);
 
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count} purchase lines name a supply only by its text: they are not matched to an item and are left out'**
-  String biItemUnresolved(String count);
+  /// **'{count, plural, =1{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}'**
+  String biItemUnresolved(int count);
 
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count} suppliers'**
-  String biItemVendorBasis(String count);
+  /// **'{count, plural, =1{1 supplier} other{{count} suppliers}}'**
+  String biItemVendorBasis(int count);
 
   /// #3294 step 4 items on purchase lines
   ///
@@ -6289,8 +6289,8 @@ abstract class AppLocalizations {
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
-  /// **'There are more than {count} groups; choose no grouping.'**
-  String biRefusedBudget(String count);
+  /// **'{count, plural, =1{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}'**
+  String biRefusedBudget(int count);
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -6511,8 +6511,8 @@ abstract class AppLocalizations {
   /// #3294 step 3 sales analytics
   ///
   /// In en, this message translates to:
-  /// **'{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net'**
-  String biSalesNetUnknown(String count);
+  /// **'{count, plural, =1{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}'**
+  String biSalesNetUnknown(int count);
 
   /// #3294 step 3 sales analytics
   ///
@@ -6558,8 +6558,8 @@ abstract class AppLocalizations {
   /// #3294 step 3 sales analytics
   ///
   /// In en, this message translates to:
-  /// **'{count} services and packages'**
-  String biSalesServiceBasis(String count);
+  /// **'{count, plural, =1{1 service and package} other{{count} services and packages}}'**
+  String biSalesServiceBasis(int count);
 
   /// #3294 step 3 sales analytics
   ///
@@ -6672,8 +6672,8 @@ abstract class AppLocalizations {
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:
-  /// **'{count} categories'**
-  String biVendorCategoryBasis(String count);
+  /// **'{count, plural, =1{1 category} other{{count} categories}}'**
+  String biVendorCategoryBasis(int count);
 
   /// #3294 step 2 vendor analytics
   ///
@@ -6696,8 +6696,8 @@ abstract class AppLocalizations {
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:
-  /// **'{cohort}: {count} bills, {amount}'**
-  String biVendorCohortLine(String cohort, String count, String amount);
+  /// **'{count, plural, =1{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}'**
+  String biVendorCohortLine(String cohort, int count, String amount);
 
   /// #3294 step 2 vendor analytics
   ///
@@ -6750,8 +6750,8 @@ abstract class AppLocalizations {
   /// #3294 step 5 vendor delivery analytics
   ///
   /// In en, this message translates to:
-  /// **'{cohort}: {count} orders'**
-  String biVendorDeliveryCohortLine(String cohort, String count);
+  /// **'{count, plural, =1{{cohort}: 1 order} other{{cohort}: {count} orders}}'**
+  String biVendorDeliveryCohortLine(String cohort, int count);
 
   /// #3294 step 5 vendor delivery analytics
   ///
@@ -6851,8 +6851,8 @@ abstract class AppLocalizations {
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:
-  /// **'{count} bills carry no supplier date or no received date and are left out'**
-  String biVendorLagUndated(String count);
+  /// **'{count, plural, =1{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}'**
+  String biVendorLagUndated(int count);
 
   /// #3294 step 2 vendor analytics
   ///
@@ -6927,8 +6927,8 @@ abstract class AppLocalizations {
   /// #2578 saved-view cards saved for another metric version
   ///
   /// In en, this message translates to:
-  /// **'{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.'**
-  String biViewCardsIncompatible(String count);
+  /// **'{count, plural, =1{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}'**
+  String biViewCardsIncompatible(int count);
 
   /// #1923 B Web-BI toolbar and module section
   ///
@@ -7095,8 +7095,8 @@ abstract class AppLocalizations {
   /// #2579 analytical reports
   ///
   /// In en, this message translates to:
-  /// **'{count} figures of this view are not shown: you may not read them.'**
-  String biViewWithheld(String count);
+  /// **'{count, plural, =1{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}'**
+  String biViewWithheld(int count);
 
   /// #1923 C Web-BI saved views
   ///
@@ -8571,7 +8571,7 @@ abstract class AppLocalizations {
   /// No description provided for @calendarItemCount.
   ///
   /// In en, this message translates to:
-  /// **'{count} items'**
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
   String calendarItemCount(int count);
 
   /// #718/#719 - calendar hub
@@ -9531,8 +9531,8 @@ abstract class AppLocalizations {
   /// #1660 template_compare
   ///
   /// In en, this message translates to:
-  /// **'Up to {count} templates can be compared. Remove one first.'**
-  String compareLimit(String count);
+  /// **'{count, plural, =1{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}'**
+  String compareLimit(int count);
 
   /// #1660 template_compare
   ///
@@ -9615,7 +9615,7 @@ abstract class AppLocalizations {
   /// No description provided for @composerCharsLeft.
   ///
   /// In en, this message translates to:
-  /// **'{count} characters left'**
+  /// **'{count, plural, =1{1 character left} other{{count} characters left}}'**
   String composerCharsLeft(int count);
 
   /// No description provided for @composerDraftKept.
@@ -13815,7 +13815,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventExpenseRepartitionLine.
   ///
   /// In en, this message translates to:
-  /// **'{actor} distributes “{title}” — {amount} over {count} members'**
+  /// **'{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}'**
   String eventExpenseRepartitionLine(
     String actor,
     String title,
@@ -13927,7 +13927,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventPriceNegotiationItems.
   ///
   /// In en, this message translates to:
-  /// **'{count} items'**
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
   String eventPriceNegotiationItems(int count);
 
   /// No description provided for @eventPriceNegotiationLine.
@@ -17059,13 +17059,13 @@ abstract class AppLocalizations {
   /// #1288 custom fields: fieldProblemTooLong
   ///
   /// In en, this message translates to:
-  /// **'At most {count} characters.'**
+  /// **'{count, plural, =1{At most 1 character.} other{At most {count} characters.}}'**
   String fieldProblemTooLong(int count);
 
   /// #1288 custom fields: fieldProblemTooShort
   ///
   /// In en, this message translates to:
-  /// **'At least {count} characters.'**
+  /// **'{count, plural, =1{At least 1 character.} other{At least {count} characters.}}'**
   String fieldProblemTooShort(int count);
 
   /// #1288 custom fields: fieldProblemTooSmall
@@ -18385,14 +18385,14 @@ abstract class AppLocalizations {
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'{count} settlement summary(ies) left out: their invoices are already listed'**
-  String handoffExcludedSettlements(String count);
+  /// **'{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summary(ies) left out: their invoices are already listed}}'**
+  String handoffExcludedSettlements(int count);
 
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'{count} document(s) in the file'**
-  String handoffIncluded(String count);
+  /// **'{count, plural, =1{1 document in the file} other{{count} document(s) in the file}}'**
+  String handoffIncluded(int count);
 
   /// #1640 accountant_handoff
   ///
@@ -19261,7 +19261,7 @@ abstract class AppLocalizations {
   /// #2051 open-data holiday import
   ///
   /// In en, this message translates to:
-  /// **'Import {count} closure days'**
+  /// **'{count, plural, =1{Import 1 closure day} other{Import {count} closure days}}'**
   String holidayImportConfirm(int count);
 
   /// #2051 open-data holiday import
@@ -19942,11 +19942,83 @@ abstract class AppLocalizations {
   /// **'Deploy the functions: payments, e-invoices, push, badges ({count}).'**
   String instanceDeployFunctions(int count);
 
+  /// #3489 Instance doctor report footer when nothing is wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything checked is healthy.'**
+  String get instanceDoctorAllHealthy;
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'Attention required'**
   String get instanceDoctorAttention;
+
+  /// #3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.'**
+  String instanceDoctorGuardAnonViewDetail(String names);
+
+  /// #3489 Doctor alarm: a view readable by anon runs as its owner.
+  ///
+  /// In en, this message translates to:
+  /// **'A view readable by anon runs as its owner'**
+  String get instanceDoctorGuardAnonViewTitle;
+
+  /// #3489 Detail of the alarm: a definer function has no fixed search_path; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        It runs as the owner; an unpinned search_path lets a caller decide which table its unqualified names mean.'**
+  String instanceDoctorGuardDefinerDetail(String names);
+
+  /// #3489 Doctor alarm: a definer function has no fixed search_path.
+  ///
+  /// In en, this message translates to:
+  /// **'A SECURITY DEFINER function has no fixed search_path'**
+  String get instanceDoctorGuardDefinerTitle;
+
+  /// #3489 Detail of the alarm: a storage bucket is public; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        A public bucket serves every object to anyone with the URL, whatever the policies say.'**
+  String instanceDoctorGuardPublicBucketDetail(String names);
+
+  /// #3489 Doctor alarm: a storage bucket is public.
+  ///
+  /// In en, this message translates to:
+  /// **'A storage bucket is public'**
+  String get instanceDoctorGuardPublicBucketTitle;
+
+  /// #3489 Detail of the alarm: a realtime-published table is unprotected; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        Realtime replays row changes to subscribers through the same policies; a table without them publishes to everyone.'**
+  String instanceDoctorGuardRealtimeDetail(String names);
+
+  /// #3489 Doctor alarm: a realtime-published table is unprotected.
+  ///
+  /// In en, this message translates to:
+  /// **'A realtime-published table is unprotected'**
+  String get instanceDoctorGuardRealtimeTitle;
+
+  /// #3489 Detail of the alarm: a table holding secrets grants to an API role; {names} lists the objects.
+  ///
+  /// In en, this message translates to:
+  /// **'{names}\n        Payment and e-invoice credentials, push configuration and badge attempts are read by the server, never by a client.'**
+  String instanceDoctorGuardSecretGrantsDetail(String names);
+
+  /// #3489 Doctor alarm: a table holding secrets grants to an API role.
+  ///
+  /// In en, this message translates to:
+  /// **'A table holding secrets grants to an API role'**
+  String get instanceDoctorGuardSecretGrantsTitle;
+
+  /// #3489 Instance doctor: what an installation holds, in workspaces and members.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}'**
+  String instanceDoctorHeld(int workspaces, int members);
 
   /// #1308 instance wizard doctor and token
   ///
@@ -19954,17 +20026,131 @@ abstract class AppLocalizations {
   /// **'Before this device uses it, the security check must pass: an alarm keeps the button off until it is fixed.'**
   String get instanceDoctorIntro;
 
+  /// #3489 Instance doctor report footer: how many findings are problems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}'**
+  String instanceDoctorNeedsHuman(int count);
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
-  /// **'{count} checks passed'**
+  /// **'{count, plural, =1{1 check passed} other{{count} checks passed}}'**
   String instanceDoctorPassed(int count);
+
+  /// #3489 Detail: number of policies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}'**
+  String instanceDoctorPoliciesMatchDetail(int count);
+
+  /// #3489 Policies equal the migrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Policies match the migrations'**
+  String get instanceDoctorPoliciesMatchTitle;
+
+  /// #3489 Detail: the expected policy list is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'the expected list is empty — assets/instance/policies.txt was not read, so drift cannot be judged'**
+  String get instanceDoctorPolicyDriftSkippedDetail;
+
+  /// #3489 Policy drift could not be judged.
+  ///
+  /// In en, this message translates to:
+  /// **'Policy drift not checked'**
+  String get instanceDoctorPolicyDriftSkippedTitle;
+
+  /// #3489 Doctor probe name: auth configuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Auth configuration'**
+  String get instanceDoctorProbeAuth;
+
+  /// #3489 Detail of a failed probe.
+  ///
+  /// In en, this message translates to:
+  /// **'Supabase answered {status}: {message}\n        The other checks ran without it.'**
+  String instanceDoctorProbeFailedDetail(int status, String message);
+
+  /// #3489 A doctor probe failed; {probe} is its name.
+  ///
+  /// In en, this message translates to:
+  /// **'{probe} query failed'**
+  String instanceDoctorProbeFailedTitle(String probe);
+
+  /// #3489 Doctor probe name: hardening.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardening'**
+  String get instanceDoctorProbeHardening;
+
+  /// #3489 Doctor probe name: policies.
+  ///
+  /// In en, this message translates to:
+  /// **'Policies'**
+  String get instanceDoctorProbePolicies;
+
+  /// #3489 Doctor probe name: installation roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation roles'**
+  String get instanceDoctorProbeRoles;
+
+  /// #3489 Doctor probe name: schema.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema'**
+  String get instanceDoctorProbeSchema;
+
+  /// #3489 Doctor probe name: security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get instanceDoctorProbeSecurity;
+
+  /// #3489 Doctor probe name: sign-ups.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-ups'**
+  String get instanceDoctorProbeSignups;
+
+  /// #3489 Doctor probe name: storage scoping.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage scoping'**
+  String get instanceDoctorProbeStorage;
 
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
   /// **'Protected'**
   String get instanceDoctorProtected;
+
+  /// #3489 Detail: roles column missing; {held} is the instanceDoctorHeld phrase.
+  ///
+  /// In en, this message translates to:
+  /// **'the schema predates the roles column; the installation behaves as combined (personal home and workspace host) — {held}.\n        Fix: dart run tool/instance.dart install --ref <ref>'**
+  String instanceDoctorRolesUndeclaredDetail(String held);
+
+  /// #3489 The installation did not declare its roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation roles not declared'**
+  String get instanceDoctorRolesUndeclaredTitle;
+
+  /// #3489 Detail: the declared roles.
+  ///
+  /// In en, this message translates to:
+  /// **'{roles}\n        Only personal_home and workspace_host exist; operator_set_installation_roles writes a valid set.'**
+  String instanceDoctorRolesUnknownDetail(String roles);
+
+  /// #3489 The declared roles are not a known set.
+  ///
+  /// In en, this message translates to:
+  /// **'Installation roles are not a known set'**
+  String get instanceDoctorRolesUnknownTitle;
 
   /// #1308 instance wizard doctor and token
   ///
@@ -19977,6 +20163,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Check again'**
   String get instanceDoctorRunAgain;
+
+  /// #3489 Detail: tables exist but no schema version.
+  ///
+  /// In en, this message translates to:
+  /// **'{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>'**
+  String instanceDoctorSchemaNoVersionDetail(int tables, int required);
+
+  /// #3489 The schema records no version.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema has no version'**
+  String get instanceDoctorSchemaNoVersionTitle;
+
+  /// #3489 Detail: sign-ups but no confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'{created} signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.'**
+  String instanceDoctorSignupsNobodyDetail(int created);
+
+  /// #3489 Nobody confirmed a sign-up in seven days.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody has confirmed in seven days'**
+  String get instanceDoctorSignupsNobodyTitle;
+
+  /// #3489 Detail: number of storage read policies.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}'**
+  String instanceDoctorStorageScopedDetail(int count);
+
+  /// #3489 Storage reads are scoped to folders.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage reads are scoped'**
+  String get instanceDoctorStorageScopedTitle;
+
+  /// #3489 Instance doctor: accounts unconfirmed for over a day.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}'**
+  String instanceDoctorStuckTitle(int count);
 
   /// #977 instance wizard: instanceDoneIntro
   ///
@@ -21061,7 +21289,7 @@ abstract class AppLocalizations {
   /// Archive: how many invoices the current filters show
   ///
   /// In en, this message translates to:
-  /// **'{count} invoices'**
+  /// **'{count, plural, =1{1 invoice} other{{count} invoices}}'**
   String invoiceCountShown(int count);
 
   /// FAB + sheet title issuing an invoice
@@ -21589,7 +21817,7 @@ abstract class AppLocalizations {
   /// Confirm dialog of the invoice-all sweep
   ///
   /// In en, this message translates to:
-  /// **'Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.'**
+  /// **'{count, plural, =1{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}'**
   String invoiceIssueAllConfirm(int count, String month, String total);
 
   /// Looks for the invoice in the archive; never sends it again
@@ -21637,7 +21865,7 @@ abstract class AppLocalizations {
   /// Snackbar after the invoice-all sweep
   ///
   /// In en, this message translates to:
-  /// **'{count} invoices issued.'**
+  /// **'{count, plural, =1{1 invoice issued.} other{{count} invoices issued.}}'**
   String invoiceIssuedCount(int count);
 
   /// Sweep result when some members could not be invoiced
@@ -23929,7 +24157,7 @@ abstract class AppLocalizations {
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
-  /// **'{count} occurrences were already presented for a date after the end.'**
+  /// **'{count, plural, =1{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}'**
   String leaseOccurrencesAfter(int count);
 
   /// #2569 premises lease
@@ -28788,7 +29016,7 @@ abstract class AppLocalizations {
   /// Statement line for usage beyond the included quota
   ///
   /// In en, this message translates to:
-  /// **'Overage ({count} extra half-days)'**
+  /// **'{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}'**
   String moneyOverage(int count);
 
   /// No description provided for @moneyOverdueBanner.
@@ -30510,8 +30738,8 @@ abstract class AppLocalizations {
   /// #2583 the overview's own figures
   ///
   /// In en, this message translates to:
-  /// **'{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart'**
-  String overviewOverdueBasis(String count, String unknown, String held);
+  /// **'{count, plural, =1{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}'**
+  String overviewOverdueBasis(int count, String unknown, String held);
 
   /// #2583 the overview's own figures
   ///
@@ -31958,7 +32186,7 @@ abstract class AppLocalizations {
   /// Quota summary
   ///
   /// In en, this message translates to:
-  /// **'{count} half-days'**
+  /// **'{count, plural, =1{1 half-day} other{{count} half-days}}'**
   String plansEditorQuota(int count);
 
   /// Owner plan-editor screen title (#105)
@@ -33074,7 +33302,7 @@ abstract class AppLocalizations {
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'{count} features changed.'**
+  /// **'{count, plural, =1{1 feature changed.} other{{count} features changed.}}'**
   String processApplied(int count);
 
   /// No description provided for @processBillingPayments.
@@ -33104,13 +33332,13 @@ abstract class AppLocalizations {
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'Switch off {count} features'**
+  /// **'{count, plural, =1{Switch off 1 feature} other{Switch off {count} features}}'**
   String processConfirmOff(int count);
 
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'Switch on {count} features'**
+  /// **'{count, plural, =1{Switch on 1 feature} other{Switch on {count} features}}'**
   String processConfirmOn(int count);
 
   /// #1329 the process change preview and apply
@@ -33254,7 +33482,7 @@ abstract class AppLocalizations {
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'Also switch off the {count} dependants'**
+  /// **'{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}'**
   String processRemoveDependants(int count);
 
   /// No description provided for @processReservationsUsage.
@@ -33638,7 +33866,7 @@ abstract class AppLocalizations {
   /// #1274 confirm creating the previewed days
   ///
   /// In en, this message translates to:
-  /// **'Create {count} closure days'**
+  /// **'{count, plural, =1{Create 1 closure day} other{Create {count} closure days}}'**
   String publicHolidaysConfirm(int count);
 
   /// #1274 the country field label
@@ -33650,7 +33878,7 @@ abstract class AppLocalizations {
   /// #1274 how many closure days were written
   ///
   /// In en, this message translates to:
-  /// **'{count} closure days created'**
+  /// **'{count, plural, =1{1 closure day created} other{{count} closure days created}}'**
   String publicHolidaysCreated(int count);
 
   /// #1274 this date's month already carries an invoice
@@ -36030,7 +36258,7 @@ abstract class AppLocalizations {
   /// No description provided for @refFilterShow.
   ///
   /// In en, this message translates to:
-  /// **'Show {count} results'**
+  /// **'{count, plural, =1{Show 1 result} other{Show {count} results}}'**
   String refFilterShow(int count);
 
   /// No description provided for @refFilterSort.
@@ -38556,7 +38784,7 @@ abstract class AppLocalizations {
   /// #2631 resource_reserve: reserveRoomFor
   ///
   /// In en, this message translates to:
-  /// **'Meeting room · {count} people'**
+  /// **'{count, plural, =1{Meeting room · 1 person} other{Meeting room · {count} people}}'**
   String reserveRoomFor(int count);
 
   /// #2631 resource_reserve: reserveSlotDay
@@ -39246,7 +39474,7 @@ abstract class AppLocalizations {
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:
-  /// **'Open to {count} chosen entries'**
+  /// **'{count, plural, =1{Open to 1 chosen entry} other{Open to {count} chosen entries}}'**
   String roomRentAudienceNamed(int count);
 
   /// #2568 rented rooms
@@ -39705,11 +39933,11 @@ abstract class AppLocalizations {
   /// **'Until (optional)'**
   String get scheduleEndsOn;
 
-  /// No description provided for @scheduleEveryDays.
+  /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'every {count} days'**
-  String scheduleEveryDays(Object count);
+  /// **'{count, plural, =1{every day} other{every {count} days}}'**
+  String scheduleEveryDays(int count);
 
   /// No description provided for @scheduleEveryLabel.
   ///
@@ -39717,17 +39945,17 @@ abstract class AppLocalizations {
   /// **'Every'**
   String get scheduleEveryLabel;
 
-  /// No description provided for @scheduleEveryMonths.
+  /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'every {count} months'**
-  String scheduleEveryMonths(Object count);
+  /// **'{count, plural, =1{every month} other{every {count} months}}'**
+  String scheduleEveryMonths(int count);
 
-  /// No description provided for @scheduleEveryWeeks.
+  /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'every {count} weeks'**
-  String scheduleEveryWeeks(Object count);
+  /// **'{count, plural, =1{every week} other{every {count} weeks}}'**
+  String scheduleEveryWeeks(int count);
 
   /// No description provided for @scheduleMissingFields.
   ///
@@ -39819,11 +40047,11 @@ abstract class AppLocalizations {
   /// **'Supplier it pays (optional)'**
   String get scheduleSupplierLabel;
 
-  /// No description provided for @scheduleTimes.
+  /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'{count} times'**
-  String scheduleTimes(Object count);
+  /// **'{count, plural, =1{1 time} other{{count} times}}'**
+  String scheduleTimes(int count);
 
   /// No description provided for @scheduleTimesLabel.
   ///
@@ -41544,7 +41772,7 @@ abstract class AppLocalizations {
   /// Confirm regrouping N invoices into one (#804)
   ///
   /// In en, this message translates to:
-  /// **'Regroup {count} invoices into one of {amount}?'**
+  /// **'{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}'**
   String settlementConfirm(int count, String amount);
 
   /// No description provided for @settlementDocumentationOnly.
@@ -43169,7 +43397,7 @@ abstract class AppLocalizations {
   /// #2870 setup steps: setupPlacesCounts
   ///
   /// In en, this message translates to:
-  /// **'{rooms, plural, =1{1 room} other{{rooms} rooms}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}'**
+  /// **'{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}'**
   String setupPlacesCounts(int rooms, int desks, int seats);
 
   /// #2870 setup steps: setupPlacesEmpty
@@ -46217,7 +46445,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderEditedNote
   ///
   /// In en, this message translates to:
-  /// **'Edited copy: {count} steps left out. The recording on this device is unchanged.'**
+  /// **'{count, plural, =1{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}'**
   String taskRecorderEditedNote(int count);
 
   /// #1865 task recorder: taskRecorderEndInterrupted
@@ -46325,7 +46553,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderIndicator
   ///
   /// In en, this message translates to:
-  /// **'Recording a task: {count} steps'**
+  /// **'{count, plural, =1{Recording a task: 1 step} other{Recording a task: {count} steps}}'**
   String taskRecorderIndicator(int count);
 
   /// #1865 task recorder: taskRecorderLeaveOut
@@ -46607,7 +46835,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderStepCount
   ///
   /// In en, this message translates to:
-  /// **'{count} steps'**
+  /// **'{count, plural, =1{1 step} other{{count} steps}}'**
   String taskRecorderStepCount(int count);
 
   /// #1865 task recorder: taskRecorderStepExcluded
@@ -48143,14 +48371,14 @@ abstract class AppLocalizations {
   /// #1658 template_widen
   ///
   /// In en, this message translates to:
-  /// **'{count} settings become readable, exactly as the template holds them now.'**
-  String templateWidenCount(String count);
+  /// **'{count, plural, =1{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}'**
+  String templateWidenCount(int count);
 
   /// #1658 template_widen
   ///
   /// In en, this message translates to:
-  /// **'{count} kinds of value never leave with it (bank details, sites, addresses…).'**
-  String templateWidenExcluded(String count);
+  /// **'{count, plural, =1{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}'**
+  String templateWidenExcluded(int count);
 
   /// #1658 template_widen
   ///
@@ -48947,7 +49175,7 @@ abstract class AppLocalizations {
   /// #2590 usage preparation
   ///
   /// In en, this message translates to:
-  /// **'{count} bookings of this month are not recorded yet, so this list may be incomplete.'**
+  /// **'{count, plural, =1{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}'**
   String usagePrepareBanner(int count);
 
   /// #2590 usage preparation

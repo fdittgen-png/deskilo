@@ -9,7 +9,7 @@
   "refSortAmountLow": "Montant le plus bas",
   "refFilterReset": "Réinitialiser",
   "refFilterAmount": "Montant",
-  "refFilterShow": "Afficher {count} résultats",
+  "refFilterShow": "{count, plural, =1{Afficher 1 résultat} other{Afficher {count} résultats}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {

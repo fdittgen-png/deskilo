@@ -159,7 +159,7 @@
       }
     }
   },
-  "leaseOccurrencesAfter": "Ya se presentaron {count} vencimientos con fecha posterior al final.",
+  "leaseOccurrencesAfter": "{count, plural, =1{Ya se presentó 1 vencimiento con fecha posterior al final.} other{Ya se presentaron {count} vencimientos con fecha posterior al final.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {

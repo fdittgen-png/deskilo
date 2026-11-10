@@ -44,7 +44,7 @@ Future<bool> showTemplateWidenDialog(
           children: [
             Text(
               key: const ValueKey('template-widen-count'),
-              l10n.templateWidenCount('${inspection.coverage.present}'),
+              l10n.templateWidenCount(inspection.coverage.present),
             ),
             const SizedBox(height: AppSpacing.xs),
             for (final g in inspection.outline.groups)
@@ -57,7 +57,7 @@ Future<bool> showTemplateWidenDialog(
               Text(
                 key: const ValueKey('template-widen-excluded'),
                 l10n.templateWidenExcluded(
-                      '${inspection.exclusions.length}',
+                      inspection.exclusions.length,
                     ),
               ),
             ],

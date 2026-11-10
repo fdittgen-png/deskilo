@@ -13,7 +13,7 @@
   "biSalesKindAdjustment": "Ajustes",
   "biSalesKindOther": "Otros",
   "biSalesServiceTitle": "Ventas por servicio",
-  "biSalesServiceBasis": "{count} servicios y paquetes",
+  "biSalesServiceBasis": "{count, plural, =1{1 servicio y paquete} other{{count} servicios y paquetes}}",
   "biSalesServiceDefinition": "Las líneas de servicios y paquetes de las facturas del periodo, sin IVA, por la descripción con la que se vendieron.",
   "biSalesNoDescription": "Sin descripción",
   "biSalesRoomTitle": "Margen de las salas alquiladas",
@@ -21,5 +21,5 @@
   "biSalesRoomDefinition": "Para cada sala que alquila el espacio: lo que se cobró por sus reservas, sin impuestos, menos el coste propio de la sala (su alquiler con vencimiento en el periodo, o su coste por uso por los usos). No se le imputa ningún otro coste: es un margen, no un beneficio.",
   "biSalesRoomLine": "{room}: cobrado {charges}, coste {cost}, {uses} reservas",
   "biSalesRoomsOff": "El espacio no alquila salas: active las salas alquiladas para ver su margen",
-  "biSalesNetUnknown": "{count} líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto"
+  "biSalesNetUnknown": "{count, plural, =1{1 línea de venta no tiene un tipo de IVA legible: su neto es desconocido y queda fuera del neto} other{{count} líneas de venta no tienen un tipo de IVA legible: su neto es desconocido y queda fuera del neto}}"
 }

@@ -82,7 +82,7 @@
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
   },
-  "roomRentAudienceNamed": "Für {count} gewählte Einträge offen",
+  "roomRentAudienceNamed": "{count, plural, =1{Für 1 gewählten Eintrag offen} other{Für {count} gewählte Einträge offen}}",
   "@roomRentAudienceNamed": {
     "description": "#2568 rented rooms",
     "placeholders": {

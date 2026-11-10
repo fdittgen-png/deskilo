@@ -18,7 +18,7 @@
   "usageDeleteSubmitted": "Entfernung angefragt.",
   "usageMember": "Mitglied",
   "usageMemberAll": "Alle",
-  "usagePrepareBanner": "{count} Buchungen dieses Monats sind noch nicht erfasst, diese Liste kann daher unvollständig sein.",
+  "usagePrepareBanner": "{count, plural, =1{1 Buchung dieses Monats ist noch nicht erfasst, diese Liste kann daher unvollständig sein.} other{{count} Buchungen dieses Monats sind noch nicht erfasst, diese Liste kann daher unvollständig sein.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {
