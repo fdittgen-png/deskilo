@@ -129,5 +129,38 @@
   },
   "@meNextBook": {
     "description": "#3545 D: the one filled action of Next up when nothing is booked: opens the places to book in"
+  },
+  "meOverviewAttentionDocumentTitle": "Invoice {number} · {workspace}",
+  "meOverviewAttentionDue": "Due {date}",
+  "meOverviewAttentionToPay": "To pay",
+  "@meOverviewAttentionDocumentTitle": {
+    "description": "#3545 E: a Needs-you row for an unpaid invoice: what, then which business",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "workspace": {
+        "type": "String"
+      }
+    }
+  },
+  "@meOverviewAttentionDue": {
+    "description": "#3545 E: the second line of an unpaid invoice's row: its frozen due day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@meOverviewAttentionToPay": {
+    "description": "#3545 E: the chip of an unpaid invoice that is not yet overdue"
+  },
+  "mePlaceMember": "Member",
+  "mePlaceRequestSent": "Request sent · waiting for an answer",
+  "@mePlaceMember": {
+    "description": "#3545 E: where the person stands in a business, on a compact Home row"
+  },
+  "@mePlaceRequestSent": {
+    "description": "#3545 E: a compact Home row of a space the person asked to join and nobody has answered"
   }
 }

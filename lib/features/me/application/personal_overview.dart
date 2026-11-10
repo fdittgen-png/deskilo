@@ -96,11 +96,15 @@ class OwedDocument {
     required this.number,
     required this.remainingCents,
     required this.currency,
+    this.dueOn,
     this.overdue = false,
   });
 
   final String id, workspaceId, workspaceName, number, currency;
   final int remainingCents;
+
+  /// The due day the invoice froze, when it has one.
+  final DateTime? dueOn;
   final bool overdue;
 }
 
