@@ -7692,12 +7692,6 @@ abstract class AppLocalizations {
   /// **'Grand total'**
   String get bookReportGrandTotal;
 
-  /// Book reports (#2376): the bank journal
-  ///
-  /// In en, this message translates to:
-  /// **'Bank'**
-  String get bookReportJournalBank;
-
   /// Book reports (#2376): the miscellaneous journal
   ///
   /// In en, this message translates to:

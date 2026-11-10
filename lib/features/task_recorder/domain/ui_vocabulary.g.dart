@@ -6326,7 +6326,6 @@ const Set<String> uiLabelKeys = {
   'bookReportEntry',
   'bookReportFooter',
   'bookReportGrandTotal',
-  'bookReportJournalBank',
   'bookReportJournalOther',
   'bookReportJournalPurchases',
   'bookReportJournalSales',

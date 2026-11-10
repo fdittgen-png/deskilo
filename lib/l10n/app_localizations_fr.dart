@@ -4770,9 +4770,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookReportGrandTotal => 'Total général';
 
   @override
-  String get bookReportJournalBank => 'Banque';
-
-  @override
   String get bookReportJournalOther => 'Opérations diverses';
 
   @override

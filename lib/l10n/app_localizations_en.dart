@@ -4734,9 +4734,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookReportGrandTotal => 'Grand total';
 
   @override
-  String get bookReportJournalBank => 'Bank';
-
-  @override
   String get bookReportJournalOther => 'Miscellaneous';
 
   @override

@@ -4763,9 +4763,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookReportGrandTotal => 'Total general';
 
   @override
-  String get bookReportJournalBank => 'Banco';
-
-  @override
   String get bookReportJournalOther => 'Operaciones diversas';
 
   @override

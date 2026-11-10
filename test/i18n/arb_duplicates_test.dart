@@ -20,8 +20,7 @@ const _redundantCeiling = 0;
 /// named as a string by code that is not a getter call (a registry, the
 /// lexicon, a guide builder), so renaming it would break that reader.
 const Map<String, String> _namedByCode = {
-  'featureAccountingPeriodsTitle': 'named as a string in tool/build_process_catalogue.dart',
-  'bookReportJournalBank': 'named as a string in tool/build_guide_site.dart',
+  'featureAccountingPeriodsTitle': 'composed from the feature name in tool/build_process_catalogue.dart (\'feature\' + Name + \'Title\')',
   'planReserveButton': 'named as a string in lib/core/l10n/lexicon_defaults.dart',
 };
 

@@ -2990,7 +2990,6 @@
   "bookReportEntry": "Asiento",
   "bookReportFooter": "Elaborado a partir de los asientos de la contabilidad: los mismos asientos, cuentas y terceros que el FEC del periodo.",
   "bookReportGrandTotal": "Total general",
-  "bookReportJournalBank": "Banco",
   "bookReportJournalOther": "Operaciones diversas",
   "bookReportJournalPurchases": "Compras",
   "bookReportJournalSales": "Ventas",

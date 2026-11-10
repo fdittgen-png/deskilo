@@ -2990,7 +2990,6 @@
   "bookReportEntry": "Buchung",
   "bookReportFooter": "Aus den Buchungen der Buchführung erstellt: dieselben Buchungen, Konten und Geschäftspartner wie der FEC des Zeitraums.",
   "bookReportGrandTotal": "Gesamtsumme",
-  "bookReportJournalBank": "Bank",
   "bookReportJournalOther": "Sonstige Buchungen",
   "bookReportJournalPurchases": "Einkauf",
   "bookReportJournalSales": "Verkauf",

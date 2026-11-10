@@ -2990,7 +2990,6 @@
   "bookReportEntry": "Registrazione",
   "bookReportFooter": "Redatto a partire dalle registrazioni della contabilità: le stesse registrazioni, gli stessi conti e terzi del FEC del periodo.",
   "bookReportGrandTotal": "Totale generale",
-  "bookReportJournalBank": "Banca",
   "bookReportJournalOther": "Operazioni diverse",
   "bookReportJournalPurchases": "Acquisti",
   "bookReportJournalSales": "Vendite",

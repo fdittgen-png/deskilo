@@ -6353,10 +6353,6 @@
   "@bookReportGrandTotal": {
     "description": "Book reports (#2376): the grand total row"
   },
-  "bookReportJournalBank": "Bank",
-  "@bookReportJournalBank": {
-    "description": "Book reports (#2376): the bank journal"
-  },
   "bookReportJournalOther": "Miscellaneous",
   "@bookReportJournalOther": {
     "description": "Book reports (#2376): the miscellaneous journal"

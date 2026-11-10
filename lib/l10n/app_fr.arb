@@ -2990,7 +2990,6 @@
   "bookReportEntry": "Écriture",
   "bookReportFooter": "Établi à partir des écritures de la comptabilité : les mêmes écritures, comptes et tiers que le FEC de la période.",
   "bookReportGrandTotal": "Total général",
-  "bookReportJournalBank": "Banque",
   "bookReportJournalOther": "Opérations diverses",
   "bookReportJournalPurchases": "Achats",
   "bookReportJournalSales": "Ventes",

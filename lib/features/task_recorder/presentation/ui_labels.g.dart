@@ -7758,7 +7758,6 @@ Map<String, _Getter> _part23() => {
   'bookMappingsTitle': (l) => l.bookMappingsTitle,
   'bookPeriodsLoadFailed': (l) => l.bookPeriodsLoadFailed,
   'bookPeriodsReopenBody': (l) => l.bookPeriodsReopenBody,
-  'bookReportJournalBank': (l) => l.bookReportJournalBank,
   'bookingRecoveryTitle': (l) => l.bookingRecoveryTitle,
   'bookingRecoveryUnknown': (l) => l.bookingRecoveryUnknown,
   'capabilityBrowserPrefer': (l) => l.capabilityBrowserPrefer,
