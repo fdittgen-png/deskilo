@@ -22914,6 +22914,82 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Promemoria di pagamento';
 
   @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days giorni di ritardo',
+      one: '$number · 1 giorno di ritardo',
+      zero: '$number · scade oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Fatto';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Niente da condividere';
+
+  @override
+  String get reminderQueueFailed =>
+      'Non è stato possibile condividerla. Riprovi.';
+
+  @override
+  String get reminderQueueIntro =>
+      'I solleciti si condividono a mano. Una condivisione registra un livello, e solo se è partita.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Sollecito $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Non è stato registrato nulla: la condivisione è stata chiusa.';
+
+  @override
+  String get reminderQueueNotShared => 'Non condivisi';
+
+  @override
+  String get reminderQueuePreview => 'Anteprima';
+
+  @override
+  String get reminderQueueResultNone => 'Nessun sollecito condiviso';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Ogni condivisione ha registrato un livello.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count solleciti condivisi',
+      one: '1 sollecito condiviso',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Condividi';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Condividi la prossima · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Condiviso';
+
+  @override
+  String get reminderQueueStays => 'Restano in «Da fare».';
+
+  @override
+  String get reminderQueueTitle => 'Solleciti da condividere';
+
+  @override
   String get reminderStatusAccepted =>
       'Accettato dal servizio di notifiche — non prova che sia stato letto';
 

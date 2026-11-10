@@ -22729,6 +22729,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Payment reminder';
 
   @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days days late',
+      one: '$number · 1 day late',
+      zero: '$number · due today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Done';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Nothing to share';
+
+  @override
+  String get reminderQueueFailed => 'Could not be shared. Try again.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Reminders are shared by hand. A share records one level, and only if it left.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Reminder $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Nothing was recorded: the share was closed.';
+
+  @override
+  String get reminderQueueNotShared => 'Not shared';
+
+  @override
+  String get reminderQueuePreview => 'Preview';
+
+  @override
+  String get reminderQueueResultNone => 'No reminder shared';
+
+  @override
+  String get reminderQueueResultSubtitle => 'Each share recorded one level.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reminders shared',
+      one: '1 reminder shared',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Share';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Share the next one · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Shared';
+
+  @override
+  String get reminderQueueStays => 'They stay in To do.';
+
+  @override
+  String get reminderQueueTitle => 'Reminders to share';
+
+  @override
   String get reminderStatusAccepted =>
       'Accepted by the push service — not proof it was read';
 

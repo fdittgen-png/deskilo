@@ -22901,6 +22901,80 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Recordatorio de pago';
 
   @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days días de retraso',
+      one: '$number · 1 día de retraso',
+      zero: '$number · vence hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Hecho';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Nada que compartir';
+
+  @override
+  String get reminderQueueFailed => 'No se pudo compartir. Inténtelo de nuevo.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Los recordatorios se comparten a mano. Compartir registra un nivel, y solo si salió.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Recordatorio $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'No se registró nada: se cerró el menú de compartir.';
+
+  @override
+  String get reminderQueueNotShared => 'No compartidos';
+
+  @override
+  String get reminderQueuePreview => 'Vista previa';
+
+  @override
+  String get reminderQueueResultNone => 'Ningún recordatorio compartido';
+
+  @override
+  String get reminderQueueResultSubtitle => 'Cada envío registró un nivel.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recordatorios compartidos',
+      one: '1 recordatorio compartido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Compartir';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Compartir la siguiente · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Compartido';
+
+  @override
+  String get reminderQueueStays => 'Se quedan en «Por hacer».';
+
+  @override
+  String get reminderQueueTitle => 'Recordatorios por compartir';
+
+  @override
   String get reminderStatusAccepted =>
       'Aceptado por el servicio de notificaciones — no prueba que se haya leído';
 

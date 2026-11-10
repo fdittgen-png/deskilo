@@ -22951,6 +22951,82 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Zahlungserinnerung';
 
   @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days Tage überfällig',
+      one: '$number · 1 Tag überfällig',
+      zero: '$number · heute fällig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Fertig';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Nichts zu teilen';
+
+  @override
+  String get reminderQueueFailed =>
+      'Konnte nicht geteilt werden. Bitte erneut versuchen.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Mahnungen werden von Hand geteilt. Ein Teilen vermerkt eine Stufe, und nur wenn es abgeschickt wurde.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Mahnung $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Nichts wurde vermerkt: das Teilen wurde geschlossen.';
+
+  @override
+  String get reminderQueueNotShared => 'Nicht geteilt';
+
+  @override
+  String get reminderQueuePreview => 'Vorschau';
+
+  @override
+  String get reminderQueueResultNone => 'Keine Mahnung geteilt';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Jedes Teilen hat eine Stufe vermerkt.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen geteilt',
+      one: '1 Mahnung geteilt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Teilen';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Nächste teilen · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Geteilt';
+
+  @override
+  String get reminderQueueStays => 'Sie bleiben unter „Zu erledigen“.';
+
+  @override
+  String get reminderQueueTitle => 'Zu teilende Mahnungen';
+
+  @override
   String get reminderStatusAccepted =>
       'Vom Benachrichtigungsdienst angenommen — kein Nachweis, dass sie gelesen wurde';
 

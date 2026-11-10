@@ -1,0 +1,19 @@
+{
+  "reminderQueueTitle": "Zu teilende Mahnungen",
+  "reminderQueueIntro": "Mahnungen werden von Hand geteilt. Ein Teilen vermerkt eine Stufe, und nur wenn es abgeschickt wurde.",
+  "reminderQueueLevel": "Mahnung {level}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · heute fällig} =1{{number} · 1 Tag überfällig} other{{number} · {days} Tage überfällig}}",
+  "reminderQueuePreview": "Vorschau",
+  "reminderQueueShare": "Teilen",
+  "reminderQueueShareNext": "Nächste teilen · {customer}",
+  "reminderQueueShared": "Geteilt",
+  "reminderQueueNotRecorded": "Nichts wurde vermerkt: das Teilen wurde geschlossen.",
+  "reminderQueueFailed": "Konnte nicht geteilt werden. Bitte erneut versuchen.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 Mahnung geteilt} other{{count} Mahnungen geteilt}}",
+  "reminderQueueResultNone": "Keine Mahnung geteilt",
+  "reminderQueueResultSubtitle": "Jedes Teilen hat eine Stufe vermerkt.",
+  "reminderQueueNotShared": "Nicht geteilt",
+  "reminderQueueStays": "Sie bleiben unter „Zu erledigen“.",
+  "reminderQueueDone": "Fertig",
+  "reminderQueueDoneEmpty": "Nichts zu teilen"
+}

@@ -1,0 +1,93 @@
+{
+  "reminderQueueTitle": "Reminders to share",
+  "@reminderQueueTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueTitle)"
+  },
+  "reminderQueueIntro": "Reminders are shared by hand. A share records one level, and only if it left.",
+  "@reminderQueueIntro": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueIntro)"
+  },
+  "reminderQueueLevel": "Reminder {level}",
+  "@reminderQueueLevel": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel)",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
+  "@reminderQueueDetail": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueuePreview": "Preview",
+  "@reminderQueuePreview": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueuePreview)"
+  },
+  "reminderQueueShare": "Share",
+  "@reminderQueueShare": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShare)"
+  },
+  "reminderQueueShareNext": "Share the next one · {customer}",
+  "@reminderQueueShareNext": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShareNext)",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueShared": "Shared",
+  "@reminderQueueShared": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShared)"
+  },
+  "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
+  "@reminderQueueNotRecorded": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)"
+  },
+  "reminderQueueFailed": "Could not be shared. Try again.",
+  "@reminderQueueFailed": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
+  },
+  "reminderQueueResultTitle": "{count, plural, =1{1 reminder shared} other{{count} reminders shared}}",
+  "@reminderQueueResultTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueResultNone": "No reminder shared",
+  "@reminderQueueResultNone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
+  },
+  "reminderQueueResultSubtitle": "Each share recorded one level.",
+  "@reminderQueueResultSubtitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)"
+  },
+  "reminderQueueNotShared": "Not shared",
+  "@reminderQueueNotShared": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotShared)"
+  },
+  "reminderQueueStays": "They stay in To do.",
+  "@reminderQueueStays": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueStays)"
+  },
+  "reminderQueueDone": "Done",
+  "@reminderQueueDone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDone)"
+  },
+  "reminderQueueDoneEmpty": "Nothing to share",
+  "@reminderQueueDoneEmpty": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
+  }
+}

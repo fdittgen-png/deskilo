@@ -1,0 +1,19 @@
+{
+  "reminderQueueTitle": "Solleciti da condividere",
+  "reminderQueueIntro": "I solleciti si condividono a mano. Una condivisione registra un livello, e solo se è partita.",
+  "reminderQueueLevel": "Sollecito {level}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · scade oggi} =1{{number} · 1 giorno di ritardo} other{{number} · {days} giorni di ritardo}}",
+  "reminderQueuePreview": "Anteprima",
+  "reminderQueueShare": "Condividi",
+  "reminderQueueShareNext": "Condividi la prossima · {customer}",
+  "reminderQueueShared": "Condiviso",
+  "reminderQueueNotRecorded": "Non è stato registrato nulla: la condivisione è stata chiusa.",
+  "reminderQueueFailed": "Non è stato possibile condividerla. Riprovi.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 sollecito condiviso} other{{count} solleciti condivisi}}",
+  "reminderQueueResultNone": "Nessun sollecito condiviso",
+  "reminderQueueResultSubtitle": "Ogni condivisione ha registrato un livello.",
+  "reminderQueueNotShared": "Non condivisi",
+  "reminderQueueStays": "Restano in «Da fare».",
+  "reminderQueueDone": "Fatto",
+  "reminderQueueDoneEmpty": "Niente da condividere"
+}
