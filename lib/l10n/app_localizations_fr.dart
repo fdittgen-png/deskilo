@@ -26517,6 +26517,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelNameBookingsMeasured => 'Usage mesuré';
 
   @override
+  String get setupLevelNameBookingsNone => 'Pas de places';
+
+  @override
   String get setupLevelNameBookingsResources => 'Salles et ressources';
 
   @override

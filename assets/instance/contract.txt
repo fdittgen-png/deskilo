@@ -2243,6 +2243,7 @@ routine public.book_role_account_type(p_role text) -> text | function | invoker 
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d4ef2aaa9fd9
 routine public.business_kind_setting_check() -> trigger | function | invoker | volatile | exec:service_role | body:50eaa3943a8a
+routine public.business_kinds_profile_check() -> trigger | function | invoker | volatile | exec:service_role | body:ef13acf7a64a
 routine public.buy_package(p_workspace_id uuid, p_package_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:d3b206405454
 routine public.calendar_items(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone, p_kinds text[], p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b467c82650aa
 routine public.can_discuss_workspace_application(p_event_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:fcf9ed2b287b
@@ -3234,7 +3235,7 @@ routine public.setup_current_levels(p_flags jsonb) -> jsonb | function | invoker
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:04202633af7b
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:8a839a06267a
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
@@ -3446,6 +3447,7 @@ trigger book_exports.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_st
 trigger book_mappings.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_mappings FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_periods.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_periods FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger book_profiles.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.book_profiles FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger business_kinds.business_kinds_profile_check CREATE TRIGGER business_kinds_profile_check BEFORE INSERT OR UPDATE OF feature_profile ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION business_kinds_profile_check()
 trigger business_kinds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.business_kinds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger capability_states.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.capability_states FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger charging_stations.charging_stations_fee CREATE TRIGGER charging_stations_fee AFTER INSERT OR DELETE OR UPDATE ON public.charging_stations FOR EACH ROW EXECUTE FUNCTION charging_stations_fee()

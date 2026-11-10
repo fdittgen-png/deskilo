@@ -355,7 +355,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
     fields: {
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'preset': McpField(McpFieldType.enum_, values: ['essentiel', 'standard', 'complet']),
-      'bookings': McpField(McpFieldType.enum_, values: ['simple', 'resources', 'measured']),
+      'bookings': McpField(McpFieldType.enum_, values: ['none', 'simple', 'resources', 'measured']),
       'community': McpField(McpFieldType.enum_, values: ['basic', 'organised']),
       'money': McpField(McpFieldType.enum_, values: ['none', 'statements', 'invoices']),
       'payments': McpField(McpFieldType.enum_, values: ['off', 'online']),
@@ -375,7 +375,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'request_id': McpField(McpFieldType.uuid, required: true),
       'workspace_id': McpField(McpFieldType.uuid, required: true),
       'preset': McpField(McpFieldType.enum_, values: ['essentiel', 'standard', 'complet']),
-      'bookings': McpField(McpFieldType.enum_, values: ['simple', 'resources', 'measured']),
+      'bookings': McpField(McpFieldType.enum_, values: ['none', 'simple', 'resources', 'measured']),
       'community': McpField(McpFieldType.enum_, values: ['basic', 'organised']),
       'money': McpField(McpFieldType.enum_, values: ['none', 'statements', 'invoices']),
       'payments': McpField(McpFieldType.enum_, values: ['off', 'online']),

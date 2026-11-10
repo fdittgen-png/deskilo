@@ -47,11 +47,19 @@ class SetupLevel {
 /// that can be switched off entirely adds nothing.
 const Map<SetupProcess, List<SetupLevel>> setupLevels = {
   SetupProcess.bookings: [
+    // #3550 — a business without places (a studio, a practice, a salon)
+    // books none: its kind's profile chooses this level.
+    SetupLevel('none', features: {}),
     SetupLevel(
       'simple',
       features: {
-        // #3550 — a business with places books them from the first level.
+        // #3550 — a business with places books them from the first level,
+        // with the place features that sat in other processes' levels and
+        // are on for a new space (a level counts as reached only when all
+        // its features are on).
         WorkspaceFeature.placeBooking,
+        WorkspaceFeature.singleRoomLevelNames,
+        WorkspaceFeature.placeFeedback,
         WorkspaceFeature.workingHours,
         WorkspaceFeature.bookingPolicies,
         WorkspaceFeature.bookingGate,
@@ -67,6 +75,9 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
     SetupLevel(
       'resources',
       features: {
+        // #3550 — place features a new space starts without.
+        WorkspaceFeature.guestParticipation,
+        WorkspaceFeature.planMemberPhotos,
         WorkspaceFeature.levelBooking,
         WorkspaceFeature.meetingRooms,
         WorkspaceFeature.parking,
@@ -126,14 +137,11 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.managedProfiles,
         WorkspaceFeature.managedProfileAccess,
         WorkspaceFeature.memberOrigin,
-        WorkspaceFeature.guestParticipation,
         WorkspaceFeature.validationScopes,
         WorkspaceFeature.validationChain,
         WorkspaceFeature.calendarValidations,
         WorkspaceFeature.whatsappIntegration,
       },
-      // #3550 — some of its features sit under the places.
-      needs: {SetupProcess.bookings: 'simple'},
     ),
   ],
   SetupProcess.money: [
@@ -251,12 +259,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
     SetupLevel(
       'basic',
       features: {
-        WorkspaceFeature.planMemberPhotos,
         WorkspaceFeature.uniqueMonograms,
-        WorkspaceFeature.singleRoomLevelNames,
       },
-      // #3550 — some of its features sit under the places.
-      needs: {SetupProcess.bookings: 'simple'},
     ),
     SetupLevel(
       'branded',
@@ -280,7 +284,6 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.formHelpHints,
         WorkspaceFeature.setupGuide,
         WorkspaceFeature.memberGettingStarted,
-        WorkspaceFeature.placeFeedback,
         WorkspaceFeature.uiAnimations,
         WorkspaceFeature.regionalFormats,
         WorkspaceFeature.navigationStyle,
@@ -292,8 +295,6 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.dataReport,
         WorkspaceFeature.memberDataExport,
       },
-      // #3550 — some of its features sit under the places.
-      needs: {SetupProcess.bookings: 'simple'},
     ),
     SetupLevel(
       'insight',

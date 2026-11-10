@@ -17,6 +17,7 @@
   "setupProcessNamePurchases": "Einkauf",
   "setupProcessNamePresentation": "Auftritt",
   "setupProcessNameOperations": "Betrieb",
+  "setupLevelNameBookingsNone": "Keine Plätze",
   "setupLevelNameBookingsSimple": "Geteilte Plätze",
   "setupLevelNameBookingsResources": "Räume und Ressourcen",
   "setupLevelNameBookingsMeasured": "Gemessene Nutzung",

@@ -17,6 +17,8 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/workspace/domain/business_kind_proposal.dart::BusinessKindProposal':
+      '#3550 PR 2b — the kind chooser reads the proposal it shows',
 };
 
 void main() {
