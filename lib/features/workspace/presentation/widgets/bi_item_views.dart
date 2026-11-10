@@ -18,7 +18,7 @@ List<String> _notes(BiMeasure m, AppLocalizations l10n) => [
   if (m.reasons.contains('period_not_over')) l10n.biFinancePartial,
   // Those up to the period's end include the months' own.
   if (_kpi(m) case final k? when k.unresolvedCostLines > 0)
-    l10n.biItemUnresolved('${k.unresolvedCostLines}'),
+    l10n.biItemUnresolved(k.unresolvedCostLines),
 ];
 
 String _method(ItemMarginsKpi k, AppLocalizations l10n) =>
@@ -52,7 +52,7 @@ final itemModuleViews = <String, BiModuleView>{
     notes: (m, l10n, locale) => [
       ..._notes(m, l10n),
       if (_kpi(m) case final k? when k.uncosted > 0)
-        l10n.biItemUncosted('${k.uncosted}'),
+        l10n.biItemUncosted(k.uncosted),
     ],
     details: (m, l10n, locale) => [l10n.biItemProductDefinition],
   ),
@@ -60,7 +60,7 @@ final itemModuleViews = <String, BiModuleView>{
     title: (l10n) => l10n.biItemVendorTitle,
     value: biMoneyCell,
     basis: (m, l10n, locale) => switch (_kpi(m)) {
-      final k? => l10n.biItemVendorBasis('${k.supplierCount}'),
+      final k? => l10n.biItemVendorBasis(k.supplierCount),
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),

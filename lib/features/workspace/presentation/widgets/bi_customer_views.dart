@@ -74,7 +74,7 @@ final customerModuleViews = <String, BiModuleView>{
           if (k.cohorts[c] case final f? when f.count > 0)
             l10n.biCustomerCohortLine(
               _cohortName(c, l10n),
-              '${f.count}',
+              f.count,
               biMoneyCell(f.minor, locale, k.currency),
             ),
       ],

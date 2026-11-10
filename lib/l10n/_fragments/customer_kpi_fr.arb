@@ -3,7 +3,7 @@
   "biCustomerPaymentBasis": "{onTime} des {settled} factures réglées payées à l’échéance",
   "biCustomerPaymentDefinition": "Les factures arrivant à échéance dans la période, chacune dans un seul groupe. Une facture réglée est à l’heure lorsque son dernier paiement a été déclaré payé au plus tard à son échéance : la date de valeur bancaire lorsqu’une ligne rapprochée explique le paiement, sinon la date de paiement enregistrée, jamais le jour du lettrage. Les montants sont ce que doivent les factures, TVA comprise.",
   "biCustomerDelay": "Jours entre l’échéance et le paiement : médiane {median}, 90e centile {p90}, pondéré par le montant {weighted} (négatif : en avance)",
-  "biCustomerCohortLine": "{cohort} : {count} factures, {amount}",
+  "biCustomerCohortLine": "{count, plural, =1{{cohort} : 1 facture, {amount}} other{{cohort} : {count} factures, {amount}}}",
   "biCustomerCohortOnTime": "Payées à l’heure",
   "biCustomerCohortLate": "Payées en retard",
   "biCustomerCohortUndated": "Réglées sans date de paiement",

@@ -9,7 +9,7 @@
   "refSortAmountLow": "Lowest amount",
   "refFilterReset": "Reset",
   "refFilterAmount": "Amount",
-  "refFilterShow": "Show {count} results",
+  "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {

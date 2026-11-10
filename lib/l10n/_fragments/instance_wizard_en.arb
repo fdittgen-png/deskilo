@@ -278,7 +278,7 @@
   "@instanceDoctorAttention": {
     "description": "#1308 instance wizard doctor and token"
   },
-  "instanceDoctorPassed": "{count} checks passed",
+  "instanceDoctorPassed": "{count, plural, =1{1 check passed} other{{count} checks passed}}",
   "@instanceDoctorPassed": {
     "description": "#1308 instance wizard doctor and token",
     "placeholders": {

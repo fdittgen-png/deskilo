@@ -59,12 +59,12 @@
   "@overviewOverdueTitle": {
     "description": "#2583 the overview's own figures"
   },
-  "overviewOverdueBasis": "{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart",
+  "overviewOverdueBasis": "{count, plural, =1{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}",
   "@overviewOverdueBasis": {
     "description": "#2583 the overview's own figures",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       },
       "unknown": {
         "type": "String"

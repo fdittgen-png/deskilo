@@ -1241,3 +1241,27 @@ Vous regardez comment l'espace se porte.
 - La période en cours est partielle ; ses chiffres changent encore.
 
 **Voir aussi:** [L'écran Facturation](help:user.invoicing.hub)
+
+<!-- anchor: user.invoicing.bi-costs -->
+### Charges, échéances et charges partagées dans l'analyse
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez le côté achats de l'analyse : ce que l'espace a dépensé, doit encore et s'attend encore à payer, et comment les charges partagées pèsent sur chaque ressource.
+
+**Étapes**
+
+1. Ouvrez [Analyse d’activité](app:/bi) et choisissez les mois.
+2. Lisez **Charges d'exploitation (enregistrées)**, **Facturé moins charges d'exploitation enregistrées**, **Amortissements comptables (enregistrés)** et **Équipement acquis (immobilisé)**.
+3. Lisez **Payé (enregistré)**, **Reste à facturer (contrats)** et **À payer attendu (dû + contrats)** pour la trésorerie.
+4. Lisez **Charges partagées par ressource**, et touchez **Règles de répartition** pour dire comment une catégorie d'achat se répartit sur les étages et les bureaux.
+5. Dans une règle, choisissez la **Catégorie d'achat** (ou **Une ligne d'achat**), les **Poids (nombres entiers ; vide ou 0 : aucune part)**, la **Base (pourquoi ces poids)** et **En vigueur à partir du**, puis enregistrez. **Arrêter la règle** y met fin à partir de ce mois.
+
+**Bon à savoir**
+
+- Les chiffres disent ce qu'ils comptent. **Facturé moins charges d'exploitation enregistrées** n'est pas un bénéfice : ni amortissements, ni salaires, ni frais bancaires. **Payé (enregistré)** reprend les paiements enregistrés, pas un solde bancaire rapproché.
+- Les amortissements ne sont connus que si les valeurs comptables confirmées par votre expert-comptable couvrent exactement les mois choisis ; sinon ils sont inconnus, jamais 0.
+- Une charge qu'aucune règle ne répartit reste non affectée, jamais partagée à parts égales. La répartition est une analyse : aucun membre n'est facturé et aucun document ne change.
+- Les règles de répartition demandent **Gérer les tarifs et règles de facturation**.
+
+**Voir aussi:** [Analyse d'activité](help:user.invoicing.bi) · [Le registre des équipements](help:user.money.purchases.equipment)

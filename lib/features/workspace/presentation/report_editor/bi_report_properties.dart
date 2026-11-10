@@ -438,7 +438,7 @@ class _Layout extends ConsumerWidget {
         BiStepper(
           keyPrefix: 'bi-prop-height-$id',
           label: l10n.biEditorHeight,
-          value: l10n.biEditorRows('${layout.height}'),
+          value: l10n.biEditorRows(layout.height),
           less: l10n.biEditorLower,
           more: l10n.biEditorHigher,
           onLess: layout.height > 1

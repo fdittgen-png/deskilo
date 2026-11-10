@@ -9,6 +9,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/workspace/domain/kpi_vendor_delivery.dart';
+import '../../text/collation.dart';
 import 'purchase_order_repository.dart';
 
 DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
@@ -96,7 +97,7 @@ VendorDeliveryReading demoVendorDelivery({
   ]..sort((a, b) {
       final byOrders = b.orders.compareTo(a.orders);
       if (byOrders != 0) return byOrders;
-      final byName = a.name.compareTo(b.name);
+      final byName = compareNames(a.name, b.name);
       return byName != 0 ? byName : a.supplierId.compareTo(b.supplierId);
     });
   return (

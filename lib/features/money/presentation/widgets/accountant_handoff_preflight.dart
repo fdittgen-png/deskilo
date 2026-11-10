@@ -40,12 +40,12 @@ Future<bool> showAccountantHandoffPreflight(
   final textTheme = Theme.of(context).textTheme;
   final lines = <Widget>[
     Text(
-      l10n.handoffIncluded('${report.included}'),
+      l10n.handoffIncluded(report.included),
       key: const ValueKey('handoff-included'),
     ),
     for (final e in report.excluded.entries)
       Text(
-        l10n.handoffExcludedSettlements('${e.value}'),
+        l10n.handoffExcludedSettlements(e.value),
         key: ValueKey('handoff-excluded-${e.key}'),
       ),
     const SizedBox(height: AppSpacing.sm),

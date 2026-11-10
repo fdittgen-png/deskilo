@@ -27,7 +27,7 @@
   "setupHoursRange": "{from}–{to}",
   "setupHoursClosed": "Geschlossen",
   "setupPlacesEmpty": "Noch keine Plätze. Zeichnen Sie Räume, Tische und Plätze im Editor oder beginnen Sie mit einer Vorlage.",
-  "setupPlacesCounts": "{rooms, plural, =1{1 Raum} other{{rooms} Räume}} · {desks, plural, =1{1 Tisch} other{{desks} Tische}} · {seats, plural, =1{1 Platz} other{{seats} Plätze}}",
+  "setupPlacesCounts": "{rooms, plural, =0{keine Räume} =1{1 Raum} other{{rooms} Räume}} · {desks, plural, =0{keine Tische} =1{1 Tisch} other{{desks} Tische}} · {seats, plural, =0{keine Plätze} =1{1 Platz} other{{seats} Plätze}}",
   "setupPlacesOpenEditor": "Editor öffnen",
   "setupPlacesFromTemplate": "Mit einer Vorlage beginnen",
   "setupPlacesPlanLabel": "Plan von {level}",

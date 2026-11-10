@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import 'ref_picker_filter.dart';
@@ -151,7 +152,7 @@ class _PanelState<T extends RefFilterable> extends State<_Panel<T>> {
     options.sort(
       (a, b) => facet.key == 'month'
           ? b.value.id.compareTo(a.value.id)
-          : a.value.label.toLowerCase().compareTo(b.value.label.toLowerCase()),
+          : compareNames(a.value.label, b.value.label),
     );
     final needle = (_search[facet.key] ?? '').toLowerCase();
     if (needle.isNotEmpty) {

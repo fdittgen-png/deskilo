@@ -439,8 +439,8 @@ void main() {
         '1 of 2 received orders arrived by the expected date',
       );
       final details = view.details(m, l10n, 'en');
-      expect(details, contains('Received on time: 1 orders'));
-      expect(details, contains('Awaited, overdue: 1 orders'));
+      expect(details, contains('Received on time: 1 order'));
+      expect(details, contains('Awaited, overdue: 1 order'));
       expect(
         details,
         contains('Alpha: 1 on time, 1 late, of 2 orders'),

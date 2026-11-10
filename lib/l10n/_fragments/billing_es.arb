@@ -86,7 +86,7 @@
   "settlementVatNote": "Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.",
   "settlementSettledBy": "Agrupada en otra factura: esa es la que se debe y se reclama.",
   "settlementAction": "Agrupar en una factura",
-  "settlementConfirm": "¿Agrupar {count} facturas en una de {amount}?",
+  "settlementConfirm": "{count, plural, =1{¿Agrupar 1 factura en una de {amount}?} other{¿Agrupar {count} facturas en una de {amount}?}}",
   "settlementDone": "Agrupadas en {number}.",
   "settlementNeedsTwo": "Elija al menos dos facturas abiertas del mismo miembro.",
   "@settlementConfirm": {

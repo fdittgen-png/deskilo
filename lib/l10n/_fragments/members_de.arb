@@ -257,7 +257,7 @@
   "conversationLoadEarlier": "Frühere Nachrichten laden",
   "conversationToday": "Heute",
   "composerAttach": "Verweis anhängen",
-  "composerCharsLeft": "{count} Zeichen übrig",
+  "composerCharsLeft": "{count, plural, =1{1 Zeichen übrig} other{{count} Zeichen übrig}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {

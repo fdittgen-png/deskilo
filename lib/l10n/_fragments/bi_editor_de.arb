@@ -319,12 +319,12 @@
       }
     }
   },
-  "biEditorRows": "{count} Zeilen",
+  "biEditorRows": "{count, plural, =1{1 Zeile} other{{count} Zeilen}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },

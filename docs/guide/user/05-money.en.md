@@ -431,6 +431,107 @@ You want to see what the space still owes, and record what was paid.
 
 **See also:** [The Cash page](help:user.money.cash)
 
+<!-- anchor: user.money.purchases.lease -->
+### The premises lease
+
+**Audience:** Owner · Administrator with the permission
+
+The space rents its premises, and you want the rent and charges it owes recorded once, with their history.
+
+<!-- image: user-money-purchases-lease -->
+
+**Steps**
+
+1. Open [Purchases](app:/money/purchases) and tap **Premises lease**.
+2. Tap **Add a lease**. Choose the **Lessor (a supplier)**, write the **Premises (address)** and the **Starts on** date. Add **Fixed until**, **Notice in months**, the **Deposit** and an **Indexation (note)** if the lease has them.
+3. Under **Rent and charges**, tap **New amount**. Choose the **Charge** (**Rent**, **Service charge advance** or **Other charge**), the **Amount**, how often it is **Paid** and **From** which day.
+4. When the rent changes, add a **New amount** from its date. It replaces the amount in force; the earlier one stays in the history.
+5. To end the lease, tap **Give notice**. Enter **Notice given on**, **The lease ends on** and **Why does it end?**.
+6. Once the lessor bills the year's service charges, tap **Settle charges**. Enter the period, the **Amount billed** and the day it is **Due on**.
+
+**Good to know**
+
+- Record the lessor as a supplier first.
+- After notice, the scheduled amounts stop at the day the lease ends. Occurrences already presented are kept.
+- A settlement deducts the advances paid in the period: a balance is owed on the day you chose, a surplus is recorded as a credit. A period is settled once.
+- Recording the lease needs **Record the premises lease**; the space must have **Premises lease** switched on.
+
+**See also:** [Rent commitments and the bills that meet them](help:user.money.purchases.commitments) · [Suppliers](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.commitments -->
+### Rent commitments and the bills that meet them
+
+**Audience:** Owner · Administrator with the permission
+
+The lease or a rented room expects rent each month, and you want each month matched to the lessor's bill, without counting the cost twice.
+
+**Steps**
+
+1. In **Premises lease** or **Rented rooms**, tap **Commitments**.
+2. Read each month: **Expected**, **Partly matched** or **Matched**.
+3. Tap **Match a bill** on a month. Choose the **Bill** and the **Line of the bill**, and enter the **Amount covered**.
+4. If the bill differs from what the month expects, tap **Accept the difference** and write **Why the bill differs**.
+5. A wrong match is undone with **Reverse** and its reason.
+
+**Good to know**
+
+- A bill matched to a month replaces that month's expectation; it never adds a second cost.
+- Only the lessor's pending or approved supplier bills can be matched, up to what the month still expects.
+- An accepted difference goes to the validators: nothing changes until they decide.
+
+**See also:** [The premises lease](help:user.money.purchases.lease) · [Rented rooms](help:user.money.purchases.rented-rooms)
+
+<!-- anchor: user.money.purchases.rented-rooms -->
+### Rented rooms
+
+**Audience:** Owner · Administrator with the permission
+
+The space rents rooms from a lessor, and you want members to book them only while the rental runs, and only the members you choose.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Steps**
+
+1. In the floor plan, mark the floor as rented: under **Floors**, it reads "Rented floor: its rooms are booked only inside a rental".
+2. Open [Purchases](app:/money/purchases), tap **Rented rooms**, and tap **Rent this room** on a room.
+3. Choose the **Lessor**, the **First day** and, if it ends, the **Last day (optional)**. Enter the **Cost to the space per month** and the **Fee per half day for a member (optional)**.
+4. Choose who may book: **Open to every member**, or **Also open to these members**, **Also open to these roles** or **Also open to these plans**, each with its own fee if you wish.
+5. Set the **Status** to **Active: bookable** and tap **Save**.
+
+**Good to know**
+
+- A rented room can be booked only inside its rental period, and only by the people you chose. Nobody else sees it.
+- While the status is **Draft: not bookable**, nobody can book it. Once the rental **Ended**, the room is not bookable again until a new rental starts.
+- The monthly cost appears in **Commitments**, to be matched to the lessor's bills.
+- Managing rented rooms needs **Manage sites and edit the floor plan**; the space must have **Rented rooms** switched on.
+
+**See also:** [Rent commitments and the bills that meet them](help:user.money.purchases.commitments)
+
+<!-- anchor: user.money.purchases.equipment -->
+### The equipment register
+
+**Audience:** Owner · Administrator with the permission
+
+The space bought long-lasting equipment, and you want it registered and treated as your accountant decides.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Steps**
+
+1. On the purchase, classify the line as long-lasting equipment.
+2. Open [Purchases](app:/money/purchases), tap **Equipment** and then **Register equipment**. Choose the **Purchase line** and give the **Name of the equipment**.
+3. Tap **Decide treatment**. Choose **Capitalise as equipment** or **Expense**, write the **Basis of the decision**, and add **Available for use on** only if you know it.
+4. To keep your accountant's figures, tap **Accountant's valuations** and **Import a file** (or **Type in one asset**). Check the preview and tap **Confirm**.
+
+**Good to know**
+
+- Each piece shows its state: **Waiting for treatment**, **Capitalised, in use**, **Expensed** or **Disposed of**.
+- The cost is known once the purchase's deductible VAT share is qualified.
+- Valuations are evidence only: nothing is posted from them, and a blank figure stays unknown. A later batch replaces an earlier one and says why.
+- Registering needs **Capture supplier bills**; deciding the treatment and the valuations need **Manage tariffs and billing rules** and **View workspace finances**.
+
+**See also:** [A supplier bill, from capture to approval](help:user.money.purchases.bills)
+
 <!-- anchor: user.money.cash -->
 ### The Cash page
 

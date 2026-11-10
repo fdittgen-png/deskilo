@@ -263,6 +263,8 @@ public.message_reactions.mcp_delegated_deny
 public.message_reactions.personal_native_session
 public.message_stars.mcp_delegated_deny
 public.message_stars.personal_native_session
+public.national_channel_acceptances.mcp_delegated_deny
+public.national_channel_acceptances.national_channel_acceptances_select
 public.number_sequences.mcp_delegated_deny
 public.number_sequences.number_sequences_select
 public.offices.mcp_delegated_deny

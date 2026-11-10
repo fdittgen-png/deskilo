@@ -50,12 +50,12 @@
   "@biVendorCategoryTitle": {
     "description": "#3294 step 2 vendor analytics"
   },
-  "biVendorCategoryBasis": "{count} categories",
+  "biVendorCategoryBasis": "{count, plural, =1{1 category} other{{count} categories}}",
   "@biVendorCategoryBasis": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -98,7 +98,7 @@
       }
     }
   },
-  "biVendorCohortLine": "{cohort}: {count} bills, {amount}",
+  "biVendorCohortLine": "{count, plural, =1{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}",
   "@biVendorCohortLine": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
@@ -106,7 +106,7 @@
         "type": "String"
       },
       "count": {
-        "type": "String"
+        "type": "int"
       },
       "amount": {
         "type": "String"
@@ -178,12 +178,12 @@
       }
     }
   },
-  "biVendorLagUndated": "{count} bills carry no supplier date or no received date and are left out",
+  "biVendorLagUndated": "{count, plural, =1{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}",
   "@biVendorLagUndated": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },

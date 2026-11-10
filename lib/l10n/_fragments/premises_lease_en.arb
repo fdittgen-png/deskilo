@@ -159,7 +159,7 @@
       }
     }
   },
-  "leaseOccurrencesAfter": "{count} occurrences were already presented for a date after the end.",
+  "leaseOccurrencesAfter": "{count, plural, =1{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {

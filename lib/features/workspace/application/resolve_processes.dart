@@ -33,6 +33,7 @@
 // not there, which is the defect #800 fixed for single toggles. So a
 // removal that would orphan something returns [blockedBy] and changes
 // nothing. The caller names the dependents and asks.
+import '../../../core/text/collation.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_process.dart';
 
@@ -169,7 +170,7 @@ ProcessChangeSet resolveActivation({
         reason: active.contains(entry)
             ? CapabilityReason.alreadyActive
             : CapabilityReason.prerequisite,
-        neededBy: neededBy[entry]!..sort((a, b) => a.name.compareTo(b.name)),
+        neededBy: neededBy[entry]!..sort((a, b) => compareNames(a.name, b.name)),
       ),
   ];
 
@@ -210,7 +211,7 @@ ProcessChangeSet resolveDeactivation({
     final orphans = [
       for (final candidate in remaining)
         if (requirementChain(candidate).contains(feature)) candidate,
-    ]..sort((a, b) => a.name.compareTo(b.name));
+    ]..sort((a, b) => compareNames(a.name, b.name));
     if (orphans.isNotEmpty) {
       blocked.add(BlockedRemoval(feature: feature, orphans: orphans));
     }

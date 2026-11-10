@@ -1,7 +1,7 @@
 {
   "handoffTitle": "Antes de guardar",
-  "handoffIncluded": "{count} documento(s) en el archivo",
-  "handoffExcludedSettlements": "{count} resumen(es) de liquidación omitido(s): sus facturas ya figuran",
+  "handoffIncluded": "{count, plural, =1{1 documento en el archivo} other{{count} documento(s) en el archivo}}",
+  "handoffExcludedSettlements": "{count, plural, =1{1 resumen de liquidación omitido: sus facturas ya figuran} other{{count} resumen(es) de liquidación omitido(s): sus facturas ya figuran}}",
   "handoffIssued": "Emitidas",
   "handoffVoided": "Anuladas",
   "handoffPayments": "Pagado: {confirmed} confirmado, {pending} pendiente",

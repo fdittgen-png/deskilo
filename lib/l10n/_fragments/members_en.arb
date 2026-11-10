@@ -290,7 +290,7 @@
   "conversationLoadEarlier": "Load earlier messages",
   "conversationToday": "Today",
   "composerAttach": "Attach a reference",
-  "composerCharsLeft": "{count} characters left",
+  "composerCharsLeft": "{count, plural, =1{1 character left} other{{count} characters left}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {

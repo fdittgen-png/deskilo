@@ -431,6 +431,107 @@ Vous voulez voir ce que l'espace doit encore, et enregistrer ce qui a été pay�
 
 **Voir aussi:** [La page Trésorerie](help:user.money.cash)
 
+<!-- anchor: user.money.purchases.lease -->
+### Le bail des locaux
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+L'espace loue ses locaux, et vous voulez enregistrer une seule fois le loyer et les charges qu'il doit, avec leur historique.
+
+<!-- image: user-money-purchases-lease -->
+
+**Étapes**
+
+1. Ouvrez [Achats](app:/money/purchases) et touchez **Bail des locaux**.
+2. Touchez **Ajouter un bail**. Choisissez le **Bailleur (un fournisseur)**, écrivez les **Locaux (adresse)** et la date de **Début**. Ajoutez **Ferme jusqu’au**, **Préavis en mois**, le **Dépôt de garantie** et une **Indexation (note)** si le bail en prévoit.
+3. Sous **Loyer et charges**, touchez **Nouveau montant**. Choisissez la **Charge** (**Loyer**, **Provision sur charges** ou **Autre charge**), le **Montant**, la fréquence (**Payé**) et la date de départ (**À partir du**).
+4. Quand le loyer change, ajoutez un **Nouveau montant** à sa date. Il remplace le montant en vigueur ; l'ancien reste dans l'historique.
+5. Pour mettre fin au bail, touchez **Donner congé**. Saisissez **Congé donné le**, **Le bail se termine le** et **Pourquoi se termine-t-il ?**.
+6. Quand le bailleur facture les charges de l'année, touchez **Régulariser les charges**. Saisissez la période, le **Montant facturé** et le jour de paiement (**Échéance le**).
+
+**Bon à savoir**
+
+- Enregistrez d'abord le bailleur comme fournisseur.
+- Après le congé, les montants programmés s'arrêtent au jour de fin du bail. Les échéances déjà présentées sont conservées.
+- Une régularisation déduit les provisions payées sur la période : un solde est dû au jour choisi, un excédent est enregistré comme crédit. Une période n'est régularisée qu'une fois.
+- Enregistrer le bail demande **Enregistrer le bail des locaux** ; l'espace doit avoir activé **Bail des locaux**.
+
+**Voir aussi:** [Les échéances de loyer et les factures qui les règlent](help:user.money.purchases.commitments) · [Soldes des fournisseurs](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.commitments -->
+### Les échéances de loyer et les factures qui les règlent
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Le bail ou une salle louée attend un loyer chaque mois, et vous voulez rapprocher chaque mois de la facture du bailleur, sans compter le coût deux fois.
+
+**Étapes**
+
+1. Dans **Bail des locaux** ou **Salles louées**, touchez **Échéances**.
+2. Lisez chaque mois : **Attendu**, **En partie rapproché** ou **Rapproché**.
+3. Touchez **Rapprocher une facture** sur un mois. Choisissez la **Facture** et la **Ligne de la facture**, puis saisissez le **Montant couvert**.
+4. Si la facture diffère de ce que le mois attend, touchez **Accepter l'écart** et écrivez **Pourquoi la facture diffère**.
+5. Un rapprochement erroné s'annule avec **Annuler** et sa raison.
+
+**Bon à savoir**
+
+- Une facture rapprochée d'un mois remplace l'attente de ce mois ; elle n'ajoute jamais un second coût.
+- Seules les factures fournisseur du bailleur, en attente ou approuvées, se rapprochent, jusqu'à ce que le mois attend encore.
+- Un écart accepté part aux validateurs : rien ne change avant leur décision.
+
+**Voir aussi:** [Le bail des locaux](help:user.money.purchases.lease) · [Salles louées](help:user.money.purchases.rented-rooms)
+
+<!-- anchor: user.money.purchases.rented-rooms -->
+### Salles louées
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+L'espace loue des salles à un bailleur, et vous voulez que les membres ne les réservent que pendant la location, et seulement ceux que vous choisissez.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Étapes**
+
+1. Dans le plan, marquez l'étage comme loué : sous **Étages**, il indique « Étage loué : ses salles ne se réservent que dans une location ».
+2. Ouvrez [Achats](app:/money/purchases), touchez **Salles louées**, puis **Louer cette salle** sur une salle.
+3. Choisissez le **Bailleur**, le **Premier jour** et, si la location se termine, le **Dernier jour (facultatif)**. Saisissez le **Coût mensuel pour l'espace** et le **Tarif par demi-journée pour un membre (facultatif)**.
+4. Choisissez qui peut réserver : **Ouverte à tous les membres**, ou **Aussi ouverte à ces membres**, **Aussi ouverte à ces rôles** ou **Aussi ouverte à ces formules**, chacun avec son propre tarif si vous le souhaitez.
+5. Mettez l'**État** sur **Active : réservable** et touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- Une salle louée ne se réserve que pendant sa période de location, et seulement par les personnes choisies. Personne d'autre ne la voit.
+- Tant que l'état est **Brouillon : non réservable**, personne ne peut la réserver. Une fois la location **Terminée**, la salle n'est plus réservable jusqu'à une nouvelle location.
+- Le coût mensuel apparaît dans **Échéances**, à rapprocher des factures du bailleur.
+- Gérer les salles louées demande **Gérer les sites et modifier le plan** ; l'espace doit avoir activé **Salles louées**.
+
+**Voir aussi:** [Les échéances de loyer et les factures qui les règlent](help:user.money.purchases.commitments)
+
+<!-- anchor: user.money.purchases.equipment -->
+### Le registre des équipements
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+L'espace a acheté un équipement durable, et vous voulez l'enregistrer et le traiter comme votre expert-comptable le décide.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Étapes**
+
+1. Sur l'achat, classez la ligne comme équipement durable.
+2. Ouvrez [Achats](app:/money/purchases), touchez **Équipements** puis **Enregistrer un équipement**. Choisissez la **Ligne d'achat** et donnez le **Nom de l'équipement**.
+3. Touchez **Décider du traitement**. Choisissez **Immobiliser comme équipement** ou **Passer en charge**, écrivez le **Fondement de la décision**, et ajoutez **Mise en service le** seulement si vous la connaissez.
+4. Pour garder les chiffres de votre expert-comptable, touchez **Valorisations de l'expert-comptable** puis **Importer un fichier** (ou **Saisir un bien**). Vérifiez l'aperçu et touchez **Confirmer**.
+
+**Bon à savoir**
+
+- Chaque équipement montre son état : **En attente de traitement**, **Immobilisé, en service**, **Passé en charge** ou **Sorti de l'actif**.
+- Le coût est connu une fois la part de TVA déductible de l'achat qualifiée.
+- Les valorisations sont des pièces justificatives : rien n'est comptabilisé à partir d'elles, et un chiffre vide reste inconnu. Un lot ultérieur remplace le précédent et dit pourquoi.
+- Enregistrer demande **Saisir les factures fournisseur** ; décider du traitement et les valorisations demandent **Gérer les tarifs et règles de facturation** et **Consulter les finances de l'espace**.
+
+**Voir aussi:** [Une facture fournisseur, de la saisie à l'approbation](help:user.money.purchases.bills)
+
 <!-- anchor: user.money.cash -->
 ### La page Trésorerie
 

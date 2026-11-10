@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
+import '../../text/collation.dart';
 
 /// In-memory [AccessoryRepository] (fakes over mocks).
 class FakeAccessoryRepository implements AccessoryRepository {
@@ -54,7 +55,7 @@ class FakeAccessoryRepository implements AccessoryRepository {
           .toList()
         ..sort((a, b) {
           final bySortOrder = a.sortOrder.compareTo(b.sortOrder);
-          return bySortOrder != 0 ? bySortOrder : a.name.compareTo(b.name);
+          return bySortOrder != 0 ? bySortOrder : compareNames(a.name, b.name);
         });
 
   @override

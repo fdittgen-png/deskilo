@@ -86,7 +86,7 @@
   "settlementVatNote": "Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.",
   "settlementSettledBy": "Regroupée dans une autre facture — c’est celle-là qui est due et relancée.",
   "settlementAction": "Regrouper en une facture",
-  "settlementConfirm": "Regrouper {count} factures en une seule de {amount} ?",
+  "settlementConfirm": "{count, plural, =1{Regrouper 1 facture en une seule de {amount} ?} other{Regrouper {count} factures en une seule de {amount} ?}}",
   "settlementDone": "Regroupées dans {number}.",
   "settlementNeedsTwo": "Choisissez au moins deux factures ouvertes du même membre.",
   "@settlementConfirm": {

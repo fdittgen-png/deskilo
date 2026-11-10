@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/presence/presence_rules.dart';
 import '../../../../core/settings/directory_windows.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -129,9 +130,7 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
           final active =
               members.where((m) => m.status == MemberStatus.active).toList()
                 ..sort(
-                  (a, b) => (names[a.id] ?? '').toLowerCase().compareTo(
-                    (names[b.id] ?? '').toLowerCase(),
-                  ),
+                  (a, b) => compareNames((names[a.id] ?? ''), (names[b.id] ?? '')),
                 );
           return RefreshIndicator(
             onRefresh: () => _refresh(ref),

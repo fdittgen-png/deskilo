@@ -66,12 +66,12 @@
   "@biExportRecallNote": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biExportLeftOut": "{count} cartes ne sont pas dans cet export : leur chiffre, leurs filtres ou leur regroupement ne sont pas encore exportables.",
+  "biExportLeftOut": "{count, plural, =1{1 carte n'est pas dans cet export : son chiffre, ses filtres ou son regroupement ne sont pas encore exportables.} other{{count} cartes ne sont pas dans cet export : leur chiffre, leurs filtres ou leur regroupement ne sont pas encore exportables.}}",
   "@biExportLeftOut": {
     "description": "#2581 analytical report print layout and exports",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },

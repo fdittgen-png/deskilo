@@ -123,7 +123,7 @@
       }
     }
   },
-  "invoiceIssuedCount": "{count} fatture emesse.",
+  "invoiceIssuedCount": "{count, plural, =1{1 fattura emessa.} other{{count} fatture emesse.}}",
   "@invoiceIssuedCount": {
     "placeholders": {
       "count": {
@@ -171,7 +171,7 @@
   "invoiceMatchPickPayment": "Seleziona il pagamento registrato",
   "invoiceMatchNoPayments": "Nessun pagamento registrato da riconciliare — lo registri o lo confermi prima.",
   "invoiceStatusOpen": "Aperta",
-  "invoiceCountShown": "{count} fatture",
+  "invoiceCountShown": "{count, plural, =1{1 fattura} other{{count} fatture}}",
   "@invoiceCountShown": {
     "placeholders": {
       "count": {
@@ -222,7 +222,7 @@
   },
   "invoicePickMember": "Scelga un membro per vedere cosa ha registrato il suo mese.",
   "invoiceRunningMonth": "Questo mese è ancora in corso — le sue voci possono cambiare, e un mese si fattura una sola volta.",
-  "invoiceIssueAllConfirm": "Emettere {count} fatture per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.",
+  "invoiceIssueAllConfirm": "{count, plural, =1{Emettere 1 fattura per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.} other{Emettere {count} fatture per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.}}",
   "@invoiceIssueAllConfirm": {
     "placeholders": {
       "count": {
@@ -779,7 +779,7 @@
   },
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
   "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
-  "eventPriceNegotiationItems": "{count} articoli",
+  "eventPriceNegotiationItems": "{count, plural, =1{1 articolo} other{{count} articoli}}",
   "journeyStateDone": "Completato",
   "journeyStateCurrent": "Passaggio attuale",
   "journeyStateUpcoming": "Da completare",

@@ -1241,3 +1241,27 @@ Guarda come funziona lo spazio.
 - Il periodo in corso è parziale; le sue cifre cambiano ancora.
 
 **Vedi anche:** [La schermata Fatturazione](help:user.invoicing.hub)
+
+<!-- anchor: user.invoicing.bi-costs -->
+### Costi, scadenze e costi condivisi nell'analisi
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole il lato acquisti dell'analisi: ciò che lo spazio ha speso, deve ancora e prevede ancora di pagare, e come i costi condivisi ricadono su ogni risorsa.
+
+**Passaggi**
+
+1. Apra [Analisi aziendale](app:/bi) e scelga i mesi.
+2. Legga **Costi operativi (registrati)**, **Fatturato meno costi operativi registrati**, **Ammortamenti contabili (registrati)** e **Attrezzature acquistate (capitalizzate)**.
+3. Legga **Pagato (registrato)**, **Ancora da fatturare (contratti)** e **Previsto da pagare (dovuto + contratti)** per la cassa.
+4. Legga **Costi condivisi per risorsa**, e tocchi **Regole di ripartizione** per dire come una categoria di acquisto si ripartisce su piani e uffici.
+5. In una regola, scelga la **Categoria di acquisto** (o **Una riga di acquisto**), i **Pesi (numeri interi; vuoto o 0: nessuna quota)**, la **Base (perché questi pesi)** e **In vigore dal**, poi salvi. **Ferma la regola** la termina da questo mese.
+
+**Da sapere**
+
+- Le cifre dicono che cosa contano. **Fatturato meno costi operativi registrati** non è un utile: non contiene ammortamenti, stipendi né spese bancarie. **Pagato (registrato)** sono pagamenti registrati, non un saldo bancario riconciliato.
+- Gli ammortamenti sono noti solo se i valori contabili confermati dal Suo commercialista coprono esattamente i mesi scelti; altrimenti sono sconosciuti, mai 0.
+- Un costo che nessuna regola ripartisce resta non attribuito, mai diviso in parti uguali. La ripartizione è un'analisi: nessun membro viene fatturato e nessun documento cambia.
+- Le regole di ripartizione richiedono **Gestire tariffe e regole di fatturazione**.
+
+**Vedi anche:** [Analisi aziendale](help:user.invoicing.bi) · [Il registro delle attrezzature](help:user.money.purchases.equipment)

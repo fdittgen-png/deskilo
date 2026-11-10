@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -104,7 +105,7 @@ class TemplateGallery extends ConsumerStatefulWidget {
               .compareTo(_visibilityRank(b.visibility));
           return byRank != 0
               ? byRank
-              : a.name.toLowerCase().compareTo(b.name.toLowerCase());
+              : compareNames(a.name, b.name);
         });
 
   /// Whether [t] matches the search [query] and carries every tag in
@@ -171,7 +172,7 @@ class _TemplateGalleryState extends ConsumerState<TemplateGallery> {
       if (_shortlist.any((s) => s.id == t.id)) {
         _shortlist.removeWhere((s) => s.id == t.id);
       } else if (_shortlist.length >= maxShortlist) {
-        AppSnack.info(context, l10n.compareLimit('$maxShortlist'));
+        AppSnack.info(context, l10n.compareLimit(maxShortlist));
       } else {
         _shortlist.add(t);
       }

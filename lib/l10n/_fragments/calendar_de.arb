@@ -225,7 +225,7 @@
   },
   "calendarWeekEmpty": "Nichts in dieser Woche.",
   "calendarDayEmpty": "Nichts an diesem Tag.",
-  "calendarItemCount": "{count} Einträge",
+  "calendarItemCount": "{count, plural, =1{1 Eintrag} other{{count} Einträge}}",
   "@calendarItemCount": {
     "placeholders": {
       "count": {

@@ -71,12 +71,12 @@
   "@compareNotCarried": {
     "description": "#1660 template_compare"
   },
-  "compareLimit": "Up to {count} templates can be compared. Remove one first.",
+  "compareLimit": "{count, plural, =1{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}",
   "@compareLimit": {
     "description": "#1660 template_compare",
     "placeholders": {
       "count": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
