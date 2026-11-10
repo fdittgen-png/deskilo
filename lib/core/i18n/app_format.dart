@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
@@ -108,8 +109,12 @@ class AppFormat {
 
   /// #3484 — [instant] on the wall clock the reader asked for (the
   /// workspace's, or the device's): what a screen shows, compares by day or
-  /// hands to a picker. Replaces `.toLocal()` and `WorkspaceTime.display`.
-  DateTime wall(DateTime instant) => _wall(instant);
+  /// hands to a picker. Replaces `.toLocal()` and `WorkspaceTime.display`,
+  /// and keeps the latter's rule: a zone-carrying value (a workspace-anchored
+  /// window is a [tz.TZDateTime]) already reads in its own wall clock and
+  /// passes through — "Morning until 13:00" says 13:00 on a device hours away.
+  DateTime wall(DateTime instant) =>
+      instant is tz.TZDateTime ? instant : _wall(instant);
 
   /// #3484 — the date shape [shape] in the member's format locale. It formats
   /// the value it is given as it is: an instant goes through [wall] first, a
