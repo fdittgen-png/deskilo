@@ -146,7 +146,7 @@ Every functionality ships behind a `WorkspaceFeature`. *Enable a feature and you
 1. The enum value (appended at the end) and its `featureManifest` entry (`requires`, default) in `lib/features/workspace/domain/workspace_feature.dart`.
 2. Its name in `feature_names.dart` and its description on the Features screen.
 3. ARB fragments `featureXxx` and `featureXxxDesc`, in all five languages.
-4. `web/setup.html`: the feature line and the `REQUIRES` entry. Then `dart run tool/build_setup_l10n.dart` and commit `web/setup_l10n.js` and `web/setup_catalogue.js`.
+4. The setup questionnaire: nothing to edit in `web/setup.html`. Its feature list and `REQUIRES` tree come from steps 1–3 through `dart run tool/build_setup_l10n.dart` (#2923); commit the regenerated `web/setup_l10n.js` and `web/setup_catalogue.js` (`setup_l10n_test` fails on any drift).
 5. A primary subprocess (or an explicit internal reason) in `workspace_process.dart`; then `dart run tool/build_process_catalogue.dart`.
 6. Its assessment line in `feature_lifecycle.dart`.
 7. A migration carrying the output of `dart run tool/build_feature_registry_sql.dart`. A server gate calls `public.feature_effective(ws, 'key')`, never the raw flag.
