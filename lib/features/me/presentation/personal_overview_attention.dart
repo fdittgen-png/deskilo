@@ -19,8 +19,8 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/ui/personal_kit/me_kit_metrics.dart';
 import '../../../core/ui/private_value.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../directory/domain/inbox_composition.dart';
 import '../../directory/domain/inbox_sources.dart';
 import '../../directory/presentation/messenger/open_inbox_entry.dart';
@@ -32,6 +32,8 @@ import '../application/personal_overview.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
 import 'kit/me_quiet_line.dart';
+import 'kit/me_row.dart';
+import 'kit/me_status_chip.dart';
 import 'personal_overview_sections.dart';
 
 /// How many items Needs attention lists before it says how many more wait:
@@ -78,6 +80,7 @@ List<AttentionItem>? attentionItemsOf(
           number: d.number,
           remainingCents: d.remainingCents,
           currency: d.currency,
+          dueOn: d.dueOn,
           overdue: d.overdueAt(now),
         ),
     ],
@@ -117,6 +120,7 @@ class NeedsAttentionSection extends ConsumerWidget {
                   number: d.number,
                   remainingCents: d.remainingCents,
                   currency: d.currency,
+                  dueOn: d.dueOn,
                   overdue: d.overdueAt(now),
                 ),
             ],
@@ -189,8 +193,9 @@ class NeedsAttentionSection extends ConsumerWidget {
   }
 }
 
-/// One thing that waits: what it is, and the one action that leads to it.
-/// The row is not a button; its action is.
+/// One thing that waits: a row of Me whose whole text is the one button that
+/// leads to it, named by what and where. The amount of a document is private:
+/// masked until revealed, its own target beside the row's button.
 class _AttentionRow extends ConsumerWidget {
   const _AttentionRow({required this.item});
 
@@ -199,114 +204,91 @@ class _AttentionRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final tokens = PersonalTheme.of(context);
-    final (icon, title, detail, action, onAction) = _describe(
-      context,
-      ref,
-      l10n,
+    final d = item.document;
+    final (icon, title, detail, chip, onTap) = switch (item.kind) {
+      AttentionKind.document => (
+        Icons.receipt_long_outlined,
+        l10n.meOverviewAttentionDocumentTitle(d!.number, d.workspaceName),
+        d.dueOn == null
+            ? null
+            : l10n.meOverviewAttentionDue(
+                ref.watch(appFormatProvider).date(d.dueOn!),
+              ),
+        MeStatusChip(
+          kind: d.overdue ? MeChipKind.overdue : MeChipKind.toPay,
+          label: d.overdue
+              ? l10n.meOverviewAttentionOverdue
+              : l10n.meOverviewAttentionToPay,
+        ),
+        () => context.push(myFinancesRoute(workspaceId: d.workspaceId)),
+      ),
+      AttentionKind.application => (
+        Icons.hourglass_top_outlined,
+        item.application!.label ?? l10n.meRefUnnamed,
+        l10n.meOverviewAttentionApplication(
+          item.application!.label ?? l10n.meRefUnnamed,
+        ),
+        null,
+        () => context.push('/applications'),
+      ),
+      AttentionKind.conversation => (
+        Icons.forum_outlined,
+        item.conversation!.title.isNotEmpty
+            ? item.conversation!.title
+            : item.conversation!.workspaceName,
+        l10n.meOverviewAttentionConversation(item.conversation!.unread),
+        null,
+        () => unawaited(openInboxEntry(context, ref, item.conversation!)),
+      ),
+    };
+    final row = MeRow(
+      key: ValueKey('me-overview-action-${item.key}'),
+      leading: Icon(icon),
+      title: title,
+      subtitle: detail,
+      semanticLabel: [title, ?detail].join('. '),
+      trailing: chip,
+      onTap: onTap,
     );
     return Padding(
       key: ValueKey('me-overview-${item.key}'),
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: Row(
-        children: [
-          Icon(icon, color: item.overdue ? tokens.danger : tokens.primary),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
+      child: d == null
+          ? row
+          : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleSmall?.strong,
-                ),
-                DefaultTextStyle.merge(
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: tokens.secondaryText,
-                  ),
-                  child: detail,
-                ),
-                if (item.overdue)
-                  Text(
-                    l10n.meOverviewAttentionOverdue,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: tokens.danger,
-                    ),
-                  ),
-              ],
+              children: [row, _Amount(item: item, document: d)],
             ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Flexible(
-            child: TextButton(
-              key: ValueKey('me-overview-action-${item.key}'),
-              style: TextButton.styleFrom(
-                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
-              ),
-              onPressed: onAction,
-              child: Text(action, textAlign: TextAlign.center),
-            ),
-          ),
-        ],
-      ),
     );
   }
+}
 
-  (IconData, String, Widget, String, VoidCallback) _describe(
-    BuildContext context,
-    WidgetRef ref,
-    AppLocalizations l10n,
-  ) {
-    switch (item.kind) {
-      case AttentionKind.document:
-        final d = item.document!;
-        final format = ref.watch(appFormatProvider);
-        // The amount is private: masked until revealed, as on Finances.
-        return (
-          Icons.receipt_long_outlined,
-          d.workspaceName,
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: AppSpacing.xs,
-            children: [
-              PrivateValue(
-                revealKey: ValueKey('me-overview-amount-${item.key}'),
-                maskedText: l10n.financesAmountMasked(d.currency),
-                hiddenLabel: l10n.financesAmountHidden,
-                showLabel: l10n.financesShowAmount,
-                hideLabel: l10n.financesHideAmount,
-                child: Text(
-                  format.money(d.remainingCents, currency: d.currency),
-                ),
-              ),
-              Text(l10n.meOverviewAttentionDocumentToPay(d.number)),
-            ],
-          ),
-          l10n.meOverviewAttentionViewDocument,
-          () => context.push(myFinancesRoute(workspaceId: d.workspaceId)),
-        );
-      case AttentionKind.application:
-        final name = item.application!.label ?? l10n.meRefUnnamed;
-        return (
-          Icons.hourglass_top_outlined,
-          name,
-          Text(l10n.meOverviewAttentionApplication(name)),
-          l10n.mySpacesRequestStatus,
-          () => context.push('/applications'),
-        );
-      case AttentionKind.conversation:
-        final c = item.conversation!;
-        return (
-          Icons.forum_outlined,
-          c.title.isNotEmpty ? c.title : c.workspaceName,
-          Text(l10n.meOverviewAttentionConversation(c.unread)),
-          l10n.meOverviewAttentionOpenConversation,
-          () => unawaited(openInboxEntry(context, ref, c)),
-        );
-    }
+/// A document's amount in its own currency, masked until revealed.
+class _Amount extends ConsumerWidget {
+  const _Amount({required this.item, required this.document});
+
+  final AttentionItem item;
+  final OwedDocument document;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final d = document;
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(
+        start: MeKitMetrics.tile + MeKitMetrics.gap,
+      ),
+      child: PrivateValue(
+        revealKey: ValueKey('me-overview-amount-${item.key}'),
+        maskedText: l10n.financesAmountMasked(d.currency),
+        hiddenLabel: l10n.financesAmountHidden,
+        showLabel: l10n.financesShowAmount,
+        hideLabel: l10n.financesHideAmount,
+        child: Text(
+          ref.watch(appFormatProvider).money(d.remainingCents, currency: d.currency),
+        ),
+      ),
+    );
   }
 }
 

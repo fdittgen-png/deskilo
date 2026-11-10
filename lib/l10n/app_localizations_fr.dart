@@ -17504,6 +17504,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String meOverviewAttentionDocumentTitle(String number, String workspace) {
+    return 'Facture $number · $workspace';
+  }
+
+  @override
   String meOverviewAttentionDocumentToPay(String number) {
     return 'à payer · $number';
   }
@@ -17515,6 +17520,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get meOverviewAttentionDocumentsUnavailable =>
       'Vos documents n\'ont pas pu être lus.';
+
+  @override
+  String meOverviewAttentionDue(String date) {
+    return 'Échéance $date';
+  }
 
   @override
   String get meOverviewAttentionMessagesPartial =>
@@ -17548,6 +17558,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meOverviewAttentionTitle => 'Vous attend';
 
   @override
+  String get meOverviewAttentionToPay => 'À payer';
+
+  @override
   String get meOverviewAttentionViewDocument => 'Voir le document';
 
   @override
@@ -17578,6 +17591,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meOverviewView => 'Voir';
+
+  @override
+  String get mePlaceMember => 'Membre';
+
+  @override
+  String get mePlaceRequestSent => 'Demande envoyée · en attente de réponse';
 
   @override
   String get meRefDefault => 'Par défaut';

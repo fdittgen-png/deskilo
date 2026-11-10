@@ -44,7 +44,7 @@ import 'me_shell.dart';
 import 'personal_first_visit.dart';
 import 'personal_overview_attention.dart';
 import 'personal_overview_sections.dart';
-import 'personal_space_card.dart';
+import 'personal_space_compact_row.dart';
 
 /// The narrowest the right-hand column may be in the 2:1 layout.
 const double _rightMinWidth = 290;
@@ -54,7 +54,7 @@ const double _columnGap = AppSpacing.xl;
 
 /// How many spaces the Overview previews: a composition choice of this
 /// page; All my spaces always reaches the full list.
-const int _spacesPreview = 2;
+const int _spacesPreview = 3;
 
 /// Whether a content area [width] wide lays the Overview out 2:1: the
 /// right-hand third must keep its minimum width.
@@ -246,7 +246,7 @@ class _SpacesSection extends ConsumerWidget {
           // With no space, the ways to one lead, here.
           const _SpaceActions(empty: true),
         ] else
-          for (final row in preview) PersonalSpaceCard(row: row),
+          for (final row in preview) PersonalSpaceCompactRow(row: row),
         // #1835 — my guest visits: beside my spaces, never among them.
         const MyVisitsSection(),
         if (refs != null && !nothing) ...[

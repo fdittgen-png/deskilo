@@ -416,6 +416,26 @@ void main() {
       expect(_key('me-overview-conversation||space|c1'), findsOneWidget);
       expect(find.text('2 unread messages'), findsOneWidget);
       expect(_key('me-overview-attention-none'), findsNothing);
+      // One row per document: what and where in the title, the due day on its
+      // second line, a chip for its state; the whole row is one named button.
+      expect(find.text('Invoice INV-eur · One'), findsOneWidget);
+      expect(find.text('Invoice INV-chf · Two'), findsOneWidget);
+      expect(find.text('To pay'), findsNWidgets(2));
+      expect(find.textContaining('Due '), findsNWidgets(2));
+      final named = tester.getSemantics(
+        _key('me-overview-action-document|ws-One|eur'),
+      );
+      expect(named.label, 'Invoice INV-eur · One. Due Jan 1, 2999');
+      expect(named.getSemanticsData().flagsCollection.isButton, isTrue);
+      // My places: compact rows say where I stand, never the server.
+      expect(find.text('Request sent · waiting for an answer'), findsOneWidget);
+      expect(find.text('On this server'), findsNothing);
+      expect(find.textContaining('Membership verified'), findsNothing);
+      expect(
+        _key('my-space-open-$_home:$_pending'),
+        findsNothing,
+        reason: 'a pending request has no Book',
+      );
 
       // Compact: Next commitment, then Needs attention, then My spaces.
       final next = tester.getTopLeft(_key('me-overview-next')).dy;
