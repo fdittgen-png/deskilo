@@ -91,8 +91,8 @@ class _GalleryState extends State<_Gallery> {
                 ),
                 TodoRow(
                   icon: Icons.error_outline,
-                  title: '1 invoice could not be sent',
-                  caption: '2026-0082 · E. Dubois · e-mail address missing',
+                  title: '1 e-invoice was rejected',
+                  caption: '2026-0082 · E. Dubois · buyer reference missing',
                   buttonLabel: 'Fix',
                   buttonKey: const ValueKey('kit-todo-fix'),
                   alert: true,
@@ -152,28 +152,33 @@ Widget _page() => Scaffold(
       FilledButton(
         key: const ValueKey('kit-send'),
         onPressed: () {},
-        child: const Text('Send reminder 2'),
+        child: const Text('Share reminder 2'),
       ),
     ],
   ),
-  body: const Padding(
-    padding: EdgeInsets.all(12),
-    child: KitCard(
-      child: Story(
-        lines: [
-          (text: 'Issued and sent by e-mail', when: '7 Sep'),
-          (text: 'Due date', when: '21 Sep'),
-        ],
-        now: (text: 'Reminder 2 is due', when: 'Today'),
+  body: ListView(
+    padding: const EdgeInsets.all(12),
+    children: const [
+      KitCard(
+        child: Story(
+          lines: [
+            (
+              text: 'Issued · the customer sees it in their account',
+              when: '7 Sep',
+            ),
+            (text: 'Due date', when: '21 Sep'),
+          ],
+          now: (text: 'Reminder 2 is due', when: 'Today'),
+        ),
       ),
-    ),
+    ],
   ),
 );
 
 Widget _result() => Scaffold(
   body: ResultPage(
     title: '5 invoices issued',
-    subtitle: 'Sent by e-mail to each customer.',
+    subtitle: 'Each customer sees theirs in their account.',
     done: const [(title: 'Atelier Nord', detail: '2026-0096', outcome: 'Sent')],
     notDone: const [
       (title: 'Kontor GmbH', detail: 'Billing address missing', outcome: ''),

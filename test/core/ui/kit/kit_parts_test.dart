@@ -44,7 +44,14 @@ void main() {
         ],
       ),
     );
-    expect(find.byType(DecoratedBox), findsNWidgets(2));
+    final parts = find.byType(DecoratedBox);
+    expect(parts, findsNWidgets(2));
+    // Drawn, not collapsed: each part is as tall as the bar and as wide as
+    // its share.
+    final first = tester.getSize(parts.first);
+    final last = tester.getSize(parts.last);
+    expect(first.height, greaterThan(0));
+    expect(first.width, greaterThan(last.width * 2));
   });
 
   testWidgets('a chip and a legend line report their choice', (tester) async {

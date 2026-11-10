@@ -28,6 +28,9 @@ class SplitBar extends StatelessWidget {
         height: KitMetrics.barHeight,
         child: Row(
           spacing: 3,
+          // Each part fills the bar's height: a box without a child would
+          // otherwise shrink to nothing.
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             for (final p in shown)
               Expanded(
