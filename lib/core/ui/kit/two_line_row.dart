@@ -27,7 +27,7 @@ class TwoLineRow extends StatelessWidget {
   final VoidCallback onTap;
   final Widget? leading;
 
-  /// Under the amount: a status chip or one button.
+  /// Under the line at its end: a status chip or one button.
   final Widget? trailing;
 
   @override
@@ -39,45 +39,47 @@ class TwoLineRow extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 60),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
+          // The status sits under the amount at the end, with the line's
+          // whole width: a long status never squeezes the name or the sum.
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            spacing: 4,
             children: [
-              if (leading != null) ...[
-                leading!,
-                const SizedBox(width: KitMetrics.gap),
-              ],
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleSmall,
-                    ),
-                    DefaultTextStyle.merge(
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      child: caption,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: KitMetrics.gap),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                spacing: 4,
+              Row(
                 children: [
+                  if (leading != null) ...[
+                    leading!,
+                    const SizedBox(width: KitMetrics.gap),
+                  ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleSmall,
+                        ),
+                        DefaultTextStyle.merge(
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          child: caption,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: KitMetrics.gap),
                   Text(
                     amount,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
-                  ?trailing,
                 ],
               ),
+              ?trailing,
             ],
           ),
         ),

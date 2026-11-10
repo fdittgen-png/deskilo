@@ -193,20 +193,22 @@ class InvoicingList extends StatelessWidget {
               selected: filter,
               onSelected: onFilter,
             ),
-            // The count and the switch share one row, so the pinned area is
-            // two rows on a phone; the count wraps inside its share.
-            Row(
+            // The count and the switch share one row where they fit (a
+            // phone of 390 px and up), so the pinned area is two rows; on the
+            // narrowest phones the switch moves under the count.
+            Wrap(
               spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Expanded(
-                  child: Text(
-                    l.invoicingCountLine(
-                      l.invoicingCustomerCount(customers),
-                      l.invoicingInvoiceCount(shown.length),
-                    ),
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+                Text(
+                  l.invoicingCountLine(
+                    l.invoicingCustomerCount(customers),
+                    l.invoicingInvoiceCount(shown.length),
+                  ),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
                 if (filter != InvoicingFilter.paid)
