@@ -33,6 +33,14 @@ const _legs = {
 };
 const _sha = r'${{ steps.source.outputs.sha }}';
 const _prOnly = r"${{ github.event_name == 'pull_request' }}";
+
+/// #3584 — a newer push to the same ref supersedes the run in flight too
+/// (master merges collapse to the newest), allowed only where the group
+/// keeps the nightly and a dispatched run apart, so neither is cancelled.
+const _prOrPush =
+    r"${{ github.event_name == 'pull_request' || github.event_name == 'push' }}";
+const _manualApart =
+    r"(github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.event_name || 'change'";
 const _identity = './.github/actions/source-identity';
 
 /// Dependency and toolchain caches only — what a cache may carry. A new
@@ -193,10 +201,15 @@ void main() {
         expect('${block['group']}', contains(r'${{ github.ref }}'),
             reason: '$stem: a group without the ref cancels other PRs');
       }
-      expect(block['cancel-in-progress'], anyOf(isFalse, _prOnly),
-          reason: '$stem: only a superseded pull request may be cancelled; '
-              'a bare `true` cancels a dispatch or a release someone '
-              'started on purpose');
+      expect(block['cancel-in-progress'], anyOf(isFalse, _prOnly, _prOrPush),
+          reason: '$stem: only a superseded pull request or push may be '
+              'cancelled; a bare `true` cancels a dispatch or a release '
+              'someone started on purpose');
+      if (block['cancel-in-progress'] == _prOrPush) {
+        expect('${block['group']}', contains(_manualApart),
+            reason: '$stem: cancelling a superseded push needs a group that '
+                'keeps the nightly and a dispatched run apart');
+      }
     }
     final train = _workflow('release-train.yml')['concurrency'] as YamlMap;
     expect(train['group'], 'release-train');
