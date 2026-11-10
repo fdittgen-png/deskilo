@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -44,7 +46,7 @@ class _Body extends ConsumerWidget {
     final workspaceId = space.id;
     final requests = ref.watch(workspaceRightsRequestsProvider(workspaceId));
     final names = {for (final m in space.members) m.id: m.name};
-    final date = DateFormat.yMMMd(Localizations.localeOf(context).toString());
+    final date = appFormatOf(context).dates(DateShape.date);
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 720),

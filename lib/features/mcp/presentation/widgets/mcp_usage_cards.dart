@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/mcp_usage.dart';
@@ -80,9 +82,7 @@ class McpMyUsageSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final usage = ref.watch(myMcpUsageProvider);
-    final format = DateFormat.yMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    ).add_Hm();
+    final format = appFormatOf(context);
     return Column(
       key: const ValueKey('mcp-usage-mine'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -128,7 +128,7 @@ class McpMyUsageSection extends ConsumerWidget {
                               if (c.lastUsedAt != null)
                                 Text(
                                   l10n.mcpUsageLastUsed(
-                                        format.format(c.lastUsedAt!.toLocal()),
+                                        format.datesAndTime(DateShape.numeric, c.lastUsedAt!),
                                       ),
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),

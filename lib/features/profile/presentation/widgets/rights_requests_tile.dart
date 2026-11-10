@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -115,9 +117,7 @@ class _RightsRequestsSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final date = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final date = appFormatOf(context).dates(DateShape.date);
     final requests = ref.watch(myRightsRequestsProvider).value ?? const [];
     final target = spaceNames[workspaceId];
     return SafeArea(

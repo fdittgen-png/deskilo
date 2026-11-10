@@ -10,8 +10,9 @@
 // who may not match or reconcile sees the list and no door.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -263,7 +264,7 @@ class _LineTile extends StatelessWidget {
     final l10n = context.l10n;
     final line = item.line;
     final money = moneyFormat(line.currency);
-    final day = DateFormat.yMMMd(Localizations.localeOf(context).toString());
+    final day = appFormatOf(context).dates(DateShape.date);
     final what = [
       if (line.counterpartyName.isNotEmpty) line.counterpartyName,
       if (line.reference.isNotEmpty)

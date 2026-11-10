@@ -16,8 +16,9 @@
 // by month. A list without facets behaves exactly as before.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -173,7 +174,6 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
     final grouped =
         (_filter.sort == RefSort.newest || _filter.sort == RefSort.oldest) &&
         visible.any((c) => c.at != null);
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
 
     return SafeArea(
       child: Padding(
@@ -330,7 +330,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                               child: Text(
                                 visible[i].at == null
                                     ? ''
-                                    : DateFormat.yMMMM(locale)
+                                    : appFormatOf(context).dates(DateShape.monthYear)
                                           .format(visible[i].at!),
                                 style: theme.textTheme.labelLarge?.copyWith(
                                   color: theme.colorScheme.primary,

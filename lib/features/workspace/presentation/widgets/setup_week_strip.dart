@@ -5,8 +5,9 @@
 // also says its hours in words, and reads as one sentence to a screen
 // reader.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/work_hours.dart';
@@ -26,7 +27,6 @@ class SetupWeekStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
-    final locale = Localizations.localeOf(context).toString();
     String clock(int minutes) => material.formatTimeOfDay(
       TimeOfDay(hour: minutes ~/ 60 % 24, minute: minutes % 60),
     );
@@ -70,7 +70,7 @@ class SetupWeekStrip extends StatelessWidget {
           _DayRow(
             weekday: weekday,
             // 2024-01-01 was a Monday, so day-of-month == ISO weekday.
-            day: DateFormat.E(locale).format(DateTime(2024, 1, weekday)),
+            day: appFormatOf(context).dates(DateShape.weekday).format(DateTime(2024, 1, weekday)),
             isOpen: open.contains(weekday),
             hoursText: hours,
             first: first,

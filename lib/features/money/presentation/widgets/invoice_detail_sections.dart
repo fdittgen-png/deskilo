@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -218,9 +218,7 @@ class InvoiceDetailSections {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final currency = moneyFormat(invoice.currency);
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     Widget line(String text) => _detailLine(theme, text);
     final sent = transmission;
     // The platform's answer, in the reader's language.

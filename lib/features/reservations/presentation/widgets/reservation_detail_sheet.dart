@@ -2,14 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -134,7 +133,7 @@ class ReservationDetailSheet extends ConsumerWidget {
               // Date + the range as humans read it — a full day says
               // 'Full day', never '00:00 – 00:00' (field report).
               title: Text(
-                '${DateFormat.MMMEd().format(WorkspaceTime.display(r.startsAt))}'
+                '${appFormatOf(context).dates(DateShape.weekdayMonthDay).format(appFormatOf(context).wall(r.startsAt))}'
                 ' · ${bookingRangeText(context, appFormatOf(context), l10n, r.startsAt, r.endsAt)}',
               ),
               subtitle: _subtitle(context, r, target),

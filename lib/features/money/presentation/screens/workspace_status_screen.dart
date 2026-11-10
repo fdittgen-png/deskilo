@@ -7,8 +7,9 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -92,9 +93,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final status = ref.watch(workspaceStatusProvider(_from, _to));
-    final monthLabel = DateFormat.yMMM(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final monthLabel = appFormatOf(context).dates(DateShape.monthYearShort);
     String label(String ym) =>
         monthLabel.format(DateTime(int.parse(ym.substring(0, 4)), int.parse(ym.substring(5, 7))));
     return Scaffold(

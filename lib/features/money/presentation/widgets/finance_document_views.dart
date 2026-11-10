@@ -12,8 +12,9 @@
 // currency stays) until its reveal action shows it.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -178,9 +179,7 @@ class _FinanceDocument extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final format = DateFormat.yMMMd(
-      Localizations.localeOf(context).toLanguageTag(),
-    );
+    final format = appFormatOf(context).dates(DateShape.date);
     final overdue = invoice.overdueAt(now);
     final due = invoice.dueOn;
     final devTone = AppEnvironmentColors.developmentOf(theme.brightness);
@@ -196,7 +195,7 @@ class _FinanceDocument extends ConsumerWidget {
               color: overdue ? scheme.error : scheme.onSurfaceVariant,
             ),
           )
-        : Text(format.format(invoice.issuedAt.toLocal()), style: muted);
+        : Text(format.format(appFormatOf(context).wall(invoice.issuedAt)), style: muted);
     final workspace = isDev
         ? DevLabel(name: invoice.workspaceName, small: true)
         : Text(

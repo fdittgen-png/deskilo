@@ -5,10 +5,10 @@
 // screen uses for a period of that length.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -28,13 +28,17 @@ String vatDeclarationPeriodName(
 }
 
 /// One filing period: « September 2026 », « Q3 2026 », « 2026 ».
-String vatFilingPeriodLabel(AppLocalizations l10n, VatFilingPeriod period) {
+String vatFilingPeriodLabel(
+  AppLocalizations l10n,
+  VatFilingPeriod period,
+  AppFormat format,
+) {
   final start = period.start;
   final months =
       (period.end.year - start.year) * 12 + period.end.month - start.month + 1;
   if (months >= 12) return '${start.year}';
   if (months == 3) return 'Q${(start.month - 1) ~/ 3 + 1} ${start.year}';
-  return DateFormat.yMMMM(l10n.localeName).format(start);
+  return format.dates(DateShape.monthYear).format(start);
 }
 
 /// The field; the screen shows it while VAT declarations are on.

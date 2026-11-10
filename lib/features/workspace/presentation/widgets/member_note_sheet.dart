@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -34,9 +35,7 @@ Future<void> showMemberNoteSheet(
       builder: (sheetContext) {
         final l10n = sheetContext.l10n;
         final theme = Theme.of(sheetContext);
-        final when = DateFormat.yMMMd()
-            .add_Hm()
-            .format(note.createdAt.toLocal());
+        final when = appFormatOf(context).datesAndTime(DateShape.date, note.createdAt);
         return SheetShell(
           title: title,
           children: [

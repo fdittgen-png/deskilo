@@ -17,11 +17,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/help/help_blocker.dart';
 import '../../../../core/help/help_hint_providers.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
@@ -262,7 +262,7 @@ class ReserveHubHeader extends ConsumerWidget {
           // #711 — intl's default locale IS the member's format locale now
           // (set by appFormatProvider), so the bare call is the right one; a
           // per-site locale would disagree with every other date on screen.
-          Text(DateFormat.MMMd().format(host.selectedDay)),
+          Text(ref.watch(appFormatProvider).dates(DateShape.monthDay).format(host.selectedDay)),
         ]),
       ),
       // Honest controls: the window chips act on Plan (state filter +

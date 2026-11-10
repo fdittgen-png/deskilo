@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
@@ -107,9 +109,7 @@ class _InvoiceRegisterScreenState
     final canExport = permissions.contains(WorkspacePermission.exportData) &&
         (canIssue || permissions.contains(WorkspacePermission.viewFinances));
     final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
-    final dateFormat = DateFormat.yMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final dateFormat = appFormatOf(context).dates(DateShape.numeric);
 
     return Scaffold(
       appBar: AppBar(

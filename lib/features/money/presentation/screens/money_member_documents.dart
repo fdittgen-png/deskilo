@@ -7,9 +7,10 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/report_language.dart';
@@ -165,7 +166,7 @@ class MoneyMemberDocuments {
     final pendingEvents = _ref.read(eventsProvider).value ?? const [];
     final memberName =
         _ref.read(memberNamesProvider).value?[member.id] ?? '';
-    final monthLabel = DateFormat.yMMMM(locale).format(month);
+    final monthLabel = appFormatOf(context).dates(DateShape.monthYear).format(month);
 
     final strings = _billStrings(l10n, statement, locale, month);
     final sections = buildBillSections(

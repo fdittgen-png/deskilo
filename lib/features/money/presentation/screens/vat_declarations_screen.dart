@@ -13,6 +13,8 @@ import 'package:intl/intl.dart';
 import '../../../../core/files/file_saver.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -106,7 +108,7 @@ class _VatDeclarationsScreenState
   Map<String, Object?> _reportData(VatDeclaration declaration) {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
-    final dateFormat = DateFormat.yMMMd(l10n.localeName);
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     final reference = requireWorkspaceTaxReference(ref);
     return vatDeclarationReportData(
       declaration: declaration,
@@ -189,7 +191,7 @@ class _VatDeclarationsScreenState
         ? ''
         : words.vatDeclCorrectionOf(start == null || end == null
             ? line.corrects
-            : vatFilingPeriodLabel(l10n, (start: start, end: end)));
+            : vatFilingPeriodLabel(l10n, (start: start, end: end), appFormatOf(context)));
     return [
       if (line.isInput) words.vatDeclInputVat,
       if (line.isAcquisition) words.vatDeclAcquisitionTax,
@@ -244,7 +246,7 @@ class _VatDeclarationsScreenState
             for (final (index, p) in periods.indexed)
               DropdownMenuItem(
                 value: index,
-                child: Text(vatFilingPeriodLabel(l10n, p)),
+                child: Text(vatFilingPeriodLabel(l10n, p, appFormatOf(context))),
               ),
           ],
           onChanged: (value) => setState(

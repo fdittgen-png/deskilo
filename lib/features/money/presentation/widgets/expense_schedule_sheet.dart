@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -70,7 +72,7 @@ Future<void> showExpenseSchedulesSheet(
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return;
-  final dates = DateFormat.yMMMd();
+  final dates = appFormatOf(context).dates(DateShape.date);
   await showAppSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -219,7 +221,7 @@ Future<bool> _showCreateExpenseScheduleSheet(
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return false;
-  final dates = DateFormat.yMMMd();
+  final dates = appFormatOf(context).dates(DateShape.date);
   final title = TextEditingController();
   final amount = TextEditingController();
   final description = TextEditingController();
@@ -449,7 +451,7 @@ class _ExpenseOccurrenceCardState extends ConsumerState<ExpenseOccurrenceCard> {
     final rejected = o.status == OccurrenceStatus.rejected;
     // #1449 — the rule the command applies, read here to show the field.
     final explain = needsExplanation(o, cents);
-    final dates = DateFormat.yMMMd();
+    final dates = appFormatOf(context).dates(DateShape.date);
     final scheme = Theme.of(context).colorScheme;
     return Card(
       key: ValueKey('occurrence-${o.id}'),

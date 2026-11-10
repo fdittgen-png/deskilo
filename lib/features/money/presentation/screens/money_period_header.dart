@@ -4,8 +4,9 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/statement.dart';
 import 'money_screen_ops.dart';
@@ -33,9 +34,7 @@ class MoneyPeriodHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final visible = statement;
-    final monthLabel = DateFormat.yMMMM(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    ).format(ops.month);
+    final monthLabel = appFormatOf(context).dates(DateShape.monthYear).format(ops.month);
     return Row(
       children: [
         IconButton(

@@ -6,8 +6,9 @@
 // given; which rows exist and what a half-slot shows stays with [WeekGrid].
 // [WeekGridMetrics] is their geometry.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -73,8 +74,8 @@ class WeekGridDayHeaders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final weekdayFormat = DateFormat.E();
-    final dayFormat = DateFormat.d();
+    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
+    final dayFormat = appFormatOf(context).dates(DateShape.day);
     final style = Theme.of(context).textTheme.labelMedium;
     return SizedBox(
       height: WeekGridMetrics.headerHeight,

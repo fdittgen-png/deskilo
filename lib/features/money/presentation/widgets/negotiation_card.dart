@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
@@ -43,9 +44,7 @@ class NegotiationCard extends ConsumerWidget {
     final pending = value.pending;
     final services = ref.watch(servicesProvider).value ?? const <ServiceItem>[];
     final packages = ref.watch(packagesProvider).value ?? const <Package>[];
-    final monthFormat = DateFormat.yMMMM(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final monthFormat = appFormatOf(context).dates(DateShape.monthYear);
 
     final defaultLabel = l10n.negotiationDefaultColumn;
     final mineLabel = l10n.negotiationMineColumn;

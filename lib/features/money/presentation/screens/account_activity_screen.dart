@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -120,10 +121,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                         entry.reference,
                                         entry.description,
                                         _status(l10n, entry.status),
-                                        DateFormat.yMMMd(
-                                          Localizations.localeOf(context)
-                                              .toLanguageTag(),
-                                        ).format(entry.occurredAt.toLocal()),
+                                        appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(entry.occurredAt)),
                                         if (entry.amountCents
                                             case final amount?)
                                           moneyFormat(entry.currency)

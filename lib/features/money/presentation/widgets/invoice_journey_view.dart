@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -237,9 +239,7 @@ String invoiceMoveText(
 }) {
   final l10n = context.l10n;
   final currency = moneyFormat(invoice.currency);
-  final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
-  );
+  final dateFormat = appFormatOf(context).dates(DateShape.date);
   // #910 — the client, company included when there is no person.
   final name = invoice.clientName;
   final owed = currency.formatMinor(journey.remainingCents);

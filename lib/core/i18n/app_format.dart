@@ -88,6 +88,36 @@ class AppFormat {
 
   // ── dates and times ──────────────────────────────────────────────
 
+  /// #3484 — [instant] on the wall clock the reader asked for (the
+  /// workspace's, or the device's): what a screen shows, compares by day or
+  /// hands to a picker. Replaces `.toLocal()` and `WorkspaceTime.display`.
+  DateTime wall(DateTime instant) => _wall(instant);
+
+  /// #3484 — the date shape [shape] in the member's format locale. It formats
+  /// the value it is given as it is: an instant goes through [wall] first, a
+  /// calendar date or a wall-clock value does not.
+  DateFormat dates(DateShape shape) => switch (shape) {
+        DateShape.day => DateFormat.d(locale),
+        DateShape.weekday => DateFormat.E(locale),
+        DateShape.weekdayLong => DateFormat.EEEE(locale),
+        DateShape.monthShort => DateFormat.MMM(locale),
+        DateShape.month => DateFormat.MMMM(locale),
+        DateShape.monthDay => DateFormat.MMMd(locale),
+        DateShape.weekdayMonthDay => DateFormat.MMMEd(locale),
+        DateShape.numeric => DateFormat.yMd(locale),
+        DateShape.monthYearShort => DateFormat.yMMM(locale),
+        DateShape.date => DateFormat.yMMMd(locale),
+        DateShape.weekdayDate => DateFormat.yMMMEd(locale),
+        DateShape.monthYear => DateFormat.yMMMM(locale),
+        DateShape.longDate => DateFormat.yMMMMd(locale),
+        DateShape.fullDate => DateFormat.yMMMMEEEEd(locale),
+      };
+
+  /// #3484 — a date shape and the time, as one label: the date of [instant]
+  /// on the reader's wall clock and its time under their clock preference.
+  String datesAndTime(DateShape shape, DateTime instant) =>
+      '${dates(shape).format(_wall(instant))} ${time(instant)}';
+
   /// The wall-clock the reader asked for: the workspace's, or the
   /// device's with a zone label wherever the two differ.
   DateTime _wall(DateTime instant) => switch (timeZoneMode) {
@@ -183,4 +213,23 @@ String defaultFormatLocale(String uiLanguage, String workspaceCountry) {
     (l) => l.startsWith('${uiLanguage}_'),
     orElse: () => 'en_GB',
   );
+}
+
+/// #3484 — the date shapes the screens use; each names its ICU skeleton
+/// (`date` is `yMMMd`: `28 Aug 2026` in en, `28 août 2026` in fr).
+enum DateShape {
+  day,
+  weekday,
+  weekdayLong,
+  monthShort,
+  month,
+  monthDay,
+  weekdayMonthDay,
+  numeric,
+  monthYearShort,
+  date,
+  weekdayDate,
+  monthYear,
+  longDate,
+  fullDate,
 }

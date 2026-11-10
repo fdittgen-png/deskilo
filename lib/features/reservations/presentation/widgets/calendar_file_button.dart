@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/labeled_rows.dart';
@@ -154,8 +153,8 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final snapshot = _preview.snapshot;
-    final start = WorkspaceTime.display(snapshot.startUtc);
-    final when = '${DateFormat.MMMEd().format(start)} · '
+    final start = appFormatOf(context).wall(snapshot.startUtc);
+    final when = '${appFormatOf(context).dates(DateShape.weekdayMonthDay).format(start)} · '
         '${bookingRangeText(context, appFormatOf(context), l10n, snapshot.startUtc, snapshot.endUtc)}';
     final status = switch (snapshot.status) {
       CalendarEventStatus.confirmed =>

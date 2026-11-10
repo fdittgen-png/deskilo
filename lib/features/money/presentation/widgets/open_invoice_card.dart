@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -59,9 +61,7 @@ class OpenInvoiceJourneyList extends ConsumerWidget {
     final rules = ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     final events = ref.watch(eventsProvider).value ?? const [];
     final now = ref.watch(clockProvider).now();
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     // #831 — a settlement's sources nest under it, documentation only.
     final fold = ref
         .watch(enabledFeaturesSyncProvider)

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/work_hours.dart';
@@ -29,7 +30,6 @@ class AvailabilityWeekdays extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -54,7 +54,7 @@ class AvailabilityWeekdays extends StatelessWidget {
                   // locale weekday names without hardcoded strings.
                   key: ValueKey('availability-filter-chip-$weekday'),
                   label: Text(
-                    DateFormat.E(locale).format(DateTime(2024, 1, weekday)),
+                    appFormatOf(context).dates(DateShape.weekday).format(DateTime(2024, 1, weekday)),
                   ),
                   selected: open.contains(weekday),
                   onSelected: (selected) =>
@@ -260,7 +260,6 @@ class AvailabilityClosures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -303,7 +302,7 @@ class AvailabilityClosures extends StatelessWidget {
         for (final closure in closures)
           ListTile(
             leading: const Icon(Icons.event_busy_outlined),
-            title: Text(DateFormat.yMMMMd(locale).format(closure.day)),
+            title: Text(appFormatOf(context).dates(DateShape.longDate).format(closure.day)),
             subtitle: closure.reason.isEmpty ? null : Text(closure.reason),
             trailing: IconButton(
               key: ValueKey('availability-delete-${closure.id}'),

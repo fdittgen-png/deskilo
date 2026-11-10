@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../../core/i18n/app_format.dart';
@@ -234,15 +233,15 @@ class _Commitment extends StatelessWidget {
     final known = zone != null && TimeZones.isKnown(zone);
     DateTime wall(DateTime instant) => known
         ? tz.TZDateTime.from(instant, tz.getLocation(zone))
-        : instant.toLocal();
+        : appFormatOf(context).wall(instant);
     final start = wall(item.startsAt);
     final end = wall(item.endsAt);
     final showZone =
-        known && start.timeZoneOffset != item.startsAt.toLocal().timeZoneOffset;
+        known && start.timeZoneOffset != appFormatOf(context).wall(item.startsAt).timeZoneOffset;
     final place = item.placeLabel.isEmpty
         ? l10n.myReservationsUnnamedPlace
         : item.placeLabel;
-    final day = DateFormat.MMMEd(format.locale).format(start);
+    final day = format.dates(DateShape.weekdayMonthDay).format(start);
     final secondary = theme.textTheme.bodySmall?.copyWith(
       color: tokens.secondaryText,
     );

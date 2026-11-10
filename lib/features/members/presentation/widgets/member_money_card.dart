@@ -2,8 +2,9 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
@@ -173,7 +174,7 @@ class MemberMoneyCard extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     payment.description.isEmpty
-                        ? DateFormat.yMMMd().format(payment.createdAt.toLocal())
+                        ? appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(payment.createdAt))
                         : payment.description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -245,7 +246,7 @@ class _InvoiceRow extends StatelessWidget {
                 style: theme.textTheme.bodyMedium,
               ),
               Text(
-                '${DateFormat.yMMMd().format(invoice.issuedAt.toLocal())}'
+                '${appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(invoice.issuedAt))}'
                 ' · $status',
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: open
