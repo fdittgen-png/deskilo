@@ -22,8 +22,6 @@ const Map<String, String> _allowed = {
   // first setup step) shows it and writes it on confirm.
   'lib/features/workspace/domain/business_kind_proposal.dart::proposalFor':
       '#3550 PR 2b — the kind chooser shows the proposal and writes it on confirm',
-  'lib/features/me/presentation/kit/me_quiet_line.dart::MeQuietLine':
-      '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
   // The workspace's business kind: the settings tile and the setup step of
   // #3549's second PR read it, then #3550's feature proposal.
   'lib/features/workspace/domain/business_profile.dart::BusinessProfile':

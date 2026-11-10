@@ -22898,6 +22898,14 @@
   "@meMySpaces": {
     "description": "Heading above the list of spaces the person belongs to."
   },
+  "meNextBook": "Book",
+  "@meNextBook": {
+    "description": "#3545 D: the one filled action of Next up when nothing is booked: opens the places to book in"
+  },
+  "meNextNothingWeek": "Nothing booked this week.",
+  "@meNextNothingWeek": {
+    "description": "#3545 D: Next up, nothing booked in the window; the filled Book action follows"
+  },
   "meNoSpaceBody": "Find one near you, join with an invitation code, or create your own.",
   "@meNoSpaceBody": {
     "description": "Empty state body on the Me home when the person has no space."

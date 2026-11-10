@@ -20,5 +20,7 @@
   "meOverviewAttentionOpenConversation": "Apri",
   "meOverviewAttentionMessagesUnavailable": "Non è stato possibile leggere le Sue conversazioni.",
   "meOverviewAttentionMessagesPartial": "Non è stato possibile leggere alcune conversazioni.",
-  "meOverviewAttentionMore": "{count, plural, =1{1 altro} other{{count} altri}}"
+  "meOverviewAttentionMore": "{count, plural, =1{1 altro} other{{count} altri}}",
+  "meNextNothingWeek": "Niente prenotato questa settimana.",
+  "meNextBook": "Prenota"
 }

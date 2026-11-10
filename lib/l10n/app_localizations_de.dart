@@ -17365,6 +17365,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meMySpaces => 'Meine Orte';
 
   @override
+  String get meNextBook => 'Buchen';
+
+  @override
+  String get meNextNothingWeek => 'Diese Woche ist nichts gebucht.';
+
+  @override
   String get meNoSpaceBody =>
       'Finden Sie einen in Ihrer Nähe, treten Sie mit einem Einladungscode bei oder gründen Sie Ihren eigenen.';
 

@@ -20,5 +20,7 @@
   "meOverviewAttentionOpenConversation": "Öffnen",
   "meOverviewAttentionMessagesUnavailable": "Ihre Unterhaltungen konnten nicht gelesen werden.",
   "meOverviewAttentionMessagesPartial": "Einige Unterhaltungen konnten nicht gelesen werden.",
-  "meOverviewAttentionMore": "{count, plural, =1{1 weiteres} other{{count} weitere}}"
+  "meOverviewAttentionMore": "{count, plural, =1{1 weiteres} other{{count} weitere}}",
+  "meNextNothingWeek": "Diese Woche ist nichts gebucht.",
+  "meNextBook": "Buchen"
 }

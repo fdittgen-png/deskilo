@@ -10771,6 +10771,8 @@
   "meLinkedUnavailable": "{host} non ha risposto: questo elenco potrebbe essere incompleto.",
   "meManageSpaces": "Gestisci i miei spazi",
   "meMySpaces": "I miei posti",
+  "meNextBook": "Prenota",
+  "meNextNothingWeek": "Niente prenotato questa settimana.",
   "meNoSpaceBody": "Ne trovi uno vicino a Lei, entri con un codice di invito o ne crei uno suo.",
   "meNoSpaceTitle": "Non è ancora in nessuno spazio",
   "meOverviewAttentionApplication": "La Sua richiesta di entrare in {name} è in attesa.",
