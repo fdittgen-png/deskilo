@@ -78,7 +78,7 @@ class MoneyActionSet {
         on: data.invoicingOn,
         key: 'invoices-button',
         icon: Icons.receipt_long_outlined,
-        title: l10n.invoicesManage,
+        title: l10n.featureInvoicing,
         subtitle: l10n.uxNavSales,
         onTap: () => context.push('/invoices'),
       ),
@@ -124,7 +124,7 @@ class MoneyActionSet {
         on: data.invoicingOn && (data.member?.isAdmin ?? false),
         key: 'sales-hub-button',
         icon: Icons.sell_outlined,
-        title: l10n.hubSalesTitle,
+        title: l10n.bookReportJournalSales,
         subtitle: l10n.hubSalesSubtitle,
         onTap: () => context.push('/money/sales'),
       ),
@@ -252,7 +252,7 @@ class MoneyActionSet {
         door('sales-hub-services', Icons.room_service_outlined,
             l10n.servicesTitle, '/services'),
       door('sales-hub-invoices', Icons.receipt_long_outlined,
-          l10n.invoicesManage, '/invoices'),
+          l10n.featureInvoicing, '/invoices'),
       // #3308 — passes sold at the desk, for who sells or prices them.
       if (data.guestPassesOn &&
           (held.contains('issueInvoices') || held.contains('manageServices')))
@@ -339,7 +339,7 @@ class MoneyActionSet {
           key: const ValueKey('suppliers-button'),
           onPressed: () => context.push('/money/suppliers'),
           icon: const Icon(Icons.storefront_outlined),
-          label: fitted(l10n.suppliersTitle),
+          label: fitted(l10n.bookRoleSuppliers),
         ),
       // #2573 — one document per purchase: the member's receipts and the
       // supplier bills.

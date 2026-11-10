@@ -59,7 +59,6 @@
   "acctMapRemoteMissing": "Indichi il codice o l'identificativo che usa il sistema.",
   "acctMapRemoteId": "Identificativo nel sistema (facoltativo)",
   "acctMapRemoteName": "Nome nel sistema (facoltativo)",
-  "acctKindInvoice": "Fattura",
   "acctKindCreditNote": "Nota di credito",
   "acctKindReceipt": "Incasso",
   "acctKindRefund": "Rimborso",

@@ -1,8 +1,6 @@
 {
   "inviteSectionTitle": "Jemanden einladen",
-  "inviteViaWhatsapp": "WhatsApp",
   "inviteViaSms": "SMS",
-  "inviteViaShare": "Teilen…",
   "inviteFirstNameLabel": "Vorname (optional)",
   "inviteLastNameLabel": "Nachname (optional)",
   "invitePhoneLabel": "Telefon (optional, mit Ländervorwahl)",

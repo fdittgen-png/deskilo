@@ -35,7 +35,7 @@ enum MeDataView {
       values.where((v) => v.wire == wire).firstOrNull ?? finances;
 
   String label(AppLocalizations l10n) => switch (this) {
-        finances => l10n.financesTitle,
+        finances => l10n.tabMoney,
         reservations => l10n.meDataViewReservations,
         profile => l10n.personalInfoTitle,
       };

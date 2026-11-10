@@ -93,7 +93,7 @@ Future<void> showConsumptionSheet(
               isExpanded: true,
               initialValue: service,
               decoration: InputDecoration(
-                labelText: l10n.consumptionService,
+                labelText: l10n.eventTypeServiceCharge,
               ),
               items: [
                 for (final item in services)
@@ -115,7 +115,7 @@ Future<void> showConsumptionSheet(
             Row(
               children: [
                 Expanded(
-                  child: Text(l10n.consumptionQuantity),
+                  child: Text(l10n.purchasesQuantity),
                 ),
                 IconButton(
                   key: ValueKey('consumption-sheet-a11y-decrease-$subjectMemberId'),

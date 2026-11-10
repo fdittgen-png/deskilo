@@ -60,7 +60,7 @@ class SchemaUpdateScreen extends ConsumerWidget {
               key: const ValueKey('schema-update-retry'),
               onPressed: () => ref.invalidate(schemaCompatibilityProvider),
               icon: const Icon(Icons.refresh),
-              label: Text(l10n.schemaUpdateRetry),
+              label: Text(l10n.invoiceIssueCheckAgain),
             ),
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(

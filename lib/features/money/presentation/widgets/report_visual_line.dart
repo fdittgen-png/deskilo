@@ -122,13 +122,13 @@ String reportLineName(ReportLineKind kind, AppLocalizations l10n) =>
     switch (kind) {
       ReportLineKind.title => l10n.reportLineTitle,
       ReportLineKind.section => l10n.reportLineSection,
-      ReportLineKind.text => l10n.reportLineText,
+      ReportLineKind.text => l10n.taxRefText,
       ReportLineKind.small => l10n.reportLineSmall,
       ReportLineKind.row => l10n.reportLineRow,
       ReportLineKind.boldRow => l10n.reportLineBoldRow,
       ReportLineKind.divider => l10n.reportLineDivider,
       ReportLineKind.spacer => l10n.reportLineSpacer,
-      ReportLineKind.image => l10n.reportLineImage,
+      ReportLineKind.image => l10n.editorToolImage,
       ReportLineKind.columnsFence =>
         l10n.reportLineColumns,
       ReportLineKind.columnsSplit =>

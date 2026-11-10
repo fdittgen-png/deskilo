@@ -34,6 +34,5 @@
   "pendingLastChecked": "Dernière vérification {time}",
   "pendingNotUpdated": "Statut non mis à jour — le serveur est injoignable. Votre demande reste inchangée.",
   "pendingStillWaiting": "Toujours en attente d’approbation.",
-  "pendingSwitchWorkspace": "Changer d’espace",
   "pendingHelp": "Aide"
 }

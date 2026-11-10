@@ -370,7 +370,7 @@ class _SupplierDialogState extends State<_SupplierDialog> {
               title: Text(l10n.suppliersFieldGroup),
               onChanged: (v) => setState(() => _group = v ?? false),
             ),
-            _field(l10n, 'street', l10n.suppliersFieldStreet, maxLength: 200),
+            _field(l10n, 'street', l10n.siteStreet, maxLength: 200),
             _field(
               l10n,
               'postalCode',

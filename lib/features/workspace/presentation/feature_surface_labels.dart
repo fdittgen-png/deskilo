@@ -23,7 +23,7 @@ String featureSurfaceName(
       FeatureSurface.members => l10n.membersTitle,
       FeatureSurface.money => lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney),
       FeatureSurface.messages => lexiconText(context, key: 'messagesTitle', fallback: l10n.messagesTitle),
-      FeatureSurface.documents => l10n.documentsTitle,
+      FeatureSurface.documents => l10n.featureDocuments,
       FeatureSurface.kiosk => l10n.kioskRevertTitle,
       FeatureSurface.reports => l10n.featureSurfaceReports,
       FeatureSurface.settings => l10n.settingsTitle,

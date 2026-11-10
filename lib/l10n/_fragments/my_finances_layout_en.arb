@@ -4,10 +4,6 @@
   "@financesStateUnpaid": {
     "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
   },
-  "financesTypeInvoice": "Invoice",
-  "@financesTypeInvoice": {
-    "description": "#2557 C4 Me › Finances: the document state of an issued invoice (a row and the type filter)."
-  },
   "financesTypeCreditNote": "Credit note",
   "@financesTypeCreditNote": {
     "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."

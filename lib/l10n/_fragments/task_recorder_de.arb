@@ -24,7 +24,6 @@
   "taskRecorderAddNote": "Notiz hinzufügen",
   "taskRecorderNoteHint": "Ihre eigenen Worte, so gespeichert, wie Sie sie schreiben",
   "taskRecorderRecording": "Aufzeichnung läuft",
-  "taskRecorderPaused": "Pausiert",
   "taskRecorderIndicator": "{count, plural, =1{Aufgabe wird aufgezeichnet: 1 Schritt} other{Aufgabe wird aufgezeichnet: {count} Schritte}}",
   "taskRecorderMyRecordings": "Meine Aufzeichnungen auf diesem Gerät",
   "taskRecorderNoRecordings": "Keine Aufzeichnungen auf diesem Gerät.",

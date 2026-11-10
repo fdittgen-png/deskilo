@@ -23,10 +23,6 @@
   "@overviewGroupCapacity": {
     "description": "#2583 the workspace overview"
   },
-  "overviewGroupSales": "Sales",
-  "@overviewGroupSales": {
-    "description": "#2583 the workspace overview"
-  },
   "overviewGroupPurchases": "Purchases",
   "@overviewGroupPurchases": {
     "description": "#2583 the workspace overview"

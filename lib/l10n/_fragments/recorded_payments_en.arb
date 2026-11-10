@@ -15,10 +15,6 @@
   "@recordedPaymentsOff": {
     "description": "Shown when the money area is switched off"
   },
-  "recordedPaymentsUnnamed": "Payment",
-  "@recordedPaymentsUnnamed": {
-    "description": "Row title when a payment names neither an invoice nor a payer"
-  },
   "recordedPaymentsPeriod": "Period: {from} – {to}",
   "@recordedPaymentsPeriod": {
     "description": "The days the payments list covers",

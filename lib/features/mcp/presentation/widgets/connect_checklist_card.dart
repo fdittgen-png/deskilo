@@ -195,7 +195,7 @@ class _ConnectRow extends ConsumerWidget {
           ClipboardData(text: l10n.mcpConnectOperatorRequest),
         );
         if (context.mounted) {
-          AppSnack.success(context, l10n.mcpConnectCopied);
+          AppSnack.success(context, l10n.paymentCopied);
         }
       }),
     };

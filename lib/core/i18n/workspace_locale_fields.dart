@@ -79,7 +79,7 @@ class WorkspaceLocaleFields extends ConsumerWidget {
           helperText: l10n.workspaceSettingsCurrencyHelper,
         ),
         validator: (value) => value == null
-            ? (l10n.authFieldRequired)
+            ? (l10n.taxRefRequired)
             : null,
       ),
         ),

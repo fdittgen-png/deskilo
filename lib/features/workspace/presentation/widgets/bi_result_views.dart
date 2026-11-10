@@ -69,7 +69,7 @@ class BiRows extends StatelessWidget {
           TableRow(
             children: [
               cell(groupHeader ?? '', style: bold),
-              cell(l10n.biColumnValue, style: bold),
+              cell(l10n.biPrintColValue, style: bold),
               if (compared != null) ...[
                 cell(compared, style: bold),
                 cell(l10n.biColumnChange, style: bold),

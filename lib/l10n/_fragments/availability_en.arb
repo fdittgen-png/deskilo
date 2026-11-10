@@ -16,10 +16,6 @@
   "@availabilityAddClosure": {
     "description": "FAB tooltip and reason-dialog title for adding a closure day"
   },
-  "availabilityClosureReason": "Reason (optional)",
-  "@availabilityClosureReason": {
-    "description": "Label of the optional reason field when adding a closure day"
-  },
   "availabilityLastOpenDay": "At least one weekday must stay open.",
   "@availabilityLastOpenDay": {
     "description": "Snackbar shown when the owner tries to uncheck the last open weekday"
@@ -122,10 +118,6 @@
   "@availabilityWorkHoursInvalid": {
     "description": "Shown as a text in availability actions (workspace)."
   },
-  "availabilityPoliciesTitle": "Booking policies",
-  "@availabilityPoliciesTitle": {
-    "description": "Shown as a text in availability policies (workspace)."
-  },
   "policyAllowPastTitle": "Allow past bookings",
   "@policyAllowPastTitle": {
     "description": "Shown as a title in availability policies (workspace)."
@@ -189,10 +181,6 @@
   "policySimultaneousDesc": "How many overlapping bookings one member may hold. 1 keeps one place at a time.",
   "@policySimultaneousDesc": {
     "description": "#628 - subtitle explaining the simultaneous-reservations stepper"
-  },
-  "policyLimitsTitle": "Booking limits",
-  "@policyLimitsTitle": {
-    "description": "#649 - section header for the three numeric booking limits"
   },
   "policyLimitsDesc": "How far ahead a booking may be made, and how short or long it may be. These hold on every granularity.",
   "@policyLimitsDesc": {

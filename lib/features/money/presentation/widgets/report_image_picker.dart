@@ -49,7 +49,7 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
       errorText: l10n.workspaceGenericError,
       action: () async {
         final file = await pick(XTypeGroup(
-          label: l10n.profilePhotoFileType,
+          label: l10n.editorToolImage,
           extensions: const ['jpg', 'jpeg', 'png', 'webp'],
           mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
         ));

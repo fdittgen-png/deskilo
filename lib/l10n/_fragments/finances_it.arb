@@ -1,8 +1,4 @@
 {
-  "financesTitle": "Le mie finanze",
-  "@financesTitle": {
-    "description": "Me › Finances"
-  },
   "financesOutstanding": "Da pagare",
   "@financesOutstanding": {
     "description": "Me › Finances"
@@ -11,16 +7,8 @@
   "@financesPaid": {
     "description": "Me › Finances"
   },
-  "financesPayments": "Pagamenti",
-  "@financesPayments": {
-    "description": "Me › Finances"
-  },
   "financesReminders": "Solleciti",
   "@financesReminders": {
-    "description": "Me › Finances"
-  },
-  "financesToPay": "Da pagare",
-  "@financesToPay": {
     "description": "Me › Finances"
   },
   "financesNothingOwed": "Niente da pagare — è in regola.",
@@ -45,10 +33,6 @@
   },
   "financesStatePaid": "Pagata",
   "@financesStatePaid": {
-    "description": "Me › Finances"
-  },
-  "financesStateRefunded": "Rimborsata",
-  "@financesStateRefunded": {
     "description": "Me › Finances"
   },
   "financesStateClosed": "Chiusa",

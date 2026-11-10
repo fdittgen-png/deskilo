@@ -100,7 +100,7 @@ String? readinessReasonLabel(AppLocalizations l10n, String? reason) =>
 
 String _readinessActorLabel(AppLocalizations l10n, ReadinessActor actor) =>
     switch (actor) {
-      ReadinessActor.owner => l10n.readinessActorOwner,
+      ReadinessActor.owner => l10n.seatDayMine,
       ReadinessActor.operator =>
         l10n.readinessActorOperator,
       ReadinessActor.administrator =>

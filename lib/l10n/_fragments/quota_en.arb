@@ -165,10 +165,6 @@
       }
     }
   },
-  "eventsMessagesHeader": "Messages",
-  "@eventsMessagesHeader": {
-    "description": "Member-notes inbox on the Events screen (#460)"
-  },
   "memberNoteTo": "To {name}",
   "@memberNoteTo": {
     "description": "Member-notes inbox on the Events screen (#460)",

@@ -460,7 +460,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
             onChanged: (_) => setState(() {}),
             validator: (v) => (v == null || v.trim().isEmpty)
-                ? (l10n.authFieldRequired)
+                ? (l10n.taxRefRequired)
                 : null,
           ),
           const SizedBox(height: AppSpacing.md),

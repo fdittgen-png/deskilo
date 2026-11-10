@@ -154,10 +154,6 @@
   "@biEditorVisualDescription": {
     "description": "#2580 BI report editor"
   },
-  "biEditorText": "Testo",
-  "@biEditorText": {
-    "description": "#2580 BI report editor"
-  },
   "biEditorFigure": "Indicatore",
   "@biEditorFigure": {
     "description": "#2580 BI report editor"
@@ -192,10 +188,6 @@
   },
   "biEditorKindTable": "Tabella",
   "@biEditorKindTable": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorKindText": "Testo",
-  "@biEditorKindText": {
     "description": "#2580 BI report editor"
   },
   "biEditorGrouping": "Raggruppato per",
@@ -252,10 +244,6 @@
   },
   "biEditorSourceNoteToggle": "Nota sulla fonte",
   "@biEditorSourceNoteToggle": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorPalette": "Colori",
-  "@biEditorPalette": {
     "description": "#2580 BI report editor"
   },
   "biEditorPaletteStandard": "I colori dell’app",
@@ -350,10 +338,6 @@
   },
   "biEditorDelete": "Elimini",
   "@biEditorDelete": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorFilters": "Filtri",
-  "@biEditorFilters": {
     "description": "#2580 BI report editor"
   },
   "biEditorNoFilters": "Nessun filtro: ogni indicatore mostra tutto ciò che i Suoi diritti consentono.",

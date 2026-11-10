@@ -60,7 +60,7 @@ OverviewGroup overviewGroupOf(BiModule module) => switch (module) {
 String _groupLabel(AppLocalizations l10n, OverviewGroup g) => switch (g) {
   OverviewGroup.people => l10n.overviewGroupPeople,
   OverviewGroup.capacity => l10n.overviewGroupCapacity,
-  OverviewGroup.sales => l10n.overviewGroupSales,
+  OverviewGroup.sales => l10n.bookReportJournalSales,
   OverviewGroup.purchases => l10n.overviewGroupPurchases,
   OverviewGroup.cash => l10n.overviewGroupCash,
 };

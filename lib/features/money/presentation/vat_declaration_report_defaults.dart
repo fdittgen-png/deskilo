@@ -12,7 +12,7 @@ ReportBands vatDeclarationBandsOf(AppLocalizations l10n) =>
         colRate: l10n.vatDeclRate,
         colNet: l10n.vatDeclNet,
         colVat: l10n.vatDeclVat,
-        colInvoices: l10n.vatDeclInvoices,
+        colInvoices: l10n.featureInvoicing,
         totals: l10n.vatDeclTotals,
         boxesTitle: l10n.vatDeclBoxes,
         colBox: l10n.vatDeclBox,

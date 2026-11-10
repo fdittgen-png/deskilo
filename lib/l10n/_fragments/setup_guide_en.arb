@@ -55,10 +55,6 @@
   "@setupStepTitleNotifications": {
     "description": "#3485 setupStepTitle: the label for case 'notifications'."
   },
-  "setupStepTitleLimits": "Booking limits",
-  "@setupStepTitleLimits": {
-    "description": "#3485 setupStepTitle: the label for case 'limits'."
-  },
   "setupStepTitleKiosk": "Kiosk and badges",
   "@setupStepTitleKiosk": {
     "description": "#3485 setupStepTitle: the label for case 'kiosk'."
@@ -278,10 +274,6 @@
   "setupStateNameDeferred": "Set aside",
   "@setupStateNameDeferred": {
     "description": "#3485 setupStateName: the label for case 'deferred'."
-  },
-  "setupStateNameUnknown": "Unknown",
-  "@setupStateNameUnknown": {
-    "description": "#3485 setupStateName: the label for case 'unknown'."
   },
   "setupGuideTitle": "Setup guide",
   "@setupGuideTitle": {

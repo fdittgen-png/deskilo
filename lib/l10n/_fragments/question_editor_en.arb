@@ -20,10 +20,6 @@
   "@questionsInactive": {
     "description": "#1288 the question editor: questionsInactive"
   },
-  "questionEditorKey": "Key",
-  "@questionEditorKey": {
-    "description": "#1288 the question editor: questionEditorKey"
-  },
   "questionEditorKeyHelp": "Lower-case letters, digits and underscores. It never changes: the answers point at it.",
   "@questionEditorKeyHelp": {
     "description": "#1288 the question editor: questionEditorKeyHelp"

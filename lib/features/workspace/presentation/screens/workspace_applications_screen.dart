@@ -40,7 +40,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
         actions: [
           IconButton(
             key: const ValueKey('workspace-applications-pending-approval-refresh'),
-            tooltip: l10n.pendingApprovalRefresh,
+            tooltip: l10n.invoiceIssueCheckAgain,
             onPressed: () => ref.invalidate(provider),
             icon: const Icon(Icons.refresh),
           ),

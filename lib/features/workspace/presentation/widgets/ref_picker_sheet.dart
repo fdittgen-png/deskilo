@@ -265,7 +265,7 @@ class _RefPickerSheetState extends State<_RefPickerSheet> {
                     if (sortable)
                       PopupMenuButton<RefSort>(
                         key: Key('${widget.keyPrefix}-sort'),
-                        tooltip: l10n.refFilterSort,
+                        tooltip: l10n.meSortTooltip,
                         initialValue: _filter.sort,
                         onSelected: (s) =>
                             setState(() => _filter = _filter.copyWith(sort: s)),

@@ -177,7 +177,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
       return;
     }
     if (!mounted) return;
-    AppSnack.success(context, l10n.payConfigSaved);
+    AppSnack.success(context, l10n.billingSaved);
     // Clear the secret fields again (never re-shown) and reload the status.
     for (final field in paymentProviderFields[widget.provider]!) {
       if (field.secret) _controllers[field.key]!.clear();

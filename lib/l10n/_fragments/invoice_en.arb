@@ -28,10 +28,6 @@
   "@invoiceActionDeclined": {
     "description": "Result of a look: the validators declined a held void or refund"
   },
-  "invoicesTitle": "Invoices",
-  "@invoicesTitle": {
-    "description": "The invoice archive screen title and its Money entry button (0060)"
-  },
   "invoicesEmpty": "No invoices yet.",
   "@invoicesEmpty": {
     "description": "Empty state of the invoice archive"
@@ -164,14 +160,6 @@
   "invoiceFilterAllMonths": "All months",
   "@invoiceFilterAllMonths": {
     "description": "Archive month filter: no filter"
-  },
-  "invoiceFilterMonthLabel": "Month",
-  "@invoiceFilterMonthLabel": {
-    "description": "Archive month filter label"
-  },
-  "invoiceSortTooltip": "Sort",
-  "@invoiceSortTooltip": {
-    "description": "Archive sort menu tooltip"
   },
   "invoiceSortNewest": "Newest first",
   "@invoiceSortNewest": {
@@ -666,10 +654,6 @@
   "@legalIdentityExemptionReason": {
     "description": "Exemption reason field label"
   },
-  "legalIdentityStreet": "Street",
-  "@legalIdentityStreet": {
-    "description": "Street field label"
-  },
   "legalIdentityCity": "City",
   "@legalIdentityCity": {
     "description": "City field label"
@@ -685,10 +669,6 @@
   "legalIdentityVatWarning": "This space charges VAT but has no default rate in force: no invoice can be issued until you add one. Rates are edited with “VAT management” switched on.",
   "@legalIdentityVatWarning": {
     "description": "Warning shown for the VAT-registered regime"
-  },
-  "addressCountryLabel": "Country",
-  "@addressCountryLabel": {
-    "description": "Country field on the member address sheet"
   },
   "addressVatIdLabel": "VAT number (if you invoice as a business)",
   "@addressVatIdLabel": {
@@ -721,10 +701,6 @@
   "invoiceRegisterTitle": "Invoice register",
   "@invoiceRegisterTitle": {
     "description": "Screen title of the sortable invoice register (0072)"
-  },
-  "invoiceRegisterDate": "Date",
-  "@invoiceRegisterDate": {
-    "description": "Register column header, and its sort control"
   },
   "invoiceRegisterName": "Name",
   "@invoiceRegisterName": {
@@ -850,10 +826,6 @@
   "@invoiceAccountingExportEmpty": {
     "description": "Refusal when the selected period holds nothing"
   },
-  "invoiceRegisterYear": "Year",
-  "@invoiceRegisterYear": {
-    "description": "Register filter: which fiscal year the register shows"
-  },
   "invoiceRegisterAllYears": "All years",
   "@invoiceRegisterAllYears": {
     "description": "Register filter: no year restriction"
@@ -885,10 +857,6 @@
   "fecAccountRevenue": "Revenue",
   "@fecAccountRevenue": {
     "description": "Field label: the revenue account"
-  },
-  "fecAccountBank": "Bank",
-  "@fecAccountBank": {
-    "description": "Field label: the cash account"
   },
   "fecMissingSiren": "The FEC is named after your registration number — fill it in under Legal identity first.",
   "@fecMissingSiren": {
@@ -1071,10 +1039,6 @@
         "type": "int"
       }
     }
-  },
-  "invoiceTemplateDocInvoice": "Invoice",
-  "@invoiceTemplateDocInvoice": {
-    "description": "Mahnwesen / reminder letters (#472)"
   },
   "invoiceTemplateDocReminder": "Reminder {level}",
   "@invoiceTemplateDocReminder": {
@@ -1285,10 +1249,6 @@
   "@reportLineSection": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLineText": "Text",
-  "@reportLineText": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
   "reportLineSmall": "Small print",
   "@reportLineSmall": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -1307,10 +1267,6 @@
   },
   "reportLineSpacer": "Spacing",
   "@reportLineSpacer": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLineImage": "Image",
-  "@reportLineImage": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportLineColumns": "Columns start/end",
@@ -1424,10 +1380,6 @@
   "@invoicePdfCreditNote": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
   },
-  "invoiceStatusRefunded": "Refunded",
-  "@invoiceStatusRefunded": {
-    "description": "Negative invoices are credit notes the workspace refunds (#508)"
-  },
   "invoiceRefundLabel": "To refund",
   "@invoiceRefundLabel": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
@@ -1538,10 +1490,6 @@
   },
   "journeyStepIssued": "Issued",
   "@journeyStepIssued": {
-    "description": "Shown as a text in invoice journey view (money)."
-  },
-  "journeyStepPayment": "Payment",
-  "@journeyStepPayment": {
     "description": "Shown as a text in invoice journey view (money)."
   },
   "journeyStepConfirmation": "Confirmation",
@@ -1957,10 +1905,6 @@
   "@reportDesignerDrag": {
     "description": "Shown as a message in report visual editor (money)."
   },
-  "reportImageSize": "Size",
-  "@reportImageSize": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "reportImageSizeSmall": "Small",
   "@reportImageSizeSmall": {
     "description": "Shown as a button or chip label in report visual editor actions (money)."
@@ -1972,22 +1916,6 @@
   "reportImageSizeLarge": "Large",
   "@reportImageSizeLarge": {
     "description": "Shown as a button or chip label in report visual editor actions (money)."
-  },
-  "reportImageAlign": "Alignment",
-  "@reportImageAlign": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "reportImageAlignLeft": "Left",
-  "@reportImageAlignLeft": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "reportImageAlignCenter": "Centre",
-  "@reportImageAlignCenter": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "reportImageAlignRight": "Right",
-  "@reportImageAlignRight": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "reportTemplateLangOverridden": "Own template",
   "@reportTemplateLangOverridden": {
@@ -2033,10 +1961,6 @@
   "@reportFieldGroupLoops": {
     "description": "Shown as a text in report field picker (money)."
   },
-  "reportDesignerSideBySide": "Design and preview side by side",
-  "@reportDesignerSideBySide": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "wizardTitle": "Invoicing wizard",
   "@wizardTitle": {
     "description": "Shown as a title in invoicing wizard screen (money)."
@@ -2044,10 +1968,6 @@
   "invoiceWizardAction": "Month-close wizard",
   "@invoiceWizardAction": {
     "description": "Shown as a text in wizard context (money)."
-  },
-  "wizardCardHint": "Issue, send, remind, register and validate payments, match and close — one guided process.",
-  "@wizardCardHint": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "wizardRunStart": "Start of month",
   "@wizardRunStart": {
@@ -2079,14 +1999,6 @@
   },
   "wizardStepRemind": "Remind",
   "@wizardStepRemind": {
-    "description": "Shown as a text in wizard context (money)."
-  },
-  "wizardStepPayments": "Payments",
-  "@wizardStepPayments": {
-    "description": "Shown as a text in wizard context (money)."
-  },
-  "wizardStepMatch": "Match",
-  "@wizardStepMatch": {
     "description": "Shown as a text in wizard context (money)."
   },
   "wizardStepClose": "Close",
@@ -2260,10 +2172,6 @@
   "@wizardMatchNoCredit": {
     "description": "Shown as a text in wizard steps payments (money)."
   },
-  "wizardMatchAction": "Match",
-  "@wizardMatchAction": {
-    "description": "Shown as a text in wizard steps payments (money)."
-  },
   "wizardCloseHint": "A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.",
   "@wizardCloseHint": {
     "description": "Shown as a text in wizard steps payments (money)."
@@ -2341,10 +2249,6 @@
   "@wizardTodoNone": {
     "description": "Shown as a text in wizard steps payments (money)."
   },
-  "wizardWhoYou": "You",
-  "@wizardWhoYou": {
-    "description": "Shown as a text in wizard steps payments (money)."
-  },
   "wizardWhoValidators": "Validators",
   "@wizardWhoValidators": {
     "description": "Shown as a text in wizard steps payments (money)."
@@ -2372,10 +2276,6 @@
   "registerPaymentDate": "Paid on",
   "@registerPaymentDate": {
     "description": "Shown as a title in register payment sheet (money)."
-  },
-  "registerPaymentNote": "Note",
-  "@registerPaymentNote": {
-    "description": "Shown as the label of a field in register payment sheet (money)."
   },
   "registerPaymentSubmit": "Register",
   "@registerPaymentSubmit": {
@@ -2638,10 +2538,6 @@
         "type": "String"
       }
     }
-  },
-  "retentionClassInvoice": "Invoices",
-  "@retentionClassInvoice": {
-    "description": "#2571 retention clocks"
   },
   "retentionClassBooks": "Books",
   "@retentionClassBooks": {

@@ -4,7 +4,6 @@
   "assistantSetupIntro": "Was Assistenten in diesem Arbeitsbereich brauchen, der Reihe nach. Jeder Schritt sagt, wer ihn erledigt.",
   "assistantSetupNoWorkspace": "Wählen Sie zuerst einen Arbeitsbereich.",
   "assistantSetupAllDone": "Für diesen Arbeitsbereich ist alles eingerichtet.",
-  "assistantSetupSaved": "Gespeichert.",
   "assistantSetupStale": "Jemand hat das Angebot inzwischen geändert. Prüfen Sie es und versuchen Sie es erneut.",
   "assistantSetupFailed": "Speichern fehlgeschlagen. Nichts wurde geändert; versuchen Sie es erneut.",
   "assistantSetupLinkIdentity": "Meine Identität bestätigen",

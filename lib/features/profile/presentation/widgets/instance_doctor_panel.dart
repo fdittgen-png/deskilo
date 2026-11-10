@@ -137,7 +137,7 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
               icon: const Icon(Icons.health_and_safety_outlined),
               label: Text(findings == null
                   ? (l10n.instanceDoctorRun)
-                  : (l10n.instanceDoctorRunAgain)),
+                  : (l10n.invoiceIssueCheckAgain)),
             ),
           ],
         ),

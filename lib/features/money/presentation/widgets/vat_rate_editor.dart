@@ -231,7 +231,7 @@ class VatRateRow extends StatelessWidget {
         initialValue: draft.group,
         isExpanded: true,
         decoration: InputDecoration(
-          labelText: l10n.vatGroupLabel,
+          labelText: l10n.taxRefGroup,
           // The group is its own documented object, and its own paragraph
           // in the guide.
           suffixIcon: HelpDot(

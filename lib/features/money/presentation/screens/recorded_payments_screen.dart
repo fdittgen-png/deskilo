@@ -224,7 +224,7 @@ class _PaymentRow extends ConsumerWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(
         [?invoice, ?payer].isEmpty
-            ? l10n.recordedPaymentsUnnamed
+            ? l10n.eventTypePayment
             : [?invoice, ?payer].join(' · '),
       ),
       subtitle: Text(

@@ -134,8 +134,8 @@ class _SafTContactDialogState extends State<_SafTContactDialog> {
                     helperMaxLines: 3,
                   ),
                   items: [
-                    DropdownMenuItem(value: true, child: Text(l10n.saftSmallBusinessYes)),
-                    DropdownMenuItem(value: false, child: Text(l10n.saftSmallBusinessNo)),
+                    DropdownMenuItem(value: true, child: Text(l10n.compareYes)),
+                    DropdownMenuItem(value: false, child: Text(l10n.compareNo)),
                   ],
                   onChanged: (v) => setState(() => _smallBusiness = v),
                 ),

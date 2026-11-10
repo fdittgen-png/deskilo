@@ -47,10 +47,6 @@
   "@federationStageCompleting": {
     "description": "#1648 Shown only while the returned sign-in is being verified and finished."
   },
-  "federationCancel": "Cancel",
-  "@federationCancel": {
-    "description": "#1648 Abandons the pending Deskilo sign-in; the previous context stays."
-  },
   "federationRetry": "Try again",
   "@federationRetry": {
     "description": "#1648 Starts a fresh Deskilo sign-in after a failure."

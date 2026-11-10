@@ -20,10 +20,6 @@
   "@reportTextsAdd": {
     "description": "#880 report texts: reportTextsAdd"
   },
-  "reportTextsKey": "Schlüssel",
-  "@reportTextsKey": {
-    "description": "#880 report texts: reportTextsKey"
-  },
   "reportTextsKeyHint": "Buchstaben, Ziffern und Unterstriche, z. B. gruss",
   "@reportTextsKeyHint": {
     "description": "#880 report texts: reportTextsKeyHint"

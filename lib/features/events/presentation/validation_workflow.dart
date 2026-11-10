@@ -46,7 +46,7 @@ String workflowName(
     switch (w) {
       ValidationWorkflow.money => lexiconText(context, key: 'tabMoney', fallback: l10n.tabMoney),
       ValidationWorkflow.bookings =>
-        l10n.validationWorkflowBookings,
+        l10n.calendarKindReservation,
       ValidationWorkflow.people =>
         l10n.validationWorkflowPeople,
     };

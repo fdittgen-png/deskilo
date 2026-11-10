@@ -39,10 +39,6 @@
   "@mcpPolicyBroadening": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
-  "mcpPolicySave": "Save",
-  "@mcpPolicySave": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
   "mcpGroupOwn": "Own bookings and account",
   "@mcpGroupOwn": {
     "description": "#1626 #1627 #1628 mcp_settings"
@@ -61,10 +57,6 @@
   },
   "mcpGroupValidations": "Validations",
   "@mcpGroupValidations": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
-  "mcpPolicySaved": "Saved.",
-  "@mcpPolicySaved": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpPolicyStale": "Someone changed these settings meanwhile. Review the current settings and save again.",
@@ -86,10 +78,6 @@
   },
   "mcpDisconnectBody": "The assistant loses access to every workspace on this database. What it already read is not taken back.",
   "@mcpDisconnectBody": {
-    "description": "#1626 #1627 #1628 mcp_settings"
-  },
-  "mcpCancel": "Cancel",
-  "@mcpCancel": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
   "mcpDisconnect": "Disconnect",

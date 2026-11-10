@@ -1,13 +1,10 @@
 {
   "levelReserveButton": "Prenota il piano",
-  "levelReserveTitle": "Prenotare l'intero piano",
-  "levelPermissionTile": "Prenotazioni del piano",
   "levelPermissionAllowed": "Può prenotare un tavolo, ufficio o piano intero",
   "levelPermissionDenied": "Non può prenotare un tavolo, ufficio o piano intero",
   "levelBookableToggle": "Prenotabile per intero",
   "levelBookableDesc": "L'intero piano può essere prenotato come un'unica prenotazione.",
   "levelPriceLabel": "Prezzo per mezza giornata",
-  "levelAssignMember": "Per il membro",
   "levelAssignMyself": "Io stesso",
   "levelSupplementLabel": "Prenotazioni del piano",
   "levelNotAllowed": "Non è autorizzato a prenotare un tavolo, ufficio o piano intero.",

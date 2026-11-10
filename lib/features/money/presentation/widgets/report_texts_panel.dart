@@ -82,7 +82,7 @@ class _ReportTextsPanelState extends State<ReportTextsPanel> {
             autofocus: true,
             autocorrect: false,
             decoration: InputDecoration(
-              labelText: l10n.reportTextsKey,
+              labelText: l10n.repartitionWeight,
               helperText:
                   l10n.reportTextsKeyHint,
               prefixText: 'text.',

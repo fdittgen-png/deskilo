@@ -96,7 +96,7 @@ Future<void> showSeatPropertiesSheet(
             children: [
               Text(
                 switch (seat.resourceKind) {
-                  ResourceKind.room => l10n.editorRoomProperties,
+                  ResourceKind.room => l10n.reserveMeetingRoom,
                   ResourceKind.parking => l10n.editorParkingSlotProperties,
                   ResourceKind.seat => l10n.editorSeatProperties,
                 },
@@ -161,7 +161,7 @@ Future<void> showSeatPropertiesSheet(
                 accessoryLabel: (a) => accessoryChoiceLabel(a,
                     a.supplementCents > 0 ? currency.formatMinor(a.supplementCents) : null),
               ),
-              Text(l10n.editorAccessoriesLabel),
+              Text(l10n.accessoriesTitle),
               const SizedBox(height: 4),
               // #1216 — a link, not an instruction. Telling somebody
               // where to go and making them walk there themselves is

@@ -59,16 +59,8 @@
   "@biGrain": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
-  "biGrainMonth": "Month",
-  "@biGrainMonth": {
-    "description": "#1923 B Web-BI toolbar and module section"
-  },
   "biGrainQuarter": "Quarter",
   "@biGrainQuarter": {
-    "description": "#1923 B Web-BI toolbar and module section"
-  },
-  "biGrainYear": "Year",
-  "@biGrainYear": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
   "biCompare": "Compare with",
@@ -221,10 +213,6 @@
   "@biRemainder": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
-  "biColumnValue": "Value",
-  "@biColumnValue": {
-    "description": "#1923 B Web-BI toolbar and module section"
-  },
   "biColumnChange": "Change",
   "@biColumnChange": {
     "description": "#1923 B Web-BI toolbar and module section"
@@ -251,10 +239,6 @@
   },
   "biViewsTeam": "Team views",
   "@biViewsTeam": {
-    "description": "#1923 C Web-BI saved views"
-  },
-  "biViewSave": "Save",
-  "@biViewSave": {
     "description": "#1923 C Web-BI saved views"
   },
   "biViewSaveAs": "Save as a new view…",
@@ -367,14 +351,6 @@
   },
   "biCards": "Analyses shown",
   "@biCards": {
-    "description": "#1924 finance KPI / #1923 analyses picker"
-  },
-  "biCardUp": "Move up",
-  "@biCardUp": {
-    "description": "#1924 finance KPI / #1923 analyses picker"
-  },
-  "biCardDown": "Move down",
-  "@biCardDown": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
   "biFinanceInvoiced": "Invoiced",

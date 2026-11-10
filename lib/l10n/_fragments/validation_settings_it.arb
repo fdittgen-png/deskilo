@@ -1,6 +1,5 @@
 {
   "@@locale": "it",
-  "validationWorkflowBookings": "Prenotazioni",
   "validationWorkflowPeople": "Persone e ruoli",
   "validationWorkflowMoneyStake": "Finché non è accettato, l'importo non conta su nessun estratto conto.",
   "validationWorkflowBookingsStake": "Finché non è accettato, il posto resta com’era.",

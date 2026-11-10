@@ -19,8 +19,6 @@
   "saftTaxNumberLabel": "Número fiscal (Steuernummer)",
   "saftTaxNumberHelper": "El número que la administración tributaria austriaca asigna a la empresa, no su número del registro mercantil.",
   "saftSmallBusinessLabel": "Pequeña empresa (§ 6 (1) Z 27 UStG)",
-  "saftSmallBusinessYes": "Sí",
-  "saftSmallBusinessNo": "No",
   "saftSmallBusinessHelper": "Si la empresa es una pequeña empresa según el § 6 (1) Z 27 UStG, tal como lo indica la cabecera del SAF-T AT.",
   "saftStandardAccountsTitle": "Cuentas del plan estándar",
   "saftStandardAccountsIntro": "Confirme la cuenta del plan contable estándar austriaco (Einheitskontenrahmen) bajo la que se escribe cada cuenta del libro. La sugerencia viene del papel de la cuenta; revísela: no todas las cuentas de un papel corresponden a la misma cuenta estándar.",

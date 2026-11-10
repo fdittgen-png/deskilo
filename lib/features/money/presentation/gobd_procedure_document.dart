@@ -113,8 +113,8 @@ String _sequence(AppLocalizations l10n, NumberSequence s) {
     'credit_note' => l10n.numberSequenceJournalCreditNote,
     'vat_declaration' => l10n.numberSequenceJournalVatDeclaration,
     'member' => l10n.numberSequenceJournalMember,
-    'payment' => l10n.numberSequenceJournalPayment,
-    'invoice' => l10n.numberSequenceJournalInvoice,
+    'payment' => l10n.invoicePdfPayments,
+    'invoice' => l10n.featureInvoicing,
     _ => s.journal,
   };
   final datePart = switch (s.datePart) {

@@ -216,18 +216,6 @@
   "@libraryCustomizedHere": {
     "description": "Template apply preview: this workspace changed the group since it last applied the same template (#1280)"
   },
-  "libraryApply": "Apply to this space",
-  "@libraryApply": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "libraryApplyConfirmBody": "The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.",
-  "@libraryApplyConfirmBody": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "libraryApplied": "Template applied.",
-  "@libraryApplied": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "librarySave": "Save this space as a template",
   "@librarySave": {
     "description": "Shown as the line under a title in workspace settings screen (workspace), and 2 other places."

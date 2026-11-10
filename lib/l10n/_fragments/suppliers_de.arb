@@ -1,22 +1,42 @@
 {
   "@@locale": "de",
   "suppliersOutstanding": "Offener Betrag: {amount}",
-  "@suppliersOutstanding": {"description": "#3070 supplier outstanding balance", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersNoOutstanding": "Kein offener Betrag",
-  "@suppliersNoOutstanding": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBalanceUnavailable": "Saldo nicht verfügbar",
-  "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersViewPayables": "Lieferantenverbindlichkeiten anzeigen",
-  "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersPayablesUnavailable": "Verbindlichkeiten nicht verfügbar",
-  "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
+  },
   "suppliersHeld": "Zurückgestellt: {amount}",
-  "@suppliersHeld": {"description": "#3070 portion of the supplier balance on hold", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersLoadMore": "Mehr laden",
-  "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
-  "suppliersTitle": "Lieferanten",
-  "@suppliersTitle": {
-    "description": "#2567 suppliers"
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
   },
   "suppliersIntro": "Die Zahlungsempfänger Ihrer Einkäufe. Ein Lieferant wird an einer geprüften Steuernummer erkannt, nie allein am Namen.",
   "@suppliersIntro": {
@@ -65,10 +85,6 @@
   },
   "suppliersFieldGroup": "Das ist eine Umsatzsteuer-Gruppennummer",
   "@suppliersFieldGroup": {
-    "description": "#2567 suppliers"
-  },
-  "suppliersFieldStreet": "Straße",
-  "@suppliersFieldStreet": {
     "description": "#2567 suppliers"
   },
   "suppliersFieldPostalCode": "Postleitzahl",

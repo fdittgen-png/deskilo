@@ -190,7 +190,6 @@
   "instanceRevokeToken": "Ora può revocare il token di accesso: DesKilo non ne ha conservato alcuna copia.",
   "instanceDoctorIntro": "Prima che questo dispositivo la usi, il controllo di sicurezza deve passare: un allarme tiene il pulsante disattivato finché non è risolto.",
   "instanceDoctorRun": "Avvia il controllo di sicurezza",
-  "instanceDoctorRunAgain": "Controlla di nuovo",
   "instanceDoctorProtected": "Protetto",
   "instanceDoctorAttention": "Richiede attenzione",
   "instanceDoctorPassed": "{count, plural, =1{1 controllo superato} other{{count} controlli superati}}"

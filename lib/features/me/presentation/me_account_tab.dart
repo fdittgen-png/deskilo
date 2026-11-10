@@ -77,7 +77,7 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
       _Section(2, l10n.uxPreferencesSection, [
         ...accountSettingsTiles(context, ref, only: AccountTileGroup.account),
         _Door('me-activity', Icons.account_balance_wallet_outlined,
-            l10n.financesTitle, '/account-activity'),
+            l10n.tabMoney, '/account-activity'),
       ]),
       _Section(3, l10n.uxAdvancedSection, const [
         TaskWizardEntry(entryKey: 'me-task-wizard', chevron: true),

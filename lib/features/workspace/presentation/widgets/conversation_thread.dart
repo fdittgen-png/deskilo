@@ -383,7 +383,7 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
     final l10n = context.l10n;
     if (conversation == null) return '';
     return conversation.isGroup
-        ? (conversation.title ?? (l10n.conversationGroup))
+        ? (conversation.title ?? (l10n.taxRefGroup))
         : (names[conversation.otherMemberId] ??
             (l10n.conversationUnknownMember));
   }

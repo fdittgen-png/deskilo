@@ -201,7 +201,7 @@ class _VatDeclarationsScreenState
       switch (VatDeclarationRow(declaration).stage) {
         VatDeclarationStage.filed => l10n.vatDeclFiled,
         VatDeclarationStage.prepared => l10n.vatDeclPrepared,
-        VatDeclarationStage.draft => l10n.vatDeclDraft,
+        VatDeclarationStage.draft => l10n.purchasesStateDraft,
       };
 
   Future<void> _markFiled(VatDeclaration declaration) async {

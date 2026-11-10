@@ -34,6 +34,5 @@
   "pendingLastChecked": "Zuletzt geprüft {time}",
   "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Ihre Anfrage bleibt unverändert.",
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
-  "pendingSwitchWorkspace": "Bereich wechseln",
   "pendingHelp": "Hilfe"
 }

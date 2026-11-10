@@ -77,9 +77,5 @@
   "purchaseOrderMailInvalid": "A sender address, a name without < > or quotes, and on the first save the API key",
   "@purchaseOrderMailInvalid": {
     "description": "#3307 purchase order e-mail"
-  },
-  "purchaseOrderMailSave": "Save",
-  "@purchaseOrderMailSave": {
-    "description": "#3307 purchase order e-mail"
   }
 }

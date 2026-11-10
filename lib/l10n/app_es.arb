@@ -4,8 +4,6 @@
   "a11yDecrease": "Disminuir",
   "a11yFinishEditing": "Terminar la edición",
   "a11yIncrease": "Aumentar",
-  "a11yMoveDown": "Bajar",
-  "a11yMoveUp": "Subir",
   "a11yRecentre": "Ajustar el plano a la pantalla",
   "a11ySeatBlocked": "no disponible",
   "a11ySeatFree": "libre",
@@ -164,7 +162,6 @@
   "accountPaymentAsk": "Elegir al pagar",
   "accountPaymentConfirmed": "Pago confirmado",
   "accountPaymentPreference": "Pago en línea preferido",
-  "accountPaymentsTitle": "Pagos",
   "accountRefundDue": "Reembolso pendiente del espacio",
   "@accountRefundDue": {
     "description": "Account card: open credit notes the workspace still owes"
@@ -241,7 +238,6 @@
   "acctKindAcquisitionTax": "Impuesto sobre adquisiciones",
   "acctKindCreditNote": "Factura rectificativa",
   "acctKindExpense": "Gasto",
-  "acctKindInvoice": "Factura",
   "acctKindMemberReceipt": "Justificante de un miembro",
   "acctKindOther": "Otro asiento",
   "acctKindReceipt": "Cobro",
@@ -320,7 +316,6 @@
   "acctTransfersPeriod": "Año {year}",
   "acctTransfersTitle": "Transferencias",
   "acctWhoUnknown": "alguien que ya no está en el espacio",
-  "addressCountryLabel": "País",
   "addressNone": "Sin dirección",
   "addressSaved": "Dirección guardada",
   "addressTitle": "Dirección",
@@ -427,10 +422,6 @@
     "description": "Workspace admission history and discussion (#1791)"
   },
   "archiveSwissNeedsExportLog": "La documentación de los procedimientos de este archivo suizo indica que cada descarga queda registrada en el registro de exportaciones, y este espacio no lleva ninguno: active primero los periodos contables o los sistemas contables.",
-  "assistantPrefix": "Asistente",
-  "@assistantPrefix": {
-    "description": "#872 one wizard idiom: assistantPrefix"
-  },
   "assistantSetupActorConfigurer": "Quién: alguien que gestiona la configuración de este espacio de trabajo",
   "assistantSetupActorDatabaseAdministrator": "Quién: un administrador de la base de datos",
   "assistantSetupActorInstanceOperator": "Quién: el propietario de la instancia o un delegado",
@@ -467,7 +458,6 @@
   "assistantSetupRecommended": "Usar la selección recomendada",
   "assistantSetupRequest": "Solicitar acceso",
   "assistantSetupReview": "Revisar solicitudes",
-  "assistantSetupSaved": "Guardado.",
   "assistantSetupStale": "Alguien cambió la oferta mientras tanto. Revísela e inténtelo de nuevo.",
   "assistantSetupStateBlocked": "Después de los pasos anteriores",
   "assistantSetupStateDone": "Hecho",
@@ -512,7 +502,6 @@
   "authDisplayNameLabel": "Nombre visible",
   "authEmailLabel": "Correo electrónico",
   "authEmailNotConfirmed": "Confirme primero su dirección de correo: abra el mensaje que le enviamos y luego inicie sesión.",
-  "authFieldRequired": "Obligatorio",
   "authForgotPassword": "¿Ha olvidado la contraseña?",
   "authGenericError": "Error de autenticación. Compruebe sus credenciales e inténtelo de nuevo.",
   "authHidePassword": "Ocultar contraseña",
@@ -587,7 +576,6 @@
   "authWeakPassword": "Elija una contraseña más segura.",
   "availabilityAddClosure": "Añadir día de cierre",
   "availabilityClosureDays": "Días de cierre",
-  "availabilityClosureReason": "Motivo (opcional)",
   "availabilityFullDayHours": "Horas facturadas como jornada completa",
   "availabilityGranularity15": "Franjas de 15 minutos",
   "availabilityGranularity30": "Franjas de 30 minutos",
@@ -605,7 +593,6 @@
   "availabilityLastOpenDay": "Al menos un día de la semana debe permanecer abierto.",
   "availabilityNoClosures": "No hay días de cierre.",
   "availabilityOpenWeekdays": "Días de apertura",
-  "availabilityPoliciesTitle": "Políticas de reserva",
   "availabilityTitle": "Disponibilidad",
   "availabilityWorkEnd": "Fin de la jornada",
   "availabilityWorkHoursDescription": "Las ventanas de media jornada y jornada completa en todas partes — reservas, check-in y facturación — siguen este horario.",
@@ -629,7 +616,6 @@
   "backendErrorUrlNotCanonical": "Indique solo la dirección del proyecto (https://host), sin ruta, parámetros ni credenciales.",
   "backendErrorUrlNotHttps": "La URL debe empezar por https://.",
   "backendFacetNo": "no",
-  "backendFacetUnknown": "desconocido",
   "backendFacetYes": "sí",
   "backendFacets": "Alcanzado: {reachable} · Clave aceptada: {key} · Esquema: {schema} · Versión: {version}",
   "backendFullCheckHint": "Pegue un token de acceso personal para esta comprobación. Solo se usa para ella y nunca se guarda.",
@@ -884,7 +870,6 @@
   "bankLineReconciled": "Conciliado con un pago registrado",
   "bankLineRecorded": "Pago registrado, aún sin factura",
   "bankLineReview": "Posiblemente ya importado: revíselo",
-  "bankLineSaved": "Guardado.",
   "bankLineSuggested": "Propuesta: {number} ({why})",
   "bankMatchConfirm": "Confirmar",
   "bankMatchFailed": "No se ha podido conciliar el movimiento. No se ha cambiado nada.",
@@ -1136,8 +1121,6 @@
     "description": "#2581 analytical report print layout and exports"
   },
   "biBookingBasis": "La capacidad reservada mide reservas, no la asistencia real.",
-  "biCardDown": "Bajar",
-  "biCardUp": "Subir",
   "biCards": "Análisis mostrados",
   "biCardsUnavailable": "{count, plural, =1{1 análisis de esta vista no está disponible para usted y se omite.} other{{count} análisis de esta vista no están disponibles para usted y se omiten.}}",
   "biCashNotBankBalance": "Pagos registrados, no un saldo bancario conciliado.",
@@ -1179,7 +1162,6 @@
     "description": "Business analytics dashboard: biCollectionOutstanding"
   },
   "biColumnChange": "Variación",
-  "biColumnValue": "Valor",
   "biCommitmentsBasis": "{overdue} vencido, {upcoming} por vencer",
   "biCommitmentsDefinition": "Lo que los arrendamientos y las salas alquiladas prevén en los meses, menos las facturas de proveedor ya conciliadas. Los vencimientos aún no generados se toman de su calendario.",
   "biCommitmentsNoContracts": "No hay arrendamientos ni salas alquiladas activos: no se espera nada.",
@@ -1491,10 +1473,6 @@
       }
     }
   },
-  "biEditorFilters": "Filtros",
-  "@biEditorFilters": {
-    "description": "#2580 BI report editor"
-  },
   "biEditorFormat": "Formato de número",
   "@biEditorFormat": {
     "description": "#2580 BI report editor"
@@ -1574,10 +1552,6 @@
   },
   "biEditorKindTable": "Tabla",
   "@biEditorKindTable": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorKindText": "Texto",
-  "@biEditorKindText": {
     "description": "#2580 BI report editor"
   },
   "biEditorLater": "Después",
@@ -1685,10 +1659,6 @@
   },
   "biEditorPagesAndVisuals": "Páginas y visuales",
   "@biEditorPagesAndVisuals": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorPalette": "Colores",
-  "@biEditorPalette": {
     "description": "#2580 BI report editor"
   },
   "biEditorPaletteContrast": "Alto contraste",
@@ -1905,10 +1875,6 @@
   "@biEditorSourceNoteToggle": {
     "description": "#2580 BI report editor"
   },
-  "biEditorText": "Texto",
-  "@biEditorText": {
-    "description": "#2580 BI report editor"
-  },
   "biEditorTitle": "Editor de informes",
   "@biEditorTitle": {
     "description": "#2580 BI report editor"
@@ -2111,9 +2077,7 @@
   "biForecastTitle": "Previsto a pagar (debido + contratos)",
   "biFutureBasis": "Reservas existentes y horarios actuales; no es una previsión de demanda ni un uso garantizado.",
   "biGrain": "Duración del periodo",
-  "biGrainMonth": "Mes",
   "biGrainQuarter": "Trimestre",
-  "biGrainYear": "Año",
   "biGroupBy": "Agrupar por",
   "biGroupNone": "Sin agrupar",
   "biIncompatible": "El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.",
@@ -2247,10 +2211,6 @@
   "biPrintFigures": "Cifras",
   "@biPrintFigures": {
     "description": "#2581 analytical report print: the line naming each figure by id, version and coverage"
-  },
-  "biPrintFilters": "Filtros",
-  "@biPrintFilters": {
-    "description": "#2581 analytical report print layout and exports"
   },
   "biPrintFooter": "Línea de pie de página",
   "@biPrintFooter": {
@@ -2705,7 +2665,6 @@
   "biViewPeriodFixed": "Siempre {period}",
   "biViewPeriodMoves": "El periodo sigue al día en que se abre",
   "biViewRename": "Cambiar nombre…",
-  "biViewSave": "Guardar",
   "biViewSaveAs": "Guardar como vista nueva…",
   "biViewScopePrivate": "Solo yo",
   "biViewScopeTeam": "El equipo",
@@ -2738,7 +2697,6 @@
     "description": "Business analytics dashboard: biVsYearAgo"
   },
   "billAccessorySupplements": "Suplementos de accesorios",
-  "billBalance": "Saldo",
   "billCreditNoteCard": "Nota de crédito {number}",
   "@billCreditNoteCard": {
     "description": "Bill card title when the covering document is a credit note (#508)",
@@ -2842,7 +2800,6 @@
   },
   "billingPackageDays": "Días",
   "billingPackageName": "Nombre",
-  "billingPackagePrice": "Precio",
   "billingPackageSummary": "{days} días · {price}",
   "billingPackages": "Paquetes de días",
   "billingPackagesHint": "Los miembros con plan de paquetes los compran cuando se les acaban los días.",
@@ -3382,21 +3339,9 @@
   "@calendarKindEvent": {
     "description": "#718/#719 - calendar hub"
   },
-  "calendarKindInvoice": "Facturas",
-  "@calendarKindInvoice": {
-    "description": "#718/#719 - calendar hub"
-  },
   "calendarKindLease": "Fechas del contrato de alquiler",
   "@calendarKindLease": {
     "description": "#2569 lease reminders"
-  },
-  "calendarKindMessage": "Mensajes",
-  "@calendarKindMessage": {
-    "description": "#718/#719 - calendar hub"
-  },
-  "calendarKindPayment": "Pagos",
-  "@calendarKindPayment": {
-    "description": "#718/#719 - calendar hub"
   },
   "calendarKindReminder": "Recordatorios",
   "@calendarKindReminder": {
@@ -3481,7 +3426,6 @@
   "calendarValidationValidated": "Validado: {what}",
   "calendarViewAgenda": "Agenda",
   "calendarViewAlerts": "Avisos",
-  "calendarViewMonth": "Mes",
   "calendarViewWeek": "Semana",
   "calendarWeekEmpty": "Nada esta semana.",
   "calendarWhoCanSee": "Quién puede ver esto",
@@ -3503,7 +3447,6 @@
   "capabilityStateEnabled": "Activado",
   "capabilityStateIncompatible": "No aplicable aquí",
   "capabilityStateLocalInput": "Necesita antes un valor local",
-  "capabilityStateUnknown": "Desconocido",
   "capabilityStateUnspecified": "No lo fija esta plantilla",
   "capabilitySubscriptionPlans": "Planes de suscripción",
   "capacityKpiAsOf": "Calculado {time}",
@@ -3642,7 +3585,6 @@
   "carnetBalance": "{count, plural, =0{No quedan medias jornadas} =1{Queda 1 media jornada} other{Quedan {count} medias jornadas}}",
   "carnetHalfDays": "Medias jornadas",
   "carnetName": "Nombre",
-  "carnetPrice": "Precio",
   "carnetSell": "Vender un bono",
   "carnetSold": "Bono vendido — cobrado una vez en la factura del mes.",
   "carnetSummary": "{halfDays} medias jornadas · {price}",
@@ -3856,7 +3798,6 @@
       }
     }
   },
-  "composerDraftKept": "Borrador guardado",
   "composerMention": "Mencionar a alguien",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
@@ -3885,7 +3826,6 @@
   "consentControllerTitle": "Quién es responsable",
   "consentIntro": "Antes de usar DesKilo, esto es lo que la app hace con sus datos, quién puede verlos y qué puede hacer al respecto. Dos minutos; no hay más.",
   "consentMessagesBody": "Solo las personas de una conversación pueden abrirla: ustedes dos, los miembros de un grupo o, cuando escribe a un espacio, los anfitriones que la app nombra antes del envío. Los propietarios y los admins de un espacio no pueden leer sus conversaciones. Los mensajes no están cifrados de extremo a extremo: se guardan en el servidor donde vive la conversación — el de otro servidor, tras su confirmación, cuando escribe a alguien de allí — y quien gestiona ese servidor puede acceder a ellos técnicamente.",
-  "consentMessagesTitle": "Mensajes",
   "consentNotBody": "Sin rastreo, sin analítica, sin publicidad, sin venta de datos. Sus datos no van a nadie salvo a los destinatarios nombrados aquí y en el aviso del servidor. La versión F-Droid no tiene ningún servicio de Google.",
   "consentNotTitle": "Lo que DesKilo nunca hace",
   "consentPushBody": "Opcionales, y salientes. Cuando el operador del servidor ha configurado el push, su espacio lo usa y está activado en este dispositivo, la dirección de este dispositivo y cada notificación van al servicio de push (Firebase Cloud Messaging, que pasa a Apple las notificaciones para dispositivos Apple). Una notificación solo dice algo genérico, como «Tiene un mensaje nuevo»: ni nombres, ni horas, ni texto de mensajes. Desactívelas en Ajustes → Privacidad y datos; la app sigue funcionando y ya no se envía nada a este dispositivo.",
@@ -3911,13 +3851,11 @@
   "consumptionAddForMember": "Añadir servicio para {name}",
   "consumptionNoServices": "No hay servicios activos que registrar.",
   "consumptionPeriodLabel": "Período de facturación (AAAA-MM)",
-  "consumptionQuantity": "Cantidad",
   "consumptionRecorded": "Consumo registrado — pendiente de confirmación.",
   "consumptionRefusedInactive": "Este servicio ya no se ofrece. No se registró nada.",
   "consumptionRefusedPeriod": "El periodo de facturación debe ser un mes (AAAA-MM). No se registró nada.",
   "consumptionRefusedQuantity": "La cantidad debe estar entre 1 y 999. No se registró nada.",
   "consumptionRefusedStock": "No queda suficiente stock. No se registró nada.",
-  "consumptionService": "Servicio",
   "conversationAddPeople": "Añadir miembros",
   "@conversationAddPeople": {
     "description": "#687 - messaging centre"
@@ -3927,20 +3865,11 @@
     "description": "#687 - messaging centre"
   },
   "conversationArchive": "Archivar",
-  "conversationArchived": "Conversación archivada.",
   "conversationChoose": "Elija una conversación",
   "conversationDraftSessionOnly": "Borrador no enviado, conservado en la aplicación hasta que cierre sesión o la cierre.",
   "conversationEmpty": "Aún no hay mensajes — ¡saluda!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
-  },
-  "conversationGroup": "Grupo",
-  "@conversationGroup": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationGroupInfo": "Grupo",
-  "@conversationGroupInfo": {
-    "description": "#687 - messaging centre"
   },
   "conversationLeave": "Salir del grupo",
   "@conversationLeave": {
@@ -3968,7 +3897,6 @@
     }
   },
   "conversationMute": "Silenciar notificaciones",
-  "conversationMutedBadge": "Silenciada",
   "conversationPin": "Fijar arriba",
   "conversationRemove": "Quitar",
   "@conversationRemove": {
@@ -3991,10 +3919,6 @@
   "conversationUnpin": "Desfijar",
   "conversationYesterday": "Ayer",
   "@conversationYesterday": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationYou": "Usted",
-  "@conversationYou": {
     "description": "#687 - messaging centre"
   },
   "countryChangeBody": "En {country} estas funciones no están disponibles y dejan de funcionar: {features}. Sus interruptores se conservan: vuelven si restablece el país.",
@@ -4220,14 +4144,11 @@
   },
   "dataReportArchived": "Archivado",
   "dataReportColumnAttended": "Asistencias",
-  "dataReportColumnBalance": "Saldo",
-  "dataReportColumnBookings": "Reservas",
   "dataReportColumnCancelled": "Canceladas",
   "dataReportColumnCharges": "Cargado",
   "dataReportColumnCredits": "Abonado",
   "dataReportColumnHeld": "Mantenidas",
   "dataReportColumnHours": "Horas",
-  "dataReportColumnMonth": "Mes",
   "dataReportColumnOpen": "Pendiente",
   "dataReportColumnPaid": "Pagado",
   "dataReportColumnReference": "Referencia",
@@ -4235,7 +4156,6 @@
   "dataReportColumnSeats": "Plazas",
   "dataReportContents": "Índice",
   "dataReportFailed": "No se pudo crear el informe de datos. Inténtelo de nuevo en un momento.",
-  "dataReportNo": "No",
   "dataReportNone": "Nada registrado",
   "dataReportPartBookings": "Reservas por mes",
   "dataReportPartInvoices": "Registro de facturas",
@@ -4245,7 +4165,6 @@
   "dataReportPartPurchases": "Compras y proveedores",
   "dataReportSubtitle": "Miembros, reservas, facturas, pagos, compras y el plano con sus precios, con totales, para leer o imprimir.",
   "dataReportTitle": "Informe de datos del espacio",
-  "dataReportYes": "Sí",
   "datevAccountLength": "Longitud de las cuentas (Sachkontenlänge)",
   "datevAccountsIntro": "Su asesor le da los números de asesor y de cliente. DATEV rechaza un archivo cuyos números no coincidan — que es lo que evita que acabe en los libros de otra empresa.",
   "@datevAccountsIntro": {
@@ -4468,21 +4387,9 @@
       }
     }
   },
-  "deployEntityAccessories": "Accesorios",
-  "@deployEntityAccessories": {
-    "description": "#988/#990 deployments: deployEntityAccessories"
-  },
   "deployEntityBookingRules": "Reglas de reserva",
   "@deployEntityBookingRules": {
     "description": "#988/#990 deployments: deployEntityBookingRules"
-  },
-  "deployEntityBranding": "Colores",
-  "@deployEntityBranding": {
-    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
-  },
-  "deployEntityClosureDays": "Días de cierre",
-  "@deployEntityClosureDays": {
-    "description": "#988/#990 deployments: deployEntityClosureDays"
   },
   "deployEntityCreditProducts": "Los bonos prepago en venta",
   "@deployEntityCreditProducts": {
@@ -4516,10 +4423,6 @@
   "@deployEntityInvitations": {
     "description": "#988/#990 deployments: deployEntityInvitations"
   },
-  "deployEntityPackages": "Paquetes",
-  "@deployEntityPackages": {
-    "description": "#988/#990 deployments: deployEntityPackages"
-  },
   "deployEntityPaymentInstructions": "Instrucciones de pago",
   "@deployEntityPaymentInstructions": {
     "description": "#1010 deploy entity: payment instructions"
@@ -4535,10 +4438,6 @@
   "deployEntityServices": "Servicios",
   "@deployEntityServices": {
     "description": "#988/#990 deployments: deployEntityServices"
-  },
-  "deployEntitySites": "Sedes",
-  "@deployEntitySites": {
-    "description": "#988/#990 deployments: deployEntitySites"
   },
   "deployEntityTariffs": "Tarifas",
   "@deployEntityTariffs": {
@@ -4808,10 +4707,6 @@
   "@documentsCategoryGuides": {
     "description": "Workspace document library (#500)"
   },
-  "documentsCategoryLabel": "Categoría",
-  "@documentsCategoryLabel": {
-    "description": "Workspace document library (#500)"
-  },
   "documentsCategoryMinutes": "Actas de reuniones",
   "@documentsCategoryMinutes": {
     "description": "Workspace document library (#500)"
@@ -4854,10 +4749,6 @@
   },
   "documentsRoleOwner": "Solo propietarios",
   "@documentsRoleOwner": {
-    "description": "Workspace document library (#500)"
-  },
-  "documentsTitle": "Biblioteca de documentos",
-  "@documentsTitle": {
     "description": "Workspace document library (#500)"
   },
   "documentsTitleLabel": "Título",
@@ -5231,7 +5122,6 @@
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
   },
-  "editorAccessoriesLabel": "Accesorios",
   "editorAddLevel": "Añadir planta",
   "editorAmenitiesLabel": "Equipamiento",
   "editorAreaKindTitle": "¿Qué tipo de zona?",
@@ -5383,10 +5273,6 @@
   "@editorResourceKindTitle": {
     "description": "#2631 resource_editor: editorResourceKindTitle"
   },
-  "editorResourceRoom": "Sala de reuniones",
-  "@editorResourceRoom": {
-    "description": "#2631 resource_editor: editorResourceRoom"
-  },
   "editorResourceSeat": "Puesto",
   "@editorResourceSeat": {
     "description": "#2631 resource_editor: editorResourceSeat"
@@ -5394,14 +5280,6 @@
   "editorRoomCapacityLabel": "Capacidad (personas)",
   "@editorRoomCapacityLabel": {
     "description": "#2631 resource_editor: editorRoomCapacityLabel"
-  },
-  "editorRoomNameDefault": "Sala",
-  "@editorRoomNameDefault": {
-    "description": "#2631 resource_editor: editorRoomNameDefault"
-  },
-  "editorRoomProperties": "Sala de reuniones",
-  "@editorRoomProperties": {
-    "description": "#2631 resource_editor: editorRoomProperties"
   },
   "editorRotate": "Girar",
   "editorSeatNameDefault": "Asiento",
@@ -5688,10 +5566,6 @@
   },
   "equipmentRegisterTitle": "Registrar un equipo",
   "@equipmentRegisterTitle": {
-    "description": "#2576 equipment register"
-  },
-  "equipmentSaved": "Guardado.",
-  "@equipmentSaved": {
     "description": "#2576 equipment register"
   },
   "equipmentSource": "{supplier} · {reference}",
@@ -6073,7 +5947,6 @@
   "eventValidations": "{current}/{required} validaciones",
   "eventsEmpty": "Aún no hay eventos.",
   "eventsFilterAll": "Todos",
-  "eventsMessagesHeader": "Mensajes",
   "eventsPendingHeader": "Esperando su confirmación",
   "expenseCategoryCoffee": "Café y cocina",
   "expenseCategoryEquipment": "Equipamiento",
@@ -6090,7 +5963,6 @@
   "expenseSupplyHint": "Cápsulas de café, bolsas de aspiradora… Una vez validado, el artículo pasa al estante como servicio consumible: quien lo usa lo paga.",
   "expenseSupplyItem": "Artículo",
   "expenseSupplyNewItem": "Artículo nuevo",
-  "expenseSupplyQuantity": "Cantidad",
   "expenseSupplyToggle": "Es un suministro para el espacio",
   "expenseSupplyUnitPrice": "Precio unitario (lo que cuesta un consumo)",
   "expenseSupplyUnitPriceHint": "Prellenado con importe ÷ cantidad; redondee si quiere.",
@@ -6163,9 +6035,7 @@
   "exportColumnNameBlockedFrom": "Bloqueado desde",
   "exportColumnNameBlockedTo": "Bloqueado hasta",
   "exportColumnNameBookableAsWhole": "Reservable entero",
-  "exportColumnNameBySystem": "Automático",
   "exportColumnNameCapacity": "Capacidad",
-  "exportColumnNameCategory": "Categoría",
   "exportColumnNameChair": "Silla",
   "exportColumnNameCheckedInAt": "Entrada",
   "exportColumnNameCheckedOutAt": "Salida",
@@ -6173,7 +6043,6 @@
   "exportColumnNameCoOwner": "Copropietario",
   "exportColumnNameColor": "Color",
   "exportColumnNameCompany": "Empresa",
-  "exportColumnNameCountry": "País",
   "exportColumnNameCreatedAt": "Registrado el",
   "exportColumnNameCurrency": "Moneda",
   "exportColumnNameDecidedAt": "Decidido el",
@@ -6195,7 +6064,6 @@
   "exportColumnNameFirstName": "Nombre",
   "exportColumnNameHeight": "Alto",
   "exportColumnNameId": "ID",
-  "exportColumnNameInvoice": "Factura",
   "exportColumnNameIssuedAt": "Emitida el",
   "exportColumnNameIssuedBy": "Emitida por",
   "exportColumnNameJoinedAt": "Miembro desde",
@@ -6215,8 +6083,6 @@
   "exportColumnNameName": "Nombre",
   "exportColumnNameNet": "Base imponible",
   "exportColumnNameNumber": "Número",
-  "exportColumnNameOccurredOn": "Fecha",
-  "exportColumnNameOffice": "Sala",
   "exportColumnNameOn": "Activa",
   "exportColumnNameOrderId": "Pedido",
   "exportColumnNameOrientation": "Orientación",
@@ -6227,10 +6093,8 @@
   "exportColumnNamePeriod": "Período",
   "exportColumnNamePhone": "Teléfono",
   "exportColumnNamePostalCode": "Código postal",
-  "exportColumnNamePrice": "Precio",
   "exportColumnNameProcess": "Proceso",
   "exportColumnNameProvider": "Proveedor",
-  "exportColumnNameQuantity": "Cantidad",
   "exportColumnNameRecordedAt": "Registrado el",
   "exportColumnNameReplaces": "Sustituye",
   "exportColumnNameReservationId": "Reserva",
@@ -6245,14 +6109,12 @@
   "exportColumnNameStartsAt": "Inicio",
   "exportColumnNameState": "Estado",
   "exportColumnNameStatus": "Estado",
-  "exportColumnNameStreet": "Calle",
   "exportColumnNameSubject": "Afecta a",
   "exportColumnNameSubscriptionPct": "Suscripción (%)",
   "exportColumnNameTimezone": "Zona horaria",
   "exportColumnNameTitle": "Título",
   "exportColumnNameTotal": "Total",
   "exportColumnNameType": "Tipo",
-  "exportColumnNameValue": "Valor",
   "exportColumnNameVat": "IVA",
   "exportColumnNameVatByRate": "IVA por tipo",
   "exportColumnNameVatCategory": "Categoría de IVA",
@@ -6261,7 +6123,6 @@
   "exportColumnNameVatRegime": "Régimen de IVA",
   "exportColumnNameVatTreatment": "Tratamiento del IVA",
   "exportColumnNameVoidedAt": "Anulada el",
-  "exportColumnNameWhatsapp": "WhatsApp",
   "exportColumnNameWidth": "Ancho",
   "exportColumnNameWorkspaceCode": "Código del espacio",
   "exportColumnNameX": "X",
@@ -6274,16 +6135,13 @@
     "description": "#1868 - accounting capability: no complete posted books"
   },
   "exportSheetNameAbout": "Acerca de esta exportación",
-  "exportSheetNameAccessories": "Accesorios",
   "exportSheetNameAssetValuationBatches": "Valoraciones de activos",
   "exportSheetNameAssetValuationRows": "Líneas de valoración",
   "exportSheetNameBookAccounts": "Plan de cuentas",
   "exportSheetNameBookMappings": "Asignación de cuentas",
-  "exportSheetNameBookPeriods": "Periodos contables",
   "exportSheetNameBookProfiles": "Perfiles contables",
   "exportSheetNameChargingStations": "Puntos de carga",
   "exportSheetNameCheckIns": "Asistencia",
-  "exportSheetNameClosureDays": "Días de cierre",
   "exportSheetNameCreditProducts": "Tipos de bono",
   "exportSheetNameDecisions": "Decisiones",
   "exportSheetNameDesks": "Mesas",
@@ -6299,7 +6157,6 @@
   "exportSheetNameInvoiceLines": "Líneas de factura",
   "exportSheetNameInvoiceMatches": "Liquidación de facturas",
   "exportSheetNameInvoiceReminders": "Recordatorios",
-  "exportSheetNameInvoices": "Facturas",
   "exportSheetNameLeaseSettlements": "Liquidaciones del alquiler",
   "exportSheetNameLeaseTerms": "Condiciones del alquiler",
   "exportSheetNameLedger": "Cuentas de miembros",
@@ -6310,8 +6167,6 @@
   "exportSheetNameOffices": "Salas",
   "exportSheetNameOutgoingPayments": "Pagos salientes",
   "exportSheetNameOverview": "Resumen",
-  "exportSheetNamePackages": "Paquetes",
-  "exportSheetNamePayments": "Pagos",
   "exportSheetNamePlanImages": "Imágenes del plano",
   "exportSheetNamePlans": "Planes",
   "exportSheetNamePremisesLeases": "Arrendamientos",
@@ -6325,7 +6180,6 @@
   "exportSheetNamePurchaseOrderSends": "Envíos de pedidos",
   "exportSheetNamePurchaseOrders": "Pedidos de compra",
   "exportSheetNameQuotaExtensions": "Ampliaciones de cuota",
-  "exportSheetNameReservations": "Reservas",
   "exportSheetNameRightsRequests": "Solicitudes de privacidad",
   "exportSheetNameRoomRentalFees": "Tarifas de alquiler",
   "exportSheetNameRoomRentals": "Alquileres de salas",
@@ -6334,8 +6188,6 @@
   "exportSheetNameServiceCatalog": "Precios de servicios",
   "exportSheetNameServices": "Servicios usados",
   "exportSheetNameSettingValues": "Ajustes",
-  "exportSheetNameSites": "Sedes",
-  "exportSheetNameSuppliers": "Proveedores",
   "exportSheetNameTaxExemptionCertificates": "Certificados de exención",
   "exportSheetNameUsageRecords": "Uso",
   "exportSheetNameUsers": "Miembros",
@@ -6347,7 +6199,6 @@
   "exportSheetNameWorkspaceFieldDefinitions": "Preguntas",
   "exportSheetNameWorkspaceFieldValues": "Respuestas",
   "exportSheetNameWorkspaceRoleMembers": "Titulares de roles",
-  "exportSheetNameWorkspaceRoles": "Roles",
   "exportUncertifiedSoftware": "Generado según la especificación publicada, pero DesKilo no es software certificado en este país — consulte con su asesor si se le exige.",
   "@exportUncertifiedSoftware": {
     "description": "#669 - accounting export formats"
@@ -6373,19 +6224,14 @@
   "exportValueNameExpense": "Gasto",
   "exportValueNameExpired": "Caducado",
   "exportValueNameFounder": "Fundador",
-  "exportValueNameFull": "Factura",
   "exportValueNameInvited": "Invitado",
   "exportValueNameModified": "Modificado",
   "exportValueNameN": "Norte",
-  "exportValueNameNone": "No",
   "exportValueNameOverage": "Exceso",
   "exportValueNamePackage": "Paquete",
   "exportValueNameParking": "Aparcamiento",
   "exportValueNamePassive": "Sucesor",
-  "exportValueNamePaused": "En pausa",
   "exportValueNamePayg": "Pago por uso",
-  "exportValueNamePayment": "Pago",
-  "exportValueNamePending": "Pendiente",
   "exportValueNameRefund": "Reembolso",
   "exportValueNameReimbursement": "Reintegro",
   "exportValueNameRejected": "Rechazado",
@@ -6394,7 +6240,6 @@
   "exportValueNameRoom": "Sala",
   "exportValueNameS": "Sur",
   "exportValueNameSeat": "Puesto",
-  "exportValueNameService": "Servicio",
   "exportValueNameSettlement": "Liquidación",
   "exportValueNameStandard": "Estándar",
   "exportValueNameSubmitted": "Enviado",
@@ -7112,10 +6957,7 @@
   "@featureTaskRecorderTitle": {
     "description": "#1865 task recorder: the feature's name"
   },
-  "featureTierCore": "Esencial",
-  "featureTierCoreDesc": "Lo que todo espacio necesita. Activo desde el primer día.",
   "featureTierPlatform": "Plataforma",
-  "featureTierPlatformDesc": "Pedido, nunca supuesto. Active lo que este espacio realmente hace.",
   "featureUiAnimationsDesc": "Transiciones suaves y animaciones de estado en toda la aplicación. Desactivado, cada cambio es instantáneo; el ajuste de reducción de movimiento del dispositivo siempre prevalece.",
   "featureUiAnimationsTitle": "Animaciones de la interfaz",
   "featureUniqueMonogramsDesc": "Un avatar sin foto muestra iniciales que pertenecen a un solo miembro: inicial del nombre y del apellido, una letra más si dos coinciden, y números solo como último recurso. Desactivado: solo la primera letra, repetida en todos los que la comparten.",
@@ -7232,7 +7074,6 @@
   "featuresTitle": "Funciones",
   "featuresViewProcesses": "Procesos",
   "featuresViewSwitches": "Interruptores",
-  "fecAccountBank": "Banco",
   "fecAccountCustomers": "Clientes",
   "fecAccountExpenses": "Gastos",
   "@fecAccountExpenses": {
@@ -7261,7 +7102,6 @@
   "fecProvisional": "Este ejercicio no está cerrado: el FEC es provisional y el archivo lo conserva como tal.",
   "federationActionExistingAccount": "Iniciar sesión en mi cuenta existente",
   "federationActionReviewServer": "Revisar el servidor",
-  "federationCancel": "Cancelar",
   "federationClose": "Cerrar",
   "federationContinue": "Continuar con Deskilo",
   "federationDetailAuthority": "Autoridad de identidad: {host}",
@@ -7390,10 +7230,6 @@
   "fileExportKeepHint": "Una copia privada dentro de la aplicación. No aparece en Archivos.",
   "@fileExportKeepHint": {
     "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
-  },
-  "fileExportShare": "Compartir…",
-  "@fileExportShare": {
-    "description": "iPhone Export… row: hand the file to the system share sheet"
   },
   "fileExportShareHint": "La hoja del sistema: Guardar en Archivos cuando se ofrezca, Mail, AirDrop u otra aplicación.",
   "@fileExportShareHint": {
@@ -7531,10 +7367,6 @@
   "@financesPartlyPaid": {
     "description": "Me › Finances"
   },
-  "financesPayments": "Pagos",
-  "@financesPayments": {
-    "description": "Me › Finances"
-  },
   "financesPaymentsMoreFailed": "{host} no respondió con más pagos. Toque para volver a intentarlo.",
   "@financesPaymentsMoreFailed": {
     "placeholders": {
@@ -7592,22 +7424,9 @@
   "@financesStatePaid": {
     "description": "Me › Finances"
   },
-  "financesStateRefunded": "Reembolsada",
-  "@financesStateRefunded": {
-    "description": "Me › Finances"
-  },
   "financesStateUnpaid": "No pagada",
-  "financesTitle": "Mis finanzas",
-  "@financesTitle": {
-    "description": "Me › Finances"
-  },
-  "financesToPay": "Por pagar",
-  "@financesToPay": {
-    "description": "Me › Finances"
-  },
   "financesTypeAll": "Todos los documentos",
   "financesTypeCreditNote": "Nota de crédito",
-  "financesTypeInvoice": "Factura",
   "gebuevProcedureAccessBody": "Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.",
   "gebuevProcedureAccessHeading": "Accesos (art. 8)",
   "gebuevProcedureCarriersBody": "Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.",
@@ -7686,20 +7505,8 @@
   "@groupMakeAdmin": {
     "description": "workspace groups: rename, description, admins, info"
   },
-  "groupName": "Nombre del grupo",
-  "@groupName": {
-    "description": "messenger: creating a group of people"
-  },
   "groupNeedsPeople": "Añada al menos una persona.",
   "@groupNeedsPeople": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNew": "Nuevo grupo",
-  "@groupNew": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNewTitle": "Nuevo grupo",
-  "@groupNewTitle": {
     "description": "messenger: creating a group of people"
   },
   "groupPeople": "Personas del grupo",
@@ -7729,7 +7536,6 @@
   "guestPassActive": "A la venta",
   "guestPassAdd": "Añadir un pase",
   "guestPassChoose": "Pase",
-  "guestPassDay": "Primer día",
   "guestPassDays": "Días",
   "guestPassEdit": "Editar el pase",
   "guestPassFrom": "Desde",
@@ -7852,7 +7658,6 @@
   "helpDotTooltip": "Abrir la guía",
   "helpGuidedTasks": "Tareas guiadas",
   "helpHintAvailability": "Defina los días de apertura y el horario, y añada días de cierre que nadie puede reservar.",
-  "helpHintAvailabilityTopic": "Disponibilidad",
   "helpHintBadges": "Emita una credencial QR imprimible o registre una tarjeta NFC; revoque credenciales perdidas en cualquier momento.",
   "helpHintBadgesTopic": "credencial NFC",
   "helpHintCalendar": "Elija un día o un periodo: todo lo fechado que puede ver, en una lista, cada fila abre su origen.",
@@ -7892,22 +7697,15 @@
   "@helpHintMessagesTip5": {
     "description": "#695 - messaging help hints"
   },
-  "helpHintMessagesTopic": "Mensajes",
-  "@helpHintMessagesTopic": {
-    "description": "#695 - messaging help hints"
-  },
   "helpHintMoney": "Su factura mensual: recorra los meses con las flechas; pague, exporte o comparta desde aquí.",
   "helpHintMoneyDocuments": "Su papeleo: sus condiciones, el informe de pagos, el extracto del mes en PDF, la biblioteca de documentos.",
   "helpHintMoneyDocumentsTopic": "Documentos",
   "helpHintMoneyInvoices": "Sus facturas: lo que está abierto y para cuándo, cada factura que le emitieron con su estado, un toque al detalle y al pago.",
   "helpHintMoneyInvoicesTip2Topic": "Recordatorios de pago automáticos",
-  "helpHintMoneyInvoicesTopic": "Facturas",
   "helpHintMoneyPayments": "Liquidar y pedir: el saldo, cómo pagarlo o pagar en línea, registrar un pago — y enviar un gasto, pedir medios días o añadir un consumo.",
   "helpHintMoneyPaymentsTip3Topic": "pagos en línea",
   "helpHintMoneyPaymentsTipSupplyTopic": "Servicios y Accesorios",
-  "helpHintMoneyPaymentsTopic": "Pago",
   "helpHintMoneyStatement": "El mes tal como está: su cuenta, días usados y restantes, suscripción, servicios, paquetes, posiciones abiertas, abonos y el saldo. Recorra los meses con las flechas.",
-  "helpHintMoneyStatementTopic": "Extracto",
   "helpHintMoneyTopic": "dinero",
   "helpHintNextTip": "Consejo siguiente",
   "helpHintPlan": "El plano en vivo: toque un asiento libre para reservar, toque su reserva para registrar su llegada.",
@@ -7934,23 +7732,19 @@
   "helpTopicAccounting": "Exportaciones contables",
   "helpTopicBilling": "Facturación",
   "helpTopicBookingLimits": "Límites de reserva",
-  "helpTopicBookingPolicies": "Políticas de reserva",
   "helpTopicDeployment": "Desplegar",
   "helpTopicDocumentLibrary": "biblioteca de documentos",
   "helpTopicEinvoice": "factura electrónica",
   "helpTopicEnvironments": "Entornos",
   "helpTopicInstances": "Instancias",
-  "helpTopicKiosk": "Modo quiosco",
   "helpTopicLegalIdentity": "Identidad legal",
   "helpTopicReadiness": "admisibilidad",
   "helpTopicReportEditor": "editor de informes",
-  "helpTopicReportLayout": "Los diseños posicionados",
   "helpTopicScheduledExpenses": "Gastos programados",
   "helpTopicServer": "propio servidor",
   "helpTopicSettings": "Ajustes y perfil",
   "helpTopicTrace": "El registro",
   "helpTopicVat": "IVA",
-  "helpTopicWindowEnvelope": "El contrato del sobre con ventana",
   "helpTopicWorkingHours": "Horario de trabajo",
   "helpTopicWorkspaceId": "ID del espacio",
   "hmrcAcceptedNotRecorded": "HMRC aceptó la declaración (recibo {receipt}) pero no se pudo registrar aquí. Inténtelo de nuevo: no se envía nada dos veces.",
@@ -8103,7 +7897,6 @@
   "hubPurchasesSubtitle": "Lo que el espacio compra y debe: gastos, facturas de proveedores, proveedores, arrendamiento, equipos",
   "hubPurchasesTitle": "Compras",
   "hubSalesSubtitle": "Lo que el espacio vende y factura: servicios, facturas, facturación",
-  "hubSalesTitle": "Ventas",
   "identityConnectBrowser": "No se pudo abrir el navegador.",
   "identityConnectConfirmApply": "¿Enviar su solicitud de membresía a {name}?",
   "identityConnectConfirmApplyBody": "Ya está conectado. El espacio revisa su solicitud; no se comparte nada más.",
@@ -8158,7 +7951,6 @@
   "inboxNoArchived": "Ninguna conversación archivada.",
   "inboxNoUnread": "Nada sin leer — está al día.",
   "inboxRequestsCount": "Solicitudes: {count}",
-  "inboxRetry": "Reintentar",
   "inboxShowOlder": "Mostrar conversaciones anteriores",
   "inboxSourceFailed": "No se pudo leer {source}. Se muestra el resto de la bandeja de entrada.",
   "inboxSourcePersonal": "Sus mensajes personales",
@@ -8274,7 +8066,6 @@
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Solo existen personal_home y workspace_host; operator_set_installation_roles escribe un conjunto válido.",
   "instanceDoctorRolesUnknownTitle": "Los roles de la instalación no son un conjunto conocido",
   "instanceDoctorRun": "Ejecutar la comprobación de seguridad",
-  "instanceDoctorRunAgain": "Comprobar de nuevo",
   "instanceDoctorSchemaNoVersionDetail": "Existen {tables} tablas, pero ninguna versión de esquema: esta instancia es anterior a la migración 0226 y va por detrás de una app que necesita {required}. La instalación la actualiza a partir de lo que registró.\n        Solución: dart run tool/instance.dart install --ref <ref>\n        Si no sabe por dónde seguir, primero: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "instanceDoctorSchemaNoVersionTitle": "El esquema no tiene versión",
   "instanceDoctorSignupsNobodyDetail": "{created} se registraron, 0 confirmaron. El registro no es solo lento: nadie lo ha completado.\n        Revise primero la URL del sitio de arriba: es a la que apunta el correo.",
@@ -8548,9 +8339,7 @@
   },
   "inviteSectionTitle": "Invitar a alguien",
   "inviteSendFailed": "No se pudo abrir la aplicación de envío. El mensaje se copió en su lugar.",
-  "inviteViaShare": "Compartir…",
   "inviteViaSms": "SMS",
-  "inviteViaWhatsapp": "WhatsApp",
   "invoiceAccountingExport": "Exportación contable",
   "invoiceAccountingExportEmpty": "No hay nada que exportar en este periodo.",
   "invoiceActionDeclined": "La validación fue rechazada o caducó. No se cambió nada.",
@@ -8717,7 +8506,6 @@
   "invoiceFilterAllMembers": "Todos los miembros",
   "invoiceFilterAllMonths": "Todos los meses",
   "invoiceFilterClear": "Borrar filtros",
-  "invoiceFilterMonthLabel": "Mes",
   "invoiceFilterNoMatch": "Ninguna factura coincide con estos filtros.",
   "invoiceGapBuyerVatIdFormat": "El NIF-IVA del cliente no tiene la forma de su país — compruébelo.",
   "@invoiceGapBuyerVatIdFormat": {
@@ -9184,13 +8972,11 @@
   },
   "invoiceRegisterAllYears": "Todos los años",
   "invoiceRegisterAmount": "Importe",
-  "invoiceRegisterDate": "Fecha",
   "invoiceRegisterName": "Nombre",
   "invoiceRegisterPeriod": "Periodo: {from} – {to}",
   "invoiceRegisterPeriodClear": "Mostrar todos los periodos",
   "invoiceRegisterTitle": "Registro de facturas",
   "invoiceRegisterTotal": "Total",
-  "invoiceRegisterYear": "Año",
   "invoiceRemainingLabel": "Pendiente",
   "@invoiceRemainingLabel": {
     "description": "Partial payments stay open until a validated write-off (#504)"
@@ -9280,13 +9066,8 @@
   "invoiceSortByMember": "Por miembro",
   "invoiceSortByMonth": "Por mes",
   "invoiceSortNewest": "Más recientes primero",
-  "invoiceSortTooltip": "Ordenar",
   "invoiceStatusOpen": "Abierta",
   "invoiceStatusPartiallyPaid": "Parcialmente pagada",
-  "invoiceStatusRefunded": "Reembolsada",
-  "@invoiceStatusRefunded": {
-    "description": "Negative invoices are credit notes the workspace refunds (#508)"
-  },
   "invoiceStatusRemainderCancelled": "Parcialmente pagada · saldo anulado",
   "@invoiceStatusRemainderCancelled": {
     "description": "Partial payments stay open until a validated write-off (#504)"
@@ -9326,7 +9107,6 @@
   "invoiceTabOpen": "Abiertas",
   "invoiceTabToInvoice": "Por facturar",
   "invoiceTemplateBodyLabel": "Banda de cuerpo (las líneas de la factura)",
-  "invoiceTemplateDocInvoice": "Factura",
   "invoiceTemplateDocReminder": "Recordatorio {level}",
   "invoiceTemplateDocStatement": "Extracto",
   "invoiceTemplateDownload": "Descargar PDF",
@@ -9367,21 +9147,8 @@
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
   "invoicesEmpty": "Aún no hay facturas.",
-  "invoicesManage": "Facturas",
-  "@invoicesManage": {
-    "description": "#871 the Money tab row that opens invoice management (the billing hub)"
-  },
-  "invoicesTitle": "Facturas",
   "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Mis finanzas.",
   "@invoicingBanner": {
-    "description": "invoicing hub vs my finances"
-  },
-  "invoicingHubTitle": "Facturas",
-  "@invoicingHubTitle": {
-    "description": "invoicing hub vs my finances"
-  },
-  "invoicingMyFinances": "Mis finanzas",
-  "@invoicingMyFinances": {
     "description": "invoicing hub vs my finances"
   },
   "invoicingTools": "Herramientas de facturación",
@@ -9627,7 +9394,6 @@
   "journeyStepClosed": "Cerrada",
   "journeyStepConfirmation": "Confirmación",
   "journeyStepIssued": "Emitida",
-  "journeyStepPayment": "Pago",
   "journeyTimelineTitle": "Cronología",
   "journeyValidatorsMatch": "Pago conciliado — a la espera de la decisión de los validadores",
   "journeyValidatorsWriteoff": "Cancelación del resto solicitada — a la espera de los validadores",
@@ -9737,7 +9503,6 @@
   "@kioskClosedToday": {
     "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
   },
-  "kioskConfirmAction": "Confirmar",
   "kioskDone": "Listo — todo en orden.",
   "kioskGateBody": "Esta cuenta está configurada como quiosco del espacio. En modo quiosco la tableta solo muestra el plano para fichar con la tarjeta — no se puede abrir nada más. Para salir del modo quiosco, reinicia la tableta.",
   "kioskGateReject": "Ahora no — abrir la app normalmente",
@@ -9761,8 +9526,6 @@
   "@kioskPresentBadgeNext": {
     "description": "Kiosk period step continue button — leads to the badge prompt"
   },
-  "kioskRejectAction": "Rechazar",
-  "kioskReserve": "Reservar",
   "kioskReserveAndCheckIn": "Reservar y registrarse",
   "@kioskReserveAndCheckIn": {
     "description": "Kiosk summary title when a reservation starts checked in"
@@ -9911,10 +9674,6 @@
         "type": "String"
       }
     }
-  },
-  "leaseEdit": "Editar",
-  "@leaseEdit": {
-    "description": "#2569 premises lease"
   },
   "leaseEmpty": "Ningún contrato registrado.",
   "@leaseEmpty": {
@@ -10183,10 +9942,6 @@
   "@leaseRefused": {
     "description": "#2569 premises lease"
   },
-  "leaseSave": "Guardar",
-  "@leaseSave": {
-    "description": "#2569 premises lease"
-  },
   "leaseSaved": "Guardado",
   "@leaseSaved": {
     "description": "#2569 premises lease"
@@ -10275,10 +10030,6 @@
   },
   "leaseStatusActive": "En curso",
   "@leaseStatusActive": {
-    "description": "#2569 premises lease"
-  },
-  "leaseStatusDraft": "Borrador",
-  "@leaseStatusDraft": {
     "description": "#2569 premises lease"
   },
   "leaseStatusEnded": "Terminado",
@@ -10379,8 +10130,6 @@
   "ledgerCategoryAdjustment": "Ajuste",
   "ledgerCategoryExpense": "Reembolso de gasto",
   "ledgerCategoryOverage": "Exceso",
-  "ledgerCategoryPayment": "Pago",
-  "ledgerCategoryService": "Servicio",
   "ledgerCategorySubscription": "Suscripción",
   "legalIdentityAssociationRegime": "Una asociación sin actividad lucrativa no está sujeta al IVA: elija «Fuera del ámbito del IVA», no «Exento». El régimen de exención exige un número de IVA que no tiene, y la factura electrónica sería rechazada. Fuera del ámbito, su número de registro identifica a la asociación.",
   "@legalIdentityAssociationRegime": {
@@ -10397,7 +10146,6 @@
   "legalIdentityRegimeNotSubject": "Fuera del ámbito del IVA",
   "legalIdentityRegimeVatRegistered": "Sujeto a IVA (cobra IVA)",
   "legalIdentitySaved": "Identidad legal guardada.",
-  "legalIdentityStreet": "Calle",
   "legalIdentitySubtitle": "Régimen de IVA, identificadores y las condiciones de pago por defecto del espacio",
   "legalIdentityTitle": "Identidad legal y facturación electrónica",
   "legalIdentityVatId": "Número de IVA",
@@ -10432,7 +10180,6 @@
   "@legendUnavailable": {
     "description": "#1281: legendUnavailable"
   },
-  "levelAssignMember": "Para el miembro",
   "levelAssignMyself": "Yo mismo",
   "levelBookableDesc": "La planta entera puede reservarse como una sola reserva.",
   "levelBookableToggle": "Reservable en su totalidad",
@@ -10442,17 +10189,12 @@
   "levelNotAllowed": "No tiene permiso para reservar una mesa, oficina o planta entera.",
   "levelPermissionAllowed": "Puede reservar una mesa, oficina o planta entera",
   "levelPermissionDenied": "No puede reservar una mesa, oficina o planta entera",
-  "levelPermissionTile": "Reservas de planta",
   "levelPriceLabel": "Precio por media jornada",
   "levelReorderStale": "Los niveles cambiaron mientras tanto. No se guardó nada; se muestra el orden actual.",
   "levelReserveButton": "Reservar la planta",
-  "levelReserveTitle": "Reservar la planta entera",
   "levelSupplementLabel": "Reservas de planta",
-  "libraryApplied": "Plantilla aplicada.",
   "libraryAppliedChanges": "{count, plural, =1{1 cambio aplicado.} other{{count} cambios aplicados.}}",
-  "libraryApply": "Aplicar a este espacio",
   "libraryApplyChanges": "{count, plural, =0{Nada seleccionado} =1{Aplicar 1 cambio} other{Aplicar {count} cambios}}",
-  "libraryApplyConfirmBody": "El plano se añade o actualiza por nombre, y los ajustes que lleva la plantilla se fusionan. No se elimina nada de lo que ya tiene.",
   "libraryCarriesSettings": "con sus ajustes",
   "libraryConfirmSensitive": "Esto cambia: {groups}. ¿Aplicar?",
   "libraryCounts": "{levels} niveles · {desks} mesas · {seats} plazas",
@@ -10675,7 +10417,6 @@
   "mcpApiReferenceHint": "Qué puede llamar un asistente y cómo se autoriza",
   "mcpAssistantsTitle": "Asistentes",
   "mcpAssistantsUnavailable": "No se pudo cargar su acceso a asistentes. Inténtelo más tarde.",
-  "mcpCancel": "Cancelar",
   "mcpConfirmAccept": "Confirmar",
   "mcpConfirmApprove": "Su respuesta: aprobar",
   "mcpConfirmClient": "Solicitado por: {client}",
@@ -10718,7 +10459,6 @@
   "mcpConnectClaudeStep3": "Elija Conectar, inicie sesión con Google y elija este espacio de trabajo y lo que Claude puede hacer en él.",
   "mcpConnectCodeStep1": "Ejecute esto en un terminal:",
   "mcpConnectCodeStep2": "En Claude Code, escriba /mcp, elija deskilo y luego Authenticate. Se abre un navegador para iniciar sesión y elegir este espacio de trabajo.",
-  "mcpConnectCopied": "Copiado.",
   "mcpConnectCopyRequest": "Copiar una solicitud para enviar",
   "mcpConnectCursorInstall": "Añadir a Cursor",
   "mcpConnectCursorStep": "Cursor propone instalar DesKilo y luego abre un navegador para iniciar sesión y elegir este espacio de trabajo. Sin el botón, añada esto a ~/.cursor/mcp.json:",
@@ -10890,8 +10630,6 @@
   "mcpPolicyEnabled": "Ofrecer servicios de asistente",
   "mcpPolicyExplain": "Elija qué pueden hacer los asistentes en este espacio. Un miembro sigue necesitando la aprobación de esta base de datos, el rol adecuado, y debe elegir este espacio al conectar su asistente.",
   "mcpPolicyFeatureOff": "Los asistentes están desactivados en las funciones de este espacio. Aún puede restringir o desactivar los servicios de abajo.",
-  "mcpPolicySave": "Guardar",
-  "mcpPolicySaved": "Guardado.",
   "mcpPolicyStale": "Alguien cambió estos ajustes mientras tanto. Revise los ajustes actuales y guarde de nuevo.",
   "mcpPolicySwitched": "Ha cambiado de espacio. Vuelva a abrir esta página para editar el otro espacio.",
   "mcpPolicyTitle": "Acceso de asistentes",
@@ -10929,7 +10667,6 @@
   "mcpStateNotRequested": "No solicitada",
   "mcpStatePending": "En espera de una decisión",
   "mcpStateRevoked": "Caducada o retirada",
-  "mcpStateUnavailable": "Desconocido",
   "mcpStateUnlinked": "No confirmada",
   "mcpStateVerified": "Verificada",
   "mcpStatusBackend": "Servidor",
@@ -10991,7 +10728,6 @@
   "meGroupFavorites": "Favoritos",
   "meGroupInstallations": "Instalaciones conectadas",
   "meGroupMove": "Mover a un grupo…",
-  "meGroupName": "Nombre del grupo",
   "meGroupOther": "Otros",
   "meGroupProfile": "Mi perfil",
   "meGroupRename": "Renombrar",
@@ -11060,7 +10796,6 @@
   "meSpaceException": "En este espacio",
   "meSpaceLastUsed": "Último usado",
   "meSpaceNotifications": "{count, plural, =1{1 notificación le espera aquí} other{{count} notificaciones le esperan aquí}}",
-  "meSpaceOpen": "Abrir",
   "meSpacePending": "Pendiente de aprobación",
   "meSpacesNoMatch": "Ningún espacio coincide.",
   "meSpacesSearch": "Buscar mis espacios",
@@ -11069,7 +10804,6 @@
   "meTabDiscover": "Descubrir",
   "meTabHome": "Inicio",
   "meTabMe": "Yo",
-  "meTabMessages": "Mensajes",
   "meTabOverview": "Resumen",
   "meTabOverviewShort": "Resumen",
   "meTabSpacesShort": "Espacios",
@@ -11139,10 +10873,6 @@
   "memberMakeAdmin": "Dar el rol Administrador/a",
   "memberMakeKiosk": "Convertir en quiosco",
   "memberMakeMember": "Retirar el rol Administrador/a",
-  "memberMessagesAction": "Mensajes",
-  "@memberMessagesAction": {
-    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
-  },
   "memberMoneySettled": "Nada pendiente.",
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
@@ -11198,7 +10928,6 @@
   "memberOriginDelegated": "Perfil creado por un administrador",
   "memberOriginFounder": "Fundó este espacio",
   "memberOriginGuest": "Compró un pase de invitado en recepción",
-  "memberOriginHeading": "Cómo empezó esta afiliación",
   "memberOriginInvited": "Se unió por invitación",
   "memberOveragePolicyLabel": "Cuando se acaban los días",
   "memberOveragePolicyTooltip": "Exceso de consumo",
@@ -11251,7 +10980,6 @@
       }
     }
   },
-  "memberPageStatusActive": "Activo",
   "memberPageWorkspaceDefaultValue": "Predeterminado del espacio ({count})",
   "@memberPageWorkspaceDefaultValue": {
     "placeholders": {
@@ -11269,10 +10997,6 @@
     }
   },
   "memberPause": "Pausar la membresía",
-  "memberPayments": "Pagos",
-  "@memberPayments": {
-    "description": "#704 - the money section of a member profile"
-  },
   "memberPlanShare": "Plan {pct} %",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
@@ -11301,10 +11025,6 @@
   "memberRolesNone": "Ningún rol: todo lo que puede hacer un miembro.",
   "@memberRolesNone": {
     "description": "#2085 giving roles: memberRolesNone"
-  },
-  "memberRolesTitle": "Roles",
-  "@memberRolesTitle": {
-    "description": "#2085 giving roles: memberRolesTitle"
   },
   "memberRolesWhatTheyCanDo": "Lo que esta persona puede hacer aquí",
   "@memberRolesWhatTheyCanDo": {
@@ -11358,10 +11078,6 @@
   "@messageSearchHint": {
     "description": "#687 - messaging search"
   },
-  "messageSearchMessages": "Mensajes",
-  "@messageSearchMessages": {
-    "description": "#687 - messaging search"
-  },
   "messageSearchNothing": "Sin resultados.",
   "@messageSearchNothing": {
     "description": "#687 - messaging search"
@@ -11387,17 +11103,9 @@
     "description": "#687 - messaging centre"
   },
   "messengerContextAccount": "De persona a persona",
-  "messengerContextGroup": "Grupo",
-  "@messengerContextGroup": {
-    "description": "messenger: a group of people"
-  },
   "messengerContextInquiryIn": "Consulta a {space}",
   "messengerContextInquiryOut": "Su consulta a {space}",
   "messengerContextSpace": "En {space}",
-  "messengerCopied": "Copiado.",
-  "@messengerCopied": {
-    "description": "messenger: reactions, stars, edits"
-  },
   "messengerCopy": "Copiar texto",
   "@messengerCopy": {
     "description": "messenger: reactions, stars, edits"
@@ -11406,10 +11114,6 @@
   "messengerDeleteConfirm": "¿Eliminar este mensaje para todas las personas de la conversación?",
   "messengerDeleted": "Mensaje eliminado.",
   "messengerDelivered": "Entregado",
-  "messengerEdit": "Editar",
-  "@messengerEdit": {
-    "description": "messenger: reactions, stars, edits"
-  },
   "messengerEditFailed": "No se pudo editar el mensaje — quizá pasaron los 15 minutos.",
   "@messengerEditFailed": {
     "description": "messenger: reactions, stars, edits"
@@ -11489,18 +11193,13 @@
   "mfaVerify": "Verificar",
   "mfaWrong": "Ese código no fue aceptado. Pruebe el actual.",
   "moneyAmountLabel": "Importe",
-  "moneyBalance": "Saldo",
   "moneyBaseFee": "Suscripción base",
   "moneyCredits": "Pagos y créditos",
   "moneyDescriptionLabel": "Descripción",
-  "moneyDocumentLibrary": "Biblioteca de documentos",
   "moneyDueIn": "Vence en {days} días",
   "moneyExpenseCategoryLabel": "Categoría",
   "moneyExpensePending": "Gasto enviado — esperando aprobación.",
   "moneyFaceDocuments": "Documentos",
-  "moneyFaceInvoices": "Facturas",
-  "moneyFacePayments": "Pagos",
-  "moneyFaceStatement": "Extracto",
   "moneyFaceUsage": "Uso",
   "moneyLedgerEmpty": "Aún no hay movimientos.",
   "moneyLedgerHeader": "Libro de cuentas",
@@ -11659,7 +11358,6 @@
   "negotiationItemsHint": "Un precio unitario para este miembro; vacío mantiene el catálogo.",
   "negotiationKeepCurrent": "Mantener la actual",
   "negotiationMineColumn": "Las mías",
-  "negotiationNote": "Nota",
   "negotiationOccupation": "Ocupación",
   "negotiationOccupationHint": "La parte de días abiertos incluida cada mes; se aplica al miembro una vez validada.",
   "negotiationOnTariff": "Está en la tarifa del espacio.",
@@ -11672,9 +11370,7 @@
   "negotiationProposed": "Condiciones propuestas — pendientes de validación.",
   "negotiationReadOnly": "Solo lectura",
   "negotiationSubmit": "Proponer para validación",
-  "negotiationValidFrom": "Se aplica desde",
   "negotiationWhoCanSee": "Quién puede verlo",
-  "newConversationGroupSwitch": "Grupo",
   "newConversationNoMembers": "Aún no hay nadie más.",
   "@newConversationNoMembers": {
     "description": "#687 - messaging centre"
@@ -11687,17 +11383,12 @@
   "@newConversationStart": {
     "description": "#687 - messaging centre"
   },
-  "newConversationTapToOpen": "Toque a una persona para abrir el chat; active Grupo para elegir varias.",
   "newConversationTitle": "Nueva conversación",
   "@newConversationTitle": {
     "description": "#687 - messaging centre"
   },
   "newGroupCreate": "Crear grupo",
   "@newGroupCreate": {
-    "description": "#687 - messaging centre"
-  },
-  "newGroupName": "Nombre del grupo",
-  "@newGroupName": {
     "description": "#687 - messaging centre"
   },
   "newGroupNameTaken": "Ya existe un grupo con ese nombre aquí. Elija otro.",
@@ -11770,13 +11461,11 @@
   "@noteRefGone": {
     "description": "Tapping a message reservation reference whose target was deleted (#523)"
   },
-  "noteRefInvoice": "Factura",
   "noteRefNoReservations": "No hay reservas próximas que vincular.",
   "@noteRefNoReservations": {
     "description": "Reservation picker when the sender has nothing upcoming (#523)"
   },
   "noteRefNone": "Nada que referenciar todavía.",
-  "noteRefPayment": "Pago",
   "noteRefPickAlert": "¿Qué aviso?",
   "noteRefPickInvoice": "¿Qué factura?",
   "noteRefPickPayment": "¿Qué pago?",
@@ -11808,7 +11497,6 @@
   "notifCategoryMembers": "Miembros",
   "notifCategoryMoney": "Dinero",
   "notifGroupBy": "Agrupar por",
-  "notifGroupByDate": "Fecha",
   "notifGroupByType": "Tipo",
   "notifGroupByUser": "Miembro",
   "notifSortByDate": "Ordenar por fecha",
@@ -11845,17 +11533,9 @@
   "@numberSequenceJournalCreditNote": {
     "description": "#925 number sequences: numberSequenceJournalCreditNote"
   },
-  "numberSequenceJournalInvoice": "Facturas",
-  "@numberSequenceJournalInvoice": {
-    "description": "#925 number sequences: numberSequenceJournalInvoice"
-  },
   "numberSequenceJournalMember": "Socios",
   "@numberSequenceJournalMember": {
     "description": "#928 number-sequence adopters: numberSequenceJournalMember"
-  },
-  "numberSequenceJournalPayment": "Pagos",
-  "@numberSequenceJournalPayment": {
-    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
   },
   "numberSequenceJournalVatDeclaration": "Declaraciones de IVA",
   "@numberSequenceJournalVatDeclaration": {
@@ -11992,7 +11672,6 @@
   "overviewGroupCash": "Tesorería",
   "overviewGroupPeople": "Personas",
   "overviewGroupPurchases": "Compras",
-  "overviewGroupSales": "Ventas",
   "overviewIndicators": "Indicadores clave",
   "overviewLayoutConflict": "Su disposición se cambió en otro lugar desde que la abrió. No se sobrescribió nada: recárguela y vuelva a hacer su cambio.",
   "@overviewLayoutConflict": {
@@ -12085,7 +11764,6 @@
   "payConfigOpen": "Configurar",
   "payConfigRemove": "Eliminar",
   "payConfigRemoved": "Eliminado.",
-  "payConfigSaved": "Guardado.",
   "payConfigSecretSet": "Definido — déjelo en blanco para conservarlo",
   "payConfigSettlementsFetch": "Obtener los pagos",
   "payConfigSettlementsFetched": "{count} pagos registrados",
@@ -12209,10 +11887,6 @@
   "@paymentTermsOverridden": {
     "description": "#881 member payment conditions: paymentTermsOverridden"
   },
-  "paymentTermsReason": "Motivo (opcional)",
-  "@paymentTermsReason": {
-    "description": "#881 member payment conditions: paymentTermsReason"
-  },
   "paymentTermsRequestHint": "Deje un campo vacío para conservar la redacción del espacio. El cambio se aplica una vez validado.",
   "@paymentTermsRequestHint": {
     "description": "#881 member payment conditions: paymentTermsRequestHint"
@@ -12246,14 +11920,12 @@
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
   "pendingApprovalBody": "Se ha unido a {workspace}. Un administrador debe aprobar su membresía antes de que pueda usar el espacio — tendrá acceso en cuanto confirme.",
-  "pendingApprovalRefresh": "Comprobar de nuevo",
   "pendingApprovalTitle": "Membresía del espacio pendiente de aprobación",
   "pendingAvailable": "Mientras espera, sus otros espacios, su cuenta y la ayuda siguen disponibles.",
   "pendingHelp": "Ayuda",
   "pendingLastChecked": "Última comprobación {time}",
   "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Su solicitud no ha cambiado.",
   "pendingStillWaiting": "Sigue pendiente de aprobación.",
-  "pendingSwitchWorkspace": "Cambiar de espacio",
   "percentValue": "{value} %",
   "periodReservationsEmpty": "Ninguna reserva en estos meses.",
   "periodReservationsFailed": "No se pudieron leer las reservas.",
@@ -12395,7 +12067,6 @@
   "personalBirthday": "Fecha de nacimiento",
   "personalBirthdayClear": "Quitar la fecha de nacimiento",
   "personalBirthdayHelp": "Solo usted, las personas autorizadas a ver los datos personales de los miembros y el administrador de datos personales del espacio pueden leerla. Quien solo emite facturas, no.",
-  "personalBirthdayPick": "Elegir una fecha",
   "personalBirthdaySaveFailed": "Sus datos se guardaron, pero la fecha de nacimiento no.",
   "personalInfoCity": "Ciudad",
   "@personalInfoCity": {
@@ -12404,10 +12075,6 @@
   "personalInfoCompany": "Empresa (opcional)",
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
-  },
-  "personalInfoCountry": "País",
-  "@personalInfoCountry": {
-    "description": "#886 personal-information form / feature: personalInfoCountry"
   },
   "personalInfoEmail": "E-mail para documentos",
   "@personalInfoEmail": {
@@ -12440,10 +12107,6 @@
   "personalInfoPreview": "En sus documentos",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
-  },
-  "personalInfoSave": "Guardar",
-  "@personalInfoSave": {
-    "description": "#886 personal-information form: save button"
   },
   "personalInfoSaved": "Datos personales guardados",
   "@personalInfoSaved": {
@@ -12632,10 +12295,6 @@
   "@policyLimitsDesc": {
     "description": "#649 - subtitle of the booking-limits section"
   },
-  "policyLimitsTitle": "Límites de reserva",
-  "@policyLimitsTitle": {
-    "description": "#649 - section header for the three numeric booking limits"
-  },
   "policyMaxDurationDesc": "La reserva más larga aceptada. Una reserva termina el día en que empieza, así que la jornada entera es el techo.",
   "@policyMaxDurationDesc": {
     "description": "#649 - max_duration_minutes explanation"
@@ -12736,7 +12395,6 @@
   "portalSearch": "Buscar espacios",
   "portalSendCode": "Enviar código de acceso",
   "portalSourceUnavailable": "Un servidor no está disponible. Esta vista está incompleta. Toque para reintentar.",
-  "portalSuggestionGroup": "Grupo",
   "portalUseCode": "Usar un código por correo",
   "portalUseWorkspaceInfo": "Usar la información del espacio",
   "portalVisibilityLink": "Quién puede encontrarme y escribirme",
@@ -12804,7 +12462,6 @@
   "privacyAdminRecord": "Registrar una solicitud",
   "privacyAdminRefusalReason": "Motivo del rechazo (al menos 10 caracteres)",
   "privacyAdminRefuse": "Rechazar",
-  "privacyAdminSave": "Guardar",
   "privacyAdminStore": "Dónde (un almacén o una lista)",
   "privacyAdminTitle": "Datos personales y solicitudes de derechos",
   "privacyErase": "Abandonar este espacio y borrar mis datos",
@@ -13051,7 +12708,6 @@
   "processWorkspaceAccess": "Espacio y acceso",
   "processWorkspaceAccessDesc": "Gestionar membresías, roles y acceso al espacio.",
   "profilePhotoChoose": "Elegir una foto",
-  "profilePhotoFileType": "Imagen",
   "profilePhotoNone": "Toque para añadir una foto",
   "profilePhotoRemove": "Quitar foto",
   "profilePhotoRemoved": "Foto eliminada",
@@ -13145,10 +12801,6 @@
       }
     }
   },
-  "publicHolidaysCountry": "País",
-  "@publicHolidaysCountry": {
-    "description": "#1274 the country field label"
-  },
   "publicHolidaysCreated": "{count, plural, =1{1 día de cierre creado} other{{count} días de cierre creados}}",
   "@publicHolidaysCreated": {
     "description": "#1274 how many closure days were written",
@@ -13186,10 +12838,6 @@
   "publicHolidaysSheetTitle": "Días festivos",
   "@publicHolidaysSheetTitle": {
     "description": "#1274 the preview sheet's title"
-  },
-  "publicHolidaysYear": "Año",
-  "@publicHolidaysYear": {
-    "description": "#1274 the year field label"
   },
   "publicPersonUnavailable": "Este perfil no es público.",
   "publicProfileCopied": "Enlace copiado.",
@@ -13250,7 +12898,6 @@
   "purchaseOrderMailInvalid": "Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API",
   "purchaseOrderMailKey": "Clave de API de Resend",
   "purchaseOrderMailKeyKept": "Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.",
-  "purchaseOrderMailSave": "Guardar",
   "purchaseOrderMailSender": "Dirección del remitente (un dominio verificado en Resend)",
   "purchaseOrderMailSenderName": "Nombre del remitente",
   "purchaseOrderMailSettings": "Envío por correo",
@@ -13264,7 +12911,6 @@
   "purchaseOrderNote": "Nota para el proveedor",
   "purchaseOrderPickDate": "Elegir la fecha de entrega prevista",
   "purchaseOrderPrint": "Imprimir",
-  "purchaseOrderQuantity": "Cantidad",
   "purchaseOrderReceive": "Registrar una entrega",
   "purchaseOrderReceiveLine": "{description} ({left} por llegar)",
   "purchaseOrderReceiveNote": "Nota (opcional)",
@@ -13283,7 +12929,6 @@
   "purchaseOrderSendUnconfirmed": "No llegó ninguna respuesta confirmada. Compruebe con el proveedor antes de volver a enviar.",
   "purchaseOrderSentTo": "Enviado a {recipient}",
   "purchaseOrderStateCancelled": "Anulado",
-  "purchaseOrderStateDraft": "Borrador",
   "purchaseOrderStatePartlyReceived": "Recibido en parte",
   "purchaseOrderStateReceived": "Recibido",
   "purchaseOrderStateSent": "Enviado",
@@ -13360,10 +13005,6 @@
         "type": "String"
       }
     }
-  },
-  "purchasesClaimYou": "Usted",
-  "@purchasesClaimYou": {
-    "description": "#2574 purchase payables"
   },
   "purchasesClaimsTitle": "Reembolso",
   "@purchasesClaimsTitle": {
@@ -13503,10 +13144,6 @@
   "@purchasesOffsetHint": {
     "description": "#2574 claim offset"
   },
-  "purchasesOffsetInvoice": "Factura",
-  "@purchasesOffsetInvoice": {
-    "description": "#2574 claim offset"
-  },
   "purchasesOffsetLine": "Compensación · {amount} · {invoice}",
   "@purchasesOffsetLine": {
     "description": "#2574 claim offset",
@@ -13609,10 +13246,6 @@
   },
   "purchasesPaymentReversed": "Revertido",
   "@purchasesPaymentReversed": {
-    "description": "#2574 purchase payments"
-  },
-  "purchasesPayments": "Pagos",
-  "@purchasesPayments": {
     "description": "#2574 purchase payments"
   },
   "purchasesPickDate": "Elegir una fecha",
@@ -13768,10 +13401,6 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTabToPay": "Por pagar",
-  "@purchasesTabToPay": {
-    "description": "#2574 purchase payables"
-  },
   "purchasesTaxField": "Impuesto incluido (vacío si la factura no lo indica)",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
@@ -13886,10 +13515,6 @@
   "questionEditorContexts": "Dónde se pregunta",
   "@questionEditorContexts": {
     "description": "#1288 the question editor: questionEditorContexts"
-  },
-  "questionEditorKey": "Clave",
-  "@questionEditorKey": {
-    "description": "#1288 the question editor: questionEditorKey"
   },
   "questionEditorKeyHelp": "Minúsculas, dígitos y guiones bajos. No cambia nunca: las respuestas se apoyan en ella.",
   "@questionEditorKeyHelp": {
@@ -14037,7 +13662,6 @@
   "readinessActor": "Quién: {who}",
   "readinessActorAdministrator": "Un administrador de la base de datos",
   "readinessActorOperator": "El operador del servidor",
-  "readinessActorOwner": "Usted",
   "readinessAll": "Todas las secciones ({ready} de {total} listas)",
   "readinessAreaAssistant": "Acceso de asistentes (opcional)",
   "readinessAreaBackend": "Servidor y versión de la base de datos",
@@ -14120,7 +13744,6 @@
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
   "recordedPaymentsPeriod": "Periodo: {from} – {to}",
   "recordedPaymentsTitle": "Pagos recibidos",
-  "recordedPaymentsUnnamed": "Pago",
   "recordingPrivacyBadge": "Modo grabación — personas inventadas",
   "@recordingPrivacyBadge": {
     "description": "#1514 recording privacy: recordingPrivacyBadge"
@@ -14142,7 +13765,6 @@
   "recordsLocationHosted": "Alojado en {country}, según lo declara el operador de esta instalación",
   "recordsLocationTitle": "Dónde se conservan los registros",
   "recordsLocationUndeclared": "No declarado por el operador de esta instalación: la aplicación no indica ningún lugar",
-  "refFacetMonth": "Mes",
   "refFacetPerson": "Persona",
   "refFacetStatus": "Estado",
   "refFacetType": "Tipo",
@@ -14168,7 +13790,6 @@
       }
     }
   },
-  "refFilterSort": "Ordenar",
   "refSortAmountHigh": "Importe más alto",
   "refSortAmountLow": "Importe más bajo",
   "refSortNewest": "Más recientes primero",
@@ -14177,10 +13798,8 @@
   "refStatusDecided": "Decidida",
   "refStatusOpen": "Abierta (sin pagar)",
   "refStatusPaid": "Pagada",
-  "refStatusPending": "Pendiente",
   "refStatusRefunded": "Reembolsada",
   "refTypeCreditNote": "Nota de crédito",
-  "refTypeInvoice": "Factura",
   "refusalAccountingClosed": "Esta conexión ya no lo admite: se revocó o ya ha enviado documentos. Revóquela y vuelva a conectarse. No se ha guardado nada.",
   "refusalAccountingValue": "El servidor ha rechazado este valor: compruebe el token, la clave o el emisor e inténtelo de nuevo. No se ha guardado nada.",
   "refusalAlreadyDecided": "Alguien ya lo ha decidido. La lista muestra el resultado.",
@@ -14238,10 +13857,6 @@
   "@regionalDeviceZoneHint": {
     "description": "#711 - globalization"
   },
-  "regionalFollowLanguage": "Automático",
-  "@regionalFollowLanguage": {
-    "description": "#711 - globalization"
-  },
   "regionalFormatLocale": "Números y fechas",
   "@regionalFormatLocale": {
     "description": "#711 - globalization"
@@ -14265,7 +13880,6 @@
   "registerPaymentHint": "Un pago que llegó al espacio: el socio lo confirma y luego puede conciliarse con una factura.",
   "registerPaymentMember": "Socio",
   "registerPaymentMethod": "Medio",
-  "registerPaymentNote": "Nota",
   "registerPaymentSubmit": "Registrar",
   "registerPaymentTitle": "Registrar un pago",
   "reminderBody": "{target} empieza a las {time}",
@@ -14367,10 +13981,6 @@
   "repartitionMethodUsage": "Uso",
   "repartitionNoShares": "Nadie lleva una parte: revise la clave.",
   "repartitionPeriod": "Se imputa a",
-  "repartitionPeriodLabel": "Mes",
-  "@repartitionPeriodLabel": {
-    "description": "#934 workspace status / repartition wizard: repartitionPeriodLabel"
-  },
   "repartitionPreview": "Partes",
   "repartitionRememberRule": "Recordar esta regla",
   "@repartitionRememberRule": {
@@ -14543,7 +14153,6 @@
   "reportDesignerReplace": "Reemplazar",
   "reportDesignerReplaceBody": "Las bandas de este documento se reemplazan. Deshacer las recupera.",
   "reportDesignerReplaceTitle": "¿Reemplazar el diseño actual?",
-  "reportDesignerSideBySide": "Diseño y vista previa lado a lado",
   "reportDesignerUndo": "Deshacer",
   "reportDesignerZoom": "Zoom",
   "@reportDesignerZoom": {
@@ -14610,10 +14219,6 @@
   "reportFieldGroupSeller": "Vendedor",
   "@reportFieldGroupSeller": {
     "description": "#966 report guide: reportFieldGroupSeller"
-  },
-  "reportFieldGroupSites": "Sedes",
-  "@reportFieldGroupSites": {
-    "description": "#966 report guide: reportFieldGroupSites"
   },
   "reportFieldGroupStatus": "Situación del espacio",
   "@reportFieldGroupStatus": {
@@ -15013,10 +14618,6 @@
   "@reportGuideTitle": {
     "description": "#966 report guide: reportGuideTitle"
   },
-  "reportImageAlign": "Alineación",
-  "reportImageAlignCenter": "Centro",
-  "reportImageAlignLeft": "Izquierda",
-  "reportImageAlignRight": "Derecha",
   "reportImageForbidden": "No se permite leer esta imagen",
   "@reportImageForbidden": {
     "description": "#2586 report image failure"
@@ -15041,7 +14642,6 @@
   "@reportImageRetry": {
     "description": "#2586 report image failure"
   },
-  "reportImageSize": "Tamaño",
   "reportImageSizeLarge": "Grande",
   "reportImageSizeMedium": "Mediana",
   "reportImageSizeSmall": "Pequeña",
@@ -15126,10 +14726,6 @@
   "@reportLineDivider": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
-  "reportLineImage": "Imagen",
-  "@reportLineImage": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
   "reportLineLogic": "Lógica",
   "@reportLineLogic": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -15148,10 +14744,6 @@
   },
   "reportLineSpacer": "Espaciado",
   "@reportLineSpacer": {
-    "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLineText": "Texto",
-  "@reportLineText": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportLineTitle": "Título",
@@ -15262,10 +14854,6 @@
   "reportTextsInherited": "Idioma predeterminado",
   "@reportTextsInherited": {
     "description": "#880 report texts: reportTextsInherited"
-  },
-  "reportTextsKey": "Clave",
-  "@reportTextsKey": {
-    "description": "#880 report texts: reportTextsKey"
   },
   "reportTextsKeyExists": "Esta clave ya existe.",
   "@reportTextsKeyExists": {
@@ -15420,7 +15008,6 @@
   "@reserveParkingStandard": {
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
-  "reservePickDateTooltip": "Elegir una fecha",
   "reservePlanLoading": "Cargando el plano…",
   "reserveRoomFor": "{count, plural, =1{Sala de reuniones · 1 persona} other{Sala de reuniones · {count} personas}}",
   "@reserveRoomFor": {
@@ -15458,10 +15045,6 @@
   },
   "retentionClassCorrespondence": "Correspondencia",
   "@retentionClassCorrespondence": {
-    "description": "#2571 retention clocks"
-  },
-  "retentionClassInvoice": "Facturas",
-  "@retentionClassInvoice": {
     "description": "#2571 retention clocks"
   },
   "retentionClassVoucher": "Justificantes",
@@ -15724,10 +15307,6 @@
   "@roleEditorHolders": {
     "description": "#1528 the roles of a space: roleEditorHolders"
   },
-  "roleEditorKey": "Clave",
-  "@roleEditorKey": {
-    "description": "#1528 the roles of a space: roleEditorKey"
-  },
   "roleEditorKeyHelp": "Minúsculas, dígitos y guiones bajos. No cambia nunca: las personas con el rol se apoyan en ella.",
   "@roleEditorKeyHelp": {
     "description": "#1528 the roles of a space: roleEditorKeyHelp"
@@ -15946,10 +15525,6 @@
   "@roomRentFieldFee": {
     "description": "#2568 rented rooms"
   },
-  "roomRentFieldFrom": "Primer día",
-  "@roomRentFieldFrom": {
-    "description": "#2568 rented rooms"
-  },
   "roomRentFieldLessor": "Arrendador",
   "@roomRentFieldLessor": {
     "description": "#2568 rented rooms"
@@ -16023,10 +15598,6 @@
   "@roomRentRent": {
     "description": "#2568 rented rooms"
   },
-  "roomRentSave": "Guardar",
-  "@roomRentSave": {
-    "description": "#2568 rented rooms"
-  },
   "roomRentSaved": "Alquiler guardado",
   "@roomRentSaved": {
     "description": "#2568 rented rooms"
@@ -16089,8 +15660,6 @@
   "saftProfitBasisLabel": "Forma de determinar el beneficio",
   "saftSmallBusinessHelper": "Si la empresa es una pequeña empresa según el § 6 (1) Z 27 UStG, tal como lo indica la cabecera del SAF-T AT.",
   "saftSmallBusinessLabel": "Pequeña empresa (§ 6 (1) Z 27 UStG)",
-  "saftSmallBusinessNo": "No",
-  "saftSmallBusinessYes": "Sí",
   "saftStandardAccountsIntro": "Confirme la cuenta del plan contable estándar austriaco (Einheitskontenrahmen) bajo la que se escribe cada cuenta del libro. La sugerencia viene del papel de la cuenta; revísela: no todas las cuentas de un papel corresponden a la misma cuenta estándar.",
   "saftStandardAccountsNoSuggestion": "Sin sugerencia: introduzca la cuenta estándar.",
   "saftStandardAccountsSuggested": "Sugerida: {suggestion}. Confírmela o cámbiela.",
@@ -16182,7 +15751,6 @@
   "schemaUpdateBody": "Esta aplicación necesita la versión {version} del esquema de DesKilo, y el servidor al que se conecta ejecuta una más antigua. Hasta que el servidor se actualice, la aplicación fallaría de formas que no podría explicar, así que se detiene aquí.",
   "schemaUpdateMember": "Si no: avise a la persona que gestiona su espacio. No se pierde nada de lo que haya introducido.",
   "schemaUpdateOperator": "Si gestiona este servidor: aplique las migraciones que faltan con `dart run tool/instance.dart install --ref <proyecto>`. Solo se ejecuta lo que falta.",
-  "schemaUpdateRetry": "Comprobar de nuevo",
   "schemaUpdateServer": "Ajustes del servidor",
   "schemaUpdateTitle": "Este servidor necesita una actualización",
   "seatDayAhead": "Por venir",
@@ -16243,7 +15811,6 @@
   "serverConnectUseHere": "Usar en este dispositivo",
   "serverReferenceLabel": "servidor de referencia ({host})",
   "serviceOutOfStock": "Agotado",
-  "serviceOutOfStockHint": "No queda nada en el estante — el próximo suministro lo repone.",
   "serviceStockCount": "{count} en stock",
   "servicesActive": "Activo",
   "servicesEdit": "Editar servicio",
@@ -16776,10 +16343,6 @@
       }
     }
   },
-  "settingSave": "Guardar",
-  "@settingSave": {
-    "description": "#2484 settings: Save button."
-  },
   "settingSaved": "Ajuste guardado",
   "@settingSaved": {
     "description": "#2484 settings: Snackbar."
@@ -16852,10 +16415,6 @@
   "settingUnitYears": "años",
   "@settingUnitYears": {
     "description": "#2571 retention settings"
-  },
-  "settingValueField": "Valor",
-  "@settingValueField": {
-    "description": "#2484 settings: Field label."
   },
   "settingVersionLine": "{value} {unit} · desde {from}",
   "@settingVersionLine": {
@@ -17242,7 +16801,6 @@
   "setupLevelNameBookingsSimple": "Plazas compartidas",
   "setupLevelNameCommunityBasic": "Básico",
   "setupLevelNameCommunityOrganised": "Organizada",
-  "setupLevelNameMoneyInvoices": "Facturas",
   "setupLevelNameMoneyNone": "Sin dinero",
   "setupLevelNameMoneyStatements": "Extractos",
   "setupLevelNameOperationsAdvanced": "Avanzada",
@@ -17371,12 +16929,9 @@
   "setupPricingPreviewTitle": "Lo que paga un miembro",
   "setupPricingSaveFailed": "No se pudieron guardar los niveles. Inténtelo de nuevo.",
   "setupPricingTerms": "{monthly} al mes\nMedia jornada adicional {half} · una jornada adicional {day}",
-  "setupProcessNameAssistant": "Asistente",
-  "setupProcessNameBookings": "Reservas",
   "setupProcessNameCommunity": "Comunidad",
   "setupProcessNameMoney": "Dinero",
   "setupProcessNameOperations": "Operación",
-  "setupProcessNamePayments": "Pagos",
   "setupProcessNamePresentation": "Presentación",
   "setupProcessNamePurchases": "Compras",
   "setupProcessNameTax": "Impuestos",
@@ -17438,7 +16993,6 @@
   "setupStateNameNeedsOperator": "Actúa su operador",
   "setupStateNameNotApplicable": "No se usa",
   "setupStateNameReady": "Hecho",
-  "setupStateNameUnknown": "Desconocido",
   "setupStepDone": "Hecho",
   "@setupStepDone": {
     "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."
@@ -17493,7 +17047,6 @@
   "setupStepTitleKiosk": "Quiosco y tarjetas",
   "setupStepTitleLease": "Su alquiler",
   "setupStepTitleLegalIdentity": "Identidad legal",
-  "setupStepTitleLimits": "Límites de reserva",
   "setupStepTitleLook": "Colores y vocabulario",
   "setupStepTitleMemberRights": "Qué pueden hacer los miembros",
   "setupStepTitleNewMembers": "Nuevos miembros",
@@ -17584,10 +17137,6 @@
   "sitesSubtitle": "Direcciones, las plantas de cada una y la sede de cada socio",
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
-  },
-  "sitesTitle": "Sedes",
-  "@sitesTitle": {
-    "description": "#945 sites: sitesTitle"
   },
   "smallBusinessCheckFigure": "Este límite es el último verificado: confirme la cifra vigente con su administración tributaria.",
   "@smallBusinessCheckFigure": {
@@ -17828,10 +17377,6 @@
   },
   "supplierLookupContinueManually": "Continuar manualmente",
   "@supplierLookupContinueManually": {
-    "description": "#2863 supplier lookup"
-  },
-  "supplierLookupCountry": "País",
-  "@supplierLookupCountry": {
     "description": "#2863 supplier lookup"
   },
   "supplierLookupCountryMissing": "Elija el país del proveedor.",
@@ -18084,10 +17629,6 @@
   "@suppliersFieldPostalCode": {
     "description": "#2567 suppliers"
   },
-  "suppliersFieldStreet": "Calle",
-  "@suppliersFieldStreet": {
-    "description": "#2567 suppliers"
-  },
   "suppliersFieldTaxId": "Identificador fiscal (NIF-IVA con prefijo de país)",
   "@suppliersFieldTaxId": {
     "description": "#2567 suppliers"
@@ -18203,10 +17744,6 @@
   "@suppliersTaxVerified": {
     "description": "#2567 suppliers"
   },
-  "suppliersTitle": "Proveedores",
-  "@suppliersTitle": {
-    "description": "#2567 suppliers"
-  },
   "suppliersViewPayables": "Ver pagos pendientes del proveedor",
   "@suppliersViewPayables": {
     "description": "#3070 supplier outstanding balance"
@@ -18289,9 +17826,7 @@
   "taskExportEndStopped": "Detenida por la persona que la grabó.",
   "taskExportEndStorageFailed": "Detenida porque falló la escritura de la grabación.",
   "taskExportExcluded": "Se visitó una pantalla protegida ({category}); no se grabó nada de ella.",
-  "taskExportFieldAccessories": "Accesorios",
   "taskExportFieldCheckIn": "Registro de llegada",
-  "taskExportFieldDateRelation": "Fecha",
   "taskExportFieldForWhom": "Para quién",
   "taskExportFieldPeriod": "Periodo",
   "taskExportFieldRefusal": "Motivo",
@@ -18344,7 +17879,6 @@
   "taskExportSaved": "Documento de Word guardado: {file}",
   "taskExportSceneAlt": "Ilustración: {screen} – {step}",
   "taskExportSceneBookingTitle": "Reservar un puesto",
-  "taskExportSceneCancel": "Cancelar",
   "taskExportSceneConfirm": "Confirmar",
   "taskExportSceneDetailTitle": "Reserva",
   "taskExportSceneLater": "Más adelante",
@@ -18358,8 +17892,6 @@
   "taskExportStoryboardGap": "Hueco: aquí no se grabó nada",
   "taskExportStoryboardInclude": "Incluir",
   "taskExportStoryboardLeftOut": "Paso omitido en la revisión.",
-  "taskExportStoryboardMoveDown": "Bajar",
-  "taskExportStoryboardMoveUp": "Subir",
   "taskExportStoryboardOrderRefused": "Un resultado no puede ir antes de la orden a la que responde.",
   "taskExportStoryboardRenderFailed": "No se pudo dibujar la ilustración; este paso queda como texto.",
   "taskExportStoryboardSourceExcluded": "Pantalla protegida: sin ilustración",
@@ -18531,7 +18063,6 @@
   "taskRecorderOutcomeSettingSaved": "Guardado",
   "taskRecorderOutcomeUnknown": "No llegó ninguna respuesta",
   "taskRecorderPause": "Pausar",
-  "taskRecorderPaused": "En pausa",
   "taskRecorderProtectedAuthentication": "inicio de sesión",
   "taskRecorderProtectedIdentity": "identidad",
   "taskRecorderProtectedMessenger": "mensajes",
@@ -18796,10 +18327,6 @@
       }
     }
   },
-  "taxCertRequired": "Obligatorio",
-  "@taxCertRequired": {
-    "description": "#2362 sales tax: taxCertRequired"
-  },
   "taxCertSave": "Guardar el certificado",
   "@taxCertSave": {
     "description": "#2362 sales tax: taxCertSave"
@@ -19040,10 +18567,6 @@
   "taxRefInvoiceOption": "Opción por la fecha de factura",
   "@taxRefInvoiceOption": {
     "description": "#2479 tax reference: Switch: the seller may opt for the invoice date."
-  },
-  "taxRefKey": "Clave",
-  "@taxRefKey": {
-    "description": "#2477 tax reference: Field: key naming a value within a country."
   },
   "taxRefLabel": "Etiqueta",
   "@taxRefLabel": {
@@ -19349,7 +18872,6 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Desbloquear",
-  "unblockDone": "Desbloqueada.",
   "unsavedChangesBody": "Lo que ha cambiado en esta página todavía no está guardado.",
   "unsavedChangesDiscard": "Descartar los cambios",
   "unsavedChangesKeep": "Seguir editando",
@@ -19518,7 +19040,6 @@
   "validationOwnerSelf": "La propiedad puede validar lo propio",
   "validationOwnerSelfDesc": "La única excepción, y es solo de la propiedad: un admin nunca valida su propio acto.",
   "validationOwnerSelfShort": "La propiedad puede validar lo propio",
-  "validationPickPersons": "Elija las personas",
   "validationRequiredCount": "Validaciones requeridas",
   "validationSaved": "Regla de validación guardada.",
   "validationScopeAdmins": "Los admins",
@@ -19544,7 +19065,6 @@
   "validationTrailNone": "Aún no hay decisión.",
   "validationTrailStep": "Paso {order}",
   "validationTrailTitle": "Historial de validación",
-  "validationWorkflowBookings": "Reservas",
   "validationWorkflowBookingsStake": "Hasta que se acepte, el puesto sigue como estaba.",
   "validationWorkflowMoneyStake": "Hasta que se acepte, el importe no cuenta en ningún extracto.",
   "validationWorkflowPeople": "Personas y roles",
@@ -19925,10 +19445,6 @@
   "@valuationTitle": {
     "description": "#2576 accountant valuations"
   },
-  "valuationUnknown": "desconocido",
-  "@valuationUnknown": {
-    "description": "#2576 accountant valuations"
-  },
   "vatAccountField": "Cuenta de IVA",
   "vatAccountHint": "Cuenta donde la exportación contable registra el IVA recaudado. Vacío = 445710.",
   "vatAddRate": "Añadir un tipo",
@@ -20018,10 +19534,6 @@
   "vatDeclDisclaimer": "Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.",
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
-  },
-  "vatDeclDraft": "Borrador",
-  "@vatDeclDraft": {
-    "description": "Draft status chip"
   },
   "vatDeclEdiTva": "Archivo EDI-TVA (CA3)",
   "@vatDeclEdiTva": {
@@ -20126,10 +19638,6 @@
   "vatDeclInputVat": "IVA deducible",
   "@vatDeclInputVat": {
     "description": "#2357 input VAT: vatDeclInputVat"
-  },
-  "vatDeclInvoices": "Facturas",
-  "@vatDeclInvoices": {
-    "description": "Invoice-count column"
   },
   "vatDeclLipeXml": "XML LIPE (liquidación periódica del IVA)",
   "@vatDeclLipeXml": {
@@ -20304,10 +19812,6 @@
   "vatGroupIntermediate": "Intermedio",
   "@vatGroupIntermediate": {
     "description": "#947 VAT groups: vatGroupIntermediate"
-  },
-  "vatGroupLabel": "Grupo",
-  "@vatGroupLabel": {
-    "description": "#947 VAT groups: vatGroupLabel"
   },
   "vatGroupNotSubject": "No sujeto",
   "@vatGroupNotSubject": {
@@ -20717,7 +20221,6 @@
   "whatsappSaved": "Número de WhatsApp guardado",
   "whatsappTitle": "WhatsApp",
   "wizardBack": "Atrás",
-  "wizardCardHint": "Emitir, enviar, recordar, registrar y validar pagos, conciliar y cerrar: un solo proceso guiado.",
   "wizardCloseHint": "Un socio con varias facturas abiertas puede pagar UNA; a una factura pagada en parte se le puede anular el resto; una nota de crédito se reembolsa. Cada una pasa por la validación.",
   "wizardCloseNone": "Nada que reagrupar, anular o reembolsar.",
   "wizardFinish": "Terminar",
@@ -20747,7 +20250,6 @@
       }
     }
   },
-  "wizardMatchAction": "Conciliar",
   "wizardMatchCredit": "Crédito disponible: {amount}",
   "@wizardMatchCredit": {
     "placeholders": {
@@ -20817,8 +20319,6 @@
   "wizardStepClose": "Cerrar",
   "wizardStepCompleted": "Completado",
   "wizardStepIssue": "Emitir",
-  "wizardStepMatch": "Conciliar",
-  "wizardStepPayments": "Pagos",
   "wizardStepRemind": "Recordar",
   "wizardStepReview": "Revisión",
   "wizardStepSend": "Enviar",
@@ -20841,7 +20341,6 @@
   "wizardTodoHeading": "Aún abierto: a quién le toca",
   "wizardTodoNone": "No queda nada abierto.",
   "wizardWhoValidators": "Validadores",
-  "wizardWhoYou": "Usted",
   "wizardWriteoff": "Anular",
   "wordingChangedOnly": "Solo modificados",
   "@wordingChangedOnly": {
@@ -20930,7 +20429,6 @@
   "workspaceCodeRejected": "ID rechazado — debe tener 4–20 letras o dígitos y no estar ya en uso.",
   "workspaceCodeSharePng": "Compartir como PNG",
   "workspaceCodeTitle": "ID del espacio y QR",
-  "workspaceConfigAvailability": "Disponibilidad",
   "workspaceConfigBookableWhole": "reservable en su totalidad",
   "workspaceConfigClosures": "Cierres",
   "workspaceConfigColName": "Nombre",

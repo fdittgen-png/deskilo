@@ -59,6 +59,5 @@
   "portalGroupsHeading": "Gruppi",
   "portalRecipientHint": "Digiti un nome: i suggerimenti compaiono dalla prima lettera",
   "portalDirectoryCount": "{name} ({count})",
-  "portalSuggestionGroup": "Gruppo",
   "portalWriteTo": "Scrivere a {name}"
 }

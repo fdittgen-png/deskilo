@@ -11,7 +11,6 @@
   "mcpConnectOpenInstallation": "Abrir la consola de la instalación",
   "mcpConnectCopyRequest": "Copiar una solicitud para enviar",
   "mcpConnectOperatorRequest": "Hola, ¿podría activar los asistentes en nuestro servidor DesKilo? Está en Ajustes → Instalación: asistentes. Gracias.",
-  "mcpConnectCopied": "Copiado.",
   "mcpConnectStepGoogle": "Inicio de sesión con Google",
   "mcpConnectStepIdentity": "Su identidad en este servidor",
   "mcpConnectStepAccess": "Su acceso a los asistentes",

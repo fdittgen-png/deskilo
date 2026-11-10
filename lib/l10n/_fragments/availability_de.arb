@@ -4,7 +4,6 @@
   "availabilityOpenWeekdays": "Geöffnete Wochentage",
   "availabilityClosureDays": "Schließtage",
   "availabilityAddClosure": "Schließtag hinzufügen",
-  "availabilityClosureReason": "Grund (optional)",
   "availabilityLastOpenDay": "Mindestens ein Wochentag muss geöffnet bleiben.",
   "availabilityNoClosures": "Keine Schließtage.",
   "availabilityGranularityTitle": "Buchungsraster",
@@ -28,7 +27,6 @@
   "availabilityFullDayHours": "Stunden, die als ganzer Tag gelten",
   "availabilityHourOption": "{count} h",
   "availabilityWorkHoursInvalid": "Es muss gelten: Beginn < Halbtagsgrenze < Ende.",
-  "availabilityPoliciesTitle": "Buchungsregeln",
   "policyAllowPastTitle": "Vergangene Buchungen erlauben",
   "policyAllowPastDesc": "Mitglieder können eine bereits beendete Buchung nachtragen.",
   "policyAdminCheckoutTitle": "Admins dürfen Mitglieder auschecken",
@@ -45,10 +43,6 @@
   "policyOutsideHoursChargedDesc": "Erlaubt und wie normale Nutzung gezählt — außer an einem Tag, an dem das Mitglied bereits eine reguläre Buchung hat.",
   "policySimultaneousTitle": "Gleichzeitige Reservierungen pro Mitglied",
   "policySimultaneousDesc": "Wie viele sich überschneidende Buchungen ein Mitglied halten darf. 1 bedeutet ein Platz zur selben Zeit.",
-  "policyLimitsTitle": "Buchungsgrenzen",
-  "@policyLimitsTitle": {
-    "description": "#649 - section header for the three numeric booking limits"
-  },
   "policyLimitsDesc": "Wie weit im Voraus gebucht werden darf und welche Dauer akzeptiert wird. Beides gilt bei jeder Granularität.",
   "@policyLimitsDesc": {
     "description": "#649 - subtitle of the booking-limits section"

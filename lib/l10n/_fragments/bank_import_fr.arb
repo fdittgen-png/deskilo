@@ -50,7 +50,6 @@
   "bankMatchNoInvoice": "Aucune facture ouverte dans cette devise.",
   "bankMatchConfirm": "Confirmer",
   "bankMatchFailed": "Le mouvement n'a pas pu être rapproché. Rien n'a changé.",
-  "bankLineSaved": "Enregistré.",
   "bankReviewTitle": "Déjà importé ?",
   "bankReviewBody": "Un autre relevé contient un mouvement de même jour, montant et détails, et la banque n'a donné d'identifiant à aucun des deux. Conservez-le s'il s'agit d'un second paiement.",
   "bankReviewKeep": "Le conserver",

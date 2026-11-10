@@ -12,10 +12,6 @@
   "@fileExportKeepHint": {
     "description": "iPhone Export… row subtitle: the copy is app-private, not in Files"
   },
-  "fileExportShare": "Compartir…",
-  "@fileExportShare": {
-    "description": "iPhone Export… row: hand the file to the system share sheet"
-  },
   "fileExportShareHint": "La hoja del sistema: Guardar en Archivos cuando se ofrezca, Mail, AirDrop u otra aplicación.",
   "@fileExportShareHint": {
     "description": "iPhone Export… row subtitle: what the system sheet offers (Save to Files when available)"

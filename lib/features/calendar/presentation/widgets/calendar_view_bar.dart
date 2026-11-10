@@ -91,8 +91,8 @@ class CalendarViewBar extends StatelessWidget {
                     ButtonSegment(
                       value: CalendarView.month,
                       icon: const Icon(Icons.calendar_month_outlined),
-                      label: labelFor(CalendarView.month, l10n.calendarViewMonth),
-                      tooltip: l10n.calendarViewMonth,
+                      label: labelFor(CalendarView.month, l10n.reserveMonthView),
+                      tooltip: l10n.reserveMonthView,
                     ),
                     if (alertsAvailable)
                       ButtonSegment(

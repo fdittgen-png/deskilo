@@ -445,7 +445,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
           if (_isGroup && _contextId.isNotEmpty)
             IconButton(
               key: const ValueKey('agroup-info'),
-              tooltip: l10n.conversationGroupInfo,
+              tooltip: l10n.taxRefGroup,
               icon: const Icon(Icons.groups_outlined),
               onPressed: () async {
                 final left = await showAccountGroupSheet(context, _contextId);

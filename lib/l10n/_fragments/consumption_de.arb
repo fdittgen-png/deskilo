@@ -2,8 +2,6 @@
   "@@locale": "de",
   "consumptionAdd": "Verbrauch erfassen",
   "consumptionAddForMember": "Leistung für {name} erfassen",
-  "consumptionService": "Leistung",
-  "consumptionQuantity": "Menge",
   "consumptionPeriodLabel": "Abrechnungszeitraum (JJJJ-MM)",
   "consumptionNoServices": "Keine aktiven Leistungen vorhanden.",
   "consumptionRecorded": "Verbrauch erfasst — wartet auf Bestätigung.",

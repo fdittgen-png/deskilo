@@ -120,18 +120,6 @@
   "@deployEntityServices": {
     "description": "#988/#990 deployments: deployEntityServices"
   },
-  "deployEntityPackages": "Packages",
-  "@deployEntityPackages": {
-    "description": "#988/#990 deployments: deployEntityPackages"
-  },
-  "deployEntityAccessories": "Accessories",
-  "@deployEntityAccessories": {
-    "description": "#988/#990 deployments: deployEntityAccessories"
-  },
-  "deployEntitySites": "Sites",
-  "@deployEntitySites": {
-    "description": "#988/#990 deployments: deployEntitySites"
-  },
   "deployEntityBookingRules": "Booking rules",
   "@deployEntityBookingRules": {
     "description": "#988/#990 deployments: deployEntityBookingRules"
@@ -156,10 +144,6 @@
   "@deployEntityDocumentLinks": {
     "description": "#988/#990 deployments: deployEntityDocumentLinks"
   },
-  "deployEntityClosureDays": "Closure days",
-  "@deployEntityClosureDays": {
-    "description": "#988/#990 deployments: deployEntityClosureDays"
-  },
   "deployEntityInvitations": "Invitation templates",
   "@deployEntityInvitations": {
     "description": "#988/#990 deployments: deployEntityInvitations"
@@ -167,10 +151,6 @@
   "deployEntityFeatures": "Features",
   "@deployEntityFeatures": {
     "description": "#988/#990 deployments: deployEntityFeatures"
-  },
-  "deployEntityBranding": "Colours",
-  "@deployEntityBranding": {
-    "description": "#1289 deployments: deployEntityBranding — the workspace colours entity"
   },
   "helpTopicDeployment": "Deploying",
   "helpTopicEnvironments": "Environments",

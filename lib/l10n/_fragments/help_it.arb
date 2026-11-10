@@ -5,10 +5,6 @@
   "@helpHintMessages": {
     "description": "#695 - messaging help hints"
   },
-  "helpHintMessagesTopic": "Messaggi",
-  "@helpHintMessagesTopic": {
-    "description": "#695 - messaging help hints"
-  },
   "helpHintMessagesTip2": "Scelga una persona per una chat privata, o più per creare un gruppo — il campo del nome compare da due in poi, e quel nome è unico qui: nessuno deve indovinare a quale «Team» sta scrivendo.",
   "@helpHintMessagesTip2": {
     "description": "#695 - messaging help hints"

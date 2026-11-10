@@ -272,7 +272,7 @@ class _LiveControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final heading = paused
-        ? (l10n.taskRecorderPaused)
+        ? (l10n.memberStatusPaused)
         : (l10n.taskRecorderRecording);
     final count = l10n.taskRecorderStepCount(steps);
     return Card(

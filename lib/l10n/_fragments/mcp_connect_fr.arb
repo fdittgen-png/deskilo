@@ -11,7 +11,6 @@
   "mcpConnectOpenInstallation": "Ouvrir la console de l'installation",
   "mcpConnectCopyRequest": "Copier une demande à envoyer",
   "mcpConnectOperatorRequest": "Bonjour, pourriez-vous activer les assistants sur notre serveur DesKilo ? C'est dans Paramètres → Installation : assistants. Merci.",
-  "mcpConnectCopied": "Copié.",
   "mcpConnectStepGoogle": "Connexion avec Google",
   "mcpConnectStepIdentity": "Votre identité sur ce serveur",
   "mcpConnectStepAccess": "Votre accès aux assistants",

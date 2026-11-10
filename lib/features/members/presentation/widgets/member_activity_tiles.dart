@@ -66,7 +66,7 @@ List<Widget> memberQuickActions(MemberPageContext c) {
       FilledButton.tonalIcon(
         key: const ValueKey('member-page-action-message'),
         icon: const Icon(Icons.chat_bubble_outline),
-        label: Text(l10n.memberMessagesAction),
+        label: Text(l10n.messagesTitle),
         onPressed: () =>
             openDirectConversation(context, ref, memberId: member.id),
       ),

@@ -1,9 +1,5 @@
 {
   "@@locale": "en",
-  "assistantPrefix": "Assistant",
-  "@assistantPrefix": {
-    "description": "#872 one wizard idiom: assistantPrefix"
-  },
   "settlementStepPick": "Choose invoices",
   "@settlementStepPick": {
     "description": "#872 one wizard idiom: settlementStepPick"

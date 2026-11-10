@@ -75,7 +75,7 @@ Future<FecAccounts?> showFecAccountsDialog(
             controller: bank,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n.fecAccountBank,
+              labelText: l10n.bookRoleBank,
             ),
           ),
           TextField(
@@ -208,7 +208,7 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
               l10n.datevAccountLength),
           field('datev-account-revenue', revenue,
               l10n.fecAccountRevenue),
-          field('datev-account-bank', bank, l10n.fecAccountBank),
+          field('datev-account-bank', bank, l10n.bookRoleBank),
           field('datev-account-expenses', expenses,
               l10n.fecAccountExpenses),
           field('datev-debtor-base', debtorBase, l10n.datevDebtorBase),
@@ -301,7 +301,7 @@ Future<SageAccounts?> showSageAccountsDialog(
             controller: bank,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: l10n.fecAccountBank,
+              labelText: l10n.bookRoleBank,
             ),
           ),
           TextField(
@@ -384,7 +384,7 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
           field('saft-account-revenue', revenue,
               l10n.fecAccountRevenue),
           field('saft-account-vat', vat, l10n.fecAccountVat),
-          field('saft-account-bank', bank, l10n.fecAccountBank),
+          field('saft-account-bank', bank, l10n.bookRoleBank),
         ]),
       ),
       actions: [

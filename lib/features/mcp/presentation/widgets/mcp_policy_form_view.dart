@@ -121,7 +121,7 @@ class McpPolicyFormView extends ConsumerWidget {
         FilledButton(
           key: const ValueKey('mcp-policy-save'),
           onPressed: busy || switched ? null : onSave,
-          child: Text(l10n.mcpPolicySave),
+          child: Text(l10n.commonSave),
         ),
       ],
     );
@@ -215,7 +215,7 @@ class McpPolicyFormView extends ConsumerWidget {
       switch (outcome) {
         'saved' || 'replayed' => _note(
           'mcp-policy-saved',
-          l10n.mcpPolicySaved,
+          l10n.billingSaved,
           Icons.check_circle_outline,
           InlineBannerSeverity.info,
         ),

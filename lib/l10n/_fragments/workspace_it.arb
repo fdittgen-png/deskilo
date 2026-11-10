@@ -76,7 +76,6 @@
   "workspaceConfigOverview": "Panoramica",
   "workspaceConfigMembersSection": "Membri",
   "workspaceConfigFeatures": "Funzioni attive",
-  "workspaceConfigAvailability": "Disponibilità",
   "workspaceConfigFloorPlan": "Pianta",
   "workspaceConfigGranularity": "Granularità di prenotazione",
   "workspaceConfigColName": "Nome",
@@ -130,10 +129,6 @@
   "@featureDocumentsDesc": {
     "description": "Workspace document library (#500)"
   },
-  "documentsTitle": "Biblioteca documenti",
-  "@documentsTitle": {
-    "description": "Workspace document library (#500)"
-  },
   "documentsAdd": "Aggiungi un documento",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -152,10 +147,6 @@
   },
   "documentsProviderLabel": "Archiviato su",
   "@documentsProviderLabel": {
-    "description": "Workspace document library (#500)"
-  },
-  "documentsCategoryLabel": "Categoria",
-  "@documentsCategoryLabel": {
     "description": "Workspace document library (#500)"
   },
   "documentsRoleLabel": "Visibile a",
@@ -294,10 +285,6 @@
         "type": "String"
       }
     }
-  },
-  "regionalFollowLanguage": "Automatico",
-  "@regionalFollowLanguage": {
-    "description": "#711 - globalization"
   },
   "regionalClock": "Orologio",
   "@regionalClock": {

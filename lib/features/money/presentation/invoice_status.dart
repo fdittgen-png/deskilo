@@ -157,7 +157,7 @@ class InvoiceStatusChip extends StatelessWidget {
       InvoiceLifecycle.refunded => (
           colors.secondaryContainer,
           colors.onSecondaryContainer,
-          l10n.invoiceStatusRefunded,
+          l10n.refStatusRefunded,
         ),
       InvoiceLifecycle.erroneous => (
           colors.errorContainer,

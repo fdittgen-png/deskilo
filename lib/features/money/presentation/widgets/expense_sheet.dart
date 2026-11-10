@@ -234,7 +234,7 @@ Future<void> showExpenseSheet(
                     controller: fields['supplyQuantity'],
                     fieldKey: 'supplyQuantity',
                     keyboardType: TextInputType.number,
-                    label: l10n.expenseSupplyQuantity,
+                    label: l10n.purchasesQuantity,
                     onChanged: (_) {
                       prefillUnit();
                       refresh();

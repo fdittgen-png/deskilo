@@ -147,17 +147,9 @@
   "@settingHistory": {
     "description": "#2484 settings: History button."
   },
-  "settingValueField": "Valeur",
-  "@settingValueField": {
-    "description": "#2484 settings: Field label."
-  },
   "settingNoteField": "Note (facultative)",
   "@settingNoteField": {
     "description": "#2484 settings: Field label."
-  },
-  "settingSave": "Enregistrer",
-  "@settingSave": {
-    "description": "#2484 settings: Save button."
   },
   "settingSaved": "Réglage enregistré",
   "@settingSaved": {

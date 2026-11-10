@@ -373,10 +373,8 @@ void main() {
         'helpTopicDocumentLibrary': l10n.helpTopicDocumentLibrary,
         'helpTopicWorkspaceId': l10n.helpTopicWorkspaceId,
         'helpTopicSettings': l10n.helpTopicSettings,
-        'helpTopicKiosk': l10n.helpTopicKiosk,
         'helpTopicBilling': l10n.helpTopicBilling,
         'helpTopicWorkingHours': l10n.helpTopicWorkingHours,
-        'helpTopicBookingPolicies': l10n.helpTopicBookingPolicies,
         'helpTopicBookingLimits': l10n.helpTopicBookingLimits,
         'helpTopicScheduledExpenses': l10n.helpTopicScheduledExpenses,
         'helpTopicServer': l10n.helpTopicServer,
@@ -386,8 +384,6 @@ void main() {
         'helpTopicDeployment': l10n.helpTopicDeployment,
         'helpTopicEnvironments': l10n.helpTopicEnvironments,
         // #1393 — the four the technical guide made possible.
-        'helpTopicReportLayout': l10n.helpTopicReportLayout,
-        'helpTopicWindowEnvelope': l10n.helpTopicWindowEnvelope,
         'helpTopicTrace': l10n.helpTopicTrace,
         'helpTopicInstances': l10n.helpTopicInstances,
         // #1393 — the export sheet and the readiness gate, the two

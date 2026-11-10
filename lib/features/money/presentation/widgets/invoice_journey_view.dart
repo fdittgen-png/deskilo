@@ -88,7 +88,7 @@ InvoiceJourney? _journey(
 String invoiceStepLabel(AppLocalizations l10n, InvoiceStep step) =>
     switch (step) {
       InvoiceStep.issued => l10n.journeyStepIssued,
-      InvoiceStep.payment => l10n.journeyStepPayment,
+      InvoiceStep.payment => l10n.eventTypePayment,
       InvoiceStep.confirmation =>
         l10n.journeyStepConfirmation,
       InvoiceStep.closed => l10n.journeyStepClosed,

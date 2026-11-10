@@ -311,7 +311,7 @@ class BillServicesCard extends StatelessWidget {
             for (final entry in sections.serviceEntries)
               BillLine(
                 label: entry.description.isEmpty
-                    ? (l10n.ledgerCategoryService)
+                    ? (l10n.eventTypeServiceCharge)
                     : entry.description,
                 value: '−${money(entry.amountCents)}',
               ),

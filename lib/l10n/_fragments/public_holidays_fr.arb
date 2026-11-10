@@ -71,14 +71,6 @@
   "@publicHolidaysSheetTitle": {
     "description": "#1274 the preview sheet's title"
   },
-  "publicHolidaysYear": "Année",
-  "@publicHolidaysYear": {
-    "description": "#1274 the year field label"
-  },
-  "publicHolidaysCountry": "Pays",
-  "@publicHolidaysCountry": {
-    "description": "#1274 the country field label"
-  },
   "publicHolidaysPreviewNone": "Aucun jour férié pour cette année.",
   "@publicHolidaysPreviewNone": {
     "description": "#1274 the preview came back empty"

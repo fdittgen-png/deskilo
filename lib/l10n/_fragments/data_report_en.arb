@@ -23,14 +23,6 @@
   "@dataReportNone": {
     "description": "#2862 data report: dataReportNone"
   },
-  "dataReportYes": "Yes",
-  "@dataReportYes": {
-    "description": "#2862 data report: dataReportYes"
-  },
-  "dataReportNo": "No",
-  "@dataReportNo": {
-    "description": "#2862 data report: dataReportNo"
-  },
   "dataReportArchived": "Archived",
   "@dataReportArchived": {
     "description": "#2862 data report: dataReportArchived"
@@ -58,14 +50,6 @@
   "dataReportPartPlan": "Plan and prices",
   "@dataReportPartPlan": {
     "description": "#3485 dataReportPart: the label for case 'plan'."
-  },
-  "dataReportColumnMonth": "Month",
-  "@dataReportColumnMonth": {
-    "description": "#3485 dataReportColumn: the label for case 'month'."
-  },
-  "dataReportColumnBookings": "Bookings",
-  "@dataReportColumnBookings": {
-    "description": "#3485 dataReportColumn: the label for case 'bookings'."
   },
   "dataReportColumnHeld": "Held",
   "@dataReportColumnHeld": {
@@ -98,10 +82,6 @@
   "dataReportColumnCredits": "Settled",
   "@dataReportColumnCredits": {
     "description": "#3485 dataReportColumn: the label for case 'credits'."
-  },
-  "dataReportColumnBalance": "Balance",
-  "@dataReportColumnBalance": {
-    "description": "#3485 dataReportColumn: the label for case 'balance'."
   },
   "dataReportColumnSeats": "Places",
   "@dataReportColumnSeats": {

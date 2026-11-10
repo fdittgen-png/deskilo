@@ -8,10 +8,6 @@
   "@featureRoleAssignmentDesc": {
     "description": "#2085 giving roles: featureRoleAssignmentDesc"
   },
-  "memberRolesTitle": "Rôles",
-  "@memberRolesTitle": {
-    "description": "#2085 giving roles: memberRolesTitle"
-  },
   "memberRolesAdd": "Ajouter un rôle",
   "@memberRolesAdd": {
     "description": "#2085 giving roles: memberRolesAdd"

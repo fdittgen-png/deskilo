@@ -40,7 +40,7 @@ class PurchaseOrderMailSheet {
       context,
       AppFormSheet(
         title: l10n.purchaseOrderMailSettings,
-        submitLabel: l10n.purchaseOrderMailSave,
+        submitLabel: l10n.commonSave,
         submitKey: const ValueKey('purchase-order-mail-save'),
         onDispose: fields.dispose,
         validate: () => draft().validFor(current)

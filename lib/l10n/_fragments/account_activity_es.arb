@@ -1,6 +1,5 @@
 {
   "accountActivityTitle": "Mi consumo y mis pagos",
-  "accountPaymentsTitle": "Pagos",
   "accountActivityScope": "Todos sus perfiles en este servidor, incluidas las afiliaciones anteriores. Las monedas se muestran por separado.",
   "accountActivityEmpty": "No hay registros que mostrar.",
   "accountActivityFailed": "No se pudo cargar su historial financiero. Toque para reintentar.",

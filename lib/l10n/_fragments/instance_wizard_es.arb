@@ -190,7 +190,6 @@
   "instanceRevokeToken": "Ya puede revocar el token de acceso: DesKilo no guardó ninguna copia.",
   "instanceDoctorIntro": "Antes de que este dispositivo la use, la comprobación de seguridad debe pasar: una alarma mantiene el botón desactivado hasta corregirla.",
   "instanceDoctorRun": "Ejecutar la comprobación de seguridad",
-  "instanceDoctorRunAgain": "Comprobar de nuevo",
   "instanceDoctorProtected": "Protegido",
   "instanceDoctorAttention": "Requiere atención",
   "instanceDoctorPassed": "{count, plural, =1{1 comprobación superada} other{{count} comprobaciones superadas}}"

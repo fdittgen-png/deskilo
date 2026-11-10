@@ -76,10 +76,6 @@
   "@noteRefWholeLevel": {
     "description": "Space picker: the level-as-a-whole entry suffix (#523)"
   },
-  "memberMessagesAction": "Messages",
-  "@memberMessagesAction": {
-    "description": "Member-sheet/profile action opening the conversation thread (messaging refactor)"
-  },
   "conversationEmpty": "No messages yet — say hello!",
   "@conversationEmpty": {
     "description": "Empty state of a fresh conversation thread"
@@ -92,20 +88,12 @@
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"
   },
-  "conversationGroup": "Group",
-  "@conversationGroup": {
-    "description": "#687 - messaging centre"
-  },
   "conversationUnknownMember": "Member",
   "@conversationUnknownMember": {
     "description": "#687 - messaging centre"
   },
   "conversationYesterday": "Yesterday",
   "@conversationYesterday": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationYou": "You",
-  "@conversationYou": {
     "description": "#687 - messaging centre"
   },
   "messagesTitle": "Messages",
@@ -141,16 +129,8 @@
   "@newConversationNoMembers": {
     "description": "#687 - messaging centre"
   },
-  "newGroupName": "Group name",
-  "@newGroupName": {
-    "description": "#687 - messaging centre"
-  },
   "newGroupCreate": "Create group",
   "@newGroupCreate": {
-    "description": "#687 - messaging centre"
-  },
-  "conversationGroupInfo": "Group",
-  "@conversationGroupInfo": {
     "description": "#687 - messaging centre"
   },
   "conversationAddPeople": "Add people",
@@ -197,10 +177,6 @@
   "@messageSearchGroups": {
     "description": "#687 - messaging search"
   },
-  "messageSearchMessages": "Messages",
-  "@messageSearchMessages": {
-    "description": "#687 - messaging search"
-  },
   "messageSearchTitle": "Search",
   "@messageSearchTitle": {
     "description": "#687 - messaging search"
@@ -232,10 +208,6 @@
   },
   "memberMonthInProgress": "This month",
   "@memberMonthInProgress": {
-    "description": "#704 - the money section of a member profile"
-  },
-  "memberPayments": "Payments",
-  "@memberPayments": {
     "description": "#704 - the money section of a member profile"
   },
   "memberInvoiceOpen": "{amount} open",
@@ -324,14 +296,6 @@
   "@conversationUnarchive": {
     "description": "Shown as a title in unified inbox view (directory)."
   },
-  "conversationArchived": "Conversation archived.",
-  "@conversationArchived": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "conversationMutedBadge": "Muted",
-  "@conversationMutedBadge": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "conversationLoadEarlier": "Load earlier messages",
   "@conversationLoadEarlier": {
     "description": "Shown as a button or chip label in conversation thread (workspace), and 1 other place."
@@ -352,22 +316,6 @@
         "type": "int"
       }
     }
-  },
-  "composerDraftKept": "Draft kept",
-  "@composerDraftKept": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
-  "@newConversationTapToOpen": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "newConversationGroupSwitch": "Group",
-  "@newConversationGroupSwitch": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
-  "inboxRetry": "Try again",
-  "@inboxRetry": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
   "@memberNoteDeleteRead": {
@@ -404,14 +352,6 @@
   "noteRefValidation": "Validation",
   "@noteRefValidation": {
     "description": "#842 - attach-menu entry: reference a validation"
-  },
-  "noteRefInvoice": "Invoice",
-  "@noteRefInvoice": {
-    "description": "#842 - attach-menu entry: reference an invoice"
-  },
-  "noteRefPayment": "Payment",
-  "@noteRefPayment": {
-    "description": "#842 - attach-menu entry: reference a payment"
   },
   "noteRefRefund": "Refund",
   "@noteRefRefund": {
@@ -457,10 +397,6 @@
   "@memberOriginDelegated": {
     "description": "Shown as a text in member contact card (members)."
   },
-  "memberOriginHeading": "How this membership began",
-  "@memberOriginHeading": {
-    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
-  },
   "inboxMessengerDoor": "Open my messenger",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
@@ -483,14 +419,6 @@
   },
   "messengerCopy": "Copy text",
   "@messengerCopy": {
-    "description": "messenger: reactions, stars, edits"
-  },
-  "messengerCopied": "Copied.",
-  "@messengerCopied": {
-    "description": "messenger: reactions, stars, edits"
-  },
-  "messengerEdit": "Edit",
-  "@messengerEdit": {
     "description": "messenger: reactions, stars, edits"
   },
   "messengerEdited": "edited",
@@ -572,22 +500,6 @@
   "composerMention": "Mention someone",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
-  },
-  "messengerContextGroup": "Group",
-  "@messengerContextGroup": {
-    "description": "messenger: a group of people"
-  },
-  "groupNew": "New group",
-  "@groupNew": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupNewTitle": "New group",
-  "@groupNewTitle": {
-    "description": "messenger: creating a group of people"
-  },
-  "groupName": "Group name",
-  "@groupName": {
-    "description": "messenger: creating a group of people"
   },
   "groupCreate": "Create group",
   "@groupCreate": {

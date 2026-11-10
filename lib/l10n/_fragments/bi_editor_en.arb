@@ -154,10 +154,6 @@
   "@biEditorVisualDescription": {
     "description": "#2580 BI report editor"
   },
-  "biEditorText": "Text",
-  "@biEditorText": {
-    "description": "#2580 BI report editor"
-  },
   "biEditorFigure": "Figure",
   "@biEditorFigure": {
     "description": "#2580 BI report editor"
@@ -192,10 +188,6 @@
   },
   "biEditorKindTable": "Table",
   "@biEditorKindTable": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorKindText": "Text",
-  "@biEditorKindText": {
     "description": "#2580 BI report editor"
   },
   "biEditorGrouping": "Grouped by",
@@ -252,10 +244,6 @@
   },
   "biEditorSourceNoteToggle": "Source note",
   "@biEditorSourceNoteToggle": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorPalette": "Colours",
-  "@biEditorPalette": {
     "description": "#2580 BI report editor"
   },
   "biEditorPaletteStandard": "The app’s colours",
@@ -350,10 +338,6 @@
   },
   "biEditorDelete": "Delete",
   "@biEditorDelete": {
-    "description": "#2580 BI report editor"
-  },
-  "biEditorFilters": "Filters",
-  "@biEditorFilters": {
     "description": "#2580 BI report editor"
   },
   "biEditorNoFilters": "No filter: each figure shows everything your rights allow.",

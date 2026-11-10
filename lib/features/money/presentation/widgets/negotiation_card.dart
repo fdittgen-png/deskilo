@@ -344,7 +344,7 @@ Future<void> showPriceNegotiationSheet(
             key: const ValueKey('negotiation-note'),
             readOnly: readOnly,
             controller: note,
-            decoration: InputDecoration(labelText: l10n.negotiationNote),
+            decoration: InputDecoration(labelText: l10n.invoiceMatchNoteLabel),
           ),
           if (services.isNotEmpty || packages.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.md),

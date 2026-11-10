@@ -162,7 +162,7 @@ class InvoicesScreen extends ConsumerWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n.invoicingHubTitle),
+          title: Text(l10n.featureInvoicing),
           actions: [
             _personalFinancesAction(context),
             if (facts.setupGuideAvailable || facts.canViewWorkspaceSettings)
@@ -286,7 +286,7 @@ typedef _HubFacts = ({
 /// Personal finances remain a separate destination from workspace invoicing.
 Widget _personalFinancesAction(BuildContext context) => IconButton(
   key: const ValueKey('invoicing-personal-action'),
-  tooltip: context.l10n.invoicingMyFinances,
+  tooltip: context.l10n.tabMoney,
   icon: const Icon(Icons.person_outline),
   onPressed: () => context.push(myFinancesRoute()),
 );
@@ -326,7 +326,7 @@ List<_ToolItem> _toolItems(
     (
       'invoicing-my-finances-tool',
       Icons.account_balance_wallet_outlined,
-      l10n.invoicingMyFinances,
+      l10n.tabMoney,
       () => context.push(myFinancesRoute()),
     ),
     if (repartitionOn)
@@ -437,7 +437,7 @@ class _Banner extends StatelessWidget {
                 child: TextButton(
                   key: const ValueKey('invoicing-my-finances'),
                   onPressed: () => context.push(myFinancesRoute()),
-                  child: Text(l10n.invoicingMyFinances),
+                  child: Text(l10n.tabMoney),
                 ),
               ),
             ],

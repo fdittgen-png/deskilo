@@ -20,10 +20,6 @@
   "@numberSequencesIntro": {
     "description": "#925 number sequences: numberSequencesIntro"
   },
-  "numberSequenceJournalInvoice": "Rechnungen",
-  "@numberSequenceJournalInvoice": {
-    "description": "#925 number sequences: numberSequenceJournalInvoice"
-  },
   "numberSequenceJournalCreditNote": "Gutschriften",
   "@numberSequenceJournalCreditNote": {
     "description": "#925 number sequences: numberSequenceJournalCreditNote"
@@ -91,10 +87,6 @@
   "numberSequenceJournalMember": "Mitglieder",
   "@numberSequenceJournalMember": {
     "description": "#928 number-sequence adopters: numberSequenceJournalMember"
-  },
-  "numberSequenceJournalPayment": "Zahlungen",
-  "@numberSequenceJournalPayment": {
-    "description": "#928 number-sequence adopters: numberSequenceJournalPayment"
   },
   "memberNumberLabel": "Mitgliedsnummer",
   "@memberNumberLabel": {

@@ -1,22 +1,42 @@
 {
   "@@locale": "es",
   "suppliersOutstanding": "Pendiente: {amount}",
-  "@suppliersOutstanding": {"description": "#3070 supplier outstanding balance", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersOutstanding": {
+    "description": "#3070 supplier outstanding balance",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersNoOutstanding": "Sin saldo pendiente",
-  "@suppliersNoOutstanding": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersNoOutstanding": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersBalanceUnavailable": "Saldo no disponible",
-  "@suppliersBalanceUnavailable": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersBalanceUnavailable": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersViewPayables": "Ver pagos pendientes del proveedor",
-  "@suppliersViewPayables": {"description": "#3070 supplier outstanding balance"},
+  "@suppliersViewPayables": {
+    "description": "#3070 supplier outstanding balance"
+  },
   "suppliersPayablesUnavailable": "Pagos pendientes no disponibles",
-  "@suppliersPayablesUnavailable": {"description": "#3070 supplier payable read error"},
+  "@suppliersPayablesUnavailable": {
+    "description": "#3070 supplier payable read error"
+  },
   "suppliersHeld": "En espera: {amount}",
-  "@suppliersHeld": {"description": "#3070 portion of the supplier balance on hold", "placeholders": {"amount": {"type": "String"}}},
+  "@suppliersHeld": {
+    "description": "#3070 portion of the supplier balance on hold",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "suppliersLoadMore": "Cargar más",
-  "@suppliersLoadMore": {"description": "#3070 supplier outstanding balance"},
-  "suppliersTitle": "Proveedores",
-  "@suppliersTitle": {
-    "description": "#2567 suppliers"
+  "@suppliersLoadMore": {
+    "description": "#3070 supplier outstanding balance"
   },
   "suppliersIntro": "Los beneficiarios de sus compras. Un proveedor se reconoce por un identificador fiscal verificado, nunca solo por su nombre.",
   "@suppliersIntro": {
@@ -65,10 +85,6 @@
   },
   "suppliersFieldGroup": "Es un identificador de grupo de IVA",
   "@suppliersFieldGroup": {
-    "description": "#2567 suppliers"
-  },
-  "suppliersFieldStreet": "Calle",
-  "@suppliersFieldStreet": {
     "description": "#2567 suppliers"
   },
   "suppliersFieldPostalCode": "Código postal",

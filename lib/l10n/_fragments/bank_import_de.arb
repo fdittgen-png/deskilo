@@ -50,7 +50,6 @@
   "bankMatchNoInvoice": "Keine offene Rechnung in dieser Währung.",
   "bankMatchConfirm": "Bestätigen",
   "bankMatchFailed": "Die Bewegung konnte nicht zugeordnet werden. Nichts wurde geändert.",
-  "bankLineSaved": "Gespeichert.",
   "bankReviewTitle": "Bereits importiert?",
   "bankReviewBody": "Ein anderer Auszug enthält eine Bewegung mit demselben Tag, Betrag und denselben Angaben, und die Bank hat keiner von beiden eine Kennung gegeben. Behalten Sie sie, wenn es eine zweite Zahlung ist.",
   "bankReviewKeep": "Behalten",

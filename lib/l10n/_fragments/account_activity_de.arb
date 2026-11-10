@@ -1,6 +1,5 @@
 {
   "accountActivityTitle": "Mein Verbrauch und meine Zahlungen",
-  "accountPaymentsTitle": "Zahlungen",
   "accountActivityScope": "Alle Ihre Profile auf diesem Server, auch frühere Mitgliedschaften. Währungen werden getrennt angezeigt.",
   "accountActivityEmpty": "Keine Einträge vorhanden.",
   "accountActivityFailed": "Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.",

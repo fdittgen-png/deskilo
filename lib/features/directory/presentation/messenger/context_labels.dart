@@ -14,7 +14,7 @@ String contextLabel(AppLocalizations l10n, InboxEntry entry) {
     MessageContextKind.account =>
       l10n.messengerContextAccount,
     MessageContextKind.accountGroup =>
-      l10n.messengerContextGroup,
+      l10n.taxRefGroup,
     MessageContextKind.inquiryOut =>
       l10n.messengerContextInquiryOut(space),
     MessageContextKind.inquiryIn =>

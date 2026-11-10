@@ -24,7 +24,7 @@ IconData feedGroupingIcon(FeedGrouping grouping) => switch (grouping) {
 String _groupingLabel(AppLocalizations l10n, FeedGrouping grouping) =>
     switch (grouping) {
       FeedGrouping.type => l10n.notifGroupByType,
-      FeedGrouping.date => l10n.notifGroupByDate,
+      FeedGrouping.date => l10n.numberSequenceDatePart,
       FeedGrouping.user => l10n.notifGroupByUser,
       FeedGrouping.none => '',
     };

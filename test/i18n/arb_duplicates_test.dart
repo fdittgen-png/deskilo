@@ -14,7 +14,16 @@ import 'package:flutter_test/flutter_test.dart';
 // 188 when recorded (#3541); 225 once #3543 gave each dictionary entry its
 // own key (setup steps, export columns, report parts reuse common words).
 // The consolidation of #3486 lowers it.
-const _redundantCeiling = 225;
+const _redundantCeiling = 0;
+
+/// Keys that stay distinct although another key says the same word: each is
+/// named as a string by code that is not a getter call (a registry, the
+/// lexicon, a guide builder), so renaming it would break that reader.
+const Map<String, String> _namedByCode = {
+  'featureAccountingPeriodsTitle': 'named as a string in tool/build_process_catalogue.dart',
+  'bookReportJournalBank': 'named as a string in tool/build_guide_site.dart',
+  'planReserveButton': 'named as a string in lib/core/l10n/lexicon_defaults.dart',
+};
 
 Map<String, Object?> _arb(String locale) =>
     jsonDecode(File('lib/l10n/app_$locale.arb').readAsStringSync())
@@ -27,6 +36,7 @@ void main() {
     final byValue = <String, List<String>>{};
     for (final MapEntry(:key, :value) in en.entries) {
       if (key.startsWith('@') || value is! String) continue;
+      if (_namedByCode.containsKey(key)) continue;
       byValue.putIfAbsent(value, () => []).add(key);
     }
     var redundant = 0;

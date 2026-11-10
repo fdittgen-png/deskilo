@@ -267,7 +267,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             key: const ValueKey('personal-info-country'),
             initialValue: _country,
             decoration: InputDecoration(
-              labelText: l10n.personalInfoCountry,
+              labelText: l10n.workspaceCountryLabel,
               border: const OutlineInputBorder(),
             ),
             items: [
@@ -336,7 +336,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         FilledButton(
           key: const ValueKey('personal-info-save'),
           onPressed: widget.saving ? null : () => widget.onSave(_value),
-          child: Text(l10n.personalInfoSave),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

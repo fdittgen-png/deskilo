@@ -84,7 +84,7 @@ class _PaymentMethodsScreenState
             Text(l10n.paymentInstructionsTitle),
         actions: [
           HelpDot(
-            l10n.helpHintMoneyPaymentsTopic,
+            l10n.eventTypePayment,
             anchor: HelpAnchor.paymentsMethods,
           ),
         ],

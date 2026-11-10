@@ -3,10 +3,6 @@
   "@accountActivityTitle": {
     "description": "Shown as a text in account portal entry (directory), and 2 other places."
   },
-  "accountPaymentsTitle": "Payments",
-  "@accountPaymentsTitle": {
-    "description": "Shown as a text in account activity screen (money)."
-  },
   "accountActivityScope": "All your profiles on this server, including previous memberships. Currencies are shown separately.",
   "@accountActivityScope": {
     "description": "Shown as a text in account activity screen (money)."

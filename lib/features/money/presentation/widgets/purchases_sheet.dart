@@ -145,7 +145,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
                 value: false,
                 label: Text(l10n.purchasesTabDocuments),
               ),
-              ButtonSegment(value: true, label: Text(l10n.purchasesTabToPay)),
+              ButtonSegment(value: true, label: Text(l10n.cashHubToPay)),
             ],
             selected: {_toPay},
             onSelectionChanged: (s) => setState(() => _toPay = s.first),

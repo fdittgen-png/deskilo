@@ -217,7 +217,7 @@ String reportFieldMeaning(String field, AppLocalizations l10n) =>
       'status_members' => l10n.reportFieldMeaningStatusMembers,
       'declaration_status' => l10n.vatDeclStatus,
       'declaration_note' => l10n.reportFieldMeaningDeclarationNote,
-      'declaration_invoice_count' => l10n.vatDeclInvoices,
+      'declaration_invoice_count' => l10n.featureInvoicing,
       'configuration_rows' => l10n.workspaceConfigPdfTitle,
       'vat_form_boxes' => l10n.vatDeclBoxes,
       'vat_positions' => l10n.reportFieldMeaningVatPositions,
@@ -249,7 +249,7 @@ String reportFieldGroupName(ReportFieldGroup group, AppLocalizations l10n) =>
       ReportFieldGroup.bank => l10n.reportFieldGroupBank,
       ReportFieldGroup.usage => l10n.reportFieldGroupUsage,
       ReportFieldGroup.vat => l10n.reportFieldGroupVat,
-      ReportFieldGroup.sites => l10n.reportFieldGroupSites,
+      ReportFieldGroup.sites => l10n.featureMultiSite,
       ReportFieldGroup.status =>
         l10n.reportFieldGroupStatus,
     };

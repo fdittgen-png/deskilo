@@ -278,7 +278,7 @@ void main() {
       }
       expect(screen, contains('messageSearchPeople'));
       expect(screen, contains('messageSearchGroups'));
-      expect(screen, contains('messageSearchMessages'));
+      expect(screen, contains('messagesTitle'));
     });
 
     test('people and groups filter LOCALLY; only text search waits', () {

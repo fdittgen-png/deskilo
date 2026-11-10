@@ -31,7 +31,6 @@
   "memberNoteSend": "Envoyer",
   "memberNoteSent": "Notification envoyée.",
   "memberNoteReceived": "Message de {name}",
-  "eventsMessagesHeader": "Messages",
   "memberNoteTo": "À {name}",
   "memberNoteToAllAdmins": "À tous les admins",
   "memberNoteDeleted": "Message supprimé.",

@@ -40,7 +40,7 @@ Future<void> showPremisesLeaseSheet(
 
 String _leaseStatusLabel(AppLocalizations l10n, LeaseStatus status) =>
     switch (status) {
-      LeaseStatus.draft => l10n.leaseStatusDraft,
+      LeaseStatus.draft => l10n.purchasesStateDraft,
       LeaseStatus.active => l10n.leaseStatusActive,
       LeaseStatus.noticeGiven => l10n.leaseStatusNotice,
       LeaseStatus.ended => l10n.leaseStatusEnded,
@@ -295,7 +295,7 @@ class _LeaseCard extends StatelessWidget {
                   TextButton(
                     key: ValueKey('lease-edit-${lease.id}'),
                     onPressed: onEdit,
-                    child: Text(l10n.leaseEdit),
+                    child: Text(l10n.taskWizardEdit),
                   ),
                 if (onTerm != null)
                   TextButton(

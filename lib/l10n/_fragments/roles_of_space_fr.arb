@@ -20,10 +20,6 @@
   "@rolesOfSpaceInactive": {
     "description": "#1528 the roles of a space: rolesOfSpaceInactive"
   },
-  "roleEditorKey": "Clé",
-  "@roleEditorKey": {
-    "description": "#1528 the roles of a space: roleEditorKey"
-  },
   "roleEditorKeyHelp": "Minuscules, chiffres et tirets bas. Elle ne change jamais : les personnes qui tiennent le rôle s'y rattachent.",
   "@roleEditorKeyHelp": {
     "description": "#1528 the roles of a space: roleEditorKeyHelp"

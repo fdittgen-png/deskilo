@@ -173,7 +173,7 @@ class WizardMatchStep extends ConsumerWidget {
                               .read(invoicingWizardControllerProvider.notifier)
                               .bump((t) => t.copyWith(matched: t.matched + 1));
                         },
-                        child: Text(l10n.wizardMatchAction),
+                        child: Text(l10n.leaseMatchSave),
                       )
                     : null,
               ),
@@ -298,7 +298,7 @@ class WizardSummaryStep extends ConsumerWidget {
       if (journey == null || journey.move == InvoiceMove.none) continue;
       final who = switch (journey.move.who) {
         InvoiceMover.member => invoice.memberName,
-        InvoiceMover.issuer => l10n.wizardWhoYou,
+        InvoiceMover.issuer => l10n.seatDayMine,
         InvoiceMover.validators => l10n.wizardWhoValidators,
         InvoiceMover.nobody => '',
       };
