@@ -318,7 +318,7 @@ void main() {
     finance.calls = 0;
     await _menu(tester, 'bi-views-open-${shared.id}');
 
-    expect(find.textContaining('1 figures of this view'), findsOneWidget);
+    expect(find.textContaining('1 figure of this view'), findsOneWidget);
     expect(finance.calls, 0);
     // Not shown every figure, the reader does not edit it (they copy it).
     expect(find.byKey(const ValueKey('bi-report-panel')), findsNothing);

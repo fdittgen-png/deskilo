@@ -144,7 +144,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('task-recorder-stop')));
     await tester.pumpAndSettle();
     expect(h.controller.state, RecorderState.ended);
-    expect(find.textContaining('1 steps'), findsOneWidget);
+    expect(find.textContaining('1 step'), findsOneWidget);
     expect(find.textContaining('Complete'), findsOneWidget);
     await h.done(tester);
   });
