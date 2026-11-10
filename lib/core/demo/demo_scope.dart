@@ -3,6 +3,7 @@ import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
@@ -55,6 +56,7 @@ import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
+import 'package:deskilo/features/workspace/providers/business_kind_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -238,6 +240,10 @@ List<Override> _serverOnlyOverrides() => [
   // figures of the cities are demo_city_commerce_overrides', and the older
   // spaces' need the server's ledger of every source.
   costAllocationRepositoryProvider.overrideWithValue(const UnavailableCostAllocationRepository()),
+  // #3550 — the five kinds and their profiles.
+  businessKindRepositoryProvider.overrideWith(
+    (ref) => DemoBusinessKindRepository(ref.watch(settingsRepositoryProvider)),
+  ),
   // #2583 — the overview's own figures need the server.
   overviewKpiRepositoryProvider.overrideWithValue(
     const UnavailableOverviewKpiRepository(),

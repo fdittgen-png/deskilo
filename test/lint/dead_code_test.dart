@@ -18,6 +18,12 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/workspace/providers/business_kind_providers.dart::businessKinds':
+      '#3550 PR 2b-2 — the kind chooser reads it',
+  'lib/features/workspace/providers/business_kind_providers.dart::businessProfile':
+      '#3550 PR 2b-2 — the kind chooser reads it',
+  'lib/features/workspace/providers/business_kind_providers.dart::businessKindCommands':
+      '#3550 PR 2b-2 — the kind chooser reads it',
   // A kind's proposal: the kind chooser of #3550 PR 2b (settings tile and the
   // first setup step) shows it and writes it on confirm.
   'lib/features/workspace/domain/business_kind_proposal.dart::proposalFor':
