@@ -6,7 +6,6 @@
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
-import '../i18n/format_prefs.dart';
 
 import '../trace/trace_logger.dart';
 
@@ -84,33 +83,6 @@ abstract final class WorkspaceTime {
     return local.hour * 60 + local.minute;
   }
 
-  /// [instant] for DISPLAY. Zone-carrying values (workspace-anchored
-  /// windows are [tz.TZDateTime]s) already read in their own wall clock
-  /// — a "Morning until 13:00" says 13:00 on a device hours away — and
-  /// pass through; bare instants (UTC reservation rows, device-built
-  /// flexible windows) convert to device-local as before.
-  static DateTime display(DateTime instant) {
-    if (instant is tz.TZDateTime) return instant;
-    // #711 — the member reads bare instants in the WORKSPACE's clock
-    // unless they asked for their own. With no zone installed (tests,
-    // pre-connect boot) there is no workspace clock to read, and the
-    // device's is the honest answer — asking [wall] here would loop.
-    final location = _location;
-    if (displayMode == TimeZoneMode.workspace && location != null) {
-      final local = tz.TZDateTime.from(instant, location);
-      return DateTime(local.year, local.month, local.day, local.hour,
-          local.minute, local.second);
-    }
-    return instant.toLocal();
-  }
-
-  /// Which clock [display] renders a bare instant in (#711). Set by the
-  /// format controller from the member's profile; workspace by default,
-  /// which is the pre-#711 behaviour for every screen that already
-  /// called [wall] and a CHANGE for the ones that called `toLocal()`
-  /// directly — those now agree with the booking grid.
-  static TimeZoneMode displayMode = TimeZoneMode.workspace;
-
   /// The instant as the WORKSPACE's naive wall-clock time (#490) — the
   /// anchor every day-grid position and time label must use: a device
   /// (or browser) in another timezone otherwise shifts every block by
@@ -120,8 +92,10 @@ abstract final class WorkspaceTime {
     // Always convert THROUGH the location — a TZDateTime may sit in
     // package:timezone's default-UTC tz.local (#417) and must not be
     // trusted to already read in the workspace's clock.
+    // No zone installed (tests, pre-connect boot): a zone-carrying value
+    // reads in its own clock, a bare instant in the device's.
     final local = location == null
-        ? display(instant)
+        ? (instant is tz.TZDateTime ? instant : instant.toLocal())
         : tz.TZDateTime.from(instant, location);
     return DateTime(local.year, local.month, local.day, local.hour,
         local.minute, local.second);

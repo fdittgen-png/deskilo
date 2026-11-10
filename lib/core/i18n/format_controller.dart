@@ -23,17 +23,14 @@ part 'format_controller.g.dart';
 /// workspace (#711): their format locale (or the derived default), the
 /// workspace's currency, their clock and zone preference.
 ///
-/// THREE SIDE EFFECTS, all deliberate and both documented here because a
+/// TWO SIDE EFFECTS, both deliberate and documented here because a
 /// provider with side effects is a thing to be suspicious of:
 ///
-///  1. `Intl.defaultLocale` is set to the resolved locale. That is what
-///     makes the two dozen `DateFormat.MMMd()` calls the app grew before
-///     this seam existed (#701) stop formatting in `en_US`. It is a
-///     global, and this is the one place that writes it.
-///  2. [WorkspaceTime.displayMode] follows the member's zone preference,
-///     so `WorkspaceTime.display()` — the helper the older screens
-///     already call — honours it without each of them changing.
-///  3. [WorkspaceCurrency] learns the platform's default currency, so the
+///  1. `Intl.defaultLocale` is set to the resolved locale, for what still
+///     formats without naming one (the money default, the typed-number
+///     parser; #3484 removes it). It is a global, and this is the one place
+///     that writes it. Screens format through this [AppFormat] instead.
+///  2. [WorkspaceCurrency] learns the platform's default currency, so the
 ///     ambient grain of a screen with no workspace follows the operator's
 ///     `locale.default_currency` and not the compile-time copy (#2488).
 ///
@@ -62,7 +59,6 @@ AppFormat appFormat(Ref ref) {
 
   final region = ref.watch(regionDefaultsProvider);
   Intl.defaultLocale = locale;
-  WorkspaceTime.displayMode = prefs.timeZoneMode;
   WorkspaceCurrency.installDefault(region.currency);
 
   return AppFormat(
