@@ -146,7 +146,7 @@ Future<void> _pump(
       ),
     ),
     // Tall enough that no row is cut by the viewport (see the Me guards).
-    size: Size(width, width < 600 ? 5000 : 2400),
+    size: Size(width, width < 600 ? 7000 : 2400),
     textScale: scale,
   );
   await tester.pumpAndSettle();
