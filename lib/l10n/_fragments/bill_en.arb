@@ -340,7 +340,13 @@
     "description": "#669 - SAF-T derived postings"
   },
   "invoiceExportGenericJournal": "Journal (CSV, for any accounting system)",
+  "@invoiceExportGenericJournal": {
+    "description": "Shown as a text in accounting export sheet (money)."
+  },
   "journalNeedsLocalBook": "The journal is posted from a local book: set up the issuer's book chart first.",
+  "@journalNeedsLocalBook": {
+    "description": "Shown as a text in accounting export journal (money)."
+  },
   "journalBlocked": "Map these roles in the book chart first: {roles}",
   "@journalBlocked": {
     "description": "Journal export (#2370): roles the posting engine could not resolve",

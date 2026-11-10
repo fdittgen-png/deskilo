@@ -56,5 +56,8 @@
   "@profilesPairProd": {
     "description": "#987/#989 environment pairs: profilesPairProd"
   },
-  "uxProfileChooseEnvironment": "Choose an environment"
+  "uxProfileChooseEnvironment": "Choose an environment",
+  "@uxProfileChooseEnvironment": {
+    "description": "Shown as a text in pair card (profile)."
+  }
 }

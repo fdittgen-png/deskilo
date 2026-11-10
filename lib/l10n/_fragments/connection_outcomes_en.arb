@@ -1,19 +1,70 @@
 {
   "connectionChecking": "Checking…",
+  "@connectionChecking": {
+    "description": "Shown as a text in connections screen (directory)."
+  },
   "connectionUsable": "Connected",
+  "@connectionUsable": {
+    "description": "Shown as a text in connections screen (directory)."
+  },
   "connectionUnsupported": "This server's version cannot be connected from this app. Update the app, or ask the server's operator to update the server.",
+  "@connectionUnsupported": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionExpired": "Your sign-in to this server has ended. Sign in to this server again.",
+  "@connectionExpired": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionDenied": "This server refused the account. Check the sign-in details, or disconnect it.",
+  "@connectionDenied": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionUnavailable": "This server is not answering right now. Your other servers are not affected.",
+  "@connectionUnavailable": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionChangedIdentity": "This server is no longer the one you connected. Its actions are paused until you verify it again.",
+  "@connectionChangedIdentity": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionInvalidEndpoint": "This address or key is not a valid server.",
+  "@connectionInvalidEndpoint": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionNotConnected": "This server is not connected on this device.",
+  "@connectionNotConnected": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionCurrentServer": "This is the server this app already uses.",
+  "@connectionCurrentServer": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionCancelled": "The account changed meanwhile, so this answer was discarded.",
+  "@connectionCancelled": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionMalformed": "This server answered something this app cannot read.",
+  "@connectionMalformed": {
+    "description": "Shown as a text in connection outcome text (directory), and 1 other place."
+  },
   "connectionUnknownOutcome": "The connection dropped after the request was sent. It may have been applied: check before trying again.",
+  "@connectionUnknownOutcome": {
+    "description": "Shown as a text in connection outcome text (directory)."
+  },
   "connectionSessionNotSaved": "The action was done, but this device could not save the server's sign-in. You may be asked to sign in again.",
+  "@connectionSessionNotSaved": {
+    "description": "Shown as a text in connections screen (directory)."
+  },
   "connectionSignInAgain": "Sign in again",
+  "@connectionSignInAgain": {
+    "description": "Shown as a text in connections screen (directory)."
+  },
   "connectionRetry": "Try again",
-  "connectionVerifyAgain": "Verify again"
+  "@connectionRetry": {
+    "description": "Shown as a text in connections screen (directory)."
+  },
+  "connectionVerifyAgain": "Verify again",
+  "@connectionVerifyAgain": {
+    "description": "Shown as a text in connections screen (directory)."
+  }
 }

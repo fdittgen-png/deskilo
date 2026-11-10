@@ -1,16 +1,47 @@
 {
   "directoryLinkIntro": "The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.",
+  "@directoryLinkIntro": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkCheck": "Check",
+  "@directoryLinkCheck": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkAction": "Link",
+  "@directoryLinkAction": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkStateDirectory": "This is the reference server: the spaces it publishes are always listed.",
+  "@directoryLinkStateDirectory": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkStateLinked": "Linked: the spaces it publishes are listed in Discover.",
+  "@directoryLinkStateLinked": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkStateLinkable": "Can be linked: it answers, and publishes spaces this app can read.",
+  "@directoryLinkStateLinkable": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkStateUnreachable": "Cannot be linked yet: it does not answer, or its version cannot publish spaces.",
+  "@directoryLinkStateUnreachable": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkDone": "Linked. The spaces it publishes are now listed in Discover.",
+  "@directoryLinkDone": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkNeedsAccount": "A link is recorded on the reference server: connect your account there first.",
+  "@directoryLinkNeedsAccount": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "directoryLinkConnect": "Connect the reference server",
+  "@directoryLinkConnect": {
+    "description": "Shown as a text in directory link dialog (directory)."
+  },
   "spaceHostedOn": "Server: {server}",
   "@spaceHostedOn": {
+    "description": "Shown as a text in space row controls (me). Placeholders: {server} (String).",
     "placeholders": {
       "server": {
         "type": "String"
@@ -19,6 +50,7 @@
   },
   "serverReferenceLabel": "reference server ({host})",
   "@serverReferenceLabel": {
+    "description": "Shown as a text in server label (core). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
         "type": "String"

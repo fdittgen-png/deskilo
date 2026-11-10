@@ -469,21 +469,52 @@
     "description": "#711 - globalization"
   },
   "moneyFacePayments": "Payments",
+  "@moneyFacePayments": {
+    "description": "Shown as a text in money faces view (money)."
+  },
   "moneyFaceInvoices": "Invoices",
+  "@moneyFaceInvoices": {
+    "description": "Shown as a text in money faces view (money)."
+  },
   "moneyNoInvoicesYet": "No invoice yet — the month is invoiced by the workspace once it closes.",
+  "@moneyNoInvoicesYet": {
+    "description": "Shown as a text in my invoices list (money)."
+  },
   "moneyFaceStatement": "Statement",
+  "@moneyFaceStatement": {
+    "description": "Shown as a text in money faces view (money)."
+  },
   "moneyFaceDocuments": "Documents",
+  "@moneyFaceDocuments": {
+    "description": "Shown as a text in money faces view (money)."
+  },
   "moneyOverdueBanner": "{count} overdue — {amount} to settle",
   "moneyPayNow": "Pay now",
+  "@moneyPayNow": {
+    "description": "Shown as a tooltip in my invoices list (money), and 2 other places."
+  },
   "moneyOpenInvoicesTitle": "Open invoices",
+  "@moneyOpenInvoicesTitle": {
+    "description": "Shown as a text in invoice overview (money)."
+  },
   "moneyOpenInvoicesSummary": "{count} open · {amount} due",
   "moneyDueIn": "Due in {days} days",
   "moneyOverdueBy": "Overdue by {days} days",
   "moneyNothingOpen": "Nothing open — you are up to date.",
+  "@moneyNothingOpen": {
+    "description": "Shown as a text in invoice overview (money)."
+  },
   "moneyDocumentLibrary": "Document library",
+  "@moneyDocumentLibrary": {
+    "description": "Shown as a button or chip label in documents face (money)."
+  },
   "moneyStatementPdf": "This month's statement (PDF)",
+  "@moneyStatementPdf": {
+    "description": "Shown as a button or chip label in documents face (money)."
+  },
   "moneyRemindedTimes": "Reminded ×{count}",
   "@moneyOverdueBanner": {
+    "description": "Shown as a text in invoice overview (money), and 1 other place. Placeholders: {count} (int), {amount} (String).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -494,6 +525,7 @@
     }
   },
   "@moneyOpenInvoicesSummary": {
+    "description": "Shown as a text in invoice overview (money). Placeholders: {count} (int), {amount} (String).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -504,6 +536,7 @@
     }
   },
   "@moneyDueIn": {
+    "description": "Shown as a text in my invoices list (money). Placeholders: {days} (int).",
     "placeholders": {
       "days": {
         "type": "int"
@@ -511,6 +544,7 @@
     }
   },
   "@moneyOverdueBy": {
+    "description": "Shown as a text in my invoices list (money). Placeholders: {days} (int).",
     "placeholders": {
       "days": {
         "type": "int"
@@ -518,6 +552,7 @@
     }
   },
   "@moneyRemindedTimes": {
+    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -525,16 +560,41 @@
     }
   },
   "expenseSupplyToggle": "This is a supply for the space",
+  "@expenseSupplyToggle": {
+    "description": "Shown as a title in expense sheet (money)."
+  },
   "expenseSupplyHint": "Coffee capsules, vacuum bags… Once validated, the item goes on the shelf as a consumable service: members who use it pay for it.",
+  "@expenseSupplyHint": {
+    "description": "Shown as the line under a title in expense sheet (money)."
+  },
   "expenseSupplyItem": "Item",
+  "@expenseSupplyItem": {
+    "description": "Shown as the label of a field in expense sheet (money)."
+  },
   "expenseSupplyNewItem": "New item",
+  "@expenseSupplyNewItem": {
+    "description": "Shown as a text in expense sheet (money), and 1 other place."
+  },
   "expenseSupplyQuantity": "Quantity",
+  "@expenseSupplyQuantity": {
+    "description": "Shown as a button or chip label in expense sheet (money)."
+  },
   "expenseSupplyUnitPrice": "Unit price (what a consumption costs)",
+  "@expenseSupplyUnitPrice": {
+    "description": "Shown as a button or chip label in expense sheet (money)."
+  },
   "expenseSupplyUnitPriceHint": "Prefilled from amount ÷ quantity; round up if you like.",
+  "@expenseSupplyUnitPriceHint": {
+    "description": "Shown as a text in expense sheet (money)."
+  },
   "serviceStockCount": "{count} in stock",
   "serviceOutOfStock": "Out of stock",
+  "@serviceOutOfStock": {
+    "description": "Shown as a text in services screen (money), and 1 other place."
+  },
   "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
   "@serviceStockCount": {
+    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -542,23 +602,69 @@
     }
   },
   "negotiationCardTitle": "My negotiated prices",
+  "@negotiationCardTitle": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationOnTariff": "You are on the workspace tariff.",
+  "@negotiationOnTariff": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationPending": "A deal is awaiting validation.",
+  "@negotiationPending": {
+    "description": "Shown as a text in negotiation card (money), and 1 other place."
+  },
   "negotiationActiveSince": "Your deal applies since {month}.",
   "negotiationFee": "Monthly fee",
+  "@negotiationFee": {
+    "description": "Shown as a text in negotiation card (money), and 1 other place."
+  },
   "negotiationOverage": "Overage per half-day",
+  "@negotiationOverage": {
+    "description": "Shown as a text in negotiation card (money), and 1 other place."
+  },
   "negotiationDiscount": "Discount on supplements",
+  "@negotiationDiscount": {
+    "description": "Shown as a text in negotiation card (money), and 1 other place."
+  },
   "negotiationDefaultColumn": "Tariff",
+  "@negotiationDefaultColumn": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationMineColumn": "Mine",
+  "@negotiationMineColumn": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationWhoCanSee": "Who can see this",
+  "@negotiationWhoCanSee": {
+    "description": "Shown as a button or chip label in negotiation card (money)."
+  },
   "negotiationProposeTitle": "Price negotiation",
+  "@negotiationProposeTitle": {
+    "description": "Shown as a text in negotiation card (money), and 1 other place."
+  },
   "negotiationProposeHint": "Leave a field empty to keep the tariff. The deal goes through validation before it applies.",
+  "@negotiationProposeHint": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationNote": "Note",
+  "@negotiationNote": {
+    "description": "Shown as the label of a field in negotiation card (money)."
+  },
   "negotiationValidFrom": "Applies from",
   "negotiationSubmit": "Propose for validation",
+  "@negotiationSubmit": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationProposed": "Deal proposed — waiting for validation.",
+  "@negotiationProposed": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationPendingBadge": "awaiting validation",
+  "@negotiationPendingBadge": {
+    "description": "Shown as a button or chip label in negotiation card (money)."
+  },
   "@negotiationActiveSince": {
+    "description": "Shown as a text in negotiation card (money). Placeholders: {month} (String).",
     "placeholders": {
       "month": {
         "type": "String"
@@ -566,12 +672,28 @@
     }
   },
   "negotiationOccupation": "Occupation",
+  "@negotiationOccupation": {
+    "description": "Shown as a text in negotiation card (money), and 1 other place."
+  },
   "negotiationOccupationHint": "The share of open days included each month; applied to the member once validated.",
+  "@negotiationOccupationHint": {
+    "description": "Shown as the helper line under a field in negotiation card (money)."
+  },
   "negotiationKeepCurrent": "Keep current",
+  "@negotiationKeepCurrent": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationItems": "Services and packages",
+  "@negotiationItems": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationItemsHint": "A unit price for this member; empty keeps the catalogue.",
+  "@negotiationItemsHint": {
+    "description": "Shown as a text in negotiation card (money)."
+  },
   "negotiationPercent": "{value} %",
   "@negotiationPercent": {
+    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int).",
     "placeholders": {
       "value": {
         "type": "int"
@@ -579,9 +701,21 @@
     }
   },
   "negotiationReadOnly": "Read only",
+  "@negotiationReadOnly": {
+    "description": "Shown as the line under a title in negotiation card (money)."
+  },
   "scheduledExpensesTitle": "Scheduled expenses",
+  "@scheduledExpensesTitle": {
+    "description": "Shown as a button or chip label in money action set (money), and 1 other place."
+  },
   "scheduledExpensesIntro": "Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.",
+  "@scheduledExpensesIntro": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduledExpensesEmpty": "No scheduled expense yet.",
+  "@scheduledExpensesEmpty": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduledExpensesFinished": "Ended and rejected ({count})",
   "@scheduledExpensesFinished": {
     "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected.",
@@ -592,29 +726,101 @@
     }
   },
   "scheduleNew": "Schedule a recurring expense",
+  "@scheduleNew": {
+    "description": "Shown as a button or chip label in expense schedule sheet (money), and 1 other place."
+  },
   "scheduleCancel": "End this schedule",
+  "@scheduleCancel": {
+    "description": "Shown as a tooltip in expense schedule sheet (money)."
+  },
   "scheduleTitleLabel": "What (e.g. Internet)",
+  "@scheduleTitleLabel": {
+    "description": "Shown as the label of a field in expense schedule sheet (money)."
+  },
   "scheduleStartsOn": "First occurrence",
+  "@scheduleStartsOn": {
+    "description": "Shown as a title in expense schedule sheet (money)."
+  },
   "scheduleEveryLabel": "Every",
+  "@scheduleEveryLabel": {
+    "description": "Shown as the label of a field in expense schedule sheet (money)."
+  },
   "scheduleUnitLabel": "Unit",
+  "@scheduleUnitLabel": {
+    "description": "Shown as the label of a field in expense schedule sheet (money)."
+  },
   "scheduleTimesLabel": "Repetitions (empty = until the end date)",
+  "@scheduleTimesLabel": {
+    "description": "Shown as the label of a field in expense schedule sheet (money)."
+  },
   "scheduleEndsOn": "Until (optional)",
+  "@scheduleEndsOn": {
+    "description": "Shown as a title in schedule supplier field (money)."
+  },
   "scheduleNoEnd": "No end date",
+  "@scheduleNoEnd": {
+    "description": "Shown as the line under a title in schedule supplier field (money)."
+  },
   "scheduleValidationHint": "The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.",
+  "@scheduleValidationHint": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleSubmit": "Schedule it",
+  "@scheduleSubmit": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleSupplierLabel": "Supplier it pays (optional)",
+  "@scheduleSupplierLabel": {
+    "description": "Shown as the label of a field in schedule supplier field (money)."
+  },
   "scheduleNoSupplier": "No supplier",
+  "@scheduleNoSupplier": {
+    "description": "Shown as a text in schedule supplier field (money)."
+  },
   "schedulePaysSupplier": "pays {supplier}",
+  "@schedulePaysSupplier": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleMissingFields": "Name and amount are needed.",
+  "@scheduleMissingFields": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "schedulePending": "Scheduled — waiting for the validators to confirm it.",
+  "@schedulePending": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleStatusPending": "Awaiting validation",
+  "@scheduleStatusPending": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleStatusActive": "Active",
+  "@scheduleStatusActive": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleStatusRejected": "Rejected",
+  "@scheduleStatusRejected": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleStatusEnded": "Ended",
+  "@scheduleStatusEnded": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleDaily": "daily",
+  "@scheduleDaily": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleWeekly": "weekly",
+  "@scheduleWeekly": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleMonthly": "monthly",
+  "@scheduleMonthly": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleYearly": "yearly",
+  "@scheduleYearly": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleEveryDays": "{count, plural, =1{every day} other{every {count} days}}",
   "@scheduleEveryDays": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
@@ -652,20 +858,65 @@
     }
   },
   "scheduleUntil": "until {date}",
+  "@scheduleUntil": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleNextDue": "next: {date}",
+  "@scheduleNextDue": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "occurrenceRejected": "The validators rejected it — adjust the amount or the description and resend.",
+  "@occurrenceRejected": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "occurrenceScheduledAmount": "Validated: {amount}",
+  "@occurrenceScheduledAmount": {
+    "description": "Shown as the helper line under a field in expense schedule sheet (money)."
+  },
   "occurrenceReasonLabel": "Why it differs (required)",
+  "@occurrenceReasonLabel": {
+    "description": "Shown as the label of a field in expense schedule sheet (money)."
+  },
   "occurrenceConfirm": "Confirm this expense",
+  "@occurrenceConfirm": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "occurrenceResend": "Resend for validation",
+  "@occurrenceResend": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "occurrenceReasonMissing": "A different amount needs an explanation.",
+  "@occurrenceReasonMissing": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "occurrenceSentForValidation": "Sent to the validators — it counts once they confirm.",
+  "@occurrenceSentForValidation": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "occurrenceAdded": "Added to your expenses.",
+  "@occurrenceAdded": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduledAwaitingTitle": "Scheduled expenses awaiting you",
+  "@scheduledAwaitingTitle": {
+    "description": "Shown as a text in money face content (money)."
+  },
   "scheduleUnitDays": "days",
+  "@scheduleUnitDays": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleUnitWeeks": "weeks",
+  "@scheduleUnitWeeks": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleUnitMonths": "months",
+  "@scheduleUnitMonths": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "scheduleUnitYears": "years",
+  "@scheduleUnitYears": {
+    "description": "Shown as a text in expense schedule sheet (money)."
+  },
   "moneyFaceUsage": "Usage",
   "@moneyFaceUsage": {
     "description": "#833 - the Money tab face showing usage records"

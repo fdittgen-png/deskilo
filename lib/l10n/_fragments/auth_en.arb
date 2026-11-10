@@ -186,12 +186,30 @@
     "description": "Sign-in screen: secondary link to the Server screen (#1650); the wizard on that screen covers setting one up"
   },
   "identityConsentTitle": "Continue with Deskilo",
+  "@identityConsentTitle": {
+    "description": "Shown as a title in oauth consent screen (auth)."
+  },
   "identityConsentAsks": "Use your Deskilo identity to sign in to {host}.",
   "identityConsentPurpose": "Workspace and assistant access are approved separately.",
+  "@identityConsentPurpose": {
+    "description": "Shown as a text in oauth consent screen (auth)."
+  },
   "identityConsentUnavailable": "This sign-in request is unavailable. Return to the destination and start again.",
+  "@identityConsentUnavailable": {
+    "description": "Shown as a text in oauth consent screen (auth)."
+  },
   "identityConsentReturning": "Returning to sign-in…",
+  "@identityConsentReturning": {
+    "description": "Shown as a text in oauth consent screen (auth)."
+  },
   "identityConsentReturnFailed": "Could not open the destination.",
+  "@identityConsentReturnFailed": {
+    "description": "Shown as a text in oauth consent screen (auth)."
+  },
   "identityConsentCompleting": "Saving your choice…",
+  "@identityConsentCompleting": {
+    "description": "Shown as a text in oauth consent screen (auth)."
+  },
   "@identityConsentAsks": {
     "description": "Identity-only consent names the exact destination host.",
     "placeholders": {

@@ -1,9 +1,19 @@
 {
   "invitationReviewButton": "Review invitation",
+  "@invitationReviewButton": {
+    "description": "Shown as a text in onboarding join form (workspace)."
+  },
   "invitationPasteButton": "Paste",
+  "@invitationPasteButton": {
+    "description": "Shown as a button or chip label in onboarding join form (workspace)."
+  },
   "invitationReviewTitle": "Check before you join",
+  "@invitationReviewTitle": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationServerRow": "Server: {host}",
   "@invitationServerRow": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
         "type": "String"
@@ -12,6 +22,7 @@
   },
   "invitationServerLabel": "Named “{label}” by whoever shared it",
   "@invitationServerLabel": {
+    "description": "Shown as a text in invitation join panel (workspace), and 1 other place. Placeholders: {label} (String).",
     "placeholders": {
       "label": {
         "type": "String"
@@ -20,6 +31,7 @@
   },
   "invitationJoiningAs": "Joining as {account}",
   "@invitationJoiningAs": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {account} (String).",
     "placeholders": {
       "account": {
         "type": "String"
@@ -27,17 +39,48 @@
     }
   },
   "invitationRoleMember": "Offered role: member",
+  "@invitationRoleMember": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationRoleAdmin": "Offered role: administrator",
+  "@invitationRoleAdmin": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationRoleUnknown": "Offered role: not known yet",
+  "@invitationRoleUnknown": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationApprovalRequired": "An administrator approves new members before the workspace opens.",
+  "@invitationApprovalRequired": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationApprovalUnknown": "Whether an administrator must approve is not known.",
+  "@invitationApprovalUnknown": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationEnvironmentTest": "Test workspace",
+  "@invitationEnvironmentTest": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationEnvironmentProduction": "Production workspace",
+  "@invitationEnvironmentProduction": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationJoinButton": "Join workspace",
+  "@invitationJoinButton": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationChangeAccount": "Change account",
+  "@invitationChangeAccount": {
+    "description": "Shown as a text in invitation join panel (workspace), and 1 other place."
+  },
   "invitationCheckAnother": "Use another invitation",
+  "@invitationCheckAnother": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationAlreadyMember": "You are already a member of {workspace}.",
   "@invitationAlreadyMember": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {workspace} (String).",
     "placeholders": {
       "workspace": {
         "type": "String"
@@ -45,8 +88,12 @@
     }
   },
   "invitationContinue": "Continue to this workspace",
+  "@invitationContinue": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationPaused": "Your membership in {workspace} is paused. Only an administrator there can resume it.",
   "@invitationPaused": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {workspace} (String).",
     "placeholders": {
       "workspace": {
         "type": "String"
@@ -54,10 +101,20 @@
     }
   },
   "invitationExpired": "This invitation has expired. Ask the person who sent it for a new one.",
+  "@invitationExpired": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationRevoked": "This workspace code was replaced. Ask the person who sent it for the current one.",
+  "@invitationRevoked": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationWrongAccount": "This invitation was already used by another account. If it was meant for you, sign in with that account.",
+  "@invitationWrongAccount": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationInvalid": "No workspace on {host} knows this invitation. Check it, or ask the organizer for their server link.",
   "@invitationInvalid": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
         "type": "String"
@@ -65,8 +122,12 @@
     }
   },
   "invitationUnknownAnswer": "The server gave an answer this version of the app cannot read. Nothing was changed.",
+  "@invitationUnknownAnswer": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationOtherServer": "This invitation is for another server: {host}.",
   "@invitationOtherServer": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
         "type": "String"
@@ -75,6 +136,7 @@
   },
   "invitationThisDevice": "This device uses {host}. An invitation is only checked on its own server.",
   "@invitationThisDevice": {
+    "description": "Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
         "type": "String"
@@ -82,13 +144,32 @@
     }
   },
   "invitationUseServer": "Use this server",
+  "@invitationUseServer": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationNewerVersion": "This invitation was made by a newer version of DesKilo. Update the app, then open it again.",
+  "@invitationNewerVersion": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationBadServer": "The server in this invitation is not valid. Ask for a new invitation.",
+  "@invitationBadServer": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationCheckFailed": "The invitation could not be checked — status not updated. Nothing was changed; try again.",
+  "@invitationCheckFailed": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "invitationJoinUnconfirmed": "The result could not be confirmed. Join again to check — the invitation is not used twice.",
+  "@invitationJoinUnconfirmed": {
+    "description": "Shown as a text in invitation join panel (workspace)."
+  },
   "pendingAvailable": "While you wait, your other workspaces, your account and the help stay available.",
+  "@pendingAvailable": {
+    "description": "Shown as a text in pending approval screen (workspace)."
+  },
   "pendingLastChecked": "Last checked {time}",
   "@pendingLastChecked": {
+    "description": "Shown as a text in pending approval screen (workspace). Placeholders: {time} (String).",
     "placeholders": {
       "time": {
         "type": "String"
@@ -96,7 +177,16 @@
     }
   },
   "pendingNotUpdated": "Status not updated — the server could not be reached. Your request is unchanged.",
+  "@pendingNotUpdated": {
+    "description": "Shown as a text in pending approval screen (workspace)."
+  },
   "pendingStillWaiting": "Still awaiting approval.",
+  "@pendingStillWaiting": {
+    "description": "Shown as a text in pending approval screen (workspace)."
+  },
   "pendingSwitchWorkspace": "Switch workspace",
-  "pendingHelp": "Help"
+  "pendingHelp": "Help",
+  "@pendingHelp": {
+    "description": "Shown as a button or chip label in pending approval screen (workspace)."
+  }
 }

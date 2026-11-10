@@ -173,26 +173,81 @@
     "description": "Reservation deletion requests (#492)"
   },
   "notifCategoryCheckIns": "Check-ins",
+  "@notifCategoryCheckIns": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "notifCategoryMoney": "Money",
+  "@notifCategoryMoney": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "notifCategoryMembers": "Members",
+  "@notifCategoryMembers": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "notesFilterRead": "Read",
+  "@notesFilterRead": {
+    "description": "Shown as a button or chip label in events filter bar (events)."
+  },
   "notifSortByDate": "Sort by date",
+  "@notifSortByDate": {
+    "description": "Shown as a tooltip in events filter bar (events)."
+  },
   "notifGroupBy": "Group by",
+  "@notifGroupBy": {
+    "description": "Shown as a text in events filter bar (events)."
+  },
   "notifGroupByType": "Type",
+  "@notifGroupByType": {
+    "description": "Shown as a text in events filter bar (events)."
+  },
   "notifGroupByDate": "Date",
+  "@notifGroupByDate": {
+    "description": "Shown as a text in events filter bar (events)."
+  },
   "notifGroupByUser": "Member",
+  "@notifGroupByUser": {
+    "description": "Shown as a text in events filter bar (events)."
+  },
   "notifUngroup": "Ungroup",
+  "@notifUngroup": {
+    "description": "Shown as a tooltip in events screen (events)."
+  },
   "validationScopeLabel": "Who validates",
+  "@validationScopeLabel": {
+    "description": "Shown as a text in validation scope picker (events)."
+  },
   "validationScopeAdmins": "Admins",
+  "@validationScopeAdmins": {
+    "description": "Shown as a button or chip label in validation scope picker (events)."
+  },
   "validationScopeListed": "Listed persons",
+  "@validationScopeListed": {
+    "description": "Shown as a button or chip label in validation scope picker (events)."
+  },
   "validationScopeMembers": "All members",
+  "@validationScopeMembers": {
+    "description": "Shown as a text in validation workflow (events), and 1 other place."
+  },
   "validationScopeHint": "The owner always may. Admins: every admin, or the ones you list. Listed: exactly these people, whatever their role. All members: anyone active.",
+  "@validationScopeHint": {
+    "description": "Shown as a text in validation scope picker (events)."
+  },
   "validationPickPersons": "Pick the persons",
   "eventTypeExpenseSchedule": "Scheduled expense",
+  "@eventTypeExpenseSchedule": {
+    "description": "Shown as a text in event labels (events)."
+  },
   "eventExpenseScheduleLine": "{actor} schedules “{title}” — {amount} recurring",
+  "@eventExpenseScheduleLine": {
+    "description": "Shown as a text in event lines (events)."
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
+  "@eventExpenseDeviation": {
+    "description": "Shown as a text in event lines (events)."
+  },
   "eventExpenseRepartitionLine": "{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}",
   "@eventExpenseRepartitionLine": {
+    "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {title} (String), {amount} (String), {count} (int).",
     "placeholders": {
       "actor": {
         "type": "String"
@@ -209,6 +264,9 @@
     }
   },
   "eventTypeExpenseRepartition": "Shared expense",
+  "@eventTypeExpenseRepartition": {
+    "description": "Shown as a text in bill view (money), and 1 other place."
+  },
   "eventTypeUsageCorrection": "Early departure",
   "@eventTypeUsageCorrection": {
     "description": "#833 - event type: an accepted early departure"
@@ -287,7 +345,11 @@
   "eventRepeatedMarker": "×{count}",
   "@eventRepeatedMarker": {
     "description": "#3067 how many identical events a collapsed row stands for",
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "eventOutcomeApplied": "Done",
   "@eventOutcomeApplied": {

@@ -1,6 +1,7 @@
 {
   "meLeaveSide": "Leave {side}",
   "@meLeaveSide": {
+    "description": "Shown as a text in me spaces list (me). Placeholders: {side} (String).",
     "placeholders": {
       "side": {
         "type": "String"

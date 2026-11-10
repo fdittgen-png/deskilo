@@ -225,17 +225,48 @@
     }
   },
   "calendarEventActionCreated": "created",
+  "@calendarEventActionCreated": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventActionModified": "changed",
+  "@calendarEventActionModified": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventActionCancelled": "cancelled",
+  "@calendarEventActionCancelled": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventActionSubmitted": "submitted",
+  "@calendarEventActionSubmitted": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventActionApproved": "approved",
+  "@calendarEventActionApproved": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventActionRejected": "rejected",
+  "@calendarEventActionRejected": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventStatusPending": "awaiting confirmation",
+  "@calendarEventStatusPending": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventStatusRejected": "rejected",
+  "@calendarEventStatusRejected": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarEventStatusExpired": "expired",
+  "@calendarEventStatusExpired": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "accessKindNegotiations": "Price negotiations",
+  "@accessKindNegotiations": {
+    "description": "Shown as a title in access sheet (calendar), and 1 other place."
+  },
   "accessRuleNegotiations": "You, the owners and the finance admins: {people}. Every read by someone else is on the record below.",
   "@accessRuleNegotiations": {
+    "description": "Shown as the line under a title in access sheet (calendar). Placeholders: {people} (String).",
     "placeholders": {
       "people": {
         "type": "String"
@@ -243,15 +274,40 @@
     }
   },
   "calendarViewAgenda": "Agenda",
+  "@calendarViewAgenda": {
+    "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
+  },
   "calendarViewWeek": "Week",
+  "@calendarViewWeek": {
+    "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
+  },
   "calendarViewMonth": "Month",
+  "@calendarViewMonth": {
+    "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
+  },
   "calendarToday": "Today",
+  "@calendarToday": {
+    "description": "Shown as a text in calendar feed (calendar), and 3 other places."
+  },
   "calendarTomorrow": "Tomorrow",
+  "@calendarTomorrow": {
+    "description": "Shown as a text in calendar feed (calendar), and 2 other places."
+  },
   "calendarYesterday": "Yesterday",
+  "@calendarYesterday": {
+    "description": "Shown as a text in calendar feed (calendar)."
+  },
   "calendarKindDue": "Payments due",
+  "@calendarKindDue": {
+    "description": "Shown as a text in calendar kind labels (core)."
+  },
   "calendarKindScheduled": "Scheduled expenses",
+  "@calendarKindScheduled": {
+    "description": "Shown as a text in calendar kind labels (core)."
+  },
   "calendarDueTitle": "Payment due · {number}",
   "@calendarDueTitle": {
+    "description": "Shown as a text in calendar item row (calendar). Placeholders: {number} (String).",
     "placeholders": {
       "number": {
         "type": "String"
@@ -260,6 +316,7 @@
   },
   "calendarScheduledTitle": "Scheduled expense · {name}",
   "@calendarScheduledTitle": {
+    "description": "Shown as a text in calendar item row (calendar). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"
@@ -267,8 +324,12 @@
     }
   },
   "calendarClosedDay": "Closed",
+  "@calendarClosedDay": {
+    "description": "Shown as a text in calendar feed (calendar), and 1 other place."
+  },
   "calendarClosedDayReason": "Closed — {reason}",
   "@calendarClosedDayReason": {
+    "description": "Shown as a text in calendar feed (calendar). Placeholders: {reason} (String).",
     "placeholders": {
       "reason": {
         "type": "String"
@@ -276,10 +337,20 @@
     }
   },
   "calendarGroupBookings": "Bookings & presence",
+  "@calendarGroupBookings": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarGroupActivity": "Alerts & messages",
+  "@calendarGroupActivity": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarGroupMoney": "Money",
+  "@calendarGroupMoney": {
+    "description": "Shown as a text in calendar item row (calendar)."
+  },
   "calendarAgendaEmpty": "Nothing planned in the next {days} days.",
   "@calendarAgendaEmpty": {
+    "description": "Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).",
     "placeholders": {
       "days": {
         "type": "int"
@@ -288,6 +359,7 @@
   },
   "calendarAgendaRange": "Next {days} days",
   "@calendarAgendaRange": {
+    "description": "Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).",
     "placeholders": {
       "days": {
         "type": "int"
@@ -295,7 +367,13 @@
     }
   },
   "calendarWeekEmpty": "Nothing this week.",
+  "@calendarWeekEmpty": {
+    "description": "Shown as a text in calendar hub screen (calendar)."
+  },
   "calendarDayEmpty": "Nothing on this day.",
+  "@calendarDayEmpty": {
+    "description": "Shown as a text in calendar hub screen (calendar), and 1 other place."
+  },
   "calendarItemCount": "{count, plural, =1{1 item} other{{count} items}}",
   "@calendarItemCount": {
     "placeholders": {
@@ -335,6 +413,9 @@
     "description": "#843 - verb of a refused decision"
   },
   "calendarViewAlerts": "Alerts",
+  "@calendarViewAlerts": {
+    "description": "Shown as a text in calendar view bar (calendar), and 1 other place."
+  },
   "calendarKindLease": "Lease dates",
   "@calendarKindLease": {
     "description": "#2569 lease reminders"

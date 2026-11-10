@@ -1,5 +1,8 @@
 {
   "myBadgeTitle": "My badge",
+  "@myBadgeTitle": {
+    "description": "Shown as a title in my badge tile (workspace)."
+  },
   "badgeSignInTitle": "Sign in with your badge",
   "@badgeSignInTitle": {
     "description": "#662 - badge sign-in"

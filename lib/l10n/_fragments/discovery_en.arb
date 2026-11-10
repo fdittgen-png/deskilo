@@ -1,13 +1,35 @@
 {
   "discoveryTitle": "Discover workspaces",
+  "@discoveryTitle": {
+    "description": "Shown as a title in directory screen (directory)."
+  },
   "discoveryBookmark": "Bookmark",
+  "@discoveryBookmark": {
+    "description": "Shown as a tooltip in saved place button (directory), and 1 other place."
+  },
   "discoverySaved": "Saved on this device",
+  "@discoverySaved": {
+    "description": "Shown as a button or chip label in saved place button (directory)."
+  },
   "discoveryRemoveBookmark": "Remove bookmark",
+  "@discoveryRemoveBookmark": {
+    "description": "Shown as a tooltip in saved place button (directory)."
+  },
   "discoveryView": "View",
+  "@discoveryView": {
+    "description": "Shown as a text in demo scope (core), and 1 other place."
+  },
   "discoverySavedFilter": "Saved",
+  "@discoverySavedFilter": {
+    "description": "Shown as a button or chip label in discovery list view (directory)."
+  },
   "discoveryNoSaved": "No places saved on this device yet.",
+  "@discoveryNoSaved": {
+    "description": "Shown as a text in discovery list view (directory)."
+  },
   "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
   "@discoveryLoadedCount": {
+    "description": "Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int).",
     "placeholders": {
       "loaded": {
         "type": "int"
@@ -25,6 +47,7 @@
   },
   "discoveryShowMoreFrom": "Show more from {source}",
   "@discoveryShowMoreFrom": {
+    "description": "Shown as a text in discovery list view (directory). Placeholders: {source} (String).",
     "placeholders": {
       "source": {
         "type": "String"
@@ -33,6 +56,7 @@
   },
   "discoverySourceFailed": "{source} did not answer. The places already shown stay.",
   "@discoverySourceFailed": {
+    "description": "Shown as a text in discovery list view (directory). Placeholders: {source} (String).",
     "placeholders": {
       "source": {
         "type": "String"
@@ -40,9 +64,16 @@
     }
   },
   "discoveryMoreDirectoriesFailed": "More directories could not be loaded.",
+  "@discoveryMoreDirectoriesFailed": {
+    "description": "Shown as a text in discovery list view (directory)."
+  },
   "discoveryMapDisclosureTitle": "Before the map opens",
+  "@discoveryMapDisclosureTitle": {
+    "description": "Shown as a title in map disclosure dialog (directory)."
+  },
   "discoveryMapDisclosureBody": "The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device's IP address and the part of the map you look at. Nothing is sent to them unless you continue.",
   "@discoveryMapDisclosureBody": {
+    "description": "Shown as a text in map disclosure dialog (directory). Placeholders: {tiles} (String), {geocoder} (String).",
     "placeholders": {
       "tiles": {
         "type": "String"
@@ -53,7 +84,19 @@
     }
   },
   "discoveryMapRemembered": "Your choice is kept on this device for this map provider.",
+  "@discoveryMapRemembered": {
+    "description": "Shown as a text in map disclosure dialog (directory)."
+  },
   "discoveryMapContinue": "Continue to the map",
+  "@discoveryMapContinue": {
+    "description": "Shown as a text in map disclosure dialog (directory)."
+  },
   "discoveryMapStay": "Stay with the list",
-  "discoveryShowAllLoaded": "Show all loaded places"
+  "@discoveryMapStay": {
+    "description": "Shown as a text in map disclosure dialog (directory)."
+  },
+  "discoveryShowAllLoaded": "Show all loaded places",
+  "@discoveryShowAllLoaded": {
+    "description": "Shown as a tooltip in directory map (directory)."
+  }
 }

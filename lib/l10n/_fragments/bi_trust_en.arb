@@ -1,20 +1,63 @@
 {
   "biRefresh": "Refresh data",
+  "@biRefresh": {
+    "description": "Shown as a tooltip in bi module section (workspace)."
+  },
   "biRecordedPast": "Past period · current records",
+  "@biRecordedPast": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biRecordedPresent": "Current period · includes future dates",
+  "@biRecordedPresent": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biRecordedFuture": "Future period · bookings on record",
+  "@biRecordedFuture": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biBookingBasis": "Reserved capacity measures bookings, not actual attendance.",
+  "@biBookingBasis": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biPastBasis": "Recomputed from records available now, not a snapshot of what was known then.",
+  "@biPastBasis": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biCurrentBasis": "The whole period is included. Comparison with a completed period is not like-for-like.",
+  "@biCurrentBasis": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biFutureBasis": "Existing bookings and current opening rules; not a demand forecast or guaranteed usage.",
+  "@biFutureBasis": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biDataPartial": "Partial data",
+  "@biDataPartial": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biDataStale": "Out of date",
+  "@biDataStale": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biDataUnavailable": "Unavailable",
+  "@biDataUnavailable": {
+    "description": "Shown as a text in capacity evidence (workspace), and 1 other place."
+  },
   "biDataNotRecorded": "Not recorded",
+  "@biDataNotRecorded": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biDataNotApplicable": "No applicable capacity",
+  "@biDataNotApplicable": {
+    "description": "Shown as a text in capacity evidence (workspace)."
+  },
   "biComparisonUnqualified": "Change unavailable: one period has partial or out-of-date data.",
+  "@biComparisonUnqualified": {
+    "description": "Shown as a text in bi module section (workspace)."
+  },
   "biSeatHoursFree": "{hours} unreserved seat-hours",
   "@biSeatHoursFree": {
+    "description": "Shown as a text in capacity evidence (workspace). Placeholders: {hours} (String).",
     "placeholders": {
       "hours": {
         "type": "String"
@@ -23,6 +66,7 @@
   },
   "biSeatHoursBlocked": "{hours} blocked seat-hours",
   "@biSeatHoursBlocked": {
+    "description": "Shown as a text in capacity evidence (workspace). Placeholders: {hours} (String).",
     "placeholders": {
       "hours": {
         "type": "String"
@@ -31,11 +75,15 @@
   },
   "biComputedWorkspaceTime": "Computed {date} · workspace time",
   "@biComputedWorkspaceTime": {
+    "description": "Shown as a text in capacity evidence (workspace). Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
       }
     }
   },
-  "statusNetExplanation": "This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together."
+  "statusNetExplanation": "This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.",
+  "@statusNetExplanation": {
+    "description": "Shown as the line under a title in workspace status screen (money)."
+  }
 }

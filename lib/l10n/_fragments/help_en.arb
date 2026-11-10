@@ -1,6 +1,12 @@
 {
   "helpTitle": "Help",
+  "@helpTitle": {
+    "description": "Shown as a tooltip in settings screen (profile), and 3 other places."
+  },
   "helpContents": "Contents",
+  "@helpContents": {
+    "description": "Shown as a tooltip in help screen (help)."
+  },
   "helpHintMessages": "Every conversation in one list, newest first. Tap the pencil to write to someone or start a group.",
   "@helpHintMessages": {
     "description": "#695 - messaging help hints"

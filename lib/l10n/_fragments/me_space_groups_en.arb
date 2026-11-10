@@ -1,18 +1,66 @@
 {
   "meGroupFavorites": "Favorites",
+  "@meGroupFavorites": {
+    "description": "Shown as a text in me spaces list (me), and 1 other place."
+  },
   "meGroupOther": "Other",
+  "@meGroupOther": {
+    "description": "Shown as a text in me spaces list (me)."
+  },
   "meGroupName": "Group name",
+  "@meGroupName": {
+    "description": "Shown as a title in group name dialog (me)."
+  },
   "meGroupAdd": "New group",
+  "@meGroupAdd": {
+    "description": "Shown as a title in me spaces list (me), and 1 other place."
+  },
   "meGroupRename": "Rename",
+  "@meGroupRename": {
+    "description": "Shown as a text in me spaces chrome (me)."
+  },
   "meGroupDelete": "Delete group",
+  "@meGroupDelete": {
+    "description": "Shown as a text in me spaces chrome (me)."
+  },
   "meGroupMove": "Move to group…",
+  "@meGroupMove": {
+    "description": "Shown as a text in space row controls (me)."
+  },
   "meGroupEmptyFavorites": "Give a space a heart and it waits for you here.",
+  "@meGroupEmptyFavorites": {
+    "description": "Shown as a text in me spaces list (me)."
+  },
   "meGroupEmptyOwn": "Move spaces here from their menu.",
+  "@meGroupEmptyOwn": {
+    "description": "Shown as a text in me spaces list (me)."
+  },
   "meSortHand": "My order",
+  "@meSortHand": {
+    "description": "Shown as a text in me spaces chrome (me)."
+  },
   "meSortRecent": "Recently used",
+  "@meSortRecent": {
+    "description": "Shown as a text in me spaces chrome (me)."
+  },
   "meSortRating": "Best rated",
+  "@meSortRating": {
+    "description": "Shown as a text in me spaces chrome (me)."
+  },
   "meSortAlphabet": "A–Z",
+  "@meSortAlphabet": {
+    "description": "Shown as a text in me spaces chrome (me)."
+  },
   "meSortTooltip": "Sort",
+  "@meSortTooltip": {
+    "description": "Shown as a tooltip in me spaces chrome (me)."
+  },
   "meSpacesSearch": "Search my spaces",
-  "meSpacesNoMatch": "No space matches."
+  "@meSpacesSearch": {
+    "description": "Shown as a button or chip label in personal spaces view (me), and 1 other place."
+  },
+  "meSpacesNoMatch": "No space matches.",
+  "@meSpacesNoMatch": {
+    "description": "Shown as a text in me spaces list (me)."
+  }
 }

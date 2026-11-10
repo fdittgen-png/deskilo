@@ -1,4 +1,10 @@
 {
   "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this space.",
-  "favoriteKeptOnDeviceUnreachable": "Kept on this device only: your account could not be reached. Try again later."
+  "@favoriteKeptOnDeviceRefused": {
+    "description": "Shown as a text in personal space card (me)."
+  },
+  "favoriteKeptOnDeviceUnreachable": "Kept on this device only: your account could not be reached. Try again later.",
+  "@favoriteKeptOnDeviceUnreachable": {
+    "description": "Shown as a text in personal space card (me)."
+  }
 }

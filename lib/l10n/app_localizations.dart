@@ -242,7 +242,7 @@ abstract class AppLocalizations {
   /// **'Version {version}'**
   String aboutVersion(String version);
 
-  /// No description provided for @accessKindNegotiations.
+  /// Shown as a title in access sheet (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Price negotiations'**
@@ -302,7 +302,7 @@ abstract class AppLocalizations {
   /// **'Only the people in the conversation — no role can read a conversation it is not part of.'**
   String get accessRuleMessages;
 
-  /// No description provided for @accessRuleNegotiations.
+  /// Shown as the line under a title in access sheet (calendar). Placeholders: {people} (String).
   ///
   /// In en, this message translates to:
   /// **'You, the owners and the finance admins: {people}. Every read by someone else is on the record below.'**
@@ -380,25 +380,25 @@ abstract class AppLocalizations {
   /// **'Accessories'**
   String get accessoriesTitle;
 
-  /// No description provided for @accountActivityEmpty.
+  /// Shown as a text in account activity screen (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'No records to display.'**
   String get accountActivityEmpty;
 
-  /// No description provided for @accountActivityFailed.
+  /// Shown as a text in account activity screen (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Could not load your financial history. Tap to retry.'**
   String get accountActivityFailed;
 
-  /// No description provided for @accountActivityScope.
+  /// Shown as a text in account activity screen (money).
   ///
   /// In en, this message translates to:
   /// **'All your profiles on this server, including previous memberships. Currencies are shown separately.'**
   String get accountActivityScope;
 
-  /// No description provided for @accountActivityTitle.
+  /// Shown as a text in account portal entry (directory), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'My consumption and payments'**
@@ -422,19 +422,19 @@ abstract class AppLocalizations {
   /// **'Your credit can settle open invoices — the workspace applies it when matching payments.'**
   String get accountImputationHint;
 
-  /// No description provided for @accountInvoiceIssued.
+  /// Shown as a text in account activity screen (money).
   ///
   /// In en, this message translates to:
   /// **'Invoice issued'**
   String get accountInvoiceIssued;
 
-  /// No description provided for @accountInvoiceRegrouped.
+  /// Shown as a text in account activity screen (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Included in a settlement invoice'**
   String get accountInvoiceRegrouped;
 
-  /// No description provided for @accountInvoiceVoided.
+  /// Shown as a text in account activity screen (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Invoice voided'**
@@ -452,25 +452,25 @@ abstract class AppLocalizations {
   /// **'{period} · {paid} paid'**
   String accountOpenPartial(String period, String paid);
 
-  /// No description provided for @accountPaymentAsk.
+  /// Shown as a text in personal payment provider (money).
   ///
   /// In en, this message translates to:
   /// **'Choose at checkout'**
   String get accountPaymentAsk;
 
-  /// No description provided for @accountPaymentConfirmed.
+  /// Shown as a text in account activity screen (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Payment confirmed'**
   String get accountPaymentConfirmed;
 
-  /// No description provided for @accountPaymentPreference.
+  /// Shown as the label of a field in personal payment provider (money).
   ///
   /// In en, this message translates to:
   /// **'Preferred online payment'**
   String get accountPaymentPreference;
 
-  /// No description provided for @accountPaymentsTitle.
+  /// Shown as a text in account activity screen (money).
   ///
   /// In en, this message translates to:
   /// **'Payments'**
@@ -482,13 +482,13 @@ abstract class AppLocalizations {
   /// **'Refund due from the workspace'**
   String get accountRefundDue;
 
-  /// No description provided for @accountUsageCorrected.
+  /// Shown as a text in account activity screen (money).
   ///
   /// In en, this message translates to:
   /// **'Corrected billable usage'**
   String get accountUsageCorrected;
 
-  /// No description provided for @accountUsageMinutes.
+  /// Shown as a text in account activity screen (money), and 1 other place. Placeholders: {minutes} (int).
   ///
   /// In en, this message translates to:
   /// **'{minutes} minutes'**
@@ -2276,7 +2276,7 @@ abstract class AppLocalizations {
   /// **'Reason (optional)'**
   String get availabilityClosureReason;
 
-  /// No description provided for @availabilityFullDayHours.
+  /// Shown as a title in availability sections (workspace).
   ///
   /// In en, this message translates to:
   /// **'Hours billed as a full day'**
@@ -2330,7 +2330,7 @@ abstract class AppLocalizations {
   /// **'Half days (morning & afternoon)'**
   String get availabilityGranularityHalfDay;
 
-  /// No description provided for @availabilityGranularityHours.
+  /// Shown as a text in space act form (reservations), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Real hours (exact from–to, half/full days as shortcuts)'**
@@ -2342,13 +2342,13 @@ abstract class AppLocalizations {
   /// **'Booking granularity'**
   String get availabilityGranularityTitle;
 
-  /// No description provided for @availabilityHalfBoundary.
+  /// Shown as a title in availability sections (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Half-day boundary'**
   String get availabilityHalfBoundary;
 
-  /// No description provided for @availabilityHalfDayHours.
+  /// Shown as a title in availability sections (workspace).
   ///
   /// In en, this message translates to:
   /// **'Hours billed as a half day'**
@@ -2378,7 +2378,7 @@ abstract class AppLocalizations {
   /// **'Open weekdays'**
   String get availabilityOpenWeekdays;
 
-  /// No description provided for @availabilityPoliciesTitle.
+  /// Shown as a text in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Booking policies'**
@@ -2390,31 +2390,31 @@ abstract class AppLocalizations {
   /// **'Availability'**
   String get availabilityTitle;
 
-  /// No description provided for @availabilityWorkEnd.
+  /// Shown as a title in availability sections (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Day ends'**
   String get availabilityWorkEnd;
 
-  /// No description provided for @availabilityWorkHoursDescription.
+  /// Shown as a text in availability sections (workspace).
   ///
   /// In en, this message translates to:
   /// **'The half-day and full-day windows everywhere — reservations, check-in and invoicing — follow these hours.'**
   String get availabilityWorkHoursDescription;
 
-  /// No description provided for @availabilityWorkHoursInvalid.
+  /// Shown as a text in availability actions (workspace).
   ///
   /// In en, this message translates to:
   /// **'The day must run start < half-day boundary < end.'**
   String get availabilityWorkHoursInvalid;
 
-  /// No description provided for @availabilityWorkHoursTitle.
+  /// Shown as a text in workspace configuration report strings (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Working hours'**
   String get availabilityWorkHoursTitle;
 
-  /// No description provided for @availabilityWorkStart.
+  /// Shown as a title in availability sections (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Day starts'**
@@ -2995,13 +2995,13 @@ abstract class AppLocalizations {
   /// **'No PIN yet'**
   String get badgePinNotSet;
 
-  /// No description provided for @badgePinReviewNotice.
+  /// Shown as a text in badge pin review notice (workspace).
   ///
   /// In en, this message translates to:
   /// **'This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.'**
   String get badgePinReviewNotice;
 
-  /// No description provided for @badgePinReviewUnavailable.
+  /// Shown as a text in badge pin review notice (workspace).
   ///
   /// In en, this message translates to:
   /// **'PIN review status is unavailable. Try again before assuming this PIN meets the current minimum.'**
@@ -4051,7 +4051,7 @@ abstract class AppLocalizations {
   /// **'booked time'**
   String get biBasisReservationTime;
 
-  /// No description provided for @biBookingBasis.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reserved capacity measures bookings, not actual attendance.'**
@@ -4231,7 +4231,7 @@ abstract class AppLocalizations {
   /// **'{period} is only partly recorded.'**
   String biComparedPartial(String period);
 
-  /// No description provided for @biComparisonUnqualified.
+  /// Shown as a text in bi module section (workspace).
   ///
   /// In en, this message translates to:
   /// **'Change unavailable: one period has partial or out-of-date data.'**
@@ -4243,7 +4243,7 @@ abstract class AppLocalizations {
   /// **'What it is made of'**
   String get biCompositionTitle;
 
-  /// No description provided for @biComputedWorkspaceTime.
+  /// Shown as a text in capacity evidence (workspace). Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Computed {date} · workspace time'**
@@ -4315,7 +4315,7 @@ abstract class AppLocalizations {
   /// **'recorded history'**
   String get biCoverageRecordedHistory;
 
-  /// No description provided for @biCurrentBasis.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'The whole period is included. Comparison with a completed period is not like-for-like.'**
@@ -4522,31 +4522,31 @@ abstract class AppLocalizations {
   /// **'Customer {rank}'**
   String biCustomerRank(String rank);
 
-  /// No description provided for @biDataNotApplicable.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'No applicable capacity'**
   String get biDataNotApplicable;
 
-  /// No description provided for @biDataNotRecorded.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Not recorded'**
   String get biDataNotRecorded;
 
-  /// No description provided for @biDataPartial.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Partial data'**
   String get biDataPartial;
 
-  /// No description provided for @biDataStale.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Out of date'**
   String get biDataStale;
 
-  /// No description provided for @biDataUnavailable.
+  /// Shown as a text in capacity evidence (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Unavailable'**
@@ -5692,7 +5692,7 @@ abstract class AppLocalizations {
   /// **'Expected to pay (owed + contracts)'**
   String get biForecastTitle;
 
-  /// No description provided for @biFutureBasis.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Existing bookings and current opening rules; not a demand forecast or guaranteed usage.'**
@@ -5884,7 +5884,7 @@ abstract class AppLocalizations {
   /// **'Open the source'**
   String get biOpenSource;
 
-  /// No description provided for @biPastBasis.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Recomputed from records available now, not a snapshot of what was known then.'**
@@ -6262,25 +6262,25 @@ abstract class AppLocalizations {
   /// **'Q{quarter} {year}'**
   String biQuarter(String quarter, String year);
 
-  /// No description provided for @biRecordedFuture.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Future period · bookings on record'**
   String get biRecordedFuture;
 
-  /// No description provided for @biRecordedPast.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Past period · current records'**
   String get biRecordedPast;
 
-  /// No description provided for @biRecordedPresent.
+  /// Shown as a text in capacity evidence (workspace).
   ///
   /// In en, this message translates to:
   /// **'Current period · includes future dates'**
   String get biRecordedPresent;
 
-  /// No description provided for @biRefresh.
+  /// Shown as a tooltip in bi module section (workspace).
   ///
   /// In en, this message translates to:
   /// **'Refresh data'**
@@ -6591,13 +6591,13 @@ abstract class AppLocalizations {
   /// **'Free during opening hours'**
   String get biSeatFree;
 
-  /// No description provided for @biSeatHoursBlocked.
+  /// Shown as a text in capacity evidence (workspace). Placeholders: {hours} (String).
   ///
   /// In en, this message translates to:
   /// **'{hours} blocked seat-hours'**
   String biSeatHoursBlocked(String hours);
 
-  /// No description provided for @biSeatHoursFree.
+  /// Shown as a text in capacity evidence (workspace). Placeholders: {hours} (String).
   ///
   /// In en, this message translates to:
   /// **'{hours} unreserved seat-hours'**
@@ -7296,7 +7296,7 @@ abstract class AppLocalizations {
   /// **'Add package'**
   String get billingAddPackage;
 
-  /// No description provided for @billingAdvanceDays.
+  /// Shown as a text in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Days before the month starts'**
@@ -7410,19 +7410,19 @@ abstract class AppLocalizations {
   /// **'Remove band'**
   String get billingRemoveBand;
 
-  /// No description provided for @billingRulesSaved.
+  /// Shown as a text in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Invoice schedule saved.'**
   String get billingRulesSaved;
 
-  /// No description provided for @billingRulesSubtitle.
+  /// Shown as the line under a title in workspace settings parameters (workspace).
   ///
   /// In en, this message translates to:
   /// **'When subscription and end-of-month invoices go out'**
   String get billingRulesSubtitle;
 
-  /// No description provided for @billingRulesTitle.
+  /// Shown as a title in workspace settings parameters (workspace), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Invoice schedule'**
@@ -7434,19 +7434,19 @@ abstract class AppLocalizations {
   /// **'Saved.'**
   String get billingSaved;
 
-  /// No description provided for @billingSubscriptionAuto.
+  /// Shown as a title in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Issue automatically'**
   String get billingSubscriptionAuto;
 
-  /// No description provided for @billingSubscriptionOff.
+  /// Shown as a text in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Switch on “Subscription invoices” in Features to use this.'**
   String get billingSubscriptionOff;
 
-  /// No description provided for @billingSubscriptionSection.
+  /// Shown as a text in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Subscription, in advance'**
@@ -7470,67 +7470,67 @@ abstract class AppLocalizations {
   /// **'Pricing & packages'**
   String get billingTitle;
 
-  /// No description provided for @billingUsageAuto.
+  /// Shown as a title in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Issue automatically'**
   String get billingUsageAuto;
 
-  /// No description provided for @billingUsageOff.
+  /// Shown as a text in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Switch on “End-of-month invoices” in Features to use this.'**
   String get billingUsageOff;
 
-  /// No description provided for @billingUsageSection.
+  /// Shown as a text in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'The month just finished'**
   String get billingUsageSection;
 
-  /// No description provided for @billingUsageWhenZero.
+  /// Shown as a title in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Also when there is nothing to pay'**
   String get billingUsageWhenZero;
 
-  /// No description provided for @billingUsageWhenZeroHint.
+  /// Shown as the line under a title in billing rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Sends a document reading zero, as confirmation that the subscription covered the whole month.'**
   String get billingUsageWhenZeroHint;
 
-  /// No description provided for @blockPersonAction.
+  /// Shown as a text in block person (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Block this person'**
   String get blockPersonAction;
 
-  /// No description provided for @blockPersonConfirm.
+  /// Shown as the body of a dialog in block person (directory). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Block {name}? Neither of you will see or reach the other. You can undo this in Me.'**
   String blockPersonConfirm(String name);
 
-  /// No description provided for @blockPersonDone.
+  /// Shown as a text in block person (directory).
   ///
   /// In en, this message translates to:
   /// **'Blocked.'**
   String get blockPersonDone;
 
-  /// No description provided for @blockedPeopleEmpty.
+  /// Shown as the line under a title in blocked people card (me).
   ///
   /// In en, this message translates to:
   /// **'You have not blocked anyone.'**
   String get blockedPeopleEmpty;
 
-  /// No description provided for @blockedPeopleHint.
+  /// Shown as a text in blocked people card (me).
   ///
   /// In en, this message translates to:
   /// **'A blocked person cannot see you or write to you, and you cannot see or reach them.'**
   String get blockedPeopleHint;
 
-  /// No description provided for @blockedPeopleTitle.
+  /// Shown as a title in blocked people card (me).
   ///
   /// In en, this message translates to:
   /// **'Blocked people'**
@@ -7896,13 +7896,13 @@ abstract class AppLocalizations {
   /// **'Bank'**
   String get bookRoleBank;
 
-  /// No description provided for @bookRoleCashDiscount.
+  /// Shown as a text in book chart sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Discounts granted'**
   String get bookRoleCashDiscount;
 
-  /// No description provided for @bookRoleClearing.
+  /// Shown as a text in book chart sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Payment provider (in transit)'**
@@ -7926,7 +7926,7 @@ abstract class AppLocalizations {
   /// **'Expenses'**
   String get bookRoleExpenses;
 
-  /// No description provided for @bookRoleFees.
+  /// Shown as a text in book chart sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Payment provider fees'**
@@ -7956,7 +7956,7 @@ abstract class AppLocalizations {
   /// **'Stock (goods for resale)'**
   String get bookRoleStock;
 
-  /// No description provided for @bookRoleSuppliers.
+  /// Shown as a text in book chart sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Suppliers'**
@@ -7974,13 +7974,13 @@ abstract class AppLocalizations {
   /// **'Output VAT'**
   String get bookRoleVatOutput;
 
-  /// No description provided for @bookRoleVatPending.
+  /// Shown as a text in book chart sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Output tax not yet due'**
   String get bookRoleVatPending;
 
-  /// No description provided for @bookRoleWriteOff.
+  /// Shown as a text in book chart sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Bad debts written off'**
@@ -8124,13 +8124,13 @@ abstract class AppLocalizations {
   /// **'Details'**
   String get bookingOpenDetails;
 
-  /// No description provided for @bookingOutsideHoursError.
+  /// Shown as a text in booking error text (reservations).
   ///
   /// In en, this message translates to:
   /// **'Bookings must stay within the working hours.'**
   String get bookingOutsideHoursError;
 
-  /// No description provided for @bookingOutsideOffError.
+  /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Bookings outside the opening hours are not allowed.'**
@@ -8148,7 +8148,7 @@ abstract class AppLocalizations {
   /// **'The seat is already booked during part of this time.'**
   String get bookingOverlapsAnother;
 
-  /// No description provided for @bookingPastError.
+  /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'This booking lies entirely in the past.'**
@@ -8286,7 +8286,7 @@ abstract class AppLocalizations {
   /// **'Reserved: {when}.'**
   String bookingReservedWhen(String when);
 
-  /// No description provided for @bookingSameDayError.
+  /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'A booking ends on the day it starts — book the next day separately.'**
@@ -8310,7 +8310,7 @@ abstract class AppLocalizations {
   /// **'Too short — a booking lasts at least {minutes} minutes.'**
   String bookingTooShortError(int minutes);
 
-  /// No description provided for @bookingWalkUpTodayError.
+  /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'A walk-up check-in must start today.'**
@@ -8412,13 +8412,13 @@ abstract class AppLocalizations {
   /// **'GST/HST and QST (Canada)'**
   String get caTaxTitle;
 
-  /// No description provided for @calendarAgendaEmpty.
+  /// Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
   /// **'Nothing planned in the next {days} days.'**
   String calendarAgendaEmpty(int days);
 
-  /// No description provided for @calendarAgendaRange.
+  /// Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
   /// **'Next {days} days'**
@@ -8442,13 +8442,13 @@ abstract class AppLocalizations {
   /// **'Cancel this occurrence'**
   String get calendarCancelOccurrence;
 
-  /// No description provided for @calendarClosedDay.
+  /// Shown as a text in calendar feed (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Closed'**
   String get calendarClosedDay;
 
-  /// No description provided for @calendarClosedDayReason.
+  /// Shown as a text in calendar feed (calendar). Placeholders: {reason} (String).
   ///
   /// In en, this message translates to:
   /// **'Closed — {reason}'**
@@ -8460,37 +8460,37 @@ abstract class AppLocalizations {
   /// **'Day'**
   String get calendarDay;
 
-  /// No description provided for @calendarDayEmpty.
+  /// Shown as a text in calendar hub screen (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Nothing on this day.'**
   String get calendarDayEmpty;
 
-  /// No description provided for @calendarDueTitle.
+  /// Shown as a text in calendar item row (calendar). Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Payment due · {number}'**
   String calendarDueTitle(String number);
 
-  /// No description provided for @calendarEventActionApproved.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'approved'**
   String get calendarEventActionApproved;
 
-  /// No description provided for @calendarEventActionCancelled.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'cancelled'**
   String get calendarEventActionCancelled;
 
-  /// No description provided for @calendarEventActionCreated.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'created'**
   String get calendarEventActionCreated;
 
-  /// No description provided for @calendarEventActionModified.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'changed'**
@@ -8502,13 +8502,13 @@ abstract class AppLocalizations {
   /// **'refused'**
   String get calendarEventActionRefused;
 
-  /// No description provided for @calendarEventActionRejected.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'rejected'**
   String get calendarEventActionRejected;
 
-  /// No description provided for @calendarEventActionSubmitted.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'submitted'**
@@ -8520,19 +8520,19 @@ abstract class AppLocalizations {
   /// **'validated'**
   String get calendarEventActionValidated;
 
-  /// No description provided for @calendarEventStatusExpired.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'expired'**
   String get calendarEventStatusExpired;
 
-  /// No description provided for @calendarEventStatusPending.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'awaiting confirmation'**
   String get calendarEventStatusPending;
 
-  /// No description provided for @calendarEventStatusRejected.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'rejected'**
@@ -8550,19 +8550,19 @@ abstract class AppLocalizations {
   /// **'Everyone'**
   String get calendarEveryoneTab;
 
-  /// No description provided for @calendarGroupActivity.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'Alerts & messages'**
   String get calendarGroupActivity;
 
-  /// No description provided for @calendarGroupBookings.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'Bookings & presence'**
   String get calendarGroupBookings;
 
-  /// No description provided for @calendarGroupMoney.
+  /// Shown as a text in calendar item row (calendar).
   ///
   /// In en, this message translates to:
   /// **'Money'**
@@ -8592,7 +8592,7 @@ abstract class AppLocalizations {
   /// **'Consumption'**
   String get calendarKindConsumption;
 
-  /// No description provided for @calendarKindDue.
+  /// Shown as a text in calendar kind labels (core).
   ///
   /// In en, this message translates to:
   /// **'Payments due'**
@@ -8640,7 +8640,7 @@ abstract class AppLocalizations {
   /// **'Bookings'**
   String get calendarKindReservation;
 
-  /// No description provided for @calendarKindScheduled.
+  /// Shown as a text in calendar kind labels (core).
   ///
   /// In en, this message translates to:
   /// **'Scheduled expenses'**
@@ -8748,7 +8748,7 @@ abstract class AppLocalizations {
   /// **'Reservation actions'**
   String get calendarReservationActions;
 
-  /// No description provided for @calendarScheduledTitle.
+  /// Shown as a text in calendar item row (calendar). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Scheduled expense · {name}'**
@@ -8778,13 +8778,13 @@ abstract class AppLocalizations {
   /// **'Timeline view'**
   String get calendarTimelineView;
 
-  /// No description provided for @calendarToday.
+  /// Shown as a text in calendar feed (calendar), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Today'**
   String get calendarToday;
 
-  /// No description provided for @calendarTomorrow.
+  /// Shown as a text in calendar feed (calendar), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Tomorrow'**
@@ -8802,31 +8802,31 @@ abstract class AppLocalizations {
   /// **'Validated: {what}'**
   String calendarValidationValidated(String what);
 
-  /// No description provided for @calendarViewAgenda.
+  /// Shown as a text in calendar view bar (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Agenda'**
   String get calendarViewAgenda;
 
-  /// No description provided for @calendarViewAlerts.
+  /// Shown as a text in calendar view bar (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Alerts'**
   String get calendarViewAlerts;
 
-  /// No description provided for @calendarViewMonth.
+  /// Shown as a text in calendar view bar (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Month'**
   String get calendarViewMonth;
 
-  /// No description provided for @calendarViewWeek.
+  /// Shown as a text in calendar view bar (calendar), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Week'**
   String get calendarViewWeek;
 
-  /// No description provided for @calendarWeekEmpty.
+  /// Shown as a text in calendar hub screen (calendar).
   ///
   /// In en, this message translates to:
   /// **'Nothing this week.'**
@@ -8838,7 +8838,7 @@ abstract class AppLocalizations {
   /// **'Who can see this'**
   String get calendarWhoCanSee;
 
-  /// No description provided for @calendarYesterday.
+  /// Shown as a text in calendar feed (calendar).
   ///
   /// In en, this message translates to:
   /// **'Yesterday'**
@@ -9606,13 +9606,13 @@ abstract class AppLocalizations {
   /// **'Yes'**
   String get compareYes;
 
-  /// No description provided for @composerAttach.
+  /// Shown as a tooltip in member note composer (workspace).
   ///
   /// In en, this message translates to:
   /// **'Attach a reference'**
   String get composerAttach;
 
-  /// No description provided for @composerCharsLeft.
+  /// Shown as a field counter in member note composer (workspace). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 character left} other{{count} characters left}}'**
@@ -9630,103 +9630,103 @@ abstract class AppLocalizations {
   /// **'Mention someone'**
   String get composerMention;
 
-  /// No description provided for @connectionCancelled.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'The account changed meanwhile, so this answer was discarded.'**
   String get connectionCancelled;
 
-  /// No description provided for @connectionChangedIdentity.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This server is no longer the one you connected. Its actions are paused until you verify it again.'**
   String get connectionChangedIdentity;
 
-  /// No description provided for @connectionChecking.
+  /// Shown as a text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Checking…'**
   String get connectionChecking;
 
-  /// No description provided for @connectionCurrentServer.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This is the server this app already uses.'**
   String get connectionCurrentServer;
 
-  /// No description provided for @connectionDenied.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This server refused the account. Check the sign-in details, or disconnect it.'**
   String get connectionDenied;
 
-  /// No description provided for @connectionExpired.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'Your sign-in to this server has ended. Sign in to this server again.'**
   String get connectionExpired;
 
-  /// No description provided for @connectionInvalidEndpoint.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This address or key is not a valid server.'**
   String get connectionInvalidEndpoint;
 
-  /// No description provided for @connectionMalformed.
+  /// Shown as a text in connection outcome text (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'This server answered something this app cannot read.'**
   String get connectionMalformed;
 
-  /// No description provided for @connectionNotConnected.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This server is not connected on this device.'**
   String get connectionNotConnected;
 
-  /// No description provided for @connectionRetry.
+  /// Shown as a text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Try again'**
   String get connectionRetry;
 
-  /// No description provided for @connectionSessionNotSaved.
+  /// Shown as a text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'The action was done, but this device could not save the server\'s sign-in. You may be asked to sign in again.'**
   String get connectionSessionNotSaved;
 
-  /// No description provided for @connectionSignInAgain.
+  /// Shown as a text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Sign in again'**
   String get connectionSignInAgain;
 
-  /// No description provided for @connectionUnavailable.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This server is not answering right now. Your other servers are not affected.'**
   String get connectionUnavailable;
 
-  /// No description provided for @connectionUnknownOutcome.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'The connection dropped after the request was sent. It may have been applied: check before trying again.'**
   String get connectionUnknownOutcome;
 
-  /// No description provided for @connectionUnsupported.
+  /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
   /// **'This server\'s version cannot be connected from this app. Update the app, or ask the server\'s operator to update the server.'**
   String get connectionUnsupported;
 
-  /// No description provided for @connectionUsable.
+  /// Shown as a text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Connected'**
   String get connectionUsable;
 
-  /// No description provided for @connectionVerifyAgain.
+  /// Shown as a text in connections screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Verify again'**
@@ -9978,7 +9978,7 @@ abstract class AppLocalizations {
   /// **'Admin'**
   String get conversationAdmin;
 
-  /// No description provided for @conversationArchive.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Archive'**
@@ -10050,13 +10050,13 @@ abstract class AppLocalizations {
   /// **'This conversation could not be checked because its server did not answer. Nothing was opened.'**
   String get conversationLinkUnreachable;
 
-  /// No description provided for @conversationLoadEarlier.
+  /// Shown as a button or chip label in conversation thread (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Load earlier messages'**
   String get conversationLoadEarlier;
 
-  /// No description provided for @conversationMarkUnread.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Mark as unread'**
@@ -10068,7 +10068,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 member} other{{count} members}}'**
   String conversationMemberCount(int count);
 
-  /// No description provided for @conversationMute.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Mute notifications'**
@@ -10080,7 +10080,7 @@ abstract class AppLocalizations {
   /// **'Muted'**
   String get conversationMutedBadge;
 
-  /// No description provided for @conversationPin.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Pin to top'**
@@ -10116,13 +10116,13 @@ abstract class AppLocalizations {
   /// **'Delivery not confirmed: the message may or may not have arrived. Read the conversation again before you send it again.'**
   String get conversationSendUnconfirmed;
 
-  /// No description provided for @conversationToday.
+  /// Shown as a text in conversation day separator (workspace).
   ///
   /// In en, this message translates to:
   /// **'Today'**
   String get conversationToday;
 
-  /// No description provided for @conversationUnarchive.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Restore from archive'**
@@ -10134,13 +10134,13 @@ abstract class AppLocalizations {
   /// **'Member'**
   String get conversationUnknownMember;
 
-  /// No description provided for @conversationUnmute.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Unmute'**
   String get conversationUnmute;
 
-  /// No description provided for @conversationUnpin.
+  /// Shown as a title in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Unpin'**
@@ -11484,7 +11484,7 @@ abstract class AppLocalizations {
   /// **'DEVELOPMENT'**
   String get developmentWatermark;
 
-  /// No description provided for @directoryApproximate.
+  /// Shown as a text in directory map (directory).
   ///
   /// In en, this message translates to:
   /// **'Approximate address location'**
@@ -11538,79 +11538,79 @@ abstract class AppLocalizations {
   /// **'Seen {minutes} min ago'**
   String directoryLastSeenMinutes(int minutes);
 
-  /// No description provided for @directoryLinkAction.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Link'**
   String get directoryLinkAction;
 
-  /// No description provided for @directoryLinkCheck.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Check'**
   String get directoryLinkCheck;
 
-  /// No description provided for @directoryLinkConnect.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Connect the reference server'**
   String get directoryLinkConnect;
 
-  /// No description provided for @directoryLinkDone.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Linked. The spaces it publishes are now listed in Discover.'**
   String get directoryLinkDone;
 
-  /// No description provided for @directoryLinkIntro.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.'**
   String get directoryLinkIntro;
 
-  /// No description provided for @directoryLinkNeedsAccount.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'A link is recorded on the reference server: connect your account there first.'**
   String get directoryLinkNeedsAccount;
 
-  /// No description provided for @directoryLinkStateDirectory.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'This is the reference server: the spaces it publishes are always listed.'**
   String get directoryLinkStateDirectory;
 
-  /// No description provided for @directoryLinkStateLinkable.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Can be linked: it answers, and publishes spaces this app can read.'**
   String get directoryLinkStateLinkable;
 
-  /// No description provided for @directoryLinkStateLinked.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Linked: the spaces it publishes are listed in Discover.'**
   String get directoryLinkStateLinked;
 
-  /// No description provided for @directoryLinkStateUnreachable.
+  /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Cannot be linked yet: it does not answer, or its version cannot publish spaces.'**
   String get directoryLinkStateUnreachable;
 
-  /// No description provided for @directoryLocate.
+  /// Shown as a tooltip in directory row (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Locate on map'**
   String get directoryLocate;
 
-  /// No description provided for @directoryLocating.
+  /// Shown as a text in directory map (directory).
   ///
   /// In en, this message translates to:
   /// **'Locating the public address…'**
   String get directoryLocating;
 
-  /// No description provided for @directoryLocationMissing.
+  /// Shown as a text in directory map (directory).
   ///
   /// In en, this message translates to:
   /// **'Location unavailable. The owner can publish precise map coordinates.'**
@@ -11634,7 +11634,7 @@ abstract class AppLocalizations {
   /// **'Open WhatsApp group'**
   String get directoryOpenGroup;
 
-  /// No description provided for @directoryPinsMissing.
+  /// Shown as a text in directory map (directory). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
@@ -11676,31 +11676,31 @@ abstract class AppLocalizations {
   /// **'Chat on WhatsApp'**
   String get directoryWhatsapp;
 
-  /// No description provided for @discoveryBookmark.
+  /// Shown as a tooltip in saved place button (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Bookmark'**
   String get discoveryBookmark;
 
-  /// No description provided for @discoveryLoadedCount.
+  /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int).
   ///
   /// In en, this message translates to:
   /// **'Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}'**
   String discoveryLoadedCount(int loaded, int shown, int answered, int sources);
 
-  /// No description provided for @discoveryMapContinue.
+  /// Shown as a text in map disclosure dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Continue to the map'**
   String get discoveryMapContinue;
 
-  /// No description provided for @discoveryMapDisclosureBody.
+  /// Shown as a text in map disclosure dialog (directory). Placeholders: {tiles} (String), {geocoder} (String).
   ///
   /// In en, this message translates to:
   /// **'The map is drawn by {tiles}, and addresses without coordinates are placed by {geocoder}. The map provider receives connection and viewed-area information: your device\'s IP address and the part of the map you look at. Nothing is sent to them unless you continue.'**
   String discoveryMapDisclosureBody(String tiles, String geocoder);
 
-  /// No description provided for @discoveryMapDisclosureTitle.
+  /// Shown as a title in map disclosure dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Before the map opens'**
@@ -11712,7 +11712,7 @@ abstract class AppLocalizations {
   /// **'Map tiles: {tiles}. Address lookup: {geocoder}.'**
   String discoveryMapProvenance(String tiles, String geocoder);
 
-  /// No description provided for @discoveryMapRemembered.
+  /// Shown as a text in map disclosure dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Your choice is kept on this device for this map provider.'**
@@ -11736,67 +11736,67 @@ abstract class AppLocalizations {
   /// **'chosen by this server\'s operator'**
   String get discoveryMapSourceManaged;
 
-  /// No description provided for @discoveryMapStay.
+  /// Shown as a text in map disclosure dialog (directory).
   ///
   /// In en, this message translates to:
   /// **'Stay with the list'**
   String get discoveryMapStay;
 
-  /// No description provided for @discoveryMoreDirectoriesFailed.
+  /// Shown as a text in discovery list view (directory).
   ///
   /// In en, this message translates to:
   /// **'More directories could not be loaded.'**
   String get discoveryMoreDirectoriesFailed;
 
-  /// No description provided for @discoveryNoSaved.
+  /// Shown as a text in discovery list view (directory).
   ///
   /// In en, this message translates to:
   /// **'No places saved on this device yet.'**
   String get discoveryNoSaved;
 
-  /// No description provided for @discoveryRemoveBookmark.
+  /// Shown as a tooltip in saved place button (directory).
   ///
   /// In en, this message translates to:
   /// **'Remove bookmark'**
   String get discoveryRemoveBookmark;
 
-  /// No description provided for @discoverySaved.
+  /// Shown as a button or chip label in saved place button (directory).
   ///
   /// In en, this message translates to:
   /// **'Saved on this device'**
   String get discoverySaved;
 
-  /// No description provided for @discoverySavedFilter.
+  /// Shown as a button or chip label in discovery list view (directory).
   ///
   /// In en, this message translates to:
   /// **'Saved'**
   String get discoverySavedFilter;
 
-  /// No description provided for @discoveryShowAllLoaded.
+  /// Shown as a tooltip in directory map (directory).
   ///
   /// In en, this message translates to:
   /// **'Show all loaded places'**
   String get discoveryShowAllLoaded;
 
-  /// No description provided for @discoveryShowMoreFrom.
+  /// Shown as a text in discovery list view (directory). Placeholders: {source} (String).
   ///
   /// In en, this message translates to:
   /// **'Show more from {source}'**
   String discoveryShowMoreFrom(String source);
 
-  /// No description provided for @discoverySourceFailed.
+  /// Shown as a text in discovery list view (directory). Placeholders: {source} (String).
   ///
   /// In en, this message translates to:
   /// **'{source} did not answer. The places already shown stay.'**
   String discoverySourceFailed(String source);
 
-  /// No description provided for @discoveryTitle.
+  /// Shown as a title in directory screen (directory).
   ///
   /// In en, this message translates to:
   /// **'Discover workspaces'**
   String get discoveryTitle;
 
-  /// No description provided for @discoveryView.
+  /// Shown as a text in demo scope (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'View'**
@@ -11916,13 +11916,13 @@ abstract class AppLocalizations {
   /// **'Link (https://…)'**
   String get documentsUrlLabel;
 
-  /// No description provided for @dunningAutomatic.
+  /// Shown as a title in dunning rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Automatic reminders'**
   String get dunningAutomatic;
 
-  /// No description provided for @dunningAutomaticHint.
+  /// Shown as the line under a title in dunning rules dialog (money).
   ///
   /// In en, this message translates to:
   /// **'Once a day, invoices past their recorded payment term get their next reminder level by themselves — for the amount still outstanding, never while a payment is pending or the invoice is on hold. Invoices without a recorded term are left to you. Off: you send each reminder yourself.'**
@@ -12984,31 +12984,31 @@ abstract class AppLocalizations {
   /// **'Seat name'**
   String get editorSeatNameLabel;
 
-  /// No description provided for @editorSeatNfcDuplicate.
+  /// Shown as a text in seat properties sheet (editor).
   ///
   /// In en, this message translates to:
   /// **'This tag is already linked to another chair.'**
   String get editorSeatNfcDuplicate;
 
-  /// No description provided for @editorSeatNfcHelp.
+  /// Shown as the helper line under a field in seat properties sheet (editor).
   ///
   /// In en, this message translates to:
   /// **'Tag uid in hex — leave empty for no tag.'**
   String get editorSeatNfcHelp;
 
-  /// No description provided for @editorSeatNfcLabel.
+  /// Shown as the label of a field in seat properties sheet (editor).
   ///
   /// In en, this message translates to:
   /// **'NFC/RFID tag'**
   String get editorSeatNfcLabel;
 
-  /// No description provided for @editorSeatNfcRead.
+  /// Shown as a tooltip in seat properties sheet (editor).
   ///
   /// In en, this message translates to:
   /// **'Read a tag now'**
   String get editorSeatNfcRead;
 
-  /// No description provided for @editorSeatNfcReadFailed.
+  /// Shown as a text in seat properties sheet (editor).
   ///
   /// In en, this message translates to:
   /// **'Could not start the tag reader.'**
@@ -13788,7 +13788,7 @@ abstract class AppLocalizations {
   /// **'Auto-validated'**
   String get eventAutoValidated;
 
-  /// No description provided for @eventBadgeSecurityAlert.
+  /// Shown as a text in event lines (events). Placeholders: {failures} (int), {minutes} (int).
   ///
   /// In en, this message translates to:
   /// **'Badge sign-in paused after {failures} failed attempts in {minutes} minutes. Review the badges and ask members to use email while the lock clears.'**
@@ -13806,13 +13806,13 @@ abstract class AppLocalizations {
     String reason,
   );
 
-  /// No description provided for @eventExpenseDeviation.
+  /// Shown as a text in event lines (events).
   ///
   /// In en, this message translates to:
   /// **'validated {scheduled} — {reason}'**
   String eventExpenseDeviation(Object reason, Object scheduled);
 
-  /// No description provided for @eventExpenseRepartitionLine.
+  /// Shown as a text in event lines (events). Placeholders: {actor} (String), {title} (String), {amount} (String), {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}'**
@@ -13823,7 +13823,7 @@ abstract class AppLocalizations {
     int count,
   );
 
-  /// No description provided for @eventExpenseScheduleLine.
+  /// Shown as a text in event lines (events).
   ///
   /// In en, this message translates to:
   /// **'{actor} schedules “{title}” — {amount} recurring'**
@@ -13847,7 +13847,7 @@ abstract class AppLocalizations {
   /// **'Invoice {number} paid — {amount}'**
   String eventInvoicePaid(String number, String amount);
 
-  /// No description provided for @eventInvoiceReminderLine.
+  /// Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}: invoice {number} — {amount} still due'**
@@ -13924,13 +13924,13 @@ abstract class AppLocalizations {
   /// **'{actor} asks to set payment conditions: {terms}'**
   String eventPaymentTermsChangeLine(String actor, String terms);
 
-  /// No description provided for @eventPriceNegotiationItems.
+  /// Shown as a text in event lines (events). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 item} other{{count} items}}'**
   String eventPriceNegotiationItems(int count);
 
-  /// No description provided for @eventPriceNegotiationLine.
+  /// Shown as a text in event lines (events). Placeholders: {actor} (String), {member} (String), {terms} (String).
   ///
   /// In en, this message translates to:
   /// **'{actor} proposes a deal for {member}: {terms}'**
@@ -14050,7 +14050,7 @@ abstract class AppLocalizations {
   /// **'Adjustment'**
   String get eventTypeAdjustment;
 
-  /// No description provided for @eventTypeBadgeSecurityAlert.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Badge sign-in protection'**
@@ -14068,13 +14068,13 @@ abstract class AppLocalizations {
   /// **'Expense'**
   String get eventTypeExpense;
 
-  /// No description provided for @eventTypeExpenseRepartition.
+  /// Shown as a text in bill view (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Shared expense'**
   String get eventTypeExpenseRepartition;
 
-  /// No description provided for @eventTypeExpenseSchedule.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Scheduled expense'**
@@ -14098,7 +14098,7 @@ abstract class AppLocalizations {
   /// **'Payment match undone'**
   String get eventTypeInvoicePaymentReversed;
 
-  /// No description provided for @eventTypeInvoiceReminder.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Payment reminder'**
@@ -14128,7 +14128,7 @@ abstract class AppLocalizations {
   /// **'Permission matrix change'**
   String get eventTypeMatrixChange;
 
-  /// No description provided for @eventTypeMemberJoin.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'New member'**
@@ -14158,7 +14158,7 @@ abstract class AppLocalizations {
   /// **'Payment conditions'**
   String get eventTypePaymentTermsChange;
 
-  /// No description provided for @eventTypePriceNegotiation.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Price negotiation'**
@@ -14344,43 +14344,43 @@ abstract class AppLocalizations {
   /// **'Name the new item.'**
   String get expenseMissingSupplyName;
 
-  /// No description provided for @expenseSupplyHint.
+  /// Shown as the line under a title in expense sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Coffee capsules, vacuum bags… Once validated, the item goes on the shelf as a consumable service: members who use it pay for it.'**
   String get expenseSupplyHint;
 
-  /// No description provided for @expenseSupplyItem.
+  /// Shown as the label of a field in expense sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Item'**
   String get expenseSupplyItem;
 
-  /// No description provided for @expenseSupplyNewItem.
+  /// Shown as a text in expense sheet (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'New item'**
   String get expenseSupplyNewItem;
 
-  /// No description provided for @expenseSupplyQuantity.
+  /// Shown as a button or chip label in expense sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Quantity'**
   String get expenseSupplyQuantity;
 
-  /// No description provided for @expenseSupplyToggle.
+  /// Shown as a title in expense sheet (money).
   ///
   /// In en, this message translates to:
   /// **'This is a supply for the space'**
   String get expenseSupplyToggle;
 
-  /// No description provided for @expenseSupplyUnitPrice.
+  /// Shown as a button or chip label in expense sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Unit price (what a consumption costs)'**
   String get expenseSupplyUnitPrice;
 
-  /// No description provided for @expenseSupplyUnitPriceHint.
+  /// Shown as a text in expense sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Prefilled from amount ÷ quantity; round up if you like.'**
@@ -14572,13 +14572,13 @@ abstract class AppLocalizations {
   /// **'{key, select, reserved{Booked} checkedIn{Checked in} completed{Completed} cancelled{Cancelled} released{Released} active{Active} paused{Paused} pending{Pending} exited{Left} applied{Applied} confirmed{Confirmed} rejected{Declined} expired{Expired} created{Created} modified{Changed} submitted{Submitted} approved{Approved} accepted{Accepted} declined{Declined} charge{Charge} credit{Credit} subscription{Subscription} overage{Over quota} expense{Expense} payment{Payment} adjustment{Adjustment} service{Service} package{Package} refund{Refund} reimbursement{Reimbursement} seat{Seat} room{Room} parking{Parking} standard{Standard} ev{Electric} accessible{Accessible} workspace{Workspace} n{North} e{East} s{South} w{West} blocked{Not allowed} payg{Pay as you go} none{No} passive{Successor} founder{Founder} invited{Invited} full{Invoice} usage{Usage} settlement{Settlement} other{{key}}}'**
   String exportValueName(String key);
 
-  /// No description provided for @favoriteKeptOnDeviceRefused.
+  /// Shown as a text in personal space card (me).
   ///
   /// In en, this message translates to:
   /// **'Kept on this device only: your account cannot save this space.'**
   String get favoriteKeptOnDeviceRefused;
 
-  /// No description provided for @favoriteKeptOnDeviceUnreachable.
+  /// Shown as a text in personal space card (me).
   ///
   /// In en, this message translates to:
   /// **'Kept on this device only: your account could not be reached. Try again later.'**
@@ -14644,13 +14644,13 @@ abstract class AppLocalizations {
   /// **'Admins issue invoices too. The owner always can.'**
   String get featureAdminInvoicingDesc;
 
-  /// No description provided for @featureAdminLevelAssign.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Admins can assign levels'**
   String get featureAdminLevelAssign;
 
-  /// No description provided for @featureAdminLevelAssignDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Admins assign level reservations to members. The owner always can.'**
@@ -14758,25 +14758,25 @@ abstract class AppLocalizations {
   /// **'Admins and owners book seats for other members.'**
   String get featureBookForOthersDesc;
 
-  /// No description provided for @featureBookingGateDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Every booking surface — plan, day, week and month views, the booking sheet, the kiosk, a QR or NFC scan — checks the availability parameters before offering a window and names the reason when it cannot; closed days draw as closed in every view, a legend names the seat states, and admins may check members out where the policy allows.'**
   String get featureBookingGateDesc;
 
-  /// No description provided for @featureBookingGateTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Booking gate'**
   String get featureBookingGateTitle;
 
-  /// No description provided for @featureBookingPoliciesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Owner-configurable booking behavior: past bookings, minute bookings outside the working hours, and check-out by admins.'**
   String get featureBookingPoliciesDesc;
 
-  /// No description provided for @featureBookingPoliciesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Booking policies'**
@@ -14830,13 +14830,13 @@ abstract class AppLocalizations {
   /// **'Validations on the calendar'**
   String get featureCalendarValidationsTitle;
 
-  /// No description provided for @featureCalendarViewsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'The Calendar tab as agenda, week and month: per-day markers by kind, closed days drawn as closed, Today / Tomorrow headers, payment due dates and scheduled expenses in the feed. Off: the plain day-or-range selector over the feed.'**
   String get featureCalendarViewsDesc;
 
-  /// No description provided for @featureCalendarViewsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Calendar views'**
@@ -15172,13 +15172,13 @@ abstract class AppLocalizations {
   /// **'Activity feed and pending confirmations.'**
   String get featureEventsTabDesc;
 
-  /// No description provided for @featureExpenseRepartitionDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'A shared expense (a cleaning bill, an internet upgrade, a broken chair) split over the members — equal shares, pro rata of the subscription, pro rata of usage, or a key per member — with every share previewed before it is booked. The shares land as charge lines on the next usage invoice; a reversal books credit notes. Through the validation rules. Off: no distribution.'**
   String get featureExpenseRepartitionDesc;
 
-  /// No description provided for @featureExpenseRepartitionTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Shared expenses'**
@@ -15208,13 +15208,13 @@ abstract class AppLocalizations {
   /// **'Rented rooms'**
   String get featureExternalRoomsTitle;
 
-  /// No description provided for @featureFinanceFacesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'My finances reads as four faces — Statement, Payments, Invoices, Documents — under one month chooser, each with its own help. Off: a single column.'**
   String get featureFinanceFacesDesc;
 
-  /// No description provided for @featureFinanceFacesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Statement, payments, invoices, documents'**
@@ -15232,13 +15232,13 @@ abstract class AppLocalizations {
   /// **'Purchases in another currency'**
   String get featureForeignCurrencyPurchasesTitle;
 
-  /// No description provided for @featureFormHelpHintsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'A dismissible tip carousel on every main screen, and a small ? beside every parameter and entry field — one tap opens the guide at the right section. Restorable from Settings.'**
   String get featureFormHelpHintsDesc;
 
-  /// No description provided for @featureFormHelpHintsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Help hints'**
@@ -15334,37 +15334,37 @@ abstract class AppLocalizations {
   /// **'Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.'**
   String get featureInvoiceAddressWindowDesc;
 
-  /// No description provided for @featureInvoiceJourneyDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.'**
   String get featureInvoiceJourneyDesc;
 
-  /// No description provided for @featureInvoiceJourneyTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'The journey of an invoice'**
   String get featureInvoiceJourneyTitle;
 
-  /// No description provided for @featureInvoicePdfTemplate.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invoice PDF template'**
   String get featureInvoicePdfTemplate;
 
-  /// No description provided for @featureInvoicePdfTemplateDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Owner-written intro and footer text on the invoice PDF. Never touches the e-invoice XML.'**
   String get featureInvoicePdfTemplateDesc;
 
-  /// No description provided for @featureInvoiceSettlementDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Several of a member\'s open invoices can be regrouped into one they pay. The originals stay in the archive, traceable position by position, and stop being chased separately.'**
   String get featureInvoiceSettlementDesc;
 
-  /// No description provided for @featureInvoiceSettlementTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Regroup invoices'**
@@ -15382,25 +15382,25 @@ abstract class AppLocalizations {
   /// **'Immutable, signed invoices in an archive — download or share as PDF.'**
   String get featureInvoicingDesc;
 
-  /// No description provided for @featureInvoicingWizardDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'One guided month-close process for the finance person: a start-of-month run for the subscriptions paid ahead and an end-of-month run for usage and extra charges — review, issue in one batch, send, remind what is due, register and validate payments, match them to invoices, regroup, write off or refund, and a summary with whose move is left. Off: the separate screens.'**
   String get featureInvoicingWizardDesc;
 
-  /// No description provided for @featureInvoicingWizardTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invoicing wizard'**
   String get featureInvoicingWizardTitle;
 
-  /// No description provided for @featureKioskMemberPhotosDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'The kiosk receipt shows the member\'s profile photo — the visual wrong-badge check.'**
   String get featureKioskMemberPhotosDesc;
 
-  /// No description provided for @featureKioskMemberPhotosTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Member photos at the kiosk'**
@@ -15436,13 +15436,13 @@ abstract class AppLocalizations {
   /// **'Invoices, proformas, statements, agreements, payments and consumption reports and reminders without a design print as standard letters: letterhead, recipient in the envelope window, body from 90 mm, a fixed footer.'**
   String get featureLetterStandardDesc;
 
-  /// No description provided for @featureLevelBooking.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Desk, office & level reservations'**
   String get featureLevelBooking;
 
-  /// No description provided for @featureLevelBookingDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Reserve a whole desk, office or floor as one booking, priced per half-day. Grant the right per member.'**
@@ -15580,13 +15580,13 @@ abstract class AppLocalizations {
   /// **'Export & erasure'**
   String get featureMemberDataExportTitle;
 
-  /// No description provided for @featureMemberEnvironmentsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'When you invite somebody, choose whether they also reach the production space. They join the test space either way, and the role still has to allow production access.'**
   String get featureMemberEnvironmentsDesc;
 
-  /// No description provided for @featureMemberEnvironmentsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Choose the environments a person is activated on'**
@@ -15604,37 +15604,37 @@ abstract class AppLocalizations {
   /// **'Get started card'**
   String get featureMemberGettingStartedTitle;
 
-  /// No description provided for @featureMemberNotifications.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Member notifications'**
   String get featureMemberNotifications;
 
-  /// No description provided for @featureMemberNotificationsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Messaging between members: private and group conversations, read receipts, links to a reservation or a space; admins can notify all admins, owner included.'**
   String get featureMemberNotificationsDesc;
 
-  /// No description provided for @featureMemberOriginDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'A discreet line on a member saying how their membership began: founded the space, joined by invitation, or had the profile created for them. It is not a status.'**
   String get featureMemberOriginDesc;
 
-  /// No description provided for @featureMemberOriginTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'How each member got here'**
   String get featureMemberOriginTitle;
 
-  /// No description provided for @featureMemberPageDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'One page per member: photo and presence, when they were last seen, what they have booked and what comes next, quick actions to message, WhatsApp or e-mail them, contact and money cards, and for admins every setting grouped by topic with its current value. Off: the profile sheet and the Members & plans action sheet.'**
   String get featureMemberPageDesc;
 
-  /// No description provided for @featureMemberPageTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Member page'**
@@ -15688,13 +15688,13 @@ abstract class AppLocalizations {
   /// **'Message forwarding'**
   String get featureMessageForwardingTitle;
 
-  /// No description provided for @featureMessageGesturesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Swipe a message right to quote it in your reply; swipe left to take your own message back while nobody has read it yet, after a confirmation. Off: messages are deleted by holding them.'**
   String get featureMessageGesturesDesc;
 
-  /// No description provided for @featureMessageGesturesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Swipe to quote or take back'**
@@ -15712,13 +15712,13 @@ abstract class AppLocalizations {
   /// **'Mentions in groups'**
   String get featureMessageMentionsTitle;
 
-  /// No description provided for @featureMessagesHubDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'One inbox bar (All / Unread / Archived and search), pin, mute, archive and mark-unread on a thread, the conversation as a full page with date separators, an attach menu and a kept draft in the composer, a person opened with one tap. Off: the two-bar inbox and the sheet thread.'**
   String get featureMessagesHubDesc;
 
-  /// No description provided for @featureMessagesHubTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Messages, reworked'**
@@ -15790,13 +15790,13 @@ abstract class AppLocalizations {
   /// **'Members check in at a kiosk by tapping an RFID/NFC card. Needs an Android device with NFC.'**
   String get featureNfcBadgesDesc;
 
-  /// No description provided for @featureNfcSeatTagsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'A physical NFC/RFID tag on a chair resolves to its seat like the printed QR card; owners fill the tag field by tapping the chip.'**
   String get featureNfcSeatTagsDesc;
 
-  /// No description provided for @featureNfcSeatTagsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'NFC/RFID chair tags'**
@@ -15880,13 +15880,13 @@ abstract class AppLocalizations {
   /// **'Parking'**
   String get featureParkingTitle;
 
-  /// No description provided for @featurePaymentRemindersDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Open invoices past the configured term get their reminder levels automatically — an alert in the member\'s feed and a push, once a day. Off: reminders stay a manual action.'**
   String get featurePaymentRemindersDesc;
 
-  /// No description provided for @featurePaymentRemindersTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Automatic payment reminders'**
@@ -15952,13 +15952,13 @@ abstract class AppLocalizations {
   /// **'Draw the room on the plan'**
   String get featurePlanDecorTitle;
 
-  /// No description provided for @featurePlanMemberPhotosDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Occupied seats on the Plan tab and Reserve hub show the occupant\'s profile photo instead of the initial.'**
   String get featurePlanMemberPhotosDesc;
 
-  /// No description provided for @featurePlanMemberPhotosTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Member photos on the plan'**
@@ -15988,13 +15988,13 @@ abstract class AppLocalizations {
   /// **'Premises lease'**
   String get featurePremisesLeaseTitle;
 
-  /// No description provided for @featurePriceNegotiationsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'The tariff is the default; a member can hold their own conditions — monthly fee, overage rate, discount on supplements, unit prices per service and package, the occupation percentage — proposed by whoever holds Manage commercial agreements and validated by the rules. Seen by the member, the owners and the holders of View commercial agreements; every read is logged.'**
   String get featurePriceNegotiationsDesc;
 
-  /// No description provided for @featurePriceNegotiationsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Price negotiations'**
@@ -16072,13 +16072,13 @@ abstract class AppLocalizations {
   /// **'Deliver pending confirmations to members\' devices.'**
   String get featurePushNotificationsDesc;
 
-  /// No description provided for @featureQrBadgesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Printable QR badge cards for the kiosk, beside the NFC/RFID cards.'**
   String get featureQrBadgesDesc;
 
-  /// No description provided for @featureQrBadgesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'QR badges'**
@@ -16132,13 +16132,13 @@ abstract class AppLocalizations {
   /// **'Export and import report designs'**
   String get featureReportDesignExchangeTitle;
 
-  /// No description provided for @featureReportDesignerDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'The report editor as a full-screen designer: elements edited in place in their real typography, drag to reorder, an insert palette, a searchable field picker, undo and redo, image size and alignment, a discard guard, presets and reset behind a confirmation, the template error spelled out, design and preview side by side on a wide screen. Off: the editor sheet.'**
   String get featureReportDesignerDesc;
 
-  /// No description provided for @featureReportDesignerTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Report designer'**
@@ -16222,13 +16222,13 @@ abstract class AppLocalizations {
   /// **'Sales tax (United States)'**
   String get featureSalesTaxTitle;
 
-  /// No description provided for @featureScheduledExpensesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Recurring expenses (internet, phone, electricity): any member schedules one with its rule (every X days/weeks/months/years, X times or until a date); the schedule is validated once, and every due date is presented to the member — the validated amount counts immediately, a different amount explains itself and passes the expense validation.'**
   String get featureScheduledExpensesDesc;
 
-  /// No description provided for @featureScheduledExpensesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Scheduled expenses'**
@@ -16270,13 +16270,13 @@ abstract class AppLocalizations {
   /// **'Service catalog and consumption tracking.'**
   String get featureServicesDesc;
 
-  /// No description provided for @featureSettlementFoldDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invoices regrouped into one disappear from the lists as peers and nest under the regrouping invoice, which carries all their lines. On a regrouped invoice every operation is off; the one thing left is its PDF, stamped with the number it was regrouped in. Off: the regrouped invoices stay listed beside the regrouping one.'**
   String get featureSettlementFoldDesc;
 
-  /// No description provided for @featureSettlementFoldTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Regrouped invoices fold'**
@@ -16342,13 +16342,13 @@ abstract class AppLocalizations {
   /// **'Printable QR cards per seat, desk, office and level — scan to reserve or check in.'**
   String get featureSpaceQrCodesDesc;
 
-  /// No description provided for @featureSubscriptionInvoicesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.'**
   String get featureSubscriptionInvoicesDesc;
 
-  /// No description provided for @featureSubscriptionInvoicesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Subscription invoices'**
@@ -16366,13 +16366,13 @@ abstract class AppLocalizations {
   /// **'Place of supply per service'**
   String get featureSupplyClassificationTitle;
 
-  /// No description provided for @featureSupplyExpensesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'An expense can be a supply for the space (coffee capsules, vacuum bags…): once validated it restocks or creates a consumable service with a unit price, and consumptions count the stock down.'**
   String get featureSupplyExpensesDesc;
 
-  /// No description provided for @featureSupplyExpensesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Supplies from expenses'**
@@ -16474,7 +16474,7 @@ abstract class AppLocalizations {
   /// **'What every space needs. On from the first day.'**
   String get featureTierCoreDesc;
 
-  /// No description provided for @featureTierPlatform.
+  /// Shown as a text in feature tile (workspace).
   ///
   /// In en, this message translates to:
   /// **'Platform'**
@@ -16486,37 +16486,37 @@ abstract class AppLocalizations {
   /// **'Asked for, never assumed. Switch on what this space actually runs.'**
   String get featureTierPlatformDesc;
 
-  /// No description provided for @featureUiAnimationsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Smooth transitions and state animations across the app. Off means every change is instant; the device\'s reduced-motion setting always wins.'**
   String get featureUiAnimationsDesc;
 
-  /// No description provided for @featureUiAnimationsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Interface animations'**
   String get featureUiAnimationsTitle;
 
-  /// No description provided for @featureUniqueMonogramsDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'An avatar without a photo shows initials that belong to one member: first and family initial, a further letter when two members would clash, numbers only as a last resort. Off: the first letter alone, repeated across everyone who shares it.'**
   String get featureUniqueMonogramsDesc;
 
-  /// No description provided for @featureUniqueMonogramsTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Distinct avatar initials'**
   String get featureUniqueMonogramsTitle;
 
-  /// No description provided for @featureUsageInvoicesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Once a month is over, what it actually cost beyond the subscription — overage, accessories, services — is invoiced separately. Off: those stay on the whole-month invoice.'**
   String get featureUsageInvoicesDesc;
 
-  /// No description provided for @featureUsageInvoicesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'End-of-month invoices'**
@@ -16558,13 +16558,13 @@ abstract class AppLocalizations {
   /// **'Chained validations'**
   String get featureValidationChainTitle;
 
-  /// No description provided for @featureValidationScopesDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Each validation rule names who validates: the admins, listed persons of any role, or every member — plus how many. Off: owner and admins as before.'**
   String get featureValidationScopesDesc;
 
-  /// No description provided for @featureValidationScopesTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Validators by role or person'**
@@ -16678,13 +16678,13 @@ abstract class AppLocalizations {
   /// **'Members share their WhatsApp number on their profile; one tap on a member opens a chat with it; the community group link in the directory. No server-side WhatsApp integration.'**
   String get featureWhatsappIntegrationDesc;
 
-  /// No description provided for @featureWorkingHours.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Working hours'**
   String get featureWorkingHours;
 
-  /// No description provided for @featureWorkingHoursDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Configure the working day and offer exact-hours booking; off keeps the 8:00–17:00 defaults.'**
@@ -16702,13 +16702,13 @@ abstract class AppLocalizations {
   /// **'Workspace colours'**
   String get featureWorkspaceBrandingTitle;
 
-  /// No description provided for @featureWorkspaceLibraryDesc.
+  /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
   /// **'Save this space\'s floor plan and how it works as a template, choose who may see it, invite people by e-mail, and start from what others offer.'**
   String get featureWorkspaceLibraryDesc;
 
-  /// No description provided for @featureWorkspaceLibraryTitle.
+  /// Shown as a text in feature names (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace library'**
@@ -17158,7 +17158,7 @@ abstract class AppLocalizations {
   /// **'the device refused the write'**
   String get fileSaveFailureWrite;
 
-  /// No description provided for @financesAllSpaces.
+  /// Shown as a button or chip label in my finances parts (money).
   ///
   /// In en, this message translates to:
   /// **'All spaces'**
@@ -17242,7 +17242,7 @@ abstract class AppLocalizations {
   /// **'{workspace}: {count, plural, =1{1 document} other{{count} documents}}'**
   String financesCoverageWorkspace(String workspace, int count);
 
-  /// No description provided for @financesDevSection.
+  /// Shown as a text in my finances parts (money).
   ///
   /// In en, this message translates to:
   /// **'Development spaces — test data, not counted above'**
@@ -17272,19 +17272,19 @@ abstract class AppLocalizations {
   /// **'Hide amount'**
   String get financesHideAmount;
 
-  /// No description provided for @financesLinkAction.
+  /// Shown as a text in my finances link card (money). Placeholders: {space} (String).
   ///
   /// In en, this message translates to:
   /// **'Open for {space}'**
   String financesLinkAction(String space);
 
-  /// No description provided for @financesLinkBody.
+  /// Shown as a text in my finances link card (money).
   ///
   /// In en, this message translates to:
   /// **'Your invoices, reminders and payments from every space are together in Me › My finances.'**
   String get financesLinkBody;
 
-  /// No description provided for @financesLinkTitle.
+  /// Shown as a text in my finances link card (money).
   ///
   /// In en, this message translates to:
   /// **'Your finances across spaces'**
@@ -18460,13 +18460,13 @@ abstract class AppLocalizations {
   /// **'Voided'**
   String get handoffVoided;
 
-  /// No description provided for @helpContents.
+  /// Shown as a tooltip in help screen (help).
   ///
   /// In en, this message translates to:
   /// **'Contents'**
   String get helpContents;
 
-  /// No description provided for @helpDotTooltip.
+  /// Shown as a tooltip in help dot (core).
   ///
   /// In en, this message translates to:
   /// **'Open the guide'**
@@ -18478,25 +18478,25 @@ abstract class AppLocalizations {
   /// **'Guided tasks'**
   String get helpGuidedTasks;
 
-  /// No description provided for @helpHintAvailability.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Set the open weekdays and working hours, and add closure days nobody can book.'**
   String get helpHintAvailability;
 
-  /// No description provided for @helpHintAvailabilityTopic.
+  /// Shown as a text in help tips (core), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Availability'**
   String get helpHintAvailabilityTopic;
 
-  /// No description provided for @helpHintBadges.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Issue a printable QR badge or register an NFC card; revoke lost badges any time.'**
   String get helpHintBadges;
 
-  /// No description provided for @helpHintBadgesTopic.
+  /// Shown as a text in help tips (core), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'NFC badge'**
@@ -18508,79 +18508,79 @@ abstract class AppLocalizations {
   /// **'Pick a day or a range: everything dated that you may see, in one list, each row opening its source.'**
   String get helpHintCalendar;
 
-  /// No description provided for @helpHintCalendarTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Calendar'**
   String get helpHintCalendarTopic;
 
-  /// No description provided for @helpHintDismiss.
+  /// Shown as a tooltip in help hint (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Dismiss hint'**
   String get helpHintDismiss;
 
-  /// No description provided for @helpHintEditor.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.'**
   String get helpHintEditor;
 
-  /// No description provided for @helpHintEditorTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'space editor'**
   String get helpHintEditorTopic;
 
-  /// No description provided for @helpHintEvents.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.'**
   String get helpHintEvents;
 
-  /// No description provided for @helpHintEventsTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'confirmations'**
   String get helpHintEventsTopic;
 
-  /// No description provided for @helpHintFeatures.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Switch workspace functionality on or off — every member\'s app follows immediately.'**
   String get helpHintFeatures;
 
-  /// No description provided for @helpHintFeaturesTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Features'**
   String get helpHintFeaturesTopic;
 
-  /// No description provided for @helpHintLearnMore.
+  /// Shown as a text in help tips (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Learn more'**
   String get helpHintLearnMore;
 
-  /// No description provided for @helpHintMembers.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Invite members, set their plan percentage and role, and manage their badges.'**
   String get helpHintMembers;
 
-  /// No description provided for @helpHintMembersTip4Topic.
+  /// Shown as the topic of a help symbol in roles screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Role management'**
   String get helpHintMembersTip4Topic;
 
-  /// No description provided for @helpHintMembersTipNegotiationTopic.
+  /// Shown as the topic of a help symbol in members screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Price negotiations'**
   String get helpHintMembersTipNegotiationTopic;
 
-  /// No description provided for @helpHintMembersTopic.
+  /// Shown as a text in help tips (core), and 6 other places.
   ///
   /// In en, this message translates to:
   /// **'Members & plans'**
@@ -18622,103 +18622,103 @@ abstract class AppLocalizations {
   /// **'Messages'**
   String get helpHintMessagesTopic;
 
-  /// No description provided for @helpHintMoney.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Your monthly bill: browse months with the arrows; pay, export or share from here.'**
   String get helpHintMoney;
 
-  /// No description provided for @helpHintMoneyDocuments.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Your paperwork: your conditions, the payments report, the month\'s statement as PDF, the document library.'**
   String get helpHintMoneyDocuments;
 
-  /// No description provided for @helpHintMoneyDocumentsTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Documents'**
   String get helpHintMoneyDocumentsTopic;
 
-  /// No description provided for @helpHintMoneyInvoices.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.'**
   String get helpHintMoneyInvoices;
 
-  /// No description provided for @helpHintMoneyInvoicesTip2Topic.
+  /// Shown as the topic of a help symbol in dunning rules dialog (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Automatic payment reminders'**
   String get helpHintMoneyInvoicesTip2Topic;
 
-  /// No description provided for @helpHintMoneyInvoicesTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Invoices'**
   String get helpHintMoneyInvoicesTopic;
 
-  /// No description provided for @helpHintMoneyPayments.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.'**
   String get helpHintMoneyPayments;
 
-  /// No description provided for @helpHintMoneyPaymentsTip3Topic.
+  /// Shown as the topic of a help symbol in payment config screen (money).
   ///
   /// In en, this message translates to:
   /// **'online payments'**
   String get helpHintMoneyPaymentsTip3Topic;
 
-  /// No description provided for @helpHintMoneyPaymentsTipSupplyTopic.
+  /// Shown as the topic of a help symbol in services screen (money).
   ///
   /// In en, this message translates to:
   /// **'Services and Accessories'**
   String get helpHintMoneyPaymentsTipSupplyTopic;
 
-  /// No description provided for @helpHintMoneyPaymentsTopic.
+  /// Shown as a text in help tips (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Payment'**
   String get helpHintMoneyPaymentsTopic;
 
-  /// No description provided for @helpHintMoneyStatement.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.'**
   String get helpHintMoneyStatement;
 
-  /// No description provided for @helpHintMoneyStatementTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Statement'**
   String get helpHintMoneyStatementTopic;
 
-  /// No description provided for @helpHintMoneyTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Money'**
   String get helpHintMoneyTopic;
 
-  /// No description provided for @helpHintNextTip.
+  /// Shown as a tooltip in help hint (core).
   ///
   /// In en, this message translates to:
   /// **'Next tip'**
   String get helpHintNextTip;
 
-  /// No description provided for @helpHintPlan.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'The live floor plan: tap a free seat to book it, tap your own booking to check in.'**
   String get helpHintPlan;
 
-  /// No description provided for @helpHintPlanTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'floor plan'**
   String get helpHintPlanTopic;
 
-  /// No description provided for @helpHintPrevTip.
+  /// Shown as a tooltip in help hint (core).
   ///
   /// In en, this message translates to:
   /// **'Previous tip'**
@@ -18736,85 +18736,85 @@ abstract class AppLocalizations {
   /// **'Privacy'**
   String get helpHintPrivacyTopic;
 
-  /// No description provided for @helpHintReserve.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Pick a day and time window, then tap a free seat to book it.'**
   String get helpHintReserve;
 
-  /// No description provided for @helpHintReserveTip4Topic.
+  /// Shown as the topic of a help symbol in booking sheet parts (reservations).
   ///
   /// In en, this message translates to:
   /// **'How booking behaves'**
   String get helpHintReserveTip4Topic;
 
-  /// No description provided for @helpHintReserveTopic.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Reserve hub'**
   String get helpHintReserveTopic;
 
-  /// No description provided for @helpHintRestoreTitle.
+  /// Shown as a title in account settings tiles (profile).
   ///
   /// In en, this message translates to:
   /// **'Show help hints again'**
   String get helpHintRestoreTitle;
 
-  /// No description provided for @helpHintRestored.
+  /// Shown as a text in account settings tiles (profile).
   ///
   /// In en, this message translates to:
   /// **'Help hints will be shown again.'**
   String get helpHintRestored;
 
-  /// No description provided for @helpHintValidation.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Decide which actions need confirmation, who confirms, and how many approvals it takes.'**
   String get helpHintValidation;
 
-  /// No description provided for @helpHintValidationTopic.
+  /// Shown as a text in help tips (core), and 8 other places.
   ///
   /// In en, this message translates to:
   /// **'confirmations'**
   String get helpHintValidationTopic;
 
-  /// No description provided for @helpHintWorkspace.
+  /// Shown as a text in help tips (core).
   ///
   /// In en, this message translates to:
   /// **'Country, currency, language and billing details — documents and taxes follow these settings.'**
   String get helpHintWorkspace;
 
-  /// No description provided for @helpHintWorkspaceTopic.
+  /// Shown as a text in help tips (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Workspace settings'**
   String get helpHintWorkspaceTopic;
 
-  /// No description provided for @helpTitle.
+  /// Shown as a tooltip in settings screen (profile), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Help'**
   String get helpTitle;
 
-  /// No description provided for @helpTopicAccounting.
+  /// Shown as the topic of a help symbol in accounting capability card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Accounting exports'**
   String get helpTopicAccounting;
 
-  /// No description provided for @helpTopicBilling.
+  /// Shown as the topic of a help symbol in billing editor sections (money).
   ///
   /// In en, this message translates to:
   /// **'Billing'**
   String get helpTopicBilling;
 
-  /// No description provided for @helpTopicBookingLimits.
+  /// Shown as the topic of a help symbol in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Booking limits'**
   String get helpTopicBookingLimits;
 
-  /// No description provided for @helpTopicBookingPolicies.
+  /// Shown as the topic of a help symbol in availability policies (workspace), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Booking policies'**
@@ -18826,13 +18826,13 @@ abstract class AppLocalizations {
   /// **'Deploying'**
   String get helpTopicDeployment;
 
-  /// No description provided for @helpTopicDocumentLibrary.
+  /// Shown as the topic of a help symbol in documents screen (workspace), and 4 other places.
   ///
   /// In en, this message translates to:
   /// **'document library'**
   String get helpTopicDocumentLibrary;
 
-  /// No description provided for @helpTopicEinvoice.
+  /// Shown as a text in legal identity screen (money), and 7 other places.
   ///
   /// In en, this message translates to:
   /// **'e-invoice'**
@@ -18844,7 +18844,7 @@ abstract class AppLocalizations {
   /// **'Environments'**
   String get helpTopicEnvironments;
 
-  /// No description provided for @helpTopicInstances.
+  /// Shown as the topic of a help symbol in new instance screen (profile).
   ///
   /// In en, this message translates to:
   /// **'Instances'**
@@ -18856,19 +18856,19 @@ abstract class AppLocalizations {
   /// **'Kiosk mode'**
   String get helpTopicKiosk;
 
-  /// No description provided for @helpTopicLegalIdentity.
+  /// Shown as the topic of a help symbol in legal identity screen (money), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Legal identity'**
   String get helpTopicLegalIdentity;
 
-  /// No description provided for @helpTopicReadiness.
+  /// Shown as the topic of a help symbol in e invoice sheet (money).
   ///
   /// In en, this message translates to:
   /// **'readiness gate'**
   String get helpTopicReadiness;
 
-  /// No description provided for @helpTopicReportEditor.
+  /// Shown as the topic of a help symbol in invoice template sheet (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'report editor'**
@@ -18880,31 +18880,31 @@ abstract class AppLocalizations {
   /// **'Positioned layouts'**
   String get helpTopicReportLayout;
 
-  /// No description provided for @helpTopicScheduledExpenses.
+  /// Shown as the topic of a help symbol in expense schedule sheet (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Scheduled expenses'**
   String get helpTopicScheduledExpenses;
 
-  /// No description provided for @helpTopicServer.
+  /// Shown as the topic of a help symbol in server choice screen (profile), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'your own server'**
   String get helpTopicServer;
 
-  /// No description provided for @helpTopicSettings.
+  /// Shown as a text in settings screen (profile), and 17 other places.
   ///
   /// In en, this message translates to:
   /// **'Settings & profile'**
   String get helpTopicSettings;
 
-  /// No description provided for @helpTopicTrace.
+  /// Shown as the topic of a help symbol in developer screen (profile).
   ///
   /// In en, this message translates to:
   /// **'The trace'**
   String get helpTopicTrace;
 
-  /// No description provided for @helpTopicVat.
+  /// Shown as a dialog in member vat treatment (workspace), and 10 other places.
   ///
   /// In en, this message translates to:
   /// **'VAT'**
@@ -18916,13 +18916,13 @@ abstract class AppLocalizations {
   /// **'The window-envelope contract'**
   String get helpTopicWindowEnvelope;
 
-  /// No description provided for @helpTopicWorkingHours.
+  /// Shown as the topic of a help symbol in availability sections (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Working hours'**
   String get helpTopicWorkingHours;
 
-  /// No description provided for @helpTopicWorkspaceId.
+  /// Shown as the topic of a help symbol in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Workspace ID'**
@@ -19522,43 +19522,43 @@ abstract class AppLocalizations {
   /// **'Use your Deskilo identity to sign in to {host}.'**
   String identityConsentAsks(String host);
 
-  /// No description provided for @identityConsentCompleting.
+  /// Shown as a text in oauth consent screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Saving your choice…'**
   String get identityConsentCompleting;
 
-  /// No description provided for @identityConsentPurpose.
+  /// Shown as a text in oauth consent screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Workspace and assistant access are approved separately.'**
   String get identityConsentPurpose;
 
-  /// No description provided for @identityConsentReturnFailed.
+  /// Shown as a text in oauth consent screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Could not open the destination.'**
   String get identityConsentReturnFailed;
 
-  /// No description provided for @identityConsentReturning.
+  /// Shown as a text in oauth consent screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Returning to sign-in…'**
   String get identityConsentReturning;
 
-  /// No description provided for @identityConsentTitle.
+  /// Shown as a title in oauth consent screen (auth).
   ///
   /// In en, this message translates to:
   /// **'Continue with Deskilo'**
   String get identityConsentTitle;
 
-  /// No description provided for @identityConsentUnavailable.
+  /// Shown as a text in oauth consent screen (auth).
   ///
   /// In en, this message translates to:
   /// **'This sign-in request is unavailable. Return to the destination and start again.'**
   String get identityConsentUnavailable;
 
-  /// No description provided for @inboxAlertsTab.
+  /// Shown as a text in shell tabs (app), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Alerts'**
@@ -19570,19 +19570,19 @@ abstract class AppLocalizations {
   /// **'Chats'**
   String get inboxChatsTab;
 
-  /// No description provided for @inboxFilterAll.
+  /// Shown as a text in inbox header (directory).
   ///
   /// In en, this message translates to:
   /// **'All'**
   String get inboxFilterAll;
 
-  /// No description provided for @inboxFilterArchived.
+  /// Shown as a text in inbox header (directory).
   ///
   /// In en, this message translates to:
   /// **'Archived'**
   String get inboxFilterArchived;
 
-  /// No description provided for @inboxFilterUnread.
+  /// Shown as a text in inbox header (directory), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Unread'**
@@ -19600,13 +19600,13 @@ abstract class AppLocalizations {
   /// **'More actions'**
   String get inboxMoreActions;
 
-  /// No description provided for @inboxNoArchived.
+  /// Shown as a text in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'No archived conversations.'**
   String get inboxNoArchived;
 
-  /// No description provided for @inboxNoUnread.
+  /// Shown as a text in unified inbox view (directory).
   ///
   /// In en, this message translates to:
   /// **'Nothing unread — you are up to date.'**
@@ -20854,49 +20854,49 @@ abstract class AppLocalizations {
   /// **'{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book\'s currency} unknownDocument{a posting books the unknown document {subject}} sourceTooLong{the document number {subject} is over 20 characters, which the file does not take} unusableAccount{the account {subject} cannot be written in the file} other{{subject}}}'**
   String interchangeBlock(String kind, String subject);
 
-  /// No description provided for @invitationAlreadyMember.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {workspace} (String).
   ///
   /// In en, this message translates to:
   /// **'You are already a member of {workspace}.'**
   String invitationAlreadyMember(String workspace);
 
-  /// No description provided for @invitationApprovalRequired.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'An administrator approves new members before the workspace opens.'**
   String get invitationApprovalRequired;
 
-  /// No description provided for @invitationApprovalUnknown.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Whether an administrator must approve is not known.'**
   String get invitationApprovalUnknown;
 
-  /// No description provided for @invitationBadServer.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'The server in this invitation is not valid. Ask for a new invitation.'**
   String get invitationBadServer;
 
-  /// No description provided for @invitationChangeAccount.
+  /// Shown as a text in invitation join panel (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Change account'**
   String get invitationChangeAccount;
 
-  /// No description provided for @invitationCheckAnother.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Use another invitation'**
   String get invitationCheckAnother;
 
-  /// No description provided for @invitationCheckFailed.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'The invitation could not be checked — status not updated. Nothing was changed; try again.'**
   String get invitationCheckFailed;
 
-  /// No description provided for @invitationContinue.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Continue to this workspace'**
@@ -20914,115 +20914,115 @@ abstract class AppLocalizations {
     String inviteLink,
   );
 
-  /// No description provided for @invitationEnvironmentProduction.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Production workspace'**
   String get invitationEnvironmentProduction;
 
-  /// No description provided for @invitationEnvironmentTest.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Test workspace'**
   String get invitationEnvironmentTest;
 
-  /// No description provided for @invitationExpired.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'This invitation has expired. Ask the person who sent it for a new one.'**
   String get invitationExpired;
 
-  /// No description provided for @invitationInvalid.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).
   ///
   /// In en, this message translates to:
   /// **'No workspace on {host} knows this invitation. Check it, or ask the organizer for their server link.'**
   String invitationInvalid(String host);
 
-  /// No description provided for @invitationJoinButton.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Join workspace'**
   String get invitationJoinButton;
 
-  /// No description provided for @invitationJoinUnconfirmed.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'The result could not be confirmed. Join again to check — the invitation is not used twice.'**
   String get invitationJoinUnconfirmed;
 
-  /// No description provided for @invitationJoiningAs.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {account} (String).
   ///
   /// In en, this message translates to:
   /// **'Joining as {account}'**
   String invitationJoiningAs(String account);
 
-  /// No description provided for @invitationNewerVersion.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'This invitation was made by a newer version of DesKilo. Update the app, then open it again.'**
   String get invitationNewerVersion;
 
-  /// No description provided for @invitationOtherServer.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).
   ///
   /// In en, this message translates to:
   /// **'This invitation is for another server: {host}.'**
   String invitationOtherServer(String host);
 
-  /// No description provided for @invitationPasteButton.
+  /// Shown as a button or chip label in onboarding join form (workspace).
   ///
   /// In en, this message translates to:
   /// **'Paste'**
   String get invitationPasteButton;
 
-  /// No description provided for @invitationPaused.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {workspace} (String).
   ///
   /// In en, this message translates to:
   /// **'Your membership in {workspace} is paused. Only an administrator there can resume it.'**
   String invitationPaused(String workspace);
 
-  /// No description provided for @invitationReviewButton.
+  /// Shown as a text in onboarding join form (workspace).
   ///
   /// In en, this message translates to:
   /// **'Review invitation'**
   String get invitationReviewButton;
 
-  /// No description provided for @invitationReviewTitle.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Check before you join'**
   String get invitationReviewTitle;
 
-  /// No description provided for @invitationRevoked.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'This workspace code was replaced. Ask the person who sent it for the current one.'**
   String get invitationRevoked;
 
-  /// No description provided for @invitationRoleAdmin.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Offered role: administrator'**
   String get invitationRoleAdmin;
 
-  /// No description provided for @invitationRoleMember.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Offered role: member'**
   String get invitationRoleMember;
 
-  /// No description provided for @invitationRoleUnknown.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Offered role: not known yet'**
   String get invitationRoleUnknown;
 
-  /// No description provided for @invitationServerLabel.
+  /// Shown as a text in invitation join panel (workspace), and 1 other place. Placeholders: {label} (String).
   ///
   /// In en, this message translates to:
   /// **'Named “{label}” by whoever shared it'**
   String invitationServerLabel(String label);
 
-  /// No description provided for @invitationServerRow.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).
   ///
   /// In en, this message translates to:
   /// **'Server: {host}'**
@@ -21046,31 +21046,31 @@ abstract class AppLocalizations {
   /// **'Message language'**
   String get invitationTemplateLanguage;
 
-  /// No description provided for @invitationTemplateTitle.
+  /// Shown as a text in workspace settings parameters (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Invitation message'**
   String get invitationTemplateTitle;
 
-  /// No description provided for @invitationThisDevice.
+  /// Shown as a text in invitation join panel (workspace). Placeholders: {host} (String).
   ///
   /// In en, this message translates to:
   /// **'This device uses {host}. An invitation is only checked on its own server.'**
   String invitationThisDevice(String host);
 
-  /// No description provided for @invitationUnknownAnswer.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'The server gave an answer this version of the app cannot read. Nothing was changed.'**
   String get invitationUnknownAnswer;
 
-  /// No description provided for @invitationUseServer.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'Use this server'**
   String get invitationUseServer;
 
-  /// No description provided for @invitationWrongAccount.
+  /// Shown as a text in invitation join panel (workspace).
   ///
   /// In en, this message translates to:
   /// **'This invitation was already used by another account. If it was meant for you, sign in with that account.'**
@@ -21088,37 +21088,37 @@ abstract class AppLocalizations {
   /// **'New administrator code'**
   String get inviteAdminNewCode;
 
-  /// No description provided for @inviteAlsoProdSubtitle.
+  /// Shown as the line under a title in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'They join the test space either way. The role still has to allow production access.'**
   String get inviteAlsoProdSubtitle;
 
-  /// No description provided for @inviteAlsoProdTitle.
+  /// Shown as a title in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Also give access to production'**
   String get inviteAlsoProdTitle;
 
-  /// No description provided for @inviteCreateFailed.
+  /// Shown as the error under a field in workspace code screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Could not create the invitation. Check your connection and try again.'**
   String get inviteCreateFailed;
 
-  /// No description provided for @inviteFirstNameLabel.
+  /// Shown as the label of a field in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'First name (optional)'**
   String get inviteFirstNameLabel;
 
-  /// No description provided for @inviteLanguageLabel.
+  /// Shown as a text in setup invite step (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Message language'**
   String get inviteLanguageLabel;
 
-  /// No description provided for @inviteLastNameLabel.
+  /// Shown as the label of a field in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Last name (optional)'**
@@ -21130,7 +21130,7 @@ abstract class AppLocalizations {
   /// **'There is no owner invite — only an owner can grant ownership, in Members & plans.'**
   String get inviteOwnerNote;
 
-  /// No description provided for @invitePhoneLabel.
+  /// Shown as the label of a field in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Phone (optional, with country code)'**
@@ -21160,31 +21160,31 @@ abstract class AppLocalizations {
   /// **'Roles on arrival'**
   String get inviteRolesTitle;
 
-  /// No description provided for @inviteSectionTitle.
+  /// Shown as a button or chip label in workspace code screen (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Invite someone'**
   String get inviteSectionTitle;
 
-  /// No description provided for @inviteSendFailed.
+  /// Shown as a text in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Could not open the app for sending. The message was copied instead.'**
   String get inviteSendFailed;
 
-  /// No description provided for @inviteViaShare.
+  /// Shown as a button or chip label in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Share…'**
   String get inviteViaShare;
 
-  /// No description provided for @inviteViaSms.
+  /// Shown as a button or chip label in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'SMS'**
   String get inviteViaSms;
 
-  /// No description provided for @inviteViaWhatsapp.
+  /// Shown as a button or chip label in invite sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'WhatsApp'**
@@ -21478,7 +21478,7 @@ abstract class AppLocalizations {
   /// **'General ledger (PDF, from the book)'**
   String get invoiceExportGeneralLedger;
 
-  /// No description provided for @invoiceExportGenericJournal.
+  /// Shown as a text in accounting export sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Journal (CSV, for any accounting system)'**
@@ -21556,7 +21556,7 @@ abstract class AppLocalizations {
   /// **'Xero (sales invoice import)'**
   String get invoiceExportXeroInvoiceCsv;
 
-  /// No description provided for @invoiceExternalIssuingTitle.
+  /// Shown as a text in invoice issue block text (money).
   ///
   /// In en, this message translates to:
   /// **'Issue this invoice outside the app'**
@@ -21580,7 +21580,7 @@ abstract class AppLocalizations {
   /// **'Share Factur-X (PDF)'**
   String get invoiceFacturXShare;
 
-  /// No description provided for @invoiceFeatureDisabled.
+  /// Shown as a text in invoice missing sales tax (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'This invoice type is disabled in this workspace. Existing invoices and statements remain available.'**
@@ -21874,31 +21874,31 @@ abstract class AppLocalizations {
   /// **'{issued} issued, {failed} failed.'**
   String invoiceIssuedPartial(int issued, int failed);
 
-  /// No description provided for @invoiceIssuingUnavailable.
+  /// Shown as a text in invoice issue block text (money).
   ///
   /// In en, this message translates to:
   /// **'Invoice creation unavailable'**
   String get invoiceIssuingUnavailable;
 
-  /// No description provided for @invoiceKindFull.
+  /// Shown as a text in invoice status (money).
   ///
   /// In en, this message translates to:
   /// **'Whole month'**
   String get invoiceKindFull;
 
-  /// No description provided for @invoiceKindSettlement.
+  /// Shown as a text in invoice status (money).
   ///
   /// In en, this message translates to:
   /// **'Regrouped invoices'**
   String get invoiceKindSettlement;
 
-  /// No description provided for @invoiceKindSubscription.
+  /// Shown as a text in invoice status (money).
   ///
   /// In en, this message translates to:
   /// **'Subscription, in advance'**
   String get invoiceKindSubscription;
 
-  /// No description provided for @invoiceKindUsage.
+  /// Shown as a text in invoice status (money).
   ///
   /// In en, this message translates to:
   /// **'The month\'s extras'**
@@ -22222,7 +22222,7 @@ abstract class AppLocalizations {
   /// **'The workspace\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))'**
   String get invoiceMissingSellerBnFormat;
 
-  /// No description provided for @invoiceMissingSellerCountry.
+  /// Shown as a text in invoice missing sales tax (money).
   ///
   /// In en, this message translates to:
   /// **'The workspace country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app'**
@@ -22276,13 +22276,13 @@ abstract class AppLocalizations {
   /// **'No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory'**
   String get invoiceMissingVatNotRegistered;
 
-  /// No description provided for @invoiceMissingVatRate.
+  /// Shown as a text in invoice missing sales tax (money).
   ///
   /// In en, this message translates to:
   /// **'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)'**
   String get invoiceMissingVatRate;
 
-  /// No description provided for @invoiceMissingVatTreatment.
+  /// Shown as a text in invoice missing sales tax (money).
   ///
   /// In en, this message translates to:
   /// **'Reverse-charge, export and exempt invoices must be reviewed and issued outside the app with your accountant. Statements remain available.'**
@@ -22438,7 +22438,7 @@ abstract class AppLocalizations {
   /// **'Sales tax'**
   String get invoicePdfSalesTax;
 
-  /// No description provided for @invoicePdfSettledIn.
+  /// Shown as a text in invoice documents (money), and 2 other places. Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Regrouped in {number}'**
@@ -22960,7 +22960,7 @@ abstract class AppLocalizations {
   /// **'Erroneous'**
   String get invoiceVoidedChip;
 
-  /// No description provided for @invoiceWizardAction.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Month-close wizard'**
@@ -23050,7 +23050,7 @@ abstract class AppLocalizations {
   /// **'The journal was not written: {reasons}'**
   String journalInterchangeRefused(String reasons);
 
-  /// No description provided for @journalNeedsLocalBook.
+  /// Shown as a text in accounting export journal (money).
   ///
   /// In en, this message translates to:
   /// **'The journal is posted from a local book: set up the issuer\'s book chart first.'**
@@ -23086,337 +23086,337 @@ abstract class AppLocalizations {
   /// **'These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}'**
   String journalSwissTaxCodes(String keys);
 
-  /// No description provided for @journeyClosedPaid.
+  /// Shown as a text in invoice journey view (money). Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Paid on {date} — closed'**
   String journeyClosedPaid(String date);
 
-  /// No description provided for @journeyClosedRefunded.
+  /// Shown as a text in invoice journey view (money). Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Refunded on {date} — closed'**
   String journeyClosedRefunded(String date);
 
-  /// No description provided for @journeyClosedRemainder.
+  /// Shown as a text in invoice journey view (money). Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Closed — remainder cancelled on {date}'**
   String journeyClosedRemainder(String date);
 
-  /// No description provided for @journeyClosedReplaced.
+  /// Shown as a text in invoice journey view (money). Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Cancelled — replaced by {number}'**
   String journeyClosedReplaced(String number);
 
-  /// No description provided for @journeyClosedSettled.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Regrouped into another invoice — that one is owed and chased'**
   String get journeyClosedSettled;
 
-  /// No description provided for @journeyHowButton.
+  /// Shown as a button or chip label in invoice overview (money).
   ///
   /// In en, this message translates to:
   /// **'How it works'**
   String get journeyHowButton;
 
-  /// No description provided for @journeyHowClosedMember.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'The month reads settled and the invoice stays readable forever: quick view, PDF, share.'**
   String get journeyHowClosedMember;
 
-  /// No description provided for @journeyHowClosedWorkspace.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Paid, remainder cancelled or refunded: the invoice moves to the archive. A wrong invoice is marked erroneous and replaced — before payment, never after.'**
   String get journeyHowClosedWorkspace;
 
-  /// No description provided for @journeyHowConfirmationMember.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Nothing to do — unless the workspace recorded the payment for them: then they confirm it in Events.'**
   String get journeyHowConfirmationMember;
 
-  /// No description provided for @journeyHowConfirmationWorkspace.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Another admin confirms the declared payment; the issuer then matches the registered payment to the invoice (Mark as paid) — a validation rule may hand the match to the validators. Paid more? A credit note. Paid less? Partially paid, the rest owed until paid or written off.'**
   String get journeyHowConfirmationWorkspace;
 
-  /// No description provided for @journeyHowIntro.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Four steps, the same for every invoice. Each one says whose move it is.'**
   String get journeyHowIntro;
 
-  /// No description provided for @journeyHowIssuedMember.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Finds it on the Invoices face: positions, balance, due date.'**
   String get journeyHowIssuedMember;
 
-  /// No description provided for @journeyHowIssuedWorkspace.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Issues the invoice from the month\'s tracked data — numbered, signed, immutable — and shares the PDF or sends the e-invoice.'**
   String get journeyHowIssuedWorkspace;
 
-  /// No description provided for @journeyHowMemberLabel.
+  /// Shown as a button or chip label in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Member'**
   String get journeyHowMemberLabel;
 
-  /// No description provided for @journeyHowPaymentMember.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Pays online (settled at once) or by transfer, then records the payment so the workspace knows.'**
   String get journeyHowPaymentMember;
 
-  /// No description provided for @journeyHowPaymentWorkspace.
+  /// Shown as a text in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Waits for the money. Past the term it sends the reminder levels it configured — by hand or automatically.'**
   String get journeyHowPaymentWorkspace;
 
-  /// No description provided for @journeyHowTitle.
+  /// Shown as a text in invoices screen (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'How invoicing works'**
   String get journeyHowTitle;
 
-  /// No description provided for @journeyHowWorkspaceLabel.
+  /// Shown as a button or chip label in invoice process sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Workspace'**
   String get journeyHowWorkspaceLabel;
 
-  /// No description provided for @journeyIssuerAdminConfirms.
+  /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{name} declared a payment of {amount} — another admin confirms it in Events'**
   String journeyIssuerAdminConfirms(String name, String amount);
 
-  /// No description provided for @journeyIssuerMatches.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'A payment of {amount} is registered — match it to this invoice'**
   String journeyIssuerMatches(String amount);
 
-  /// No description provided for @journeyIssuerMemberConfirms.
+  /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'A payment of {amount} was recorded — {name} confirms it in Events'**
   String journeyIssuerMemberConfirms(String name, String amount);
 
-  /// No description provided for @journeyIssuerMemberPays.
+  /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Waiting for {name}\'s payment of {amount} — due {date}'**
   String journeyIssuerMemberPays(String name, String amount, String date);
 
-  /// No description provided for @journeyIssuerMemberPaysOverdue.
+  /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {days} (int).
   ///
   /// In en, this message translates to:
   /// **'{name} owes {amount} — overdue by {days} days'**
   String journeyIssuerMemberPaysOverdue(String name, String amount, int days);
 
-  /// No description provided for @journeyIssuerMemberPaysRemainder.
+  /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{name} still owes {amount} after a partial payment'**
   String journeyIssuerMemberPaysRemainder(String name, String amount);
 
-  /// No description provided for @journeyIssuerRefunds.
+  /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Credit note — refund {amount} to {name} and record it'**
   String journeyIssuerRefunds(String name, String amount);
 
-  /// No description provided for @journeyIssuerReplaces.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Cancelled — issue the replacement'**
   String get journeyIssuerReplaces;
 
-  /// No description provided for @journeyMemberConfirms.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Your move: confirm the payment of {amount} recorded for you, in Events'**
   String journeyMemberConfirms(String amount);
 
-  /// No description provided for @journeyMemberDeclared.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'You declared {amount} — the workspace is confirming it'**
   String journeyMemberDeclared(String amount);
 
-  /// No description provided for @journeyMemberPays.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Your move: pay {amount} by {date}'**
   String journeyMemberPays(String amount, String date);
 
-  /// No description provided for @journeyMemberPaysOverdue.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {days} (int).
   ///
   /// In en, this message translates to:
   /// **'Your move: pay {amount} — overdue by {days} days'**
   String journeyMemberPaysOverdue(String amount, int days);
 
-  /// No description provided for @journeyMemberPaysRemainder.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Your move: pay the remaining {amount}'**
   String journeyMemberPaysRemainder(String amount);
 
-  /// No description provided for @journeyMemberRefund.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'The workspace owes you {amount} — nothing to pay'**
   String journeyMemberRefund(String amount);
 
-  /// No description provided for @journeyMemberRegistered.
+  /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Your payment of {amount} is registered — the workspace matches it to this invoice'**
   String journeyMemberRegistered(String amount);
 
-  /// No description provided for @journeyMemberReplaces.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Cancelled — a replacement follows'**
   String get journeyMemberReplaces;
 
-  /// No description provided for @journeyMemberValidators.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Payment matched — awaiting validation'**
   String get journeyMemberValidators;
 
-  /// No description provided for @journeyMemberWriteoff.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'The workspace asked to cancel the remainder — awaiting validation'**
   String get journeyMemberWriteoff;
 
-  /// No description provided for @journeyOutstanding.
+  /// Shown as a text in invoice stage strip (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{amount} outstanding'**
   String journeyOutstanding(String amount);
 
-  /// No description provided for @journeyOverdueCount.
+  /// Shown as a text in invoice stage strip (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count} overdue'**
   String journeyOverdueCount(int count);
 
-  /// No description provided for @journeyPrimaryConfirmInEvents.
+  /// Shown as a text in open invoice act view (money).
   ///
   /// In en, this message translates to:
   /// **'Open Events'**
   String get journeyPrimaryConfirmInEvents;
 
-  /// No description provided for @journeyPrimaryRemind.
+  /// Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int).
   ///
   /// In en, this message translates to:
   /// **'Send reminder {level}'**
   String journeyPrimaryRemind(int level);
 
-  /// No description provided for @journeyStageClosed.
+  /// Shown as a button or chip label in invoice stage strip (money).
   ///
   /// In en, this message translates to:
   /// **'Closed'**
   String get journeyStageClosed;
 
-  /// No description provided for @journeyStageCollect.
+  /// Shown as a button or chip label in invoice stage strip (money).
   ///
   /// In en, this message translates to:
   /// **'To collect'**
   String get journeyStageCollect;
 
-  /// No description provided for @journeyStageConfirm.
+  /// Shown as a button or chip label in invoice stage strip (money).
   ///
   /// In en, this message translates to:
   /// **'To confirm'**
   String get journeyStageConfirm;
 
-  /// No description provided for @journeyStageIssue.
+  /// Shown as a button or chip label in invoice stage strip (money).
   ///
   /// In en, this message translates to:
   /// **'To issue'**
   String get journeyStageIssue;
 
-  /// No description provided for @journeyStageStripLabel.
+  /// Shown as a button or chip label in invoice stage strip (money).
   ///
   /// In en, this message translates to:
   /// **'The invoicing process: issue, collect, confirm, close'**
   String get journeyStageStripLabel;
 
-  /// No description provided for @journeyStateCancelled.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get journeyStateCancelled;
 
-  /// No description provided for @journeyStateCurrent.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Current step'**
   String get journeyStateCurrent;
 
-  /// No description provided for @journeyStateDone.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Completed'**
   String get journeyStateDone;
 
-  /// No description provided for @journeyStateUpcoming.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Upcoming'**
   String get journeyStateUpcoming;
 
-  /// No description provided for @journeyStepClosed.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Closed'**
   String get journeyStepClosed;
 
-  /// No description provided for @journeyStepConfirmation.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Confirmation'**
   String get journeyStepConfirmation;
 
-  /// No description provided for @journeyStepIssued.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Issued'**
   String get journeyStepIssued;
 
-  /// No description provided for @journeyStepPayment.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Payment'**
   String get journeyStepPayment;
 
-  /// No description provided for @journeyTimelineTitle.
+  /// Shown as a text in invoice detail sections (money).
   ///
   /// In en, this message translates to:
   /// **'Timeline'**
   String get journeyTimelineTitle;
 
-  /// No description provided for @journeyValidatorsMatch.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Payment matched — awaiting the validators\' decision'**
   String get journeyValidatorsMatch;
 
-  /// No description provided for @journeyValidatorsWriteoff.
+  /// Shown as a text in invoice journey view (money).
   ///
   /// In en, this message translates to:
   /// **'Write-off of the remainder requested — awaiting the validators'**
@@ -23542,7 +23542,7 @@ abstract class AppLocalizations {
   /// **'Start kiosk mode?'**
   String get kioskGateTitle;
 
-  /// No description provided for @kioskLevelButton.
+  /// Shown as a button or chip label in kiosk screen (kiosk).
   ///
   /// In en, this message translates to:
   /// **'This level'**
@@ -24369,37 +24369,37 @@ abstract class AppLocalizations {
   /// **'Premises lease'**
   String get leaseTitle;
 
-  /// No description provided for @leaseVarianceAccept.
+  /// Shown as a text in lease commitments sheet (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Accept the difference'**
   String get leaseVarianceAccept;
 
-  /// No description provided for @leaseVarianceDone.
+  /// Shown as a text in lease commitments sheet (money).
   ///
   /// In en, this message translates to:
   /// **'The difference is accepted'**
   String get leaseVarianceDone;
 
-  /// No description provided for @leaseVarianceLineText.
+  /// Shown as a title in lease commitments sheet (money). Placeholders: {reference} (String), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{reference}: accepted difference {amount}'**
   String leaseVarianceLineText(String reference, String amount);
 
-  /// No description provided for @leaseVarianceReason.
+  /// Shown as a button or chip label in lease commitments sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Why the bill differs'**
   String get leaseVarianceReason;
 
-  /// No description provided for @leaseVarianceSent.
+  /// Shown as a text in lease commitments sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Sent to the validators: nothing changes until they decide'**
   String get leaseVarianceSent;
 
-  /// No description provided for @leaseVarianceTitle.
+  /// Shown as a title in lease commitments sheet (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Accept a difference of {amount}'**
@@ -24621,31 +24621,31 @@ abstract class AppLocalizations {
   /// **'For member'**
   String get levelAssignMember;
 
-  /// No description provided for @levelAssignMyself.
+  /// Shown as a text in booking sheet (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Myself'**
   String get levelAssignMyself;
 
-  /// No description provided for @levelBookableDesc.
+  /// Shown as the line under a title in editor screen (editor).
   ///
   /// In en, this message translates to:
   /// **'The whole floor can be reserved as one booking.'**
   String get levelBookableDesc;
 
-  /// No description provided for @levelBookableToggle.
+  /// Shown as a text in workspace configuration report strings (workspace), and 4 other places.
   ///
   /// In en, this message translates to:
   /// **'Bookable as a whole'**
   String get levelBookableToggle;
 
-  /// No description provided for @levelConflict.
+  /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'The level has reservations in that period.'**
   String get levelConflict;
 
-  /// No description provided for @levelDetail.
+  /// Shown as a text in lexicon defaults (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Whole level'**
@@ -24657,19 +24657,19 @@ abstract class AppLocalizations {
   /// **'Office & level reservations are switched off in Features.'**
   String get levelFeatureOff;
 
-  /// No description provided for @levelNotAllowed.
+  /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'You are not allowed to reserve a whole desk, office or level.'**
   String get levelNotAllowed;
 
-  /// No description provided for @levelPermissionAllowed.
+  /// Shown as a text in workspace settings reports (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'May reserve a whole desk, office or level'**
   String get levelPermissionAllowed;
 
-  /// No description provided for @levelPermissionDenied.
+  /// Shown as a text in members screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'May not reserve a whole desk, office or level'**
@@ -24681,7 +24681,7 @@ abstract class AppLocalizations {
   /// **'Level reservations'**
   String get levelPermissionTile;
 
-  /// No description provided for @levelPriceLabel.
+  /// Shown as a text in space scan (reservations), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Price per half-day'**
@@ -24693,7 +24693,7 @@ abstract class AppLocalizations {
   /// **'The levels changed meanwhile. Nothing was saved; the current order is shown.'**
   String get levelReorderStale;
 
-  /// No description provided for @levelReserveButton.
+  /// Shown as a text in lexicon defaults (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Reserve level'**
@@ -24705,7 +24705,7 @@ abstract class AppLocalizations {
   /// **'Reserve the whole level'**
   String get levelReserveTitle;
 
-  /// No description provided for @levelSupplementLabel.
+  /// Shown as a text in report strings l10n (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Level reservations'**
@@ -24759,7 +24759,7 @@ abstract class AppLocalizations {
   /// **'This changes {groups}. Apply?'**
   String libraryConfirmSensitive(String groups);
 
-  /// No description provided for @libraryCounts.
+  /// Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).
   ///
   /// In en, this message translates to:
   /// **'{levels} levels · {desks} desks · {seats} seats'**
@@ -24771,19 +24771,19 @@ abstract class AppLocalizations {
   /// **'Customized here'**
   String get libraryCustomizedHere;
 
-  /// No description provided for @libraryDelete.
+  /// Shown as a text in workspace library screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Delete template'**
   String get libraryDelete;
 
-  /// No description provided for @libraryDeleteConfirm.
+  /// Shown as the body of a dialog in workspace library screen (workspace). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Delete « {name} »? People you shared it with lose access.'**
   String libraryDeleteConfirm(String name);
 
-  /// No description provided for @libraryEmpty.
+  /// Shown as a title in template gallery (workspace).
   ///
   /// In en, this message translates to:
   /// **'Nothing here yet. Save this space as a template, or wait for someone to share one with you.'**
@@ -24999,19 +24999,19 @@ abstract class AppLocalizations {
   /// **'Your fee schedule would be replaced as a whole.'**
   String get libraryReasonFeeSchedule;
 
-  /// No description provided for @librarySave.
+  /// Shown as the line under a title in workspace settings screen (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Save this space as a template'**
   String get librarySave;
 
-  /// No description provided for @librarySaveDescription.
+  /// Shown as the label of a field in save template sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Description (optional)'**
   String get librarySaveDescription;
 
-  /// No description provided for @librarySaveName.
+  /// Shown as the label of a field in save template sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Template name'**
@@ -25023,7 +25023,7 @@ abstract class AppLocalizations {
   /// **'Tags, separated by commas'**
   String get librarySaveTags;
 
-  /// No description provided for @librarySaved.
+  /// Shown as a text in save template sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Saved to your templates.'**
@@ -25053,43 +25053,43 @@ abstract class AppLocalizations {
   /// **'The templates\' settings could not be checked, so none is shown as matching. Try again.'**
   String get librarySearchUnavailable;
 
-  /// No description provided for @libraryShare.
+  /// Shown as a text in workspace library screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Share…'**
   String get libraryShare;
 
-  /// No description provided for @libraryShareAdd.
+  /// Shown as a text in template share sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invite'**
   String get libraryShareAdd;
 
-  /// No description provided for @libraryShareEmail.
+  /// Shown as the label of a field in template share sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'E-mail address'**
   String get libraryShareEmail;
 
-  /// No description provided for @libraryShareHint.
+  /// Shown as a text in template share sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invite by e-mail. The invitation works the moment that address signs in — nothing is revealed about whether it already has an account.'**
   String get libraryShareHint;
 
-  /// No description provided for @libraryShareNobody.
+  /// Shown as a text in template share sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Nobody invited yet.'**
   String get libraryShareNobody;
 
-  /// No description provided for @libraryShareTitle.
+  /// Shown as a text in template share sheet (workspace). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Share « {name} »'**
   String libraryShareTitle(String name);
 
-  /// No description provided for @libraryStartFrom.
+  /// Shown as a title in workspace library screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Start from the library'**
@@ -25119,43 +25119,43 @@ abstract class AppLocalizations {
   /// **'New'**
   String get libraryStateNew;
 
-  /// No description provided for @libraryTitle.
+  /// Shown as a title in workspace settings screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Workspace library'**
   String get libraryTitle;
 
-  /// No description provided for @libraryVisibility.
+  /// Shown as a text in save template sheet (workspace).
   ///
   /// In en, this message translates to:
   /// **'Who may see it'**
   String get libraryVisibility;
 
-  /// No description provided for @libraryVisibilityBuiltin.
+  /// Shown as a text in template card (workspace).
   ///
   /// In en, this message translates to:
   /// **'Built in'**
   String get libraryVisibilityBuiltin;
 
-  /// No description provided for @libraryVisibilityPrivate.
+  /// Shown as a text in workspace library screen (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Only me'**
   String get libraryVisibilityPrivate;
 
-  /// No description provided for @libraryVisibilityPublic.
+  /// Shown as a text in workspace library screen (workspace), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Everyone (the library)'**
   String get libraryVisibilityPublic;
 
-  /// No description provided for @libraryVisibilityShared.
+  /// Shown as a text in workspace library screen (workspace), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'People I invite'**
   String get libraryVisibilityShared;
 
-  /// No description provided for @libraryYours.
+  /// Shown as a title in workspace library screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Your templates'**
@@ -27249,31 +27249,31 @@ abstract class AppLocalizations {
   /// **'Find a space'**
   String get meFindSpace;
 
-  /// No description provided for @meGroupAdd.
+  /// Shown as a title in me spaces list (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'New group'**
   String get meGroupAdd;
 
-  /// No description provided for @meGroupDelete.
+  /// Shown as a text in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'Delete group'**
   String get meGroupDelete;
 
-  /// No description provided for @meGroupEmptyFavorites.
+  /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
   /// **'Give a space a heart and it waits for you here.'**
   String get meGroupEmptyFavorites;
 
-  /// No description provided for @meGroupEmptyOwn.
+  /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
   /// **'Move spaces here from their menu.'**
   String get meGroupEmptyOwn;
 
-  /// No description provided for @meGroupFavorites.
+  /// Shown as a text in me spaces list (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Favorites'**
@@ -27285,19 +27285,19 @@ abstract class AppLocalizations {
   /// **'Connected installations'**
   String get meGroupInstallations;
 
-  /// No description provided for @meGroupMove.
+  /// Shown as a text in space row controls (me).
   ///
   /// In en, this message translates to:
   /// **'Move to group…'**
   String get meGroupMove;
 
-  /// No description provided for @meGroupName.
+  /// Shown as a title in group name dialog (me).
   ///
   /// In en, this message translates to:
   /// **'Group name'**
   String get meGroupName;
 
-  /// No description provided for @meGroupOther.
+  /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
   /// **'Other'**
@@ -27309,7 +27309,7 @@ abstract class AppLocalizations {
   /// **'My profile'**
   String get meGroupProfile;
 
-  /// No description provided for @meGroupRename.
+  /// Shown as a text in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'Rename'**
@@ -27369,7 +27369,7 @@ abstract class AppLocalizations {
   /// **'Owners hand the space over before leaving'**
   String get meLeaveOwner;
 
-  /// No description provided for @meLeaveSide.
+  /// Shown as a text in me spaces list (me). Placeholders: {side} (String).
   ///
   /// In en, this message translates to:
   /// **'Leave {side}'**
@@ -27615,31 +27615,31 @@ abstract class AppLocalizations {
   /// **'My history and data'**
   String get meSectionMine;
 
-  /// No description provided for @meSortAlphabet.
+  /// Shown as a text in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'A–Z'**
   String get meSortAlphabet;
 
-  /// No description provided for @meSortHand.
+  /// Shown as a text in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'My order'**
   String get meSortHand;
 
-  /// No description provided for @meSortRating.
+  /// Shown as a text in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'Best rated'**
   String get meSortRating;
 
-  /// No description provided for @meSortRecent.
+  /// Shown as a text in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'Recently used'**
   String get meSortRecent;
 
-  /// No description provided for @meSortTooltip.
+  /// Shown as a tooltip in me spaces chrome (me).
   ///
   /// In en, this message translates to:
   /// **'Sort'**
@@ -27675,13 +27675,13 @@ abstract class AppLocalizations {
   /// **'Waiting for approval'**
   String get meSpacePending;
 
-  /// No description provided for @meSpacesNoMatch.
+  /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
   /// **'No space matches.'**
   String get meSpacesNoMatch;
 
-  /// No description provided for @meSpacesSearch.
+  /// Shown as a button or chip label in personal spaces view (me), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Search my spaces'**
@@ -27771,7 +27771,7 @@ abstract class AppLocalizations {
   /// **'all admins'**
   String get memberAllAdmins;
 
-  /// No description provided for @memberApprove.
+  /// Shown as a text in members screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Approve membership'**
@@ -27951,13 +27951,13 @@ abstract class AppLocalizations {
   /// **'Delete this message? This cannot be undone.'**
   String get memberNoteDeleteConfirm;
 
-  /// No description provided for @memberNoteDeleteNotMine.
+  /// Shown as a text in conversation bubble (workspace).
   ///
   /// In en, this message translates to:
   /// **'Only the sender can take a message back.'**
   String get memberNoteDeleteNotMine;
 
-  /// No description provided for @memberNoteDeleteRead.
+  /// Shown as a text in conversation bubble (workspace).
   ///
   /// In en, this message translates to:
   /// **'Already read — this message can no longer be taken back.'**
@@ -28035,13 +28035,13 @@ abstract class AppLocalizations {
   /// **'Member no.'**
   String get memberNumberLabel;
 
-  /// No description provided for @memberOriginDelegated.
+  /// Shown as a text in member contact card (members).
   ///
   /// In en, this message translates to:
   /// **'Profile created by an admin'**
   String get memberOriginDelegated;
 
-  /// No description provided for @memberOriginFounder.
+  /// Shown as a text in member contact card (members).
   ///
   /// In en, this message translates to:
   /// **'Founded this space'**
@@ -28059,7 +28059,7 @@ abstract class AppLocalizations {
   /// **'How this membership began'**
   String get memberOriginHeading;
 
-  /// No description provided for @memberOriginInvited.
+  /// Shown as a text in member contact card (members).
   ///
   /// In en, this message translates to:
   /// **'Joined by invitation'**
@@ -28077,91 +28077,91 @@ abstract class AppLocalizations {
   /// **'Over-consumption'**
   String get memberOveragePolicyTooltip;
 
-  /// No description provided for @memberPageAddService.
+  /// Shown as a button or chip label in member activity tiles (members).
   ///
   /// In en, this message translates to:
   /// **'Add a service'**
   String get memberPageAddService;
 
-  /// No description provided for @memberPageCheckedIn.
+  /// Shown as a text in member header cards (members). Placeholders: {seat} (String), {time} (String).
   ///
   /// In en, this message translates to:
   /// **'Checked in · {seat} · since {time}'**
   String memberPageCheckedIn(String seat, String time);
 
-  /// No description provided for @memberPageEmailAction.
+  /// Shown as a button or chip label in member activity tiles (members).
   ///
   /// In en, this message translates to:
   /// **'E-mail'**
   String get memberPageEmailAction;
 
-  /// No description provided for @memberPageGroupAccess.
+  /// Shown as a text in member page (members).
   ///
   /// In en, this message translates to:
   /// **'Badges & access'**
   String get memberPageGroupAccess;
 
-  /// No description provided for @memberPageGroupBilling.
+  /// Shown as a text in member page (members).
   ///
   /// In en, this message translates to:
   /// **'Billing'**
   String get memberPageGroupBilling;
 
-  /// No description provided for @memberPageGroupBooking.
+  /// Shown as a text in member page (members).
   ///
   /// In en, this message translates to:
   /// **'Booking rules'**
   String get memberPageGroupBooking;
 
-  /// No description provided for @memberPageGroupMembership.
+  /// Shown as a text in member page (members).
   ///
   /// In en, this message translates to:
   /// **'Membership'**
   String get memberPageGroupMembership;
 
-  /// No description provided for @memberPageLevelTitle.
+  /// Shown as a title in member activity tiles (members).
   ///
   /// In en, this message translates to:
   /// **'Whole-space bookings'**
   String get memberPageLevelTitle;
 
-  /// No description provided for @memberPageManageHeading.
+  /// Shown as a text in member page (members).
   ///
   /// In en, this message translates to:
   /// **'Manage'**
   String get memberPageManageHeading;
 
-  /// No description provided for @memberPageNeverSeen.
+  /// Shown as a text in member header cards (members).
   ///
   /// In en, this message translates to:
   /// **'Not seen yet'**
   String get memberPageNeverSeen;
 
-  /// No description provided for @memberPageNext.
+  /// Shown as a text in member header cards (members). Placeholders: {label} (String).
   ///
   /// In en, this message translates to:
   /// **'Next: {label}'**
   String memberPageNext(String label);
 
-  /// No description provided for @memberPageNone.
+  /// Shown as a text in member admin tiles (members).
   ///
   /// In en, this message translates to:
   /// **'None'**
   String get memberPageNone;
 
-  /// No description provided for @memberPageNowHeading.
+  /// Shown as a text in member header cards (members).
   ///
   /// In en, this message translates to:
   /// **'Right now'**
   String get memberPageNowHeading;
 
-  /// No description provided for @memberPageReservedNow.
+  /// Shown as a text in member header cards (members). Placeholders: {seat} (String), {time} (String).
   ///
   /// In en, this message translates to:
   /// **'Reserved now · {seat} · until {time}'**
   String memberPageReservedNow(String seat, String time);
 
-  /// No description provided for @memberPageSince.
+  /// Shown as a text in member header cards (members). Placeholders: {date} (String).
   ///
   /// In en, this message translates to:
   /// **'Member since {date}'**
@@ -28173,13 +28173,13 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get memberPageStatusActive;
 
-  /// No description provided for @memberPageWorkspaceDefaultValue.
+  /// Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'Workspace default ({count})'**
   String memberPageWorkspaceDefaultValue(int count);
 
-  /// No description provided for @memberPageYou.
+  /// Shown as a text in member header cards (members). Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'{name} (you)'**
@@ -28209,7 +28209,7 @@ abstract class AppLocalizations {
   /// **'Reactivate membership'**
   String get memberReactivate;
 
-  /// No description provided for @memberRejectJoin.
+  /// Shown as a text in members screen (workspace), and 3 other places.
   ///
   /// In en, this message translates to:
   /// **'Reject membership'**
@@ -28347,7 +28347,7 @@ abstract class AppLocalizations {
   /// **'Paused'**
   String get memberStatusPaused;
 
-  /// No description provided for @memberStatusPending.
+  /// Shown as a text in member labels (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Pending'**
@@ -28419,13 +28419,13 @@ abstract class AppLocalizations {
   /// **'Read by'**
   String get messageReadBy;
 
-  /// No description provided for @messageRequestsHint.
+  /// Shown as a text in message requests card (directory).
   ///
   /// In en, this message translates to:
   /// **'These people are outside the ones you chose to be reachable by. They are not told what you decide.'**
   String get messageRequestsHint;
 
-  /// No description provided for @messageRequestsTitle.
+  /// Shown as a text in message requests card (directory).
   ///
   /// In en, this message translates to:
   /// **'Message requests'**
@@ -28803,7 +28803,7 @@ abstract class AppLocalizations {
   /// **'Too many at once. Please wait a minute.'**
   String get messengerRefusedLimit;
 
-  /// No description provided for @messengerRefusedRequestPending.
+  /// Shown as a text in refusal text (directory).
   ///
   /// In en, this message translates to:
   /// **'Your first message is waiting for an answer.'**
@@ -28911,13 +28911,13 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get moneyDescriptionLabel;
 
-  /// No description provided for @moneyDocumentLibrary.
+  /// Shown as a button or chip label in documents face (money).
   ///
   /// In en, this message translates to:
   /// **'Document library'**
   String get moneyDocumentLibrary;
 
-  /// No description provided for @moneyDueIn.
+  /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
   /// **'Due in {days} days'**
@@ -28935,25 +28935,25 @@ abstract class AppLocalizations {
   /// **'Expense submitted — waiting for approval.'**
   String get moneyExpensePending;
 
-  /// No description provided for @moneyFaceDocuments.
+  /// Shown as a text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Documents'**
   String get moneyFaceDocuments;
 
-  /// No description provided for @moneyFaceInvoices.
+  /// Shown as a text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Invoices'**
   String get moneyFaceInvoices;
 
-  /// No description provided for @moneyFacePayments.
+  /// Shown as a text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Payments'**
   String get moneyFacePayments;
 
-  /// No description provided for @moneyFaceStatement.
+  /// Shown as a text in money faces view (money).
   ///
   /// In en, this message translates to:
   /// **'Statement'**
@@ -28983,7 +28983,7 @@ abstract class AppLocalizations {
   /// **'My conditions'**
   String get moneyMyAgreement;
 
-  /// No description provided for @moneyNoInvoicesYet.
+  /// Shown as a text in my invoices list (money).
   ///
   /// In en, this message translates to:
   /// **'No invoice yet — the month is invoiced by the workspace once it closes.'**
@@ -28995,19 +28995,19 @@ abstract class AppLocalizations {
   /// **'Note (optional)'**
   String get moneyNoteLabel;
 
-  /// No description provided for @moneyNothingOpen.
+  /// Shown as a text in invoice overview (money).
   ///
   /// In en, this message translates to:
   /// **'Nothing open — you are up to date.'**
   String get moneyNothingOpen;
 
-  /// No description provided for @moneyOpenInvoicesSummary.
+  /// Shown as a text in invoice overview (money). Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{count} open · {amount} due'**
   String moneyOpenInvoicesSummary(int count, String amount);
 
-  /// No description provided for @moneyOpenInvoicesTitle.
+  /// Shown as a text in invoice overview (money).
   ///
   /// In en, this message translates to:
   /// **'Open invoices'**
@@ -29019,19 +29019,19 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}'**
   String moneyOverage(int count);
 
-  /// No description provided for @moneyOverdueBanner.
+  /// Shown as a text in invoice overview (money), and 1 other place. Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{count} overdue — {amount} to settle'**
   String moneyOverdueBanner(int count, String amount);
 
-  /// No description provided for @moneyOverdueBy.
+  /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
   /// **'Overdue by {days} days'**
   String moneyOverdueBy(int days);
 
-  /// No description provided for @moneyPayNow.
+  /// Shown as a tooltip in my invoices list (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Pay now'**
@@ -29061,7 +29061,7 @@ abstract class AppLocalizations {
   /// **'Record a payment'**
   String get moneyRecordPayment;
 
-  /// No description provided for @moneyRemindedTimes.
+  /// Shown as a text in my invoices list (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
@@ -29097,7 +29097,7 @@ abstract class AppLocalizations {
   /// **'Open'**
   String get moneyStatementOpen;
 
-  /// No description provided for @moneyStatementPdf.
+  /// Shown as a button or chip label in documents face (money).
   ///
   /// In en, this message translates to:
   /// **'This month\'s statement (PDF)'**
@@ -29145,7 +29145,7 @@ abstract class AppLocalizations {
   /// **'{free}/{total}'**
   String monthFreeCount(int free, int total);
 
-  /// No description provided for @myBadgeTitle.
+  /// Shown as a title in my badge tile (workspace).
   ///
   /// In en, this message translates to:
   /// **'My badge'**
@@ -29637,133 +29637,133 @@ abstract class AppLocalizations {
   /// **'Navigation'**
   String get navigationTitle;
 
-  /// No description provided for @negotiationActiveSince.
+  /// Shown as a text in negotiation card (money). Placeholders: {month} (String).
   ///
   /// In en, this message translates to:
   /// **'Your deal applies since {month}.'**
   String negotiationActiveSince(String month);
 
-  /// No description provided for @negotiationCardTitle.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'My negotiated prices'**
   String get negotiationCardTitle;
 
-  /// No description provided for @negotiationDefaultColumn.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Tariff'**
   String get negotiationDefaultColumn;
 
-  /// No description provided for @negotiationDiscount.
+  /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Discount on supplements'**
   String get negotiationDiscount;
 
-  /// No description provided for @negotiationFee.
+  /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Monthly fee'**
   String get negotiationFee;
 
-  /// No description provided for @negotiationItems.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Services and packages'**
   String get negotiationItems;
 
-  /// No description provided for @negotiationItemsHint.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'A unit price for this member; empty keeps the catalogue.'**
   String get negotiationItemsHint;
 
-  /// No description provided for @negotiationKeepCurrent.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Keep current'**
   String get negotiationKeepCurrent;
 
-  /// No description provided for @negotiationMineColumn.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Mine'**
   String get negotiationMineColumn;
 
-  /// No description provided for @negotiationNote.
+  /// Shown as the label of a field in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Note'**
   String get negotiationNote;
 
-  /// No description provided for @negotiationOccupation.
+  /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Occupation'**
   String get negotiationOccupation;
 
-  /// No description provided for @negotiationOccupationHint.
+  /// Shown as the helper line under a field in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'The share of open days included each month; applied to the member once validated.'**
   String get negotiationOccupationHint;
 
-  /// No description provided for @negotiationOnTariff.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'You are on the workspace tariff.'**
   String get negotiationOnTariff;
 
-  /// No description provided for @negotiationOverage.
+  /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Overage per half-day'**
   String get negotiationOverage;
 
-  /// No description provided for @negotiationPending.
+  /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'A deal is awaiting validation.'**
   String get negotiationPending;
 
-  /// No description provided for @negotiationPendingBadge.
+  /// Shown as a button or chip label in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
 
-  /// No description provided for @negotiationPercent.
+  /// Shown as a text in negotiation card (money). Placeholders: {value} (int).
   ///
   /// In en, this message translates to:
   /// **'{value} %'**
   String negotiationPercent(int value);
 
-  /// No description provided for @negotiationProposeHint.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Leave a field empty to keep the tariff. The deal goes through validation before it applies.'**
   String get negotiationProposeHint;
 
-  /// No description provided for @negotiationProposeTitle.
+  /// Shown as a text in negotiation card (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Price negotiation'**
   String get negotiationProposeTitle;
 
-  /// No description provided for @negotiationProposed.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Deal proposed — waiting for validation.'**
   String get negotiationProposed;
 
-  /// No description provided for @negotiationReadOnly.
+  /// Shown as the line under a title in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Read only'**
   String get negotiationReadOnly;
 
-  /// No description provided for @negotiationSubmit.
+  /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Propose for validation'**
@@ -29775,7 +29775,7 @@ abstract class AppLocalizations {
   /// **'Applies from'**
   String get negotiationValidFrom;
 
-  /// No description provided for @negotiationWhoCanSee.
+  /// Shown as a button or chip label in negotiation card (money).
   ///
   /// In en, this message translates to:
   /// **'Who can see this'**
@@ -30069,7 +30069,7 @@ abstract class AppLocalizations {
   /// **'No unread messages — all caught up.'**
   String get notesFilterEmpty;
 
-  /// No description provided for @notesFilterRead.
+  /// Shown as a button or chip label in events filter bar (events).
   ///
   /// In en, this message translates to:
   /// **'Read'**
@@ -30081,55 +30081,55 @@ abstract class AppLocalizations {
   /// **'Unread'**
   String get notesFilterUnread;
 
-  /// No description provided for @notifCategoryCheckIns.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Check-ins'**
   String get notifCategoryCheckIns;
 
-  /// No description provided for @notifCategoryMembers.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Members'**
   String get notifCategoryMembers;
 
-  /// No description provided for @notifCategoryMoney.
+  /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
   /// **'Money'**
   String get notifCategoryMoney;
 
-  /// No description provided for @notifGroupBy.
+  /// Shown as a text in events filter bar (events).
   ///
   /// In en, this message translates to:
   /// **'Group by'**
   String get notifGroupBy;
 
-  /// No description provided for @notifGroupByDate.
+  /// Shown as a text in events filter bar (events).
   ///
   /// In en, this message translates to:
   /// **'Date'**
   String get notifGroupByDate;
 
-  /// No description provided for @notifGroupByType.
+  /// Shown as a text in events filter bar (events).
   ///
   /// In en, this message translates to:
   /// **'Type'**
   String get notifGroupByType;
 
-  /// No description provided for @notifGroupByUser.
+  /// Shown as a text in events filter bar (events).
   ///
   /// In en, this message translates to:
   /// **'Member'**
   String get notifGroupByUser;
 
-  /// No description provided for @notifSortByDate.
+  /// Shown as a tooltip in events filter bar (events).
   ///
   /// In en, this message translates to:
   /// **'Sort by date'**
   String get notifSortByDate;
 
-  /// No description provided for @notifUngroup.
+  /// Shown as a tooltip in events screen (events).
   ///
   /// In en, this message translates to:
   /// **'Ungroup'**
@@ -30303,49 +30303,49 @@ abstract class AppLocalizations {
   /// **'Number sequences'**
   String get numberSequencesTitle;
 
-  /// No description provided for @occurrenceAdded.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Added to your expenses.'**
   String get occurrenceAdded;
 
-  /// No description provided for @occurrenceConfirm.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Confirm this expense'**
   String get occurrenceConfirm;
 
-  /// No description provided for @occurrenceReasonLabel.
+  /// Shown as the label of a field in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Why it differs (required)'**
   String get occurrenceReasonLabel;
 
-  /// No description provided for @occurrenceReasonMissing.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'A different amount needs an explanation.'**
   String get occurrenceReasonMissing;
 
-  /// No description provided for @occurrenceRejected.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'The validators rejected it — adjust the amount or the description and resend.'**
   String get occurrenceRejected;
 
-  /// No description provided for @occurrenceResend.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Resend for validation'**
   String get occurrenceResend;
 
-  /// No description provided for @occurrenceScheduledAmount.
+  /// Shown as the helper line under a field in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Validated: {amount}'**
   String occurrenceScheduledAmount(Object amount);
 
-  /// No description provided for @occurrenceSentForValidation.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Sent to the validators — it counts once they confirm.'**
@@ -30465,19 +30465,19 @@ abstract class AppLocalizations {
   /// **'Safe for trying things out: every screen and document says it is a test. No real billing.'**
   String get onboardingShapeTestHint;
 
-  /// No description provided for @onboardingStartEmpty.
+  /// Shown as a title in onboarding screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Empty space'**
   String get onboardingStartEmpty;
 
-  /// No description provided for @onboardingStartEmptyDesc.
+  /// Shown as the line under a title in template empty space (workspace).
   ///
   /// In en, this message translates to:
   /// **'Draw your own plan from a blank canvas.'**
   String get onboardingStartEmptyDesc;
 
-  /// No description provided for @onboardingStartFrom.
+  /// Shown as a button or chip label in onboarding screen (workspace), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Start from'**
@@ -31289,49 +31289,49 @@ abstract class AppLocalizations {
   /// **'pending validation'**
   String get paymentsPendingTag;
 
-  /// No description provided for @pendingApprovalBody.
+  /// Shown as a text in pending approval screen (workspace). Placeholders: {workspace} (String).
   ///
   /// In en, this message translates to:
   /// **'You have joined {workspace}. An administrator must approve your membership before you can use the workspace — you will get access as soon as they confirm.'**
   String pendingApprovalBody(String workspace);
 
-  /// No description provided for @pendingApprovalRefresh.
+  /// Shown as a tooltip in workspace applications screen (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Check again'**
   String get pendingApprovalRefresh;
 
-  /// No description provided for @pendingApprovalTitle.
+  /// Shown as a title in pending approval screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace membership awaiting approval'**
   String get pendingApprovalTitle;
 
-  /// No description provided for @pendingAvailable.
+  /// Shown as a text in pending approval screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'While you wait, your other workspaces, your account and the help stay available.'**
   String get pendingAvailable;
 
-  /// No description provided for @pendingHelp.
+  /// Shown as a button or chip label in pending approval screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Help'**
   String get pendingHelp;
 
-  /// No description provided for @pendingLastChecked.
+  /// Shown as a text in pending approval screen (workspace). Placeholders: {time} (String).
   ///
   /// In en, this message translates to:
   /// **'Last checked {time}'**
   String pendingLastChecked(String time);
 
-  /// No description provided for @pendingNotUpdated.
+  /// Shown as a text in pending approval screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Status not updated — the server could not be reached. Your request is unchanged.'**
   String get pendingNotUpdated;
 
-  /// No description provided for @pendingStillWaiting.
+  /// Shown as a text in pending approval screen (workspace).
   ///
   /// In en, this message translates to:
   /// **'Still awaiting approval.'**
@@ -32201,25 +32201,25 @@ abstract class AppLocalizations {
   /// **'unlimited half-days'**
   String get plansEditorUnlimited;
 
-  /// No description provided for @policyAdminCheckoutDesc.
+  /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'An admin can end a member\'s running check-in.'**
   String get policyAdminCheckoutDesc;
 
-  /// No description provided for @policyAdminCheckoutTitle.
+  /// Shown as a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Admins may check members out'**
   String get policyAdminCheckoutTitle;
 
-  /// No description provided for @policyAllowPastDesc.
+  /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Members may record a booking that already ended (backfill).'**
   String get policyAllowPastDesc;
 
-  /// No description provided for @policyAllowPastTitle.
+  /// Shown as a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Allow past bookings'**
@@ -32297,13 +32297,13 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 minute} other{{count} minutes}}'**
   String policyMinutesValue(int count);
 
-  /// No description provided for @policyOutsideHoursCharged.
+  /// Shown as a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Charged'**
   String get policyOutsideHoursCharged;
 
-  /// No description provided for @policyOutsideHoursChargedDesc.
+  /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Allowed and counted like ordinary usage — except on a day the member already holds a regular booking.'**
@@ -32315,31 +32315,31 @@ abstract class AppLocalizations {
   /// **'What may happen outside the working day — one answer, on every granularity. A booking that touches the working hours is an ordinary booking.'**
   String get policyOutsideHoursDesc;
 
-  /// No description provided for @policyOutsideHoursFree.
+  /// Shown as a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Free'**
   String get policyOutsideHoursFree;
 
-  /// No description provided for @policyOutsideHoursFreeDesc.
+  /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Allowed, never counted and never charged — pure presence information.'**
   String get policyOutsideHoursFreeDesc;
 
-  /// No description provided for @policyOutsideHoursOff.
+  /// Shown as a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Off'**
   String get policyOutsideHoursOff;
 
-  /// No description provided for @policyOutsideHoursOffDesc.
+  /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Nothing outside the hours: no booking ahead, no walk-up, and a booking running past the day end is refused too.'**
   String get policyOutsideHoursOffDesc;
 
-  /// No description provided for @policyOutsideHoursTitle.
+  /// Shown as a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Outside the opening hours'**
@@ -32351,7 +32351,7 @@ abstract class AppLocalizations {
   /// **'Spontaneous only'**
   String get policyOutsideHoursWalkUp;
 
-  /// No description provided for @policyOutsideHoursWalkUpDesc.
+  /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:
   /// **'Walk-up check-ins stay possible, evening overtime included; booking ahead outside the hours is refused.'**
@@ -36489,55 +36489,55 @@ abstract class AppLocalizations {
   /// **'Region & formats'**
   String get regionalFormatsTitle;
 
-  /// No description provided for @registerPaymentAmount.
+  /// Shown as the label of a field in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Amount'**
   String get registerPaymentAmount;
 
-  /// No description provided for @registerPaymentDate.
+  /// Shown as a title in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Paid on'**
   String get registerPaymentDate;
 
-  /// No description provided for @registerPaymentDone.
+  /// Shown as a text in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Payment registered — the member confirms it from their side.'**
   String get registerPaymentDone;
 
-  /// No description provided for @registerPaymentHint.
+  /// Shown as a text in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'A payment that reached the workspace — the member confirms it, then it can be matched to an invoice.'**
   String get registerPaymentHint;
 
-  /// No description provided for @registerPaymentMember.
+  /// Shown as the label of a field in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Member'**
   String get registerPaymentMember;
 
-  /// No description provided for @registerPaymentMethod.
+  /// Shown as the label of a field in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Method'**
   String get registerPaymentMethod;
 
-  /// No description provided for @registerPaymentNote.
+  /// Shown as the label of a field in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Note'**
   String get registerPaymentNote;
 
-  /// No description provided for @registerPaymentSubmit.
+  /// Shown as a text in register payment sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Register'**
   String get registerPaymentSubmit;
 
-  /// No description provided for @registerPaymentTitle.
+  /// Shown as a title in register payment sheet (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Register a payment'**
@@ -36681,13 +36681,13 @@ abstract class AppLocalizations {
   /// **'Check in soon'**
   String get reminderTitle;
 
-  /// No description provided for @repartitionAction.
+  /// Shown as a text in invoices screen (money).
   ///
   /// In en, this message translates to:
   /// **'Distribute an expense'**
   String get repartitionAction;
 
-  /// No description provided for @repartitionAmount.
+  /// Shown as the label of a field in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Total amount'**
@@ -36711,73 +36711,73 @@ abstract class AppLocalizations {
   /// **'Leave out'**
   String get repartitionExclude;
 
-  /// No description provided for @repartitionFiled.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Shares booked — they appear on the next usage invoice.'**
   String get repartitionFiled;
 
-  /// No description provided for @repartitionFiledPending.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Shares filed — they book once validated.'**
   String get repartitionFiledPending;
 
-  /// No description provided for @repartitionHint.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Split a shared cost over the members. The shares land as lines on each member\'s next usage invoice; a reversal gives the money back as credit notes.'**
   String get repartitionHint;
 
-  /// No description provided for @repartitionHistory.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Distributions'**
   String get repartitionHistory;
 
-  /// No description provided for @repartitionHistoryEmpty.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'No distribution yet.'**
   String get repartitionHistoryEmpty;
 
-  /// No description provided for @repartitionMethod.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Split by'**
   String get repartitionMethod;
 
-  /// No description provided for @repartitionMethodCustom.
+  /// Shown as a button or chip label in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Custom key'**
   String get repartitionMethodCustom;
 
-  /// No description provided for @repartitionMethodEqual.
+  /// Shown as a button or chip label in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Equal'**
   String get repartitionMethodEqual;
 
-  /// No description provided for @repartitionMethodSubscription.
+  /// Shown as a button or chip label in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Subscription'**
   String get repartitionMethodSubscription;
 
-  /// No description provided for @repartitionMethodUsage.
+  /// Shown as a button or chip label in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Usage'**
   String get repartitionMethodUsage;
 
-  /// No description provided for @repartitionNoShares.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Nobody carries a share — check the key.'**
   String get repartitionNoShares;
 
-  /// No description provided for @repartitionPeriod.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Lands on'**
@@ -36789,7 +36789,7 @@ abstract class AppLocalizations {
   /// **'Month'**
   String get repartitionPeriodLabel;
 
-  /// No description provided for @repartitionPreview.
+  /// Shown as a button or chip label in expense repartition sheet (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Shares'**
@@ -36801,7 +36801,7 @@ abstract class AppLocalizations {
   /// **'Remember this rule'**
   String get repartitionRememberRule;
 
-  /// No description provided for @repartitionReverse.
+  /// Shown as a title in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Reversal — give back as credit notes'**
@@ -36825,25 +36825,25 @@ abstract class AppLocalizations {
   /// **'Total of the shares'**
   String get repartitionSharesTotal;
 
-  /// No description provided for @repartitionStatusConfirmed.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Booked'**
   String get repartitionStatusConfirmed;
 
-  /// No description provided for @repartitionStatusExpired.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Expired'**
   String get repartitionStatusExpired;
 
-  /// No description provided for @repartitionStatusPending.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Awaiting validation'**
   String get repartitionStatusPending;
 
-  /// No description provided for @repartitionStatusRejected.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Rejected'**
@@ -36873,25 +36873,25 @@ abstract class AppLocalizations {
   /// **'The rule'**
   String get repartitionStepRule;
 
-  /// No description provided for @repartitionSubmit.
+  /// Shown as a text in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Book the shares'**
   String get repartitionSubmit;
 
-  /// No description provided for @repartitionSum.
+  /// Shown as a text in expense repartition sheet (money). Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}'**
   String repartitionSum(int count, String amount);
 
-  /// No description provided for @repartitionTitle.
+  /// Shown as a title in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Distribute an expense'**
   String get repartitionTitle;
 
-  /// No description provided for @repartitionTitleField.
+  /// Shown as the label of a field in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'What for'**
@@ -36903,7 +36903,7 @@ abstract class AppLocalizations {
   /// **'Title'**
   String get repartitionTitleLabel;
 
-  /// No description provided for @repartitionWeight.
+  /// Shown as the label of a field in expense repartition sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Key'**
@@ -37095,67 +37095,67 @@ abstract class AppLocalizations {
   /// **'Design'**
   String get reportDesignerDesign;
 
-  /// No description provided for @reportDesignerDiscard.
+  /// Shown as a text in wizard navigation (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Discard'**
   String get reportDesignerDiscard;
 
-  /// No description provided for @reportDesignerDiscardBody.
+  /// Shown as the body of a dialog in report editor dialogs (money).
   ///
   /// In en, this message translates to:
   /// **'Your changes to the templates are not saved.'**
   String get reportDesignerDiscardBody;
 
-  /// No description provided for @reportDesignerDiscardTitle.
+  /// Shown as a title in wizard navigation (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Leave without saving?'**
   String get reportDesignerDiscardTitle;
 
-  /// No description provided for @reportDesignerDrag.
+  /// Shown as a message in report visual editor (money).
   ///
   /// In en, this message translates to:
   /// **'Drag to reorder'**
   String get reportDesignerDrag;
 
-  /// No description provided for @reportDesignerError.
+  /// Shown as a text in report page designer (money), and 1 other place. Placeholders: {message} (String).
   ///
   /// In en, this message translates to:
   /// **'The template does not render — {message}'**
   String reportDesignerError(String message);
 
-  /// No description provided for @reportDesignerFields.
+  /// Shown as a text in report field picker (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Fields'**
   String get reportDesignerFields;
 
-  /// No description provided for @reportDesignerFieldsSearch.
+  /// Shown as the hint inside a field in report field picker (money).
   ///
   /// In en, this message translates to:
   /// **'Search a field'**
   String get reportDesignerFieldsSearch;
 
-  /// No description provided for @reportDesignerInsert.
+  /// Shown as a tooltip in report visual editor (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Insert element'**
   String get reportDesignerInsert;
 
-  /// No description provided for @reportDesignerKeepEditing.
+  /// Shown as a text in wizard navigation (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Keep editing'**
   String get reportDesignerKeepEditing;
 
-  /// No description provided for @reportDesignerMoveTo.
+  /// Shown as a tooltip in report visual editor (money).
   ///
   /// In en, this message translates to:
   /// **'Move to band'**
   String get reportDesignerMoveTo;
 
-  /// No description provided for @reportDesignerPages.
+  /// Shown as a text in report page designer (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 page} other{{count} pages}}'**
@@ -37167,25 +37167,25 @@ abstract class AppLocalizations {
   /// **'Preview'**
   String get reportDesignerPreview;
 
-  /// No description provided for @reportDesignerRedo.
+  /// Shown as a text in report history controls (money).
   ///
   /// In en, this message translates to:
   /// **'Redo'**
   String get reportDesignerRedo;
 
-  /// No description provided for @reportDesignerReplace.
+  /// Shown as a text in report editor dialogs (money).
   ///
   /// In en, this message translates to:
   /// **'Replace'**
   String get reportDesignerReplace;
 
-  /// No description provided for @reportDesignerReplaceBody.
+  /// Shown as the body of a dialog in report editor dialogs (money).
   ///
   /// In en, this message translates to:
   /// **'The bands of this document are replaced. Undo brings them back.'**
   String get reportDesignerReplaceBody;
 
-  /// No description provided for @reportDesignerReplaceTitle.
+  /// Shown as a title in report editor dialogs (money).
   ///
   /// In en, this message translates to:
   /// **'Replace the current layout?'**
@@ -37197,7 +37197,7 @@ abstract class AppLocalizations {
   /// **'Design and preview side by side'**
   String get reportDesignerSideBySide;
 
-  /// No description provided for @reportDesignerUndo.
+  /// Shown as a text in report history controls (money).
   ///
   /// In en, this message translates to:
   /// **'Undo'**
@@ -37221,13 +37221,13 @@ abstract class AppLocalizations {
   /// **'Financial agreement'**
   String get reportDocAgreement;
 
-  /// No description provided for @reportDocBadges.
+  /// Shown as a text in report kind labels (money).
   ///
   /// In en, this message translates to:
   /// **'Member badges'**
   String get reportDocBadges;
 
-  /// No description provided for @reportDocCoa.
+  /// Shown as a text in report kind labels (money).
   ///
   /// In en, this message translates to:
   /// **'Chart of accounts'**
@@ -37257,7 +37257,7 @@ abstract class AppLocalizations {
   /// **'Purchase order'**
   String get reportDocPurchaseOrder;
 
-  /// No description provided for @reportDocSpaceCodes.
+  /// Shown as a text in report kind labels (money).
   ///
   /// In en, this message translates to:
   /// **'Space QR cards'**
@@ -37305,7 +37305,7 @@ abstract class AppLocalizations {
   /// **'Markup'**
   String get reportEditorMarkup;
 
-  /// No description provided for @reportEditorTitle.
+  /// Shown as a title in workspace reports (workspace), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Report editor'**
@@ -37329,31 +37329,31 @@ abstract class AppLocalizations {
   /// **'Bank details'**
   String get reportFieldGroupBank;
 
-  /// No description provided for @reportFieldGroupDocument.
+  /// Shown as a text in report field picker (money).
   ///
   /// In en, this message translates to:
   /// **'Document'**
   String get reportFieldGroupDocument;
 
-  /// No description provided for @reportFieldGroupLegal.
+  /// Shown as a text in report field picker (money).
   ///
   /// In en, this message translates to:
   /// **'Legal mentions'**
   String get reportFieldGroupLegal;
 
-  /// No description provided for @reportFieldGroupLoops.
+  /// Shown as a text in report field picker (money).
   ///
   /// In en, this message translates to:
   /// **'Lines & VAT loops'**
   String get reportFieldGroupLoops;
 
-  /// No description provided for @reportFieldGroupMember.
+  /// Shown as a text in report field picker (money).
   ///
   /// In en, this message translates to:
   /// **'Member & workspace'**
   String get reportFieldGroupMember;
 
-  /// No description provided for @reportFieldGroupMoney.
+  /// Shown as a text in report field picker (money).
   ///
   /// In en, this message translates to:
   /// **'Amounts'**
@@ -38037,19 +38037,19 @@ abstract class AppLocalizations {
   /// **'Size'**
   String get reportImageSize;
 
-  /// No description provided for @reportImageSizeLarge.
+  /// Shown as a button or chip label in report visual editor actions (money).
   ///
   /// In en, this message translates to:
   /// **'Large'**
   String get reportImageSizeLarge;
 
-  /// No description provided for @reportImageSizeMedium.
+  /// Shown as a button or chip label in report visual editor actions (money).
   ///
   /// In en, this message translates to:
   /// **'Medium'**
   String get reportImageSizeMedium;
 
-  /// No description provided for @reportImageSizeSmall.
+  /// Shown as a button or chip label in report visual editor actions (money).
   ///
   /// In en, this message translates to:
   /// **'Small'**
@@ -38403,7 +38403,7 @@ abstract class AppLocalizations {
   /// **'Subject'**
   String get reportSubject;
 
-  /// No description provided for @reportTemplateClearOverlay.
+  /// Shown as a button or chip label in report template toolbar (money).
   ///
   /// In en, this message translates to:
   /// **'Use the default for this language'**
@@ -38415,13 +38415,13 @@ abstract class AppLocalizations {
   /// **'Default (all languages)'**
   String get reportTemplateLangDefault;
 
-  /// No description provided for @reportTemplateLangInherits.
+  /// Shown as a tooltip in report template toolbar (money).
   ///
   /// In en, this message translates to:
   /// **'Inherits the default'**
   String get reportTemplateLangInherits;
 
-  /// No description provided for @reportTemplateLangOverridden.
+  /// Shown as a tooltip in report template toolbar (money).
   ///
   /// In en, this message translates to:
   /// **'Own template'**
@@ -38487,19 +38487,19 @@ abstract class AppLocalizations {
   /// **'Add line'**
   String get reportVisualAddLine;
 
-  /// No description provided for @requestAccept.
+  /// Shown as a text in message requests card (directory).
   ///
   /// In en, this message translates to:
   /// **'Accept'**
   String get requestAccept;
 
-  /// No description provided for @requestBlock.
+  /// Shown as a text in message requests card (directory).
   ///
   /// In en, this message translates to:
   /// **'Block'**
   String get requestBlock;
 
-  /// No description provided for @requestIgnore.
+  /// Shown as a text in message requests card (directory).
   ///
   /// In en, this message translates to:
   /// **'Ignore'**
@@ -39915,19 +39915,19 @@ abstract class AppLocalizations {
   /// **'Scan workspace QR'**
   String get scanJoinTitle;
 
-  /// No description provided for @scheduleCancel.
+  /// Shown as a tooltip in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'End this schedule'**
   String get scheduleCancel;
 
-  /// No description provided for @scheduleDaily.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'daily'**
   String get scheduleDaily;
 
-  /// No description provided for @scheduleEndsOn.
+  /// Shown as a title in schedule supplier field (money).
   ///
   /// In en, this message translates to:
   /// **'Until (optional)'**
@@ -39939,7 +39939,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{every day} other{every {count} days}}'**
   String scheduleEveryDays(int count);
 
-  /// No description provided for @scheduleEveryLabel.
+  /// Shown as the label of a field in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Every'**
@@ -39957,91 +39957,91 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{every week} other{every {count} weeks}}'**
   String scheduleEveryWeeks(int count);
 
-  /// No description provided for @scheduleMissingFields.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Name and amount are needed.'**
   String get scheduleMissingFields;
 
-  /// No description provided for @scheduleMonthly.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'monthly'**
   String get scheduleMonthly;
 
-  /// No description provided for @scheduleNew.
+  /// Shown as a button or chip label in expense schedule sheet (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Schedule a recurring expense'**
   String get scheduleNew;
 
-  /// No description provided for @scheduleNextDue.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'next: {date}'**
   String scheduleNextDue(Object date);
 
-  /// No description provided for @scheduleNoEnd.
+  /// Shown as the line under a title in schedule supplier field (money).
   ///
   /// In en, this message translates to:
   /// **'No end date'**
   String get scheduleNoEnd;
 
-  /// No description provided for @scheduleNoSupplier.
+  /// Shown as a text in schedule supplier field (money).
   ///
   /// In en, this message translates to:
   /// **'No supplier'**
   String get scheduleNoSupplier;
 
-  /// No description provided for @schedulePaysSupplier.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'pays {supplier}'**
   String schedulePaysSupplier(Object supplier);
 
-  /// No description provided for @schedulePending.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Scheduled — waiting for the validators to confirm it.'**
   String get schedulePending;
 
-  /// No description provided for @scheduleStartsOn.
+  /// Shown as a title in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'First occurrence'**
   String get scheduleStartsOn;
 
-  /// No description provided for @scheduleStatusActive.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Active'**
   String get scheduleStatusActive;
 
-  /// No description provided for @scheduleStatusEnded.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Ended'**
   String get scheduleStatusEnded;
 
-  /// No description provided for @scheduleStatusPending.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Awaiting validation'**
   String get scheduleStatusPending;
 
-  /// No description provided for @scheduleStatusRejected.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Rejected'**
   String get scheduleStatusRejected;
 
-  /// No description provided for @scheduleSubmit.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Schedule it'**
   String get scheduleSubmit;
 
-  /// No description provided for @scheduleSupplierLabel.
+  /// Shown as the label of a field in schedule supplier field (money).
   ///
   /// In en, this message translates to:
   /// **'Supplier it pays (optional)'**
@@ -40053,55 +40053,55 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 time} other{{count} times}}'**
   String scheduleTimes(int count);
 
-  /// No description provided for @scheduleTimesLabel.
+  /// Shown as the label of a field in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Repetitions (empty = until the end date)'**
   String get scheduleTimesLabel;
 
-  /// No description provided for @scheduleTitleLabel.
+  /// Shown as the label of a field in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'What (e.g. Internet)'**
   String get scheduleTitleLabel;
 
-  /// No description provided for @scheduleUnitDays.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'days'**
   String get scheduleUnitDays;
 
-  /// No description provided for @scheduleUnitLabel.
+  /// Shown as the label of a field in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Unit'**
   String get scheduleUnitLabel;
 
-  /// No description provided for @scheduleUnitMonths.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'months'**
   String get scheduleUnitMonths;
 
-  /// No description provided for @scheduleUnitWeeks.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'weeks'**
   String get scheduleUnitWeeks;
 
-  /// No description provided for @scheduleUnitYears.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'years'**
   String get scheduleUnitYears;
 
-  /// No description provided for @scheduleUntil.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'until {date}'**
   String scheduleUntil(Object date);
 
-  /// No description provided for @scheduleValidationHint.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'The schedule goes to the validators first. Each due date is then presented to you: confirmed at this amount it counts immediately; a different amount explains itself and is validated again.'**
@@ -40113,25 +40113,25 @@ abstract class AppLocalizations {
   /// **'Enter a deductible share between 0 and 100.'**
   String get scheduleVatInvalid;
 
-  /// No description provided for @scheduleWeekly.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'weekly'**
   String get scheduleWeekly;
 
-  /// No description provided for @scheduleYearly.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'yearly'**
   String get scheduleYearly;
 
-  /// No description provided for @scheduledAwaitingTitle.
+  /// Shown as a text in money face content (money).
   ///
   /// In en, this message translates to:
   /// **'Scheduled expenses awaiting you'**
   String get scheduledAwaitingTitle;
 
-  /// No description provided for @scheduledExpensesEmpty.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'No scheduled expense yet.'**
@@ -40143,13 +40143,13 @@ abstract class AppLocalizations {
   /// **'Ended and rejected ({count})'**
   String scheduledExpensesFinished(int count);
 
-  /// No description provided for @scheduledExpensesIntro.
+  /// Shown as a text in expense schedule sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Subscriptions the space pays for — internet, phone, electricity. The schedule is validated once; every due date is presented to you before it counts.'**
   String get scheduledExpensesIntro;
 
-  /// No description provided for @scheduledExpensesTitle.
+  /// Shown as a button or chip label in money action set (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Scheduled expenses'**
@@ -40353,13 +40353,13 @@ abstract class AppLocalizations {
   /// **'Use on this device'**
   String get serverConnectUseHere;
 
-  /// No description provided for @serverReferenceLabel.
+  /// Shown as a text in server label (core). Placeholders: {host} (String).
   ///
   /// In en, this message translates to:
   /// **'reference server ({host})'**
   String serverReferenceLabel(String host);
 
-  /// No description provided for @serviceOutOfStock.
+  /// Shown as a text in services screen (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Out of stock'**
@@ -40371,7 +40371,7 @@ abstract class AppLocalizations {
   /// **'Nothing left on the shelf — the next supply restocks it.'**
   String get serviceOutOfStockHint;
 
-  /// No description provided for @serviceStockCount.
+  /// Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count} in stock'**
@@ -40947,7 +40947,7 @@ abstract class AppLocalizations {
   /// **'The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.'**
   String get settingHintSecurityBadgePinMinLength;
 
-  /// No description provided for @settingHintSecurityBadgeWorkspaceFailureLimit.
+  /// Shown as a text in settings labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.'**
@@ -41385,7 +41385,7 @@ abstract class AppLocalizations {
   /// **'Shortest badge PIN'**
   String get settingLabelSecurityBadgePinMinLength;
 
-  /// No description provided for @settingLabelSecurityBadgeWorkspaceFailureLimit.
+  /// Shown as a text in settings labels (workspace).
   ///
   /// In en, this message translates to:
   /// **'Workspace badge failure ceiling'**
@@ -41739,31 +41739,31 @@ abstract class AppLocalizations {
   /// **'Settings values'**
   String get settingsWorkspaceTitle;
 
-  /// No description provided for @settlementAction.
+  /// Shown as a text in invoices screen (money), and 2 other places.
   ///
   /// In en, this message translates to:
   /// **'Regroup into one invoice'**
   String get settlementAction;
 
-  /// No description provided for @settlementAnnexAlone.
+  /// Shown as a text in invoice pdf actions (money).
   ///
   /// In en, this message translates to:
   /// **'This invoice only'**
   String get settlementAnnexAlone;
 
-  /// No description provided for @settlementAnnexBody.
+  /// Shown as the body of a dialog in invoice pdf actions (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
   String settlementAnnexBody(int count);
 
-  /// No description provided for @settlementAnnexTitle.
+  /// Shown as a title in invoice pdf actions (money).
   ///
   /// In en, this message translates to:
   /// **'Attach the regrouped invoices?'**
   String get settlementAnnexTitle;
 
-  /// No description provided for @settlementAnnexWith.
+  /// Shown as a text in invoice pdf actions (money).
   ///
   /// In en, this message translates to:
   /// **'Attach them'**
@@ -41775,37 +41775,37 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}'**
   String settlementConfirm(int count, String amount);
 
-  /// No description provided for @settlementDocumentationOnly.
+  /// Shown as a text in invoice actions (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Documentation only — every operation happens on the regrouping invoice.'**
   String get settlementDocumentationOnly;
 
-  /// No description provided for @settlementDone.
+  /// Shown as a text in settlement sheet (money). Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Regrouped into {number}.'**
   String settlementDone(String number);
 
-  /// No description provided for @settlementFoldedIn.
+  /// Shown as the line under a title in open invoice card (money), and 1 other place. Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Regrouped in {number}'**
   String settlementFoldedIn(String number);
 
-  /// No description provided for @settlementNeedsTwo.
+  /// Shown as a text in settlement sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Pick at least two open invoices of the same member.'**
   String get settlementNeedsTwo;
 
-  /// No description provided for @settlementPaidThrough.
+  /// Shown as the line under a title in open invoice card (money). Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Paid through {number}'**
   String settlementPaidThrough(String number);
 
-  /// No description provided for @settlementRegroups.
+  /// Shown as a text in invoice detail sections (money).
   ///
   /// In en, this message translates to:
   /// **'This invoice regroups'**
@@ -41817,13 +41817,13 @@ abstract class AppLocalizations {
   /// **'Regroups {numbers}'**
   String settlementRegroupsNumbers(String numbers);
 
-  /// No description provided for @settlementSettledBy.
+  /// Shown as a text in invoice detail sheet (money).
   ///
   /// In en, this message translates to:
   /// **'Regrouped into another invoice — that one is what is owed and chased.'**
   String get settlementSettledBy;
 
-  /// No description provided for @settlementSourcePdf.
+  /// Shown as a tooltip in open invoice card (money).
   ///
   /// In en, this message translates to:
   /// **'PDF (regrouped)'**
@@ -41841,7 +41841,7 @@ abstract class AppLocalizations {
   /// **'These invoices are folded into one settlement document; each stays readable behind it.'**
   String get settlementSummaryHint;
 
-  /// No description provided for @settlementVatNote.
+  /// Shown as a text in invoice detail sections (money).
   ///
   /// In en, this message translates to:
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
@@ -43970,7 +43970,7 @@ abstract class AppLocalizations {
   /// **'Remove from favorites'**
   String get spaceFavoriteRemove;
 
-  /// No description provided for @spaceHostedOn.
+  /// Shown as a text in space row controls (me). Placeholders: {server} (String).
   ///
   /// In en, this message translates to:
   /// **'Server: {server}'**
@@ -44156,7 +44156,7 @@ abstract class AppLocalizations {
   /// **'Net'**
   String get statusNet;
 
-  /// No description provided for @statusNetExplanation.
+  /// Shown as the line under a title in workspace status screen (money).
   ///
   /// In en, this message translates to:
   /// **'This subtotal is invoiced amounts less credit notes, reimbursements and credits. It is neither profit nor a bank balance. Matched and received payments overlap and must not be added together.'**
@@ -49046,7 +49046,7 @@ abstract class AppLocalizations {
   /// **'HMRC notification reference'**
   String get ukOptionToTaxReference;
 
-  /// No description provided for @unblockAction.
+  /// Shown as a text in blocked people card (me).
   ///
   /// In en, this message translates to:
   /// **'Unblock'**
@@ -49448,7 +49448,7 @@ abstract class AppLocalizations {
   /// **'Profile & account'**
   String get uxProfileAccount;
 
-  /// No description provided for @uxProfileChooseEnvironment.
+  /// Shown as a text in pair card (profile).
   ///
   /// In en, this message translates to:
   /// **'Choose an environment'**
@@ -49694,31 +49694,31 @@ abstract class AppLocalizations {
   /// **'Validation rule saved.'**
   String get validationSaved;
 
-  /// No description provided for @validationScopeAdmins.
+  /// Shown as a button or chip label in validation scope picker (events).
   ///
   /// In en, this message translates to:
   /// **'Admins'**
   String get validationScopeAdmins;
 
-  /// No description provided for @validationScopeHint.
+  /// Shown as a text in validation scope picker (events).
   ///
   /// In en, this message translates to:
   /// **'The owner always may. Admins: every admin, or the ones you list. Listed: exactly these people, whatever their role. All members: anyone active.'**
   String get validationScopeHint;
 
-  /// No description provided for @validationScopeLabel.
+  /// Shown as a text in validation scope picker (events).
   ///
   /// In en, this message translates to:
   /// **'Who validates'**
   String get validationScopeLabel;
 
-  /// No description provided for @validationScopeListed.
+  /// Shown as a button or chip label in validation scope picker (events).
   ///
   /// In en, this message translates to:
   /// **'Listed persons'**
   String get validationScopeListed;
 
-  /// No description provided for @validationScopeMembers.
+  /// Shown as a text in validation workflow (events), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'All members'**
@@ -51770,7 +51770,7 @@ abstract class AppLocalizations {
   /// **'WhatsApp'**
   String get whatsappTitle;
 
-  /// No description provided for @wizardBack.
+  /// Shown as a button or chip label in wizard scaffold (core).
   ///
   /// In en, this message translates to:
   /// **'Back'**
@@ -51782,247 +51782,247 @@ abstract class AppLocalizations {
   /// **'Issue, send, remind, register and validate payments, match and close — one guided process.'**
   String get wizardCardHint;
 
-  /// No description provided for @wizardCloseHint.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.'**
   String get wizardCloseHint;
 
-  /// No description provided for @wizardCloseNone.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Nothing to regroup, write off or refund.'**
   String get wizardCloseNone;
 
-  /// No description provided for @wizardFinish.
+  /// Shown as a button or chip label in wizard scaffold (core), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Finish'**
   String get wizardFinish;
 
-  /// No description provided for @wizardIssueAll.
+  /// Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}'**
   String wizardIssueAll(int count);
 
-  /// No description provided for @wizardIssueFailed.
+  /// Shown as a text in wizard steps issue (money), and 1 other place. Placeholders: {name} (String).
   ///
   /// In en, this message translates to:
   /// **'Could not issue for {name}.'**
   String wizardIssueFailed(String name);
 
-  /// No description provided for @wizardIssueHint.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Untick a member to leave them out of this batch. Members already covered are shown as done.'**
   String get wizardIssueHint;
 
-  /// No description provided for @wizardIssueNothing.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Nothing to issue for this period.'**
   String get wizardIssueNothing;
 
-  /// No description provided for @wizardIssuedChip.
+  /// Shown as the line under a title in wizard steps issue (money). Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
   /// **'Issued {number}'**
   String wizardIssuedChip(String number);
 
-  /// No description provided for @wizardMatchAction.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Match'**
   String get wizardMatchAction;
 
-  /// No description provided for @wizardMatchCredit.
+  /// Shown as a text in wizard steps payments (money). Placeholders: {amount} (String).
   ///
   /// In en, this message translates to:
   /// **'Credit available: {amount}'**
   String wizardMatchCredit(String amount);
 
-  /// No description provided for @wizardMatchHint.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'An invoice is paid once a real payment is matched to it. Rows with credit on the member\'s account are ready.'**
   String get wizardMatchHint;
 
-  /// No description provided for @wizardMatchNoCredit.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'No payment on the account yet'**
   String get wizardMatchNoCredit;
 
-  /// No description provided for @wizardMatchNone.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Every invoice is paid or closed.'**
   String get wizardMatchNone;
 
-  /// No description provided for @wizardMatchPending.
+  /// Shown as a text in wizard steps payments (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Awaiting validation'**
   String get wizardMatchPending;
 
-  /// No description provided for @wizardNext.
+  /// Shown as a button or chip label in wizard scaffold (core).
   ///
   /// In en, this message translates to:
   /// **'Next'**
   String get wizardNext;
 
-  /// No description provided for @wizardPaymentAccept.
+  /// Shown as a tooltip in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Confirm'**
   String get wizardPaymentAccept;
 
-  /// No description provided for @wizardPaymentReject.
+  /// Shown as a tooltip in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Reject'**
   String get wizardPaymentReject;
 
-  /// No description provided for @wizardPaymentsHint.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'What members declared waits for your confirmation below. A payment that reached the account without a declaration is registered here — the member then confirms it.'**
   String get wizardPaymentsHint;
 
-  /// No description provided for @wizardPaymentsNone.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'No declared payment waits for you.'**
   String get wizardPaymentsNone;
 
-  /// No description provided for @wizardPeriodLabel.
+  /// Shown as a text in wizard steps issue (money). Placeholders: {period} (String).
   ///
   /// In en, this message translates to:
   /// **'Period: {period}'**
   String wizardPeriodLabel(String period);
 
-  /// No description provided for @wizardRefund.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Refund'**
   String get wizardRefund;
 
-  /// No description provided for @wizardRemindAll.
+  /// Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}'**
   String wizardRemindAll(int count);
 
-  /// No description provided for @wizardRemindHint.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.'**
   String get wizardRemindHint;
 
-  /// No description provided for @wizardRemindLevel.
+  /// Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int).
   ///
   /// In en, this message translates to:
   /// **'reminder {level}'**
   String wizardRemindLevel(int level);
 
-  /// No description provided for @wizardRemindNone.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'No reminder is due by your rules.'**
   String get wizardRemindNone;
 
-  /// No description provided for @wizardRemindOne.
+  /// Shown as a tooltip in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Reminder letter'**
   String get wizardRemindOne;
 
-  /// No description provided for @wizardReviewIssued.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Already issued'**
   String get wizardReviewIssued;
 
-  /// No description provided for @wizardReviewOpen.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Open invoices'**
   String get wizardReviewOpen;
 
-  /// No description provided for @wizardReviewOverdue.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Reminders due'**
   String get wizardReviewOverdue;
 
-  /// No description provided for @wizardReviewPending.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Payments to validate'**
   String get wizardReviewPending;
 
-  /// No description provided for @wizardReviewToIssue.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'To issue'**
   String get wizardReviewToIssue;
 
-  /// No description provided for @wizardRunEnd.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'End of month'**
   String get wizardRunEnd;
 
-  /// No description provided for @wizardRunEndHint.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'What the month that just ended cost: usage, consumption and extra charges. Issue, send, remind — then register, validate and match the payments, and close.'**
   String get wizardRunEndHint;
 
-  /// No description provided for @wizardRunStart.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Start of month'**
   String get wizardRunStart;
 
-  /// No description provided for @wizardRunStartHint.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'The subscriptions members pay ahead: issue them for the coming month, send them, plan the reminders — then the payment side.'**
   String get wizardRunStartHint;
 
-  /// No description provided for @wizardSendDownload.
+  /// Shown as a tooltip in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Download the PDF'**
   String get wizardSendDownload;
 
-  /// No description provided for @wizardSendHint.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Hand each invoice to its member — share the PDF, or download it to send it your own way.'**
   String get wizardSendHint;
 
-  /// No description provided for @wizardSendNone.
+  /// Shown as a text in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'No invoice of this run to send yet.'**
   String get wizardSendNone;
 
-  /// No description provided for @wizardSendShare.
+  /// Shown as a tooltip in wizard steps issue (money).
   ///
   /// In en, this message translates to:
   /// **'Share the PDF'**
   String get wizardSendShare;
 
-  /// No description provided for @wizardSettle.
+  /// Shown as a text in wizard steps payments (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'Regroup {count}'**
   String wizardSettle(int count);
 
-  /// No description provided for @wizardStepClose.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Close'**
@@ -52034,37 +52034,37 @@ abstract class AppLocalizations {
   /// **'Completed'**
   String get wizardStepCompleted;
 
-  /// No description provided for @wizardStepIssue.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Issue'**
   String get wizardStepIssue;
 
-  /// No description provided for @wizardStepMatch.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Match'**
   String get wizardStepMatch;
 
-  /// No description provided for @wizardStepPayments.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Payments'**
   String get wizardStepPayments;
 
-  /// No description provided for @wizardStepRemind.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Remind'**
   String get wizardStepRemind;
 
-  /// No description provided for @wizardStepReview.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Review'**
   String get wizardStepReview;
 
-  /// No description provided for @wizardStepSend.
+  /// Shown as a text in wizard context (money).
   ///
   /// In en, this message translates to:
   /// **'Send'**
@@ -52076,7 +52076,7 @@ abstract class AppLocalizations {
   /// **'Skipped — suggested settings'**
   String get wizardStepSkipped;
 
-  /// No description provided for @wizardStepSummary.
+  /// Shown as a text in wizard context (money), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'Summary'**
@@ -52094,103 +52094,103 @@ abstract class AppLocalizations {
   /// **'Submitting'**
   String get wizardSubmitting;
 
-  /// No description provided for @wizardSummaryHint.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'What this run did'**
   String get wizardSummaryHint;
 
-  /// No description provided for @wizardTallyDecided.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Payments confirmed or rejected'**
   String get wizardTallyDecided;
 
-  /// No description provided for @wizardTallyIssued.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Invoices issued'**
   String get wizardTallyIssued;
 
-  /// No description provided for @wizardTallyMatched.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Invoices matched'**
   String get wizardTallyMatched;
 
-  /// No description provided for @wizardTallyNothing.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Nothing was changed.'**
   String get wizardTallyNothing;
 
-  /// No description provided for @wizardTallyRefunds.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Refunds'**
   String get wizardTallyRefunds;
 
-  /// No description provided for @wizardTallyRegistered.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Payments registered'**
   String get wizardTallyRegistered;
 
-  /// No description provided for @wizardTallyReminded.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Reminders sent'**
   String get wizardTallyReminded;
 
-  /// No description provided for @wizardTallySettled.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Regroupings'**
   String get wizardTallySettled;
 
-  /// No description provided for @wizardTallyShared.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'PDFs shared or downloaded'**
   String get wizardTallyShared;
 
-  /// No description provided for @wizardTallyWriteoffs.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Write-offs requested'**
   String get wizardTallyWriteoffs;
 
-  /// No description provided for @wizardTitle.
+  /// Shown as a title in invoicing wizard screen (money).
   ///
   /// In en, this message translates to:
   /// **'Invoicing wizard'**
   String get wizardTitle;
 
-  /// No description provided for @wizardTodoHeading.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Still open — whose move'**
   String get wizardTodoHeading;
 
-  /// No description provided for @wizardTodoNone.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Nothing left open.'**
   String get wizardTodoNone;
 
-  /// No description provided for @wizardWhoValidators.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Validators'**
   String get wizardWhoValidators;
 
-  /// No description provided for @wizardWhoYou.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'You'**
   String get wizardWhoYou;
 
-  /// No description provided for @wizardWriteoff.
+  /// Shown as a text in wizard steps payments (money).
   ///
   /// In en, this message translates to:
   /// **'Write off'**
@@ -52490,25 +52490,25 @@ abstract class AppLocalizations {
   /// **'Booking granularity'**
   String get workspaceConfigGranularity;
 
-  /// No description provided for @workspaceConfigInvitationCustom.
+  /// Shown as a text in workspace configuration report strings (workspace).
   ///
   /// In en, this message translates to:
   /// **'Custom invitation message configured'**
   String get workspaceConfigInvitationCustom;
 
-  /// No description provided for @workspaceConfigInvitationDefault.
+  /// Shown as a text in workspace configuration report strings (workspace).
   ///
   /// In en, this message translates to:
   /// **'Built-in invitation message (all languages)'**
   String get workspaceConfigInvitationDefault;
 
-  /// No description provided for @workspaceConfigInvitationSingleUse.
+  /// Shown as a text in workspace configuration report strings (workspace).
   ///
   /// In en, this message translates to:
   /// **'Personal invitation codes are single-use and expire after 14 days; new members need admin approval'**
   String get workspaceConfigInvitationSingleUse;
 
-  /// No description provided for @workspaceConfigInvitations.
+  /// Shown as a text in workspace configuration report strings (workspace).
   ///
   /// In en, this message translates to:
   /// **'Invitations'**
@@ -52646,7 +52646,7 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Please try again.'**
   String get workspaceGenericError;
 
-  /// No description provided for @workspaceInviteCodeInvalid.
+  /// Shown as a text in onboarding join form (workspace).
   ///
   /// In en, this message translates to:
   /// **'No workspace ID found — paste the invitation or type the ID.'**
@@ -52658,7 +52658,7 @@ abstract class AppLocalizations {
   /// **'Invite code'**
   String get workspaceInviteCodeLabel;
 
-  /// No description provided for @workspaceInvitePasteHint.
+  /// Shown as the helper line under a field in onboarding join form (workspace).
   ///
   /// In en, this message translates to:
   /// **'Paste the whole invitation message — the ID is found automatically.'**

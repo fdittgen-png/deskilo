@@ -25,12 +25,25 @@
     }
   },
   "leaseVarianceAccept": "Accept the difference",
+  "@leaseVarianceAccept": {
+    "description": "Shown as a text in lease commitments sheet (money), and 1 other place."
+  },
   "leaseVarianceTitle": "Accept a difference of {amount}",
   "leaseVarianceReason": "Why the bill differs",
+  "@leaseVarianceReason": {
+    "description": "Shown as a button or chip label in lease commitments sheet (money)."
+  },
   "leaseVarianceDone": "The difference is accepted",
+  "@leaseVarianceDone": {
+    "description": "Shown as a text in lease commitments sheet (money)."
+  },
   "leaseVarianceSent": "Sent to the validators: nothing changes until they decide",
+  "@leaseVarianceSent": {
+    "description": "Shown as a text in lease commitments sheet (money)."
+  },
   "leaseVarianceLineText": "{reference}: accepted difference {amount}",
   "@leaseVarianceTitle": {
+    "description": "Shown as a title in lease commitments sheet (money). Placeholders: {amount} (String).",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -38,6 +51,7 @@
     }
   },
   "@leaseVarianceLineText": {
+    "description": "Shown as a title in lease commitments sheet (money). Placeholders: {reference} (String), {amount} (String).",
     "placeholders": {
       "reference": {
         "type": "String"

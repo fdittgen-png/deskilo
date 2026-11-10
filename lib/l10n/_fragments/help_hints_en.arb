@@ -1,36 +1,129 @@
 {
   "helpHintLearnMore": "Learn more",
+  "@helpHintLearnMore": {
+    "description": "Shown as a text in help tips (core), and 1 other place."
+  },
   "helpHintDismiss": "Dismiss hint",
+  "@helpHintDismiss": {
+    "description": "Shown as a tooltip in help hint (core), and 1 other place."
+  },
   "helpHintPrevTip": "Previous tip",
+  "@helpHintPrevTip": {
+    "description": "Shown as a tooltip in help hint (core)."
+  },
   "helpHintNextTip": "Next tip",
+  "@helpHintNextTip": {
+    "description": "Shown as a tooltip in help hint (core)."
+  },
   "helpHintRestoreTitle": "Show help hints again",
+  "@helpHintRestoreTitle": {
+    "description": "Shown as a title in account settings tiles (profile)."
+  },
   "helpHintRestored": "Help hints will be shown again.",
+  "@helpHintRestored": {
+    "description": "Shown as a text in account settings tiles (profile)."
+  },
   "helpHintReserve": "Pick a day and time window, then tap a free seat to book it.",
+  "@helpHintReserve": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintReserveTopic": "Reserve hub",
+  "@helpHintReserveTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintReserveTip4Topic": "How booking behaves",
+  "@helpHintReserveTip4Topic": {
+    "description": "Shown as the topic of a help symbol in booking sheet parts (reservations)."
+  },
   "helpHintPlan": "The live floor plan: tap a free seat to book it, tap your own booking to check in.",
+  "@helpHintPlan": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintPlanTopic": "floor plan",
+  "@helpHintPlanTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintCalendar": "Pick a day or a range: everything dated that you may see, in one list, each row opening its source.",
   "helpHintCalendarTopic": "Calendar",
+  "@helpHintCalendarTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintEvents": "Everything that happened, in one feed. Decisions waiting for you sit on top; the chips filter the rest.",
+  "@helpHintEvents": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintEventsTopic": "confirmations",
+  "@helpHintEventsTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintEditor": "Draw rooms and desks, stamp seats onto them — tap a seat twice to edit its properties.",
+  "@helpHintEditor": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintEditorTopic": "space editor",
+  "@helpHintEditorTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintAvailability": "Set the open weekdays and working hours, and add closure days nobody can book.",
+  "@helpHintAvailability": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintAvailabilityTopic": "Availability",
+  "@helpHintAvailabilityTopic": {
+    "description": "Shown as a text in help tips (core), and 2 other places."
+  },
   "helpHintFeatures": "Switch workspace functionality on or off — every member's app follows immediately.",
+  "@helpHintFeatures": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintFeaturesTopic": "Features",
+  "@helpHintFeaturesTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMembers": "Invite members, set their plan percentage and role, and manage their badges.",
+  "@helpHintMembers": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMembersTopic": "Members & plans",
+  "@helpHintMembersTopic": {
+    "description": "Shown as a text in help tips (core), and 6 other places."
+  },
   "helpHintMembersTip4Topic": "Role management",
+  "@helpHintMembersTip4Topic": {
+    "description": "Shown as the topic of a help symbol in roles screen (workspace), and 1 other place."
+  },
   "helpHintMoney": "Your monthly bill: browse months with the arrows; pay, export or share from here.",
+  "@helpHintMoney": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyTopic": "Money",
+  "@helpHintMoneyTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintValidation": "Decide which actions need confirmation, who confirms, and how many approvals it takes.",
+  "@helpHintValidation": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintValidationTopic": "confirmations",
+  "@helpHintValidationTopic": {
+    "description": "Shown as a text in help tips (core), and 8 other places."
+  },
   "helpHintWorkspace": "Country, currency, language and billing details — documents and taxes follow these settings.",
+  "@helpHintWorkspace": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintWorkspaceTopic": "Workspace settings",
+  "@helpHintWorkspaceTopic": {
+    "description": "Shown as a text in help tips (core), and 1 other place."
+  },
   "helpHintBadges": "Issue a printable QR badge or register an NFC card; revoke lost badges any time.",
+  "@helpHintBadges": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintBadgesTopic": "NFC badge",
+  "@helpHintBadgesTopic": {
+    "description": "Shown as a text in help tips (core), and 2 other places."
+  },
   "@helpHintCalendar": {
     "description": "#718/#719 - help hints"
   },
@@ -43,36 +136,126 @@
     "description": "#718/#719 - help hints"
   },
   "helpHintMoneyPayments": "Settle and ask: the balance, how to pay it or pay online, record a payment — and submit an expense, request half-days or add a consumption.",
+  "@helpHintMoneyPayments": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyPaymentsTopic": "Payment",
+  "@helpHintMoneyPaymentsTopic": {
+    "description": "Shown as a text in help tips (core), and 1 other place."
+  },
   "helpHintMoneyPaymentsTip3Topic": "online payments",
+  "@helpHintMoneyPaymentsTip3Topic": {
+    "description": "Shown as the topic of a help symbol in payment config screen (money)."
+  },
   "helpHintMoneyStatement": "The month as it stands: your account, days used and left, subscription, services, packages, open positions, credits and the balance. Browse months with the arrows.",
+  "@helpHintMoneyStatement": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyStatementTopic": "Statement",
+  "@helpHintMoneyStatementTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyInvoices": "Your invoices: what is open and when it is due, every invoice issued to you with its status, one tap to the detail and to paying it.",
+  "@helpHintMoneyInvoices": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyInvoicesTopic": "Invoices",
+  "@helpHintMoneyInvoicesTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyInvoicesTip2Topic": "Automatic payment reminders",
+  "@helpHintMoneyInvoicesTip2Topic": {
+    "description": "Shown as the topic of a help symbol in dunning rules dialog (money), and 1 other place."
+  },
   "helpHintMoneyDocuments": "Your paperwork: your conditions, the payments report, the month's statement as PDF, the document library.",
+  "@helpHintMoneyDocuments": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyDocumentsTopic": "Documents",
+  "@helpHintMoneyDocumentsTopic": {
+    "description": "Shown as a text in help tips (core)."
+  },
   "helpHintMoneyPaymentsTipSupplyTopic": "Services and Accessories",
+  "@helpHintMoneyPaymentsTipSupplyTopic": {
+    "description": "Shown as the topic of a help symbol in services screen (money)."
+  },
   "helpHintMembersTipNegotiationTopic": "Price negotiations",
+  "@helpHintMembersTipNegotiationTopic": {
+    "description": "Shown as the topic of a help symbol in members screen (workspace)."
+  },
   "helpDotTooltip": "Open the guide",
+  "@helpDotTooltip": {
+    "description": "Shown as a tooltip in help dot (core)."
+  },
   "helpTopicLegalIdentity": "Legal identity",
+  "@helpTopicLegalIdentity": {
+    "description": "Shown as the topic of a help symbol in legal identity screen (money), and 3 other places."
+  },
   "helpTopicEinvoice": "e-invoice",
+  "@helpTopicEinvoice": {
+    "description": "Shown as a text in legal identity screen (money), and 7 other places."
+  },
   "helpTopicReportEditor": "report editor",
+  "@helpTopicReportEditor": {
+    "description": "Shown as the topic of a help symbol in invoice template sheet (money), and 1 other place."
+  },
   "helpTopicDocumentLibrary": "document library",
+  "@helpTopicDocumentLibrary": {
+    "description": "Shown as the topic of a help symbol in documents screen (workspace), and 4 other places."
+  },
   "helpTopicWorkspaceId": "Workspace ID",
+  "@helpTopicWorkspaceId": {
+    "description": "Shown as the topic of a help symbol in workspace code screen (workspace), and 1 other place."
+  },
   "helpTopicVat": "VAT",
+  "@helpTopicVat": {
+    "description": "Shown as a dialog in member vat treatment (workspace), and 10 other places."
+  },
   "helpTopicSettings": "Settings & profile",
+  "@helpTopicSettings": {
+    "description": "Shown as a text in settings screen (profile), and 17 other places."
+  },
   "helpTopicKiosk": "Kiosk mode",
   "helpTopicBilling": "Billing",
+  "@helpTopicBilling": {
+    "description": "Shown as the topic of a help symbol in billing editor sections (money)."
+  },
   "helpTopicWorkingHours": "Working hours",
+  "@helpTopicWorkingHours": {
+    "description": "Shown as the topic of a help symbol in availability sections (workspace), and 1 other place."
+  },
   "helpTopicBookingPolicies": "Booking policies",
+  "@helpTopicBookingPolicies": {
+    "description": "Shown as the topic of a help symbol in availability policies (workspace), and 3 other places."
+  },
   "helpTopicBookingLimits": "Booking limits",
+  "@helpTopicBookingLimits": {
+    "description": "Shown as the topic of a help symbol in availability policies (workspace)."
+  },
   "helpTopicScheduledExpenses": "Scheduled expenses",
+  "@helpTopicScheduledExpenses": {
+    "description": "Shown as the topic of a help symbol in expense schedule sheet (money), and 2 other places."
+  },
   "helpTopicServer": "your own server",
+  "@helpTopicServer": {
+    "description": "Shown as the topic of a help symbol in server choice screen (profile), and 3 other places."
+  },
   "helpTopicReportLayout": "Positioned layouts",
   "helpTopicWindowEnvelope": "The window-envelope contract",
   "helpTopicTrace": "The trace",
+  "@helpTopicTrace": {
+    "description": "Shown as the topic of a help symbol in developer screen (profile)."
+  },
   "helpTopicInstances": "Instances",
+  "@helpTopicInstances": {
+    "description": "Shown as the topic of a help symbol in new instance screen (profile)."
+  },
   "helpTopicAccounting": "Accounting exports",
-  "helpTopicReadiness": "readiness gate"
+  "@helpTopicAccounting": {
+    "description": "Shown as the topic of a help symbol in accounting capability card (money), and 1 other place."
+  },
+  "helpTopicReadiness": "readiness gate",
+  "@helpTopicReadiness": {
+    "description": "Shown as the topic of a help symbol in e invoice sheet (money)."
+  }
 }
