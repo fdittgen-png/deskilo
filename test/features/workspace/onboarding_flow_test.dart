@@ -284,7 +284,14 @@ void main() {
 
       await tester.tap(find.text('Next'));
       await tester.pumpAndSettle();
-      expect(find.text('CHF'), findsOneWidget, reason: 'the where step kept it');
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('onboarding-currency')),
+          matching: find.text('CHF'),
+        ),
+        findsOneWidget,
+        reason: 'the where step kept it',
+      );
       await tester.tap(find.text('Next'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Next'));

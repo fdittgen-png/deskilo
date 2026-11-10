@@ -15954,6 +15954,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managedProfileTitle => 'Managed profile';
 
   @override
+  String get masterDataSearchHint =>
+      'Type a name or a code, or pick from the list';
+
+  @override
+  String get masterDataUnknownCode =>
+      'This is not a valid entry. Pick one from the list.';
+
+  @override
   String get mcpApiReference => 'API reference';
 
   @override

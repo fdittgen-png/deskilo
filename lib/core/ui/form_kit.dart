@@ -120,6 +120,7 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     this.onSubmitted,
     this.help,
+    this.focusNode,
   });
 
   final TextEditingController controller;
@@ -138,12 +139,16 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onSubmitted;
   final Widget? help;
 
+  /// For a field a composite control owns (the master-data lookup).
+  final FocusNode? focusNode;
+
   @override
   Widget build(BuildContext context) {
     final scope = fieldKey == null ? null : FormErrorsScope.maybeOf(context);
     final shown = error ?? scope?.errors[fieldKey];
     return TextField(
       controller: controller,
+      focusNode: focusNode,
       enabled: enabled,
       autofocus: autofocus,
       obscureText: obscureText,

@@ -11,7 +11,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
-import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../providers/tax_reference_providers.dart';
 import '../widgets/tax_reference_history_sheet.dart';
@@ -122,8 +122,8 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
                 ),
             ]),
             const SizedBox(height: AppSpacing.sm),
-            AppTextField(
-              key: const ValueKey('tax-reference-country-filter'),
+            CountryField(
+              textKey: const ValueKey('tax-reference-country-filter'),
               controller: _filter,
               label: l10n.taxRefCountry,
               onChanged: (v) => setState(() => _country = v.trim().toUpperCase()),
