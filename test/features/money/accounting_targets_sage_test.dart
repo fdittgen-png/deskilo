@@ -114,15 +114,22 @@ void main() {
     expect(importNotices(l10n, 'GB', reference: ActiveTaxReference.current), isEmpty);
   });
 
-  test('Sage 50 Canada, Sage 200 and Sage Intacct wait for a '
-      'specification and write nothing', () {
-    for (final id in ['sage50_ca', 'sage200', 'sage_intacct']) {
+  test('Sage 200 and Sage Intacct wait for a specification and write nothing', () {
+    for (final id in ['sage200', 'sage_intacct']) {
       final t = _target(id);
       expect(t.capability.state, QualificationState.specificationNeeded);
       expect(t.capability.producible, isFalse, reason: id);
       expect(t.format, isNull, reason: id);
       expect(t.runnerDelivers, isFalse, reason: id);
     }
+  });
+
+  test('Sage 50 Canada writes the general-journal text file, in Canada only', () {
+    final t = _target('sage50_ca');
+    expect(t.capability.state, QualificationState.implemented);
+    expect(t.format?.kind, ExportKind.sage50CaJournal);
+    expect(t.format?.extension, 'txt');
     expect(targetsFor('CA', reference: ActiveTaxReference.current).map((t) => t.id), contains('sage50_ca'));
+    expect(targetsFor('GB', reference: ActiveTaxReference.current).map((t) => t.id), isNot(contains('sage50_ca')));
   });
 }

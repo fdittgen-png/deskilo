@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
@@ -117,7 +118,7 @@ class _OrderForm {
       v == v.roundToDouble() ? v.toInt().toString() : v.toString();
 
   static double? _number(String text) =>
-      double.tryParse(text.trim().replaceAll(',', '.'));
+      parseDecimalInput(text, grouping: false)?.toDouble();
 
   PurchaseOrderDraft draft() => PurchaseOrderDraft(
     orderId: order?.id,
@@ -133,7 +134,7 @@ class _OrderForm {
           description: fields['desc-$i'].text,
           quantity: _number(fields['qty-$i'].text) ?? 0,
           unit: fields['unit-$i'].text,
-          unitPriceCents: parseCentsInput(fields['price-$i'].text) ?? -1,
+          unitPriceCents: parseMinorInput(fields['price-$i'].text) ?? -1,
           vatRatePercent: fields['vat-$i'].text.trim().isEmpty
               ? null
               : (_number(fields['vat-$i'].text) ?? -1),

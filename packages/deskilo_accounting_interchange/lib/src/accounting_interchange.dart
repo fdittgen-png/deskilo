@@ -36,6 +36,14 @@ enum InterchangeBlock {
 
   /// A posting books a document the envelope does not carry.
   unknownDocument,
+
+  /// #2373 -- a document number over the 20 characters a Sage 50 Canada
+  /// journal takes for its source.
+  sourceTooLong,
+
+  /// #2373 -- an account code a journal text file cannot hold (empty, or with
+  /// a comma, a quote or a line break).
+  unusableAccount,
 }
 
 /// One reason an envelope is refused, and what it is about.

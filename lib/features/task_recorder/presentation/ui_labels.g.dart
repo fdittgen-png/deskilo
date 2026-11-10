@@ -1155,6 +1155,7 @@ Map<String, _Getter> _part3() => {
   'instanceStepSchema': (l) => l.instanceStepSchema,
   'inviteLastNameLabel': (l) => l.inviteLastNameLabel,
   'invoiceCorrectionReasonR3': (l) => l.invoiceCorrectionReasonR3,
+  'invoiceExportSage50Ca': (l) => l.invoiceExportSage50Ca,
   'invoiceGapMissingBuyerCountry': (l) => l.invoiceGapMissingBuyerCountry,
   'invoiceIssueUnknownBody': (l) => l.invoiceIssueUnknownBody,
   'invoiceLegalCustomerCapacityField': (l) => l.invoiceLegalCustomerCapacityField,

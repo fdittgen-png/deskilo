@@ -408,6 +408,31 @@ Vous êtes dans un espace et voulez atteindre un écran. Tout est dans un seul m
 
 **Voir aussi:** [Style de navigation](help:user.profile.settings.navigation) · [Moi : votre accueil et vos espaces](help:user.me.home)
 
+### La vue d'ensemble de l'espace
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous ouvrez l'espace et voulez voir d'abord ce qui vous attend, puis les chiffres que vous pouvez lire.
+
+<!-- image: user-start-workspace-overview -->
+
+**Étapes**
+
+1. Ouvrez [Vue d'ensemble](app:/workspace-overview).
+2. Lisez **À traiter** : ce qui vous attend, et une ligne qui compte les demandes que personne n'a encore décidées dans l'espace. « Rien ne vous attend » signifie qu'il n'y a rien.
+3. Lisez **Indicateurs clés**, groupés en **Capacité**, **Ventes**, **Achats**, **Trésorerie** et **Personnes**. Touchez une tuile pour ouvrir l'endroit d'où vient son chiffre.
+4. Touchez **Personnaliser** pour épingler les tuiles que vous voulez, dans votre ordre.
+5. Touchez **Tous les indicateurs** pour la page d'analyse complète.
+
+**Bon à savoir**
+
+- Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche **Non disponible**, jamais zéro.
+- **Adhésions actives** compte des adhésions, pas des personnes. **Créances échues** laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.
+- **Personnaliser** demande le droit de lire les chiffres de l'espace et le concepteur de rapports.
+- Le ou la propriétaire active la page sous **Vue d'ensemble de l'espace** parmi les fonctionnalités. Désactivée, la liste d'attention et la page d'analyse restent telles quelles.
+
+**Voir aussi:** [S'orienter dans l'application](help:user.start.navigation)
+
 ### La carte Premiers pas et les astuces
 
 **Public:** Tout le monde
@@ -2509,6 +2534,28 @@ Vous avez payé quelque chose pour l'espace et vous voulez que l'espace vous rem
 
 **Voir aussi:** [Approuver ou refuser une dépense](help:user.money.expense.approve)
 
+### La TVA d'une dépense
+
+**Public:** Membre · Administrateur·rice · Propriétaire
+
+Une dépense contient de la TVA, et vous voulez que l'espace en déduise la bonne part.
+
+**Étapes**
+
+1. Dans le formulaire de dépense, ou dans **Dépenses programmées**, choisissez la **TVA sur cette dépense** : un taux, ou **Sans TVA**.
+2. Saisissez la **Part déductible (%)** : 100, sauf si une partie de la dépense est privée ou sert une activité exonérée.
+3. Activez **Une immobilisation** pour un équipement que l'espace garde et amortit.
+4. Pour un service acheté à l'étranger sans TVA de votre pays, activez **Acheté auprès d'un fournisseur à l'étranger**. Le montant saisi est alors la base : l'espace doit l'impôt sur les acquisitions sur ce montant et en déduit sa part.
+
+**Bon à savoir**
+
+- Les champs apparaissent quand l'espace est assujetti à la TVA et que **TVA déductible** est activée.
+- **Acheté auprès d'un fournisseur à l'étranger** n'apparaît que si la déclaration de votre pays a une case pour cet impôt, par exemple le décompte suisse (chiffre 383).
+- Une dépense programmée pose la question une fois, et chaque occurrence reprend la réponse.
+- La TVA déductible compte dans le mois où la dépense est approuvée.
+
+**Voir aussi:** [Soumettre une dépense](help:user.money.expense) · [Le décompte suisse : chiffres 205 et 383](help:user.money.vat.ch-return)
+
 ### Approuver ou refuser une dépense
 
 **Public:** Administrateur·rice · Propriétaire
@@ -2531,6 +2578,125 @@ Une dépense attend et vous décidez si l'espace la paie.
 - **Alertes financières** dans Finances n'apparaît que lorsque la fonction **Onglet Événements** est activée.
 
 **Voir aussi:** [Les alertes financières](help:user.money.alerts)
+
+### La page Ventes
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez trouver au même endroit tout ce que l'espace vend et facture.
+
+<!-- image: user-money-sales -->
+
+**Étapes**
+
+1. Ouvrez [Ventes](app:/money/sales), ou touchez **Ventes** dans [Mes finances](app:/money).
+2. Touchez **Services** pour changer ce que les membres peuvent acheter. La ligne apparaît si vous pouvez gérer les services.
+3. Touchez **Factures** pour émettre et suivre les factures.
+4. Touchez **Pass invités** pour les pass vendus à l'accueil, si l'espace en vend.
+5. Touchez **Registre des factures** pour la liste de toutes les factures émises, ou **Tarifs et forfaits** pour changer les prix. **Tarifs et forfaits** apparaît si vous pouvez gérer les règles de facturation.
+
+**Bon à savoir**
+
+- Chaque ligne ouvre l'écran qu'elle a toujours ouvert, avec les mêmes droits. La page ne fait que les rassembler.
+- La page apparaît quand la facturation est activée dans l'espace et que vous êtes administrateur·rice.
+
+**Voir aussi:** [La facturation en un coup d'œil](help:user.money.invoicing) · [La page Achats et Ajouter un achat / une dépense](help:user.money.purchases)
+
+### La page Achats et Ajouter un achat / une dépense
+
+**Public:** Membre · Administrateur·rice · Propriétaire
+
+Vous avez acheté quelque chose pour l'espace, ou un fournisseur a envoyé une facture, et vous voulez l'enregistrer.
+
+<!-- image: user-money-purchases -->
+
+**Étapes**
+
+1. Ouvrez [Achats](app:/money/purchases), ou touchez **Achats** dans [Mes finances](app:/money).
+2. Touchez **Ajouter un achat / une dépense**.
+3. Si vous pouvez saisir les factures fournisseur, répondez à **Qui a payé ?** :
+   - **J'ai payé moi-même** : le formulaire de dépense s'ouvre. Une fois la dépense approuvée, l'espace vous la doit.
+   - **Pas encore payé** : une facture fournisseur que l'espace doit encore payer.
+   - **L'espace a déjà payé** : saisissez la facture. Une fois approuvée, enregistrez son paiement depuis **À payer**.
+4. Remplissez le formulaire qui s'ouvre et enregistrez-le.
+
+**Bon à savoir**
+
+- Sans le droit de saisir les factures fournisseur, la question est sautée et le formulaire de dépense s'ouvre.
+- Les autres boutons de la page ouvrent **Fournisseurs**, **Achats** (la liste des pièces d'achat), le bail, l'équipement et les salles louées, chacun quand l'espace s'en sert.
+- **Achats** liste les factures fournisseur et les justificatifs que les membres ont payés pour l'espace, une pièce chacun. Les onglets sont **Documents** et **À payer**.
+
+**Voir aussi:** [Soumettre une dépense](help:user.money.expense) · [Une facture fournisseur, de la saisie à l'approbation](help:user.money.purchases.bills)
+
+### Une facture fournisseur, de la saisie à l'approbation
+
+**Public:** Administrateur·rice · Propriétaire
+
+Un fournisseur a envoyé une facture et vous voulez que l'espace la doive, avec l'approbation d'une seconde personne.
+
+**Étapes**
+
+1. Dans **Achats**, touchez **Ajouter une facture fournisseur**, ou passez par **Ajouter un achat / une dépense**.
+2. Choisissez le **Fournisseur** et saisissez le **Numéro de facture**, les lignes et le **Total**. Une facture enregistrée incomplète reste un brouillon : « Un brouillon : envoyez-le pour approbation une fois complet. »
+3. Touchez **Envoyer pour approbation**.
+4. Une autre personne ouvre [Factures fournisseurs à approuver](app:/money/purchases/approvals) et touche **Approuver**, ou **Refuser** en donnant la raison.
+5. Une fois approuvée, la facture est due au fournisseur jusqu'à son paiement.
+
+**Bon à savoir**
+
+- Une facture a besoin de son fournisseur et d'un montant avant d'être envoyée.
+- La personne qui a envoyé une facture ne peut pas la décider. Dans les paramètres de l'espace, **Factures qu'une seule personne peut approuver en dessous de (unités monétaires)** lui permet d'approuver les petites factures, si elle peut approuver les dépenses. 0 garde la règle : une autre personne approuve chaque facture. Un refus demande toujours une autre personne.
+- Chaque pièce montre à part son approbation, son règlement (**Non réglé**, **Réglé en partie**, **Réglé**, **Rien de dû**) et son état comptable.
+- Saisir une facture demande **Saisir les factures fournisseur**. La décider demande **Approuver les dépenses**.
+
+**Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay) · [Soldes des fournisseurs](help:user.money.suppliers.balance)
+
+### Ce que l'espace doit : À payer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce que l'espace doit encore, et enregistrer ce qui a été payé.
+
+**Étapes**
+
+1. Dans **Achats**, ouvrez l'onglet **À payer**, ou ouvrez [Trésorerie](app:/money/cash) et touchez **À payer**.
+2. Lisez **Dû aux fournisseurs** pour les factures approuvées et **Dû aux membres** pour les remboursements des justificatifs approuvés.
+3. Touchez **Enregistrer le paiement** sur une ligne. Saisissez le **Montant versé**, la date (**Payé le**), le **Mode de paiement** et, si vous le souhaitez, une **Référence (facultatif)**.
+4. Pour un membre qui doit aussi de l'argent à l'espace, touchez plutôt **Compenser avec une facture**. Choisissez la **Facture** : la créance règle cette facture ouverte au lieu d'être versée.
+5. Pour appliquer un avoir fournisseur, touchez **Appliquer à sa facture** sur l'avoir.
+
+**Bon à savoir**
+
+- N'enregistrez que de l'argent réellement versé. Le paiement est déclaré par vous ; il n'est pas confirmé par la banque.
+- Un paiement erroné n'est jamais supprimé. Touchez **Annuler** et donnez la raison. Un paiement déjà appliqué à une facture ne peut pas être annulé.
+- Une compensation garde les ventes et la TVA de la facture ; seul son paiement est expliqué.
+- Un avoir est appliqué par une autre personne que celle qui l'a saisi, à une facture approuvée du même fournisseur qui doit encore au moins ce montant.
+- Dans les paramètres de l'espace, **Paiements enregistrés par une seconde personne à partir de (unités monétaires)** signifie qu'un paiement d'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu'il paie. 0 désactive la règle.
+- Enregistrer un paiement demande **Enregistrer les paiements aux membres** ; une compensation demande **Émettre les factures et rapprocher les paiements**.
+
+**Voir aussi:** [La page Trésorerie](help:user.money.cash)
+
+### La page Trésorerie
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir l'argent enregistré en entrée et en sortie, et ce qui reste à payer.
+
+<!-- image: user-money-cash -->
+
+**Étapes**
+
+1. Ouvrez [Trésorerie](app:/money/cash), ou touchez **Trésorerie** dans [Mes finances](app:/money).
+2. Touchez **Entrées et sorties par mois** pour les paiements enregistrés, mois par mois.
+3. Touchez **À payer** pour ce que l'espace doit encore.
+4. Touchez **Relevés bancaires** pour importer un relevé et rapprocher ses lignes, si l'espace s'en sert.
+
+**Bon à savoir**
+
+- La page montre des paiements enregistrés, pas un solde bancaire rapproché.
+- Elle apparaît pour les administrateur·rices quand l'état de l'espace ou les achats sont activés.
+
+**Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay)
 
 ### Soldes des fournisseurs
 
@@ -4842,6 +5008,28 @@ Un groupe dit de quel type de taux il s'agit, pour que la facture le range dans 
 
 **Voir aussi:** [Définir les taux](help:user.money.vat.rates)
 
+### Le décompte suisse : chiffres 205 et 383
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Votre espace est en Suisse, et vous voulez les prestations pour lesquelles vous avez opté et l'impôt sur les acquisitions dans les bonnes cases.
+
+**Étapes**
+
+1. Dans [Identité légale et facturation électronique](app:/legal-identity), sous **Location et option (Suisse)**, activez **Nous ne louons que des locaux nus** si vous louez des locaux sans services. Activez ensuite **Nous avons opté (art. 22 LTVA)** si vous avez opté, et saisissez **Option effective dès (AAAA-MM-JJ)**.
+2. Enregistrez une dépense achetée à l'étranger avec **Acheté auprès d'un fournisseur à l'étranger** activé.
+3. Ouvrez [Déclaration de TVA](app:/vat-declarations) et préparez la période.
+4. Téléchargez **Décompte TVA, XML eCH-0217 (téléversement ePortal)** et déposez-le sur l'ePortal.
+
+**Bon à savoir**
+
+- Le chiffre 205 est la part de votre chiffre d'affaires (chiffre 200) qui est une location nue imposée parce que vous avez opté. Les lignes immobilières de la facture donnent cette part. Le décompte la compte toujours dans le chiffre 200.
+- Le chiffre 383 est l'impôt sur les acquisitions. Il est déclaré comme impôt dû, et sa part déductible compte avec l'impôt préalable. Il ne fait pas partie du chiffre d'affaires.
+- Dans le fichier eCH-0217, les prestations optées sont écrites `opted`, et l'impôt sur les acquisitions un élément `acquisitionTax` par taux.
+- Un·e opérateur·rice qui modifie les cases dans **Données de référence fiscales** nomme les lignes supplémentaires d'une case dans **Autres catégories de lignes qu'elle additionne (séparées par des virgules, p. ex. acquisition)**. Le chiffre 383 porte `acquisition`.
+
+**Voir aussi:** [Préparer la déclaration de TVA](help:user.money.vat.declaration) · [La TVA d'une dépense](help:user.money.expenses.vat)
+
 ### Changer un taux par la loi
 
 **Public:** Propriétaire · Administrateur·rice facturation
@@ -5393,6 +5581,46 @@ Vous remettez à votre comptable les factures et les paiements de l'année.
 - Certains formats précisent que DesKilo n'est pas un logiciel certifié dans votre pays.
 
 **Voir aussi:** [Compte de TVA](help:user.money.vat.account) · [Le registre des factures](help:user.invoicing.register)
+
+### Transferts : le lien numérique vers votre système comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous tenez vos registres de TVA dans un autre système comptable, et vous devez montrer comment les chiffres y sont arrivés, par exemple pour le Making Tax Digital britannique.
+
+**Étapes**
+
+1. Ouvrez [Comptabilité et TVA](app:/money/accounting) et touchez **Systèmes comptables**.
+2. Lisez **Transferts** : chaque fichier remis et chaque document livré à une connexion sur la période, chacun avec le SHA-256 de ce qui a été transmis.
+3. Remettez le **CSV comptable** à votre comptable. Son `report.json` cite la liste des Transferts de l'année.
+
+**Bon à savoir**
+
+- Un lien numérique est un fichier ou une livraison par connexion enregistré dans **Transferts**. Recopier des chiffres à la main dans l'autre système n'est pas un lien numérique.
+- Le SHA-256 prouve que le fichier reçu par l'autre système est celui que DesKilo a remis.
+- Une liste vide indique « Rien n'a été remis ni envoyé dans cette période. »
+
+**Voir aussi:** [Exports comptables](help:user.invoicing.accounting-export) · [Où les registres sont conservés](help:user.invoicing.records-location)
+
+### Où les registres sont conservés
+
+**Public:** Propriétaire · Administrateur·rice facturation · Opérateur·rice
+
+Certains pays disent où une entreprise conserve ses livres, et vous voulez savoir ce que l'application indique pour la vôtre.
+
+**Étapes**
+
+1. Ouvrez [Identité légale et facturation électronique](app:/legal-identity) et allez à la section **Livre comptable**.
+2. Lisez **Où les registres sont conservés**, à côté des durées de conservation.
+3. Pour une entreprise canadienne dont les registres sont conservés hors du Canada, saisissez **Autorisation de l'ARC de conserver les registres hors du Canada** dans les paramètres de l'espace, sous **Lieu de conservation des registres**.
+
+**Bon à savoir**
+
+- L'opérateur·rice de l'installation déclare **Pays où cette installation conserve ses données**, comme le contrat d'hébergement l'indique. L'application ne le devine jamais. Non déclaré, la tuile le dit et n'indique aucun lieu.
+- Le Canada fait conserver les livres au Canada sauf autorisation de l'ARC ; l'Allemagne fait conserver les livres électroniques dans l'UE. La tuile avertit quand le pays déclaré ne convient pas.
+- Une archive britannique, irlandaise, canadienne ou américaine contient ses tables avec un `tables/README.txt` qui décrit en anglais chaque table et chaque colonne, et dit où les registres sont conservés.
+
+**Voir aussi:** [Transferts : le lien numérique vers votre système comptable](help:user.invoicing.transfers)
 
 ### Arrêter le nouveau travail comptable
 

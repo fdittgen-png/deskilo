@@ -283,6 +283,29 @@ Ha pagado algo para el espacio y quiere que el espacio se lo reembolse.
 
 **Véase también:** [Apruebe o rechace un gasto](help:user.money.expense.approve)
 
+<!-- anchor: user.money.expenses.vat -->
+### El IVA de un gasto
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Un gasto lleva IVA, y quiere que el espacio deduzca la parte correcta.
+
+**Pasos**
+
+1. En el formulario del gasto, o en **Gastos programados**, elija el **IVA de este gasto**: un tipo, o **Sin IVA**.
+2. Introduzca la **Parte deducible (%)**: 100, salvo que parte del gasto sea privada o sirva a una actividad exenta.
+3. Active **Un bien de inversión** para el equipamiento que el espacio conserva y amortiza.
+4. Para un servicio comprado en el extranjero sin el impuesto de su país, active **Comprado a un proveedor en el extranjero**. El importe introducido es entonces la base: el espacio adeuda sobre él el impuesto por adquisición y deduce su parte.
+
+**Conviene saber**
+
+- Los campos aparecen cuando el espacio está sujeto al IVA y **IVA soportado** está activado.
+- **Comprado a un proveedor en el extranjero** solo aparece si la declaración de su país tiene una casilla para ese impuesto, por ejemplo la declaración suiza (casilla 383).
+- Un gasto programado lo pregunta una vez, y cada repetición conserva la respuesta.
+- El IVA deducible cuenta en el mes en que se aprueba el gasto.
+
+**Véase también:** [Envíe un gasto](help:user.money.expense) · [La declaración suiza: casillas 205 y 383](help:user.money.vat.ch-return)
+
 <!-- anchor: user.money.expense.approve -->
 ### Apruebe o rechace un gasto
 
@@ -306,6 +329,130 @@ Hay un gasto en espera y usted decide si el espacio lo paga.
 - **Avisos financieros** en Finanzas solo aparece cuando la función **Pestaña Eventos** está activada.
 
 **Véase también:** [Avisos financieros](help:user.money.alerts)
+
+<!-- anchor: user.money.sales -->
+### La página Ventas
+
+**Público:** Administrador/a · Propietario
+
+Quiere encontrar en un solo lugar todo lo que el espacio vende y factura.
+
+<!-- image: user-money-sales -->
+
+**Pasos**
+
+1. Abra [Ventas](app:/money/sales), o toque **Ventas** en [Mis finanzas](app:/money).
+2. Toque **Servicios** para cambiar lo que los miembros pueden comprar. La línea aparece si puede gestionar los servicios.
+3. Toque **Facturas** para emitir y seguir las facturas.
+4. Toque **Pases de invitado** para los pases vendidos en recepción, si el espacio los vende.
+5. Toque **Registro de facturas** para la lista de todas las facturas emitidas, o **Tarifas y paquetes** para cambiar los precios. **Tarifas y paquetes** aparece si puede gestionar las reglas de facturación.
+
+**Conviene saber**
+
+- Cada línea abre la pantalla que siempre abrió, con los mismos derechos. La página solo las reúne.
+- La página aparece cuando la facturación está activada en el espacio y usted es administrador/a.
+
+**Véase también:** [La facturación de un vistazo](help:user.money.invoicing) · [La página Compras y Añadir compra / gasto](help:user.money.purchases)
+
+<!-- anchor: user.money.purchases -->
+### La página Compras y Añadir compra / gasto
+
+**Público:** Miembro · Administrador/a · Propietario
+
+Compró algo para el espacio, o un proveedor envió una factura, y quiere registrarlo.
+
+<!-- image: user-money-purchases -->
+
+**Pasos**
+
+1. Abra [Compras](app:/money/purchases), o toque **Compras** en [Mis finanzas](app:/money).
+2. Toque **Añadir compra / gasto**.
+3. Si puede registrar facturas de proveedor, responda a **¿Quién pagó?**:
+   - **Pagué yo**: se abre el formulario de gasto. Una vez aprobado, el espacio se lo debe.
+   - **Aún sin pagar**: una factura de proveedor que el espacio todavía debe pagar.
+   - **El espacio ya pagó**: registre la factura. Una vez aprobada, registre su pago desde **Por pagar**.
+4. Rellene el formulario que se abre y guárdelo.
+
+**Conviene saber**
+
+- Sin el derecho a registrar facturas de proveedor, la pregunta se omite y se abre el formulario de gasto.
+- Los demás botones de la página abren **Proveedores**, **Compras** (la lista de documentos de compra), el arrendamiento, el equipamiento y las salas alquiladas, cada uno cuando el espacio lo usa.
+- **Compras** lista las facturas de proveedor y los justificantes que los miembros pagaron para el espacio, un documento cada uno. Las pestañas son **Documentos** y **Por pagar**.
+
+**Véase también:** [Envíe un gasto](help:user.money.expense) · [Una factura de proveedor, del registro a la aprobación](help:user.money.purchases.bills)
+
+<!-- anchor: user.money.purchases.bills -->
+### Una factura de proveedor, del registro a la aprobación
+
+**Público:** Administrador/a · Propietario
+
+Un proveedor envió una factura y quiere que el espacio la deba, con la aprobación de una segunda persona.
+
+**Pasos**
+
+1. En **Compras**, toque **Añadir factura de proveedor**, o use **Añadir compra / gasto**.
+2. Elija el **Proveedor** e introduzca el **Número de factura**, las líneas y el **Total**. Una factura guardada incompleta queda como borrador: «Un borrador: envíelo a aprobación cuando esté completo.»
+3. Toque **Enviar a aprobación**.
+4. Otra persona abre [Facturas de proveedores por aprobar](app:/money/purchases/approvals) y toca **Aprobar**, o **Rechazar** indicando el motivo.
+5. Una vez aprobada, la factura se debe al proveedor hasta que se pague.
+
+**Conviene saber**
+
+- Una factura necesita su proveedor y un importe antes de poder enviarse.
+- Quien envió una factura no puede decidirla. En los ajustes del espacio, **Facturas que una sola persona puede aprobar por debajo de (unidades monetarias)** permite a esa persona aprobar facturas pequeñas, si puede aprobar gastos. 0 mantiene la regla de que otra persona aprueba cada factura. Rechazar siempre requiere otra persona.
+- Cada documento muestra por separado su aprobación, su liquidación (**Sin pagar**, **Saldado en parte**, **Saldado**, **Nada adeudado**) y su estado contable.
+- Registrar una factura requiere **Registrar facturas de proveedor**. Decidirla requiere **Aprobar gastos**.
+
+**Véase también:** [Lo que debe el espacio: Por pagar](help:user.money.purchases.to-pay) · [Saldos de proveedores](help:user.money.suppliers.balance)
+
+<!-- anchor: user.money.purchases.to-pay -->
+### Lo que debe el espacio: Por pagar
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver lo que el espacio todavía debe y registrar lo que se pagó.
+
+**Pasos**
+
+1. En **Compras**, abra la pestaña **Por pagar**, o abra [Tesorería](app:/money/cash) y toque **Por pagar**.
+2. Lea **Debido a proveedores** para las facturas aprobadas y **Debido a miembros** para los reembolsos de justificantes aprobados.
+3. Toque **Registrar pago** en una línea. Introduzca el **Importe pagado**, la fecha (**Pagado el**), el **Método** y, si lo desea, una **Referencia (opcional)**.
+4. Para un miembro que también debe dinero al espacio, toque en su lugar **Compensar con una factura**. Elija la **Factura**: el crédito liquida esa factura abierta en lugar de pagarse.
+5. Para aplicar una nota de crédito de proveedor, toque **Aplicar a su factura** en la nota de crédito.
+
+**Conviene saber**
+
+- Registre solo el dinero realmente pagado. El pago lo declara usted; el banco no lo confirma.
+- Un pago erróneo nunca se borra. Toque **Revertir** e indique el motivo. Un pago ya aplicado a una factura no puede revertirse.
+- Una compensación mantiene las ventas y el IVA de la factura; solo se explica su pago.
+- Una nota de crédito la aplica una persona distinta de quien la registró, a una factura aprobada del mismo proveedor que todavía deba al menos ese importe.
+- En los ajustes del espacio, **Pagos que registra una segunda persona desde (unidades monetarias)** significa que un pago de al menos ese importe no puede registrarlo la persona que aprobó la factura que paga. 0 desactiva la regla.
+- Registrar un pago requiere **Registrar pagos a miembros**; una compensación requiere **Emitir facturas y conciliar pagos**.
+
+**Véase también:** [La página Tesorería](help:user.money.cash)
+
+<!-- anchor: user.money.cash -->
+### La página Tesorería
+
+**Público:** Administrador/a · Propietario
+
+Quiere ver el dinero registrado que entró y salió, y lo que queda por pagar.
+
+<!-- image: user-money-cash -->
+
+**Pasos**
+
+1. Abra [Tesorería](app:/money/cash), o toque **Tesorería** en [Mis finanzas](app:/money).
+2. Toque **Entradas y salidas por mes** para los pagos registrados, mes a mes.
+3. Toque **Por pagar** para lo que el espacio todavía debe.
+4. Toque **Extractos bancarios** para importar un extracto y conciliar sus líneas, si el espacio los usa.
+
+**Conviene saber**
+
+- La página muestra pagos registrados, no un saldo bancario conciliado.
+- Aparece para los administradores cuando el estado del espacio o las compras están activados.
+
+**Véase también:** [Lo que debe el espacio: Por pagar](help:user.money.purchases.to-pay)
 
 <!-- anchor: user.money.suppliers.balance -->
 ### Saldos de proveedores

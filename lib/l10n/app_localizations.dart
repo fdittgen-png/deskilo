@@ -97,8 +97,8 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('de'),
     Locale('en'),
+    Locale('de'),
     Locale('es'),
     Locale('fr'),
     Locale('it'),
@@ -20623,7 +20623,7 @@ abstract class AppLocalizations {
   /// #2370 Generic journal export: one reason the interchange envelope was refused, by kind.
   ///
   /// In en, this message translates to:
-  /// **'{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book\'s currency} unknownDocument{a posting books the unknown document {subject}} other{{subject}}}'**
+  /// **'{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book\'s currency} unknownDocument{a posting books the unknown document {subject}} sourceTooLong{the document number {subject} is over 20 characters, which the file does not take} unusableAccount{the account {subject} cannot be written in the file} other{{subject}}}'**
   String interchangeBlock(String kind, String subject);
 
   /// No description provided for @invitationAlreadyMember.
@@ -21303,6 +21303,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sage 50 (audit trail)'**
   String get invoiceExportSage;
+
+  /// #2373 The Sage 50 Canada general-journal text file of a local book on the accounting export sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Sage 50 Canada journal (text file)'**
+  String get invoiceExportSage50Ca;
 
   /// #2360/#2377 The Swiss journal of a local book on the accounting export sheet.
   ///

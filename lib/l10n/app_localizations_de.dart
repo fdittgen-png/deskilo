@@ -12598,6 +12598,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'unbalancedEntry': 'die Buchung $subject ist nicht ausgeglichen',
       'unconvertedCurrency': '$subject ist nicht in der Währung des Buchs',
       'unknownDocument': 'eine Buchung betrifft den unbekannten Beleg $subject',
+      'sourceTooLong':
+          'die Belegnummer $subject hat mehr als 20 Zeichen, die die Datei nicht aufnimmt',
+      'unusableAccount':
+          'das Konto $subject kann nicht in die Datei geschrieben werden',
       'other': '$subject',
     });
     return '$_temp0';
@@ -13018,6 +13022,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceExportSage => 'Sage 50 (Audit-Journal)';
+
+  @override
+  String get invoiceExportSage50Ca => 'Sage-50-Canada-Journal (Textdatei)';
 
   @override
   String get invoiceExportSwissKmu =>

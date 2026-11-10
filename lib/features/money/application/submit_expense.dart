@@ -10,6 +10,7 @@
 // and keeps the form open with the reason, and the command refuses the
 // same way whatever a future caller forgets.
 import '../../../core/format/cents.dart';
+import '../../../core/format/decimal_input.dart';
 import '../domain/expense_repository.dart';
 
 enum ExpenseOutcome {
@@ -77,7 +78,7 @@ class ExpenseDraft {
   final ExpenseVatFlags vatFlags;
 
   double? get deductiblePct =>
-      double.tryParse(deductible.trim().replaceAll(',', '.'));
+      parseDecimalInput(deductible, grouping: false)?.toDouble();
 
   /// The VAT payload the RPC takes, or null for an expense without VAT.
   Map<String, Object?>? get vat => (vatPercent ?? 0) <= 0
@@ -89,7 +90,7 @@ class ExpenseDraft {
           if (vatFlags.acquisition) 'acquisition': true,
         };
 
-  int? get amountCents => parseCentsInput(amount);
+  int? get amountCents => parseMinorInput(amount);
   int? get quantity => int.tryParse(supplyQuantity.trim());
   String get name => (supplyItemName ?? supplyName).trim();
 
@@ -100,7 +101,7 @@ class ExpenseDraft {
           if (supplyItemId != null) 'service_id': supplyItemId,
           'name': name,
           'quantity': quantity,
-          'unit_price_cents': parseCentsInput(supplyUnitPrice),
+          'unit_price_cents': parseMinorInput(supplyUnitPrice),
         };
 }
 
@@ -120,7 +121,7 @@ ExpenseOutcome expenseOutcome(ExpenseDraft draft) {
   if (qty == null || qty < 1) return ExpenseOutcome.invalidSupplyQuantity;
   final unit = draft.supplyUnitPrice.trim();
   if (unit.isNotEmpty) {
-    final unitCents = parseCentsInput(unit);
+    final unitCents = parseMinorInput(unit);
     if (unitCents == null || unitCents < 0) {
       return ExpenseOutcome.invalidUnitPrice;
     }

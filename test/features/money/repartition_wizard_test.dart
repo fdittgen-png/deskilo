@@ -4,6 +4,7 @@
 // percentage that add up to the cost exactly, and remembers the rule.
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/presentation/screens/repartition_wizard_screen.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -52,5 +53,50 @@ void main() {
     expect(money.repartitions.single.title, 'Internet');
     expect(money.repartitionRule.method, RepartitionMethod.subscription,
         reason: 'the rule is remembered by default');
+  });
+
+  testWidgets('#3487 a custom weight typed as 0,5 under a German locale is 0.5',
+      (tester) async {
+    final money = FakeMoneyRepository();
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    await tester.pumpWidget(ProviderScope(
+      overrides: standardTestOverrides(money: money, workspace: workspace),
+      child: const MaterialApp(
+        locale: Locale('de'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: RepartitionWizardScreen(),
+      ),
+    ));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('wizard-title')), 'Internet');
+    await tester.enterText(find.byKey(const ValueKey('wizard-amount')), '100');
+    await tester.pump();
+    await tester.tap(find.text('Weiter'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+
+    await tester.tap(find.byKey(const ValueKey('wizard-method')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(RepartitionMethod.custom.name).last);
+    await tester.pumpAndSettle();
+    final weight = find.byWidgetPredicate((w) =>
+        w is TextField &&
+        w.key is ValueKey<String> &&
+        (w.key! as ValueKey<String>).value.startsWith('wizard-weight-'));
+    expect(weight, findsWidgets);
+    final id = (tester.widget<TextField>(weight.first).key! as ValueKey<String>)
+        .value
+        .substring('wizard-weight-'.length);
+    await tester.enterText(weight.first, '0,5');
+    await tester.pump();
+
+    await tester.tap(find.text('Weiter'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(find.byKey(const ValueKey('wizard-book')));
+    await tester.pumpAndSettle();
+    expect(money.repartitionRule.method, RepartitionMethod.custom);
+    expect(money.repartitionRule.weights[id], 0.5);
   });
 }

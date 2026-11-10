@@ -1,5 +1,5 @@
 {
   "@@locale": "fr",
   "journalInterchangeRefused": "Le journal n’a pas été écrit : {reasons}",
-  "interchangeBlock": "{kind, select, missingIssuer{le livre ne nomme aucun émetteur} missingRevision{le profil comptable {subject} n’a pas de révision} unbalancedEntry{l’écriture {subject} n’est pas équilibrée} unconvertedCurrency{{subject} n’est pas dans la devise du livre} unknownDocument{une écriture porte sur le document inconnu {subject}} other{{subject}}}"
+  "interchangeBlock": "{kind, select, missingIssuer{le livre ne nomme aucun émetteur} missingRevision{le profil comptable {subject} n’a pas de révision} unbalancedEntry{l’écriture {subject} n’est pas équilibrée} unconvertedCurrency{{subject} n’est pas dans la devise du livre} unknownDocument{une écriture porte sur le document inconnu {subject}} sourceTooLong{le numéro de document {subject} dépasse 20 caractères, ce que le fichier n’accepte pas} unusableAccount{le compte {subject} ne peut pas être écrit dans le fichier} other{{subject}}}"
 }

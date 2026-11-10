@@ -8206,7 +8206,7 @@
   "instanceYou": "usted",
   "instanceYouAreDelegate": "Usted es delegado del propietario de la instancia.",
   "instanceYouAreOwner": "Usted es el propietario de la instancia.",
-  "interchangeBlock": "{kind, select, missingIssuer{el libro no indica ningún emisor} missingRevision{el perfil contable {subject} no tiene revisión} unbalancedEntry{el asiento {subject} no cuadra} unconvertedCurrency{{subject} no está en la moneda del libro} unknownDocument{un asiento contabiliza el documento desconocido {subject}} other{{subject}}}",
+  "interchangeBlock": "{kind, select, missingIssuer{el libro no indica ningún emisor} missingRevision{el perfil contable {subject} no tiene revisión} unbalancedEntry{el asiento {subject} no cuadra} unconvertedCurrency{{subject} no está en la moneda del libro} unknownDocument{un asiento contabiliza el documento desconocido {subject}} sourceTooLong{el número de documento {subject} supera los 20 caracteres, que el archivo no admite} unusableAccount{la cuenta {subject} no se puede escribir en el archivo} other{{subject}}}",
   "invitationAlreadyMember": "Ya es miembro de {workspace}.",
   "invitationApprovalRequired": "Un administrador aprueba a los nuevos miembros antes de que se abra el espacio.",
   "invitationApprovalUnknown": "No se sabe si un administrador debe aprobar.",
@@ -8422,6 +8422,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSage50Ca": "Diario de Sage 50 Canadá (archivo de texto)",
   "invoiceExportSwissKmu": "Diario de asientos suizo (CSV, cuentas PYME, códigos de IVA)",
   "invoiceExportTrialBalance": "Balance de sumas y saldos, general y auxiliar (PDF, desde la contabilidad)",
   "invoiceExportXeroInvoiceCsv": "Xero (importación de facturas de venta)",

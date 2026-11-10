@@ -211,7 +211,7 @@ reached and how far it is qualified. The table below is generated from it;
 | `sage100_fr` | Sage · Sage 100 Comptabilité · import of the FEC | file | journal | FR | implemented | imports the FEC (target fec): DGFiP fichiers standards des écritures comptables |
 | `sage50_fr` | Sage · Sage 50 (ex Ciel Compta) · import of the FEC | file | journal | FR | implemented | imports the FEC (target fec): DGFiP fichiers standards des écritures comptables |
 | `sage_de` | Sage · Sage 50 / Sage 100 (KHK, Office Line) · import of a DATEV EXTF Buchungsstapel | file | journal | AT, DE | implemented | imports DATEV (target datev): EXTF 700 Buchungsstapel |
-| `sage50_ca` | Sage · Sage 50 Accounting (Canada) · .IMP sales invoices and general journal | file | documents | CA | specificationNeeded | not named yet |
+| `sage50_ca` | Sage · Sage 50 Accounting (Canada) · general journal text import | file | journal | CA | implemented | Sage 50 Canada general journal text import (help: Import General Journal Entries) |
 | `sage200` | Sage · Sage 200 · import of transactions | file | journal | GB, IE | specificationNeeded | not named yet |
 | `sage_intacct` | Sage · Sage Intacct · journal import templates and XML API | api | journal | CA, GB, US | specificationNeeded | not named yet |
 | `xero_gb` | Xero · Xero · Accounting API 2.0, UK organisation | api | documents | GB | implemented | Xero Accounting API 2.0: Invoices ACCREC, CreditNotes ACCRECCREDIT with Allocations, Payments, ManualJournals, TaxRates |
@@ -264,11 +264,17 @@ and GB 8100 unconfirmed until an accountant has checked the chart in use).
   (`sage100_fr`, `sage50_fr`); **Sage 50 / Sage 100 (KHK, Office Line) in
   Germany and Austria** import DATEV (`sage_de`). They write nothing of
   their own; the export sheet names them above the file they take.
-- **Sage 50 Canada** (`sage50_ca`): the tagged `.IMP` sales-invoice import
-  and the general-journal `.txt` are documented only in Sage's own knowledge
-  base, so the target is `specificationNeeded` until that layout is in hand
-  and a company file can import a fixture. **Sage 200** and **Sage Intacct**
-  are `specificationNeeded` too.
+- **Sage 50 Canada** (`sage50_ca`): the **general-journal text import**,
+  written from the local book's postings (`sage50_ca_journal.dart`; spec: Sage's
+  public help page "Import General Journal Entries"). The tax lines are one
+  `TAXD` per tax (HST in Ontario, GST and QST in Québec), split by the tax
+  reference's `rate_component` rows. What the page does not state is assumed
+  and said in the file's header comment (the `TAXH`/`TAXD` lines sit before the
+  detail lines; tax name and code equal the scheme); no import into a Sage 50
+  company has been reported. A linked receivable or payable account is
+  importable only from an accountant's copy. The **sales-invoice `.IMP`**
+  layout (knowledge base article 10032) is not public and is not written.
+  **Sage 200** and **Sage Intacct** are `specificationNeeded`.
 
 ## Connections, mappings and transfers (#2370)
 

@@ -452,11 +452,14 @@ const Map<String, AccountingCapability> accountingCapabilities = {
     state: QualificationState.implemented,
     specification: 'imports DATEV (target datev): EXTF 700 Buchungsstapel',
   ),
-  // The .IMP layout is in Sage's knowledge base only; Sage 200 and Intacct
-  // are separate products with their own imports.
+  // #2373 -- the general-journal text import, from its public help page; the
+  // order of its tax lines is assumed and no import into a Sage 50 company has
+  // been reported. The sales-invoice .IMP layout is in Sage's knowledge base
+  // only. Sage 200 and Intacct are separate products with their own imports.
   'sage50_ca': AccountingCapability(
     formatId: 'sage50_ca',
-    state: QualificationState.specificationNeeded,
+    state: QualificationState.implemented,
+    specification: 'Sage 50 Canada general journal text import (help: Import General Journal Entries)',
   ),
   'sage200': AccountingCapability(
     formatId: 'sage200',

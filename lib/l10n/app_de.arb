@@ -8206,7 +8206,7 @@
   "instanceYou": "Sie",
   "instanceYouAreDelegate": "Sie sind Stellvertreter des Instanzeigentümers.",
   "instanceYouAreOwner": "Sie sind der Instanzeigentümer.",
-  "interchangeBlock": "{kind, select, missingIssuer{das Buch nennt keinen Aussteller} missingRevision{das Buchungsprofil {subject} hat keine Revision} unbalancedEntry{die Buchung {subject} ist nicht ausgeglichen} unconvertedCurrency{{subject} ist nicht in der Währung des Buchs} unknownDocument{eine Buchung betrifft den unbekannten Beleg {subject}} other{{subject}}}",
+  "interchangeBlock": "{kind, select, missingIssuer{das Buch nennt keinen Aussteller} missingRevision{das Buchungsprofil {subject} hat keine Revision} unbalancedEntry{die Buchung {subject} ist nicht ausgeglichen} unconvertedCurrency{{subject} ist nicht in der Währung des Buchs} unknownDocument{eine Buchung betrifft den unbekannten Beleg {subject}} sourceTooLong{die Belegnummer {subject} hat mehr als 20 Zeichen, die die Datei nicht aufnimmt} unusableAccount{das Konto {subject} kann nicht in die Datei geschrieben werden} other{{subject}}}",
   "invitationAlreadyMember": "Sie sind bereits Mitglied von {workspace}.",
   "invitationApprovalRequired": "Ein Administrator gibt neue Mitglieder frei, bevor sich der Bereich öffnet.",
   "invitationApprovalUnknown": "Ob ein Administrator freigeben muss, ist nicht bekannt.",
@@ -8422,6 +8422,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSage50Ca": "Sage-50-Canada-Journal (Textdatei)",
   "invoiceExportSwissKmu": "Schweizer Buchungsjournal (CSV, KMU-Konten, MWST-Codes)",
   "invoiceExportTrialBalance": "Summen- und Saldenliste mit Personenkonten (PDF, aus der Buchführung)",
   "invoiceExportXeroInvoiceCsv": "Xero (Import von Ausgangsrechnungen)",

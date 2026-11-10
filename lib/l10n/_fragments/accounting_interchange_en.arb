@@ -9,7 +9,7 @@
       }
     }
   },
-  "interchangeBlock": "{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book's currency} unknownDocument{a posting books the unknown document {subject}} other{{subject}}}",
+  "interchangeBlock": "{kind, select, missingIssuer{the book names no issuer} missingRevision{the book profile {subject} has no revision} unbalancedEntry{the entry {subject} does not balance} unconvertedCurrency{{subject} is not in the book's currency} unknownDocument{a posting books the unknown document {subject}} sourceTooLong{the document number {subject} is over 20 characters, which the file does not take} unusableAccount{the account {subject} cannot be written in the file} other{{subject}}}",
   "@interchangeBlock": {
     "description": "#2370 Generic journal export: one reason the interchange envelope was refused, by kind.",
     "placeholders": {

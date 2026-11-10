@@ -105,7 +105,7 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
   }
 
   LeaseDraft? _draft() {
-    final deposit = parseCentsInput(
+    final deposit = parseMinorInput(
       _deposit.text.isEmpty ? '0' : _deposit.text,
     );
     final months = int.tryParse(_months.text.trim());

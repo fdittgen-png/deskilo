@@ -20,5 +20,6 @@ trial_balance | a printed book report (PDF)
 journals | a printed book report (PDF)
 audit_trail | bytes
 bundle | bytes
+sage50_ca | bytes
 xero_invoice_csv | exports/xero_invoices.csv in export_bytes_golden_test
 business_central_journal_xlsx | bytes

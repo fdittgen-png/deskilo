@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -57,7 +58,7 @@ class ExpenseVatChoice {
 
   /// The share typed, or null when it is not a number.
   double? get sharePct =>
-      double.tryParse(share.text.trim().replaceAll(',', '.'));
+      parseDecimalInput(share.text, grouping: false)?.toDouble();
 
   /// Whether a rate is chosen and the share lies in 0..100.
   bool get shareValid {
@@ -233,7 +234,7 @@ String _deductibleHelper(
   ExpenseVatChoice choice,
 ) {
   final words = vatWords(l10n);
-  final gross = parseCentsInput(amount);
+  final gross = parseMinorInput(amount);
   final pct = choice.sharePct;
   final percent = choice.percent;
   if (gross == null ||
