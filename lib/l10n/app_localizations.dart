@@ -11604,6 +11604,18 @@ abstract class AppLocalizations {
   /// **'Bookmark'**
   String get discoveryBookmark;
 
+  /// #3545 Discover: the action under a search with no result.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get discoveryClearSearch;
+
+  /// #3545 Discover: one line when directories did not answer, beside the results that loaded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
+  String discoveryDirectoriesDidNotAnswer(int count);
+
   /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int).
   ///
   /// In en, this message translates to:
@@ -11670,6 +11682,12 @@ abstract class AppLocalizations {
   /// **'More directories could not be loaded.'**
   String get discoveryMoreDirectoriesFailed;
 
+  /// #3545 Discover: no place matches the search; {query} is what was typed.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found for “{query}”'**
+  String discoveryNoMatchTitle(String query);
+
   /// Shown as a text in discovery list view (directory).
   ///
   /// In en, this message translates to:
@@ -11712,11 +11730,17 @@ abstract class AppLocalizations {
   /// **'{source} did not answer. The places already shown stay.'**
   String discoverySourceFailed(String source);
 
-  /// Shown as a title in directory screen (directory).
+  /// #3545 Discover start state: what can be typed.
   ///
   /// In en, this message translates to:
-  /// **'Discover workspaces'**
-  String get discoveryTitle;
+  /// **'Type a city, a service or a name.'**
+  String get discoveryStartBody;
+
+  /// #3545 Discover start state: the title shown before a search when no place is loaded.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you looking for?'**
+  String get discoveryStartTitle;
 
   /// Shown as a text in demo scope (core), and 1 other place.
   ///
@@ -28671,6 +28695,18 @@ abstract class AppLocalizations {
   /// **'My places'**
   String get meMySpaces;
 
+  /// #3545 D: the one filled action of Next up when nothing is booked: opens the places to book in
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get meNextBook;
+
+  /// #3545 D: Next up, nothing booked in the window; the filled Book action follows
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked this week.'**
+  String get meNextNothingWeek;
+
   /// Empty state body on the Me home when the person has no space.
   ///
   /// In en, this message translates to:
@@ -33575,12 +33611,6 @@ abstract class AppLocalizations {
   /// **'Show more'**
   String get portalDirectoryShowMore;
 
-  /// Shown as the text in discovery list view (directory), and 2 other places.
-  ///
-  /// In en, this message translates to:
-  /// **'Some directories could not be reached. Results are incomplete.'**
-  String get portalDirectoryUnavailable;
-
   /// #2472 personal directory: Shown inside one workspace section whose membership fact lapsed.
   ///
   /// In en, this message translates to:
@@ -33688,12 +33718,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This workspace is no longer published.'**
   String get portalNoLongerPublished;
-
-  /// Shown as the text in discovery list view (directory), and 1 other place.
-  ///
-  /// In en, this message translates to:
-  /// **'No published workspaces found.'**
-  String get portalNoWorkspaces;
 
   /// Menu item on the account menu (globe) that opens the Me layer.
   ///

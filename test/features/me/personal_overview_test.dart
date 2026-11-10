@@ -70,10 +70,26 @@ MyReservationItem _item(
 );
 
 /// Each host answers what the test set: its page, or a failure.
-class _Hosts implements MyReservationsRepository {
+class _Hosts implements MyReservationsRepository, MyReservationActions {
   final Map<String, List<MyReservationItem>> items = {};
   final Map<String, Exception> failures = {};
   Exception? limitsFailure;
+  final List<String> checkedIn = [];
+
+  @override
+  Future<MyReservationItem> view(
+    MyReservationsSource source,
+    MyReservationItem item,
+  ) async => item;
+
+  @override
+  Future<void> cancel(MyReservationsSource source, MyReservationItem item) async {}
+
+  @override
+  Future<void> checkIn(
+    MyReservationsSource source,
+    MyReservationItem item,
+  ) async => checkedIn.add(item.id);
 
   @override
   Future<MyReservationsLimits> limits() async {
@@ -140,6 +156,7 @@ Future<GoRouter> _pump(
   Size size = const Size(420, 2600),
   bool shell = true,
 }) async {
+  final host = hosts ?? _Hosts();
   final router = await pumpMeApp(
     tester,
     workspace: workspace ?? twoSpaces(),
@@ -149,7 +166,8 @@ Future<GoRouter> _pump(
     size: size,
     extraOverrides: <Override>[
       personalShellEnabledProvider.overrideWithValue(shell),
-      myReservationsRepositoryProvider.overrideWithValue(hosts ?? _Hosts()),
+      myReservationsRepositoryProvider.overrideWithValue(host),
+      myReservationActionsProvider.overrideWithValue(host),
       myReservationsSourcesProvider.overrideWith((ref) async => sources),
     ],
   );
@@ -415,7 +433,15 @@ void main() {
         '/me/data?view=finances&workspace=ws-One',
       );
       await goTo(tester, router, '/me');
-      await tapIn(tester, 'me-home-list', _key('me-overview-next-view'));
+      expect(
+        find.descendant(
+          of: _key('me-overview-next-action'),
+          matching: find.text('Details'),
+        ),
+        findsOneWidget,
+        reason: 'a booking days away is not checked into: Details',
+      );
+      await tapIn(tester, 'me-home-list', _key('me-overview-next-action'));
       expect(router.state.uri.toString(), '/me/data?view=reservations');
     });
 
@@ -438,9 +464,36 @@ void main() {
         'is said, not "nothing ever"; nothing waits', (tester) async {
       await _pump(tester);
       expect(_key('me-overview-next-none'), findsOneWidget);
-      expect(find.textContaining('Nothing booked from'), findsOneWidget);
+      expect(find.text('Nothing booked this week.'), findsOneWidget);
       expect(_key('me-overview-attention-none'), findsOneWidget);
       expect(_key('me-overview-next-view'), findsNothing);
+      expect(
+        find.descendant(
+          of: _key('me-overview-next'),
+          matching: find.byType(FilledButton),
+        ),
+        findsOneWidget,
+        reason: 'Next up has one filled action: Book',
+      );
+    });
+
+    testWidgets('inside the check-in window the one filled action is '
+        'Check in, and it checks in', (tester) async {
+      final hosts = _Hosts()
+        ..items['inst-a'] = [
+          _item('now', kTestNow.add(const Duration(minutes: 5))),
+        ];
+      await _pump(tester, hosts: hosts);
+      expect(
+        find.descendant(
+          of: _key('me-overview-next-action'),
+          matching: find.text('Check in'),
+        ),
+        findsOneWidget,
+      );
+      await tapIn(tester, 'me-home-list', _key('me-overview-next-action'));
+      await tester.pumpAndSettle();
+      expect(hosts.checkedIn, ['now']);
     });
 
     testWidgets('a host that cannot be read is said with its own Try again; '

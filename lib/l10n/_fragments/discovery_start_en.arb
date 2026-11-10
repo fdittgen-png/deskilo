@@ -1,0 +1,32 @@
+{
+  "discoveryStartTitle": "What are you looking for?",
+  "@discoveryStartTitle": {
+    "description": "#3545 Discover start state: the title shown before a search when no place is loaded."
+  },
+  "discoveryStartBody": "Type a city, a service or a name.",
+  "@discoveryStartBody": {
+    "description": "#3545 Discover start state: what can be typed."
+  },
+  "discoveryNoMatchTitle": "Nothing found for “{query}”",
+  "@discoveryNoMatchTitle": {
+    "description": "#3545 Discover: no place matches the search; {query} is what was typed.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryClearSearch": "Clear search",
+  "@discoveryClearSearch": {
+    "description": "#3545 Discover: the action under a search with no result."
+  },
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.",
+  "@discoveryDirectoriesDidNotAnswer": {
+    "description": "#3545 Discover: one line when directories did not answer, beside the results that loaded.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

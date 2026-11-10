@@ -238,7 +238,11 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource(
     'services',
     sheets: ['Service catalog'],
-    columns: {'id', 'name', 'price_cents', 'active'},
+    columns: {
+      'id', 'name', 'price_cents', 'active',
+      // #3552 — what a service says about itself.
+      'category', 'duration_minutes', 'description', 'is_public', 'sort_order',
+    },
   ),
   ExportSource(
     'invoices',

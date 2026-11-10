@@ -9,7 +9,10 @@ import '../../../core/backend/personal_home_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/personal_kit/me_filled_field.dart';
+import '../../../core/ui/personal_kit/me_notice.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
@@ -101,22 +104,30 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     final l = context.l10n;
     return Padding(
       padding: AppSpacing.mdAll,
-      child: TextField(
-        key: const ValueKey('directory-portal-search-2'),
-        controller: _search,
-        autofocus: widget.focusSearch,
-        decoration: InputDecoration(
-          labelText: l.portalSearch,
-          suffixIcon: IconButton(
-            key: const ValueKey('directory-portal-search'),
-            tooltip: l.portalSearch,
-            icon: const Icon(Icons.search),
-            onPressed: () => _submit(_search.text),
+      child: MeFilledField(
+        child: TextField(
+          key: const ValueKey('directory-portal-search-2'),
+          controller: _search,
+          autofocus: widget.focusSearch,
+          decoration: InputDecoration(
+            hintText: l.meFindPlaceHint,
+            suffixIcon: IconButton(
+              key: const ValueKey('directory-portal-search'),
+              tooltip: l.portalSearch,
+              icon: const Icon(Icons.search),
+              onPressed: () => _submit(_search.text),
+            ),
           ),
+          onSubmitted: _submit,
         ),
-        onSubmitted: _submit,
       ),
     );
+  }
+
+  /// The search emptied: the start of Discover again.
+  void _clear() {
+    _search.clear();
+    _submit('');
   }
 
   /// A new search is a new listing: every source starts again at its
@@ -144,6 +155,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         selected: _selected,
         onView: _open,
         onLocate: _locate,
+        onClear: _clear,
         revealSelected: beside,
       );
 
@@ -191,7 +203,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                       children: [
                         if (result.unavailable.isNotEmpty)
                           Text(
-                            '${l.portalDirectoryUnavailable}\n${result.unavailable.join('\n')}',
+                            '${l.discoveryDirectoriesDidNotAnswer(result.unavailable.length)}\n${result.unavailable.join('\n')}',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         if (result.incompatible.isNotEmpty)
@@ -213,7 +225,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
                   borderRadius: AppRadius.lgAll,
                   child: Padding(
                     padding: AppSpacing.mdAll,
-                    child: Text(l.portalNoWorkspaces),
+                    child: Text(l.discoveryStartTitle),
                   ),
                 ),
               )
@@ -258,12 +270,25 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         ),
       );
     }
-    return Center(
-      child: TextButton(
-        key: const ValueKey('directory-portal-directory-unavailable-2'),
-        onPressed: retry,
-        child: Text(l.portalDirectoryUnavailable),
-      ),
+    // A listing that could not be read is one line with its Retry above
+    // the start state, never a centred message on a blank page.
+    return Column(
+      children: [
+        Padding(
+          padding: AppSpacing.mdAll,
+          child: MeNotice(
+            key: const ValueKey('directory-portal-directory-unavailable-2'),
+            text: l.discoveryDirectoriesDidNotAnswer(1),
+            retryLabel: l.commonRetry,
+            onRetry: retry,
+          ),
+        ),
+        EmptyState(
+          icon: Icons.travel_explore_outlined,
+          title: l.discoveryStartTitle,
+          subtitle: l.discoveryStartBody,
+        ),
+      ],
     );
   }
 
@@ -305,7 +330,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         automaticallyImplyLeading: !widget.embedded,
         title: widget.embedded
             ? null
-            : Text(l.discoveryTitle),
+            : Text(l.meTabDiscover),
         actions: [
           IconButton(
             key: const ValueKey('directory-portal-list'),

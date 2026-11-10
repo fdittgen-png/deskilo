@@ -25,6 +25,16 @@ sealed class ServiceItem with _$ServiceItem implements SystemStamped {
     /// #2354 — where the service is supplied for VAT: connected with the
     /// premises (the default) or a general service.
     @Default(SupplyClass.property) SupplyClass supplyClass,
+    /// #3552 — what a stranger reads about the service; '' = none.
+    @Default('') String description,
+    /// #3552 — how long it takes, in minutes; null = not time-based.
+    int? durationMinutes,
+    /// #3552 — the group it is listed under; '' = none.
+    @Default('') String category,
+    /// #3552 — shown on the public page only when the business says so.
+    @Default(false) bool isPublic,
+    /// #3552 — the order within its category.
+    @Default(0) int sortOrder,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _ServiceItem;

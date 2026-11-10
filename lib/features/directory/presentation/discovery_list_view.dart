@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/motion.dart';
+import '../../../core/ui/personal_kit/me_notice.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
@@ -32,6 +34,7 @@ class DiscoveryListView extends ConsumerStatefulWidget {
     required this.selected,
     required this.onView,
     required this.onLocate,
+    required this.onClear,
     this.revealSelected = false,
   });
 
@@ -39,6 +42,9 @@ class DiscoveryListView extends ConsumerStatefulWidget {
   final DiscoveryResults results;
   final PublicWorkspace? selected;
   final ValueChanged<PublicWorkspace> onView, onLocate;
+
+  /// Empties the search: the way out of a query with no result.
+  final VoidCallback onClear;
   final bool revealSelected;
 
   @override
@@ -47,6 +53,9 @@ class DiscoveryListView extends ConsumerStatefulWidget {
 
 class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
   final _scroll = ScrollController();
+
+  /// The counts and the names of silent directories, shown on request.
+  var _details = false;
   final _selectedRow = GlobalKey(debugLabel: 'discovery-selected-row');
 
   /// Jumps toward a card not built yet before giving up on revealing it.
@@ -186,6 +195,109 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
     );
   }
 
+  /// What an empty list says: no saved place, what to type before a search,
+  /// or what was typed and the way to start over.
+  List<Widget> _emptyState(bool savedOnly) {
+    final l = context.l10n;
+    if (savedOnly) {
+      return [
+        EmptyState(
+          key: const ValueKey('directory-empty-saved'),
+          icon: Icons.bookmark_border,
+          title: l.discoveryNoSaved,
+        ),
+      ];
+    }
+    if (query.trim().isEmpty) {
+      return [
+        EmptyState(
+          key: const ValueKey('directory-start'),
+          icon: Icons.travel_explore_outlined,
+          title: l.discoveryStartTitle,
+          subtitle: l.discoveryStartBody,
+        ),
+      ];
+    }
+    return [
+      EmptyState(
+        key: const ValueKey('directory-no-match'),
+        icon: Icons.search_off_outlined,
+        title: l.discoveryNoMatchTitle(query.trim()),
+      ),
+      Center(
+        child: OutlinedButton(
+          key: const ValueKey('directory-clear-search'),
+          onPressed: widget.onClear,
+          child: Text(l.discoveryClearSearch),
+        ),
+      ),
+    ];
+  }
+
+  /// A directory that did not answer is one line with its Retry beside the
+  /// results that loaded -- never instead of them; the counts and the names
+  /// are for whoever asks: behind Details.
+  List<Widget> _notices() {
+    final l = context.l10n;
+    final refused = results.refused;
+    return [
+      if (refused.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+          child: MeNotice(
+            key: const ValueKey('directory-portal-directory-unavailable'),
+            text: l.discoveryDirectoriesDidNotAnswer(refused.length),
+            retryLabel: l.commonRetry,
+            onRetry: () => ref.invalidate(discoveryListingProvider(query)),
+          ),
+        ),
+    ];
+  }
+
+  /// Details, at the END of the list: the counts and the names of the
+  /// directories that did not answer, for whoever asks.
+  List<Widget> _detailsAtEnd(int loaded, int shown) {
+    final l = context.l10n;
+    final refused = results.refused;
+    return [
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: TextButton.icon(
+          key: const ValueKey('directory-details'),
+          onPressed: () => setState(() => _details = !_details),
+          icon: Icon(_details ? Icons.expand_less : Icons.expand_more),
+          label: Text(
+            l.bookingOpenDetails,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+      ),
+      if (_details) ...[
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(
+            key: const ValueKey('directory-loaded-count'),
+            l.discoveryLoadedCount(
+              loaded,
+              shown,
+              results.answered,
+              results.sources.length,
+            ),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+        if (refused.isNotEmpty)
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              refused.join('\n'),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+      ],
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -208,26 +320,11 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
     _selectedAt = widget.selected == null
         ? -1
         : order.indexOf('${widget.selected!.source}/${widget.selected!.id}');
-    final refused = results.refused;
     return ListView(
       controller: _scroll,
       padding: AppSpacing.mdAll,
       children: [
-        Text(
-          key: const ValueKey('directory-loaded-count'),
-          l.discoveryLoadedCount(
-            loaded.length,
-            shown,
-            results.answered,
-            results.sources.length,
-          ),
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        if (refused.isNotEmpty)
-          Text(
-            key: const ValueKey('directory-portal-directory-unavailable'),
-            '${l.portalDirectoryUnavailable}\n${refused.join('\n')}',
-          ),
+        ..._notices(),
         // A card this version cannot interpret is not shown; its
         // installation is named, the rest still is.
         if (results.incompatible.isNotEmpty)
@@ -247,8 +344,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
                   ref.read(discoverSavedOnlyProvider.notifier).toggle(),
             ),
           ),
-        if (shown == 0)
-          Text(savedOnly ? l.discoveryNoSaved : l.portalNoWorkspaces),
+        if (shown == 0) ..._emptyState(savedOnly),
         for (final s in results.sources) ...[
           if (results.sources.length > 1 &&
               (s.cards.any(shows) || s.status != SourceStatus.ready || s.more))
@@ -265,6 +361,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
           ?_footer(context, ref, s),
         ],
         ?_moreSources(context, ref),
+        ..._detailsAtEnd(loaded.length, shown),
       ],
     );
   }

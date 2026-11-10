@@ -31,6 +31,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
+import 'kit/me_quiet_line.dart';
 import 'personal_overview_sections.dart';
 
 /// How many items Needs attention lists before it says how many more wait:
@@ -179,7 +180,7 @@ class NeedsAttentionSection extends ConsumerWidget {
         if (reading)
           const SectionLoading(key: ValueKey('me-overview-attention-loading'))
         else if (settled && items.isEmpty && !partialDocuments && !partialInbox)
-          Text(
+          MeQuietLine(
             l10n.meOverviewAttentionNone,
             key: const ValueKey('me-overview-attention-none'),
           ),
@@ -239,13 +240,15 @@ class _AttentionRow extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
-          TextButton(
-            key: ValueKey('me-overview-action-${item.key}'),
-            style: TextButton.styleFrom(
-              minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+          Flexible(
+            child: TextButton(
+              key: ValueKey('me-overview-action-${item.key}'),
+              style: TextButton.styleFrom(
+                minimumSize: const Size(0, PersonalShellMetrics.minTarget),
+              ),
+              onPressed: onAction,
+              child: Text(action, textAlign: TextAlign.center),
             ),
-            onPressed: onAction,
-            child: Text(action),
           ),
         ],
       ),

@@ -18,6 +18,7 @@ import 'member.dart';
 import 'workspace.dart';
 import 'workspace_overview_sheets.dart';
 
+
 /// The data export's workbook (#395): one tab per dataset, one row per
 /// record, every stored detail a client may read.
 ///
@@ -314,11 +315,10 @@ class _ExcelExport {
         ],
   ]);
 
-  XlsxSheet _servicecatalog() =>
-      XlsxSheet(name: 'Service catalog', rows: [
-    ['id', 'name', 'price', 'currency', 'active'],
+  XlsxSheet _servicecatalog() => XlsxSheet(name: 'Service catalog', rows: [
+    ['id', 'name', 'price', 'currency', 'active', 'category', 'duration_minutes', 'description', 'is_public', 'sort_order'], // #3552
     for (final s in services)
-      [s.id, s.name, major(s.priceCents), workspace.currencyCode, s.active],
+      [s.id, s.name, major(s.priceCents), workspace.currencyCode, s.active, if (s.category.isEmpty) null else s.category, s.durationMinutes, if (s.description.isEmpty) null else s.description, s.isPublic, s.sortOrder],
   ]);
 
   XlsxSheet _invoices() =>

@@ -4,8 +4,8 @@
 // border, no shadow; [MeCardTone.hero] is `primary` with `onPrimary` text.
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_radius.dart';
-import '../../../../core/theme/personal_theme.dart';
+import '../../theme/app_radius.dart';
+import '../../theme/personal_theme.dart';
 import 'me_kit_metrics.dart';
 
 /// How a card looks.

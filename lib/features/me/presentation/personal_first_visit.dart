@@ -15,6 +15,8 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/personal_kit/me_card.dart';
+import '../../../core/ui/personal_kit/me_filled_field.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
@@ -27,7 +29,6 @@ import '../domain/greeting.dart';
 import '../domain/my_spaces.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
-import 'kit/me_card.dart';
 import 'kit/me_row.dart';
 import 'kit/me_section_label.dart';
 import 'kit/me_status_chip.dart';
@@ -299,27 +300,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              // A surface-coloured field on the hero: no border, a quiet hint
-              // and icon, so it reads as a place to start, not a disabled box.
-              Theme(
-                data: theme.copyWith(
-                  inputDecorationTheme: InputDecorationTheme(
-                    filled: true,
-                    fillColor: tokens.surface,
-                    border: const OutlineInputBorder(
-                      borderRadius: PersonalShellMetrics.controlRadiusAll,
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: PersonalShellMetrics.controlRadiusAll,
-                      borderSide: BorderSide.none,
-                    ),
-                    hintStyle: theme.textTheme.bodyLarge?.copyWith(
-                      color: tokens.secondaryText,
-                    ),
-                    prefixIconColor: tokens.secondaryText,
-                  ),
-                ),
+              MeFilledField(
                 child: AppTextField(
                   key: const ValueKey('me-first-visit-search'),
                   controller: _search,

@@ -18,9 +18,10 @@ export '../../reservations/providers/reservation_providers.dart'
         myReservationsWindowControllerProvider;
 
 /// The commitment a reservation [item] is. [now] decides whether a check-in
-/// is open (the base window of `Reservation.checkInWindowOpen`: from
-/// `Reservation.checkInLeeway` before the start until the end; the server stays the
-/// authority); [source] is the installation it was read from and [zone] the
+/// is open: the rule IS `Reservation.checkInWindowOpen`, without a
+/// granularity (the item carries none: the base window, from
+/// `Reservation.checkInLeeway` before the start until the end; the server
+/// stays the authority); [source] is the installation it was read from and [zone] the
 /// IANA zone of its workspace.
 PersonalCommitment commitmentOfReservation(
   MyReservationItem item, {
@@ -52,10 +53,14 @@ PersonalCommitment commitmentOfReservation(
     endsAt: item.endsAt,
     zone: zone,
     state: state,
-    canCheckIn:
-        item.status == ReservationStatus.reserved &&
-        now.isBefore(item.endsAt) &&
-        !now.isBefore(item.startsAt.subtract(Reservation.checkInLeeway)),
+    canCheckIn: Reservation(
+      id: item.id,
+      workspaceId: item.workspaceId,
+      memberId: '',
+      startsAt: item.startsAt,
+      endsAt: item.endsAt,
+      status: item.status,
+    ).checkInWindowOpen(now),
     source: source,
   );
 }

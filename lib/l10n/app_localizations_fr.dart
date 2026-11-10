@@ -7098,6 +7098,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoveryBookmark => 'Enregistrer';
 
   @override
+  String get discoveryClearSearch => 'Effacer la recherche';
+
+  @override
+  String discoveryDirectoriesDidNotAnswer(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count annuaires n’ont pas répondu.',
+      one: 'Un annuaire n’a pas répondu.',
+    );
+    return '$_temp0 Ces résultats peuvent être incomplets.';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -7147,6 +7161,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les autres annuaires n’ont pas pu être chargés.';
 
   @override
+  String discoveryNoMatchTitle(String query) {
+    return 'Rien trouvé pour « $query »';
+  }
+
+  @override
   String get discoveryNoSaved =>
       'Aucun espace enregistré sur cet appareil pour l’instant.';
 
@@ -7173,7 +7192,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get discoveryTitle => 'Découvrir des espaces';
+  String get discoveryStartBody => 'Saisissez une ville, un service ou un nom.';
+
+  @override
+  String get discoveryStartTitle => 'Que cherchez-vous ?';
 
   @override
   String get discoveryView => 'Voir';
@@ -17449,6 +17471,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meMySpaces => 'Mes lieux';
 
   @override
+  String get meNextBook => 'Réserver';
+
+  @override
+  String get meNextNothingWeek => 'Rien de réservé cette semaine.';
+
+  @override
   String get meNoSpaceBody =>
       'Trouvez-en un près de chez vous, rejoignez-en un avec un code d\'invitation ou créez le vôtre.';
 
@@ -20391,10 +20419,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalDirectoryShowMore => 'Afficher plus';
 
   @override
-  String get portalDirectoryUnavailable =>
-      'Certains annuaires sont inaccessibles. Les résultats sont incomplets.';
-
-  @override
   String get portalDirectoryUnverified =>
       'Cet espace ne peut pas être vérifié pour l’instant.';
 
@@ -20449,9 +20473,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get portalNoLongerPublished => 'Cet espace n’est plus publié.';
-
-  @override
-  String get portalNoWorkspaces => 'Aucun espace publié trouvé.';
 
   @override
   String get portalOpenMe => 'Moi : mon compte et mes espaces';

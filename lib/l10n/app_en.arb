@@ -9443,6 +9443,19 @@
   "@discoveryBookmark": {
     "description": "Shown as a tooltip in saved place button (directory), and 1 other place."
   },
+  "discoveryClearSearch": "Clear search",
+  "@discoveryClearSearch": {
+    "description": "#3545 Discover: the action under a search with no result."
+  },
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.",
+  "@discoveryDirectoriesDidNotAnswer": {
+    "description": "#3545 Discover: one line when directories did not answer, beside the results that loaded.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
   "@discoveryLoadedCount": {
     "description": "Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int).",
@@ -9517,6 +9530,15 @@
   "@discoveryMoreDirectoriesFailed": {
     "description": "Shown as a text in discovery list view (directory)."
   },
+  "discoveryNoMatchTitle": "Nothing found for “{query}”",
+  "@discoveryNoMatchTitle": {
+    "description": "#3545 Discover: no place matches the search; {query} is what was typed.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
   "discoveryNoSaved": "No places saved on this device yet.",
   "@discoveryNoSaved": {
     "description": "Shown as a text in discovery list view (directory)."
@@ -9555,9 +9577,13 @@
       }
     }
   },
-  "discoveryTitle": "Discover workspaces",
-  "@discoveryTitle": {
-    "description": "Shown as a title in directory screen (directory)."
+  "discoveryStartBody": "Type a city, a service or a name.",
+  "@discoveryStartBody": {
+    "description": "#3545 Discover start state: what can be typed."
+  },
+  "discoveryStartTitle": "What are you looking for?",
+  "@discoveryStartTitle": {
+    "description": "#3545 Discover start state: the title shown before a search when no place is loaded."
   },
   "discoveryView": "View",
   "@discoveryView": {
@@ -22979,6 +23005,14 @@
   "@meMySpaces": {
     "description": "Heading above the list of spaces the person belongs to."
   },
+  "meNextBook": "Book",
+  "@meNextBook": {
+    "description": "#3545 D: the one filled action of Next up when nothing is booked: opens the places to book in"
+  },
+  "meNextNothingWeek": "Nothing booked this week.",
+  "@meNextNothingWeek": {
+    "description": "#3545 D: Next up, nothing booked in the window; the filled Book action follows"
+  },
   "meNoSpaceBody": "Find one near you, join with an invitation code, or create your own.",
   "@meNoSpaceBody": {
     "description": "Empty state body on the Me home when the person has no space."
@@ -26858,10 +26892,6 @@
   "@portalDirectoryShowMore": {
     "description": "#2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory."
   },
-  "portalDirectoryUnavailable": "Some directories could not be reached. Results are incomplete.",
-  "@portalDirectoryUnavailable": {
-    "description": "Shown as the text in discovery list view (directory), and 2 other places."
-  },
   "portalDirectoryUnverified": "This workspace cannot be verified right now.",
   "@portalDirectoryUnverified": {
     "description": "#2472 personal directory: Shown inside one workspace section whose membership fact lapsed."
@@ -26933,10 +26963,6 @@
   "portalNoLongerPublished": "This workspace is no longer published.",
   "@portalNoLongerPublished": {
     "description": "Shown as the text in public workspace view (directory)."
-  },
-  "portalNoWorkspaces": "No published workspaces found.",
-  "@portalNoWorkspaces": {
-    "description": "Shown as the text in discovery list view (directory), and 1 other place."
   },
   "portalOpenMe": "Me: my account and my spaces",
   "@portalOpenMe": {

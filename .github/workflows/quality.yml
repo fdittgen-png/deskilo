@@ -31,8 +31,11 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: quality-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: quality-${{ github.ref }}-${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.event_name || 'change' }}
+  # A newer push to the same ref supersedes the run in flight: a pull request's
+  # new head, and on master the next merge — several merges in a row cost one
+  # run, not one each. The nightly and a dispatched run are never cancelled.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
 
 env:
   FLUTTER_VERSION: "3.47.5"
