@@ -6797,6 +6797,7 @@ Dans ce chapitre :
 - [Désactiver ne supprime rien](help:setup.features.off)
 - [Bêta, non évaluée, et la question avant d’activer](help:setup.features.maturity)
 - [Trois points de départ](help:setup.features.profiles)
+- [Votre genre d’activité](help:setup.features.kind)
 - [L’ordre d’activation](help:setup.features.order)
 - [Activer une fonctionnalité en sécurité](help:setup.features.safely)
 - [Éviter les fonctionnalités qui se contredisent](help:setup.features.consistency)
@@ -7035,6 +7036,26 @@ Ajoutez ensuite seulement ce qui vous concerne :
 - Activez-les une par une et émettez d’abord une facture d’essai dans un espace de test. Voir [L’ordre d’activation](help:setup.features.order).
 
 **Voir aussi :** [Argent et facturation](help:setup.money.overview) · [Partir d’un modèle ou de rien](help:setup.before.template)
+
+### Votre genre d’activité
+
+**Public:** Propriétaire · Copropriétaire
+
+Vous tenez un studio, un cabinet ou un salon plutôt qu’un espace de coworking, et voulez que l’application s’y adapte. La première étape de la mise en place demande **Quel genre d’activité est-ce ?** ; vous pouvez changer la réponse plus tard dans **Espace de coworking**.
+
+<!-- image: setup-features-kind -->
+
+*Ce que fait le choix*
+
+- Choisissez un genre : **Espace de coworking**, **Studio**, **Cabinet**, **Salon** ou **Entreprise de services**. Cochez d’autres genres en dessous si l’activité est plusieurs choses à la fois ; c’est facultatif.
+- Le genre propose des fonctions. Avant tout changement, vous lisez deux phrases : ce qu’il **Active** et ce qu’il **Désactive**, chacune avec **Tout afficher** pour la liste complète. Un genre sans places désactive tout ce qui concerne les places — sièges, plan, borne, salles.
+- Rien ne change avant **Enregistrer**. **Annuler** laisse les fonctions telles quelles, et choisir un genre plus tard propose à nouveau ; rien n’est jamais changé en silence.
+
+*Bon à savoir*
+
+- Une fonction pas encore stable n’est activée que si vous la cochez. Laissez-la décochée et activez-la plus tard dans **Fonctions**.
+- Le coworking ne propose rien : chaque espace existant garde ses fonctions.
+- Désactiver les places ne supprime rien ; réactivez-les et le plan et les réservations reviennent. Voir [Désactiver ne supprime rien](help:setup.features.off).
 
 ### L’ordre d’activation
 

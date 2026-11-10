@@ -6797,6 +6797,7 @@ En este capítulo:
 - [Desactivar no borra nada](help:setup.features.off)
 - [Beta, Sin evaluar y la pregunta antes de activar](help:setup.features.maturity)
 - [Tres puntos de partida](help:setup.features.profiles)
+- [Su tipo de negocio](help:setup.features.kind)
 - [El orden para activar las cosas](help:setup.features.order)
 - [Active una función con seguridad](help:setup.features.safely)
 - [Evite funciones que se contradicen](help:setup.features.consistency)
@@ -7035,6 +7036,26 @@ Después añada solo lo que le corresponda:
 - Active estas funciones de una en una y emita antes una factura de prueba en un espacio de prueba. Véase [El orden para activar las cosas](help:setup.features.order).
 
 **Véase también:** [Dinero y facturación](help:setup.money.overview) · [Partir de una plantilla o de cero](help:setup.before.template)
+
+### Su tipo de negocio
+
+**Público:** Propietario · Copropietario
+
+Lleva un estudio, una consulta o un salón en lugar de un espacio de coworking y quiere que la aplicación se adapte. El primer paso de la configuración pregunta **¿Qué tipo de negocio es?**; puede cambiar la respuesta más tarde en **Ajustes del espacio**.
+
+<!-- image: setup-features-kind -->
+
+*Qué hace la elección*
+
+- Elija un tipo: **Espacio de coworking**, **Estudio**, **Consulta**, **Salón** o **Empresa de servicios**. Marque otros tipos debajo si el negocio es varias cosas a la vez; es opcional.
+- El tipo propone funciones. Antes de que nada cambie, lee dos frases: lo que **Activa** y lo que **Desactiva**, cada una con **Mostrar todo** para la lista completa. Un tipo sin plazas desactiva todo lo relativo a plazas — asientos, plano, quiosco, salas.
+- Nada cambia hasta **Guardar**. **Cancelar** deja las funciones como están, y elegir un tipo más tarde vuelve a proponer; nunca se cambia nada en silencio.
+
+*Conviene saber*
+
+- Una función aún no estable solo se activa si la marca. Déjela sin marcar y actívela más tarde en **Funciones**.
+- El coworking no propone nada: cada espacio existente conserva sus funciones.
+- Desactivar las plazas no borra nada; vuelva a activarlas y el plano y las reservas regresan. Véase [Desactivar no borra nada](help:setup.features.off).
 
 ### El orden para activar las cosas
 

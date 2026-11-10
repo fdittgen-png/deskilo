@@ -332,6 +332,7 @@
   "setup.features.profile-tiny": "Unos pocos lugares compartidos",
   "setup.features.profile-association": "Una asociación con una sala",
   "setup.features.profile-invoicing": "Un coworking que factura",
+  "setup.features.kind": "Su tipo de negocio",
   "setup.features.order": "El orden para activar las cosas",
   "setup.features.safely": "Active una función con seguridad",
   "setup.features.consistency": "Evite funciones que se contradicen",

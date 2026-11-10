@@ -750,5 +750,13 @@
  "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
  "retUsRule": "Vale la regola di conservazione",
  "badgeFailureLimit": "Tentativi falliti di accesso con badge per spazio",
- "badgeFailureLimitHint": "Dopo questo numero di PIN errati nello spazio, l’accesso con badge si sospende per la finestra di blocco e i proprietari ricevono un avviso. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 per impostazione predefinita. Il file XML conserva la risposta; inserirla nell’app."
+ "badgeFailureLimitHint": "Dopo questo numero di PIN errati nello spazio, l’accesso con badge si sospende per la finestra di blocco e i proprietari ricevono un avviso. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 per impostazione predefinita. Il file XML conserva la risposta; inserirla nell’app.",
+ "identityBusinessKind": "Tipo di attività",
+ "identityBusinessKindHint": "Si sceglie nell’app, al primo passo: propone le funzioni di cui questo tipo di attività ha bisogno.",
+ "businessKind_coworking": "Spazio di coworking",
+ "businessKind_studio": "Studio — lezioni e corsi",
+ "businessKind_practice": "Ambulatorio — appuntamenti",
+ "businessKind_salon": "Salone — estetica, parrucchiere, tatuaggio",
+ "businessKind_service": "Altra impresa di servizi",
+ "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)"
 }

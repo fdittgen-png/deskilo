@@ -332,6 +332,7 @@
   "setup.features.profile-tiny": "Ein paar gemeinsame Plätze",
   "setup.features.profile-association": "Ein Verein mit einem Raum",
   "setup.features.profile-invoicing": "Ein Coworking, das Rechnungen stellt",
+  "setup.features.kind": "Ihre Art von Unternehmen",
   "setup.features.order": "Die Reihenfolge beim Einschalten",
   "setup.features.safely": "Eine Funktion sicher einschalten",
   "setup.features.consistency": "Funktionen vermeiden, die sich widersprechen",

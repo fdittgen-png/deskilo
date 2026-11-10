@@ -5069,6 +5069,93 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String businessKindAndMore(String list, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$list et $count autres',
+      one: '$list et 1 autre',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindConsentLater =>
+      'Vous pourrez les activer plus tard dans Fonctions.';
+
+  @override
+  String get businessKindConsentTitle =>
+      'Pas encore stable — activé seulement si vous cochez';
+
+  @override
+  String get businessKindDescCoworking =>
+      'Les membres réservent places, bureaux et salles sur un plan.';
+
+  @override
+  String get businessKindDescPractice =>
+      'Rendez-vous : massage, thérapie, coaching, conseil.';
+
+  @override
+  String get businessKindDescSalon => 'Beauté, coiffure, ongles, tatouage.';
+
+  @override
+  String get businessKindDescService =>
+      'Toute autre entreprise qui vend ses services.';
+
+  @override
+  String get businessKindDescStudio =>
+      'Cours et ateliers : yoga, danse, musique, art.';
+
+  @override
+  String get businessKindMoreTitle => 'C’est aussi… (facultatif)';
+
+  @override
+  String get businessKindNameCoworking => 'Espace de coworking';
+
+  @override
+  String get businessKindNamePractice => 'Cabinet';
+
+  @override
+  String get businessKindNameSalon => 'Salon';
+
+  @override
+  String get businessKindNameService => 'Entreprise de services';
+
+  @override
+  String get businessKindNameStudio => 'Studio';
+
+  @override
+  String get businessKindNoChange => 'Les fonctions restent telles quelles.';
+
+  @override
+  String businessKindPlacesOff(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'tout ce qui concerne les places — sièges, plan, borne, salles ($count fonctions)',
+      one: 'tout ce qui concerne les places — sièges, plan, borne, salles (1 fonction)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindShowAll => 'Tout afficher';
+
+  @override
+  String businessKindSwitchesOff(String features) {
+    return 'Désactive : $features';
+  }
+
+  @override
+  String businessKindSwitchesOn(String features) {
+    return 'Active : $features';
+  }
+
+  @override
+  String get businessKindTitle => 'Quel genre d’activité est-ce ?';
+
+  @override
   String get buyPackageButton => 'Acheter un forfait';
 
   @override

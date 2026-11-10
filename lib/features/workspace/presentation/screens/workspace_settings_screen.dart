@@ -27,6 +27,7 @@ import '../../domain/workspace_xml.dart';
 import '../../providers/workspace_providers.dart';
 import '../country_change_confirm.dart';
 import '../excel_export.dart';
+import '../widgets/business_kind_sheet.dart';
 import '../widgets/local_setup_views.dart';
 import '../widgets/workspace_form_group.dart';
 import '../widgets/workspace_reports.dart';
@@ -110,6 +111,7 @@ class _WorkspaceSettingsScreenState
                   // #2313 — tips sit at the top of every screen.
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
+                  const BusinessKindTile(), // #3549
                   if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.publicListings))ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ...WorkspaceParameterTiles(this, _form, _update,

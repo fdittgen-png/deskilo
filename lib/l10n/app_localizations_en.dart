@@ -5030,6 +5030,93 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String businessKindAndMore(String list, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$list and $count more',
+      one: '$list and 1 more',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindConsentLater =>
+      'You can switch these on later in Features.';
+
+  @override
+  String get businessKindConsentTitle =>
+      'Not yet stable — switched on only if you tick it';
+
+  @override
+  String get businessKindDescCoworking =>
+      'Members book seats, desks and rooms on a floor plan.';
+
+  @override
+  String get businessKindDescPractice =>
+      'Appointments: massage, therapy, coaching, consulting.';
+
+  @override
+  String get businessKindDescSalon => 'Beauty, hair, nails, tattoo.';
+
+  @override
+  String get businessKindDescService =>
+      'Any other business that sells its services.';
+
+  @override
+  String get businessKindDescStudio =>
+      'Classes and courses: yoga, dance, music, art.';
+
+  @override
+  String get businessKindMoreTitle => 'It is also… (optional)';
+
+  @override
+  String get businessKindNameCoworking => 'Coworking space';
+
+  @override
+  String get businessKindNamePractice => 'Practice';
+
+  @override
+  String get businessKindNameSalon => 'Salon';
+
+  @override
+  String get businessKindNameService => 'Service business';
+
+  @override
+  String get businessKindNameStudio => 'Studio';
+
+  @override
+  String get businessKindNoChange => 'The features stay as they are.';
+
+  @override
+  String businessKindPlacesOff(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'everything about places — seats, floor plan, kiosk, rooms ($count features)',
+      one: 'everything about places — seats, floor plan, kiosk, rooms (1 feature)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get businessKindShowAll => 'Show all';
+
+  @override
+  String businessKindSwitchesOff(String features) {
+    return 'Switches off: $features';
+  }
+
+  @override
+  String businessKindSwitchesOn(String features) {
+    return 'Switches on: $features';
+  }
+
+  @override
+  String get businessKindTitle => 'What kind of business is it?';
+
+  @override
   String get buyPackageButton => 'Buy a package';
 
   @override

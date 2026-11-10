@@ -148,6 +148,7 @@ const PARAM_META=[
  ['landTax.option','legalOptionToTax','bool'],['landTax.date','legalOptionDate','date'],['landTax.ref','legalOptionRef','text'],['landTax.bare','legalBareLetting','bool'],['landTax.qst','legalQstNumber','text'],['landTax.quick','legalQuickMethod','bool'],
  ['freeLevel','billingFreeLevel','bool'],
  ['pay.iban','payIbanIntl','text'],['pay.qr_iban','payQrIban','text'],['pay.reference','payReference','text'],['pay.wero','payWero','text'],['pay.lydia','payLydia','text'],['pay.wise','payWise','text'],
+ ['businessKind','identityBusinessKind','enum',()=>['coworking','studio','practice','salon','service']],
  ['org','legalOrg','enum',()=>['association','company']],['customerCapacity','legalCustomerCapacity','enum',()=>['','business','consumer']],
  ['vatRegime','legalVatRegime','enum',()=>['not_subject','exempt','registered']],['vatExigibility','legalVatExigibility','enum',()=>VATEXIGIBILITY.map(x=>x[0])],
  ['numbering.prefix','fieldPrefix','text'],['numbering.datePart','colDate','enum',()=>NUMDATE.map(x=>x[0])],['numbering.digits','fieldDigits','int',{min:1}],
@@ -178,7 +179,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
+const DEST={businessKind:'app',name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it
@@ -188,6 +189,7 @@ const HELP={
  region:['helpAppRegion','user.workspace.settings.currency-timezone'],
  language:['helpAppLanguage','user.workspace.settings.language'],
  features:['helpAppFeatures','user.features.processes'],
+ businessKind:['helpAppBusinessKind','setup.features.kind'],
  availability:['helpAppAvailability','user.workspace.availability.open-weekdays'],
  hours:['helpAppHours','user.workspace.availability.working-hours'],
  booking:['helpAppBooking','user.workspace.availability.policies'],

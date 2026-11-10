@@ -332,6 +332,7 @@
   "setup.features.profile-tiny": "A few shared places",
   "setup.features.profile-association": "An association with a room",
   "setup.features.profile-invoicing": "A coworking that invoices",
+  "setup.features.kind": "Your kind of business",
   "setup.features.order": "The order to switch things on",
   "setup.features.safely": "Switch a feature on safely",
   "setup.features.consistency": "Avoid features that contradict each other",
