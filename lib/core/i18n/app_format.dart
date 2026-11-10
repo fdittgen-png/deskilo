@@ -80,6 +80,12 @@ class AppFormat {
   String percent(num fraction) =>
       NumberFormat.percentPattern(locale).format(fraction);
 
+  /// #3484 — a tax rate given in percent (`20` is 20 %): '20 %', '5,5 %'
+  /// (fr_FR), '7.7 %' (de_CH); a whole rate without decimals. Files print
+  /// rates with `percentText` instead.
+  String rate(double percent) =>
+      '${NumberFormat.decimalPattern(locale).format(percent)} %';
+
   // ── dates and times ──────────────────────────────────────────────
 
   /// The wall-clock the reader asked for: the workspace's, or the

@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -109,8 +110,7 @@ class InvoiceDetailSections {
               children: [
                 Expanded(
                   child: Text(
-                    '${l10n.vatPdfVat} '
-                    '${_percentLabel(total.percent)}',
+                    '${l10n.vatPdfVat} ${appFormatOf(context).rate(total.percent)}',
                     style: TextStyle(color: theme.hintColor),
                   ),
                 ),
@@ -306,10 +306,6 @@ Widget _detailLine(ThemeData theme, String text) => Padding(
     ),
   ),
 );
-
-/// '20 %', '5.5 %' — a rate beside its caption.
-String _percentLabel(double percent) =>
-    '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
 
 /// The platform's answer, in the reader's language (#3335: also the two
 /// unsettled phases).

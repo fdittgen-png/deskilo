@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -66,6 +67,7 @@ class BillingVatHint extends StatelessWidget {
       chargesVat: chargesVat,
       rates: rates,
       vatRateId: tariffRateId,
+      format: appFormatOf(context),
     );
     if (rate == null) return const SizedBox.shrink();
     return Padding(
@@ -185,6 +187,7 @@ class BillingPackageTile extends StatelessWidget {
       chargesVat: chargesVat,
       rates: rates,
       vatRateId: package.vatRateId,
+      format: appFormatOf(context),
     );
     final vatLabel = rate == null ? null : (l10n.priceVatIncluded(rate));
     return ListTile(

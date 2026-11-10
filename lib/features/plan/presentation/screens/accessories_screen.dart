@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
@@ -112,6 +113,7 @@ class AccessoriesScreen extends ConsumerWidget {
         chargesVat: chargesVat,
         rates: vatRates,
         vatRateId: accessory.vatRateId,
+        format: appFormatOf(context),
       );
       if (vatRate == null) return base;
       return '$base · ${l10n.priceVatIncluded(vatRate)}';

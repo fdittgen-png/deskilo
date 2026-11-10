@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -114,8 +115,7 @@ class InvoicePreviewBody extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '${l10n.vatPdfVat} '
-                    '${total.percent == total.percent.roundToDouble() ? total.percent.toStringAsFixed(0) : total.percent} %',
+                    '${l10n.vatPdfVat} ${appFormatOf(context).rate(total.percent)}',
                     style: hint,
                   ),
                 ),
