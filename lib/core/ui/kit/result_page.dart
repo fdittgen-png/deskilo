@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_spacing.dart';
+import '../../theme/personal_theme.dart';
 import 'bottom_action_bar.dart';
 import 'kit_metrics.dart';
 import 'status_chip.dart';
@@ -45,6 +46,7 @@ class ResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final tokens = PersonalTheme.of(context);
     Widget line(ResultLine l, {required bool ok}) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
@@ -77,10 +79,12 @@ class ResultPage extends StatelessWidget {
           child: ListView(
             padding: AppSpacing.mdAll,
             children: [
+              // Something was done: a check in the ok tone, even when part
+              // failed (the list says what); nothing was done: the alert.
               Icon(
-                notDone.isEmpty ? Icons.check_circle : Icons.info_outline,
+                done.isNotEmpty ? Icons.check_circle : Icons.error_outline,
                 size: 56,
-                color: notDone.isEmpty ? scheme.primary : scheme.error,
+                color: done.isNotEmpty ? tokens.success : tokens.danger,
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(

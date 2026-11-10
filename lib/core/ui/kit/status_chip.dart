@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_radius.dart';
-import '../../theme/status_colors.dart';
+import '../../theme/personal_theme.dart';
 
 /// What a status says about its row.
 enum StatusTone {
@@ -25,23 +25,16 @@ enum StatusTone {
   neutral,
 }
 
-/// The (background, foreground) pair of [tone] in [scheme].
-(Color, Color) statusColorsOf(ColorScheme scheme, StatusTone tone) =>
+/// The (tint, colour) pair of [tone] in the semantic tokens [t]: the same
+/// table the personal layer reads, and its brightness's copy under the
+/// workspace theme. "Info" is a blue, never the green of "ok".
+(Color, Color) statusColorsOf(PersonalTheme t, StatusTone tone) =>
     switch (tone) {
-      StatusTone.due => (scheme.errorContainer, scheme.onErrorContainer),
-      StatusTone.info => (scheme.tertiaryContainer, scheme.onTertiaryContainer),
-      StatusTone.warn => (
-        scheme.secondaryContainer,
-        scheme.onSecondaryContainer,
-      ),
-      StatusTone.ok => (
-        scheme.surfaceContainerHighest,
-        AppStatusColors.successTextOf(scheme.brightness),
-      ),
-      StatusTone.neutral => (
-        scheme.surfaceContainerHighest,
-        scheme.onSurfaceVariant,
-      ),
+      StatusTone.due => (t.dangerTint, t.danger),
+      StatusTone.info => (t.infoTint, t.info),
+      StatusTone.warn => (t.warningTint, t.warning),
+      StatusTone.ok => (t.successTint, t.success),
+      StatusTone.neutral => (t.subtle, t.secondaryText),
     };
 
 class StatusChip extends StatelessWidget {
@@ -53,7 +46,10 @@ class StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final (background, foreground) = statusColorsOf(theme.colorScheme, tone);
+    final (background, foreground) = statusColorsOf(
+      PersonalTheme.of(context),
+      tone,
+    );
     return DecoratedBox(
       decoration: BoxDecoration(
         color: background,

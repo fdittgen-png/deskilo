@@ -34,6 +34,8 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
     required this.warningTint,
     required this.danger,
     required this.dangerTint,
+    required this.info,
+    required this.infoTint,
   });
 
   static const PersonalTheme light = PersonalTheme(
@@ -53,6 +55,8 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
     warningTint: Color(0xFFFFF3DF),
     danger: Color(0xFFB3263A),
     dangerTint: Color(0xFFFDECEF),
+    info: Color(0xFF2F5597),
+    infoTint: Color(0xFFE4ECF8),
   );
 
   static const PersonalTheme dark = PersonalTheme(
@@ -72,6 +76,8 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
     warningTint: Color(0xFF45331B),
     danger: Color(0xFFFFB1BD),
     dangerTint: Color(0xFF472735),
+    info: Color(0xFFA9C2F2),
+    infoTint: Color(0xFF1C2A45),
   );
 
   /// The page behind every card.
@@ -102,6 +108,11 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
   final Color danger;
   final Color dangerTint;
 
+  /// Money on its way, something to confirm: never the green of "paid"
+  /// (#3587).
+  final Color info;
+  final Color infoTint;
+
   /// The tokens of [brightness].
   static PersonalTheme forBrightness(Brightness brightness) =>
       brightness == Brightness.dark ? dark : light;
@@ -131,6 +142,8 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
         ('warning on surface', warning, surface),
         ('danger on danger tint', danger, dangerTint),
         ('danger on surface', danger, surface),
+        ('info on info tint', info, infoTint),
+        ('info on surface', info, surface),
       ];
 
   /// The borders that must read as a boundary on every surface.
@@ -166,6 +179,8 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
       warningTint: mix(warningTint, other.warningTint),
       danger: mix(danger, other.danger),
       dangerTint: mix(dangerTint, other.dangerTint),
+      info: mix(info, other.info),
+      infoTint: mix(infoTint, other.infoTint),
     );
   }
 }
