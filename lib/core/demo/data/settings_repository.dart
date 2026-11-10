@@ -9,10 +9,17 @@ class FakeSettingsRepository implements SettingsStore {
       : definitions = {for (final d in definitions) d.key: d},
         _loader = null;
 
-  /// Demo: the registry is the one the app ships, read when first asked.
-  FakeSettingsRepository.fromLoader(Future<List<SettingDefinition>> Function() loader)
-      : definitions = {},
-        _loader = loader;
+  /// Demo: the registry is the one the app ships, read when first asked;
+  /// [seed] are the values the Demo's spaces start with.
+  FakeSettingsRepository.fromLoader(
+    Future<List<SettingDefinition>> Function() loader, {
+    Iterable<SettingVersion> seed = const [],
+  })  : definitions = {},
+        _loader = loader {
+    for (final v in seed) {
+      versions.putIfAbsent(_slot(v.workspaceId, v.key), () => []).add(v);
+    }
+  }
 
   final Map<String, SettingDefinition> definitions;
   final Future<List<SettingDefinition>> Function()? _loader;

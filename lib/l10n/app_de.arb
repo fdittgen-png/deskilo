@@ -15859,6 +15859,7 @@
   "@settingGroupBooking": {
     "description": "#2486 settings: Settings group title."
   },
+  "settingGroupBusiness": "Geschäft",
   "settingGroupDirectory": "Mitgliederverzeichnis",
   "@settingGroupDirectory": {
     "description": "#2486 settings: Settings group title."
@@ -15958,6 +15959,8 @@
   "@settingHintBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting hint."
   },
+  "settingHintBusinessKind": "Was das Geschäft ist: ein Coworking-Space, ein Studio, eine Praxis, ein Salon oder ein anderes Dienstleistungsgeschäft. Sie schlägt die Funktionen und Begriffe vor, die es braucht; ein Coworking-Space bleibt, wie er war.",
+  "settingHintBusinessMoreKinds": "Weitere Arten, die das Geschäft neben der Hauptart ist, falls zutreffend.",
   "settingHintCalendarRangeDays": "Von der Plattform festgelegt: der längste Zeitraum, den eine Kalenderabfrage anfordern darf. Er begrenzt die Abfrage.",
   "@settingHintCalendarRangeDays": {
     "description": "#2487 settings: Setting hint."
@@ -16142,6 +16145,8 @@
   "@settingLabelBookingWalkUpWindowMinutes": {
     "description": "#2486 settings: Setting label."
   },
+  "settingLabelBusinessKind": "Art des Geschäfts",
+  "settingLabelBusinessMoreKinds": "Auch eine Art des Geschäfts",
   "settingLabelCalendarRangeDays": "Kalenderzeitraum",
   "@settingLabelCalendarRangeDays": {
     "description": "#2487 settings: Setting label."

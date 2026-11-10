@@ -18,6 +18,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The workspace's business kind: the settings tile and the setup step of
+  // #3549's second PR read it, then #3550's feature proposal.
+  'lib/features/workspace/domain/business_profile.dart::BusinessProfile':
+      '#3549 — PR 2 wires the settings tile and the setup step to it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
