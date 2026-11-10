@@ -16,7 +16,9 @@ void main() {
   test('the code-point order this replaces put accents after Z', () {
     expect('Émile'.compareTo('Zoé'), greaterThan(0));
     expect(compareNames('Émile', 'Zoé'), lessThan(0));
-    expect(compareNames('Über', 'Zimmer'), greaterThan(0));
+    expect('Über'.compareTo('Zimmer'), greaterThan(0));
+    expect(compareNames('Über', 'Zimmer'), lessThan(0));
+    expect('Ñandú'.compareTo('Zapata'), greaterThan(0));
     expect(compareNames('Ñandú', 'Zapata'), lessThan(0));
   });
 
