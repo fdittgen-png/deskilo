@@ -12436,7 +12436,7 @@
   "portalReachableHeading": "Persone a cui può scrivere",
   "portalRecipientHint": "Digiti un nome: i suggerimenti compaiono dalla prima lettera",
   "portalRegisterDirectory": "Collega un server alla directory globale",
-  "portalRequestProfile": "Richiedi un profilo nello spazio",
+  "portalRequestProfile": "Chiedi di unirti",
   "portalRequestSent": "Richiesta inviata. Lo spazio esaminerà il suo profilo.",
   "portalResetAll": "Ripristina tutti i dati pubblici dalle informazioni dello spazio",
   "portalResetAllBody": "I valori pubblici di ogni campo che ha un’informazione nello spazio vengono sostituiti da essa. I campi senza corrispondenza nello spazio mantengono ciò che ha scritto.",
@@ -17273,6 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Scrivi a {name}",
+  "spaceMessageSpace": "Invia un messaggio",
   "spaceMoveDown": "Sposta giù",
   "spaceMoveUp": "Sposta su",
   "spaceNotBookable": "Questo spazio non è configurato per le prenotazioni intere.",
@@ -17285,8 +17286,12 @@
       }
     }
   },
+  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.",
   "spaceQrSizeLabel": "Dimensione del codice QR",
   "spaceRatingClear": "Nessuna valutazione",
+  "spaceRunByAssociation": "Gestito da un'associazione",
+  "spaceRunByCompany": "Gestito da un'azienda",
+  "spaceRunByPerson": "Gestito da una persona",
   "spaceScanField": "Codice",
   "spaceScanHint": "Inquadri la scheda di una postazione, tavolo, ufficio o piano — oppure digiti il codice.",
   "spaceScanInvalid": "Non è un codice spazio di questo workspace.",

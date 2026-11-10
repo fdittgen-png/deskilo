@@ -95,7 +95,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     unawaited(
       publicWorkspacePage.open<void>(
         context,
-        PublicWorkspaceView(workspace: w),
+        PublicWorkspaceView(workspace: w, personal: widget.embedded),
       ),
     );
   }

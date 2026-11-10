@@ -25,6 +25,7 @@ class SpaceOffers extends ConsumerWidget {
     super.key,
     required this.workspace,
     required this.onRequest,
+    this.secondary,
   });
 
   final PublicWorkspace workspace;
@@ -32,25 +33,29 @@ class SpaceOffers extends ConsumerWidget {
   /// The admission request, as the page already made it.
   final Future<void> Function() onRequest;
 
+  /// The outlined action beside the one filled action (Message the space).
+  final Widget? secondary;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final signedIn = ref.watch(authStateProvider).value != null;
     // A membership can only be recognised on this server: the page's id
     // is that server's own workspace id.
-    final here = signedIn &&
+    final here =
+        signedIn &&
         workspace.source == ref.watch(connectedInstallationsProvider).origin;
     final mine = here
         ? (ref.watch(myWorkspacesProvider).value ?? const <Workspace>[])
-            .where((w) => w.id == workspace.id)
-            .firstOrNull
+              .where((w) => w.id == workspace.id)
+              .firstOrNull
         : null;
     final email = workspace.text('email').trim();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-      child: Wrap(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSpacing.sm,
-        runSpacing: AppSpacing.sm,
         children: [
           if (mine != null)
             FilledButton.icon(
@@ -63,13 +68,12 @@ class SpaceOffers extends ConsumerWidget {
             FilledButton.icon(
               key: const ValueKey('portal-request-membership'),
               icon: const Icon(Icons.person_add_outlined),
-              label: Text(
-                l.portalRequestProfile,
-              ),
+              label: Text(l.portalRequestProfile),
               onPressed: onRequest,
             ),
+          ?secondary,
           if (email.isNotEmpty)
-            OutlinedButton.icon(
+            TextButton.icon(
               key: const ValueKey('portal-copy-email'),
               icon: const Icon(Icons.copy_outlined),
               label: Text(l.portalCopyEmail),

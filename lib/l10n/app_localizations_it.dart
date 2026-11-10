@@ -20497,7 +20497,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Collega un server alla directory globale';
 
   @override
-  String get portalRequestProfile => 'Richiedi un profilo nello spazio';
+  String get portalRequestProfile => 'Chiedi di unirti';
 
   @override
   String get portalRequestSent =>
@@ -27758,6 +27758,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Invia un messaggio';
+
+  @override
   String get spaceMoveDown => 'Sposta giù';
 
   @override
@@ -27777,10 +27780,23 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get spacePreviewPrivacy =>
+      'Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.';
+
+  @override
   String get spaceQrSizeLabel => 'Dimensione del codice QR';
 
   @override
   String get spaceRatingClear => 'Nessuna valutazione';
+
+  @override
+  String get spaceRunByAssociation => 'Gestito da un\'associazione';
+
+  @override
+  String get spaceRunByCompany => 'Gestito da un\'azienda';
+
+  @override
+  String get spaceRunByPerson => 'Gestito da una persona';
 
   @override
   String get spaceScanField => 'Codice';

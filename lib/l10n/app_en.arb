@@ -27053,7 +27053,7 @@
   "@portalRegisterDirectory": {
     "description": "Shown as the title in directory link dialog (directory), and 1 other place."
   },
-  "portalRequestProfile": "Request a workspace profile",
+  "portalRequestProfile": "Ask to join",
   "@portalRequestProfile": {
     "description": "Shown as the text in space offers (directory)."
   },
@@ -36226,6 +36226,10 @@
       }
     }
   },
+  "spaceMessageSpace": "Send a message",
+  "@spaceMessageSpace": {
+    "description": "#3545 F: the outlined action of a space's public page that writes to its hosts"
+  },
   "spaceMoveDown": "Move down",
   "@spaceMoveDown": {
     "description": "Shown as the text in space row controls (me), and 1 other place."
@@ -36251,6 +36255,10 @@
       }
     }
   },
+  "spacePreviewPrivacy": "When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.",
+  "@spacePreviewPrivacy": {
+    "description": "#3545 F: the line under the actions of a space's public page: what asking to join shares"
+  },
   "spaceQrSizeLabel": "QR code size",
   "@spaceQrSizeLabel": {
     "description": "Shown as the text in space codes options dialog (workspace)."
@@ -36258,6 +36266,18 @@
   "spaceRatingClear": "No rating",
   "@spaceRatingClear": {
     "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
+  "spaceRunByAssociation": "Run by an association",
+  "@spaceRunByAssociation": {
+    "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "spaceRunByCompany": "Run by a company",
+  "@spaceRunByCompany": {
+    "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "spaceRunByPerson": "Run by a person",
+  "@spaceRunByPerson": {
+    "description": "#3545 F: who runs a space, plain text under its address"
   },
   "spaceScanField": "Code",
   "@spaceScanField": {

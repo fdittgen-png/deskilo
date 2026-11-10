@@ -8,9 +8,11 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/core/theme/personal_theme.dart';
 import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
+import 'package:deskilo/features/directory/presentation/public_workspace_view.dart';
 import 'package:deskilo/features/directory/providers/discovery_listing_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +57,9 @@ PublicWorkspace _card(String id, String name, [Map<String, dynamic>? more]) =>
     PublicWorkspace(id, 'https://a.example', 'k', {'name': name, ...?more});
 
 final _atelier = _card('1', 'Atelier Nord', {
+  'description': 'A quiet studio with six desks and a meeting room.',
+  'email': 'hello@ateliernord.example',
+  'phone': '+33 4 67 00 00 00',
   'address': '12 rue Haute, 34120 Pézenas',
   'host_type': 'company',
 });
@@ -106,7 +111,9 @@ void main() {
                 directory: state.value(),
               ),
               if (state.key == 'one-directory-failed')
-                discoveryListingProvider.overrideWith2((_) => _PartlyAnswered()),
+                discoveryListingProvider.overrideWith2(
+                  (_) => _PartlyAnswered(),
+                ),
             ],
             child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -147,5 +154,45 @@ void main() {
     tester.view.resetPhysicalSize();
     tester.view.resetDevicePixelRatio();
     debugPrint('discover sheet: ${out.path}');
+  }, skip: !enabled);
+
+  testWidgets('render a space page to build/discover_sheet', (tester) async {
+    await _loadRoboto();
+    final out = Directory('build/discover_sheet')..createSync(recursive: true);
+    for (final dark in [false, true]) {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(390, 844);
+      await tester.pumpWidget(
+        ProviderScope(
+          key: UniqueKey(),
+          overrides: standardTestOverrides(
+            auth: FakeAuthRepository.signedIn(),
+            directory: FakeDirectoryRepository()..cards.add(_atelier),
+          ),
+          child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: personalThemeFrom(ThemeData()),
+            darkTheme: personalThemeFrom(
+              ThemeData(brightness: Brightness.dark),
+            ),
+            themeMode: dark ? ThemeMode.dark : ThemeMode.light,
+            home: PublicWorkspaceView(workspace: _atelier, personal: true),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final target = tester.firstRenderObject<RenderRepaintBoundary>(
+        find.byType(RepaintBoundary).first,
+      );
+      final image = await tester.runAsync(target.toImage);
+      final bytes = await tester.runAsync(
+        () => image!.toByteData(format: ui.ImageByteFormat.png),
+      );
+      File('${out.path}/space--${dark ? 'dark' : 'light'}.png')
+          .writeAsBytesSync(bytes!.buffer.asUint8List());
+    }
+    tester.view.resetPhysicalSize();
+    tester.view.resetDevicePixelRatio();
   }, skip: !enabled);
 }

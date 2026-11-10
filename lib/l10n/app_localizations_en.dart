@@ -20331,7 +20331,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalRegisterDirectory => 'Link a server to the global directory';
 
   @override
-  String get portalRequestProfile => 'Request a workspace profile';
+  String get portalRequestProfile => 'Ask to join';
 
   @override
   String get portalRequestSent =>
@@ -27504,6 +27504,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Send a message';
+
+  @override
   String get spaceMoveDown => 'Move down';
 
   @override
@@ -27523,10 +27526,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get spacePreviewPrivacy =>
+      'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.';
+
+  @override
   String get spaceQrSizeLabel => 'QR code size';
 
   @override
   String get spaceRatingClear => 'No rating';
+
+  @override
+  String get spaceRunByAssociation => 'Run by an association';
+
+  @override
+  String get spaceRunByCompany => 'Run by a company';
+
+  @override
+  String get spaceRunByPerson => 'Run by a person';
 
   @override
   String get spaceScanField => 'Code';

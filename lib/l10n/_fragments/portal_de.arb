@@ -29,7 +29,7 @@
   "portalOwner": "Eigentümer",
   "portalAdmin": "Administrator",
   "portalChat": "Chat",
-  "portalRequestProfile": "Workspace-Profil beantragen",
+  "portalRequestProfile": "Beitritt anfragen",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
   "portalList": "Liste",
   "portalMap": "Karte",
@@ -57,5 +57,10 @@
   "portalGroupsHeading": "Gruppen",
   "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
   "portalDirectoryCount": "{name} ({count})",
-  "portalWriteTo": "{name} schreiben"
+  "portalWriteTo": "{name} schreiben",
+  "spaceMessageSpace": "Nachricht senden",
+  "spacePreviewPrivacy": "Wenn Sie anfragen, sieht dieser Betrieb Ihre E-Mail-Adresse. Als Mitglied sehen seine Administratoren Ihren Namen sowie die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.",
+  "spaceRunByCompany": "Betrieben von einem Unternehmen",
+  "spaceRunByAssociation": "Betrieben von einem Verein",
+  "spaceRunByPerson": "Betrieben von einer Privatperson"
 }

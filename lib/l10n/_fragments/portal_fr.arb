@@ -29,7 +29,7 @@
   "portalOwner": "Propriétaire",
   "portalAdmin": "Administrateur",
   "portalChat": "Discuter",
-  "portalRequestProfile": "Demander un profil dans cet espace",
+  "portalRequestProfile": "Demander à rejoindre",
   "portalRequestSent": "Demande envoyée. L’espace examinera votre profil.",
   "portalList": "Liste",
   "portalMap": "Carte",
@@ -57,5 +57,10 @@
   "portalGroupsHeading": "Groupes",
   "portalRecipientHint": "Tapez un nom : des suggestions apparaissent dès la première lettre",
   "portalDirectoryCount": "{name} ({count})",
-  "portalWriteTo": "Écrire à {name}"
+  "portalWriteTo": "Écrire à {name}",
+  "spaceMessageSpace": "Envoyer un message",
+  "spacePreviewPrivacy": "Quand vous demandez, cette entreprise voit votre adresse e-mail. Une fois membre, ses administrateurs voient votre nom et les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.",
+  "spaceRunByCompany": "Géré par une entreprise",
+  "spaceRunByAssociation": "Géré par une association",
+  "spaceRunByPerson": "Géré par un particulier"
 }

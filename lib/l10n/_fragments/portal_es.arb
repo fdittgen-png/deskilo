@@ -29,7 +29,7 @@
   "portalOwner": "Propietario",
   "portalAdmin": "Administrador",
   "portalChat": "Conversar",
-  "portalRequestProfile": "Solicitar un perfil en este espacio",
+  "portalRequestProfile": "Pedir unirme",
   "portalRequestSent": "Solicitud enviada. El espacio revisará su perfil.",
   "portalList": "Lista",
   "portalMap": "Mapa",
@@ -57,5 +57,10 @@
   "portalGroupsHeading": "Grupos",
   "portalRecipientHint": "Escriba un nombre: las sugerencias aparecen desde la primera letra",
   "portalDirectoryCount": "{name} ({count})",
-  "portalWriteTo": "Escribir a {name}"
+  "portalWriteTo": "Escribir a {name}",
+  "spaceMessageSpace": "Enviar un mensaje",
+  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su dirección de correo. Una vez miembro, sus administradores verán su nombre y los datos de contacto y facturación que necesitan para facturarle.",
+  "spaceRunByCompany": "Gestionado por una empresa",
+  "spaceRunByAssociation": "Gestionado por una asociación",
+  "spaceRunByPerson": "Gestionado por una persona"
 }

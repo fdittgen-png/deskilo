@@ -12436,7 +12436,7 @@
   "portalReachableHeading": "Personen, denen Sie schreiben können",
   "portalRecipientHint": "Geben Sie einen Namen ein: Vorschläge erscheinen ab dem ersten Buchstaben",
   "portalRegisterDirectory": "Server mit dem globalen Verzeichnis verbinden",
-  "portalRequestProfile": "Workspace-Profil beantragen",
+  "portalRequestProfile": "Beitritt anfragen",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
   "portalResetAll": "Alle öffentlichen Daten auf die Arbeitsbereichsangaben zurücksetzen",
   "portalResetAllBody": "Die öffentlichen Werte aller Felder, für die es Arbeitsbereichsangaben gibt, werden durch diese ersetzt. Felder ohne Entsprechung im Arbeitsbereich behalten Ihre Eingabe.",
@@ -17273,6 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Nachricht an {name}",
+  "spaceMessageSpace": "Nachricht senden",
   "spaceMoveDown": "Nach unten",
   "spaceMoveUp": "Nach oben",
   "spaceNotBookable": "Dieser Raum ist nicht für Ganzraum-Reservierungen eingerichtet.",
@@ -17285,8 +17286,12 @@
       }
     }
   },
+  "spacePreviewPrivacy": "Wenn Sie anfragen, sieht dieser Betrieb Ihre E-Mail-Adresse. Als Mitglied sehen seine Administratoren Ihren Namen sowie die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.",
   "spaceQrSizeLabel": "Größe des QR-Codes",
   "spaceRatingClear": "Keine Bewertung",
+  "spaceRunByAssociation": "Betrieben von einem Verein",
+  "spaceRunByCompany": "Betrieben von einem Unternehmen",
+  "spaceRunByPerson": "Betrieben von einer Privatperson",
   "spaceScanField": "Code",
   "spaceScanHint": "Kamera auf die Karte eines Platzes, Tischs, Büros oder einer Etage richten — oder den Code eintippen.",
   "spaceScanInvalid": "Kein Raumcode dieses Workspace.",

@@ -20524,7 +20524,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Server mit dem globalen Verzeichnis verbinden';
 
   @override
-  String get portalRequestProfile => 'Workspace-Profil beantragen';
+  String get portalRequestProfile => 'Beitritt anfragen';
 
   @override
   String get portalRequestSent =>
@@ -27792,6 +27792,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spaceMessageSpace => 'Nachricht senden';
+
+  @override
   String get spaceMoveDown => 'Nach unten';
 
   @override
@@ -27811,10 +27814,23 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spacePreviewPrivacy =>
+      'Wenn Sie anfragen, sieht dieser Betrieb Ihre E-Mail-Adresse. Als Mitglied sehen seine Administratoren Ihren Namen sowie die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.';
+
+  @override
   String get spaceQrSizeLabel => 'Größe des QR-Codes';
 
   @override
   String get spaceRatingClear => 'Keine Bewertung';
+
+  @override
+  String get spaceRunByAssociation => 'Betrieben von einem Verein';
+
+  @override
+  String get spaceRunByCompany => 'Betrieben von einem Unternehmen';
+
+  @override
+  String get spaceRunByPerson => 'Betrieben von einer Privatperson';
 
   @override
   String get spaceScanField => 'Code';

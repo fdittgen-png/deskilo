@@ -33836,7 +33836,7 @@ abstract class AppLocalizations {
   /// Shown as the text in space offers (directory).
   ///
   /// In en, this message translates to:
-  /// **'Request a workspace profile'**
+  /// **'Ask to join'**
   String get portalRequestProfile;
 
   /// Shown as the text in public workspace view (directory).
@@ -45704,6 +45704,12 @@ abstract class AppLocalizations {
   /// **'Message {name}'**
   String spaceMessageReserver(String name);
 
+  /// #3545 F: the outlined action of a space's public page that writes to its hosts
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message'**
+  String get spaceMessageSpace;
+
   /// Shown as the text in space row controls (me), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -45734,6 +45740,12 @@ abstract class AppLocalizations {
   /// **'Options for {name}'**
   String spaceOptions(String name);
 
+  /// #3545 F: the line under the actions of a space's public page: what asking to join shares
+  ///
+  /// In en, this message translates to:
+  /// **'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.'**
+  String get spacePreviewPrivacy;
+
   /// Shown as the text in space codes options dialog (workspace).
   ///
   /// In en, this message translates to:
@@ -45745,6 +45757,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No rating'**
   String get spaceRatingClear;
+
+  /// #3545 F: who runs a space, plain text under its address
+  ///
+  /// In en, this message translates to:
+  /// **'Run by an association'**
+  String get spaceRunByAssociation;
+
+  /// #3545 F: who runs a space, plain text under its address
+  ///
+  /// In en, this message translates to:
+  /// **'Run by a company'**
+  String get spaceRunByCompany;
+
+  /// #3545 F: who runs a space, plain text under its address
+  ///
+  /// In en, this message translates to:
+  /// **'Run by a person'**
+  String get spaceRunByPerson;
 
   /// Label of the typed space-code input
   ///

@@ -346,7 +346,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Alice'), findsOneWidget);
       expect(find.text('Owner'), findsOneWidget);
-      expect(find.text('Private host'), findsOneWidget);
+      expect(find.text('Run by a person'), findsOneWidget);
     },
   );
   testWidgets(
@@ -378,7 +378,7 @@ void main() {
       );
       expect(find.text('This workspace is no longer published.'), findsOneWidget);
       expect(find.byKey(const ValueKey('write-to-hosts')), findsNothing);
-      expect(find.text('Request a workspace profile'), findsNothing);
+      expect(find.text('Ask to join'), findsNothing);
       expect(find.byTooltip('Chat'), findsNothing);
       expect(repo.requests, isEmpty);
     },
@@ -410,7 +410,7 @@ void main() {
         find.byKey(const ValueKey('public-workspace-withdrawn')),
         findsNothing,
       );
-      expect(find.text('Request a workspace profile'), findsOneWidget);
+      expect(find.text('Ask to join'), findsOneWidget);
     },
   );
   testWidgets(
@@ -435,7 +435,7 @@ void main() {
         find.byKey(const ValueKey('directory-view-https://demo.invalid/newer')),
       );
       await tester.pumpAndSettle();
-      final request = find.text('Request a workspace profile');
+      final request = find.text('Ask to join');
       await tester.ensureVisible(request);
       await tester.tap(request);
       await tester.pumpAndSettle();

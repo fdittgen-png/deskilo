@@ -12436,7 +12436,7 @@
   "portalReachableHeading": "Personnes à qui vous pouvez écrire",
   "portalRecipientHint": "Tapez un nom : des suggestions apparaissent dès la première lettre",
   "portalRegisterDirectory": "Relier un serveur à l’annuaire global",
-  "portalRequestProfile": "Demander un profil dans cet espace",
+  "portalRequestProfile": "Demander à rejoindre",
   "portalRequestSent": "Demande envoyée. L’espace examinera votre profil.",
   "portalResetAll": "Rétablir toutes les données publiques depuis les informations de l’espace",
   "portalResetAllBody": "Les valeurs publiques de chaque champ qui a une information dans l’espace sont remplacées par celle-ci. Les champs sans équivalent dans l’espace gardent ce que vous avez saisi.",
@@ -17273,6 +17273,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceMessageReserver": "Écrire à {name}",
+  "spaceMessageSpace": "Envoyer un message",
   "spaceMoveDown": "Descendre",
   "spaceMoveUp": "Monter",
   "spaceNotBookable": "Cet espace n'est pas configuré pour les réservations entières.",
@@ -17285,8 +17286,12 @@
       }
     }
   },
+  "spacePreviewPrivacy": "Quand vous demandez, cette entreprise voit votre adresse e-mail. Une fois membre, ses administrateurs voient votre nom et les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.",
   "spaceQrSizeLabel": "Taille du code QR",
   "spaceRatingClear": "Aucune note",
+  "spaceRunByAssociation": "Géré par une association",
+  "spaceRunByCompany": "Géré par une entreprise",
+  "spaceRunByPerson": "Géré par un particulier",
   "spaceScanField": "Code",
   "spaceScanHint": "Visez la carte d'un poste, d'une table, d'un bureau ou d'un niveau — ou saisissez son code.",
   "spaceScanInvalid": "Ce n'est pas un code d'espace de cet espace de travail.",

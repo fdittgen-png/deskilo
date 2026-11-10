@@ -119,7 +119,7 @@
   "@portalChat": {
     "description": "Shown as the tooltip in public workspace view (directory)."
   },
-  "portalRequestProfile": "Request a workspace profile",
+  "portalRequestProfile": "Ask to join",
   "@portalRequestProfile": {
     "description": "Shown as the text in space offers (directory)."
   },
@@ -247,5 +247,25 @@
         "type": "String"
       }
     }
+  },
+  "spaceMessageSpace": "Send a message",
+  "spacePreviewPrivacy": "When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.",
+  "@spaceMessageSpace": {
+    "description": "#3545 F: the outlined action of a space's public page that writes to its hosts"
+  },
+  "@spacePreviewPrivacy": {
+    "description": "#3545 F: the line under the actions of a space's public page: what asking to join shares"
+  },
+  "spaceRunByCompany": "Run by a company",
+  "spaceRunByAssociation": "Run by an association",
+  "spaceRunByPerson": "Run by a person",
+  "@spaceRunByCompany": {
+    "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "@spaceRunByAssociation": {
+    "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "@spaceRunByPerson": {
+    "description": "#3545 F: who runs a space, plain text under its address"
   }
 }
