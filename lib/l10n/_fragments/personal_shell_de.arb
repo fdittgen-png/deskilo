@@ -1,13 +1,13 @@
 {
   "featurePersonalShellTitle": "Persönliche Oberfläche (fünf Ziele)",
   "featurePersonalShellDesc": "Ich als fünf Ziele: Überblick, Meine Spaces, Entdecken, Nachrichten und Meine Daten, mit einer Seitenleiste in einem breiten Fenster, einer schmalen Leiste in einem mittleren und einer Leiste unten auf dem Telefon. Ausgeschaltet behält Ich seine vier Tabs.",
-  "meTabOverview": "Überblick",
-  "meTabOverviewShort": "Überblick",
-  "meTabSpacesShort": "Spaces",
+  "meTabOverview": "Start",
+  "meTabOverviewShort": "Start",
+  "meTabSpacesShort": "Orte",
   "meTabData": "Meine Daten",
   "meTabDataShort": "Daten",
   "meContextPersonal": "Persönlich",
-  "meUtilityAccount": "Vertraulichkeit und Konto",
+  "meUtilityAccount": "Privatsphäre und Konto",
   "meUtilityHelp": "Hilfe und Assistent",
   "meDataViewReservations": "Buchungen"
 }

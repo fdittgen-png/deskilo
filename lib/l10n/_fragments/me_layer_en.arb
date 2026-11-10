@@ -19,7 +19,7 @@
   "@meHomeTitle": {
     "description": "Title of the Me layer home tab."
   },
-  "meMySpaces": "My spaces",
+  "meMySpaces": "My places",
   "@meMySpaces": {
     "description": "Heading above the list of spaces the person belongs to."
   },

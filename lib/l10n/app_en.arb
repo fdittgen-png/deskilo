@@ -23250,6 +23250,37 @@
   "@meFindSpace": {
     "description": "Button on the Me home: open Discover."
   },
+  "meGreetingAfternoon": "Good afternoon, {name}",
+  "@meGreetingAfternoon": {
+    "description": "#3545 The Home greeting from noon until 6 pm; {name} is the first name of the account.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meGreetingEvening": "Good evening, {name}",
+  "@meGreetingEvening": {
+    "description": "#3545 The Home greeting after 6 pm; {name} is the first name of the account.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meGreetingMorning": "Good morning, {name}",
+  "@meGreetingMorning": {
+    "description": "#3545 The Home greeting before noon; {name} is the first name of the account.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "meGreetingNoName": "Welcome",
+  "@meGreetingNoName": {
+    "description": "#3545 The Home greeting when the account has no name yet."
+  },
   "meGroupAdd": "New group",
   "@meGroupAdd": {
     "description": "Shown as a title in me spaces list (me), and 1 other place."
@@ -23393,7 +23424,7 @@
   "@meManageSpaces": {
     "description": "Button on the Me home: the detailed list of spaces (default at start, site)."
   },
-  "meMySpaces": "My spaces",
+  "meMySpaces": "My places",
   "@meMySpaces": {
     "description": "Heading above the list of spaces the person belongs to."
   },
@@ -23461,7 +23492,7 @@
       }
     }
   },
-  "meOverviewAttentionNone": "Nothing needs your attention.",
+  "meOverviewAttentionNone": "Nothing needs you right now.",
   "@meOverviewAttentionNone": {
     "description": "#2554 Overview: every source answered and nothing waits"
   },
@@ -23473,7 +23504,7 @@
   "@meOverviewAttentionOverdue": {
     "description": "#2554 Overview: the document is past its due day"
   },
-  "meOverviewAttentionTitle": "Needs attention",
+  "meOverviewAttentionTitle": "Needs you",
   "@meOverviewAttentionTitle": {
     "description": "#2554 Overview: the needs-attention section"
   },
@@ -23506,7 +23537,7 @@
   "@meOverviewNextNotYet": {
     "description": "#2554 Overview: no upcoming booking among those read so far; more are in My reservations"
   },
-  "meOverviewNextTitle": "Next commitment",
+  "meOverviewNextTitle": "Next up",
   "@meOverviewNextTitle": {
     "description": "#2554 Overview: the next commitment section"
   },
@@ -23522,14 +23553,6 @@
         "type": "String"
       }
     }
-  },
-  "meOverviewSubtitle": "Your next booking, what needs you, and your spaces.",
-  "@meOverviewSubtitle": {
-    "description": "#2554 Overview: the supporting line under the heading"
-  },
-  "meOverviewTitle": "Your day, in one place",
-  "@meOverviewTitle": {
-    "description": "#2554 Overview: the page heading"
   },
   "meOverviewView": "View",
   "@meOverviewView": {
@@ -23644,19 +23667,19 @@
   "@meTabMessages": {
     "description": "Me layer bottom tab: the person's messages."
   },
-  "meTabOverview": "Overview",
+  "meTabOverview": "Home",
   "@meTabOverview": {
     "description": "#2552 first destination of the personal shell: the person's overview."
   },
-  "meTabOverviewShort": "Overview",
+  "meTabOverviewShort": "Home",
   "@meTabOverviewShort": {
     "description": "#2552 the Overview destination on a phone's bottom bar (FR: Accueil)."
   },
-  "meTabSpacesShort": "Spaces",
+  "meTabSpacesShort": "Places",
   "@meTabSpacesShort": {
     "description": "#2552 the My spaces destination on a phone's bottom bar."
   },
-  "meUtilityAccount": "Confidentiality and account",
+  "meUtilityAccount": "Privacy and account",
   "@meUtilityAccount": {
     "description": "#2552 utility of the personal shell: who sees what of me, and my account."
   },
