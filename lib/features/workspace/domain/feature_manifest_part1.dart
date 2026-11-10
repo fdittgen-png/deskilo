@@ -86,12 +86,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
     ),
   WorkspaceFeature.adminSeatBlocking: FeatureManifestEntry(
     feature: WorkspaceFeature.adminSeatBlocking,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
   WorkspaceFeature.levelBooking: FeatureManifestEntry(
     feature: WorkspaceFeature.levelBooking,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.platform,
     defaultOn: false,
@@ -108,6 +110,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
   WorkspaceFeature.kioskMode:
       FeatureManifestEntry(
       feature: WorkspaceFeature.kioskMode,
+      requires: WorkspaceFeature.placeBooking,
       surface: FeatureSurface.kiosk,
       tier: FeatureTier.platform,
     ),
@@ -137,6 +140,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
   WorkspaceFeature.spaceQrCodes:
       FeatureManifestEntry(
       feature: WorkspaceFeature.spaceQrCodes,
+      requires: WorkspaceFeature.placeBooking,
       surface: FeatureSurface.reserve,
       tier: FeatureTier.core,
     ),
@@ -154,6 +158,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
   // attendance records, which is an explicit owner decision.
   WorkspaceFeature.autoCheckInOut: FeatureManifestEntry(
     feature: WorkspaceFeature.autoCheckInOut,
+    requires: WorkspaceFeature.placeBooking,
     surface: FeatureSurface.reserve,
     tier: FeatureTier.platform,
     defaultOn: false,
@@ -274,6 +279,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
   WorkspaceFeature.planObjectDelete:
       FeatureManifestEntry(
       feature: WorkspaceFeature.planObjectDelete,
+      requires: WorkspaceFeature.placeBooking,
       surface: FeatureSurface.reserve,
       tier: FeatureTier.core,
     ),
@@ -303,6 +309,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
   WorkspaceFeature.nfcSeatTags:
       FeatureManifestEntry(
       feature: WorkspaceFeature.nfcSeatTags,
+      requires: WorkspaceFeature.placeBooking,
       surface: FeatureSurface.kiosk,
       tier: FeatureTier.platform,
     ),
@@ -374,6 +381,7 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest1 = {
   WorkspaceFeature.planMemberPhotos:
       FeatureManifestEntry(
       feature: WorkspaceFeature.planMemberPhotos,
+      requires: WorkspaceFeature.placeBooking,
       surface: FeatureSurface.reserve,
       tier: FeatureTier.platform,
     ),

@@ -263,5 +263,7 @@
   "featurePurchaseOrdersTitle": "Pedir a los proveedores",
   "featurePurchaseOrdersDesc": "Preparar pedidos numerados para sus proveedores con sus líneas, precios y fecha de entrega, imprimirlos o enviarlos por correo y registrar lo que llegó. Desactivado, solo quedan las facturas.",
   "featureGuestPassesTitle": "Pases de invitado en recepción",
-  "featureGuestPassesDesc": "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan."
+  "featureGuestPassesDesc": "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan.",
+  "featurePlaceBookingTitle": "Plazas reservables",
+  "featurePlaceBookingDesc": "El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan."
 }

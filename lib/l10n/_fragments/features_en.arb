@@ -793,5 +793,13 @@
   },
   "@featureGuestPassesDesc": {
     "description": "#3308 the guest pass flag"
+  },
+  "featurePlaceBookingTitle": "Places to book",
+  "featurePlaceBookingDesc": "The business has places people book: seats, desks, rooms and a floor plan. Off: the plan, reservations and every place feature are hidden, for a studio, practice or salon that sells services, not places. Earlier bookings stay.",
+  "@featurePlaceBookingTitle": {
+    "description": "#3550 the places flag"
+  },
+  "@featurePlaceBookingDesc": {
+    "description": "#3550 the places flag"
   }
 }

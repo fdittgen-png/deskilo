@@ -263,5 +263,7 @@
   "featurePurchaseOrdersTitle": "Commander auprès des fournisseurs",
   "featurePurchaseOrdersDesc": "Préparer des bons de commande numérotés pour vos fournisseurs avec leurs lignes, prix et date de livraison, les imprimer ou les envoyer par e-mail, et enregistrer ce qui est arrivé. Désactivé, seules les factures restent.",
   "featureGuestPassesTitle": "Pass invités à l'accueil",
-  "featureGuestPassesDesc": "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent."
+  "featureGuestPassesDesc": "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent.",
+  "featurePlaceBookingTitle": "Places à réserver",
+  "featurePlaceBookingDesc": "L'activité a des places que l'on réserve : sièges, bureaux, salles et un plan. Désactivé : le plan, les réservations et toutes les fonctions liées aux places sont masqués, pour un studio, un cabinet ou un salon qui vend des prestations, pas des places. Les réservations passées restent."
 }

@@ -50,6 +50,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
     SetupLevel(
       'simple',
       features: {
+        // #3550 — a business with places books them from the first level.
+        WorkspaceFeature.placeBooking,
         WorkspaceFeature.workingHours,
         WorkspaceFeature.bookingPolicies,
         WorkspaceFeature.bookingGate,
@@ -130,6 +132,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.calendarValidations,
         WorkspaceFeature.whatsappIntegration,
       },
+      // #3550 — some of its features sit under the places.
+      needs: {SetupProcess.bookings: 'simple'},
     ),
   ],
   SetupProcess.money: [
@@ -251,6 +255,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.uniqueMonograms,
         WorkspaceFeature.singleRoomLevelNames,
       },
+      // #3550 — some of its features sit under the places.
+      needs: {SetupProcess.bookings: 'simple'},
     ),
     SetupLevel(
       'branded',
@@ -286,6 +292,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.dataReport,
         WorkspaceFeature.memberDataExport,
       },
+      // #3550 — some of its features sit under the places.
+      needs: {SetupProcess.bookings: 'simple'},
     ),
     SetupLevel(
       'insight',

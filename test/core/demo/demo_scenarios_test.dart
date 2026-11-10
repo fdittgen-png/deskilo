@@ -286,6 +286,11 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   ),
   WorkspaceFeature.spaceQrCodes: _toggle('every place prints its QR code'),
   // ── spaceManagement ──────────────────────────────────────────────────
+  WorkspaceFeature.placeBooking: _state(
+    _member,
+    'the plan has places to book',
+    (w) => w.f.floorPlan.levels.isNotEmpty,
+  ),
   WorkspaceFeature.multiSite: _state(
     _owner,
     'the studio and the garage are '

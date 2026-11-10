@@ -1369,6 +1369,10 @@ window.SETUP_L10N={
    "guestPasses": [
     "Guest passes at the desk",
     "Sell a day or hourly pass to a guest who is not a member: the place is booked for them, the pass is charged and invoiced to them, and a payment can be recorded. Off: no pass is sold; earlier passes and their invoices stay."
+   ],
+   "placeBooking": [
+    "Places to book",
+    "The business has places people book: seats, desks, rooms and a floor plan. Off: the plan, reservations and every place feature are hidden, for a studio, practice or salon that sells services, not places. Earlier bookings stay."
    ]
   },
   "process": {
@@ -3077,6 +3081,10 @@ window.SETUP_L10N={
    "guestPasses": [
     "Pass invités à l'accueil",
     "Vendre un pass journée ou à l'heure à un invité qui n'est pas membre : la place lui est réservée, le pass lui est facturé et un paiement peut être enregistré. Désactivé : aucun pass n'est vendu ; les pass déjà vendus et leurs factures restent."
+   ],
+   "placeBooking": [
+    "Places à réserver",
+    "L'activité a des places que l'on réserve : sièges, bureaux, salles et un plan. Désactivé : le plan, les réservations et toutes les fonctions liées aux places sont masqués, pour un studio, un cabinet ou un salon qui vend des prestations, pas des places. Les réservations passées restent."
    ]
   },
   "process": {
@@ -4785,6 +4793,10 @@ window.SETUP_L10N={
    "guestPasses": [
     "Gästepässe am Empfang",
     "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben."
+   ],
+   "placeBooking": [
+    "Buchbare Plätze",
+    "Das Unternehmen hat Plätze, die gebucht werden: Sitzplätze, Tische, Räume und einen Raumplan. Aus: Plan, Reservierungen und alle Platzfunktionen sind ausgeblendet, für ein Studio, eine Praxis oder einen Salon, der Leistungen verkauft, keine Plätze. Frühere Buchungen bleiben."
    ]
   },
   "process": {
@@ -6493,6 +6505,10 @@ window.SETUP_L10N={
    "guestPasses": [
     "Pases de invitado en recepción",
     "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan."
+   ],
+   "placeBooking": [
+    "Plazas reservables",
+    "El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan."
    ]
   },
   "process": {
@@ -8201,6 +8217,10 @@ window.SETUP_L10N={
    "guestPasses": [
     "Pass ospite all'accoglienza",
     "Vendere un pass giornaliero o orario a un ospite che non è membro: il posto viene prenotato per lui, il pass gli viene addebitato e fatturato e si può registrare un pagamento. Disattivato: nessun pass viene venduto; i pass precedenti e le loro fatture restano."
+   ],
+   "placeBooking": [
+    "Posti prenotabili",
+    "L'attività ha posti che si prenotano: sedute, scrivanie, sale e una planimetria. Disattivato: la planimetria, le prenotazioni e tutte le funzioni dei posti sono nascoste, per uno studio, un ambulatorio o un salone che vende servizi, non posti. Le prenotazioni passate restano."
    ]
   },
   "process": {

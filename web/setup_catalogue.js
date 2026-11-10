@@ -614,17 +614,26 @@ window.SETUP_REGISTRY={
   [
    "guestPasses",
    false
+  ],
+  [
+   "placeBooking",
+   true
   ]
  ],
  "requires": {
   "services": "moneyTab",
   "accessorySupplements": "moneyTab",
   "onlinePayments": "moneyTab",
+  "adminSeatBlocking": "placeBooking",
+  "levelBooking": "placeBooking",
   "adminLevelAssign": "levelBooking",
+  "kioskMode": "placeBooking",
   "nfcBadges": "kioskMode",
   "whatsappIntegration": "membersDirectory",
+  "spaceQrCodes": "placeBooking",
   "invoicing": "moneyTab",
   "adminInvoicing": "invoicing",
+  "autoCheckInOut": "placeBooking",
   "invoicePdfTemplate": "invoicing",
   "invoiceAddressWindow": "invoicing",
   "dunning": "invoicing",
@@ -632,9 +641,12 @@ window.SETUP_REGISTRY={
   "vatManagement": "invoicing",
   "vatDeclarations": "vatManagement",
   "einvoiceCustomerDelivery": "invoicing",
+  "planObjectDelete": "placeBooking",
   "notificationGrouping": "eventsTab",
+  "nfcSeatTags": "placeBooking",
   "qrBadges": "kioskMode",
   "kioskMemberPhotos": "kioskMode",
+  "planMemberPhotos": "placeBooking",
   "badgeSignIn": "nfcBadges",
   "calendarHub": "calendarTab",
   "dataAccessLog": "moneyTab",
@@ -651,11 +663,13 @@ window.SETUP_REGISTRY={
   "numberSequences": "invoicing",
   "workspaceStatus": "invoicing",
   "expenseRepartitionWizard": "expenseRepartition",
+  "multiSite": "placeBooking",
   "siteDocuments": "multiSite",
   "vatGroups": "vatManagement",
   "vatRateHistory": "vatManagement",
   "vatCounterparty": "vatManagement",
   "deployments": "environmentPairs",
+  "seatDayTimeline": "placeBooking",
   "memberPaymentTerms": "invoicing",
   "reportTexts": "reportDesigner",
   "usageReport": "usageRecords",
@@ -677,18 +691,24 @@ window.SETUP_REGISTRY={
   "configurationTransfer": "dataExport",
   "memberOrigin": "membersDirectory",
   "memberEnvironments": "environmentPairs",
+  "singleRoomLevelNames": "placeBooking",
   "carnets": "invoicing",
+  "placeFeedback": "placeBooking",
   "messageForwarding": "memberNotifications",
   "captureProtection": "memberNotifications",
   "holidayImport": "publicHolidays",
+  "capacityKpi": "placeBooking",
   "accountingBook": "invoicing",
   "roleAssignment": "roleManagement",
+  "guestParticipation": "placeBooking",
   "messageMentions": "memberNotifications",
   "supplyClassification": "vatManagement",
   "viesVerification": "supplyClassification",
   "recapitulativeStatement": "vatDeclarations",
   "inputVat": "vatDeclarations",
   "salesTax": "invoicing",
+  "meetingRooms": "placeBooking",
+  "parking": "placeBooking",
   "webMcp": "mcpAccess",
   "purchases": "moneyTab",
   "premisesLease": "scheduledExpenses",
@@ -700,6 +720,7 @@ window.SETUP_REGISTRY={
   "foreignCurrencyPurchases": "purchases",
   "accountingConnectors": "accountingBook",
   "bankImport": "invoicing",
+  "planDecor": "placeBooking",
   "mtdSubmission": "vatDeclarations",
   "purchaseOrders": "purchases",
   "guestPasses": "invoicing"
@@ -1129,6 +1150,7 @@ window.SETUP_PROCESSES=[
    {
     "key": "structure",
     "features": [
+     "placeBooking",
      "multiSite",
      "planObjectDelete",
      "planDecor",
@@ -1467,7 +1489,8 @@ window.SETUP_LEVELS={
       "seatDayTimeline",
       "bookingGate",
       "calendarFileExport",
-      "planDecor"
+      "planDecor",
+      "placeBooking"
      ],
      "needs": {}
     },
@@ -1545,7 +1568,9 @@ window.SETUP_LEVELS={
       "customFields",
       "guestParticipation"
      ],
-     "needs": {}
+     "needs": {
+      "bookings": "simple"
+     }
     }
    ]
   },
@@ -1710,7 +1735,9 @@ window.SETUP_LEVELS={
       "uniqueMonograms",
       "singleRoomLevelNames"
      ],
-     "needs": {}
+     "needs": {
+      "bookings": "simple"
+     }
     },
     {
      "id": "branded",
@@ -1751,7 +1778,9 @@ window.SETUP_LEVELS={
       "setupGuide",
       "dataReport"
      ],
-     "needs": {}
+     "needs": {
+      "bookings": "simple"
+     }
     },
     {
      "id": "insight",

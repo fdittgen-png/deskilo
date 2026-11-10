@@ -16924,6 +16924,18 @@ abstract class AppLocalizations {
   /// **'Personal shell (five destinations)'**
   String get featurePersonalShellTitle;
 
+  /// #3550 the places flag
+  ///
+  /// In en, this message translates to:
+  /// **'The business has places people book: seats, desks, rooms and a floor plan. Off: the plan, reservations and every place feature are hidden, for a studio, practice or salon that sells services, not places. Earlier bookings stay.'**
+  String get featurePlaceBookingDesc;
+
+  /// #3550 the places flag
+  ///
+  /// In en, this message translates to:
+  /// **'Places to book'**
+  String get featurePlaceBookingTitle;
+
   /// #2185 place feedback
   ///
   /// In en, this message translates to:

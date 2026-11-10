@@ -10124,6 +10124,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featurePersonalShellTitle => 'Interfaz personal (cinco destinos)';
 
   @override
+  String get featurePlaceBookingDesc =>
+      'El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan.';
+
+  @override
+  String get featurePlaceBookingTitle => 'Plazas reservables';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Los miembros marcan puestos, mesas, oficinas y plantas como favoritos y los valoran de 0 a 5 estrellas. Un favorito es personal; una valoración muestra su media y cuántas hay, nunca quién. Un asistente puede listar los favoritos, reservar uno y registrar una valoración. Desactivado oculta corazones y estrellas y rechaza las escrituras; nada más depende de ello.';
 

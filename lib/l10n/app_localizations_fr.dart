@@ -10151,6 +10151,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Interface personnelle (cinq destinations)';
 
   @override
+  String get featurePlaceBookingDesc =>
+      'L\'activité a des places que l\'on réserve : sièges, bureaux, salles et un plan. Désactivé : le plan, les réservations et toutes les fonctions liées aux places sont masqués, pour un studio, un cabinet ou un salon qui vend des prestations, pas des places. Les réservations passées restent.';
+
+  @override
+  String get featurePlaceBookingTitle => 'Places à réserver';
+
+  @override
   String get featurePlaceFeedbackDesc =>
       'Les membres marquent des places, bureaux, salles et étages en favoris et les notent de 0 à 5 étoiles. Un favori est personnel ; une note montre sa moyenne et le nombre de notes, jamais qui. Un assistant peut lister les favoris, en réserver un et enregistrer une note. Désactivé, les cœurs et les étoiles disparaissent et les écritures sont refusées ; rien d\'autre n\'en dépend.';
 

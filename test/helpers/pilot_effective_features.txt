@@ -30,6 +30,7 @@ navigationStyle
 notificationGrouping
 pdfExport
 personalInfo
+placeBooking
 placeFeedback
 planDecor
 planObjectDelete

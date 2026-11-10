@@ -7716,6 +7716,8 @@ const Set<String> uiLabelKeys = {
   'featurePersonalInfoDesc',
   'featurePersonalShellDesc',
   'featurePersonalShellTitle',
+  'featurePlaceBookingDesc',
+  'featurePlaceBookingTitle',
   'featurePlaceFeedbackDesc',
   'featurePlaceFeedbackTitle',
   'featurePlanDecorDesc',

@@ -244,6 +244,7 @@ begin
       "pdfExport": true,
       "personalInfo": true,
       "personalShell": false,
+      "placeBooking": true,
       "placeFeedback": true,
       "planDecor": true,
       "planMemberPhotos": false,
