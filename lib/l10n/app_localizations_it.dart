@@ -12152,6 +12152,51 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceDoctorAttention => 'Richiede attenzione';
 
   @override
+  String instanceDoctorGuardAnonViewDetail(String names) {
+    return '$names\n        Senza security_invoker la vista legge con i diritti del proprietario e aggira le policy delle tabelle sottostanti.';
+  }
+
+  @override
+  String get instanceDoctorGuardAnonViewTitle =>
+      'Una vista leggibile da anon viene eseguita come il suo proprietario';
+
+  @override
+  String instanceDoctorGuardDefinerDetail(String names) {
+    return '$names\n        Viene eseguita come proprietario; un search_path non fissato lascia decidere al chiamante quale tabella indichino i suoi nomi non qualificati.';
+  }
+
+  @override
+  String get instanceDoctorGuardDefinerTitle =>
+      'Una funzione SECURITY DEFINER non ha un search_path fisso';
+
+  @override
+  String instanceDoctorGuardPublicBucketDetail(String names) {
+    return '$names\n        Un bucket pubblico serve ogni oggetto a chiunque abbia l\'URL, qualunque cosa dicano le policy.';
+  }
+
+  @override
+  String get instanceDoctorGuardPublicBucketTitle =>
+      'Un bucket di archiviazione è pubblico';
+
+  @override
+  String instanceDoctorGuardRealtimeDetail(String names) {
+    return '$names\n        Il tempo reale ritrasmette le modifiche di riga agli iscritti con le stesse policy; una tabella senza di esse pubblica per tutti.';
+  }
+
+  @override
+  String get instanceDoctorGuardRealtimeTitle =>
+      'Una tabella pubblicata in tempo reale non è protetta';
+
+  @override
+  String instanceDoctorGuardSecretGrantsDetail(String names) {
+    return '$names\n        Le credenziali di pagamento e di fattura elettronica, la configurazione push e i tentativi di badge sono letti dal server, mai da un client.';
+  }
+
+  @override
+  String get instanceDoctorGuardSecretGrantsTitle =>
+      'Una tabella con segreti concede permessi a un ruolo API';
+
+  @override
   String instanceDoctorHeld(int workspaces, int members) {
     String _temp0 = intl.Intl.pluralLogic(
       workspaces,
@@ -12189,13 +12234,121 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String instanceDoctorPoliciesMatchDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count policy, esattamente l\'insieme che creano le migrazioni',
+      one: '1 policy, esattamente l\'insieme che creano le migrazioni',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorPoliciesMatchTitle =>
+      'Le policy corrispondono alle migrazioni';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedDetail =>
+      'l\'elenco atteso è vuoto — assets/instance/policies.txt non è stato letto, quindi la deriva non può essere valutata';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedTitle =>
+      'Deriva delle policy non verificata';
+
+  @override
+  String get instanceDoctorProbeAuth => 'Configurazione dell\'autenticazione';
+
+  @override
+  String instanceDoctorProbeFailedDetail(int status, String message) {
+    return 'Supabase ha risposto $status: $message\n        Gli altri controlli sono stati eseguiti senza.';
+  }
+
+  @override
+  String instanceDoctorProbeFailedTitle(String probe) {
+    return 'Interrogazione «$probe» non riuscita';
+  }
+
+  @override
+  String get instanceDoctorProbeHardening => 'Hardening';
+
+  @override
+  String get instanceDoctorProbePolicies => 'Policy';
+
+  @override
+  String get instanceDoctorProbeRoles => 'Ruoli dell\'installazione';
+
+  @override
+  String get instanceDoctorProbeSchema => 'Schema';
+
+  @override
+  String get instanceDoctorProbeSecurity => 'Sicurezza';
+
+  @override
+  String get instanceDoctorProbeSignups => 'Registrazioni';
+
+  @override
+  String get instanceDoctorProbeStorage => 'Ambito dell\'archiviazione';
+
+  @override
   String get instanceDoctorProtected => 'Protetto';
+
+  @override
+  String instanceDoctorRolesUndeclaredDetail(String held) {
+    return 'lo schema è anteriore alla colonna dei ruoli; l\'installazione si comporta come combinata (casa personale e host di spazi) — $held.\n        Rimedio: dart run tool/instance.dart install --ref <ref>';
+  }
+
+  @override
+  String get instanceDoctorRolesUndeclaredTitle =>
+      'Ruoli dell\'installazione non dichiarati';
+
+  @override
+  String instanceDoctorRolesUnknownDetail(String roles) {
+    return '$roles\n        Esistono solo personal_home e workspace_host; operator_set_installation_roles scrive un insieme valido.';
+  }
+
+  @override
+  String get instanceDoctorRolesUnknownTitle =>
+      'I ruoli dell\'installazione non sono un insieme noto';
 
   @override
   String get instanceDoctorRun => 'Avvia il controllo di sicurezza';
 
   @override
   String get instanceDoctorRunAgain => 'Controlla di nuovo';
+
+  @override
+  String instanceDoctorSchemaNoVersionDetail(int tables, int required) {
+    return 'Esistono $tables tabelle, ma nessuna versione dello schema: questa istanza è anteriore alla migrazione 0226 ed è quindi indietro rispetto a un\'app che richiede $required. L\'installazione la aggiorna da ciò che ha registrato.\n        Rimedio: dart run tool/instance.dart install --ref <ref>\n        Se non sa da dove riprendere, prima: dart run tool/instance.dart record --ref <ref> --through <NNNN>';
+  }
+
+  @override
+  String get instanceDoctorSchemaNoVersionTitle => 'Lo schema non ha versione';
+
+  @override
+  String instanceDoctorSignupsNobodyDetail(int created) {
+    return '$created registrati, 0 confermati. La registrazione non è solo lenta: nessuno l\'ha completata.\n        Controlli prima l\'URL del sito qui sopra: è quella a cui rimanda l\'e-mail.';
+  }
+
+  @override
+  String get instanceDoctorSignupsNobodyTitle =>
+      'Nessuno ha confermato in sette giorni';
+
+  @override
+  String instanceDoctorStorageScopedDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count policy di lettura, ciascuna con la cartella proprietaria del file',
+      one: '1 policy di lettura, che nomina la cartella proprietaria del file',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorStorageScopedTitle =>
+      'Le letture dell\'archiviazione sono circoscritte';
 
   @override
   String instanceDoctorStuckTitle(int count) {

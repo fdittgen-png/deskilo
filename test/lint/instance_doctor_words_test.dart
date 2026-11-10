@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'literal_ratchet.dart';
 
-const _sentenceCeiling = 14;
+const _sentenceCeiling = 0;
 
 void main() {
   final files = filesUnder(['lib/core/instance']);

@@ -12174,6 +12174,51 @@ class AppLocalizationsDe extends AppLocalizations {
   String get instanceDoctorAttention => 'Handlungsbedarf';
 
   @override
+  String instanceDoctorGuardAnonViewDetail(String names) {
+    return '$names\n        Ohne security_invoker liest die View mit den Rechten des Eigentümers und umgeht die Richtlinien der darunterliegenden Tabellen.';
+  }
+
+  @override
+  String get instanceDoctorGuardAnonViewTitle =>
+      'Eine für anon lesbare View läuft als ihr Eigentümer';
+
+  @override
+  String instanceDoctorGuardDefinerDetail(String names) {
+    return '$names\n        Sie läuft als Eigentümer; ein nicht festgelegter search_path lässt den Aufrufer entscheiden, welche Tabelle ihre unqualifizierten Namen meinen.';
+  }
+
+  @override
+  String get instanceDoctorGuardDefinerTitle =>
+      'Eine SECURITY-DEFINER-Funktion hat keinen festen search_path';
+
+  @override
+  String instanceDoctorGuardPublicBucketDetail(String names) {
+    return '$names\n        Ein öffentlicher Bucket liefert jedes Objekt an jeden mit der URL aus, was auch immer die Richtlinien sagen.';
+  }
+
+  @override
+  String get instanceDoctorGuardPublicBucketTitle =>
+      'Ein Speicher-Bucket ist öffentlich';
+
+  @override
+  String instanceDoctorGuardRealtimeDetail(String names) {
+    return '$names\n        Realtime spielt Zeilenänderungen über dieselben Richtlinien an Abonnenten aus; eine Tabelle ohne sie veröffentlicht an alle.';
+  }
+
+  @override
+  String get instanceDoctorGuardRealtimeTitle =>
+      'Eine per Realtime veröffentlichte Tabelle ist ungeschützt';
+
+  @override
+  String instanceDoctorGuardSecretGrantsDetail(String names) {
+    return '$names\n        Zahlungs- und E-Rechnungs-Zugangsdaten, Push-Konfiguration und Badge-Versuche liest der Server, nie ein Client.';
+  }
+
+  @override
+  String get instanceDoctorGuardSecretGrantsTitle =>
+      'Eine Tabelle mit Geheimnissen erteilt einer API-Rolle Rechte';
+
+  @override
   String instanceDoctorHeld(int workspaces, int members) {
     String _temp0 = intl.Intl.pluralLogic(
       workspaces,
@@ -12211,13 +12256,122 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String instanceDoctorPoliciesMatchDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Richtlinien, genau die Menge, die die Migrationen anlegen',
+      one: '1 Richtlinie, genau die Menge, die die Migrationen anlegen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorPoliciesMatchTitle =>
+      'Richtlinien entsprechen den Migrationen';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedDetail =>
+      'die erwartete Liste ist leer — assets/instance/policies.txt wurde nicht gelesen, die Abweichung lässt sich nicht beurteilen';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedTitle =>
+      'Richtlinien-Abweichung nicht geprüft';
+
+  @override
+  String get instanceDoctorProbeAuth => 'Auth-Konfiguration';
+
+  @override
+  String instanceDoctorProbeFailedDetail(int status, String message) {
+    return 'Supabase antwortete $status: $message\n        Die anderen Prüfungen liefen ohne sie.';
+  }
+
+  @override
+  String instanceDoctorProbeFailedTitle(String probe) {
+    return 'Abfrage „$probe“ fehlgeschlagen';
+  }
+
+  @override
+  String get instanceDoctorProbeHardening => 'Härtung';
+
+  @override
+  String get instanceDoctorProbePolicies => 'Richtlinien';
+
+  @override
+  String get instanceDoctorProbeRoles => 'Installationsrollen';
+
+  @override
+  String get instanceDoctorProbeSchema => 'Schema';
+
+  @override
+  String get instanceDoctorProbeSecurity => 'Sicherheit';
+
+  @override
+  String get instanceDoctorProbeSignups => 'Registrierungen';
+
+  @override
+  String get instanceDoctorProbeStorage => 'Speicher-Zugriffsbereiche';
+
+  @override
   String get instanceDoctorProtected => 'Geschützt';
+
+  @override
+  String instanceDoctorRolesUndeclaredDetail(String held) {
+    return 'das Schema ist älter als die Rollenspalte; die Installation verhält sich kombiniert (persönliche Heimat und Workspace-Host) — $held.\n        Abhilfe: dart run tool/instance.dart install --ref <ref>';
+  }
+
+  @override
+  String get instanceDoctorRolesUndeclaredTitle =>
+      'Installationsrollen nicht deklariert';
+
+  @override
+  String instanceDoctorRolesUnknownDetail(String roles) {
+    return '$roles\n        Es gibt nur personal_home und workspace_host; operator_set_installation_roles schreibt eine gültige Menge.';
+  }
+
+  @override
+  String get instanceDoctorRolesUnknownTitle =>
+      'Installationsrollen sind keine bekannte Menge';
 
   @override
   String get instanceDoctorRun => 'Sicherheitsprüfung starten';
 
   @override
   String get instanceDoctorRunAgain => 'Erneut prüfen';
+
+  @override
+  String instanceDoctorSchemaNoVersionDetail(int tables, int required) {
+    return '$tables Tabellen existieren, aber keine Schemaversion: Diese Instanz ist älter als Migration 0226 und hinkt einer App hinterher, die $required braucht. Die Installation hebt sie anhand des Aufgezeichneten an.\n        Abhilfe: dart run tool/instance.dart install --ref <ref>\n        Wenn sie nicht erkennt, wo sie fortsetzen soll, zuerst: dart run tool/instance.dart record --ref <ref> --through <NNNN>';
+  }
+
+  @override
+  String get instanceDoctorSchemaNoVersionTitle =>
+      'Das Schema hat keine Version';
+
+  @override
+  String instanceDoctorSignupsNobodyDetail(int created) {
+    return '$created haben sich registriert, 0 bestätigt. Die Registrierung ist nicht nur langsam — niemand hat sie abgeschlossen.\n        Prüfen Sie zuerst die Site-URL oben: Darauf verweist die Mail.';
+  }
+
+  @override
+  String get instanceDoctorSignupsNobodyTitle =>
+      'Seit sieben Tagen hat niemand bestätigt';
+
+  @override
+  String instanceDoctorStorageScopedDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Leserichtlinien, jede nennt den Ordner, dem die Datei gehört',
+      one: '1 Leserichtlinie, die den Ordner nennt, dem die Datei gehört',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorStorageScopedTitle =>
+      'Speicherzugriffe sind eingegrenzt';
 
   @override
   String instanceDoctorStuckTitle(int count) {

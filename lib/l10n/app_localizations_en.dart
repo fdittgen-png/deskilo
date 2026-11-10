@@ -12066,6 +12066,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceDoctorAttention => 'Attention required';
 
   @override
+  String instanceDoctorGuardAnonViewDetail(String names) {
+    return '$names\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.';
+  }
+
+  @override
+  String get instanceDoctorGuardAnonViewTitle =>
+      'A view readable by anon runs as its owner';
+
+  @override
+  String instanceDoctorGuardDefinerDetail(String names) {
+    return '$names\n        It runs as the owner; an unpinned search_path lets a caller decide which table its unqualified names mean.';
+  }
+
+  @override
+  String get instanceDoctorGuardDefinerTitle =>
+      'A SECURITY DEFINER function has no fixed search_path';
+
+  @override
+  String instanceDoctorGuardPublicBucketDetail(String names) {
+    return '$names\n        A public bucket serves every object to anyone with the URL, whatever the policies say.';
+  }
+
+  @override
+  String get instanceDoctorGuardPublicBucketTitle =>
+      'A storage bucket is public';
+
+  @override
+  String instanceDoctorGuardRealtimeDetail(String names) {
+    return '$names\n        Realtime replays row changes to subscribers through the same policies; a table without them publishes to everyone.';
+  }
+
+  @override
+  String get instanceDoctorGuardRealtimeTitle =>
+      'A realtime-published table is unprotected';
+
+  @override
+  String instanceDoctorGuardSecretGrantsDetail(String names) {
+    return '$names\n        Payment and e-invoice credentials, push configuration and badge attempts are read by the server, never by a client.';
+  }
+
+  @override
+  String get instanceDoctorGuardSecretGrantsTitle =>
+      'A table holding secrets grants to an API role';
+
+  @override
   String instanceDoctorHeld(int workspaces, int members) {
     String _temp0 = intl.Intl.pluralLogic(
       workspaces,
@@ -12103,13 +12148,119 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String instanceDoctorPoliciesMatchDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count policies, exactly the set the migrations create',
+      one: '1 policy, exactly the set the migrations create',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorPoliciesMatchTitle =>
+      'Policies match the migrations';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedDetail =>
+      'the expected list is empty — assets/instance/policies.txt was not read, so drift cannot be judged';
+
+  @override
+  String get instanceDoctorPolicyDriftSkippedTitle =>
+      'Policy drift not checked';
+
+  @override
+  String get instanceDoctorProbeAuth => 'Auth configuration';
+
+  @override
+  String instanceDoctorProbeFailedDetail(int status, String message) {
+    return 'Supabase answered $status: $message\n        The other checks ran without it.';
+  }
+
+  @override
+  String instanceDoctorProbeFailedTitle(String probe) {
+    return '$probe query failed';
+  }
+
+  @override
+  String get instanceDoctorProbeHardening => 'Hardening';
+
+  @override
+  String get instanceDoctorProbePolicies => 'Policies';
+
+  @override
+  String get instanceDoctorProbeRoles => 'Installation roles';
+
+  @override
+  String get instanceDoctorProbeSchema => 'Schema';
+
+  @override
+  String get instanceDoctorProbeSecurity => 'Security';
+
+  @override
+  String get instanceDoctorProbeSignups => 'Sign-ups';
+
+  @override
+  String get instanceDoctorProbeStorage => 'Storage scoping';
+
+  @override
   String get instanceDoctorProtected => 'Protected';
+
+  @override
+  String instanceDoctorRolesUndeclaredDetail(String held) {
+    return 'the schema predates the roles column; the installation behaves as combined (personal home and workspace host) — $held.\n        Fix: dart run tool/instance.dart install --ref <ref>';
+  }
+
+  @override
+  String get instanceDoctorRolesUndeclaredTitle =>
+      'Installation roles not declared';
+
+  @override
+  String instanceDoctorRolesUnknownDetail(String roles) {
+    return '$roles\n        Only personal_home and workspace_host exist; operator_set_installation_roles writes a valid set.';
+  }
+
+  @override
+  String get instanceDoctorRolesUnknownTitle =>
+      'Installation roles are not a known set';
 
   @override
   String get instanceDoctorRun => 'Run the security check';
 
   @override
   String get instanceDoctorRunAgain => 'Check again';
+
+  @override
+  String instanceDoctorSchemaNoVersionDetail(int tables, int required) {
+    return '$tables tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs $required. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>';
+  }
+
+  @override
+  String get instanceDoctorSchemaNoVersionTitle => 'Schema has no version';
+
+  @override
+  String instanceDoctorSignupsNobodyDetail(int created) {
+    return '$created signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.';
+  }
+
+  @override
+  String get instanceDoctorSignupsNobodyTitle =>
+      'Nobody has confirmed in seven days';
+
+  @override
+  String instanceDoctorStorageScopedDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count read policies, each naming the folder that owns the file',
+      one: '1 read policy, naming the folder that owns the file',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorStorageScopedTitle => 'Storage reads are scoped';
 
   @override
   String instanceDoctorStuckTitle(int count) {

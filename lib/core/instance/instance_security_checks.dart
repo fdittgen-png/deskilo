@@ -83,9 +83,7 @@ List<DoctorFinding> checkPolicyDrift(
 ) {
   if (expected.isEmpty) {
     return const [
-      DoctorFinding(DoctorLevel.warn, 'Policy drift not checked',
-          'the expected list is empty — assets/instance/policies.txt was '
-              'not read, so drift cannot be judged'),
+      DoctorFinding.typed(DoctorLevel.warn, DoctorWords.policyDriftSkipped),
     ];
   }
   if (rows.isEmpty) {
@@ -102,9 +100,8 @@ List<DoctorFinding> checkPolicyDrift(
   final missing = expected.difference(live).toList()..sort();
   return [
     if (extra.isEmpty && missing.isEmpty)
-      DoctorFinding(DoctorLevel.ok, 'Policies match the migrations',
-          '${live.length} policies, exactly the set the migrations create',
-          count: live.length),
+      DoctorFinding.typed(DoctorLevel.ok, DoctorWords.policiesMatch,
+          count: live.length, facts: [live.length]),
     if (extra.isNotEmpty)
       DoctorFinding(
         DoctorLevel.alarm,
@@ -155,10 +152,8 @@ List<DoctorFinding> checkStorageScoping(
       if (!policy.contains('foldername')) policy.split(' :: ').first,
   ];
   return [
-    if (unscoped.isEmpty) DoctorFinding(DoctorLevel.ok, 'Storage reads are scoped',
-            '${policies.length} read policies, each naming the folder that '
-                'owns the file',
-            count: policies.length) else DoctorFinding(
+    if (unscoped.isEmpty) DoctorFinding.typed(DoctorLevel.ok, DoctorWords.storageScoped,
+            count: policies.length, facts: [policies.length]) else DoctorFinding(
             DoctorLevel.alarm,
             'A storage read is not scoped to its folder',
             '${unscoped.join(', ')}\n'
@@ -187,15 +182,13 @@ List<DoctorFinding> checkGuards(List<Map<String, Object?>> rows) {
     String key,
     String okTitle,
     String okDetail,
-    String alarmTitle,
-    String alarmDetail,
+    DoctorWords alarm,
   ) {
     final found = names(key);
     return found.isEmpty
         ? DoctorFinding(DoctorLevel.ok, okTitle, okDetail)
-        : DoctorFinding(DoctorLevel.alarm, alarmTitle,
-            '${found.join(', ')}\n        $alarmDetail',
-            count: found.length);
+        : DoctorFinding.typed(DoctorLevel.alarm, alarm,
+            count: found.length, facts: [found.join(', ')]);
   }
 
   return [
@@ -203,41 +196,31 @@ List<DoctorFinding> checkGuards(List<Map<String, Object?>> rows) {
       'realtime_unprotected',
       'Realtime',
       'every published table has row-level security and a policy',
-      'A realtime-published table is unprotected',
-      'Realtime replays row changes to subscribers through the same '
-          'policies; a table without them publishes to everyone.',
+      DoctorWords.guardRealtime,
     ),
     guard(
       'definers_unpinned',
       'Definer search_path',
       'every SECURITY DEFINER function pins its search_path',
-      'A SECURITY DEFINER function has no fixed search_path',
-      'It runs as the owner; an unpinned search_path lets a caller '
-          'decide which table its unqualified names mean.',
+      DoctorWords.guardDefiner,
     ),
     guard(
       'anon_views',
       'Views',
       'no view hands its owner rights to anon',
-      'A view readable by anon runs as its owner',
-      'Without security_invoker the view reads with the owner rights and '
-          'bypasses the policies of the tables under it.',
+      DoctorWords.guardAnonView,
     ),
     guard(
       'secret_grants',
       'Secret tables',
       'the credential tables grant nothing to anon or authenticated',
-      'A table holding secrets grants to an API role',
-      'Payment and e-invoice credentials, push configuration and badge '
-          'attempts are read by the server, never by a client.',
+      DoctorWords.guardSecretGrants,
     ),
     guard(
       'public_buckets',
       'Buckets',
       'no storage bucket is public',
-      'A storage bucket is public',
-      'A public bucket serves every object to anyone with the URL, '
-          'whatever the policies say.',
+      DoctorWords.guardPublicBucket,
     ),
   ];
 }
@@ -280,13 +263,9 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
   final facts = [workspaces, members];
   if (raw == null) {
     return [
-      DoctorFinding(
+      DoctorFinding.typed(
         DoctorLevel.warn,
-        'Installation roles not declared',
-        'the schema predates the roles column; the installation behaves as '
-            'combined (personal home and workspace host) — $held.\n'
-            '        Fix: dart run tool/instance.dart install --ref <ref>',
-        words: DoctorWords.installationHeld,
+        DoctorWords.rolesUndeclared,
         facts: facts,
       ),
     ];
@@ -294,12 +273,10 @@ List<DoctorFinding> checkInstallationRoles(List<Map<String, Object?>> rows) {
   const known = {'personal_home', 'workspace_host'};
   if (roles.isEmpty || !roles.every(known.contains)) {
     return [
-      DoctorFinding(
+      DoctorFinding.typed(
         DoctorLevel.alarm,
-        'Installation roles are not a known set',
-        '${roles.join(', ')}\n'
-            '        Only personal_home and workspace_host exist; '
-            'operator_set_installation_roles writes a valid set.',
+        DoctorWords.rolesUnknown,
+        facts: [roles.join(', ')],
       ),
     ];
   }

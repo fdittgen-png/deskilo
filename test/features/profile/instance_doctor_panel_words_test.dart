@@ -75,4 +75,26 @@ void main() {
       expect(find.text(words.instanceDoctorAllHealthy), findsOneWidget);
     });
   }
+
+  testWidgets('a typed finding is worded by the catalogue in every locale', (tester) async {
+    for (final locale in AppLocalizations.supportedLocales) {
+      final words = lookupAppLocalizations(locale);
+      await _pump(tester, locale, const [
+        DoctorFinding.typed(
+          DoctorLevel.alarm,
+          DoctorWords.guardPublicBucket,
+          count: 1,
+          facts: ['avatars'],
+        ),
+        DoctorFinding.typed(
+          DoctorLevel.alarm,
+          DoctorWords.signupsNobodyConfirmed,
+          facts: [4],
+        ),
+      ]);
+      expect(find.text(words.instanceDoctorGuardPublicBucketTitle), findsOneWidget, reason: locale.languageCode);
+      expect(find.textContaining('avatars'), findsOneWidget, reason: locale.languageCode);
+      expect(find.text(words.instanceDoctorSignupsNobodyTitle), findsOneWidget, reason: locale.languageCode);
+    }
+  });
 }

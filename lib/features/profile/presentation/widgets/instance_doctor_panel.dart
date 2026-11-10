@@ -146,20 +146,86 @@ class _InstanceDoctorPanelState extends ConsumerState<InstanceDoctorPanel> {
   }
 }
 
-/// A finding's title in the member's language: the ARB wording where the
-/// finding carries typed [DoctorWords], else the title as the doctor wrote it.
-String _title(AppLocalizations l10n, DoctorFinding f) => switch (f.words) {
-  DoctorWords.stuckAccounts => l10n.instanceDoctorStuckTitle(f.count ?? 0),
-  DoctorWords.installationHeld || null => f.title,
+/// A probe's name in the member's language.
+String _probe(AppLocalizations l10n, DoctorProbe probe) => switch (probe) {
+  DoctorProbe.auth => l10n.instanceDoctorProbeAuth,
+  DoctorProbe.signups => l10n.instanceDoctorProbeSignups,
+  DoctorProbe.schema => l10n.instanceDoctorProbeSchema,
+  DoctorProbe.security => l10n.instanceDoctorProbeSecurity,
+  DoctorProbe.policies => l10n.instanceDoctorProbePolicies,
+  DoctorProbe.storage => l10n.instanceDoctorProbeStorage,
+  DoctorProbe.hardening => l10n.instanceDoctorProbeHardening,
+  DoctorProbe.roles => l10n.instanceDoctorProbeRoles,
 };
 
-/// A finding's detail in the member's language: the held phrase of an
-/// installation is the one wording taken from the catalogue (the rest of the
-/// sentence is the operator's English until #3489's second PR).
-String _detail(AppLocalizations l10n, DoctorFinding f) =>
-    f.words == DoctorWords.installationHeld && f.facts.length == 2
-    ? f.detail.replaceFirst(
-        heldInEnglish(f.facts[0], f.facts[1]),
-        l10n.instanceDoctorHeld(f.facts[0], f.facts[1]),
-      )
-    : f.detail;
+/// A finding's title in the member's language: the catalogue's wording where
+/// the finding is typed, else the title as the doctor wrote it.
+String _title(AppLocalizations l10n, DoctorFinding f) {
+  final facts = f.facts;
+  return switch (f.words) {
+    null || DoctorWords.installationHeld => f.title,
+    DoctorWords.stuckAccounts => l10n.instanceDoctorStuckTitle(f.count ?? 0),
+    DoctorWords.probeFailed => l10n.instanceDoctorProbeFailedTitle(
+      _probe(l10n, facts[0] as DoctorProbe),
+    ),
+    DoctorWords.signupsNobodyConfirmed => l10n.instanceDoctorSignupsNobodyTitle,
+    DoctorWords.schemaNoVersion => l10n.instanceDoctorSchemaNoVersionTitle,
+    DoctorWords.policyDriftSkipped =>
+      l10n.instanceDoctorPolicyDriftSkippedTitle,
+    DoctorWords.policiesMatch => l10n.instanceDoctorPoliciesMatchTitle,
+    DoctorWords.storageScoped => l10n.instanceDoctorStorageScopedTitle,
+    DoctorWords.guardRealtime => l10n.instanceDoctorGuardRealtimeTitle,
+    DoctorWords.guardDefiner => l10n.instanceDoctorGuardDefinerTitle,
+    DoctorWords.guardAnonView => l10n.instanceDoctorGuardAnonViewTitle,
+    DoctorWords.guardSecretGrants => l10n.instanceDoctorGuardSecretGrantsTitle,
+    DoctorWords.guardPublicBucket => l10n.instanceDoctorGuardPublicBucketTitle,
+    DoctorWords.rolesUndeclared => l10n.instanceDoctorRolesUndeclaredTitle,
+    DoctorWords.rolesUnknown => l10n.instanceDoctorRolesUnknownTitle,
+  };
+}
+
+/// A finding's detail in the member's language. The held phrase of an
+/// installation is worded from `instanceDoctorHeld`; the sentences the doctor
+/// still writes itself stay as it wrote them.
+String _detail(AppLocalizations l10n, DoctorFinding f) {
+  final facts = f.facts;
+  return switch (f.words) {
+    null || DoctorWords.stuckAccounts => f.detail,
+    DoctorWords.installationHeld when facts.length == 2 => f.detail.replaceFirst(
+      heldInEnglish(facts[0] as int, facts[1] as int),
+      l10n.instanceDoctorHeld(facts[0] as int, facts[1] as int),
+    ),
+    DoctorWords.installationHeld => f.detail,
+    DoctorWords.probeFailed => l10n.instanceDoctorProbeFailedDetail(
+      facts[1] as int,
+      '${facts[2]}',
+    ),
+    DoctorWords.signupsNobodyConfirmed =>
+      l10n.instanceDoctorSignupsNobodyDetail(facts[0] as int),
+    DoctorWords.schemaNoVersion => l10n.instanceDoctorSchemaNoVersionDetail(
+      facts[0] as int,
+      facts[1] as int,
+    ),
+    DoctorWords.policyDriftSkipped =>
+      l10n.instanceDoctorPolicyDriftSkippedDetail,
+    DoctorWords.policiesMatch =>
+      l10n.instanceDoctorPoliciesMatchDetail(facts[0] as int),
+    DoctorWords.storageScoped =>
+      l10n.instanceDoctorStorageScopedDetail(facts[0] as int),
+    DoctorWords.guardRealtime =>
+      l10n.instanceDoctorGuardRealtimeDetail('${facts[0]}'),
+    DoctorWords.guardDefiner =>
+      l10n.instanceDoctorGuardDefinerDetail('${facts[0]}'),
+    DoctorWords.guardAnonView =>
+      l10n.instanceDoctorGuardAnonViewDetail('${facts[0]}'),
+    DoctorWords.guardSecretGrants =>
+      l10n.instanceDoctorGuardSecretGrantsDetail('${facts[0]}'),
+    DoctorWords.guardPublicBucket =>
+      l10n.instanceDoctorGuardPublicBucketDetail('${facts[0]}'),
+    DoctorWords.rolesUndeclared => l10n.instanceDoctorRolesUndeclaredDetail(
+      l10n.instanceDoctorHeld(facts[0] as int, facts[1] as int),
+    ),
+    DoctorWords.rolesUnknown =>
+      l10n.instanceDoctorRolesUnknownDetail('${facts[0]}'),
+  };
+}
