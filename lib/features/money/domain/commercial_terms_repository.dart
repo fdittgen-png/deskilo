@@ -45,6 +45,7 @@ abstract interface class CommercialTermsRepository {
     required int priceCents,
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
+    ServiceDetails details = const ServiceDetails(),
   });
 
   /// Owner-only: partial update of name, price, VAT rate and active flag.
@@ -57,6 +58,7 @@ abstract interface class CommercialTermsRepository {
     bool? active,
     String? vatRateId,
     SupplyClass? supplyClass,
+    ServiceDetails? details,
   });
 
   /// Owner-defined day packages (migration 0042). Members read the active

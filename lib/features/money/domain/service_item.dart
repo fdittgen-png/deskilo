@@ -39,3 +39,37 @@ sealed class ServiceItem with _$ServiceItem implements SystemStamped {
     @Default(SystemColumns.none) SystemColumns system,
   }) = _ServiceItem;
 }
+
+/// #3552 — what a service says about itself, written together: its
+/// description ('' = none), its duration in minutes (null = not time-based),
+/// its category ('' = none) and whether it is shown on the public page.
+@immutable
+class ServiceDetails {
+  const ServiceDetails({
+    this.description = '',
+    this.durationMinutes,
+    this.category = '',
+    this.isPublic = false,
+  });
+
+  /// The details [service] carries now.
+  factory ServiceDetails.of(ServiceItem service) => ServiceDetails(
+    description: service.description,
+    durationMinutes: service.durationMinutes,
+    category: service.category,
+    isPublic: service.isPublic,
+  );
+
+  final String description;
+  final int? durationMinutes;
+  final String category;
+  final bool isPublic;
+
+  /// The columns of public.services (0711); '' is stored as null.
+  Map<String, Object?> toRow() => {
+    'description': description.trim().isEmpty ? null : description.trim(),
+    'duration_minutes': durationMinutes,
+    'category': category.trim().isEmpty ? null : category.trim(),
+    'is_public': isPublic,
+  };
+}
