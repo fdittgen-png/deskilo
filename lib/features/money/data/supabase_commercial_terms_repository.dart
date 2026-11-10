@@ -112,10 +112,12 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     required int priceCents,
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
+    ServiceDetails details = const ServiceDetails(),
   }) async {
     final row = await _client
         .from('services')
         .insert({
+          ...details.toRow(),
           'supply_class': supplyClass.wire,
           'workspace_id': workspaceId,
           'name': name,
@@ -137,10 +139,12 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
     bool? active,
     String? vatRateId,
     SupplyClass? supplyClass,
+    ServiceDetails? details,
   }) async {
     final row = await _client
         .from('services')
         .update({
+          ...?details?.toRow(),
           'supply_class': ?supplyClass?.wire,
           'name': ?name,
           'price_cents': ?priceCents,

@@ -68,8 +68,13 @@ class DemoCommercialTerms implements CommercialTermsRepository {
     required int priceCents,
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
+    ServiceDetails details = const ServiceDetails(),
   }) async {
     final service = ServiceItem(
+      description: details.description,
+      durationMinutes: details.durationMinutes,
+      category: details.category,
+      isPublic: details.isPublic,
       supplyClass: supplyClass,
       id: 'service-${_m.services.length + 1}',
       workspaceId: workspaceId,
@@ -90,10 +95,16 @@ class DemoCommercialTerms implements CommercialTermsRepository {
     bool? active,
     String? vatRateId,
     SupplyClass? supplyClass,
+    ServiceDetails? details,
   }) async {
     final i = _m.services.indexWhere((s) => s.id == serviceId);
     if (i < 0) throw StateError('unknown service');
+    final d = details ?? ServiceDetails.of(_m.services[i]);
     final updated = _m.services[i].copyWith(
+      description: d.description,
+      durationMinutes: d.durationMinutes,
+      category: d.category,
+      isPublic: d.isPublic,
       supplyClass: supplyClass ?? _m.services[i].supplyClass,
       name: name ?? _m.services[i].name,
       priceCents: priceCents ?? _m.services[i].priceCents,

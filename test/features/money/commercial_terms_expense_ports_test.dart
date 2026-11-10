@@ -70,6 +70,7 @@ class _Terms implements CommercialTermsRepository {
     required int priceCents,
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
+    ServiceDetails details = const ServiceDetails(),
   }) => throw UnimplementedError();
 
   @override
@@ -80,6 +81,7 @@ class _Terms implements CommercialTermsRepository {
     bool? active,
     String? vatRateId,
     SupplyClass? supplyClass,
+    ServiceDetails? details,
   }) => throw UnimplementedError();
 
   @override
