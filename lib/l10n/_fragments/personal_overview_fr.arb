@@ -22,5 +22,10 @@
   "meOverviewAttentionMessagesPartial": "Certaines conversations n'ont pas pu être lues.",
   "meOverviewAttentionMore": "{count, plural, =1{1 de plus} other{{count} de plus}}",
   "meNextNothingWeek": "Rien de réservé cette semaine.",
-  "meNextBook": "Réserver"
+  "meNextBook": "Réserver",
+  "meOverviewAttentionDocumentTitle": "Facture {number} · {workspace}",
+  "meOverviewAttentionDue": "Échéance {date}",
+  "meOverviewAttentionToPay": "À payer",
+  "mePlaceMember": "Membre",
+  "mePlaceRequestSent": "Demande envoyée · en attente de réponse"
 }

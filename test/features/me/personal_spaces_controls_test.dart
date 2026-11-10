@@ -371,7 +371,11 @@ void main() {
       );
       expect(second, findsOneWidget);
       expect(first, findsOneWidget);
-      expect(_key('my-space-$_away:$_one'), findsNothing);
+      expect(
+        _key('my-space-$_away:$_one'),
+        findsOneWidget,
+        reason: 'the preview holds up to three compact rows',
+      );
       expect(
         tester.getTopLeft(second).dy,
         lessThan(tester.getTopLeft(first).dy),

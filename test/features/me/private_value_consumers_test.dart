@@ -369,7 +369,7 @@ void main() {
       await _pumpOverview(tester, policy: _offered);
       expect(_key('me-overview-document|ws-One|eur'), findsOneWidget);
       expect(find.text('EUR ••••'), findsOneWidget);
-      expect(find.text('to pay · INV-eur'), findsOneWidget);
+      expect(find.text('Invoice INV-eur · One'), findsOneWidget);
       await _maskedThenRevealed(
         tester,
         needle: '4,711',
