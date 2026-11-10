@@ -116,14 +116,6 @@
   },
   "settlementDocumentationOnly": "Nur Dokumentation — jede Aktion erfolgt auf der Sammelrechnung.",
   "settlementSourcePdf": "PDF (zusammengefasst)",
-  "settlementRegroupsNumbers": "Fasst {numbers} zusammen",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "invoicePdfSettledIn": "Zusammengefasst in {number}",
   "@invoicePdfSettledIn": {
     "placeholders": {

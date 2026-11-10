@@ -6834,14 +6834,6 @@
   "@calendarGroupMoney": {
     "description": "Shown as a text in calendar item row (calendar)."
   },
-  "calendarItemCount": "{count, plural, =1{1 item} other{{count} items}}",
-  "@calendarItemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "calendarKindCheckIn": "Check-ins",
   "@calendarKindCheckIn": {
     "description": "#718/#719 - calendar hub"
@@ -7704,6 +7696,9 @@
     }
   },
   "composerDraftKept": "Draft kept",
+  "@composerDraftKept": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "composerMention": "Mention someone",
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
@@ -7879,6 +7874,9 @@
     "description": "Shown as a title in unified inbox view (directory)."
   },
   "conversationArchived": "Conversation archived.",
+  "@conversationArchived": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "conversationChoose": "Choose a conversation",
   "@conversationChoose": {
     "description": "#2556 conversation pane: The thread pane beside the inbox before a conversation is opened (wide layout)."
@@ -7941,6 +7939,9 @@
     "description": "Shown as a title in unified inbox view (directory)."
   },
   "conversationMutedBadge": "Muted",
+  "@conversationMutedBadge": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "conversationPin": "Pin to top",
   "@conversationPin": {
     "description": "Shown as a title in unified inbox view (directory)."
@@ -12852,12 +12853,21 @@
     "description": "#1865 task recorder: the feature's name"
   },
   "featureTierCore": "Core",
+  "@featureTierCore": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "featureTierCoreDesc": "What every space needs. On from the first day.",
+  "@featureTierCoreDesc": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "featureTierPlatform": "Platform",
   "@featureTierPlatform": {
     "description": "Shown as a text in feature tile (workspace)."
   },
   "featureTierPlatformDesc": "Asked for, never assumed. Switch on what this space actually runs.",
+  "@featureTierPlatformDesc": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "featureUiAnimationsDesc": "Smooth transitions and state animations across the app. Off means every change is instant; the device's reduced-motion setting always wins.",
   "@featureUiAnimationsDesc": {
     "description": "Shown as a text in feature copy (workspace)."
@@ -14766,6 +14776,9 @@
     "description": "Shown as the topic of a help symbol in new instance screen (profile)."
   },
   "helpTopicKiosk": "Kiosk mode",
+  "@helpTopicKiosk": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "helpTopicLegalIdentity": "Legal identity",
   "@helpTopicLegalIdentity": {
     "description": "Shown as the topic of a help symbol in legal identity screen (money), and 3 other places."
@@ -14779,6 +14792,9 @@
     "description": "Shown as the topic of a help symbol in invoice template sheet (money), and 1 other place."
   },
   "helpTopicReportLayout": "Positioned layouts",
+  "@helpTopicReportLayout": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "helpTopicScheduledExpenses": "Scheduled expenses",
   "@helpTopicScheduledExpenses": {
     "description": "Shown as the topic of a help symbol in expense schedule sheet (money), and 2 other places."
@@ -14800,6 +14816,9 @@
     "description": "Shown as a dialog in member vat treatment (workspace), and 10 other places."
   },
   "helpTopicWindowEnvelope": "The window-envelope contract",
+  "@helpTopicWindowEnvelope": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "helpTopicWorkingHours": "Working hours",
   "@helpTopicWorkingHours": {
     "description": "Shown as the topic of a help symbol in availability sections (workspace), and 1 other place."
@@ -15334,6 +15353,9 @@
     }
   },
   "inboxRetry": "Try again",
+  "@inboxRetry": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "inboxShowOlder": "Show older conversations",
   "@inboxShowOlder": {
     "description": "#2556 inbox sources: Loads the next page of every inbox source that has more."
@@ -18589,6 +18611,9 @@
     "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
   },
   "kioskConfirmAction": "Confirm",
+  "@kioskConfirmAction": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "kioskDone": "Done — you're all set.",
   "@kioskDone": {
     "description": "Success snackbar after a kiosk operation; the member is signed out already"
@@ -18646,6 +18671,9 @@
     "description": "Kiosk period step continue button — leads to the badge prompt"
   },
   "kioskRejectAction": "Reject",
+  "@kioskRejectAction": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "kioskReserve": "Reserve",
   "@kioskReserve": {
     "description": "Kiosk seat action: reserve the seat for today's window"
@@ -19438,6 +19466,9 @@
     "description": "#1281: legendUnavailable"
   },
   "levelAssignMember": "For member",
+  "@levelAssignMember": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelAssignMyself": "Myself",
   "@levelAssignMyself": {
     "description": "Shown as a text in booking sheet (reservations), and 1 other place."
@@ -19475,6 +19506,9 @@
     "description": "Shown as a text in members screen (workspace), and 1 other place."
   },
   "levelPermissionTile": "Level reservations",
+  "@levelPermissionTile": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelPriceLabel": "Price per half-day",
   "@levelPriceLabel": {
     "description": "Shown as a text in space scan (reservations), and 3 other places."
@@ -19488,11 +19522,17 @@
     "description": "Shown as a text in lexicon defaults (core), and 1 other place."
   },
   "levelReserveTitle": "Reserve the whole level",
+  "@levelReserveTitle": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelSupplementLabel": "Level reservations",
   "@levelSupplementLabel": {
     "description": "Shown as a text in report strings l10n (money), and 1 other place."
   },
   "libraryApplied": "Template applied.",
+  "@libraryApplied": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "libraryAppliedChanges": "{count, plural, =1{1 change applied.} other{{count} changes applied.}}",
   "@libraryAppliedChanges": {
     "description": "Template apply preview (#1280): libraryAppliedChanges",
@@ -19503,6 +19543,9 @@
     }
   },
   "libraryApply": "Apply to this space",
+  "@libraryApply": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "libraryApplyChanges": "{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}",
   "@libraryApplyChanges": {
     "description": "Template apply preview (#1280): libraryApplyChanges",
@@ -19513,13 +19556,8 @@
     }
   },
   "libraryApplyConfirmBody": "The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.",
-  "libraryApplyConfirmTitle": "Apply « {name} »?",
-  "@libraryApplyConfirmTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
+  "@libraryApplyConfirmBody": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
   },
   "libraryCarriesSettings": "with its settings",
   "@libraryCarriesSettings": {
@@ -21756,6 +21794,9 @@
     }
   },
   "meSpaceOpen": "Open",
+  "@meSpaceOpen": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "meSpacePending": "Waiting for approval",
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."
@@ -22043,6 +22084,9 @@
     "description": "#3308 a customer record made by a guest pass sale"
   },
   "memberOriginHeading": "How this membership began",
+  "@memberOriginHeading": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "memberOriginInvited": "Joined by invitation",
   "@memberOriginInvited": {
     "description": "Shown as a text in member contact card (members)."
@@ -22142,6 +22186,9 @@
     }
   },
   "memberPageStatusActive": "Active",
+  "@memberPageStatusActive": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
   "@memberPageWorkspaceDefaultValue": {
     "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).",
@@ -23462,11 +23509,17 @@
     "description": "Shown as a text in negotiation card (money)."
   },
   "negotiationValidFrom": "Applies from",
+  "@negotiationValidFrom": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "negotiationWhoCanSee": "Who can see this",
   "@negotiationWhoCanSee": {
     "description": "Shown as a button or chip label in negotiation card (money)."
   },
   "newConversationGroupSwitch": "Group",
+  "@newConversationGroupSwitch": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "newConversationNoMembers": "Nobody else here yet.",
   "@newConversationNoMembers": {
     "description": "#687 - messaging centre"
@@ -23480,6 +23533,9 @@
     "description": "#687 - messaging centre"
   },
   "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
+  "@newConversationTapToOpen": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "newConversationTitle": "New conversation",
   "@newConversationTitle": {
     "description": "#687 - messaging centre"
@@ -24599,6 +24655,9 @@
     "description": "Shown as a text in pending approval screen (workspace)."
   },
   "pendingSwitchWorkspace": "Switch workspace",
+  "@pendingSwitchWorkspace": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "percentValue": "{value}%",
   "@percentValue": {
     "description": "A plain percentage value (level chips, member rows)",
@@ -28577,6 +28636,9 @@
     "description": "Shown as a title in report editor dialogs (money)."
   },
   "reportDesignerSideBySide": "Design and preview side by side",
+  "@reportDesignerSideBySide": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportDesignerUndo": "Undo",
   "@reportDesignerUndo": {
     "description": "Shown as a text in report history controls (money)."
@@ -29107,9 +29169,21 @@
     "description": "#966 report guide: reportGuideTitle"
   },
   "reportImageAlign": "Alignment",
+  "@reportImageAlign": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignCenter": "Centre",
+  "@reportImageAlignCenter": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignLeft": "Left",
+  "@reportImageAlignLeft": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignRight": "Right",
+  "@reportImageAlignRight": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageForbidden": "Not allowed to read this image",
   "@reportImageForbidden": {
     "description": "#2586 report image failure"
@@ -29135,6 +29209,9 @@
     "description": "#2586 report image failure"
   },
   "reportImageSize": "Size",
+  "@reportImageSize": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageSizeLarge": "Large",
   "@reportImageSizeLarge": {
     "description": "Shown as a button or chip label in report visual editor actions (money)."
@@ -30897,6 +30974,9 @@
     "description": "Shown as a text in services screen (money), and 1 other place."
   },
   "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
+  "@serviceOutOfStockHint": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "serviceStockCount": "{count} in stock",
   "@serviceStockCount": {
     "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).",
@@ -31942,14 +32022,6 @@
   "settlementRegroups": "This invoice regroups",
   "@settlementRegroups": {
     "description": "Shown as a text in invoice detail sections (money)."
-  },
-  "settlementRegroupsNumbers": "Regroups {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
   },
   "settlementSettledBy": "Regrouped into another invoice — that one is what is owed and chased.",
   "@settlementSettledBy": {
@@ -37370,6 +37442,9 @@
     "description": "Shown as a text in blocked people card (me)."
   },
   "unblockDone": "Unblocked.",
+  "@unblockDone": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "unsavedChangesBody": "What you changed on this page is not saved yet.",
   "@unsavedChangesBody": {
     "description": "#3072 body of the leave-with-unsaved-changes question"
@@ -37678,6 +37753,9 @@
     "description": "#840 - summary chip when the owner exception is on"
   },
   "validationPickPersons": "Pick the persons",
+  "@validationPickPersons": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "validationRequiredCount": "Required validations",
   "@validationRequiredCount": {
     "description": "Label of the 1–10 stepper for how many accepts confirm a pending event; also prefixes the count in the card summary"
@@ -39356,6 +39434,9 @@
     "description": "Shown as a button or chip label in wizard scaffold (core)."
   },
   "wizardCardHint": "Issue, send, remind, register and validate payments, match and close — one guided process.",
+  "@wizardCardHint": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "wizardCloseHint": "A member with several open invoices can pay ONE; a partly paid invoice can have its remainder written off; a credit note is refunded. Each goes through validation.",
   "@wizardCloseHint": {
     "description": "Shown as a text in wizard steps payments (money)."

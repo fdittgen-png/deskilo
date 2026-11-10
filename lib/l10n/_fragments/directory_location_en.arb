@@ -16,6 +16,9 @@
     "description": "Shown as a text in directory map (directory)."
   },
   "meSpaceOpen": "Open",
+  "@meSpaceOpen": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",

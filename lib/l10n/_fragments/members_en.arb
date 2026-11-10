@@ -325,7 +325,13 @@
     "description": "Shown as a title in unified inbox view (directory)."
   },
   "conversationArchived": "Conversation archived.",
+  "@conversationArchived": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "conversationMutedBadge": "Muted",
+  "@conversationMutedBadge": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "conversationLoadEarlier": "Load earlier messages",
   "@conversationLoadEarlier": {
     "description": "Shown as a button or chip label in conversation thread (workspace), and 1 other place."
@@ -348,9 +354,21 @@
     }
   },
   "composerDraftKept": "Draft kept",
+  "@composerDraftKept": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "newConversationTapToOpen": "Tap a person to open the chat; switch on Group to pick several.",
+  "@newConversationTapToOpen": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "newConversationGroupSwitch": "Group",
+  "@newConversationGroupSwitch": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "inboxRetry": "Try again",
+  "@inboxRetry": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "memberNoteDeleteRead": "Already read — this message can no longer be taken back.",
   "@memberNoteDeleteRead": {
     "description": "Shown as a text in conversation bubble (workspace)."
@@ -440,6 +458,9 @@
     "description": "Shown as a text in member contact card (members)."
   },
   "memberOriginHeading": "How this membership began",
+  "@memberOriginHeading": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "inboxMessengerDoor": "Open my messenger",
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"

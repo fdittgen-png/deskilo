@@ -185,6 +185,9 @@
     "description": "Shown as a text in pending approval screen (workspace)."
   },
   "pendingSwitchWorkspace": "Switch workspace",
+  "@pendingSwitchWorkspace": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "pendingHelp": "Help",
   "@pendingHelp": {
     "description": "Shown as a button or chip label in pending approval screen (workspace)."

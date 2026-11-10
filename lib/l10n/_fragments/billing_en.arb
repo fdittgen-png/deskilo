@@ -382,14 +382,6 @@
   "@settlementSourcePdf": {
     "description": "Shown as a tooltip in open invoice card (money)."
   },
-  "settlementRegroupsNumbers": "Regroups {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "invoicePdfSettledIn": "Regrouped in {number}",
   "@invoicePdfSettledIn": {
     "description": "Shown as a text in invoice documents (money), and 2 other places. Placeholders: {number} (String).",

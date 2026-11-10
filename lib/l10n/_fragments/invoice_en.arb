@@ -1958,6 +1958,9 @@
     "description": "Shown as a message in report visual editor (money)."
   },
   "reportImageSize": "Size",
+  "@reportImageSize": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageSizeSmall": "Small",
   "@reportImageSizeSmall": {
     "description": "Shown as a button or chip label in report visual editor actions (money)."
@@ -1971,9 +1974,21 @@
     "description": "Shown as a button or chip label in report visual editor actions (money)."
   },
   "reportImageAlign": "Alignment",
+  "@reportImageAlign": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignLeft": "Left",
+  "@reportImageAlignLeft": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignCenter": "Centre",
+  "@reportImageAlignCenter": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportImageAlignRight": "Right",
+  "@reportImageAlignRight": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "reportTemplateLangOverridden": "Own template",
   "@reportTemplateLangOverridden": {
     "description": "Shown as a tooltip in report template toolbar (money)."
@@ -2019,6 +2034,9 @@
     "description": "Shown as a text in report field picker (money)."
   },
   "reportDesignerSideBySide": "Design and preview side by side",
+  "@reportDesignerSideBySide": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "wizardTitle": "Invoicing wizard",
   "@wizardTitle": {
     "description": "Shown as a title in invoicing wizard screen (money)."
@@ -2028,6 +2046,9 @@
     "description": "Shown as a text in wizard context (money)."
   },
   "wizardCardHint": "Issue, send, remind, register and validate payments, match and close — one guided process.",
+  "@wizardCardHint": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "wizardRunStart": "Start of month",
   "@wizardRunStart": {
     "description": "Shown as a text in wizard context (money)."

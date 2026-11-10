@@ -374,14 +374,6 @@
   "@calendarDayEmpty": {
     "description": "Shown as a text in calendar hub screen (calendar), and 1 other place."
   },
-  "calendarItemCount": "{count, plural, =1{1 item} other{{count} items}}",
-  "@calendarItemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "calendarKindValidation": "Validations",
   "@calendarKindValidation": {
     "description": "#843 - calendar kind chip: decisions taken on events"

@@ -8568,12 +8568,6 @@ abstract class AppLocalizations {
   /// **'Money'**
   String get calendarGroupMoney;
 
-  /// No description provided for @calendarItemCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 item} other{{count} items}}'**
-  String calendarItemCount(int count);
-
   /// #718/#719 - calendar hub
   ///
   /// In en, this message translates to:
@@ -9618,7 +9612,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 character left} other{{count} characters left}}'**
   String composerCharsLeft(int count);
 
-  /// No description provided for @composerDraftKept.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Draft kept'**
@@ -9984,7 +9978,7 @@ abstract class AppLocalizations {
   /// **'Archive'**
   String get conversationArchive;
 
-  /// No description provided for @conversationArchived.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Conversation archived.'**
@@ -10074,7 +10068,7 @@ abstract class AppLocalizations {
   /// **'Mute notifications'**
   String get conversationMute;
 
-  /// No description provided for @conversationMutedBadge.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Muted'**
@@ -16462,13 +16456,13 @@ abstract class AppLocalizations {
   /// **'Task recorder'**
   String get featureTaskRecorderTitle;
 
-  /// No description provided for @featureTierCore.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Core'**
   String get featureTierCore;
 
-  /// No description provided for @featureTierCoreDesc.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'What every space needs. On from the first day.'**
@@ -16480,7 +16474,7 @@ abstract class AppLocalizations {
   /// **'Platform'**
   String get featureTierPlatform;
 
-  /// No description provided for @featureTierPlatformDesc.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Asked for, never assumed. Switch on what this space actually runs.'**
@@ -18850,7 +18844,7 @@ abstract class AppLocalizations {
   /// **'Instances'**
   String get helpTopicInstances;
 
-  /// No description provided for @helpTopicKiosk.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Kiosk mode'**
@@ -18874,7 +18868,7 @@ abstract class AppLocalizations {
   /// **'report editor'**
   String get helpTopicReportEditor;
 
-  /// No description provided for @helpTopicReportLayout.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Positioned layouts'**
@@ -18910,7 +18904,7 @@ abstract class AppLocalizations {
   /// **'VAT'**
   String get helpTopicVat;
 
-  /// No description provided for @helpTopicWindowEnvelope.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'The window-envelope contract'**
@@ -19618,7 +19612,7 @@ abstract class AppLocalizations {
   /// **'Requests: {count}'**
   String inboxRequestsCount(int count);
 
-  /// No description provided for @inboxRetry.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Try again'**
@@ -23506,7 +23500,7 @@ abstract class AppLocalizations {
   /// **'The workspace is closed today — check-in and reservations are not possible.'**
   String get kioskClosedToday;
 
-  /// No description provided for @kioskConfirmAction.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Confirm'**
@@ -23596,7 +23590,7 @@ abstract class AppLocalizations {
   /// **'Present the badge'**
   String get kioskPresentBadgeNext;
 
-  /// No description provided for @kioskRejectAction.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Reject'**
@@ -24615,7 +24609,7 @@ abstract class AppLocalizations {
   /// **'Unavailable'**
   String get legendUnavailable;
 
-  /// No description provided for @levelAssignMember.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'For member'**
@@ -24675,7 +24669,7 @@ abstract class AppLocalizations {
   /// **'May not reserve a whole desk, office or level'**
   String get levelPermissionDenied;
 
-  /// No description provided for @levelPermissionTile.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Level reservations'**
@@ -24699,7 +24693,7 @@ abstract class AppLocalizations {
   /// **'Reserve level'**
   String get levelReserveButton;
 
-  /// No description provided for @levelReserveTitle.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Reserve the whole level'**
@@ -24711,7 +24705,7 @@ abstract class AppLocalizations {
   /// **'Level reservations'**
   String get levelSupplementLabel;
 
-  /// No description provided for @libraryApplied.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Template applied.'**
@@ -24723,7 +24717,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 change applied.} other{{count} changes applied.}}'**
   String libraryAppliedChanges(int count);
 
-  /// No description provided for @libraryApply.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Apply to this space'**
@@ -24735,17 +24729,11 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}'**
   String libraryApplyChanges(int count);
 
-  /// No description provided for @libraryApplyConfirmBody.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'The floor plan is added or updated by name, and the settings the template carries are merged in. Nothing you already have is removed.'**
   String get libraryApplyConfirmBody;
-
-  /// No description provided for @libraryApplyConfirmTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Apply « {name} »?'**
-  String libraryApplyConfirmTitle(String name);
 
   /// Appended to a template card's plan counts when the template also carries configuration (hours, prices, rules) (#1280)
   ///
@@ -27663,7 +27651,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}'**
   String meSpaceNotifications(int count);
 
-  /// No description provided for @meSpaceOpen.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Open'**
@@ -28053,7 +28041,7 @@ abstract class AppLocalizations {
   /// **'Bought a guest pass at the desk'**
   String get memberOriginGuest;
 
-  /// No description provided for @memberOriginHeading.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'How this membership began'**
@@ -28167,7 +28155,7 @@ abstract class AppLocalizations {
   /// **'Member since {date}'**
   String memberPageSince(String date);
 
-  /// No description provided for @memberPageStatusActive.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Active'**
@@ -29769,7 +29757,7 @@ abstract class AppLocalizations {
   /// **'Propose for validation'**
   String get negotiationSubmit;
 
-  /// No description provided for @negotiationValidFrom.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Applies from'**
@@ -29781,7 +29769,7 @@ abstract class AppLocalizations {
   /// **'Who can see this'**
   String get negotiationWhoCanSee;
 
-  /// No description provided for @newConversationGroupSwitch.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Group'**
@@ -29805,7 +29793,7 @@ abstract class AppLocalizations {
   /// **'Start chat'**
   String get newConversationStart;
 
-  /// No description provided for @newConversationTapToOpen.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Tap a person to open the chat; switch on Group to pick several.'**
@@ -31337,7 +31325,7 @@ abstract class AppLocalizations {
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
 
-  /// No description provided for @pendingSwitchWorkspace.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Switch workspace'**
@@ -37191,7 +37179,7 @@ abstract class AppLocalizations {
   /// **'Replace the current layout?'**
   String get reportDesignerReplaceTitle;
 
-  /// No description provided for @reportDesignerSideBySide.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Design and preview side by side'**
@@ -37983,25 +37971,25 @@ abstract class AppLocalizations {
   /// **'Placeholders and markup'**
   String get reportGuideTitle;
 
-  /// No description provided for @reportImageAlign.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Alignment'**
   String get reportImageAlign;
 
-  /// No description provided for @reportImageAlignCenter.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Centre'**
   String get reportImageAlignCenter;
 
-  /// No description provided for @reportImageAlignLeft.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Left'**
   String get reportImageAlignLeft;
 
-  /// No description provided for @reportImageAlignRight.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Right'**
@@ -38031,7 +38019,7 @@ abstract class AppLocalizations {
   /// **'Retry reading the image'**
   String get reportImageRetry;
 
-  /// No description provided for @reportImageSize.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Size'**
@@ -40365,7 +40353,7 @@ abstract class AppLocalizations {
   /// **'Out of stock'**
   String get serviceOutOfStock;
 
-  /// No description provided for @serviceOutOfStockHint.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Nothing left on the shelf — the next supply restocks it.'**
@@ -41810,12 +41798,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This invoice regroups'**
   String get settlementRegroups;
-
-  /// No description provided for @settlementRegroupsNumbers.
-  ///
-  /// In en, this message translates to:
-  /// **'Regroups {numbers}'**
-  String settlementRegroupsNumbers(String numbers);
 
   /// Shown as a text in invoice detail sheet (money).
   ///
@@ -49052,7 +49034,7 @@ abstract class AppLocalizations {
   /// **'Unblock'**
   String get unblockAction;
 
-  /// No description provided for @unblockDone.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Unblocked.'**
@@ -49676,7 +49658,7 @@ abstract class AppLocalizations {
   /// **'Owner may validate their own'**
   String get validationOwnerSelfShort;
 
-  /// No description provided for @validationPickPersons.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Pick the persons'**
@@ -51776,7 +51758,7 @@ abstract class AppLocalizations {
   /// **'Back'**
   String get wizardBack;
 
-  /// No description provided for @wizardCardHint.
+  /// Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486).
   ///
   /// In en, this message translates to:
   /// **'Issue, send, remind, register and validate payments, match and close — one guided process.'**

@@ -116,14 +116,6 @@
   },
   "settlementDocumentationOnly": "Solo documentazione: ogni operazione avviene sulla fattura di raggruppamento.",
   "settlementSourcePdf": "PDF (raggruppata)",
-  "settlementRegroupsNumbers": "Raggruppa {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "invoicePdfSettledIn": "Raggruppata in {number}",
   "@invoicePdfSettledIn": {
     "placeholders": {

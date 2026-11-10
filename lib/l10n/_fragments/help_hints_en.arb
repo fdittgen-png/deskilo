@@ -216,6 +216,9 @@
     "description": "Shown as a text in settings screen (profile), and 17 other places."
   },
   "helpTopicKiosk": "Kiosk mode",
+  "@helpTopicKiosk": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "helpTopicBilling": "Billing",
   "@helpTopicBilling": {
     "description": "Shown as the topic of a help symbol in billing editor sections (money)."
@@ -241,7 +244,13 @@
     "description": "Shown as the topic of a help symbol in server choice screen (profile), and 3 other places."
   },
   "helpTopicReportLayout": "Positioned layouts",
+  "@helpTopicReportLayout": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "helpTopicWindowEnvelope": "The window-envelope contract",
+  "@helpTopicWindowEnvelope": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "helpTopicTrace": "The trace",
   "@helpTopicTrace": {
     "description": "Shown as the topic of a help symbol in developer screen (profile)."

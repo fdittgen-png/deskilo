@@ -154,7 +154,13 @@
     "description": "Device NFC status: not usable"
   },
   "kioskConfirmAction": "Confirm",
+  "@kioskConfirmAction": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "kioskRejectAction": "Reject",
+  "@kioskRejectAction": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "kioskGateTitle": "Start kiosk mode?",
   "@kioskGateTitle": {
     "description": "Title of the kiosk gate a kiosk account sees on every app start"

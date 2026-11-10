@@ -4,7 +4,13 @@
     "description": "Shown as a text in lexicon defaults (core), and 1 other place."
   },
   "levelReserveTitle": "Reserve the whole level",
+  "@levelReserveTitle": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelPermissionTile": "Level reservations",
+  "@levelPermissionTile": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelPermissionAllowed": "May reserve a whole desk, office or level",
   "@levelPermissionAllowed": {
     "description": "Shown as a text in workspace settings reports (workspace), and 2 other places."
@@ -26,6 +32,9 @@
     "description": "Shown as a text in space scan (reservations), and 3 other places."
   },
   "levelAssignMember": "For member",
+  "@levelAssignMember": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "levelAssignMyself": "Myself",
   "@levelAssignMyself": {
     "description": "Shown as a text in booking sheet (reservations), and 1 other place."

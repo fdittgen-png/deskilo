@@ -5278,17 +5278,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get calendarGroupMoney => 'Finances';
 
   @override
-  String calendarItemCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count éléments',
-      one: '1 élément',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get calendarKindCheckIn => 'Pointages';
 
   @override
@@ -15500,11 +15489,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le plan est ajouté ou mis à jour par nom, et les réglages que porte le modèle sont fusionnés. Rien de ce que vous avez déjà n\'est supprimé.';
 
   @override
-  String libraryApplyConfirmTitle(String name) {
-    return 'Appliquer « $name » ?';
-  }
-
-  @override
   String get libraryCarriesSettings => 'avec ses réglages';
 
   @override
@@ -25691,11 +25675,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settlementRegroups => 'Cette facture regroupe';
-
-  @override
-  String settlementRegroupsNumbers(String numbers) {
-    return 'Regroupe $numbers';
-  }
 
   @override
   String get settlementSettledBy =>

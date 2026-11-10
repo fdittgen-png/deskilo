@@ -593,6 +593,9 @@
     "description": "Shown as a text in services screen (money), and 1 other place."
   },
   "serviceOutOfStockHint": "Nothing left on the shelf — the next supply restocks it.",
+  "@serviceOutOfStockHint": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "@serviceStockCount": {
     "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).",
     "placeholders": {
@@ -651,6 +654,9 @@
     "description": "Shown as the label of a field in negotiation card (money)."
   },
   "negotiationValidFrom": "Applies from",
+  "@negotiationValidFrom": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "negotiationSubmit": "Propose for validation",
   "@negotiationSubmit": {
     "description": "Shown as a text in negotiation card (money)."

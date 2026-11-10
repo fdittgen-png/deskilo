@@ -225,14 +225,6 @@
   },
   "calendarWeekEmpty": "Nichts in dieser Woche.",
   "calendarDayEmpty": "Nichts an diesem Tag.",
-  "calendarItemCount": "{count, plural, =1{1 Eintrag} other{{count} Einträge}}",
-  "@calendarItemCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "calendarKindValidation": "Freigaben",
   "calendarValidationValidated": "Freigegeben: {what}",
   "calendarValidationRefused": "Abgelehnt: {what}",

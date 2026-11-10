@@ -135,6 +135,9 @@
     "description": "Shown as a text in member page (members)."
   },
   "memberPageStatusActive": "Active",
+  "@memberPageStatusActive": {
+    "description": "Read by name only: the task recorder's label map lists it, and no screen shows it today (#3486)."
+  },
   "memberPageNeverSeen": "Not seen yet",
   "@memberPageNeverSeen": {
     "description": "Shown as a text in member header cards (members)."

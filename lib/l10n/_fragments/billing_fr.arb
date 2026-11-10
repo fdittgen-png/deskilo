@@ -116,14 +116,6 @@
   },
   "settlementDocumentationOnly": "Documentation uniquement — toute opération se fait sur la facture de regroupement.",
   "settlementSourcePdf": "PDF (regroupée)",
-  "settlementRegroupsNumbers": "Regroupe {numbers}",
-  "@settlementRegroupsNumbers": {
-    "placeholders": {
-      "numbers": {
-        "type": "String"
-      }
-    }
-  },
   "invoicePdfSettledIn": "Regroupée dans {number}",
   "@invoicePdfSettledIn": {
     "placeholders": {
