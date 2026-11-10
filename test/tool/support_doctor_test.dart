@@ -123,8 +123,16 @@ void main() {
         );
         final report = childReport(result);
         expect(result.exitCode, 2, reason: report);
-        expect(result.stderr, contains('doctor needs --ref'), reason: report);
-        expect('${result.stdout}${result.stderr}', isNot(contains('PRIVATE')));
+        expect(
+          sanitizeChildOutput('${result.stderr}'),
+          contains('doctor needs --ref'),
+          reason: report,
+        );
+        expect(
+          '${result.stdout}${result.stderr}'.contains('PRIVATE'),
+          isFalse,
+          reason: report,
+        );
       }
     },
   );
