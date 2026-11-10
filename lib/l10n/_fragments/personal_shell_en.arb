@@ -7,15 +7,15 @@
   "@featurePersonalShellDesc": {
     "description": "#2552 Features screen: what the personal shell changes and what off means."
   },
-  "meTabOverview": "Overview",
+  "meTabOverview": "Home",
   "@meTabOverview": {
     "description": "#2552 first destination of the personal shell: the person's overview."
   },
-  "meTabOverviewShort": "Overview",
+  "meTabOverviewShort": "Home",
   "@meTabOverviewShort": {
     "description": "#2552 the Overview destination on a phone's bottom bar (FR: Accueil)."
   },
-  "meTabSpacesShort": "Spaces",
+  "meTabSpacesShort": "Places",
   "@meTabSpacesShort": {
     "description": "#2552 the My spaces destination on a phone's bottom bar."
   },
@@ -31,7 +31,7 @@
   "@meContextPersonal": {
     "description": "#2552 the scope badge in the personal shell's header: this is the person's own layer, never a space."
   },
-  "meUtilityAccount": "Confidentiality and account",
+  "meUtilityAccount": "Privacy and account",
   "@meUtilityAccount": {
     "description": "#2552 utility of the personal shell: who sees what of me, and my account."
   },

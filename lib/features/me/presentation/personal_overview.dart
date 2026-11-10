@@ -23,15 +23,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/ui/empty_state.dart';
+import '../../profile/providers/profile_providers.dart';
 import '../../visits/presentation/my_visits_section.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_spaces_view.dart';
+import '../domain/greeting.dart';
 import '../domain/my_spaces.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
@@ -126,22 +131,33 @@ class PersonalOverview extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
+class _Header extends ConsumerWidget {
   const _Header({required this.expanded});
 
   final bool expanded;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final tokens = PersonalTheme.of(context);
+    final format = ref.watch(appFormatProvider);
+    final now = ref.watch(clockProvider).now();
+    final name = firstNameOf(ref.watch(myProfileProvider).value?.displayName);
+    final greeting = name == null
+        ? l10n.meGreetingNoName
+        : switch (greetingPartAt(format.wall(now))) {
+            GreetingPart.morning => l10n.meGreetingMorning(name),
+            GreetingPart.afternoon => l10n.meGreetingAfternoon(name),
+            GreetingPart.evening => l10n.meGreetingEvening(name),
+          };
     return Column(
       key: const ValueKey('me-overview-header'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.meOverviewTitle,
+          greeting,
+          key: const ValueKey('me-overview-greeting'),
           style:
               (expanded
                       ? theme.textTheme.displaySmall
@@ -150,7 +166,8 @@ class _Header extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          l10n.meOverviewSubtitle,
+          format.dates(DateShape.fullDate).format(format.wall(now)),
+          key: const ValueKey('me-overview-date'),
           style: theme.textTheme.bodyLarge?.copyWith(
             color: tokens.secondaryText,
           ),
