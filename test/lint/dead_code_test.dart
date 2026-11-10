@@ -18,6 +18,12 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/workspace/providers/business_kind_providers.dart::businessKinds':
+      '#3550 PR 2b-2 — the kind chooser reads it',
+  'lib/features/workspace/providers/business_kind_providers.dart::businessProfile':
+      '#3550 PR 2b-2 — the kind chooser reads it',
+  'lib/features/workspace/providers/business_kind_providers.dart::businessKindCommands':
+      '#3550 PR 2b-2 — the kind chooser reads it',
   // A kind's proposal: the kind chooser of #3550 PR 2b (settings tile and the
   // first setup step) shows it and writes it on confirm.
   'lib/features/workspace/domain/business_kind_proposal.dart::proposalFor':
@@ -26,10 +32,6 @@ const Map<String, String> _allowed = {
       '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
   'lib/features/me/presentation/kit/me_quiet_line.dart::MeQuietLine':
       '#3545 step 0 — the Me kit; steps A–F compose the screens from it and each entry leaves as its part gets a reader',
-  // The workspace's business kind: the settings tile and the setup step of
-  // #3549's second PR read it, then #3550's feature proposal.
-  'lib/features/workspace/domain/business_profile.dart::BusinessProfile':
-      '#3549 — PR 2 wires the settings tile and the setup step to it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
