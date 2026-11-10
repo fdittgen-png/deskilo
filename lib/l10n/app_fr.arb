@@ -7446,6 +7446,7 @@
   "@financesStateClosed": {
     "description": "Me › Finances"
   },
+  "financesStateCreditOpen": "Avoir non utilisé",
   "financesStatePaid": "Payée",
   "@financesStatePaid": {
     "description": "Me › Finances"
@@ -7453,6 +7454,7 @@
   "financesStateUnpaid": "Non payée",
   "financesTypeAll": "Tous les documents",
   "financesTypeCreditNote": "Avoir",
+  "financesYourCredit": "Votre avoir",
   "gebuevProcedureAccessBody": "Chaque export comptable et chaque téléchargement d'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d'audit liste ces accès à côté des documents.",
   "gebuevProcedureAccessHeading": "Accès (art. 8)",
   "gebuevProcedureCarriersBody": "Cette archive se lit avec n'importe quel outil zip et éditeur de texte. Une copie de tout l'espace est prouvée par un export de l'espace terminé, inscrit avec son empreinte : la liste de préparation indique la date du dernier et en demande un nouveau lorsqu'il est ancien.",

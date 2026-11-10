@@ -11062,6 +11062,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesStateClosed => 'Closed';
 
   @override
+  String get financesStateCreditOpen => 'Credit not used yet';
+
+  @override
   String get financesStatePaid => 'Paid';
 
   @override
@@ -11072,6 +11075,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesTypeCreditNote => 'Credit note';
+
+  @override
+  String get financesYourCredit => 'Your credit';
 
   @override
   String get gebuevProcedureAccessBody =>

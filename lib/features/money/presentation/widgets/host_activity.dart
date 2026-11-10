@@ -152,6 +152,6 @@ String _line(
   },
   appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(entry.occurredAt)),
   if (entry.amountCents case final amount?)
-    appFormatOf(context).moneyIn(entry.currency).formatMinor(amount),
+    appFormatOf(context).moneyNamed(entry.currency).formatMinor(amount),
   if (entry.minutes case final minutes?) l10n.accountUsageMinutes(minutes),
 ].where((s) => s.isNotEmpty).join(' · ');

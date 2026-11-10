@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "financesYourCredit": "Your credit",
+  "@financesYourCredit": {
+    "description": "#3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them."
+  },
+  "financesStateCreditOpen": "Credit not used yet",
+  "@financesStateCreditOpen": {
+    "description": "#3599 Me › Finances: the payment state of a credit note nothing was matched to yet. It is money due to me, so it never says Unpaid."
+  }
+}

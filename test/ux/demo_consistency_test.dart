@@ -99,7 +99,15 @@ void main() {
       expect(
         find.descendant(
           of: summary,
-          matching: find.text(moneyFormat(e.key, locale: null).formatMinor(e.value)),
+          // #3599 — Me names a currency without doubt: the dollars read USD.
+          matching: find.text(
+            MoneyFormat(
+              e.key,
+              locale: null,
+              spaceAlphabetic: true,
+              distinct: true,
+            ).formatMinor(e.value),
+          ),
         ),
         findsOneWidget,
         reason: 'the ${e.key} amount to pay, in the summary',

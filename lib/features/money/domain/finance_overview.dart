@@ -67,9 +67,10 @@ class FinanceInvoice {
   bool get isCreditNote => totalCents < 0;
 
   /// Past the term: the due day counts, as the server and the register rule
-  /// (#3285: one rule, `invoiceDue`).
+  /// (#3285: one rule, `invoiceDue`). A credit note is money due to me:
+  /// it is never late.
   bool overdueAt(DateTime now) =>
-      state.owed && dueOn != null && isOverdueOn(dueOn!, now);
+      state.owed && !isCreditNote && dueOn != null && isOverdueOn(dueOn!, now);
 
   factory FinanceInvoice.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'finance_invoice');
@@ -82,7 +83,9 @@ class FinanceInvoice {
       dueOn: r.dateTimeOrNull('due_on'),
       totalCents: r.intOrNull('total_cents') ?? 0,
       paidCents: r.intOrNull('paid_cents') ?? 0,
-      currency: r.stringOr('currency'),
+      // Required (#3599): the column is not null, and an amount whose
+      // currency is unknown must fail to read, never read as another one.
+      currency: r.string('currency'),
       state: FinanceState.fromWire(r.json['state']),
       reminderCount: r.intOrNull('reminder_count') ?? 0,
       lastReminderAt: r.dateTimeOrNull('last_reminder_at'),
@@ -419,14 +422,50 @@ class FinanceOverview {
           if (!i.state.owed) i,
       ];
 
-  /// Remaining per currency — never summed across currencies.
-  Map<String, int> get owedByCurrency {
-    final out = <String, int>{};
+  /// What I still have to pay: the owed invoices. A credit note that was not
+  /// used yet is money due TO me and is never among them (#3599).
+  List<FinanceInvoice> get payable => [
+        for (final i in outstanding)
+          if (!i.isCreditNote) i,
+      ];
+
+  /// What remains open with each business, per currency: its owed invoices
+  /// less its own credit notes not used yet. A credit lowers what I pay the
+  /// business that issued it and never another one's invoice — the money
+  /// goes to one payee.
+  Map<(String, String), int> get _openByPayee {
+    final out = <(String, String), int>{};
     for (final i in outstanding) {
-      out[i.currency] = (out[i.currency] ?? 0) + i.remainingCents;
+      final payee = (i.workspaceId, i.currency);
+      out[payee] = (out[payee] ?? 0) + i.remainingCents;
     }
     return out;
   }
+
+  /// [sign] of what is open with each business, summed per currency and
+  /// ordered by currency code: 1 for what I owe, -1 for what I am owed.
+  Map<String, int> _openByCurrency(int sign) {
+    final out = <String, int>{};
+    for (final e in _openByPayee.entries) {
+      final cents = e.value * sign;
+      if (cents > 0) out[e.key.$2] = (out[e.key.$2] ?? 0) + cents;
+    }
+    return {for (final code in out.keys.toList()..sort()) code: out[code]!};
+  }
+
+  /// What I owe per currency — never summed across currencies, and each
+  /// business's own credit taken off its own invoices only.
+  Map<String, int> get owedByCurrency => _openByCurrency(1);
+
+  /// What businesses still hold for me per currency: the credit notes not
+  /// used yet, beyond what I owe the business that issued them.
+  Map<String, int> get inMyFavourByCurrency => _openByCurrency(-1);
+
+  /// The currencies in which an invoice of mine is past its due day.
+  Set<String> overdueCurrencies(DateTime now) => {
+        for (final i in payable)
+          if (i.overdueAt(now)) i.currency,
+      };
 
   factory FinanceOverview.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'my_finances');

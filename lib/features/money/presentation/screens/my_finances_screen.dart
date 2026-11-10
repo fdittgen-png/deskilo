@@ -17,7 +17,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_tab_bar.dart';
@@ -34,6 +33,7 @@ import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
+import '../widgets/finances_owed_summary.dart';
 import '../widgets/host_payment_pages.dart';
 import '../widgets/invoice_process_sheet.dart';
 import '../widgets/my_finances_parts.dart';
@@ -64,7 +64,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);
     final data = _filter.apply(all);
     final (prod, dev) = (data.production(devIds), data.development(devIds));
-    final (owed, options) = (prod.outstanding.length, all.workspaces);
+    final (owed, options) = (prod.payable.length, all.workspaces);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -185,10 +185,8 @@ class _Outstanding extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
     final now = ref.watch(clockProvider).now();
     final list = newestFirst(data.outstanding);
-    final overdue = list.where((i) => i.overdueAt(now)).length;
     return FinancesColumn(
       onRefresh: () => refreshMyFinances(ref),
       children: [
@@ -199,37 +197,7 @@ class _Outstanding extends ConsumerWidget {
             title: l10n.financesNothingOwed,
           )
         else ...[
-          Card(
-            key: const ValueKey('finances-summary'),
-            child: Padding(
-              padding: AppSpacing.mdAll,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.cashHubToPay,
-                      style: theme.textTheme.labelLarge),
-                  const SizedBox(height: 4),
-                  for (final e in data.owedByCurrency.entries)
-                    Text(
-                      appFormatOf(context).moneyIn(e.key).formatMinor(e.value),
-                      style: theme.textTheme.headlineSmall?.strong.copyWith(
-                        color: overdue > 0 ? theme.colorScheme.error : null,
-                      ),
-                    ),
-                  if (overdue > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Text(
-                        l10n.financesOverdueCount(overdue),
-                        key: const ValueKey('finances-overdue'),
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: theme.colorScheme.error),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
+          FinancesOwedSummary(data: data, now: now),
           const SizedBox(height: AppSpacing.sm),
           FinanceDocumentList(invoices: list, documents: data, now: now,
               onOpen: (i) => unawaited(
@@ -424,7 +392,7 @@ class _Payments extends ConsumerWidget {
                       ].join(' · ')),
                       trailing: e.amountCents == null
                           ? null
-                          : Text(appFormatOf(context).moneyIn(e.currency).formatMinor(e.amountCents!)),
+                          : Text(appFormatOf(context).moneyNamed(e.currency).formatMinor(e.amountCents!)),
                     ),
                   ),
                   ),

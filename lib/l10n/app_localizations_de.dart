@@ -11150,6 +11150,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesStateClosed => 'Abgeschlossen';
 
   @override
+  String get financesStateCreditOpen => 'Gutschrift noch offen';
+
+  @override
   String get financesStatePaid => 'Bezahlt';
 
   @override
@@ -11160,6 +11163,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesTypeCreditNote => 'Gutschrift';
+
+  @override
+  String get financesYourCredit => 'Ihr Guthaben';
 
   @override
   String get gebuevProcedureAccessBody =>
