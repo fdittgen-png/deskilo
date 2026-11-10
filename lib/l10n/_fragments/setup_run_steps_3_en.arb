@@ -3,23 +3,37 @@
   "@setupNotificationsWho": {
     "description": "#2871 setup run steps: setupNotificationsWho"
   },
-  "setupNotificationsEvent": "{event, select, pending_request{A request waits for a decision} reservation_cancelled{A booking was removed by someone else} check_in{A booking is about to start: time to check in} member_note{A message or an announcement} member_mention{Someone names them in a conversation} invoice_reminder{A payment reminder} other{{event}}}",
-  "@setupNotificationsEvent": {
-    "description": "#2871 setup run steps: setupNotificationsEvent",
-    "placeholders": {
-      "event": {
-        "type": "String"
-      }
-    }
+  "setupNotificationsEventPendingRequest": "A request waits for a decision",
+  "@setupNotificationsEventPendingRequest": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'pending_request'."
   },
-  "setupNotificationsAudience": "{audience, select, deciders{Whoever decides it} members{Members} other{{audience}}}",
-  "@setupNotificationsAudience": {
-    "description": "#2871 setup run steps: setupNotificationsAudience",
-    "placeholders": {
-      "audience": {
-        "type": "String"
-      }
-    }
+  "setupNotificationsEventReservationCancelled": "A booking was removed by someone else",
+  "@setupNotificationsEventReservationCancelled": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'reservation_cancelled'."
+  },
+  "setupNotificationsEventCheckIn": "A booking is about to start: time to check in",
+  "@setupNotificationsEventCheckIn": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'check_in'."
+  },
+  "setupNotificationsEventMemberNote": "A message or an announcement",
+  "@setupNotificationsEventMemberNote": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'member_note'."
+  },
+  "setupNotificationsEventMemberMention": "Someone names them in a conversation",
+  "@setupNotificationsEventMemberMention": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'member_mention'."
+  },
+  "setupNotificationsEventInvoiceReminder": "A payment reminder",
+  "@setupNotificationsEventInvoiceReminder": {
+    "description": "#3485 setupNotificationsEvent: the label for case 'invoice_reminder'."
+  },
+  "setupNotificationsAudienceDeciders": "Whoever decides it",
+  "@setupNotificationsAudienceDeciders": {
+    "description": "#3485 setupNotificationsAudience: the label for case 'deciders'."
+  },
+  "setupNotificationsAudienceMembers": "Members",
+  "@setupNotificationsAudienceMembers": {
+    "description": "#3485 setupNotificationsAudience: the label for case 'members'."
   },
   "setupNotificationsLineHow": "{audience}: {channels}",
   "@setupNotificationsLineHow": {
@@ -33,14 +47,17 @@
       }
     }
   },
-  "setupNotificationsChannels": "{channels, select, app{in the app} app_push{in the app and as a phone notification} device{as a reminder on their own phone, even without phone notifications} other{{channels}}}",
-  "@setupNotificationsChannels": {
-    "description": "#2871 setup run steps: setupNotificationsChannels",
-    "placeholders": {
-      "channels": {
-        "type": "String"
-      }
-    }
+  "setupNotificationsChannelsApp": "in the app",
+  "@setupNotificationsChannelsApp": {
+    "description": "#3485 setupNotificationsChannels: the label for case 'app'."
+  },
+  "setupNotificationsChannelsAppPush": "in the app and as a phone notification",
+  "@setupNotificationsChannelsAppPush": {
+    "description": "#3485 setupNotificationsChannels: the label for case 'app_push'."
+  },
+  "setupNotificationsChannelsDevice": "as a reminder on their own phone, even without phone notifications",
+  "@setupNotificationsChannelsDevice": {
+    "description": "#3485 setupNotificationsChannels: the label for case 'device'."
   },
   "setupNotificationsPushOn": "Phone notifications are on. A phone receives them once the operator has connected push for this server; until then, everything stays in the app.",
   "@setupNotificationsPushOn": {

@@ -110,7 +110,7 @@
       }
     }
   },
-  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at their gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
+  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {

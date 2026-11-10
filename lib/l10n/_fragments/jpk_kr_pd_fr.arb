@@ -1,30 +1,77 @@
 {
   "@@locale": "fr",
-  "jpkKrPdField": "{field, select, nip{NIP} legalName{raison sociale} voivodeship{voïvodie} county{powiat} municipality{commune} buildingNumber{numéro de bâtiment} city{ville} postalCode{code postal} street{rue} taxOfficeCode{code du bureau des impôts} accountName{nom du compte} accountParent{compte parent} accountMarker{marqueur polonais du compte} journalNumber{numéro de journal} journalName{nom du journal} documentNumber{numéro de pièce} documentType{type de pièce} responsiblePerson{personne responsable} journalDescription{libellé du journal} accountIdentifier{identifiant ou nom du compte} journalText{texte du journal} counterpartyCode{code de la contrepartie} other{}}",
-  "@jpkKrPdField": {
-    "description": "Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about",
-    "placeholders": {
-      "field": {
-        "type": "String"
-      }
-    }
-  },
-  "jpkKrPdGap": "{code, select, currencyNotPln{la devise fonctionnelle doit être le PLN} noPostings{le journal doit contenir des écritures comptabilisées} invalidYear{l’exercice déclaré est invalide} sectionEntity{l’entité polonaise et son adresse} sectionOffice{le bureau des impôts et l’objet de la déclaration} sectionAccounts{les comptes parents, les marqueurs polonais et les soldes sources} sectionJournal{la séquence du journal et la personne responsable} sectionSource{les dates de pièce et de comptabilisation, les montants et le détail des lignes} sectionKsef{l’applicabilité et l’identifiant KSeF} sectionReconciliation{le rapprochement de l’impôt sur le revenu K_1–K_8} journalSequenceUnverified{la séquence du journal source n’est pas vérifiée} taxYear{l’année d’imposition est invalide} entityCategory{cette catégorie d’entité déclarante polonaise n’est pas prise en charge} addressCountry{le pays de l’adresse de l’entité doit être la Pologne} nipFormat{le NIP doit comporter 10 chiffres valides} missing{{field}{subject} manque} tooLong{{field}{subject} dépasse {limit} caractères} invalidOffice{le code du bureau des impôts est inconnu} purpose{l’objet de la déclaration doit être 1 ou 2} reconciliation{le rapprochement K_1–K_8 doit comporter huit montants en PLN} openingOutside{l’écriture d’ouverture{subject} est datée dans la période déclarée} unbalanced{l’écriture{subject} n’est pas équilibrée} invalidDebitCredit{l’écriture{subject} a un débit ou un crédit invalide} foreignLine{l’écriture{subject} contient une ligne en devise étrangère} postingCurrency{l’écriture{subject} n’est pas en PLN} accountBalances{les soldes du compte{subject} sont invalides} openingMismatch{le solde d’ouverture du compte{subject} ne correspond pas aux écritures} closingMismatch{le solde de clôture du compte{subject} ne correspond pas aux écritures} invalidMarker{le marqueur polonais du compte{subject} est invalide} journalEvidence{chaque écriture exige sa pièce de journal} turnoverPrecision{le mouvement du compte{subject} dépasse la précision du schéma} totalsPrecision{les totaux du journal dépassent la précision du schéma} documentTotalPrecision{le total des pièces dépasse la précision du schéma} unreferencedCounterparty{la contrepartie{subject} n’est référencée par aucune écriture} invalidCounterpartyCountry{le pays de la contrepartie{subject} est invalide} invalidCounterpartyTaxId{l’identifiant fiscal de la contrepartie{subject} est invalide} counterpartyCodeInvalid{un code de contrepartie manque ou est en double} journalSourceMismatch{l’écriture de journal{subject} ne correspond pas à sa pièce source} postingOutside{l’écriture{subject} est datée hors de l’exercice déclaré} bookingOutside{la comptabilisation{subject} est datée hors de l’exercice déclaré} documentAmount{le montant de la pièce{subject} n’est pas en PLN} chronology{l’écriture{subject} rompt l’ordre chronologique du journal} duplicateJournalNumber{le numéro de journal{subject} est utilisé deux fois} lineDescriptions{écriture{subject} : libellés de ligne manquants ou ne correspondant pas aux lignes} lineNumbers{écriture{subject} : numéros de ligne manquants, en double ou ne correspondant pas aux lignes} counterpartyCode{l’écriture{subject} exige un code de contrepartie} counterpartySourceMissing{l’écriture{subject} nomme une contrepartie que sa pièce source n’a pas} counterpartySourceMismatch{la contrepartie de l’écriture{subject} ne correspond pas à sa pièce source} counterpartyUnknown{la contrepartie{subject} n’est pas dans la liste des contreparties} invalidKsef{l’identifiant KSeF de l’écriture{subject} est invalide} duplicateLineNumber{le numéro de ligne{subject} est utilisé deux fois dans un journal} ksefMissing{l’écriture{subject} exige son identifiant KSeF} other{}}",
-  "@jpkKrPdGap": {
-    "description": "Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or \" (name)\", limit is the schema maximum",
-    "placeholders": {
-      "code": {
-        "type": "String"
-      },
-      "field": {
-        "type": "String"
-      },
-      "subject": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "String"
-      }
-    }
-  }
+  "jpkKrPdFieldNip": "NIP",
+  "jpkKrPdFieldLegalName": "raison sociale",
+  "jpkKrPdFieldVoivodeship": "voïvodie",
+  "jpkKrPdFieldCounty": "powiat",
+  "jpkKrPdFieldMunicipality": "commune",
+  "jpkKrPdFieldBuildingNumber": "numéro de bâtiment",
+  "jpkKrPdFieldCity": "ville",
+  "jpkKrPdFieldPostalCode": "code postal",
+  "jpkKrPdFieldStreet": "rue",
+  "jpkKrPdFieldTaxOfficeCode": "code du bureau des impôts",
+  "jpkKrPdFieldAccountName": "nom du compte",
+  "jpkKrPdFieldAccountParent": "compte parent",
+  "jpkKrPdFieldAccountMarker": "marqueur polonais du compte",
+  "jpkKrPdFieldJournalNumber": "numéro de journal",
+  "jpkKrPdFieldJournalName": "nom du journal",
+  "jpkKrPdFieldDocumentNumber": "numéro de pièce",
+  "jpkKrPdFieldDocumentType": "type de pièce",
+  "jpkKrPdFieldResponsiblePerson": "personne responsable",
+  "jpkKrPdFieldJournalDescription": "libellé du journal",
+  "jpkKrPdFieldAccountIdentifier": "identifiant ou nom du compte",
+  "jpkKrPdFieldJournalText": "texte du journal",
+  "jpkKrPdFieldCounterpartyCode": "code de la contrepartie",
+  "jpkKrPdGapCurrencyNotPln": "la devise fonctionnelle doit être le PLN",
+  "jpkKrPdGapNoPostings": "le journal doit contenir des écritures comptabilisées",
+  "jpkKrPdGapInvalidYear": "l’exercice déclaré est invalide",
+  "jpkKrPdGapSectionEntity": "l’entité polonaise et son adresse",
+  "jpkKrPdGapSectionOffice": "le bureau des impôts et l’objet de la déclaration",
+  "jpkKrPdGapSectionAccounts": "les comptes parents, les marqueurs polonais et les soldes sources",
+  "jpkKrPdGapSectionJournal": "la séquence du journal et la personne responsable",
+  "jpkKrPdGapSectionSource": "les dates de pièce et de comptabilisation, les montants et le détail des lignes",
+  "jpkKrPdGapSectionKsef": "l’applicabilité et l’identifiant KSeF",
+  "jpkKrPdGapSectionReconciliation": "le rapprochement de l’impôt sur le revenu K_1–K_8",
+  "jpkKrPdGapJournalSequenceUnverified": "la séquence du journal source n’est pas vérifiée",
+  "jpkKrPdGapTaxYear": "l’année d’imposition est invalide",
+  "jpkKrPdGapEntityCategory": "cette catégorie d’entité déclarante polonaise n’est pas prise en charge",
+  "jpkKrPdGapAddressCountry": "le pays de l’adresse de l’entité doit être la Pologne",
+  "jpkKrPdGapNipFormat": "le NIP doit comporter 10 chiffres valides",
+  "jpkKrPdGapMissing": "{field}{subject} manque",
+  "jpkKrPdGapTooLong": "{field}{subject} dépasse {limit} caractères",
+  "jpkKrPdGapInvalidOffice": "le code du bureau des impôts est inconnu",
+  "jpkKrPdGapPurpose": "l’objet de la déclaration doit être 1 ou 2",
+  "jpkKrPdGapReconciliation": "le rapprochement K_1–K_8 doit comporter huit montants en PLN",
+  "jpkKrPdGapOpeningOutside": "l’écriture d’ouverture{subject} est datée dans la période déclarée",
+  "jpkKrPdGapUnbalanced": "l’écriture{subject} n’est pas équilibrée",
+  "jpkKrPdGapInvalidDebitCredit": "l’écriture{subject} a un débit ou un crédit invalide",
+  "jpkKrPdGapForeignLine": "l’écriture{subject} contient une ligne en devise étrangère",
+  "jpkKrPdGapPostingCurrency": "l’écriture{subject} n’est pas en PLN",
+  "jpkKrPdGapAccountBalances": "les soldes du compte{subject} sont invalides",
+  "jpkKrPdGapOpeningMismatch": "le solde d’ouverture du compte{subject} ne correspond pas aux écritures",
+  "jpkKrPdGapClosingMismatch": "le solde de clôture du compte{subject} ne correspond pas aux écritures",
+  "jpkKrPdGapInvalidMarker": "le marqueur polonais du compte{subject} est invalide",
+  "jpkKrPdGapJournalEvidence": "chaque écriture exige sa pièce de journal",
+  "jpkKrPdGapTurnoverPrecision": "le mouvement du compte{subject} dépasse la précision du schéma",
+  "jpkKrPdGapTotalsPrecision": "les totaux du journal dépassent la précision du schéma",
+  "jpkKrPdGapDocumentTotalPrecision": "le total des pièces dépasse la précision du schéma",
+  "jpkKrPdGapUnreferencedCounterparty": "la contrepartie{subject} n’est référencée par aucune écriture",
+  "jpkKrPdGapInvalidCounterpartyCountry": "le pays de la contrepartie{subject} est invalide",
+  "jpkKrPdGapInvalidCounterpartyTaxId": "l’identifiant fiscal de la contrepartie{subject} est invalide",
+  "jpkKrPdGapCounterpartyCodeInvalid": "un code de contrepartie manque ou est en double",
+  "jpkKrPdGapJournalSourceMismatch": "l’écriture de journal{subject} ne correspond pas à sa pièce source",
+  "jpkKrPdGapPostingOutside": "l’écriture{subject} est datée hors de l’exercice déclaré",
+  "jpkKrPdGapBookingOutside": "la comptabilisation{subject} est datée hors de l’exercice déclaré",
+  "jpkKrPdGapDocumentAmount": "le montant de la pièce{subject} n’est pas en PLN",
+  "jpkKrPdGapChronology": "l’écriture{subject} rompt l’ordre chronologique du journal",
+  "jpkKrPdGapDuplicateJournalNumber": "le numéro de journal{subject} est utilisé deux fois",
+  "jpkKrPdGapLineDescriptions": "écriture{subject} : libellés de ligne manquants ou ne correspondant pas aux lignes",
+  "jpkKrPdGapLineNumbers": "écriture{subject} : numéros de ligne manquants, en double ou ne correspondant pas aux lignes",
+  "jpkKrPdGapCounterpartyCode": "l’écriture{subject} exige un code de contrepartie",
+  "jpkKrPdGapCounterpartySourceMissing": "l’écriture{subject} nomme une contrepartie que sa pièce source n’a pas",
+  "jpkKrPdGapCounterpartySourceMismatch": "la contrepartie de l’écriture{subject} ne correspond pas à sa pièce source",
+  "jpkKrPdGapCounterpartyUnknown": "la contrepartie{subject} n’est pas dans la liste des contreparties",
+  "jpkKrPdGapInvalidKsef": "l’identifiant KSeF de l’écriture{subject} est invalide",
+  "jpkKrPdGapDuplicateLineNumber": "le numéro de ligne{subject} est utilisé deux fois dans un journal",
+  "jpkKrPdGapKsefMissing": "l’écriture{subject} exige son identifiant KSeF"
 }

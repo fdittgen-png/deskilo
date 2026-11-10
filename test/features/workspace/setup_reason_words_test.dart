@@ -8,6 +8,7 @@ import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo/l10n/app_localizations_es.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
 import 'package:deskilo/l10n/app_localizations_it.dart';
+import 'package:deskilo/l10n/dictionary_labels.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

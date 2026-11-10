@@ -23,6 +23,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/einvoice_providers.dart';

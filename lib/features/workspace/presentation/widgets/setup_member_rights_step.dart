@@ -16,6 +16,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/grant_member_essentials.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';

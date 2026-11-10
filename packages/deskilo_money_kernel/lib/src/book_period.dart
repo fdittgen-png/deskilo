@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'json_reader.dart';
 import 'date_text.dart';
+import 'json_reader.dart';
 
 /// #2365 — closing a period of the books, and the log of accounting exports
 /// (`book_periods`, `book_exports`, 0504). The server owns every rule: a

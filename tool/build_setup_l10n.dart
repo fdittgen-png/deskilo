@@ -147,11 +147,33 @@ Map<String, String> _selectArms(
   return arms;
 }
 
+/// #3485 — the arms of a dictionary label that is one ARB key per case: the
+/// cases are the arms of its method in `lib/l10n/dictionary_labels.dart`.
+Map<String, String> _labelArms(
+  Map<String, dynamic> arb,
+  String label,
+  String locale,
+) {
+  final source = File('lib/l10n/dictionary_labels.dart').readAsStringSync();
+  final start = source.indexOf(' String $label(');
+  if (start < 0) {
+    throw StateError('"$label" is neither an ARB select nor a dictionary label');
+  }
+  final next = source.indexOf('  /// The `', start);
+  final block = source.substring(start, next < 0 ? source.length : next);
+  return {
+    for (final m in RegExp(r"'((?:[^'\\]|\\.)*)' => (\w+)").allMatches(block))
+      m.group(1)!: _arbString(arb, m.group(2)!, locale),
+  };
+}
+
 /// #2868 — the words of the questions step: the app's own, so the page and
 /// the levels screen ask the same questions in the same words.
 Map<String, dynamic> _journeyWords(Map<String, dynamic> arb, String locale) {
   Map<String, String> select(String key, {bool keepOther = false}) =>
-      _selectArms(_arbString(arb, key, locale), key, keepOther: keepOther);
+      arb.containsKey(key)
+      ? _selectArms(_arbString(arb, key, locale), key, keepOther: keepOther)
+      : _labelArms(arb, key, locale);
   return {
     'question': select('setupQuestion'),
     'process': select('setupProcessName'),

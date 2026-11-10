@@ -25,6 +25,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/book_chart.dart';
 import '../../providers/book_profile_providers.dart';
 import 'accounting_targets_sheet.dart';

@@ -13,6 +13,7 @@ import 'package:deskilo/features/workspace/presentation/screens/setup_launch_scr
 import 'package:deskilo/features/workspace/presentation/workspace_configuration_report_strings.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/l10n/dictionary_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

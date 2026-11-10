@@ -26,6 +26,7 @@ import '../../../../core/ui/lock_confirm.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_facts.dart';
 import '../../providers/money_providers.dart';

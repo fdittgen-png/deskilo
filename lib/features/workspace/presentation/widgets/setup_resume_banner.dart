@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_readiness.dart';
 import '../../providers/local_setup_providers.dart';

@@ -20,6 +20,7 @@ import 'package:deskilo/features/workspace/presentation/screens/setup_guide_scre
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/l10n/dictionary_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,48 +1,279 @@
 {
-  "setupQuestion": "{key, select, association{The space is run by an association, a cooperative or a club} approve_bookings{Bookings wait for an approval; members do not book directly} members_owe_money{Members owe the space money (rent, passes, extras)} issue_invoices{You issue invoices} pay_online{Members pay online} vat_registered{The space is registered for VAT} keep_books{You keep accounting books} tracks_purchases{You track what the space buys} several_rooms_or_sites{Several rooms, a meeting room or several sites} door_tablet{A tablet at the door checks people in} public_page{A public page shows the space} organised{Committees, own roles or approvals by several people} other{{key}}}",
-  "@setupQuestion": {
-    "description": "#2868 setup levels: setupQuestion",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionAssociation": "The space is run by an association, a cooperative or a club",
+  "@setupQuestionAssociation": {
+    "description": "#3485 setupQuestion: the label for case 'association'."
   },
-  "setupProcessName": "{key, select, bookings{Bookings} community{Community} money{Money} payments{Payments} tax{Tax} purchases{Purchases} presentation{Presentation} operations{Operations} assistant{Assistant} other{{key}}}",
-  "@setupProcessName": {
-    "description": "#2868 setup levels: setupProcessName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionApproveBookings": "Bookings wait for an approval; members do not book directly",
+  "@setupQuestionApproveBookings": {
+    "description": "#3485 setupQuestion: the label for case 'approve_bookings'."
   },
-  "setupLevelName": "{key, select, bookings_simple{Shared places} bookings_resources{Rooms and resources} bookings_measured{Measured use} community_basic{Basic} community_organised{Organised} money_none{No money} money_statements{Statements} money_invoices{Invoices} payments_off{By transfer} payments_online{Online} tax_none{No VAT} tax_vat{VAT} tax_books{Books} purchases_none{None} purchases_expenses{Expenses} purchases_full{Full purchasing} presentation_basic{Basic} presentation_branded{Your colours} presentation_public{Public page} operations_basic{Basic} operations_insight{Figures} operations_advanced{Advanced} assistant_off{Off} assistant_on{On} other{{key}}}",
-  "@setupLevelName": {
-    "description": "#2868 setup levels: setupLevelName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionMembersOweMoney": "Members owe the space money (rent, passes, extras)",
+  "@setupQuestionMembersOweMoney": {
+    "description": "#3485 setupQuestion: the label for case 'members_owe_money'."
   },
-  "setupReason": "{key, select, door_tablet{Because a tablet at the door checks people in} keeps_books{Because you keep accounting books} later{Because an assistant can come later} members_only{Because only members see the space} members_owe{Because members owe the space money} no_money{Because no money changes hands} no_purchases{Because the space buys nothing it tracks} no_vat{Because the space is not registered for VAT} organised{Because several people decide together} pay_by_transfer{Because members pay by transfer} pay_online{Because members pay online} public_page{Because the space has a public page} several_rooms{Because there are several rooms or sites} shared_places{Because members share the places} small_community{Because the community is small} start_simple{Because you want to start simple} tracks_purchases{Because you track what the space buys} vat_registered{Because the space is registered for VAT} issues_invoices{Because you issue invoices} association{Because an association decides together, with its board} approve_bookings{Because bookings wait for an approval} other{{key}}}",
-  "@setupReason": {
-    "description": "#2868 setup levels: setupReason",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionIssueInvoices": "You issue invoices",
+  "@setupQuestionIssueInvoices": {
+    "description": "#3485 setupQuestion: the label for case 'issue_invoices'."
   },
-  "setupPresetName": "{key, select, essentiel{Essential} standard{Standard} complet{Complete} other{{key}}}",
-  "@setupPresetName": {
-    "description": "#2868 setup levels: setupPresetName",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "setupQuestionPayOnline": "Members pay online",
+  "@setupQuestionPayOnline": {
+    "description": "#3485 setupQuestion: the label for case 'pay_online'."
+  },
+  "setupQuestionVatRegistered": "The space is registered for VAT",
+  "@setupQuestionVatRegistered": {
+    "description": "#3485 setupQuestion: the label for case 'vat_registered'."
+  },
+  "setupQuestionKeepBooks": "You keep accounting books",
+  "@setupQuestionKeepBooks": {
+    "description": "#3485 setupQuestion: the label for case 'keep_books'."
+  },
+  "setupQuestionTracksPurchases": "You track what the space buys",
+  "@setupQuestionTracksPurchases": {
+    "description": "#3485 setupQuestion: the label for case 'tracks_purchases'."
+  },
+  "setupQuestionSeveralRoomsOrSites": "Several rooms, a meeting room or several sites",
+  "@setupQuestionSeveralRoomsOrSites": {
+    "description": "#3485 setupQuestion: the label for case 'several_rooms_or_sites'."
+  },
+  "setupQuestionDoorTablet": "A tablet at the door checks people in",
+  "@setupQuestionDoorTablet": {
+    "description": "#3485 setupQuestion: the label for case 'door_tablet'."
+  },
+  "setupQuestionPublicPage": "A public page shows the space",
+  "@setupQuestionPublicPage": {
+    "description": "#3485 setupQuestion: the label for case 'public_page'."
+  },
+  "setupQuestionOrganised": "Committees, own roles or approvals by several people",
+  "@setupQuestionOrganised": {
+    "description": "#3485 setupQuestion: the label for case 'organised'."
+  },
+  "setupProcessNameBookings": "Bookings",
+  "@setupProcessNameBookings": {
+    "description": "#3485 setupProcessName: the label for case 'bookings'."
+  },
+  "setupProcessNameCommunity": "Community",
+  "@setupProcessNameCommunity": {
+    "description": "#3485 setupProcessName: the label for case 'community'."
+  },
+  "setupProcessNameMoney": "Money",
+  "@setupProcessNameMoney": {
+    "description": "#3485 setupProcessName: the label for case 'money'."
+  },
+  "setupProcessNamePayments": "Payments",
+  "@setupProcessNamePayments": {
+    "description": "#3485 setupProcessName: the label for case 'payments'."
+  },
+  "setupProcessNameTax": "Tax",
+  "@setupProcessNameTax": {
+    "description": "#3485 setupProcessName: the label for case 'tax'."
+  },
+  "setupProcessNamePurchases": "Purchases",
+  "@setupProcessNamePurchases": {
+    "description": "#3485 setupProcessName: the label for case 'purchases'."
+  },
+  "setupProcessNamePresentation": "Presentation",
+  "@setupProcessNamePresentation": {
+    "description": "#3485 setupProcessName: the label for case 'presentation'."
+  },
+  "setupProcessNameOperations": "Operations",
+  "@setupProcessNameOperations": {
+    "description": "#3485 setupProcessName: the label for case 'operations'."
+  },
+  "setupProcessNameAssistant": "Assistant",
+  "@setupProcessNameAssistant": {
+    "description": "#3485 setupProcessName: the label for case 'assistant'."
+  },
+  "setupLevelNameBookingsSimple": "Shared places",
+  "@setupLevelNameBookingsSimple": {
+    "description": "#3485 setupLevelName: the label for case 'bookings_simple'."
+  },
+  "setupLevelNameBookingsResources": "Rooms and resources",
+  "@setupLevelNameBookingsResources": {
+    "description": "#3485 setupLevelName: the label for case 'bookings_resources'."
+  },
+  "setupLevelNameBookingsMeasured": "Measured use",
+  "@setupLevelNameBookingsMeasured": {
+    "description": "#3485 setupLevelName: the label for case 'bookings_measured'."
+  },
+  "setupLevelNameCommunityBasic": "Basic",
+  "@setupLevelNameCommunityBasic": {
+    "description": "#3485 setupLevelName: the label for case 'community_basic'."
+  },
+  "setupLevelNameCommunityOrganised": "Organised",
+  "@setupLevelNameCommunityOrganised": {
+    "description": "#3485 setupLevelName: the label for case 'community_organised'."
+  },
+  "setupLevelNameMoneyNone": "No money",
+  "@setupLevelNameMoneyNone": {
+    "description": "#3485 setupLevelName: the label for case 'money_none'."
+  },
+  "setupLevelNameMoneyStatements": "Statements",
+  "@setupLevelNameMoneyStatements": {
+    "description": "#3485 setupLevelName: the label for case 'money_statements'."
+  },
+  "setupLevelNameMoneyInvoices": "Invoices",
+  "@setupLevelNameMoneyInvoices": {
+    "description": "#3485 setupLevelName: the label for case 'money_invoices'."
+  },
+  "setupLevelNamePaymentsOff": "By transfer",
+  "@setupLevelNamePaymentsOff": {
+    "description": "#3485 setupLevelName: the label for case 'payments_off'."
+  },
+  "setupLevelNamePaymentsOnline": "Online",
+  "@setupLevelNamePaymentsOnline": {
+    "description": "#3485 setupLevelName: the label for case 'payments_online'."
+  },
+  "setupLevelNameTaxNone": "No VAT",
+  "@setupLevelNameTaxNone": {
+    "description": "#3485 setupLevelName: the label for case 'tax_none'."
+  },
+  "setupLevelNameTaxVat": "VAT",
+  "@setupLevelNameTaxVat": {
+    "description": "#3485 setupLevelName: the label for case 'tax_vat'."
+  },
+  "setupLevelNameTaxBooks": "Books",
+  "@setupLevelNameTaxBooks": {
+    "description": "#3485 setupLevelName: the label for case 'tax_books'."
+  },
+  "setupLevelNamePurchasesNone": "None",
+  "@setupLevelNamePurchasesNone": {
+    "description": "#3485 setupLevelName: the label for case 'purchases_none'."
+  },
+  "setupLevelNamePurchasesExpenses": "Expenses",
+  "@setupLevelNamePurchasesExpenses": {
+    "description": "#3485 setupLevelName: the label for case 'purchases_expenses'."
+  },
+  "setupLevelNamePurchasesFull": "Full purchasing",
+  "@setupLevelNamePurchasesFull": {
+    "description": "#3485 setupLevelName: the label for case 'purchases_full'."
+  },
+  "setupLevelNamePresentationBasic": "Basic",
+  "@setupLevelNamePresentationBasic": {
+    "description": "#3485 setupLevelName: the label for case 'presentation_basic'."
+  },
+  "setupLevelNamePresentationBranded": "Your colours",
+  "@setupLevelNamePresentationBranded": {
+    "description": "#3485 setupLevelName: the label for case 'presentation_branded'."
+  },
+  "setupLevelNamePresentationPublic": "Public page",
+  "@setupLevelNamePresentationPublic": {
+    "description": "#3485 setupLevelName: the label for case 'presentation_public'."
+  },
+  "setupLevelNameOperationsBasic": "Basic",
+  "@setupLevelNameOperationsBasic": {
+    "description": "#3485 setupLevelName: the label for case 'operations_basic'."
+  },
+  "setupLevelNameOperationsInsight": "Figures",
+  "@setupLevelNameOperationsInsight": {
+    "description": "#3485 setupLevelName: the label for case 'operations_insight'."
+  },
+  "setupLevelNameOperationsAdvanced": "Advanced",
+  "@setupLevelNameOperationsAdvanced": {
+    "description": "#3485 setupLevelName: the label for case 'operations_advanced'."
+  },
+  "setupLevelNameAssistantOff": "Off",
+  "@setupLevelNameAssistantOff": {
+    "description": "#3485 setupLevelName: the label for case 'assistant_off'."
+  },
+  "setupLevelNameAssistantOn": "On",
+  "@setupLevelNameAssistantOn": {
+    "description": "#3485 setupLevelName: the label for case 'assistant_on'."
+  },
+  "setupReasonDoorTablet": "Because a tablet at the door checks people in",
+  "@setupReasonDoorTablet": {
+    "description": "#3485 setupReason: the label for case 'door_tablet'."
+  },
+  "setupReasonKeepsBooks": "Because you keep accounting books",
+  "@setupReasonKeepsBooks": {
+    "description": "#3485 setupReason: the label for case 'keeps_books'."
+  },
+  "setupReasonLater": "Because an assistant can come later",
+  "@setupReasonLater": {
+    "description": "#3485 setupReason: the label for case 'later'."
+  },
+  "setupReasonMembersOnly": "Because only members see the space",
+  "@setupReasonMembersOnly": {
+    "description": "#3485 setupReason: the label for case 'members_only'."
+  },
+  "setupReasonMembersOwe": "Because members owe the space money",
+  "@setupReasonMembersOwe": {
+    "description": "#3485 setupReason: the label for case 'members_owe'."
+  },
+  "setupReasonNoMoney": "Because no money changes hands",
+  "@setupReasonNoMoney": {
+    "description": "#3485 setupReason: the label for case 'no_money'."
+  },
+  "setupReasonNoPurchases": "Because the space buys nothing it tracks",
+  "@setupReasonNoPurchases": {
+    "description": "#3485 setupReason: the label for case 'no_purchases'."
+  },
+  "setupReasonNoVat": "Because the space is not registered for VAT",
+  "@setupReasonNoVat": {
+    "description": "#3485 setupReason: the label for case 'no_vat'."
+  },
+  "setupReasonOrganised": "Because several people decide together",
+  "@setupReasonOrganised": {
+    "description": "#3485 setupReason: the label for case 'organised'."
+  },
+  "setupReasonPayByTransfer": "Because members pay by transfer",
+  "@setupReasonPayByTransfer": {
+    "description": "#3485 setupReason: the label for case 'pay_by_transfer'."
+  },
+  "setupReasonPayOnline": "Because members pay online",
+  "@setupReasonPayOnline": {
+    "description": "#3485 setupReason: the label for case 'pay_online'."
+  },
+  "setupReasonPublicPage": "Because the space has a public page",
+  "@setupReasonPublicPage": {
+    "description": "#3485 setupReason: the label for case 'public_page'."
+  },
+  "setupReasonSeveralRooms": "Because there are several rooms or sites",
+  "@setupReasonSeveralRooms": {
+    "description": "#3485 setupReason: the label for case 'several_rooms'."
+  },
+  "setupReasonSharedPlaces": "Because members share the places",
+  "@setupReasonSharedPlaces": {
+    "description": "#3485 setupReason: the label for case 'shared_places'."
+  },
+  "setupReasonSmallCommunity": "Because the community is small",
+  "@setupReasonSmallCommunity": {
+    "description": "#3485 setupReason: the label for case 'small_community'."
+  },
+  "setupReasonStartSimple": "Because you want to start simple",
+  "@setupReasonStartSimple": {
+    "description": "#3485 setupReason: the label for case 'start_simple'."
+  },
+  "setupReasonTracksPurchases": "Because you track what the space buys",
+  "@setupReasonTracksPurchases": {
+    "description": "#3485 setupReason: the label for case 'tracks_purchases'."
+  },
+  "setupReasonVatRegistered": "Because the space is registered for VAT",
+  "@setupReasonVatRegistered": {
+    "description": "#3485 setupReason: the label for case 'vat_registered'."
+  },
+  "setupReasonIssuesInvoices": "Because you issue invoices",
+  "@setupReasonIssuesInvoices": {
+    "description": "#3485 setupReason: the label for case 'issues_invoices'."
+  },
+  "setupReasonAssociation": "Because an association decides together, with its board",
+  "@setupReasonAssociation": {
+    "description": "#3485 setupReason: the label for case 'association'."
+  },
+  "setupReasonApproveBookings": "Because bookings wait for an approval",
+  "@setupReasonApproveBookings": {
+    "description": "#3485 setupReason: the label for case 'approve_bookings'."
+  },
+  "setupPresetNameEssentiel": "Essential",
+  "@setupPresetNameEssentiel": {
+    "description": "#3485 setupPresetName: the label for case 'essentiel'."
+  },
+  "setupPresetNameStandard": "Standard",
+  "@setupPresetNameStandard": {
+    "description": "#3485 setupPresetName: the label for case 'standard'."
+  },
+  "setupPresetNameComplet": "Complete",
+  "@setupPresetNameComplet": {
+    "description": "#3485 setupPresetName: the label for case 'complet'."
   },
   "setupLevelsTitle": "What your space does",
   "@setupLevelsTitle": {

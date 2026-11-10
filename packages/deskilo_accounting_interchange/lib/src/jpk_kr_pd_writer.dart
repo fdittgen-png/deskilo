@@ -3,9 +3,9 @@
 // #2379 — JPK_KR_PD(1) v1-1 for the supplied frozen posting ledger and
 // explicit supplementary Polish facts. It does not assert complete books
 // or acceptance by the authority.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:xml/xml.dart';
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'jpk_kr_pd_gap.dart';
 import 'jpk_kr_pd_validation.dart';
 

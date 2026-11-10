@@ -8,6 +8,7 @@
 import '../../../core/i18n/app_format.dart';
 import '../../../core/l10n/payment_instructions_labels.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/presentation/screens/roles_screen_labels.dart';
 
