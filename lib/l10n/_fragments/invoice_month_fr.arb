@@ -1,0 +1,22 @@
+{
+  "invoiceMonthTitle": "Facturer {month}",
+  "invoiceMonthNote": "Une facture émise ne peut plus être modifiée ; une erreur se corrige par une facture de remplacement.",
+  "invoiceMonthLineCaption": "Positions de {month}",
+  "invoiceMonthSummary": "{count, plural, =0{Aucun client sélectionné} =1{1 client · {total}} other{{count} clients · {total}}}",
+  "invoiceMonthIssue": "{count, plural, =0{Émettre les factures} =1{Émettre 1 facture} other{Émettre {count} factures}}",
+  "invoiceMonthIssuing": "Émission…",
+  "invoiceMonthProforma": "Voir la proforma",
+  "invoiceMonthResultTitle": "{count, plural, =1{1 facture émise} other{{count} factures émises}}",
+  "invoiceMonthResultNone": "Rien n'a été émis",
+  "invoiceMonthResultSubtitle": "Chaque client la voit maintenant dans son compte et reçoit une notification.",
+  "invoiceMonthResultNoneSubtitle": "Aucune facture n'existe encore pour ce qui suit.",
+  "invoiceMonthIssued": "Émise",
+  "invoiceMonthHeld": "Attend une validation",
+  "invoiceMonthNotDone": "Non fait",
+  "invoiceMonthNotIssued": "Le serveur ne l'a pas émise.",
+  "invoiceMonthUnknown": "Non confirmée : elle existe peut-être. Vérifiez à nouveau.",
+  "invoiceMonthStays": "Ce qui n'a pas été fait reste dans « À faire ».",
+  "invoiceMonthRetry": "Réessayer pour celles-ci",
+  "invoiceMonthCheckAgain": "Vérifier à nouveau",
+  "invoiceMonthDone": "Terminé"
+}

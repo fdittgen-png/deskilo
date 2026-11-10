@@ -1,0 +1,110 @@
+{
+  "invoiceMonthTitle": "Invoice {month}",
+  "@invoiceMonthTitle": {
+    "description": "#3587 R1-e: title of the Invoice-the-month flow",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthNote": "An issued invoice can no longer be edited; a mistake is corrected with a replacement.",
+  "@invoiceMonthNote": {
+    "description": "#3587 R1-e: the line that says an issued invoice is immutable"
+  },
+  "invoiceMonthLineCaption": "Positions of {month}",
+  "@invoiceMonthLineCaption": {
+    "description": "#3587 R1-e: caption under a customer line of the month flow",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthSummary": "{count, plural, =0{Nobody selected} =1{1 customer · {total}} other{{count} customers · {total}}}",
+  "@invoiceMonthSummary": {
+    "description": "#3587 R1-e: how many customers are selected and their total",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthIssue": "{count, plural, =0{Issue invoices} =1{Issue 1 invoice} other{Issue {count} invoices}}",
+  "@invoiceMonthIssue": {
+    "description": "#3587 R1-e: the one filled action of the month flow",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceMonthIssuing": "Issuing…",
+  "@invoiceMonthIssuing": {
+    "description": "#3587 R1-e: the issue button while it works"
+  },
+  "invoiceMonthProforma": "Preview the proforma",
+  "@invoiceMonthProforma": {
+    "description": "#3587 R1-e: tooltip: preview a customer's proforma before issuing"
+  },
+  "invoiceMonthResultTitle": "{count, plural, =1{1 invoice issued} other{{count} invoices issued}}",
+  "@invoiceMonthResultTitle": {
+    "description": "#3587 R1-e: result page title when something was issued",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceMonthResultNone": "Nothing was issued",
+  "@invoiceMonthResultNone": {
+    "description": "#3587 R1-e: result page title when nothing was issued"
+  },
+  "invoiceMonthResultSubtitle": "Each customer sees it in their account now and gets a notification.",
+  "@invoiceMonthResultSubtitle": {
+    "description": "#3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)"
+  },
+  "invoiceMonthResultNoneSubtitle": "No invoice exists yet for what is listed below.",
+  "@invoiceMonthResultNoneSubtitle": {
+    "description": "#3587 R1-e: result page subtitle when nothing was issued"
+  },
+  "invoiceMonthIssued": "Issued",
+  "@invoiceMonthIssued": {
+    "description": "#3587 R1-e: chip on an issued invoice"
+  },
+  "invoiceMonthHeld": "Waits for a validation",
+  "@invoiceMonthHeld": {
+    "description": "#3587 R1-e: chip on an invoice a validation policy holds"
+  },
+  "invoiceMonthNotDone": "Not done",
+  "@invoiceMonthNotDone": {
+    "description": "#3587 R1-e: heading of what the server did not issue"
+  },
+  "invoiceMonthNotIssued": "The server did not issue it.",
+  "@invoiceMonthNotIssued": {
+    "description": "#3587 R1-e: reason line when the server refused without words"
+  },
+  "invoiceMonthUnknown": "Could not be confirmed: it may exist. Check again.",
+  "@invoiceMonthUnknown": {
+    "description": "#3587 R1-e: reason line when the answer was lost"
+  },
+  "invoiceMonthStays": "What was not done stays in To do.",
+  "@invoiceMonthStays": {
+    "description": "#3587 R1-e: where what was not issued stays"
+  },
+  "invoiceMonthRetry": "Retry for these",
+  "@invoiceMonthRetry": {
+    "description": "#3587 R1-e: retry only the customers the server refused"
+  },
+  "invoiceMonthCheckAgain": "Check again",
+  "@invoiceMonthCheckAgain": {
+    "description": "#3587 R1-e: look again for the customers whose answer was lost"
+  },
+  "invoiceMonthDone": "Done",
+  "@invoiceMonthDone": {
+    "description": "#3587 R1-e: leave the result page"
+  }
+}

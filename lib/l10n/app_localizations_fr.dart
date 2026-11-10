@@ -14154,6 +14154,101 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une vérification VIES valide du numéro de TVA du membre (requise pour l\'autoliquidation ; si VIES n\'a pas répondu, réessayez plus tard)';
 
   @override
+  String get invoiceMonthCheckAgain => 'Vérifier à nouveau';
+
+  @override
+  String get invoiceMonthDone => 'Terminé';
+
+  @override
+  String get invoiceMonthHeld => 'Attend une validation';
+
+  @override
+  String invoiceMonthIssue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Émettre $count factures',
+      one: 'Émettre 1 facture',
+      zero: 'Émettre les factures',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthIssued => 'Émise';
+
+  @override
+  String get invoiceMonthIssuing => 'Émission…';
+
+  @override
+  String invoiceMonthLineCaption(String month) {
+    return 'Positions de $month';
+  }
+
+  @override
+  String get invoiceMonthNotDone => 'Non fait';
+
+  @override
+  String get invoiceMonthNotIssued => 'Le serveur ne l\'a pas émise.';
+
+  @override
+  String get invoiceMonthNote =>
+      'Une facture émise ne peut plus être modifiée ; une erreur se corrige par une facture de remplacement.';
+
+  @override
+  String get invoiceMonthProforma => 'Voir la proforma';
+
+  @override
+  String get invoiceMonthResultNone => 'Rien n\'a été émis';
+
+  @override
+  String get invoiceMonthResultNoneSubtitle =>
+      'Aucune facture n\'existe encore pour ce qui suit.';
+
+  @override
+  String get invoiceMonthResultSubtitle =>
+      'Chaque client la voit maintenant dans son compte et reçoit une notification.';
+
+  @override
+  String invoiceMonthResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count factures émises',
+      one: '1 facture émise',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthRetry => 'Réessayer pour celles-ci';
+
+  @override
+  String get invoiceMonthStays =>
+      'Ce qui n\'a pas été fait reste dans « À faire ».';
+
+  @override
+  String invoiceMonthSummary(int count, String total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count clients · $total',
+      one: '1 client · $total',
+      zero: 'Aucun client sélectionné',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthTitle(String month) {
+    return 'Facturer $month';
+  }
+
+  @override
+  String get invoiceMonthUnknown =>
+      'Non confirmée : elle existe peut-être. Vérifiez à nouveau.';
+
+  @override
   String get invoiceNoOpen => 'Aucune facture en cours.';
 
   @override

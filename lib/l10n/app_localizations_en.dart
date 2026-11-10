@@ -14015,6 +14015,100 @@ class AppLocalizationsEn extends AppLocalizations {
       'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)';
 
   @override
+  String get invoiceMonthCheckAgain => 'Check again';
+
+  @override
+  String get invoiceMonthDone => 'Done';
+
+  @override
+  String get invoiceMonthHeld => 'Waits for a validation';
+
+  @override
+  String invoiceMonthIssue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Issue $count invoices',
+      one: 'Issue 1 invoice',
+      zero: 'Issue invoices',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthIssued => 'Issued';
+
+  @override
+  String get invoiceMonthIssuing => 'Issuing…';
+
+  @override
+  String invoiceMonthLineCaption(String month) {
+    return 'Positions of $month';
+  }
+
+  @override
+  String get invoiceMonthNotDone => 'Not done';
+
+  @override
+  String get invoiceMonthNotIssued => 'The server did not issue it.';
+
+  @override
+  String get invoiceMonthNote =>
+      'An issued invoice can no longer be edited; a mistake is corrected with a replacement.';
+
+  @override
+  String get invoiceMonthProforma => 'Preview the proforma';
+
+  @override
+  String get invoiceMonthResultNone => 'Nothing was issued';
+
+  @override
+  String get invoiceMonthResultNoneSubtitle =>
+      'No invoice exists yet for what is listed below.';
+
+  @override
+  String get invoiceMonthResultSubtitle =>
+      'Each customer sees it in their account now and gets a notification.';
+
+  @override
+  String invoiceMonthResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices issued',
+      one: '1 invoice issued',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthRetry => 'Retry for these';
+
+  @override
+  String get invoiceMonthStays => 'What was not done stays in To do.';
+
+  @override
+  String invoiceMonthSummary(int count, String total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count customers · $total',
+      one: '1 customer · $total',
+      zero: 'Nobody selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthTitle(String month) {
+    return 'Invoice $month';
+  }
+
+  @override
+  String get invoiceMonthUnknown =>
+      'Could not be confirmed: it may exist. Check again.';
+
+  @override
   String get invoiceNoOpen => 'No open invoices.';
 
   @override

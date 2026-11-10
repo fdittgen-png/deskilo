@@ -22,13 +22,7 @@ const Map<String, String> _allowed = {
       '#3587 R1-c — the invoicing home and its pages read it',
   'lib/core/ui/kit/filter_chips.dart::FilterChips':
       '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/kit_card.dart::QuietLine':
-      '#3587 R1-c — the invoicing home and its pages read it',
   'lib/core/ui/kit/owed_card.dart::OwedCard':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/result_page.dart::ResultPage':
-      '#3587 R1-c — the invoicing home and its pages read it',
-  'lib/core/ui/kit/select_row.dart::SelectRow':
       '#3587 R1-c — the invoicing home and its pages read it',
   'lib/core/ui/kit/split_bar.dart::LegendToggle':
       '#3587 R1-c — the invoicing home and its pages read it',

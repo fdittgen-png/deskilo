@@ -23272,6 +23272,126 @@ abstract class AppLocalizations {
   /// **'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
   String get invoiceMissingVies;
 
+  /// #3587 R1-e: look again for the customers whose answer was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get invoiceMonthCheckAgain;
+
+  /// #3587 R1-e: leave the result page
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get invoiceMonthDone;
+
+  /// #3587 R1-e: chip on an invoice a validation policy holds
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for a validation'**
+  String get invoiceMonthHeld;
+
+  /// #3587 R1-e: the one filled action of the month flow
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Issue invoices} =1{Issue 1 invoice} other{Issue {count} invoices}}'**
+  String invoiceMonthIssue(int count);
+
+  /// #3587 R1-e: chip on an issued invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get invoiceMonthIssued;
+
+  /// #3587 R1-e: the issue button while it works
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing…'**
+  String get invoiceMonthIssuing;
+
+  /// #3587 R1-e: caption under a customer line of the month flow
+  ///
+  /// In en, this message translates to:
+  /// **'Positions of {month}'**
+  String invoiceMonthLineCaption(String month);
+
+  /// #3587 R1-e: heading of what the server did not issue
+  ///
+  /// In en, this message translates to:
+  /// **'Not done'**
+  String get invoiceMonthNotDone;
+
+  /// #3587 R1-e: reason line when the server refused without words
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not issue it.'**
+  String get invoiceMonthNotIssued;
+
+  /// #3587 R1-e: the line that says an issued invoice is immutable
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice can no longer be edited; a mistake is corrected with a replacement.'**
+  String get invoiceMonthNote;
+
+  /// #3587 R1-e: tooltip: preview a customer's proforma before issuing
+  ///
+  /// In en, this message translates to:
+  /// **'Preview the proforma'**
+  String get invoiceMonthProforma;
+
+  /// #3587 R1-e: result page title when nothing was issued
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was issued'**
+  String get invoiceMonthResultNone;
+
+  /// #3587 R1-e: result page subtitle when nothing was issued
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice exists yet for what is listed below.'**
+  String get invoiceMonthResultNoneSubtitle;
+
+  /// #3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)
+  ///
+  /// In en, this message translates to:
+  /// **'Each customer sees it in their account now and gets a notification.'**
+  String get invoiceMonthResultSubtitle;
+
+  /// #3587 R1-e: result page title when something was issued
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 invoice issued} other{{count} invoices issued}}'**
+  String invoiceMonthResultTitle(int count);
+
+  /// #3587 R1-e: retry only the customers the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Retry for these'**
+  String get invoiceMonthRetry;
+
+  /// #3587 R1-e: where what was not issued stays
+  ///
+  /// In en, this message translates to:
+  /// **'What was not done stays in To do.'**
+  String get invoiceMonthStays;
+
+  /// #3587 R1-e: how many customers are selected and their total
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nobody selected} =1{1 customer · {total}} other{{count} customers · {total}}}'**
+  String invoiceMonthSummary(int count, String total);
+
+  /// #3587 R1-e: title of the Invoice-the-month flow
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {month}'**
+  String invoiceMonthTitle(String month);
+
+  /// #3587 R1-e: reason line when the answer was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be confirmed: it may exist. Check again.'**
+  String get invoiceMonthUnknown;
+
   /// Open tab empty state
   ///
   /// In en, this message translates to:
