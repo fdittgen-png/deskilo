@@ -15,8 +15,14 @@
 // without a conflict and the merged file is still exactly what this tool
 // writes (test/tool/generated_merge_test.dart).
 //
+// #3486 — every English key carries `@key.description`: the translator's
+// only context otherwise is the key's name. The keys recorded without one in
+// tool/arb_undescribed_keys.txt are allowed until they get one; a new key
+// without a description, or a listed key that now has one, fails the build.
+//
 // Usage:
-//   dart run tool/build_arb.dart
+//   dart run tool/build_arb.dart [--fragments <dir>] [--out <dir>]
+//                                [--undescribed <file>]
 //   flutter gen-l10n   (always run afterwards)
 
 import 'dart:convert';
@@ -25,11 +31,20 @@ import 'dart:io';
 const supportedLocales = ['en', 'fr', 'de', 'es', 'it'];
 const fragmentsDir = 'lib/l10n/_fragments';
 const outputDir = 'lib/l10n';
+const undescribedList = 'tool/arb_undescribed_keys.txt';
 
-void main() {
-  final dir = Directory(fragmentsDir);
+void main(List<String> args) {
+  String option(String name, String fallback) {
+    final i = args.indexOf('--$name');
+    return i >= 0 && i + 1 < args.length ? args[i + 1] : fallback;
+  }
+
+  final fragments = option('fragments', fragmentsDir);
+  final output = option('out', outputDir);
+  final undescribedFile = option('undescribed', undescribedList);
+  final dir = Directory(fragments);
   if (!dir.existsSync()) {
-    stderr.writeln('No $fragmentsDir directory found.');
+    stderr.writeln('No $fragments directory found.');
     exitCode = 1;
     return;
   }
@@ -73,12 +88,51 @@ void main() {
       }
     }
 
-    final out = File('$outputDir/app_$locale.arb')
+    if (locale == 'en' && !_descriptionsHold(merged, undescribedFile)) {
+      exitCode = 1;
+      return;
+    }
+
+    final out = File('$output/app_$locale.arb')
       ..writeAsStringSync(encodeArb(merged));
     stdout.writeln(
       'Wrote ${out.path} (${merged.keys.where((k) => !k.startsWith('@')).length} keys)',
     );
   }
+}
+
+/// The English keys without a non-empty `@key.description`.
+Set<String> undescribedKeys(Map<String, dynamic> english) => {
+  for (final k in english.keys)
+    if (!k.startsWith('@') && !_described(english['@$k'])) k,
+};
+
+bool _described(Object? meta) =>
+    meta is Map &&
+    meta['description'] is String &&
+    (meta['description'] as String).trim().isNotEmpty;
+
+/// Whether the English keys keep #3486's rule against [listFile]; the
+/// reasons it does not are written to stderr.
+bool _descriptionsHold(Map<String, dynamic> english, String listFile) {
+  final file = File(listFile);
+  final allowed = file.existsSync()
+      ? {
+          for (final line in file.readAsLinesSync())
+            if (line.trim().isNotEmpty && !line.startsWith('#')) line.trim(),
+        }
+      : <String>{};
+  final missing = undescribedKeys(english);
+  final added = missing.difference(allowed).toList()..sort();
+  final described = allowed.difference(missing).toList()..sort();
+  for (final k in added) {
+    stderr.writeln('"$k" has no @$k.description: say what a translator needs '
+        'to know (where it shows, what the placeholders are).');
+  }
+  for (final k in described) {
+    stderr.writeln('"$k" is described now (or gone): remove it from $listFile.');
+  }
+  return added.isEmpty && described.isEmpty;
 }
 
 /// The aggregate's text: `@@locale` first, then every key in code-unit

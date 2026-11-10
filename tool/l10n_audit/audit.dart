@@ -10,9 +10,10 @@
 // a string reaches a member's eyes. This finds those positions and
 // reports what is NOT going through `AppLocalizations`.
 //
-// The repository's idiom is `l10n?.someKey ?? 'English fallback'`: the
-// fallback literal is correct and stays. So a literal counts only when
-// nothing hands it a localized value first.
+// The repository's idiom is `context.l10n.someKey`: the localizations are
+// never null (#2388). A literal that still follows a localized value (an
+// old `?? 'fallback'`) is not what a member reads, so a literal counts only
+// when nothing hands it a localized value first.
 import 'dart:io';
 
 /// Where a string becomes something a member reads.
