@@ -3484,6 +3484,7 @@ Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworkin
 
 **Da sapere**
 
+- La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.
 - Un tipo senza posti disattiva tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale. **Mostra tutto** elenca ogni funzione.
 - Nulla cambia prima di **Salva**; **Annulla** lascia tutto com’è. Scegliere un tipo più tardi propone di nuovo e non cambia mai nulla in silenzio.
 - Una funzione non ancora stabile si attiva solo se la spunta; altrimenti la attivi più tardi in **Funzioni**.

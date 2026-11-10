@@ -23,5 +23,6 @@
   "businessKindShowAll": "Tout afficher",
   "businessKindNoChange": "Les fonctions restent telles quelles.",
   "businessKindConsentTitle": "Pas encore stable — activé seulement si vous cochez",
-  "businessKindConsentLater": "Vous pourrez les activer plus tard dans Fonctions."
+  "businessKindConsentLater": "Vous pourrez les activer plus tard dans Fonctions.",
+  "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique."
 }

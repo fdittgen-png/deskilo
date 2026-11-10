@@ -3241,6 +3241,7 @@
   "businessKindNameSalon": "Salon",
   "businessKindNameService": "Dienstleistungsunternehmen",
   "businessKindNameStudio": "Studio",
+  "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite.",
   "businessKindNoChange": "Die Funktionen bleiben, wie sie sind.",
   "businessKindPlacesOff": "{count, plural, =1{alles rund um Plätze — Sitzplätze, Raumplan, Kiosk, Räume (1 Funktion)} other{alles rund um Plätze — Sitzplätze, Raumplan, Kiosk, Räume ({count} Funktionen)}}",
   "businessKindShowAll": "Alle anzeigen",

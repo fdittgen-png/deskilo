@@ -23,5 +23,6 @@
   "businessKindShowAll": "Alle anzeigen",
   "businessKindNoChange": "Die Funktionen bleiben, wie sie sind.",
   "businessKindConsentTitle": "Noch nicht stabil — nur eingeschaltet, wenn Sie es ankreuzen",
-  "businessKindConsentLater": "Sie können sie später unter Funktionen einschalten."
+  "businessKindConsentLater": "Sie können sie später unter Funktionen einschalten.",
+  "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite."
 }

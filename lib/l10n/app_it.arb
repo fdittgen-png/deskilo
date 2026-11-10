@@ -3241,6 +3241,7 @@
   "businessKindNameSalon": "Salone",
   "businessKindNameService": "Impresa di servizi",
   "businessKindNameStudio": "Studio",
+  "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.",
   "businessKindNoChange": "Le funzioni restano come sono.",
   "businessKindPlacesOff": "{count, plural, =1{tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale (1 funzione)} other{tutto ciò che riguarda i posti — sedute, planimetria, chiosco, sale ({count} funzioni)}}",
   "businessKindShowAll": "Mostra tutto",

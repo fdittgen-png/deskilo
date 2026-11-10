@@ -8268,6 +8268,12 @@ abstract class AppLocalizations {
   /// **'Studio'**
   String get businessKindNameStudio;
 
+  /// #3550 under the proposal of a kind without places: what this version does not do yet, and what it gives today
+  ///
+  /// In en, this message translates to:
+  /// **'Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.'**
+  String get businessKindNoBookingYet;
+
   /// #3550 the proposal of a kind that changes no feature
   ///
   /// In en, this message translates to:

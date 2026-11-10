@@ -758,5 +758,6 @@
  "businessKind_practice": "Consulta — citas",
  "businessKind_salon": "Salón — belleza, peluquería, tatuaje",
  "businessKind_service": "Otra empresa de servicios",
- "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)"
+ "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)",
+ "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública."
 }

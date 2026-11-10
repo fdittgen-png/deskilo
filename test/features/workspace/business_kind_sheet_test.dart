@@ -100,11 +100,20 @@ void main() {
       find.byKey(const ValueKey('business-kind-no-change')),
       findsOneWidget,
     );
+    expect(
+      find.byKey(const ValueKey('business-kind-no-booking-yet')),
+      findsNothing,
+    );
 
     await _tap(tester, 'business-kind-practice');
     expect(find.byKey(const ValueKey('business-kind-no-change')), findsNothing);
     expect(find.byKey(const ValueKey('business-kind-off')), findsOneWidget);
     expect(find.textContaining('everything about places'), findsOneWidget);
+    // A kind without places says what this version does not do yet.
+    expect(
+      find.byKey(const ValueKey('business-kind-no-booking-yet')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Cancel writes nothing', (tester) async {

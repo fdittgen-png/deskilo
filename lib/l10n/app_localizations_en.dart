@@ -5086,6 +5086,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessKindNameStudio => 'Studio';
 
   @override
+  String get businessKindNoBookingYet =>
+      'Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.';
+
+  @override
   String get businessKindNoChange => 'The features stay as they are.';
 
   @override

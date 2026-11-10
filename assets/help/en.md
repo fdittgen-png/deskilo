@@ -3336,6 +3336,7 @@ You run a studio, a practice or a salon rather than a coworking space, and want 
 
 **Good to know**
 
+- Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.
 - A kind without places switches off everything about places — seats, the floor plan, the kiosk, rooms. **Show all** lists every feature.
 - Nothing changes until **Save**; **Cancel** leaves everything as it is. Choosing a kind later proposes again and never switches anything silently.
 - A feature not yet reviewed as stable is switched on only if you tick it; switch it on later in **Features** otherwise.

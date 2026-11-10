@@ -758,5 +758,6 @@
  "businessKind_practice": "Ambulatorio — appuntamenti",
  "businessKind_salon": "Salone — estetica, parrucchiere, tatuaggio",
  "businessKind_service": "Altra impresa di servizi",
- "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)"
+ "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)",
+ "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica."
 }

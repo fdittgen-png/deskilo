@@ -23,5 +23,6 @@
   "businessKindShowAll": "Mostrar todo",
   "businessKindNoChange": "Las funciones se quedan como están.",
   "businessKindConsentTitle": "Aún no estable — solo se activa si lo marca",
-  "businessKindConsentLater": "Puede activarlas más tarde en Funciones."
+  "businessKindConsentLater": "Puede activarlas más tarde en Funciones.",
+  "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública."
 }

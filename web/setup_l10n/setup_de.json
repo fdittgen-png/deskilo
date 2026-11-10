@@ -758,5 +758,6 @@
  "businessKind_practice": "Praxis — Termine",
  "businessKind_salon": "Salon — Kosmetik, Friseur, Tattoo",
  "businessKind_service": "Anderes Dienstleistungsunternehmen",
- "helpAppBusinessKind": "Einrichtungsleitfaden → erster Schritt (oder Einstellungen des Space → Was für ein Unternehmen ist es?)"
+ "helpAppBusinessKind": "Einrichtungsleitfaden → erster Schritt (oder Einstellungen des Space → Was für ein Unternehmen ist es?)",
+ "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite."
 }

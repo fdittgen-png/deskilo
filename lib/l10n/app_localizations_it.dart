@@ -5117,6 +5117,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get businessKindNameStudio => 'Studio';
 
   @override
+  String get businessKindNoBookingYet =>
+      'La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.';
+
+  @override
   String get businessKindNoChange => 'Le funzioni restano come sono.';
 
   @override

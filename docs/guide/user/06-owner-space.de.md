@@ -494,6 +494,7 @@ Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space
 
 **Gut zu wissen**
 
+- Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite.
 - Eine Art ohne Plätze schaltet alles rund um Plätze aus — Sitzplätze, Raumplan, Kiosk, Räume. **Alle anzeigen** listet jede Funktion.
 - Nichts ändert sich vor **Speichern**; **Abbrechen** lässt alles, wie es ist. Eine spätere Wahl schlägt erneut vor und schaltet nie stillschweigend um.
 - Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.

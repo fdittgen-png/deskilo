@@ -95,6 +95,10 @@ class _Choice {
         e.key: e.value,
   };
 
+  /// Whether the chosen kind switches the places off.
+  bool get withoutPlaces =>
+      kinds.any((k) => k.code == kind && k.profile['placeBooking'] == false);
+
   List<String> get moreKinds => [
     for (final k in kinds)
       if (more.contains(k.code)) k.code,
@@ -142,6 +146,12 @@ List<Widget> _fields(
       refresh();
     },
   ),
+  // #3550 — a kind without places is told what this version does not do yet.
+  if (choice.withoutPlaces)
+    Text(
+      l10n.businessKindNoBookingYet,
+      key: const ValueKey('business-kind-no-booking-yet'),
+    ),
 ];
 
 /// Whether switching [key] to [value] asks for consent (#1851 A).
@@ -298,7 +308,7 @@ class BusinessKindTile extends ConsumerWidget {
     return ListTile(
       key: const ValueKey('business-kind-tile'),
       leading: const Icon(Icons.storefront_outlined),
-      title: Text(l10n.businessKindTitle),
+      title: Text(l10n.settingLabelBusinessKind),
       subtitle: profile == null
           ? null
           : Text(

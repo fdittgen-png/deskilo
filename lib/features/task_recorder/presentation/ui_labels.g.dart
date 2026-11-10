@@ -7154,6 +7154,7 @@ Map<String, _Getter> _part21() => {
   'bookRoleVatInput': (l) => l.bookRoleVatInput,
   'bookStale': (l) => l.bookStale,
   'bookingRatePlace': (l) => l.bookingRatePlace,
+  'businessKindNoBookingYet': (l) => l.businessKindNoBookingYet,
   'buyPackageDone': (l) => l.buyPackageDone,
   'buyPackageTitle': (l) => l.buyPackageTitle,
   'calendarEventActionRefused': (l) => l.calendarEventActionRefused,

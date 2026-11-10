@@ -763,7 +763,8 @@ window.SETUP_L10N={
    "businessKind_practice": "Practice — appointments",
    "businessKind_salon": "Salon — beauty, hair, tattoo",
    "businessKind_service": "Another service business",
-   "helpAppBusinessKind": "Setup guide → first step (or Workspace settings → What kind of business is it?)"
+   "helpAppBusinessKind": "Setup guide → first step (or Workspace settings → What kind of business is it?)",
+   "businessKindNoBookingYet": "Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page."
   },
   "feature": {
    "calendarTab": [
@@ -2484,7 +2485,8 @@ window.SETUP_L10N={
    "businessKind_practice": "Cabinet — rendez-vous",
    "businessKind_salon": "Salon — beauté, coiffure, tatouage",
    "businessKind_service": "Autre entreprise de services",
-   "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)"
+   "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)",
+   "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique."
   },
   "feature": {
    "calendarTab": [
@@ -4205,7 +4207,8 @@ window.SETUP_L10N={
    "businessKind_practice": "Praxis — Termine",
    "businessKind_salon": "Salon — Kosmetik, Friseur, Tattoo",
    "businessKind_service": "Anderes Dienstleistungsunternehmen",
-   "helpAppBusinessKind": "Einrichtungsleitfaden → erster Schritt (oder Einstellungen des Space → Was für ein Unternehmen ist es?)"
+   "helpAppBusinessKind": "Einrichtungsleitfaden → erster Schritt (oder Einstellungen des Space → Was für ein Unternehmen ist es?)",
+   "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite."
   },
   "feature": {
    "calendarTab": [
@@ -5926,7 +5929,8 @@ window.SETUP_L10N={
    "businessKind_practice": "Consulta — citas",
    "businessKind_salon": "Salón — belleza, peluquería, tatuaje",
    "businessKind_service": "Otra empresa de servicios",
-   "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)"
+   "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)",
+   "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública."
   },
   "feature": {
    "calendarTab": [
@@ -7647,7 +7651,8 @@ window.SETUP_L10N={
    "businessKind_practice": "Ambulatorio — appuntamenti",
    "businessKind_salon": "Salone — estetica, parrucchiere, tatuaggio",
    "businessKind_service": "Altra impresa di servizi",
-   "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)"
+   "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)",
+   "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica."
   },
   "feature": {
    "calendarTab": [

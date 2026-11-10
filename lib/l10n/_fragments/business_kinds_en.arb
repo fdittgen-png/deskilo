@@ -121,5 +121,9 @@
   "businessKindConsentLater": "You can switch these on later in Features.",
   "@businessKindConsentLater": {
     "description": "#3550 the line under the beta features: they can be switched on later"
+  },
+  "businessKindNoBookingYet": "Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.",
+  "@businessKindNoBookingYet": {
+    "description": "#3550 under the proposal of a kind without places: what this version does not do yet, and what it gives today"
   }
 }

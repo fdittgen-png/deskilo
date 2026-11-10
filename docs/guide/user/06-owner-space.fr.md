@@ -494,6 +494,7 @@ Vous tenez un studio, un cabinet ou un salon plutôt qu’un espace de coworking
 
 **Bon à savoir**
 
+- La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.
 - Un genre sans places désactive tout ce qui concerne les places — sièges, plan, borne, salles. **Tout afficher** liste chaque fonction.
 - Rien ne change avant **Enregistrer** ; **Annuler** laisse tout tel quel. Choisir un genre plus tard propose à nouveau et ne change jamais rien en silence.
 - Une fonction pas encore stable n’est activée que si vous la cochez ; sinon activez-la plus tard dans **Fonctions**.

@@ -758,5 +758,6 @@
  "businessKind_practice": "Cabinet — rendez-vous",
  "businessKind_salon": "Salon — beauté, coiffure, tatouage",
  "businessKind_service": "Autre entreprise de services",
- "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)"
+ "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)",
+ "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique."
 }

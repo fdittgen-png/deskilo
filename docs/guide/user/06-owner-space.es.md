@@ -494,6 +494,7 @@ Lleva un estudio, una consulta o un salón en lugar de un espacio de coworking y
 
 **Conviene saber**
 
+- La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.
 - Un tipo sin plazas desactiva todo lo relativo a plazas — asientos, plano, quiosco, salas. **Mostrar todo** lista cada función.
 - Nada cambia hasta **Guardar**; **Cancelar** lo deja todo como está. Elegir un tipo más tarde vuelve a proponer y nunca cambia nada en silencio.
 - Una función aún no estable solo se activa si la marca; si no, actívela más tarde en **Funciones**.

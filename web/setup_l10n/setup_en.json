@@ -758,5 +758,6 @@
  "businessKind_practice": "Practice — appointments",
  "businessKind_salon": "Salon — beauty, hair, tattoo",
  "businessKind_service": "Another service business",
- "helpAppBusinessKind": "Setup guide → first step (or Workspace settings → What kind of business is it?)"
+ "helpAppBusinessKind": "Setup guide → first step (or Workspace settings → What kind of business is it?)",
+ "businessKindNoBookingYet": "Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page."
 }
