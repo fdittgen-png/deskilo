@@ -26475,6 +26475,18 @@ abstract class AppLocalizations {
   /// **'Managed profile'**
   String get managedProfileTitle;
 
+  /// #3563 Helper under a field that names master data (a country, a currency): what can be typed.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a name or a code, or pick from the list'**
+  String get masterDataSearchHint;
+
+  /// #3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too.
+  ///
+  /// In en, this message translates to:
+  /// **'This is not a valid entry. Pick one from the list.'**
+  String get masterDataUnknownCode;
+
   /// #1801 mcp_settings
   ///
   /// In en, this message translates to:

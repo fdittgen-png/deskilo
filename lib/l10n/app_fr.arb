@@ -10412,6 +10412,8 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataSearchHint": "Saisissez un nom ou un code, ou choisissez dans la liste",
+  "masterDataUnknownCode": "Ce n'est pas une entrée valide. Choisissez-en une dans la liste.",
   "mcpApiReference": "Référence de l’API",
   "mcpApiReferenceHint": "Ce qu’un assistant peut appeler, et comment c’est autorisé",
   "mcpAssistantsTitle": "Assistants",

@@ -16103,6 +16103,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get managedProfileTitle => 'Profil géré';
 
   @override
+  String get masterDataSearchHint =>
+      'Saisissez un nom ou un code, ou choisissez dans la liste';
+
+  @override
+  String get masterDataUnknownCode =>
+      'Ce n\'est pas une entrée valide. Choisissez-en une dans la liste.';
+
+  @override
   String get mcpApiReference => 'Référence de l’API';
 
   @override

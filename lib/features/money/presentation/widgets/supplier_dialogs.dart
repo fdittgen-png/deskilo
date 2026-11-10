@@ -11,6 +11,7 @@ import 'package:flutter/semantics.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/company_lookup.dart';
@@ -378,11 +379,13 @@ class _SupplierDialogState extends State<_SupplierDialog> {
               maxLength: 20,
             ),
             _field(l10n, 'city', l10n.suppliersFieldCity, maxLength: 100),
-            _field(
-              l10n,
-              'countryCode',
-              l10n.suppliersFieldCountry,
-              maxLength: 2,
+            CountryField(
+              textKey: ValueKey(_widgetKeys['countryCode']!),
+              controller: _fields['countryCode'],
+              label: l10n.suppliersFieldCountry,
+              helper: _helper(l10n, 'countryCode'),
+              error: _step.value.countryError,
+              enabled: !_step.value.busy,
             ),
             _field(l10n, 'contact', l10n.suppliersFieldContact, maxLength: 300),
             SupplierSaveStatus(

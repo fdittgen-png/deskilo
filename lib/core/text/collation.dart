@@ -105,7 +105,10 @@ const Map<String, String> _fold = {
   'ž': 'z',
 };
 
-/// [name] lower-cased with its diacritics (and `ß`, `œ`, `æ`) folded away.
+/// [name] lower-cased with its diacritics (and `ß`, `œ`, `æ`) folded away:
+/// what a search compares, so `Zurich` finds `Zürich`.
+String foldForSearch(String name) => _folded(name);
+
 String _folded(String name) {
   final lower = name.toLowerCase();
   final out = StringBuffer();

@@ -21301,6 +21301,14 @@
   "@managedProfileTitle": {
     "description": "#887 managed profiles: managedProfileTitle"
   },
+  "masterDataSearchHint": "Type a name or a code, or pick from the list",
+  "@masterDataSearchHint": {
+    "description": "#3563 Helper under a field that names master data (a country, a currency): what can be typed."
+  },
+  "masterDataUnknownCode": "This is not a valid entry. Pick one from the list.",
+  "@masterDataUnknownCode": {
+    "description": "#3563 Error under a master-data field (country, currency) whose value is outside the catalogue; shown for a stored value too."
+  },
   "mcpApiReference": "API reference",
   "@mcpApiReference": {
     "description": "#1801 mcp_settings"

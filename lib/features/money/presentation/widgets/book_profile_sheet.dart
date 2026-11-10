@@ -12,6 +12,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
@@ -288,14 +289,12 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
             ),
             if (_authority == BookAuthority.externalBook)
               ..._softwareFields(l10n, workspace.countryCode),
-            TextField(
-              key: const ValueKey('book-currency'),
+            CurrencyField(
+              textKey: const ValueKey('book-currency'),
               controller: _currency,
               onChanged: (_) => setState(() {}),
-              decoration: InputDecoration(
-                labelText: l10n.bookCurrency,
-                hintText: workspace.currencyCode,
-              ),
+              label: l10n.bookCurrency,
+              helper: workspace.currencyCode,
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(l10n.bookFiscalStart),

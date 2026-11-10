@@ -16093,6 +16093,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get managedProfileTitle => 'Verwaltetes Profil';
 
   @override
+  String get masterDataSearchHint =>
+      'Namen oder Code eingeben oder aus der Liste wählen';
+
+  @override
+  String get masterDataUnknownCode =>
+      'Das ist kein gültiger Eintrag. Wählen Sie einen aus der Liste.';
+
+  @override
   String get mcpApiReference => 'API-Referenz';
 
   @override
