@@ -17,8 +17,23 @@
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
   "purchaseApprovalVisibleReceipts": "Pending member receipts you can view",
+  "@purchaseApprovalVisibleReceipts": {
+    "description": "Shown as the text in purchase approvals screen (money)."
+  },
   "purchaseApprovalReceiptsUnavailable": "Pending receipts could not be loaded.",
+  "@purchaseApprovalReceiptsUnavailable": {
+    "description": "Shown as the text in purchase approvals screen (money)."
+  },
   "purchaseApprovalEvidenceUnavailable": "Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.",
+  "@purchaseApprovalEvidenceUnavailable": {
+    "description": "Shown as the text in purchases sheet (money)."
+  },
   "purchaseApprovalFxSame": "The bill is in the workspace currency.",
-  "purchaseApprovalFxUnavailable": "The exchange rate is unavailable in this approval view."
+  "@purchaseApprovalFxSame": {
+    "description": "Shown as the text in purchase exchange rate (money)."
+  },
+  "purchaseApprovalFxUnavailable": "The exchange rate is unavailable in this approval view.",
+  "@purchaseApprovalFxUnavailable": {
+    "description": "Shown as the text in purchase exchange rate (money)."
+  }
 }

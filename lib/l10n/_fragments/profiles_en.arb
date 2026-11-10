@@ -1,4 +1,10 @@
 {
   "profilesDefault": "Default at startup",
-  "profilesMakeDefault": "Use as default at startup"
+  "@profilesDefault": {
+    "description": "Shown as the text in profiles screen (profile)."
+  },
+  "profilesMakeDefault": "Use as default at startup",
+  "@profilesMakeDefault": {
+    "description": "Shown as the text in profiles screen (profile)."
+  }
 }

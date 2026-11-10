@@ -1,7 +1,11 @@
 {
   "authContinueWith": "or continue with",
+  "@authContinueWith": {
+    "description": "Shown as the text in auth form sections (auth)."
+  },
   "authSocialUnavailable": "{provider} sign-in is not available yet — the server has not enabled it.",
   "@authSocialUnavailable": {
+    "description": "Shown as the text in linked accounts screen (auth), and 1 other place. Placeholders: {provider} (String).",
     "placeholders": {
       "provider": {
         "type": "String"
@@ -9,11 +13,29 @@
     }
   },
   "linkedAccountsTitle": "Linked accounts",
+  "@linkedAccountsTitle": {
+    "description": "Shown as the title in linked accounts screen (auth), and 1 other place."
+  },
   "linkedAccountsIntro": "Sign into this account with any linked identity. The available providers depend on your server.",
+  "@linkedAccountsIntro": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsLink": "Link",
+  "@linkedAccountsLink": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsUnlink": "Unlink",
+  "@linkedAccountsUnlink": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsLinked": "Linked",
+  "@linkedAccountsLinked": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "linkedAccountsLinkStarted": "Continue in the browser to finish linking.",
+  "@linkedAccountsLinkStarted": {
+    "description": "Shown as the text in linked accounts screen (auth)."
+  },
   "authLinkManualDisabled": "Linking accounts is switched off on this server. Its administrator must turn on “Allow manual linking” in the authentication settings.",
   "@authLinkManualDisabled": {
     "description": "Linked accounts: authLinkManualDisabled"

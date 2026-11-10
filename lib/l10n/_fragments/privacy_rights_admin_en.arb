@@ -1,20 +1,56 @@
 {
   "@@locale": "en",
   "personalBirthday": "Birthday",
+  "@personalBirthday": {
+    "description": "Shown as the text in birthday field (profile), and 2 other places."
+  },
   "personalBirthdayHelp": "Only you, people allowed to see members' personal data and the workspace's privacy admin can read it. Someone who only issues invoices cannot.",
+  "@personalBirthdayHelp": {
+    "description": "Shown as the helper text of a field in birthday field (profile)."
+  },
   "personalBirthdayPick": "Choose a date",
+  "@personalBirthdayPick": {
+    "description": "Shown as the text in birthday field (profile)."
+  },
   "personalBirthdayClear": "Remove the birthday",
-  "personalBirthdayInvalid": "A birthday cannot be in the future or before 1900.",
+  "@personalBirthdayClear": {
+    "description": "Shown as the tooltip in birthday field (profile)."
+  },
   "personalBirthdaySaveFailed": "Your details were saved, but the birthday could not be.",
+  "@personalBirthdaySaveFailed": {
+    "description": "Shown as the error text of a field in personal info screen (profile)."
+  },
   "privacyAdminTitle": "Personal data and rights requests",
+  "@privacyAdminTitle": {
+    "description": "Shown as the title in privacy admin screen (members)."
+  },
   "privacyAdminIntro": "The requests members file about their personal data, and the incidents you record. Each request is answered within one calendar month.",
+  "@privacyAdminIntro": {
+    "description": "Shown as the subtitle in privacy screen (profile), and 1 other place."
+  },
   "privacyAdminEmpty": "No rights request yet.",
+  "@privacyAdminEmpty": {
+    "description": "Shown as the text in privacy admin screen (members)."
+  },
   "privacyAdminRecord": "Record a request",
+  "@privacyAdminRecord": {
+    "description": "Shown as the label in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminMember": "Member",
+  "@privacyAdminMember": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminKind": "Kind of request",
+  "@privacyAdminKind": {
+    "description": "Shown as the label of a field in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminDetails": "Details (optional)",
+  "@privacyAdminDetails": {
+    "description": "Shown as the label in privacy admin sheets (members)."
+  },
   "privacyAdminReceivedOn": "Received on {date}",
   "@privacyAdminReceivedOn": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place. Placeholders: {date} (String).",
     "placeholders": {
       "date": {
         "type": "String"
@@ -22,23 +58,72 @@
     }
   },
   "privacyAdminExtend": "Extend the deadline",
+  "@privacyAdminExtend": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminExtendReason": "Reason for the extension (at least 10 characters)",
+  "@privacyAdminExtendReason": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminComplete": "Complete",
+  "@privacyAdminComplete": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminRefuse": "Refuse",
+  "@privacyAdminRefuse": {
+    "description": "Shown as the text in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminOutcomeKind": "What happened to the data",
+  "@privacyAdminOutcomeKind": {
+    "description": "Shown as the label of a field in privacy admin sheets (members)."
+  },
   "privacyOutcomeRemoved": "Removed",
+  "@privacyOutcomeRemoved": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeCorrected": "Corrected",
+  "@privacyOutcomeCorrected": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeRestricted": "Restricted",
+  "@privacyOutcomeRestricted": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeRetained": "Kept (with a reason)",
+  "@privacyOutcomeRetained": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomePendingExternal": "Still open elsewhere",
+  "@privacyOutcomePendingExternal": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyOutcomeFailed": "Could not be done",
+  "@privacyOutcomeFailed": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyAdminStore": "Where (a store or a list)",
+  "@privacyAdminStore": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminBasis": "Why it is kept",
+  "@privacyAdminBasis": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminPeriod": "For how long",
+  "@privacyAdminPeriod": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminRefusalReason": "Reason for the refusal (at least 10 characters)",
+  "@privacyAdminRefusalReason": {
+    "description": "Shown as the text in privacy admin sheets (members), and 1 other place."
+  },
   "privacyAdminSave": "Save",
+  "@privacyAdminSave": {
+    "description": "Shown as the text in privacy admin sheets (members), and 3 other places."
+  },
   "privacyAdminActionFailed": "The server refused: {reason}",
   "@privacyAdminActionFailed": {
+    "description": "Shown as the text in privacy admin sheets (members). Placeholders: {reason} (String).",
     "placeholders": {
       "reason": {
         "type": "String"
@@ -46,14 +131,36 @@
     }
   },
   "privacyAdminIncidentTitle": "Record a privacy incident",
+  "@privacyAdminIncidentTitle": {
+    "description": "Shown as the label in privacy admin screen (members), and 1 other place."
+  },
   "privacyAdminIncidentIntro": "The people who handle personal data in this workspace are told at once. Name what happened; do not paste personal data here.",
+  "@privacyAdminIncidentIntro": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyIncidentDataBreach": "A data breach",
+  "@privacyIncidentDataBreach": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyIncidentWrongInvoice": "A wrong invoice",
+  "@privacyIncidentWrongInvoice": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyIncidentOther": "Another incident",
+  "@privacyIncidentOther": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyAdminIncidentNote": "What happened (optional, 1000 characters at most)",
+  "@privacyAdminIncidentNote": {
+    "description": "Shown as the label in privacy admin sheets (members)."
+  },
   "privacyAdminIncidentSend": "Record and tell them",
+  "@privacyAdminIncidentSend": {
+    "description": "Shown as the text in privacy admin sheets (members)."
+  },
   "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
   "@privacyAdminIncidentRecorded": {
+    "description": "Shown as the message in privacy admin sheets (members). Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -61,5 +168,11 @@
     }
   },
   "privacyAdminOpenTile": "Personal data and rights requests",
-  "privacyAdminLoadFailed": "The requests could not be read."
+  "@privacyAdminOpenTile": {
+    "description": "Shown as the title in privacy screen (profile)."
+  },
+  "privacyAdminLoadFailed": "The requests could not be read.",
+  "@privacyAdminLoadFailed": {
+    "description": "Shown as the text in privacy admin screen (members)."
+  }
 }

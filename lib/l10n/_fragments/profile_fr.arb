@@ -118,7 +118,6 @@
   "backendServerTitle": "Serveur",
   "backendServerDefault": "Le serveur de l'app ({host})",
   "backendServerCustom": "Votre propre serveur ({host})",
-  "backendServerHint": "Par défaut, l'app utilise son propre serveur. Si votre communauté fait tourner son propre projet Supabase, saisissez-le ici — l'app y stockera alors tout.",
   "backendUrlLabel": "URL du projet",
   "backendKeyLabel": "Clé publiable",
   "backendServerRestartHint": "L'app vous déconnecte et applique le changement au prochain démarrage.",

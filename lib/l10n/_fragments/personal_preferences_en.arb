@@ -1,6 +1,18 @@
 {
   "preferencesWorkspaceOnly": "Only for this workspace",
+  "@preferencesWorkspaceOnly": {
+    "description": "Shown as the title in preference scope controls (profile)."
+  },
   "preferencesScopeHint": "Language, appearance and regional formats. Off: edit my defaults.",
+  "@preferencesScopeHint": {
+    "description": "Shown as the subtitle in preference scope controls (profile)."
+  },
   "preferencesUseDefaults": "Use my defaults",
-  "preferencesSaveFailed": "Could not save your preferences. Please try again."
+  "@preferencesUseDefaults": {
+    "description": "Shown as the text in preference scope controls (profile)."
+  },
+  "preferencesSaveFailed": "Could not save your preferences. Please try again.",
+  "@preferencesSaveFailed": {
+    "description": "Shown as the error text of a field in preference scope controls (profile), and 4 other places."
+  }
 }

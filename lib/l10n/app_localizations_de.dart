@@ -1609,10 +1609,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get backendServerHint =>
-      'Standardmäßig nutzt die App ihren eigenen Server. Wenn Ihre Community ein eigenes Supabase-Projekt betreibt, tragen Sie es hier ein — die App speichert dann alles dort.';
-
-  @override
   String get backendServerInUse => 'Auf diesem Gerät in Gebrauch';
 
   @override
@@ -11764,9 +11760,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get guideHostGoToPage => 'Zur Seite';
-
-  @override
   String get guideHostInstruction =>
       'Lesen Sie dies und markieren Sie es als erledigt.';
 
@@ -20196,10 +20189,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nur Sie, Personen mit Einsicht in die persönlichen Daten der Mitglieder und die Datenschutzverantwortlichen des Arbeitsbereichs können es lesen. Wer nur Rechnungen stellt, kann es nicht.';
 
   @override
-  String get personalBirthdayInvalid =>
-      'Ein Geburtstag kann nicht in der Zukunft oder vor 1900 liegen.';
-
-  @override
   String get personalBirthdayPick => 'Datum wählen';
 
   @override
@@ -20797,13 +20786,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalImage => 'URL des Workspace-Bildes';
 
   @override
-  String get portalLatitude => 'Breitengrad';
-
-  @override
   String get portalList => 'Liste';
-
-  @override
-  String get portalLongitude => 'Längengrad';
 
   @override
   String get portalMap => 'Karte';
@@ -20900,9 +20883,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalSuggestionGroup => 'Gruppe';
-
-  @override
-  String get portalThisServer => 'Dieser Server';
 
   @override
   String get portalUseCode => 'E-Mail-Code verwenden';

@@ -53,28 +53,85 @@
     "description": "Country display name (workspace creation dropdown)"
   },
   "countryNameAT": "Austria",
+  "@countryNameAT": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameCH": "Switzerland",
+  "@countryNameCH": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameFR": "France",
+  "@countryNameFR": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameIT": "Italy",
+  "@countryNameIT": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameES": "Spain",
+  "@countryNameES": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNamePT": "Portugal",
+  "@countryNamePT": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameNL": "Netherlands",
+  "@countryNameNL": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameBE": "Belgium",
+  "@countryNameBE": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameLU": "Luxembourg",
+  "@countryNameLU": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameGB": "United Kingdom",
+  "@countryNameGB": {
+    "description": "Shown as the text in country names (core)."
+  },
   "countryNameUS": "United States",
+  "@countryNameUS": {
+    "description": "Shown as the text in country names (core)."
+  },
   "workspaceCodeTitle": "Workspace ID & QR",
   "workspaceCodeLabel": "Workspace ID",
+  "@workspaceCodeLabel": {
+    "description": "Shown as the label of a field in workspace code screen (workspace)."
+  },
   "workspaceCodeHint": "4–20 letters or digits, unique",
+  "@workspaceCodeHint": {
+    "description": "Shown as the text in workspace code screen (workspace)."
+  },
   "workspaceCodeEdit": "Change workspace ID",
+  "@workspaceCodeEdit": {
+    "description": "Shown as the title in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeRejected": "That ID was rejected — it must be 4–20 letters or digits and not already taken.",
+  "@workspaceCodeRejected": {
+    "description": "Shown as the error text of a field in workspace code screen (workspace)."
+  },
   "workspaceCodeExplainer": "Coworkers scan this QR code — or type the ID — to join this workspace.",
+  "@workspaceCodeExplainer": {
+    "description": "Shown as the text in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeCopy": "Copy ID",
+  "@workspaceCodeCopy": {
+    "description": "Shown as the text in workspace code screen (workspace), and 1 other place."
+  },
   "workspaceCodeCopied": "Copied",
+  "@workspaceCodeCopied": {
+    "description": "Shown as the text in workspace code screen (workspace), and 1 other place."
+  },
   "inviteRoleMember": "Member invite",
   "inviteRoleAdmin": "Administrator invite",
   "inviteAdminExplainer": "This code is single-use: it admits ONE person as an admin, then expires. Give it only to the person it is meant for.",
   "inviteAdminNewCode": "New administrator code",
+  "@inviteAdminNewCode": {
+    "description": "Shown as the label in workspace code screen (workspace), and 1 other place."
+  },
   "inviteOwnerNote": "There is no owner invite — only an owner can grant ownership, in Members & plans.",
   "scanJoinTitle": "Scan workspace QR",
   "onboardingScanButton": "Scan QR code",
@@ -117,7 +174,13 @@
   },
   "workspaceSettingsSaved": "Workspace saved.",
   "workspaceSettingsConflict": "Someone changed these settings while you were editing. Nothing was saved; your changes are still here.",
+  "@workspaceSettingsConflict": {
+    "description": "Shown as the text in workspace settings screen (workspace)."
+  },
   "provenanceProductDefault": "Product default",
+  "@provenanceProductDefault": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "provenanceFromTemplate": "From template «{name}»",
   "@provenanceFromTemplate": {
     "description": "#1307 S4 provenance chip",
@@ -128,8 +191,17 @@
     }
   },
   "provenanceWorkspaceSetting": "Workspace setting",
+  "@provenanceWorkspaceSetting": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "provenanceResetToTemplate": "Reset to template",
+  "@provenanceResetToTemplate": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "provenanceResetToDefault": "Reset to product default",
+  "@provenanceResetToDefault": {
+    "description": "Shown as the text in work hours provenance row (workspace)."
+  },
   "@workspaceSettingsSaved": {
     "description": "Snackbar after the workspace locale settings were persisted (#153)."
   },
@@ -730,5 +802,11 @@
     "description": "#713 - region name in the format picker"
   },
   "permViewNegotiations": "View commercial agreements",
-  "permManageNegotiations": "Manage commercial agreements"
+  "@permViewNegotiations": {
+    "description": "Shown as the text in roles screen labels (workspace)."
+  },
+  "permManageNegotiations": "Manage commercial agreements",
+  "@permManageNegotiations": {
+    "description": "Shown as the text in roles screen labels (workspace)."
+  }
 }

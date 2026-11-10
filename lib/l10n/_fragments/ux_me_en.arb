@@ -1,3 +1,6 @@
 {
-  "uxLinkedReference": "Linked resource"
+  "uxLinkedReference": "Linked resource",
+  "@uxLinkedReference": {
+    "description": "Shown as the text in inbox header (directory)."
+  }
 }

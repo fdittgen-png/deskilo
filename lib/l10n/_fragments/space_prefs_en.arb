@@ -1,11 +1,27 @@
 {
   "spaceFavoriteAdd": "Add to favorites",
+  "@spaceFavoriteAdd": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceFavoriteRemove": "Remove from favorites",
+  "@spaceFavoriteRemove": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceRatingClear": "No rating",
+  "@spaceRatingClear": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceMoveUp": "Move up",
+  "@spaceMoveUp": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceMoveDown": "Move down",
+  "@spaceMoveDown": {
+    "description": "Shown as the text in space row controls (me), and 1 other place."
+  },
   "spaceOptions": "Options for {name}",
   "@spaceOptions": {
+    "description": "Shown as the tooltip in space row controls (me). Placeholders: {name} (String).",
     "placeholders": {
       "name": {
         "type": "String"

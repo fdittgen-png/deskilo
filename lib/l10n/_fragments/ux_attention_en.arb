@@ -1,4 +1,14 @@
 {
   "uxAttentionSummary": "{updates} new updates · {pending} awaiting your decision",
-  "@uxAttentionSummary": {"placeholders": {"updates": {"type": "int"}, "pending": {"type": "int"}}}
+  "@uxAttentionSummary": {
+    "description": "Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).",
+    "placeholders": {
+      "updates": {
+        "type": "int"
+      },
+      "pending": {
+        "type": "int"
+      }
+    }
+  }
 }

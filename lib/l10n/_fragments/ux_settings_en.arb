@@ -1,4 +1,10 @@
 {
   "uxSettingsPersonal": "My settings",
-  "uxSettingsSpace": "Manage workspace"
+  "@uxSettingsPersonal": {
+    "description": "Shown as the text in settings screen (profile)."
+  },
+  "uxSettingsSpace": "Manage workspace",
+  "@uxSettingsSpace": {
+    "description": "Shown as the text in settings screen (profile)."
+  }
 }

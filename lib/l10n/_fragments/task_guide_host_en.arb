@@ -237,10 +237,18 @@
       }
     }
   },
-  "guideHostGoToPage": "Go to page",
   "guideHostDestination": "Step destination",
+  "@guideHostDestination": {
+    "description": "Shown as the label of a field in guide draft screen (task_recorder)."
+  },
   "guideHostDestinationMissing": "Choose the page this step refers to in the guide editor.",
+  "@guideHostDestinationMissing": {
+    "description": "Shown as the text in guide step text (task_recorder), and 5 other places."
+  },
   "taskRecorderEndReferenceMissing": "Stopped: the current form could not be identified. Open a supported page and start again.",
+  "@taskRecorderEndReferenceMissing": {
+    "description": "Shown as the text in task export labels (task_recorder), and 2 other places."
+  },
   "guideHostManualAt": "Complete this step on “{form}”, then mark it done.",
   "@guideHostManualAt": {
     "description": "Instruction naming the required form when the precise control is unknown.",

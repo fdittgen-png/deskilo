@@ -63,7 +63,6 @@
       }
     }
   },
-  "guideHostGoToPage": "Apri la pagina",
   "guideHostDestination": "Destinazione del passaggio",
   "guideHostDestinationMissing": "Scelga la pagina di questo passaggio nell’editor della guida.",
   "taskRecorderEndReferenceMissing": "Interrotto: impossibile identificare il modulo attuale. Apra una pagina supportata e ricominci.",

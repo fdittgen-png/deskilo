@@ -1,5 +1,8 @@
 {
   "eventTypePaymentInstructionsChange": "Bank account change",
+  "@eventTypePaymentInstructionsChange": {
+    "description": "Shown as the text in event labels (events)."
+  },
   "eventPaymentInstructionsChange": "{actor} changed the bank account members pay into, through an assistant and with their confirmation in the app: {fields}.",
   "@eventPaymentInstructionsChange": {
     "description": "#3132 the owner notice: who changed the bank account through an assistant, and which fields",

@@ -648,6 +648,7 @@
   },
   "taskExportValueRedacted": "not kept ({length} characters)",
   "@taskExportValueRedacted": {
+    "description": "Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).",
     "placeholders": {
       "length": {
         "type": "int"
@@ -655,5 +656,11 @@
     }
   },
   "taskExportValueOn": "on",
-  "taskExportValueOff": "off"
+  "@taskExportValueOn": {
+    "description": "Shown as the text in task export labels (task_recorder), and 1 other place."
+  },
+  "taskExportValueOff": "off",
+  "@taskExportValueOff": {
+    "description": "Shown as the text in task export labels (task_recorder), and 1 other place."
+  }
 }

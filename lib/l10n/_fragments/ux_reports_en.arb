@@ -1,7 +1,22 @@
 {
   "uxReportsTitle": "Reports",
+  "@uxReportsTitle": {
+    "description": "Shown as the title in workspace settings screen (workspace), and 2 other places."
+  },
   "uxReportsFinance": "Financial reports",
+  "@uxReportsFinance": {
+    "description": "Shown as the text in shell drawer entries (app), and 1 other place."
+  },
   "uxReportsWorkspace": "Workspace documents",
+  "@uxReportsWorkspace": {
+    "description": "Shown as the text in help tips (core), and 2 other places."
+  },
   "uxReportsTemplates": "Templates",
-  "uxReportsHint": "Financial reports, workspace documents and exports"
+  "@uxReportsTemplates": {
+    "description": "Shown as the text in shell drawer entries (app), and 1 other place."
+  },
+  "uxReportsHint": "Financial reports, workspace documents and exports",
+  "@uxReportsHint": {
+    "description": "Shown as the subtitle in workspace settings parameters (workspace), and 1 other place."
+  }
 }

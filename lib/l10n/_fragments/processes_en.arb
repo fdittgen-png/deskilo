@@ -1,64 +1,250 @@
 {
   "processWorkspaceAccess": "Workspace & access",
+  "@processWorkspaceAccess": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processSpaceManagement": "Space management",
+  "@processSpaceManagement": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processReservationsUsage": "Reservations & usage",
+  "@processReservationsUsage": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processCoordination": "Calendar & coordination",
+  "@processCoordination": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processMembershipCommerce": "Membership commerce",
+  "@processMembershipCommerce": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processBillingPayments": "Billing & payments",
+  "@processBillingPayments": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processDocumentsInformation": "Documents & information",
+  "@processDocumentsInformation": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processOperations": "Operations & administration",
+  "@processOperations": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processIntegrations": "Integrations & automation",
+  "@processIntegrations": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPeople": "People & membership",
+  "@subprocessPeople": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPhysicalAccess": "Physical access",
+  "@subprocessPhysicalAccess": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessStructure": "Space structure",
+  "@subprocessStructure": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessAvailability": "Opening days & hours",
+  "@subprocessAvailability": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPresentation": "Space presentation",
+  "@subprocessPresentation": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessReservations": "Booking desks & spaces",
+  "@subprocessReservations": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessAttendance": "Attendance & usage",
+  "@subprocessAttendance": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessCalendar": "Calendar views",
+  "@subprocessCalendar": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessDecisions": "Decisions & approvals",
+  "@subprocessDecisions": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessCommunication": "Member communication",
+  "@subprocessCommunication": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPricing": "Services & pricing",
+  "@subprocessPricing": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessRecords": "Financial records",
+  "@subprocessRecords": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessInvoicing": "Invoicing",
+  "@subprocessInvoicing": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessCollection": "Payment collection",
+  "@subprocessCollection": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessExpenses": "Shared expenses",
+  "@subprocessExpenses": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessTax": "VAT management",
+  "@subprocessTax": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessDocuments": "Document publication",
+  "@subprocessDocuments": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessReportDesign": "Report design",
+  "@subprocessReportDesign": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessPrivacy": "Personal data access & exports",
+  "@subprocessPrivacy": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessConfiguration": "Configuration & deployment",
+  "@subprocessConfiguration": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessExperience": "Application experience",
+  "@subprocessExperience": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "subprocessDelivery": "External delivery",
+  "@subprocessDelivery": {
+    "description": "Shown as the title in process names (workspace)."
+  },
   "processWorkspaceAccessDesc": "Manage membership, roles and access to the space.",
+  "@processWorkspaceAccessDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processSpaceManagementDesc": "Organize the places members can use and when they open.",
+  "@processSpaceManagementDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processReservationsUsageDesc": "Reserve capacity and track its use.",
+  "@processReservationsUsageDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processCoordinationDesc": "Coordinate activity, messages and decisions.",
+  "@processCoordinationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processMembershipCommerceDesc": "Set service prices and member agreements.",
+  "@processMembershipCommerceDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processBillingPaymentsDesc": "Turn activity into invoices and reconcile what is owed.",
+  "@processBillingPaymentsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processDocumentsInformationDesc": "Create, share and export workspace information.",
+  "@processDocumentsInformationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processOperationsDesc": "Maintain configuration and the application experience.",
+  "@processOperationsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "processIntegrationsDesc": "Deliver notifications and documents through external services.",
+  "@processIntegrationsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPeopleDesc": "Identify members and manage their membership and permissions.",
+  "@subprocessPeopleDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPhysicalAccessDesc": "Use badges, seat tags and the shared check-in kiosk.",
+  "@subprocessPhysicalAccessDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessStructureDesc": "Manage sites and the availability of plan objects.",
+  "@subprocessStructureDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessAvailabilityDesc": "Define working hours and generate closure days.",
+  "@subprocessAvailabilityDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPresentationDesc": "Help members recognize people and places on the plan.",
+  "@subprocessPresentationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessReservationsDesc": "Book seats or whole spaces under the workspace rules.",
+  "@subprocessReservationsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessAttendanceDesc": "Record attendance and close check-ins at day end.",
+  "@subprocessAttendanceDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessCalendarDesc": "See reservations and pending decisions over time.",
+  "@subprocessCalendarDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessDecisionsDesc": "Review actions and record the required approvals.",
+  "@subprocessDecisionsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessCommunicationDesc": "Exchange messages and keep track of updates.",
+  "@subprocessCommunicationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPricingDesc": "Price services and accessories and agree member terms.",
+  "@subprocessPricingDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessRecordsDesc": "Understand balances, payments and member statements.",
+  "@subprocessRecordsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessInvoicingDesc": "Issue and follow immutable invoices through settlement.",
+  "@subprocessInvoicingDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessCollectionDesc": "Collect payments and follow up overdue invoices.",
+  "@subprocessCollectionDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessExpensesDesc": "Share costs, replenish supplies and schedule recurring expenses.",
+  "@subprocessExpensesDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessTaxDesc": "Maintain VAT groups, rates and declarations.",
+  "@subprocessTaxDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessDocumentsDesc": "Publish documents and produce printable files.",
+  "@subprocessDocumentsDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessReportDesignDesc": "Design reports and maintain their text and layouts.",
+  "@subprocessReportDesignDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessPrivacyDesc": "Inspect access to personal data and export records.",
+  "@subprocessPrivacyDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessConfigurationDesc": "Transfer configuration, use templates and manage instances.",
+  "@subprocessConfigurationDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
   "subprocessExperienceDesc": "Adjust help, navigation and display preferences.",
-  "subprocessDeliveryDesc": "Connect push, WhatsApp and electronic invoice delivery."
+  "@subprocessExperienceDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  },
+  "subprocessDeliveryDesc": "Connect push, WhatsApp and electronic invoice delivery.",
+  "@subprocessDeliveryDesc": {
+    "description": "Shown as the text in process names (workspace)."
+  }
 }
