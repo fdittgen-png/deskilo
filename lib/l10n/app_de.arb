@@ -10767,6 +10767,8 @@
   "meLinkedUnavailable": "{host} hat nicht geantwortet: Diese Liste ist womöglich unvollständig.",
   "meManageSpaces": "Meine Spaces verwalten",
   "meMySpaces": "Meine Orte",
+  "meNextBook": "Buchen",
+  "meNextNothingWeek": "Diese Woche ist nichts gebucht.",
   "meNoSpaceBody": "Finden Sie einen in Ihrer Nähe, treten Sie mit einem Einladungscode bei oder gründen Sie Ihren eigenen.",
   "meNoSpaceTitle": "Sie sind noch in keinem Space",
   "meOverviewAttentionApplication": "Ihre Anfrage, {name} beizutreten, ist offen.",

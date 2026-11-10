@@ -121,5 +121,13 @@
         "type": "int"
       }
     }
+  },
+  "meNextNothingWeek": "Nothing booked this week.",
+  "meNextBook": "Book",
+  "@meNextNothingWeek": {
+    "description": "#3545 D: Next up, nothing booked in the window; the filled Book action follows"
+  },
+  "@meNextBook": {
+    "description": "#3545 D: the one filled action of Next up when nothing is booked: opens the places to book in"
   }
 }

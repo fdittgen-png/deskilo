@@ -17358,6 +17358,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get meMySpaces => 'Mes lieux';
 
   @override
+  String get meNextBook => 'Réserver';
+
+  @override
+  String get meNextNothingWeek => 'Rien de réservé cette semaine.';
+
+  @override
   String get meNoSpaceBody =>
       'Trouvez-en un près de chez vous, rejoignez-en un avec un code d\'invitation ou créez le vôtre.';
 
