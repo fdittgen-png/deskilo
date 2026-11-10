@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3587 R1-a -- the dimensions of the shared kit, one place. Colours come from
+// the ambient Theme (its ColorScheme), type from its text theme, never from
+// here: the same part renders under the workspace and the personal theme.
+
+/// The kit's dimensions.
+abstract final class KitMetrics {
+  /// The inside of a card.
+  static const double cardPadding = 14;
+
+  /// The leading tile of a row.
+  static const double tile = 38;
+
+  /// The smallest tap target.
+  static const double minTarget = 48;
+
+  /// The gap between the parts of a row.
+  static const double gap = 10;
+
+  /// The height of a split bar.
+  static const double barHeight = 12;
+
+  /// The narrowest a part of a split bar is drawn, so a small share shows.
+  static const double barMinPart = 6;
+
+  /// The dot of a legend line.
+  static const double dot = 12;
+}
