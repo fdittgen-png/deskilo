@@ -8206,7 +8206,7 @@
   "instanceYou": "Lei",
   "instanceYouAreDelegate": "È un delegato del proprietario dell'istanza.",
   "instanceYouAreOwner": "È il proprietario dell'istanza.",
-  "interchangeBlock": "{kind, select, missingIssuer{il libro non indica alcun emittente} missingRevision{il profilo contabile {subject} non ha una revisione} unbalancedEntry{la scrittura {subject} non quadra} unconvertedCurrency{{subject} non è nella valuta del libro} unknownDocument{una scrittura registra il documento sconosciuto {subject}} other{{subject}}}",
+  "interchangeBlock": "{kind, select, missingIssuer{il libro non indica alcun emittente} missingRevision{il profilo contabile {subject} non ha una revisione} unbalancedEntry{la scrittura {subject} non quadra} unconvertedCurrency{{subject} non è nella valuta del libro} unknownDocument{una scrittura registra il documento sconosciuto {subject}} sourceTooLong{il numero di documento {subject} supera i 20 caratteri, che il file non accetta} unusableAccount{il conto {subject} non può essere scritto nel file} other{{subject}}}",
   "invitationAlreadyMember": "È già membro di {workspace}.",
   "invitationApprovalRequired": "Un amministratore approva i nuovi membri prima che lo spazio si apra.",
   "invitationApprovalUnknown": "Non è noto se un amministratore debba approvare.",
@@ -8422,6 +8422,7 @@
   "@invoiceExportSage": {
     "description": "#669 - accounting export formats"
   },
+  "invoiceExportSage50Ca": "Giornale Sage 50 Canada (file di testo)",
   "invoiceExportSwissKmu": "Giornale delle registrazioni svizzero (CSV, conti PMI, codici IVA)",
   "invoiceExportTrialBalance": "Bilancio di verifica, generale e ausiliario (PDF, dalla contabilità)",
   "invoiceExportXeroInvoiceCsv": "Xero (importazione fatture di vendita)",

@@ -42,7 +42,7 @@ audit_trail | audit_trail | exchange | csv | accounts=false legalId=false uncert
 bundle | bundle | exchange | zip | accounts=false legalId=true uncertified=false
 quickbooks_online_ca | -
 sage_business_cloud_ca | -
-sage50_ca | -
+sage50_ca | sage50_ca | exchange | txt | accounts=false legalId=false uncertified=false
 sage_intacct | -
 xero_ca | -
 xero_invoice_csv | xero_invoice_csv | exchange | csv | accounts=true legalId=false uncertified=false

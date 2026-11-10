@@ -12,8 +12,9 @@
 //   * Sage 100 and Sage 50 in France import the FEC, Sage 50 and Sage 100 in
 //     Germany and Austria import DATEV: they point to that target and write
 //     nothing of their own;
-//   * Sage 50 Canada's .IMP import, Sage 200 and Sage Intacct wait for a
-//     reviewed specification and say so.
+//   * Sage 50 Canada's general-journal text import is written from the local
+//     book (spec URL in sage50_ca_journal.dart); its sales-invoice .IMP
+//     layout, Sage 200 and Sage Intacct wait for a reviewed specification.
 import 'accounting_format.dart';
 
 /// The operations every Sage target takes, by API or by file.
@@ -30,6 +31,17 @@ const Set<AccountingOperation> _operations = {
 /// A Sage Business Cloud contact reference holds at most eight characters
 /// (accounting_sage.ts `CONTACT_REFERENCE_LENGTH`).
 const _contactReference = CustomerIdRule(maxLength: 8);
+
+/// #2373 -- Sage 50 Canada's general-journal text import, written from the
+/// local book's postings. The sales-invoice `.IMP` layout (a knowledge base
+/// article) is not public: it is tracked apart, not offered.
+const _sage50CaFormat = AccountingFormat(
+  id: 'sage50_ca',
+  kind: ExportKind.sage50CaJournal,
+  sources: SourceRequirements.postedOnly,
+  claim: FormatClaim.exchange,
+  extension: 'txt',
+);
 
 /// The Sage targets, in the order the sheet lists them.
 const List<AccountingTarget> sageAccountingTargets = [
@@ -174,10 +186,10 @@ const List<AccountingTarget> sageAccountingTargets = [
     id: 'sage50_ca',
     vendor: 'Sage',
     product: 'Sage 50 Accounting (Canada)',
-    edition: '.IMP sales invoices and general journal',
+    edition: 'general journal text import',
     countries: {'CA'},
     transport: AccountingTransport.file,
-    payload: AccountingPayload.documents,
+    payload: AccountingPayload.journal,
     operations: {
       AccountingOperation.sale,
       AccountingOperation.credit,
@@ -185,6 +197,7 @@ const List<AccountingTarget> sageAccountingTargets = [
       AccountingOperation.writeOff,
     },
     taxCodeModel: TaxCodeModel.perComponent,
+    format: _sage50CaFormat,
   ),
   AccountingTarget(
     id: 'sage200',

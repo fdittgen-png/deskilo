@@ -12485,6 +12485,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'unbalancedEntry': 'the entry $subject does not balance',
       'unconvertedCurrency': '$subject is not in the book\'s currency',
       'unknownDocument': 'a posting books the unknown document $subject',
+      'sourceTooLong':
+          'the document number $subject is over 20 characters, which the file does not take',
+      'unusableAccount': 'the account $subject cannot be written in the file',
       'other': '$subject',
     });
     return '$_temp0';
@@ -12902,6 +12905,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceExportSage => 'Sage 50 (audit trail)';
+
+  @override
+  String get invoiceExportSage50Ca => 'Sage 50 Canada journal (text file)';
 
   @override
   String get invoiceExportSwissKmu =>

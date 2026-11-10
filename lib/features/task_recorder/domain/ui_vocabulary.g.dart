@@ -8322,6 +8322,7 @@ const Set<String> uiLabelKeys = {
   'invoiceExportSafTNo',
   'invoiceExportSafTPt',
   'invoiceExportSage',
+  'invoiceExportSage50Ca',
   'invoiceExportSwissKmu',
   'invoiceExportTrialBalance',
   'invoiceExportXeroInvoiceCsv',
