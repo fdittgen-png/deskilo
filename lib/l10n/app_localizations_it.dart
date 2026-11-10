@@ -17177,10 +17177,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meFinanceGlanceOwed => 'Da pagare:';
 
   @override
-  String get meFindPlaceHint => 'Una postazione, yoga, un massaggio… o un nome';
+  String get meFindPlaceBrowse => 'Vedi i posti';
 
   @override
-  String get meFindPlaceNearMe => 'Cerca vicino a me';
+  String get meFindPlaceHint => 'Yoga, una postazione, un massaggio…';
 
   @override
   String get meFindPlaceTitle => 'Trovi un posto nelle vicinanze';
@@ -17493,6 +17493,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meStartedDone => 'Fatto';
+
+  @override
+  String meStartedLeft(int count, String next) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Mancano $count passi · $next',
+      one: 'Manca un passo · $next',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get meStartedNext => 'Prossimo';

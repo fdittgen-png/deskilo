@@ -16,6 +16,7 @@ import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -54,23 +55,26 @@ class HomeState {
   final Map<StartedStep, bool?> facts;
 }
 
-/// Reads the sources once for the first-visit decision and the checklist.
-HomeState homeStateOf(WidgetRef ref) {
-  final profile = ref.watch(myProfileProvider);
+/// What the spaces say: the place fact (a place, or a pending request) and
+/// whether the person has none at all; both null while a source is unread.
+({bool? fact, bool? none, PersonalWorkspaceRefs? refs}) _spacesRead(
+  WidgetRef ref,
+) {
   final answer = ref.watch(personalWorkspaceRefsProvider);
   final local = ref.watch(myWorkspacesProvider).value;
   final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
   final refs = answer.hasError && !answer.isLoading
       ? null
       : refsOfCurrentAccount(answer);
-  final nothing = refs != null && local != null && noSpaceAtAll(refs, local, linked);
-  final pending =
-      refs?.refs.any((r) => r.status == RefStatus.pending) ?? false;
-  final spaceFact = refs == null || local == null
-      ? null
-      : (!nothing || pending);
+  if (refs == null || local == null) return (fact: null, none: null, refs: refs);
+  final nothing = noSpaceAtAll(refs, local, linked);
+  final pending = refs.refs.any((r) => r.status == RefStatus.pending);
+  return (fact: !nothing || pending, none: nothing, refs: refs);
+}
 
-  // A booking ever read: any commitment in the window Home starts with.
+/// What the bookings say: the next commitment (null until read) and the
+/// booking fact -- any commitment in the window Home starts with.
+({NextCommitment? next, bool? fact}) _bookingsRead(WidgetRef ref, DateTime now) {
   final window = ref.watch(myReservationsWindowControllerProvider).value;
   final composition = window == null
       ? null
@@ -81,31 +85,44 @@ HomeState homeStateOf(WidgetRef ref) {
               ),
             )
             .value;
-  final now = ref.watch(clockProvider).now();
   final next = composition == null ? null : nextCommitmentOf(composition, now);
-  final bookingFact = composition == null || next == null || next.reading
-      ? null
-      : (composition.visible.isNotEmpty ? true : (next.complete ? false : null));
+  if (composition == null || next == null || next.reading) {
+    return (next: next, fact: null);
+  }
+  final read = composition.visible.isNotEmpty;
+  return (next: next, fact: read ? true : (next.complete ? false : null));
+}
 
+/// The profile fact: a name and a photo; null while it is being read.
+bool? _profileFact(AsyncValue<Profile?> profile) {
+  final p = profile.value;
+  return p == null ? null : p.displayName.trim().isNotEmpty && p.hasAvatar;
+}
+
+/// Reads the sources once for the first-visit decision and the checklist.
+HomeState homeStateOf(WidgetRef ref) {
+  final profile = ref.watch(myProfileProvider);
+  final now = ref.watch(clockProvider).now();
+  final spaces = _spacesRead(ref);
+  final bookings = _bookingsRead(ref, now);
   // Nothing waiting: no unpaid document, undecided request or unread message.
-  final items = attentionItemsOf(ref, now, refs);
-
-  final standing = next?.commitment != null;
-  final bool? firstVisit = spaceFact == null || next == null || items == null
+  final items = attentionItemsOf(ref, now, spaces.refs);
+  final next = bookings.next;
+  final bool? firstVisit =
+      spaces.none == null || next == null || items == null
       ? null
-      : (!spaceFact && !standing && next.complete && items.isEmpty);
-
-  final account = profile.hasValue ? profile.value != null : null;
-  final named = profile.value;
+      : (spaces.none! &&
+            !spaces.fact! &&
+            next.commitment == null &&
+            next.complete &&
+            items.isEmpty);
   return HomeState(
     firstVisit: firstVisit,
     facts: {
-      StartedStep.account: account,
-      StartedStep.space: spaceFact,
-      StartedStep.booking: bookingFact,
-      StartedStep.profile: named == null
-          ? null
-          : named.displayName.trim().isNotEmpty && named.hasAvatar,
+      StartedStep.account: profile.hasValue ? profile.value != null : null,
+      StartedStep.space: spaces.fact,
+      StartedStep.booking: bookings.fact,
+      StartedStep.profile: _profileFact(profile),
     },
   );
 }
@@ -126,8 +143,8 @@ IconData _stepIcon(StartedStep step) => switch (step) {
 
 /// The card of the four first steps: a finished one is checked, the next is
 /// bold, the others quiet.
-class FirstStepsCard extends StatelessWidget {
-  const FirstStepsCard({super.key, required this.facts});
+class _FirstStepsCard extends StatelessWidget {
+  const _FirstStepsCard({required this.facts});
 
   final Map<StartedStep, bool?> facts;
 
@@ -173,18 +190,50 @@ class FirstStepsCard extends StatelessWidget {
                 ),
                 StartedState.later => null,
               },
-              onTap: switch (row.step) {
-                StartedStep.account => null,
-                StartedStep.space ||
-                StartedStep.booking => () => context.go(_discoverFocus),
-                StartedStep.profile => () => context.go(MeTab.me.path),
-              },
+              onTap: _openStep(context, row.step),
             ),
         ],
       ),
     );
   }
 }
+
+/// While first steps remain, ONE line at the end of Home: how many are left
+/// and which comes next ("One step left · Add your name and photo"), one tap
+/// to it. The full card is the first visit's.
+class FirstStepsRow extends StatelessWidget {
+  const FirstStepsRow({super.key, required this.facts});
+
+  final Map<StartedStep, bool?> facts;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final rows = startedRows(facts);
+    final left = rows.where((r) => r.state != StartedState.done).toList();
+    final next = rows.firstWhere((r) => r.state == StartedState.next).step;
+    final text = l10n.meStartedLeft(left.length, _stepLabel(l10n, next));
+    return MeCard(
+      key: const ValueKey('me-first-steps-row'),
+      child: MeRow(
+        key: const ValueKey('me-first-steps-open'),
+        title: text,
+        semanticLabel: text,
+        leading: Icon(_stepIcon(next)),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: _openStep(context, next),
+      ),
+    );
+  }
+}
+
+VoidCallback? _openStep(BuildContext context, StartedStep step) =>
+    switch (step) {
+      StartedStep.account => null,
+      StartedStep.space ||
+      StartedStep.booking => () => context.go(MeTab.discover.path),
+      StartedStep.profile => () => context.go(MeTab.me.path),
+    };
 
 /// Discover with its search box focused (a person who asked for a place wants
 /// to type or look, not to see an empty list first).
@@ -250,26 +299,48 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              AppTextField(
-                key: const ValueKey('me-first-visit-search'),
-                controller: _search,
-                label: '',
-                readOnly: true,
-                onTap: discover,
-                hint: l10n.meFindPlaceHint,
-                prefixIcon: const Icon(Icons.search),
-                filled: true,
+              // A surface-coloured field on the hero: no border, a quiet hint
+              // and icon, so it reads as a place to start, not a disabled box.
+              Theme(
+                data: theme.copyWith(
+                  inputDecorationTheme: InputDecorationTheme(
+                    filled: true,
+                    fillColor: tokens.surface,
+                    border: const OutlineInputBorder(
+                      borderRadius: PersonalShellMetrics.controlRadiusAll,
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: PersonalShellMetrics.controlRadiusAll,
+                      borderSide: BorderSide.none,
+                    ),
+                    hintStyle: theme.textTheme.bodyLarge?.copyWith(
+                      color: tokens.secondaryText,
+                    ),
+                    prefixIconColor: tokens.secondaryText,
+                  ),
+                ),
+                child: AppTextField(
+                  key: const ValueKey('me-first-visit-search'),
+                  controller: _search,
+                  label: '',
+                  readOnly: true,
+                  onTap: discover,
+                  hint: l10n.meFindPlaceHint,
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true,
+                ),
               ),
               const SizedBox(height: AppSpacing.sm),
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: FilledButton.tonal(
-                  key: const ValueKey('me-first-visit-near-me'),
+                  key: const ValueKey('me-first-visit-browse'),
                   style: FilledButton.styleFrom(
                     minimumSize: const Size(0, PersonalShellMetrics.minTarget),
                   ),
-                  onPressed: discover,
-                  child: Text(l10n.meFindPlaceNearMe),
+                  onPressed: () => context.go(MeTab.discover.path),
+                  child: Text(l10n.meFindPlaceBrowse),
                 ),
               ),
             ],
@@ -289,7 +360,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        FirstStepsCard(facts: widget.facts),
+        _FirstStepsCard(facts: widget.facts),
         const SizedBox(height: AppSpacing.md),
         TextButton(
           key: const ValueKey('me-first-visit-run'),

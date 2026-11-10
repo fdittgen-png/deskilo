@@ -176,6 +176,7 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label.isEmpty ? null : label,
         hintText: hint,
+        hintMaxLines: 2,
         prefixIcon: prefixIcon,
         filled: filled ? true : null,
         helperText: helper,

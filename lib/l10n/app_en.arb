@@ -22666,13 +22666,13 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
-  "meFindPlaceHint": "A desk, yoga, a massage… or a name",
+  "meFindPlaceBrowse": "Browse places",
+  "@meFindPlaceBrowse": {
+    "description": "#3545 First visit: the button that opens Discover's start state."
+  },
+  "meFindPlaceHint": "Yoga, a desk, a massage…",
   "@meFindPlaceHint": {
     "description": "#3545 First visit: the placeholder of the search field in the hero card."
-  },
-  "meFindPlaceNearMe": "Search near me",
-  "@meFindPlaceNearMe": {
-    "description": "#3545 First visit: the button that opens Discover with the search focused."
   },
   "meFindPlaceTitle": "Find a place near you",
   "@meFindPlaceTitle": {
@@ -23094,6 +23094,18 @@
   "meStartedDone": "Done",
   "@meStartedDone": {
     "description": "#3545 Getting started: the mark of a finished step."
+  },
+  "meStartedLeft": "{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}",
+  "@meStartedLeft": {
+    "description": "#3545 The one line at the end of Home while first steps remain: how many are left and which comes next.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
   },
   "meStartedNext": "Next",
   "@meStartedNext": {

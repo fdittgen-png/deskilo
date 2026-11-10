@@ -28311,17 +28311,17 @@ abstract class AppLocalizations {
   /// **'To pay:'**
   String get meFinanceGlanceOwed;
 
+  /// #3545 First visit: the button that opens Discover's start state.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse places'**
+  String get meFindPlaceBrowse;
+
   /// #3545 First visit: the placeholder of the search field in the hero card.
   ///
   /// In en, this message translates to:
-  /// **'A desk, yoga, a massage… or a name'**
+  /// **'Yoga, a desk, a massage…'**
   String get meFindPlaceHint;
-
-  /// #3545 First visit: the button that opens Discover with the search focused.
-  ///
-  /// In en, this message translates to:
-  /// **'Search near me'**
-  String get meFindPlaceNearMe;
 
   /// #3545 First visit: the title of the hero card that leads to Discover.
   ///
@@ -28814,6 +28814,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get meStartedDone;
+
+  /// #3545 The one line at the end of Home while first steps remain: how many are left and which comes next.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}'**
+  String meStartedLeft(int count, String next);
 
   /// #3545 Getting started: the mark of the step to do now.
   ///

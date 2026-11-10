@@ -17037,10 +17037,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meFinanceGlanceOwed => 'To pay:';
 
   @override
-  String get meFindPlaceHint => 'A desk, yoga, a massage… or a name';
+  String get meFindPlaceBrowse => 'Browse places';
 
   @override
-  String get meFindPlaceNearMe => 'Search near me';
+  String get meFindPlaceHint => 'Yoga, a desk, a massage…';
 
   @override
   String get meFindPlaceTitle => 'Find a place near you';
@@ -17351,6 +17351,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meStartedDone => 'Done';
+
+  @override
+  String meStartedLeft(int count, String next) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count steps left · $next',
+      one: 'One step left · $next',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get meStartedNext => 'Next';

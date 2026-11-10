@@ -16,13 +16,13 @@
   "@meFindPlaceTitle": {
     "description": "#3545 First visit: the title of the hero card that leads to Discover."
   },
-  "meFindPlaceHint": "A desk, yoga, a massage… or a name",
+  "meFindPlaceHint": "Yoga, a desk, a massage…",
   "@meFindPlaceHint": {
     "description": "#3545 First visit: the placeholder of the search field in the hero card."
   },
-  "meFindPlaceNearMe": "Search near me",
-  "@meFindPlaceNearMe": {
-    "description": "#3545 First visit: the button that opens Discover with the search focused."
+  "meFindPlaceBrowse": "Browse places",
+  "@meFindPlaceBrowse": {
+    "description": "#3545 First visit: the button that opens Discover's start state."
   },
   "meInvitationTitle": "I have an invitation code",
   "@meInvitationTitle": {
@@ -67,5 +67,17 @@
   "meStartedNext": "Next",
   "@meStartedNext": {
     "description": "#3545 Getting started: the mark of the step to do now."
+  },
+  "meStartedLeft": "{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}",
+  "@meStartedLeft": {
+    "description": "#3545 The one line at the end of Home while first steps remain: how many are left and which comes next.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "next": {
+        "type": "String"
+      }
+    }
   }
 }

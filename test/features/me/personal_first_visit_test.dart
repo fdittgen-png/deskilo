@@ -16,6 +16,8 @@ import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -163,21 +165,38 @@ void main() {
       expect(_key('me-overview-next'), findsNothing);
       expect(_key('me-overview-attention'), findsNothing);
       expect(find.byType(FilledButton), findsOneWidget);
-      expect(_key('me-first-visit-near-me'), findsOneWidget);
+      expect(_key('me-first-visit-browse'), findsOneWidget);
       expect(_chip(tester, StartedStep.account), 'Done');
       expect(_chip(tester, StartedStep.space), 'Next');
       expect(_chip(tester, StartedStep.booking), '');
       expect(_chip(tester, StartedStep.profile), '');
     });
 
-    testWidgets('the search field and Search near me open Discover with the search focused', (tester) async {
-      for (final exit in ['me-first-visit-search', 'me-first-visit-near-me']) {
-        final router = await _pump(tester);
-        await tester.tap(_key(exit));
-        await tester.pumpAndSettle();
-        expect(router.state.uri.toString(), contains('discover'), reason: exit);
-        expect(router.state.uri.queryParameters['focus'], 'search', reason: exit);
-      }
+    testWidgets('the search field opens Discover with the search focused; Browse places opens it plain', (tester) async {
+      var router = await _pump(tester);
+      await tester.tap(_key('me-first-visit-search'));
+      await tester.pumpAndSettle();
+      expect(router.state.uri.toString(), contains('discover'));
+      expect(router.state.uri.queryParameters['focus'], 'search');
+      router = await _pump(tester);
+      await tester.tap(_key('me-first-visit-browse'));
+      await tester.pumpAndSettle();
+      expect(router.state.uri.toString(), contains('discover'));
+      expect(router.state.uri.queryParameters['focus'], isNull);
+    });
+
+    testWidgets('the hint is not cut off at 320 px', (tester) async {
+      // The app's own font: the test font is far wider than any real text.
+      final font = FontLoader('Roboto')
+        ..addFont(rootBundle.load('assets/fonts/Roboto-Regular.ttf'))
+        ..addFont(rootBundle.load('assets/fonts/Roboto-Bold.ttf'));
+      await font.load();
+      await _pump(tester, size: const Size(320, 2400));
+      final hint = find.text('Yoga, a desk, a massage…');
+      expect(hint, findsOneWidget);
+      final paragraph = tester.renderObject<RenderParagraph>(hint);
+      expect(paragraph.didExceedMaxLines, isFalse);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets('the invitation card and the business link lead to onboarding', (tester) async {
@@ -193,7 +212,7 @@ void main() {
   });
 
   group('after the first steps', () {
-    testWidgets('a pending request is a step done and Home is the normal one', (tester) async {
+    testWidgets('a pending request is a step done; Home is the normal one with one line at its end', (tester) async {
       final me = FakeMeRepository()
         ..workspaceRefs = const PersonalWorkspaceRefs(
           homeInstallationId: _home,
@@ -209,23 +228,35 @@ void main() {
         );
       await _pump(tester, me: me);
       expect(_key('me-first-visit'), findsNothing);
-      expect(_chip(tester, StartedStep.space), 'Done');
-      expect(_chip(tester, StartedStep.booking), 'Next');
+      expect(_key('me-getting-started'), findsNothing);
+      expect(
+        find.descendant(
+          of: _key('me-first-steps-row'),
+          matching: find.text('2 steps left · Make your first booking'),
+        ),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('a first booking marks the booking step done', (tester) async {
+    testWidgets('the line sits at the end of Home, below the sections', (tester) async {
       await _pump(
         tester,
         workspace: twoSpaces(),
         hosts: _Hosts(items: [_booking()]),
       );
-      expect(_key('me-first-visit'), findsNothing);
-      expect(_chip(tester, StartedStep.space), 'Done');
-      expect(_chip(tester, StartedStep.booking), 'Done');
-      expect(_chip(tester, StartedStep.profile), 'Next');
+      final row = tester.getTopLeft(_key('me-first-steps-row')).dy;
+      expect(row, greaterThan(tester.getTopLeft(_key('me-overview-next')).dy));
+      expect(row, greaterThan(tester.getTopLeft(_key('me-overview-attention')).dy));
+      expect(
+        find.descendant(
+          of: _key('me-first-steps-row'),
+          matching: find.text('One step left · Add your name and photo'),
+        ),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('all four done: the card is gone', (tester) async {
+    testWidgets('all four done: nothing is left to say', (tester) async {
       await _pump(
         tester,
         workspace: twoSpaces(),
@@ -233,7 +264,7 @@ void main() {
         profile: _profile(avatar: true),
       );
       expect(_key('me-first-visit'), findsNothing);
-      expect(_key('me-getting-started'), findsNothing);
+      expect(_key('me-first-steps-row'), findsNothing);
     });
 
     testWidgets('a host that fails never marks the booking done', (tester) async {
@@ -241,8 +272,8 @@ void main() {
       expect(_key('me-first-visit'), findsNothing);
       expect(
         find.descendant(
-          of: _key('me-started-booking'),
-          matching: find.text('Done'),
+          of: _key('me-first-steps-row'),
+          matching: find.textContaining('Make your first booking'),
         ),
         findsNothing,
       );

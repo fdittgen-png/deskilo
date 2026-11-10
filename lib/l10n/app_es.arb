@@ -10721,8 +10721,8 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
-  "meFindPlaceHint": "Un puesto, yoga, un masaje… o un nombre",
-  "meFindPlaceNearMe": "Buscar cerca de mí",
+  "meFindPlaceBrowse": "Ver lugares",
+  "meFindPlaceHint": "Yoga, un puesto, un masaje…",
   "meFindPlaceTitle": "Encuentra un lugar cerca",
   "meFindSpace": "Buscar un espacio",
   "meGreetingAfternoon": "Buenas tardes, {name}",
@@ -10812,6 +10812,7 @@
   "meStartedAccount": "Cree su cuenta",
   "meStartedBooking": "Haga su primera reserva",
   "meStartedDone": "Hecho",
+  "meStartedLeft": "{count, plural, =1{Queda un paso · {next}} other{Quedan {count} pasos · {next}}}",
   "meStartedNext": "Siguiente",
   "meStartedProfile": "Añada su nombre y su foto",
   "meStartedSpace": "Encontrar un lugar",

@@ -2,8 +2,8 @@
   "meWelcomeTitle": "Benvenuto, {name}",
   "meWelcomeSubtitle": "Che cosa cerca?",
   "meFindPlaceTitle": "Trovi un posto nelle vicinanze",
-  "meFindPlaceHint": "Una postazione, yoga, un massaggio… o un nome",
-  "meFindPlaceNearMe": "Cerca vicino a me",
+  "meFindPlaceHint": "Yoga, una postazione, un massaggio…",
+  "meFindPlaceBrowse": "Vedi i posti",
   "meInvitationTitle": "Ho un codice d'invito",
   "meInvitationBody": "Entri nel posto che la ha invitata",
   "meRunASpace": "Gestisce un’attività in proprio?",
@@ -14,5 +14,6 @@
   "meStartedBooking": "Faccia la sua prima prenotazione",
   "meStartedProfile": "Aggiunga il suo nome e la sua foto",
   "meStartedDone": "Fatto",
-  "meStartedNext": "Prossimo"
+  "meStartedNext": "Prossimo",
+  "meStartedLeft": "{count, plural, =1{Manca un passo · {next}} other{Mancano {count} passi · {next}}}"
 }

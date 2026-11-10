@@ -122,12 +122,12 @@ class PersonalOverview extends StatelessWidget {
                     else ...[
                       _Header(expanded: expanded),
                       const SizedBox(height: _columnGap),
-                      if (settled && !startedComplete(home.facts)) ...[
-                        FirstStepsCard(facts: home.facts),
-                        const SizedBox(height: _columnGap),
-                      ],
                       ...sections,
                       const _DiscoverJoinEntry(),
+                      if (settled && !startedComplete(home.facts)) ...[
+                        const SizedBox(height: _columnGap),
+                        FirstStepsRow(facts: home.facts),
+                      ],
                     ],
                     const SizedBox(height: AppSpacing.xl),
                   ];
