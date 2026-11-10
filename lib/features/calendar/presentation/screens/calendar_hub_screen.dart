@@ -627,8 +627,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   // ── the filters ────────────────────────────────────────────────────
   Future<void> _pickMember(Map<String, String> names, String? myId) async {
     final l10n = context.l10n;
-    final entries = names.entries.toList()
-      ..sort((a, b) => compareNames(a.value, b.value));
+    final entries = names.entries.toList()..sort((a, b) => compareNames(a.value, b.value));
     final picked = await showAppSheet<String?>(
       context: context,
       builder: (_) => SafeArea(
