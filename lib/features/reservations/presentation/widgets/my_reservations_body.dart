@@ -19,8 +19,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/session/session_source.dart';
@@ -387,7 +387,7 @@ class _List extends ConsumerWidget {
                 bottom: AppSpacing.xs,
               ),
               child: Text(
-                DateFormat.yMMMEd(format.locale).format(e.day),
+                format.dates(DateShape.weekdayDate).format(e.day),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),

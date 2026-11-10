@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
@@ -25,7 +26,7 @@ Map<String, Object?> workspaceStatusReportData(
 }) {
   final l10n = l10nOverride ?? context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final currency = moneyFormat(status.currency);
+  final currency = moneyFormat(status.currency, locale: appFormatOf(context).locale);
   final issued = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   ).format(ref.read(clockProvider).now());
@@ -77,6 +78,6 @@ Map<String, Object?> workspaceStatusReportData(
           'paid': currency.formatMinor(m.paidCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace, reference: requireWorkspaceTaxReference(ref)),
+    ...legalMentionData(reportStringsOf(l10n, formatLocale: appFormatOf(context).locale), workspace, reference: requireWorkspaceTaxReference(ref)),
   };
 }

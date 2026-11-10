@@ -3,6 +3,7 @@
 // The two dialogs of the saved-views menu: a name, and a name with a scope.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/bi_query.dart';
@@ -99,7 +100,7 @@ class _SaveDialogState extends State<BiSaveDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
-    final locale = Localizations.localeOf(context).toString();
+    final locale = appFormatOf(context).locale;
     final relative = widget.query.period.isRelative;
     final current = widget.query.current(widget.today);
     return AlertDialog(

@@ -24,6 +24,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/lock_confirm.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/save_workspace_basics.dart';
 import '../../domain/feature_countries.dart';
 import '../../domain/workspace.dart';

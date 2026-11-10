@@ -66,7 +66,7 @@ void main() {
     });
     test('speaks the reader\'s language, dates included', () {
       final data = agreementReportData(
-          reportStringsOf(AppLocalizationsFr(), dateLocale: 'fr'), facts,
+          reportStringsOf(AppLocalizationsFr(), dateLocale: 'fr', formatLocale: null), facts,
           memberName: 'Ana', subscriptionPct: 50, reference: ActiveTaxReference.current);
       final lines = (data['lines'] as List).cast<Map<String, Object?>>();
       expect(lines[1]['label'], AppLocalizationsFr().agreementExtraHalfDay);

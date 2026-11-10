@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -72,7 +72,7 @@ class InvoiceDetailSections {
   List<Widget> amounts(BuildContext context, {required bool association}) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     return [
       // The positions, exactly as the PDF prints them.
       for (final (i, position) in invoice.lines.indexed)
@@ -84,7 +84,7 @@ class InvoiceDetailSections {
               Expanded(
                 child: Text(
                   invoiceLineText(
-                    reportStringsOf(l10n),
+                    reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
                     position,
                     association: association,
                     period: invoice.period,
@@ -109,8 +109,7 @@ class InvoiceDetailSections {
               children: [
                 Expanded(
                   child: Text(
-                    '${l10n.vatPdfVat} '
-                    '${_percentLabel(total.percent)}',
+                    '${l10n.vatPdfVat} ${appFormatOf(context).rate(total.percent)}',
                     style: TextStyle(color: theme.hintColor),
                   ),
                 ),
@@ -149,7 +148,7 @@ class InvoiceDetailSections {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     Widget line(String text) => _detailLine(theme, text);
     return [
       const Divider(height: AppSpacing.xl),
@@ -186,7 +185,7 @@ class InvoiceDetailSections {
                       Expanded(
                         child: Text(
                           invoiceLineText(
-                            reportStringsOf(l10n),
+                            reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
                             position,
                             association: association,
                             period: source.period,
@@ -217,10 +216,8 @@ class InvoiceDetailSections {
   List<Widget> timeline(BuildContext context, InvoiceMatch? standingMatch) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final currency = moneyFormat(invoice.currency);
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     Widget line(String text) => _detailLine(theme, text);
     final sent = transmission;
     // The platform's answer, in the reader's language.
@@ -306,10 +303,6 @@ Widget _detailLine(ThemeData theme, String text) => Padding(
     ),
   ),
 );
-
-/// '20 %', '5.5 %' — a rate beside its caption.
-String _percentLabel(double percent) =>
-    '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
 
 /// The platform's answer, in the reader's language (#3335: also the two
 /// unsettled phases).

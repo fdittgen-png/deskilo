@@ -37,7 +37,7 @@ String _line(AppLocalizations l10n, Map<String, dynamic> payload) => eventLine(
       _event(payload),
       _names,
       const {},
-      MoneyFormat('EUR'),
+      MoneyFormat('EUR', locale: null),
     );
 
 void main() {

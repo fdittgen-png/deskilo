@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 
@@ -105,7 +106,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
               helper: widget.vatShare(draft.feeCents),
               keyboardType: amount,
               onChanged: (raw) {
-                draft.feeCents = parseMinorInput(raw);
+                draft.feeCents = appFormatOf(context).parseMinor(raw);
                 widget.onEdited();
               },
             ),
@@ -120,7 +121,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
               helper: widget.vatShare(draft.overageCents),
               keyboardType: amount,
               onChanged: (raw) {
-                draft.overageCents = parseMinorInput(raw);
+                draft.overageCents = appFormatOf(context).parseMinor(raw);
                 widget.onEdited();
               },
             ),

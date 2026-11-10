@@ -15,6 +15,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -23,6 +25,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/book_chart.dart';
 import '../../providers/book_profile_providers.dart';
 import 'accounting_targets_sheet.dart';
@@ -141,7 +144,7 @@ class _BooksPreview extends ConsumerWidget {
         key: const ValueKey('setup-accounting-pre'),
       );
     }
-    final dates = DateFormat.yMMMd(Localizations.localeOf(context).toString());
+    final dates = appFormatOf(context).dates(DateShape.date);
     final issuers = {for (final p in profiles) p.issuerSiteId};
     return Column(
       key: const ValueKey('setup-accounting-preview'),

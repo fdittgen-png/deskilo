@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'customer_id_rule.dart';
 import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart'
     show CsvDialect, csvCell;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:meta/meta.dart';
+
+import 'customer_id_rule.dart';
 
 /// Sage 50 Accounts' **audit-trail CSV** (#669, #2373) — the import shape
 /// the British and Irish Sage 50 reads, in the 18 columns of its current

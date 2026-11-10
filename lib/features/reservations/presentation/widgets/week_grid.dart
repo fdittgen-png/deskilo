@@ -2,8 +2,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/seat_state_colors.dart';
@@ -466,7 +466,7 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
     final picked = await showAppSheet<Reservation>(
       context: context,
       builder: (context) => WeekGridCellSheet(
-        title: '${seat.name} · ${DateFormat.MMMEd().format(day)}',
+        title: '${seat.name} · ${appFormatOf(context).dates(DateShape.weekdayMonthDay).format(day)}',
         items: sorted,
         myMemberId: widget.myMemberId,
         lineOf: (r) => _occupantLine(r, names, l10n),

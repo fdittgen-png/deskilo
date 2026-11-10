@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -167,7 +167,7 @@ class ConversationBubble extends ConsumerWidget {
     final l10n = context.l10n;
     final when = timeOnly
         ? ref.watch(appFormatProvider).time(note.createdAt)
-        : DateFormat.MMMd().add_Hm().format(note.createdAt.toLocal());
+        : appFormatOf(context).datesAndTime(DateShape.monthDay, note.createdAt);
     final split = splitLeadingQuote(note.body);
     // #1824 — the actions sit BESIDE the bubble, never inside it: the
     // bubble's long press (delete) must not land on a button's tooltip.

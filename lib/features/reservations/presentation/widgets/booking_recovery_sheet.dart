@@ -8,8 +8,9 @@
 // or can no longer say.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -124,14 +125,13 @@ class _BookingRecoverySheetState extends ConsumerState<BookingRecoverySheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final fmt = DateFormat.MMMd(locale).add_Hm();
+    final fmt = appFormatOf(context);
     final window =
         l10n.bookingRecoveryWindow(
           // Evaluated only when l10n is non-null (null-aware call).
           widget.spaceName ?? l10n.bookingRecoverySpaceFallback,
-          fmt.format(_intent.startsAt.toLocal()),
-          fmt.format(_intent.endsAt.toLocal()),
+          fmt.datesAndTime(DateShape.monthDay, _intent.startsAt),
+          fmt.datesAndTime(DateShape.monthDay, _intent.endsAt),
         );
     final (status, severity) = _status(l10n);
     final committed = _reservationId != null;

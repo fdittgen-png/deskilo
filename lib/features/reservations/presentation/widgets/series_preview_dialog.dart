@@ -4,8 +4,9 @@
 // and the person chooses: book the others, or nothing. A partial series is
 // never silent (spec §5.2).
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -38,7 +39,7 @@ Future<bool> confirmSeriesPreview(
   if (preview.failing.isEmpty) return true;
   if (!context.mounted) return false;
   final l10n = context.l10n;
-  final dateFormat = DateFormat.MMMEd();
+  final dateFormat = appFormatOf(context).dates(DateShape.weekdayMonthDay);
   final go = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(

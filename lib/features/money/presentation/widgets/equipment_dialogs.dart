@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -114,7 +114,7 @@ class _RegisterDialogState extends ConsumerState<_RegisterDialog> {
                             value: r,
                             child: Text(
                               '${r.description.isEmpty ? '—' : r.description} · '
-                              '${moneyFormat(r.currency).formatMinor(r.grossCents)}'
+                              '${appFormatOf(context).moneyIn(r.currency).formatMinor(r.grossCents)}'
                               '${r.supplierName.isEmpty ? '' : ' · ${r.supplierName}'}',
                               overflow: TextOverflow.ellipsis,
                             ),

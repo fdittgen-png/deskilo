@@ -36,8 +36,8 @@ void main() {
   });
 
   test('an empty currency code formats as the registry default currency', () {
-    expect(moneyFormat('').code, 'EUR');
-    expect(moneyFormat(null).code, 'EUR');
-    expect(moneyFormat('CHF').code, 'CHF');
+    expect(moneyFormat('', locale: null).code, 'EUR');
+    expect(moneyFormat(null, locale: null).code, 'EUR');
+    expect(moneyFormat('CHF', locale: null).code, 'CHF');
   });
 }

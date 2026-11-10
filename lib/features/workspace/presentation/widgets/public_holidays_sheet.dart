@@ -10,8 +10,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -147,7 +148,6 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toString();
     final preview = _preview;
     final creatable = preview?.creatable.length ?? 0;
     // Hoisted out of the widget: the no-hard-coded-strings lint matches
@@ -217,7 +217,7 @@ class _PublicHolidaysSheetState extends ConsumerState<_PublicHolidaysSheet> {
                                   ? Icons.check
                                   : Icons.event_busy_outlined),
                           title: Text(_holidayName(l10n, d.key)),
-                          subtitle: Text(DateFormat.yMMMMd(locale).format(d.day)),
+                          subtitle: Text(appFormatOf(context).dates(DateShape.longDate).format(d.day)),
                           trailing: d.locked
                               ? Text(l10n.publicHolidaysLocked)
                               : d.present

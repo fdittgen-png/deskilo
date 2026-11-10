@@ -8,8 +8,8 @@
 // plain sentences, as they will meet them when they book.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -17,6 +17,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/save_booking_limits.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/workspace.dart';
@@ -246,9 +247,7 @@ class _Stepper extends StatelessWidget {
               : null,
         ),
         Text(
-          NumberFormat.decimalPattern(
-            Localizations.localeOf(context).toLanguageTag(),
-          ).format(value),
+          appFormatOf(context).numbers().format(value),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         IconButton(

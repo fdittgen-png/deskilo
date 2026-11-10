@@ -13,9 +13,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -25,6 +24,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/save_vat_rates.dart';
 import '../../domain/report_data_sample.dart';
 import '../../domain/vat_catalogue.dart';
@@ -71,9 +71,7 @@ class SetupVatStep extends ConsumerWidget {
 /// A rate as the reader's locale writes it: 19, 5,5, 9.975.
 String _rate(BuildContext context, double percent) => percentText(
   percent,
-  decimalSeparator: NumberFormat.decimalPattern(
-    Localizations.localeOf(context).toString(),
-  ).symbols.DECIMAL_SEP,
+  decimalSeparator: appFormatOf(context).numbers().symbols.DECIMAL_SEP,
 );
 
 class _VatForm extends ConsumerStatefulWidget {
@@ -255,10 +253,7 @@ class _VatPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final money = moneyFormat(
-      currencyCode,
-      locale: Localizations.localeOf(context).toString(),
-    );
+    final money = appFormatOf(context).moneyIn(currencyCode);
     final gross = money.formatMinor(SampleInvoice.grossCents);
     final split = vatSplit(SampleInvoice.grossCents, percent);
     if (split.vatCents == 0) {

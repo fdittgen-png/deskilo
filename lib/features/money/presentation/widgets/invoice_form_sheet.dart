@@ -5,8 +5,9 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -71,7 +72,7 @@ Future<void> showInvoiceIssueSheet(
         for (final member in members)
           (id: member.id, name: names[member.id] ?? ''),
       ],
-      currency: moneyFormat(workspace.currencyCode),
+      currency: appFormatOf(context).moneyIn(workspace.currencyCode),
       preview: (memberId, period) => repo.previewInvoice(
         workspaceId: workspace.id,
         memberId: memberId,
@@ -352,9 +353,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     final replacesBanner = replacesNumber == null
         ? null
         : '${l10n.invoicePdfReplaces} $replacesNumber';
-    final monthLabel = DateFormat.yMMMM(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    ).format(_month);
+    final monthLabel = appFormatOf(context).dates(DateShape.monthYear).format(_month);
     final now = widget.now;
     final atCurrent = _month.year == now.year && _month.month == now.month;
     final preview = _preview;

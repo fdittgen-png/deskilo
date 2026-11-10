@@ -21,7 +21,7 @@ void main() {
     setUp(() => WorkspaceCurrency.install('JPY'));
 
     test('5000 yen is stored as 5000, not 500 000', () {
-      expect(parseMinorInput('5000'), 5000);
+      expect(parseMinorInput('5000', locale: 'en_US'), 5000);
     });
 
     test('and reads back as the same 5000', () {
@@ -30,7 +30,7 @@ void main() {
 
     test('the round trip is the identity', () {
       for (final typed in ['1', '250', '5000', '123456']) {
-        expect(centsToMajor(parseMinorInput(typed)!), typed);
+        expect(centsToMajor(parseMinorInput(typed, locale: 'en_US')!), typed);
       }
     });
   });
@@ -39,7 +39,7 @@ void main() {
     setUp(() => WorkspaceCurrency.install('BHD'));
 
     test('12.5 is 12 500 fils', () {
-      expect(parseMinorInput('12.5'), 12500);
+      expect(parseMinorInput('12.5', locale: 'en_US'), 12500);
     });
   });
 
@@ -47,14 +47,14 @@ void main() {
     setUp(() => WorkspaceCurrency.install('EUR'));
 
     test('12,50 is 1250 cents and reads back as 12.50', () {
-      expect(parseMinorInput('12,50'), 1250);
+      expect(parseMinorInput('12,50', locale: 'en_US'), 1250);
       expect(centsToMajor(1250), '12.50');
       expect(centsToMajor(15000), '150');
     });
   });
 
   test('with nothing installed the euro grain is the safe default', () {
-    expect(parseMinorInput('12.50'), 1250);
+    expect(parseMinorInput('12.50', locale: 'en_US'), 1250);
     expect(centsToMajor(1250), '12.50');
   });
 }

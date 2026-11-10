@@ -7,7 +7,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
@@ -160,7 +160,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
         if (_picked.contains(invoice.id)) invoice,
     ];
     final currency =
-        moneyFormat(candidates.isEmpty ? SettingDefaults.localeDefaultCurrency : candidates.first.currency);
+        appFormatOf(context).moneyIn(candidates.isEmpty ? SettingDefaults.localeDefaultCurrency : candidates.first.currency);
     final total = chosen.fold<int>(0, (sum, i) => sum + i.totalCents);
     final steps = <WizardStepSpec>[
       (name: 'pick', label: l10n.settlementStepPick),

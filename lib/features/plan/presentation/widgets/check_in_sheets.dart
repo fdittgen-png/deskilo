@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
@@ -47,7 +47,7 @@ Future<String?> showMySeatSheet(
       opensWall.month != nowWall.month ||
       opensWall.day != nowWall.day;
   final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity, leeway: leeway));
-  final opensOn = DateFormat.MMMd().format(opensWall);
+  final opensOn = appFormatOf(context).dates(DateShape.monthDay).format(opensWall);
   return showAppSheet<String>(
     context: context,
     builder: (context) => SafeArea(

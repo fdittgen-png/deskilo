@@ -16,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/launch_review.dart';
 import '../../domain/setup_status.dart';
 import '../../domain/workspace.dart';

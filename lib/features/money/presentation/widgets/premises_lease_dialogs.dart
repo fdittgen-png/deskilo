@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -105,9 +106,7 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
   }
 
   LeaseDraft? _draft() {
-    final deposit = parseMinorInput(
-      _deposit.text.isEmpty ? '0' : _deposit.text,
-    );
+    final deposit = appFormatOf(context).parseMinor(_deposit.text.isEmpty ? '0' : _deposit.text,);
     final months = int.tryParse(_months.text.trim());
     final starts = _starts;
     final supplier = _supplierId;

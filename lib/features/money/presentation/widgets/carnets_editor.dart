@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -41,7 +40,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
   Future<void> _add() async {
     final name = _name.text.trim();
     final halfDays = int.tryParse(_halfDays.text.trim());
-    final price = parseMinorInput(_price.text);
+    final price = appFormatOf(context).parseMinor(_price.text);
     final validityRaw = _validity.text.trim();
     final validity = validityRaw.isEmpty ? null : int.tryParse(validityRaw);
     if (name.isEmpty ||
@@ -74,7 +73,7 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final products = ref.watch(creditProductsProvider).value ?? const [];
-    final money = moneyFormat(WorkspaceCurrency.code);
+    final money = appFormatOf(context).moneyIn(WorkspaceCurrency.code);
     return Column(
       key: const ValueKey('carnets-editor'),
       crossAxisAlignment: CrossAxisAlignment.stretch,

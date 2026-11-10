@@ -13,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/i18n/format_controller.dart';
-import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -340,7 +339,7 @@ class FinanceGlance extends ConsumerWidget {
                               showLabel: l10n.financesShowAmount,
                               hideLabel: l10n.financesHideAmount,
                               child: Text(
-                                moneyFormat(e.key).formatMinor(e.value),
+                                appFormatOf(context).moneyIn(e.key).formatMinor(e.value),
                                 style: strong,
                               ),
                             ),

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
@@ -118,7 +119,7 @@ class WizardContext {
       settlementEnabled: features.contains(WorkspaceFeature.invoiceSettlement),
       now: now,
       workspaceId: workspace?.id ?? '',
-      currency: moneyFormat(workspace?.currencyCode),
+      currency: ref.watch(appFormatProvider).moneyIn(workspace?.currencyCode),
       members: ref.watch(workspaceMembersProvider).value ?? const [],
       names: ref.watch(memberNamesProvider).value ?? const {},
       invoices: invoices.value ?? const [],

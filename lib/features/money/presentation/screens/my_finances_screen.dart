@@ -10,9 +10,9 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/session/session_source.dart';
@@ -168,7 +168,7 @@ Future<void> _openMyPayment(
   if (!context.mounted) return;
   if (ref.read(sessionStateProvider).value != principal) return;
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
-  final local = at.toLocal();
+  final local = appFormatOf(context).wall(at);
   ref
       .read(moneyFocusControllerProvider.notifier)
       .setPeriod(yearMonth(local.year, local.month));
@@ -211,7 +211,7 @@ class _Outstanding extends ConsumerWidget {
                   const SizedBox(height: 4),
                   for (final e in data.owedByCurrency.entries)
                     Text(
-                      moneyFormat(e.key).formatMinor(e.value),
+                      appFormatOf(context).moneyIn(e.key).formatMinor(e.value),
                       style: theme.textTheme.headlineSmall?.strong.copyWith(
                         color: overdue > 0 ? theme.colorScheme.error : null,
                       ),
@@ -300,7 +300,7 @@ class _Reminders extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
+    final format = appFormatOf(context).dates(DateShape.date);
     final workspaceOf = {
       for (final i in [...data.invoices, ...dev.invoices]) i.id: i.workspaceId,
     };
@@ -331,7 +331,7 @@ class _Reminders extends ConsumerWidget {
               Text(
                 [
                   if (!isDev) r.workspaceName,
-                  format.format(r.sentAt.toLocal()),
+                  format.format(appFormatOf(context).wall(r.sentAt)),
                   if (r.automatic) l10n.financesAutomatic,
                 ].join(' · '),
                 style: theme.textTheme.bodySmall,
@@ -392,7 +392,7 @@ class _Payments extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final home = ref.watch(accountActivityProvider(AccountActivityKind.payments));
-    final format = DateFormat.yMMMd(Localizations.localeOf(context).toLanguageTag());
+    final format = appFormatOf(context).dates(DateShape.date);
     Widget list(List<AccountActivity> all) => Column(
               children: [
                 for (final e in all.where(_kept))
@@ -420,11 +420,11 @@ class _Payments extends ConsumerWidget {
                       ),
                       subtitle: Text([
                         if (e.description.isNotEmpty) e.description,
-                        format.format(e.occurredAt.toLocal()),
+                        format.format(appFormatOf(context).wall(e.occurredAt)),
                       ].join(' · ')),
                       trailing: e.amountCents == null
                           ? null
-                          : Text(moneyFormat(e.currency).formatMinor(e.amountCents!)),
+                          : Text(appFormatOf(context).moneyIn(e.currency).formatMinor(e.amountCents!)),
                     ),
                   ),
                   ),

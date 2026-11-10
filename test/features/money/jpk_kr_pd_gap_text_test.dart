@@ -5,6 +5,7 @@
 import 'package:deskilo/features/money/presentation/accounting_export_journal.dart';
 import 'package:deskilo/features/money/presentation/saft_gap_text.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/l10n/dictionary_labels.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

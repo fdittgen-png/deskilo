@@ -5,9 +5,9 @@
 // documents, with no book profile, keeps the calendar year. The FEC is one
 // file per fiscal year, named after its closing day, and its entries are
 // dated inside it.
-import 'date_text.dart';
 import 'book_period.dart';
 import 'book_profile.dart';
+import 'date_text.dart';
 
 /// One fiscal year: its first and last day, both inside it.
 class FiscalYear {

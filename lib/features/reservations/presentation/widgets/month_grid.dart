@@ -2,8 +2,9 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -117,7 +118,7 @@ class MonthGrid extends ConsumerWidget {
     }
 
     final today = ref.watch(clockProvider).now();
-    final weekdayFormat = DateFormat.E();
+    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
     // One occupancy fold for the whole grid instead of one reservation
     // scan per cell (perf audit).
     final occupied = plansReady

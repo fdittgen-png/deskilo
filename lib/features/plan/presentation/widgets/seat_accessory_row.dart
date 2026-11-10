@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -68,7 +69,7 @@ class SeatAccessoryRow extends ConsumerWidget {
     final showSupplements = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.accessorySupplements);
-    final currency = moneyFormat(ref.watch(currentWorkspaceProvider).value?.currencyCode);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final anyPriced = showSupplements &&
         accessories.any((accessory) => accessory.supplementCents > 0);
 

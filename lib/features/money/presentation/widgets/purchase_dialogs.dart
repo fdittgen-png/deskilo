@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/format/decimal_input.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -73,9 +74,9 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   }
 
   PurchaseBillDraft? _draft() {
-    final gross = parseMinorInput(_gross.text);
+    final gross = appFormatOf(context).parseMinor(_gross.text);
     final taxText = _tax.text.trim();
-    final tax = taxText.isEmpty ? null : parseMinorInput(taxText);
+    final tax = taxText.isEmpty ? null : appFormatOf(context).parseMinor(taxText);
     if (gross == null || gross <= 0) return null;
     if (taxText.isNotEmpty && (tax == null || tax > gross)) return null;
     // Another currency than the space's is captured with its rate.

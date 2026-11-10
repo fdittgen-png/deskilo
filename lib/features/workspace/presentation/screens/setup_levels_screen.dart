@@ -22,6 +22,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/process_activation.dart';
 import '../../application/setup_journey_save.dart';
 import '../../domain/feature_flags_write.dart';

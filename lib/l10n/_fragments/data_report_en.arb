@@ -35,23 +35,85 @@
   "@dataReportArchived": {
     "description": "#2862 data report: dataReportArchived"
   },
-  "dataReportPart": "{key, select, members{Members} bookings{Bookings by month} invoices{Invoice register} payments{Payments and balances} purchases{Purchases and suppliers} plan{Plan and prices} other{{key}}}",
-  "@dataReportPart": {
-    "description": "#2862 data report section title by key",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "dataReportPartMembers": "Members",
+  "@dataReportPartMembers": {
+    "description": "#3485 dataReportPart: the label for case 'members'."
   },
-  "dataReportColumn": "{key, select, month{Month} bookings{Bookings} held{Held} attended{Attended} cancelled{Cancelled} hours{Hours} paid{Paid} open{Open} charges{Charged} credits{Settled} balance{Balance} seats{Places} reference{Reference} role{Role} other{{key}}}",
-  "@dataReportColumn": {
-    "description": "#2862 data report column header by key; other keys fall back to the export column names",
-    "placeholders": {
-      "key": {
-        "type": "String"
-      }
-    }
+  "dataReportPartBookings": "Bookings by month",
+  "@dataReportPartBookings": {
+    "description": "#3485 dataReportPart: the label for case 'bookings'."
+  },
+  "dataReportPartInvoices": "Invoice register",
+  "@dataReportPartInvoices": {
+    "description": "#3485 dataReportPart: the label for case 'invoices'."
+  },
+  "dataReportPartPayments": "Payments and balances",
+  "@dataReportPartPayments": {
+    "description": "#3485 dataReportPart: the label for case 'payments'."
+  },
+  "dataReportPartPurchases": "Purchases and suppliers",
+  "@dataReportPartPurchases": {
+    "description": "#3485 dataReportPart: the label for case 'purchases'."
+  },
+  "dataReportPartPlan": "Plan and prices",
+  "@dataReportPartPlan": {
+    "description": "#3485 dataReportPart: the label for case 'plan'."
+  },
+  "dataReportColumnMonth": "Month",
+  "@dataReportColumnMonth": {
+    "description": "#3485 dataReportColumn: the label for case 'month'."
+  },
+  "dataReportColumnBookings": "Bookings",
+  "@dataReportColumnBookings": {
+    "description": "#3485 dataReportColumn: the label for case 'bookings'."
+  },
+  "dataReportColumnHeld": "Held",
+  "@dataReportColumnHeld": {
+    "description": "#3485 dataReportColumn: the label for case 'held'."
+  },
+  "dataReportColumnAttended": "Attended",
+  "@dataReportColumnAttended": {
+    "description": "#3485 dataReportColumn: the label for case 'attended'."
+  },
+  "dataReportColumnCancelled": "Cancelled",
+  "@dataReportColumnCancelled": {
+    "description": "#3485 dataReportColumn: the label for case 'cancelled'."
+  },
+  "dataReportColumnHours": "Hours",
+  "@dataReportColumnHours": {
+    "description": "#3485 dataReportColumn: the label for case 'hours'."
+  },
+  "dataReportColumnPaid": "Paid",
+  "@dataReportColumnPaid": {
+    "description": "#3485 dataReportColumn: the label for case 'paid'."
+  },
+  "dataReportColumnOpen": "Open",
+  "@dataReportColumnOpen": {
+    "description": "#3485 dataReportColumn: the label for case 'open'."
+  },
+  "dataReportColumnCharges": "Charged",
+  "@dataReportColumnCharges": {
+    "description": "#3485 dataReportColumn: the label for case 'charges'."
+  },
+  "dataReportColumnCredits": "Settled",
+  "@dataReportColumnCredits": {
+    "description": "#3485 dataReportColumn: the label for case 'credits'."
+  },
+  "dataReportColumnBalance": "Balance",
+  "@dataReportColumnBalance": {
+    "description": "#3485 dataReportColumn: the label for case 'balance'."
+  },
+  "dataReportColumnSeats": "Places",
+  "@dataReportColumnSeats": {
+    "description": "#3485 dataReportColumn: the label for case 'seats'."
+  },
+  "dataReportColumnReference": "Reference",
+  "@dataReportColumnReference": {
+    "description": "#3485 dataReportColumn: the label for case 'reference'."
+  },
+  "dataReportColumnRole": "Role",
+  "@dataReportColumnRole": {
+    "description": "#3485 dataReportColumn: the label for case 'role'."
   },
   "dataReportFailed": "The data report could not be made. Try again in a moment.",
   "@dataReportFailed": {

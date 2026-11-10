@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
@@ -174,7 +174,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               ),
               Expanded(
                 child: Text(
-                  DateFormat.yMMMM().format(_month),
+                  appFormatOf(context).dates(DateShape.monthYear).format(_month),
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),

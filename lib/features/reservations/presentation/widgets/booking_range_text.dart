@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/l10n/lexicon.dart';
-import '../../../../core/time/workspace_time.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_window_label.dart';
 
@@ -26,7 +25,7 @@ String bookingRangeText(
   final timeFormat = format; // #1150 — the member's clock and zone
   String fmt(DateTime t) => timeFormat.time(t);
   String fmtEnd() {
-    final display = WorkspaceTime.display(end);
+    final display = format.wall(end);
     final isNextMidnight = display.hour == 0 &&
         display.minute == 0 &&
         end.isAfter(start);

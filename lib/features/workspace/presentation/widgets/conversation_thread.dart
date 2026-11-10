@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/capture/capture_shield.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -445,12 +446,12 @@ class _ConversationThreadState extends ConsumerState<ConversationThread> {
   ) {
     final note = messages[i];
     final previous = i > 0 ? messages[i - 1] : null;
-    if (!_hub || (previous != null && sameLocalDay(previous.createdAt, note.createdAt))) {
+    if (!_hub || (previous != null && sameLocalDay(appFormatOf(context), previous.createdAt, note.createdAt))) {
       return bubble;
     }
     return Column(children: [
       ConversationDaySeparator(
-        day: note.createdAt.toLocal(),
+        day: appFormatOf(context).wall(note.createdAt),
         today: ref.read(clockProvider).now(),
       ),
       bubble,

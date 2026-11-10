@@ -3,7 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -100,7 +100,7 @@ class OverdueBanner extends ConsumerWidget {
     if (exposure.overdue.isEmpty) return const SizedBox.shrink();
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
-    final amount = moneyFormat(exposure.currency).formatMinor(
+    final amount = appFormatOf(context).moneyIn(exposure.currency).formatMinor(
       exposure.overdue.fold(0, (sum, i) => sum + i.totalCents),
     );
     return Card(
@@ -145,7 +145,7 @@ class InvoiceSummaryCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final money = moneyFormat(exposure.currency);
+    final money = appFormatOf(context).moneyIn(exposure.currency);
     // #812 — the same explainer the issuers' hub opens.
     final howItWorks = invoiceJourneyOn(ref)
         ? TextButton.icon(

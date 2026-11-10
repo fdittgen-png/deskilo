@@ -9,9 +9,8 @@
 // VAT book (validation 12).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:meta/meta.dart';
-
 import 'package:deskilo_xlsx/deskilo_xlsx.dart';
+import 'package:meta/meta.dart';
 
 /// What the AEAT's keys say of one rate of an issued document: the
 /// calificación (S1 taxed, S2 reverse-charged, N1/N2 not subject), the

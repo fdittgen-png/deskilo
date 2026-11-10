@@ -1,30 +1,77 @@
 {
   "@@locale": "es",
-  "jpkKrPdField": "{field, select, nip{NIP} legalName{razón social} voivodeship{voivodato} county{condado (powiat)} municipality{municipio} buildingNumber{número de edificio} city{localidad} postalCode{código postal} street{calle} taxOfficeCode{código de la oficina tributaria} accountName{nombre de la cuenta} accountParent{cuenta superior} accountMarker{marcador polaco de la cuenta} journalNumber{número de diario} journalName{nombre del diario} documentNumber{número de documento} documentType{tipo de documento} responsiblePerson{persona responsable} journalDescription{descripción del diario} accountIdentifier{identificador o nombre de la cuenta} journalText{texto del diario} counterpartyCode{código de la contraparte} other{}}",
-  "@jpkKrPdField": {
-    "description": "Polish JPK_KR_PD refusal (#3380): the name of the schema field a gap is about",
-    "placeholders": {
-      "field": {
-        "type": "String"
-      }
-    }
-  },
-  "jpkKrPdGap": "{code, select, currencyNotPln{la moneda funcional debe ser PLN} noPostings{el diario necesita asientos contabilizados} invalidYear{el ejercicio declarado no es válido} sectionEntity{la entidad polaca y su dirección} sectionOffice{la oficina tributaria y la finalidad del envío} sectionAccounts{las cuentas superiores, los marcadores polacos y los saldos de origen} sectionJournal{la secuencia del diario y la persona responsable} sectionSource{las fechas de documento y contabilización, los importes y el detalle de las líneas} sectionKsef{la aplicabilidad y el identificador de KSeF} sectionReconciliation{la conciliación del impuesto sobre la renta K_1–K_8} journalSequenceUnverified{la secuencia del diario de origen no está verificada} taxYear{el ejercicio fiscal no es válido} entityCategory{esta categoría de entidad declarante polaca no es compatible} addressCountry{el país de la dirección de la entidad debe ser Polonia} nipFormat{el NIP debe tener 10 dígitos válidos} missing{falta {field}{subject}} tooLong{{field}{subject} supera los {limit} caracteres} invalidOffice{el código de la oficina tributaria es desconocido} purpose{la finalidad del envío debe ser 1 o 2} reconciliation{la conciliación K_1–K_8 debe tener ocho importes en PLN} openingOutside{el asiento de apertura{subject} está fechado dentro del periodo declarado} unbalanced{el asiento{subject} no está equilibrado} invalidDebitCredit{el asiento{subject} tiene un débito o crédito no válido} foreignLine{el asiento{subject} contiene una línea en moneda extranjera} postingCurrency{el asiento{subject} no está en PLN} accountBalances{los saldos de la cuenta{subject} no son válidos} openingMismatch{el saldo de apertura de la cuenta{subject} no coincide con los asientos} closingMismatch{el saldo de cierre de la cuenta{subject} no coincide con los asientos} invalidMarker{el marcador polaco de la cuenta{subject} no es válido} journalEvidence{cada asiento necesita su justificante de diario} turnoverPrecision{el movimiento de la cuenta{subject} supera la precisión del esquema} totalsPrecision{los totales del diario superan la precisión del esquema} documentTotalPrecision{el total de documentos supera la precisión del esquema} unreferencedCounterparty{la contraparte{subject} no la usa ningún asiento} invalidCounterpartyCountry{el país de la contraparte{subject} no es válido} invalidCounterpartyTaxId{el identificador fiscal de la contraparte{subject} no es válido} counterpartyCodeInvalid{falta un código de contraparte o está duplicado} journalSourceMismatch{el asiento de diario{subject} no coincide con su documento de origen} postingOutside{el asiento{subject} está fechado fuera del ejercicio declarado} bookingOutside{la contabilización{subject} está fechada fuera del ejercicio declarado} documentAmount{el importe del documento{subject} no está en PLN} chronology{el asiento{subject} rompe el orden cronológico del diario} duplicateJournalNumber{el número de diario{subject} se usa dos veces} lineDescriptions{asiento{subject}: faltan descripciones de línea o no coinciden con las líneas} lineNumbers{asiento{subject}: faltan números de línea, están duplicados o no coinciden con las líneas} counterpartyCode{el asiento{subject} necesita un código de contraparte} counterpartySourceMissing{el asiento{subject} nombra una contraparte que su documento de origen no tiene} counterpartySourceMismatch{la contraparte del asiento{subject} no coincide con su documento de origen} counterpartyUnknown{la contraparte{subject} no está en la lista de contrapartes} invalidKsef{el identificador KSeF del asiento{subject} no es válido} duplicateLineNumber{el número de línea{subject} se usa dos veces en un diario} ksefMissing{el asiento{subject} necesita su identificador KSeF} other{}}",
-  "@jpkKrPdGap": {
-    "description": "Polish JPK_KR_PD refusal (#3380): one reason the file was refused, by code; field is already worded, subject is empty or \" (name)\", limit is the schema maximum",
-    "placeholders": {
-      "code": {
-        "type": "String"
-      },
-      "field": {
-        "type": "String"
-      },
-      "subject": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "String"
-      }
-    }
-  }
+  "jpkKrPdFieldNip": "NIP",
+  "jpkKrPdFieldLegalName": "razón social",
+  "jpkKrPdFieldVoivodeship": "voivodato",
+  "jpkKrPdFieldCounty": "condado (powiat)",
+  "jpkKrPdFieldMunicipality": "municipio",
+  "jpkKrPdFieldBuildingNumber": "número de edificio",
+  "jpkKrPdFieldCity": "localidad",
+  "jpkKrPdFieldPostalCode": "código postal",
+  "jpkKrPdFieldStreet": "calle",
+  "jpkKrPdFieldTaxOfficeCode": "código de la oficina tributaria",
+  "jpkKrPdFieldAccountName": "nombre de la cuenta",
+  "jpkKrPdFieldAccountParent": "cuenta superior",
+  "jpkKrPdFieldAccountMarker": "marcador polaco de la cuenta",
+  "jpkKrPdFieldJournalNumber": "número de diario",
+  "jpkKrPdFieldJournalName": "nombre del diario",
+  "jpkKrPdFieldDocumentNumber": "número de documento",
+  "jpkKrPdFieldDocumentType": "tipo de documento",
+  "jpkKrPdFieldResponsiblePerson": "persona responsable",
+  "jpkKrPdFieldJournalDescription": "descripción del diario",
+  "jpkKrPdFieldAccountIdentifier": "identificador o nombre de la cuenta",
+  "jpkKrPdFieldJournalText": "texto del diario",
+  "jpkKrPdFieldCounterpartyCode": "código de la contraparte",
+  "jpkKrPdGapCurrencyNotPln": "la moneda funcional debe ser PLN",
+  "jpkKrPdGapNoPostings": "el diario necesita asientos contabilizados",
+  "jpkKrPdGapInvalidYear": "el ejercicio declarado no es válido",
+  "jpkKrPdGapSectionEntity": "la entidad polaca y su dirección",
+  "jpkKrPdGapSectionOffice": "la oficina tributaria y la finalidad del envío",
+  "jpkKrPdGapSectionAccounts": "las cuentas superiores, los marcadores polacos y los saldos de origen",
+  "jpkKrPdGapSectionJournal": "la secuencia del diario y la persona responsable",
+  "jpkKrPdGapSectionSource": "las fechas de documento y contabilización, los importes y el detalle de las líneas",
+  "jpkKrPdGapSectionKsef": "la aplicabilidad y el identificador de KSeF",
+  "jpkKrPdGapSectionReconciliation": "la conciliación del impuesto sobre la renta K_1–K_8",
+  "jpkKrPdGapJournalSequenceUnverified": "la secuencia del diario de origen no está verificada",
+  "jpkKrPdGapTaxYear": "el ejercicio fiscal no es válido",
+  "jpkKrPdGapEntityCategory": "esta categoría de entidad declarante polaca no es compatible",
+  "jpkKrPdGapAddressCountry": "el país de la dirección de la entidad debe ser Polonia",
+  "jpkKrPdGapNipFormat": "el NIP debe tener 10 dígitos válidos",
+  "jpkKrPdGapMissing": "falta {field}{subject}",
+  "jpkKrPdGapTooLong": "{field}{subject} supera los {limit} caracteres",
+  "jpkKrPdGapInvalidOffice": "el código de la oficina tributaria es desconocido",
+  "jpkKrPdGapPurpose": "la finalidad del envío debe ser 1 o 2",
+  "jpkKrPdGapReconciliation": "la conciliación K_1–K_8 debe tener ocho importes en PLN",
+  "jpkKrPdGapOpeningOutside": "el asiento de apertura{subject} está fechado dentro del periodo declarado",
+  "jpkKrPdGapUnbalanced": "el asiento{subject} no está equilibrado",
+  "jpkKrPdGapInvalidDebitCredit": "el asiento{subject} tiene un débito o crédito no válido",
+  "jpkKrPdGapForeignLine": "el asiento{subject} contiene una línea en moneda extranjera",
+  "jpkKrPdGapPostingCurrency": "el asiento{subject} no está en PLN",
+  "jpkKrPdGapAccountBalances": "los saldos de la cuenta{subject} no son válidos",
+  "jpkKrPdGapOpeningMismatch": "el saldo de apertura de la cuenta{subject} no coincide con los asientos",
+  "jpkKrPdGapClosingMismatch": "el saldo de cierre de la cuenta{subject} no coincide con los asientos",
+  "jpkKrPdGapInvalidMarker": "el marcador polaco de la cuenta{subject} no es válido",
+  "jpkKrPdGapJournalEvidence": "cada asiento necesita su justificante de diario",
+  "jpkKrPdGapTurnoverPrecision": "el movimiento de la cuenta{subject} supera la precisión del esquema",
+  "jpkKrPdGapTotalsPrecision": "los totales del diario superan la precisión del esquema",
+  "jpkKrPdGapDocumentTotalPrecision": "el total de documentos supera la precisión del esquema",
+  "jpkKrPdGapUnreferencedCounterparty": "la contraparte{subject} no la usa ningún asiento",
+  "jpkKrPdGapInvalidCounterpartyCountry": "el país de la contraparte{subject} no es válido",
+  "jpkKrPdGapInvalidCounterpartyTaxId": "el identificador fiscal de la contraparte{subject} no es válido",
+  "jpkKrPdGapCounterpartyCodeInvalid": "falta un código de contraparte o está duplicado",
+  "jpkKrPdGapJournalSourceMismatch": "el asiento de diario{subject} no coincide con su documento de origen",
+  "jpkKrPdGapPostingOutside": "el asiento{subject} está fechado fuera del ejercicio declarado",
+  "jpkKrPdGapBookingOutside": "la contabilización{subject} está fechada fuera del ejercicio declarado",
+  "jpkKrPdGapDocumentAmount": "el importe del documento{subject} no está en PLN",
+  "jpkKrPdGapChronology": "el asiento{subject} rompe el orden cronológico del diario",
+  "jpkKrPdGapDuplicateJournalNumber": "el número de diario{subject} se usa dos veces",
+  "jpkKrPdGapLineDescriptions": "asiento{subject}: faltan descripciones de línea o no coinciden con las líneas",
+  "jpkKrPdGapLineNumbers": "asiento{subject}: faltan números de línea, están duplicados o no coinciden con las líneas",
+  "jpkKrPdGapCounterpartyCode": "el asiento{subject} necesita un código de contraparte",
+  "jpkKrPdGapCounterpartySourceMissing": "el asiento{subject} nombra una contraparte que su documento de origen no tiene",
+  "jpkKrPdGapCounterpartySourceMismatch": "la contraparte del asiento{subject} no coincide con su documento de origen",
+  "jpkKrPdGapCounterpartyUnknown": "la contraparte{subject} no está en la lista de contrapartes",
+  "jpkKrPdGapInvalidKsef": "el identificador KSeF del asiento{subject} no es válido",
+  "jpkKrPdGapDuplicateLineNumber": "el número de línea{subject} se usa dos veces en un diario",
+  "jpkKrPdGapKsefMissing": "el asiento{subject} necesita su identificador KSeF"
 }

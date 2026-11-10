@@ -5,8 +5,9 @@
 // import another, and to the movements of each.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -77,7 +78,7 @@ class BankStatementsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final statements = ref.watch(bankStatementsProvider(workspaceId));
-    final day = DateFormat.yMMMd(Localizations.localeOf(context).toString());
+    final day = appFormatOf(context).dates(DateShape.date);
     return SheetShell(
       title: l10n.bankStatementsTitle,
       children: [

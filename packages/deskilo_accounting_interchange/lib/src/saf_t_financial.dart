@@ -19,9 +19,10 @@
 // it does not know, a company or party field the authority requires and the
 // data lacks, or an identifier longer than the schema allows stops the file,
 // and each one is named.
-import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+
 import 'jpk_kr_pd_facts.dart';
 import 'jpk_kr_pd_gap.dart';
 import 'jpk_kr_pd_validation.dart';

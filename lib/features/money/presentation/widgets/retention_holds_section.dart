@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/refusal_text.dart';
@@ -36,9 +37,7 @@ class RetentionHoldsSection extends ConsumerWidget {
     final scope = ref.watch(accountingSystemsScopeProvider);
     final sites = scope.issuers;
     final canManage = scope.permissions.contains(retentionHoldPermission);
-    final day = DateFormat.yMMMd(
-      Localizations.localeOf(context).toLanguageTag(),
-    );
+    final day = appFormatOf(context).dates(DateShape.date);
     return Column(
       key: const ValueKey('retention-holds'),
       mainAxisSize: MainAxisSize.min,

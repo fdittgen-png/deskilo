@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -24,6 +25,7 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
   required int priceCents,
   required String keyPrefix,
 }) async {
+  final format = appFormatOf(context); // #3484 — read before the await
   final l10n = context.l10n;
   var isBookable = bookable;
   final nameField = TextEditingController(text: name);
@@ -105,10 +107,9 @@ Future<SpaceProperties?> showSpacePropertiesSheet(
     ),
   );
   if (saved != true) return null;
-  final trimmed = nameField.text.trim();
   return (
-    name: trimmed.isEmpty ? name : trimmed,
+    name: nameField.text.trim().isEmpty ? name : nameField.text.trim(),
     bookable: isBookable,
-    priceCents: parseMinorInput(price.text) ?? 0,
+    priceCents: format.parseMinor(price.text) ?? 0,
   );
 }

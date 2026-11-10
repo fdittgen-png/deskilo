@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -294,9 +296,7 @@ class _EInvoiceBody extends StatelessWidget {
                         l10n,
                         m,
                         today,
-                        DateFormat.yMMMd(
-                          Localizations.maybeLocaleOf(context)?.toString(),
-                        ),
+                        appFormatOf(context).dates(DateShape.date),
                       )}',
                   ].join('\n'),
                 ),

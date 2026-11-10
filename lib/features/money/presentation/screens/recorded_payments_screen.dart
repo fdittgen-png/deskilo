@@ -6,8 +6,8 @@
 // missing or malformed shows the current month.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -35,9 +35,7 @@ class RecordedPaymentsScreen extends ConsumerWidget {
     final today = ref.watch(clockProvider).now();
     final first = period?.first ?? DateTime(today.year, today.month);
     final last = period?.last ?? DateTime(today.year, today.month + 1, 0);
-    final dateFormat = DateFormat.yMMMd(
-      ref.watch(appFormatProvider.select((f) => f.locale)),
-    );
+    final dateFormat = ref.watch(appFormatProvider).dates(DateShape.date);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.recordedPaymentsTitle)),
       body: workspace == null

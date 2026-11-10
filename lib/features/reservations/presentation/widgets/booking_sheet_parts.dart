@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
@@ -96,7 +96,7 @@ class BookingTimeTile extends StatelessWidget {
       onTap: () async {
         final picked = await showTimePicker(
           context: context,
-          initialTime: TimeOfDay.fromDateTime(WorkspaceTime.display(value)),
+          initialTime: TimeOfDay.fromDateTime(appFormatOf(context).wall(value)),
         );
         if (picked != null) onPicked(picked);
       },
@@ -125,15 +125,15 @@ class BookingDateTile extends StatelessWidget {
     key: const ValueKey('booking-sheet-parts-list-tile-2'),
     contentPadding: EdgeInsets.zero,
     title: Text(label),
-    trailing: Text(DateFormat.yMMMd().format(WorkspaceTime.wall(value))),
+    trailing: Text(appFormatOf(context).dates(DateShape.date).format(WorkspaceTime.wall(value))),
     onTap: () async {
       final picked = await showDatePicker(
         context: context,
         initialDate: WorkspaceTime.wall(value),
-        // display(): TZDateTime.toLocal() lands in package:timezone's
+        // display(): appFormatOf(context).wall(TZDateTime) lands in package:timezone's
         // default-UTC tz.local (#417) — a Paris midnight became Sunday.
-        firstDate: WorkspaceTime.display(first),
-        lastDate: WorkspaceTime.display(first).add(const Duration(days: 180)),
+        firstDate: appFormatOf(context).wall(first),
+        lastDate: appFormatOf(context).wall(first).add(const Duration(days: 180)),
       );
       if (picked != null) onPicked(picked);
     },

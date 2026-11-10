@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 
-/// Whether [a] and [b] fall on the same calendar day where the device is.
-bool sameLocalDay(DateTime a, DateTime b) {
-  final x = a.toLocal();
-  final y = b.toLocal();
+/// Whether [a] and [b] fall on the same calendar day on the reader's wall
+/// clock ([AppFormat.wall]: the workspace's or the device's, as they chose).
+bool sameLocalDay(AppFormat format, DateTime a, DateTime b) {
+  final x = format.wall(a);
+  final y = format.wall(b);
   return x.year == y.year && x.month == y.month && x.day == y.day;
 }
 
@@ -35,7 +37,7 @@ class ConversationDaySeparator extends StatelessWidget {
         ? (l10n.conversationToday)
         : diff == -1
         ? (l10n.conversationYesterday)
-        : DateFormat.yMMMEd(Localizations.maybeLocaleOf(context)?.toString())
+        : appFormatOf(context).dates(DateShape.weekdayDate)
               .format(day);
     return Center(
       child: Container(

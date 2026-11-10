@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -185,7 +185,7 @@ class _RoomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final r = rental;
-    final money = r == null ? null : moneyFormat(r.currency);
+    final money = r == null ? null : appFormatOf(context).moneyIn(r.currency);
     int? generalFee;
     for (final f in r?.fees ?? const <RoomFee>[]) {
       if (f.unit == RoomFeeUnit.halfDay && f.audience.toJson().isEmpty) {

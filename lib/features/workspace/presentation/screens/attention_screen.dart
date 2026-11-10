@@ -23,14 +23,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
-
 import '../../../../l10n/app_localizations.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/attention.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
@@ -112,8 +113,7 @@ class AttentionRow extends StatelessWidget {
     final theme = Theme.of(context);
     // English only where no localization is installed (a bare test app).
     final l10n = context.l10n;
-    final locale = Localizations.maybeLocaleOf(context)?.toLanguageTag();
-    final since = DateFormat.yMMMd(locale).format(item.waitingSince.toLocal());
+    final since = appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(item.waitingSince));
     return ListTile(
       key: const ValueKey('attention-chevron-right'),
       contentPadding: EdgeInsets.zero,

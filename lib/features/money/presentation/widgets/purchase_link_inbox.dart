@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
@@ -108,7 +108,7 @@ class _LinkInboxDialogState extends ConsumerState<_LinkInboxDialog> {
                   title: Text(d.supplierName),
                   subtitle: Text('${d.number} · ${d.issueDate}'),
                   trailing: Text(
-                    moneyFormat(d.currency).formatMinor(d.grossCents),
+                    appFormatOf(context).moneyIn(d.currency).formatMinor(d.grossCents),
                   ),
                   onTap: () => _link(d),
                 ),

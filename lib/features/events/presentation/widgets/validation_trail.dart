@@ -13,8 +13,9 @@
 // how many validations are still awaited. A rule that asks for them one
 // after another (#840) labels the steps instead of numbering a list.
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -143,7 +144,7 @@ class _TrailEntry extends StatelessWidget {
         ? (l10n.eventSystemDecider)
         : (names[decision.memberId] ?? '');
     final when =
-        DateFormat.MMMd().add_Hm().format(decision.decidedAt.toLocal());
+        appFormatOf(context).datesAndTime(DateShape.monthDay, decision.decidedAt);
     final color = decision.accept
         ? AppStatusColors.successOf(theme.brightness)
         : theme.colorScheme.error;

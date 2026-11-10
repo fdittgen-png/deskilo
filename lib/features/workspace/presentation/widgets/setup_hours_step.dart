@@ -8,8 +8,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -17,6 +18,7 @@ import '../../../../core/time/work_hours.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
@@ -149,7 +151,6 @@ class _HoursPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final locale = Localizations.localeOf(context).toString();
     final from = DateTime(today.year, today.month, today.day);
     final coming = closures.where((c) => !c.day.isBefore(from)).toList()
       ..sort((a, b) => a.day.compareTo(b.day));
@@ -176,7 +177,7 @@ class _HoursPreview extends StatelessWidget {
             dense: true,
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.event_busy_outlined),
-            title: Text(DateFormat.yMMMMEEEEd(locale).format(closure.day)),
+            title: Text(appFormatOf(context).dates(DateShape.fullDate).format(closure.day)),
             subtitle: closure.reason.isEmpty ? null : Text(closure.reason),
           ),
       ],

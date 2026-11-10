@@ -36,7 +36,7 @@ void main() {
         event,
         const {'delegate': 'Camille', 'owner': 'Florian'},
         const {},
-        MoneyFormat('EUR'),
+        MoneyFormat('EUR', locale: null),
       );
       expect(
         line,

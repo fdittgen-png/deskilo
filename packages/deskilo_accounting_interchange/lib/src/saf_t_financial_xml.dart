@@ -2,10 +2,10 @@
 //
 // #2379 — the XML of a SAF-T Financial file, in the schema's section order:
 // the header, the master files and the general ledger entries.
-import 'package:xml/xml.dart';
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:xml/xml.dart';
+
 import 'saf_t_financial.dart';
 import 'saf_t_financial_facts.dart';
 import 'saf_t_ledger.dart';

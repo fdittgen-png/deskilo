@@ -2,7 +2,6 @@
 // #2494 — the identity cards at the top of the member profile: who they are
 // and what they are doing now. Split out of member_page (was a part file).
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -170,7 +169,7 @@ class MemberHeaderCard extends StatelessWidget {
                   if (joined != null)
                     Text(
                       l10n.memberPageSince(
-                              DateFormat.yMMMd().format(joined.toLocal())),
+                              appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(joined))),
                       key: const ValueKey('member-page-since'),
                       style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant),
@@ -330,9 +329,9 @@ String _memberBookingLabel(
   Reservation reservation,
   String seatName,
 ) {
-  final local = reservation.startsAt.toLocal();
+  final local = format.wall(reservation.startsAt);
   final day =
-      '${DateFormat.E().format(local)} ${DateFormat.d().format(local)}';
+      '${format.dates(DateShape.weekday).format(local)} ${format.dates(DateShape.day).format(local)}';
   final when = '$day · ${format.time(reservation.startsAt)}';
   return seatName.isEmpty ? when : '$when · $seatName';
 }

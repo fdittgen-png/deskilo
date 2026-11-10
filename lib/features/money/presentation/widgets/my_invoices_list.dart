@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -57,9 +58,7 @@ class MyInvoicesList extends ConsumerWidget {
     final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
     final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
     final now = ref.watch(clockProvider).now();
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     if (invoices.isEmpty) {
       return Padding(
         key: const ValueKey('my-invoices-empty'),
@@ -156,7 +155,7 @@ class MyInvoicesList extends ConsumerWidget {
               ),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(
-            moneyFormat(invoice.currency).formatMinor(invoice.totalCents),
+            appFormatOf(context).moneyIn(invoice.currency).formatMinor(invoice.totalCents),
             style: theme.textTheme.titleSmall
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
@@ -176,7 +175,7 @@ class MyInvoicesList extends ConsumerWidget {
     // #831 — the regrouped sources under their settlement, PDF only.
     if (invoice.settles.isEmpty) return card;
     final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
-    final currency = moneyFormat(invoice.currency);
+    final currency = appFormatOf(context).moneyIn(invoice.currency);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

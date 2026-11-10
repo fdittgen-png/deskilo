@@ -57,7 +57,7 @@ String _procedure(AppLocalizations l10n) => buildGobdProcedureDocument(l10n, (
 
 Map<String, List<int>> _package() {
   final invoices = SeededExportYear.acceptanceInvoices;
-  final words = reportStringsOf(_de);
+  final words = reportStringsOf(_de, formatLocale: null);
   return buildGobdPackage(
     GobdRequest(
       supplierName: 'Cowork',

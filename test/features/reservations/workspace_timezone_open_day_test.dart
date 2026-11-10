@@ -11,6 +11,8 @@
 // assert_workspace_open walks days in the workspace zone): convert via
 // WorkspaceTime.dateOf, never via .toLocal().
 
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
@@ -72,9 +74,14 @@ void main() {
             'windows crossed the UTC date line');
   });
 
-  test('display() keeps workspace wall-clock times readable', () {
+  test('AppFormat.wall keeps workspace wall-clock times readable', () {
     final window = HalfDayWindows.afternoon(monday);
-    expect(WorkspaceTime.display(window.start).hour, 13,
+    const reader = AppFormat(
+      locale: 'en_GB',
+      currencyCode: 'EUR',
+      timeZoneMode: TimeZoneMode.device,
+    );
+    expect(reader.wall(window.start).hour, 13,
         reason: 'a 13:00 Paris window says 13:00, not 11:00');
   });
 }

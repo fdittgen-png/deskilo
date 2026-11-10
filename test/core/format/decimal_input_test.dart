@@ -71,9 +71,9 @@ void main() {
     tearDown(WorkspaceCurrency.reset);
 
     test('blank is free, negative or malformed is refused', () {
-      expect(parseMinorInput(''), 0);
-      expect(parseMinorInput('-1'), isNull);
-      expect(parseMinorInput('12x'), isNull);
+      expect(parseMinorInput('', locale: 'en_US'), 0);
+      expect(parseMinorInput('-1', locale: 'en_US'), isNull);
+      expect(parseMinorInput('12x', locale: 'en_US'), isNull);
     });
 
     test('a grouped amount in the member locale', () {

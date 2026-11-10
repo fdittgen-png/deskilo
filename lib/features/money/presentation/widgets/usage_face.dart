@@ -13,8 +13,8 @@
 // saying what it used to be.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -103,8 +103,7 @@ class UsageRecordCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final locale = Localizations.maybeLocaleOf(context)?.toString();
-    final day = DateFormat.MMMEd(locale).format(record.reservedFrom);
+    final day = appFormatOf(context).dates(DateShape.weekdayMonthDay).format(record.reservedFrom);
     final from = appFormatOf(context).time(record.reservedFrom); // #1150
     final to = appFormatOf(context).time(record.reservedTo); // #1150
 

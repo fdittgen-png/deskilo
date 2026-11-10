@@ -18,6 +18,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/notification_lines.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';

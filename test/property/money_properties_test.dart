@@ -165,11 +165,11 @@ void main() {
       for (var i = 0; i < kCases; i++) {
         final minor = random.nextInt(100000000);
         expect(
-          parseMinorInput(centsToMajor(minor)),
+          parseMinorInput(centsToMajor(minor), locale: 'en_US'),
           minor,
           reason: 'seed $kSeed case $i: $minor rendered as '
               '"${centsToMajor(minor)}" and came back as '
-              '${parseMinorInput(centsToMajor(minor))}. Every price field '
+              '${parseMinorInput(centsToMajor(minor), locale: 'en_US')}. Every price field '
               'in the app does exactly this round trip when it opens.',
         );
       }
@@ -182,8 +182,8 @@ void main() {
         final minor = random.nextInt(1000000);
         final typed = centsToMajor(minor);
         expect(
-          parseMinorInput(typed.replaceAll('.', ',')),
-          parseMinorInput(typed),
+          parseMinorInput(typed.replaceAll('.', ','), locale: 'en_US'),
+          parseMinorInput(typed, locale: 'en_US'),
           reason: 'seed $kSeed case $i: "$typed" and its comma form '
               'disagree',
         );

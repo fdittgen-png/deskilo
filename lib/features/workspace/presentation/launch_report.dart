@@ -4,6 +4,7 @@
 // the server says it is reached, and the steps that are its evidence. The
 // same lines feed the Launch page's copied text and the configuration PDF.
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 import '../domain/launch_review.dart';
 import '../domain/setup_status.dart';
 

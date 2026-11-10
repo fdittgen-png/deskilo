@@ -6,6 +6,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -47,7 +48,7 @@ Future<void> settleCreditInvoiceDialog(
   Invoice invoice,
 ) async {
   final l10n = context.l10n;
-  final currency = moneyFormat(invoice.currency);
+  final currency = appFormatOf(context).moneyIn(invoice.currency);
   final noteController = TextEditingController();
   final confirmed = await showDialog<bool>(
     context: context,

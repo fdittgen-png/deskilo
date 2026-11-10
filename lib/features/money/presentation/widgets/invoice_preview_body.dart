@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -60,7 +61,7 @@ class InvoicePreviewBody extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final (i, line) in preview.lines.indexed) _lineRow(i, line),
+        for (final (i, line) in preview.lines.indexed) _lineRow(context, i, line),
         const Divider(),
         ..._vatRows(context, ref, preview.lines),
         _totalRow(context, preview.totalCents),
@@ -68,7 +69,7 @@ class InvoicePreviewBody extends ConsumerWidget {
     );
   }
 
-  Widget _lineRow(int index, InvoiceLine line) => Padding(
+  Widget _lineRow(BuildContext context, int index, InvoiceLine line) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 2),
     child: Row(
       key: ValueKey('invoice-preview-line-$index'),
@@ -76,7 +77,7 @@ class InvoicePreviewBody extends ConsumerWidget {
         Expanded(
           child: Text(
             invoiceLineText(
-              reportStringsOf(l10n),
+              reportStringsOf(l10n, formatLocale: appFormatOf(context).locale),
               line,
               association: association,
               period: period,
@@ -114,8 +115,7 @@ class InvoicePreviewBody extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '${l10n.vatPdfVat} '
-                    '${total.percent == total.percent.roundToDouble() ? total.percent.toStringAsFixed(0) : total.percent} %',
+                    '${l10n.vatPdfVat} ${appFormatOf(context).rate(total.percent)}',
                     style: hint,
                   ),
                 ),

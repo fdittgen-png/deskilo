@@ -22,6 +22,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_branding.dart';

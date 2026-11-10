@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/member_account.dart';
 
@@ -25,7 +25,7 @@ class AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final currency = moneyFormat(currencyCode);
+    final currency = appFormatOf(context).moneyIn(currencyCode);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final net = account.netPositionCents;

@@ -4,8 +4,9 @@
 // the member page imports this one file.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -32,11 +33,11 @@ class ViesCheckTile extends ConsumerWidget {
   static String statusText(
     AppLocalizations l10n,
     ViesCheck check,
-    String locale,
+    AppFormat format,
   ) {
     final date = check.checkedAt == null
         ? ''
-        : DateFormat.yMMMd(locale).format(check.checkedAt!);
+        : format.dates(DateShape.date).format(check.checkedAt!);
     return switch (check.status) {
       ViesStatus.none => l10n.viesStatusNone,
       ViesStatus.valid => l10n.viesStatusValid(check.consultation, date),
@@ -84,7 +85,6 @@ class ViesCheckTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n =
         context.l10n;
-    final locale = Localizations.localeOf(context).toLanguageTag();
     final check = ref.watch(memberViesCheckProvider(memberId)).value;
     return ListTile(
       key: const ValueKey('member-page-vies-check'),
@@ -94,7 +94,7 @@ class ViesCheckTile extends ConsumerWidget {
             : Icons.fact_check_outlined,
       ),
       title: Text(l10n.viesTileTitle),
-      subtitle: Text(statusText(l10n, check ?? ViesCheck.none, locale)),
+      subtitle: Text(statusText(l10n, check ?? ViesCheck.none, appFormatOf(context))),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _open(context, ref),
     );

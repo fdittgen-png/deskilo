@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -131,15 +132,15 @@ class _RentedRoomDialogState extends ConsumerState<_RentedRoomDialog> {
   }
 
   RoomRentalCommand? _command() {
-    final cost = parseMinorInput(_cost.text.isEmpty ? '0' : _cost.text);
-    final fee = _fee.text.trim().isEmpty ? null : parseMinorInput(_fee.text);
+    final cost = appFormatOf(context).parseMinor(_cost.text.isEmpty ? '0' : _cost.text);
+    final fee = _fee.text.trim().isEmpty ? null : appFormatOf(context).parseMinor(_fee.text);
     final supplier = _supplierId;
     final from = _from;
     final entryFees = <RoomFee>[];
     for (final e in _all ? const <RoomAudienceEntry>[] : _entries) {
       final text = _entryFees[roomAudienceFeeKey(e)]?.text.trim() ?? '';
       if (text.isEmpty) continue;
-      final cents = parseMinorInput(text);
+      final cents = appFormatOf(context).parseMinor(text);
       if (cents == null) return null;
       entryFees.add(
         RoomFee(unit: RoomFeeUnit.halfDay, feeCents: cents, audience: e),

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -51,7 +51,7 @@ class _SettlementDialogState extends ConsumerState<_SettlementDialog> {
 
   Future<void> _save() async {
     final today = ref.read(clockProvider).now();
-    final cents = parseMinorInput(_billed.text);
+    final cents = appFormatOf(context).parseMinor(_billed.text);
     final from = _from;
     final to = _to;
     final due = _due ?? to;

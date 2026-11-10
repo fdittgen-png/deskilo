@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/settings/setting_defaults.g.dart';
@@ -91,12 +92,10 @@ Map<String, Object?> _vatReportData(
 ) {
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: appFormatOf(context).locale);
   final locale = Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
-  String rate(double percent) => percent == percent.roundToDouble()
-      ? '${percent.round()} %'
-      : '${percent.toStringAsFixed(1)} %';
+  final rate = appFormatOf(context).rate;
   final periodLabel = '${dateFormat.format(report.periodStart)} – '
       '${dateFormat.format(report.periodEnd)}';
   return <String, Object?>{
@@ -158,7 +157,7 @@ Map<String, Object?> _vatReportData(
           'gross': currency.formatMinor(t.grossCents),
         },
     ],
-    ...legalMentionData(reportStringsOf(l10n), workspace, reference: reference),
+    ...legalMentionData(reportStringsOf(l10n, formatLocale: appFormatOf(context).locale), workspace, reference: reference),
   };
 }
 

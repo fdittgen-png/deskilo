@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show PostgrestException;
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -57,7 +57,7 @@ Future<void> showSeatPropertiesSheet(
   final initialAccessories = assignments[seat.id] ?? const <String>{};
   final selectedAccessories = {...initialAccessories};
   final currency =
-      moneyFormat(workspace?.currencyCode);
+      appFormatOf(context).moneyIn(workspace?.currencyCode);
 
   final name = TextEditingController(text: seat.name);
   final chair = TextEditingController(text: seat.chair);

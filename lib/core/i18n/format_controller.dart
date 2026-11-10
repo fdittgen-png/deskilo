@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/profile/providers/personal_preferences_providers.dart';
@@ -12,7 +11,6 @@ import '../locale/device_locale.dart';
 import '../locale/locale_controller.dart';
 import '../settings/region_defaults.dart';
 import '../settings/setting_defaults.g.dart';
-import '../time/workspace_time.dart';
 import 'app_format.dart';
 import 'format_prefs.dart';
 import 'workspace_currency.dart';
@@ -23,19 +21,12 @@ part 'format_controller.g.dart';
 /// workspace (#711): their format locale (or the derived default), the
 /// workspace's currency, their clock and zone preference.
 ///
-/// THREE SIDE EFFECTS, all deliberate and both documented here because a
-/// provider with side effects is a thing to be suspicious of:
-///
-///  1. `Intl.defaultLocale` is set to the resolved locale. That is what
-///     makes the two dozen `DateFormat.MMMd()` calls the app grew before
-///     this seam existed (#701) stop formatting in `en_US`. It is a
-///     global, and this is the one place that writes it.
-///  2. [WorkspaceTime.displayMode] follows the member's zone preference,
-///     so `WorkspaceTime.display()` — the helper the older screens
-///     already call — honours it without each of them changing.
-///  3. [WorkspaceCurrency] learns the platform's default currency, so the
-///     ambient grain of a screen with no workspace follows the operator's
-///     `locale.default_currency` and not the compile-time copy (#2488).
+/// ONE SIDE EFFECT, deliberate and documented here because a provider with
+/// side effects is a thing to be suspicious of: [WorkspaceCurrency] learns
+/// the platform's default currency, so the ambient grain of a screen with no
+/// workspace follows the operator's `locale.default_currency` and not the
+/// compile-time copy (#2488). Since #3484 it writes no locale: everything
+/// that formats names one (this [AppFormat]'s, or a document's).
 ///
 /// Under the `regionalFormats` feature OFF, the member's stored
 /// preferences are ignored and everything reads as it did before: the
@@ -61,8 +52,6 @@ AppFormat appFormat(Ref ref) {
       : defaultFormatLocale(uiLanguage, workspace?.countryCode ?? '');
 
   final region = ref.watch(regionDefaultsProvider);
-  Intl.defaultLocale = locale;
-  WorkspaceTime.displayMode = prefs.timeZoneMode;
   WorkspaceCurrency.installDefault(region.currency);
 
   return AppFormat(

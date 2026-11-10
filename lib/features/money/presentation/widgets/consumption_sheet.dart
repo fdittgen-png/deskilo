@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -59,7 +59,7 @@ Future<void> showConsumptionSheet(
     return;
   }
 
-  final currency = moneyFormat(workspace.currencyCode);
+  final currency = appFormatOf(context).moneyIn(workspace.currencyCode);
   final period = TextEditingController(
     text: currentPeriod(ref.read(clockProvider).now()),
   );

@@ -6,6 +6,7 @@
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/dictionary_labels.dart';
 
 /// One refusal reason of [gap], in the language of [l10n].
 String safTGapText(AppLocalizations l10n, SafTGap gap) {

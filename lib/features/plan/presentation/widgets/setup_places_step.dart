@@ -17,6 +17,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/floor_plan.dart';
 import '../../domain/level.dart';
 import '../../providers/floor_plan_providers.dart';

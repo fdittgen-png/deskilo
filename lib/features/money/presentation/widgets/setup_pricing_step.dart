@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -22,6 +22,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/dictionary_labels.dart';
 import '../../application/offer_subscription_levels.dart';
 import '../../domain/credit_product.dart';
 import '../../domain/fee_band.dart';
@@ -167,7 +168,7 @@ class _PricingPageState extends ConsumerState<_PricingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final money = moneyFormat(widget.currencyCode);
+    final money = appFormatOf(context).moneyIn(widget.currencyCode);
     return SetupStepLayout(
       form: widget.draft(
         form: _kept,

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/ledger_entry.dart';
@@ -81,9 +82,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.maybeLocaleOf(context)?.toString(),
-    );
+    final dateFormat = appFormatOf(context).dates(DateShape.date);
     final payment = _payment;
     final paid = payment?.amountCents;
     final over = paid != null && paid > widget.dueCents;
