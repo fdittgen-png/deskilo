@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/accessory.dart';
@@ -71,7 +72,7 @@ class ResourceDraft {
   }
 
   double? get powerKw {
-    final kw = double.tryParse(power.text.trim().replaceAll(',', '.'));
+    final kw = parseDecimalInput(power.text, grouping: false)?.toDouble();
     return kw == null || kw <= 0 || kw > 1000 ? null : kw;
   }
 }

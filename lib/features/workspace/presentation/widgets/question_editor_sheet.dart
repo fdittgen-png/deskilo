@@ -13,6 +13,7 @@
 // field is simply not offered when editing an existing question.
 import 'package:flutter/material.dart';
 
+import '../../../../core/format/decimal_input.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -153,7 +154,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
 
   /// The question as it stands, which is also what the preview renders.
   WorkspaceField get _draft {
-    final rule = num.tryParse(_rule.text.trim());
+    final rule = parseDecimalInput(_rule.text, grouping: false);
     return WorkspaceField(
       id: widget.initial?.id ?? '',
       key: _key.text.trim(),

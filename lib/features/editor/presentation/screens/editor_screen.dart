@@ -295,7 +295,7 @@ class _LevelBookingDialogState extends ConsumerState<_LevelBookingDialog> {
 
   Future<void> _save() async {
     final l10n = context.l10n;
-    final cents = parseCentsInput(_price.text) ?? 0;
+    final cents = parseMinorInput(_price.text) ?? 0;
     if (!await runGuarded(
       context,
       domain: 'editor',
