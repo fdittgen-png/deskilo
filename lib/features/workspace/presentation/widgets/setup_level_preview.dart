@@ -39,6 +39,21 @@ class SetupLevelPreview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (change.isEmpty) Text(l10n.setupLevelsNoChange),
+            // #3283 — first, in plain words, what the business will be able
+            // to do; the exact switches follow.
+            if (change.levels.isNotEmpty) ...[
+              Text(
+                l10n.setupLevelsOutcomeTitle,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              for (final MapEntry(key: p, value: id) in change.levels.entries)
+                Padding(
+                  key: ValueKey('setup-levels-outcome-${p.name}'),
+                  padding: const EdgeInsets.only(top: AppSpacing.xs),
+                  child: Text(l10n.setupLevelOutcome('${p.name}_$id')),
+                ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
             if (change.switchOn.isNotEmpty)
               ...outcomes(
                 l10n.setupLevelsSwitchOn,

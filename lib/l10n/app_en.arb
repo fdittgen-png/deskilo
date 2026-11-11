@@ -36333,6 +36333,106 @@
   "@setupLevelNameTaxVat": {
     "description": "#3485 setupLevelName: the label for case 'tax_vat'."
   },
+  "setupLevelOutcomeAssistantOff": "You will be able to run the space without any assistant reaching its data.",
+  "@setupLevelOutcomeAssistantOff": {
+    "description": "#3283 the setup review: what the level assistant_off lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeAssistantOn": "You will be able to let an assistant you choose act in the space for you, and record tasks that guide others.",
+  "@setupLevelOutcomeAssistantOn": {
+    "description": "#3283 the setup review: what the level assistant_on lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeBookingsMeasured": "You will be able to check people in by badge, QR code or a kiosk tablet and see how full the space is.",
+  "@setupLevelOutcomeBookingsMeasured": {
+    "description": "#3283 the setup review: what the level bookings_measured lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeBookingsNone": "You will be able to run your business without bookable places.",
+  "@setupLevelOutcomeBookingsNone": {
+    "description": "#3283 the setup review: what the level bookings_none lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeBookingsResources": "You will be able to offer meeting rooms, parking and whole levels, run several sites, welcome guests and close on public holidays.",
+  "@setupLevelOutcomeBookingsResources": {
+    "description": "#3283 the setup review: what the level bookings_resources lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeBookingsSimple": "You will be able to let members book desks and rooms on your floor plan, within your opening hours and booking rules, also as a series or for someone else.",
+  "@setupLevelOutcomeBookingsSimple": {
+    "description": "#3283 the setup review: what the level bookings_simple lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeCommunityBasic": "You will be able to keep a directory of members with their roles, share a calendar, and send messages and notifications.",
+  "@setupLevelOutcomeCommunityBasic": {
+    "description": "#3283 the setup review: what the level community_basic lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeCommunityOrganised": "You will be able to share ownership, define your own roles and fields, manage profiles for others and have requests approved in steps.",
+  "@setupLevelOutcomeCommunityOrganised": {
+    "description": "#3283 the setup review: what the level community_organised lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeMoneyInvoices": "You will be able to issue numbered invoices for memberships and usage, send payment reminders and design your documents.",
+  "@setupLevelOutcomeMoneyInvoices": {
+    "description": "#3283 the setup review: what the level money_invoices lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeMoneyNone": "You will be able to run the space without any money in the app.",
+  "@setupLevelOutcomeMoneyNone": {
+    "description": "#3283 the setup review: what the level money_none lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeMoneyStatements": "You will be able to price your memberships and services and give each member a monthly statement of what they owe.",
+  "@setupLevelOutcomeMoneyStatements": {
+    "description": "#3283 the setup review: what the level money_statements lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeOperationsAdvanced": "You will be able to try changes in a development copy, deploy them and move configuration between spaces.",
+  "@setupLevelOutcomeOperationsAdvanced": {
+    "description": "#3283 the setup review: what the level operations_advanced lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeOperationsBasic": "You will be able to follow the setup guide, export documents and data, and try things in the Demo.",
+  "@setupLevelOutcomeOperationsBasic": {
+    "description": "#3283 the setup review: what the level operations_basic lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeOperationsInsight": "You will be able to see an overview of the space and design your own reports.",
+  "@setupLevelOutcomeOperationsInsight": {
+    "description": "#3283 the setup review: what the level operations_insight lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePaymentsOff": "You will be able to take payments outside the app, by transfer or in cash, and record what arrives.",
+  "@setupLevelOutcomePaymentsOff": {
+    "description": "#3283 the setup review: what the level payments_off lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePaymentsOnline": "You will be able to let members pay online through your payment provider.",
+  "@setupLevelOutcomePaymentsOnline": {
+    "description": "#3283 the setup review: what the level payments_online lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePresentationBasic": "You will be able to tell members apart by their own initials.",
+  "@setupLevelOutcomePresentationBasic": {
+    "description": "#3283 the setup review: what the level presentation_basic lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePresentationBranded": "You will be able to give the space your own colours and your own words.",
+  "@setupLevelOutcomePresentationBranded": {
+    "description": "#3283 the setup review: what the level presentation_branded lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePresentationPublic": "You will be able to publish a public page and receive enquiries from people who are not members yet.",
+  "@setupLevelOutcomePresentationPublic": {
+    "description": "#3283 the setup review: what the level presentation_public lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePurchasesExpenses": "You will be able to record your expenses, repeat them each month and share them among members.",
+  "@setupLevelOutcomePurchasesExpenses": {
+    "description": "#3283 the setup review: what the level purchases_expenses lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePurchasesFull": "You will be able to order from suppliers, record bills and leases, keep an asset register and analyse what you buy.",
+  "@setupLevelOutcomePurchasesFull": {
+    "description": "#3283 the setup review: what the level purchases_full lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomePurchasesNone": "You will be able to run the space without recording your own purchases.",
+  "@setupLevelOutcomePurchasesNone": {
+    "description": "#3283 the setup review: what the level purchases_none lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeTaxBooks": "You will be able to keep the books, close periods, import bank statements and hand everything to your accountant.",
+  "@setupLevelOutcomeTaxBooks": {
+    "description": "#3283 the setup review: what the level tax_books lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeTaxNone": "You will be able to invoice without handling VAT in the app.",
+  "@setupLevelOutcomeTaxNone": {
+    "description": "#3283 the setup review: what the level tax_none lets the business do, one truthful sentence."
+  },
+  "setupLevelOutcomeTaxVat": "You will be able to apply VAT rates to invoices and purchases and prepare your VAT returns.",
+  "@setupLevelOutcomeTaxVat": {
+    "description": "#3283 the setup review: what the level tax_vat lets the business do, one truthful sentence."
+  },
   "setupLevelsApplied": "Your space now does what you chose.",
   "@setupLevelsApplied": {
     "description": "#2868 setup levels: setupLevelsApplied"
@@ -36372,6 +36472,10 @@
   "setupLevelsNoChange": "Nothing changes: the space already does this.",
   "@setupLevelsNoChange": {
     "description": "#2868 setup levels: setupLevelsNoChange"
+  },
+  "setupLevelsOutcomeTitle": "With this change:",
+  "@setupLevelsOutcomeTitle": {
+    "description": "#3283 the setup review: heading above the outcome sentence of each changed level."
   },
   "setupLevelsPresets": "Quick start",
   "@setupLevelsPresets": {

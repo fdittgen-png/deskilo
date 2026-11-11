@@ -2035,7 +2035,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_all",
    "from": "2026-01-01",
-   "source": "einvoice_mandates.dart (#2358): loi du 6 février 2024, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Loi du 6 février 2024, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2043,7 +2043,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "receive_all",
    "from": "2026-01-01",
-   "source": "einvoice_mandates.dart (#2358): loi du 6 février 2024, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Loi du 6 février 2024, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   }
  ],
@@ -2053,7 +2053,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "receive_all",
    "from": "2025-01-01",
-   "source": "einvoice_mandates.dart (#2358): Wachstumschancengesetz, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Wachstumschancengesetz, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2061,7 +2061,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_large",
    "from": "2027-01-01",
-   "source": "einvoice_mandates.dart (#2358): Wachstumschancengesetz, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Wachstumschancengesetz, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2069,7 +2069,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_all",
    "from": "2028-01-01",
-   "source": "einvoice_mandates.dart (#2358): Wachstumschancengesetz, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Wachstumschancengesetz, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2078,7 +2078,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "next_year",
    "cents": 2500000,
    "currency": "EUR",
-   "source": "small_business_threshold.dart (#2440): § 19 Abs. 1 UStG (JStG 2024)",
+   "source": "§ 19 Abs. 1 UStG (JStG 2024)",
    "confirmed": true
   },
   {
@@ -2087,7 +2087,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "immediate",
    "cents": 10000000,
    "currency": "EUR",
-   "source": "small_business_threshold.dart (#2440): § 19 Abs. 1 UStG (JStG 2024)",
+   "source": "§ 19 Abs. 1 UStG (JStG 2024)",
    "confirmed": true
   }
  ],
@@ -2097,7 +2097,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "invoice_records",
    "from": "2027-01-01",
-   "source": "einvoice_mandates.dart (#2358): RD 1007/2023 as moved by RDL 15/2025, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "RD 1007/2023 as moved by RDL 15/2025, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2106,7 +2106,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "simplified_invoice",
    "cents": 40000,
    "currency": "EUR",
-   "source": "RD 1619/2012 art. 4.1.a: a simplified invoice is enough up to EUR 400, VAT included (#2363); not yet confirmed",
+   "source": "RD 1619/2012 art. 4.1.a: a simplified invoice is enough up to EUR 400, VAT included; not yet confirmed",
    "confirmed": false
   },
   {
@@ -2115,7 +2115,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "annual_operations",
    "cents": 300506,
    "currency": "EUR",
-   "source": "RD 1065/2007 art. 33 (modelo 347): the operations with one person or entity above EUR 3,005.06 in the calendar year, VAT included (#2363); not yet confirmed",
+   "source": "RD 1065/2007 art. 33 (modelo 347): the operations with one person or entity above EUR 3,005.06 in the calendar year, VAT included; not yet confirmed",
    "confirmed": false
   }
  ],
@@ -2125,7 +2125,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "e_reporting",
    "from": "2026-09-01",
-   "source": "einvoice_mandates.dart (#2358): loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2133,7 +2133,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_large",
    "from": "2026-09-01",
-   "source": "einvoice_mandates.dart (#2358): loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2141,7 +2141,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "receive_all",
    "from": "2026-09-01",
-   "source": "einvoice_mandates.dart (#2358): loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2149,7 +2149,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_all",
    "from": "2027-09-01",
-   "source": "einvoice_mandates.dart (#2358): loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "Loi de finances 2024, art. 91, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2158,7 +2158,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "next_year",
    "cents": 3750000,
    "currency": "EUR",
-   "source": "small_business_threshold.dart (#2440): CGI art. 293 B (services); the 2026 figure was not verified",
+   "source": "CGI art. 293 B (services); the 2026 figure was not verified",
    "confirmed": false
   },
   {
@@ -2167,7 +2167,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "immediate",
    "cents": 4125000,
    "currency": "EUR",
-   "source": "small_business_threshold.dart (#2440): CGI art. 293 B (services, tolerance); the 2026 figure was not verified",
+   "source": "CGI art. 293 B (services, tolerance); the 2026 figure was not verified",
    "confirmed": false
   }
  ],
@@ -2177,7 +2177,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_all",
    "from": "2019-01-01",
-   "source": "einvoice_mandates.dart (#2358): 2019 (SdI), as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "2019 (SdI), as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2186,7 +2186,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "stamp_duty",
    "cents": 7747,
    "currency": "EUR",
-   "source": "DPR 642/1972, tariff art. 13 note 1, and DL 69/2013: EUR 2.00 on an invoice without VAT above EUR 77.47, the figures invoice_fatturapa.dart carried (#2438, #2363); typed in code, not re-verified",
+   "source": "DPR 642/1972, tariff art. 13 note 1, and DL 69/2013: EUR 2.00 on an invoice without VAT above EUR 77.47, the figures carried; typed in code, not re-verified",
    "confirmed": false
   }
  ],
@@ -2196,7 +2196,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_large",
    "from": "2026-02-01",
-   "source": "einvoice_mandates.dart (#2358): KSeF, Ustawa of 5 August 2025, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "KSeF, Ustawa of 5 August 2025, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   },
   {
@@ -2204,7 +2204,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_all",
    "from": "2026-04-01",
-   "source": "einvoice_mandates.dart (#2358): KSeF, Ustawa of 5 August 2025, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "KSeF, Ustawa of 5 August 2025, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   }
  ],
@@ -2214,7 +2214,7 @@ window.SETUP_OBLIGATIONS={
    "question": "issue_invoices",
    "detail": "issue_all",
    "from": "2024-07-01",
-   "source": "einvoice_mandates.dart (#2358): OUG 120/2021, as the laws stood in October 2026; typed in code, not re-verified",
+   "source": "OUG 120/2021, as the laws stood in October 2026; typed in code, not re-verified",
    "confirmed": false
   }
  ],
@@ -2225,7 +2225,7 @@ window.SETUP_OBLIGATIONS={
    "detail": "simplified_invoice",
    "cents": 25000,
    "currency": "GBP",
-   "source": "VAT Notice 700 §16.4: a less detailed invoice is enough up to GBP 250 including VAT, the figure invoice_essentials_missing carried since 0417 (#2359, #2363); typed in code, not re-verified",
+   "source": "VAT Notice 700 §16.4: a less detailed invoice is enough up to GBP 250 including VAT, the figure invoice_essentials_missing carried since 0417; typed in code, not re-verified",
    "confirmed": false
   }
  ]

@@ -27974,6 +27974,106 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelNameTaxVat => 'TVA';
 
   @override
+  String get setupLevelOutcomeAssistantOff =>
+      'Vous pourrez gérer l\'espace sans qu\'aucun assistant n\'accède à ses données.';
+
+  @override
+  String get setupLevelOutcomeAssistantOn =>
+      'Vous pourrez laisser un assistant de votre choix agir dans l\'espace pour vous, et enregistrer des tâches qui guident les autres.';
+
+  @override
+  String get setupLevelOutcomeBookingsMeasured =>
+      'Vous pourrez enregistrer les arrivées par badge, QR code ou tablette d\'accueil et voir le taux d\'occupation.';
+
+  @override
+  String get setupLevelOutcomeBookingsNone =>
+      'Vous pourrez gérer votre activité sans places à réserver.';
+
+  @override
+  String get setupLevelOutcomeBookingsResources =>
+      'Vous pourrez proposer salles de réunion, parkings et niveaux entiers, gérer plusieurs sites, accueillir des invités et fermer les jours fériés.';
+
+  @override
+  String get setupLevelOutcomeBookingsSimple =>
+      'Vous pourrez laisser les membres réserver bureaux et salles sur votre plan, dans vos horaires et vos règles de réservation, aussi en série ou pour quelqu\'un d\'autre.';
+
+  @override
+  String get setupLevelOutcomeCommunityBasic =>
+      'Vous pourrez tenir un annuaire des membres avec leurs rôles, partager un calendrier et envoyer messages et notifications.';
+
+  @override
+  String get setupLevelOutcomeCommunityOrganised =>
+      'Vous pourrez partager la propriété, définir vos propres rôles et champs, gérer des profils pour d\'autres et faire valider les demandes par étapes.';
+
+  @override
+  String get setupLevelOutcomeMoneyInvoices =>
+      'Vous pourrez émettre des factures numérotées pour les abonnements et l\'usage, envoyer des relances et concevoir vos documents.';
+
+  @override
+  String get setupLevelOutcomeMoneyNone =>
+      'Vous pourrez gérer l\'espace sans aucun argent dans l\'application.';
+
+  @override
+  String get setupLevelOutcomeMoneyStatements =>
+      'Vous pourrez fixer le prix de vos abonnements et services et remettre à chaque membre un relevé mensuel de ce qu\'il doit.';
+
+  @override
+  String get setupLevelOutcomeOperationsAdvanced =>
+      'Vous pourrez essayer des changements dans une copie de développement, les déployer et transférer la configuration entre espaces.';
+
+  @override
+  String get setupLevelOutcomeOperationsBasic =>
+      'Vous pourrez suivre le guide de mise en place, exporter documents et données, et essayer dans la démo.';
+
+  @override
+  String get setupLevelOutcomeOperationsInsight =>
+      'Vous pourrez voir une vue d\'ensemble de l\'espace et concevoir vos propres rapports.';
+
+  @override
+  String get setupLevelOutcomePaymentsOff =>
+      'Vous pourrez encaisser hors de l\'application, par virement ou en espèces, et enregistrer ce qui arrive.';
+
+  @override
+  String get setupLevelOutcomePaymentsOnline =>
+      'Vous pourrez laisser les membres payer en ligne via votre prestataire de paiement.';
+
+  @override
+  String get setupLevelOutcomePresentationBasic =>
+      'Vous pourrez distinguer les membres par leurs propres initiales.';
+
+  @override
+  String get setupLevelOutcomePresentationBranded =>
+      'Vous pourrez donner à l\'espace vos propres couleurs et vos propres mots.';
+
+  @override
+  String get setupLevelOutcomePresentationPublic =>
+      'Vous pourrez publier une page publique et recevoir des demandes de personnes qui ne sont pas encore membres.';
+
+  @override
+  String get setupLevelOutcomePurchasesExpenses =>
+      'Vous pourrez enregistrer vos dépenses, les répéter chaque mois et les répartir entre les membres.';
+
+  @override
+  String get setupLevelOutcomePurchasesFull =>
+      'Vous pourrez commander auprès de fournisseurs, enregistrer factures et baux, tenir un registre des immobilisations et analyser vos achats.';
+
+  @override
+  String get setupLevelOutcomePurchasesNone =>
+      'Vous pourrez gérer l\'espace sans enregistrer vos propres achats.';
+
+  @override
+  String get setupLevelOutcomeTaxBooks =>
+      'Vous pourrez tenir la comptabilité, clôturer les périodes, importer les relevés bancaires et tout transmettre à votre comptable.';
+
+  @override
+  String get setupLevelOutcomeTaxNone =>
+      'Vous pourrez facturer sans gérer la TVA dans l\'application.';
+
+  @override
+  String get setupLevelOutcomeTaxVat =>
+      'Vous pourrez appliquer les taux de TVA aux factures et aux achats et préparer vos déclarations de TVA.';
+
+  @override
   String get setupLevelsApplied =>
       'Votre espace fait désormais ce que vous avez choisi.';
 
@@ -28002,6 +28102,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupLevelsNoChange => 'Rien ne change : l’espace le fait déjà.';
+
+  @override
+  String get setupLevelsOutcomeTitle => 'Avec ce changement :';
 
   @override
   String get setupLevelsPresets => 'Démarrage rapide';

@@ -332,6 +332,38 @@ extension DictionaryLabels on AppLocalizations {
     _ => key,
   };
 
+  /// #3283 — what level [key] (`<process>_<id>`) lets the business do: one
+  /// truthful sentence per level, beside its name, for the review before
+  /// Apply (and the v3 proposal).
+  String setupLevelOutcome(String key) => switch (key) {
+    'bookings_none' => setupLevelOutcomeBookingsNone,
+    'bookings_simple' => setupLevelOutcomeBookingsSimple,
+    'bookings_resources' => setupLevelOutcomeBookingsResources,
+    'bookings_measured' => setupLevelOutcomeBookingsMeasured,
+    'community_basic' => setupLevelOutcomeCommunityBasic,
+    'community_organised' => setupLevelOutcomeCommunityOrganised,
+    'money_none' => setupLevelOutcomeMoneyNone,
+    'money_statements' => setupLevelOutcomeMoneyStatements,
+    'money_invoices' => setupLevelOutcomeMoneyInvoices,
+    'payments_off' => setupLevelOutcomePaymentsOff,
+    'payments_online' => setupLevelOutcomePaymentsOnline,
+    'tax_none' => setupLevelOutcomeTaxNone,
+    'tax_vat' => setupLevelOutcomeTaxVat,
+    'tax_books' => setupLevelOutcomeTaxBooks,
+    'purchases_none' => setupLevelOutcomePurchasesNone,
+    'purchases_expenses' => setupLevelOutcomePurchasesExpenses,
+    'purchases_full' => setupLevelOutcomePurchasesFull,
+    'presentation_basic' => setupLevelOutcomePresentationBasic,
+    'presentation_branded' => setupLevelOutcomePresentationBranded,
+    'presentation_public' => setupLevelOutcomePresentationPublic,
+    'operations_basic' => setupLevelOutcomeOperationsBasic,
+    'operations_insight' => setupLevelOutcomeOperationsInsight,
+    'operations_advanced' => setupLevelOutcomeOperationsAdvanced,
+    'assistant_off' => setupLevelOutcomeAssistantOff,
+    'assistant_on' => setupLevelOutcomeAssistantOn,
+    _ => key,
+  };
+
   /// The `setupMilestoneName` label for [key].
   String setupMilestoneName(String key) => switch (key) {
     'bookable' => setupMilestoneNameBookable,

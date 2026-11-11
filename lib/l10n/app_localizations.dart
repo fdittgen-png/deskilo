@@ -45541,6 +45541,156 @@ abstract class AppLocalizations {
   /// **'VAT'**
   String get setupLevelNameTaxVat;
 
+  /// #3283 the setup review: what the level assistant_off lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run the space without any assistant reaching its data.'**
+  String get setupLevelOutcomeAssistantOff;
+
+  /// #3283 the setup review: what the level assistant_on lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to let an assistant you choose act in the space for you, and record tasks that guide others.'**
+  String get setupLevelOutcomeAssistantOn;
+
+  /// #3283 the setup review: what the level bookings_measured lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to check people in by badge, QR code or a kiosk tablet and see how full the space is.'**
+  String get setupLevelOutcomeBookingsMeasured;
+
+  /// #3283 the setup review: what the level bookings_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run your business without bookable places.'**
+  String get setupLevelOutcomeBookingsNone;
+
+  /// #3283 the setup review: what the level bookings_resources lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to offer meeting rooms, parking and whole levels, run several sites, welcome guests and close on public holidays.'**
+  String get setupLevelOutcomeBookingsResources;
+
+  /// #3283 the setup review: what the level bookings_simple lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to let members book desks and rooms on your floor plan, within your opening hours and booking rules, also as a series or for someone else.'**
+  String get setupLevelOutcomeBookingsSimple;
+
+  /// #3283 the setup review: what the level community_basic lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to keep a directory of members with their roles, share a calendar, and send messages and notifications.'**
+  String get setupLevelOutcomeCommunityBasic;
+
+  /// #3283 the setup review: what the level community_organised lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to share ownership, define your own roles and fields, manage profiles for others and have requests approved in steps.'**
+  String get setupLevelOutcomeCommunityOrganised;
+
+  /// #3283 the setup review: what the level money_invoices lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to issue numbered invoices for memberships and usage, send payment reminders and design your documents.'**
+  String get setupLevelOutcomeMoneyInvoices;
+
+  /// #3283 the setup review: what the level money_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run the space without any money in the app.'**
+  String get setupLevelOutcomeMoneyNone;
+
+  /// #3283 the setup review: what the level money_statements lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to price your memberships and services and give each member a monthly statement of what they owe.'**
+  String get setupLevelOutcomeMoneyStatements;
+
+  /// #3283 the setup review: what the level operations_advanced lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to try changes in a development copy, deploy them and move configuration between spaces.'**
+  String get setupLevelOutcomeOperationsAdvanced;
+
+  /// #3283 the setup review: what the level operations_basic lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to follow the setup guide, export documents and data, and try things in the Demo.'**
+  String get setupLevelOutcomeOperationsBasic;
+
+  /// #3283 the setup review: what the level operations_insight lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to see an overview of the space and design your own reports.'**
+  String get setupLevelOutcomeOperationsInsight;
+
+  /// #3283 the setup review: what the level payments_off lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to take payments outside the app, by transfer or in cash, and record what arrives.'**
+  String get setupLevelOutcomePaymentsOff;
+
+  /// #3283 the setup review: what the level payments_online lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to let members pay online through your payment provider.'**
+  String get setupLevelOutcomePaymentsOnline;
+
+  /// #3283 the setup review: what the level presentation_basic lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to tell members apart by their own initials.'**
+  String get setupLevelOutcomePresentationBasic;
+
+  /// #3283 the setup review: what the level presentation_branded lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to give the space your own colours and your own words.'**
+  String get setupLevelOutcomePresentationBranded;
+
+  /// #3283 the setup review: what the level presentation_public lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to publish a public page and receive enquiries from people who are not members yet.'**
+  String get setupLevelOutcomePresentationPublic;
+
+  /// #3283 the setup review: what the level purchases_expenses lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to record your expenses, repeat them each month and share them among members.'**
+  String get setupLevelOutcomePurchasesExpenses;
+
+  /// #3283 the setup review: what the level purchases_full lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to order from suppliers, record bills and leases, keep an asset register and analyse what you buy.'**
+  String get setupLevelOutcomePurchasesFull;
+
+  /// #3283 the setup review: what the level purchases_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run the space without recording your own purchases.'**
+  String get setupLevelOutcomePurchasesNone;
+
+  /// #3283 the setup review: what the level tax_books lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to keep the books, close periods, import bank statements and hand everything to your accountant.'**
+  String get setupLevelOutcomeTaxBooks;
+
+  /// #3283 the setup review: what the level tax_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to invoice without handling VAT in the app.'**
+  String get setupLevelOutcomeTaxNone;
+
+  /// #3283 the setup review: what the level tax_vat lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to apply VAT rates to invoices and purchases and prepare your VAT returns.'**
+  String get setupLevelOutcomeTaxVat;
+
   /// #2868 setup levels: setupLevelsApplied
   ///
   /// In en, this message translates to:
@@ -45588,6 +45738,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing changes: the space already does this.'**
   String get setupLevelsNoChange;
+
+  /// #3283 the setup review: heading above the outcome sentence of each changed level.
+  ///
+  /// In en, this message translates to:
+  /// **'With this change:'**
+  String get setupLevelsOutcomeTitle;
 
   /// #2868 setup levels: setupLevelsPresets
   ///

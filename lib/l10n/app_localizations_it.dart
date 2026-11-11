@@ -27924,6 +27924,106 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupLevelNameTaxVat => 'IVA';
 
   @override
+  String get setupLevelOutcomeAssistantOff =>
+      'Potrà gestire lo spazio senza che alcun assistente acceda ai suoi dati.';
+
+  @override
+  String get setupLevelOutcomeAssistantOn =>
+      'Potrà lasciare che un assistente di sua scelta agisca nello spazio per lei, e registrare attività che guidino gli altri.';
+
+  @override
+  String get setupLevelOutcomeBookingsMeasured =>
+      'Potrà registrare gli arrivi con badge, codice QR o un tablet all\'ingresso e vedere quanto è pieno lo spazio.';
+
+  @override
+  String get setupLevelOutcomeBookingsNone =>
+      'Potrà gestire la sua attività senza posti prenotabili.';
+
+  @override
+  String get setupLevelOutcomeBookingsResources =>
+      'Potrà offrire sale riunioni, parcheggi e interi piani, gestire più sedi, accogliere ospiti e chiudere nei giorni festivi.';
+
+  @override
+  String get setupLevelOutcomeBookingsSimple =>
+      'Potrà far prenotare ai membri scrivanie e sale sulla sua planimetria, entro i suoi orari e le sue regole di prenotazione, anche in serie o per un\'altra persona.';
+
+  @override
+  String get setupLevelOutcomeCommunityBasic =>
+      'Potrà tenere un elenco dei membri con i loro ruoli, condividere un calendario e inviare messaggi e notifiche.';
+
+  @override
+  String get setupLevelOutcomeCommunityOrganised =>
+      'Potrà condividere la titolarità, definire ruoli e campi propri, gestire profili per altri e far approvare le richieste per fasi.';
+
+  @override
+  String get setupLevelOutcomeMoneyInvoices =>
+      'Potrà emettere fatture numerate per abbonamenti e utilizzo, inviare solleciti di pagamento e progettare i suoi documenti.';
+
+  @override
+  String get setupLevelOutcomeMoneyNone =>
+      'Potrà gestire lo spazio senza denaro nell\'app.';
+
+  @override
+  String get setupLevelOutcomeMoneyStatements =>
+      'Potrà dare un prezzo agli abbonamenti e ai servizi e fornire a ogni membro un estratto mensile di quanto deve.';
+
+  @override
+  String get setupLevelOutcomeOperationsAdvanced =>
+      'Potrà provare modifiche in una copia di sviluppo, distribuirle e trasferire la configurazione tra spazi.';
+
+  @override
+  String get setupLevelOutcomeOperationsBasic =>
+      'Potrà seguire la guida di avvio, esportare documenti e dati e provare nella demo.';
+
+  @override
+  String get setupLevelOutcomeOperationsInsight =>
+      'Potrà vedere una panoramica dello spazio e progettare i suoi report.';
+
+  @override
+  String get setupLevelOutcomePaymentsOff =>
+      'Potrà incassare fuori dall\'app, con bonifico o in contanti, e registrare ciò che arriva.';
+
+  @override
+  String get setupLevelOutcomePaymentsOnline =>
+      'Potrà far pagare i membri online tramite il suo fornitore di pagamenti.';
+
+  @override
+  String get setupLevelOutcomePresentationBasic =>
+      'Potrà distinguere i membri dalle loro iniziali.';
+
+  @override
+  String get setupLevelOutcomePresentationBranded =>
+      'Potrà dare allo spazio i suoi colori e le sue parole.';
+
+  @override
+  String get setupLevelOutcomePresentationPublic =>
+      'Potrà pubblicare una pagina pubblica e ricevere richieste da persone che non sono ancora membri.';
+
+  @override
+  String get setupLevelOutcomePurchasesExpenses =>
+      'Potrà registrare le sue spese, ripeterle ogni mese e ripartirle tra i membri.';
+
+  @override
+  String get setupLevelOutcomePurchasesFull =>
+      'Potrà ordinare ai fornitori, registrare fatture e locazioni, tenere un registro dei cespiti e analizzare ciò che acquista.';
+
+  @override
+  String get setupLevelOutcomePurchasesNone =>
+      'Potrà gestire lo spazio senza registrare i propri acquisti.';
+
+  @override
+  String get setupLevelOutcomeTaxBooks =>
+      'Potrà tenere la contabilità, chiudere i periodi, importare gli estratti bancari e consegnare tutto al suo commercialista.';
+
+  @override
+  String get setupLevelOutcomeTaxNone =>
+      'Potrà fatturare senza gestire l\'IVA nell\'app.';
+
+  @override
+  String get setupLevelOutcomeTaxVat =>
+      'Potrà applicare le aliquote IVA a fatture e acquisti e preparare le sue dichiarazioni IVA.';
+
+  @override
   String get setupLevelsApplied => 'Il suo spazio ora fa ciò che ha scelto.';
 
   @override
@@ -27951,6 +28051,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupLevelsNoChange => 'Nulla cambia: lo spazio lo fa già.';
+
+  @override
+  String get setupLevelsOutcomeTitle => 'Con questa modifica:';
 
   @override
   String get setupLevelsPresets => 'Avvio rapido';

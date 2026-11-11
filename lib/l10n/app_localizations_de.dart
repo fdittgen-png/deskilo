@@ -27951,6 +27951,106 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelNameTaxVat => 'USt.';
 
   @override
+  String get setupLevelOutcomeAssistantOff =>
+      'Sie können den Bereich führen, ohne dass ein Assistent auf seine Daten zugreift.';
+
+  @override
+  String get setupLevelOutcomeAssistantOn =>
+      'Sie können einen Assistenten Ihrer Wahl im Bereich für Sie handeln lassen und Abläufe aufzeichnen, die andere anleiten.';
+
+  @override
+  String get setupLevelOutcomeBookingsMeasured =>
+      'Sie können Anwesenheit per Ausweis, QR-Code oder Empfangstablet erfassen und sehen, wie voll der Bereich ist.';
+
+  @override
+  String get setupLevelOutcomeBookingsNone =>
+      'Sie können Ihr Geschäft ohne buchbare Plätze führen.';
+
+  @override
+  String get setupLevelOutcomeBookingsResources =>
+      'Sie können Besprechungsräume, Parkplätze und ganze Etagen anbieten, mehrere Standorte führen, Gäste empfangen und an Feiertagen schließen.';
+
+  @override
+  String get setupLevelOutcomeBookingsSimple =>
+      'Sie können Mitglieder Schreibtische und Räume auf Ihrem Plan buchen lassen, innerhalb Ihrer Öffnungszeiten und Buchungsregeln, auch als Serie oder für andere.';
+
+  @override
+  String get setupLevelOutcomeCommunityBasic =>
+      'Sie können ein Mitgliederverzeichnis mit Rollen führen, einen Kalender teilen und Nachrichten und Benachrichtigungen senden.';
+
+  @override
+  String get setupLevelOutcomeCommunityOrganised =>
+      'Sie können die Inhaberschaft teilen, eigene Rollen und Felder festlegen, Profile für andere verwalten und Anträge stufenweise genehmigen lassen.';
+
+  @override
+  String get setupLevelOutcomeMoneyInvoices =>
+      'Sie können nummerierte Rechnungen für Mitgliedschaften und Nutzung ausstellen, Zahlungserinnerungen senden und Ihre Dokumente gestalten.';
+
+  @override
+  String get setupLevelOutcomeMoneyNone =>
+      'Sie können den Bereich ganz ohne Geld in der App führen.';
+
+  @override
+  String get setupLevelOutcomeMoneyStatements =>
+      'Sie können Mitgliedschaften und Leistungen bepreisen und jedem Mitglied eine monatliche Abrechnung über seine Schulden geben.';
+
+  @override
+  String get setupLevelOutcomeOperationsAdvanced =>
+      'Sie können Änderungen in einer Entwicklungskopie erproben, sie übernehmen und Konfiguration zwischen Bereichen übertragen.';
+
+  @override
+  String get setupLevelOutcomeOperationsBasic =>
+      'Sie können der Einrichtungsanleitung folgen, Dokumente und Daten exportieren und Dinge in der Demo ausprobieren.';
+
+  @override
+  String get setupLevelOutcomeOperationsInsight =>
+      'Sie können eine Übersicht des Bereichs sehen und eigene Berichte gestalten.';
+
+  @override
+  String get setupLevelOutcomePaymentsOff =>
+      'Sie können Zahlungen außerhalb der App annehmen, per Überweisung oder bar, und erfassen, was eingeht.';
+
+  @override
+  String get setupLevelOutcomePaymentsOnline =>
+      'Sie können Mitglieder online über Ihren Zahlungsanbieter zahlen lassen.';
+
+  @override
+  String get setupLevelOutcomePresentationBasic =>
+      'Sie können Mitglieder an ihren eigenen Initialen unterscheiden.';
+
+  @override
+  String get setupLevelOutcomePresentationBranded =>
+      'Sie können dem Bereich Ihre eigenen Farben und Ihre eigenen Begriffe geben.';
+
+  @override
+  String get setupLevelOutcomePresentationPublic =>
+      'Sie können eine öffentliche Seite veröffentlichen und Anfragen von Menschen erhalten, die noch keine Mitglieder sind.';
+
+  @override
+  String get setupLevelOutcomePurchasesExpenses =>
+      'Sie können Ihre Ausgaben erfassen, monatlich wiederholen und unter den Mitgliedern aufteilen.';
+
+  @override
+  String get setupLevelOutcomePurchasesFull =>
+      'Sie können bei Lieferanten bestellen, Rechnungen und Mietverträge erfassen, ein Anlagenverzeichnis führen und Ihre Einkäufe auswerten.';
+
+  @override
+  String get setupLevelOutcomePurchasesNone =>
+      'Sie können den Bereich führen, ohne Ihre eigenen Einkäufe zu erfassen.';
+
+  @override
+  String get setupLevelOutcomeTaxBooks =>
+      'Sie können die Bücher führen, Perioden abschließen, Kontoauszüge einlesen und alles an Ihre Steuerberatung übergeben.';
+
+  @override
+  String get setupLevelOutcomeTaxNone =>
+      'Sie können ohne Umsatzsteuerverwaltung in der App abrechnen.';
+
+  @override
+  String get setupLevelOutcomeTaxVat =>
+      'Sie können Umsatzsteuersätze auf Rechnungen und Einkäufe anwenden und Ihre Umsatzsteuererklärungen vorbereiten.';
+
+  @override
   String get setupLevelsApplied => 'Ihr Raum tut jetzt, was Sie gewählt haben.';
 
   @override
@@ -27979,6 +28079,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupLevelsNoChange =>
       'Nichts ändert sich: Der Raum tut das bereits.';
+
+  @override
+  String get setupLevelsOutcomeTitle => 'Mit dieser Änderung:';
 
   @override
   String get setupLevelsPresets => 'Schnellstart';
