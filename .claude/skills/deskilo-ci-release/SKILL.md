@@ -54,6 +54,7 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
   and name it in the body.
 
 ## Merge
+- First `scripts/merge_check.sh <pr> <worktree-at-head>` (AGENT_RULES "Before a merge: evidence, not claims"): scope, behind, the body's Gate line, closing keywords, tool lines, ancestry (`--contains`), preflight's generators and listed tests, and one verdict line. No watcher without a Gate line; a watcher ends on the first failed job.
 - `gh pr merge <n> --auto --squash --match-head-commit <sha>` — invoke only after
   the current candidate's required checks succeeded. With protection absent,
   auto-merge can merge immediately; it is not a substitute for that verification.
