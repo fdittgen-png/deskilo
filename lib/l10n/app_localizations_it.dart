@@ -5142,6 +5142,54 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get businessExampleApproveBookings =>
+      'Per esempio: un membro chiede la sala riunioni per giovedì e la responsabile la conferma.';
+
+  @override
+  String get businessExampleAssociation =>
+      'Per esempio: i membri eleggono un consiglio e tengono un\'assemblea generale ogni anno.';
+
+  @override
+  String get businessExampleDoorTablet =>
+      'Per esempio: i membri passano il badge su un tablet all\'ingresso quando arrivano.';
+
+  @override
+  String get businessExampleIssueInvoices =>
+      'Per esempio: un\'azienda membro ha bisogno ogni mese di una fattura numerata per la sua contabilità.';
+
+  @override
+  String get businessExampleKeepBooks =>
+      'Per esempio: il suo commercialista chiede i libri dell\'anno e gli estratti bancari.';
+
+  @override
+  String get businessExampleMembersOweMoney =>
+      'Per esempio: un abbonamento mensile, un pass giornaliero o caffè e stampe sul conto.';
+
+  @override
+  String get businessExampleOrganised =>
+      'Per esempio: una spesa oltre un importo stabilito richiede l\'approvazione di due membri del consiglio.';
+
+  @override
+  String get businessExamplePayOnline =>
+      'Per esempio: un membro paga l\'estratto del mese con carta dal telefono.';
+
+  @override
+  String get businessExamplePublicPage =>
+      'Per esempio: qualcuno che cerca una scrivania vicino trova la sua pagina e le scrive.';
+
+  @override
+  String get businessExampleSeveralRoomsOrSites =>
+      'Per esempio: un open space, due sale riunioni e un secondo indirizzo in città.';
+
+  @override
+  String get businessExampleTracksPurchases =>
+      'Per esempio: l\'affitto, le pulizie e la macchina del caffè che acquista per lo spazio.';
+
+  @override
+  String get businessExampleVatRegistered =>
+      'Per esempio: le sue fatture riportano l\'IVA e lei presenta le dichiarazioni IVA.';
+
+  @override
   String businessKindAndMore(String list, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -28607,54 +28655,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupQuestionDoorTablet =>
       'Un tablet all’ingresso registra gli arrivi';
-
-  @override
-  String get setupQuestionExampleApproveBookings =>
-      'Per esempio: un membro chiede la sala riunioni per giovedì e la responsabile la conferma.';
-
-  @override
-  String get setupQuestionExampleAssociation =>
-      'Per esempio: i membri eleggono un consiglio e tengono un\'assemblea generale ogni anno.';
-
-  @override
-  String get setupQuestionExampleDoorTablet =>
-      'Per esempio: i membri passano il badge su un tablet all\'ingresso quando arrivano.';
-
-  @override
-  String get setupQuestionExampleIssueInvoices =>
-      'Per esempio: un\'azienda membro ha bisogno ogni mese di una fattura numerata per la sua contabilità.';
-
-  @override
-  String get setupQuestionExampleKeepBooks =>
-      'Per esempio: il suo commercialista chiede i libri dell\'anno e gli estratti bancari.';
-
-  @override
-  String get setupQuestionExampleMembersOweMoney =>
-      'Per esempio: un abbonamento mensile, un pass giornaliero o caffè e stampe sul conto.';
-
-  @override
-  String get setupQuestionExampleOrganised =>
-      'Per esempio: una spesa oltre un importo stabilito richiede l\'approvazione di due membri del consiglio.';
-
-  @override
-  String get setupQuestionExamplePayOnline =>
-      'Per esempio: un membro paga l\'estratto del mese con carta dal telefono.';
-
-  @override
-  String get setupQuestionExamplePublicPage =>
-      'Per esempio: qualcuno che cerca una scrivania vicino trova la sua pagina e le scrive.';
-
-  @override
-  String get setupQuestionExampleSeveralRoomsOrSites =>
-      'Per esempio: un open space, due sale riunioni e un secondo indirizzo in città.';
-
-  @override
-  String get setupQuestionExampleTracksPurchases =>
-      'Per esempio: l\'affitto, le pulizie e la macchina del caffè che acquista per lo spazio.';
-
-  @override
-  String get setupQuestionExampleVatRegistered =>
-      'Per esempio: le sue fatture riportano l\'IVA e lei presenta le dichiarazioni IVA.';
 
   @override
   String get setupQuestionIssueInvoices => 'Emette fatture';

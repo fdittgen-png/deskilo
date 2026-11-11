@@ -76,7 +76,7 @@ class SetupQuestionGroup extends StatelessWidget {
               subtitle: Text(
                 unknown.contains(key)
                     ? l10n.setupAnswerUnknown
-                    : l10n.setupQuestionExample(key),
+                    : l10n.businessExample(key),
                 key: ValueKey('setup-question-$key-example'),
               ),
             ),

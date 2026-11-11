@@ -8213,6 +8213,78 @@ abstract class AppLocalizations {
   /// **'The colour {color} was not applied: {pair} would be unreadable.'**
   String brandColorRefused(String color, String pair);
 
+  /// #3283 a business example under the setup question approve_bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a member asks for Thursday\'s meeting room and the manager confirms it.'**
+  String get businessExampleApproveBookings;
+
+  /// #3283 a business example under the setup question association.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: the members elect a board and hold a general meeting each year.'**
+  String get businessExampleAssociation;
+
+  /// #3283 a business example under the setup question door_tablet.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: members tap their badge on a tablet by the entrance as they arrive.'**
+  String get businessExampleDoorTablet;
+
+  /// #3283 a business example under the setup question issue_invoices.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a company member needs a numbered invoice for its accounts each month.'**
+  String get businessExampleIssueInvoices;
+
+  /// #3283 a business example under the setup question keep_books.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: your accountant asks for the year\'s books and the bank statements.'**
+  String get businessExampleKeepBooks;
+
+  /// #3283 a business example under the setup question members_owe_money.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a monthly membership, a day pass or coffee and printing on the bill.'**
+  String get businessExampleMembersOweMoney;
+
+  /// #3283 a business example under the setup question organised.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: an expense over a set amount needs the approval of two board members.'**
+  String get businessExampleOrganised;
+
+  /// #3283 a business example under the setup question pay_online.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a member pays this month\'s statement by card from their phone.'**
+  String get businessExamplePayOnline;
+
+  /// #3283 a business example under the setup question public_page.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: someone looking for a desk nearby finds your page and writes to you.'**
+  String get businessExamplePublicPage;
+
+  /// #3283 a business example under the setup question several_rooms_or_sites.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: an open space, two meeting rooms and a second address across town.'**
+  String get businessExampleSeveralRoomsOrSites;
+
+  /// #3283 a business example under the setup question tracks_purchases.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: the rent, the cleaning and the coffee machine you buy for the space.'**
+  String get businessExampleTracksPurchases;
+
+  /// #3283 a business example under the setup question vat_registered.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: your invoices show VAT and you file VAT returns.'**
+  String get businessExampleVatRegistered;
+
   /// #3550 a shortened list: {list} is the first names, {count} how many more
   ///
   /// In en, this message translates to:
@@ -46536,78 +46608,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A tablet at the door checks people in'**
   String get setupQuestionDoorTablet;
-
-  /// #3283 a business example under the setup question approve_bookings.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: a member asks for Thursday\'s meeting room and the manager confirms it.'**
-  String get setupQuestionExampleApproveBookings;
-
-  /// #3283 a business example under the setup question association.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: the members elect a board and hold a general meeting each year.'**
-  String get setupQuestionExampleAssociation;
-
-  /// #3283 a business example under the setup question door_tablet.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: members tap their badge on a tablet by the entrance as they arrive.'**
-  String get setupQuestionExampleDoorTablet;
-
-  /// #3283 a business example under the setup question issue_invoices.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: a company member needs a numbered invoice for its accounts each month.'**
-  String get setupQuestionExampleIssueInvoices;
-
-  /// #3283 a business example under the setup question keep_books.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: your accountant asks for the year\'s books and the bank statements.'**
-  String get setupQuestionExampleKeepBooks;
-
-  /// #3283 a business example under the setup question members_owe_money.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: a monthly membership, a day pass or coffee and printing on the bill.'**
-  String get setupQuestionExampleMembersOweMoney;
-
-  /// #3283 a business example under the setup question organised.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: an expense over a set amount needs the approval of two board members.'**
-  String get setupQuestionExampleOrganised;
-
-  /// #3283 a business example under the setup question pay_online.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: a member pays this month\'s statement by card from their phone.'**
-  String get setupQuestionExamplePayOnline;
-
-  /// #3283 a business example under the setup question public_page.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: someone looking for a desk nearby finds your page and writes to you.'**
-  String get setupQuestionExamplePublicPage;
-
-  /// #3283 a business example under the setup question several_rooms_or_sites.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: an open space, two meeting rooms and a second address across town.'**
-  String get setupQuestionExampleSeveralRoomsOrSites;
-
-  /// #3283 a business example under the setup question tracks_purchases.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: the rent, the cleaning and the coffee machine you buy for the space.'**
-  String get setupQuestionExampleTracksPurchases;
-
-  /// #3283 a business example under the setup question vat_registered.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: your invoices show VAT and you file VAT returns.'**
-  String get setupQuestionExampleVatRegistered;
 
   /// #3485 setupQuestion: the label for case 'issue_invoices'.
   ///

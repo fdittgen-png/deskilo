@@ -5150,6 +5150,54 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get businessExampleApproveBookings =>
+      'Zum Beispiel: Ein Mitglied fragt den Besprechungsraum für Donnerstag an, und die Leitung bestätigt.';
+
+  @override
+  String get businessExampleAssociation =>
+      'Zum Beispiel: Die Mitglieder wählen einen Vorstand und halten jedes Jahr eine Mitgliederversammlung ab.';
+
+  @override
+  String get businessExampleDoorTablet =>
+      'Zum Beispiel: Mitglieder halten beim Ankommen ihren Ausweis an ein Tablet am Eingang.';
+
+  @override
+  String get businessExampleIssueInvoices =>
+      'Zum Beispiel: Ein Firmenmitglied braucht jeden Monat eine nummerierte Rechnung für seine Buchhaltung.';
+
+  @override
+  String get businessExampleKeepBooks =>
+      'Zum Beispiel: Ihre Steuerberatung verlangt die Bücher des Jahres und die Kontoauszüge.';
+
+  @override
+  String get businessExampleMembersOweMoney =>
+      'Zum Beispiel: eine Monatsmitgliedschaft, ein Tagespass oder Kaffee und Drucke auf der Rechnung.';
+
+  @override
+  String get businessExampleOrganised =>
+      'Zum Beispiel: Eine Ausgabe über einem festgelegten Betrag braucht die Zustimmung zweier Vorstandsmitglieder.';
+
+  @override
+  String get businessExamplePayOnline =>
+      'Zum Beispiel: Ein Mitglied bezahlt die Monatsabrechnung per Karte vom Telefon aus.';
+
+  @override
+  String get businessExamplePublicPage =>
+      'Zum Beispiel: Jemand sucht einen Schreibtisch in der Nähe, findet Ihre Seite und schreibt Ihnen.';
+
+  @override
+  String get businessExampleSeveralRoomsOrSites =>
+      'Zum Beispiel: ein offener Bereich, zwei Besprechungsräume und eine zweite Adresse in der Stadt.';
+
+  @override
+  String get businessExampleTracksPurchases =>
+      'Zum Beispiel: die Miete, die Reinigung und die Kaffeemaschine, die Sie für den Bereich kaufen.';
+
+  @override
+  String get businessExampleVatRegistered =>
+      'Zum Beispiel: Ihre Rechnungen weisen Umsatzsteuer aus, und Sie geben Umsatzsteuererklärungen ab.';
+
+  @override
   String businessKindAndMore(String list, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -28636,54 +28684,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupQuestionDoorTablet =>
       'Ein Tablet am Eingang erfasst die Ankunft';
-
-  @override
-  String get setupQuestionExampleApproveBookings =>
-      'Zum Beispiel: Ein Mitglied fragt den Besprechungsraum für Donnerstag an, und die Leitung bestätigt.';
-
-  @override
-  String get setupQuestionExampleAssociation =>
-      'Zum Beispiel: Die Mitglieder wählen einen Vorstand und halten jedes Jahr eine Mitgliederversammlung ab.';
-
-  @override
-  String get setupQuestionExampleDoorTablet =>
-      'Zum Beispiel: Mitglieder halten beim Ankommen ihren Ausweis an ein Tablet am Eingang.';
-
-  @override
-  String get setupQuestionExampleIssueInvoices =>
-      'Zum Beispiel: Ein Firmenmitglied braucht jeden Monat eine nummerierte Rechnung für seine Buchhaltung.';
-
-  @override
-  String get setupQuestionExampleKeepBooks =>
-      'Zum Beispiel: Ihre Steuerberatung verlangt die Bücher des Jahres und die Kontoauszüge.';
-
-  @override
-  String get setupQuestionExampleMembersOweMoney =>
-      'Zum Beispiel: eine Monatsmitgliedschaft, ein Tagespass oder Kaffee und Drucke auf der Rechnung.';
-
-  @override
-  String get setupQuestionExampleOrganised =>
-      'Zum Beispiel: Eine Ausgabe über einem festgelegten Betrag braucht die Zustimmung zweier Vorstandsmitglieder.';
-
-  @override
-  String get setupQuestionExamplePayOnline =>
-      'Zum Beispiel: Ein Mitglied bezahlt die Monatsabrechnung per Karte vom Telefon aus.';
-
-  @override
-  String get setupQuestionExamplePublicPage =>
-      'Zum Beispiel: Jemand sucht einen Schreibtisch in der Nähe, findet Ihre Seite und schreibt Ihnen.';
-
-  @override
-  String get setupQuestionExampleSeveralRoomsOrSites =>
-      'Zum Beispiel: ein offener Bereich, zwei Besprechungsräume und eine zweite Adresse in der Stadt.';
-
-  @override
-  String get setupQuestionExampleTracksPurchases =>
-      'Zum Beispiel: die Miete, die Reinigung und die Kaffeemaschine, die Sie für den Bereich kaufen.';
-
-  @override
-  String get setupQuestionExampleVatRegistered =>
-      'Zum Beispiel: Ihre Rechnungen weisen Umsatzsteuer aus, und Sie geben Umsatzsteuererklärungen ab.';
 
   @override
   String get setupQuestionIssueInvoices => 'Sie stellen Rechnungen';

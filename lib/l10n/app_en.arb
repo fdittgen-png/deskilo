@@ -6802,6 +6802,54 @@
       }
     }
   },
+  "businessExampleApproveBookings": "For example: a member asks for Thursday's meeting room and the manager confirms it.",
+  "@businessExampleApproveBookings": {
+    "description": "#3283 a business example under the setup question approve_bookings."
+  },
+  "businessExampleAssociation": "For example: the members elect a board and hold a general meeting each year.",
+  "@businessExampleAssociation": {
+    "description": "#3283 a business example under the setup question association."
+  },
+  "businessExampleDoorTablet": "For example: members tap their badge on a tablet by the entrance as they arrive.",
+  "@businessExampleDoorTablet": {
+    "description": "#3283 a business example under the setup question door_tablet."
+  },
+  "businessExampleIssueInvoices": "For example: a company member needs a numbered invoice for its accounts each month.",
+  "@businessExampleIssueInvoices": {
+    "description": "#3283 a business example under the setup question issue_invoices."
+  },
+  "businessExampleKeepBooks": "For example: your accountant asks for the year's books and the bank statements.",
+  "@businessExampleKeepBooks": {
+    "description": "#3283 a business example under the setup question keep_books."
+  },
+  "businessExampleMembersOweMoney": "For example: a monthly membership, a day pass or coffee and printing on the bill.",
+  "@businessExampleMembersOweMoney": {
+    "description": "#3283 a business example under the setup question members_owe_money."
+  },
+  "businessExampleOrganised": "For example: an expense over a set amount needs the approval of two board members.",
+  "@businessExampleOrganised": {
+    "description": "#3283 a business example under the setup question organised."
+  },
+  "businessExamplePayOnline": "For example: a member pays this month's statement by card from their phone.",
+  "@businessExamplePayOnline": {
+    "description": "#3283 a business example under the setup question pay_online."
+  },
+  "businessExamplePublicPage": "For example: someone looking for a desk nearby finds your page and writes to you.",
+  "@businessExamplePublicPage": {
+    "description": "#3283 a business example under the setup question public_page."
+  },
+  "businessExampleSeveralRoomsOrSites": "For example: an open space, two meeting rooms and a second address across town.",
+  "@businessExampleSeveralRoomsOrSites": {
+    "description": "#3283 a business example under the setup question several_rooms_or_sites."
+  },
+  "businessExampleTracksPurchases": "For example: the rent, the cleaning and the coffee machine you buy for the space.",
+  "@businessExampleTracksPurchases": {
+    "description": "#3283 a business example under the setup question tracks_purchases."
+  },
+  "businessExampleVatRegistered": "For example: your invoices show VAT and you file VAT returns.",
+  "@businessExampleVatRegistered": {
+    "description": "#3283 a business example under the setup question vat_registered."
+  },
   "businessKindAndMore": "{count, plural, =1{{list} and 1 more} other{{list} and {count} more}}",
   "@businessKindAndMore": {
     "description": "#3550 a shortened list: {list} is the first names, {count} how many more",
@@ -37171,54 +37219,6 @@
   "setupQuestionDoorTablet": "A tablet at the door checks people in",
   "@setupQuestionDoorTablet": {
     "description": "#3485 setupQuestion: the label for case 'door_tablet'."
-  },
-  "setupQuestionExampleApproveBookings": "For example: a member asks for Thursday's meeting room and the manager confirms it.",
-  "@setupQuestionExampleApproveBookings": {
-    "description": "#3283 a business example under the setup question approve_bookings."
-  },
-  "setupQuestionExampleAssociation": "For example: the members elect a board and hold a general meeting each year.",
-  "@setupQuestionExampleAssociation": {
-    "description": "#3283 a business example under the setup question association."
-  },
-  "setupQuestionExampleDoorTablet": "For example: members tap their badge on a tablet by the entrance as they arrive.",
-  "@setupQuestionExampleDoorTablet": {
-    "description": "#3283 a business example under the setup question door_tablet."
-  },
-  "setupQuestionExampleIssueInvoices": "For example: a company member needs a numbered invoice for its accounts each month.",
-  "@setupQuestionExampleIssueInvoices": {
-    "description": "#3283 a business example under the setup question issue_invoices."
-  },
-  "setupQuestionExampleKeepBooks": "For example: your accountant asks for the year's books and the bank statements.",
-  "@setupQuestionExampleKeepBooks": {
-    "description": "#3283 a business example under the setup question keep_books."
-  },
-  "setupQuestionExampleMembersOweMoney": "For example: a monthly membership, a day pass or coffee and printing on the bill.",
-  "@setupQuestionExampleMembersOweMoney": {
-    "description": "#3283 a business example under the setup question members_owe_money."
-  },
-  "setupQuestionExampleOrganised": "For example: an expense over a set amount needs the approval of two board members.",
-  "@setupQuestionExampleOrganised": {
-    "description": "#3283 a business example under the setup question organised."
-  },
-  "setupQuestionExamplePayOnline": "For example: a member pays this month's statement by card from their phone.",
-  "@setupQuestionExamplePayOnline": {
-    "description": "#3283 a business example under the setup question pay_online."
-  },
-  "setupQuestionExamplePublicPage": "For example: someone looking for a desk nearby finds your page and writes to you.",
-  "@setupQuestionExamplePublicPage": {
-    "description": "#3283 a business example under the setup question public_page."
-  },
-  "setupQuestionExampleSeveralRoomsOrSites": "For example: an open space, two meeting rooms and a second address across town.",
-  "@setupQuestionExampleSeveralRoomsOrSites": {
-    "description": "#3283 a business example under the setup question several_rooms_or_sites."
-  },
-  "setupQuestionExampleTracksPurchases": "For example: the rent, the cleaning and the coffee machine you buy for the space.",
-  "@setupQuestionExampleTracksPurchases": {
-    "description": "#3283 a business example under the setup question tracks_purchases."
-  },
-  "setupQuestionExampleVatRegistered": "For example: your invoices show VAT and you file VAT returns.",
-  "@setupQuestionExampleVatRegistered": {
-    "description": "#3283 a business example under the setup question vat_registered."
   },
   "setupQuestionIssueInvoices": "You issue invoices",
   "@setupQuestionIssueInvoices": {

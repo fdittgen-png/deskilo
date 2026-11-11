@@ -365,19 +365,19 @@ extension DictionaryLabels on AppLocalizations {
   };
 
   /// #3283 — a business example under setup question [key].
-  String setupQuestionExample(String key) => switch (key) {
-    'approve_bookings' => setupQuestionExampleApproveBookings,
-    'several_rooms_or_sites' => setupQuestionExampleSeveralRoomsOrSites,
-    'public_page' => setupQuestionExamplePublicPage,
-    'members_owe_money' => setupQuestionExampleMembersOweMoney,
-    'issue_invoices' => setupQuestionExampleIssueInvoices,
-    'pay_online' => setupQuestionExamplePayOnline,
-    'vat_registered' => setupQuestionExampleVatRegistered,
-    'association' => setupQuestionExampleAssociation,
-    'keep_books' => setupQuestionExampleKeepBooks,
-    'tracks_purchases' => setupQuestionExampleTracksPurchases,
-    'door_tablet' => setupQuestionExampleDoorTablet,
-    'organised' => setupQuestionExampleOrganised,
+  String businessExample(String key) => switch (key) {
+    'approve_bookings' => businessExampleApproveBookings,
+    'several_rooms_or_sites' => businessExampleSeveralRoomsOrSites,
+    'public_page' => businessExamplePublicPage,
+    'members_owe_money' => businessExampleMembersOweMoney,
+    'issue_invoices' => businessExampleIssueInvoices,
+    'pay_online' => businessExamplePayOnline,
+    'vat_registered' => businessExampleVatRegistered,
+    'association' => businessExampleAssociation,
+    'keep_books' => businessExampleKeepBooks,
+    'tracks_purchases' => businessExampleTracksPurchases,
+    'door_tablet' => businessExampleDoorTablet,
+    'organised' => businessExampleOrganised,
     _ => '',
   };
 

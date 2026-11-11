@@ -191,11 +191,11 @@ void main() {
   // stays to try again, and a retry writes the planned change once.
   Future<void> apply(WidgetTester tester) async {
     await tester.tap(find.byKey(const ValueKey('setup-levels-apply')));
-    await tester.pumpAndSettle();
+    await _frames(tester);
     final yes = find.byKey(const ValueKey('setup-levels-confirm-off-yes'));
     if (yes.evaluate().isNotEmpty) {
       await tester.tap(yes);
-      await tester.pumpAndSettle();
+      await _frames(tester);
     }
   }
 
@@ -203,7 +203,7 @@ void main() {
     final repo = await _pump(tester);
     repo.flagConflictNext = true;
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
-    await tester.pumpAndSettle();
+    await _frames(tester);
     await apply(tester);
     expect(repo.flagWrites, isEmpty);
     expect(find.byType(SnackBar), findsOneWidget);
@@ -218,7 +218,7 @@ void main() {
       code: '42501',
     );
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
-    await tester.pumpAndSettle();
+    await _frames(tester);
     await apply(tester);
     expect(repo.flagWrites, isEmpty);
     expect(find.byType(SnackBar), findsOneWidget);
@@ -232,7 +232,7 @@ void main() {
     final expected = _planFor(repo, setupPresets[SetupPreset.complet]!);
     repo.flagWriteErrorNext = TimeoutException('offline');
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
-    await tester.pumpAndSettle();
+    await _frames(tester);
     await apply(tester);
     expect(repo.flagWrites, isEmpty);
     expect(
@@ -240,7 +240,7 @@ void main() {
       findsOneWidget,
     );
     await tester.pump(const Duration(seconds: 6)); // the notice leaves
-    await tester.pumpAndSettle();
+    await _frames(tester);
     await apply(tester);
     expect(repo.flagWrites, [expected.flags]);
   });
@@ -263,9 +263,9 @@ void main() {
     await tester.tap(
       find.byKey(const ValueKey('setup-question-door_tablet-unknown')),
     );
-    await tester.pumpAndSettle();
+    await _frames(tester);
     await tester.tap(find.byKey(const ValueKey('form-error-summary-go')));
-    await tester.pumpAndSettle();
+    await _frames(tester);
     final question = find.byKey(const ValueKey('setup-question-door_tablet'));
     expect(question, findsOneWidget);
     final focused = FocusManager.instance.primaryFocus?.context;
@@ -289,5 +289,11 @@ Future<void> _unfoldDetails(WidgetTester tester) async {
   final details = find.byKey(const ValueKey('setup-levels-details'));
   await tester.ensureVisible(details);
   await tester.tap(details);
-  await tester.pumpAndSettle();
+  await _frames(tester);
+}
+
+/// A few frames and the half second an expansion or a notice takes.
+Future<void> _frames(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
 }
