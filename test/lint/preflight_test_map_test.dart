@@ -81,6 +81,29 @@ void main() {
       );
     });
 
+    test('an ARB-only change lists test/i18n and nothing else', () {
+      final skip = readNoImporterSearch(File('tool/preflight/test_map.json'));
+      final consumers = <String, String>{
+        'test/features/x_test.dart':
+            "import 'package:deskilo/l10n/app_localizations.dart';",
+      };
+      expect(
+        affectedTests(
+          [
+            'lib/l10n/_fragments/portal_en.arb',
+            'lib/l10n/app_en.arb',
+            'lib/l10n/app_localizations.dart',
+            'lib/l10n/app_localizations_en.dart',
+            'lib/features/task_recorder/domain/ui_vocabulary.g.dart',
+          ],
+          table,
+          consumers,
+          skipImporters: skip,
+        ),
+        ['test/i18n/'],
+      );
+    });
+
     test('a documentation-only change lists nothing', () {
       expect(list(['docs/AGENT_RULES.md', 'README.md']), isEmpty);
     });

@@ -15,6 +15,13 @@ class TestMapRow {
   final List<String> tests;
 }
 
+/// The patterns of generated files whose importers are not searched.
+List<String> readNoImporterSearch(File file) =>
+    ((jsonDecode(file.readAsStringSync()) as Map<String, dynamic>)['no_importer_search']
+            as List?)
+        ?.cast<String>() ??
+    const [];
+
 /// The table read from [file] (`tool/preflight/test_map.json`).
 List<TestMapRow> readTestMap(File file) {
   final json = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
@@ -48,11 +55,16 @@ RegExp patternRegExp(String pattern) {
 /// lib file, as `package:deskilo/<path>` or as a relative path ending in it.
 Set<String> importersOf(
   Iterable<String> changed,
-  Map<String, String> testSources,
-) {
+  Map<String, String> testSources, {
+  List<String> skip = const [],
+}) {
+  final skipped = skip.map(patternRegExp).toList();
   final libs = [
     for (final p in changed)
-      if (p.startsWith('lib/') && p.endsWith('.dart')) p.substring(4),
+      if (p.startsWith('lib/') &&
+          p.endsWith('.dart') &&
+          !skipped.any((m) => m.hasMatch(p)))
+        p.substring(4),
   ];
   if (libs.isEmpty) return {};
   return {
@@ -65,8 +77,9 @@ Set<String> importersOf(
 List<String> affectedTests(
   Iterable<String> changed,
   List<TestMapRow> table,
-  Map<String, String> testSources,
-) {
+  Map<String, String> testSources, {
+  List<String> skipImporters = const [],
+}) {
   final out = <String>{};
   for (final row in table) {
     final matchers = row.patterns.map(patternRegExp).toList();
@@ -75,7 +88,7 @@ List<String> affectedTests(
     }
   }
   out
-    ..addAll(importersOf(changed, testSources))
+    ..addAll(importersOf(changed, testSources, skip: skipImporters))
     // A changed test file runs itself.
     ..addAll(
       changed.where((p) => p.startsWith('test/') && p.endsWith('_test.dart')),

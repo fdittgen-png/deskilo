@@ -1,8 +1,12 @@
 {
-  "_": "#3715 -- the tests that must run when a path changes, beyond the generators: a path pattern (`*` inside a name, `**` across folders) -> test files or folders. The importers of a changed lib file are found by search, not listed here. `dart run tool/preflight.dart --list` prints the result for the branch's diff; test/lint/preflight_test_map_test.dart keeps this table true.",
+  "_": "#3715 -- the tests that must run when a path changes, beyond the generators: a path pattern (`*` inside a name, `**` across folders) -> test files or folders. The importers of a changed lib file are found by search, not listed here. `dart run tool/preflight.dart --list` prints the result for the branch's diff; test/lint/preflight_test_map_test.dart keeps this table true. Generated files (`no_importer_search`) still trigger the table's rows but their importers are not searched: an ARB change rewrites the localizations and would otherwise list every test.",
   "rows": [
     {
-      "patterns": ["lib/app/routes/**", "lib/app/route_classes.dart", "lib/app/router.dart"],
+      "patterns": [
+        "lib/app/routes/**",
+        "lib/app/route_classes.dart",
+        "lib/app/router.dart"
+      ],
       "tests": [
         "test/app/route_outcomes_golden_test.dart",
         "test/features/task_recorder/coverage_manifest_test.dart",
@@ -10,11 +14,19 @@
       ]
     },
     {
-      "patterns": ["lib/l10n/_fragments/**"],
-      "tests": ["test/i18n/"]
+      "patterns": [
+        "lib/l10n/_fragments/**"
+      ],
+      "tests": [
+        "test/i18n/"
+      ]
     },
     {
-      "patterns": ["lib/features/workspace/domain/setup_*", "web/setup*", "tool/setup/**"],
+      "patterns": [
+        "lib/features/workspace/domain/setup_*",
+        "web/setup*",
+        "tool/setup/**"
+      ],
       "tests": [
         "test/lint/setup_levels_web_test.dart",
         "test/lint/setup_levels_contract_test.dart",
@@ -22,19 +34,36 @@
       ]
     },
     {
-      "patterns": ["lib/core/ui/kit/**"],
-      "tests": ["test/ux/", "test/core/ui/"]
+      "patterns": [
+        "lib/core/ui/kit/**"
+      ],
+      "tests": [
+        "test/ux/",
+        "test/core/ui/"
+      ]
     },
     {
-      "patterns": ["lib/main.dart", "lib/core/demo/demo_space_routing.dart"],
+      "patterns": [
+        "lib/main.dart",
+        "lib/core/demo/demo_space_routing.dart"
+      ],
       "tests": [
         "test/core/demo/demo_scope_test.dart",
         "test/core/demo/demo_scope_reach_test.dart"
       ]
     },
     {
-      "patterns": ["test/lint/*.dart"],
-      "tests": ["test/lint/lint_sources_test.dart"]
+      "patterns": [
+        "test/lint/*.dart"
+      ],
+      "tests": [
+        "test/lint/lint_sources_test.dart"
+      ]
     }
+  ],
+  "no_importer_search": [
+    "lib/l10n/app_localizations*.dart",
+    "**/*.g.dart",
+    "**/*.freezed.dart"
   ]
 }

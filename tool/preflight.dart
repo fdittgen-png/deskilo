@@ -90,10 +90,13 @@ void _listTests(String root, Iterable<String> paths) {
     paths,
     readTestMap(File('$root/tool/preflight/test_map.json')),
     readTestSources(root),
+    skipImporters:
+        readNoImporterSearch(File('$root/tool/preflight/test_map.json')),
   );
   stdout.writeln('tests to run before the push (beyond the lint folder): '
       '${tests.length}');
   for (final t in tests) {
     stdout.writeln('  $t');
   }
+  stdout.writeln('tests to run: ${tests.length}');
 }
