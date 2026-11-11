@@ -8609,6 +8609,18 @@ abstract class AppLocalizations {
   /// **'What kind of business is it?'**
   String get businessKindTitle;
 
+  /// #3673 the business's one e-mail sender
+  ///
+  /// In en, this message translates to:
+  /// **'The sender of your purchase orders and reminders by e-mail'**
+  String get businessMailSenderSubtitle;
+
+  /// #3673 the business's one e-mail sender
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail sending, in the business settings'**
+  String get businessMailSenderWhere;
+
   /// Money-tab button opening the package buy sheet (package-plan members)
   ///
   /// In en, this message translates to:

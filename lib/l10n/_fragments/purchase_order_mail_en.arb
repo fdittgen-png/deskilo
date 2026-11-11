@@ -77,5 +77,13 @@
   "purchaseOrderMailInvalid": "A sender address, a name without < > or quotes, and on the first save the API key",
   "@purchaseOrderMailInvalid": {
     "description": "#3307 purchase order e-mail"
+  },
+  "businessMailSenderSubtitle": "The sender of your purchase orders and reminders by e-mail",
+  "@businessMailSenderSubtitle": {
+    "description": "#3673 the business's one e-mail sender"
+  },
+  "businessMailSenderWhere": "E-mail sending, in the business settings",
+  "@businessMailSenderWhere": {
+    "description": "#3673 the business's one e-mail sender"
   }
 }

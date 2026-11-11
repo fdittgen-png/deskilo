@@ -3296,6 +3296,8 @@
   "businessKindSwitchesOff": "Schaltet aus: {features}",
   "businessKindSwitchesOn": "Schaltet ein: {features}",
   "businessKindTitle": "Was für ein Unternehmen ist es?",
+  "businessMailSenderSubtitle": "Der Absender Ihrer Bestellungen und Mahnungen per E-Mail",
+  "businessMailSenderWhere": "E-Mail-Versand, in den Unternehmenseinstellungen",
   "buyPackageButton": "Paket kaufen",
   "buyPackageDays": "{days, plural, one{{days} Tag} other{{days} Tage}}",
   "buyPackageDone": "Tage hinzugefügt — viel Spaß.",

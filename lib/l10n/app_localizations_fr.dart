@@ -5482,6 +5482,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessKindTitle => 'Quel genre d’activité est-ce ?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'L\'expéditeur de vos bons de commande et de vos relances par e-mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'Envoi d\'e-mails, dans les paramètres de l\'entreprise';
+
+  @override
   String get buyPackageButton => 'Acheter un forfait';
 
   @override

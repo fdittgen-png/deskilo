@@ -5481,6 +5481,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get businessKindTitle => 'Was für ein Unternehmen ist es?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'Der Absender Ihrer Bestellungen und Mahnungen per E-Mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'E-Mail-Versand, in den Unternehmenseinstellungen';
+
+  @override
   String get buyPackageButton => 'Paket kaufen';
 
   @override

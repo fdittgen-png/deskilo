@@ -3296,6 +3296,8 @@
   "businessKindSwitchesOff": "Disattiva: {features}",
   "businessKindSwitchesOn": "Attiva: {features}",
   "businessKindTitle": "Che tipo di attività è?",
+  "businessMailSenderSubtitle": "Il mittente dei suoi ordini e dei solleciti via e-mail",
+  "businessMailSenderWhere": "Invio e-mail, nelle impostazioni dell'attività",
   "buyPackageButton": "Acquista un pacchetto",
   "buyPackageDays": "{days, plural, one{{days} giorno} other{{days} giorni}}",
   "buyPackageDone": "Giorni aggiunti — si goda il tempo extra.",

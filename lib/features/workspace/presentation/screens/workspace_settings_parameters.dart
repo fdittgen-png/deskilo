@@ -14,6 +14,8 @@ import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/billing_rules_dialog.dart';
 import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
+import '../../../money/presentation/widgets/purchase_order_mail_sheet.dart';
+import '../../../money/providers/purchase_order_providers.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
@@ -396,6 +398,20 @@ class WorkspaceParameterTiles {
                     ),
                     onTap: () => showDunningRulesDialog(context, ref),
                   ),
+                  // #3673 — the business's one e-mail sender: its orders
+                  // and its reminders by e-mail go out with it.
+                  if (ref.watch(enabledFeaturesSyncProvider).any((f) =>
+                      f == WorkspaceFeature.purchaseOrders ||
+                      f == WorkspaceFeature.reminderEmail))
+                    HelpRow(
+                      key: const Key('workspaceSettingsMailSender'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.forward_to_inbox_outlined),
+                      title: l10n.purchaseOrderMailSettings,
+                      subtitle: Text(l10n.businessMailSenderSubtitle),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: _openMailSender,
+                    ),
                   // #2484 — the registry of business values, edited here.
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
@@ -433,6 +449,20 @@ class WorkspaceParameterTiles {
                       onTap: () => showBillingRulesDialog(context, ref),
                     ),
       ];
+
+  /// #3673 — opens the business's e-mail sender, filled from the server.
+  Future<void> _openMailSender() async {
+    final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
+    if (workspaceId == null) return;
+    final current = await ref.read(
+      purchaseOrderMailSettingsProvider(workspaceId).future,
+    );
+    if (!context.mounted) return;
+    await PurchaseOrderMailSheet(context, ref).open(
+      workspaceId: workspaceId,
+      current: current,
+    );
+  }
 
   /// #763 — a control with no free suffix slot gets the ? at its side.
   Widget _withDot(Widget field, String topic, {required String anchor}) => Row(

@@ -12,5 +12,7 @@
   "purchaseOrderMailSenderName": "Nombre del remitente",
   "purchaseOrderMailKey": "Clave de API de Resend",
   "purchaseOrderMailKeyKept": "Hay una clave guardada. Déjelo vacío para conservarla; nunca se vuelve a mostrar.",
-  "purchaseOrderMailInvalid": "Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API"
+  "purchaseOrderMailInvalid": "Una dirección de remitente, un nombre sin < > ni comillas y, la primera vez, la clave de API",
+  "businessMailSenderSubtitle": "El remitente de sus pedidos y recordatorios por correo electrónico",
+  "businessMailSenderWhere": "Envío de correos, en la configuración de la empresa"
 }

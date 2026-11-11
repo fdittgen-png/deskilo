@@ -7153,6 +7153,14 @@
   "@businessKindTitle": {
     "description": "#3550 the kind chooser's title, in settings and the setup guide"
   },
+  "businessMailSenderSubtitle": "The sender of your purchase orders and reminders by e-mail",
+  "@businessMailSenderSubtitle": {
+    "description": "#3673 the business's one e-mail sender"
+  },
+  "businessMailSenderWhere": "E-mail sending, in the business settings",
+  "@businessMailSenderWhere": {
+    "description": "#3673 the business's one e-mail sender"
+  },
   "buyPackageButton": "Buy a package",
   "@buyPackageButton": {
     "description": "Money-tab button opening the package buy sheet (package-plan members)"

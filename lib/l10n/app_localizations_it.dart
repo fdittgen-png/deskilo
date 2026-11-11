@@ -5474,6 +5474,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get businessKindTitle => 'Che tipo di attività è?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'Il mittente dei suoi ordini e dei solleciti via e-mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'Invio e-mail, nelle impostazioni dell\'attività';
+
+  @override
   String get buyPackageButton => 'Acquista un pacchetto';
 
   @override

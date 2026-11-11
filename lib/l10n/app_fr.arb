@@ -3296,6 +3296,8 @@
   "businessKindSwitchesOff": "Désactive : {features}",
   "businessKindSwitchesOn": "Active : {features}",
   "businessKindTitle": "Quel genre d’activité est-ce ?",
+  "businessMailSenderSubtitle": "L'expéditeur de vos bons de commande et de vos relances par e-mail",
+  "businessMailSenderWhere": "Envoi d'e-mails, dans les paramètres de l'entreprise",
   "buyPackageButton": "Acheter un forfait",
   "buyPackageDays": "{days, plural, one{{days} jour} other{{days} jours}}",
   "buyPackageDone": "Jours ajoutés — profitez-en.",

@@ -5438,6 +5438,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessKindTitle => 'What kind of business is it?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'The sender of your purchase orders and reminders by e-mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'E-mail sending, in the business settings';
+
+  @override
   String get buyPackageButton => 'Buy a package';
 
   @override
