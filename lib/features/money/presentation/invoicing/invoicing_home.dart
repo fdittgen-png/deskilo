@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/navigation_style.dart';
-import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/ui/kit/kit_card.dart';
@@ -23,6 +22,7 @@ import '../../../../core/ui/kit/todo_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
 import 'invoicing_words.dart';
 
@@ -191,7 +191,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
     if (data.receivables.isEmpty &&
         data.toInvoice.isEmpty &&
         data.failed.isEmpty) {
-      return _EmptyHome(onNewInvoice: widget.actions.onNewInvoice);
+      return InvoicingEmptyHome(onNewInvoice: widget.actions.onNewInvoice);
     }
     return ValueListenableBuilder(
       valueListenable: _filter,
@@ -218,7 +218,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                 sliver: SliverList.list(
                   children: [
                     for (final s in data.failed) ...[
-                      _FailedSource(
+                      InvoicingFailedSource(
                         source: s,
                         onRetry: () => widget.actions.onRetry(s),
                       ),
@@ -437,96 +437,9 @@ class _InvoicingHomeState extends State<InvoicingHome> {
     padding: AppSpacing.mdAll,
     children: [
       for (final s in failed) ...[
-        _FailedSource(source: s, onRetry: () => widget.actions.onRetry(s)),
+        InvoicingFailedSource(source: s, onRetry: () => widget.actions.onRetry(s)),
         const SizedBox(height: AppSpacing.sm),
       ],
     ],
   );
-}
-
-/// The home of a business that has never invoiced.
-class _EmptyHome extends StatelessWidget {
-  const _EmptyHome({required this.onNewInvoice});
-
-  final VoidCallback onNewInvoice;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final theme = Theme.of(context);
-    return ListView(
-      key: const ValueKey('invoicing-empty'),
-      padding: AppSpacing.mdAll,
-      children: [
-        KitCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: AppSpacing.sm,
-            children: [
-              Text(l.invoicingEmptyTitle, style: theme.textTheme.titleMedium),
-              Text(
-                l.invoicingEmptyBody,
-                style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              FilledButton.icon(
-                key: const ValueKey('invoicing-empty-new'),
-                onPressed: onNewInvoice,
-                icon: const Icon(Icons.add),
-                label: Text(l.invoicingEmptyNew),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-/// One line naming a source that could not be read, with a retry.
-class _FailedSource extends StatelessWidget {
-  const _FailedSource({required this.source, required this.onRetry});
-
-  final InvoicingSource source;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final t = PersonalTheme.of(context);
-    final name = switch (source) {
-      InvoicingSource.invoices => l.featureInvoicing,
-      InvoicingSource.matches => l.invoicingSourceMatches,
-      InvoicingSource.holds => l.invoicingSourceHolds,
-      InvoicingSource.transmissions => l.invoicingSourceTransmissions,
-      InvoicingSource.payments => l.invoicingSourcePayments,
-      InvoicingSource.reminders => l.invoicingSourceReminders,
-      InvoicingSource.toInvoice => l.invoicingSourceToInvoice,
-    };
-    return DecoratedBox(
-      key: ValueKey('invoicing-failed-${source.name}'),
-      decoration: BoxDecoration(
-        color: t.warningTint,
-        borderRadius: AppRadius.lgAll,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: AppSpacing.md),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                l.invoicingSourceFailed(name),
-                style: TextStyle(color: t.warning),
-              ),
-            ),
-            TextButton(
-              key: ValueKey('invoicing-retry-${source.name}'),
-              onPressed: onRetry,
-              child: Text(l.invoicingTryAgain),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
