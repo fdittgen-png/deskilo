@@ -15074,6 +15074,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get invoicingSourceHolds => 'Relances suspendues';
+
+  @override
+  String get invoicingSourceMatches => 'Rapprochements des paiements';
+
+  @override
   String get invoicingSourcePayments => 'L’historique des paiements';
 
   @override
@@ -15081,6 +15087,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoicingSourceToInvoice => 'Le mois à facturer';
+
+  @override
+  String get invoicingSourceTransmissions =>
+      'Transmissions des factures électroniques';
 
   @override
   String get invoicingStatusAwaitingCustomer =>
@@ -15172,9 +15182,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoicingTodoDrafts => 'Émettre les brouillons';
-
-  @override
-  String get invoicingTodoDueDate => 'Fixer une échéance';
 
   @override
   String get invoicingTodoFix => 'Corriger';

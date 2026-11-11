@@ -121,7 +121,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           _wide = box.maxWidth >= kWideNavigationMinWidth;
           final home = switch (invoices) {
             AsyncData(:final value) => _home(context, value),
-            AsyncError() => _home(context, const [], failedInvoices: true),
+            AsyncError() => _home(context, const []),
             _ => const LoadingView(),
           };
           final selected = _desk ? _selected : null;
@@ -160,15 +160,20 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ),
       ...widget.more,
     ];
-    return PopupMenuButton<int>(
+    // An entry is chosen by its key, never by its place in the list.
+    return PopupMenuButton<String>(
       key: const ValueKey('invoicing-tools'),
       tooltip: l.invoicingTools,
-      onSelected: (i) => entries[i].$4(),
+      onSelected: (key) {
+        for (final e in entries) {
+          if (e.$1 == key) e.$4();
+        }
+      },
       itemBuilder: (_) => [
-        for (final (i, e) in entries.indexed)
-          PopupMenuItem<int>(
+        for (final e in entries)
+          PopupMenuItem<String>(
             key: ValueKey(e.$1),
-            value: i,
+            value: e.$1,
             child: Row(
               children: [
                 Icon(e.$2, size: 20),
@@ -196,11 +201,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     );
   }
 
-  Widget _home(
-    BuildContext context,
-    List<Invoice> invoices, {
-    bool failedInvoices = false,
-  }) {
+  Widget _home(BuildContext context, List<Invoice> invoices) {
     final format = appFormatOf(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final now = ref.watch(clockProvider).now();
@@ -212,7 +213,6 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final rules =
         ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
     final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
-    final reminders = ref.watch(invoiceRemindersProvider);
     final overview = ref.watch(invoicingOverviewProvider);
     final window = (
       workspaceId: workspace?.id ?? '',
@@ -247,8 +247,8 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           (currency: p.currency, minor: p.minor, on: dayOf(p.on)),
       ],
       failed: {
+        ...ref.watch(invoicingFailedSourcesProvider),
         if (received.hasError) InvoicingSource.payments,
-        if (reminders.hasError) InvoicingSource.reminders,
         if (overview.hasError) InvoicingSource.toInvoice,
       },
     );
@@ -271,16 +271,16 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           action,
           data.mode,
         ),
-        onTodo: (kind) => _todo(kind, receivables, byId, matches, period),
+        onTodo: (kind) => _todo(kind, period),
         onRules: () => showDunningRulesDialog(context, ref),
         onRetry: (source) => switch (source) {
           InvoicingSource.payments => ref.invalidate(
             receivedPaymentsProvider(window),
           ),
-          InvoicingSource.reminders => ref.invalidate(invoiceRemindersProvider),
           InvoicingSource.toInvoice => ref.invalidate(
             invoicingOverviewProvider,
           ),
+          _ => retryInvoicingSource(ref, source),
         },
         onNewInvoice: () => showInvoiceIssueSheet(context, ref),
       ),
@@ -341,37 +341,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     }
   }
 
-  Future<void> _todo(
-    TodoKind kind,
-    List<Receivable> receivables,
-    Map<String, Invoice> byId,
-    Map<String, InvoiceMatch> matches,
-    String? period,
-  ) async {
-    Invoice? first(bool Function(Receivable) holds) {
-      for (final r in receivables) {
-        if (holds(r)) return byId[r.invoiceId];
-      }
-      return null;
-    }
-
-    switch (kind) {
-      case TodoKind.invoiceTheMonth:
-        await _invoiceTheMonth(period);
-      case TodoKind.shareReminders:
-        _filter.value = InvoicingFilter.overdue;
-      case TodoKind.confirmPayments || TodoKind.matchPayments:
-        _filter.value = InvoicingFilter.toConfirm;
-      case TodoKind.payOutRefunds:
-        final note = first((r) => r.stage == ReceivableStage.refundOwed);
-        if (note != null) await settleCreditInvoiceDialog(context, ref, note);
-      case TodoKind.rejectedEInvoices:
-        await _open(first((r) => r.eInvoiceRejected), matches);
-      case TodoKind.setDueDate:
-        await _open(first((r) => r.isOutstanding && !r.dueDateSet), matches);
-      case TodoKind.issueDrafts:
-        break;
-    }
+  /// The home opens every other "To do" entry as its own list; the month's
+  /// entry opens its flow.
+  Future<void> _todo(TodoKind kind, String? period) async {
+    if (kind == TodoKind.invoiceTheMonth) await _invoiceTheMonth(period);
   }
 
   /// The month to invoice, full screen with the list the app has today,

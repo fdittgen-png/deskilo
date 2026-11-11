@@ -123,12 +123,6 @@ String statusWordsOf(
     button: l.invoicingTodoFix,
     alert: true,
   ),
-  TodoKind.setDueDate => (
-    icon: Icons.event_outlined,
-    title: l.invoicingTodoDueDate,
-    button: l.invoicingTodoReview,
-    alert: false,
-  ),
   TodoKind.issueDrafts => (
     icon: Icons.edit_note_outlined,
     title: l.invoicingTodoDrafts,

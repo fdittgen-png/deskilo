@@ -9725,6 +9725,14 @@
       }
     }
   },
+  "invoicingSourceHolds": "Angehaltene Mahnungen",
+  "@invoicingSourceHolds": {
+    "description": "#3587 a source name: invoices whose reminders are on hold"
+  },
+  "invoicingSourceMatches": "Zahlungszuordnungen",
+  "@invoicingSourceMatches": {
+    "description": "#3587 a source name: the payments matched to invoices"
+  },
   "invoicingSourcePayments": "Der Zahlungsverlauf",
   "@invoicingSourcePayments": {
     "description": "#3587 a source name"
@@ -9736,6 +9744,10 @@
   "invoicingSourceToInvoice": "Der abzurechnende Monat",
   "@invoicingSourceToInvoice": {
     "description": "#3587 a source name"
+  },
+  "invoicingSourceTransmissions": "E-Rechnungs-Übermittlungen",
+  "@invoicingSourceTransmissions": {
+    "description": "#3587 a source name: the e-invoice transmission statuses"
   },
   "invoicingStatusAwaitingCustomer": "Wartet auf die Bestätigung des Kunden",
   "@invoicingStatusAwaitingCustomer": {
@@ -9857,10 +9869,6 @@
   "invoicingTodoDrafts": "Entwürfe ausstellen",
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
-  },
-  "invoicingTodoDueDate": "Fälligkeit festlegen",
-  "@invoicingTodoDueDate": {
-    "description": "#3587 To do: open invoices without a due date"
   },
   "invoicingTodoFix": "Beheben",
   "@invoicingTodoFix": {

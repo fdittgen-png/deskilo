@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/screens/invoices.dart' show invoicingRow, openInvoice, pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show closeInvoicePage, invoicingRow, openInvoice, pumpInvoices, seededMoney;
 
 void main() {
   testWidgets(
@@ -32,8 +32,14 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
 
+    // The To do opens the list of the refunds to pay out; the credit
+    // note's page records the refund from its bar.
     await tester.ensureVisible(refund);
     await tester.tap(refund);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoicing-todo-selected')), findsOne);
+    await openInvoice(tester, invoice.id);
+    await tester.tap(find.byKey(const ValueKey('invoice-page-refund')));
     await tester.pumpAndSettle();
     expect(find.textContaining('WORKSPACE owes the member'),
         findsOneWidget);
@@ -55,6 +61,7 @@ void main() {
     expect(match.resolution, 'refunded');
 
     // #3587 — the refunded credit note is on the Paid and closed list.
+    await closeInvoicePage(tester);
     final row = await invoicingRow(tester, invoice.id);
     expect(row, findsOneWidget);
     expect(find.descendant(of: row, matching: find.text('Refunded')),

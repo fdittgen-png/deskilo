@@ -101,6 +101,10 @@ final Map<String, InvoicingHomeData> _states = {
   'populated': _data(_sample),
   'empty': _data(const []),
   'one source failed': _data(_sample, failed: {InvoicingSource.payments}),
+  'a status source failed': _data(
+    _sample,
+    failed: {InvoicingSource.matches, InvoicingSource.reminders},
+  ),
   'two currencies': _data([
     ..._sample,
     _r(
@@ -150,7 +154,9 @@ Future<void> _pump(
     textScale: scale,
   );
   await tester.pumpAndSettle();
-  if (view == InvoicingView.invoices && data.receivables.isNotEmpty) {
+  if (view == InvoicingView.invoices &&
+      data.receivables.isNotEmpty &&
+      !data.failed.any(InvoicingSource.statuses.contains)) {
     await tester.tap(
       find.descendant(
         of: find.byKey(const ValueKey('invoicing-view')),

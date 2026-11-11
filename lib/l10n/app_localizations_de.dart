@@ -15067,6 +15067,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoicingSourceHolds => 'Angehaltene Mahnungen';
+
+  @override
+  String get invoicingSourceMatches => 'Zahlungszuordnungen';
+
+  @override
   String get invoicingSourcePayments => 'Der Zahlungsverlauf';
 
   @override
@@ -15074,6 +15080,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicingSourceToInvoice => 'Der abzurechnende Monat';
+
+  @override
+  String get invoicingSourceTransmissions => 'E-Rechnungs-Übermittlungen';
 
   @override
   String get invoicingStatusAwaitingCustomer =>
@@ -15165,9 +15174,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicingTodoDrafts => 'Entwürfe ausstellen';
-
-  @override
-  String get invoicingTodoDueDate => 'Fälligkeit festlegen';
 
   @override
   String get invoicingTodoFix => 'Beheben';

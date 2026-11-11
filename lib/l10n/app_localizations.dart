@@ -24724,6 +24724,18 @@ abstract class AppLocalizations {
   /// **'{source} could not be read.'**
   String invoicingSourceFailed(String source);
 
+  /// #3587 a source name: invoices whose reminders are on hold
+  ///
+  /// In en, this message translates to:
+  /// **'Held reminders'**
+  String get invoicingSourceHolds;
+
+  /// #3587 a source name: the payments matched to invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Payment matches'**
+  String get invoicingSourceMatches;
+
   /// #3587 a source name
   ///
   /// In en, this message translates to:
@@ -24741,6 +24753,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The month to invoice'**
   String get invoicingSourceToInvoice;
+
+  /// #3587 a source name: the e-invoice transmission statuses
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice transmissions'**
+  String get invoicingSourceTransmissions;
 
   /// #3587 status
   ///
@@ -24873,12 +24891,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Issue drafts'**
   String get invoicingTodoDrafts;
-
-  /// #3587 To do: open invoices without a due date
-  ///
-  /// In en, this message translates to:
-  /// **'Set a due date'**
-  String get invoicingTodoDueDate;
 
   /// #3587 a To do entry's button for a failure
   ///

@@ -9725,6 +9725,14 @@
       }
     }
   },
+  "invoicingSourceHolds": "Relances suspendues",
+  "@invoicingSourceHolds": {
+    "description": "#3587 a source name: invoices whose reminders are on hold"
+  },
+  "invoicingSourceMatches": "Rapprochements des paiements",
+  "@invoicingSourceMatches": {
+    "description": "#3587 a source name: the payments matched to invoices"
+  },
   "invoicingSourcePayments": "L’historique des paiements",
   "@invoicingSourcePayments": {
     "description": "#3587 a source name"
@@ -9736,6 +9744,10 @@
   "invoicingSourceToInvoice": "Le mois à facturer",
   "@invoicingSourceToInvoice": {
     "description": "#3587 a source name"
+  },
+  "invoicingSourceTransmissions": "Transmissions des factures électroniques",
+  "@invoicingSourceTransmissions": {
+    "description": "#3587 a source name: the e-invoice transmission statuses"
   },
   "invoicingStatusAwaitingCustomer": "En attente de la confirmation du client",
   "@invoicingStatusAwaitingCustomer": {
@@ -9857,10 +9869,6 @@
   "invoicingTodoDrafts": "Émettre les brouillons",
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
-  },
-  "invoicingTodoDueDate": "Fixer une échéance",
-  "@invoicingTodoDueDate": {
-    "description": "#3587 To do: open invoices without a due date"
   },
   "invoicingTodoFix": "Corriger",
   "@invoicingTodoFix": {
