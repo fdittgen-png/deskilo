@@ -1663,6 +1663,7 @@ window.SETUP_L10N={
    },
    "reason": {
     "door_tablet": "Because a tablet at the door checks people in",
+    "books_no_places": "Because this business books no places",
     "keeps_books": "Because you keep accounting books",
     "later": "Because an assistant can come later",
     "members_only": "Because only members see the space",
@@ -3385,6 +3386,7 @@ window.SETUP_L10N={
    },
    "reason": {
     "door_tablet": "Parce qu’une tablette à l’entrée enregistre les arrivées",
+    "books_no_places": "Parce que cette activité ne réserve pas de places",
     "keeps_books": "Parce que vous tenez une comptabilité",
     "later": "Parce qu’un assistant peut venir plus tard",
     "members_only": "Parce que seuls les membres voient l’espace",
@@ -5107,6 +5109,7 @@ window.SETUP_L10N={
    },
    "reason": {
     "door_tablet": "Weil ein Tablet am Eingang die Ankunft erfasst",
+    "books_no_places": "Weil dieses Unternehmen keine Plätze vergibt",
     "keeps_books": "Weil Sie Bücher führen",
     "later": "Weil ein Assistent später kommen kann",
     "members_only": "Weil nur Mitglieder den Raum sehen",
@@ -6829,6 +6832,7 @@ window.SETUP_L10N={
    },
    "reason": {
     "door_tablet": "Porque una tableta en la entrada registra las llegadas",
+    "books_no_places": "Porque este negocio no reserva puestos",
     "keeps_books": "Porque lleva la contabilidad",
     "later": "Porque un asistente puede venir más tarde",
     "members_only": "Porque solo los miembros ven el espacio",
@@ -8551,6 +8555,7 @@ window.SETUP_L10N={
    },
    "reason": {
     "door_tablet": "Perché un tablet all’ingresso registra gli arrivi",
+    "books_no_places": "Perché questa attività non prenota postazioni",
     "keeps_books": "Perché tiene la contabilità",
     "later": "Perché un assistente può arrivare più tardi",
     "members_only": "Perché solo i membri vedono lo spazio",

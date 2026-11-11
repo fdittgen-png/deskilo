@@ -176,7 +176,7 @@
     "description": "#977 instance wizard: commonCopy"
   },
   "instanceReadyInstall": "Le projet est vide : tout sera installé.",
-  "instanceReadyResume": "Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.",
+  "instanceReadyResume": "{pending, plural, one{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migration, et seules celles-ci seront exécutées.} other{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.}}",
   "instanceReadyUpgrade": "La version {version} de DesKilo est installée : seules les {pending} migrations manquantes seront exécutées.",
   "instanceReadyCurrent": "La version {version} de DesKilo est installée et à jour : le schéma n'a besoin de rien.",
   "instanceReadyAttention": "Ce projet demande votre attention — rien n'a été installé.",

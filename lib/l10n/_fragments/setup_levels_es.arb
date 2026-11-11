@@ -55,6 +55,7 @@
   "setupReasonPublicPage": "Porque el espacio tiene una página pública",
   "setupReasonSeveralRooms": "Porque hay varias salas o sedes",
   "setupReasonSharedPlaces": "Porque los miembros comparten las plazas",
+  "setupReasonBooksNoPlaces": "Porque este negocio no reserva puestos",
   "setupReasonSmallCommunity": "Porque es una comunidad pequeña",
   "setupReasonStartSimple": "Porque conviene empezar sencillo",
   "setupReasonTracksPurchases": "Porque sigue lo que compra el espacio",

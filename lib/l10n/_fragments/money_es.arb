@@ -2,7 +2,7 @@
   "@@locale": "es",
   "moneyBaseFee": "Suscripción base",
   "moneyUsage": "{used} de {included} medias jornadas usadas",
-  "moneyUsageUnlimited": "{used} medias jornadas usadas",
+  "moneyUsageUnlimited": "{used, plural, one{{used} media jornada usada} other{{used} medias jornadas usadas}}",
   "moneyOverage": "{count, plural, =1{Exceso (1 media jornada extra)} other{Exceso ({count} medias jornadas extra)}}",
   "moneyCredits": "Pagos y créditos",
   "moneyStatementSettled": "Al día",

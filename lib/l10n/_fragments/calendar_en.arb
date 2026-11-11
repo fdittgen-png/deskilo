@@ -332,7 +332,7 @@
   "@calendarGroupMoney": {
     "description": "Shown as a text in calendar item row (calendar)."
   },
-  "calendarAgendaEmpty": "Nothing planned in the next {days} days.",
+  "calendarAgendaEmpty": "{days, plural, one{Nothing planned in the next day.} other{Nothing planned in the next {days} days.}}",
   "@calendarAgendaEmpty": {
     "description": "Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).",
     "placeholders": {
@@ -341,7 +341,7 @@
       }
     }
   },
-  "calendarAgendaRange": "Next {days} days",
+  "calendarAgendaRange": "{days, plural, one{Next day} other{Next {days} days}}",
   "@calendarAgendaRange": {
     "description": "Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).",
     "placeholders": {

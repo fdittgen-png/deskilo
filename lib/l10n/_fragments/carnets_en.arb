@@ -31,7 +31,7 @@
   "@carnetAdd": {
     "description": "#1279 carnets: carnetAdd"
   },
-  "carnetSummary": "{halfDays} half-days · {price}",
+  "carnetSummary": "{halfDays, plural, one{{halfDays} half-day · {price}} other{{halfDays} half-days · {price}}}",
   "@carnetSummary": {
     "description": "#1279 carnets: carnetSummary",
     "placeholders": {

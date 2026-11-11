@@ -36,7 +36,7 @@
   "@retentionHoldReasonHelper": {
     "description": "#2571 retention holds and dispositions"
   },
-  "retentionHoldReasonMissing": "Name the reason, in at most {max} characters.",
+  "retentionHoldReasonMissing": "{max, plural, one{Name the reason, in at most {max} character.} other{Name the reason, in at most {max} characters.}}",
   "@retentionHoldReasonMissing": {
     "description": "#2571 retention holds and dispositions",
     "placeholders": {
@@ -127,7 +127,7 @@
       }
     }
   },
-  "retentionExtendedBySetting": "{years} years from the document date (this space’s own setting)",
+  "retentionExtendedBySetting": "{years, plural, one{{years} year from the document date (this space’s own setting)} other{{years} years from the document date (this space’s own setting)}}",
   "@retentionExtendedBySetting": {
     "description": "#2571 retention holds and dispositions",
     "placeholders": {

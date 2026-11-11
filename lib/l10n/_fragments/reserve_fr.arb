@@ -64,7 +64,7 @@
       }
     }
   },
-  "bookingHorizonError": "Trop loin — les réservations sont ouvertes {days} jours à l'avance.",
+  "bookingHorizonError": "{days, plural, one{Trop loin — les réservations sont ouvertes {days} jour à l'avance.} other{Trop loin — les réservations sont ouvertes {days} jours à l'avance.}}",
   "@bookingHorizonError": {
     "placeholders": {
       "days": {
@@ -72,7 +72,7 @@
       }
     }
   },
-  "bookingTooShortError": "Trop court — une réservation dure au moins {minutes} minutes.",
+  "bookingTooShortError": "{minutes, plural, one{Trop court — une réservation dure au moins {minutes} minute.} other{Trop court — une réservation dure au moins {minutes} minutes.}}",
   "@bookingTooShortError": {
     "placeholders": {
       "minutes": {
@@ -80,7 +80,7 @@
       }
     }
   },
-  "bookingTooLongError": "Trop long — une réservation dure au plus {minutes} minutes.",
+  "bookingTooLongError": "{minutes, plural, one{Trop long — une réservation dure au plus {minutes} minute.} other{Trop long — une réservation dure au plus {minutes} minutes.}}",
   "@bookingTooLongError": {
     "placeholders": {
       "minutes": {

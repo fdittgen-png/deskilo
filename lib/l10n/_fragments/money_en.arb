@@ -16,7 +16,7 @@
       }
     }
   },
-  "moneyUsageUnlimited": "{used} half-days used",
+  "moneyUsageUnlimited": "{used, plural, one{{used} half-day used} other{{used} half-days used}}",
   "@moneyUsageUnlimited": {
     "description": "Statement usage line for unlimited plans",
     "placeholders": {

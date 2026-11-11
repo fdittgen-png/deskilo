@@ -102,7 +102,15 @@ class MeDataTab extends ConsumerWidget {
                   for (final v in MeDataView.values)
                     ButtonSegment(
                       value: v,
-                      icon: Icon(v.icon, key: ValueKey('me-data-view-${v.wire}')),
+                      // Icon only on a phone: the icon carries the view's name
+                      // for a screen reader (the tooltip is for the pointer).
+                      icon: Semantics(
+                        label: labelled ? null : v.label(l10n),
+                        child: Icon(
+                          v.icon,
+                          key: ValueKey('me-data-view-${v.wire}'),
+                        ),
+                      ),
                       label: labelled ? Text(v.label(l10n)) : null,
                       tooltip: labelled ? null : v.label(l10n),
                     ),

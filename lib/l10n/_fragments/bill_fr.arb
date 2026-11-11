@@ -2,7 +2,7 @@
   "@@locale": "fr",
   "billSubscription": "Abonnement {pct} %",
   "billEntitlement": "{used} demi-journées facturées sur {included} ({openDays} jours d'ouverture)",
-  "billOverage": "{extra} demi-journées supplémentaires",
+  "billOverage": "{extra, plural, one{{extra} demi-journée supplémentaire} other{{extra} demi-journées supplémentaires}}",
   "billServices": "Services consommés",
   "billServicesTotal": "Total des services",
   "billOpenPositions": "Postes en attente",

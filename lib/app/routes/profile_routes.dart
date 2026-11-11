@@ -90,6 +90,12 @@ List<RouteBase> profileRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const RegionalFormatsScreen(),
     ),
+    // #3697 — the person's own Region & formats, from Me: no business and no
+    // feature needed (the formats apply on every personal surface).
+    GoRoute(
+      path: '/me/formats',
+      builder: (context, state) => const RegionalFormatsScreen(),
+    ),
     // #886 — the person's identity as the documents print it.
     GoRoute(
       path: '/settings/personal-info',

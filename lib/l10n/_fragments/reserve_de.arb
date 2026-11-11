@@ -64,7 +64,7 @@
       }
     }
   },
-  "bookingHorizonError": "Zu weit voraus — Buchungen sind {days} Tage im Voraus möglich.",
+  "bookingHorizonError": "{days, plural, one{Zu weit voraus — Buchungen sind {days} Tag im Voraus möglich.} other{Zu weit voraus — Buchungen sind {days} Tage im Voraus möglich.}}",
   "@bookingHorizonError": {
     "placeholders": {
       "days": {
@@ -72,7 +72,7 @@
       }
     }
   },
-  "bookingTooShortError": "Zu kurz — eine Buchung dauert mindestens {minutes} Minuten.",
+  "bookingTooShortError": "{minutes, plural, one{Zu kurz — eine Buchung dauert mindestens {minutes} Minute.} other{Zu kurz — eine Buchung dauert mindestens {minutes} Minuten.}}",
   "@bookingTooShortError": {
     "placeholders": {
       "minutes": {
@@ -80,7 +80,7 @@
       }
     }
   },
-  "bookingTooLongError": "Zu lang — eine Buchung dauert höchstens {minutes} Minuten.",
+  "bookingTooLongError": "{minutes, plural, one{Zu lang — eine Buchung dauert höchstens {minutes} Minute.} other{Zu lang — eine Buchung dauert höchstens {minutes} Minuten.}}",
   "@bookingTooLongError": {
     "placeholders": {
       "minutes": {
