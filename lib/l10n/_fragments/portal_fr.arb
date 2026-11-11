@@ -63,5 +63,15 @@
   "spacePreviewPrivacy": "Quand vous demandez, cette entreprise voit votre nom et votre photo. Une fois membre, ses administrateurs voient les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.",
   "spaceRunByCompany": "Géré par une entreprise",
   "spaceRunByAssociation": "Géré par une association",
-  "spaceRunByPerson": "Géré par un particulier"
+  "spaceRunByPerson": "Géré par un particulier",
+  "portalPlaceTitle": "Où vous êtes sur la carte",
+  "portalPlaceNone": "Aucun lieu enregistré : la carte d'un visiteur recherche l'adresse.",
+  "portalPlaceAt": "Repère à {latitude}, {longitude}",
+  "portalPlaceFind": "Trouver l'adresse sur la carte",
+  "portalPlaceFound": "Trouvé : {place}. Utilisez-le, ou touchez la carte pour déplacer le repère.",
+  "portalPlaceUse": "Utiliser ce lieu",
+  "portalPlaceNotFound": "Aucun lieu trouvé pour cette adresse. Vérifiez l'adresse et réessayez.",
+  "portalPlaceFailed": "Le service de carte n'a pas répondu. Réessayez.",
+  "portalPlaceRemove": "Retirer le lieu",
+  "portalPlaceTapToMove": "Touchez la carte pour déplacer le repère."
 }

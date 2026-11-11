@@ -63,5 +63,15 @@
   "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.",
   "spaceRunByCompany": "Gestionado por una empresa",
   "spaceRunByAssociation": "Gestionado por una asociación",
-  "spaceRunByPerson": "Gestionado por una persona"
+  "spaceRunByPerson": "Gestionado por una persona",
+  "portalPlaceTitle": "Dónde está usted en el mapa",
+  "portalPlaceNone": "No hay ningún lugar guardado: el mapa de un visitante busca la dirección.",
+  "portalPlaceAt": "Marcador en {latitude}, {longitude}",
+  "portalPlaceFind": "Buscar la dirección en el mapa",
+  "portalPlaceFound": "Encontrado: {place}. Úselo, o toque el mapa para mover el marcador.",
+  "portalPlaceUse": "Usar este lugar",
+  "portalPlaceNotFound": "No se encontró ningún lugar para esta dirección. Compruebe la dirección e inténtelo de nuevo.",
+  "portalPlaceFailed": "El servicio de mapas no respondió. Inténtelo de nuevo.",
+  "portalPlaceRemove": "Quitar el lugar",
+  "portalPlaceTapToMove": "Toque el mapa para mover el marcador."
 }

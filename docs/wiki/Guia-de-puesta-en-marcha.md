@@ -806,7 +806,7 @@ Usted quiere un lugar que diga, para las funciones principales, qué obtienen lo
 | **Fotos de los miembros en el plano** | Fotos de los ocupantes en los asientos. | | Nadie |
 | **Vocabulario del espacio** | Las palabras propias del espacio para unas cuantas etiquetas. | | Propietario |
 | **Colores del espacio** | El color de la marca y los colores de las salas. | | Propietario |
-| **Anuncio público del espacio** | Una página pública con lo que usted decida mostrar. | | Propietario |
+| **Anuncio público del espacio** | Una página pública con lo que usted decida mostrar, y dónde está usted en el mapa. | | Propietario |
 
 *Reservas y uso*
 
