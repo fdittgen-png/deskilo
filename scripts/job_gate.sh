@@ -23,7 +23,13 @@ for pair in "$@"; do
   outcome="${pair#*=}"
   [ "$pair" = "$name" ] && outcome=""
   echo "$name = ${outcome:-(no outcome)}"
-  if [ "$outcome" != "success" ]; then
+  if [ "$outcome" = "cancelled" ]; then
+    # #3663 -- a job cancelled (a time limit, a stalled runner) did not
+    # finish; that says nothing against the change. It is still not green:
+    # re-run that job alone.
+    echo "::error::'$name' did not finish (cancelled — usually a time limit, not a failure of the change): re-run that job"
+    status=1
+  elif [ "$outcome" != "success" ]; then
     echo "::error::'$name' did not succeed: ${outcome:-no outcome was recorded}"
     status=1
   fi

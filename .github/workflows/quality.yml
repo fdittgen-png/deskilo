@@ -1537,6 +1537,22 @@ jobs:
           name: quality-database-attempt-${{ github.run_attempt }}
           path: report
 
+      # #3663 -- a re-run of only the failed jobs does not run the jobs that
+      # passed again: their rows exist only under the earlier attempt's number.
+      # For each input this attempt did not produce, take the newest earlier
+      # attempt of THIS run that did, and say so in the report.
+      - name: Rows an earlier attempt produced
+        id: earlier
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          missing=()
+          [ "${{ steps.dl_classification.outcome }}" = "success" ] || missing+=("dl_classification:quality-classification")
+          [ "${{ steps.dl_code.outcome }}" = "success" ] || missing+=("dl_code:quality-code")
+          [ "${{ steps.dl_database.outcome }}" = "success" ] || missing+=("dl_database:quality-database")
+          bash scripts/fallback_attempt_rows.sh report "${missing[@]}"
+
       - name: DESKILO QUALITY REPORT
         if: always()
         run: bash scripts/quality_report.sh report .github/quality-manifest.psv
@@ -1561,6 +1577,6 @@ jobs:
             "quality · test · core, app, profile and a11y=${{ needs.core.result }}" \
             "analyze · l10n gate · test · coverage=${{ needs.code.result }}" \
             "quality · database=${{ needs.database.result }}" \
-            "Classification input=${{ steps.dl_classification.outcome }}" \
-            "Code rows input=${{ steps.dl_code.outcome }}" \
-            "Database rows input=${{ steps.dl_database.outcome }}"
+            "Classification input=${{ steps.dl_classification.outcome == 'success' && 'success' || (steps.earlier.outputs.dl_classification == 'recovered' && 'success' || steps.dl_classification.outcome) }}" \
+            "Code rows input=${{ steps.dl_code.outcome == 'success' && 'success' || (steps.earlier.outputs.dl_code == 'recovered' && 'success' || steps.dl_code.outcome) }}" \
+            "Database rows input=${{ steps.dl_database.outcome == 'success' && 'success' || (steps.earlier.outputs.dl_database == 'recovered' && 'success' || steps.dl_database.outcome) }}"

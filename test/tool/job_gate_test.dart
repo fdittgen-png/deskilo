@@ -34,7 +34,12 @@ void main() {
     for (final outcome in ['skipped', 'cancelled', '', 'passed', 'true']) {
       final r = _gate(['Migration safety=$outcome', 'Tests=success']);
       expect(r.code, 1, reason: 'outcome "$outcome" passed: ${r.out}');
-      expect(r.out, contains("'Migration safety' did not succeed"),
+      // #3663 -- a cancelled job is said to have not finished (still red).
+      expect(
+          r.out,
+          contains(outcome == 'cancelled'
+              ? "'Migration safety' did not finish"
+              : "'Migration safety' did not succeed"),
           reason: outcome);
     }
   });
