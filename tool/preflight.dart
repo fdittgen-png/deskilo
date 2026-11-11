@@ -5,6 +5,7 @@
 // This is local tooling, not evidence that the full CI suite passed.
 import 'dart:io';
 
+import 'preflight/affected_tests.dart';
 import 'preflight/git_state.dart';
 import 'preflight/preflight.dart';
 
@@ -33,6 +34,7 @@ int run(List<String> args, {
         .replaceFirst(RegExp(r'\r?\n$'), '');
     final git = PreflightGit(root, execute);
     final paths = git.changedPaths(base);
+    if (listOnly) _listTests(root, paths);
     if (paths.isEmpty) {
       stdout.writeln('preflight v$preflightVersion: no changed inputs; no generators run');
       return 0;
@@ -80,4 +82,29 @@ int run(List<String> args, {
     stderr.writeln('preflight: invalid input: $error\n$stack');
     return 2;
   }
+}
+
+/// #3715 -- the tests the branch's diff drags in (the table plus importers).
+void _listTests(String root, Iterable<String> paths) {
+  // A tree without the table (a fixture, an older checkout) lists nothing and
+  // says so; the table's own lint keeps it present in this repository.
+  if (!File('$root/tool/preflight/test_map.json').existsSync()) {
+    stdout.writeln(
+      'tests to run: none listed (no tool/preflight/test_map.json)',
+    );
+    return;
+  }
+  final tests = affectedTests(
+    paths,
+    readTestMap(File('$root/tool/preflight/test_map.json')),
+    readTestSources(root),
+    skipImporters:
+        readNoImporterSearch(File('$root/tool/preflight/test_map.json')),
+  );
+  stdout.writeln('tests to run before the push (beyond the lint folder): '
+      '${tests.length}');
+  for (final t in tests) {
+    stdout.writeln('  $t');
+  }
+  stdout.writeln('tests to run: ${tests.length}');
 }

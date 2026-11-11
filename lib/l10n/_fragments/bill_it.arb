@@ -2,7 +2,7 @@
   "@@locale": "it",
   "billSubscription": "Abbonamento {pct} %",
   "billEntitlement": "{used} mezze giornate fatturate su {included} ({openDays} giorni di apertura)",
-  "billOverage": "{extra} mezze giornate extra",
+  "billOverage": "{extra, plural, one{{extra} mezza giornata extra} other{{extra} mezze giornate extra}}",
   "billServices": "Servizi consumati",
   "billServicesTotal": "Totale servizi",
   "billOpenPositions": "Voci in sospeso",

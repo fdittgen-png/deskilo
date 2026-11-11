@@ -176,7 +176,7 @@
     "description": "#977 instance wizard: commonCopy"
   },
   "instanceReadyInstall": "Il progetto è vuoto: verrà installato tutto.",
-  "instanceReadyResume": "Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazioni e verranno eseguite solo quelle.",
+  "instanceReadyResume": "{pending, plural, one{Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazione e verranno eseguite solo quelle.} other{Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazioni e verranno eseguite solo quelle.}}",
   "instanceReadyUpgrade": "La versione {version} di DesKilo è installata: verranno eseguite solo le {pending} migrazioni mancanti.",
   "instanceReadyCurrent": "La versione {version} di DesKilo è installata e aggiornata: lo schema non richiede nulla.",
   "instanceReadyAttention": "Questo progetto richiede attenzione: non è stato installato nulla.",

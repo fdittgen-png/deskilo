@@ -8,7 +8,7 @@
   "accountInvoiceRegrouped": "Incluido en una factura de liquidación",
   "accountInvoiceIssued": "Factura emitida",
   "accountUsageCorrected": "Consumo facturable corregido",
-  "accountUsageMinutes": "{minutes} minutos",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} minuto} other{{minutes} minutos}}",
   "accountPaymentPreference": "Pago en línea preferido",
   "accountPaymentAsk": "Elegir al pagar",
   "@accountUsageMinutes": {

@@ -2,7 +2,7 @@
   "@@locale": "it",
   "moneyBaseFee": "Abbonamento base",
   "moneyUsage": "{used} mezze giornate usate su {included}",
-  "moneyUsageUnlimited": "{used} mezze giornate usate",
+  "moneyUsageUnlimited": "{used, plural, one{{used} mezza giornata usata} other{{used} mezze giornate usate}}",
   "moneyOverage": "{count, plural, =1{Eccedenza (1 mezza giornata extra)} other{Eccedenza ({count} mezze giornate extra)}}",
   "moneyCredits": "Pagamenti e crediti",
   "moneyStatementSettled": "Saldato",

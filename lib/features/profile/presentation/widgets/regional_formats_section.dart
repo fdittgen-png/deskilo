@@ -25,7 +25,11 @@ import 'preference_scope_controls.dart';
 /// clock and time zone. The tile previews what the choices add up to;
 /// the screen behind it edits them.
 class RegionalFormatsSection extends ConsumerWidget {
-  const RegionalFormatsSection({super.key});
+  const RegionalFormatsSection({super.key, this.route = '/formats'});
+
+  /// The screen behind the tile: a business's own formats ('/formats', behind
+  /// its feature) or the person's own, from Me ('/me/formats', #3697).
+  final String route;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +44,7 @@ class RegionalFormatsSection extends ConsumerWidget {
         '${format.money(123456)} · ${format.date(now)} · ${format.time(now)}',
       ),
       trailing: const Icon(Icons.chevron_right),
-      onTap: () => context.push('/formats'),
+      onTap: () => context.push(route),
     );
   }
 }

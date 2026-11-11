@@ -2,7 +2,7 @@
   "@@locale": "it",
   "myReservationsEmpty": "Nessuna prenotazione in questo periodo.",
   "myReservationsChangePeriod": "Altro periodo",
-  "myReservationsPeriodLimit": "Al massimo {days} giorni alla volta.",
+  "myReservationsPeriodLimit": "{days, plural, one{Al massimo {days} giorno alla volta.} other{Al massimo {days} giorni alla volta.}}",
   "myReservationsLoadMore": "Mostra altro",
   "myReservationsLoadingMore": "Caricamento…",
   "myReservationsFailed": "Non è stato possibile leggere le Sue prenotazioni. Riprovi tra un istante.",

@@ -76,6 +76,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/me/discover', RouteClass.nativeAccount),
   RouteRule('/me/messages', RouteClass.nativeAccount),
   RouteRule('/me/data', RouteClass.nativeAccount),
+  RouteRule('/me/formats', RouteClass.nativeAccount),
   RouteRule('/me/account', RouteClass.nativeAccount),
   RouteRule('/me/account/connections', RouteClass.nativeAccount),
   RouteRule('/discover', RouteClass.publicEntry),

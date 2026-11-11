@@ -410,3 +410,36 @@ List<String> setupVectorGaps(SetupLevelVector vector) => [
             setupLevelRank(needed, minimum))
           '${process.name}.${level.id} → ${needed.name}.$minimum',
 ];
+
+/// #3702 — [candidate] (the levels the screen holds, with the [recomputed]
+/// processes at their recommended level) checked against the levels' needs: a
+/// recomputed level is never set below what a KEPT level needs (money is not
+/// lowered under `invoices` while tax stays at `vat`). Returns the vector and,
+/// for each process raised, the kept level (`by`, `level`) that holds it there.
+({
+  SetupLevelVector vector,
+  Map<SetupProcess, ({SetupProcess by, String level})> held,
+})
+holdRecomputedAtNeeds(
+  SetupLevelVector candidate,
+  Set<SetupProcess> recomputed,
+) {
+  final vector = {...candidate};
+  final held = <SetupProcess, ({SetupProcess by, String level})>{};
+  for (final MapEntry(key: process, value: chosen) in candidate.entries) {
+    if (recomputed.contains(process)) continue;
+    for (final level in setupLevels[process]!.take(
+      setupLevelRank(process, chosen) + 1,
+    )) {
+      for (final MapEntry(key: needed, value: minimum) in level.needs.entries) {
+        if (!recomputed.contains(needed)) continue;
+        if (setupLevelRank(needed, vector[needed] ?? '') <
+            setupLevelRank(needed, minimum)) {
+          vector[needed] = minimum;
+          held[needed] = (by: process, level: level.id);
+        }
+      }
+    }
+  }
+  return (vector: vector, held: held);
+}

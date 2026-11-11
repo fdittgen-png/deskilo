@@ -8,7 +8,7 @@
   "accountInvoiceRegrouped": "Incluso in una fattura di conguaglio",
   "accountInvoiceIssued": "Fattura emessa",
   "accountUsageCorrected": "Consumo fatturabile corretto",
-  "accountUsageMinutes": "{minutes} minuti",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} minuto} other{{minutes} minuti}}",
   "accountPaymentPreference": "Pagamento online preferito",
   "accountPaymentAsk": "Scegli al pagamento",
   "@accountUsageMinutes": {

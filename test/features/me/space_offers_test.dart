@@ -10,10 +10,13 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/presentation/public_workspace_view.dart';
 import 'package:deskilo/features/directory/presentation/space_offers.dart';
+import 'package:deskilo/features/directory/providers/pending_admissions_provider.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -148,5 +151,75 @@ void main() {
     expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
     expect(find.byKey(const ValueKey('portal-request-membership')),
         findsNothing);
+  });
+
+  testWidgets('a request waiting on this business shows as pending on every '
+      'visit, from the account (#3696)', (tester) async {
+    final directory = FakeDirectoryRepository();
+    await _open(
+      tester,
+      _page('ws-elsewhere'),
+      directory: directory,
+      extraOverrides: [
+        pendingAdmissionsProvider.overrideWith(
+          (ref) async => {'ws-elsewhere'},
+        ),
+      ],
+    );
+    final ask = find.byKey(const ValueKey('portal-request-membership'));
+    expect(find.text('Request pending'), findsOneWidget);
+    expect(tester.widget<FilledButton>(ask).onPressed, isNull);
+    await tester.tap(ask, warnIfMissed: false);
+    await tester.pumpAndSettle();
+    expect(directory.requests, isEmpty, reason: 'no second request');
+  });
+
+  testWidgets('no request is offered while the pending requests are read (#3696)', (tester) async {
+    final never = Completer<Set<String>>();
+    await pumpApp(
+      tester,
+      Scaffold(
+        body: SpaceOffers(
+          workspace: _page('ws-2'),
+          onRequest: () async => true,
+        ),
+      ),
+      overrides: [
+        ...standardTestOverrides(workspace: twoSpaces(serverDefault: null)),
+        pendingAdmissionsProvider.overrideWith((ref) => never.future),
+      ],
+    );
+    await tester.pump();
+    final ask = find.byKey(const ValueKey('portal-request-membership'));
+    expect(tester.widget<FilledButton>(ask).onPressed, isNull);
+  });
+
+  testWidgets('a failed read of the pending requests offers Try again, not '
+      'Ask to join (#3696)', (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        // The read failed: said at once, not after the default retries.
+        retry: (count, error) => null,
+        overrides: [
+          ...standardTestOverrides(workspace: twoSpaces(serverDefault: null)),
+          pendingAdmissionsProvider.overrideWith(
+            (ref) async => throw StateError('offline'),
+          ),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: SpaceOffers(
+              workspace: _page('ws-elsewhere'),
+              onRequest: () async => true,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
+    expect(find.text('Try again'), findsOneWidget);
   });
 }

@@ -64,7 +64,7 @@
       }
     }
   },
-  "bookingHorizonError": "Demasiado lejos — las reservas se abren con {days} días de antelación.",
+  "bookingHorizonError": "{days, plural, one{Demasiado lejos — las reservas se abren con {days} día de antelación.} other{Demasiado lejos — las reservas se abren con {days} días de antelación.}}",
   "@bookingHorizonError": {
     "placeholders": {
       "days": {
@@ -72,7 +72,7 @@
       }
     }
   },
-  "bookingTooShortError": "Demasiado corta — una reserva dura al menos {minutes} minutos.",
+  "bookingTooShortError": "{minutes, plural, one{Demasiado corta — una reserva dura al menos {minutes} minuto.} other{Demasiado corta — una reserva dura al menos {minutes} minutos.}}",
   "@bookingTooShortError": {
     "placeholders": {
       "minutes": {
@@ -80,7 +80,7 @@
       }
     }
   },
-  "bookingTooLongError": "Demasiado larga — una reserva dura como máximo {minutes} minutos.",
+  "bookingTooLongError": "{minutes, plural, one{Demasiado larga — una reserva dura como máximo {minutes} minuto.} other{Demasiado larga — una reserva dura como máximo {minutes} minutos.}}",
   "@bookingTooLongError": {
     "placeholders": {
       "minutes": {

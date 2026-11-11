@@ -6,6 +6,7 @@
 // Me screen is added here in the PR that adds it; `me_scaffold_table_test`
 // fails when a Scaffold under lib/features/me/presentation is not listed.
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
@@ -147,6 +148,19 @@ MeScenario _oneSourceFailed() => MeScenario(
   documents: twoCurrencies(),
 );
 
+/// The Spaces page's own source is the references of the account: when they
+/// cannot be read it says so beside what it could read (#1650, #3545).
+MeScenario _spacesSourceFailed() => MeScenario(
+  workspace: twoSpaces(),
+  overrides: [
+    ..._shell(hosts: _Hosts()),
+    personalWorkspaceRefsProvider.overrideWith(
+      (ref) async => throw StateError('the account references are unreadable'),
+    ),
+  ],
+  documents: twoCurrencies(),
+);
+
 const Map<String, MeStateBuilder> _states = {
   'populated': _populated,
   'empty': _empty,
@@ -165,7 +179,11 @@ final List<MeScreen> meScreens = [
     id: 'spaces',
     route: '/me/spaces',
     sources: ['personal_spaces_view.dart'],
-    states: _states,
+    states: {
+      'populated': _populated,
+      'empty': _empty,
+      'one source failed': _spacesSourceFailed,
+    },
   ),
   const MeScreen(
     id: 'discover',

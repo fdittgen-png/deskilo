@@ -123,7 +123,7 @@
   "@billingPackagesHint": {
     "description": "Sub-header explaining who buys packages"
   },
-  "billingPackageSummary": "{days} days · {price}",
+  "billingPackageSummary": "{days, plural, one{{days} day · {price}} other{{days} days · {price}}}",
   "@billingPackageSummary": {
     "description": "Summary line under a package name in the editor: day count and formatted price",
     "placeholders": {
@@ -155,7 +155,7 @@
   "@buyPackageTitle": {
     "description": "Title of the package buy sheet"
   },
-  "buyPackageDays": "{days} days",
+  "buyPackageDays": "{days, plural, one{{days} day} other{{days} days}}",
   "@buyPackageDays": {
     "description": "Day count of a package row in the buy sheet",
     "placeholders": {

@@ -94,7 +94,7 @@
   "@badgePinMismatch": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinTooShort": "Utilisez au moins {min} chiffres.",
+  "badgePinTooShort": "{min, plural, one{Utilisez au moins {min} chiffre.} other{Utilisez au moins {min} chiffres.}}",
   "@badgePinTooShort": {
     "description": "#662 - badge sign-in",
     "placeholders": {
