@@ -65,7 +65,7 @@
       }
     }
   },
-  "financesOverdueCount": "{count} en retard",
+  "financesOverdueCount": "{count, plural, one{{count} en retard} other{{count} en retard}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {

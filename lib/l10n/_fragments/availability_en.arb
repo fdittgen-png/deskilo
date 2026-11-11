@@ -60,7 +60,7 @@
   "@availabilityGranularityFullDay": {
     "description": "Radio option: every booking covers the whole day (0032)"
   },
-  "planSlotError": "Bookings must start and end on the {minutes}-minute grid.",
+  "planSlotError": "Bookings must start and end on the {minutes, plural, =1{1-minute grid} other{{minutes}-minute grid}}.",
   "@planSlotError": {
     "description": "Booking error when the server rejects a misaligned window under a minute granularity (0032)",
     "placeholders": {
@@ -107,7 +107,7 @@
   },
   "availabilityHourOption": "{count} h",
   "@availabilityHourOption": {
-    "description": "Dropdown option: a whole-hour count (#446)",
+    "description": "Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h.",
     "placeholders": {
       "count": {
         "type": "int"

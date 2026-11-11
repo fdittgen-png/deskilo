@@ -647,7 +647,7 @@
   },
   "equipmentHeading": "#{number} {name}",
   "@equipmentHeading": {
-    "description": "#2576 equipment register",
+    "description": "#2576 equipment register. The number is not a count: it is an item number.",
     "placeholders": {
       "number": {
         "type": "int"

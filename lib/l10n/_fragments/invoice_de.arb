@@ -104,7 +104,7 @@
       }
     }
   },
-  "invoiceSummaryOpen": "{count} offen · {amount} ausstehend",
+  "invoiceSummaryOpen": "{count, plural, =1{1 offen} other{{count} offen}} · {amount} ausstehend",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -209,7 +209,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Anhang: {movements} Bewegungen, {checkIns} Check-ins",
+  "invoiceAnnexSummary": "Anhang: {movements, plural, =1{1 Bewegung} other{{movements} Bewegungen}}, {checkIns, plural, =1{1 Check-in} other{{checkIns} Check-ins}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -236,7 +236,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} ausgestellt, {failed} fehlgeschlagen.",
+  "invoiceIssuedPartial": "{issued, plural, =1{1 ausgestellt} other{{issued} ausgestellt}}, {failed, plural, =1{1 fehlgeschlagen} other{{failed} fehlgeschlagen}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -956,7 +956,7 @@
   "journeyStageCollect": "Einzuziehen",
   "journeyStageConfirm": "Zu bestätigen",
   "journeyStageClosed": "Abgeschlossen",
-  "journeyOverdueCount": "{count} überfällig",
+  "journeyOverdueCount": "{count, plural, =1{1 überfällig} other{{count} überfällig}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {

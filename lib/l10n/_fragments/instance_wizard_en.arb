@@ -100,7 +100,7 @@
   },
   "instanceInstallSchema": "Install the schema: every migration of the app, in order ({count}).",
   "@instanceInstallSchema": {
-    "description": "#977 instance wizard: instanceInstallSchema",
+    "description": "#977 instance wizard: instanceInstallSchema. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -109,7 +109,7 @@
   },
   "instanceDeployFunctions": "Deploy the functions: payments, e-invoices, push, badges ({count}).",
   "@instanceDeployFunctions": {
-    "description": "#977 instance wizard: instanceDeployFunctions",
+    "description": "#977 instance wizard: instanceDeployFunctions. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -118,7 +118,7 @@
   },
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
-    "description": "#977 instance wizard: instanceProgress",
+    "description": "#977 instance wizard: instanceProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
     "placeholders": {
       "done": {
         "type": "int"
@@ -188,7 +188,7 @@
       }
     }
   },
-  "instanceReadyUpgrade": "DesKilo version {version} is installed: only the {pending} missing migrations will run.",
+  "instanceReadyUpgrade": "DesKilo version {version} is installed: {pending, plural, =1{only the 1 missing migration will run} other{only the {pending} missing migrations will run}}.",
   "@instanceReadyUpgrade": {
     "description": "#1308 instance readiness",
     "placeholders": {
@@ -202,7 +202,7 @@
   },
   "instanceReadyCurrent": "DesKilo version {version} is installed and current: the schema needs nothing.",
   "@instanceReadyCurrent": {
-    "description": "#1308 instance readiness",
+    "description": "#1308 instance readiness. The number is not a count: it is a schema version.",
     "placeholders": {
       "version": {
         "type": "int"
@@ -219,7 +219,7 @@
   },
   "instanceAttentionPostgres": "It runs Postgres {found}; DesKilo is built for Postgres {supported}.",
   "@instanceAttentionPostgres": {
-    "description": "#1308 instance readiness",
+    "description": "#1308 instance readiness. The number is not a count: it is a schema version.",
     "placeholders": {
       "found": {
         "type": "int"

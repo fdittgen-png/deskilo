@@ -339,7 +339,7 @@
   },
   "eventRepeatedMarker": "×{count}",
   "@eventRepeatedMarker": {
-    "description": "#3067 how many identical events a collapsed row stands for",
+    "description": "#3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
     "placeholders": {
       "count": {
         "type": "int"

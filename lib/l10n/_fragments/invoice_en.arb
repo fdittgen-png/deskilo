@@ -254,7 +254,7 @@
   },
   "invoiceRemindedBadge": "Reminded ×{count}",
   "@invoiceRemindedBadge": {
-    "description": "Archive row badge: reminder count",
+    "description": "Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -311,14 +311,14 @@
   },
   "invoiceSummaryToInvoice": "{count} to invoice",
   "@invoiceSummaryToInvoice": {
-    "description": "Summary strip: pending count",
+    "description": "Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
   },
-  "invoiceSummaryOpen": "{count} open · {amount} outstanding",
+  "invoiceSummaryOpen": "{count, plural, =1{1 open} other{{count} open}} · {amount} outstanding",
   "@invoiceSummaryOpen": {
     "description": "Summary strip: open count + outstanding amount",
     "placeholders": {
@@ -481,7 +481,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Annex: {movements} movements, {checkIns} check-ins",
+  "invoiceAnnexSummary": "Annex: {movements, plural, =1{1 movement} other{{movements} movements}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-ins}}",
   "@invoiceAnnexSummary": {
     "description": "Detail sheet: what the snapshotted annex carries (0064)",
     "placeholders": {
@@ -516,7 +516,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} issued, {failed} failed.",
+  "invoiceIssuedPartial": "{issued, plural, =1{1 issued} other{{issued} issued}}, {failed, plural, =1{1 failed} other{{failed} failed}}.",
   "@invoiceIssuedPartial": {
     "description": "Sweep result when some members could not be invoiced",
     "placeholders": {
@@ -1078,7 +1078,7 @@
   },
   "dunningDueChip": "Reminder {level} due",
   "@dunningDueChip": {
-    "description": "Mahnwesen / reminder letters (#472)",
+    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1087,7 +1087,7 @@
   },
   "invoiceTemplateDocReminder": "Reminder {level}",
   "@invoiceTemplateDocReminder": {
-    "description": "Mahnwesen / reminder letters (#472)",
+    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1448,7 +1448,7 @@
   },
   "invoiceSummaryToRefund": "{count} to refund · {amount}",
   "@invoiceSummaryToRefund": {
-    "description": "Summary strip: open credit notes the workspace still owes (#508/#510)",
+    "description": "Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1476,7 +1476,7 @@
     "description": "#2332: when automatic payment reminders run"
   },
   "@eventInvoiceReminderLine": {
-    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String).",
+    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation.",
     "placeholders": {
       "number": {
         "type": "String"
@@ -1781,7 +1781,7 @@
   "@journeyStageClosed": {
     "description": "Shown as a button or chip label in invoice stage strip (money)."
   },
-  "journeyOverdueCount": "{count} overdue",
+  "journeyOverdueCount": "{count, plural, =1{1 overdue} other{{count} overdue}}",
   "@journeyOverdueCount": {
     "description": "Shown as a text in invoice stage strip (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -1852,7 +1852,7 @@
   },
   "journeyPrimaryRemind": "Send reminder {level}",
   "@journeyPrimaryRemind": {
-    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int).",
+    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.",
     "placeholders": {
       "level": {
         "type": "int"
@@ -2156,7 +2156,7 @@
   },
   "wizardRemindLevel": "reminder {level}",
   "@wizardRemindLevel": {
-    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int).",
+    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.",
     "placeholders": {
       "level": {
         "type": "int"
@@ -2227,7 +2227,7 @@
   },
   "wizardSettle": "Regroup {count}",
   "@wizardSettle": {
-    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int).",
+    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
     "placeholders": {
       "count": {
         "type": "int"

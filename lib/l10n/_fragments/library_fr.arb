@@ -6,7 +6,7 @@
   "libraryStartFrom": "Partir de la bibliothèque",
   "libraryYours": "Vos modèles",
   "libraryEmpty": "Rien ici pour l'instant. Enregistrez cet espace comme modèle, ou attendez qu'on en partage un avec vous.",
-  "libraryCounts": "{levels} niveaux · {desks} tables · {seats} places",
+  "libraryCounts": "{levels, plural, one{{levels} niveau} other{{levels} niveaux}} · {desks, plural, one{{desks} table} other{{desks} tables}} · {seats, plural, one{{seats} place} other{{seats} places}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {

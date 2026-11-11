@@ -104,7 +104,7 @@
       }
     }
   },
-  "invoiceSummaryOpen": "{count} aperte · {amount} in sospeso",
+  "invoiceSummaryOpen": "{count, plural, =1{1 aperta} other{{count} aperte}} · {amount} in sospeso",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -209,7 +209,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Allegato: {movements} movimenti, {checkIns} check-in",
+  "invoiceAnnexSummary": "Allegato: {movements, plural, =1{1 movimento} other{{movements} movimenti}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-in}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -236,7 +236,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} emesse, {failed} non riuscite.",
+  "invoiceIssuedPartial": "{issued, plural, =1{1 emessa} other{{issued} emesse}}, {failed, plural, =1{1 non riuscita} other{{failed} non riuscite}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -956,7 +956,7 @@
   "journeyStageCollect": "Da incassare",
   "journeyStageConfirm": "Da confermare",
   "journeyStageClosed": "Chiuse",
-  "journeyOverdueCount": "{count} in ritardo",
+  "journeyOverdueCount": "{count, plural, =1{1 in ritardo} other{{count} in ritardo}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {

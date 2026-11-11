@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "eventValidations": "{current}/{required} validations",
+  "eventValidations": "{current}/{required, plural, one{{required} validation} other{{required} validations}}",
   "eventValidatedBy": "Validé par {name} · {when}",
   "eventRejectedBy": "Refusé par {name} · {when}",
   "eventSystemDecider": "Système",

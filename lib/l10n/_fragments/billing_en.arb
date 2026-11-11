@@ -10,7 +10,7 @@
   },
   "billingBandFrom": "from {from}%",
   "@billingBandFrom": {
-    "description": "Derived lower boundary of a band row (exclusive)",
+    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage.",
     "placeholders": {
       "from": {
         "type": "int"
@@ -79,7 +79,7 @@
   },
   "moneySubscriptionPct": "Subscription {pct}%",
   "@moneySubscriptionPct": {
-    "description": "Statement line for the band fee of the member's percentage",
+    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage.",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -88,7 +88,7 @@
   },
   "percentValue": "{value}%",
   "@percentValue": {
-    "description": "A plain percentage value (level chips, member rows)",
+    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage.",
     "placeholders": {
       "value": {
         "type": "int"

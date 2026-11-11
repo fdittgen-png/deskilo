@@ -862,7 +862,7 @@
   "bankImportAction": "Importer un relevé",
   "bankImportFailed": "Le relevé n'a pas pu être importé. Rien n'a été ajouté.",
   "bankImportRepeated": "Ce fichier a déjà été importé. Rien n'a été ajouté.",
-  "bankImported": "Importé : {created} nouveaux, {known} déjà connus, {review} à vérifier.",
+  "bankImported": "Importé : {created, plural, one{{created} nouvelle écriture} other{{created} nouvelles écritures}}, {known, plural, one{{known} déjà connue} other{{known} déjà connues}}, {review} à vérifier.",
   "bankLineDuplicate": "Doublon",
   "bankLineMatched": "Règle {number}",
   "bankLineMoneyOut": "Sortie, à rapprocher",
@@ -2350,7 +2350,7 @@
   "@biPrintWorkspace": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biProjectionBasis": "Une droite tracée sur les {count} dernières périodes complètes, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
+  "biProjectionBasis": "Une droite tracée sur {count, plural, one{la dernière période complète} other{les {count} dernières périodes complètes}}, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -2364,7 +2364,7 @@
     "description": "Business analytics dashboard: biProjectionLabel"
   },
   "biProjectionNext": "{period} : {value} ({low} – {high}) · {label}",
-  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have} périodes complètes pour l'instant, {need} nécessaires.",
+  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have, plural, one{{have} période complète} other{{have} périodes complètes}} pour l'instant, {need, plural, one{{need} nécessaire} other{{need} nécessaires}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {
@@ -2716,7 +2716,7 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "billEntitlement": "{used} demi-journées facturées sur {included} ({openDays} jours d'ouverture)",
+  "billEntitlement": "{used, plural, one{{used} demi-journée facturée} other{{used} demi-journées facturées}} sur {included} ({openDays, plural, one{{openDays} jour d'ouverture} other{{openDays} jours d'ouverture}})",
   "billInvoiceCard": "Facture {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -3725,7 +3725,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n} couleurs à vous, dans cet ordre.",
+  "coloursRoomsOwn": "{n, plural, one{{n} couleur à vous, dans cet ordre.} other{{n} couleurs à vous, dans cet ordre.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -3738,7 +3738,7 @@
   "@coloursRoomsProduct": {
     "description": "#1289 colours screen: no own fills yet"
   },
-  "coloursRoomsSaved": "{n} couleurs de salles enregistrées.",
+  "coloursRoomsSaved": "{n, plural, one{{n} couleur de salle enregistrée.} other{{n} couleurs de salles enregistrées.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -3755,7 +3755,7 @@
   "@coloursTitle": {
     "description": "#1289 colours screen: the title"
   },
-  "coloursTooMany": "Le plan peint au plus {most} couleurs de salles.",
+  "coloursTooMany": "Le plan peint au plus {most, plural, one{{most} couleur de salle} other{{most} couleurs de salles}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {
@@ -5733,7 +5733,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "eventBadgeSecurityAlert": "La connexion par badge est suspendue après {failures} échecs en {minutes} minutes. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.",
+  "eventBadgeSecurityAlert": "La connexion par badge est suspendue après {failures, plural, one{{failures} échec} other{{failures} échecs}} en {minutes, plural, one{{minutes} minute} other{{minutes} minutes}}. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -5858,7 +5858,7 @@
       }
     }
   },
-  "eventQuotaRequested": "{actor} demande {halfDays} demi-journées supplémentaires pour {period}",
+  "eventQuotaRequested": "{actor} demande {halfDays, plural, one{{halfDays} demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
   "eventReject": "Refuser",
   "eventRejectedBy": "Refusé par {name} · {when}",
   "eventRepeatedMarker": "×{count}",
@@ -5995,7 +5995,7 @@
   "eventUsageRecordDeleteLine": "{actor} demande la suppression d'un relevé d'usage ({space})",
   "eventValidatedBy": "Validé par {name} · {when}",
   "eventValidationStage": "Validation {stage} sur {required} demandée",
-  "eventValidations": "{current}/{required} validations",
+  "eventValidations": "{current}/{required, plural, one{{required} validation} other{{required} validations}}",
   "eventsEmpty": "Aucun événement pour l'instant.",
   "eventsFilterAll": "Tous",
   "eventsPendingHeader": "En attente de votre confirmation",
@@ -7406,7 +7406,7 @@
   "@financesOutstanding": {
     "description": "Me › Finances"
   },
-  "financesOverdueCount": "{count} en retard",
+  "financesOverdueCount": "{count, plural, one{{count} en retard} other{{count} en retard}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {
@@ -8135,9 +8135,9 @@
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Seuls personal_home et workspace_host existent ; operator_set_installation_roles écrit un ensemble valide.",
   "instanceDoctorRolesUnknownTitle": "Les rôles de l'installation ne sont pas un ensemble connu",
   "instanceDoctorRun": "Lancer le contrôle de sécurité",
-  "instanceDoctorSchemaNoVersionDetail": "{tables} tables existent, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige {required}. L'installation la met à niveau à partir de ce qu'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, one{{tables} table existe} other{{tables} tables existent}}, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige {required}. L'installation la met à niveau à partir de ce qu'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "instanceDoctorSchemaNoVersionTitle": "Le schéma n'a pas de version",
-  "instanceDoctorSignupsNobodyDetail": "{created} inscrits, 0 confirmé. L'inscription n'est pas seulement lente — personne ne l'a terminée.\n        Vérifiez d'abord l'URL du site ci-dessus : c'est celle du lien de l'e-mail.",
+  "instanceDoctorSignupsNobodyDetail": "{created, plural, one{{created} inscrit} other{{created} inscrits}}, 0 confirmé. L'inscription n'est pas seulement lente — personne ne l'a terminée.\n        Vérifiez d'abord l'URL du site ci-dessus : c'est celle du lien de l'e-mail.",
   "instanceDoctorSignupsNobodyTitle": "Personne n'a confirmé depuis sept jours",
   "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 politique de lecture, qui nomme le dossier propriétaire du fichier} other{{count} politiques de lecture, chacune nommant le dossier propriétaire du fichier}}",
   "instanceDoctorStorageScopedTitle": "Les lectures du stockage sont circonscrites",
@@ -8263,7 +8263,7 @@
   "instanceReadyCurrent": "La version {version} de DesKilo est installée et à jour : le schéma n'a besoin de rien.",
   "instanceReadyInstall": "Le projet est vide : tout sera installé.",
   "instanceReadyResume": "{pending, plural, one{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migration, et seules celles-ci seront exécutées.} other{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.}}",
-  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : seules les {pending} migrations manquantes seront exécutées.",
+  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : {pending, plural, one{seule {pending} migration manquante sera exécutée} other{seules les {pending} migrations manquantes seront exécutées}}.",
   "instanceRegion": "Région (la plus proche de l'espace)",
   "@instanceRegion": {
     "description": "#977 instance wizard: instanceRegion"
@@ -8415,7 +8415,7 @@
   "invoiceActionUnknownBody": "La demande a été envoyée mais la réponse n'est pas arrivée : elle a peut-être déjà été appliquée. Rien n'est renvoyé. Vérifiez à nouveau pour la retrouver.",
   "invoiceAllCaughtUp": "Tout est à jour — rien à facturer.",
   "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre.",
-  "invoiceAnnexSummary": "Annexe : {movements} mouvements, {checkIns} pointages",
+  "invoiceAnnexSummary": "Annexe : {movements, plural, one{{movements} mouvement} other{{movements} mouvements}}, {checkIns, plural, one{{checkIns} pointage} other{{checkIns} pointages}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -8703,7 +8703,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} émises, {failed} en échec.",
+  "invoiceIssuedPartial": "{issued, plural, one{{issued} émise} other{{issued} émises}}, {failed} en échec.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -9466,7 +9466,7 @@
   "@invoiceStatusRemainderCancelled": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
-  "invoiceSummaryOpen": "{count} en cours · {amount} dus",
+  "invoiceSummaryOpen": "{count, plural, one{{count} en cours} other{{count} en cours}} · {amount} dus",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -10188,7 +10188,7 @@
       }
     }
   },
-  "journeyOverdueCount": "{count} en retard",
+  "journeyOverdueCount": "{count, plural, one{{count} en retard} other{{count} en retard}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {
@@ -11023,7 +11023,7 @@
   "libraryApplyChanges": "{count, plural, =0{Rien de sélectionné} =1{Appliquer 1 changement} other{Appliquer {count} changements}}",
   "libraryCarriesSettings": "avec ses réglages",
   "libraryConfirmSensitive": "Cela modifie : {groups}. Appliquer ?",
-  "libraryCounts": "{levels} niveaux · {desks} tables · {seats} places",
+  "libraryCounts": "{levels, plural, one{{levels} niveau} other{{levels} niveaux}} · {desks, plural, one{{desks} table} other{{desks} tables}} · {seats, plural, one{{seats} place} other{{seats} places}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {
@@ -11753,7 +11753,7 @@
   "@memberMonthInProgress": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "+{count} autres",
+  "memberMoreInvoices": "{count, plural, one{+{count} autre} other{+{count} autres}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -12078,10 +12078,10 @@
   "moneyNoInvoicesYet": "Pas encore de facture — l'espace facture le mois une fois clos.",
   "moneyNoteLabel": "Note (facultatif)",
   "moneyNothingOpen": "Rien d'ouvert — vous êtes à jour.",
-  "moneyOpenInvoicesSummary": "{count} ouvertes · {amount} dus",
+  "moneyOpenInvoicesSummary": "{count, plural, one{{count} ouverte} other{{count} ouvertes}} · {amount} dus",
   "moneyOpenInvoicesTitle": "Factures ouvertes",
   "moneyOverage": "{count, plural, =1{Dépassement (1 demi-journée supplémentaire)} other{Dépassement ({count} demi-journées supplémentaires)}}",
-  "moneyOverdueBanner": "{count} en retard — {amount} à régler",
+  "moneyOverdueBanner": "{count, plural, one{{count} en retard} other{{count} en retard}} — {amount} à régler",
   "moneyOverdueBy": "{days, plural, =0{Échéance aujourd’hui} =1{En retard de 1 jour} other{En retard de {days} jours}}",
   "moneyPayNow": "Payer maintenant",
   "moneyPaymentDateLabel": "Date du paiement",
@@ -12108,7 +12108,7 @@
   "moneySubmitExpense": "Soumettre une dépense",
   "moneySubmitPayment": "Soumettre pour confirmation",
   "moneySubscriptionPct": "Abonnement {pct} %",
-  "moneyUsage": "{used} demi-journées utilisées sur {included}",
+  "moneyUsage": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}} sur {included}",
   "moneyUsageUnlimited": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
@@ -13118,7 +13118,7 @@
   "planReservedBy": "Réservée par {name}",
   "planSeatBlocked": "Cette place est bloquée pour maintenance.",
   "planSendForConfirmation": "Envoyer pour confirmation",
-  "planSlotError": "Les réservations doivent commencer et finir sur la grille de {minutes} minutes.",
+  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, one{la grille de {minutes} minute} other{la grille de {minutes} minutes}}.",
   "planStartNow": "Commence maintenant",
   "planStartsAt": "Commence à {time}",
   "planStateFree": "Libre",
@@ -13540,7 +13540,7 @@
   "processCoordinationDesc": "Coordonner les activités, les messages et les décisions.",
   "processDocumentsInformation": "Documents et informations",
   "processDocumentsInformationDesc": "Créer, partager et exporter les informations de l’espace.",
-  "processFeatureCount": "{enabled} fonctionnalités actives sur {total}",
+  "processFeatureCount": "{enabled, plural, one{{enabled} fonctionnalité active} other{{enabled} fonctionnalités actives}} sur {total}",
   "processFeatureOff": "Désactivée",
   "processFeatureOn": "Activée",
   "processFeatureWaiting": "Activée, en attente de {feature}",
@@ -13577,7 +13577,7 @@
   "processStateAvailable": "Disponible",
   "processStateNeedsAttention": "À vérifier",
   "processStatePartial": "Partiel",
-  "processSubprocessCount": "{active} sous-processus actifs sur {total}",
+  "processSubprocessCount": "{active, plural, one{{active} sous-processus actif} other{{active} sous-processus actifs}} sur {total}",
   "processSwitchHint": "Touchez une fonctionnalité pour la modifier parmi les interrupteurs.",
   "processSwitchOff": "Désactiver",
   "processSwitchOn": "Activer",
@@ -15930,7 +15930,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Réservée par créneaux de {minutes} minutes",
+  "reserveSlotMinutes": "Réservée par {minutes, plural, one{créneaux de {minutes} minute} other{créneaux de {minutes} minutes}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {
@@ -16596,7 +16596,7 @@
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
   "sampleDataClear": "Effacer les données d'exemple",
-  "sampleDataCounts": "Cet espace contient des données d'exemple : {members} membres, {bookings} réservations, {payments} paiements.",
+  "sampleDataCounts": "Cet espace contient des données d'exemple : {members, plural, one{{members} membre} other{{members} membres}}, {bookings, plural, one{{bookings} réservation} other{{bookings} réservations}}, {payments, plural, one{{payments} paiement} other{{payments} paiements}}.",
   "sampleDataExplain": "Remplissez cet espace de test avec quelques membres d'exemple, leurs réservations des deux dernières et des deux prochaines semaines et quelques paiements, construits à partir de vos propres places et de vos prix. Rien n'est envoyé à personne, et vous pouvez tout effacer ensuite.",
   "sampleDataFill": "Remplir avec des données d'exemple",
   "sampleDataFillFailed": "Les données d'exemple n'ont pas pu être créées.",
@@ -17454,7 +17454,7 @@
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Dès qu'une approbation est donnée.} other{Dès que {required} approbations sont données.}} Un refus la clôt, et personne n'approuve sa propre demande.",
   "setupApprovalsFlowRequest": "Un membre demande",
   "setupApprovalsFlowRequestBody": "Un remboursement, la suppression d'une réservation, une dépense…",
-  "setupApprovalsFlowValidators": "{required} sur {people} approuvent",
+  "setupApprovalsFlowValidators": "{required, plural, one{{required} sur {people} approuve} other{{required} sur {people} approuvent}}",
   "setupApprovalsFlowWho": "{owners, plural, =1{Le propriétaire} other{{owners} propriétaires}} et {admins, plural, =0{aucun administrateur} =1{1 administrateur} other{{admins} administrateurs}}",
   "setupApprovalsOpenRules": "Règles par type de demande",
   "setupApprovalsOwnRulesNone": "Chaque demande suit la règle par défaut ci-dessus.",
@@ -18681,7 +18681,7 @@
   "supportPrepare": "Préparer l’aperçu",
   "supportPrivacy": "Seuls les compteurs limités de cet appareil et les contrôles connus sont inclus. Identités, adresses serveur, identifiants, données métier et journaux bruts sont exclus. Les contrôles inconnus sont indisponibles ; un opérateur peut exécuter doctor --support-json séparément. Les fichiers partagés ne peuvent pas être révoqués.",
   "supportSaved": "Enregistré localement",
-  "supportSize": "Aperçu : {bytes} octets",
+  "supportSize": "Aperçu : {bytes, plural, one{{bytes} octet} other{{bytes} octets}}",
   "@supportSize": {
     "placeholders": {
       "bytes": {
@@ -18850,7 +18850,7 @@
   "taskExportValuePlan": "plan",
   "taskExportValuePolicy": "une règle de réservation",
   "taskExportValueQuota": "un quota",
-  "taskExportValueRedacted": "non conservé ({length} caractères)",
+  "taskExportValueRedacted": "non conservé ({length, plural, one{{length} caractère} other{{length} caractères}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {
@@ -18960,7 +18960,7 @@
   "taskRecorderFieldTime": "horaire",
   "taskRecorderIndicator": "{count, plural, =1{Enregistrement d'une tâche : 1 étape} other{Enregistrement d'une tâche : {count} étapes}}",
   "taskRecorderLeaveOut": "Exclure de l'export",
-  "taskRecorderLimits": "Jusqu'à {steps} étapes ou {minutes} minutes par enregistrement. Les enregistrements sont effacés de cet appareil après {days} jours ; un fichier exporté vous appartient et reste là où vous l'avez enregistré.",
+  "taskRecorderLimits": "Jusqu'à {steps, plural, one{{steps} étape} other{{steps} étapes}} ou {minutes, plural, one{{minutes} minute} other{{minutes} minutes}} par enregistrement. Les enregistrements sont effacés de cet appareil après {days, plural, one{{days} jour} other{{days} jours}} ; un fichier exporté vous appartient et reste là où vous l'avez enregistré.",
   "taskRecorderMyRecordings": "Mes enregistrements sur cet appareil",
   "taskRecorderNameHint": "Facultatif. Laissé vide, l'enregistrement porte l'heure de son démarrage.",
   "taskRecorderNameLabel": "Nommer cette tâche",
@@ -19883,7 +19883,7 @@
   "usageWas": "était {before}",
   "uxAdvancedSection": "Avancé",
   "uxAlertsFilterEmpty": "Aucune actualité ne correspond à ces filtres.",
-  "uxAttentionSummary": "{updates} nouveautés · {pending} décisions en attente",
+  "uxAttentionSummary": "{updates, plural, one{{updates} nouveauté} other{{updates} nouveautés}} · {pending, plural, one{{pending} décision en attente} other{{pending} décisions en attente}}",
   "@uxAttentionSummary": {
     "placeholders": {
       "updates": {
@@ -21506,7 +21506,7 @@
     "description": "#1532: workspaceXmlImportPartial"
   },
   "workspaceXmlImportPreviewAccessories": "Accessoires : {count}",
-  "workspaceXmlImportPreviewConfiguration": "Configuration : {settings} réglages, {rows} lignes dans {tables} tables",
+  "workspaceXmlImportPreviewConfiguration": "Configuration : {settings, plural, one{{settings} réglage} other{{settings} réglages}}, {rows, plural, one{{rows} ligne} other{{rows} lignes}} dans {tables, plural, one{{tables} table} other{{tables} tables}}",
   "@workspaceXmlImportPreviewConfiguration": {
     "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
     "placeholders": {

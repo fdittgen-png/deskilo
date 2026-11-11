@@ -17,7 +17,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Réservée par créneaux de {minutes} minutes",
+  "reserveSlotMinutes": "Réservée par {minutes, plural, one{créneaux de {minutes} minute} other{créneaux de {minutes} minutes}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {

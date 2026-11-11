@@ -18,7 +18,7 @@
   "bankFormatOfx": "OFX / QFX",
   "bankFormatCsv": "Tableur (CSV)",
   "bankFormatRead": "Lire",
-  "bankImported": "Importé : {created} nouveaux, {known} déjà connus, {review} à vérifier.",
+  "bankImported": "Importé : {created, plural, one{{created} nouvelle écriture} other{{created} nouvelles écritures}}, {known, plural, one{{known} déjà connue} other{{known} déjà connues}}, {review} à vérifier.",
   "bankImportRepeated": "Ce fichier a déjà été importé. Rien n'a été ajouté.",
   "bankImportFailed": "Le relevé n'a pas pu être importé. Rien n'a été ajouté.",
   "bankRefusedTooLarge": "Le fichier dépasse la taille que ce serveur importe. Rien n'a été importé.",

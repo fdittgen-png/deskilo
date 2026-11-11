@@ -103,7 +103,7 @@
   },
   "usagePrepared": "Recorded: {count}",
   "@usagePrepared": {
-    "description": "#2590 usage preparation",
+    "description": "#2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
     "placeholders": {
       "count": {
         "type": "int"
