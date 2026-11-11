@@ -191,7 +191,11 @@ const SA = {
 };
 
 /** Runs the real handler with FCM stubbed; returns every message sent. */
-async function run(body: Record<string, string>, configured = true) {
+async function run(
+  body: Record<string, string>,
+  configured = true,
+  status = 202,
+) {
   resetTokenCacheForTests();
   await cachedAccessToken(SA, () => Promise.resolve("oauth-token"));
   Deno.env.set("FCM_SERVICE_ACCOUNT", JSON.stringify(SA));
@@ -213,8 +217,8 @@ async function run(body: Record<string, string>, configured = true) {
       // deno-lint-ignore no-explicit-any
       fakeSupabase(tables()) as any,
     );
-    assertEquals(res.status, 202);
-    return { res: await res.json(), sent };
+    assertEquals(res.status, status);
+    return { res: status === 202 ? await res.json() : null, sent };
   } finally {
     globalThis.fetch = original;
     Deno.env.delete("FCM_SERVICE_ACCOUNT");
@@ -346,9 +350,7 @@ Deno.test("an unreadable installation id leaves no reference, never a partial on
   ]);
 });
 
-Deno.test("a legacy installation still delivers with no shared secret configured", async () => {
-  const { res, sent } = await run({ note_id: "note-1" }, false);
-  assertEquals(res, { accepted: true });
-  assertEquals(sent.length, 1);
-  assertNoSentinel(sent);
+Deno.test("without the shared secret, a caller without the service credential sends nothing", async () => {
+  const { sent } = await run({ note_id: "note-1" }, false, 401);
+  assertEquals(sent.length, 0);
 });
