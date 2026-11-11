@@ -66,7 +66,7 @@ reminderLetterReport(
   final l10n = language.isEmpty ? context.l10n : l10nForLanguage(language);
   final title = level <= 1
       ? (l10n.reminderPdfTitleFriendly)
-      : '${l10n.reminderPdfTitleFirm} $level';
+      : l10n.reminderPdfTitleLevel(level);
   final data = reminderReportData(
     reportStringsFor(
       context,

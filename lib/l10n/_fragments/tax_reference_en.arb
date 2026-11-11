@@ -48,6 +48,27 @@
   "@taxRefValidFrom": {
     "description": "#2477 tax reference: Field: first day a version is in force."
   },
+  "taxRefValidFromUntilDate": "Valid from {from} until {until}",
+  "@taxRefValidFromUntilDate": {
+    "description": "#3652 A tax reference value that is valid from one date until another.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "taxRefValidFromDate": "Valid from {date}",
+  "@taxRefValidFromDate": {
+    "description": "#3652 A tax reference value that is valid from a date, with no end.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "taxRefValidUntil": "until",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."

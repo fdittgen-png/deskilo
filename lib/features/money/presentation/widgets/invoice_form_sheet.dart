@@ -352,7 +352,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     final replacesNumber = widget.replacesNumber;
     final replacesBanner = replacesNumber == null
         ? null
-        : '${l10n.invoicePdfReplaces} $replacesNumber';
+        : l10n.invoicePdfReplacesNumber(replacesNumber);
     final monthLabel = appFormatOf(context).dates(DateShape.monthYear).format(_month);
     final now = widget.now;
     final atCurrent = _month.year == now.year && _month.month == now.month;

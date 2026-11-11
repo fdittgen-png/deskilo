@@ -88,6 +88,15 @@
   "@profilePhotoSaveFailed": {
     "description": "Error snackbar when uploading or removing the photo fails."
   },
+  "profilePhotoRefused": "The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.",
+  "@profilePhotoRefused": {
+    "description": "#3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count.",
+    "placeholders": {
+      "megabytes": {
+        "type": "int"
+      }
+    }
+  },
   "settingsBillingReports": "Billing & reports",
   "@settingsBillingReports": {
     "description": "Admin settings entry to the invoicing hub (#478)"
@@ -252,6 +261,15 @@
   "consentVersion": "Version",
   "@consentVersion": {
     "description": "Shown as the text in consent screen (profile), and 1 other place."
+  },
+  "consentVersionNumber": "Version {version}",
+  "@consentVersionNumber": {
+    "description": "#3652 The version of a consent text or privacy notice, e.g. \"Version 3\".",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   },
   "consentAcceptedOn": "Accepted on {date} ({version})",
   "@consentAcceptedOn": {

@@ -35,5 +35,6 @@
   "purchaseOrderSummary": "{supplier} · {total}",
   "purchaseOrderRefused": "Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.",
   "reportDocPurchaseOrder": "Bestellung",
+  "reportDocPurchaseOrderTitle": "Bestellung {reference}",
   "reportExpectedDelivery": "Erwartete Lieferung"
 }

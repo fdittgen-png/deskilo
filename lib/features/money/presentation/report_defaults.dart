@@ -199,7 +199,7 @@ ReportBands defaultReminderBands(int level, AppLocalizations l10n) =>
 
 String _reminderTitle(int level, AppLocalizations l10n) => level <= 1
     ? (l10n.reminderPdfTitleFriendly)
-    : '${l10n.reminderPdfTitleFirm} $level';
+    : l10n.reminderPdfTitleLevel(level);
 
 String _reminderOpening(int level, AppLocalizations l10n) => level <= 1
     ? (l10n.reminderPdfOpeningFriendly)
@@ -212,7 +212,7 @@ ReportBands _reminderPresetBands(
   final invoiceRecap = '''
 ## ${l10n.invoicePdfTitle}
 {{ number }} · ${l10n.invoicePdfIssuedOn} {{ issued }} | {{ total }}
-> ${l10n.reminderPdfDaysOpen} {{ days_open }} ${l10n.reminderPdfDays} · ${l10n.reminderPdfLevelLabel} {{ reminder_level }}''';
+> ${l10n.reminderPdfDaysOpenLine('{{ days_open }}')} · ${l10n.reminderPdfLevelLabel} {{ reminder_level }}''';
   final closing =
       '> ${l10n.reminderPdfClosing}';
   // A reminder cites the statutory late-payment clauses (#480) — on the
@@ -227,7 +227,7 @@ ReportBands _reminderPresetBands(
         header: '# $title',
         body: '''
 {{ member }} — {{ number }} ({{ issued }})
-> ${l10n.reminderPdfDaysOpen} {{ days_open }} ${l10n.reminderPdfDays}
+> ${l10n.reminderPdfDaysOpenLine('{{ days_open }}')}
 = ${l10n.invoiceBalance} | {{ total }}''',
         footer: '$clauses\n$closing',
       );
