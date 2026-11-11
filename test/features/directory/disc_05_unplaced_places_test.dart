@@ -6,7 +6,9 @@
 // - The map's "could not be placed" count is every loaded place without a
 //   pin whose lookup has settled: no public address, an address the
 //   geocoder does not find, a lookup that failed, and a place beyond the
-//   bounded lookups (deferred). A lookup still running is not counted yet.
+//   bounded lookups (deferred). A lookup still running, or waiting its
+//   turn, is not counted yet. Only a place with an address uses one of
+//   the bounded lookups (#3684).
 // - Places at the same spot fold into one cluster with their number; none
 //   of them is lost.
 // - Beside the map, every loaded place keeps its card in the list, placed
@@ -15,7 +17,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/features/directory/data/directory_lookups.dart';
 import 'package:deskilo/features/directory/domain/directory_location.dart';
+import 'package:deskilo/features/directory/domain/directory_location_memory.dart';
 import 'package:deskilo/features/directory/domain/discovery_view.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/domain/saved_place.dart';
@@ -84,8 +88,21 @@ Future<void> _showMap(
         tileProvider: _BlankTiles(),
       ),
     ),
-    overrides: [directoryGeocoderProvider.overrideWithValue(geocoder)],
+    overrides: [
+      directoryGeocoderProvider.overrideWithValue(geocoder),
+      directoryLocationMemoryProvider.overrideWithValue(
+        InMemoryDirectoryLocationMemory(),
+      ),
+    ],
   );
+  await _frames(tester);
+}
+
+/// Every queued lookup and its courtesy pause, one after the other.
+Future<void> _allLookups(WidgetTester tester, int count) async {
+  for (var i = 0; i < count; i++) {
+    await tester.pump(DirectoryLookups.courtesyPause);
+  }
   await _frames(tester);
 }
 
@@ -111,21 +128,25 @@ void main() {
       _place('blank'),
       _place('nowhere', address: 'Nowhere'),
       _place('broken', address: 'Broken'),
-      // 3 lookups are spent above; 17 of these are looked up, 3 deferred.
+      // 2 lookups are spent above (a place without an address spends
+      // none); 18 of these are looked up, 2 deferred.
       for (var i = 0; i < 20; i++) _place('street-$i', address: 'Street $i'),
     ];
     await _showMap(tester, places, _Geocoder());
+    await _allLookups(tester, 20);
 
     expect(find.byKey(_missing), findsOneWidget);
     expect(
       find.text(
-        '6 workspaces could not be placed on the map; their cards are below.',
+        '5 workspaces could not be placed on the map; their cards are below.',
       ),
       findsOneWidget,
-      reason: 'no address 1, not found 1, failed 1, deferred 3',
+      reason: 'no address 1, not found 1, failed 1, deferred 2',
     );
+    expect(find.text('1 has no published address.'), findsOneWidget);
+    expect(find.text('1 could not be looked up.'), findsOneWidget);
     expect(find.text('2'), findsOneWidget, reason: 'the two Paris places');
-    expect(find.text('17'), findsOneWidget, reason: 'every looked-up place');
+    expect(find.text('18'), findsOneWidget, reason: 'every looked-up place');
     expect(tester.takeException(), isNull);
   });
 

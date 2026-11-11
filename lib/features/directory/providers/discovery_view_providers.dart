@@ -35,13 +35,15 @@ class DiscoveryView extends _$DiscoveryView {
   }
 
   /// Shows the list, or the map when [map]; the map is only shown for a
-  /// provider already accepted.
-  Future<void> show({required bool map}) async {
+  /// provider already accepted. Answers whether the asked view is shown
+  /// (#3684): a refused map is said by the caller, never swallowed.
+  Future<bool> show({required bool map}) async {
     final current = await future;
     if (map && !current.accepts(ref.read(mapServicesProvider).identity)) {
-      return;
+      return false;
     }
     await _keep(current.showing(map: map));
+    return true;
   }
 
   /// The person read who the map provider is and chose the map.

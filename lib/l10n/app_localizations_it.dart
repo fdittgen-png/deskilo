@@ -7041,13 +7041,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Posizione non disponibile. Il proprietario può pubblicare coordinate precise.';
 
   @override
+  String get directoryMapOpenFailed => 'Non è stato possibile aprire la mappa.';
+
+  @override
   String get directoryNoUpcoming => 'Nessuna prenotazione in arrivo';
+
+  @override
+  String get directoryNothingToPin =>
+      'Non è stato possibile collocare nessuno di questi luoghi sulla mappa.';
 
   @override
   String get directoryOnline => 'Online';
 
   @override
   String get directoryOpenGroup => 'Apri il gruppo WhatsApp';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'La ricerca di $count indirizzi non è riuscita.',
+      one: 'La ricerca di 1 indirizzo non è riuscita.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7057,6 +7075,17 @@ class AppLocalizationsIt extends AppLocalizations {
       other:
           '$count spazi non è stato possibile collocarli sulla mappa; le loro schede sono sotto.',
       one: '1 spazio non è stato possibile collocarlo sulla mappa; la sua scheda è sotto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count non hanno un indirizzo pubblicato.',
+      one: '1 non ha un indirizzo pubblicato.',
     );
     return '$_temp0';
   }
@@ -7074,6 +7103,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Prenotato oggi';
+
+  @override
+  String get directoryTilesFailed =>
+      'Non è stato possibile caricare lo sfondo della mappa.';
 
   @override
   String get directoryTitle => 'Membri';

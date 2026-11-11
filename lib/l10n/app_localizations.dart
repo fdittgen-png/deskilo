@@ -11538,11 +11538,23 @@ abstract class AppLocalizations {
   /// **'Location unavailable. The owner can publish precise map coordinates.'**
   String get directoryLocationMissing;
 
+  /// Shown as an error snackbar in directory screen (directory) when the map could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'The map could not be opened.'**
+  String get directoryMapOpenFailed;
+
   /// Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead
   ///
   /// In en, this message translates to:
   /// **'No upcoming reservations'**
   String get directoryNoUpcoming;
+
+  /// Shown as a text in directory map (directory), in place of the map when no loaded place has a pin.
+  ///
+  /// In en, this message translates to:
+  /// **'None of these places could be placed on the map.'**
+  String get directoryNothingToPin;
 
   /// Directory status chip: heartbeat younger than the presence window (#223)
   ///
@@ -11556,11 +11568,23 @@ abstract class AppLocalizations {
   /// **'Open WhatsApp group'**
   String get directoryOpenGroup;
 
+  /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}'**
+  String directoryPinsLookupFailed(int count);
+
   /// Shown as a text in directory map (directory). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
   String directoryPinsMissing(int count);
+
+  /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 has no published address.} other{{count} have no published address.}}'**
+  String directoryPinsNoAddress(int count);
 
   /// Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail
   ///
@@ -11585,6 +11609,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reserved today'**
   String get directoryReservedToday;
+
+  /// Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows.
+  ///
+  /// In en, this message translates to:
+  /// **'The map background could not be loaded.'**
+  String get directoryTilesFailed;
 
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///

@@ -9,10 +9,13 @@ import '../../../core/backend/personal_home_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/personal_kit/me_filled_field.dart';
 import '../../../core/ui/personal_kit/me_notice.dart';
+import '../../../core/ui/view_toggle.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
@@ -70,19 +73,66 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   /// toggle. Before it first loads from a provider, the person is told who
   /// that provider is and what it receives, and nothing loads unless they
   /// choose the map.
+  ///
+  /// #3684 -- a map that cannot be opened says so: a failure on the way,
+  /// or a provider no longer accepted, ends in a message, never in nothing.
   Future<void> _openMap() async {
-    final view = ref.read(discoveryViewProvider.notifier);
-    final services = ref.read(mapServicesProvider);
-    final current = await ref.read(discoveryViewProvider.future);
+    try {
+      final view = ref.read(discoveryViewProvider.notifier);
+      final services = ref.read(mapServicesProvider);
+      final current = await ref.read(discoveryViewProvider.future);
+      if (!mounted) return;
+      if (current.accepts(services.identity)) {
+        if (!await view.show(map: true)) _mapUnavailable();
+        return;
+      }
+      final remembered = ref.read(savedPlacesNamespaceProvider).value != null;
+      final accepted = await MapDisclosureDialog.ask(
+        context,
+        services: services,
+        remembered: remembered,
+      );
+      if (accepted && mounted) await view.acceptMap();
+    } on Object catch (e, st) {
+      TraceLogger.instance.error(
+        'directory',
+        'the map could not be opened',
+        error: e.runtimeType,
+        stackTrace: st,
+      );
+      _mapUnavailable();
+    }
+  }
+
+  void _mapUnavailable() {
     if (!mounted) return;
-    if (current.accepts(services.identity)) return view.show(map: true);
-    final remembered = ref.read(savedPlacesNamespaceProvider).value != null;
-    final accepted = await MapDisclosureDialog.ask(
-      context,
-      services: services,
-      remembered: remembered,
+    AppSnack.error(context, context.l10n.directoryMapOpenFailed);
+  }
+
+  /// The labelled List | Map switch: the map side asks first, as the
+  /// card's Locate does.
+  Widget _viewSwitch(bool map) {
+    final l = context.l10n;
+    return Padding(
+      padding: AppSpacing.smH,
+      child: ViewToggle<bool>(
+        key: const ValueKey('directory-view-switch'),
+        selected: map,
+        onChanged: (toMap) => unawaited(
+          toMap
+              ? _openMap()
+              : ref.read(discoveryViewProvider.notifier).show(map: false),
+        ),
+        options: [
+          ViewToggleOption(value: false, icon: Icons.list, label: l.portalList),
+          ViewToggleOption(
+            value: true,
+            icon: Icons.map_outlined,
+            label: l.portalMap,
+          ),
+        ],
+      ),
     );
-    if (accepted && mounted) await view.acceptMap();
   }
 
   void _locate(PublicWorkspace w) {
@@ -332,14 +382,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
             ? null
             : Text(l.meTabDiscover),
         actions: [
-          IconButton(
-            key: const ValueKey('directory-portal-list'),
-            tooltip: map ? (l.portalList) : (l.portalMap),
-            icon: Icon(map ? Icons.list : Icons.map_outlined),
-            onPressed: map
-                ? () => ref.read(discoveryViewProvider.notifier).show(map: false)
-                : _openMap,
-          ),
+          _viewSwitch(map),
           if (ref.watch(authStateProvider).value != null)
             IconButton(
               key: const ValueKey('directory-portal-register-directory'),
