@@ -288,7 +288,7 @@
   "@accountUsageCorrected": {
     "description": "Shown as a text in account activity screen (money)."
   },
-  "accountUsageMinutes": "{minutes} minutes",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} minute} other{{minutes} minutes}}",
   "@accountUsageMinutes": {
     "description": "Shown as a text in account activity screen (money), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
@@ -2289,7 +2289,7 @@
   "@badgePinSetAction": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinTooShort": "Use at least {min} digits.",
+  "badgePinTooShort": "{min, plural, one{Use at least {min} digit.} other{Use at least {min} digits.}}",
   "@badgePinTooShort": {
     "description": "#662 - badge sign-in",
     "placeholders": {
@@ -2481,7 +2481,7 @@
   "@bankCsvHeader": {
     "description": "#2380 CSV sheet: the first row names the columns."
   },
-  "bankCsvNeedsAccount": "Name the account, in at most {max} characters.",
+  "bankCsvNeedsAccount": "{max, plural, one{Name the account, in at most {max} character.} other{Name the account, in at most {max} characters.}}",
   "@bankCsvNeedsAccount": {
     "description": "#2380 CSV sheet: the account is missing or longer than its column.",
     "placeholders": {
@@ -2821,7 +2821,7 @@
   "@bankRefusedTooLong": {
     "description": "#2380 Refusal: an account or a bank id longer than a statement keeps."
   },
-  "bankRefusedTooManyLines": "The file has more than {max} movements. Split it by period at the bank. Nothing was imported.",
+  "bankRefusedTooManyLines": "{max, plural, one{The file has more than {max} movement. Split it by period at the bank. Nothing was imported.} other{The file has more than {max} movements. Split it by period at the bank. Nothing was imported.}}",
   "@bankRefusedTooManyLines": {
     "description": "#2380 Refusal: more movements than one import takes.",
     "placeholders": {
@@ -5820,7 +5820,7 @@
   "@billOutstanding": {
     "description": "Footer state when the member still owes for the period"
   },
-  "billOverage": "{extra} extra half-days",
+  "billOverage": "{extra, plural, one{{extra} extra half-day} other{{extra} extra half-days}}",
   "@billOverage": {
     "description": "Overage line, shown only when extra half-days exist; the amount renders trailing",
     "placeholders": {
@@ -5972,7 +5972,7 @@
   "@billingPackageName": {
     "description": "Label of the new-package name field"
   },
-  "billingPackageSummary": "{days} days · {price}",
+  "billingPackageSummary": "{days, plural, one{{days} day · {price}} other{{days} days · {price}}}",
   "@billingPackageSummary": {
     "description": "Summary line under a package name in the editor: day count and formatted price",
     "placeholders": {
@@ -6519,7 +6519,7 @@
   "@bookingGateBlocked": {
     "description": "Shown as the text in booking sheet (reservations), and 2 other places."
   },
-  "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
+  "bookingHorizonError": "{days, plural, one{Too far ahead — bookings are open {days} day in advance.} other{Too far ahead — bookings are open {days} days in advance.}}",
   "@bookingHorizonError": {
     "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {days} (int).",
     "placeholders": {
@@ -6713,7 +6713,7 @@
   "@bookingSpaceChainTaken": {
     "description": "#1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period"
   },
-  "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
+  "bookingTooLongError": "{minutes, plural, one{Too long — a booking lasts at most {minutes} minute.} other{Too long — a booking lasts at most {minutes} minutes.}}",
   "@bookingTooLongError": {
     "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
@@ -6722,7 +6722,7 @@
       }
     }
   },
-  "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
+  "bookingTooShortError": "{minutes, plural, one{Too short — a booking lasts at least {minutes} minute.} other{Too short — a booking lasts at least {minutes} minutes.}}",
   "@bookingTooShortError": {
     "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
@@ -6874,7 +6874,7 @@
   "@buyPackageButton": {
     "description": "Money-tab button opening the package buy sheet (package-plan members)"
   },
-  "buyPackageDays": "{days} days",
+  "buyPackageDays": "{days, plural, one{{days} day} other{{days} days}}",
   "@buyPackageDays": {
     "description": "Day count of a package row in the buy sheet",
     "placeholders": {
@@ -6919,7 +6919,7 @@
   "@caTaxTitle": {
     "description": "#2361: caTaxTitle"
   },
-  "calendarAgendaEmpty": "Nothing planned in the next {days} days.",
+  "calendarAgendaEmpty": "{days, plural, one{Nothing planned in the next day.} other{Nothing planned in the next {days} days.}}",
   "@calendarAgendaEmpty": {
     "description": "Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).",
     "placeholders": {
@@ -6928,7 +6928,7 @@
       }
     }
   },
-  "calendarAgendaRange": "Next {days} days",
+  "calendarAgendaRange": "{days, plural, one{Next day} other{Next {days} days}}",
   "@calendarAgendaRange": {
     "description": "Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).",
     "placeholders": {
@@ -7483,7 +7483,7 @@
   "@carnetSold": {
     "description": "#1279 carnets: carnetSold"
   },
-  "carnetSummary": "{halfDays} half-days · {price}",
+  "carnetSummary": "{halfDays, plural, one{{halfDays} half-day · {price}} other{{halfDays} half-days · {price}}}",
   "@carnetSummary": {
     "description": "#1279 carnets: carnetSummary",
     "placeholders": {
@@ -17415,7 +17415,7 @@
   "@instanceReadyInstall": {
     "description": "#1308 instance readiness"
   },
-  "instanceReadyResume": "A DesKilo install stopped part-way: {pending} migrations remain and only those will run.",
+  "instanceReadyResume": "{pending, plural, one{A DesKilo install stopped part-way: {pending} migration remain and only those will run.} other{A DesKilo install stopped part-way: {pending} migrations remain and only those will run.}}",
   "@instanceReadyResume": {
     "description": "#1308 instance readiness",
     "placeholders": {
@@ -18848,7 +18848,7 @@
   "@invoiceNothingToInvoice": {
     "description": "Issue form: the picked month has no tracked positions (0062)"
   },
-  "invoiceOpenAge": "{days} days",
+  "invoiceOpenAge": "{days, plural, one{{days} day} other{{days} days}}",
   "@invoiceOpenAge": {
     "description": "Open row: days since the invoice was issued",
     "placeholders": {
@@ -20347,7 +20347,7 @@
       }
     }
   },
-  "journeyIssuerMemberPaysOverdue": "{name} owes {amount} — overdue by {days} days",
+  "journeyIssuerMemberPaysOverdue": "{days, plural, one{{name} owes {amount} — overdue by {days} day} other{{name} owes {amount} — overdue by {days} days}}",
   "@journeyIssuerMemberPaysOverdue": {
     "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {days} (int).",
     "placeholders": {
@@ -20420,7 +20420,7 @@
       }
     }
   },
-  "journeyMemberPaysOverdue": "Your move: pay {amount} — overdue by {days} days",
+  "journeyMemberPaysOverdue": "{days, plural, one{Your move: pay {amount} — overdue by {days} day} other{Your move: pay {amount} — overdue by {days} days}}",
   "@journeyMemberPaysOverdue": {
     "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {days} (int).",
     "placeholders": {
@@ -25544,7 +25544,7 @@
       }
     }
   },
-  "moneyUsageUnlimited": "{used} half-days used",
+  "moneyUsageUnlimited": "{used, plural, one{{used} half-day used} other{{used} half-days used}}",
   "@moneyUsageUnlimited": {
     "description": "Statement usage line for unlimited plans",
     "placeholders": {
@@ -25720,7 +25720,7 @@
   "@myReservationsNoWorkspace": {
     "description": "#2553 My reservations: no workspace context to read on."
   },
-  "myReservationsPeriodLimit": "At most {days} days at a time.",
+  "myReservationsPeriodLimit": "{days, plural, one{At most {days} day at a time.} other{At most {days} days at a time.}}",
   "@myReservationsPeriodLimit": {
     "description": "#2553 My reservations: the ceiling of one read, under the period.",
     "placeholders": {
@@ -32755,7 +32755,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
-  "retentionExtendedBySetting": "{years} years from the document date (this space’s own setting)",
+  "retentionExtendedBySetting": "{years, plural, one{{years} year from the document date (this space’s own setting)} other{{years} years from the document date (this space’s own setting)}}",
   "@retentionExtendedBySetting": {
     "description": "#2571 retention holds and dispositions",
     "placeholders": {
@@ -32764,7 +32764,7 @@
       }
     }
   },
-  "retentionFromDocument": "{years} years from the document date",
+  "retentionFromDocument": "{years, plural, one{{years} year from the document date} other{{years} years from the document date}}",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
     "placeholders": {
@@ -32773,7 +32773,7 @@
       }
     }
   },
-  "retentionFromYearEnd": "{years} years from the end of the fiscal year",
+  "retentionFromYearEnd": "{years, plural, one{{years} year from the end of the fiscal year} other{{years} years from the end of the fiscal year}}",
   "@retentionFromYearEnd": {
     "description": "#2571 retention clocks",
     "placeholders": {
@@ -32823,7 +32823,7 @@
   "@retentionHoldReasonHelper": {
     "description": "#2571 retention holds and dispositions"
   },
-  "retentionHoldReasonMissing": "Name the reason, in at most {max} characters.",
+  "retentionHoldReasonMissing": "{max, plural, one{Name the reason, in at most {max} character.} other{Name the reason, in at most {max} characters.}}",
   "@retentionHoldReasonMissing": {
     "description": "#2571 retention holds and dispositions",
     "placeholders": {
@@ -36826,6 +36826,10 @@
   "setupReasonAssociation": "Because an association decides together, with its board",
   "@setupReasonAssociation": {
     "description": "#3485 setupReason: the label for case 'association'."
+  },
+  "setupReasonBooksNoPlaces": "Because this business books no places",
+  "@setupReasonBooksNoPlaces": {
+    "description": "#3702 setupReason: the label for case 'books_no_places' — the business (its kind, or a choice already made) books no places, so an unrelated answer does not switch place booking on."
   },
   "setupReasonDoorTablet": "Because a tablet at the door checks people in",
   "@setupReasonDoorTablet": {

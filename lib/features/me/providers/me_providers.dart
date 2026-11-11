@@ -10,6 +10,7 @@ import '../../../core/backend/context_clients.dart'
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../directory/providers/admission_requests_provider.dart';
+import '../../directory/providers/pending_admissions_provider.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../application/account_favorite.dart';
 import '../application/me_actions.dart';
@@ -139,6 +140,21 @@ PersonalWorkspaceRefs? refsOfCurrentAccount(
   AsyncValue<PersonalWorkspaceRefs> answer,
 ) =>
     answer.isReloading ? null : answer.value;
+
+/// #3696 -- the businesses I asked to join and that have not answered: the
+/// pending references of my account, by the workspace id on their host. The
+/// composition root puts it in its scope's overrides (directory sits beside
+/// me in the feature graph and cannot import it).
+final Override pendingAdmissionsFromMe = pendingAdmissionsProvider.overrideWith((
+  ref,
+) async {
+  final refs = await ref.watch(personalWorkspaceRefsProvider.future);
+  return {
+    for (final r in refs.refs)
+      if (r.status == RefStatus.pending && r.hostedHere)
+        r.networkId.substring(r.networkId.indexOf(':') + 1),
+  };
+});
 
 /// #2553 C2 -- My reservations reads every host my personal account names,
 /// not only the selected workspace's. The composition root puts it in its

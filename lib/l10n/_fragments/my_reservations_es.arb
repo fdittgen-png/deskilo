@@ -2,7 +2,7 @@
   "@@locale": "es",
   "myReservationsEmpty": "No hay reservas en este periodo.",
   "myReservationsChangePeriod": "Cambiar el periodo",
-  "myReservationsPeriodLimit": "Como máximo {days} días a la vez.",
+  "myReservationsPeriodLimit": "{days, plural, one{Como máximo {days} día a la vez.} other{Como máximo {days} días a la vez.}}",
   "myReservationsLoadMore": "Mostrar más",
   "myReservationsLoadingMore": "Cargando…",
   "myReservationsFailed": "No se han podido leer sus reservas. Inténtelo de nuevo en un momento.",

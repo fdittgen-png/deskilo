@@ -8,7 +8,7 @@
   "accountInvoiceRegrouped": "In einer Sammelrechnung enthalten",
   "accountInvoiceIssued": "Rechnung ausgestellt",
   "accountUsageCorrected": "Korrigierter abrechenbarer Verbrauch",
-  "accountUsageMinutes": "{minutes} Minuten",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} Minute} other{{minutes} Minuten}}",
   "accountPaymentPreference": "Bevorzugte Onlinezahlung",
   "accountPaymentAsk": "Beim Bezahlen wählen",
   "@accountUsageMinutes": {

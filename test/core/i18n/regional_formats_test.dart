@@ -87,10 +87,24 @@ void main() {
     expect(r.profile.formatPrefs.formatLocale, tag);
   });
 
-  testWidgets('the section is gone when the owner turned the feature off',
-      (tester) async {
-    await pumpSettings(tester, flags: const {'regionalFormats': false});
-    expect(find.byKey(const ValueKey('regional-formats')), findsNothing);
+  testWidgets('#3697 — the person\'s own Region & formats stays in Me when a '
+      'business turned its feature off, and saves', (tester) async {
+    final r = await pumpSettings(tester, flags: const {'regionalFormats': false});
+    final tile = find.byKey(const ValueKey('regional-formats'));
+    await tester.scrollUntilVisible(tile, 200,
+        scrollable: find.byType(Scrollable).first);
+    await tester.ensureVisible(tile);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
+    await tester.tap(tile);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
+    expect(find.widgetWithText(AppBar, 'Region & formats'), findsOneWidget);
+    await tester.ensureVisible(find.text('12h'));
+    await tester.tap(find.text('12h'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
+    expect(r.profile.formatPrefs.clock, ClockPref.h12);
   });
 
   group('the how-to-pay card names the routing code the local way', () {
