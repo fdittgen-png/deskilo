@@ -68,8 +68,13 @@ class DemoCommercialTerms implements CommercialTermsRepository {
     required int priceCents,
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
+    ServiceDetails details = const ServiceDetails(),
   }) async {
     final service = ServiceItem(
+      description: details.description,
+      durationMinutes: details.durationMinutes,
+      category: details.category,
+      isPublic: details.isPublic,
       supplyClass: supplyClass,
       id: 'service-${_m.services.length + 1}',
       workspaceId: workspaceId,
@@ -83,22 +88,20 @@ class DemoCommercialTerms implements CommercialTermsRepository {
   }
 
   @override
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-  }) async {
+  Future<ServiceItem> updateService(String serviceId, ServiceChange change) async {
     final i = _m.services.indexWhere((s) => s.id == serviceId);
     if (i < 0) throw StateError('unknown service');
+    final d = change.details ?? ServiceDetails.of(_m.services[i]);
     final updated = _m.services[i].copyWith(
-      supplyClass: supplyClass ?? _m.services[i].supplyClass,
-      name: name ?? _m.services[i].name,
-      priceCents: priceCents ?? _m.services[i].priceCents,
-      active: active ?? _m.services[i].active,
-      vatRateId: vatRateId ?? _m.services[i].vatRateId,
+      description: d.description,
+      durationMinutes: d.durationMinutes,
+      category: d.category,
+      isPublic: d.isPublic,
+      supplyClass: change.supplyClass ?? _m.services[i].supplyClass,
+      name: change.name ?? _m.services[i].name,
+      priceCents: change.priceCents ?? _m.services[i].priceCents,
+      active: change.active ?? _m.services[i].active,
+      vatRateId: change.vatRateId ?? _m.services[i].vatRateId,
     );
     _m.services[i] = updated;
     return updated;

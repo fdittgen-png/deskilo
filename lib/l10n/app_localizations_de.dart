@@ -26698,6 +26698,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
+  String get servicesCategory => 'Kategorie';
+
+  @override
+  String get servicesDescription => 'Beschreibung';
+
+  @override
+  String get servicesDuration => 'Dauer (Minuten)';
+
+  @override
+  String get servicesDurationHint =>
+      'Leer lassen, wenn sie nicht zeitbasiert ist.';
+
+  @override
+  String servicesDurationRange(String min, String max) {
+    return 'Zwischen $min und $max Minuten.';
+  }
+
+  @override
+  String servicesDurationShort(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes Min.',
+      one: '1 Min.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get servicesEdit => 'Leistung bearbeiten';
 
   @override
@@ -26713,7 +26742,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesNew => 'Neue Leistung';
 
   @override
+  String get servicesOtherCategory => 'Weitere Leistungen';
+
+  @override
   String get servicesPrice => 'Preis';
+
+  @override
+  String get servicesPublic => 'Auf unserer öffentlichen Seite zeigen';
+
+  @override
+  String get servicesSaveFailed =>
+      'Die Leistung konnte nicht gespeichert werden. Versuchen Sie es erneut.';
 
   @override
   String get servicesTitle => 'Leistungen';

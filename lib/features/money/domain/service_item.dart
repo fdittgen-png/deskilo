@@ -2,6 +2,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/text/collation.dart';
 
 part 'service_item.freezed.dart';
 
@@ -38,4 +39,90 @@ sealed class ServiceItem with _$ServiceItem implements SystemStamped {
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _ServiceItem;
+}
+
+/// #3552 — what a service says about itself, written together: its
+/// description ('' = none), its duration in minutes (null = not time-based),
+/// its category ('' = none) and whether it is shown on the public page.
+@immutable
+class ServiceDetails {
+  const ServiceDetails({
+    this.description = '',
+    this.durationMinutes,
+    this.category = '',
+    this.isPublic = false,
+  });
+
+  /// The details [service] carries now.
+  factory ServiceDetails.of(ServiceItem service) => ServiceDetails(
+    description: service.description,
+    durationMinutes: service.durationMinutes,
+    category: service.category,
+    isPublic: service.isPublic,
+  );
+
+  final String description;
+  final int? durationMinutes;
+  final String category;
+  final bool isPublic;
+
+  /// The columns of public.services (0711); '' is stored as null.
+  Map<String, Object?> toRow() => {
+    'description': description.trim().isEmpty ? null : description.trim(),
+    'duration_minutes': durationMinutes,
+    'category': category.trim().isEmpty ? null : category.trim(),
+    'is_public': isPublic,
+  };
+}
+
+/// #3552 — what an update of a service changes; a null field stays as it is.
+@immutable
+class ServiceChange {
+  const ServiceChange({
+    this.name,
+    this.priceCents,
+    this.active,
+    this.vatRateId,
+    this.supplyClass,
+    this.details,
+  });
+
+  final String? name;
+  final int? priceCents;
+  final bool? active;
+
+  /// '' = back to the workspace's default rate.
+  final String? vatRateId;
+  final SupplyClass? supplyClass;
+  final ServiceDetails? details;
+}
+
+/// #3552 — services grouped by their category, categories in alphabetical
+/// order and the uncategorised ('' category) last; within a group by
+/// sortOrder, then by name.
+List<({String category, List<ServiceItem> services})> groupServicesByCategory(
+  Iterable<ServiceItem> services,
+) {
+  final groups = <String, List<ServiceItem>>{};
+  for (final s in services) {
+    (groups[s.category.trim()] ??= []).add(s);
+  }
+  final keys = groups.keys.toList()
+    ..sort((a, b) {
+      if (a.isEmpty != b.isEmpty) return a.isEmpty ? 1 : -1;
+      return compareNames(a, b);
+    });
+  return [
+    for (final k in keys)
+      (
+        category: k,
+        services: groups[k]!
+          ..sort((a, b) {
+            final byOrder = a.sortOrder.compareTo(b.sortOrder);
+            return byOrder != 0
+                ? byOrder
+                : compareNames(a.name, b.name);
+          }),
+      ),
+  ];
 }

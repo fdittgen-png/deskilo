@@ -7,5 +7,14 @@
   "servicesName": "Nome",
   "servicesPrice": "Prezzo",
   "servicesInactive": "Inattivo",
-  "servicesActive": "Attivo"
+  "servicesActive": "Attivo",
+  "servicesDescription": "Descrizione",
+  "servicesDuration": "Durata (minuti)",
+  "servicesDurationHint": "Lasci vuoto se non si misura in tempo.",
+  "servicesDurationRange": "Tra {min} e {max} minuti.",
+  "servicesCategory": "Categoria",
+  "servicesPublic": "Mostra sulla nostra pagina pubblica",
+  "servicesOtherCategory": "Altri servizi",
+  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "servicesSaveFailed": "Non è stato possibile salvare il servizio. Riprovi."
 }

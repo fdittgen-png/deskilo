@@ -43184,6 +43184,42 @@ abstract class AppLocalizations {
   /// **'Active'**
   String get servicesActive;
 
+  /// #3552 the service editor: the group the service is listed under
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get servicesCategory;
+
+  /// #3552 the service editor: what a stranger reads about the service
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get servicesDescription;
+
+  /// #3552 the service editor: how long the service takes, in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'Duration (minutes)'**
+  String get servicesDuration;
+
+  /// #3552 the duration field's hint: blank means not time-based
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank if it is not time-based.'**
+  String get servicesDurationHint;
+
+  /// #3552 the duration field's error: the allowed range
+  ///
+  /// In en, this message translates to:
+  /// **'Between {min} and {max} minutes.'**
+  String servicesDurationRange(String min, String max);
+
+  /// #3552 the services list: a duration in minutes, short
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, =1{1 min} other{{minutes} min}}'**
+  String servicesDurationShort(int minutes);
+
   /// Sheet title when editing an existing service
   ///
   /// In en, this message translates to:
@@ -43214,11 +43250,29 @@ abstract class AppLocalizations {
   /// **'New service'**
   String get servicesNew;
 
+  /// #3552 the services list: the heading of services without a category
+  ///
+  /// In en, this message translates to:
+  /// **'Other services'**
+  String get servicesOtherCategory;
+
   /// Label of the service price field (major currency units)
   ///
   /// In en, this message translates to:
   /// **'Price'**
   String get servicesPrice;
+
+  /// #3552 the service editor: whether the service is shown on the public page
+  ///
+  /// In en, this message translates to:
+  /// **'Show on our public page'**
+  String get servicesPublic;
+
+  /// #3552 the service editor: saving a service failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The service could not be saved. Try again.'**
+  String get servicesSaveFailed;
 
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///
