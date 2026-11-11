@@ -33,7 +33,7 @@ import 'widgets/report_preview.dart';
 /// #837 — the invoices [invoice] regrouped, resolved from the archive in
 /// the order its own snapshot lists them. Empty when it regroups
 /// nothing, or when the archive has not loaded them.
-List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
+List<Invoice> _regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
   if (invoice.settles.isEmpty) return const [];
   // #3680 — never an empty list for an archive that did not answer.
   final all = ref.read(invoicesProvider).requireValue;
@@ -56,7 +56,7 @@ Future<List<Invoice>?> _askRegroupedAnnexes(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final sources = regroupedSourcesOf(ref, invoice);
+  final sources = _regroupedSourcesOf(ref, invoice);
   if (sources.isEmpty) return const [];
   final l10n = context.l10n;
   final include = await showDialog<bool>(
