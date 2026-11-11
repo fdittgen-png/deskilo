@@ -1,0 +1,21 @@
+name: deskilo_widgetbook
+description: Local catalogue of Deskilo's shared controls and their states.
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  deskilo:
+    path: ../..
+  flutter:
+    sdk: flutter
+  widgetbook: 3.25.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
