@@ -9,11 +9,12 @@ import '../domain/invoice_pdf_template.dart';
 
 ReportBands purchaseOrderBands(AppLocalizations l10n) {
   final title = l10n.reportDocPurchaseOrder;
+  final issuedLine = l10n.invoicePdfIssuedOnDate('{{ issued }}');
   return ReportBands(
     header:
         '# {{ workspace }}\n> {{ workspace_address }}\n---\n'
         '{{ client_name }}\n> {{ client_address }}\n---\n'
-        '# $title {{ number }}\n> ${l10n.invoicePdfIssuedOn} {{ issued }}'
+        '# $title {{ number }}\n> $issuedLine'
         '{% if expected_on != "" %} · ${l10n.reportExpectedDelivery} '
         '{{ expected_on }}{% endif %}',
     continuation: '{{ workspace }} — $title {{ number }}\n---',

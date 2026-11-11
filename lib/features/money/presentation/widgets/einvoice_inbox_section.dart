@@ -160,7 +160,7 @@ class EInvoiceInboxSection extends ConsumerWidget {
       InboxStatus.rejected =>
         d.rejectReason.isEmpty
             ? l10n.eInvoiceInboxStatusRejected
-            : '${l10n.eInvoiceInboxStatusRejected}: ${d.rejectReason}',
+            : l10n.labelWithValue(l10n.eInvoiceInboxStatusRejected, d.rejectReason),
     };
   }
 

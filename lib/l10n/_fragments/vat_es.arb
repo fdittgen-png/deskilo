@@ -20,6 +20,7 @@
   "vatServiceRateDefault": "Tipo por defecto del espacio",
   "vatPdfNet": "Base",
   "vatPdfVat": "IVA",
+  "vatPdfVatRate": "IVA {rate}",
   "fecAccountVat": "IVA recaudado",
   "vatKeptRate": "Un tipo que todavía usa una factura o un servicio se conserva, desactivado.",
   "fecAccountVatPending": "IVA repercutido pendiente de devengo",

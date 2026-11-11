@@ -6058,6 +6058,18 @@ abstract class AppLocalizations {
   /// **'Estimate'**
   String get biProjectionLabel;
 
+  /// #3652 The next projected period: its value, the range around it and the projection label.
+  ///
+  /// In en, this message translates to:
+  /// **'{period}: {value} ({low} – {high}) · {label}'**
+  String biProjectionNext(
+    String period,
+    String value,
+    String low,
+    String high,
+    String label,
+  );
+
   /// Business analytics dashboard: biProjectionNotEnough
   ///
   /// In en, this message translates to:
@@ -7085,6 +7097,17 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payments & credits'**
   String get billPaymentsCredits;
+
+  /// #3652 The strip on pages 2 and later of a bill: workspace, title, member and period.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspace} — {title} — {member} — {period}'**
+  String billPdfContinuation(
+    String workspace,
+    String title,
+    String member,
+    String period,
+  );
 
   /// Tooltip of the PDF export button next to the period header on the money tab
   ///
@@ -9323,6 +9346,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get comingSoon;
+
+  /// #3652 Two short phrases separated by a comma, e.g. a label and its state.
+  ///
+  /// In en, this message translates to:
+  /// **'{first}, {second}'**
+  String commaPair(String first, String second);
 
   /// Generic cancel action in dialogs
   ///
@@ -13031,6 +13060,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seat name'**
   String get editorSeatNameLabel;
+
+  /// #3652 The default name of a new seat with its position in the desk, e.g. "Seat 2". The number is a position, not a count.
+  ///
+  /// In en, this message translates to:
+  /// **'Seat {number}'**
+  String editorSeatNameNumbered(String number);
 
   /// Shown as a text in seat properties sheet (editor).
   ///
@@ -24070,11 +24105,23 @@ abstract class AppLocalizations {
   /// **'Issued by'**
   String get invoicePdfIssuedBy;
 
+  /// #3652 The issuer line of an invoice, e.g. "Issued by Acme".
+  ///
+  /// In en, this message translates to:
+  /// **'Issued by {name}'**
+  String invoicePdfIssuedByName(String name);
+
   /// PDF: label before the issue date
   ///
   /// In en, this message translates to:
   /// **'Issued on'**
   String get invoicePdfIssuedOn;
+
+  /// #3652 The issue date line of an invoice, e.g. "Issued on 3 March 2026".
+  ///
+  /// In en, this message translates to:
+  /// **'Issued on {date}'**
+  String invoicePdfIssuedOnDate(String date);
 
   /// PDF footer page label
   ///
@@ -26193,6 +26240,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Working…'**
   String get kitActionBusy;
+
+  /// #3652 A label with its value on one line, e.g. "Total: 12.00". One message so the language places the colon (French has a space before it).
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {value}'**
+  String labelWithValue(String label, String value);
 
   /// Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees
   ///
@@ -38571,6 +38624,12 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get refFilterAmount;
 
+  /// #3652 The caption of an amount filter with its range, e.g. "Amount 10 – 50".
+  ///
+  /// In en, this message translates to:
+  /// **'Amount {low} – {high}'**
+  String refFilterAmountRange(String low, String high);
+
   /// Shown as the text in ref picker sheet (workspace).
   ///
   /// In en, this message translates to:
@@ -42584,6 +42643,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Seat {seat} today'**
   String seatDayTitle(String seat);
+
+  /// #3652 Two sentences read as one text, separated by a space.
+  ///
+  /// In en, this message translates to:
+  /// **'{first} {second}'**
+  String sentencePair(String first, String second);
 
   /// Title of the series result dialog
   ///
@@ -52166,6 +52231,18 @@ abstract class AppLocalizations {
   /// **'To call things your own way — seats, levels, bookings: change the wording.'**
   String get tipWorkspaceSettingsWording;
 
+  /// #3652 A title and its body read as two sentences, e.g. for a screen reader.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}. {body}'**
+  String titleAndBody(String title, String body);
+
+  /// #3652 Two parts of one title joined by a dash, e.g. "Desk 4 — Desk reservations".
+  ///
+  /// In en, this message translates to:
+  /// **'{first} — {second}'**
+  String titleDashDetail(String first, String second);
+
   /// #2359: ukFacilitiesPackage
   ///
   /// In en, this message translates to:
@@ -53414,6 +53491,12 @@ abstract class AppLocalizations {
   /// **'Accountant\'s valuations'**
   String get valuationTitle;
 
+  /// #3652 A value followed by a short note in parentheses, e.g. "Anna (you)".
+  ///
+  /// In en, this message translates to:
+  /// **'{value} ({note})'**
+  String valueInParens(String value, String note);
+
   /// FEC account for collected VAT
   ///
   /// In en, this message translates to:
@@ -54019,6 +54102,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VAT'**
   String get vatPdfVat;
+
+  /// #3652 The caption of a VAT subtotal with its rate, e.g. "VAT 20 %".
+  ///
+  /// In en, this message translates to:
+  /// **'VAT {rate}'**
+  String vatPdfVatRate(String rate);
 
   /// Tooltip of the default-rate radio
   ///

@@ -141,7 +141,7 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
                     ? r.country
                     : taxValueSummary(r.value)),
                 subtitle: Text('${r.country} · ${r.key} · '
-                    '${l10n.taxRefValidFrom} ${r.validFrom} · ${r.source}'),
+                    '${l10n.taxRefValidFromDate(r.validFrom)} · ${r.source}'),
                 leading: Icon(
                   r.confirmed ? Icons.verified_outlined : Icons.help_outline,
                   semanticLabel:

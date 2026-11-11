@@ -188,6 +188,15 @@
   "@editorSeatNameDefault": {
     "description": "Default seat name prefix; a number is appended"
   },
+  "editorSeatNameNumbered": "Seat {number}",
+  "@editorSeatNameNumbered": {
+    "description": "#3652 The default name of a new seat with its position in the desk, e.g. \"Seat 2\". The number is a position, not a count.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "editorOrientationLabel": "Sitting direction",
   "@editorOrientationLabel": {
     "description": "Label above the seat orientation arrows (n/e/s/w)"

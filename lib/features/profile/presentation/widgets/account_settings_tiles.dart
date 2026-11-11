@@ -363,7 +363,7 @@ List<Widget> spaceAccountTiles(BuildContext context, WidgetRef ref) {
       ref.watch(personalSettingsProvider).value?.overrides ?? const {};
   final named = <String>[
     if (overrides[PersonalPreference.uiLocale] case final code?)
-      '${l10n.languageTitle}: ${_endonyms[code] ?? code}',
+      l10n.labelWithValue(l10n.languageTitle, _endonyms[code] ?? code),
     if (overrides[PersonalPreference.theme] case final mode?)
       '${l10n.themeTitle}: ${switch (mode) {
         'light' => l10n.themeLight,

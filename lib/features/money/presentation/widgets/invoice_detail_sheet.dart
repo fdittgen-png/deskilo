@@ -324,18 +324,18 @@ class _InvoiceDetailBody extends ConsumerWidget {
     final l10n = context.l10n;
     final dateFormat = appFormatOf(context).dates(DateShape.date);
     return [
-      _line(context, '${l10n.invoicePdfIssuedOn} '
-          '${dateFormat.format(invoice.issuedAt)}'
-          '${invoice.issuerName.isEmpty ? '' : ' · '
-              '${l10n.invoicePdfIssuedBy} '
-              '${invoice.issuerName}'}'),
+      _line(context, [
+        l10n.invoicePdfIssuedOnDate(dateFormat.format(invoice.issuedAt)),
+        if (invoice.issuerName.isNotEmpty)
+          l10n.invoicePdfIssuedByName(invoice.issuerName),
+      ].join(' · ')),
       // #1913 — why reminders stop, and a due date nobody agreed
       // to, said where the issuer decides.
       if (facts.heldReason case final reason?)
         _line(context,
             l10n.invoiceHeldNote(dunningHoldReasonLabel(l10n, reason))),
       if (facts.showMaturityReview) _line(context, l10n.invoiceMaturityReview),
-      _line(context, '${l10n.invoicePdfBilledTo}: ${facts.billedTo}'),
+      _line(context, l10n.labelWithValue(l10n.invoicePdfBilledTo, facts.billedTo)),
     ];
   }
 

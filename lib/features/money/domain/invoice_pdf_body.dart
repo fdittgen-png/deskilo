@@ -239,7 +239,7 @@ pw.Table(
                       pw.Padding(
                         padding: const pw.EdgeInsets.only(top: 2),
                         child: _summaryRow(
-                            '${strings.vat} ${ratePercent(total.percent)}',
+                            strings.vatLine(ratePercent(total.percent)),
                             money(total.vatCents)),
                       ),
                     pw.SizedBox(height: 2),

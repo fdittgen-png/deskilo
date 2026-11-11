@@ -167,7 +167,7 @@ class ShellCenterButton extends ConsumerWidget {
     return Semantics(
       label: pending == 0
           ? label
-          : '$label, ${l10n.shellPendingDecisions(pending)}',
+          : l10n.commaPair(label, l10n.shellPendingDecisions(pending)),
       button: true,
       selected: selected,
       // Exposed to TalkBack and switch access as an ACTION, so somebody

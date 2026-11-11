@@ -4,6 +4,24 @@
   "@billPdfTitle": {
     "description": "Document title on the exported bill PDF (#133)"
   },
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
+  "@billPdfContinuation": {
+    "description": "#3652 The strip on pages 2 and later of a bill: workspace, title, member and period.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
   "billPdfExport": "Export bill as PDF",
   "@billPdfExport": {
     "description": "Tooltip of the PDF export button next to the period header on the money tab"

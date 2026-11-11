@@ -78,7 +78,7 @@ class RetentionClocksTile extends ConsumerWidget {
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Text(
-                    r.confirmed ? r.source : '${r.source} (${l10n.retentionUnconfirmed})',
+                    r.confirmed ? r.source : l10n.valueInParens(r.source, l10n.retentionUnconfirmed),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: AppSpacing.sm),

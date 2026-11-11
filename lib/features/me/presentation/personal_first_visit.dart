@@ -334,7 +334,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
             title: l10n.meInvitationTitle,
             subtitle: l10n.meInvitationBody,
             semanticLabel:
-                '${l10n.meInvitationTitle}. ${l10n.meInvitationBody}',
+                l10n.titleAndBody(l10n.meInvitationTitle, l10n.meInvitationBody),
             leading: const Icon(Icons.qr_code_2_outlined),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/onboarding?join=1'),

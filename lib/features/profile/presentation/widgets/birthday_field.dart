@@ -57,7 +57,7 @@ class BirthdayField extends StatelessWidget {
           Expanded(
             child: Semantics(
               button: true,
-              label: '${l10n.personalBirthday}: $text',
+              label: l10n.labelWithValue(l10n.personalBirthday, text),
               excludeSemantics: true,
               child: InkWell(
                 key: const ValueKey('personal-info-birthday'),
