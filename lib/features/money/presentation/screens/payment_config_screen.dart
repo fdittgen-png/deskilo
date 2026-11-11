@@ -14,8 +14,10 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/payment_provider.dart';
+import '../../domain/settlement_fetch.dart';
 import '../../providers/money_providers.dart';
 import '../payment_provider_labels.dart';
+import '../widgets/settlement_review_list.dart';
 
 /// Owner-only online-payment configuration (migration 0047): enter each
 /// provider's server credentials from the app instead of the CLI. Secrets
@@ -117,6 +119,9 @@ class _ProviderCard extends ConsumerStatefulWidget {
 class _ProviderCardState extends ConsumerState<_ProviderCard> {
   final Map<String, TextEditingController> _controllers = {};
 
+  /// #3510 -- the last fetch's answer: its reports waiting for review.
+  SettlementFetch? _fetched;
+
   @override
   void initState() {
     super.initState();
@@ -191,7 +196,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    ({int imported, int skipped})? result;
+    SettlementFetch? result;
     if (!await runGuarded(
       context,
       domain: 'payments',
@@ -204,6 +209,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
     }
     if (!mounted) return;
     AppSnack.success(context, l10n.payConfigSettlementsFetched('${result?.imported ?? 0}'));
+    setState(() => _fetched = result);
   }
 
   Future<void> _remove() async {
@@ -334,6 +340,7 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                 ),
               ],
             ),
+            if (_fetched case final fetched?) SettlementReviewList(fetched),
           ],
         ),
       ),

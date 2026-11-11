@@ -10,7 +10,7 @@ const WS = "00000000-0000-4000-8000-000000000001";
 
 type R = { data: unknown; error: unknown };
 
-function fakes(opts: { may?: R; on?: R; config?: R; rpc?: R } = {}) {
+function fakes(opts: { may?: R; on?: R; config?: R; rpc?: R; reviews?: R } = {}) {
   const recorded: Array<Record<string, unknown>> = [];
   const caller = {
     rpc: (fn: string) => Promise.resolve(fn === "has_permission"
@@ -21,13 +21,15 @@ function fakes(opts: { may?: R; on?: R; config?: R; rpc?: R } = {}) {
   const service = {
     rpc: (_fn: string, args: Record<string, unknown>) => {
       recorded.push(args);
-      return Promise.resolve(opts.rpc ?? { data: { costs_added: 1 }, error: null });
+      return Promise.resolve(opts.rpc ?? { data: { outcome: "new", costs_added: 1 }, error: null });
     },
     from: () => {
       const chain = {
         select: () => chain,
         eq: () => chain,
         maybeSingle: () => Promise.resolve(opts.config ?? { data: { config: { api_key: "test_key" } }, error: null }),
+        order: () => chain,
+        limit: () => Promise.resolve(opts.reviews ?? { data: [], error: null }),
       };
       return chain;
     },
@@ -77,14 +79,14 @@ Deno.test("a paid settlement is recorded as a payout with its period costs, once
     return Promise.resolve(page([settlement(), settlement({ id: "stl_open", status: "open" })]));
   });
   assertEquals(res.status, 200);
-  assertEquals(await res.json(), { imported: 1, skipped: 1 });
+  assertEquals(await res.json(), { imported: 1, unchanged: 0, skipped: 1, refused: [], reviews: [] });
   assertEquals(urls, ["https://api.mollie.com/v2/settlements?limit=50"]);
   assertEquals(f.recorded[0], {
     p_workspace_id: WS, p_provider: "mollie", p_settlement_id: "stl_1", p_amount_cents: 34000, p_currency: "EUR",
     p_arrival_date: "2026-03-15", p_status: "paid",
     p_costs: [
-      { period: "2026-03", method: "ideal", description: "iDEAL", cost_count: 3, amount_net_cents: 120 },
-      { period: "2026-03", method: "creditcard", description: "Credit card", cost_count: 1, amount_net_cents: 55 },
+      { period: "2026-03", method: "ideal", description: "iDEAL", cost_count: 3, amount_net_cents: 120, currency: "EUR" },
+      { period: "2026-03", method: "creditcard", description: "Credit card", cost_count: 1, amount_net_cents: 55, currency: "EUR" },
     ],
   });
 });
@@ -149,4 +151,48 @@ Deno.test("what is not a paid or failed settlement, or is malformed, is not reco
   assertEquals(settlementOf({ id: "stl_x", status: "paidout", amount: { currency: "EUR", value: "oops" } }), null);
   assertEquals(settlementOf({ status: "paidout", amount: { currency: "EUR", value: "1.00" } }), null);
   assertEquals(settlementOf(settlement({ status: "failed" }))?.status, "failed");
+});
+
+Deno.test("#3510: a cost in another currency reaches the recorder with its own currency, never relabelled", () => {
+  const usd = settlementOf(settlement({
+    periods: { "2026": { "03": { costs: [{ description: "iDEAL", method: "ideal", count: 1, amountNet: { currency: "usd", value: "0.29" } }] } } },
+  }));
+  assertEquals(usd?.currency, "EUR");
+  assertEquals(usd?.costs[0].currency, "USD");
+  assertEquals(usd?.costs[0].amount_net_cents, 29);
+  const plain = settlementOf(settlement({
+    periods: { "2026": { "03": { costs: [{ description: "iDEAL", method: "ideal", count: 1, amountNet: { value: "0.29" } }] } } },
+  }));
+  assertEquals(plain?.costs[0].currency, "EUR", "a cost that names no currency is in its settlement's");
+});
+
+Deno.test("#3510: the answer counts what the recorder decided: new, unchanged, refused for review", async () => {
+  const outcomes = [
+    { outcome: "new", costs_added: 2 },
+    { outcome: "unchanged", costs_added: 0 },
+    { outcome: "refused", reason: "costs_changed", costs_added: 0 },
+  ];
+  const f = fakes();
+  let i = 0;
+  f.service.rpc = (_fn: string, args: Record<string, unknown>) => {
+    f.recorded.push(args);
+    return Promise.resolve({ data: outcomes[i++], error: null });
+  };
+  const res = await call(f, () => Promise.resolve(page([settlement(), settlement({ id: "stl_2" }), settlement({ id: "stl_3" })])));
+  assertEquals(await res.json(), {
+    imported: 1,
+    unchanged: 1,
+    skipped: 0,
+    refused: [{ settlement: "stl_3", reason: "costs_changed" }],
+    reviews: [],
+  });
+  assertEquals(f.recorded.length, 3, "a refused settlement does not stop the others");
+});
+
+Deno.test("#3510: the answer lists the reports waiting for review; a failed read is said, not emptied", async () => {
+  const waiting = [{ settlement_id: "stl_3", reason: "costs_changed" }];
+  const ok = await call(fakes({ reviews: { data: waiting, error: null } }), () => Promise.resolve(page([])));
+  assertEquals((await ok.json()).reviews, waiting);
+  const failed = await call(fakes({ reviews: { data: null, error: { message: "boom" } } }), () => Promise.resolve(page([])));
+  assertEquals((await failed.json()).reviews, null);
 });

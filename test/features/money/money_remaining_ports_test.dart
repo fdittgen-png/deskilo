@@ -34,6 +34,7 @@ import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/payment_test_check.dart';
+import 'package:deskilo/features/money/domain/settlement_fetch.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -203,7 +204,7 @@ class _Payments implements PaymentGatewayRepository {
       throw UnimplementedError();
 
   @override
-  Future<({int imported, int skipped})> fetchProviderSettlements(
+  Future<SettlementFetch> fetchProviderSettlements(
     String workspaceId,
     PaymentProvider provider,
   ) => throw UnimplementedError();

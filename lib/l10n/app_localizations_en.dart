@@ -1024,6 +1024,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This payment was not found in this business. Nothing was recorded.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'This payment was already deducted on an invoice issued since: it cannot pay another invoice. Nothing was recorded.';
+
+  @override
   String get assignRefuseCurrency =>
       'An invoice is not in the business\'s currency. Nothing was recorded.';
 
@@ -1034,6 +1038,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'The payment could not be assigned. Nothing was recorded. Try again.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'An invoice was paid or changed in the meantime. It is read again: check the amounts.';
 
   @override
   String get assignRefuseNotAllowed =>
@@ -20650,12 +20658,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payConfigSecretSet => 'Set — leave blank to keep';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement: the provider changed its amount after it was recorded. Nothing of the new report was booked.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement: the provider changed its costs after it was recorded. Nothing of the new report was booked.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement: a cost is in another currency than the settlement. Nothing of it was booked.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Fetch payouts';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count payouts recorded';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle => 'Settlement reports to review';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'The settlement reports to review could not be read.';
 
   @override
   String get payConfigTitle => 'Online payments';

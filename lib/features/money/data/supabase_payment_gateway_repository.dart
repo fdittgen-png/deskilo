@@ -6,6 +6,7 @@ import '../domain/payment_gateway_repository.dart';
 import '../domain/payment_intent.dart';
 import '../domain/payment_provider.dart';
 import '../domain/payment_test_check.dart';
+import '../domain/settlement_fetch.dart';
 
 /// #2591 — online payments and their provider credentials, with its own client.
 /// The bodies are the ones that lived in the money repository and its part
@@ -163,7 +164,7 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
   }
 
   @override
-  Future<({int imported, int skipped})> fetchProviderSettlements(
+  Future<SettlementFetch> fetchProviderSettlements(
     String workspaceId,
     PaymentProvider provider,
   ) async {
@@ -180,9 +181,22 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
       );
       final data = response.data;
       final map = data is Map ? data : const <Object?, Object?>{};
-      return (
+      final reviews = map['reviews'];
+      return SettlementFetch(
         imported: (map['imported'] as num?)?.toInt() ?? 0,
+        unchanged: (map['unchanged'] as num?)?.toInt() ?? 0,
         skipped: (map['skipped'] as num?)?.toInt() ?? 0,
+        reviews: reviews is List
+            ? [
+                for (final r in reviews.whereType<Map<Object?, Object?>>())
+                  if (SettlementReviewReason.fromWire(r['reason'])
+                      case final reason?)
+                    SettlementReview(
+                      settlementId: '${r['settlement_id'] ?? ''}',
+                      reason: reason,
+                    ),
+              ]
+            : null,
       );
     } on FunctionException catch (e, st) {
       // trace-exempt: not silent — rethrown as PaymentGatewayException via

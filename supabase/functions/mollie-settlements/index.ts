@@ -28,6 +28,8 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 /** The most pages of settlements one request reads (50 a page). */
 export const MAX_PAGES = 10;
+/** The reports waiting for review that one answer lists, newest first. */
+const REVIEWS_SHOWN = 50;
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -62,15 +64,27 @@ const json = (body: unknown, status = 200) =>
 
 type Row = Record<string, unknown>;
 
+type Cost = {
+  period: string;
+  method: string;
+  description: string;
+  cost_count: number;
+  amount_net_cents: number;
+  currency: string;
+};
+
 /** What `record_provider_settlement_v1` takes of one Mollie settlement, or
- * null when it is not a paid or failed one (open, pending) or malformed. */
+ * null when it is not a paid or failed one (open, pending) or malformed.
+ * #3510: each cost keeps the currency Mollie gave it (the settlement's when
+ * it names none); one in another currency is refused by the recorder and
+ * kept for review, never relabelled here. */
 export function settlementOf(s: Row): {
   id: string;
   cents: number;
   currency: string;
   arrival: string | null;
   status: "paid" | "failed";
-  costs: Array<{ period: string; method: string; description: string; cost_count: number; amount_net_cents: number }>;
+  costs: Array<Cost>;
 } | null {
   const status = s.status === "paidout" ? "paid" : s.status === "failed" ? "failed" : null;
   const amount = (s.amount ?? {}) as Row;
@@ -79,12 +93,13 @@ export function settlementOf(s: Row): {
   const id = typeof s.id === "string" ? s.id : "";
   if (!status || !id || !currency || cents === null) return null;
   const settledAt = typeof s.settledAt === "string" ? s.settledAt : "";
-  const costs: Array<{ period: string; method: string; description: string; cost_count: number; amount_net_cents: number }> = [];
+  const costs: Array<Cost> = [];
   for (const [year, months] of Object.entries((s.periods ?? {}) as Row)) {
     for (const [month, period] of Object.entries((months ?? {}) as Row)) {
       for (const c of ((period as Row).costs ?? []) as Row[]) {
         const net = (c.amountNet ?? {}) as Row;
-        const cost = toMinor(net.value as string | undefined, String(net.currency ?? currency).toUpperCase());
+        const costCurrency = String(net.currency ?? currency).toUpperCase();
+        const cost = toMinor(net.value as string | undefined, costCurrency);
         if (cost === null || !Number.isInteger(c.count)) return null;
         costs.push({
           period: `${year}-${month}`,
@@ -92,6 +107,7 @@ export function settlementOf(s: Row): {
           description: typeof c.description === "string" ? c.description : "",
           cost_count: c.count as number,
           amount_net_cents: cost,
+          currency: costCurrency,
         });
       }
     }
@@ -131,8 +147,11 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   const key = stored.api_key || "";
   if (!key) return json({ error: "mollie_not_configured" }, 409);
 
+  // #3510: counted from what the recorder decided, not from the calls made.
   let imported = 0;
+  let unchanged = 0;
   let skipped = 0;
+  const refused: Array<{ settlement: string; reason: string }> = [];
   let url: string | null = `${mollieApi()}/v2/settlements?limit=50`;
   for (let page = 0; page < MAX_PAGES && url; page++) {
     let res: Response;
@@ -168,11 +187,24 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
         console.error("mollie settlement record failed", String((recorded.error as Row).message ?? recorded.error));
         return json({ error: "settlement_record_failed", settlement: one.id, imported }, 500);
       }
-      imported++;
+      const outcome = ((recorded.data ?? {}) as Row).outcome;
+      if (outcome === "unchanged") unchanged++;
+      else if (outcome === "refused") {
+        refused.push({ settlement: one.id, reason: String(((recorded.data ?? {}) as Row).reason ?? "") });
+      } else imported++;
     }
     url = (((list._links as Row | undefined)?.next as Row | undefined)?.href as string | undefined) ?? null;
   }
-  return json({ imported, skipped });
+  // Every report of this workspace's Mollie settlements that waits for a
+  // person: this run's refusals and the earlier ones. A failed read is said
+  // (null), never an empty list.
+  const waiting = await service.from("provider_settlement_reviews")
+    .select("settlement_id, reason")
+    .eq("workspace_id", workspaceId).eq("provider", "mollie")
+    .order("last_reported_at", { ascending: false })
+    .limit(REVIEWS_SHOWN);
+  if (waiting.error) console.error("mollie settlement reviews read failed", String(waiting.error));
+  return json({ imported, unchanged, skipped, refused, reviews: waiting.error ? null : waiting.data ?? [] });
 }
 
 if (import.meta.main) Deno.serve((req) => handle(req));

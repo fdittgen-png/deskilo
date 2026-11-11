@@ -15,6 +15,7 @@ import 'tax_reporting_repository.dart';
 
 export 'command_receipt.dart';
 export 'invoice_action_commands.dart';
+export 'settlement_fetch.dart';
 
 /// Compatibility facade (#2591): it is the sum of the narrow money ports
 /// (invoice and account reads and commands, report templates, tax

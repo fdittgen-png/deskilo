@@ -206,7 +206,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _payments.createPaymentOrder(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
   @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => _payments.fetchPaymentGatewayStatus(workspaceId);
   @override Future<PaymentTestCheck> testPaymentKeys(String workspaceId) => _payments.testPaymentKeys(workspaceId);
-  @override Future<({int imported, int skipped})> fetchProviderSettlements(String workspaceId, PaymentProvider provider) => _payments.fetchProviderSettlements(workspaceId, provider);
+  @override Future<SettlementFetch> fetchProviderSettlements(String workspaceId, PaymentProvider provider) => _payments.fetchProviderSettlements(workspaceId, provider);
   @override Future<void> setPaymentCredentials(String workspaceId, PaymentProvider provider, Map<String, String> config) => _payments.setPaymentCredentials(workspaceId, provider, config);
   @override Future<void> clearPaymentProvider(String workspaceId, PaymentProvider provider) => _payments.clearPaymentProvider(workspaceId, provider);
 }

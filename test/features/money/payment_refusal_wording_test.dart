@@ -44,11 +44,54 @@ void main() {
     });
   }
 
-  test('match_invoice\'s new refusal is a payment used meanwhile', () {
-    expect(sql, contains("raise exception 'nothing is due on this invoice'"));
+  // match_invoice runs inside the apply: what the apply can reach is said in
+  // its own words; what it cannot reach is named here with the reason.
+  const unreachable = {
+    'unknown invoice':
+        'the apply refuses an unknown invoice first, as another payer\'s',
+    'unknown resolution': 'the apply sends exact or under_accepted only',
+    'amount does not match the invoice':
+        'the apply sends exact only when the part is what is due',
+    'amount does not exceed the invoice':
+        'the apply never sends an overpayment',
+    'amount is not below the invoice':
+        'the apply sends under_accepted only below what is due',
+  };
+  test('every refusal of match_invoice the apply can reach has its own '
+      'sentence; the others are named with why they cannot be reached', () {
+    final texts = {
+      for (final m in raised.allMatches(_body(sql, 'match_invoice')))
+        m.group(1)!.replaceAll("''", "'"),
+    };
+    expect(texts, containsAll(unreachable.keys), reason: 'the list is current');
+    for (final text in texts.difference(unreachable.keys.toSet())) {
+      expect(
+        PaymentRefusal.of(StateError(text)),
+        isNot(PaymentRefusal.generic),
+        reason: '"$text" would be said as a generic failure',
+      );
+    }
+  });
+
+  test('an invoice paid or changed meanwhile is said as such, not as a '
+      'payment used meanwhile', () {
+    for (final text in const [
+      'invoice already matched',
+      'nothing is due on this invoice',
+      'invoice is voided',
+      'invoice is settled',
+    ]) {
+      expect(
+        PaymentRefusal.of(StateError(text)),
+        PaymentRefusal.invoiceChanged,
+        reason: text,
+      );
+    }
     expect(
-      PaymentRefusal.of(StateError('nothing is due on this invoice')),
-      PaymentRefusal.usedMeanwhile,
+      PaymentRefusal.of(
+        StateError('credit already deducted on an issued invoice'),
+      ),
+      PaymentRefusal.creditDeducted,
     );
   });
 }

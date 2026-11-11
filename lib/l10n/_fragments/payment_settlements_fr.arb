@@ -1,4 +1,9 @@
 {
   "payConfigSettlementsFetch": "Récupérer les versements",
-  "payConfigSettlementsFetched": "{count} versements enregistrés"
+  "payConfigSettlementsFetched": "{count} versements enregistrés",
+  "payConfigSettlementsReviewTitle": "Relevés de versement à vérifier",
+  "payConfigSettlementCostsChanged": "{settlement} : le prestataire a modifié ses frais après son enregistrement. Rien du nouveau relevé n'a été comptabilisé.",
+  "payConfigSettlementAmountChanged": "{settlement} : le prestataire a modifié son montant après son enregistrement. Rien du nouveau relevé n'a été comptabilisé.",
+  "payConfigSettlementCurrencyMismatch": "{settlement} : un frais est dans une autre devise que le versement. Rien n'en a été comptabilisé.",
+  "payConfigSettlementsReviewUnreadable": "Les relevés de versement à vérifier n'ont pas pu être lus."
 }

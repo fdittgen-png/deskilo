@@ -186,5 +186,13 @@
   "assignRefuseNotAllowed": "You may not assign payments in this business. Nothing was recorded.",
   "@assignRefuseNotAllowed": {
     "description": "#3671: assign a payment to invoices (assignRefuseNotAllowed)"
+  },
+  "assignRefuseInvoiceChanged": "An invoice was paid or changed in the meantime. It is read again: check the amounts.",
+  "@assignRefuseInvoiceChanged": {
+    "description": "#3671: assign a payment to invoices (assignRefuseInvoiceChanged)"
+  },
+  "assignRefuseCreditDeducted": "This payment was already deducted on an invoice issued since: it cannot pay another invoice. Nothing was recorded.",
+  "@assignRefuseCreditDeducted": {
+    "description": "#3671: assign a payment to invoices (assignRefuseCreditDeducted)"
   }
 }
