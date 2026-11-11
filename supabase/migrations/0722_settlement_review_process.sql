@@ -6,6 +6,9 @@
 -- #3510 (second pull request) -- a refused settlement report becomes a
 -- process before a schedule reads settlements by itself:
 --
+--  * a handled review is history: only waiting reviews are unique per
+--    settlement and reason; the same report after a hand-off writes nothing,
+--    a different one is a new waiting review and is told;
 --  * someone is told: a review kept for the first time raises a
 --    `settlement_review` event to every active member who may see the
 --    finances (viewFinances), once per settlement and reason. The workspace's
@@ -80,6 +83,22 @@ alter table public.provider_settlement_reviews
   add column if not exists handled_at timestamptz,
   add column if not exists handled_by uuid references auth.users(id) on delete set null,
   add column if not exists handled_note text;
+-- A handled review is history and is never written again: only WAITING
+-- reviews are unique per settlement and reason (0720's constraint held them
+-- unique for ever, so a later report overwrote a handled one).
+do $unique$
+declare v_name text;
+begin
+  for v_name in select conname from pg_constraint
+                 where conrelid = 'public.provider_settlement_reviews'::regclass and contype = 'u' loop
+    execute format('alter table public.provider_settlement_reviews drop constraint %I', v_name);
+  end loop;
+end
+$unique$;
+create unique index if not exists provider_settlement_reviews_waiting
+  on public.provider_settlement_reviews (workspace_id, provider, settlement_id, reason)
+  where handled_at is null;
+
 alter table public.provider_settlement_reviews
   drop constraint if exists provider_settlement_reviews_handled_note;
 alter table public.provider_settlement_reviews
@@ -165,6 +184,7 @@ declare
   v_n int := 0;
   v_review uuid;
   v_first boolean;
+  v_reported jsonb;
 begin
   -- Two reports of one settlement at the same moment (the on-demand fetch
   -- beside a scheduled poll): the second waits here and then reads what the
@@ -204,12 +224,27 @@ begin
   end if;
 
   if v_reason is not null then
+    v_reported := jsonb_build_object('amount_cents', p_amount_cents, 'currency', v_currency,
+                                     'arrival_date', p_arrival_date, 'status', p_status, 'costs', v_costs);
+    -- The provider repeating, after a person dealt with it, the report of
+    -- the latest handled review (no review of this kind waiting): nothing is
+    -- written and no one is told. A different report becomes a new waiting
+    -- review below; a waiting one keeps absorbing newer reports silently.
+    -- The settlement's lock is held, so this read is safe.
+    if not exists (select 1 from public.provider_settlement_reviews
+                    where workspace_id = p_workspace_id and provider = p_provider
+                      and settlement_id = p_settlement_id and reason = v_reason
+                      and handled_at is null)
+       and (select r.reported from public.provider_settlement_reviews r
+             where r.workspace_id = p_workspace_id and r.provider = p_provider
+               and r.settlement_id = p_settlement_id and r.reason = v_reason
+             order by r.handled_at desc limit 1) = v_reported then
+      return jsonb_build_object('outcome', 'refused', 'reason', v_reason, 'costs_added', 0);
+    end if;
     insert into public.provider_settlement_reviews
       (workspace_id, provider, settlement_id, reason, reported)
-    values (p_workspace_id, p_provider, p_settlement_id, v_reason,
-            jsonb_build_object('amount_cents', p_amount_cents, 'currency', v_currency,
-                               'arrival_date', p_arrival_date, 'status', p_status, 'costs', v_costs))
-    on conflict (workspace_id, provider, settlement_id, reason) do update
+    values (p_workspace_id, p_provider, p_settlement_id, v_reason, v_reported)
+    on conflict (workspace_id, provider, settlement_id, reason) where handled_at is null do update
       set reported = excluded.reported, last_reported_at = now()
     returning id, (xmax = 0) into v_review, v_first;
     -- #3510: the people who may see the finances are told once per

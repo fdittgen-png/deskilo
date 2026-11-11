@@ -4,7 +4,7 @@
 -- settlement and reason; a billing manager marks it handled with a note; a
 -- handled review leaves the waiting list and stays readable. Rolled back.
 begin;
-select plan(13);
+select plan(19);
 
 do $seed$
 declare u uuid := '00000000-0000-4000-8000-0000003510a1'; plain uuid := '00000000-0000-4000-8000-0000003510a2';
@@ -77,6 +77,22 @@ select is((select (handled_by::text = current_setting('t.owner')) || '|' || hand
              from public.provider_settlement_reviews where reason = 'costs_changed'),
           'true|Mollie corrected a fee; booked through a correction|true',
           'it stays readable: who, when, and the note');
+
+-- A handled review is history. The same report again writes nothing and
+-- tells no one; a different one is a new waiting review, told once.
+select set_config('t.handled', (select row_to_json(r)::text from (select id, reported, handled_at, handled_note
+  from public.provider_settlement_reviews where reason = 'costs_changed') r), false);
+select is(pg_temp.report(34000, 777), 'refused', 'after the hand-off, the same report is still refused');
+select is((select count(*)::int from public.provider_settlement_reviews where reason = 'costs_changed') || '|' || pg_temp.alerts(),
+          '1|2', 'but writes no new review and tells no one');
+select is(pg_temp.report(34000, 555), 'refused', 'a different report after the hand-off is refused');
+select is((select count(*)::int from public.provider_settlement_reviews where reason = 'costs_changed' and handled_at is null)
+          || '|' || pg_temp.alerts(), '1|3', 'and is a new waiting review, told once');
+select is((select row_to_json(r)::text from (select id, reported, handled_at, handled_note
+             from public.provider_settlement_reviews where reason = 'costs_changed' and handled_at is not null) r),
+          current_setting('t.handled'), 'the handled review is unchanged: its report, its note, its time');
+select is((select string_agg((reported -> 'costs' -> 0 ->> 'amount_net_cents'), ',') from public.provider_settlement_reviews
+            where reason = 'costs_changed' and handled_at is null), '555', 'the waiting list shows only the new report');
 
 select * from finish();
 rollback;
