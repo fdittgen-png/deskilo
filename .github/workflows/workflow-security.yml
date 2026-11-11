@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: CI · Workflow security report
+
+on:
+  pull_request:
+    paths:
+      - '.github/**'
+      - 'scripts/install_zizmor.sh'
+      - 'scripts/workflow_audit.sh'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workflow-security-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  audit:
+    name: workflow security report
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install the verified workflow scanner
+        run: bash scripts/install_zizmor.sh "$RUNNER_TEMP/workflow-audit-bin"
+      - name: Report workflow findings
+        run: |
+          bash scripts/workflow_audit.sh "$RUNNER_TEMP/workflow-audit-bin/zizmor"
+          cat report/workflow-security/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: workflow-security-attempt-${{ github.run_attempt }}
+          path: report/workflow-security/
+          retention-days: 14
+          if-no-files-found: error

@@ -183,7 +183,8 @@ void main() {
   test('action update automation has a bounded PR queue', () {
     final config =
         loadYaml(File('.github/dependabot.yml').readAsStringSync()) as YamlMap;
-    final update = (config['updates'] as YamlList).single as YamlMap;
+    final update = (config['updates'] as YamlList).cast<YamlMap>()
+        .singleWhere((item) => item['package-ecosystem'] == 'github-actions');
     expect(update['package-ecosystem'], 'github-actions');
     expect(update['open-pull-requests-limit'], 1);
     expect(update['groups'], contains('actions'));
@@ -192,9 +193,36 @@ void main() {
   test('action update automation never proposes a major version', () {
     final config =
         loadYaml(File('.github/dependabot.yml').readAsStringSync()) as YamlMap;
-    final update = (config['updates'] as YamlList).single as YamlMap;
+    final update = (config['updates'] as YamlList).cast<YamlMap>()
+        .singleWhere((item) => item['package-ecosystem'] == 'github-actions');
     final ignore = (update['ignore'] as YamlList).single as YamlMap;
     expect(ignore['dependency-name'], '*');
     expect(ignore['update-types'], ['version-update:semver-major']);
+  });
+
+  test('the Pub pilot keeps one root lockfile update open without exclusions', () {
+    final config =
+        loadYaml(File('.github/dependabot.yml').readAsStringSync()) as YamlMap;
+    final updates = (config['updates'] as YamlList).cast<YamlMap>();
+    final update = updates.singleWhere((item) => item['package-ecosystem'] == 'pub');
+    expect(update['directory'], '/');
+    expect(update['directories'], isNull);
+    expect(update['open-pull-requests-limit'], 1);
+    expect(update['versioning-strategy'], 'lockfile-only');
+    expect(update['schedule'], {'interval': 'weekly'});
+    expect(update['cooldown'], {'default-days': 7});
+    // Name filters also restrict security updates; the pilot must not add one.
+    expect(update['allow'], isNull);
+    expect(update['ignore'], isNull);
+    expect(update['groups'], isNull);
+  });
+
+  test('the workflow report has read-only authority and no persisted token', () {
+    final workflow = _workflow('workflow-security');
+    expect(workflow['permissions'], {'contents': 'read'});
+    final job = _job('workflow-security', 'audit');
+    expect(job['permissions'], isNull);
+    final checkout = _steps('workflow-security', 'audit').first;
+    expect(_mapAt(checkout, 'with')['persist-credentials'], isFalse);
   });
 }

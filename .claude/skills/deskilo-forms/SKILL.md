@@ -1,6 +1,6 @@
 ---
 name: deskilo-forms
-description: Building or changing a form in DesKilo — which scaffold (sheet, dialog, wizard, screen), the form kit (AppTextField, FormControllers, AppFormSheet, FormGap/FormSection in lib/core/ui/form_kit.dart), domain-first validation (FieldErrors), the checklist a form must pass (ARB ×5, help dot and anchor, setup.html for a parameter, feature flag, 48dp targets, labels, error announced, keyboard type, autofill hints), the identity-form rule, splitting large sheets, and the form ratchets in test/lint/form_patterns_test.dart. Trigger before writing any TextField, showModalBottomSheet with fields, dialog with inputs, wizard step or settings screen with inputs, and when a form ratchet fails.
+description: Building or changing a form in DesKilo — scaffold selection, the shared form kit, domain-first validation, responsive layout diagnosis, ARB ×5, help/setup/feature wiring, accessible controls and form ratchets. Trigger before writing any TextField, sheet, dialog, wizard step or settings screen with inputs; when a form overflows, fails with the keyboard open or breaks at another width, text scale or locale; and when test/lint/form_patterns_test.dart fails.
 ---
 # Forms in DesKilo
 
@@ -81,7 +81,14 @@ AppTextField(controller: fields['amount'], fieldKey: 'amount', label: …),
 server refused, the connection dropped — and shows above the buttons. A field
 problem never goes to that banner.
 
-## 4. The checklist a form passes before push
+## 4. Diagnose a responsive layout
+
+For overflow, unbounded constraints, clipped actions or keyboard obstruction,
+read [Responsive layout diagnosis](references/responsive-layout.md). It maps the
+failure to the existing form kit, test helpers and evidence pipeline. Preserve
+the real failing width and state in a regression test before changing layout.
+
+## 5. The checklist a form passes before push
 
 - [ ] Every label, helper, error and button in ARB ×5 (`lib/l10n/_fragments`,
       then `dart run tool/build_arb.dart` + `flutter gen-l10n` +
@@ -92,19 +99,21 @@ problem never goes to that banner.
 - [ ] New functionality behind a `WorkspaceFeature` (lifetime rule).
 - [ ] Keys on every control the recorder or a test drives (`recorder_keys_test`).
 - [ ] 48dp targets, a label on every field, the error under its field.
+- [ ] The affected form's actions remain reachable at the required widths,
+      text scales and locales, including keyboard and validation-error states.
 - [ ] The right `keyboardType`; `autofillHints` on name, e-mail, phone, address,
       password fields (the e-mail rule is at zero and stays there).
 - [ ] No sheet over ~400 lines: split per section, with a `FormControllers` bundle
       as the shared state (the three largest today: invoice template, expense
       schedule, export accounts).
 
-## 5. When a form ratchet fails
+## 6. When a form ratchet fails
 
 `form_patterns_test` prints which count moved:
 * **grew** — the change added a raw field / literal gap / inline fallback /
   e-mail field without autofill: use the kit instead.
-  A new string never gets an inline English copy: take the English from the
-  catalogue, `final words = l10n ?? AppLocalizationsEn();` then
-  `words.myKey` (see `booking_success_text.dart`).
+  Read `context.l10n.key`: the extension is never null and supplies the English
+  catalogue when delegates are absent. Do not add a Dart-side English fallback
+  (`test/lint/no_nullable_l10n_test.dart`, #2388).
 * **fell** — you migrated something: lower the ceiling in the same commit to the
   number printed, so the ground stays taken.

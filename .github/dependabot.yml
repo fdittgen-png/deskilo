@@ -15,3 +15,13 @@ updates:
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
+  # Keep the pilot on the app's committed lockfile. Independent package
+  # manifests and the Flutter pin still change through reviewed work.
+  - package-ecosystem: pub
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 1
+    versioning-strategy: lockfile-only
+    cooldown:
+      default-days: 7

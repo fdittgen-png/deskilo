@@ -48,6 +48,7 @@ is fixed, not rerun.
 | Name | File | What it is for |
 | --- | --- | --- |
 | CI · Quality report | `quality.yml` | **the gate every PR waits on**: l10n, analyze, the suite with coverage in six shards (#2600; the required context aggregates them), then nine disciplines as one table in the run summary — including the migration replay and the pgTAP suite. Its first job keeps the name `analyze · l10n gate · test · coverage`, because that name is master's required status check |
+| CI · Workflow security report | `workflow-security.yml` | offline workflow/composite/Dependabot audit on relevant pull requests or manual dispatch; findings are reported, execution and input errors fail |
 | CI · Dictionary refresh | `dictionary-refresh.yml` | after a merge to master, regenerates `docs/database/dictionary.json` and its renderings from the migration replay and keeps one auto-merging pull request, so a migration PR pays no CI round for the data dictionary (#2088) |
 | CI · Android boot check | `android-boot.yml` | installs the shrunk release APK on an emulator and proves it stays alive |
 | CI · F-Droid no-GMS audit | `fdroid-foss.yml` | proves the libre flavour carries no Google dependency |
@@ -66,6 +67,31 @@ is fixed, not rerun.
 | Tools · Add iOS TestFlight tester | `ios-testers.yml` | invite one person |
 | Tools · Dev APK (sideload) | `dev-apk.yml` | a one-off APK from any ref |
 | Tools · Database preview | `db-preview.yml` | what `quality · database` will say about a migration, before its pull request opens: the replay from empty, the policies, the effective contract and the database tests in one job of about eight minutes; uploads the contract and the policy list ready to commit (#3751) |
+
+## Dependency maintenance and workflow audit
+
+The Pub pilot updates only the root `pubspec.lock`, weekly, with one version-update
+PR open at a time and a seven-day release cooldown. It does not widen manifests,
+change `.flutter-version`, or group the whole dependency graph into one PR.
+Security updates have their own GitHub queue; no name exclusions are added.
+Review each resulting lockfile with the pinned Flutter CI before extending the
+pilot to independent packages. The existing Actions updater policy is unchanged.
+
+Run the same audit locally on Linux x64 or Apple Silicon:
+
+```bash
+bash scripts/install_zizmor.sh /tmp/deskilo-workflow-scanner
+bash scripts/workflow_audit.sh /tmp/deskilo-workflow-scanner/zizmor
+```
+
+The pinned, checksum-verified scanner writes `report/workflow-security/`:
+revision, dirty-tree status, version, JSON locations and a Markdown summary.
+First-party action tags accepted by the existing hygiene test appear as pinning
+findings; they are policy differences, not newly introduced regressions.
+The audit reports findings without suppressing tool/input failures. It does not
+run fixes, request a token, upload SARIF, or change required status checks.
+Remove the Pub entry to stop the pilot; remove `workflow-security.yml` to stop
+the report and delete its two scripts and local binary directory to uninstall.
 
 ## Rules
 
