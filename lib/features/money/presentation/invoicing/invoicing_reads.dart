@@ -122,19 +122,19 @@ final unassignedMoneyProvider = FutureProvider.autoDispose<UnassignedMoney>((
   final moves = ref.watch(creditMoveCommandsProvider);
   final accounts = ref.watch(memberAccountQueriesProvider);
   final invoices = await ref.watch(invoicesProvider.future);
-  final matches = await ref.watch(invoiceMatchesProvider.future);
-  final consumed = await readConsumedPaymentIds(
+  // A match writes junction rows: it refreshes this answer.
+  await ref.watch(invoiceMatchesProvider.future);
+  final use = await readPaymentUse(
     invoices: invoiceQueries,
     moves: moves,
     workspaceId: id,
-    matched: [for (final m in matches.values) m.paymentLedgerId],
   );
   final ledger = await accounts.fetchWorkspaceLedger(id);
   return UnassignedMoney(
     currency: currency,
     paymentsOf: unassignedPaymentsByCustomer(
       ledger: ledger,
-      consumed: consumed,
+      use: use,
       invoices: invoices,
     ),
   );

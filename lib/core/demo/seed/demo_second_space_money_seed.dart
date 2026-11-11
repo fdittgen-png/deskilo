@@ -154,7 +154,7 @@ void _pay(FakeMoneyRepository money, Invoice invoice, DateTime now) {
       occurredOn: on,
     ),
   );
-  money.consumedPaymentIds.add(ledgerId);
+  money.usePayment(ledgerId, invoice.totalCents);
   money.invoiceMatchesStore[invoice.id] = InvoiceMatch(
     invoiceId: invoice.id,
     paidCents: invoice.totalCents,

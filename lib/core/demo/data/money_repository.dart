@@ -131,8 +131,10 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   /// policy is simulated, credit note as a ledger credit adjustment.
   final invoiceMatchesStore = <String, InvoiceMatch>{};
 
-  /// #506 — every payment a match (or additional payment) consumed.
-  final consumedPaymentIds = <String>{};
+  /// #3671 — payment id -> cents its junction rows used.
+  final usedPaymentCents = <String, int>{};
+  void usePayment(String id, int cents) => usedPaymentCents[id] = (usedPaymentCents[id] ?? 0) + cents;
+  int remainingOf(LedgerEntry e) => e.amountCents > (usedPaymentCents[e.id] ?? 0) ? e.amountCents - (usedPaymentCents[e.id] ?? 0) : 0;
 
   /// #2380 (0657) — invoiceId → one row per payment of its match, oldest
   /// first, as invoice_match_payments keeps them: [InvoiceMatch.paidCents]
@@ -433,12 +435,12 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<void> releaseDunningHold(String invoiceId) => dunning.releaseDunningHold(invoiceId);
   @override Future<void> settleCreditInvoice(String invoiceId, {String note = ''}) => invoiceCommands.settleCreditInvoice(invoiceId, note: note);
   @override Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(String workspaceId) => invoiceQueries.fetchInvoiceInstalments(workspaceId);
-  @override Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) => invoiceQueries.fetchConsumedPaymentIds(workspaceId);
+  @override Future<List<(String, int)>> fetchConsumedPaymentIds(String workspaceId) => invoiceQueries.fetchConsumedPaymentIds(workspaceId);
   String seedPayment(String memberId, int amountCents, {String description = '', String? period}) => seeds.seedPayment(memberId, amountCents, description: description, period: period);
 
   String seedCreditNote(String memberId, int amountCents, {String description = 'Credit note', String? period}) => seeds.seedCreditNote(memberId, amountCents, description: description, period: period);
 
-  @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = ''}) => invoiceCommands.matchInvoice(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note);
+  @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = '', int? amountCents}) => invoiceCommands.matchInvoice(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note, amountCents: amountCents);
   UsageRecord seedUsage({required int reservedMinutes, int? actualMinutes, String memberId = 'member-1', String period = '2026-08', String space = 'Desk A1'}) => seeds.seedUsage(reservedMinutes: reservedMinutes, actualMinutes: actualMinutes, memberId: memberId, period: period, space: space);
 
   @override Future<UsageRead> readUsageRecords({required String workspaceId, required String period, String? memberId}) => accountQueries.readUsageRecords(workspaceId: workspaceId, period: period, memberId: memberId);

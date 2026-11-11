@@ -44,12 +44,17 @@ class _Repo extends FakeMoneyRepository {
     required String paymentLedgerId,
     required String resolution,
     String note = '',
+    int? amountCents,
   }) async {
     final failure = failWith;
     if (failure != null) throw failure;
     await matching?.future;
     matched.add('$invoiceId<-$paymentLedgerId:$resolution');
-    consumedPaymentIds.add(paymentLedgerId);
+    usePayment(
+      paymentLedgerId,
+      amountCents ??
+          ledger.firstWhere((e) => e.id == paymentLedgerId).amountCents,
+    );
     open = [
       for (final r in open)
         if (r.invoiceId != invoiceId) r,
@@ -146,6 +151,23 @@ void main() {
       lessThan(tester.getTopLeft(_key('payment-match-p1-older')).dy),
     );
     expect(repo.matched, isEmpty, reason: 'nothing happens until a tap');
+  });
+
+  testWidgets('a payment partly used shows what is left of it, and that '
+      'is what its invoices are compared with', (tester) async {
+    repo
+      ..open = [older, exact]
+      ..ledger.add(_payment('p1', 12000))
+      ..usePayment('p1', 7000);
+    await pump(tester);
+    expect(find.textContaining('50.00 received'), findsOneWidget);
+    expect(find.textContaining('120.00 received'), findsNothing);
+    expect(find.text('Same amount'), findsOneWidget);
+    expect(
+      tester.getTopLeft(_key('payment-match-p1-older')).dy,
+      lessThan(tester.getTopLeft(_key('payment-match-p1-exact')).dy),
+      reason: 'the 50.00 invoice is the exact one now',
+    );
   });
 
   testWidgets('one tap on the exact invoice matches it, exactly; the next '

@@ -248,7 +248,7 @@ void seedDemoHistoryMoney(FakeMoneyRepository money, DateTime now) {
           occurredOn: paidOn,
         ),
       );
-      money.consumedPaymentIds.add(ledgerId);
+      money.usePayment(ledgerId, cents);
       money.invoiceMatchesStore[id] = InvoiceMatch(
         invoiceId: id,
         paidCents: cents,
