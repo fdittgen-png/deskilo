@@ -396,12 +396,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       themeStoreProvider.overrideWithValue(fixture.prefs.theme),
       navigationStyleStoreProvider
           .overrideWithValue(fixture.prefs.navigationStyle),
-      shellBarHiddenStoreProvider
-          .overrideWithValue(fixture.prefs.shellBarHidden),
-      shellSwipeCoachStoreProvider
-          .overrideWithValue(fixture.prefs.shellSwipeCoach),
-      deskRailCollapsedStoreProvider
-          .overrideWithValue(fixture.prefs.deskRailCollapsed),
+      shellBarHiddenStoreProvider.overrideWithValue(fixture.prefs.shellBarHidden),
+      shellSwipeCoachStoreProvider.overrideWithValue(fixture.prefs.shellSwipeCoach),
+      deskRailCollapsedStoreProvider.overrideWithValue(fixture.prefs.deskRailCollapsed),
       pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
       webMcpSwitchStoreProvider.overrideWithValue(fixture.prefs.webMcpSwitch),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),

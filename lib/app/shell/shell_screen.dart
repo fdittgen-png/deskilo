@@ -12,6 +12,7 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/money/presentation/widgets/invoice_form_sheet.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
 import 'desk_scaffold.dart';
 import 'shell_app_bar.dart';
 import 'shell_bar_visibility.dart';
@@ -98,11 +99,14 @@ class ShellScreen extends ConsumerWidget {
     final actions = shellBarActions(context, ref,
         currentIndex: navigationShell.currentIndex);
     // #3603 — from the expanded window class, the desk, on every platform.
-    if (showsDesk(context)) {
+    if (chromeOf(path) == RouteChrome.desk && showsDesk(context)) {
       return DeskScaffold(
         navigation: ({required rail}) =>
             navigation(permanent: true, rail: rail),
-        title: Text(tabTitle, key: const ValueKey('desk-title')),
+        title: KeyedSubtree(
+          key: const ValueKey('desk-title'),
+          child: SpaceChip(tabTitle: tabTitle),
+        ),
         actions: actions,
         body: page,
       );

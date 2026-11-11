@@ -112,7 +112,13 @@ Future<Hub> pumpCard(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byType(ShellCenterButton));
+  // #3603 — the desk has no raised button: the hub is in its navigation.
+  final center = find.byType(ShellCenterButton);
+  await tester.tap(
+    center.evaluate().isNotEmpty
+        ? center
+        : find.byKey(const ValueKey('drawer-reserve')),
+  );
   await tester.pumpAndSettle();
   return (reservations: repo, workspace: ws, hints: store);
 }
