@@ -33,9 +33,7 @@ const _requiredSections = [
 /// are exempt from [_proposalError] ONLY: every other check still runs on
 /// them. Each reconciliation removes its own name; the set only shrinks, a
 /// new page is never listed, and there is no wildcard.
-const _unreconciled = <String>{
-  'capability-lifecycle.md',
-};
+const _unreconciled = <String>{};
 
 /// A refs line must be a real list item, not prose that contains one.
 final _refsLine = RegExp(r'^- Refs: .*#\d+', multiLine: true);
