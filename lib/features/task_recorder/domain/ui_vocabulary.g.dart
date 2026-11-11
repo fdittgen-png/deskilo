@@ -5083,6 +5083,7 @@ const Set<String> uiCommandMessages = {
   'bill submit failed',
   'birthday update failed',
   'block account failed',
+  'business mail sender read failed',
   'buy package failed',
   'calendar file preview failed',
   'calendar file save failed',
