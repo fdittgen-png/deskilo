@@ -151,8 +151,8 @@ void main() {
       final header = job!.group(1)!;
       if (!header.contains('needs:')) continue;
       final guard = context == 'quality · database'
-          ? r'if: ${{ !cancelled() }}'
-          : 'if: always()';
+          ? r"if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}"
+          : "if: always() && needs.tested.outputs.skip != 'true'";
       expect(
         header,
         contains(guard),
