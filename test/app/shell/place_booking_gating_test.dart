@@ -71,10 +71,19 @@ void main() {
     testWidgets('placeBooking $state: the Reserve button '
         '${places ? 'stays' : 'is gone'}', (tester) async {
       await _pump(tester, places: places);
-      expect(
-        find.byType(ShellCenterButton),
-        places ? findsOneWidget : findsNothing,
-      );
+      // #3551 — without places the centre button, where there is one, is a
+      // new invoice, never the booking.
+      final center = find.byType(ShellCenterButton);
+      if (places) {
+        expect(center, findsOneWidget);
+        expect(tester.widget<ShellCenterButton>(center).icon,
+            Icons.event_seat_outlined);
+      } else {
+        for (final b in tester.widgetList<ShellCenterButton>(center)) {
+          expect(b.icon, isNot(Icons.event_seat_outlined));
+          expect(b.label, 'New invoice');
+        }
+      }
     });
 
     for (final (path, carries) in _placeRoutes) {

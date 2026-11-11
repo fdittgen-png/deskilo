@@ -13,6 +13,7 @@ import '../../features/workspace/presentation/screens/inbox_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_overview_screen.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import 'shell_destinations.dart';
 import 'shell_screen.dart';
 
 /// The shell around the five destinations.
@@ -100,9 +101,14 @@ StatefulShellRoute shellRoute(RouteEnv env) => StatefulShellRoute.indexedStack(
           // stays visible and functional on the hub. #3550 — a business
           // without places has no hub: it lands on the messages.
           path: '/reserve',
-          redirect: env.guard(
-            const RouteAccess(features: [WorkspaceFeature.placeBooking]),
-          ),
+          // #3551 — every "home" entry goes through here: a business without
+          // places opens where its landing rule says, not on a fallback.
+          redirect: (context, state) =>
+              env.mounted && !env.featureEnabled(WorkspaceFeature.placeBooking)
+              ? landingRouteFor(env.enabledFeatures)
+              : env.guard(
+                  const RouteAccess(features: [WorkspaceFeature.placeBooking]),
+                )(context, state),
           builder: (context, state) => const ReserveScreen(),
         ),
       ],

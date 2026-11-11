@@ -4057,6 +4057,7 @@ const List<String> uiKeyPatterns = [
   'document-language-option-{}',
   'document-{}',
   'drawer-group-{}-{}',
+  'drawer-nav-{}',
   'drawer-tab-{}',
   'dunning-hold-{}',
   'editor-cancel-2-{}',
