@@ -28294,6 +28294,59 @@
   "@portalPhone": {
     "description": "Shown as the text in public page editor (directory), and 1 other place."
   },
+  "portalPlaceAt": "Pin at {latitude}, {longitude}",
+  "@portalPlaceAt": {
+    "description": "#3689 public-page editor: the stored pin's coordinates.",
+    "placeholders": {
+      "latitude": {
+        "type": "String"
+      },
+      "longitude": {
+        "type": "String"
+      }
+    }
+  },
+  "portalPlaceFailed": "The map service did not answer. Try again.",
+  "@portalPlaceFailed": {
+    "description": "#3689 public-page editor: the lookup failed."
+  },
+  "portalPlaceFind": "Find the address on the map",
+  "@portalPlaceFind": {
+    "description": "#3689 public-page editor: button that looks the address up (after the map notice)."
+  },
+  "portalPlaceFound": "Found: {place}. Use it, or tap the map to move the pin.",
+  "@portalPlaceFound": {
+    "description": "#3689 public-page editor: the place the lookup proposes, by name.",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "portalPlaceNone": "No place is stored: a visitor's map looks up the address.",
+  "@portalPlaceNone": {
+    "description": "#3689 public-page editor: no coordinates are stored."
+  },
+  "portalPlaceNotFound": "No place was found for this address. Check the address and try again.",
+  "@portalPlaceNotFound": {
+    "description": "#3689 public-page editor: the lookup found nothing."
+  },
+  "portalPlaceRemove": "Remove the place",
+  "@portalPlaceRemove": {
+    "description": "#3689 public-page editor: removes the stored place."
+  },
+  "portalPlaceTapToMove": "Tap the map to move the pin.",
+  "@portalPlaceTapToMove": {
+    "description": "#3689 public-page editor: how to correct the pin."
+  },
+  "portalPlaceTitle": "Where you are on the map",
+  "@portalPlaceTitle": {
+    "description": "#3689 public-page editor: the heading of the section that stores where the business is on the map."
+  },
+  "portalPlaceUse": "Use this place",
+  "@portalPlaceUse": {
+    "description": "#3689 public-page editor: confirms the proposed place."
+  },
   "portalPlans": "Plans and prices",
   "@portalPlans": {
     "description": "Shown as the text in public page editor (directory)."
@@ -37295,7 +37348,7 @@
   "@setupStepHintPricing": {
     "description": "#3485 setupStepHint: the label for case 'pricing'."
   },
-  "setupStepHintPublicPage": "What people outside the space can see.",
+  "setupStepHintPublicPage": "What people outside the space can see, including where you are on the map.",
   "@setupStepHintPublicPage": {
     "description": "#3485 setupStepHint: the label for case 'public_page'."
   },

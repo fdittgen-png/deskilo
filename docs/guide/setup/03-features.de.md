@@ -403,7 +403,7 @@ Sie möchten einen Ort, der für die wichtigsten Funktionen sagt, was Mitglieder
 | **Mitgliederfotos auf dem Plan** | Fotos der Belegenden auf den Plätzen. | | Niemand |
 | **Wortwahl des Arbeitsbereichs** | Die eigenen Begriffe des Spaces für einige Beschriftungen. | | Inhaber |
 | **Farben des Arbeitsbereichs** | Die Markenfarbe und die Raumfarben. | | Inhaber |
-| **Öffentlicher Workspace-Eintrag** | Eine öffentliche Seite mit dem, was Sie zeigen möchten. | | Inhaber |
+| **Öffentlicher Workspace-Eintrag** | Eine öffentliche Seite mit dem, was Sie zeigen möchten, und wo Sie auf der Karte sind. | | Inhaber |
 
 *Buchungen und Nutzung*
 

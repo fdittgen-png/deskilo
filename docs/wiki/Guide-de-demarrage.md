@@ -806,7 +806,7 @@ Vous voulez un seul endroit qui dise, pour les principales fonctionnalités, ce 
 | **Photos des membres sur le plan** | Les photos des occupants sur les places. | | Personne |
 | **Vocabulaire de l’espace** | Les mots propres à l’espace pour quelques libellés. | | Propriétaire |
 | **Couleurs de l’espace** | La couleur de la marque et les couleurs des salles. | | Propriétaire |
-| **Présentation publique de l’espace** | Une page publique avec ce que vous choisissez de montrer. | | Propriétaire |
+| **Présentation publique de l’espace** | Une page publique avec ce que vous choisissez de montrer, et où vous êtes sur la carte. | | Propriétaire |
 
 *Réservations et utilisation*
 

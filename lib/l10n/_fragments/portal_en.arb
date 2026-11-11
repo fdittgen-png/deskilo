@@ -271,5 +271,58 @@
   },
   "@spaceRunByPerson": {
     "description": "#3545 F: who runs a space, plain text under its address"
+  },
+  "portalPlaceTitle": "Where you are on the map",
+  "@portalPlaceTitle": {
+    "description": "#3689 public-page editor: the heading of the section that stores where the business is on the map."
+  },
+  "portalPlaceNone": "No place is stored: a visitor's map looks up the address.",
+  "@portalPlaceNone": {
+    "description": "#3689 public-page editor: no coordinates are stored."
+  },
+  "portalPlaceAt": "Pin at {latitude}, {longitude}",
+  "@portalPlaceAt": {
+    "description": "#3689 public-page editor: the stored pin's coordinates.",
+    "placeholders": {
+      "latitude": {
+        "type": "String"
+      },
+      "longitude": {
+        "type": "String"
+      }
+    }
+  },
+  "portalPlaceFind": "Find the address on the map",
+  "@portalPlaceFind": {
+    "description": "#3689 public-page editor: button that looks the address up (after the map notice)."
+  },
+  "portalPlaceFound": "Found: {place}. Use it, or tap the map to move the pin.",
+  "@portalPlaceFound": {
+    "description": "#3689 public-page editor: the place the lookup proposes, by name.",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "portalPlaceUse": "Use this place",
+  "@portalPlaceUse": {
+    "description": "#3689 public-page editor: confirms the proposed place."
+  },
+  "portalPlaceNotFound": "No place was found for this address. Check the address and try again.",
+  "@portalPlaceNotFound": {
+    "description": "#3689 public-page editor: the lookup found nothing."
+  },
+  "portalPlaceFailed": "The map service did not answer. Try again.",
+  "@portalPlaceFailed": {
+    "description": "#3689 public-page editor: the lookup failed."
+  },
+  "portalPlaceRemove": "Remove the place",
+  "@portalPlaceRemove": {
+    "description": "#3689 public-page editor: removes the stored place."
+  },
+  "portalPlaceTapToMove": "Tap the map to move the pin.",
+  "@portalPlaceTapToMove": {
+    "description": "#3689 public-page editor: how to correct the pin."
   }
 }
