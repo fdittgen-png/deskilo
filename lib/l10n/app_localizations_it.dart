@@ -14858,7 +14858,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Firma digitale (SHA-256)';
+  String get invoicePdfSignature => 'Impronta del documento (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotale';
@@ -25028,11 +25028,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motivo (facoltativo)';
 
   @override
-  String get reservationDeleteRequestButton => 'Richiedi eliminazione';
+  String get reservationDeleteRequestButton => 'Richiedi annullamento';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?';
+      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)? Fino alla decisione la prenotazione resta invariata; nulla viene rimborsato né eliminato automaticamente.';
 
   @override
   String get reservationDeleteSubmit => 'Invia richiesta';
@@ -32130,6 +32130,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates novità · $pending decisioni in attesa';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mezze giornate rimaste nel suo pacchetto questo mese',
+      one: '1 mezza giornata rimasta nel suo pacchetto questo mese',
+      zero: 'Nessuna mezza giornata rimasta nel suo pacchetto questo mese',
+    );
+    return '$_temp0';
   }
 
   @override

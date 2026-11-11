@@ -99,7 +99,7 @@ void main() {
     });
   });
 
-  testWidgets('both sheets offer Request deletion on a checked-in booking', (
+  testWidgets('both sheets offer Request cancellation on a checked-in booking', (
     tester,
   ) async {
     final checkedIn = _booking(ReservationStatus.checkedIn);
@@ -126,7 +126,7 @@ void main() {
     );
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
-    expect(find.text('Request deletion'), findsOneWidget);
+    expect(find.text('Request cancellation'), findsOneWidget);
     expect(find.text('Cancel reservation'), findsNothing);
 
     // The booking's detail sheet, same booking, same answer.
@@ -168,7 +168,7 @@ void main() {
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
     expect(find.text('Cancel reservation'), findsOneWidget);
-    expect(find.text('Request deletion'), findsNothing);
+    expect(find.text('Request cancellation'), findsNothing);
 
     await _pumpApp(tester, ReservationDetailSheet(reservation: upcoming));
     expect(find.byKey(const ValueKey('reservation-cancel')), findsOneWidget);

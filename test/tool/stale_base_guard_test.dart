@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import '../helpers/tool_process.dart';
 
 void main() {
   late Directory repo;
@@ -36,11 +37,9 @@ void main() {
 
   String head() => '${git(['rev-parse', 'HEAD']).stdout}'.trim();
 
-  ProcessResult guard({String title = 'feat: x'}) => Process.runSync(
-    'dart',
+  ProcessResult guard({String title = 'feat: x'}) => runToolSync(
+    'tool/stale_base_guard.dart',
     [
-      'run',
-      '${Directory.current.path}/tool/stale_base_guard.dart',
       '--head',
       'HEAD',
       '--base',

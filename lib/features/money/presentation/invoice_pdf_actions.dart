@@ -17,16 +17,31 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
+import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_documents.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
 import 'report_strings_l10n.dart';
 import 'widgets/report_preview.dart';
+
+/// #837 — the invoices [invoice] regrouped, resolved from the archive in
+/// the order its own snapshot lists them. Empty when it regroups
+/// nothing, or when the archive has not loaded them.
+List<Invoice> _regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
+  if (invoice.settles.isEmpty) return const [];
+  // #3680 — never an empty list for an archive that did not answer.
+  final all = ref.read(invoicesProvider).requireValue;
+  return [
+    for (final source in invoice.settles)
+      ...all.where((i) => i.id == source.invoiceId),
+  ];
+}
 
 /// #837 — a regrouping invoice goes out either on its own or with the
 /// invoices it replaced appended behind it, each stamped with where its
@@ -41,7 +56,7 @@ Future<List<Invoice>?> _askRegroupedAnnexes(
   WidgetRef ref,
   Invoice invoice,
 ) async {
-  final sources = regroupedSourcesOf(ref, invoice);
+  final sources = _regroupedSourcesOf(ref, invoice);
   if (sources.isEmpty) return const [];
   final l10n = context.l10n;
   final include = await showDialog<bool>(
@@ -102,41 +117,42 @@ Future<void> downloadInvoicePdf(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
-) async {
-  final l10n = context.l10n;
-  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
-  if (annexes == null || !context.mounted) return;
-  await runGuarded(
-    context,
-    domain: 'money',
-    message: 'invoice download failed',
-    errorText:
-        l10n.workspaceGenericError,
-    action: () async {
-      final pdf = await buildInvoicePdfFile(
-        context,
-        invoice,
-    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
-      // #920 — through layoutImage, so the shipped layouts' `logo`
-      // resolves to whatever the owner actually called theirs.
-      reportImage: (String name) => layoutImage(ref, name),
-      memberTerms: memberTermsFor(ref, invoice.memberId),
-        dueAt: invoiceDueAt(ref, invoice),
-        copy: rendersCopy(ref),
-        settledIn: settledStampOf(context, ref, invoice),
-        annexInvoices: annexes,
-        template: invoicePdfTemplateFor(ref),
-        workspace: ref.read(currentWorkspaceProvider).value));
-      if (!context.mounted) return;
-      await savePdfToDownloads(
-        context,
-        ref,
-        bytes: Uint8List.fromList(pdf.bytes),
-        fileName: pdf.fileName,
-      );
-    },
-  );
-}
+) =>
+    printOrRetry(context, 'downloadInvoicePdf', () async {
+    final l10n = context.l10n;
+    final annexes = await _askRegroupedAnnexes(context, ref, invoice);
+    if (annexes == null || !context.mounted) return;
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'invoice download failed',
+      errorText:
+          l10n.workspaceGenericError,
+      action: () async {
+        final pdf = await buildInvoicePdfFile(
+          context,
+          invoice,
+      InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
+        // #920 — through layoutImage, so the shipped layouts' `logo`
+        // resolves to whatever the owner actually called theirs.
+        reportImage: (String name) => layoutImage(ref, name),
+        memberTerms: memberTermsFor(ref, invoice.memberId),
+          dueAt: invoiceDueAt(ref, invoice),
+          copy: rendersCopy(ref),
+          settledIn: settledStampOf(context, ref, invoice),
+          annexInvoices: annexes,
+          template: invoicePdfTemplateFor(ref),
+          workspace: ref.read(currentWorkspaceProvider).value));
+        if (!context.mounted) return;
+        await savePdfToDownloads(
+          context,
+          ref,
+          bytes: Uint8List.fromList(pdf.bytes),
+          fileName: pdf.fileName,
+        );
+      },
+    );
+    }, refresh: () => ref.invalidate(invoicesProvider));
 
 
 /// #514 — see the rendered invoice ON SCREEN before any PDF exists.
@@ -147,111 +163,113 @@ Future<void> quickViewInvoice(
   WidgetRef ref,
   Invoice invoice, {
   bool proforma = false,
-}) async {
-  final l10n = context.l10n;
-  final reference = workspaceTaxReference(ref);
-  if (reference == null) {
-    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
-    return;
-  }
-  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
-  if (annexes == null || !context.mounted) return;
-  final template = invoicePdfTemplateFor(ref);
-  final data = withOwnerTexts(
-    invoiceReportData(
-      reportStringsFor(context),
-      invoice,
-      memberTerms: memberTermsFor(ref, invoice.memberId),
-      proforma: proforma,
-      copy: rendersCopy(ref),
-      workspace: ref.read(currentWorkspaceProvider).value,
-      reference: reference,
-    ),
-    template.texts,
-  );
-  var bands = proforma
-      ? (template.proformaBands ?? template.invoiceBands)
-      : template.invoiceBands;
-  if (!bands.hasBands) bands = defaultBandsForDoc('invoice', l10n);
-  final report = renderReportBands(bands: bands, data: data);
-  if (report == null) {
-    AppSnack.error(
-      context,
-      l10n.workspaceGenericError,
-    );
-    return;
-  }
-  // #837 — the regrouped invoices as further sheets, same stamp as the
-  // PDF, each below the one before it.
-  final stamp =
-      l10n.invoicePdfSettledIn(invoice.number);
-  final annexReports = <QuickPreviewAnnex>[];
-  for (final source in annexes) {
-    final sourceReport = renderReportBands(
-      bands: bands,
-      data: withOwnerTexts(
-        invoiceReportData(
-          reportStringsFor(context),
-          source,
-          memberTerms: memberTermsFor(ref, source.memberId),
-          proforma: false,
-          copy: rendersCopy(ref),
-          workspace: ref.read(currentWorkspaceProvider).value,
-          reference: reference,
-        ),
-        template.texts,
-      ),
-    );
-    if (sourceReport != null) {
-      annexReports.add((report: sourceReport, stamp: stamp));
+}) =>
+    printOrRetry(context, 'quickViewInvoice', () async {
+    final l10n = context.l10n;
+    final reference = workspaceTaxReference(ref);
+    if (reference == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+      return;
     }
-  }
-  final images = await resolveReportImages(ref, report);
-  if (!context.mounted) return;
-  await showReportQuickPreview(
-    context,
-    annexes: annexReports,
-    report: report,
-    simulated: false,
-    images: images,
-  );
-}
+    final annexes = await _askRegroupedAnnexes(context, ref, invoice);
+    if (annexes == null || !context.mounted) return;
+    final template = invoicePdfTemplateFor(ref);
+    final data = withOwnerTexts(
+      invoiceReportData(
+        reportStringsFor(context),
+        invoice,
+        memberTerms: memberTermsFor(ref, invoice.memberId),
+        proforma: proforma,
+        copy: rendersCopy(ref),
+        workspace: ref.read(currentWorkspaceProvider).value,
+        reference: reference,
+      ),
+      template.texts,
+    );
+    var bands = proforma
+        ? (template.proformaBands ?? template.invoiceBands)
+        : template.invoiceBands;
+    if (!bands.hasBands) bands = defaultBandsForDoc('invoice', l10n);
+    final report = renderReportBands(bands: bands, data: data);
+    if (report == null) {
+      AppSnack.error(
+        context,
+        l10n.workspaceGenericError,
+      );
+      return;
+    }
+    // #837 — the regrouped invoices as further sheets, same stamp as the
+    // PDF, each below the one before it.
+    final stamp =
+        l10n.invoicePdfSettledIn(invoice.number);
+    final annexReports = <QuickPreviewAnnex>[];
+    for (final source in annexes) {
+      final sourceReport = renderReportBands(
+        bands: bands,
+        data: withOwnerTexts(
+          invoiceReportData(
+            reportStringsFor(context),
+            source,
+            memberTerms: memberTermsFor(ref, source.memberId),
+            proforma: false,
+            copy: rendersCopy(ref),
+            workspace: ref.read(currentWorkspaceProvider).value,
+            reference: reference,
+          ),
+          template.texts,
+        ),
+      );
+      if (sourceReport != null) {
+        annexReports.add((report: sourceReport, stamp: stamp));
+      }
+    }
+    final images = await resolveReportImages(ref, report);
+    if (!context.mounted) return;
+    await showReportQuickPreview(
+      context,
+      annexes: annexReports,
+      report: report,
+      simulated: false,
+      images: images,
+    );
+    }, refresh: () => ref.invalidate(invoicesProvider));
 
 
 Future<void> shareInvoicePdf(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
-) async {
-  final l10n = context.l10n;
-  final annexes = await _askRegroupedAnnexes(context, ref, invoice);
-  if (annexes == null || !context.mounted) return;
-  await runGuarded(
-    context,
-    domain: 'money',
-    message: 'invoice share failed',
-    errorText:
-        l10n.workspaceGenericError,
-    action: () async {
-      final pdf = await buildInvoicePdfFile(
-        context,
-        invoice,
-    InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
-      // #920 — through layoutImage, so the shipped layouts' `logo`
-      // resolves to whatever the owner actually called theirs.
-      reportImage: (String name) => layoutImage(ref, name),
-      memberTerms: memberTermsFor(ref, invoice.memberId),
-        dueAt: invoiceDueAt(ref, invoice),
-        copy: rendersCopy(ref),
-        settledIn: settledStampOf(context, ref, invoice),
-        annexInvoices: annexes,
-        template: invoicePdfTemplateFor(ref),
-        workspace: ref.read(currentWorkspaceProvider).value));
-      await ref.read(fileSharerProvider)(
-        bytes: Uint8List.fromList(pdf.bytes),
-        fileName: pdf.fileName,
-        mimeType: 'application/pdf',
-      );
-    },
-  );
-}
+) =>
+    printOrRetry(context, 'shareInvoicePdf', () async {
+    final l10n = context.l10n;
+    final annexes = await _askRegroupedAnnexes(context, ref, invoice);
+    if (annexes == null || !context.mounted) return;
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'invoice share failed',
+      errorText:
+          l10n.workspaceGenericError,
+      action: () async {
+        final pdf = await buildInvoicePdfFile(
+          context,
+          invoice,
+      InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
+        // #920 — through layoutImage, so the shipped layouts' `logo`
+        // resolves to whatever the owner actually called theirs.
+        reportImage: (String name) => layoutImage(ref, name),
+        memberTerms: memberTermsFor(ref, invoice.memberId),
+          dueAt: invoiceDueAt(ref, invoice),
+          copy: rendersCopy(ref),
+          settledIn: settledStampOf(context, ref, invoice),
+          annexInvoices: annexes,
+          template: invoicePdfTemplateFor(ref),
+          workspace: ref.read(currentWorkspaceProvider).value));
+        await ref.read(fileSharerProvider)(
+          bytes: Uint8List.fromList(pdf.bytes),
+          fileName: pdf.fileName,
+          mimeType: 'application/pdf',
+        );
+      },
+    );
+    }, refresh: () => ref.invalidate(invoicesProvider));

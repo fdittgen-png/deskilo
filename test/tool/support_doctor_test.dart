@@ -9,6 +9,7 @@ import 'package:deskilo/core/instance/management_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/instance/support_doctor.dart';
+import '../helpers/tool_process.dart';
 
 /// The secrets the CLI test hands the child, by argument and by environment.
 const _childSecrets = ['PRIVATE-ARG-TOKEN', 'PRIVATE-ENV-TOKEN'];
@@ -108,11 +109,9 @@ void main() {
         <String>[],
         ['--ref', ''],
       ]) {
-        final result = await Process.run(
-          'dart',
+        final result = await runTool(
+          'tool/instance.dart',
           [
-            'run',
-            'tool/instance.dart',
             'doctor',
             '--support-json',
             '--token',
@@ -161,7 +160,8 @@ void main() {
   test('a forced dart run failure shows its error text', () async {
     final result = await Process.run(
       'dart',
-      ['run', 'tool/does_not_exist.dart'],
+      // #3734 — deliberately `dart run`: this checks its error text.
+      ['run', 'tool/does_not_exist.dart'], // dart-run-ok
       environment: {'SUPABASE_ACCESS_TOKEN': 'PRIVATE-ENV-TOKEN'},
     );
     final failure = _failureOf(

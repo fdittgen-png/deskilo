@@ -17,6 +17,7 @@ import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show workspaceIsEu;
+import '../invoice_journey.dart' show InvoiceJourney;
 import '../invoice_status.dart';
 import '../period_label.dart';
 import 'invoice_detail_sheet.dart';
@@ -154,8 +155,7 @@ class MyInvoicesList extends ConsumerWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: AppSpacing.xs),
-                  InvoiceJourneyBar(journey: journey),
+                  ..._rail(journey),
                   const SizedBox(height: AppSpacing.xs),
                   facts,
                   const SizedBox(height: AppSpacing.xs),
@@ -207,6 +207,14 @@ class MyInvoicesList extends ConsumerWidget {
     );
   }
 
+  /// #3285 — the four steps only while a move is left on the invoice.
+  static List<Widget> _rail(InvoiceJourney journey) => journey.closed
+      ? const []
+      : [
+          const SizedBox(height: AppSpacing.xs),
+          InvoiceJourneyBar(journey: journey),
+        ];
+
   Future<void> _open(
     BuildContext context,
     WidgetRef ref,
@@ -225,6 +233,7 @@ class MyInvoicesList extends ConsumerWidget {
             invoice, ref.read(invoicesProvider).requireValue),
         canIssue: mayIssueInvoices(ref),
         isEu: workspaceIsEu(ref, country),
+        payer: true,
         reminder: reminder,
         journey: readInvoiceJourney(
           ref,

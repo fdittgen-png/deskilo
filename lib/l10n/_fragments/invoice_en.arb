@@ -90,7 +90,7 @@
   "@invoicePdfBilledTo": {
     "description": "PDF: label above the member block"
   },
-  "invoicePdfSignature": "Digital signature (SHA-256)",
+  "invoicePdfSignature": "Document fingerprint (SHA-256)",
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
   },

@@ -15,6 +15,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/print_or_retry.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../profile/providers/profile_providers.dart';
@@ -56,7 +57,11 @@ class MoneyMemberDocuments {
 
   /// #494 — one of the member's self-service letter documents: quick
   /// in-app view, download, or share.
-  Future<void> memberDoc(String docId, String period) async {
+  Future<void> memberDoc(String docId, String period) =>
+      printOrRetry(_context, 'member document', () => _memberDoc(docId, period),
+          refresh: () => refreshLetterDocSources(_ref, docId));
+
+  Future<void> _memberDoc(String docId, String period) async {
     final l10n = _context.l10n;
     await warmLetterDocProviders(_ref, docId);
     if (!_context.mounted) return;
@@ -163,6 +168,14 @@ class MoneyMemberDocuments {
   /// [BillView] shows via [buildBillSections] — and hands it to the system
   /// share sheet (#133, ADR 0008).
   Future<void> exportBill(
+    Statement statement, {
+    required DateTime month,
+    required String nowPeriod,
+  }) =>
+      printOrRetry(_context, 'bill',
+          () => _exportBill(statement, month: month, nowPeriod: nowPeriod));
+
+  Future<void> _exportBill(
     Statement statement, {
     required DateTime month,
     required String nowPeriod,

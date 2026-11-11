@@ -12,6 +12,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import '../helpers/tool_process.dart';
 import 'lint_sources.dart';
 
 void main() {
@@ -38,8 +39,7 @@ void main() {
     final dir = Directory.systemTemp.createTempSync('rows-exit');
     try {
       final events = File('${dir.path}/tests.jsonl')..writeAsStringSync('');
-      final r = Process.runSync('dart', [
-        'run', 'tool/quality_rows.dart',
+      final r = runToolSync('tool/quality_rows.dart', [
         '--events', events.path,
         '--exit-code', '0',
         '--manifest', '.github/quality-manifest.psv',
