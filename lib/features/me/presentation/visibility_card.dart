@@ -129,21 +129,7 @@ class VisibilityCard extends ConsumerWidget {
             subtitle: Text(l10n.visibilityIntro),
           ),
           if (home != null && home.isNotEmpty)
-            // #3281: said in words; the server address is a detail.
-            ExpansionTile(
-              key: const ValueKey('visibility-home'),
-              leading: const Icon(Icons.home_outlined),
-              title: Text(l10n.visibilityHomePlain),
-              subtitle: Text(l10n.visibilityHomeDetails),
-              children: [
-                ListTile(
-                  key: const ValueKey('visibility-home-detail'),
-                  title: Text(
-                    l10n.visibilityHomeHeader(serverLabel(l10n, home)),
-                  ),
-                ),
-              ],
-            ),
+            _HomeTile(home: home),
           if (read.hasError)
             InlineBanner(
               key: const ValueKey('visibility-unavailable'),
@@ -361,6 +347,30 @@ class _AudienceSheetState extends ConsumerState<_AudienceSheet> {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// #3281 — the personal home said in words; its server address is a detail.
+class _HomeTile extends StatelessWidget {
+  const _HomeTile({required this.home});
+
+  final String home;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return ExpansionTile(
+      key: const ValueKey('visibility-home'),
+      leading: const Icon(Icons.home_outlined),
+      title: Text(l10n.visibilityHomePlain),
+      subtitle: Text(l10n.visibilityHomeDetails),
+      children: [
+        ListTile(
+          key: const ValueKey('visibility-home-detail'),
+          title: Text(l10n.visibilityHomeHeader(serverLabel(l10n, home))),
+        ),
+      ],
     );
   }
 }

@@ -20756,7 +20756,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get personalInfoCompanyScope =>
-      'Vale per tutto il tuo account, non per un solo spazio.';
+      'Vale per l\'intero account, non per un solo spazio.';
 
   @override
   String get personalInfoEmail => 'E-mail per i documenti';
@@ -33071,7 +33071,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get visibilityHomePlain => 'La tua casa personale';
+  String get visibilityHomePlain => 'La casa personale';
 
   @override
   String get visibilityIdentity => 'Nome e foto';

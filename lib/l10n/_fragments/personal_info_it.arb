@@ -68,5 +68,5 @@
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
   },
-  "personalInfoCompanyScope": "Vale per tutto il tuo account, non per un solo spazio."
+  "personalInfoCompanyScope": "Vale per l'intero account, non per un solo spazio."
 }

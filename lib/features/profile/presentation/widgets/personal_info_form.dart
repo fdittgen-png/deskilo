@@ -12,6 +12,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_info.dart';
 import '../courtesy_words.dart';
 
@@ -144,7 +145,6 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     TextCapitalization capitalization = TextCapitalization.words,
     bool autocorrect = true,
     List<String>? autofill,
-    String? helper,
   }) => Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.md),
     child: TextField(
@@ -157,11 +157,32 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       autocorrect: autocorrect,
       decoration: InputDecoration(
         labelText: label,
-        helperText: helper,
-        helperMaxLines: 3,
         border: const OutlineInputBorder(),
       ),
     ),
+  );
+
+  /// #3281 — the one Company field; on my own profile it says it is the
+  /// account-wide value, not a workspace's question.
+  Widget _companyField(AppLocalizations l10n) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      _field(
+        _company,
+        'company',
+        l10n.personalInfoCompany,
+        autofill: const [AutofillHints.organizationName],
+      ),
+      if (!widget.managed)
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: Text(
+            l10n.personalInfoCompanyScope,
+            key: const ValueKey('personal-info-company-scope'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+    ],
   );
 
   @override
@@ -227,13 +248,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           type: TextInputType.name,
           autofill: const [AutofillHints.familyName],
         ),
-        _field(
-          _company,
-          'company',
-          l10n.personalInfoCompany,
-          helper: widget.managed ? null : l10n.personalInfoCompanyScope,
-          autofill: const [AutofillHints.organizationName],
-        ),
+        _companyField(l10n),
         _field(
           _street,
           'street',

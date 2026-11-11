@@ -12942,7 +12942,7 @@
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
   },
-  "personalInfoCompanyScope": "Vale per tutto il tuo account, non per un solo spazio.",
+  "personalInfoCompanyScope": "Vale per l'intero account, non per un solo spazio.",
   "personalInfoEmail": "E-mail per i documenti",
   "@personalInfoEmail": {
     "description": "#886 personal-information form / feature: personalInfoEmail"
@@ -20964,7 +20964,7 @@
   "visibilityElsewhereTitle": "Sui miei altri server",
   "visibilityHomeDetails": "Dettagli della casa personale",
   "visibilityHomeHeader": "Casa personale: {name}",
-  "visibilityHomePlain": "La tua casa personale",
+  "visibilityHomePlain": "La casa personale",
   "visibilityIdentity": "Nome e foto",
   "visibilityIntro": "Ogni parte del suo account sceglie il proprio pubblico. Niente è pubblico se non lo sceglie.",
   "visibilityLegacyDirtyBody": "La Sua modifica a «{field}» su {server} non è ancora salvata. Appartiene a quell’account e non passa a un altro.",
