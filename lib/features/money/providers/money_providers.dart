@@ -342,6 +342,7 @@ Future<DunningRules> dunningRules(Ref ref) async {
         },
       );
   final workspace = await ref.watch(currentWorkspaceProvider.future);
+  // #3742 — no workspace, no business whose rules these would replace.
   if (workspace == null) return DunningRules.defaults;
   final rules = await ref.watch(dunningRepositoryProvider).fetchDunningRules(workspace.id);
   return rules.withSettings(await settings);

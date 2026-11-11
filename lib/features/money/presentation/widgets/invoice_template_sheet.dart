@@ -12,7 +12,6 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/dunning.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/report_template_assembly.dart';
 import '../../providers/money_providers.dart';
@@ -211,8 +210,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
   @override
   int get editorReminderLevels =>
       ref.read(enabledFeaturesSyncProvider).contains(WorkspaceFeature.dunning)
-          ? (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
-              .levels
+          ? ref.read(dunningRulesProvider).requireValue.levels
           : 0;
 
   /// Lets the section extensions rebuild (setState is protected).

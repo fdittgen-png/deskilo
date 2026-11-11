@@ -75,6 +75,7 @@ class InvoicingFailedSource extends StatelessWidget {
       InvoicingSource.reminders => l.invoicingSourceReminders,
       InvoicingSource.toInvoice => l.invoicingSourceToInvoice,
       InvoicingSource.declarations => l.invoicingSourceDeclarations,
+      InvoicingSource.rules => l.invoicingSourceRules,
     };
     return DecoratedBox(
       key: ValueKey('invoicing-failed-${source.name}'),

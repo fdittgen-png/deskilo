@@ -20,7 +20,6 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/dunning.dart';
 import '../../domain/invoice_pdf.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
@@ -256,11 +255,10 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final levels =
-        (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
-            .levels;
     editorUpdate(() => editorBusy = true);
     try {
+      // #3742 — the reminder kinds come from the business's own rules.
+      final levels = (await ref.read(dunningRulesProvider.future)).levels;
       await ref
           .read(reportTemplateRepositoryProvider)
           .setInvoicePdfTemplate(workspace.id, editorAssemble(levels));

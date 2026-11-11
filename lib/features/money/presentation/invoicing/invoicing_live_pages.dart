@@ -11,7 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/time/clock.dart';
 import '../../application/receivables.dart';
 import '../../application/reminder_queue.dart';
-import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import 'customer_page.dart';
 import 'invoicing_reads.dart';
@@ -29,14 +28,18 @@ typedef _Now = ({
 _Now _now(WidgetRef ref) {
   final receivables = ref.watch(invoicingReceivablesProvider);
   final known = unassignedMoneyKnown(ref.watch(unassignedMoneyProvider));
-  final rules = ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
+  // #3742 — the receivables wait for the rules: no page shows a reminder
+  // state on the defaults.
+  final rules = ref.watch(dunningRulesProvider).value;
   final dayOf = ref.watch(invoicingBusinessProvider).dayOf;
   return (
     receivables: receivables,
     money: known == null || receivables == null
         ? null
         : (holders: known.holdersAmong(receivables), creditOf: known.creditOf),
-    mode: rules.automatic ? ReminderMode.automatic : ReminderMode.byHand,
+    mode: rules?.automatic ?? false // empty-ok: the receivables above are null until the rules are read
+        ? ReminderMode.automatic
+        : ReminderMode.byHand,
     today: dayOf(ref.watch(clockProvider).now()),
   );
 }

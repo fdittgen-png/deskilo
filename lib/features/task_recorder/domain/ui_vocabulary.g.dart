@@ -9000,6 +9000,7 @@ const Set<String> uiLabelKeys = {
   'invoicingSourceMatches',
   'invoicingSourcePayments',
   'invoicingSourceReminders',
+  'invoicingSourceRules',
   'invoicingSourceToInvoice',
   'invoicingSourceTransmissions',
   'invoicingStatusAwaitingCustomer',

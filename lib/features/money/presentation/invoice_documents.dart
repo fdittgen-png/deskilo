@@ -33,7 +33,6 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/address_window.dart';
-import '../domain/dunning.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -67,7 +66,9 @@ InvoicePdfTemplate invoicePdfTemplateFor(WidgetRef ref) =>
     ref
         .read(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.invoicePdfTemplate)
-    ? ref.read(invoicePdfTemplateProvider).value ?? InvoicePdfTemplate.empty
+    // #3742 — the owner's template, read: a document is never printed
+    // without its texts because the read had not answered.
+    ? ref.read(invoicePdfTemplateProvider).requireValue
     : InvoicePdfTemplate.empty;
 
 /// #910 — the day the invoice falls due: the issue date plus the delay
@@ -82,8 +83,8 @@ DateTime invoiceDueAt(WidgetRef ref, Invoice invoice) =>
     invoice.dueOn ??
     invoice.issuedAt.add(
       Duration(
-        days: (ref.read(dunningRulesProvider).value ?? DunningRules.defaults)
-            .firstAfterDays,
+        // #3742 — the business's own rules, read: never the defaults.
+        days: ref.read(dunningRulesProvider).requireValue.firstAfterDays,
       ),
     );
 

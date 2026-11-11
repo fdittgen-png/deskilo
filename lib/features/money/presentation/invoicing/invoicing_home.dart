@@ -40,7 +40,10 @@ enum InvoicingSource {
   toInvoice,
 
   /// #3680 — the customers' payment declarations (read from the events).
-  declarations;
+  declarations,
+
+  /// #3742 — the business's reminder rules.
+  rules;
 
   /// The sources every invoice's status, amount owed and action is read
   /// from: while one of them failed, no figure, list or action of the
@@ -53,6 +56,7 @@ enum InvoicingSource {
     transmissions,
     credits,
     declarations,
+    rules,
   };
 }
 

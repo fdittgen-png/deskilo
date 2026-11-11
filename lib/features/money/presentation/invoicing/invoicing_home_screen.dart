@@ -226,8 +226,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf ??
         (DateTime d) => DateTime(d.year, d.month, d.day);
     final today = dayOf(now);
-    final rules =
-        ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
+    final rules = ref.watch(dunningRulesProvider).value ?? DunningRules.defaults; // empty-ok: the home waits for the statuses, the rules among them, and names a failed read
     final matches = ref.watch(invoiceMatchesProvider).value ?? const {}; // empty-ok: a failed read is a named source whose figures are withheld; a running one waits below
     final overview = ref.watch(invoicingOverviewProvider);
     final window = (

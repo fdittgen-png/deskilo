@@ -25017,6 +25017,12 @@ abstract class AppLocalizations {
   /// **'Reminder history'**
   String get invoicingSourceReminders;
 
+  /// #3742 a failed source on the invoicing home: the business's reminder rules.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder rules'**
+  String get invoicingSourceRules;
+
   /// #3587 a source name
   ///
   /// In en, this message translates to:

@@ -15392,6 +15392,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingSourceReminders => 'L’historique des relances';
 
   @override
+  String get invoicingSourceRules => 'Règles de relance';
+
+  @override
   String get invoicingSourceToInvoice => 'Le mois à facturer';
 
   @override

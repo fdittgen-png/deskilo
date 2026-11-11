@@ -16,6 +16,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -175,7 +176,20 @@ Future<void> remindInvoice(
   // #472: the level of THIS send — one past what was already sent,
   // capped at the configured maximum (extra sends reuse the last
   // letter).
-  final rules = ref.read(dunningRulesProvider).value ?? DunningRules.defaults;
+  // #3742 — the level comes from the business's own rules, read now; when
+  // they cannot be read, nothing is sent and the reader is told.
+  final DunningRules rules;
+  try {
+    rules = await ref.read(dunningRulesProvider.future);
+  } on Object catch (e, st) {
+    TraceLogger.instance.error('money', 'reminder rules read failed',
+        error: e, stackTrace: st);
+    if (context.mounted) {
+      AppSnack.error(context, context.l10n.readStateFailed);
+    }
+    return;
+  }
+  if (!context.mounted) return;
   final sent =
       ref.read(invoiceRemindersProvider).value?[invoice.id]?.count ?? 0;
   final level = (sent + 1).clamp(1, rules.levels);
