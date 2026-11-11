@@ -15816,6 +15816,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kioskTapHint => 'Tap a seat to check in';
 
   @override
+  String get kitActionBusy => 'Working…';
+
+  @override
   String get languageNameCS => 'Czech';
 
   @override

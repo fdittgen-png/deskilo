@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/feature_sheets.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -240,7 +241,7 @@ class _GroupInfoSheet extends ConsumerWidget {
             !m.isKiosk &&
             !present.contains(m.id))
           m,
-    ]..sort((a, b) => (names[a.id] ?? '').compareTo(names[b.id] ?? ''));
+    ]..sort((a, b) => compareNames(names[a.id] ?? '', names[b.id] ?? ''));
 
     final picked = await showAppSheet<String>(
       context: context,

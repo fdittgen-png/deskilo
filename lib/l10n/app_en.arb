@@ -21047,6 +21047,10 @@
   "@kioskTapHint": {
     "description": "Header hint on the kiosk plan view"
   },
+  "kitActionBusy": "Working…",
+  "@kitActionBusy": {
+    "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
+  },
   "languageNameCS": "Czech",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"

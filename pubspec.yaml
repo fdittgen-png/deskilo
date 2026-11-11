@@ -36,6 +36,7 @@ dependencies:
   dio: ^5.10.0
 
   # i18n (ADR 0007)
+  characters: ^1.4.0
   intl: ^0.20.2
   supabase_flutter: ^2.17.2
   http: ^1.6.0

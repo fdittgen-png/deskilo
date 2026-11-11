@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -194,13 +195,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
           invoice,
     ]..sort((a, b) => switch (_sort) {
         _InvoiceSort.newest => b.issuedAt.compareTo(a.issuedAt),
-        _InvoiceSort.member => a.memberName
-                    .toLowerCase()
-                    .compareTo(b.memberName.toLowerCase()) !=
-                0
-            ? a.memberName
-                .toLowerCase()
-                .compareTo(b.memberName.toLowerCase())
+        _InvoiceSort.member => compareNames(a.memberName, b.memberName) != 0
+            ? compareNames(a.memberName, b.memberName)
             : b.issuedAt.compareTo(a.issuedAt),
         _InvoiceSort.period =>
           (b.period ?? '').compareTo(a.period ?? '') != 0

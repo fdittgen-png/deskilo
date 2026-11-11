@@ -15938,6 +15938,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskTapHint => 'Tocchi un posto per fare check-in';
 
   @override
+  String get kitActionBusy => 'In corso…';
+
+  @override
   String get languageNameCS => 'Ceco';
 
   @override

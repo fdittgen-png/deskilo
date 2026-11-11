@@ -10326,6 +10326,7 @@
   "kioskRevertTitle": "Dispositivo chiosco",
   "kioskScanQr": "Scansiona il badge QR",
   "kioskTapHint": "Tocchi un posto per fare check-in",
+  "kitActionBusy": "In corso…",
   "languageNameCS": "Ceco",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"

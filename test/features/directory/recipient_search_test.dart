@@ -3,6 +3,7 @@
 // widget: a person once per server with every shared workspace, never me,
 // prefix (first or last name) before contains, accent- and
 // case-insensitive.
+import 'package:deskilo/core/text/initials.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/domain/recipient_search.dart';

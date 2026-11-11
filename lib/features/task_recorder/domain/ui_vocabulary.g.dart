@@ -9068,6 +9068,7 @@ const Set<String> uiLabelKeys = {
   'kioskRevertTitle',
   'kioskScanQr',
   'kioskTapHint',
+  'kitActionBusy',
   'languageNameCS',
   'languageNameDA',
   'languageNameDE',

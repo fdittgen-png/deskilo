@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/text/initials.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../domain/public_workspace.dart';
@@ -98,7 +99,7 @@ class _DirectoryCarouselState extends State<DirectoryCarousel> {
                       foregroundColor: selected
                           ? theme.colorScheme.onPrimary
                           : theme.colorScheme.onPrimaryContainer,
-                      child: Text(w.name.isEmpty ? '?' : w.name[0].toUpperCase()),
+                      child: Text(initialOf(w.name)),
                     ),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -126,7 +127,7 @@ class RoleHoldersSection extends ConsumerWidget {
     final candidates = [
       for (final m in members)
         if (!holderIds.contains(m.id) && refusal(m, granting: true) == null) m,
-    ]..sort((a, b) => (names[a.id] ?? '').compareTo(names[b.id] ?? ''));
+    ]..sort((a, b) => compareNames(names[a.id] ?? '', names[b.id] ?? ''));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

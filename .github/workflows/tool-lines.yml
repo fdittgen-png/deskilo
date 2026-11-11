@@ -1,0 +1,35 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: CI · Tool lines on an edited pull request
+
+# #3677 — the static gates of the Quality run read the pull request's title and
+# text when the run starts. Editing them afterwards must not start the whole
+# suite again, so an edit runs only this check: the same script, the same
+# patterns, in seconds.
+on:
+  pull_request:
+    types: [edited]
+
+concurrency:
+  group: tool-lines-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  tool-lines:
+    name: no tool line in the edited pull request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: bash scripts/tool_lines_check.sh

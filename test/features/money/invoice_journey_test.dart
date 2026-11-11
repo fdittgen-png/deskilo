@@ -7,6 +7,7 @@
 // admin confirms the declared payment, the issuer matches the registered
 // one, the validators decide, the workspace refunds, nobody (closed).
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/ui/kit/kit_action_button.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/money_face.dart';
@@ -499,7 +500,7 @@ void main() {
           findsOneWidget);
       expect(
         tester.widget(find.byKey(const ValueKey('invoice-page-match'))),
-        isA<FilledButton>(),
+        isA<KitActionButton>(),
         reason: 'the expected move is the bottom bar\'s filled button',
       );
     });
@@ -536,7 +537,7 @@ void main() {
       // stays in More.
       expect(
         tester.widget(find.byKey(const ValueKey('invoice-page-remind'))),
-        isA<FilledButton>(),
+        isA<KitActionButton>(),
       );
       expect(find.byKey(const ValueKey('invoice-page-more')), findsOneWidget);
     });
