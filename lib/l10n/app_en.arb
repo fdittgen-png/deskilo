@@ -10678,7 +10678,7 @@
   },
   "editorDeskNameNumbered": "Desk {number}",
   "@editorDeskNameNumbered": {
-    "description": "Default name of a new desk: the next number, e.g. \"Desk 2\".",
+    "description": "Default name of a new desk: its next position number in a name, not a count, e.g. \"Desk 2\".",
     "placeholders": {
       "number": {
         "type": "int"
@@ -10771,7 +10771,7 @@
   },
   "editorOfficeNameNumbered": "Office {number}",
   "@editorOfficeNameNumbered": {
-    "description": "Default name of a new office: the next number, e.g. \"Office 3\".",
+    "description": "Default name of a new office: its next position number in a name, not a count, e.g. \"Office 3\".",
     "placeholders": {
       "number": {
         "type": "int"
@@ -26654,11 +26654,11 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
-  "notesFilterUnreadCount": "Unread ({count})",
+  "notesFilterUnreadCount": "Unread ({unread})",
   "@notesFilterUnreadCount": {
-    "description": "Filter chip: unread notes with their count, e.g. \"Unread (3)\".",
+    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\".",
     "placeholders": {
-      "count": {
+      "unread": {
         "type": "int"
       }
     }

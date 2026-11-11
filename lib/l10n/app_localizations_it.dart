@@ -20453,8 +20453,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get notesFilterUnread => 'Non letti';
 
   @override
-  String notesFilterUnreadCount(int count) {
-    return 'Non letti ($count)';
+  String notesFilterUnreadCount(int unread) {
+    return 'Non letti ($unread)';
   }
 
   @override

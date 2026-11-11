@@ -13073,7 +13073,7 @@ abstract class AppLocalizations {
   /// **'Desk name'**
   String get editorDeskNameLabel;
 
-  /// Default name of a new desk: the next number, e.g. "Desk 2".
+  /// Default name of a new desk: its next position number in a name, not a count, e.g. "Desk 2".
   ///
   /// In en, this message translates to:
   /// **'Desk {number}'**
@@ -13205,7 +13205,7 @@ abstract class AppLocalizations {
   /// **'Office name'**
   String get editorOfficeNameLabel;
 
-  /// Default name of a new office: the next number, e.g. "Office 3".
+  /// Default name of a new office: its next position number in a name, not a count, e.g. "Office 3".
   ///
   /// In en, this message translates to:
   /// **'Office {number}'**
@@ -32918,11 +32918,11 @@ abstract class AppLocalizations {
   /// **'Unread'**
   String get notesFilterUnread;
 
-  /// Filter chip: unread notes with their count, e.g. "Unread (3)".
+  /// Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. "Unread (3)".
   ///
   /// In en, this message translates to:
-  /// **'Unread ({count})'**
-  String notesFilterUnreadCount(int count);
+  /// **'Unread ({unread})'**
+  String notesFilterUnreadCount(int unread);
 
   /// Shown as a text in event labels (events).
   ///

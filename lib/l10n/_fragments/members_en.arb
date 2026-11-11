@@ -84,11 +84,11 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
-  "notesFilterUnreadCount": "Unread ({count})",
+  "notesFilterUnreadCount": "Unread ({unread})",
   "@notesFilterUnreadCount": {
-    "description": "Filter chip: unread notes with their count, e.g. \"Unread (3)\".",
+    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\".",
     "placeholders": {
-      "count": {
+      "unread": {
         "type": "int"
       }
     }

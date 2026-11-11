@@ -51,7 +51,7 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
-  "notesFilterUnreadCount": "Ungelesen ({count})",
+  "notesFilterUnreadCount": "Ungelesen ({unread})",
   "notesFilterEmpty": "Keine ungelesenen Nachrichten — alles gelesen.",
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"

@@ -20489,8 +20489,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notesFilterUnread => 'Non lus';
 
   @override
-  String notesFilterUnreadCount(int count) {
-    return 'Non lus ($count)';
+  String notesFilterUnreadCount(int unread) {
+    return 'Non lus ($unread)';
   }
 
   @override

@@ -12406,7 +12406,7 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
-  "notesFilterUnreadCount": "Non lus ({count})",
+  "notesFilterUnreadCount": "Non lus ({unread})",
   "notifCategoryCheckIns": "Check-ins",
   "notifCategoryMembers": "Membres",
   "notifCategoryMoney": "Finances",
