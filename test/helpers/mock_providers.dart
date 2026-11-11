@@ -79,9 +79,12 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/auth/providers/oauth_consent_providers.dart';
 import 'package:deskilo/features/calendar/domain/calendar_repository.dart';
 import 'package:deskilo/features/calendar/providers/calendar_providers.dart';
+import 'package:deskilo/features/directory/data/directory_lookups.dart';
+import 'package:deskilo/features/directory/domain/directory_location_memory.dart';
 import 'package:deskilo/features/directory/domain/discovery_view.dart';
 import 'package:deskilo/features/directory/domain/personal_message_directory.dart';
 import 'package:deskilo/features/directory/domain/saved_place.dart';
+import 'package:deskilo/features/directory/providers/directory_location_providers.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/discovery_view_providers.dart';
 import 'package:deskilo/features/directory/providers/messenger_providers.dart';
@@ -512,6 +515,16 @@ List<Override> standardTestOverrides({
         .overrideWithValue(savedPlaces ?? InMemorySavedPlacesStore()),
     discoveryViewStoreProvider
         .overrideWithValue(discoveryView ?? InMemoryDiscoveryViewStore()),
+    // #3684 -- the places the map found: in memory, per test; and one
+    // lookup at a time without the courtesy pause, so no timer outlives
+    // a test that is not about the pacing.
+    directoryLocationMemoryProvider
+        .overrideWithValue(InMemoryDirectoryLocationMemory()),
+    directoryLookupsProvider.overrideWith((ref) => DirectoryLookups(
+          ref.watch(directoryGeocoderProvider),
+          ref.watch(directoryLocationMemoryProvider),
+          pause: Duration.zero,
+        )),
     personalContextProvider.overrideWith((ref) async {
       final subject = await ref.watch(authStateProvider.future);
       if (subject == null) return null;

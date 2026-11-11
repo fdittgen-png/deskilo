@@ -524,6 +524,26 @@ Vous voulez décider, élément par élément, qui voit votre nom, votre présen
 
 **Voir aussi:** [Profil public](help:user.privacy.public-profile) · [Qui peut voir mes données](help:user.privacy.visibility)
 
+<!-- anchor: user.privacy.business-sees -->
+### Ce que voit une entreprise que vous rejoignez
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce qu'une entreprise apprend de vous quand vous demandez à la rejoindre, et une fois membre.
+
+**Étapes**
+
+1. Ouvrez [Moi](app:/me?tab=me) et faites défiler jusqu'à **Confidentialité**.
+2. Touchez **Ce que voit une entreprise que vous rejoignez**.
+
+**Bon à savoir**
+
+- Quand vous demandez à la rejoindre, l'entreprise voit votre nom et votre photo. Votre adresse e-mail n'accompagne pas la demande.
+- Une fois membre, tout le monde dans l'espace voit votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence suivent vos choix dans **Qui me voit**.
+- Les administrateurs qui vous facturent ou tiennent le registre des membres voient ce dont ils ont besoin pour vous facturer : nom, société, adresse, téléphone, e-mail, numéro de TVA, identifiant légal et langue préférée. Votre date d'anniversaire, si vous l'avez indiquée, n'est vue que par ceux qui tiennent le registre des membres.
+
+**Voir aussi:** [Choisir qui me voit](help:user.privacy.audiences)
+
 <!-- anchor: user.privacy.public-profile -->
 ### Publier un profil public
 

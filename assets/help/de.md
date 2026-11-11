@@ -2090,6 +2090,25 @@ Sie möchten Punkt für Punkt entscheiden, wer Ihren Namen, Ihre Kurzbiografie, 
 
 **Siehe auch:** [Öffentliches Profil](help:user.privacy.public-profile) · [Wer meine Daten sehen kann](help:user.privacy.visibility)
 
+### Was ein Betrieb sieht, dem Sie beitreten
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was ein Betrieb über Sie erfährt, wenn Sie den Beitritt anfragen, und sobald Sie Mitglied sind.
+
+**Schritte**
+
+1. Öffnen Sie [Ich](app:/me?tab=me) und scrollen Sie zu **Datenschutz**.
+2. Tippen Sie auf **Was ein Betrieb sieht, dem Sie beitreten**.
+
+**Gut zu wissen**
+
+- Wenn Sie den Beitritt anfragen, sieht der Betrieb Ihren Namen und Ihr Foto. Ihre E-Mail-Adresse wird mit der Anfrage nicht gezeigt.
+- Als Mitglied sehen alle im Bereich Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihr Status und wann Sie zuletzt da waren folgen Ihrer Wahl unter **Wer mich sieht**.
+- Die Administratoren, die Ihnen Rechnungen stellen oder das Mitgliederverzeichnis führen, sehen, was sie zum Abrechnen brauchen: Name, Firma, Adresse, Telefon, E-Mail, USt-IdNr., rechtliche Kennung und bevorzugte Sprache. Ihren Geburtstag sehen, wenn Sie ihn angegeben haben, nur die, die das Mitgliederverzeichnis führen.
+
+**Siehe auch:** [Wählen, wer mich sieht](help:user.privacy.audiences)
+
 ### Ein öffentliches Profil veröffentlichen
 
 **Zielgruppe:** Alle

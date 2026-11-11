@@ -49,7 +49,10 @@ String _namespace(String user) => savedPlacesNamespaceOf(
   home: 'inst-test',
 );
 
-const _toggle = ValueKey('directory-portal-list');
+/// #3684 -- the labelled List | Map switch, by the side tapped.
+final _switch = find.byKey(const ValueKey('directory-view-switch'));
+final _mapSide = find.descendant(of: _switch, matching: find.text('Map'));
+final _listSide = find.descendant(of: _switch, matching: find.text('List'));
 const _disclosure = ValueKey('directory-map-disclosure');
 
 Future<void> _show(
@@ -90,7 +93,7 @@ void main() {
       final store = InMemoryDiscoveryViewStore();
       final geocoder = _CountingGeocoder();
       await _show(tester, store: store, geocoder: geocoder);
-      await tester.tap(find.byKey(_toggle));
+      await tester.tap(_mapSide);
       await _frames(tester);
       expect(find.byKey(_disclosure), findsOneWidget);
       expect(
@@ -115,7 +118,7 @@ void main() {
       expect(store.byNamespace, isEmpty);
       expect(geocoder.asked, isEmpty);
 
-      await tester.tap(find.byKey(_toggle));
+      await tester.tap(_mapSide);
       await _frames(tester);
       expect(find.byKey(_disclosure), findsOneWidget);
     },
@@ -128,7 +131,7 @@ void main() {
       final store = InMemoryDiscoveryViewStore();
       final geocoder = _CountingGeocoder();
       await _show(tester, store: store, geocoder: geocoder);
-      await tester.tap(find.byKey(_toggle));
+      await tester.tap(_mapSide);
       await _frames(tester);
       expect(
         find.text('Your choice is kept on this device for this map provider.'),
@@ -143,11 +146,11 @@ void main() {
       expect(store.byNamespace.keys, [_namespace('user-1')]);
 
       // Back to the list and to the map again: the provider is known.
-      await tester.tap(find.byKey(_toggle));
+      await tester.tap(_listSide);
       await _frames(tester);
       expect(find.byType(DirectoryMap), findsNothing);
       expect(store.byNamespace[_namespace('user-1')]!.map, isFalse);
-      await tester.tap(find.byKey(_toggle));
+      await tester.tap(_mapSide);
       await _frames(tester);
       expect(find.byKey(_disclosure), findsNothing);
       expect(find.byType(DirectoryMap), findsOneWidget);
@@ -166,7 +169,7 @@ void main() {
         auth: FakeAuthRepository(userId: 'user-2'),
       );
       expect(find.byType(DirectoryMap), findsNothing);
-      await tester.tap(find.byKey(_toggle));
+      await tester.tap(_mapSide);
       await _frames(tester);
       expect(find.byKey(_disclosure), findsOneWidget);
     },
@@ -190,7 +193,7 @@ void main() {
     );
     expect(find.byType(DirectoryMap), findsNothing);
     expect(geocoder.asked, isEmpty);
-    await tester.tap(find.byKey(_toggle));
+    await tester.tap(_mapSide);
     await _frames(tester);
     expect(find.textContaining('drawn by tiles.other.example'), findsOneWidget);
     expect(find.textContaining('placed by geo.other.example'), findsOneWidget);
@@ -228,7 +231,7 @@ void main() {
       geocoder: _CountingGeocoder(),
       auth: FakeAuthRepository(),
     );
-    await tester.tap(find.byKey(_toggle));
+    await tester.tap(_mapSide);
     await _frames(tester);
     expect(
       find.text('Your choice is kept on this device for this map provider.'),

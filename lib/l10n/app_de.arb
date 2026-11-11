@@ -4684,14 +4684,19 @@
   "directoryLocate": "Auf der Karte anzeigen",
   "directoryLocating": "Öffentliche Adresse wird gesucht…",
   "directoryLocationMissing": "Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.",
+  "directoryMapOpenFailed": "Die Karte konnte nicht geöffnet werden.",
   "directoryNoUpcoming": "Keine anstehenden Reservierungen",
+  "directoryNothingToPin": "Keiner dieser Orte konnte auf der Karte platziert werden.",
   "directoryOnline": "Online",
   "directoryOpenGroup": "WhatsApp-Gruppe öffnen",
+  "directoryPinsLookupFailed": "{count, plural, =1{1 konnte nicht nachgeschlagen werden.} other{{count} konnten nicht nachgeschlagen werden.}}",
   "directoryPinsMissing": "{count, plural, =1{1 Arbeitsbereich konnte nicht auf der Karte platziert werden; seine Karte steht darunter.} other{{count} Arbeitsbereiche konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.}}",
+  "directoryPinsNoAddress": "{count, plural, =1{1 hat keine veröffentlichte Adresse.} other{{count} haben keine veröffentlichte Adresse.}}",
   "directoryReservationsHeading": "Reservierungen",
   "directoryReservedNow": "Jetzt reserviert",
   "directoryReservedNowSeat": "Jetzt reserviert · {seat}",
   "directoryReservedToday": "Heute reserviert",
+  "directoryTilesFailed": "Der Kartenhintergrund konnte nicht geladen werden.",
   "directoryTitle": "Mitglieder",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
   "discoveryBookmark": "Merken",
@@ -10333,6 +10338,7 @@
   "kioskRevertTitle": "Kiosk-Gerät",
   "kioskScanQr": "QR-Badge scannen",
   "kioskTapHint": "Tippen Sie auf einen Platz zum Einchecken",
+  "kitActionBusy": "Läuft …",
   "languageNameCS": "Tschechisch",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -11489,6 +11495,22 @@
   "meAccountInMe": "Mein Konto ist unter Ich",
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
   "meAddressSaveFailed": "Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "meBusinessSeesAdmins": "Seine Administratoren, die Ihnen Rechnungen stellen oder das Mitgliederverzeichnis führen: Ihren Namen, Ihre Firma, Adresse, Telefonnummer, E-Mail, USt-IdNr., rechtliche Kennung und bevorzugte Sprache, die sie zum Abrechnen brauchen, und Ihren Geburtstag, wenn Sie ihn angegeben haben, für die, die das Mitgliederverzeichnis führen.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "Wenn Sie den Beitritt anfragen: Ihren Namen und Ihr Foto.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Als Mitglied alle im Bereich: Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihren Status und wann Sie zuletzt da waren nur so, wie Sie es unter Wer mich sieht wählen.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "Was ein Betrieb sieht, dem Sie beitreten",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Persönlich",
   "meCreateSpace": "Space gründen",
   "meDataPersonalExport": "Persönliche Daten exportieren",
@@ -18055,7 +18077,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Wenn Sie anfragen, sieht dieser Betrieb Ihre E-Mail-Adresse. Als Mitglied sehen seine Administratoren Ihren Namen sowie die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.",
+  "spacePreviewPrivacy": "Wenn Sie anfragen, sieht dieser Betrieb Ihren Namen und Ihr Foto. Als Mitglied sehen seine Administratoren die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.",
   "spaceQrSizeLabel": "Größe des QR-Codes",
   "spaceRatingClear": "Keine Bewertung",
   "spaceRunByAssociation": "Betrieben von einem Verein",

@@ -9,6 +9,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -154,13 +155,7 @@ class MembersScreen extends ConsumerWidget {
                 ListTile(
                   key: ValueKey('members-member-kiosk-label-${member.id}'),
                   leading: CircleAvatar(
-                    child: Text(
-                      (names[member.id] ?? '?').isEmpty
-                          ? '?'
-                          : (names[member.id] ?? '?')
-                              .substring(0, 1)
-                              .toUpperCase(),
-                    ),
+                    child: Text(initialOf(names[member.id] ?? '')),
                   ),
                   title: Text(names[member.id] ?? ''),
                   subtitle: Wrap(

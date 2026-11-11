@@ -18,6 +18,12 @@ abstract final class KitMetrics {
   /// The gap between the parts of a row.
   static const double gap = 10;
 
+  /// The space between a button's progress mark and its label.
+  static const double buttonGap = 8;
+
+  /// The size of the progress mark inside a busy button.
+  static const double progressMark = 18;
+
   /// The height of a split bar.
   static const double barHeight = 12;
 

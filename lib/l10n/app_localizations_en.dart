@@ -7006,13 +7006,31 @@ class AppLocalizationsEn extends AppLocalizations {
       'Location unavailable. The owner can publish precise map coordinates.';
 
   @override
+  String get directoryMapOpenFailed => 'The map could not be opened.';
+
+  @override
   String get directoryNoUpcoming => 'No upcoming reservations';
+
+  @override
+  String get directoryNothingToPin =>
+      'None of these places could be placed on the map.';
 
   @override
   String get directoryOnline => 'Online';
 
   @override
   String get directoryOpenGroup => 'Open WhatsApp group';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count could not be looked up.',
+      one: '1 could not be looked up.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7022,6 +7040,17 @@ class AppLocalizationsEn extends AppLocalizations {
       other:
           '$count workspaces could not be placed on the map; their cards are below.',
       one: '1 workspace could not be placed on the map; its card is below.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count have no published address.',
+      one: '1 has no published address.',
     );
     return '$_temp0';
   }
@@ -7039,6 +7068,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Reserved today';
+
+  @override
+  String get directoryTilesFailed => 'The map background could not be loaded.';
 
   @override
   String get directoryTitle => 'Members';
@@ -15794,6 +15826,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kioskTapHint => 'Tap a seat to check in';
 
   @override
+  String get kitActionBusy => 'Working…';
+
+  @override
   String get languageNameCS => 'Czech';
 
   @override
@@ -17780,6 +17815,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Could not save your address. Please try again.';
+
+  @override
+  String get meBusinessSeesAdmins =>
+      'Its administrators who invoice you or keep its member records: your name, company, address, phone, e-mail, VAT number, legal id and preferred language, which they need to invoice you, and your birthday if you gave it, for those who keep the member records.';
+
+  @override
+  String get meBusinessSeesAsk => 'When you ask to join: your name and photo.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.';
+
+  @override
+  String get meBusinessSeesTitle => 'What a business you join can see';
 
   @override
   String get meContextPersonal => 'Personal';
@@ -28247,7 +28296,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.';
+      'When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.';
 
   @override
   String get spaceQrSizeLabel => 'QR code size';
