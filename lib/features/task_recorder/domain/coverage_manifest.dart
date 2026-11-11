@@ -76,7 +76,7 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.messenger,
   ),
   RouteCoverage('/me/data', CoverageStatus.planned, owner: '#1881 B'),
-  RouteCoverage('/me/formats', CoverageStatus.planned, owner: '#3697'),
+  RouteCoverage('/me/formats', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/me/account', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/me/account/connections',
