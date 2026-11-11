@@ -18745,10 +18745,6 @@
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
   },
-  "invoicePageDetails": "Details",
-  "@invoicePageDetails": {
-    "description": "#3587 train 2 part C: the invoice page (invoicePageDetails)"
-  },
   "invoicePageInvoiced": "Invoiced",
   "@invoicePageInvoiced": {
     "description": "#3587 R1-d the lines card's label"

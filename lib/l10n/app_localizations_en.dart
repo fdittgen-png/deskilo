@@ -14202,9 +14202,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Payment confirmed and matched to this invoice.';
 
   @override
-  String get invoicePageDetails => 'Details';
-
-  @override
   String get invoicePageInvoiced => 'Invoiced';
 
   @override

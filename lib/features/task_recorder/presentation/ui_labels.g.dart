@@ -1203,7 +1203,6 @@ Map<String, _Getter> _part3() => {
   'invoiceLegalCustomerCapacityField': (l) => l.invoiceLegalCustomerCapacityField,
   'invoiceMatchAction': (l) => l.invoiceMatchAction,
   'invoiceMissingSellerCountry': (l) => l.invoiceMissingSellerCountry,
-  'invoicePageDetails': (l) => l.invoicePageDetails,
   'invoicePageMarkedNotReceived': (l) => l.invoicePageMarkedNotReceived,
   'invoicePageNowDeclared': (l) => l.invoicePageNowDeclared,
   'invoicePdfCopy': (l) => l.invoicePdfCopy,

@@ -14336,9 +14336,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zahlung bestätigt und dieser Rechnung zugeordnet.';
 
   @override
-  String get invoicePageDetails => 'Details';
-
-  @override
   String get invoicePageInvoiced => 'Berechnet';
 
   @override

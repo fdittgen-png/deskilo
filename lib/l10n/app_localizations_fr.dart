@@ -14342,9 +14342,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Paiement confirmé et rapproché de cette facture.';
 
   @override
-  String get invoicePageDetails => 'Détails';
-
-  @override
   String get invoicePageInvoiced => 'Facturé';
 
   @override

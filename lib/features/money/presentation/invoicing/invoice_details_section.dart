@@ -69,7 +69,7 @@ class InvoiceDetailsSection extends ConsumerWidget {
       padding: EdgeInsets.zero,
       child: ExpansionTile(
         // Collapsed: the page keeps its own words first.
-        title: Text(l.invoicePageDetails),
+        title: Text(l.bookingOpenDetails),
         shape: const Border(),
         collapsedShape: const Border(),
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,

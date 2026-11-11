@@ -279,6 +279,5 @@
   },
   "invoicePageMoreRemind": "Compartir un recordatorio",
   "invoicePageMorePayment": "Pago",
-  "invoicePageMoreMatch": "Conciliar un pago",
-  "invoicePageDetails": "Detalles"
+  "invoicePageMoreMatch": "Conciliar un pago"
 }

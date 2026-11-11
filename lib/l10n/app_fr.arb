@@ -8971,7 +8971,6 @@
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
   },
-  "invoicePageDetails": "Détails",
   "invoicePageInvoiced": "Facturé",
   "@invoicePageInvoiced": {
     "description": "#3587 R1-d the lines card's label"

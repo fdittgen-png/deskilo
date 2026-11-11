@@ -14307,9 +14307,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pago confirmado y conciliado con esta factura.';
 
   @override
-  String get invoicePageDetails => 'Detalles';
-
-  @override
   String get invoicePageInvoiced => 'Facturado';
 
   @override

@@ -279,6 +279,5 @@
   },
   "invoicePageMoreRemind": "Mahnung teilen",
   "invoicePageMorePayment": "Zahlung",
-  "invoicePageMoreMatch": "Eine Zahlung zuordnen",
-  "invoicePageDetails": "Details"
+  "invoicePageMoreMatch": "Eine Zahlung zuordnen"
 }

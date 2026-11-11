@@ -279,6 +279,5 @@
   },
   "invoicePageMoreRemind": "Partager une relance",
   "invoicePageMorePayment": "Paiement",
-  "invoicePageMoreMatch": "Rapprocher un paiement",
-  "invoicePageDetails": "Détails"
+  "invoicePageMoreMatch": "Rapprocher un paiement"
 }

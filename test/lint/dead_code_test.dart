@@ -18,6 +18,8 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/features/money/presentation/invoicing/invoice_details_section.dart::InvoiceDetailsSection':
+      '#3587 train 2 — the invoice page mounts it with its parts merged',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

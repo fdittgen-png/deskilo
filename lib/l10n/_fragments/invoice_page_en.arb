@@ -288,9 +288,5 @@
   "invoicePageMoreMatch": "Match a payment",
   "@invoicePageMoreMatch": {
     "description": "#3587 train 2 part C: the invoice page (invoicePageMoreMatch)"
-  },
-  "invoicePageDetails": "Details",
-  "@invoicePageDetails": {
-    "description": "#3587 train 2 part C: the invoice page (invoicePageDetails)"
   }
 }

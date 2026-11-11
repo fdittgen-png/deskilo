@@ -23512,12 +23512,6 @@ abstract class AppLocalizations {
   /// **'Payment confirmed and matched to this invoice.'**
   String get invoicePageConfirmedMatched;
 
-  /// #3587 train 2 part C: the invoice page (invoicePageDetails)
-  ///
-  /// In en, this message translates to:
-  /// **'Details'**
-  String get invoicePageDetails;
-
   /// #3587 R1-d the lines card's label
   ///
   /// In en, this message translates to:

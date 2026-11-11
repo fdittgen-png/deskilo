@@ -14311,9 +14311,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Pagamento confermato e abbinato a questa fattura.';
 
   @override
-  String get invoicePageDetails => 'Dettagli';
-
-  @override
   String get invoicePageInvoiced => 'Fatturato';
 
   @override
