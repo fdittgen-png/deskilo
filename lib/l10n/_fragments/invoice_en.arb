@@ -998,7 +998,7 @@
   },
   "reminderPdfTitleLevel": "Reminder {level}",
   "@reminderPdfTitleLevel": {
-    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\".",
+    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\". The number is a position, not a count.",
     "placeholders": {
       "level": {
         "type": "int"

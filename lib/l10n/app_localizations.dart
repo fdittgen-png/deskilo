@@ -36065,7 +36065,7 @@ abstract class AppLocalizations {
   /// **'Tap to add a photo'**
   String get profilePhotoNone;
 
-  /// #3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits.
+  /// #3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count.
   ///
   /// In en, this message translates to:
   /// **'The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.'**
@@ -38967,7 +38967,7 @@ abstract class AppLocalizations {
   /// **'Payment reminder'**
   String get reminderPdfTitleFriendly;
 
-  /// #3652 Title of a reminder letter of a given level, e.g. "Reminder 2".
+  /// #3652 Title of a reminder letter of a given level, e.g. "Reminder 2". The number is a position, not a count.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
