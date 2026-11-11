@@ -7327,6 +7327,10 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesBeingValidated": "In convalida",
+  "@financesBeingValidated": {
+    "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
+  },
   "financesColumnAmount": "Importo",
   "financesColumnDocument": "Documento e periodo",
   "financesColumnState": "Documento e pagamento",
@@ -7352,6 +7356,10 @@
     "description": "Me › Finances"
   },
   "financesHideAmount": "Nascondi l'importo",
+  "financesHostsUnavailable": "Non è stato possibile elencare le Sue installazioni collegate in questo momento; quanto mostrato proviene solo da questa installazione.",
+  "@financesHostsUnavailable": {
+    "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
+  },
   "financesLinkAction": "Apri per {space}",
   "@financesLinkAction": {
     "placeholders": {
@@ -7373,6 +7381,10 @@
   "financesNothingPaid": "Nessuna fattura ancora saldata.",
   "@financesNothingPaid": {
     "description": "Me › Finances"
+  },
+  "financesNothingSoFar": "Niente tra quanto letto finora.",
+  "@financesNothingSoFar": {
+    "description": "Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed"
   },
   "financesOpenDocument": "Apri",
   "financesOutstanding": "Da pagare",

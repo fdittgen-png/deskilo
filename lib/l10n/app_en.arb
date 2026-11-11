@@ -14610,6 +14610,10 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesBeingValidated": "Being validated",
+  "@financesBeingValidated": {
+    "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
+  },
   "financesColumnAmount": "Amount",
   "@financesColumnAmount": {
     "description": "#2557 C4 Me › Finances: the rows header, the amount in its own currency."
@@ -14689,6 +14693,10 @@
   "@financesHideAmount": {
     "description": "#2557 C5 Me › Finances: hides one compact card's amount again."
   },
+  "financesHostsUnavailable": "Your connected installations could not be listed right now; what is shown comes from this installation only.",
+  "@financesHostsUnavailable": {
+    "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
+  },
   "financesLinkAction": "Open for {space}",
   "@financesLinkAction": {
     "description": "Shown as a text in my finances link card (money). Placeholders: {space} (String).",
@@ -14717,6 +14725,10 @@
   "financesNothingPaid": "No settled invoice yet.",
   "@financesNothingPaid": {
     "description": "Me › Finances"
+  },
+  "financesNothingSoFar": "Nothing among what was read so far.",
+  "@financesNothingSoFar": {
+    "description": "Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed"
   },
   "financesOpenDocument": "Open",
   "@financesOpenDocument": {

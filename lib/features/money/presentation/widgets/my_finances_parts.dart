@@ -113,12 +113,15 @@ class FinancesSourceBanners extends ConsumerWidget {
         for (final source in sources)
           InlineBanner(
             key: ValueKey<String>(
-              'finances-source-unavailable-${Uri.tryParse(source)?.host ?? source}',
+              'finances-source-unavailable-${_hostOf(source)}',
             ),
             icon: Icons.cloud_off_outlined,
-            text: l10n.financesSourceUnavailable(
-              Uri.tryParse(source)?.host ?? source,
-            ),
+            // #3682 — the list of my hosts unread is said as such.
+            text: source == connectedHostsSource
+                ? l10n.financesHostsUnavailable
+                : l10n.financesSourceUnavailable(
+                    Uri.tryParse(source)?.host ?? source,
+                  ),
             actionLabel: l10n.commonRetry,
             onAction: () => unawaited(
               ref

@@ -27,6 +27,7 @@ class FinancesOwedSummary extends StatelessWidget {
     final money = appFormatOf(context);
     final toPay = data.owedByCurrency;
     final credit = data.inMyFavourByCurrency;
+    final validating = data.beingValidatedByCurrency;
     final late = data.overdueCurrencies(now);
     final overdue = data.payable.where((i) => i.overdueAt(now)).length;
     return Card(
@@ -59,8 +60,22 @@ class FinancesOwedSummary extends StatelessWidget {
                   ),
                 ),
               ),
-            if (credit.isNotEmpty) ...[
+            // #3682 — paid, the business has not confirmed yet: its own
+            // line per currency, outside To pay.
+            if (validating.isNotEmpty) ...[
               if (toPay.isNotEmpty) const SizedBox(height: AppSpacing.sm),
+              Text(l10n.financesBeingValidated,
+                  style: theme.textTheme.labelLarge),
+              for (final e in validating.entries)
+                Text(
+                  money.moneyNamed(e.key).formatMinor(e.value),
+                  key: ValueKey('finances-being-validated-${e.key}'),
+                  style: theme.textTheme.titleMedium?.strong,
+                ),
+            ],
+            if (credit.isNotEmpty) ...[
+              if (toPay.isNotEmpty || validating.isNotEmpty)
+                const SizedBox(height: AppSpacing.sm),
               Text(l10n.financesYourCredit, style: theme.textTheme.labelLarge),
               for (final e in credit.entries)
                 Text(

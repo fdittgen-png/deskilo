@@ -10979,6 +10979,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesAwaitingValidation => 'Payment being validated';
 
   @override
+  String get financesBeingValidated => 'Being validated';
+
+  @override
   String get financesColumnAmount => 'Amount';
 
   @override
@@ -11036,6 +11039,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesHideAmount => 'Hide amount';
 
   @override
+  String get financesHostsUnavailable =>
+      'Your connected installations could not be listed right now; what is shown comes from this installation only.';
+
+  @override
   String financesLinkAction(String space) {
     return 'Open for $space';
   }
@@ -11055,6 +11062,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesNothingPaid => 'No settled invoice yet.';
+
+  @override
+  String get financesNothingSoFar => 'Nothing among what was read so far.';
 
   @override
   String get financesOpenDocument => 'Open';

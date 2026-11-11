@@ -18382,6 +18382,12 @@ abstract class AppLocalizations {
   /// **'Payment being validated'**
   String get financesAwaitingValidation;
 
+  /// Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay
+  ///
+  /// In en, this message translates to:
+  /// **'Being validated'**
+  String get financesBeingValidated;
+
   /// #2557 C4 Me › Finances: the rows header, the amount in its own currency.
   ///
   /// In en, this message translates to:
@@ -18466,6 +18472,12 @@ abstract class AppLocalizations {
   /// **'Hide amount'**
   String get financesHideAmount;
 
+  /// Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none
+  ///
+  /// In en, this message translates to:
+  /// **'Your connected installations could not be listed right now; what is shown comes from this installation only.'**
+  String get financesHostsUnavailable;
+
   /// Shown as a text in my finances link card (money). Placeholders: {space} (String).
   ///
   /// In en, this message translates to:
@@ -18501,6 +18513,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No settled invoice yet.'**
   String get financesNothingPaid;
+
+  /// Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing among what was read so far.'**
+  String get financesNothingSoFar;
 
   /// #2557 C4 Me › Finances: a row's Open action, in the issuing workspace.
   ///

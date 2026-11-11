@@ -118,5 +118,17 @@
         "type": "String"
       }
     }
+  },
+  "financesBeingValidated": "Being validated",
+  "@financesBeingValidated": {
+    "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
+  },
+  "financesNothingSoFar": "Nothing among what was read so far.",
+  "@financesNothingSoFar": {
+    "description": "Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed"
+  },
+  "financesHostsUnavailable": "Your connected installations could not be listed right now; what is shown comes from this installation only.",
+  "@financesHostsUnavailable": {
+    "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
   }
 }
