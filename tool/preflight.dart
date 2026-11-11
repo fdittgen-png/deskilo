@@ -5,6 +5,7 @@
 // This is local tooling, not evidence that the full CI suite passed.
 import 'dart:io';
 
+import 'preflight/affected_tests.dart';
 import 'preflight/git_state.dart';
 import 'preflight/preflight.dart';
 
@@ -33,6 +34,7 @@ int run(List<String> args, {
         .replaceFirst(RegExp(r'\r?\n$'), '');
     final git = PreflightGit(root, execute);
     final paths = git.changedPaths(base);
+    if (listOnly) _listTests(root, paths);
     if (paths.isEmpty) {
       stdout.writeln('preflight v$preflightVersion: no changed inputs; no generators run');
       return 0;
@@ -79,5 +81,19 @@ int run(List<String> args, {
   } on FormatException catch (error, stack) {
     stderr.writeln('preflight: invalid input: $error\n$stack');
     return 2;
+  }
+}
+
+/// #3715 -- the tests the branch's diff drags in (the table plus importers).
+void _listTests(String root, Iterable<String> paths) {
+  final tests = affectedTests(
+    paths,
+    readTestMap(File('$root/tool/preflight/test_map.json')),
+    readTestSources(root),
+  );
+  stdout.writeln('tests to run before the push (beyond the lint folder): '
+      '${tests.length}');
+  for (final t in tests) {
+    stdout.writeln('  $t');
   }
 }

@@ -104,7 +104,7 @@ needs the deployment entity registry (reference.md "Flags").
 ## 3. Verify
 ```bash
 python3 scripts/worktree_prepare.py # check-only; do not hide unresolved packages
-dart run tool/preflight.dart --list   # run ONLY the selected generators, then review their diff
+dart run tool/preflight.dart --list   # the generators to run (ONLY those, then review their diff) AND the tests to run before the push: analyze + the lint folder once + exactly that list (#3715)
 dart analyze --fatal-infos            # after generation; retain the original exit
 flutter test test/lint <your tests>   # affected suites only; full suite stays in CI
 ```
