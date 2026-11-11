@@ -108,6 +108,8 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
 
   /// The letter and its message for [line], read before any wait.
   Future<ReminderLetter> _letterOf(QueuedReminder line, Invoice invoice) async {
+    await readDocumentPolicies(ref); // #3742
+    if (!mounted) throw StateError('the queue was left');
     final l10n = context.l10n;
     final money = ref.read(appFormatProvider).moneyIn(invoice.currency);
     final owed = invoiceRemainingCents(
@@ -185,6 +187,8 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     QueuedReminder line,
     Invoice invoice,
   ) async {
+    await readDocumentPolicies(ref); // #3742
+    if (!mounted) throw StateError('the queue was left');
     final letter = await reminderLetterReport(
       ref,
       context,

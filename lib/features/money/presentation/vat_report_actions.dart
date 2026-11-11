@@ -192,7 +192,7 @@ Future<void> showVatReport(
       dayOf: dayOf,
     );
     // #3742 — the owner's template, read: never an empty one.
-    await ref.read(invoicePdfTemplateProvider.future);
+    await readDocumentPolicies(ref);
     if (!context.mounted) return;
     final data = _vatReportData(context, ref, report, reference);
     final rendered =

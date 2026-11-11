@@ -17,6 +17,7 @@ import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../core/data/policy_read.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
@@ -57,6 +58,15 @@ export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
 export 'report_image_resolve.dart' show resolveReportImages;
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
+/// #3742 — the policies a document is drawn from (the owner's template and
+/// reminder rules), read before it is: a failure is asked again, a read
+/// still running is awaited. Every action that prints, shares, previews or
+/// sends calls this first, under its print guard.
+Future<void> readDocumentPolicies(WidgetRef ref) async {
+  await readPolicy(ref, invoicePdfTemplateProvider, invoicePdfTemplateProvider.future);
+  await readPolicy(ref, dunningRulesProvider, dunningRulesProvider.future);
+}
+
 /// The active workspace's PDF template (#454) — empty when the
 /// invoicePdfTemplate feature is off, so switching the flag off takes
 /// the text off every future render without touching the template. A

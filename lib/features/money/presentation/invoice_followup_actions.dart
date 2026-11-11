@@ -10,6 +10,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/data/policy_read.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -180,7 +181,9 @@ Future<void> remindInvoice(
   // they cannot be read, nothing is sent and the reader is told.
   final DunningRules rules;
   try {
-    rules = await ref.read(dunningRulesProvider.future);
+    // #3742 — a remembered failure is asked again: the next tap can send.
+    await readPolicy(ref, invoicePdfTemplateProvider, invoicePdfTemplateProvider.future);
+    rules = await readPolicy(ref, dunningRulesProvider, dunningRulesProvider.future);
   } on Object catch (e, st) {
     TraceLogger.instance.error('money', 'reminder rules read failed',
         error: e, stackTrace: st);

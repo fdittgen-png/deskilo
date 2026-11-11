@@ -54,6 +54,7 @@ Future<void> exportBiPdf(
   final now = ref.read(clockProvider).now();
   final today = WorkspaceTime.dateOf(now);
   try {
+    await readDocumentPolicies(ref); // #3742 — the owner's template texts
     final sections = <BiDashboardContent>[];
     var left = 0;
     for (final m in modules) {

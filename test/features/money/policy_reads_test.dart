@@ -5,13 +5,19 @@
 // could not be read, no default stands in for it, the failure is said at
 // once (no automatic retries), and nothing is built on a guess. "Never saved"
 // is an answer — the business gets the defaults; "could not be read" is not.
+import 'dart:async';
+
 import 'package:deskilo/core/data/policy_read.dart';
+import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/presentation/invoice_documents.dart';
+import 'package:deskilo/features/money/presentation/invoice_followup_actions.dart';
+import 'package:deskilo/features/money/presentation/invoice_pdf_actions.dart';
 import 'package:deskilo/features/money/presentation/screens/invoicing_wizard_screen.dart';
 import 'package:deskilo/features/money/presentation/screens/repartition_wizard_screen.dart';
+import 'package:deskilo/features/money/presentation/widgets/invoice_template_sheet.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -23,6 +29,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/test_workspace_context.dart';
 
 const _failed = 'This could not be loaded. Try again.';
 
@@ -168,4 +175,181 @@ void main() {
     expect(find.byType(RepartitionMethod), findsNothing);
     expect(tester.takeException(), isNull);
   });
+
+  // #3742 — the reads above are sticky without retries: an action asks a
+  // remembered failure again and awaits a read still running.
+  Future<void> act(
+    WidgetTester tester,
+    List<Override> overrides,
+    Future<void> Function(BuildContext context, WidgetRef ref) action,
+  ) async {
+    await tester.pumpWidget(
+      _app(
+        overrides,
+        Scaffold(
+          body: Consumer(
+            builder: (context, ref, _) => TextButton(
+              key: const ValueKey('go'),
+              onPressed: () => action(context, ref),
+              child: const Text('go'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+  }
+
+  Future<void> tapGo(WidgetTester tester) async {
+    await tester.tap(find.byKey(const ValueKey('go')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+  }
+
+  testWidgets('(a) the first print of a session waits for the template it '
+      'never read, and prints without a message', (tester) async {
+    final money = FakeMoneyRepository();
+    await money.createInvoice(
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      period: '2026-06',
+    );
+    await act(
+      tester,
+      [...standardTestOverrides(money: money), testReadyWorkspaceContext()],
+      (context, ref) => quickViewInvoice(context, ref, money.invoices.single),
+    );
+    await tapGo(tester);
+    expect(find.text(_failed), findsNothing);
+    expect(find.byKey(const ValueKey('report-quick-preview')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('(b) a template read that fails once says so; Retry prints', (
+    tester,
+  ) async {
+    final money = FakeMoneyRepository();
+    await money.createInvoice(
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      period: '2026-06',
+    );
+    var reads = 0;
+    await act(tester, [
+      ...standardTestOverrides(money: money),
+      testReadyWorkspaceContext(),
+      invoicePdfTemplateProvider.overrideWith((ref) async {
+        if (reads++ == 0) throw StateError('the template could not be read');
+        return InvoicePdfTemplate.empty;
+      }),
+    ], (context, ref) => quickViewInvoice(context, ref, money.invoices.single));
+    await tapGo(tester);
+    expect(find.text(_failed), findsOneWidget);
+    expect(find.byKey(const ValueKey('report-quick-preview')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('print-read-retry')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.byKey(const ValueKey('report-quick-preview')), findsOneWidget);
+    expect(reads, 2, reason: 'the remembered failure was asked again');
+  });
+
+  testWidgets('(c) reminder rules that fail once: Remind says so, the second '
+      'tap sends', (tester) async {
+    final money = _Reminders();
+    await money.createInvoice(
+      workspaceId: 'ws-1',
+      memberId: 'member-1',
+      period: '2026-06',
+    );
+    var reads = 0;
+    await act(tester, [
+      ...standardTestOverrides(money: money),
+      testReadyWorkspaceContext(),
+      dunningRulesProvider.overrideWith((ref) async {
+        if (reads++ == 0) throw StateError('the rules could not be read');
+        return DunningRules
+            .defaults; // empty-ok: never saved, the business's own answer
+      }),
+    ], (context, ref) => remindInvoice(context, ref, money.invoices.single));
+    await tapGo(tester);
+    expect(find.text(_failed), findsOneWidget);
+    expect(money.reminded, isEmpty);
+    await tester.pump(const Duration(seconds: 5));
+    await tapGo(tester);
+    expect(money.reminded, [
+      money.invoices.single.id,
+    ], reason: 'the second tap reads the rules again and sends');
+  });
+
+  testWidgets('(d) billing rules that fail once: the wizard says so; opened '
+      'again it suggests from the rules', (tester) async {
+    var reads = 0;
+    final overrides = [
+      ...standardTestOverrides(money: FakeMoneyRepository()),
+      billingRulesProvider.overrideWith((ref) async {
+        if (reads++ == 0) {
+          throw StateError('the billing rules could not be read');
+        }
+        return const BillingRules();
+      }),
+    ];
+    final container = ProviderContainer(overrides: overrides);
+    addTearDown(container.dispose);
+    Widget wizard() => UncontrolledProviderScope(
+      container: container,
+      child: const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: InvoicingWizardScreen(),
+      ),
+    );
+    await tester.pumpWidget(wizard());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text(_failed), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpWidget(wizard());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text(_failed), findsNothing);
+    expect(reads, 2, reason: 'opened again, the rules are read again');
+  });
+
+  testWidgets('(e) the template editor waits for the rules, then says they '
+      'failed, with Try again — never an exception', (tester) async {
+    final rules = Completer<DunningRules>();
+    await tester.pumpWidget(
+      _app(
+        [
+          ...standardTestOverrides(money: FakeMoneyRepository()),
+          enabledFeaturesSyncProvider.overrideWithValue({
+            WorkspaceFeature.dunning,
+          }),
+          dunningRulesProvider.overrideWith((ref) => rules.future),
+        ],
+        const Scaffold(
+          body: ReportTemplateEditor(initial: InvoicePdfTemplate.empty),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+    rules.completeError(StateError('the rules could not be read'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.textContaining('could not be loaded'), findsOneWidget);
+    expect(find.text('Try again'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+}
+
+/// Counts the reminders sent.
+class _Reminders extends FakeMoneyRepository {
+  final reminded = <String>[];
+  @override
+  Future<void> remindInvoice(String invoiceId) async {
+    reminded.add(invoiceId);
+    return super.remindInvoice(invoiceId);
+  }
 }

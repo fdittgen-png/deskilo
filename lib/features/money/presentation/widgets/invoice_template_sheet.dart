@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -219,6 +220,14 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
 
   @override
   Widget build(BuildContext context) {
+    // #3742 — the reminder kinds come from the business's own rules: until
+    // they are read the editor waits, or says they could not be, with Try
+    // again; it never throws.
+    if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.dunning)) {
+      if (readsStandIn(ref, [dunningRulesProvider]) case final standIn?) {
+        return standIn;
+      }
+    }
     final content = _content(context);
     if (!widget.asPage) {
       return SafeArea(

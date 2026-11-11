@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/data/policy_read.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -41,7 +42,7 @@ class _InvoicingWizardScreenState extends ConsumerState<InvoicingWizardScreen> {
       // when they cannot be read, the wizard says so instead of guessing.
       final BillingRules rules;
       try {
-        rules = await ref.read(billingRulesProvider.future);
+        rules = await readPolicy(ref, billingRulesProvider, billingRulesProvider.future);
       } on Object catch (e, st) {
         TraceLogger.instance.error('money', 'billing rules read failed',
             error: e, stackTrace: st);
