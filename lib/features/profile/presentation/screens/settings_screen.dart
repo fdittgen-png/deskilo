@@ -36,6 +36,7 @@ import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
+import '../../../workspace/presentation/widgets/configure_workspace_tile.dart';
 import '../../../workspace/presentation/widgets/instance_owner_tile.dart';
 import '../../../workspace/presentation/widgets/my_badge_tile.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -193,6 +194,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           if (ref.watch(currentWorkspaceProvider).value case final workspace?)
             Padding(padding: AppSpacing.mdAll, child: Text(workspace.name,
               style: Theme.of(context).textTheme.titleLarge)),
+          const ConfigureWorkspaceTile(), // #3282
           ...workspaceTiles,
         ],
       )])),

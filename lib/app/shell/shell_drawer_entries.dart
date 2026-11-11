@@ -11,6 +11,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
+import '../../features/workspace/domain/configure_workspace.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../l10n/app_localizations.dart';
@@ -257,15 +258,11 @@ class DrawerEntries {
   /// configure, as its routes require; a delegate who may not opens the
   /// deepest page they may — the workspace's settings, the switches, the plan.
   List<DrawerEntry> setupGuide() {
-    final target = setupOpen && may(WorkspacePermission.manageConfiguration)
-        ? '/setup'
-        : may(WorkspacePermission.workspaceSettings)
-            ? '/workspace-settings'
-            : may(WorkspacePermission.manageConfiguration)
-                ? '/features'
-                : mayOnPlaces(WorkspacePermission.manageSites)
-                    ? '/editor'
-                    : null;
+    final target = configureWorkspaceRoute(
+      permissions: permissions,
+      features: features,
+      setupOpen: setupOpen,
+    );
     if (target == null) return const [];
     return [
       DrawerEntry(
