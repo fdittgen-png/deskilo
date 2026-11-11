@@ -3,7 +3,7 @@
   "@eventTypeBadgeSecurityAlert": {
     "description": "Shown as a text in event labels (events)."
   },
-  "eventBadgeSecurityAlert": "Badge sign-in paused after {failures} failed attempts in {minutes} minutes. Review the badges and ask members to use email while the lock clears.",
+  "eventBadgeSecurityAlert": "Badge sign-in paused after {failures, plural, =1{1 failed attempt} other{{failures} failed attempts}} in {minutes, plural, =1{1 minute} other{{minutes} minutes}}. Review the badges and ask members to use email while the lock clears.",
   "badgePinReviewNotice": "This PIN predates length tracking or is shorter than the current minimum. Ask the member to change it in their own settings. Their existing PIN keeps working.",
   "@badgePinReviewNotice": {
     "description": "Shown as a text in badge pin review notice (workspace)."

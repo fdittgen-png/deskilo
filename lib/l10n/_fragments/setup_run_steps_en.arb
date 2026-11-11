@@ -17,7 +17,7 @@
   },
   "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
   "@setupPricingBand": {
-    "description": "#2871 setup run steps: setupPricingBand",
+    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage.",
     "placeholders": {
       "from": {
         "type": "int"
@@ -47,7 +47,7 @@
   },
   "setupPricingLevel": "Membership at {pct} %",
   "@setupPricingLevel": {
-    "description": "#2871 setup run steps: setupPricingLevel",
+    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage.",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -150,7 +150,7 @@
   "@setupApprovalsFlowRequestBody": {
     "description": "#2871 setup run steps: setupApprovalsFlowRequestBody"
   },
-  "setupApprovalsFlowValidators": "{required} of {people} approve",
+  "setupApprovalsFlowValidators": "{required, plural, =1{1 of {people} approves} other{{required} of {people} approve}}",
   "@setupApprovalsFlowValidators": {
     "description": "#2871 setup run steps: setupApprovalsFlowValidators",
     "placeholders": {

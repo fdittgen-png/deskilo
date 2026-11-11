@@ -32,7 +32,7 @@
   "@validationThresholdNote": {
     "description": "#1221 the validation screen, grouped by the process a rule interrupts"
   },
-  "validationStepQuorum": "{who} — any {count}",
+  "validationStepQuorum": "{who} — {count, plural, =1{any 1} other{any {count}}}",
   "@validationStepQuorum": {
     "description": "#1221 the middle step: who decides and how many are needed",
     "placeholders": {
@@ -46,7 +46,7 @@
   },
   "validationStepSequential": "{who} — {count} in turn",
   "@validationStepSequential": {
-    "description": "#1221 the middle step when the accepts are asked one after another",
+    "description": "#1221 the middle step when the accepts are asked one after another. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
     "placeholders": {
       "count": {
         "type": "int"

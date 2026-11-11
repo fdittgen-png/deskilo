@@ -1,5 +1,5 @@
 {
-  "uxAttentionSummary": "{updates} new updates · {pending} awaiting your decision",
+  "uxAttentionSummary": "{updates, plural, =1{1 new update} other{{updates} new updates}} · {pending, plural, =1{1 awaiting your decision} other{{pending} awaiting your decision}}",
   "@uxAttentionSummary": {
     "description": "Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).",
     "placeholders": {

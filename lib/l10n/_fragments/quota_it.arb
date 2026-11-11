@@ -7,7 +7,7 @@
   "memberMakeMember": "Revoca il ruolo Amministratore",
   "memberRoleChangeRequested": "Cambio di ruolo inviato per la convalida.",
   "eventTypeQuota": "Mezze giornate extra",
-  "eventQuotaRequested": "{actor} richiede {halfDays} mezze giornate extra per {period}",
+  "eventQuotaRequested": "{actor} richiede {halfDays, plural, =1{1 mezza giornata extra} other{{halfDays} mezze giornate extra}} per {period}",
   "quotaExceededError": "Quota mensile di mezze giornate raggiunta — richieda mezze giornate extra da Le mie finanze.",
   "quotaRequestButton": "Richiedi mezze giornate extra",
   "quotaRequestTitle": "Richiedi mezze giornate extra",

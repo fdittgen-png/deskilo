@@ -15,7 +15,7 @@
   "availabilityGranularity30": "Slot di 30 minuti",
   "availabilityGranularity60": "Slot di 1 ora",
   "availabilityGranularityFullDay": "Solo giornate intere",
-  "planSlotError": "Le prenotazioni devono iniziare e finire sulla griglia di {minutes} minuti.",
+  "planSlotError": "Le prenotazioni devono iniziare e finire sul{minutes, plural, =1{la griglia di 1 minuto} other{la griglia di {minutes} minuti}}.",
   "planFullDayError": "Qui le prenotazioni coprono l'intera giornata.",
   "availabilityGranularityHours": "Orari reali (da–a esatto, mezze/giornate come scorciatoie)",
   "availabilityWorkHoursTitle": "Orario di lavoro",

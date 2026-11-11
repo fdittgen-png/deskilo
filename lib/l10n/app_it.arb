@@ -422,6 +422,37 @@
     "description": "Workspace admission history and discussion (#1791)"
   },
   "archiveSwissNeedsExportLog": "La documentazione delle procedure di questo archivio svizzero indica che ogni download è registrato nel registro delle esportazioni, e questo spazio non ne tiene: attivi prima i periodi contabili o i sistemi contabili.",
+  "assignPaymentAction": "Assegna alle fatture",
+  "assignPaymentActionFor": "Assegna {amount} alle fatture",
+  "assignPaymentAmountLabel": "Importo per la fattura {number}",
+  "assignPaymentFull": "{count, plural, =1{1 fattura pagata per intero} other{{count} fatture pagate per intero}}",
+  "assignPaymentNoOpen": "Nessuna fattura aperta per questo cliente: il pagamento resta come credito.",
+  "assignPaymentNoteDefault": "Il pagamento ha coperto solo una parte di questa fattura.",
+  "assignPaymentNoteLabel": "Nota per le fatture pagate in parte",
+  "assignPaymentOver": "Più di quanto resta del pagamento",
+  "assignPaymentPart": "{count, plural, =1{1 fattura pagata in parte} other{{count} fatture pagate in parte}}",
+  "assignPaymentPending": "In attesa di approvazione",
+  "assignPaymentReadFailedInvoices": "Non è stato possibile leggere le fatture.",
+  "assignPaymentReadFailedPayment": "Non è stato possibile leggere il pagamento.",
+  "assignPaymentReceived": "Ricevuto: {amount}",
+  "assignPaymentRowCaption": "Scade {date} · da pagare {amount}",
+  "assignPaymentRowCaptionNoDate": "Da pagare: {amount}",
+  "assignPaymentRowOver": "Più di quanto resta da pagare su questa fattura",
+  "assignPaymentRowWaiting": "{number}: un pagamento di questa fattura attende l'approvazione; ora non accetta alcuna parte.",
+  "assignPaymentStays": "{amount} restano come credito",
+  "assignPaymentStaysNone": "Non resta nessun credito",
+  "assignPaymentTickLabel": "Paga la fattura {number}",
+  "assignPaymentUsedHead": "Ricevuto {received} · già assegnato {assigned} · resta {left}",
+  "assignRefuseBusiness": "Questo pagamento non è stato trovato in questa attività. Non è stato registrato nulla.",
+  "assignRefuseCurrency": "Una fattura non è nella valuta dell'attività. Non è stato registrato nulla.",
+  "assignRefuseDuplicate": "Una fattura compare due volte. Non è stato registrato nulla.",
+  "assignRefuseGeneric": "Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova.",
+  "assignRefuseNotAllowed": "Non può assegnare pagamenti in questa attività. Non è stato registrato nulla.",
+  "assignRefuseNote": "Una parte inferiore al dovuto richiede una nota.",
+  "assignRefusePartOver": "Una parte supera quanto resta da pagare sulla sua fattura. Non è stato registrato nulla.",
+  "assignRefusePayer": "Una fattura non è di questo cliente. Non è stato registrato nulla.",
+  "assignRefuseSumOver": "Le parti superano quanto resta del pagamento. Non è stato registrato nulla.",
+  "assignRefuseUsed": "Il pagamento è stato usato nel frattempo. Viene riletto: controlla gli importi.",
   "assistantSetupActorConfigurer": "Chi: chi gestisce la configurazione di questo spazio di lavoro",
   "assistantSetupActorDatabaseAdministrator": "Chi: un amministratore del database",
   "assistantSetupActorInstanceOperator": "Chi: il proprietario dell'istanza o un delegato",
@@ -862,7 +893,7 @@
   "bankImportAction": "Importa un estratto",
   "bankImportFailed": "Non è stato possibile importare l'estratto. Non è stato aggiunto nulla.",
   "bankImportRepeated": "Questo file è già stato importato. Non è stato aggiunto nulla.",
-  "bankImported": "Importato: {created} nuovi, {known} già noti, {review} da verificare.",
+  "bankImported": "Importato: {created, plural, =1{1 voce nuova} other{{created} voci nuove}}, {known, plural, =1{1 già nota} other{{known} già note}}, {review} da verificare.",
   "bankLineDuplicate": "Duplicato",
   "bankLineMatched": "Salda {number}",
   "bankLineMoneyOut": "Uscita, da riconciliare",
@@ -2350,7 +2381,7 @@
   "@biPrintWorkspace": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biProjectionBasis": "Una retta tracciata sugli ultimi {count} periodi completi, prolungata. La fascia ombreggiata è l'intervallo probabile. Una stima, non una promessa.",
+  "biProjectionBasis": "Una retta tracciata su{count, plural, =1{l'ultimo periodo completo} other{gli ultimi {count} periodi completi}}, prolungata. La fascia ombreggiata è l'intervallo probabile. Una stima, non una promessa.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -2364,7 +2395,7 @@
     "description": "Business analytics dashboard: biProjectionLabel"
   },
   "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
-  "biProjectionNotEnough": "Storico ancora insufficiente per proiettare: finora {have} periodi completi, ne servono {need}.",
+  "biProjectionNotEnough": "Storico ancora insufficiente per proiettare: finora {have, plural, =1{1 periodo completo} other{{have} periodi completi}}, {need, plural, =1{ne serve 1} other{ne servono {need}}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {
@@ -2716,7 +2747,7 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "billEntitlement": "{used} mezze giornate fatturate su {included} ({openDays} giorni di apertura)",
+  "billEntitlement": "{used} su {included, plural, =1{1 mezza giornata fatturata} other{{included} mezze giornate fatturate}} ({openDays, plural, =1{1 giorno di apertura} other{{openDays} giorni di apertura}})",
   "billInvoiceCard": "Fattura {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -3737,7 +3768,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n} colori suoi, in questo ordine.",
+  "coloursRoomsOwn": "{n, plural, =1{1 colore suo, in questo ordine.} other{{n} colori suoi, in questo ordine.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -3750,7 +3781,7 @@
   "@coloursRoomsProduct": {
     "description": "#1289 colours screen: no own fills yet"
   },
-  "coloursRoomsSaved": "{n} colori delle sale salvati.",
+  "coloursRoomsSaved": "{n, plural, =1{1 colore della sala salvato.} other{{n} colori delle sale salvati.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -3767,7 +3798,7 @@
   "@coloursTitle": {
     "description": "#1289 colours screen: the title"
   },
-  "coloursTooMany": "La piantina dipinge al massimo {most} colori delle sale.",
+  "coloursTooMany": "La piantina dipinge al massimo {most, plural, =1{1 colore della sala} other{{most} colori delle sale}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {
@@ -5746,7 +5777,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "eventBadgeSecurityAlert": "L’accesso con badge è sospeso dopo {failures} tentativi falliti in {minutes} minuti. Verifica i badge e chiedi ai membri di accedere via e-mail fino alla fine del blocco.",
+  "eventBadgeSecurityAlert": "L’accesso con badge è sospeso dopo {failures, plural, =1{1 tentativo fallito} other{{failures} tentativi falliti}} in {minutes, plural, =1{1 minuto} other{{minutes} minuti}}. Verifica i badge e chiedi ai membri di accedere via e-mail fino alla fine del blocco.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -5871,7 +5902,7 @@
       }
     }
   },
-  "eventQuotaRequested": "{actor} richiede {halfDays} mezze giornate extra per {period}",
+  "eventQuotaRequested": "{actor} richiede {halfDays, plural, =1{1 mezza giornata extra} other{{halfDays} mezze giornate extra}} per {period}",
   "eventReject": "Rifiuta",
   "eventRejectedBy": "Rifiutato da {name} · {when}",
   "eventRepeatedMarker": "×{count}",
@@ -6008,7 +6039,7 @@
   "eventUsageRecordDeleteLine": "{actor} chiede di rimuovere un rilevamento ({space})",
   "eventValidatedBy": "Convalidato da {name} · {when}",
   "eventValidationStage": "Convalida {stage} su {required} richiesta",
-  "eventValidations": "{current}/{required} convalide",
+  "eventValidations": "{current}/{required, plural, =1{1 convalida} other{{required} convalide}}",
   "eventsEmpty": "Ancora nessun evento.",
   "eventsFilterAll": "Tutti",
   "eventsPendingHeader": "In attesa della sua conferma",
@@ -7419,7 +7450,7 @@
   "@financesOutstanding": {
     "description": "Me › Finances"
   },
-  "financesOverdueCount": "{count} scadute",
+  "financesOverdueCount": "{count, plural, =1{1 scaduta} other{{count} scadute}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {
@@ -8148,9 +8179,9 @@
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Esistono solo personal_home e workspace_host; operator_set_installation_roles scrive un insieme valido.",
   "instanceDoctorRolesUnknownTitle": "I ruoli dell'installazione non sono un insieme noto",
   "instanceDoctorRun": "Avvia il controllo di sicurezza",
-  "instanceDoctorSchemaNoVersionDetail": "Esistono {tables} tabelle, ma nessuna versione dello schema: questa istanza è anteriore alla migrazione 0226 ed è quindi indietro rispetto a un'app che richiede {required}. L'installazione la aggiorna da ciò che ha registrato.\n        Rimedio: dart run tool/instance.dart install --ref <ref>\n        Se non sa da dove riprendere, prima: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, =1{Esiste 1 tabella} other{Esistono {tables} tabelle}}, ma nessuna versione dello schema: questa istanza è anteriore alla migrazione 0226 ed è quindi indietro rispetto a un'app che richiede {required}. L'installazione la aggiorna da ciò che ha registrato.\n        Rimedio: dart run tool/instance.dart install --ref <ref>\n        Se non sa da dove riprendere, prima: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "instanceDoctorSchemaNoVersionTitle": "Lo schema non ha versione",
-  "instanceDoctorSignupsNobodyDetail": "{created} registrati, 0 confermati. La registrazione non è solo lenta: nessuno l'ha completata.\n        Controlli prima l'URL del sito qui sopra: è quella a cui rimanda l'e-mail.",
+  "instanceDoctorSignupsNobodyDetail": "{created, plural, =1{1 registrato} other{{created} registrati}}, 0 confermati. La registrazione non è solo lenta: nessuno l'ha completata.\n        Controlli prima l'URL del sito qui sopra: è quella a cui rimanda l'e-mail.",
   "instanceDoctorSignupsNobodyTitle": "Nessuno ha confermato in sette giorni",
   "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 policy di lettura, che nomina la cartella proprietaria del file} other{{count} policy di lettura, ciascuna con la cartella proprietaria del file}}",
   "instanceDoctorStorageScopedTitle": "Le letture dell'archiviazione sono circoscritte",
@@ -8276,7 +8307,7 @@
   "instanceReadyCurrent": "La versione {version} di DesKilo è installata e aggiornata: lo schema non richiede nulla.",
   "instanceReadyInstall": "Il progetto è vuoto: verrà installato tutto.",
   "instanceReadyResume": "{pending, plural, one{Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazione e verranno eseguite solo quelle.} other{Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazioni e verranno eseguite solo quelle.}}",
-  "instanceReadyUpgrade": "La versione {version} di DesKilo è installata: verranno eseguite solo le {pending} migrazioni mancanti.",
+  "instanceReadyUpgrade": "La versione {version} di DesKilo è installata: {pending, plural, =1{verrà eseguita solo la migrazione mancante} other{verranno eseguite solo le {pending} migrazioni mancanti}}.",
   "instanceRegion": "Regione (la più vicina allo spazio)",
   "@instanceRegion": {
     "description": "#977 instance wizard: instanceRegion"
@@ -8428,7 +8459,7 @@
   "invoiceActionUnknownBody": "La richiesta è stata inviata ma la risposta non è arrivata, quindi potrebbe essere già stata applicata. Non viene rinviato nulla. Controlla di nuovo per trovarla.",
   "invoiceAllCaughtUp": "Tutto in ordine — niente da fatturare.",
   "invoiceAlreadyInvoiced": "Questo mese è già fatturato per questo membro.",
-  "invoiceAnnexSummary": "Allegato: {movements} movimenti, {checkIns} check-in",
+  "invoiceAnnexSummary": "Allegato: {movements, plural, =1{1 movimento} other{{movements} movimenti}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-in}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -8716,7 +8747,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} emesse, {failed} non riuscite.",
+  "invoiceIssuedPartial": "{issued, plural, =1{1 emessa} other{{issued} emesse}}, {failed, plural, =1{1 non riuscita} other{{failed} non riuscite}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -9479,7 +9510,7 @@
   "@invoiceStatusRemainderCancelled": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
-  "invoiceSummaryOpen": "{count} aperte · {amount} in sospeso",
+  "invoiceSummaryOpen": "{count, plural, =1{1 aperta} other{{count} aperte}} · {amount} in sospeso",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -10201,7 +10232,7 @@
       }
     }
   },
-  "journeyOverdueCount": "{count} in ritardo",
+  "journeyOverdueCount": "{count, plural, =1{1 in ritardo} other{{count} in ritardo}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {
@@ -11036,7 +11067,7 @@
   "libraryApplyChanges": "{count, plural, =0{Niente selezionato} =1{Applica 1 modifica} other{Applica {count} modifiche}}",
   "libraryCarriesSettings": "con le sue impostazioni",
   "libraryConfirmSensitive": "Questo modifica: {groups}. Applicare?",
-  "libraryCounts": "{levels} livelli · {desks} scrivanie · {seats} posti",
+  "libraryCounts": "{levels, plural, =1{1 livello} other{{levels} livelli}} · {desks, plural, =1{1 scrivania} other{{desks} scrivanie}} · {seats, plural, =1{1 posto} other{{seats} posti}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {
@@ -11766,7 +11797,7 @@
   "@memberMonthInProgress": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "+{count} altre",
+  "memberMoreInvoices": "{count, plural, =1{+1 altra} other{+{count} altre}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -12091,10 +12122,10 @@
   "moneyNoInvoicesYet": "Nessuna fattura ancora — lo spazio fattura il mese una volta chiuso.",
   "moneyNoteLabel": "Nota (facoltativa)",
   "moneyNothingOpen": "Niente di aperto — è in regola.",
-  "moneyOpenInvoicesSummary": "{count} aperte · {amount} dovuti",
+  "moneyOpenInvoicesSummary": "{count, plural, =1{1 aperta} other{{count} aperte}} · {amount} dovuti",
   "moneyOpenInvoicesTitle": "Fatture aperte",
   "moneyOverage": "{count, plural, =1{Eccedenza (1 mezza giornata extra)} other{Eccedenza ({count} mezze giornate extra)}}",
-  "moneyOverdueBanner": "{count} scadute — {amount} da regolare",
+  "moneyOverdueBanner": "{count, plural, =1{1 scaduta} other{{count} scadute}} — {amount} da regolare",
   "moneyOverdueBy": "{days, plural, =0{Scade oggi} =1{Scaduta da 1 giorno} other{Scaduta da {days} giorni}}",
   "moneyPayNow": "Paga ora",
   "moneyPaymentDateLabel": "Data del pagamento",
@@ -12121,7 +12152,7 @@
   "moneySubmitExpense": "Invia una spesa",
   "moneySubmitPayment": "Invia per conferma",
   "moneySubscriptionPct": "Abbonamento {pct} %",
-  "moneyUsage": "{used} mezze giornate usate su {included}",
+  "moneyUsage": "{used} su {included, plural, =1{1 mezza giornata usata} other{{included} mezze giornate usate}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} mezza giornata usata} other{{used} mezze giornate usate}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Il mio badge",
@@ -12702,6 +12733,7 @@
   "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
   "paymentMatchHeader": "{amount} ricevuti il {date}",
   "paymentMatchIntro": "È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.",
+  "paymentMatchInvoiceGone": "Questa fattura non è più aperta: l'elenco viene riletto.",
   "paymentMatchRefused": "Non è stato possibile abbinare il pagamento. Riprovi.",
   "paymentMatchSame": "Stesso importo",
   "paymentMatchTitle": "Pagamenti da abbinare",
@@ -13131,7 +13163,7 @@
   "planReservedBy": "Prenotato da {name}",
   "planSeatBlocked": "Questo posto è bloccato per manutenzione.",
   "planSendForConfirmation": "Invia per conferma",
-  "planSlotError": "Le prenotazioni devono iniziare e finire sulla griglia di {minutes} minuti.",
+  "planSlotError": "Le prenotazioni devono iniziare e finire sul{minutes, plural, =1{la griglia di 1 minuto} other{la griglia di {minutes} minuti}}.",
   "planStartNow": "Inizia adesso",
   "planStartsAt": "Inizia alle {time}",
   "planStateFree": "Libero",
@@ -13563,7 +13595,7 @@
   "processCoordinationDesc": "Coordinare attività, messaggi e decisioni.",
   "processDocumentsInformation": "Documenti e informazioni",
   "processDocumentsInformationDesc": "Creare, condividere ed esportare informazioni dello spazio.",
-  "processFeatureCount": "{enabled} di {total} funzionalità attive",
+  "processFeatureCount": "{enabled} di {total, plural, =1{1 funzionalità attiva} other{{total} funzionalità attive}}",
   "processFeatureOff": "Disattivata",
   "processFeatureOn": "Attiva",
   "processFeatureWaiting": "Attiva, in attesa di {feature}",
@@ -13600,7 +13632,7 @@
   "processStateAvailable": "Disponibile",
   "processStateNeedsAttention": "Da verificare",
   "processStatePartial": "Parziale",
-  "processSubprocessCount": "{active} di {total} sottoprocessi attivi",
+  "processSubprocessCount": "{active} di {total, plural, =1{1 sottoprocesso attivo} other{{total} sottoprocessi attivi}}",
   "processSwitchHint": "Tocchi una funzionalità per cambiarla tra gli interruttori.",
   "processSwitchOff": "Disattiva",
   "processSwitchOn": "Attiva",
@@ -15953,7 +15985,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Prenotabile a fasce di {minutes} minuti",
+  "reserveSlotMinutes": "Prenotabile a {minutes, plural, =1{fasce di 1 minuto} other{fasce di {minutes} minuti}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {
@@ -16619,7 +16651,7 @@
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
   "sampleDataClear": "Cancella i dati di esempio",
-  "sampleDataCounts": "Questo spazio contiene dati di esempio: {members} membri, {bookings} prenotazioni, {payments} pagamenti.",
+  "sampleDataCounts": "Questo spazio contiene dati di esempio: {members, plural, =1{1 membro} other{{members} membri}}, {bookings, plural, =1{1 prenotazione} other{{bookings} prenotazioni}}, {payments, plural, =1{1 pagamento} other{{payments} pagamenti}}.",
   "sampleDataExplain": "Riempia questo spazio di prova con alcuni membri di esempio, le loro prenotazioni delle ultime e delle prossime due settimane e alcuni pagamenti, creati a partire dai suoi posti e dai suoi prezzi. Non viene inviato nulla a nessuno e può cancellare tutto in seguito.",
   "sampleDataFill": "Riempi con dati di esempio",
   "sampleDataFillFailed": "Non è stato possibile creare i dati di esempio.",
@@ -17478,7 +17510,7 @@
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Non appena c'è un'approvazione.} other{Non appena ci sono {required} approvazioni.}} Un rifiuto la chiude, e nessuno approva la propria richiesta.",
   "setupApprovalsFlowRequest": "Un membro chiede",
   "setupApprovalsFlowRequestBody": "Un rimborso, la cancellazione di una prenotazione, una spesa…",
-  "setupApprovalsFlowValidators": "{required} su {people} approvano",
+  "setupApprovalsFlowValidators": "{required, plural, =1{1 su {people} approva} other{{required} su {people} approvano}}",
   "setupApprovalsFlowWho": "{owners, plural, =1{Il proprietario} other{{owners} proprietari}} e {admins, plural, =0{nessun amministratore} =1{1 amministratore} other{{admins} amministratori}}",
   "setupApprovalsOpenRules": "Regole per tipo di richiesta",
   "setupApprovalsOwnRulesNone": "Ogni richiesta segue la regola predefinita qui sopra.",
@@ -18740,7 +18772,7 @@
   "supportPrepare": "Prepara anteprima",
   "supportPrivacy": "Sono inclusi solo conteggi limitati di questo dispositivo e verifiche note. Sono esclusi identità, indirizzi del server, credenziali, dati aziendali e registri grezzi. Le verifiche sconosciute non sono disponibili; un operatore può eseguire doctor --support-json separatamente. I file condivisi non possono essere revocati.",
   "supportSaved": "Salvato localmente",
-  "supportSize": "Anteprima: {bytes} byte",
+  "supportSize": "Anteprima: {bytes, plural, =1{1 byte} other{{bytes} byte}}",
   "@supportSize": {
     "placeholders": {
       "bytes": {
@@ -18909,7 +18941,7 @@
   "taskExportValuePlan": "planimetria",
   "taskExportValuePolicy": "una regola di prenotazione",
   "taskExportValueQuota": "una quota",
-  "taskExportValueRedacted": "non conservato ({length} caratteri)",
+  "taskExportValueRedacted": "non conservato ({length, plural, =1{1 carattere} other{{length} caratteri}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {
@@ -19019,7 +19051,7 @@
   "taskRecorderFieldTime": "orario",
   "taskRecorderIndicator": "{count, plural, =1{Registrazione di un'attività: 1 passaggio} other{Registrazione di un'attività: {count} passaggi}}",
   "taskRecorderLeaveOut": "Escludi dall'esportazione",
-  "taskRecorderLimits": "Fino a {steps} passaggi o {minutes} minuti per registrazione. Le registrazioni vengono eliminate da questo dispositivo dopo {days} giorni; un file esportato è suo e resta dove lo ha salvato.",
+  "taskRecorderLimits": "Fino a {steps, plural, =1{1 passaggio} other{{steps} passaggi}} o {minutes, plural, =1{1 minuto} other{{minutes} minuti}} per registrazione. Le registrazioni vengono eliminate da questo dispositivo dopo {days, plural, =1{1 giorno} other{{days} giorni}}; un file esportato è suo e resta dove lo ha salvato.",
   "taskRecorderMyRecordings": "Le mie registrazioni su questo dispositivo",
   "taskRecorderNameHint": "Facoltativo. Se lasci vuoto, la registrazione prende come nome l'ora di avvio.",
   "taskRecorderNameLabel": "Dai un nome a questa attività",
@@ -19942,7 +19974,7 @@
   "usageWas": "era {before}",
   "uxAdvancedSection": "Avanzate",
   "uxAlertsFilterEmpty": "Nessun aggiornamento corrisponde a questi filtri.",
-  "uxAttentionSummary": "{updates} novità · {pending} decisioni in attesa",
+  "uxAttentionSummary": "{updates, plural, =1{1 novità} other{{updates} novità}} · {pending, plural, =1{1 decisione in attesa} other{{pending} decisioni in attesa}}",
   "@uxAttentionSummary": {
     "placeholders": {
       "updates": {
@@ -20041,7 +20073,7 @@
   "validationSpecificAdmins": "Admin specifici",
   "validationStepApplies": "diventa effettivo",
   "validationStepOwnerToo": "e il proprietario, sempre",
-  "validationStepQuorum": "{who} — {count} qualsiasi",
+  "validationStepQuorum": "{who} — {count, plural, =1{1 qualsiasi} other{{count} qualsiasi}}",
   "validationStepRaised": "Qualcuno chiede",
   "validationStepSequential": "{who} — {count} in sequenza",
   "validationThresholdNote": "Gli importi minori si applicano subito.",
@@ -21566,7 +21598,7 @@
     "description": "#1532: workspaceXmlImportPartial"
   },
   "workspaceXmlImportPreviewAccessories": "Accessori: {count}",
-  "workspaceXmlImportPreviewConfiguration": "Configurazione: {settings} impostazioni, {rows} righe in {tables} tabelle",
+  "workspaceXmlImportPreviewConfiguration": "Configurazione: {settings, plural, =1{1 impostazione} other{{settings} impostazioni}}, {rows, plural, =1{1 riga} other{{rows} righe}} in {tables, plural, =1{1 tabella} other{{tables} tabelle}}",
   "@workspaceXmlImportPreviewConfiguration": {
     "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
     "placeholders": {

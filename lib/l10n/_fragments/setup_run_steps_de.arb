@@ -26,7 +26,7 @@
   "setupApprovalsOpenRules": "Regeln je Art von Anfrage",
   "setupApprovalsFlowRequest": "Ein Mitglied fragt an",
   "setupApprovalsFlowRequestBody": "Eine Erstattung, eine gelöschte Buchung, eine Ausgabe …",
-  "setupApprovalsFlowValidators": "{required} von {people} geben frei",
+  "setupApprovalsFlowValidators": "{required, plural, =1{1 von {people} gibt frei} other{{required} von {people} geben frei}}",
   "setupApprovalsFlowWho": "{owners, plural, =1{Der Eigentümer} other{{owners} Eigentümer}} und {admins, plural, =0{kein Administrator} =1{1 Administrator} other{{admins} Administratoren}}",
   "setupApprovalsFlowOutcome": "Sie gilt",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Sobald eine Freigabe vorliegt.} other{Sobald {required} Freigaben vorliegen.}} Eine Ablehnung schließt sie, und niemand gibt die eigene Anfrage frei.",

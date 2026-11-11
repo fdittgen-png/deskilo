@@ -17,7 +17,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Prenotabile a fasce di {minutes} minuti",
+  "reserveSlotMinutes": "Prenotabile a {minutes, plural, =1{fasce di 1 minuto} other{fasce di {minutes} minuti}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {

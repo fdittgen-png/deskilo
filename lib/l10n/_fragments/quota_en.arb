@@ -38,7 +38,7 @@
   "@eventTypeQuota": {
     "description": "Event-type label for quota-extension requests (0031): feed filter chip + validation policy card"
   },
-  "eventQuotaRequested": "{actor} requests {halfDays} extra half-days for {period}",
+  "eventQuotaRequested": "{actor} requests {halfDays, plural, =1{1 extra half-day} other{{halfDays} extra half-days}} for {period}",
   "@eventQuotaRequested": {
     "description": "Feed line of a quota-extension request event",
     "placeholders": {
@@ -104,7 +104,7 @@
   },
   "memberReservationLimitChip": "max {n}",
   "@memberReservationLimitChip": {
-    "description": "Subtitle chip on a member row whose reservation cap is set",
+    "description": "Subtitle chip on a member row whose reservation cap is set. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
     "placeholders": {
       "n": {
         "type": "int"
@@ -196,7 +196,7 @@
   },
   "memberSimultaneousLimitChip": "{n} at once",
   "@memberSimultaneousLimitChip": {
-    "description": "#628 - subtitle chip on a member row with an explicit simultaneous allowance",
+    "description": "#628 - subtitle chip on a member row with an explicit simultaneous allowance. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
     "placeholders": {
       "n": {
         "type": "int"

@@ -1,6 +1,6 @@
 {
   "@@locale": "de",
-  "eventValidations": "{current}/{required} Bestätigungen",
+  "eventValidations": "{current}/{required, plural, =1{1 Bestätigung} other{{required} Bestätigungen}}",
   "eventValidatedBy": "Bestätigt von {name} · {when}",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
   "eventSystemDecider": "System",

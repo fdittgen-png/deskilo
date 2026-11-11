@@ -1,6 +1,61 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'billing_rules.dart';
 import 'command_receipt.dart';
+
+/// One part of a payment: [amountCents] of it settles [invoiceId] (#3671).
+typedef PaymentAllocation = ({String invoiceId, int amountCents});
+
+/// What the server answers to `apply_payment_to_invoices` (#3671): how many
+/// invoices took a part and what stays on the payment as the payer's credit.
+class PaymentApplied {
+  const PaymentApplied({required this.invoices, required this.leftCents});
+
+  factory PaymentApplied.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'apply_payment_to_invoices');
+    return PaymentApplied(
+      invoices: r.integer('invoices'),
+      leftCents: r.integer('left_cents'),
+    );
+  }
+
+  /// The invoices that took a part.
+  final int invoices;
+
+  /// What stays on the payment.
+  final int leftCents;
+}
+
+/// What one open invoice of a payment's payer can take of it now (#3671,
+/// `payment_invoice_capacity_v1`): the server's list, so the sheet never
+/// offers a part the server refuses.
+class InvoiceCapacity {
+  const InvoiceCapacity({
+    required this.invoiceId,
+    required this.stillDueCents,
+    required this.canTake,
+  });
+
+  factory InvoiceCapacity.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'payment_invoice_capacity_v1');
+    return InvoiceCapacity(
+      invoiceId: r.string('invoice_id'),
+      stillDueCents: r.integer('still_due_cents'),
+      canTake: r.isTrue('can_take'),
+    );
+  }
+
+  final String invoiceId;
+
+  /// The total, less what confirmed matches paid, less the parts that await
+  /// approval.
+  final int stillDueCents;
+
+  /// False while a payment of this invoice awaits approval: it is shown,
+  /// not offered.
+  final bool canTake;
+}
 
 /// #2591 C3 — what a person does to an invoice: issue or correct, void,
 /// remind, regroup, settle a credit note, match a payment. Each call is
@@ -82,5 +137,23 @@ abstract interface class InvoiceCommands {
     required String resolution,
     String note = '',
     int? amountCents,
+  });
+
+  /// Settles several invoices with ONE payment (RPC
+  /// `apply_payment_to_invoices`, #3671): each of [allocations] is the part
+  /// of the payment one invoice takes; a part below what is due on its
+  /// invoice is accepted as partial and needs [note]. All or nothing.
+  Future<PaymentApplied> applyPaymentToInvoices({
+    required String workspaceId,
+    required String paymentLedgerId,
+    required List<PaymentAllocation> allocations,
+    String note = '',
+  });
+
+  /// The open invoices of [paymentLedgerId]'s payer and what each can take
+  /// of it now (RPC `payment_invoice_capacity_v1`, #3671).
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
   });
 }

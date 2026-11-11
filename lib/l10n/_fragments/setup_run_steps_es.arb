@@ -26,7 +26,7 @@
   "setupApprovalsOpenRules": "Reglas por tipo de solicitud",
   "setupApprovalsFlowRequest": "Un miembro solicita",
   "setupApprovalsFlowRequestBody": "Un reembolso, la eliminación de una reserva, un gasto…",
-  "setupApprovalsFlowValidators": "{required} de {people} aprueban",
+  "setupApprovalsFlowValidators": "{required, plural, =1{1 de {people} aprueba} other{{required} de {people} aprueban}}",
   "setupApprovalsFlowWho": "{owners, plural, =1{El propietario} other{{owners} propietarios}} y {admins, plural, =0{ningún administrador} =1{1 administrador} other{{admins} administradores}}",
   "setupApprovalsFlowOutcome": "Se aplica",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{En cuanto hay una aprobación.} other{En cuanto hay {required} aprobaciones.}} Un rechazo la cierra, y nadie aprueba su propia solicitud.",

@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "eventValidations": "{current}/{required} convalide",
+  "eventValidations": "{current}/{required, plural, =1{1 convalida} other{{required} convalide}}",
   "eventValidatedBy": "Convalidato da {name} · {when}",
   "eventRejectedBy": "Rifiutato da {name} · {when}",
   "eventSystemDecider": "Sistema",
