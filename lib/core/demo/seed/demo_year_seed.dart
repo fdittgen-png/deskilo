@@ -477,23 +477,3 @@ void applyDemoVat(FakeMoneyRepository money) {
     );
   }
 }
-
-/// #3601 — the register of a month reads with the other members' invoices
-/// first: the owner is a paying member and keeps every invoice of her own,
-/// but a visitor's first impression of the register is not "the owner billing
-/// herself". The seed issues a month's invoices on one day; the members'
-/// invoices are issued an hour after the owner's, so the register (newest
-/// first) lists them first. No date, amount or figure moves.
-void orderDemoRegister(FakeMoneyRepository money, {String owner = 'member-1'}) {
-  for (var i = 0; i < money.invoices.length; i++) {
-    final invoice = money.invoices[i];
-    if (invoice.memberId == owner) continue;
-    final day = invoice.issuedAt;
-    // Only a day's start: an invoice already given an hour keeps it.
-    if (day.hour == 0 && day.minute == 0) {
-      money.invoices[i] = invoice.copyWith(
-        issuedAt: day.add(const Duration(hours: 1)),
-      );
-    }
-  }
-}
