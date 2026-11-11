@@ -70,18 +70,10 @@ class ShellScreen extends ConsumerWidget {
       permissions,
       membershipKnown: ref.watch(myMemberProvider).value != null,
     );
-    final newInvoice = center == ShellCenterAction.newInvoice;
     final path = GoRouterState.of(context).uri.path;
     final selectedPosition = navs.indexWhere(
       (n) => n.selectedAt(branch: navigationShell.currentIndex, path: path),
     );
-    void openNav(ShellNav nav) => nav.location != null
-        ? context.go(nav.location!)
-        : navigationShell.goBranch(
-            nav.branch,
-            initialLocation: nav.branch == navigationShell.currentIndex,
-          );
-
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
     final webShell = ref.watch(webShellProvider);
@@ -153,7 +145,41 @@ class ShellScreen extends ConsumerWidget {
       bottomNavigationBar:
           webShell || (navs.isEmpty && center == ShellCenterAction.none)
           ? null
-          : ShellBottomBar(
+          : _bottomBar(
+              context,
+              ref,
+              navs: navs,
+              center: center,
+              selectedPosition: selectedPosition,
+              badges: (
+                calendar: calendarBadge,
+                money: attention.money,
+                unread: unreadMessages,
+              ),
+            ),
+    );
+  }
+
+  /// The bottom bar: the destination table, and the centre action (the
+  /// booking, or a new invoice for a business without places, #3551).
+  Widget _bottomBar(
+    BuildContext context,
+    WidgetRef ref, {
+    required List<ShellNav> navs,
+    required ShellCenterAction center,
+    required int selectedPosition,
+    required ({int calendar, int money, int unread}) badges,
+  }) {
+    final l10n = context.l10n;
+    final tabTitles = shellTabTitles(context, l10n);
+    final newInvoice = center == ShellCenterAction.newInvoice;
+    void openNav(ShellNav nav) => nav.location != null
+        ? context.go(nav.location!)
+        : navigationShell.goBranch(
+            nav.branch,
+            initialLocation: nav.branch == navigationShell.currentIndex,
+          );
+    return ShellBottomBar(
               // -1 when no side tab matches what is on screen — on the
               // Reserve hub (the centre button carries the indication
               // instead) and for one redirect frame of a gated branch.
@@ -174,9 +200,9 @@ class ShellScreen extends ConsumerWidget {
                     shellDestinationFor(
                       nav.branch,
                       tabTitles: tabTitles,
-                      calendarBadge: calendarBadge,
-                      moneyBadge: attention.money,
-                      unreadMessages: unreadMessages,
+                      calendarBadge: badges.calendar,
+                      moneyBadge: badges.money,
+                      unreadMessages: badges.unread,
                     ),
               ],
               reserveLabel: newInvoice
@@ -201,7 +227,6 @@ class ShellScreen extends ConsumerWidget {
                       initialLocation:
                           navigationShell.currentIndex == ShellBranch.reserve,
                     ),
-            ),
-    );
+            );
   }
 }
