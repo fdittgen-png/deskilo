@@ -5343,6 +5343,54 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get businessExampleApproveBookings =>
+      'Par exemple : un membre demande la salle de réunion pour jeudi et la gérante la confirme.';
+
+  @override
+  String get businessExampleAssociation =>
+      'Par exemple : les membres élisent un bureau et tiennent une assemblée générale chaque année.';
+
+  @override
+  String get businessExampleDoorTablet =>
+      'Par exemple : les membres passent leur badge sur une tablette à l\'entrée en arrivant.';
+
+  @override
+  String get businessExampleIssueInvoices =>
+      'Par exemple : une entreprise membre a besoin chaque mois d\'une facture numérotée pour sa comptabilité.';
+
+  @override
+  String get businessExampleKeepBooks =>
+      'Par exemple : votre comptable demande les livres de l\'année et les relevés bancaires.';
+
+  @override
+  String get businessExampleMembersOweMoney =>
+      'Par exemple : un abonnement mensuel, un pass journée, ou café et impressions sur la note.';
+
+  @override
+  String get businessExampleOrganised =>
+      'Par exemple : une dépense au-delà d\'un montant fixé doit être approuvée par deux membres du bureau.';
+
+  @override
+  String get businessExamplePayOnline =>
+      'Par exemple : un membre règle le relevé du mois par carte depuis son téléphone.';
+
+  @override
+  String get businessExamplePublicPage =>
+      'Par exemple : quelqu\'un qui cherche un bureau près de chez lui trouve votre page et vous écrit.';
+
+  @override
+  String get businessExampleSeveralRoomsOrSites =>
+      'Par exemple : un open space, deux salles de réunion et une seconde adresse en ville.';
+
+  @override
+  String get businessExampleTracksPurchases =>
+      'Par exemple : le loyer, le ménage et la machine à café que vous achetez pour l\'espace.';
+
+  @override
+  String get businessExampleVatRegistered =>
+      'Par exemple : vos factures portent la TVA et vous déposez des déclarations de TVA.';
+
+  @override
   String businessKindAndMore(String list, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -6219,6 +6267,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get composerMention => 'Mentionner quelqu’un';
+
+  @override
+  String get configureWorkspaceTitle => 'Configurer l\'espace';
 
   @override
   String get connectionCancelled =>
@@ -27593,6 +27644,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.';
 
   @override
+  String get setupAdvancedSettings => 'Réglages avancés';
+
+  @override
   String get setupAnswerUnknown => 'Je ne sais pas encore';
 
   @override
@@ -28424,11 +28478,115 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupLevelNameTaxVat => 'TVA';
 
   @override
+  String get setupLevelOutcomeAssistantOff =>
+      'Vous pourrez gérer l\'espace sans qu\'aucun assistant n\'accède à ses données.';
+
+  @override
+  String get setupLevelOutcomeAssistantOn =>
+      'Vous pourrez laisser un assistant de votre choix agir dans l\'espace pour vous, et enregistrer des tâches qui guident les autres.';
+
+  @override
+  String get setupLevelOutcomeBookingsMeasured =>
+      'Vous pourrez enregistrer les arrivées par badge, QR code ou tablette d\'accueil et voir le taux d\'occupation.';
+
+  @override
+  String get setupLevelOutcomeBookingsNone =>
+      'Vous pourrez gérer votre activité sans places à réserver.';
+
+  @override
+  String get setupLevelOutcomeBookingsResources =>
+      'Vous pourrez proposer salles de réunion, parkings et niveaux entiers, gérer plusieurs sites, accueillir des invités et fermer les jours fériés.';
+
+  @override
+  String get setupLevelOutcomeBookingsSimple =>
+      'Vous pourrez laisser les membres réserver bureaux et salles sur votre plan, dans vos horaires et vos règles de réservation, aussi en série ou pour quelqu\'un d\'autre.';
+
+  @override
+  String get setupLevelOutcomeCommunityBasic =>
+      'Vous pourrez tenir un annuaire des membres avec leurs rôles, partager un calendrier et envoyer messages et notifications.';
+
+  @override
+  String get setupLevelOutcomeCommunityOrganised =>
+      'Vous pourrez partager la propriété, définir vos propres rôles et champs, gérer des profils pour d\'autres et faire valider les demandes par étapes.';
+
+  @override
+  String get setupLevelOutcomeMoneyInvoices =>
+      'Vous pourrez émettre des factures numérotées pour les abonnements et l\'usage, envoyer des relances et concevoir vos documents.';
+
+  @override
+  String get setupLevelOutcomeMoneyNone =>
+      'Vous pourrez gérer l\'espace sans aucun argent dans l\'application.';
+
+  @override
+  String get setupLevelOutcomeMoneyStatements =>
+      'Vous pourrez fixer le prix de vos abonnements et services et remettre à chaque membre un relevé mensuel de ce qu\'il doit.';
+
+  @override
+  String get setupLevelOutcomeOperationsAdvanced =>
+      'Vous pourrez essayer des changements dans une copie de développement, les déployer et transférer la configuration entre espaces.';
+
+  @override
+  String get setupLevelOutcomeOperationsBasic =>
+      'Vous pourrez suivre le guide de mise en place, exporter documents et données, et essayer dans la démo.';
+
+  @override
+  String get setupLevelOutcomeOperationsInsight =>
+      'Vous pourrez voir une vue d\'ensemble de l\'espace et concevoir vos propres rapports.';
+
+  @override
+  String get setupLevelOutcomePaymentsOff =>
+      'Vous pourrez encaisser hors de l\'application, par virement ou en espèces, et enregistrer ce qui arrive.';
+
+  @override
+  String get setupLevelOutcomePaymentsOnline =>
+      'Vous pourrez laisser les membres payer en ligne via votre prestataire de paiement.';
+
+  @override
+  String get setupLevelOutcomePresentationBasic =>
+      'Vous pourrez distinguer les membres par leurs propres initiales.';
+
+  @override
+  String get setupLevelOutcomePresentationBranded =>
+      'Vous pourrez donner à l\'espace vos propres couleurs et vos propres mots.';
+
+  @override
+  String get setupLevelOutcomePresentationPublic =>
+      'Vous pourrez publier une page publique et recevoir des demandes de personnes qui ne sont pas encore membres.';
+
+  @override
+  String get setupLevelOutcomePurchasesExpenses =>
+      'Vous pourrez enregistrer vos dépenses, les répéter chaque mois et les répartir entre les membres.';
+
+  @override
+  String get setupLevelOutcomePurchasesFull =>
+      'Vous pourrez commander auprès de fournisseurs, enregistrer factures et baux, tenir un registre des immobilisations et analyser vos achats.';
+
+  @override
+  String get setupLevelOutcomePurchasesNone =>
+      'Vous pourrez gérer l\'espace sans enregistrer vos propres achats.';
+
+  @override
+  String get setupLevelOutcomeTaxBooks =>
+      'Vous pourrez tenir la comptabilité, clôturer les périodes, importer les relevés bancaires et tout transmettre à votre comptable.';
+
+  @override
+  String get setupLevelOutcomeTaxNone =>
+      'Vous pourrez facturer sans gérer la TVA dans l\'application.';
+
+  @override
+  String get setupLevelOutcomeTaxVat =>
+      'Vous pourrez appliquer les taux de TVA aux factures et aux achats et préparer vos déclarations de TVA.';
+
+  @override
   String get setupLevelsApplied =>
       'Votre espace fait désormais ce que vous avez choisi.';
 
   @override
   String get setupLevelsApply => 'Appliquer';
+
+  @override
+  String get setupLevelsApplyFailed =>
+      'Les choix n\'ont pas pu être enregistrés. Réessayez.';
 
   @override
   String get setupLevelsChoice => 'Ce qu’il lui faut';
@@ -28452,6 +28610,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupLevelsNoChange => 'Rien ne change : l’espace le fait déjà.';
+
+  @override
+  String get setupLevelsOutcomeTitle => 'Avec ce changement :';
 
   @override
   String get setupLevelsPresets => 'Démarrage rapide';
@@ -28857,6 +29018,32 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count demi-journées incluses',
+      one: '1 demi-journée incluse',
+    );
+    return '$level : $_temp0';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '1 jour',
+    );
+    return 'Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d\'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert $_temp0 :';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes. Vos jours d\'ouverture n\'ont pas pu être lus, aucun exemple n\'est donc affiché.';
+
+  @override
   String get setupPricingLevelsBody =>
       'Les niveaux que les membres peuvent choisir. Chacun est tarifé par la tranche dans laquelle il tombe.';
 
@@ -29104,6 +29291,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le service n’a pas pu être ajouté. Réessayez.';
 
   @override
+  String get setupStateEnabled => 'Activé, encore à configurer';
+
+  @override
+  String get setupStateMarkedDone => 'Configuré, marqué fait par vous';
+
+  @override
   String get setupStateNameBlocked => 'Attend une autre étape';
 
   @override
@@ -29120,6 +29313,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupStateNameReady => 'Fait';
+
+  @override
+  String get setupStateNeedsDecision => 'Attend votre décision';
+
+  @override
+  String get setupStateVerified => 'Configuré et vérifié';
 
   @override
   String get setupStepDone => 'Terminé';
@@ -29339,6 +29538,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupStepTitleVat => 'TVA';
+
+  @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Configurer l\'espace › $task';
+  }
 
   @override
   String get setupTaskSaved =>

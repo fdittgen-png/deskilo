@@ -31,5 +31,8 @@
   "setupApprovalsFlowOutcome": "Se aplica",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{En cuanto hay una aprobación.} other{En cuanto hay {required} aprobaciones.}} Un rechazo la cierra, y nadie aprueba su propia solicitud.",
   "setupApprovalsPreviewRequest": "Su solicitud",
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{A la espera de 1 aprobación} other{A la espera de {required} aprobaciones}}"
+  "setupApprovalsPreviewWaiting": "{required, plural, =1{A la espera de 1 aprobación} other{A la espera de {required} aprobaciones}}",
+  "setupPricingLevelsBasis": "Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas, y una media jornada más allá de la parte de un miembro se cobra a la tarifa adicional de su tramo. Este mes su espacio abre {days, plural, =1{1 día} other{{days} días}}:",
+  "setupPricingLevelIncludes": "{level}: {count, plural, =1{1 media jornada incluida} other{{count} medias jornadas incluidas}}",
+  "setupPricingLevelsBasisUnknown": "Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas. No se pudieron leer sus días de apertura, así que no se muestra ningún ejemplo."
 }

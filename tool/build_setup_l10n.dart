@@ -178,6 +178,8 @@ Map<String, dynamic> _journeyWords(Map<String, dynamic> arb, String locale) {
     'question': select('setupQuestion'),
     'process': select('setupProcessName'),
     'level': select('setupLevelName'),
+    // #3283 — what each level lets the business do, as the app's review says.
+    'outcome': select('setupLevelOutcome'),
     'reason': select('setupReason'),
     'preset': select('setupPresetName'),
     'threshold': select('setupObligationThreshold', keepOther: true),

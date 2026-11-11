@@ -94,5 +94,5 @@ function obligationsCard(lbl){const rows=OBLIGATIONS[S.country]||[];
 function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.append(h('option',{value:l.id},jw('level',pr.key+'_'+l.id)));s.value=now[pr.key];
  s.onchange=()=>{applyLevel(pr.key,s.value);render()};s.setAttribute('aria-label',jw('process',pr.key));
  const why=S.journey.used&&rec[pr.key]&&rec[pr.key].level===now[pr.key]?jw('reason',rec[pr.key].reason):'';
- return h('div',{},h('label',{},jw('process',pr.key)),s,why?h('p',{class:'hint'},why):null)}
+ return h('div',{},h('label',{},jw('process',pr.key)),s,h('p',{class:'hint'},jw('outcome',pr.key+'_'+now[pr.key])),why?h('p',{class:'hint'},why):null)}
 

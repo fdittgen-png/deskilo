@@ -82,11 +82,59 @@ void main() {
     expect(find.byKey(const ValueKey('drawer-setup-guide')), findsOneWidget);
   });
 
-  testWidgets('configuration remains reachable once every milestone is reached', (
+  testWidgets(
+    'configuration remains reachable once every milestone is reached',
+    (tester) async {
+      await _open(tester, done: true);
+      await _reveal(tester);
+      expect(find.byKey(const ValueKey('drawer-setup-guide')), findsOneWidget);
+    },
+  );
+
+  // #3282 — one door for the whole configuration: it is named so, opens the
+  // guide for the owner, and the guide carries the expert pages (the
+  // workspace's settings, the feature switches, the plan) one tap deeper.
+  testWidgets('Configure workspace opens the guide and its advanced settings', (
     tester,
   ) async {
     await _open(tester, done: true);
     await _reveal(tester);
-    expect(find.byKey(const ValueKey('drawer-setup-guide')), findsOneWidget);
+    final door = find.byKey(const ValueKey('drawer-setup-guide'));
+    expect(
+      find.descendant(of: door, matching: find.text('Configure workspace')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('drawer-features')), findsNothing);
+    expect(find.byKey(const ValueKey('drawer-editor')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('drawer-workspace-settings')),
+      findsNothing,
+    );
+    await tester.tap(door);
+    for (var i = 0; i < 6; i++) {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    final advanced = find.byKey(const ValueKey('setup-advanced-settings'));
+    await tester.scrollUntilVisible(
+      advanced,
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byKey(const ValueKey('setup-guide-list')),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.tap(advanced);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(
+      find.byKey(const ValueKey('setup-advanced-workspace-settings')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('setup-advanced-features')),
+      findsOneWidget,
+    );
   });
 }

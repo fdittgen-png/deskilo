@@ -8411,6 +8411,78 @@ abstract class AppLocalizations {
   /// **'The colour {color} was not applied: {pair} would be unreadable.'**
   String brandColorRefused(String color, String pair);
 
+  /// #3283 a business example under the setup question approve_bookings.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a member asks for Thursday\'s meeting room and the manager confirms it.'**
+  String get businessExampleApproveBookings;
+
+  /// #3283 a business example under the setup question association.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: the members elect a board and hold a general meeting each year.'**
+  String get businessExampleAssociation;
+
+  /// #3283 a business example under the setup question door_tablet.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: members tap their badge on a tablet by the entrance as they arrive.'**
+  String get businessExampleDoorTablet;
+
+  /// #3283 a business example under the setup question issue_invoices.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a company member needs a numbered invoice for its accounts each month.'**
+  String get businessExampleIssueInvoices;
+
+  /// #3283 a business example under the setup question keep_books.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: your accountant asks for the year\'s books and the bank statements.'**
+  String get businessExampleKeepBooks;
+
+  /// #3283 a business example under the setup question members_owe_money.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a monthly membership, a day pass or coffee and printing on the bill.'**
+  String get businessExampleMembersOweMoney;
+
+  /// #3283 a business example under the setup question organised.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: an expense over a set amount needs the approval of two board members.'**
+  String get businessExampleOrganised;
+
+  /// #3283 a business example under the setup question pay_online.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a member pays this month\'s statement by card from their phone.'**
+  String get businessExamplePayOnline;
+
+  /// #3283 a business example under the setup question public_page.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: someone looking for a desk nearby finds your page and writes to you.'**
+  String get businessExamplePublicPage;
+
+  /// #3283 a business example under the setup question several_rooms_or_sites.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: an open space, two meeting rooms and a second address across town.'**
+  String get businessExampleSeveralRoomsOrSites;
+
+  /// #3283 a business example under the setup question tracks_purchases.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: the rent, the cleaning and the coffee machine you buy for the space.'**
+  String get businessExampleTracksPurchases;
+
+  /// #3283 a business example under the setup question vat_registered.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: your invoices show VAT and you file VAT returns.'**
+  String get businessExampleVatRegistered;
+
   /// #3550 a shortened list: {list} is the first names, {count} how many more
   ///
   /// In en, this message translates to:
@@ -9778,6 +9850,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mention someone'**
   String get composerMention;
+
+  /// #3282 the one drawer entry for the workspace's whole configuration (guide, settings, features, plan).
+  ///
+  /// In en, this message translates to:
+  /// **'Configure workspace'**
+  String get configureWorkspaceTitle;
 
   /// Shown as a text in connection outcome text (directory).
   ///
@@ -44606,6 +44684,12 @@ abstract class AppLocalizations {
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
 
+  /// #3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced settings'**
+  String get setupAdvancedSettings;
+
   /// #3076 setup questions: the third answer, not decided yet
   ///
   /// In en, this message translates to:
@@ -45835,6 +45919,156 @@ abstract class AppLocalizations {
   /// **'VAT'**
   String get setupLevelNameTaxVat;
 
+  /// #3283 the setup review: what the level assistant_off lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run the space without any assistant reaching its data.'**
+  String get setupLevelOutcomeAssistantOff;
+
+  /// #3283 the setup review: what the level assistant_on lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to let an assistant you choose act in the space for you, and record tasks that guide others.'**
+  String get setupLevelOutcomeAssistantOn;
+
+  /// #3283 the setup review: what the level bookings_measured lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to check people in by badge, QR code or a kiosk tablet and see how full the space is.'**
+  String get setupLevelOutcomeBookingsMeasured;
+
+  /// #3283 the setup review: what the level bookings_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run your business without bookable places.'**
+  String get setupLevelOutcomeBookingsNone;
+
+  /// #3283 the setup review: what the level bookings_resources lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to offer meeting rooms, parking and whole levels, run several sites, welcome guests and close on public holidays.'**
+  String get setupLevelOutcomeBookingsResources;
+
+  /// #3283 the setup review: what the level bookings_simple lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to let members book desks and rooms on your floor plan, within your opening hours and booking rules, also as a series or for someone else.'**
+  String get setupLevelOutcomeBookingsSimple;
+
+  /// #3283 the setup review: what the level community_basic lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to keep a directory of members with their roles, share a calendar, and send messages and notifications.'**
+  String get setupLevelOutcomeCommunityBasic;
+
+  /// #3283 the setup review: what the level community_organised lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to share ownership, define your own roles and fields, manage profiles for others and have requests approved in steps.'**
+  String get setupLevelOutcomeCommunityOrganised;
+
+  /// #3283 the setup review: what the level money_invoices lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to issue numbered invoices for memberships and usage, send payment reminders and design your documents.'**
+  String get setupLevelOutcomeMoneyInvoices;
+
+  /// #3283 the setup review: what the level money_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run the space without any money in the app.'**
+  String get setupLevelOutcomeMoneyNone;
+
+  /// #3283 the setup review: what the level money_statements lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to price your memberships and services and give each member a monthly statement of what they owe.'**
+  String get setupLevelOutcomeMoneyStatements;
+
+  /// #3283 the setup review: what the level operations_advanced lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to try changes in a development copy, deploy them and move configuration between spaces.'**
+  String get setupLevelOutcomeOperationsAdvanced;
+
+  /// #3283 the setup review: what the level operations_basic lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to follow the setup guide, export documents and data, and try things in the Demo.'**
+  String get setupLevelOutcomeOperationsBasic;
+
+  /// #3283 the setup review: what the level operations_insight lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to see an overview of the space and design your own reports.'**
+  String get setupLevelOutcomeOperationsInsight;
+
+  /// #3283 the setup review: what the level payments_off lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to take payments outside the app, by transfer or in cash, and record what arrives.'**
+  String get setupLevelOutcomePaymentsOff;
+
+  /// #3283 the setup review: what the level payments_online lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to let members pay online through your payment provider.'**
+  String get setupLevelOutcomePaymentsOnline;
+
+  /// #3283 the setup review: what the level presentation_basic lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to tell members apart by their own initials.'**
+  String get setupLevelOutcomePresentationBasic;
+
+  /// #3283 the setup review: what the level presentation_branded lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to give the space your own colours and your own words.'**
+  String get setupLevelOutcomePresentationBranded;
+
+  /// #3283 the setup review: what the level presentation_public lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to publish a public page and receive enquiries from people who are not members yet.'**
+  String get setupLevelOutcomePresentationPublic;
+
+  /// #3283 the setup review: what the level purchases_expenses lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to record your expenses, repeat them each month and share them among members.'**
+  String get setupLevelOutcomePurchasesExpenses;
+
+  /// #3283 the setup review: what the level purchases_full lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to order from suppliers, record bills and leases, keep an asset register and analyse what you buy.'**
+  String get setupLevelOutcomePurchasesFull;
+
+  /// #3283 the setup review: what the level purchases_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to run the space without recording your own purchases.'**
+  String get setupLevelOutcomePurchasesNone;
+
+  /// #3283 the setup review: what the level tax_books lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to keep the books, close periods, import bank statements and hand everything to your accountant.'**
+  String get setupLevelOutcomeTaxBooks;
+
+  /// #3283 the setup review: what the level tax_none lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to invoice without handling VAT in the app.'**
+  String get setupLevelOutcomeTaxNone;
+
+  /// #3283 the setup review: what the level tax_vat lets the business do, one truthful sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be able to apply VAT rates to invoices and purchases and prepare your VAT returns.'**
+  String get setupLevelOutcomeTaxVat;
+
   /// #2868 setup levels: setupLevelsApplied
   ///
   /// In en, this message translates to:
@@ -45846,6 +46080,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply'**
   String get setupLevelsApply;
+
+  /// #3283 the setup choices could not be saved.
+  ///
+  /// In en, this message translates to:
+  /// **'The choices could not be saved. Try again.'**
+  String get setupLevelsApplyFailed;
 
   /// #2868 setup levels: setupLevelsChoice
   ///
@@ -45882,6 +46122,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing changes: the space already does this.'**
   String get setupLevelsNoChange;
+
+  /// #3283 the setup review: heading above the outcome sentence of each changed level.
+  ///
+  /// In en, this message translates to:
+  /// **'With this change:'**
+  String get setupLevelsOutcomeTitle;
 
   /// #2868 setup levels: setupLevelsPresets
   ///
@@ -46453,6 +46699,24 @@ abstract class AppLocalizations {
   /// **'Membership at {pct} %'**
   String setupPricingLevel(int pct);
 
+  /// #3283 setup pricing: the half-days a level includes this month.
+  ///
+  /// In en, this message translates to:
+  /// **'{level}: {count, plural, =1{1 half-day} other{{count} half-days}} included'**
+  String setupPricingLevelIncludes(String level, int count);
+
+  /// #3283 setup pricing: what a percentage level buys, on this workspace's own open days this month.
+  ///
+  /// In en, this message translates to:
+  /// **'A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member\'s share is charged at the extra rate of their band. This month your space is open {days, plural, =1{1 day} other{{days} days}}:'**
+  String setupPricingLevelsBasis(int days);
+
+  /// #3283 setup pricing: the basis when the opening days could not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'A level is the share of the half-days your space is open in a month: 100 % is all of them. Your opening days could not be read, so no example is shown.'**
+  String get setupPricingLevelsBasisUnknown;
+
   /// #2871 setup run steps: setupPricingLevelsBody
   ///
   /// In en, this message translates to:
@@ -46861,6 +47125,18 @@ abstract class AppLocalizations {
   /// **'The service could not be added. Try again.'**
   String get setupServicesSaveFailed;
 
+  /// #3282 a setup step whose feature is on but not configured yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched on, still to configure'**
+  String get setupStateEnabled;
+
+  /// #3282 a setup step the server cannot verify, which the owner marked done.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured, marked done by you'**
+  String get setupStateMarkedDone;
+
   /// #3485 setupStateName: the label for case 'blocked'.
   ///
   /// In en, this message translates to:
@@ -46896,6 +47172,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get setupStateNameReady;
+
+  /// #3282 a setup step the server cannot verify, still open: the owner decides.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs your decision'**
+  String get setupStateNeedsDecision;
+
+  /// #3282 a setup step the server checked and found configured.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured and checked'**
+  String get setupStateVerified;
 
   /// #3076 — on the last step page of the guide: goes back to the guide, nothing is left.
   ///
@@ -47274,6 +47562,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VAT'**
   String get setupStepTitleVat;
+
+  /// #3282 the breadcrumb on a setup task: the workspace, the configuration home, the task.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspace} › Configure workspace › {task}'**
+  String setupTaskBreadcrumb(String workspace, String task);
 
   /// Workspace configuration guidance and status.
   ///

@@ -10,6 +10,7 @@
 // explain the questions they belong to. `web/setup.html` shows the same
 // rows, written out from the bundled copy by `tool/build_setup_l10n.dart`.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:meta/meta.dart';
 import '../../../core/vat/tax_reference_active.dart';
 
 enum SetupObligationKind {
@@ -89,7 +90,7 @@ List<SetupObligation> setupObligations(
         kind: SetupObligationKind.einvoicing,
         detail: (row.value as MandateValue).duty,
         from: (row.value as MandateValue).from,
-        source: row.source,
+        source: readableSource(row.source),
         confirmed: row.confirmed,
       ),
   ]..sort((a, b) => '${a.from}${a.detail}'.compareTo('${b.from}${b.detail}'));
@@ -100,9 +101,31 @@ List<SetupObligation> setupObligations(
         detail: (row.value as ThresholdValue).effect,
         cents: (row.value as ThresholdValue).cents,
         currency: (row.value as ThresholdValue).currency,
-        source: row.source,
+        source: readableSource(row.source),
         confirmed: row.confirmed,
       ),
   ]..sort((a, b) => a.cents!.compareTo(b.cents!));
   return [...mandates, ...thresholds];
+}
+
+/// #3283 — the law a row cites, as an owner reads it: the reference store's
+/// notes for its maintainers (a code file, an issue number) are left out,
+/// the citation itself is kept word for word.
+@visibleForTesting
+String readableSource(String raw) {
+  var s = raw
+      // "einvoice_mandates.dart (#2358): …" and "#2362: …" lead a note.
+      .replaceFirst(RegExp(r'^[\w/.]+\.dart(\s*\(#[^)]*\))?\s*:\s*'), '')
+      .replaceFirst(RegExp(r'^#\d+\s*:\s*'), '')
+      // "(#2480)", "(#2438, #2363)", "(#2365: a maintainer's remark)".
+      .replaceAll(RegExp(r'\s*\(#\d+[^)]*\)'), '')
+      // "(the DATEV export, #2365)" -> "(the DATEV export)".
+      .replaceAll(RegExp(r',\s*#\d+(?:,\s*#\d+)*\)'), ')')
+      // "the figures invoice_fatturapa.dart carried" -> "the figures carried".
+      .replaceAll(RegExp(r'\s*\b[\w/]+\.dart\b'), '')
+      .replaceAll(RegExp(r'\s{2,}'), ' ')
+      .replaceAll(RegExp(r'\s+([;,.])'), r'$1')
+      .trim();
+  if (s.isNotEmpty) s = s[0].toUpperCase() + s.substring(1);
+  return s;
 }

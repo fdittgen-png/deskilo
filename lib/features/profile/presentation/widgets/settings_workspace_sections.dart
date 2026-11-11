@@ -44,14 +44,14 @@ List<Widget> workspaceSettingsTiles(
   required bool hasTwin,
 }) {
   final workspace = <Widget>[
+    ?_configureTile(context, l10n, perms, features),
     if (workspaceReportsAvailable(features, perms, isAdmin: canAdminister))
       ListTile(key: const ValueKey('settings-reports'),
         leading: const Icon(Icons.summarize_outlined),
         title: Text(l10n.uxReportsTitle),
         onTap: () => context.push('/reports')),
     if (perms.contains(WorkspacePermission.workspaceSettings))
-      ListTile(
-        key: const ValueKey('settings-workspace-sections-workspace-settings-title'),
+      ListTile(key: const ValueKey('settings-workspace-sections-workspace-settings-title'),
         leading: const Icon(Icons.business_outlined),
         title: Text(l10n.workspaceSettingsTitle),
         onTap: () => context.push('/workspace-settings'),
@@ -233,3 +233,25 @@ bool _moneyMay(
   Set<WorkspaceFeature> features,
   WorkspacePermission permission,
 ) => perms.contains(permission) && features.contains(WorkspaceFeature.moneyTab);
+
+/// #3282 — Manage workspace opens with the menu's own door.
+Widget? _configureTile(
+  BuildContext context,
+  AppLocalizations l10n,
+  Set<WorkspacePermission> perms,
+  Set<WorkspaceFeature> features,
+) {
+  final route = configureWorkspaceRoute(
+    permissions: perms,
+    features: features,
+    setupOpen: features.contains(WorkspaceFeature.setupGuide),
+  );
+  if (route == null) return null;
+  return ListTile(
+    key: const ValueKey('settings-configure-workspace'),
+    leading: const Icon(Icons.tune_outlined),
+    title: Text(l10n.configureWorkspaceTitle),
+    trailing: const Icon(Icons.chevron_right),
+    onTap: () => context.push(route),
+  );
+}

@@ -62,7 +62,7 @@ final class SetupDraftAutosaveProvider
 }
 
 String _$setupDraftAutosaveHash() =>
-    r'88e89d3cb8f7a0a1e9326df179d9325414d0638b';
+    r'07096ceec27d94c64e0ab42ca73b3a68e99bbfac';
 
 /// The draft of one setup [step] of one workspace.
 

@@ -31,5 +31,8 @@
   "setupApprovalsFlowOutcome": "Sie gilt",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Sobald eine Freigabe vorliegt.} other{Sobald {required} Freigaben vorliegen.}} Eine Ablehnung schließt sie, und niemand gibt die eigene Anfrage frei.",
   "setupApprovalsPreviewRequest": "Ihre Anfrage",
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{Wartet auf 1 Freigabe} other{Wartet auf {required} Freigaben}}"
+  "setupApprovalsPreviewWaiting": "{required, plural, =1{Wartet auf 1 Freigabe} other{Wartet auf {required} Freigaben}}",
+  "setupPricingLevelsBasis": "Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle, und ein Halbtag über den Anteil eines Mitglieds hinaus wird zum Zusatzpreis seiner Preisstufe berechnet. Diesen Monat ist Ihr Bereich {days, plural, =1{1 Tag} other{{days} Tage}} geöffnet:",
+  "setupPricingLevelIncludes": "{level}: {count, plural, =1{1 Halbtag} other{{count} Halbtage}} inklusive",
+  "setupPricingLevelsBasisUnknown": "Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle. Ihre Öffnungstage konnten nicht gelesen werden, daher wird kein Beispiel gezeigt."
 }

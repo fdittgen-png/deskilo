@@ -12,7 +12,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../application/setup_draft_autosave.dart';
 import '../../domain/setup_step_draft.dart';
@@ -59,8 +61,16 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
   /// The form shows answers restored from the draft.
   final _restored = ValueNotifier<bool>(false);
 
+  /// #3282 — the stored draft could not be read: the page says so and
+  /// offers to read it again; what is shown stays editable.
+  final _readFailed = ValueNotifier<bool>(false);
+
   /// Set while the frame itself fills the form: that is not an edit.
   var _filling = false;
+
+  /// #3282 — the owner typed before the stored draft arrived: what they
+  /// typed wins, the late draft is not filled over it.
+  var _typed = false;
 
   @override
   void initState() {
@@ -77,11 +87,13 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
     widget.form.edits.removeListener(_edited);
     widget.form.attach(null);
     _restored.dispose();
+    _readFailed.dispose();
     super.dispose();
   }
 
   void _edited() {
     if (_filling) return;
+    _typed = true;
     ref.read(_draft.notifier).changed(widget.form.answers());
   }
 
@@ -96,9 +108,11 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
 
   Future<void> _restore() async {
     final SetupStepDraft? draft;
+    _readFailed.value = false;
     try {
       draft = await ref.read(_draft.notifier).load();
     } on Object catch (e, st) {
+      if (mounted) _readFailed.value = true;
       // The stored values stay; the next save tells a conflict apart.
       TraceLogger.instance.warn(
         'workspace',
@@ -108,7 +122,7 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
       );
       return;
     }
-    if (draft == null || !mounted) return;
+    if (draft == null || !mounted || _typed) return;
     _fill(draft.payload);
     _restored.value = true;
   }
@@ -143,6 +157,18 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
         restored: _restored,
         onDiscard: _discard,
         onReload: _reload,
+      ),
+      ValueListenableBuilder<bool>(
+        valueListenable: _readFailed,
+        builder: (context, failed, _) => !failed
+            ? const SizedBox.shrink()
+            : InlineBanner(
+                key: const ValueKey('setup-draft-read-failed'),
+                icon: Icons.cloud_off_outlined,
+                text: context.l10n.readStateFailed,
+                actionLabel: context.l10n.commonRetry,
+                onAction: () => unawaited(_restore()),
+              ),
       ),
       widget.child,
     ],

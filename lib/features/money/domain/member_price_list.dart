@@ -41,3 +41,29 @@ List<LevelPrice> memberPriceList(List<FeeBand> bands, Iterable<int> levels) {
       LevelPrice(pct: pct, band: feeBandFor(bands, pct)),
   ];
 }
+
+/// #3283 (ADR 0008) — the half-days a level includes in a month the
+/// workspace is open [openDays] days: `ceil(openDays × 2 × pct / 100)`.
+int includedHalfDays(int openDays, int pct) =>
+    (openDays * _halfDaysPerDay * pct + 99) ~/ 100;
+
+/// The days of [month] the workspace is open: its [openWeekdays] (ISO,
+/// Monday = 1) less the [closures] that fall in that month.
+int openDaysIn(
+  DateTime month,
+  Iterable<int> openWeekdays,
+  Iterable<DateTime> closures,
+) {
+  final weekdays = openWeekdays.toSet();
+  final closed = {
+    for (final c in closures)
+      if (c.year == month.year && c.month == month.month) c.day,
+  };
+  final last = DateTime(month.year, month.month + 1, 0).day;
+  var open = 0;
+  for (var day = 1; day <= last; day++) {
+    final date = DateTime(month.year, month.month, day);
+    if (weekdays.contains(date.weekday) && !closed.contains(day)) open++;
+  }
+  return open;
+}

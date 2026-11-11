@@ -154,6 +154,10 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) throw StateError('unknown workspace $workspaceId');
     flagExpectations.add(expected == null ? null : Map.of(expected));
+    if (flagWriteErrorNext case final error?) {
+      flagWriteErrorNext = null;
+      throw error;
+    }
     if (flagConflictNext) {
       flagConflictNext = false;
       throw FeatureFlagsConflict(expected?.keys.take(1).toList() ?? const []);

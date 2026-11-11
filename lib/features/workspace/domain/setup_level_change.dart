@@ -43,10 +43,15 @@ class SetupLevelChange {
     required this.switchOff,
     required this.flags,
     required this.expected,
+    this.levels = const {},
   });
 
   /// The processes whose level changes.
   final Set<SetupProcess> processes;
+
+  /// #3283 — the level each changed process moves to, in process order:
+  /// the review says what each lets the business do.
+  final Map<SetupProcess, String> levels;
 
   /// The features it switches on and off, in registry order.
   final List<WorkspaceFeature> switchOn;
@@ -84,6 +89,10 @@ SetupLevelChange planSetupLevels({
   ];
   return SetupLevelChange(
     processes: changed,
+    levels: {
+      for (final p in SetupProcess.values)
+        if (changed.contains(p)) p: chosen[p]!,
+    },
     switchOn: on,
     switchOff: off,
     flags: {
