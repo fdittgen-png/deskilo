@@ -32485,18 +32485,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String uxBookingAllowanceLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count demi-journées restantes dans votre forfait ce mois-ci',
-      one: '1 demi-journée restante dans votre forfait ce mois-ci',
-      zero: 'Plus aucune demi-journée dans votre forfait ce mois-ci',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get uxBookingChargePending =>
       'Le montant et l’utilisation du forfait dépendent du plan du membre et sont réglés sur le relevé.';
 

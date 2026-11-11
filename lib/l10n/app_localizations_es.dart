@@ -32385,18 +32385,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String uxBookingAllowanceLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Quedan $count medias jornadas en su bono este mes',
-      one: 'Queda 1 media jornada en su bono este mes',
-      zero: 'No quedan medias jornadas en su bono este mes',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get uxBookingChargePending =>
       'El importe y el uso de la cuota dependen del plan del miembro y se liquidan en el extracto.';
 

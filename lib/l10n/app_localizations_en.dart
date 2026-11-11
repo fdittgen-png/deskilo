@@ -32113,18 +32113,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String uxBookingAllowanceLeft(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count half-days left in your allowance this month',
-      one: '1 half-day left in your allowance this month',
-      zero: 'No half-days left in your allowance this month',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get uxBookingChargePending =>
       'The charge and allowance used depend on the member’s plan and are settled on the statement.';
 
