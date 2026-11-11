@@ -33,6 +33,10 @@ abstract final class KitMetrics {
   /// The narrowest a part of a split bar is drawn, so a small share shows.
   static const double barMinPart = 6;
 
+  /// The widest a task opened at the desk grows (a centred dialog), so a form
+  /// keeps its line length on a wide window (`showTaskSurface`, #3608).
+  static const double taskDialogMaxWidth = 560;
+
   /// The dot of a legend line.
   static const double dot = 12;
 }

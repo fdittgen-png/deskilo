@@ -26,7 +26,7 @@
   "setupApprovalsOpenRules": "Regole per tipo di richiesta",
   "setupApprovalsFlowRequest": "Un membro chiede",
   "setupApprovalsFlowRequestBody": "Un rimborso, la cancellazione di una prenotazione, una spesa…",
-  "setupApprovalsFlowValidators": "{required} su {people} approvano",
+  "setupApprovalsFlowValidators": "{required, plural, =1{1 su {people} approva} other{{required} su {people} approvano}}",
   "setupApprovalsFlowWho": "{owners, plural, =1{Il proprietario} other{{owners} proprietari}} e {admins, plural, =0{nessun amministratore} =1{1 amministratore} other{{admins} amministratori}}",
   "setupApprovalsFlowOutcome": "Si applica",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Non appena c'è un'approvazione.} other{Non appena ci sono {required} approvazioni.}} Un rifiuto la chiude, e nessuno approva la propria richiesta.",

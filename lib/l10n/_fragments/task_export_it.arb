@@ -134,7 +134,7 @@
   "taskExportLimitRecreated": "Le illustrazioni sono ricreate dai dati sicuri della registrazione, con nomi di posti inventati; non sono screenshot dello schermo.",
   "taskExportStale": "Lo storyboard appartiene a un'altra versione di questa registrazione. Lo riveda prima di esportare.",
   "taskExportWordButton": "Esporta come documento Word",
-  "taskExportValueRedacted": "non conservato ({length} caratteri)",
+  "taskExportValueRedacted": "non conservato ({length, plural, =1{1 carattere} other{{length} caratteri}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {

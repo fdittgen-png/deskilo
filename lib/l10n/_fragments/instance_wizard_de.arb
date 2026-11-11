@@ -177,7 +177,7 @@
   },
   "instanceReadyInstall": "Das Projekt ist leer: alles wird installiert.",
   "instanceReadyResume": "{pending, plural, one{Eine DesKilo-Installation brach mittendrin ab: {pending} Migration fehlen noch, und nur diese laufen.} other{Eine DesKilo-Installation brach mittendrin ab: {pending} Migrationen fehlen noch, und nur diese laufen.}}",
-  "instanceReadyUpgrade": "DesKilo-Version {version} ist installiert: nur die {pending} fehlenden Migrationen laufen.",
+  "instanceReadyUpgrade": "DesKilo-Version {version} ist installiert: {pending, plural, =1{nur die 1 fehlende Migration läuft} other{nur die {pending} fehlenden Migrationen laufen}}.",
   "instanceReadyCurrent": "DesKilo-Version {version} ist installiert und aktuell: das Schema braucht nichts.",
   "instanceReadyAttention": "Dieses Projekt braucht Aufmerksamkeit — nichts wurde installiert.",
   "instanceAttentionNotHealthy": "Supabase meldet das Projekt nicht als betriebsbereit. Warten Sie, bis es das ist, oder stellen Sie es im Dashboard wieder her.",

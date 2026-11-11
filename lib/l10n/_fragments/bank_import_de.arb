@@ -18,7 +18,7 @@
   "bankFormatOfx": "OFX / QFX",
   "bankFormatCsv": "Tabelle (CSV)",
   "bankFormatRead": "Lesen",
-  "bankImported": "Importiert: {created} neu, {known} bereits bekannt, {review} zu prüfen.",
+  "bankImported": "Importiert: {created, plural, =1{1 neuer Eintrag} other{{created} neue Einträge}}, {known, plural, =1{1 bereits bekannt} other{{known} bereits bekannt}}, {review} zu prüfen.",
   "bankImportRepeated": "Diese Datei wurde bereits importiert. Nichts wurde hinzugefügt.",
   "bankImportFailed": "Der Auszug konnte nicht importiert werden. Nichts wurde hinzugefügt.",
   "bankRefusedTooLarge": "Die Datei ist größer, als dieser Server importiert. Nichts wurde importiert.",

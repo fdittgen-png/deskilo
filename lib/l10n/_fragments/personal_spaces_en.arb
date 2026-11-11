@@ -87,7 +87,7 @@
   },
   "mySpacesReviewed": "My review: {stars} of 5",
   "@mySpacesReviewed": {
-    "description": "#2554 My spaces: my own star rating of a space",
+    "description": "#2554 My spaces: my own star rating of a space. The number is not a count: it is a rating of five stars, an index on a scale.",
     "placeholders": {
       "stars": {
         "type": "int"

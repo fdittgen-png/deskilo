@@ -177,7 +177,7 @@
   },
   "instanceReadyInstall": "El proyecto está vacío: se instalará todo.",
   "instanceReadyResume": "{pending, plural, one{Una instalación de DesKilo se detuvo a medias: quedan {pending} migración y solo se ejecutarán esas.} other{Una instalación de DesKilo se detuvo a medias: quedan {pending} migraciones y solo se ejecutarán esas.}}",
-  "instanceReadyUpgrade": "La versión {version} de DesKilo está instalada: solo se ejecutarán las {pending} migraciones que faltan.",
+  "instanceReadyUpgrade": "La versión {version} de DesKilo está instalada: {pending, plural, =1{solo se ejecutará la migración que falta} other{solo se ejecutarán las {pending} migraciones que faltan}}.",
   "instanceReadyCurrent": "La versión {version} de DesKilo está instalada y al día: el esquema no necesita nada.",
   "instanceReadyAttention": "Este proyecto requiere atención: no se instaló nada.",
   "instanceAttentionNotHealthy": "Supabase no indica que el proyecto esté operativo. Espere a que lo esté o restáurelo en el panel.",

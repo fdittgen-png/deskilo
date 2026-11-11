@@ -12,7 +12,7 @@
   "taskRecorderRecordThisTask": "Enregistrer cette tâche",
   "taskRecorderDisclosureTitle": "Avant d'enregistrer",
   "taskRecorderDisclosureBody": "L'enregistreur note les étapes que vous faites sur les écrans de cet espace — quel écran, quelle action, ce que l'application a répondu — sur cet appareil uniquement. Il ne garde jamais ce que vous tapez, ni noms, montants, messages, codes ou mots de passe. La connexion, le paiement, les messages et les autres écrans protégés ne laissent qu'un repère. Rien n'est envoyé : vous décidez de ce que vous exportez.",
-  "taskRecorderLimits": "Jusqu'à {steps} étapes ou {minutes} minutes par enregistrement. Les enregistrements sont effacés de cet appareil après {days} jours ; un fichier exporté vous appartient et reste là où vous l'avez enregistré.",
+  "taskRecorderLimits": "Jusqu'à {steps, plural, =1{1 étape} other{{steps} étapes}} ou {minutes, plural, =1{1 minute} other{{minutes} minutes}} par enregistrement. Les enregistrements sont effacés de cet appareil après {days, plural, =1{1 jour} other{{days} jours}} ; un fichier exporté vous appartient et reste là où vous l'avez enregistré.",
   "taskRecorderStart": "Commencer l'enregistrement",
   "taskRecorderUnavailable": "L'enregistrement n'est pas activé dans cet espace.",
   "taskRecorderSignedOut": "Connectez-vous pour enregistrer une tâche.",

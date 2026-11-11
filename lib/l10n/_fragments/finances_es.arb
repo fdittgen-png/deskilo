@@ -65,7 +65,7 @@
       }
     }
   },
-  "financesOverdueCount": "{count} vencidas",
+  "financesOverdueCount": "{count, plural, =1{1 vencida} other{{count} vencidas}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {

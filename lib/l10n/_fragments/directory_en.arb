@@ -31,7 +31,7 @@
   },
   "directoryLastSeenMinutes": "Seen {minutes} min ago",
   "@directoryLastSeenMinutes": {
-    "description": "Directory offline chip: compact relative last-seen, under an hour",
+    "description": "Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -103,7 +103,7 @@
   },
   "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
   "@memberPageWorkspaceDefaultValue": {
-    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).",
+    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
     "placeholders": {
       "count": {
         "type": "int"
