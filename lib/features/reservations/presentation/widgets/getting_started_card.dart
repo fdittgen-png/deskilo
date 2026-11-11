@@ -128,12 +128,6 @@ class GettingStartedCard extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final title =
         l10n.gettingStartedTitle(facts.workspaceName);
-    // #3282 — the Demo is neither: it names no environment at all.
-    final environment = DemoEnvironment.maybeOf(context) != null
-        ? null
-        : !facts.production
-        ? l10n.gettingStartedEnvDev
-        : l10n.gettingStartedEnvProd;
     final lines = <String>[
       if (hint.standing != null) GettingStartedCopy.standing(l10n, hint.standing!),
       GettingStartedCopy.reason(l10n, hint),
@@ -207,14 +201,7 @@ class GettingStartedCard extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (environment != null)
-              Text(
-                environment,
-                key: const ValueKey('getting-started-environment'),
-                style: textTheme.labelSmall?.copyWith(
-                  color: scheme.onSecondaryContainer,
-                ),
-              ),
+              ?_environment(context, production: facts.production),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 lines.join(' '),
@@ -274,4 +261,18 @@ class GettingStartedCard extends ConsumerWidget {
     );
   }
 
+}
+
+/// Which environment the space is, under its title; #3282 — the Demo is
+/// neither, and names none.
+Widget? _environment(BuildContext context, {required bool production}) {
+  if (DemoEnvironment.maybeOf(context) != null) return null;
+  final l10n = context.l10n;
+  return Text(
+    production ? l10n.gettingStartedEnvProd : l10n.gettingStartedEnvDev,
+    key: const ValueKey('getting-started-environment'),
+    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+      color: Theme.of(context).colorScheme.onSecondaryContainer,
+    ),
+  );
 }

@@ -3077,6 +3077,7 @@ const Set<String> uiKeys = {
   'setup-levels-confirm-off',
   'setup-levels-confirm-off-no',
   'setup-levels-confirm-off-yes',
+  'setup-levels-details',
   'setup-levels-off',
   'setup-levels-on',
   'setup-levels-preview',
