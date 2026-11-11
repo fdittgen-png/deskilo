@@ -102,7 +102,7 @@ void main() {
       );
     });
 
-    test('an ARB-only change lists test/i18n and nothing else', () {
+    test('an ARB-only change lists test/i18n and the Demo, nothing else', () {
       final skip = readNoImporterSearch(File('tool/preflight/test_map.json'));
       final consumers = <String, String>{
         'test/features/x_test.dart':
@@ -121,7 +121,8 @@ void main() {
           consumers,
           skipImporters: skip,
         ),
-        ['test/i18n/'],
+        // #3765 — every change to the app lists the Demo's container tests.
+        ['test/core/demo/', 'test/i18n/'],
       );
     });
 

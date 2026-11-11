@@ -107,13 +107,11 @@
     },
     {
       "patterns": [
-        "lib/features/*/presentation/**",
-        "lib/features/*/providers/**"
+        "lib/**"
       ],
       "tests": [
         "test/core/demo/"
-      ],
-      "note": "#3765 -- the Demo's container tests are the cheapest whole-app check (they caught an unread template the listed tests missed); about 3 minutes locally."
+      ]
     }
   ],
   "no_importer_search": [
