@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/jurisdiction_removal/removal_check.dart';
+import '../helpers/tool_process.dart';
 import 'lint_sources.dart';
 
 void _write(String root, String path, String text) => File('$root/$path')
@@ -216,14 +217,14 @@ void main() {
     // the command line, on a module the real tree can lose today
     const module = 'deskilo_jurisdiction_ch';
     Future<ProcessResult> cli(Map<String, Object?>? facts) async {
-      final args = ['run', 'tool/jurisdiction_removal_check.dart', module];
+      final args = [module];
       if (facts != null) {
         final dir = createTemporaryFixture('removal_cli').directory.path;
         final file = File('$dir/facts.json')
           ..writeAsStringSync(jsonEncode(facts));
         args.addAll(['--facts', file.path]);
       }
-      return Process.run('dart', args);
+      return runTool('tool/jurisdiction_removal_check.dart', args);
     }
 
     test('the command line: no facts, or a one-space answer, exits 3 '

@@ -19,6 +19,7 @@ import '../helpers/fake_supabase_management.dart';
 import '../helpers/mcp_cli_fakes.dart';
 import '../helpers/mcp_report_verifier.dart';
 import '../helpers/mcp_target_fixture.dart';
+import '../helpers/tool_process.dart';
 
 class _Out implements IOSink {
   final text = StringBuffer();
@@ -428,9 +429,9 @@ void main() {
           '1',
         ],
       ]) {
-        final r = await Process.run(
-          'dart',
-          ['run', 'tool/instance.dart', ...args],
+        final r = await runTool(
+          'tool/instance.dart',
+          args,
           environment: {'SUPABASE_ACCESS_TOKEN': 'PRIVATE-ENV-TOKEN'},
         );
         expect(r.exitCode, 2, reason: '${r.stdout}${r.stderr}');
