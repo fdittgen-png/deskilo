@@ -14,7 +14,21 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
   @override
   Future<SpacePrefs> build() => ref.watch(spacePrefsStoreProvider).read();
 
-  SpacePrefs get _now => state.value ?? SpacePrefs.empty;
+  /// The stored preferences as read; only valid after [_ready].
+  SpacePrefs get _now => state.requireValue;
+
+  /// #3683 -- every change starts from what is STORED: it waits for the first
+  /// read, and when that read failed it changes nothing, rather than deriving
+  /// its change from an empty layout and writing that over the person's
+  /// favourites, groups and order.
+  Future<bool> _ready() async {
+    try {
+      await future;
+      return true;
+    } on Object {
+      return false;
+    }
+  }
 
   Future<void> _set(SpacePrefs next) async {
     state = AsyncData(next);
@@ -22,13 +36,16 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
   }
 
   /// Puts [key] in or out of Favorites (the heart).
-  Future<void> toggleFavorite(String key) =>
-      setFavorite(key, on: !_now.favorites.contains(key));
+  Future<void> toggleFavorite(String key) async {
+    if (!await _ready()) return;
+    await setFavorite(key, on: !_now.favorites.contains(key));
+  }
 
   /// Puts [key] in Favorites when [on], out of them otherwise; nothing is
   /// written when it is there already.
-  Future<void> setFavorite(String key, {required bool on}) {
-    if (_now.favorites.contains(key) == on) return Future.value();
+  Future<void> setFavorite(String key, {required bool on}) async {
+    if (!await _ready()) return;
+    if (_now.favorites.contains(key) == on) return;
     final favorites = {..._now.favorites};
     final groupOf = {..._now.groupOf};
     if (on) {
@@ -37,41 +54,44 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
     } else {
       favorites.remove(key);
     }
-    return _set(_now.copyWith(favorites: favorites, groupOf: groupOf));
+    await _set(_now.copyWith(favorites: favorites, groupOf: groupOf));
   }
 
   /// [stars] 1–5, or null to clear.
-  Future<void> rate(String key, int? stars) {
+  Future<void> rate(String key, int? stars) async {
+    if (!await _ready()) return;
     final ratings = {..._now.ratings};
     if (stars == null) {
       ratings.remove(key);
     } else {
       ratings[key] = stars.clamp(1, 5);
     }
-    return _set(_now.copyWith(ratings: ratings));
+    await _set(_now.copyWith(ratings: ratings));
   }
 
   /// Moves [key] one place within [shown] (the keys of its group as laid out
   /// now) and keeps that as the person's order.
-  Future<void> move(List<String> shown, String key, int delta) {
+  Future<void> move(List<String> shown, String key, int delta) async {
+    if (!await _ready()) return;
     final next = _now.moved(shown, key, delta);
-    return next == null
-        ? Future.value()
-        : _set(_now.copyWith(order: _now.withGroupOrder(next)));
+    if (next == null) return;
+    await _set(_now.copyWith(order: _now.withGroupOrder(next)));
   }
 
   /// A drag: [from] to [to] (the `onReorderItem` indexes, [to] already
   /// counted without the lifted item) within the group whose keys are [shown].
-  Future<void> reorder(List<String> shown, int from, int to) {
-    if (from < 0 || from >= shown.length) return Future.value();
+  Future<void> reorder(List<String> shown, int from, int to) async {
+    if (!await _ready()) return;
+    if (from < 0 || from >= shown.length) return;
     final next = [...shown];
     final key = next.removeAt(from);
     next.insert(to.clamp(0, next.length), key);
-    return _set(_now.copyWith(order: _now.withGroupOrder(next)));
+    await _set(_now.copyWith(order: _now.withGroupOrder(next)));
   }
 
   /// Puts [key] in [groupId]: Favorites, Other or one of the own groups.
-  Future<void> moveToGroup(String key, String groupId) {
+  Future<void> moveToGroup(String key, String groupId) async {
+    if (!await _ready()) return;
     final favorites = {..._now.favorites}..remove(key);
     final groupOf = {..._now.groupOf}..remove(key);
     if (groupId == SpaceGroup.favoritesGroup) {
@@ -80,11 +100,12 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
         _now.groups.any((g) => g.id == groupId)) {
       groupOf[key] = groupId;
     }
-    return _set(_now.copyWith(favorites: favorites, groupOf: groupOf));
+    await _set(_now.copyWith(favorites: favorites, groupOf: groupOf));
   }
 
   /// A new group of my own; returns its id, or null for a blank or taken name.
   Future<String?> addGroup(String name) async {
+    if (!await _ready()) return null;
     final clean = name.trim();
     if (clean.isEmpty || _nameTaken(clean)) return null;
     final id = 'g${ref.read(clockProvider).now().microsecondsSinceEpoch}';
@@ -101,6 +122,7 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
   }
 
   Future<bool> renameGroup(String id, String name) async {
+    if (!await _ready()) return false;
     final clean = name.trim();
     if (clean.isEmpty || _nameTaken(clean, exceptId: id)) return false;
     await _set(
@@ -115,7 +137,9 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
 
   /// Removes one of my groups; its spaces fall back to Other. Favorites and
   /// Other cannot be removed.
-  Future<void> removeGroup(String id) => _set(
+  Future<void> removeGroup(String id) async {
+    if (!await _ready()) return;
+    await _set(
     _now.copyWith(
       groups: [for (final g in _now.groups) if (g.id != id) g],
       groupOf: {
@@ -124,20 +148,28 @@ class _SpacePrefsNotifier extends AsyncNotifier<SpacePrefs> {
       },
       folded: {..._now.folded}..remove(id),
     ),
-  );
-
-  Future<void> toggleFolded(String groupId) {
-    final folded = {..._now.folded};
-    if (!folded.remove(groupId)) folded.add(groupId);
-    return _set(_now.copyWith(folded: folded));
+    );
   }
 
-  Future<void> setSort(SpaceSort sort) => _set(_now.copyWith(sort: sort));
+  Future<void> toggleFolded(String groupId) async {
+    if (!await _ready()) return;
+    final folded = {..._now.folded};
+    if (!folded.remove(groupId)) folded.add(groupId);
+    await _set(_now.copyWith(folded: folded));
+  }
+
+  Future<void> setSort(SpaceSort sort) async {
+    if (!await _ready()) return;
+    await _set(_now.copyWith(sort: sort));
+  }
 
   /// I went into [key] just now.
-  Future<void> touch(String key, DateTime at) => _set(
-    _now.copyWith(
-      lastUsed: {..._now.lastUsed, key: at.millisecondsSinceEpoch},
-    ),
-  );
+  Future<void> touch(String key, DateTime at) async {
+    if (!await _ready()) return;
+    await _set(
+      _now.copyWith(
+        lastUsed: {..._now.lastUsed, key: at.millisecondsSinceEpoch},
+      ),
+    );
+  }
 }

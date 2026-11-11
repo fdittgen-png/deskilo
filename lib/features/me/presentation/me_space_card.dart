@@ -171,6 +171,9 @@ Future<void> confirmLeaveSpace(
   Member? member,
 ) async {
   final l10n = context.l10n;
+  // #3683 -- the container outlives this page: the lists are refreshed
+  // whether or not the page is still there once the server has answered.
+  final container = ProviderScope.containerOf(context);
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
@@ -204,9 +207,10 @@ Future<void> confirmLeaveSpace(
         .leave(space.id, isOwner: member?.isOwner ?? false),
   );
   if (!ok) return;
-  ref
+  container
     ..invalidate(myWorkspacesProvider)
-    ..invalidate(myMembershipsProvider);
+    ..invalidate(myMembershipsProvider)
+    ..invalidate(personalWorkspaceRefsProvider);
   if (!context.mounted) return;
   AppSnack.success(
     context,

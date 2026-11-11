@@ -10,7 +10,9 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/empty_state.dart';
+import '../../../core/ui/loading_view.dart';
 import '../../profile/presentation/widgets/personal_avatar.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../visits/presentation/my_visits_section.dart';
@@ -66,16 +68,22 @@ class MeHomeTab extends ConsumerWidget {
       return const PersonalOverview();
     }
     final l10n = context.l10n;
-    final spaces = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
+    final spacesRead = ref.watch(myWorkspacesProvider);
+    final spaces = spacesRead.value ?? const <Workspace>[];
     final memberships =
         ref.watch(myMembershipsProvider).value ?? const <Member>[];
     final last = ref.watch(activeWorkspaceIdProvider).value;
-    final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
+    final linkedRead = ref.watch(linkedServerSpacesProvider);
+    final linked = linkedRead.value ?? const [];
+    // #3683 -- "not in a space yet" is said only once both lists were read.
+    final answered = spacesRead.hasValue && linkedRead.hasValue;
+    final failed = spacesRead.hasError || linkedRead.hasError;
     final rows = pairSides(spaces).length;
     // #2563 — a workspace my account names elsewhere is not "nothing".
     final elsewhere =
         refsOfCurrentAccount(ref.watch(personalWorkspaceRefsProvider));
-    final nothing = spaces.isEmpty &&
+    final nothing = answered &&
+        spaces.isEmpty &&
         linked.every((s) => s.spaces.isEmpty) &&
         (elsewhere?.beyondLocalSpaces.isEmpty ?? true);
     return Scaffold(
@@ -112,7 +120,16 @@ class MeHomeTab extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              if (nothing)
+              if (!answered && failed)
+                ReadFailureBanner(
+                  error: (spacesRead.error ?? linkedRead.error)!,
+                  onRetry: () => ref
+                    ..invalidate(myWorkspacesProvider)
+                    ..invalidate(linkedServerSpacesProvider),
+                )
+              else if (!answered)
+                const SizedBox(height: 72, child: LoadingView())
+              else if (nothing)
                 EmptyState(
                   key: const ValueKey('me-home-empty'),
                   icon: Icons.meeting_room_outlined,

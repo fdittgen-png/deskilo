@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/me_providers.dart';
 import '../providers/public_profile_providers.dart';
@@ -58,7 +59,9 @@ class PublicProfileTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final published = ref.watch(myPublicProfileProvider).value ?? false;
+    final read = ref.watch(myPublicProfileProvider);
+    // #3683 -- no statement from a read that failed or is still running.
+    final published = read.value ?? false;
     final me = ref.watch(authStateProvider).value;
     final link = me == null ? null : publicProfileLink(me);
     return Column(
@@ -68,14 +71,20 @@ class PublicProfileTile extends ConsumerWidget {
           key: const ValueKey('visibility-public-profile'),
           secondary: const Icon(Icons.public),
           title: Text(l10n.publicProfileTitle),
-          subtitle: Text(
-            published
-                ? (l10n.publicProfileOn)
-                : (l10n.publicProfileOff),
-          ),
+          subtitle: read.hasValue
+              ? Text(published ? l10n.publicProfileOn : l10n.publicProfileOff)
+              : null,
           value: published,
-          onChanged: (v) => _set(context, ref, v),
+          onChanged: read.hasValue ? (v) => _set(context, ref, v) : null,
         ),
+        if (!read.hasValue && read.hasError && !read.isLoading)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: ReadFailureBanner(
+              error: read.error!,
+              onRetry: () => ref.invalidate(myPublicProfileProvider),
+            ),
+          ),
         if (published && link != null)
           Padding(
             padding: const EdgeInsets.fromLTRB(72, 0, 16, 8),
