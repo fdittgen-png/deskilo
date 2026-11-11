@@ -471,11 +471,7 @@ bool rendersCopy(WidgetRef ref) {
 /// owner's band set for that level, else the shipped localized default.
 /// A broken custom band set falls back to the default — a reminder must
 /// never fail on a template.
-/// The reminder letter of [invoice] at [level], rendered (#472): the owner's
-/// band set for that level, else the shipped localized default, in the
-/// member's language (#496). The PDF and the on-screen preview both read it.
-Future<({InvoiceReport report, String title, AppLocalizations l10n})>
-reminderLetterReport(
+Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
@@ -522,31 +518,8 @@ reminderLetterReport(
   final report =
       (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
       renderReportBands(bands: fallback, data: texted)!;
-  return (report: report, title: title, l10n: l10n);
-}
-
-Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
-  BuildContext context,
-  WidgetRef ref,
-  Invoice invoice, {
-  required int level,
-  required TaxReferenceSet reference,
-  ReportBands? draftBands,
-}) async {
-  // Read before any await: the context is not used across a gap.
-  final mark = developmentMark(context, ref);
-  final letter = await reminderLetterReport(
-    context,
-    ref,
-    invoice,
-    level: level,
-    reference: reference,
-    draftBands: draftBands,
-  );
-  final report = letter.report;
-  final title = letter.title;
-  final l10n = letter.l10n;
   final pageLabel = l10n.invoicePdfPage;
+  final mark = developmentMark(context, ref);
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
   final bytes = await buildBandedLetterPdf(

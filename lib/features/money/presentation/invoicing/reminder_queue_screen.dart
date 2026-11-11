@@ -137,14 +137,6 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
   Future<void> _preview(QueuedReminder line) async {
     final invoice = await _invoiceOf(line.invoiceId);
     if (invoice == null || !mounted) return;
-    final letter = await reminderLetterReport(
-      context,
-      ref,
-      invoice,
-      level: line.level,
-      reference: requireWorkspaceTaxReference(ref),
-    );
-    if (!mounted) return;
     await runReportActions(
       context,
       ref,
@@ -159,7 +151,6 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
         );
         return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
       },
-      render: () => letter.report,
     );
   }
 
