@@ -71,7 +71,7 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
   fi
   # #3735 -- a re-run of one failed shard keeps the others' results of an
   # earlier attempt: the table says which attempt each shard's result came from.
-  if [ -s "$DIR/shard-attempts.psv" ]; then
+  if [ -s "$DIR/shard-attempts.txt" ]; then
     echo
     echo 'Test shards, by the attempt their result came from:'
     while IFS='|' read -r shard attempt; do
@@ -82,7 +82,7 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
       else
         printf -- '- %s: attempt %s (earlier; not re-run)\n' "$shard" "$attempt"
       fi
-    done < "$DIR/shard-attempts.psv"
+    done < "$DIR/shard-attempts.txt"
   fi
   echo
   echo '> Performance is not a row here, and the guards that exist prove'

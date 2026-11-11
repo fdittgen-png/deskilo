@@ -919,18 +919,18 @@ jobs:
         run: |
           # Which attempt each shard's result came from, for the report.
           mkdir -p report
-          : > report/shard-attempts.psv
+          : > report/shard-attempts.txt
           for pair in gate:${{ steps.dl_gate.outcome }} money:${{ steps.dl_money.outcome }} \
                       workspace:${{ steps.dl_workspace.outcome }} rest:${{ steps.dl_rest.outcome }} \
                       money2:${{ steps.dl_money2.outcome }} core:${{ steps.dl_core.outcome }}; do
             shard=${pair%%:*}
             if [ "${pair#*:}" = "success" ]; then
-              echo "$shard|$GITHUB_RUN_ATTEMPT" >> report/shard-attempts.psv
+              echo "$shard|$GITHUB_RUN_ATTEMPT" >> report/shard-attempts.txt
               continue
             fi
             bash scripts/fallback_attempt_rows.sh "shards/testshard-$shard" "dl_$shard:testshard-$shard"
             got=$(cut -d'|' -f2 "shards/testshard-$shard/attempts.txt" 2>/dev/null | tail -1)
-            echo "$shard|${got##*-attempt-}" >> report/shard-attempts.psv
+            echo "$shard|${got##*-attempt-}" >> report/shard-attempts.txt
           done
 
       # What the shards were promised, re-derived from this tree: every
@@ -1056,7 +1056,11 @@ jobs:
         if: always()
         with:
           name: quality-code-attempt-${{ github.run_attempt }}
-          path: report/*.psv
+          # The rows, and which attempt each shard came from (#3735; not a
+          # .psv: every .psv here is read as discipline rows).
+          path: |
+            report/*.psv
+            report/shard-attempts.txt
 
       # #1446 — the required context carries the WHOLE result of this job.
       # #2600 — and of every job it waited for: the outcome of a needed job
