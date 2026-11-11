@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/data/policy_read.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/state/policy_read.dart';
 import '../../../core/text/collation.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';

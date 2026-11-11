@@ -59,90 +59,86 @@ Future<void> sendEInvoice(
   String environment = 'prod',
   String destination = 'government',
   String provider = 'generic',
-}) =>
-    // #3742 — the document's policies are read first, under the print guard.
-    printOrRetry(context, 'einvoice send', () async {
-      await readDocumentPolicies(ref);
-      if (!context.mounted) return;
-    final l10n = context.l10n;
-    EInvoiceSubmission? result;
-    final format = eInvoiceFormatFor(
-      provider: provider,
-      destination: destination,
-      buyerEndpointScheme: buyer.endpointScheme,
-    );
-    if (!await runGuarded(
-      context,
-      domain: 'money',
-      message: 'e-invoice submission failed',
-      errorText:
-          l10n.workspaceGenericError,
-      action: () async {
-        final ({List<int> bytes, String fileName}) file;
-        if (format == EInvoiceFormat.facturX) {
-          file = await buildFacturXFile(
-            context,
-            ref,
-            invoice,
-            seller: seller,
-            buyer: buyer,
-            iban: iban,
-          );
-        } else {
-          // #2358 — the network's own syntax, from the inputs the
-          // download uses.
-          final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
-          final association = ref.read(sellerIsAssociationProvider);
-          // Every input is read BEFORE the first await.
-          final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
-            invoice: invoice, seller: seller, buyer: buyer, iban: iban,
-            lineText: (line) => invoiceLineText(words, line,
-                association: association, period: invoice.period),
-            dueDate: invoiceDueAt(ref, invoice),
-            paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
-                memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
-                '',
-            reference: requireWorkspaceTaxReference(ref),
-          );
-          final xml = buildChannelEInvoiceXml(
+}) async {
+  final l10n = context.l10n;
+  EInvoiceSubmission? result;
+  final format = eInvoiceFormatFor(
+    provider: provider,
+    destination: destination,
+    buyerEndpointScheme: buyer.endpointScheme,
+  );
+  if (!await runGuarded(
+    context,
+    domain: 'money',
+    message: 'e-invoice submission failed',
+    errorText:
+        l10n.workspaceGenericError,
+    action: () async {
+      final ({List<int> bytes, String fileName}) file;
+      if (format == EInvoiceFormat.facturX) {
+        file = await buildFacturXFile(
+          context,
+          ref,
+          invoice,
+          seller: seller,
+          buyer: buyer,
+          iban: iban,
+        );
+      } else {
+        // #2358 — the network's own syntax, from the inputs the
+        // download uses.
+        final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
+        final association = ref.read(sellerIsAssociationProvider);
+        // Every input is read BEFORE the first await.
+        final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
+          invoice: invoice, seller: seller, buyer: buyer, iban: iban,
+          lineText: (line) => invoiceLineText(words, line,
+              association: association, period: invoice.period),
+          dueDate: invoiceDueAt(ref, invoice),
+          paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
+              memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
+              '',
+          reference: requireWorkspaceTaxReference(ref),
+        );
+        final xml = buildChannelEInvoiceXml(
+          format,
+          input,
+          correctedIssuedAt: await correctedIssuedAtForSend(
             format,
-            input,
-            correctedIssuedAt: await correctedIssuedAtForSend(
-              format,
-              invoice,
-              () => ref.read(invoicesProvider.future),
-            ),
+            invoice,
+            () => ref.read(invoicesProvider.future),
+          ),
+        );
+        file = (
+          bytes: utf8.encode(xml),
+          fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',
+        );
+      }
+      if (file.fileName.isEmpty) return;
+      result = await ref
+          .read(eInvoiceTransmissionsProvider)
+          .sendEInvoice(
+            workspaceId: workspaceId,
+            invoiceId: invoice.id,
+            fileName: file.fileName,
+            mimeType: format.mimeType,
+            bytes: file.bytes,
+            environment: environment,
+            destination: destination,
+            format: format.name,
+            receiverScheme: buyer.endpointScheme,
+            receiverId: buyer.endpointId,
           );
-          file = (
-            bytes: utf8.encode(xml),
-            fileName: '${safeFileSlug('${format.name} ${invoice.number}')}.xml',
-          );
-        }
-        if (file.fileName.isEmpty) return;
-        result = await ref
-            .read(eInvoiceTransmissionsProvider)
-            .sendEInvoice(
-              workspaceId: workspaceId,
-              invoiceId: invoice.id,
-              fileName: file.fileName,
-              mimeType: format.mimeType,
-              bytes: file.bytes,
-              environment: environment,
-              destination: destination,
-              format: format.name,
-              receiverScheme: buyer.endpointScheme,
-              receiverId: buyer.endpointId,
-            );
-      },
-    )) {
-      return;
-    }
-    ref.invalidate(invoiceTransmissionsProvider);
-    if (!context.mounted) return;
-    final submission = result;
-    if (submission == null) return;
-    _announce(context, submission, environment, destination);
-    });
+    },
+  )) {
+    return;
+  }
+  ref.invalidate(invoiceTransmissionsProvider);
+  if (!context.mounted) return;
+  final submission = result;
+  if (submission == null) return;
+  _announce(context, submission, environment, destination);
+}
 
 /// What the owner is told about a submission (#3335: an unsettled one sends
 /// nothing again and points at the platform's record).

@@ -71,13 +71,8 @@ Future<void> exportBiPdf(
         );
         final grain = result.period.grain;
         final series = await ref.read(
-          biModuleSeriesProvider(
-            workspaceId,
-            m.id,
-            grain,
-            result.period,
-            biSeriesLength(grain, ref.read(activeSettingsProvider)),
-          ).future,
+          biModuleSeriesProvider(workspaceId, m.id, grain, result.period,
+            biSeriesLength(grain, ref.read(activeSettingsProvider))).future,
         );
         BiResult? grouped;
         if (m.groupings.contains('level')) {
