@@ -166,6 +166,7 @@ constraint asset_valuation_rows.asset_valuation_rows_workspace_id_fkey FOREIGN K
 constraint asset_valuation_rows.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint asset_valuation_rows.system_company_present CHECK ((company_id IS NOT NULL))
 constraint badge_auth_attempts.badge_auth_attempts_pkey PRIMARY KEY (id)
+constraint badge_auth_attempts.badge_auth_attempts_step_check CHECK ((step = ANY (ARRAY['identify'::text, 'pin'::text])))
 constraint badge_auth_attempts.badge_auth_attempts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint badge_auth_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint bank_line_unmatches.bank_line_unmatches_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id)
