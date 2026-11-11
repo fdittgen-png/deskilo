@@ -1,152 +1,144 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
-# Capability lifecycle — stopping new work for a country without losing the work already admitted
+# Capability lifecycle — stopping new work for a capability without losing the work already admitted
 
 ## Baseline
 
-- Source commit: 0e61749f2f0920a4117735bb416b98ce3919dc7e
-- Refs: #3336 (provenance envelope, capability lifecycle, the connector guard split), #3335 (the attempt identity the provenance envelope hangs on), #3328 (the modular epic), #3331 (the capability resolver with explicit refusal)
-- Canonical sources: `supabase/migrations/0595_accounting_connections.sql` (shared feature guard), `supabase/migrations/0636_accounting_delivery_in_flight.sql` (current twelve-argument delivery writer/in-flight rule), `docs/decisions/0045-a-closed-book-period-refuses-after-the-fact-changes.md` (closed periods), `supabase/migrations/0604_retention_disposition.sql` (retention holds), `docs/decisions/0043-features-can-be-available-by-country.md` (features by country), `e-invoice-transmission.md` (attempt identity)
-- Required review: [#3336 implementation review](https://github.com/fdittgen-png/deskilo/issues/3336#issuecomment-6659781059). Its inventory, safeguards and cases remain acceptance requirements, mapped to L1–L15 below. Lifecycle/provenance rules are **proposed**, not implemented at this baseline; only rows marked held describe current enforcement.
+- Refs: #3336 (provenance envelope, capability lifecycle, the connector guard split), #3335 (the transmission identity the provenance envelope hangs on), #3328 (the modular epic), #3331 (the capability resolver with explicit refusal)
+- Canonical sources: `supabase/migrations/0691_accounting_servicing_guard.sql` (admission of new work split from reading, managing and revoking), `supabase/migrations/0692_capability_states.sql` (the stored operational state, the admission test, the transitions), `supabase/migrations/0693_provenance_envelopes.sql` (the envelope table, its registry and writer, the producer hooks), `supabase/migrations/0694_transmission_envelope.sql` (the transmission envelope, the clipped declaration, the local rule day), `supabase/migrations/0695_linked_correction.sql` (the linked-document correction route), `docs/decisions/0043-features-can-be-available-by-country.md` (features by country), `docs/decisions/0045-a-closed-book-period-refuses-after-the-fact-changes.md` (closed periods), `supabase/migrations/0604_retention_disposition.sql` (retention holds), `supabase/migrations/0595_accounting_connections.sql` (the connector feature guard that 0691 and 0692 refine), `e-invoice-transmission.md` (the transmission identity)
+- Design review: [#3336 implementation review](https://github.com/fdittgen-png/deskilo/issues/3336#issuecomment-6659781059). Its inventory and case table are the Writers and readers and Evidence sections below, L1 to L15.
+
+The lifecycle described here is the accounting connectors' lifecycle. It is
+not a universal lifecycle of every jurisdiction module: the state table
+accepts the capability key `accountingConnectors` and no other.
 
 ## Concepts and identity
 
 | concept | meaning | identity |
 |---|---|---|
-| capability | one jurisdiction's or one target's way of producing a durable result: a VAT filing writer, an export format, an e-invoice channel, an accounting target | module id + implementation version |
-| installed | the capability's code is present on this installation | a fact about the deployment, not a state the operator switches |
-| operational state | whether the capability admits **new** work: `active`, `servicing`, `retired` | workspace/issuer/capability operation scope; installed code and resolver availability remain installation facts (D1) |
-| qualification | the evidence that the capability was proven against its authority or provider | unchanged: the existing capability evidence model |
-| durable result | an issued document, a filed return, an export handed over, a prepared transmission attempt | the existing business identity of each |
-| provenance envelope | applicable producer/context facts: module/version, contract/input schema, rule revision/effective date, format, issuer/jurisdiction, source/artifact references and digests, business/attempt identity | freeze at the relevant production boundary; distinguish server-established from client-declared facts. Issuance cannot prove a later renderer/artifact; absent historical facts read `legacy_unknown` |
-| admitted operation | work durably admitted while active, with its original context pinned, whose completion/recovery contract is not yet satisfied | the existing attempt or receipted-command identity; a replay does not create new admission |
+| installed | the capability's code and registry entry are present on this installation | a fact about the deployment, not a state anyone switches |
+| operational state | whether the accounting connectors admit **new** work: `active`, `servicing`, `retired` | one `capability_states` row per workspace and capability key, primary key `(workspace_id, capability_key)`. The state is per workspace and capability, not per issuer, country, provider, destination or environment: the workspace's separate connections share it |
+| default state | the state when no row exists | derived: feature on reads `active`, feature off reads `servicing`. The first row is optional, and installing is not a stored transition |
+| qualification | the evidence that a capability was proven against its authority or provider | a separate dimension: the state table does not consult or grant it |
+| durable result | an issued invoice, a book export, a file delivery, an accounting delivery, a transmission | the existing business identity of each |
+| provenance envelope | how a durable result was produced: module, version, input schema, rule revision, issuer context, declared client metadata, artifact digests | one `provenance_envelopes` row keyed `(result_kind, result_id)`, written at the result's production boundary. Kinds: invoice, book_export, file_delivery, accounting_delivery, transmission |
+| admitted operation | a delivery whose identity was created while the capability admitted new work | the delivery's `identity_key`; a replay finds it and creates nothing |
 
-Installed, operational state and qualification are three dimensions.
-Conflating them is what makes a switch-off dangerous: the one feature
-switch of 0595 gates reads, revocation and the delivery writer together,
-so turning it off today blocks reading history and recording a final
-outcome.
+Installed, operational state and qualification are three dimensions. The
+state decides only whether **new** work is admitted; authority, reading,
+revocation and the outcome of admitted work keep their own checks.
+
+Provenance has two sources. `provenance_modules()` is the registry of what
+produces what, and `record_provenance` resolves the authoritative module,
+version and input schema from it. What a client says about its renderer is
+kept apart in `declared`: only the keys `renderer`, `renderer_version`,
+`app_version` and `format` survive, only as strings clipped to 120
+characters (0694), and a declaration larger than 4096 bytes is refused. A
+declaration is not evidence that a renderer ran or that an artifact
+exists. A result with no envelope reads `legacy_unknown`; nothing is
+reconstructed or backfilled. The server-side source of provenance is the
+SQL registry and its producer hooks.
 
 ## Relationships and cardinalities
 
 | question | answer | qualification |
 |---|---|---|
-| For one durable result, how many provenance envelopes? | one applicable record at its production boundary, for new results | later artifacts/deliveries carry linked provenance of their own; earlier results read `legacy_unknown`, without backfill |
-| For one admission scope (workspace, issuer, capability), how many operational states? | exactly one at a time | the state changes by an attributable operator action |
-| For one admitted operation, how many selected implementations per affected capability? | one pinned selection for each | issuance, rendering and transmission can have different producers; their context is retained |
-| For one capability, how many admitted operations may be unresolved when it is retired? | none; retirement refuses until they resolve | servicing stays available; no force-retire path in this slice (D2) |
-| For one workspace, how many capabilities for one country? | **open:** selection uniqueness needs its target/destination/environment scope (D5) | no universal one-active-per-country/kind constraint; preserve government/customer and environment distinctions |
+| For one durable result, how many provenance envelopes? | one for a new result, none for a legacy one | written once with the result; `legacy_unknown` when absent |
+| For one workspace and capability, how many operational states? | at most one stored row, and exactly one effective state | the table key is `(workspace_id, capability_key)`; there is no further one-active-per-country or per-provider constraint |
+| For one workspace, how many connections share the state? | all of them | each connection keeps its own issuer site, target and credentials; a delivery identity names them |
+| For one e-invoice transmission, how many envelopes? | one | written by `prepare_einvoice_v1` on the insert only; its destination and environment identity is the transmission's own (`e-invoice-transmission.md`) |
+| For one workspace with several countries' work, how is a country stopped? | each country is its own workspace | the shared-provider case is two workspaces on one provider: stopping one leaves the other working |
 
 ## States and transitions
 
 Declared states: `active`, `servicing`, `retired`.
 
+Unknown keys and unknown states are refused (SQLSTATE 22023), and so is a
+direct change between `active` and `retired`. Every transition is made by
+`set_capability_state_v1`, which takes the exclusive capability lock.
+
 | from | event | guard | to | effects |
 |---|---|---|---|---|
-| (none) | install and activate | installed; configuration authority; existing action-specific release/pilot requirements remain satisfied | `active` | new work eligible for admission under its existing feature, authority and qualification rules; activation waives none and adds no universal qualification gate |
-| `active` | deactivate | operator authority | `servicing` | new operations refused with an explicit, capability-scoped refusal; admitted operations continue; reads, revocation and the recording of late outcomes allowed |
-| `servicing` | reactivate | operator authority and the same applicable admission requirements | `active` | new operations admitted again; nothing historical is rewritten |
-| `servicing` | retire | operator authority; no unresolved admitted work, checked atomically against admission (D2) | `retired` | retained artifacts readable; credentials revocable; no new work; refusal leaves servicing available |
-| `retired` | reopen for servicing | owner decision, recorded with its reason | `servicing` | only to resolve an operation that was admitted before retirement; new operations stay refused |
+| (none) | read | no stored row; `capability_states_v1` | *(derived: `active` with the feature on, `servicing` with it off)* | nothing is stored; a derived default, not an install-and-activate step |
+| `active` | deactivate | a signed-in native-token active member holding `manageBilling` (`accounting_connector_member`) | `servicing` | the row stores the state, the reason, the member and the time; new work is refused |
+| `servicing` | reactivate | the same authority, and the feature is on; with it off the answer is SQLSTATE 0A000 | `active` | new work is admitted again; nothing historical is rewritten |
+| `servicing` | retire | the owner, a nonblank reason, and no generated or sent delivery on a nonrevoked connection | `retired` | a failure leaves the state unchanged and names the count |
+| `retired` | reopen | the owner and a nonblank reason | `servicing` | new work stays refused until the separate, permitted reactivation |
+| *(current state)* | repeat | the requested state equals the effective one | *(unchanged)* | answer `changed: false`; attribution and history are not rewritten |
 
-**Slice 1 (accounting connectors, 0691).** Until the state table of the
-lifecycle slice exists, the operational state of the accounting
-connectors is *derived* from the existing feature choice: `accountingConnectors`
-on is `active`; off is `servicing`. In `servicing`, new work is refused with
-the unchanged `0A000` (opening a connection, a mapping, a token, preparing a
-**new** delivery, an export that logs), while the following keep working under
-their existing authority: reading connections and transfers, the manageable
-check for revocation, revoking a connection (repeat-safe), and recording the
-outcome of, or replaying, a delivery that was admitted while `active`.
-`retired` and the reopen decision do not exist yet. Authority is never
-relaxed by the state: `accounting_connector_member` is the actor check without
-the feature, and every door still needs a signed-in native-token active member
-with the right permission.
+The retirement count is the deliveries in status `generated` or `sent` whose
+connection has no `revoked_at`. Deliveries in `failed` or `conflict`, and any
+delivery on a revoked connection, do not block it: in servicing none of them
+can be relinked, sent again or settled.
 
-The proposed table excludes `retired` → `active` without
-passing through `servicing` and a reviewed reactivation; any state →
-anything that bypasses a closed period (ADR 0045) or a retention hold
-(0604). Those are core rules, enforced regardless of the capability's
-state.
+Admission and state change use the same lock key (`capability_lock_key`):
+`capability_admits` takes the shared transaction advisory lock and
+`set_capability_state_v1` the exclusive one. An admission therefore commits
+before a deactivation, or waits for it and observes the changed state and
+refuses. This is stated for these two named functions; every other way to
+change the feature choice is outside this guarantee.
 
 ## Invariants
 
-| invariant | status | enforcement |
-|---|---|---|
-| a closed book period refuses after-the-fact changes, whatever the capability's state | held | ADR 0045, core |
-| a retention hold is honoured, whatever the capability's state | held | 0604, core |
-| a feature that is off refuses the client entry points | current defect | `feature_effective(…, 'accountingConnectors')` guards reads, revocation and the delivery writer alike in 0595; **this is the blocker #3336 splits** |
-| only new operations depend on activation; servicing never relaxes authority | proposed | split admission from active membership, native-token, permission, issuer/workspace and revoked-credential checks; keep the latter on each applicable entry point |
-| the server resolves and verifies the capability for a consequential operation; a client cannot select an older or more permissive ruleset by sending a version | proposed | the resolver of #3331 runs server-side; a client-supplied version is an input to verify, never a selector |
-| within supported schema deployments, an incompatible capability command gets a scoped refusal | proposed | preserve compatible old calls and `lib/core/instance/schema_compatibility.dart`: newer-client/older-database blocking stays global; no schema-gate redesign |
-| an admitted operation keeps its original context to its end | proposed | the attempt row of `e-invoice-transmission.md` carries provider, destination, environment and digest; the envelope adds the implementation that admitted it |
-| deactivation never rewrites provenance | proposed | the envelope is written once, with the durable result; later states add facts, never replace them |
-| a document issued under version 1 is unchanged after version 2 is deployed and version 1 is deactivated | proposed | the existing immutability (`invoices_no_mutation`) plus the envelope's `legacy_unknown` honesty for rows that predate it |
+| invariant | enforcement |
+|---|---|
+| a feature that is off admits nothing, whatever the stored row says | `capability_admits` tests `feature_effective` and the stored state together |
+| only new work depends on the state; authority is never relaxed | `accounting_connector_member` checks identity, active membership, native token and the purpose permission without the state; `accounting_connector_actor` and `capability_admits` guard new work; read, manage and revoke keep their own authority |
+| admitted work completes under servicing | `record_accounting_delivery` asks for admission only when no delivery of that identity exists; an existing identity records its outcome and replays whatever the state says |
+| a revoked credential never becomes usable again | a revoked or not connected connection cannot create a delivery (SQLSTATE 23514); the revocation check runs with purpose `revoke` |
+| a closed book period refuses after-the-fact changes, whatever the capability's state | ADR 0045, core; a state grants no exception |
+| a retention hold is honoured, whatever the capability's state | `supabase/migrations/0604_retention_disposition.sql`, core; a state grants no exception |
+| provenance is written once and never changed | `provenance_envelopes_immutable` refuses update and delete, except the delete that follows the deletion of its workspace; `record_provenance` inserts once (`on conflict do nothing`) |
+| a state change never restamps a historical envelope | no transition touches `provenance_envelopes` |
+| a client cannot select the module or version that produced a result | `record_provenance` reads them from `provenance_modules()`; the client's declaration stays in `declared` |
+| invoice provenance is stamped after the legal snapshot and the quick-response reference are frozen | `invoice_provenance_stamp` is an after-insert trigger on `invoices`; issuance and the later rendering or transmission are different boundaries |
+| an issued invoice is immutable | `invoices_no_mutation` (`supabase/migrations/0060_invoices.sql`) |
+| schema compatibility stays global | `lib/core/instance/schema_compatibility.dart` blocks a newer client on an older database; a capability refusal is the existing 0A000 within a supported schema |
 
 ## Processing
 
-- **Trigger and actor:** the operator changes the operational state from the capability's configuration; the owner alone reopens a retired capability for servicing.
-- **Prerequisites:** installed; existing operator/action authority; retirement requires no unresolved admitted operation. Credentials revoked during servicing are not reusable.
-- **Atomic effects:** state change and durable new-work admission share a serialization boundary: admission commits before deactivation or is refused afterward. Record actor/time; pin context at admission. An authorised replay returns its existing result without re-admission; a late outcome only updates its admitted attempt. State changes never stamp provenance.
-- **Outcomes:** the new state, or an explicit refusal naming what blocks it (an unresolved operation, a missing authority).
-- **External effects:** none from the state change itself. An admitted operation's external effect (an upload in flight) completes or resolves by its own contract.
-- **Recovery:** servicing completes only previously admitted work under current authority, never arbitrary new issuance labelled correction. Use the explicitly authorised linked-document correction route. Unresolved work blocks retirement; history remains after revocation, but recovery cannot use revoked access. Historical provenance is never reconstructed.
+- **Trigger and actor:** a manager with `manageBilling` deactivates, reactivates and reads the state; only the owner retires or reopens. Retirement and reopening need a nonblank reason, stored up to 300 characters.
+- **Admission:** a new accounting delivery identity, and the connection actor's new-work checks, ask `capability_admits`. It refuses with the unchanged 0A000. An authorised replay returns the existing delivery and does not ask again.
+- **Atomic effects:** the state change and the admission test serialize on the capability lock; the actor and the time are recorded with the state. A late outcome only updates its admitted record.
+- **Outcomes:** the new state, or a refusal naming what blocks it (an unresolved delivery count, a missing authority, the feature being off).
+- **External effects:** none from the state change itself. An admitted operation's external effect completes or resolves by its own contract.
+- **Provenance boundaries:** the invoice envelope is stamped by the trigger after the frozen snapshot and uses the workspace's local issue day (`book_local_day`) for its rule provenance. Book exports, file deliveries and accounting deliveries write theirs at their first durable boundary; a transmission writes its at preparation. Later outcomes and state changes add facts elsewhere and never replace an envelope.
+- **Linked correction:** While stored state is servicing and the feature is on, one new accounting delivery may carry an invoice whose direct replaces_invoice_id names an invoice acknowledged on that same connection in the same workspace. The link comes from the invoice row, never the request. Retired or feature-off refuses it; replay returns the existing identity. (`capability_linked_correction` called by `record_accounting_delivery`, 0695.)
+- **Chains and issuance:** a chain needs each preceding invoice acknowledged. Invoice issuance itself is not governed by this accounting-connector switch. The delivery's envelope records `linked_correction` and the replaced invoice.
+- **Recovery:** servicing completes only previously admitted work under current authority. Unresolved work blocks retirement. History stays readable after revocation, but recovery cannot use revoked access. Historical provenance is never reconstructed.
 
-Finite producer/consumer inventory from the required review; extend current definitions, never restate 0595 over later migrations. Issuance metadata stays outside the legal snapshot and under immutability; any snapshot digest follows final QRR freezing. Record renderer/artifact facts only at their production/receipt boundary, with declared metadata distinguished from verified hashes.
+### Writers and readers
 
-| boundary | existing entrypoints to extend | obligations |
+The existing writers and readers of the lifecycle and of provenance.
+
+| boundary | existing writers and readers | evidence |
 |---|---|---|
-| Invoice issuance | shared `invoice_legal_freeze` / `invoice_qrr_freeze` hook pattern across `create_invoice_receipted_v1`, `create_invoice_replacement_v1`, `settle_invoices_v1`, guest-pass `create_invoice` | L1, L10–L13 |
-| Export and file delivery | `record_book_export_v1`, `record_file_deliveries_v1`; preserve legacy no-log/no-op/generation behaviour | L11, L12, L15 |
-| Accounting preparation/finalization | current `record_accounting_delivery` through `databaseStore` and `deliverPeriod`, retaining 0636/defaulted arguments | L7, L10–L14 |
-| Read/manage/admission | `accounting_connector_actor`, `accounting_connections_v1`, `accounting_transfers_v1`, `accounting_connection_manageable_v1`; new connections/mappings retain admission checks | L4, L6, L10, L13 |
-| Revocation | `supabase/functions/accounting-connect/lifecycle.ts` → manageable → revoke → `record_accounting_revocation`; retain HMRC-specific contracts | L3, L13, L14 |
-| E-invoice preparation/status | #3335's preparation writer and existing send/status gateway; no competing prepare writer | L2, L7, L11–L14; O1–O14 in the transmission contract |
+| Invoice issuance | the after-insert `invoice_provenance_stamp` on `invoices`, reached through `create_invoice_receipted_v1`, `create_invoice_replacement_v1`, `settle_invoices_v1` and the guest-pass `create_invoice` | L1, L10 to L13 |
+| Export and file delivery | `record_book_export_v1`, `record_file_deliveries_v1`; a space that keeps neither periods nor transfers logs nothing | L11, L12, L15 |
+| Accounting preparation and outcome | `record_accounting_delivery` through `databaseStore` and `deliverPeriod` in the Edge function | L7, L10 to L14 |
+| Read, manage and admission | `accounting_connector_actor`, `accounting_connections_v1`, `accounting_transfers_v1`, `accounting_connection_manageable_v1`, `capability_states_v1`, `provenance_envelope_v1` | L4, L6, L10, L13 |
+| Revocation | `supabase/functions/accounting-connect/lifecycle.ts`: manageable check, revoke, `record_accounting_revocation` | L3, L13, L14 |
+| E-invoice preparation and status | `prepare_einvoice_v1` and the existing send and status gateway | L2, L7, L11 to L14 |
 
 ## Evidence
 
-Existing test sources to retain; this page is not a new execution receipt:
+A path below is source-level test coverage, not a record that a run passed. Where an obligation is broader than the assertions, the covered part is stated.
 
-| rule | executed by |
-|---|---|
-| the delivery writer and its `in_flight` answer, with the connector feature on in the fixture | `supabase/tests/database/324_accounting_delivery_in_flight.sql` |
-| a closed period refuses after-the-fact changes | the tests ADR 0045 names |
-| an issued invoice cannot be edited or deleted | `supabase/tests/database/20_money_invariants.sql` |
-
-Obligations the proposed rules derive:
-
-| # | given / action | expected | oracle | layer |
-|---|---|---|---|---|
-| L1 | upgrade populated legacy data and a new v1-provenance invoice; deploy v2 and deactivate v1 | old signed fields, legal snapshot, signatures and retained artifact bytes unchanged; legacy provenance stays unknown and v1 facts stay v1 | compare named immutable fields/bytes, not whole-row JSON that gains columns | database upgrade plus artifact fixture |
-| L2 | deactivate while a transmission is `sent` or becomes uncertain | original attempt completes or remains visibly unresolved; no automatic resend | same attempt/pinned context; no second upload | database transition plus injected-provider handler tests |
-| L3 | revoke/repeat through the actual Edge endpoint while inactive | authorised local revocation succeeds; remote `revoked` / `failed` / `not_supported` remains truthful | manageable check, cleared secrets, revoked row and recorded remote outcome; no false remote success | lifecycle handler plus database tests |
-| L4 | overlapping local ids in separate installations/workspaces; deactivate country A using a shared provider | no context leak; country B's capability remains usable | correct scoped records; B succeeds while new work in A refuses | database and handler scope fixtures |
-| L5 | pinned previous supported client, compatible command, forged version selector and incompatible capability | compatible calls/readers work; server selects authoritative context; scoped refusal inside supported schema; existing global gate preserved | old-client fixture and explicit refusal keys, including unchanged behind/ahead schema behaviour | handler/client compatibility tests |
-| L6 | read issued documents and receipts under `servicing` and `retired` | readable under the existing authority | the select succeeds for the permitted member and fails for others, as before | pgTAP |
-| L7 | a late outcome recorded under `servicing` for an operation admitted under `active` | recorded on the original attempt | same attempt id; envelope unchanged | pgTAP |
-| L8 | retire with unresolved work; resolve it and retry | first refuses with the operation named and servicing intact; second may retire | state and outstanding-operation set under the atomic guard | pgTAP |
-| L9 | closed period/retention hold, later shorter rule, then deactivate | no permission to reopen, rewrite or erase follows from state | existing period and retention refusals remain; authorised reads still work | existing core tests extended to lifecycle states |
-| L10 | new admission races deactivation; authorised receipted command replays afterward | ordered commit-before-deactivate or refusal; replay returns original result without new admission | controlled competing transactions; one existing business identity/provenance | two-session database test plus real entrypoint replay |
-| L11 | every producer in the inventory creates a new durable result; positive QRR and credit/zero cases | truthful applicable context at each boundary; final QRR snapshot digest; no invented renderer identity | all named issuance paths, preparation/export records and retained artifacts | database hooks plus producer/handler fixtures |
-| L12 | forged authoritative metadata or later mutation of provenance | derive/refuse forged authority; immutable facts cannot change | original fields/digests read back; declared client metadata never promoted to proof | database and receiving-handler tests |
-| L13 | native authorised control vs ordinary/inactive/foreign-workspace/delegated actors across inventory; inactive new work and linked correction | existing access refusals persist; new connection/mapping/dispatch refuses; only the explicitly authorised linked correction route works | no forbidden history/artifact/credential/provider access or mutation; positive control succeeds | caller-role database tests and actual Edge entrypoints |
-| L14 | revoke during unresolved work, then request recovery | history/uncertainty retained; recovery refuses revoked access | no provider call initiated by that recovery; no false completion | lifecycle and recovery handler tests |
-| L15 | legacy export/file-delivery calls, repeated same digest and changed file | old no-log result, unchanged no-op and changed generation history retained | `logged: false` where applicable; original generation/artifact unchanged; no fabricated renderer proof | database and existing consumer tests |
-
-## Open decisions
-
-| # | decision | who |
+| # | rule | executed by |
 |---|---|---|
-| D1 | **resolved:** installation owns installed code/resolver availability; workspace/issuer/capability operation scope owns admission state | delegated design review: preserve workspace choices and avoid disabling another country using a shared provider |
-| D2 | **resolved:** refuse retirement while admitted work is unresolved; leave servicing available; no force-retire path | delegated design review: bounded safe behaviour without stranded operations or a second servicing mechanism |
-| D3 | **resolved:** one insert-only `provenance_envelopes` table keyed `(result_kind, result_id)`, written by the one `record_provenance` writer at each inventoried boundary (0693, 0694); the durable tables, the invoice's whole-row guard and its legal-snapshot fingerprint stay untouched; absence reads `legacy_unknown`, nothing is backfilled | the implementer; evidence pgTAP 369, 370, 371 |
-| D4 | **resolved:** admission (`capability_admits`, shared advisory lock) guards a NEW accounting delivery identity and the connection actor's new-work checks; reading, managing, revoking, the outcome of admitted work and replay of an existing identity keep their own authority (0691, 0692; pgTAP 367, 368, 371, `capability_state_race.sh`, `receipted_replay_race.sh`). **The linked-document correction route (0695):** while the capability is `servicing` (not retired, feature on), `record_accounting_delivery` admits ONE new delivery: an invoice whose `replaces_invoice_id` (same workspace, enforced by key) points to an invoice with an `acknowledged` delivery on the SAME connection. Only the direct link counts (a chain needs each step acknowledged); the link is read from the invoice row, never from the request, so no label makes new issuance a correction; everything else keeps the unchanged `0A000`; the delivery's envelope records `linked_correction` and the replaced invoice (pgTAP 372). Invoice issuance itself is not gated by this capability | implementer/reviewer |
-| D5 | **resolved, nothing enforced:** the admission state is keyed `(workspace, capability)`; countries are workspaces, so the shared-provider case (one country stopped, the other working, no leak) is two workspaces on one provider (pgTAP 371 L4, 368). Within a workspace one state covers every connection of the capability; a per-issuer/target/destination/environment scope and any uniqueness constraint wait for the resolver of #3331, so the government/customer and environment distinctions are preserved as they are today (a connection keeps its issuer site, target and credentials; a delivery identity names them). The selection actually used is pinned per result in its envelope (module id, version, input schema) | implementer under delegated design review |
+| L1 | a legacy invoice and a new envelope keep their signed fields, snapshot and retained bytes when a later version is deployed | `supabase/tests/database/371_lifecycle_evidence.sql`: legacy invoice, v1 envelope against v2, signed fields, snapshot and retained bytes unchanged. A populated fixture, not a replay of the full historical migration chain |
+| L2 | a late e-invoice outcome under servicing completes the admitted transmission and nothing is resent | `supabase/tests/database/370_transmission_envelope.sql`: a late outcome after an accounting servicing state is inserted; the envelope is unchanged. Uncertain and no-resend behaviour: `supabase/functions/send-e-invoice/handler_test.ts`. There is no separate e-invoice-channel deactivation state |
+| L3 | revocation and its repeat succeed locally while the feature is off, and the remote result stays truthful | `supabase/tests/database/367_accounting_servicing_guard.sql`: revoke and repeat with the feature off; `supabase/functions/accounting-connect/lifecycle_test.ts`: the revoke handler's purpose check, the local and remote result distinction, denied actors |
+| L4 | one workspace's state does not leak into another that shares a provider or a document id | pgTAP 371: two workspaces sharing a provider and document id; `supabase/tests/database/368_capability_states.sql`: separate workspace state. This is workspace isolation, not proof of two physical installations |
+| L5 | the current reader falls back honestly, the schema gate is unchanged, and a forged declaration cannot select the authoritative version | `test/features/money/capability_lifecycle_compat_test.dart`: the current reader's fallback, the unchanged schema gate and the 0A000 refusal; pgTAP 371: a forged declaration. A current-class unit test is not an execution of a pinned historical build |
+| L6 | history and transfers stay readable under servicing and retired, and refused to others | pgTAP 367: history and transfer reads with denied actors while the feature is off; pgTAP 368: history under retired; `supabase/tests/database/369_provenance_envelopes.sql`: the envelope reader and a foreign-workspace control. These cover what they read, not a full state-by-role matrix over every invoice and receipt reader |
+| L7 | a late outcome and a replay land on the admitted record | pgTAP 367 and 368: an admitted accounting outcome and replay; pgTAP 369: the envelope fixed across outcome and replay; pgTAP 370: a late e-invoice outcome under servicing |
+| L8 | retirement is refused while a delivery is unresolved, and succeeds after | pgTAP 368: the refusal, the resolution and the retirement, failed and revoked rows not blocking, illegal transitions, the owner and reason requirements |
+| L9 | a retired state cannot bypass a closed book period or a retention hold | pgTAP 371: the closed-period and retention-hold refusals under a retired state |
+| L10 | admission racing deactivation is ordered, and a replay returns the original | `scripts/capability_state_race.sh`: competing admission and state transactions; `scripts/receipted_replay_race.sh`: a real receipted command race and replay; pgTAP 371: a replay keeps one invoice and one envelope |
+| L11 | every producer writes its envelope at its boundary | pgTAP 369: invoice, quick-response reference, zero amount, and the export, file-delivery and accounting producer hooks; pgTAP 370: the transmission and the local-day provenance; pgTAP 371: the receipted invoice path. The replacement, settlement and guest-pass entrypoints are not each executed by these envelope tests |
+| L12 | provenance is insert-only and forged authoritative fields are refused or ignored | pgTAP 369: insert-only, no second write, forged authoritative fields; pgTAP 370: the declared allow-list and immutability; pgTAP 371: a forged selector; the send handler tests for the clipping of declared values |
+| L13 | authority persists under servicing, and the linked correction is the only new-work exception | pgTAP 367 and 368: caller authority and stopped admission; `supabase/tests/database/372_linked_correction.sql`: the permitted direct correction, and the refusals for a wrong connection, an unacknowledged original, no link, the feature off and retired; the existing Edge lifecycle and delivery tests for denied actors. The claim is scoped to those cases |
+| L14 | recovery on a revoked connection makes no provider call | `supabase/functions/accounting-connect/deliver_test.ts`: a revoked recovery makes no provider call, no refresh and no delivery write; pgTAP 367: an old connection's replay and relink distinctions |
+| L15 | legacy export and file-delivery calls keep their results | pgTAP 369: an old export signature, and an unchanged and a changed digest generation; `supabase/tests/database/234_book_periods.sql`: the existing `logged: false` behaviour; `supabase/tests/database/299_accounting_connections.sql`: legacy file-delivery outcomes. No renderer is proven |
 
-## Stop condition
-
-#3336 closes when L1–L15 and the linked review requirements are verified
-through the inventoried entrypoints, D3–D5 are recorded, and new results
-carry truthful provenance while legacy absence remains unknown. Its
-e-invoice portion depends on #3335; the bounded accounting guard split can land earlier. Country-package extraction (#3332, #3333), the provider
-adapters behind gateways (#3337) and the removability suite (#3338)
-stay in their own issues.
+pgTAP 367, 368, 369, 370, 371 and 372 are the files `367_accounting_servicing_guard.sql` through `372_linked_correction.sql` under `supabase/tests/database/`.

@@ -8,36 +8,34 @@ document that may or may not have left for a government platform, a
 country capability being switched off while a submission is in flight.
 Those get a **contract page** here (ADR 0048).
 
-A contract page is written **before** the behaviour changes and is the
-part of the issue that survives it. It is short. It explains business
+A contract page states the rule that holds on master. It is updated in the pull request that changes the behaviour; the proposal, its open decisions, its obligations and its stop condition live in the issue (the checkpoint template's Contract reference and delta, Acceptance and tests and Done when). The page is short. It explains business
 meaning; it does not repeat the schema — the schema has its own
 representation (`docs/ci/SQL_CONTRACT.md`, the generated dictionary) and
 repeating it here would be a second copy to keep true.
 
 ## What a page holds, and why in that order
 
-| section | answers |
+| Section | Meaning |
 |---|---|
-| Baseline | the commit the page was checked against, the issues it serves, the canonical sources it summarises |
-| Concepts and identity | the business things involved, and what makes two of them *the same one* — the scope of every "at most once" rule |
-| Relationships and cardinalities | who owns what, what is optional, which lifecycle qualification bends the rule (a reservation keeps its history after its seat is deleted) |
-| States and transitions | the declared states, then every transition as *from · event · guard · to · effects* — the processing rule in one table |
-| Invariants | what must hold across all of the above, each marked *held today* or *proposed*, with its enforcement point |
-| Processing | trigger and actor, prerequisites, atomic effects, outcomes, external effects and how an unknown outcome is recovered |
-| Evidence | the tests that execute the held rules, and the obligations the proposed rules derive — each with its oracle, not only its label |
-| Open decisions | what the page could not settle, and who settles it |
-| Stop condition | where the change ends |
+| Baseline | The issues served and canonical sources summarized; no pinned source commit |
+| Concepts and identity | Concepts and their identity scope |
+| Relationships and cardinalities | Ownership, optionality and lifecycle qualifications |
+| States and transitions | Declared states and the existing five-column transition table |
+| Invariants | Rules that hold, with their enforcement point |
+| Processing | Trigger/actor, guards, atomic/external effects and recovery |
+| Evidence | Executable tests for the rules; explicitly identify a rule with no test |
 
 ### Two views, kept apart
 
-The page states the **conceptual** rule in plain words ("one logical
-transmission is one invoice to one destination in one environment
-through one provider"). Under it, an **implementation mapping** names
-the actual function, column, constraint and test that realise it. A
-reader who wants the meaning stops at the first; a reader who wants to
-change it continues to the second. Mixing the two produced the
-booking-example mistakes this convention was adopted to avoid: a model
-that was internally consistent and wrong about the product.
+The meaning, question and invariant columns state the **conceptual**
+rule in plain words ("one logical transmission is one invoice to one
+destination in one environment through one provider"). The identity,
+qualification and enforcement columns map it to the implementation: the
+actual function, column, constraint and test that realise it. A reader
+who wants the meaning stops at the first; a reader who wants to change it
+continues to the second. Mixing the two produced the booking-example
+mistakes this convention was adopted to avoid: a model that was
+internally consistent and wrong about the product.
 
 ### Cardinalities are questions, not arrows
 
@@ -86,17 +84,25 @@ existing owner delegation, or a reserved owner action under
 
 ## What the lint checks, and what it cannot
 
-`test/lint/domain_contract_test.dart` checks required headings, full commit
-hash and issue-reference syntax, five nonempty transition cells, declared states,
-and backticked repository-root or peer Markdown paths (`page.md` or `./page.md`).
-It checks file existence, not symbols, anchors, commit existence or test
-results. Semantic correctness and a code change's contract impact stay
-with the review and the tests the Evidence section names.
+`test/lint/domain_contract_test.dart` checks the seven required headings
+(and that this README's section table lists exactly those, in that order),
+a `- Refs:` list item naming an issue, five nonempty transition cells,
+declared states, and backticked repository-root or peer Markdown paths
+(`page.md` or `./page.md`). It refuses proposal text on a page: an
+`## Open decisions` or `## Stop condition` heading, a `- Source commit:`
+line, and the whole word `proposed`. It does not scan this README or the
+ADRs, which explain proposals. It checks file existence, not symbols,
+anchors or test results, and it does not prove a rule is right or that a
+cited test passed. Semantic correctness and a code change's contract
+impact stay with the review and the tests the Evidence section names.
+A page listed in the lint's `_unreconciled` set is exempt from the
+proposal check only, until its own reconciliation removes it; the set only
+shrinks.
 
 ## Three safeguards
 
 1. **Current is not correct.** A rule extracted from the code documents
-   what exists. A proposed rule names the issue or decision it comes from.
+   what exists. A proposed change belongs to its issue, not to the page.
 2. **Read the implementation before changing it.** The page points at
    the functions and tests; it does not replace reading them.
 3. **The page is revised by evidence.** When implementation contradicts
