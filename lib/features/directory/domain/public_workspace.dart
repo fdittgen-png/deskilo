@@ -64,6 +64,18 @@ const publicPageFields = [
   'plans',
 ];
 
+/// #3689 — where the page's business is on the map, as a save sends it:
+/// the pair, or both empty (no stored place, visitors' maps look up the
+/// address). Every save carries it, so an edit of another field keeps it.
+Map<String, String> publicPlaceFields(DirectoryLocation? place) => {
+  'latitude': place == null ? '' : '${place.latitude}',
+  'longitude': place == null ? '' : '${place.longitude}',
+};
+
+/// The stored place of a `publication.page.read` document, if it has one.
+DirectoryLocation? publicPlaceOf(Map<String, Object?> document) =>
+    DirectoryLocation.parse(document['latitude'], document['longitude']);
+
 /// The inherited fields that follow the workspace information in [page],
 /// a `publication.page.read` answer. A page without the marker (an older
 /// server) follows nothing: what it stored is what it shows.

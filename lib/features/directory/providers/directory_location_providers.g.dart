@@ -56,6 +56,55 @@ final class DirectoryGeocoderProvider
 
 String _$directoryGeocoderHash() => r'cb43baf49aec6f59cdeba41f1ff542bb0fc1658a';
 
+/// #3689 -- the tiles of a map outside Discover (the public-page editor's
+/// pin): null is the network; a test gives its own.
+
+@ProviderFor(mapTileProvider)
+final mapTileProviderProvider = MapTileProviderProvider._();
+
+/// #3689 -- the tiles of a map outside Discover (the public-page editor's
+/// pin): null is the network; a test gives its own.
+
+final class MapTileProviderProvider
+    extends $FunctionalProvider<TileProvider?, TileProvider?, TileProvider?>
+    with $Provider<TileProvider?> {
+  /// #3689 -- the tiles of a map outside Discover (the public-page editor's
+  /// pin): null is the network; a test gives its own.
+  MapTileProviderProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'mapTileProviderProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$mapTileProviderHash();
+
+  @$internal
+  @override
+  $ProviderElement<TileProvider?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  TileProvider? create(Ref ref) {
+    return mapTileProvider(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(TileProvider? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<TileProvider?>(value),
+    );
+  }
+}
+
+String _$mapTileProviderHash() => r'42e3bba226b28221eb61f302205c30e980fb85fc';
+
 /// #3684 -- the places found on this device, so a second visit asks the
 /// geocoder nothing again.
 

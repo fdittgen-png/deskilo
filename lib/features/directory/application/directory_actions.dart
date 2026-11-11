@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
 
 /// #1847 — the owner's publication decisions (MANAGEMENT). Server
@@ -38,6 +39,12 @@ class PublicationActions {
           uri.userInfo.isNotEmpty) {
         throw ArgumentError('public links require HTTPS');
       }
+    }
+    // #3689 — the place is both coordinates or neither, and a real one.
+    final lat = normalized['latitude'] ?? '', lon = normalized['longitude'] ?? '';
+    if ((lat.isEmpty != lon.isEmpty) ||
+        (lat.isNotEmpty && DirectoryLocation.parse(lat, lon) == null)) {
+      throw ArgumentError('invalid coordinates');
     }
     return repository.savePage(workspace, normalized, published: published);
   }

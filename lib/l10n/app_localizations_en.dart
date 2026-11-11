@@ -21374,6 +21374,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalPhone => 'Public phone';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Pin at $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed => 'The map service did not answer. Try again.';
+
+  @override
+  String get portalPlaceFind => 'Find the address on the map';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Found: $place. Use it, or tap the map to move the pin.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'No place is stored: a visitor\'s map looks up the address.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'No place was found for this address. Check the address and try again.';
+
+  @override
+  String get portalPlaceRemove => 'Remove the place';
+
+  @override
+  String get portalPlaceTapToMove => 'Tap the map to move the pin.';
+
+  @override
+  String get portalPlaceTitle => 'Where you are on the map';
+
+  @override
+  String get portalPlaceUse => 'Use this place';
+
+  @override
   String get portalPlans => 'Plans and prices';
 
   @override
@@ -28579,7 +28615,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'What people outside the space can see.';
+      'What people outside the space can see, including where you are on the map.';
 
   @override
   String get setupStepHintPurchases => 'What the space buys, and from whom.';

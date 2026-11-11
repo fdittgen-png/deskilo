@@ -128,6 +128,8 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
         field: _edited.contains(field)
             ? _controllers[field]!.text
             : stored[field] as String? ?? '',
+      // #3689 — the stored place goes back as it was read.
+      ...publicPlaceFields(publicPlaceOf(stored)),
     };
     final following = _following.difference(changed);
     _busy.value = true;

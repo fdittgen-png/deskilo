@@ -69,6 +69,21 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
       printf -- '- %s: `%s`\n' "$input" "$artifact"
     done < "$DIR/attempts.txt"
   fi
+  # #3735 -- a re-run of one failed shard keeps the others' results of an
+  # earlier attempt: the table says which attempt each shard's result came from.
+  if [ -s "$DIR/shard-attempts.txt" ]; then
+    echo
+    echo 'Test shards, by the attempt their result came from:'
+    while IFS='|' read -r shard attempt; do
+      if [ -z "$attempt" ]; then
+        printf -- '- %s: no attempt of this run produced it\n' "$shard"
+      elif [ "$attempt" = "${GITHUB_RUN_ATTEMPT:-$attempt}" ]; then
+        printf -- '- %s: attempt %s\n' "$shard" "$attempt"
+      else
+        printf -- '- %s: attempt %s (earlier; not re-run)\n' "$shard" "$attempt"
+      fi
+    done < "$DIR/shard-attempts.txt"
+  fi
   echo
   echo '> Performance is not a row here, and the guards that exist prove'
   echo '> different things: a draw-call budget is algorithmic, a query'
