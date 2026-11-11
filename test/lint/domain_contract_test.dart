@@ -34,7 +34,6 @@ const _requiredSections = [
 /// them. Each reconciliation removes its own name; the set only shrinks, a
 /// new page is never listed, and there is no wildcard.
 const _unreconciled = <String>{
-  'e-invoice-transmission.md',
   'capability-lifecycle.md',
 };
 
