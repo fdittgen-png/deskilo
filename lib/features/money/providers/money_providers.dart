@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
@@ -44,9 +43,9 @@ import 'credit_providers.dart';
 import 'money_queries_providers.dart';
 
 export '../domain/bill_sections.dart' show currentPeriod;
+export 'credit_providers.dart' show InvoicingBusiness, invoicingBusinessProvider;
 export 'money_queries_providers.dart';
 
-part 'invoicing_business.dart';
 part 'money_providers.g.dart';
 
 @Riverpod(keepAlive: true)
