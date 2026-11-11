@@ -21,5 +21,7 @@
   "setupChoicesQuestionUnknown": "Non ancora deciso: {question}",
   "setupChoicesManual": "La sua scelta viene mantenuta quando risponde alle altre domande.",
   "setupChoicesReset": "Usi i livelli consigliati",
-  "setupChoicesSaving": "Salvataggio…"
+  "setupChoicesSaving": "Salvataggio…",
+  "configureWorkspaceTitle": "Configurare lo spazio",
+  "setupAdvancedSettings": "Impostazioni avanzate"
 }

@@ -51,7 +51,7 @@ Future<void> _reveal(WidgetTester tester, String key) async {
     'drawer-cash' => 'Cash & accounting',
     // #2313 — every report and the BI in their own group.
     'drawer-bi' || 'drawer-reports-finance' || 'drawer-reports-documents' || 'drawer-reports-templates' => 'Reporting',
-    'drawer-workspace-settings' || 'drawer-availability' || 'drawer-features' || 'drawer-editor' => 'Workspace setup',
+    'drawer-setup-guide' || 'drawer-availability' => 'Workspace setup',
     _ => null,
   };
   if (group != null && find.byKey(ValueKey(key)).evaluate().isEmpty) {
@@ -132,9 +132,9 @@ void main() {
     expect(find.byKey(const ValueKey('shell-drawer')), findsOneWidget);
     for (final key in [
       'drawer-reserve', 'drawer-tab-1', 'drawer-tab-2',
-      'drawer-tab-3', 'drawer-workspace-settings',
+      'drawer-tab-3', 'drawer-setup-guide',
       'drawer-members', 'drawer-roles', 'drawer-invoices', 'drawer-billing',
-      'drawer-features', 'drawer-settings', 'drawer-privacy',
+      'drawer-settings', 'drawer-privacy',
     ]) {
       await _reveal(tester, key);
       expect(find.byKey(ValueKey(key)), findsOneWidget, reason: key);
@@ -245,14 +245,15 @@ void main() {
     await _pump(tester, web: true, size: const Size(320, 1100));
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
-    for (final key in ['drawer-members', 'drawer-invoices', 'drawer-features']) {
+    for (final key in ['drawer-members', 'drawer-invoices', 'drawer-setup-guide']) {
       await _reveal(tester, key);
       expect(find.byKey(ValueKey(key)), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
-    await tester.tap(find.byKey(const ValueKey('drawer-features')));
+    await tester.tap(find.byKey(const ValueKey('drawer-setup-guide')));
     await tester.pumpAndSettle();
-    expect(find.text('Features'), findsWidgets);
+    expect(find.byKey(const ValueKey('shell-drawer')), findsNothing,
+        reason: 'the Configure workspace door opened its page');
     expect(tester.takeException(), isNull);
   });
 
@@ -273,7 +274,7 @@ void main() {
             status: MemberStatus.active,
           );
     const entries = [
-      'drawer-workspace-settings', 'drawer-members', 'drawer-availability',
+      'drawer-setup-guide', 'drawer-members', 'drawer-availability',
       'drawer-services', 'drawer-billing', 'drawer-payment-methods',
     ];
     final roles = FakeWorkspaceRoles()

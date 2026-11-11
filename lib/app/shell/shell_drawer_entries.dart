@@ -252,30 +252,35 @@ class DrawerEntries {
     ];
   }
 
-  /// #3077 — the setup guide's door, first in the workspace group, while a
-  /// milestone is open.
-  List<DrawerEntry> setupGuide() => [
-        if (setupOpen && may(WorkspacePermission.workspaceSettings))
-          DrawerEntry(
-            'drawer-setup-guide',
-            Icons.checklist_outlined,
-            l10n.setupGuideTitle,
-            () => go('/setup'),
-            route: '/setup',
-          ),
-      ];
+  /// #3282 — one "Configure workspace" door for the whole configuration:
+  /// the guide (its overview, tasks and advanced settings) for whoever may
+  /// configure, as its routes require; a delegate who may not opens the
+  /// deepest page they may — the workspace's settings, the switches, the plan.
+  List<DrawerEntry> setupGuide() {
+    final target = setupOpen && may(WorkspacePermission.manageConfiguration)
+        ? '/setup'
+        : may(WorkspacePermission.workspaceSettings)
+            ? '/workspace-settings'
+            : may(WorkspacePermission.manageConfiguration)
+                ? '/features'
+                : mayOnPlaces(WorkspacePermission.manageSites)
+                    ? '/editor'
+                    : null;
+    if (target == null) return const [];
+    return [
+      DrawerEntry(
+        'drawer-setup-guide',
+        Icons.tune_outlined,
+        l10n.configureWorkspaceTitle,
+        () => go(target),
+        route: target,
+      ),
+    ];
+  }
 
   List<DrawerEntry> administration() {
     return <DrawerEntry>[
 
-      if (may(WorkspacePermission.workspaceSettings))
-        DrawerEntry(
-          'drawer-workspace-settings',
-          Icons.business_outlined,
-          l10n.workspaceSettingsTitle,
-          () => go('/workspace-settings'),
-          route: '/workspace-settings',
-        ),
       if (may(WorkspacePermission.manageMembers))
         DrawerEntry(
           'drawer-members',
@@ -366,23 +371,6 @@ class DrawerEntries {
           l10n.billingTitle,
           () => go('/billing'),
           route: '/billing',
-        ),
-      if (may(WorkspacePermission.manageConfiguration))
-        DrawerEntry(
-          'drawer-features',
-          Icons.toggle_on_outlined,
-          l10n.featuresTitle,
-          () => go('/features'),
-          route: '/features',
-        ),
-      // #2137 — editing the plan is delegable through manageSites.
-      if (mayOnPlaces(WorkspacePermission.manageSites))
-        DrawerEntry(
-          'drawer-editor',
-          Icons.design_services_outlined,
-          l10n.editorOpenTooltip,
-          () => go('/editor'),
-          route: '/editor',
         ),
     ];
   }

@@ -110,5 +110,13 @@
   },
   "@setupChoicesSaving": {
     "description": "Visible while applying setup choices and saving the journey."
+  },
+  "configureWorkspaceTitle": "Configure workspace",
+  "@configureWorkspaceTitle": {
+    "description": "#3282 the one drawer entry for the workspace's whole configuration (guide, settings, features, plan)."
+  },
+  "setupAdvancedSettings": "Advanced settings",
+  "@setupAdvancedSettings": {
+    "description": "#3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor."
   }
 }

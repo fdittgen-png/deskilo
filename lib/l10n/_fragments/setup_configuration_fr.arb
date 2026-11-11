@@ -21,5 +21,7 @@
   "setupChoicesQuestionUnknown": "Pas encore décidé : {question}",
   "setupChoicesManual": "Votre choix est conservé lorsque vous répondez aux autres questions.",
   "setupChoicesReset": "Utiliser les niveaux conseillés",
-  "setupChoicesSaving": "Enregistrement…"
+  "setupChoicesSaving": "Enregistrement…",
+  "configureWorkspaceTitle": "Configurer l'espace",
+  "setupAdvancedSettings": "Réglages avancés"
 }

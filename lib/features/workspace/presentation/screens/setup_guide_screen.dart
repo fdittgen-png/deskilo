@@ -25,6 +25,7 @@ import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/sample_data_card.dart';
+import '../widgets/setup_advanced_settings.dart';
 import '../widgets/setup_configuration_overview.dart';
 import '../widgets/setup_guide_progress.dart';
 import '../widgets/setup_no_invoicing_banner.dart';
@@ -124,6 +125,7 @@ class _SetupGuideBody extends ConsumerWidget {
               title: Text(l10n.setupOutcomeProgress),
               children: [SetupGuideMilestones(status: value)],
             ),
+            const SetupAdvancedSettings(),
             SetupNoInvoicingBanner(reload: reload),
             // #2876 — check the answers and go live.
             Align(

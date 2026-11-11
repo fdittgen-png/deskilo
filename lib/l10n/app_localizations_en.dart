@@ -5964,6 +5964,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composerMention => 'Mention someone';
 
   @override
+  String get configureWorkspaceTitle => 'Configure workspace';
+
+  @override
   String get connectionCancelled =>
       'The account changed meanwhile, so this answer was discarded.';
 
@@ -26844,6 +26847,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settlementVatNote =>
       'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.';
+
+  @override
+  String get setupAdvancedSettings => 'Advanced settings';
 
   @override
   String get setupAnswerUnknown => 'Not sure yet';

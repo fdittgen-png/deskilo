@@ -5998,6 +5998,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get composerMention => 'Mencionar a alguien';
 
   @override
+  String get configureWorkspaceTitle => 'Configurar el espacio';
+
+  @override
   String get connectionCancelled =>
       'La cuenta cambió entretanto, así que se descartó esta respuesta.';
 
@@ -27075,6 +27078,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settlementVatNote =>
       'Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.';
+
+  @override
+  String get setupAdvancedSettings => 'Ajustes avanzados';
 
   @override
   String get setupAnswerUnknown => 'Aún no lo sé';

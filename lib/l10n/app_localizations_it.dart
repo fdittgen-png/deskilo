@@ -6000,6 +6000,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get composerMention => 'Menziona qualcuno';
 
   @override
+  String get configureWorkspaceTitle => 'Configurare lo spazio';
+
+  @override
   String get connectionCancelled =>
       'Nel frattempo l’account è cambiato, quindi questa risposta è stata scartata.';
 
@@ -27099,6 +27102,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settlementVatNote =>
       'Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.';
+
+  @override
+  String get setupAdvancedSettings => 'Impostazioni avanzate';
 
   @override
   String get setupAnswerUnknown => 'Non lo so ancora';

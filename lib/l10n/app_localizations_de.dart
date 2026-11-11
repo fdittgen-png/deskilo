@@ -6009,6 +6009,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get composerMention => 'Jemanden erwähnen';
 
   @override
+  String get configureWorkspaceTitle => 'Bereich konfigurieren';
+
+  @override
   String get connectionCancelled =>
       'Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.';
 
@@ -27123,6 +27126,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settlementVatNote =>
       'Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.';
+
+  @override
+  String get setupAdvancedSettings => 'Erweiterte Einstellungen';
 
   @override
   String get setupAnswerUnknown => 'Weiß ich noch nicht';

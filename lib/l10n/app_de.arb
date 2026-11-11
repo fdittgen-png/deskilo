@@ -3826,6 +3826,7 @@
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "configureWorkspaceTitle": "Bereich konfigurieren",
   "connectionCancelled": "Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.",
   "connectionChangedIdentity": "Dieser Server ist nicht mehr der, den Sie verbunden haben. Seine Aktionen sind angehalten, bis Sie ihn erneut bestätigen.",
   "connectionChecking": "Wird geprüft…",
@@ -17446,6 +17447,7 @@
     "description": "#872 one wizard idiom: settlementSummaryHint"
   },
   "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
+  "setupAdvancedSettings": "Erweiterte Einstellungen",
   "setupAnswerUnknown": "Weiß ich noch nicht",
   "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
   "setupApprovalsApply": "Diese Regel verwenden",

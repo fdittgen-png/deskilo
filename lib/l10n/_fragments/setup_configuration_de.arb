@@ -21,5 +21,7 @@
   "setupChoicesQuestionUnknown": "Noch unklar: {question}",
   "setupChoicesManual": "Ihre Auswahl bleibt beim Beantworten anderer Fragen erhalten.",
   "setupChoicesReset": "Empfohlene Stufen verwenden",
-  "setupChoicesSaving": "Wird gespeichert…"
+  "setupChoicesSaving": "Wird gespeichert…",
+  "configureWorkspaceTitle": "Bereich konfigurieren",
+  "setupAdvancedSettings": "Erweiterte Einstellungen"
 }

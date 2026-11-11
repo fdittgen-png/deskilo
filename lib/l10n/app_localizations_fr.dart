@@ -6010,6 +6010,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get composerMention => 'Mentionner quelqu’un';
 
   @override
+  String get configureWorkspaceTitle => 'Configurer l\'espace';
+
+  @override
   String get connectionCancelled =>
       'Le compte a changé entre-temps ; cette réponse a été ignorée.';
 
@@ -27147,6 +27150,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settlementVatNote =>
       'Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.';
+
+  @override
+  String get setupAdvancedSettings => 'Réglages avancés';
 
   @override
   String get setupAnswerUnknown => 'Je ne sais pas encore';

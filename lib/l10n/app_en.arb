@@ -7940,6 +7940,10 @@
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "configureWorkspaceTitle": "Configure workspace",
+  "@configureWorkspaceTitle": {
+    "description": "#3282 the one drawer entry for the workspace's whole configuration (guide, settings, features, plan)."
+  },
   "connectionCancelled": "The account changed meanwhile, so this answer was discarded.",
   "@connectionCancelled": {
     "description": "Shown as a text in connection outcome text (directory)."
@@ -35286,6 +35290,10 @@
   "settlementVatNote": "The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.",
   "@settlementVatNote": {
     "description": "Shown as a text in invoice detail sections (money)."
+  },
+  "setupAdvancedSettings": "Advanced settings",
+  "@setupAdvancedSettings": {
+    "description": "#3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor."
   },
   "setupAnswerUnknown": "Not sure yet",
   "@setupAnswerUnknown": {

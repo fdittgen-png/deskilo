@@ -9581,6 +9581,12 @@ abstract class AppLocalizations {
   /// **'Mention someone'**
   String get composerMention;
 
+  /// #3282 the one drawer entry for the workspace's whole configuration (guide, settings, features, plan).
+  ///
+  /// In en, this message translates to:
+  /// **'Configure workspace'**
+  String get configureWorkspaceTitle;
+
   /// Shown as a text in connection outcome text (directory).
   ///
   /// In en, this message translates to:
@@ -44311,6 +44317,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The lines and their VAT are carried over from the regrouped invoices; the VAT declaration counts the originals once.'**
   String get settlementVatNote;
+
+  /// #3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced settings'**
+  String get setupAdvancedSettings;
 
   /// #3076 setup questions: the third answer, not decided yet
   ///
