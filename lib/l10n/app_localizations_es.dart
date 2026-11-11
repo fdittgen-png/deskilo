@@ -17904,6 +17904,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo guardar su dirección. Inténtelo de nuevo.';
 
   @override
+  String get meBusinessSeesAdmins =>
+      'Sus administradores que le facturan o llevan el registro de miembros: su nombre, empresa, dirección, teléfono, correo, número de IVA, identificador legal e idioma preferido, que necesitan para facturarle, y su cumpleaños si lo indicó, para quienes llevan el registro de miembros.';
+
+  @override
+  String get meBusinessSeesAsk => 'Cuando pide unirse: su nombre y su foto.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Una vez miembro, todos en el espacio: su nombre y su foto. Su número de WhatsApp, su estado y cuándo estuvo por última vez solo según lo que elija en Quién me ve.';
+
+  @override
+  String get meBusinessSeesTitle => 'Lo que ve un negocio al que se une';
+
+  @override
   String get meContextPersonal => 'Personal';
 
   @override

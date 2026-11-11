@@ -23610,6 +23610,22 @@
   "@meAddressSaveFailed": {
     "description": "Error when saving the postal address from My account failed."
   },
+  "meBusinessSeesAdmins": "Its administrators who invoice you or keep its member records: your name, company, address, phone, e-mail, VAT number, legal id and preferred language, which they need to invoice you, and your birthday if you gave it, for those who keep the member records.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "When you ask to join: your name and photo.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "What a business you join can see",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Personal",
   "@meContextPersonal": {
     "description": "#2552 the scope badge in the personal shell's header: this is the person's own layer, never a space."

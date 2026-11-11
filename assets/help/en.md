@@ -2090,6 +2090,25 @@ You want to decide, one item at a time, who sees your name, bio, contact details
 
 **See also:** [Public profile](help:user.privacy.public-profile) · [Who can see my data](help:user.privacy.visibility)
 
+### What a business you join can see
+
+**Audience:** Everyone
+
+You want to know what a business learns about you when you ask to join it, and once you are a member.
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and scroll to **Privacy**.
+2. Tap **What a business you join can see**.
+
+**Good to know**
+
+- When you ask to join, the business sees your name and photo. Your e-mail address is not shown with a request.
+- Once you are a member, everyone in the space sees your name and photo. Your WhatsApp number, your status and when you were last seen follow your choices in **Who sees me**.
+- The administrators who invoice you or keep the member records see the details they need to invoice you: name, company, address, phone, e-mail, VAT number, legal id and preferred language. Your birthday, if you gave it, is seen only by those who keep the member records.
+
+**See also:** [Choose who sees me](help:user.privacy.audiences)
+
 ### Publish a public profile
 
 **Audience:** Everyone

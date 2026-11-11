@@ -17772,6 +17772,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not save your address. Please try again.';
 
   @override
+  String get meBusinessSeesAdmins =>
+      'Its administrators who invoice you or keep its member records: your name, company, address, phone, e-mail, VAT number, legal id and preferred language, which they need to invoice you, and your birthday if you gave it, for those who keep the member records.';
+
+  @override
+  String get meBusinessSeesAsk => 'When you ask to join: your name and photo.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.';
+
+  @override
+  String get meBusinessSeesTitle => 'What a business you join can see';
+
+  @override
   String get meContextPersonal => 'Personal';
 
   @override

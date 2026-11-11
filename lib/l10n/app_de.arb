@@ -11477,6 +11477,22 @@
   "meAccountInMe": "Mein Konto ist unter Ich",
   "meAccountInMeBody": "Foto, Sprache, Design und Anmeldungen gehören Ihnen – in jedem Space.",
   "meAddressSaveFailed": "Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "meBusinessSeesAdmins": "Seine Administratoren, die Ihnen Rechnungen stellen oder das Mitgliederverzeichnis führen: Ihren Namen, Ihre Firma, Adresse, Telefonnummer, E-Mail, USt-IdNr., rechtliche Kennung und bevorzugte Sprache, die sie zum Abrechnen brauchen, und Ihren Geburtstag, wenn Sie ihn angegeben haben, für die, die das Mitgliederverzeichnis führen.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "Wenn Sie den Beitritt anfragen: Ihren Namen und Ihr Foto.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Als Mitglied alle im Bereich: Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihren Status und wann Sie zuletzt da waren nur so, wie Sie es unter Wer mich sieht wählen.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "Was ein Betrieb sieht, dem Sie beitreten",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Persönlich",
   "meCreateSpace": "Space gründen",
   "meDataPersonalExport": "Persönliche Daten exportieren",
