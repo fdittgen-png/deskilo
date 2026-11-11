@@ -23665,9 +23665,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get reminderQueueMatch => 'Zuordnen';
-
-  @override
   String get reminderQueueNotRecorded =>
       'Nichts wurde vermerkt: das Teilen wurde geschlossen.';
 

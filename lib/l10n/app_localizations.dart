@@ -38883,12 +38883,6 @@ abstract class AppLocalizations {
   /// **'Reminder {level}'**
   String reminderQueueLevel(int level);
 
-  /// #3587 R1-f: reminder queue (reminderQueueMatch)
-  ///
-  /// In en, this message translates to:
-  /// **'Match'**
-  String get reminderQueueMatch;
-
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)
   ///
   /// In en, this message translates to:

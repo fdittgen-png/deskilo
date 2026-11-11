@@ -31128,10 +31128,6 @@
       }
     }
   },
-  "reminderQueueMatch": "Match",
-  "@reminderQueueMatch": {
-    "description": "#3587 R1-f: reminder queue (reminderQueueMatch)"
-  },
   "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
   "@reminderQueueNotRecorded": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)"

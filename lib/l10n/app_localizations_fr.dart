@@ -23671,9 +23671,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get reminderQueueMatch => 'Rapprocher';
-
-  @override
   String get reminderQueueNotRecorded =>
       'Rien n\'a été enregistré : le partage a été fermé.';
 

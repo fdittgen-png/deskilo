@@ -82,10 +82,6 @@
   "@reminderQueueCheckFirst": {
     "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
   },
-  "reminderQueueMatch": "Match",
-  "@reminderQueueMatch": {
-    "description": "#3587 R1-f: reminder queue (reminderQueueMatch)"
-  },
   "reminderQueueSharedNotRecorded": "Shared, but not recorded on the invoice. Record it: it will not be shared again.",
   "@reminderQueueSharedNotRecorded": {
     "description": "#3587 R1-f: a reminder left the device but recording its level failed; its action records only"

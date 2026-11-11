@@ -14,7 +14,6 @@
   "reminderQueueDone": "Terminé",
   "reminderQueueDoneEmpty": "Rien à partager",
   "reminderQueueCheckFirst": "À vérifier d'abord : argent reçu et non affecté",
-  "reminderQueueMatch": "Rapprocher",
   "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
   "reminderQueueRecord": "Enregistrer",
   "reminderQueueNotRecordedHeading": "Partagées, non enregistrées",

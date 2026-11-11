@@ -14771,7 +14771,6 @@
   "reminderQueueFailed": "Non è stato possibile condividerla. Riprovi.",
   "reminderQueueIntro": "Lei condivide ogni sollecito. Viene registrato solo se è stato davvero condiviso.",
   "reminderQueueLevel": "Sollecito {level}",
-  "reminderQueueMatch": "Abbina",
   "reminderQueueNotRecorded": "Non è stato registrato nulla: la condivisione è stata chiusa.",
   "reminderQueueNotRecordedHeading": "Condivisi, non registrati",
   "reminderQueueRecord": "Registra",

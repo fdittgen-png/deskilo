@@ -23625,9 +23625,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get reminderQueueMatch => 'Abbina';
-
-  @override
   String get reminderQueueNotRecorded =>
       'Non è stato registrato nulla: la condivisione è stata chiusa.';
 

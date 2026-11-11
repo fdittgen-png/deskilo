@@ -14,7 +14,6 @@
   "reminderQueueDone": "Fatto",
   "reminderQueueDoneEmpty": "Niente da condividere",
   "reminderQueueCheckFirst": "Da verificare prima: denaro ricevuto e non assegnato",
-  "reminderQueueMatch": "Abbina",
   "reminderQueueSharedNotRecorded": "Condiviso, ma non registrato sulla fattura. Lo registri: non verrà condiviso di nuovo.",
   "reminderQueueRecord": "Registra",
   "reminderQueueNotRecordedHeading": "Condivisi, non registrati",

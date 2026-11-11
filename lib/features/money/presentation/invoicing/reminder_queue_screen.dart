@@ -280,7 +280,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
                               onPressed: _checking
                                   ? null
                                   : () => widget.onMatch(c.customerId),
-                              child: Text(l10n.reminderQueueMatch),
+                              child: Text(l10n.invoicingActionMatch),
                             ),
                           ],
                         ),

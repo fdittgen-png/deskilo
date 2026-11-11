@@ -14771,7 +14771,6 @@
   "reminderQueueFailed": "No se pudo compartir. Inténtelo de nuevo.",
   "reminderQueueIntro": "Usted comparte cada recordatorio. Solo se registra si de verdad se compartió.",
   "reminderQueueLevel": "Recordatorio {level}",
-  "reminderQueueMatch": "Conciliar",
   "reminderQueueNotRecorded": "No se registró nada: se cerró el menú de compartir.",
   "reminderQueueNotRecordedHeading": "Compartidos, sin registrar",
   "reminderQueueRecord": "Registrar",

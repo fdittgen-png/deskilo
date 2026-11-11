@@ -14,7 +14,6 @@
   "reminderQueueDone": "Fertig",
   "reminderQueueDoneEmpty": "Nichts zu teilen",
   "reminderQueueCheckFirst": "Zuerst prüfen: Geld eingegangen und nicht zugeordnet",
-  "reminderQueueMatch": "Zuordnen",
   "reminderQueueSharedNotRecorded": "Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.",
   "reminderQueueRecord": "Vermerken",
   "reminderQueueNotRecordedHeading": "Geteilt, nicht vermerkt",

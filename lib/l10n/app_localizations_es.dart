@@ -23608,9 +23608,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get reminderQueueMatch => 'Conciliar';
-
-  @override
   String get reminderQueueNotRecorded =>
       'No se registró nada: se cerró el menú de compartir.';
 

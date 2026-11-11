@@ -2672,7 +2672,6 @@ Map<String, _Getter> _part7() => {
   'readinessStateUnverified': (l) => l.readinessStateUnverified,
   'recordedPaymentsMore': (l) => l.recordedPaymentsMore,
   'reminderModeAutomatic': (l) => l.reminderModeAutomatic,
-  'reminderQueueMatch': (l) => l.reminderQueueMatch,
   'reminderTitle': (l) => l.reminderTitle,
   'repartitionFiledPending': (l) => l.repartitionFiledPending,
   'repartitionPeriod': (l) => l.repartitionPeriod,

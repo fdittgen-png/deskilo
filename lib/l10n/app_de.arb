@@ -14771,7 +14771,6 @@
   "reminderQueueFailed": "Konnte nicht geteilt werden. Bitte erneut versuchen.",
   "reminderQueueIntro": "Sie teilen jede Mahnung selbst. Sie wird nur vermerkt, wenn sie wirklich geteilt wurde.",
   "reminderQueueLevel": "Mahnung {level}",
-  "reminderQueueMatch": "Zuordnen",
   "reminderQueueNotRecorded": "Nichts wurde vermerkt: das Teilen wurde geschlossen.",
   "reminderQueueNotRecordedHeading": "Geteilt, nicht vermerkt",
   "reminderQueueRecord": "Vermerken",

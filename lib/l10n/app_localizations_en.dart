@@ -23434,9 +23434,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get reminderQueueMatch => 'Match';
-
-  @override
   String get reminderQueueNotRecorded =>
       'Nothing was recorded: the share was closed.';
 
