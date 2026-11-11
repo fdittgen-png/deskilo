@@ -30,7 +30,7 @@ void main() {
     final missing = [
       for (final row in table)
         for (final t in row.tests)
-          if (!File(t).existsSync() && !Directory(t).existsSync()) t,
+          if (FileSystemEntity.typeSync(t) == FileSystemEntityType.notFound) t,
     ];
     expect(missing, isEmpty, reason: 'listed tests that do not exist: $missing');
   });
