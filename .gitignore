@@ -68,5 +68,4 @@ fastlane/metadata/ios/review_information/phone_number.txt
 /prs.json
 /snapshots.jsonl
 /supabase/.temp/
-/.mcp.json
 /.claude/settings.local.json
