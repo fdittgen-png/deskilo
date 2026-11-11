@@ -17955,6 +17955,22 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'enregistrer votre adresse. Veuillez réessayer.';
 
   @override
+  String get meBusinessSeesAdmins =>
+      'Ses administrateurs qui vous facturent ou tiennent le registre des membres : votre nom, votre société, votre adresse, votre téléphone, votre e-mail, votre numéro de TVA, votre identifiant légal et votre langue préférée, dont ils ont besoin pour vous facturer, et votre date d’anniversaire si vous l’avez indiquée, pour ceux qui tiennent le registre des membres.';
+
+  @override
+  String get meBusinessSeesAsk =>
+      'Quand vous demandez à la rejoindre : votre nom et votre photo.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Une fois membre, tout le monde dans l’espace : votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence seulement selon vos choix dans Qui me voit.';
+
+  @override
+  String get meBusinessSeesTitle =>
+      'Ce que voit une entreprise que vous rejoignez';
+
+  @override
   String get meContextPersonal => 'Personnel';
 
   @override
@@ -28557,7 +28573,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Quand vous demandez, cette entreprise voit votre adresse e-mail. Une fois membre, ses administrateurs voient votre nom et les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
+      'Quand vous demandez, cette entreprise voit votre nom et votre photo. Une fois membre, ses administrateurs voient les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
 
   @override
   String get spaceQrSizeLabel => 'Taille du code QR';

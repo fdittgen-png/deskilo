@@ -29385,6 +29385,30 @@ abstract class AppLocalizations {
   /// **'Could not save your address. Please try again.'**
   String get meAddressSaveFailed;
 
+  /// #3594 what the administrators who invoice or keep the member records see
+  ///
+  /// In en, this message translates to:
+  /// **'Its administrators who invoice you or keep its member records: your name, company, address, phone, e-mail, VAT number, legal id and preferred language, which they need to invoice you, and your birthday if you gave it, for those who keep the member records.'**
+  String get meBusinessSeesAdmins;
+
+  /// #3594 what a business sees when the person asks to join
+  ///
+  /// In en, this message translates to:
+  /// **'When you ask to join: your name and photo.'**
+  String get meBusinessSeesAsk;
+
+  /// #3594 what the members of a space see
+  ///
+  /// In en, this message translates to:
+  /// **'Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.'**
+  String get meBusinessSeesSpace;
+
+  /// #3594 Me › Privacy: the card that says what a business a person joins can see
+  ///
+  /// In en, this message translates to:
+  /// **'What a business you join can see'**
+  String get meBusinessSeesTitle;
+
   /// #2552 the scope badge in the personal shell's header: this is the person's own layer, never a space.
   ///
   /// In en, this message translates to:
@@ -46799,7 +46823,7 @@ abstract class AppLocalizations {
   /// #3545 F: the line under the actions of a space's public page: what asking to join shares
   ///
   /// In en, this message translates to:
-  /// **'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.'**
+  /// **'When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.'**
   String get spacePreviewPrivacy;
 
   /// Shown as the text in space codes options dialog (workspace).

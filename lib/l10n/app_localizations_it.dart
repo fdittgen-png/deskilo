@@ -17919,6 +17919,21 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile salvare il suo indirizzo. Riprovi.';
 
   @override
+  String get meBusinessSeesAdmins =>
+      'I suoi amministratori che le fatturano o tengono il registro dei soci: il suo nome, la società, l’indirizzo, il telefono, l’e-mail, la partita IVA, l’identificativo legale e la lingua preferita, necessari per fatturarle, e il suo compleanno se lo ha indicato, per chi tiene il registro dei soci.';
+
+  @override
+  String get meBusinessSeesAsk =>
+      'Quando chiede di unirsi: il suo nome e la sua foto.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Una volta socio, tutti nello spazio: il suo nome e la sua foto. Il suo numero WhatsApp, il suo stato e quando è stato presente l’ultima volta solo come sceglie in Chi mi vede.';
+
+  @override
+  String get meBusinessSeesTitle => 'Cosa vede un’attività a cui si unisce';
+
+  @override
   String get meContextPersonal => 'Personale';
 
   @override
@@ -28495,7 +28510,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.';
+      'Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.';
 
   @override
   String get spaceQrSizeLabel => 'Dimensione del codice QR';
