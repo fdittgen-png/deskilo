@@ -17848,6 +17848,7 @@
   "setupQuestionVatRegistered": "L’espace est assujetti à la TVA",
   "setupReasonApproveBookings": "Parce que les réservations attendent une validation",
   "setupReasonAssociation": "Parce qu’une association décide ensemble, avec son bureau",
+  "setupReasonBooksNoPlaces": "Parce que cette activité ne réserve pas de places",
   "setupReasonDoorTablet": "Parce qu’une tablette à l’entrée enregistre les arrivées",
   "setupReasonIssuesInvoices": "Parce que vous émettez des factures",
   "setupReasonKeepsBooks": "Parce que vous tenez une comptabilité",

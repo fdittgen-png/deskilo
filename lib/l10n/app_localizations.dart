@@ -46226,6 +46226,12 @@ abstract class AppLocalizations {
   /// **'Because an association decides together, with its board'**
   String get setupReasonAssociation;
 
+  /// #3702 setupReason: the label for case 'books_no_places' — the business (its kind, or a choice already made) books no places, so an unrelated answer does not switch place booking on.
+  ///
+  /// In en, this message translates to:
+  /// **'Because this business books no places'**
+  String get setupReasonBooksNoPlaces;
+
   /// #3485 setupReason: the label for case 'door_tablet'.
   ///
   /// In en, this message translates to:

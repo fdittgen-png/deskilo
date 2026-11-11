@@ -121,7 +121,12 @@ class SetupAnswers {
 /// One rule of the recommendation: [level] for [reason] when the owner
 /// answers yes to any of [anyOf]; a rule without questions always holds.
 class SetupRule {
-  const SetupRule(this.level, this.reason, {this.anyOf = const {}});
+  const SetupRule(
+    this.level,
+    this.reason, {
+    this.anyOf = const {},
+    this.whenPlaces,
+  });
 
   final String level;
 
@@ -129,8 +134,14 @@ class SetupRule {
   final String reason;
   final Set<String> anyOf;
 
-  bool holdsFor(SetupAnswers answers) =>
-      anyOf.isEmpty || anyOf.any((q) => answers[q]);
+  /// Whether the rule holds only for a business that books places (true) or
+  /// one that books none (false); null: either (#3702). The fallback of a
+  /// process that is about places is not "simple" for a studio without them.
+  final bool? whenPlaces;
+
+  bool holdsFor(SetupAnswers answers, {bool booksPlaces = true}) =>
+      (whenPlaces == null || whenPlaces == booksPlaces) &&
+      (anyOf.isEmpty || anyOf.any((q) => answers[q]));
 }
 
 /// Each process's rules, the first that holds wins; the last one of each
@@ -140,7 +151,10 @@ const Map<SetupProcess, List<SetupRule>> setupRecommendationRules = {
   SetupProcess.bookings: [
     SetupRule('measured', 'door_tablet', anyOf: {'door_tablet'}),
     SetupRule('resources', 'several_rooms', anyOf: {'several_rooms_or_sites'}),
-    SetupRule('simple', 'shared_places'),
+    SetupRule('simple', 'shared_places', whenPlaces: true),
+    // A business that books no places (its kind, or a choice already made)
+    // is not given place booking by an unrelated answer.
+    SetupRule('none', 'books_no_places', whenPlaces: false),
   ],
   SetupProcess.community: [
     SetupRule('organised', 'organised', anyOf: {'organised'}),
@@ -193,14 +207,25 @@ typedef SetupRecommendation = ({String level, String reason});
 /// The levels [answers] call for, each with its reason; every process is
 /// named, and the result never has a gap ([setupVectorGaps] is empty).
 Map<SetupProcess, SetupRecommendation> recommendSetupLevels(
-  SetupAnswers answers,
-) => {
+  SetupAnswers answers, {
+  bool booksPlaces = true,
+}) => {
   for (final MapEntry(key: process, value: rules)
       in setupRecommendationRules.entries)
     process: () {
-      final rule = rules.firstWhere((r) => r.holdsFor(answers));
+      final rule = rules.firstWhere(
+        (r) => r.holdsFor(answers, booksPlaces: booksPlaces),
+      );
       return (level: rule.level, reason: rule.reason);
     }(),
+};
+
+/// The processes whose rules name one of [questions]: answering a question
+/// recomputes only these (#3702), derived from [setupRecommendationRules].
+Set<SetupProcess> setupProcessesNaming(Iterable<String> questions) => {
+  for (final MapEntry(key: process, value: rules)
+      in setupRecommendationRules.entries)
+    if (rules.any((r) => questions.any(r.anyOf.contains))) process,
 };
 
 /// What a space already does that answers a question yes: the process and

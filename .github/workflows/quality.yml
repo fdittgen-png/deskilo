@@ -157,6 +157,17 @@ jobs:
           key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
           restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
+      # #3688 -- a branch reset onto master instead of merged silently puts
+      # recently merged files back; a pull request only.
+      - name: No recent master change is silently undone
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: >
+          dart run tool/stale_base_guard.dart
+          --head "${{ github.event.pull_request.head.sha }}"
+          --base "origin/${{ github.base_ref }}"
+          --title "$PR_TITLE"
 
       # The gates that are not a discipline row: they are preconditions,
       # and a red one makes every row below it meaningless rather than

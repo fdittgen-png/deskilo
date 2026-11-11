@@ -17848,6 +17848,7 @@
   "setupQuestionVatRegistered": "El espacio está sujeto al IVA",
   "setupReasonApproveBookings": "Porque las reservas esperan una aprobación",
   "setupReasonAssociation": "Porque una asociación decide en conjunto, con su junta",
+  "setupReasonBooksNoPlaces": "Porque este negocio no reserva puestos",
   "setupReasonDoorTablet": "Porque una tableta en la entrada registra las llegadas",
   "setupReasonIssuesInvoices": "Porque emite facturas",
   "setupReasonKeepsBooks": "Porque lleva la contabilidad",

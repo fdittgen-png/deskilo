@@ -26,7 +26,7 @@ import 'core/trace/trace_logger.dart';
 import 'core/trace/trace_provider_observer.dart';
 import 'features/auth/providers/auth_providers.dart';
 import 'features/me/providers/me_providers.dart'
-    show myReservationsSourcesFromMe;
+    show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import 'features/money/providers/expense_schedule_providers.dart'
     show eventSourceOpenersFromMoney;
 import 'features/profile/providers/profile_providers.dart';
@@ -132,6 +132,7 @@ Future<void> main() async {
         audienceRolesFromWorkspace, // #2575
         audienceMembersFromReservations, // #2575
         myReservationsSourcesFromMe, // #2553
+        pendingAdmissionsFromMe, // #3696
         financeHostsFromMe, // #2557
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573

@@ -17848,6 +17848,7 @@
   "setupQuestionVatRegistered": "Der Raum ist umsatzsteuerpflichtig",
   "setupReasonApproveBookings": "Weil Buchungen auf eine Freigabe warten",
   "setupReasonAssociation": "Weil ein Verein mit seinem Vorstand gemeinsam entscheidet",
+  "setupReasonBooksNoPlaces": "Weil dieses Unternehmen keine Plätze vergibt",
   "setupReasonDoorTablet": "Weil ein Tablet am Eingang die Ankunft erfasst",
   "setupReasonIssuesInvoices": "Weil Sie Rechnungen stellen",
   "setupReasonKeepsBooks": "Weil Sie Bücher führen",

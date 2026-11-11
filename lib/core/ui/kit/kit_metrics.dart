@@ -21,6 +21,9 @@ abstract final class KitMetrics {
   /// The space between a button's progress mark and its label.
   static const double buttonGap = 8;
 
+  /// The widest a dropdown grows on a wide line (#3545).
+  static const double dropdownMaxWidth = 240;
+
   /// The size of the progress mark inside a busy button.
   static const double progressMark = 18;
 
