@@ -1,112 +1,284 @@
 {
   "invoicePageTitle": "Factura {number}",
-  "@invoicePageTitle": {"description": "#3587 R1-d the invoice page's title", "placeholders": {"number": {"type": "String"}}},
+  "@invoicePageTitle": {
+    "description": "#3587 R1-d the invoice page's title",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageOpenOf": "pendiente de {total} · vence {date}",
-  "@invoicePageOpenOf": {"description": "#3587 R1-d under the amount", "placeholders": {"total": {"type": "String"}, "date": {"type": "String"}}},
+  "@invoicePageOpenOf": {
+    "description": "#3587 R1-d under the amount",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageOpenOfUndated": "pendiente de {total}",
-  "@invoicePageOpenOfUndated": {"description": "#3587 R1-d under the amount, no due date", "placeholders": {"total": {"type": "String"}}},
+  "@invoicePageOpenOfUndated": {
+    "description": "#3587 R1-d under the amount, no due date",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePagePaidInFull": "Pagada por completo",
-  "@invoicePagePaidInFull": {"description": "#3587 R1-d under the amount of a paid invoice"},
+  "@invoicePagePaidInFull": {
+    "description": "#3587 R1-d under the amount of a paid invoice"
+  },
   "invoicePageWhatHappened": "Lo que pasó",
-  "@invoicePageWhatHappened": {"description": "#3587 R1-d the story card's label"},
+  "@invoicePageWhatHappened": {
+    "description": "#3587 R1-d the story card's label"
+  },
   "invoicePageInvoiced": "Facturado",
-  "@invoicePageInvoiced": {"description": "#3587 R1-d the lines card's label"},
+  "@invoicePageInvoiced": {
+    "description": "#3587 R1-d the lines card's label"
+  },
   "invoicePagePdf": "PDF de la factura",
-  "@invoicePagePdf": {"description": "#3587 R1-d the document card"},
+  "@invoicePagePdf": {
+    "description": "#3587 R1-d the document card"
+  },
   "invoicePagePdfHint": "tal como lo recibió el cliente",
-  "@invoicePagePdfHint": {"description": "#3587 R1-d the document card's line"},
+  "@invoicePagePdfHint": {
+    "description": "#3587 R1-d the document card's line"
+  },
   "invoicePageView": "Ver",
-  "@invoicePageView": {"description": "#3587 R1-d opens the PDF"},
+  "@invoicePageView": {
+    "description": "#3587 R1-d opens the PDF"
+  },
   "invoicePageToday": "Hoy",
-  "@invoicePageToday": {"description": "#3587 R1-d the story's last line's day"},
+  "@invoicePageToday": {
+    "description": "#3587 R1-d the story's last line's day"
+  },
   "invoicePageStoryIssued": "Emitida · el cliente la ve en su cuenta",
-  "@invoicePageStoryIssued": {"description": "#3587 R1-d story line; no e-mail is sent in release 1"},
+  "@invoicePageStoryIssued": {
+    "description": "#3587 R1-d story line; no e-mail is sent in release 1"
+  },
   "invoicePageStoryDue": "Vencimiento",
-  "@invoicePageStoryDue": {"description": "#3587 R1-d story line"},
+  "@invoicePageStoryDue": {
+    "description": "#3587 R1-d story line"
+  },
   "invoicePageStoryReminder": "Recordatorio {level} enviado",
-  "@invoicePageStoryReminder": {"description": "#3587 R1-d story line", "placeholders": {"level": {"type": "int"}}},
+  "@invoicePageStoryReminder": {
+    "description": "#3587 R1-d story line",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "invoicePageStoryDeclared": "{customer} dice haberla pagado",
-  "@invoicePageStoryDeclared": {"description": "#3587 R1-d story line", "placeholders": {"customer": {"type": "String"}}},
+  "@invoicePageStoryDeclared": {
+    "description": "#3587 R1-d story line",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageStoryPaid": "Pagada",
-  "@invoicePageStoryPaid": {"description": "#3587 R1-d story line"},
+  "@invoicePageStoryPaid": {
+    "description": "#3587 R1-d story line"
+  },
   "invoicePageNowWaiting": "Esperando el pago",
-  "@invoicePageNowWaiting": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowWaiting": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowDue": "Vence el {date}",
-  "@invoicePageNowDue": {"description": "#3587 R1-d story's now line", "placeholders": {"date": {"type": "String"}}},
+  "@invoicePageNowDue": {
+    "description": "#3587 R1-d story's now line",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageNowReminder": "El recordatorio {level} está pendiente",
-  "@invoicePageNowReminder": {"description": "#3587 R1-d story's now line", "placeholders": {"level": {"type": "int"}}},
+  "@invoicePageNowReminder": {
+    "description": "#3587 R1-d story's now line",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "invoicePageNowEveryReminder": "Todos los recordatorios están enviados. Llame, pause o dé por perdido.",
-  "@invoicePageNowEveryReminder": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowEveryReminder": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowHold": "En pausa: no sale ningún recordatorio hasta que la libere",
-  "@invoicePageNowHold": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowHold": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowDeclared": "Revise su banco y luego confirme",
-  "@invoicePageNowDeclared": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowDeclared": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowToMatch": "Hay un pago en la cuenta: concílielo",
-  "@invoicePageNowToMatch": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowToMatch": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowApproval": "Espera una segunda aprobación",
-  "@invoicePageNowApproval": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowApproval": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowCustomer": "Esperando la confirmación del cliente",
-  "@invoicePageNowCustomer": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowCustomer": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowRefund": "La empresa debe este reembolso",
-  "@invoicePageNowRefund": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowRefund": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageNowRejected": "La factura electrónica fue rechazada: corríjala y vuelva a enviarla",
-  "@invoicePageNowRejected": {"description": "#3587 R1-d story's now line"},
+  "@invoicePageNowRejected": {
+    "description": "#3587 R1-d story's now line"
+  },
   "invoicePageShareReminder": "Compartir el recordatorio {level}",
-  "@invoicePageShareReminder": {"description": "#3587 R1-d bottom bar", "placeholders": {"level": {"type": "int"}}},
+  "@invoicePageShareReminder": {
+    "description": "#3587 R1-d bottom bar",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "invoicePageConfirm": "Confirmar el pago",
-  "@invoicePageConfirm": {"description": "#3587 R1-d bottom bar"},
+  "@invoicePageConfirm": {
+    "description": "#3587 R1-d bottom bar"
+  },
   "invoicePageNotReceived": "No recibido",
-  "@invoicePageNotReceived": {"description": "#3587 R1-d bottom bar"},
+  "@invoicePageNotReceived": {
+    "description": "#3587 R1-d bottom bar"
+  },
   "invoicePageMatch": "Conciliar el pago",
-  "@invoicePageMatch": {"description": "#3587 R1-d bottom bar"},
+  "@invoicePageMatch": {
+    "description": "#3587 R1-d bottom bar"
+  },
   "invoicePageRefund": "Registrar el reembolso",
-  "@invoicePageRefund": {"description": "#3587 R1-d bottom bar on a credit note"},
+  "@invoicePageRefund": {
+    "description": "#3587 R1-d bottom bar on a credit note"
+  },
   "invoicePageConfirmed": "Pago confirmado.",
-  "@invoicePageConfirmed": {"description": "#3587 R1-d message after Confirm"},
+  "@invoicePageConfirmed": {
+    "description": "#3587 R1-d message after Confirm"
+  },
   "invoicePageMarkedNotReceived": "Marcado como no recibido.",
-  "@invoicePageMarkedNotReceived": {"description": "#3587 R1-d message after Not received"},
+  "@invoicePageMarkedNotReceived": {
+    "description": "#3587 R1-d message after Not received"
+  },
   "invoicePageMoreDocument": "Documento",
-  "@invoicePageMoreDocument": {"description": "#3587 R1-d More: section"},
+  "@invoicePageMoreDocument": {
+    "description": "#3587 R1-d More: section"
+  },
   "invoicePageMoreQuickView": "Ver el PDF",
-  "@invoicePageMoreQuickView": {"description": "#3587 R1-d More: document"},
+  "@invoicePageMoreQuickView": {
+    "description": "#3587 R1-d More: document"
+  },
   "invoicePageMoreDownload": "Descargar el PDF",
-  "@invoicePageMoreDownload": {"description": "#3587 R1-d More: document"},
+  "@invoicePageMoreDownload": {
+    "description": "#3587 R1-d More: document"
+  },
   "invoicePageMoreShare": "Compartir el PDF",
-  "@invoicePageMoreShare": {"description": "#3587 R1-d More: document"},
+  "@invoicePageMoreShare": {
+    "description": "#3587 R1-d More: document"
+  },
   "invoicePageMoreEInvoice": "Factura electrónica",
-  "@invoicePageMoreEInvoice": {"description": "#3587 R1-d More: document"},
+  "@invoicePageMoreEInvoice": {
+    "description": "#3587 R1-d More: document"
+  },
   "invoicePageMoreReminders": "Recordatorios",
-  "@invoicePageMoreReminders": {"description": "#3587 R1-d More: section"},
+  "@invoicePageMoreReminders": {
+    "description": "#3587 R1-d More: section"
+  },
   "invoicePageMoreHold": "Pausar los recordatorios",
-  "@invoicePageMoreHold": {"description": "#3587 R1-d More: reminders"},
+  "@invoicePageMoreHold": {
+    "description": "#3587 R1-d More: reminders"
+  },
   "invoicePageMoreRelease": "Levantar la pausa",
-  "@invoicePageMoreRelease": {"description": "#3587 R1-d More: reminders"},
+  "@invoicePageMoreRelease": {
+    "description": "#3587 R1-d More: reminders"
+  },
   "invoicePageMoreCorrections": "Correcciones",
-  "@invoicePageMoreCorrections": {"description": "#3587 R1-d More: section"},
+  "@invoicePageMoreCorrections": {
+    "description": "#3587 R1-d More: section"
+  },
   "invoicePageMoreReplace": "Corregir con una factura sustitutiva",
-  "@invoicePageMoreReplace": {"description": "#3587 R1-d More: corrections"},
+  "@invoicePageMoreReplace": {
+    "description": "#3587 R1-d More: corrections"
+  },
   "invoicePageMoreCancel": "Anular esta factura, emitida por error",
-  "@invoicePageMoreCancel": {"description": "#3587 R1-d More: corrections"},
+  "@invoicePageMoreCancel": {
+    "description": "#3587 R1-d More: corrections"
+  },
   "invoicePageMoreWriteOff": "Dar por perdido el resto",
-  "@invoicePageMoreWriteOff": {"description": "#3587 R1-d More: corrections"},
+  "@invoicePageMoreWriteOff": {
+    "description": "#3587 R1-d More: corrections"
+  },
   "invoicePageClose": "Cerrar",
-  "@invoicePageClose": {"description": "#3587 R1-d closes the side panel"},
+  "@invoicePageClose": {
+    "description": "#3587 R1-d closes the side panel"
+  },
   "invoicePageConfirmedMatched": "Pago confirmado y conciliado con esta factura.",
-  "@invoicePageConfirmedMatched": {"description": "#3587 R1-d message after Confirm when the payment settled the invoice"},
+  "@invoicePageConfirmedMatched": {
+    "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
+  },
   "invoicePageConfirmedAwaitsApproval": "Pago confirmado. La conciliación espera una segunda aprobación.",
-  "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
+  "@invoicePageConfirmedAwaitsApproval": {
+    "description": "#3587 R1-d message after Confirm when the match needs a second approval"
+  },
   "invoicePageMatchRefused": "El pago no se pudo conciliar con esta factura.",
-  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"},
+  "@invoicePageMatchRefused": {
+    "description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"
+  },
   "invoicePageReminders": "{count, plural, =1{Recordatorios (1)} other{Recordatorios ({count})}}",
-  "@invoicePageReminders": {"description": "#3587 R1-d the collapsed reminder history under the story", "placeholders": {"count": {"type": "int"}}},
+  "@invoicePageReminders": {
+    "description": "#3587 R1-d the collapsed reminder history under the story",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "invoicePageApprovals": "Aprobaciones del pago",
-  "@invoicePageApprovals": {"description": "#3587 R1-d the collapsed validation trail under the story"},
+  "@invoicePageApprovals": {
+    "description": "#3587 R1-d the collapsed validation trail under the story"
+  },
   "invoicePageCancelledReplaced": "Anulada · sustituida por {number}",
-  "@invoicePageCancelledReplaced": {"description": "#3587 R1-d summary of an invoice issued by mistake and replaced", "placeholders": {"number": {"type": "String"}}},
+  "@invoicePageCancelledReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake and replaced",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageCancelledNotReplaced": "Anulada por emitirse por error · aún sin sustituir",
-  "@invoicePageCancelledNotReplaced": {"description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"},
+  "@invoicePageCancelledNotReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"
+  },
   "invoicePageRemainderWrittenOff": "Cerrada · resto de {amount} dado por perdido",
-  "@invoicePageRemainderWrittenOff": {"description": "#3587 R1-d summary of an invoice whose remainder was written off", "placeholders": {"amount": {"type": "String"}}},
+  "@invoicePageRemainderWrittenOff": {
+    "description": "#3587 R1-d summary of an invoice whose remainder was written off",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageMoreIssueReplacement": "Emitir la factura sustitutiva",
-  "@invoicePageMoreIssueReplacement": {"description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"}
+  "@invoicePageMoreIssueReplacement": {
+    "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
+  },
+  "invoicePageMoreRemind": "Compartir un recordatorio",
+  "invoicePageMorePayment": "Pago",
+  "invoicePageMoreMatch": "Conciliar un pago",
+  "invoicePageDetails": "Detalles"
 }

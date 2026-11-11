@@ -14311,6 +14311,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Pagamento confermato e abbinato a questa fattura.';
 
   @override
+  String get invoicePageDetails => 'Dettagli';
+
+  @override
   String get invoicePageInvoiced => 'Fatturato';
 
   @override
@@ -14347,10 +14350,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Emettere la fattura sostitutiva';
 
   @override
+  String get invoicePageMoreMatch => 'Abbina un pagamento';
+
+  @override
+  String get invoicePageMorePayment => 'Pagamento';
+
+  @override
   String get invoicePageMoreQuickView => 'Vedi il PDF';
 
   @override
   String get invoicePageMoreRelease => 'Togli la sospensione';
+
+  @override
+  String get invoicePageMoreRemind => 'Condividi un sollecito';
 
   @override
   String get invoicePageMoreReminders => 'Solleciti';

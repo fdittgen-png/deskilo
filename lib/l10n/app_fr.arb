@@ -8971,6 +8971,7 @@
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
   },
+  "invoicePageDetails": "Détails",
   "invoicePageInvoiced": "Facturé",
   "@invoicePageInvoiced": {
     "description": "#3587 R1-d the lines card's label"
@@ -9015,6 +9016,8 @@
   "@invoicePageMoreIssueReplacement": {
     "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
   },
+  "invoicePageMoreMatch": "Rapprocher un paiement",
+  "invoicePageMorePayment": "Paiement",
   "invoicePageMoreQuickView": "Voir le PDF",
   "@invoicePageMoreQuickView": {
     "description": "#3587 R1-d More: document"
@@ -9023,6 +9026,7 @@
   "@invoicePageMoreRelease": {
     "description": "#3587 R1-d More: reminders"
   },
+  "invoicePageMoreRemind": "Partager une relance",
   "invoicePageMoreReminders": "Relances",
   "@invoicePageMoreReminders": {
     "description": "#3587 R1-d More: section"
