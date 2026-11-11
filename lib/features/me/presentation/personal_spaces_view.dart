@@ -27,6 +27,7 @@ import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/inline_banner.dart';
@@ -163,7 +164,11 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
     final answer = ref.watch(personalWorkspaceRefsProvider);
     final localAsync = ref.watch(myWorkspacesProvider);
     final local = localAsync.value ?? const <Workspace>[];
-    final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
+    // #3749 — the person's own order and groups, never an empty layout in
+    // their place: the page waits for them, or says they could not be read.
+    final prefsStandIn = readsStandIn(ref, [spacePrefsProvider]);
+    if (prefsStandIn != null) return Scaffold(body: prefsStandIn);
+    final prefs = ref.watch(spacePrefsProvider).requireValue;
     final visits =
         ref.watch(myGuestVisitsProvider).value ?? const <GuestParticipation>[];
     // #1650 — this server's spaces could not be read: entry needs them, so
@@ -246,6 +251,7 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
               ];
               Widget card(PersonalSpaceRow row) => PersonalSpaceCard(
                 row: row,
+                prefs: prefs,
                 move: _move(ordered, row, prefs),
               );
               return ListView.builder(
