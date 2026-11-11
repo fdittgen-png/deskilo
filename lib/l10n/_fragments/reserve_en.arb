@@ -153,7 +153,7 @@
       }
     }
   },
-  "bookingHorizonError": "Too far ahead — bookings are open {days} days in advance.",
+  "bookingHorizonError": "{days, plural, one{Too far ahead — bookings are open {days} day in advance.} other{Too far ahead — bookings are open {days} days in advance.}}",
   "@bookingHorizonError": {
     "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {days} (int).",
     "placeholders": {
@@ -162,7 +162,7 @@
       }
     }
   },
-  "bookingTooShortError": "Too short — a booking lasts at least {minutes} minutes.",
+  "bookingTooShortError": "{minutes, plural, one{Too short — a booking lasts at least {minutes} minute.} other{Too short — a booking lasts at least {minutes} minutes.}}",
   "@bookingTooShortError": {
     "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {
@@ -171,7 +171,7 @@
       }
     }
   },
-  "bookingTooLongError": "Too long — a booking lasts at most {minutes} minutes.",
+  "bookingTooLongError": "{minutes, plural, one{Too long — a booking lasts at most {minutes} minute.} other{Too long — a booking lasts at most {minutes} minutes.}}",
   "@bookingTooLongError": {
     "description": "Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).",
     "placeholders": {

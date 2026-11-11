@@ -473,7 +473,7 @@ abstract class AppLocalizations {
   /// Shown as a text in account activity screen (money), and 1 other place. Placeholders: {minutes} (int).
   ///
   /// In en, this message translates to:
-  /// **'{minutes} minutes'**
+  /// **'{minutes, plural, one{{minutes} minute} other{{minutes} minutes}}'**
   String accountUsageMinutes(int minutes);
 
   /// Refusal: an accounting export needs the workspace's own tax reference, which its context has not loaded yet (#3403)
@@ -2968,7 +2968,7 @@ abstract class AppLocalizations {
   /// #662 - badge sign-in
   ///
   /// In en, this message translates to:
-  /// **'Use at least {min} digits.'**
+  /// **'{min, plural, one{Use at least {min} digit.} other{Use at least {min} digits.}}'**
   String badgePinTooShort(int min);
 
   /// Badge dialog action: register a physical RFID/NFC card as the member's badge (Android + NFC)
@@ -3214,7 +3214,7 @@ abstract class AppLocalizations {
   /// #2380 CSV sheet: the account is missing or longer than its column.
   ///
   /// In en, this message translates to:
-  /// **'Name the account, in at most {max} characters.'**
+  /// **'{max, plural, one{Name the account, in at most {max} character.} other{Name the account, in at most {max} characters.}}'**
   String bankCsvNeedsAccount(int max);
 
   /// #2380 CSV sheet: no amount column chosen.
@@ -3646,7 +3646,7 @@ abstract class AppLocalizations {
   /// #2380 Refusal: more movements than one import takes.
   ///
   /// In en, this message translates to:
-  /// **'The file has more than {max} movements. Split it by period at the bank. Nothing was imported.'**
+  /// **'{max, plural, one{The file has more than {max} movement. Split it by period at the bank. Nothing was imported.} other{The file has more than {max} movements. Split it by period at the bank. Nothing was imported.}}'**
   String bankRefusedTooManyLines(int max);
 
   /// #2380 Review dialog: why the movement waits.
@@ -7059,7 +7059,7 @@ abstract class AppLocalizations {
   /// Overage line, shown only when extra half-days exist; the amount renders trailing
   ///
   /// In en, this message translates to:
-  /// **'{extra} extra half-days'**
+  /// **'{extra, plural, one{{extra} extra half-day} other{{extra} extra half-days}}'**
   String billOverage(int extra);
 
   /// Bill section header for day packages bought this period (migration 0042); charge lines render trailing
@@ -7233,7 +7233,7 @@ abstract class AppLocalizations {
   /// Summary line under a package name in the editor: day count and formatted price
   ///
   /// In en, this message translates to:
-  /// **'{days} days · {price}'**
+  /// **'{days, plural, one{{days} day · {price}} other{{days} days · {price}}}'**
   String billingPackageSummary(int days, String price);
 
   /// Section header of the owner's day-package editor (migration 0042)
@@ -7917,7 +7917,7 @@ abstract class AppLocalizations {
   /// Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'Too far ahead — bookings are open {days} days in advance.'**
+  /// **'{days, plural, one{Too far ahead — bookings are open {days} day in advance.} other{Too far ahead — bookings are open {days} days in advance.}}'**
   String bookingHorizonError(int days);
 
   /// Refusal when create_reservation answers 'not an active member' (#1030)
@@ -8145,13 +8145,13 @@ abstract class AppLocalizations {
   /// Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).
   ///
   /// In en, this message translates to:
-  /// **'Too long — a booking lasts at most {minutes} minutes.'**
+  /// **'{minutes, plural, one{Too long — a booking lasts at most {minutes} minute.} other{Too long — a booking lasts at most {minutes} minutes.}}'**
   String bookingTooLongError(int minutes);
 
   /// Shown as the text in booking error text (reservations), and 1 other place. Placeholders: {minutes} (int).
   ///
   /// In en, this message translates to:
-  /// **'Too short — a booking lasts at least {minutes} minutes.'**
+  /// **'{minutes, plural, one{Too short — a booking lasts at least {minutes} minute.} other{Too short — a booking lasts at least {minutes} minutes.}}'**
   String bookingTooShortError(int minutes);
 
   /// Shown as a text in booking error text (reservations), and 1 other place.
@@ -8325,7 +8325,7 @@ abstract class AppLocalizations {
   /// Day count of a package row in the buy sheet
   ///
   /// In en, this message translates to:
-  /// **'{days} days'**
+  /// **'{days, plural, one{{days} day} other{{days} days}}'**
   String buyPackageDays(int days);
 
   /// Snackbar after a member bought a package
@@ -8385,13 +8385,13 @@ abstract class AppLocalizations {
   /// Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'Nothing planned in the next {days} days.'**
+  /// **'{days, plural, one{Nothing planned in the next day.} other{Nothing planned in the next {days} days.}}'**
   String calendarAgendaEmpty(int days);
 
   /// Shown as a text in calendar hub screen (calendar). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'Next {days} days'**
+  /// **'{days, plural, one{Next day} other{Next {days} days}}'**
   String calendarAgendaRange(int days);
 
   /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)
@@ -9045,7 +9045,7 @@ abstract class AppLocalizations {
   /// #1279 carnets: carnetSummary
   ///
   /// In en, this message translates to:
-  /// **'{halfDays} half-days · {price}'**
+  /// **'{halfDays, plural, one{{halfDays} half-day · {price}} other{{halfDays} half-days · {price}}}'**
   String carnetSummary(int halfDays, String price);
 
   /// #1279 carnets: carnetValidity
@@ -21799,7 +21799,7 @@ abstract class AppLocalizations {
   /// #1308 instance readiness
   ///
   /// In en, this message translates to:
-  /// **'A DesKilo install stopped part-way: {pending} migrations remain and only those will run.'**
+  /// **'{pending, plural, one{A DesKilo install stopped part-way: {pending} migration remain and only those will run.} other{A DesKilo install stopped part-way: {pending} migrations remain and only those will run.}}'**
   String instanceReadyResume(int pending);
 
   /// #1308 instance readiness
@@ -23611,7 +23611,7 @@ abstract class AppLocalizations {
   /// Open row: days since the invoice was issued
   ///
   /// In en, this message translates to:
-  /// **'{days} days'**
+  /// **'{days, plural, one{{days} day} other{{days} days}}'**
   String invoiceOpenAge(int days);
 
   /// #3587 message after Confirm when the declared payment still waits for other approvers
@@ -25339,7 +25339,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'{name} owes {amount} — overdue by {days} days'**
+  /// **'{days, plural, one{{name} owes {amount} — overdue by {days} day} other{{name} owes {amount} — overdue by {days} days}}'**
   String journeyIssuerMemberPaysOverdue(String name, String amount, int days);
 
   /// Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String).
@@ -25381,7 +25381,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'Your move: pay {amount} — overdue by {days} days'**
+  /// **'{days, plural, one{Your move: pay {amount} — overdue by {days} day} other{Your move: pay {amount} — overdue by {days} days}}'**
   String journeyMemberPaysOverdue(String amount, int days);
 
   /// Shown as a text in invoice journey view (money). Placeholders: {amount} (String).
@@ -31644,7 +31644,7 @@ abstract class AppLocalizations {
   /// Statement usage line for unlimited plans
   ///
   /// In en, this message translates to:
-  /// **'{used} half-days used'**
+  /// **'{used, plural, one{{used} half-day used} other{{used} half-days used}}'**
   String moneyUsageUnlimited(int used);
 
   /// Free-desks-of-total label in a month calendar cell (#7)
@@ -31866,7 +31866,7 @@ abstract class AppLocalizations {
   /// #2553 My reservations: the ceiling of one read, under the period.
   ///
   /// In en, this message translates to:
-  /// **'At most {days} days at a time.'**
+  /// **'{days, plural, one{At most {days} day at a time.} other{At most {days} days at a time.}}'**
   String myReservationsPeriodLimit(int days);
 
   /// #2553 C3 My reservations: the source filter that shows every workspace server.
@@ -41202,19 +41202,19 @@ abstract class AppLocalizations {
   /// #2571 retention holds and dispositions
   ///
   /// In en, this message translates to:
-  /// **'{years} years from the document date (this space’s own setting)'**
+  /// **'{years, plural, one{{years} year from the document date (this space’s own setting)} other{{years} years from the document date (this space’s own setting)}}'**
   String retentionExtendedBySetting(int years);
 
   /// #2571 retention clocks
   ///
   /// In en, this message translates to:
-  /// **'{years} years from the document date'**
+  /// **'{years, plural, one{{years} year from the document date} other{{years} years from the document date}}'**
   String retentionFromDocument(int years);
 
   /// #2571 retention clocks
   ///
   /// In en, this message translates to:
-  /// **'{years} years from the end of the fiscal year'**
+  /// **'{years, plural, one{{years} year from the end of the fiscal year} other{{years} years from the end of the fiscal year}}'**
   String retentionFromYearEnd(int years);
 
   /// #2571 retention clocks
@@ -41274,7 +41274,7 @@ abstract class AppLocalizations {
   /// #2571 retention holds and dispositions
   ///
   /// In en, this message translates to:
-  /// **'Name the reason, in at most {max} characters.'**
+  /// **'{max, plural, one{Name the reason, in at most {max} character.} other{Name the reason, in at most {max} characters.}}'**
   String retentionHoldReasonMissing(int max);
 
   /// #2571 retention holds and dispositions

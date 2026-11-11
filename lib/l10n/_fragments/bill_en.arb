@@ -24,7 +24,7 @@
       }
     }
   },
-  "billOverage": "{extra} extra half-days",
+  "billOverage": "{extra, plural, one{{extra} extra half-day} other{{extra} extra half-days}}",
   "@billOverage": {
     "description": "Overage line, shown only when extra half-days exist; the amount renders trailing",
     "placeholders": {

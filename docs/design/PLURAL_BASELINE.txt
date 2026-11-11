@@ -3,36 +3,23 @@
 # plural (five languages) and delete its line; a NEW message may not join it
 # unless its description says why the number is not a count (a year, a version,
 # a room number, a line number).
-accountUsageMinutes
 acctDeliverDone
 acctDeliverInFlight
 acctDeliverStoppedAt
 availabilityHourOption
 backendVersionBehind
 backendVersionCurrent
-badgePinTooShort
 bankCsvColumn
-bankCsvNeedsAccount
 bankImported
 bankRefusedAtLine
-bankRefusedTooManyLines
 biProjectionBasis
 biProjectionNotEnough
 billEntitlement
-billOverage
 billParticipation
 billParticipationMonth
 billSubscription
 billSubscriptionMonth
 billingBandFrom
-billingPackageSummary
-bookingHorizonError
-bookingTooLongError
-bookingTooShortError
-buyPackageDays
-calendarAgendaEmpty
-calendarAgendaRange
-carnetSummary
 coloursRoomsOwn
 coloursRoomsSaved
 coloursTooMany
@@ -61,11 +48,9 @@ instanceDoctorSignupsNobodyDetail
 instanceInstallSchema
 instanceProgress
 instanceReadyCurrent
-instanceReadyResume
 instanceReadyUpgrade
 invoiceAnnexSummary
 invoiceIssuedPartial
-invoiceOpenAge
 invoicePageNowReminder
 invoicePageShareReminder
 invoicePageStoryReminder
@@ -74,8 +59,6 @@ invoiceSummaryOpen
 invoiceSummaryToInvoice
 invoiceSummaryToRefund
 invoiceTemplateDocReminder
-journeyIssuerMemberPaysOverdue
-journeyMemberPaysOverdue
 journeyOverdueCount
 journeyPrimaryRemind
 libraryCounts
@@ -89,9 +72,7 @@ moneyOverdueBanner
 moneyRemindedTimes
 moneySubscriptionPct
 moneyUsage
-moneyUsageUnlimited
 monthFreeCount
-myReservationsPeriodLimit
 mySpacesReviewed
 negotiationPercent
 newMemberSubscriptionValue
@@ -105,10 +86,6 @@ purchaseReceiptLine
 reminderHistoryLine
 reminderQueueLevel
 reserveSlotMinutes
-retentionExtendedBySetting
-retentionFromDocument
-retentionFromYearEnd
-retentionHoldReasonMissing
 sampleDataCounts
 scheduledExpensesFinished
 schemaUpdateBody

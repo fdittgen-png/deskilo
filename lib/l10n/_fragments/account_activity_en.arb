@@ -35,7 +35,7 @@
   "@accountUsageCorrected": {
     "description": "Shown as a text in account activity screen (money)."
   },
-  "accountUsageMinutes": "{minutes} minutes",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} minute} other{{minutes} minutes}}",
   "accountPaymentPreference": "Preferred online payment",
   "@accountPaymentPreference": {
     "description": "Shown as the label of a field in personal payment provider (money)."

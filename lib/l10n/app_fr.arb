@@ -167,7 +167,7 @@
     "description": "Account card: open credit notes the workspace still owes"
   },
   "accountUsageCorrected": "Consommation facturable corrigée",
-  "accountUsageMinutes": "{minutes} minutes",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} minute} other{{minutes} minutes}}",
   "@accountUsageMinutes": {
     "placeholders": {
       "minutes": {
@@ -750,7 +750,7 @@
   "@badgePinSetAction": {
     "description": "#662 - badge sign-in"
   },
-  "badgePinTooShort": "Utilisez au moins {min} chiffres.",
+  "badgePinTooShort": "{min, plural, one{Utilisez au moins {min} chiffre.} other{Utilisez au moins {min} chiffres.}}",
   "@badgePinTooShort": {
     "description": "#662 - badge sign-in",
     "placeholders": {
@@ -840,7 +840,7 @@
   "bankCsvDecimalComma": "Les montants utilisent une virgule décimale",
   "bankCsvDuplicateColumn": "Une colonne est choisie deux fois : donnez à chaque colonne un seul sens.",
   "bankCsvHeader": "La première ligne nomme les colonnes",
-  "bankCsvNeedsAccount": "Indiquez le compte, en {max} caractères au plus.",
+  "bankCsvNeedsAccount": "{max, plural, one{Indiquez le compte, en {max} caractère au plus.} other{Indiquez le compte, en {max} caractères au plus.}}",
   "bankCsvNeedsAmount": "Choisissez la colonne du montant.",
   "bankCsvNeedsCurrency": "Indiquez la devise en trois lettres (EUR, CHF).",
   "bankCsvNeedsDate": "Choisissez la colonne de la date.",
@@ -984,7 +984,7 @@
   "bankRefusedMissingAccount": "Le fichier n'indique aucun compte. Rien n'a été importé.",
   "bankRefusedTooLarge": "Le fichier dépasse la taille que ce serveur importe. Rien n'a été importé.",
   "bankRefusedTooLong": "Un compte ou un identifiant bancaire du fichier est plus long que ce qu'un relevé conserve. Rien n'a été importé.",
-  "bankRefusedTooManyLines": "Le fichier contient plus de {max} mouvements. Scindez-le par période à la banque. Rien n'a été importé.",
+  "bankRefusedTooManyLines": "{max, plural, one{Le fichier contient plus de {max} mouvement. Scindez-le par période à la banque. Rien n'a été importé.} other{Le fichier contient plus de {max} mouvements. Scindez-le par période à la banque. Rien n'a été importé.}}",
   "bankReviewBody": "Un autre relevé contient un mouvement de même jour, montant et détails, et la banque n'a donné d'identifiant à aucun des deux. Conservez-le s'il s'agit d'un second paiement.",
   "bankReviewDuplicate": "C'est un doublon",
   "bankReviewKeep": "Le conserver",
@@ -2739,7 +2739,7 @@
   },
   "billOpenPositions": "Postes en attente",
   "billOutstanding": "À régler",
-  "billOverage": "{extra} demi-journées supplémentaires",
+  "billOverage": "{extra, plural, one{{extra} demi-journée supplémentaire} other{{extra} demi-journées supplémentaires}}",
   "billPackages": "Forfaits de jours",
   "billParticipation": "Participation {pct} %",
   "@billParticipation": {
@@ -2801,7 +2801,7 @@
   },
   "billingPackageDays": "Jours",
   "billingPackageName": "Nom",
-  "billingPackageSummary": "{days} jours · {price}",
+  "billingPackageSummary": "{days, plural, one{{days} jour · {price}} other{{days} jours · {price}}}",
   "billingPackages": "Forfaits de jours",
   "billingPackagesHint": "Les membres au plan forfait les achètent quand leurs jours sont épuisés.",
   "billingPricesVatHint": "Les prix sont TTC — la TVA {rate} (taux par défaut de l’espace) est incluse.",
@@ -3049,7 +3049,7 @@
     }
   },
   "bookingGateBlocked": "Non réservable ainsi",
-  "bookingHorizonError": "Trop loin — les réservations sont ouvertes {days} jours à l'avance.",
+  "bookingHorizonError": "{days, plural, one{Trop loin — les réservations sont ouvertes {days} jour à l'avance.} other{Trop loin — les réservations sont ouvertes {days} jours à l'avance.}}",
   "@bookingHorizonError": {
     "placeholders": {
       "days": {
@@ -3195,7 +3195,7 @@
   },
   "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément.",
   "bookingSpaceChainTaken": "Cet espace, ou un espace qui le contient, est déjà réservé sur cette période.",
-  "bookingTooLongError": "Trop long — une réservation dure au plus {minutes} minutes.",
+  "bookingTooLongError": "{minutes, plural, one{Trop long — une réservation dure au plus {minutes} minute.} other{Trop long — une réservation dure au plus {minutes} minutes.}}",
   "@bookingTooLongError": {
     "placeholders": {
       "minutes": {
@@ -3203,7 +3203,7 @@
       }
     }
   },
-  "bookingTooShortError": "Trop court — une réservation dure au moins {minutes} minutes.",
+  "bookingTooShortError": "{minutes, plural, one{Trop court — une réservation dure au moins {minutes} minute.} other{Trop court — une réservation dure au moins {minutes} minutes.}}",
   "@bookingTooShortError": {
     "placeholders": {
       "minutes": {
@@ -3250,7 +3250,7 @@
   "businessKindSwitchesOn": "Active : {features}",
   "businessKindTitle": "Quel genre d’activité est-ce ?",
   "buyPackageButton": "Acheter un forfait",
-  "buyPackageDays": "{days} jours",
+  "buyPackageDays": "{days, plural, one{{days} jour} other{{days} jours}}",
   "buyPackageDone": "Jours ajoutés — profitez-en.",
   "buyPackageNone": "Aucun forfait disponible pour l'instant.",
   "buyPackageTitle": "Acheter un forfait",
@@ -3278,7 +3278,7 @@
   "@caTaxTitle": {
     "description": "#2361: caTaxTitle"
   },
-  "calendarAgendaEmpty": "Rien de prévu dans les {days} prochains jours.",
+  "calendarAgendaEmpty": "{days, plural, one{Rien de prévu dans le prochain jour.} other{Rien de prévu dans les {days} prochains jours.}}",
   "@calendarAgendaEmpty": {
     "placeholders": {
       "days": {
@@ -3286,7 +3286,7 @@
       }
     }
   },
-  "calendarAgendaRange": "{days} prochains jours",
+  "calendarAgendaRange": "{days, plural, one{Prochain jour} other{{days} prochains jours}}",
   "@calendarAgendaRange": {
     "placeholders": {
       "days": {
@@ -3608,7 +3608,7 @@
   "carnetName": "Nom",
   "carnetSell": "Vendre un carnet",
   "carnetSold": "Carnet vendu — facturé une fois sur la facture du mois.",
-  "carnetSummary": "{halfDays} demi-journées · {price}",
+  "carnetSummary": "{halfDays, plural, one{{halfDays} demi-journée · {price}} other{{halfDays} demi-journées · {price}}}",
   "carnetValidity": "Validité (mois, vide = n'expire jamais)",
   "carnetsEmpty": "Aucun carnet pour l'instant.",
   "carnetsTitle": "Carnets",
@@ -8255,7 +8255,7 @@
   "instanceReadyAttention": "Ce projet demande votre attention — rien n'a été installé.",
   "instanceReadyCurrent": "La version {version} de DesKilo est installée et à jour : le schéma n'a besoin de rien.",
   "instanceReadyInstall": "Le projet est vide : tout sera installé.",
-  "instanceReadyResume": "Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.",
+  "instanceReadyResume": "{pending, plural, one{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migration, et seules celles-ci seront exécutées.} other{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.}}",
   "instanceReadyUpgrade": "La version {version} de DesKilo est installée : seules les {pending} migrations manquantes seront exécutées.",
   "instanceRegion": "Région (la plus proche de l'espace)",
   "@instanceRegion": {
@@ -8960,7 +8960,7 @@
   "invoiceMonthUnknown": "Non confirmée : elle existe peut-être. Vérifiez à nouveau.",
   "invoiceNoOpen": "Aucune facture en cours.",
   "invoiceNothingToInvoice": "Rien de suivi pour ce mois — rien à facturer.",
-  "invoiceOpenAge": "{days} jours",
+  "invoiceOpenAge": "{days, plural, one{{days} jour} other{{days} jours}}",
   "@invoiceOpenAge": {
     "placeholders": {
       "days": {
@@ -10067,7 +10067,7 @@
       }
     }
   },
-  "journeyIssuerMemberPaysOverdue": "{name} doit {amount} — en retard de {days} jours",
+  "journeyIssuerMemberPaysOverdue": "{days, plural, one{{name} doit {amount} — en retard de {days} jour} other{{name} doit {amount} — en retard de {days} jours}}",
   "@journeyIssuerMemberPaysOverdue": {
     "placeholders": {
       "name": {
@@ -10131,7 +10131,7 @@
       }
     }
   },
-  "journeyMemberPaysOverdue": "À vous : payez {amount} — en retard de {days} jours",
+  "journeyMemberPaysOverdue": "{days, plural, one{À vous : payez {amount} — en retard de {days} jour} other{À vous : payez {amount} — en retard de {days} jours}}",
   "@journeyMemberPaysOverdue": {
     "placeholders": {
       "amount": {
@@ -12097,7 +12097,7 @@
   "moneySubmitPayment": "Soumettre pour confirmation",
   "moneySubscriptionPct": "Abonnement {pct} %",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
-  "moneyUsageUnlimited": "{used} demi-journées utilisées",
+  "moneyUsageUnlimited": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
   "myFinancesExport": "Exporter mes documents",
@@ -12137,7 +12137,7 @@
   "myReservationsMalformed": "Ce serveur a répondu sous une forme que cette application ne comprend pas.",
   "myReservationsMisconfigured": "Ce serveur n'a pas encore de réglages pour les lectures personnelles.",
   "myReservationsNoWorkspace": "Choisissez un espace pour voir vos réservations sur son serveur.",
-  "myReservationsPeriodLimit": "Au plus {days} jours à la fois.",
+  "myReservationsPeriodLimit": "{days, plural, one{Au plus {days} jour à la fois.} other{Au plus {days} jours à la fois.}}",
   "myReservationsSourceAll": "Tous les serveurs",
   "myReservationsSourceProblem": "{source} : {problem}",
   "myReservationsSourceReading": "Lecture de {source}…",
@@ -15937,8 +15937,8 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
-  "retentionExtendedBySetting": "{years} ans à partir de la date du document (réglage propre à cet espace)",
-  "retentionFromDocument": "{years} ans à partir de la date du document",
+  "retentionExtendedBySetting": "{years, plural, one{{years} an à partir de la date du document (réglage propre à cet espace)} other{{years} ans à partir de la date du document (réglage propre à cet espace)}}",
+  "retentionFromDocument": "{years, plural, one{{years} an à partir de la date du document} other{{years} ans à partir de la date du document}}",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
     "placeholders": {
@@ -15947,7 +15947,7 @@
       }
     }
   },
-  "retentionFromYearEnd": "{years} ans à partir de la fin de l'exercice",
+  "retentionFromYearEnd": "{years, plural, one{{years} an à partir de la fin de l'exercice} other{{years} ans à partir de la fin de l'exercice}}",
   "@retentionFromYearEnd": {
     "description": "#2571 retention clocks",
     "placeholders": {
@@ -15973,7 +15973,7 @@
   "retentionHoldPlaced": "La conservation est imposée.",
   "retentionHoldReason": "Motif",
   "retentionHoldReasonHelper": "Pourquoi les pièces doivent rester, par exemple un contrôle fiscal ou un litige.",
-  "retentionHoldReasonMissing": "Indiquez le motif, en {max} caractères au plus.",
+  "retentionHoldReasonMissing": "{max, plural, one{Indiquez le motif, en {max} caractère au plus.} other{Indiquez le motif, en {max} caractères au plus.}}",
   "retentionHoldRelease": "Lever",
   "retentionHoldReleaseReason": "Pourquoi la conservation prend fin",
   "retentionHoldReleaseTitle": "Lever cette conservation ?",
