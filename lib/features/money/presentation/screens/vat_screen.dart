@@ -12,6 +12,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -222,9 +223,20 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         body: const LoadingView(),
       );
     }
+    // #3680 — the editor is never loaded from a read that failed: an empty
+    // list saved back would remove every rate.
+    if (!ratesAsync.hasValue) {
+      return Scaffold(
+        appBar: AppBar(title: title),
+        body: ReadFailureBanner(
+          error: ratesAsync.error ?? StateError('vat rates not read'),
+          onRetry: () => ref.invalidate(vatRatesProvider),
+        ),
+      );
+    }
     if (!_loaded) {
       _loaded = true;
-      _load(ratesAsync.value ?? const []);
+      _load(ratesAsync.requireValue);
     }
     final regime = vatRegimeFromWire(workspace.vatRegime);
     final muted = Theme.of(context).textTheme.bodySmall?.copyWith(

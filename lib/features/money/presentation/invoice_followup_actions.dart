@@ -245,7 +245,7 @@ Future<void> matchInvoiceToPayment(
   final ledger = await ref
       .read(memberAccountQueriesProvider)
       .fetchLedger(invoice.memberId);
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+  final matches = await ref.read(invoiceMatchesProvider.future);
   // #506 — the junction knows EVERY consumed payment (an aggregate
   // match only remembers its last one).
   // #3349 — a credit moved to another member is no longer this member's
@@ -274,7 +274,7 @@ Future<void> matchInvoiceToPayment(
   // #512 — a credit BAKED into an issued invoice was spent there, and
   // account credits (avoir excess) settle too; newest payment first by the
   // day the money moved (0070): `unmatchedPaymentsOf`, as Payments to match.
-  final memberInvoices = ref.read(invoicesProvider).value ?? const <Invoice>[];
+  final memberInvoices = await ref.read(invoicesProvider.future);
   final payments = unmatchedPaymentsOf(
     memberId: invoice.memberId,
     ledger: ledger,

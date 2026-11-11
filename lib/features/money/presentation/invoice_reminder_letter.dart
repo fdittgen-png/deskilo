@@ -49,7 +49,9 @@ reminderLetterReport(
   // preference → workspace language → country language).
   var language = '';
   try {
-    final members = ref.read(workspaceMembersProvider).value ?? const [];
+    // #3680 — the language comes from the members as read; a read that did
+    // not answer fails the letter instead of choosing a language blindly.
+    final members = ref.read(workspaceMembersProvider).requireValue;
     final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
     final userId = member?.userId;
     final profile = userId == null

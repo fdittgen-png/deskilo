@@ -16,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -156,15 +157,19 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currency = appFormatOf(context).moneyIn(workspace?.currencyCode);
-    final members = ref.watch(workspaceMembersProvider).value ?? const [];
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    // #3680 — the split and the history over reads that answered.
+    final standIn = readsStandIn(
+        ref, [workspaceMembersProvider, expenseRepartitionsProvider]);
+    if (standIn != null) return standIn;
+    final members = ref.watch(workspaceMembersProvider).requireValue;
+    final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     final pool = _members(members, names);
     final cents = _cents;
     final shares = cents == null
         ? const <RepartitionShare>[]
         : distributeExpense(
             amountCents: cents, members: pool, method: _method);
-    final history = ref.watch(expenseRepartitionsProvider).value ?? const [];
+    final history = ref.watch(expenseRepartitionsProvider).requireValue;
     final expenseComplete = _title.text.trim().isNotEmpty && cents != null;
     final canSubmit = !_busy && expenseComplete && shares.isNotEmpty;
     final steps = <WizardStepSpec>[

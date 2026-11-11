@@ -8,8 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 
 /// The item, quantity and unit of a bill line, as typed: [itemId] null
@@ -52,7 +52,13 @@ class _PurchaseItemFieldsState extends ConsumerState<PurchaseItemFields> {
     );
     if (!on) return const SizedBox.shrink();
     final l10n = context.l10n;
-    final items = ref.watch(servicesProvider).value ?? const <ServiceItem>[];
+    final itemsRead = ref.watch(servicesProvider);
+    // #3680 — the choices are offered only from a list that was read.
+    final standIn = ReadsAnswer.of([itemsRead]).standIn(
+      onRetry: () => ref.invalidate(servicesProvider),
+    );
+    if (standIn != null) return standIn;
+    final items = itemsRead.requireValue;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -10,6 +10,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -32,6 +33,7 @@ import '../widgets/online_payment_status_card.dart';
 /// made before it was split — the scope of a rebuild is unchanged.
 class MoneyViewData {
   MoneyViewData._({
+    this.reads = const ReadsAnswer.answered(),
     required this.workspace,
     required this.member,
     required this.statementAsync,
@@ -47,7 +49,15 @@ class MoneyViewData {
   factory MoneyViewData.watch(WidgetRef ref, String period) {
     final member = ref.watch(myMemberProvider).value;
     final statementAsync = ref.watch(myStatementProvider(period));
+    final invoices = ref.watch(invoicesProvider);
+    final matches = ref.watch(invoiceMatchesProvider);
+    final ledger = ref.watch(myLedgerProvider);
+    final events = ref.watch(eventsProvider);
+    final intents = ref.watch(myPaymentIntentsProvider);
     return MoneyViewData._(
+      // #3680 — the bill is shown only when every read it is built from
+      // answered; the empty fallbacks below are never on screen otherwise.
+      reads: ReadsAnswer.of([invoices, matches, ledger, events, intents]),
       workspace: ref.watch(currentWorkspaceProvider).value,
     format: ref.watch(appFormatProvider),
       member: member,
@@ -58,14 +68,14 @@ class MoneyViewData {
       settlement: settlementOfPeriod(
         period,
         member?.id ?? '',
-        ref.watch(invoicesProvider).value ?? const [],
-        ref.watch(invoiceMatchesProvider).value ?? const {},
+        invoices.value ?? const [], // empty-ok: shown only when `reads` answered
+        matches.value ?? const {}, // empty-ok: shown only when `reads` answered
       ),
-      ledger: ref.watch(myLedgerProvider).value ?? const <LedgerEntry>[],
-      pendingEvents: ref.watch(eventsProvider).value ?? const [],
+      ledger: ledger.value ?? const <LedgerEntry>[], // empty-ok: shown only when `reads` answered
+      pendingEvents: events.value ?? const [], // empty-ok: shown only when `reads` answered
       // #1637 — the month's online attempts the provider has not confirmed.
       onlineAttempts: OnlinePaymentStatusCard.shown(
-        ref.watch(myPaymentIntentsProvider).value ?? const [],
+        intents.value ?? const [], // empty-ok: shown only when `reads` answered
         period,
       ),
       // #512 — the REAL cross-month position, above the per-month bill.
@@ -73,6 +83,17 @@ class MoneyViewData {
       features: ref.watch(enabledFeaturesSyncProvider),
     );
   }
+
+  /// #3680 — whether the reads the bill is built from answered.
+  final ReadsAnswer reads;
+
+  /// Repeats the reads the bill is built from.
+  static void retry(WidgetRef ref) => ref
+    ..invalidate(invoicesProvider)
+    ..invalidate(invoiceMatchesProvider)
+    ..invalidate(myLedgerProvider)
+    ..invalidate(eventsProvider)
+    ..invalidate(myPaymentIntentsProvider);
 
   /// #2577 — only the gates, for a page that shows doors and no statement:
   /// nothing of the month is read.

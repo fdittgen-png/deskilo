@@ -20,6 +20,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -73,8 +74,9 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
 
   List<RepartitionMember> _pool() {
     final rule = _effectiveRule();
-    final members = ref.read(workspaceMembersProvider).value ?? const [];
-    final names = ref.read(memberNamesProvider).value ?? const {};
+    // Read only once the members answered (the steps wait for them).
+    final members = ref.read(workspaceMembersProvider).value ?? const []; // empty-ok: the steps that split wait for the members (build)
+    final names = ref.read(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     return [
       for (final m in members)
         if (m.status == MemberStatus.active && !m.isKiosk && !rule.excluded.contains(m.id))
@@ -158,9 +160,13 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     // on an auto-disposed async provider that nothing is subscribed to
     // answers `loading` — an empty member pool, so an empty share list,
     // so a Book button that is offered and does nothing (#1532).
-    ref
-      ..watch(workspaceMembersProvider)
-      ..watch(memberNamesProvider);
+    // #3680 — the split is computed only over a member list that was read:
+    // the rule and booking steps wait for it, or say it failed.
+    final membersRead = ref.watch(workspaceMembersProvider);
+    ref.watch(memberNamesProvider);
+    final membersStandIn = ReadsAnswer.of([membersRead]).standIn(
+      onRetry: () => ref.invalidate(workspaceMembersProvider),
+    );
     final currency = appFormatOf(context).moneyIn(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final rule = _effectiveRule();
     final shares = _shares();
@@ -170,6 +176,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     final summary = '${currency.formatMinor(_cents ?? 0)} · $_period · ${rule.method.name}';
     final Widget body = switch (_step) {
       0 => _costStep(l10n, theme),
+      _ when membersStandIn != null => membersStandIn,
       1 => _ruleStep(l10n, theme, rule: rule, shares: shares, currency: currency, total: total),
       _ => _bookStep(l10n, theme, summary: summary, shares: shares, currency: currency),
     };
@@ -250,7 +257,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
           onChanged: (m) => setState(() => _rule = rule.copyWith(method: m)),
         ),
         const SizedBox(height: AppSpacing.md),
-        for (final m in (ref.watch(workspaceMembersProvider).value ?? const []).where((m) => m.status == MemberStatus.active && !m.isKiosk))
+        for (final m in ref.watch(workspaceMembersProvider).requireValue.where((m) => m.status == MemberStatus.active && !m.isKiosk))
           Builder(builder: (context) => _memberTile(l10n, theme, m, rule: rule, shares: shares, currency: currency)),
         const Divider(),
         ListTile(
@@ -273,7 +280,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     required List<RepartitionShare> shares,
     required MoneyFormat currency,
   }) {
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     final share = shares.where((s) => s.memberId == m.id).firstOrNull;
     final excluded = rule.excluded.contains(m.id);
     final pctLabel = '${m.subscriptionPct} %';

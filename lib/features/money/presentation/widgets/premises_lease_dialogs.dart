@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/premises_lease.dart';
 import '../../providers/premises_lease_providers.dart';
@@ -173,6 +173,14 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
     final l10n = context.l10n;
     final material = MaterialLocalizations.of(context);
     final suppliers = ref.watch(suppliersProvider(widget.workspaceId));
+    // #3680 — the lessor is chosen from the suppliers as read; an unread
+    // list is not "no supplier yet".
+    final standIn = ReadsAnswer.of([suppliers]).standIn(
+      onRetry: () => ref.invalidate(suppliersProvider(widget.workspaceId)),
+    );
+    if (standIn != null) {
+      return AlertDialog(title: Text(l10n.leaseFormTitle), content: standIn);
+    }
     final locked =
         widget.lease != null && widget.lease!.status != LeaseStatus.draft;
     final now = ref.read(clockProvider).now();
@@ -188,13 +196,13 @@ class _LeaseDialogState extends ConsumerState<_LeaseDialog> {
               initialValue: _supplierId,
               decoration: InputDecoration(labelText: l10n.leaseFieldLessor),
               items: [
-                for (final s in suppliers.value ?? const <Supplier>[])
+                for (final s in suppliers.requireValue)
                   if (s.isActive || s.id == _supplierId)
                     DropdownMenuItem(value: s.id, child: Text(s.name)),
               ],
               onChanged: locked ? null : (v) => setState(() => _supplierId = v),
             ),
-            if ((suppliers.value ?? const <Supplier>[]).isEmpty)
+            if (suppliers.requireValue.isEmpty)
               Text(
                 l10n.leaseNeedSupplier,
                 key: const ValueKey('lease-need-supplier'),

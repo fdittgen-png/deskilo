@@ -76,7 +76,7 @@ class WizardReviewStep extends ConsumerWidget {
           style: theme.textTheme.titleMedium,
         ),
         const SizedBox(height: AppSpacing.md),
-        if (wiz.loading) const LinearProgressIndicator(),
+        ?wiz.standIn,
         for (final (key, label, count) in counts)
           ListTile(
             key: key,
@@ -213,7 +213,7 @@ class _WizardIssueStepState extends ConsumerState<WizardIssueStep> {
             text: l10n.invoiceFeatureDisabled,
           ),
         WizardHint(l10n.wizardIssueHint),
-        if (wiz.loading) const LinearProgressIndicator(),
+        ?wiz.standIn,
         for (final item in items)
           Card(
             key: ValueKey('wizard-issue-row-${item.memberId}'),

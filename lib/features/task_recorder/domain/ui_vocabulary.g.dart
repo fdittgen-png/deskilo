@@ -8981,6 +8981,7 @@ const Set<String> uiLabelKeys = {
   'invoicingSearch',
   'invoicingSearchHint',
   'invoicingSourceCredits',
+  'invoicingSourceDeclarations',
   'invoicingSourceHolds',
   'invoicingSourceMatches',
   'invoicingSourcePayments',

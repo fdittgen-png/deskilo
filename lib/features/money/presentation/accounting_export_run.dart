@@ -199,8 +199,8 @@ class AccountingExportRun {
     ),
     reference: taxReference, dayOf: workspaceDayOf,
   );
-  memberNames =
-      ref.read(memberNamesProvider).value ?? const <String, String>{};
+  // #3680 — an export waits for every name; a failed read fails the run.
+  memberNames = await ref.read(memberNamesProvider.future);
   if (!context.mounted) return;
   noteDevelopmentBooks(context, development: development);
   await _perform();

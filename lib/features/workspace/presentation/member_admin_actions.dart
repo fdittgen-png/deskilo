@@ -125,10 +125,10 @@ Future<void> sendMemberAgreement(
     errorText: l10n.workspaceGenericError,
     action: () async {
       await warmLetterDocProviders(ref, 'agreement');
+      final facts = await readAgreementFacts(ref); // #3680 — as read, awaited
       if (!context.mounted) return;
       // #496 — the agreement prints in the MEMBER's language.
-      final profile =
-          ref.read(memberProfilesProvider).value?[member.userId];
+      final profile = ref.read(memberProfilesProvider).value?[member.userId];
       final String language;
       try {
         language = resolveMemberReportLanguage(ref,
@@ -143,7 +143,7 @@ Future<void> sendMemberAgreement(
       final docL10n = l10nForLanguage(language);
       final data = agreementReportData(
           reportStringsFor(context, l10n: docL10n, localeName: language),
-          agreementFactsOf(ref),
+          facts,
           memberName: name,
           subscriptionPct: member.subscriptionPct, reference: requireWorkspaceTaxReference(ref));
       final report = renderLetterDoc(context, ref,

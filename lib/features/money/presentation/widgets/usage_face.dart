@@ -41,7 +41,7 @@ class UsageFace extends ConsumerWidget {
     final theme = Theme.of(context);
     final read = ref.watch(usageReadProvider(period));
     final async = read.whenData((r) => r.records);
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     final me = ref.watch(myMemberProvider).value;
 
     final unprepared = read.value?.unpreparedReservations ?? 0;
