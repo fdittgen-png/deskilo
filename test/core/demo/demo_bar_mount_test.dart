@@ -21,11 +21,16 @@ import 'package:deskilo/core/motion/motion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Widget _wrap(BuildContext context, Widget? child) =>
     DemoControls(child: child ?? const SizedBox());
 
 void main() {
+  // The bar names the demo's date; the app's localization delegates load
+  // the date data in production, these tests mount the bar without them.
+  setUpAll(() => initializeDateFormatting('en'));
+
   /// The bar exactly where the app puts it: in `MaterialApp.builder`,
   /// wrapping the Navigator rather than sitting inside it. Nothing else
   /// of the app is here, so no boot timer outlives the test — but the
