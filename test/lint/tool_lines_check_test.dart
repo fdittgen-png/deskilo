@@ -9,12 +9,13 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late Directory repo;
   late String script;
+  var counter = 0;
 
   ProcessResult git(List<String> args) =>
       Process.runSync('git', args, workingDirectory: repo.path);
 
   String commit(String message) {
-    File('${repo.path}/f').writeAsStringSync('$message${DateTime.now()}');
+    File('${repo.path}/f').writeAsStringSync('$message${counter++}');
     git(['add', '-A']);
     git(['commit', '-q', '-m', message]);
     return (git(['rev-parse', 'HEAD']).stdout as String).trim();

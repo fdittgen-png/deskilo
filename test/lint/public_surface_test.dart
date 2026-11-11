@@ -17,6 +17,8 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  'lib/core/ui/kit/kit_action_button.dart::KitActionButton':
+      '#3679 — the money and me screens move their local busy guards onto it',
   'lib/core/ui/kit/status_chip.dart::statusColorsOf':
       '#3587 R1-c — the owed card colours its bar with it',
   'lib/features/money/application/receivables.dart::invoiceStatusOf':

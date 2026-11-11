@@ -261,14 +261,12 @@ const List<String> kFormatLocales = [
 /// Latin-American country keeps the Americas' number and date conventions
 /// (`es_MX`), not Spain's. Every other missing pairing falls to the
 /// language's home region (the first `kFormatLocales` entry of the language).
-const Map<String, Map<String, String>> _closestPairing = {
-  'es': {
-    'US': 'es_MX', 'CA': 'es_MX', 'AR': 'es_MX', 'CL': 'es_MX', 'CO': 'es_MX',
-    'PE': 'es_MX', 'VE': 'es_MX', 'EC': 'es_MX', 'UY': 'es_MX', 'PY': 'es_MX',
-    'BO': 'es_MX', 'CR': 'es_MX', 'PA': 'es_MX', 'DO': 'es_MX', 'GT': 'es_MX',
-    'HN': 'es_MX', 'NI': 'es_MX', 'SV': 'es_MX', 'PR': 'es_MX', 'CU': 'es_MX',
-  },
-};
+const Map<String, String> _closestPairing = {'es': 'es_MX'};
+
+/// The regions (ISO codes, space-separated) that take [_closestPairing]'s
+/// Spanish: the Americas, where numbers and dates follow Mexico's usage.
+const String _americasRegions =
+    'US CA AR CL CO PE VE EC UY PY BO CR PA DO GT HN NI SV PR CU';
 
 
 /// The one decision of the format locale (#3656): its LANGUAGE is the
@@ -283,8 +281,10 @@ String defaultFormatLocale(String uiLanguage, String workspaceCountry) {
   final region = workspaceCountry.toUpperCase();
   final candidate = '${uiLanguage}_$region';
   if (kFormatLocales.contains(candidate)) return candidate;
-  final closest = _closestPairing[uiLanguage]?[region];
-  if (closest != null) return closest;
+  final closest = _closestPairing[uiLanguage];
+  if (closest != null && _americasRegions.split(' ').contains(region)) {
+    return closest;
+  }
   return kFormatLocales.firstWhere(
     (l) => l.startsWith('${uiLanguage}_'),
     orElse: () => 'en_GB',
