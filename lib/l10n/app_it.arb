@@ -9080,6 +9080,7 @@
   "@invoicePageNowEveryReminder": {
     "description": "#3587 R1-d story's now line"
   },
+  "invoicePageNowEveryReminderNoWriteOff": "Tutti i solleciti sono inviati. Chiami o sospenda.",
   "invoicePageNowHold": "Sospesa: nessun sollecito parte finché non la libera",
   "@invoicePageNowHold": {
     "description": "#3587 R1-d story's now line"

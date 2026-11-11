@@ -8768,6 +8768,7 @@ const Set<String> uiLabelKeys = {
   'invoicePageNowCustomer',
   'invoicePageNowDeclared',
   'invoicePageNowEveryReminder',
+  'invoicePageNowEveryReminderNoWriteOff',
   'invoicePageNowHold',
   'invoicePageNowRefund',
   'invoicePageNowRejected',

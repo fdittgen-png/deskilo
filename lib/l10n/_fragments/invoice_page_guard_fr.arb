@@ -11,5 +11,6 @@
   "@invoicePageUnreadable": {
     "description": "#3587 the invoice page of an invoice that can no longer be read"
   },
-  "invoicePageDecisionRecorded": "Votre réponse est enregistrée ; elle attend les autres."
+  "invoicePageDecisionRecorded": "Votre réponse est enregistrée ; elle attend les autres.",
+  "invoicePageNowEveryReminderNoWriteOff": "Toutes les relances sont envoyées. Appelez ou suspendez."
 }

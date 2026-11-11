@@ -23686,6 +23686,12 @@ abstract class AppLocalizations {
   /// **'Every reminder is sent. Call, hold or write off.'**
   String get invoicePageNowEveryReminder;
 
+  /// #3587 now-line on a late invoice whose every reminder is sent, when no write-off is offered
+  ///
+  /// In en, this message translates to:
+  /// **'Every reminder is sent. Call or hold.'**
+  String get invoicePageNowEveryReminderNoWriteOff;
+
   /// #3587 R1-d story's now line
   ///
   /// In en, this message translates to:

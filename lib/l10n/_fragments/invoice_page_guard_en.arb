@@ -14,5 +14,9 @@
   "invoicePageDecisionRecorded": "Your answer is recorded; it waits for the others.",
   "@invoicePageDecisionRecorded": {
     "description": "#3587 after Not received when the decision still waits for other approvers"
+  },
+  "invoicePageNowEveryReminderNoWriteOff": "Every reminder is sent. Call or hold.",
+  "@invoicePageNowEveryReminderNoWriteOff": {
+    "description": "#3587 now-line on a late invoice whose every reminder is sent, when no write-off is offered"
   }
 }

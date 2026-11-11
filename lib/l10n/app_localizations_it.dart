@@ -14407,6 +14407,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Tutti i solleciti sono inviati. Chiami, sospenda o stralci.';
 
   @override
+  String get invoicePageNowEveryReminderNoWriteOff =>
+      'Tutti i solleciti sono inviati. Chiami o sospenda.';
+
+  @override
   String get invoicePageNowHold =>
       'Sospesa: nessun sollecito parte finché non la libera';
 

@@ -14296,6 +14296,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Every reminder is sent. Call, hold or write off.';
 
   @override
+  String get invoicePageNowEveryReminderNoWriteOff =>
+      'Every reminder is sent. Call or hold.';
+
+  @override
   String get invoicePageNowHold =>
       'On hold: no reminder goes out until you release it';
 

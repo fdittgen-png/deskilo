@@ -14439,6 +14439,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Toutes les relances sont envoyées. Appelez, suspendez ou passez en perte.';
 
   @override
+  String get invoicePageNowEveryReminderNoWriteOff =>
+      'Toutes les relances sont envoyées. Appelez ou suspendez.';
+
+  @override
   String get invoicePageNowHold =>
       'Suspendue : aucune relance ne part tant que vous ne la libérez pas';
 

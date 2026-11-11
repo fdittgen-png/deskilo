@@ -14432,6 +14432,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jede Mahnung ist gesendet. Anrufen, anhalten oder abschreiben.';
 
   @override
+  String get invoicePageNowEveryReminderNoWriteOff =>
+      'Jede Mahnung ist gesendet. Anrufen oder anhalten.';
+
+  @override
   String get invoicePageNowHold =>
       'Angehalten: keine Mahnung geht hinaus, bis Sie sie freigeben';
 

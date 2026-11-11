@@ -14401,6 +14401,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Todos los recordatorios están enviados. Llame, pause o dé por perdido.';
 
   @override
+  String get invoicePageNowEveryReminderNoWriteOff =>
+      'Todos los recordatorios están enviados. Llame o pause.';
+
+  @override
   String get invoicePageNowHold =>
       'En pausa: no sale ningún recordatorio hasta que la libere';
 

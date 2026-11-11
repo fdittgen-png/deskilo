@@ -29,6 +29,7 @@ import '../dunning_hold_actions.dart';
 import '../invoice_status.dart';
 import '../widgets/invoice_detail_sheet.dart' show InvoiceApprovals;
 import '../widgets/reminder_evidence_list.dart';
+import 'invoice_details_section.dart';
 import 'invoice_page_bar.dart';
 import 'invoice_page_parts.dart';
 import 'invoicing_reads.dart';
@@ -190,6 +191,12 @@ class InvoicePage extends ConsumerWidget {
                         children: [InvoiceApprovals(eventId: eventId)],
                       ),
                     ),
+                  // What the old sheet showed: who issued it, billed to,
+                  // the amounts, the settlement trail, the transmission.
+                  InvoiceDetailsSection(
+                    invoice: invoice,
+                    replacedByNumber: replacement?.number ?? '',
+                  ),
                 ],
               ),
             ),
@@ -326,7 +333,12 @@ class InvoicePage extends ConsumerWidget {
           : l.invoiceHeldNote(dunningHoldReasonLabel(l, heldReason));
     }
     if (r.isLateOn(today)) {
-      if (r.remindersExhausted) return l.invoicePageNowEveryReminder;
+      if (r.remindersExhausted) {
+        // Write-off is named only where More offers it.
+        return invoiceWriteOffOffered(r)
+            ? l.invoicePageNowEveryReminder
+            : l.invoicePageNowEveryReminderNoWriteOff;
+      }
       if (r.reminderDueLevel case final level?) {
         return l.invoicePageNowReminder(level);
       }

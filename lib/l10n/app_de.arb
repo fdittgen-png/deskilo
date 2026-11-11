@@ -9080,6 +9080,7 @@
   "@invoicePageNowEveryReminder": {
     "description": "#3587 R1-d story's now line"
   },
+  "invoicePageNowEveryReminderNoWriteOff": "Jede Mahnung ist gesendet. Anrufen oder anhalten.",
   "invoicePageNowHold": "Angehalten: keine Mahnung geht hinaus, bis Sie sie freigeben",
   "@invoicePageNowHold": {
     "description": "#3587 R1-d story's now line"

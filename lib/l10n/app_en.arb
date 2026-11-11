@@ -18866,6 +18866,10 @@
   "@invoicePageNowEveryReminder": {
     "description": "#3587 R1-d story's now line"
   },
+  "invoicePageNowEveryReminderNoWriteOff": "Every reminder is sent. Call or hold.",
+  "@invoicePageNowEveryReminderNoWriteOff": {
+    "description": "#3587 now-line on a late invoice whose every reminder is sent, when no write-off is offered"
+  },
   "invoicePageNowHold": "On hold: no reminder goes out until you release it",
   "@invoicePageNowHold": {
     "description": "#3587 R1-d story's now line"

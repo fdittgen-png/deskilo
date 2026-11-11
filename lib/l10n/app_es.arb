@@ -9080,6 +9080,7 @@
   "@invoicePageNowEveryReminder": {
     "description": "#3587 R1-d story's now line"
   },
+  "invoicePageNowEveryReminderNoWriteOff": "Todos los recordatorios están enviados. Llame o pause.",
   "invoicePageNowHold": "En pausa: no sale ningún recordatorio hasta que la libere",
   "@invoicePageNowHold": {
     "description": "#3587 R1-d story's now line"

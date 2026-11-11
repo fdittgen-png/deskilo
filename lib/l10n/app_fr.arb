@@ -9080,6 +9080,7 @@
   "@invoicePageNowEveryReminder": {
     "description": "#3587 R1-d story's now line"
   },
+  "invoicePageNowEveryReminderNoWriteOff": "Toutes les relances sont envoyées. Appelez ou suspendez.",
   "invoicePageNowHold": "Suspendue : aucune relance ne part tant que vous ne la libérez pas",
   "@invoicePageNowHold": {
     "description": "#3587 R1-d story's now line"

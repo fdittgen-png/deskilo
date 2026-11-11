@@ -4644,6 +4644,7 @@ Map<String, _Getter> _part13() => {
   'invoiceMissingVatRate': (l) => l.invoiceMissingVatRate,
   'invoiceMonthResultNoneSubtitle': (l) => l.invoiceMonthResultNoneSubtitle,
   'invoicePageConfirm': (l) => l.invoicePageConfirm,
+  'invoicePageNowEveryReminderNoWriteOff': (l) => l.invoicePageNowEveryReminderNoWriteOff,
   'invoicePdfPage': (l) => l.invoicePdfPage,
   'invoiceRegisterPeriodClear': (l) => l.invoiceRegisterPeriodClear,
   'invoiceRegisterTitle': (l) => l.invoiceRegisterTitle,
