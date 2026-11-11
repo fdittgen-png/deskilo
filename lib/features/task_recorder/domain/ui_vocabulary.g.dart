@@ -2371,6 +2371,7 @@ const Set<String> uiKeys = {
   'personal-info-birthday',
   'personal-info-birthday-clear',
   'personal-info-birthday-field',
+  'personal-info-company-scope',
   'personal-info-country',
   'personal-info-courtesy',
   'personal-info-preview',
