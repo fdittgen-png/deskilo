@@ -4718,6 +4718,7 @@ const List<String> uiKeyPatterns = [
   'setup-level-{}',
   'setup-level-{}-{}',
   'setup-levels-outcome-{}',
+  'setup-levels-switch-{}',
   'setup-look-pick-{}',
   'setup-milestone-{}',
   'setup-new-members-question-{}',
