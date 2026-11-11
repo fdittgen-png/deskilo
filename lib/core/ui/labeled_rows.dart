@@ -50,35 +50,3 @@ class LabeledRow extends StatelessWidget {
     ),
   );
 }
-
-/// A read-only fact (#3286): what a person may read but not edit, shown as
-/// a label above its value and read aloud as one "label, value" phrase, not
-/// as a disabled text field that a screen reader announces as dimmed.
-class ReadOnlyFact extends StatelessWidget {
-  const ReadOnlyFact({super.key, required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return MergeSemantics(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: theme.textTheme.labelMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            Text(value, style: theme.textTheme.bodyLarge),
-          ],
-        ),
-      ),
-    );
-  }
-}

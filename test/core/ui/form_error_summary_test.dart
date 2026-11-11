@@ -2,9 +2,8 @@
 //
 // #3286 — a form with problems says how many, takes the focus to the first
 // field with one (and again on request), keeps each sentence under its own
-// field, and a read-only fact is read as one phrase.
+// field.
 import 'package:deskilo/core/ui/form_kit.dart';
-import 'package:deskilo/core/ui/labeled_rows.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -86,21 +85,5 @@ void main() {
     await tester.enterText(find.byKey(const ValueKey('name')), 'Ada');
     await tester.pumpAndSettle();
     expect(find.text('1 field needs your attention'), findsOneWidget);
-  });
-
-  testWidgets('a read-only fact is one phrase for a screen reader', (
-    tester,
-  ) async {
-    final handle = tester.ensureSemantics();
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(body: ReadOnlyFact(label: 'Owner', value: 'Ada')),
-      ),
-    );
-    final node = tester.getSemantics(find.byType(ReadOnlyFact));
-    expect(node.label, contains('Owner'));
-    expect(node.label, contains('Ada'));
-    expect(find.byType(TextField), findsNothing);
-    handle.dispose();
   });
 }
