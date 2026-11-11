@@ -94,3 +94,47 @@ class AsyncReadBody<T> extends StatelessWidget {
     return const LoadingView();
   }
 }
+
+/// #3680 — what several reads a figure is built from have answered: all of
+/// them (each holds a value; a refresh keeps the one it had), or not yet, or
+/// one failed. Zero is only ever a successful answer: a screen shows its
+/// figure only when [answered], and [standIn] otherwise — the progress, or
+/// the failure with Try again — never the figure of an empty list.
+class ReadsAnswer {
+  const ReadsAnswer._({required this.waiting, this.failure});
+
+  /// Nothing to wait for: a view that reads nothing more.
+  const ReadsAnswer.answered() : waiting = false, failure = null;
+
+  /// The answer of [reads].
+  factory ReadsAnswer.of(Iterable<AsyncValue<Object?>> reads) {
+    Object? failure;
+    var waiting = false;
+    for (final r in reads) {
+      if (r.hasValue) continue;
+      if (r.hasError && !r.isLoading) {
+        failure ??= r.error;
+      } else {
+        waiting = true;
+      }
+    }
+    return ReadsAnswer._(waiting: waiting, failure: failure);
+  }
+
+  /// A read is still running (and none has failed).
+  final bool waiting;
+
+  /// The first read that failed with nothing to show, or null.
+  final Object? failure;
+
+  /// Every read holds a value.
+  bool get answered => failure == null && !waiting;
+
+  /// What stands in for the figure while it cannot be shown; null when
+  /// [answered]. [onRetry] repeats the reads (invalidates their providers).
+  Widget? standIn({required VoidCallback onRetry}) => answered
+      ? null
+      : failure != null
+      ? ReadFailureBanner(error: failure!, onRetry: onRetry)
+      : const LoadingView();
+}

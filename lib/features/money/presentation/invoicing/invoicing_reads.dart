@@ -21,14 +21,14 @@ import 'receivables_adapter.dart';
 /// The reader of the invoices as receivables, now.
 final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
   (ref) => ReceivablesReader(
-    matches: ref.watch(invoiceMatchesProvider).value ?? const {},
-    reminders: ref.watch(invoiceRemindersProvider).value ?? const {},
+    matches: ref.watch(invoiceMatchesProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
+    reminders: ref.watch(invoiceRemindersProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
     rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
     now: ref.watch(clockProvider).now(),
     // The business's calendar day, from the workspace's own context.
     dayOf: ref.watch(invoicingBusinessProvider).dayOf,
     eventFactsOf: ref.watch(invoiceEventFactsProvider),
-    transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {},
+    transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
     held: {...?ref.watch(dunningHoldsProvider).value?.keys},
     fold: ref
         .watch(enabledFeaturesSyncProvider)
@@ -39,10 +39,21 @@ final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
 /// The invoices as receivables now, through [invoicingReaderProvider]; null
 /// while the invoices are not read. The pages opened from the home read this,
 /// never a copy taken when they opened.
+/// #3680 — nor while the matches, reminders or transmissions it reads are
+/// not answered: an unread match is not "unpaid", an unread reminder not
+/// "never reminded". A failed one is named on the home with Try again.
 final invoicingReceivablesProvider = Provider.autoDispose<List<Receivable>?>(
-  (ref) => switch (ref.watch(invoicesProvider).value) {
-    final invoices? => ref.watch(invoicingReaderProvider).read(invoices),
-    null => null,
+  (ref) {
+    final statuses = [
+      ref.watch(invoiceMatchesProvider),
+      ref.watch(invoiceRemindersProvider),
+      ref.watch(invoiceTransmissionsProvider),
+    ];
+    if (statuses.any((r) => !r.hasValue)) return null;
+    return switch (ref.watch(invoicesProvider).value) {
+      final invoices? => ref.watch(invoicingReaderProvider).read(invoices),
+      null => null,
+    };
   },
 );
 
