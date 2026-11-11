@@ -7,7 +7,7 @@
 -- the table takes no insert from authenticated and the recorder is the
 -- service role's only. Rolled back.
 begin;
-select plan(19);
+select plan(28);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000003159'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -82,17 +82,61 @@ select ('00000000-0000-4000-8000-0000003159'||w)::uuid, ('00000000-0000-4000-800
        ('00000000-0000-4000-8000-0000003159'||m)::uuid, ('00000000-0000-4000-8000-0000003159'||m)::uuid,
        'T-'||w, 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now()
   from (values ('d2','b2','c2'), ('d3','b3','c3')) v(w, ws, m);
-insert into public.invoice_transmissions (id, workspace_id, invoice_id, provider, status, environment)
-values ('00000000-0000-4000-8000-0000003159e2', '00000000-0000-4000-8000-0000003159b2',
-        '00000000-0000-4000-8000-0000003159d2', 'it_sdi', 'failed', 'uat');
-update public.invoice_transmissions set status = 'rejected' where id = '00000000-0000-4000-8000-0000003159e2';
-select ok(pg_temp.refused('b2','c2','IT'), 'a failed then rejected SdI answer keeps the gate shut');
-update public.invoice_transmissions set status = 'accepted', external_id = 'SDI-1'
- where id = '00000000-0000-4000-8000-0000003159e2';
-select ok(not pg_temp.refused('b2','c2','IT'), 'an accepted SdI transmission opens the gate');
-select is((select environment from public.national_channel_acceptances
+-- #3746: the channel's answer reaches the gate through the real writers
+-- (prepare, claim, outcome, lookup), and only a positive DOCUMENT verdict
+-- counts: an accepted upload whose document the SdI refused does not.
+create or replace function pg_temp.sdi(p_inv text, p_hash text) returns uuid language plpgsql as $f$
+declare v_id uuid; v_owner uuid := '00000000-0000-4000-8000-0000003159a2';
+begin
+  v_id := (public.prepare_einvoice_v1('00000000-0000-4000-8000-0000003159b2',
+             ('00000000-0000-4000-8000-0000003159' || p_inv)::uuid, 'it_sdi', 'government', 'uat',
+             v_owner, 'T', 'fatturapa', p_hash, 'f.xml', 'application/xml', '', '', '\x01'::bytea) ->> 'id')::uuid;
+  perform public.claim_einvoice_dispatch_v1(v_id, v_owner, 150);
+  perform public.record_einvoice_outcome_v1(v_id, 1, v_owner, 'accepted', 'SDI-' || p_inv, '',
+                                            jsonb_build_object('identificativo_sdi', 'SDI-' || p_inv));
+  return v_id;
+end
+$f$;
+create or replace function pg_temp.verdict(p_id uuid, p_status text) returns text language sql as $f$
+  select public.record_einvoice_lookup_v1(p_id, null, null, null,
+           jsonb_build_object('status', p_status, 'detail', p_status), null) ->> 'recorded'
+$f$;
+create or replace function pg_temp.acceptances() returns int language sql as $f$
+  select count(*)::int from public.national_channel_acceptances
+   where workspace_id = '00000000-0000-4000-8000-0000003159b2'
+$f$;
+insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
+                             currency, member_name, workspace_name, issuer_name, signature, issued_at)
+values ('00000000-0000-4000-8000-0000003159d4', '00000000-0000-4000-8000-0000003159b2',
+        '00000000-0000-4000-8000-0000003159c2', '00000000-0000-4000-8000-0000003159c2',
+        'T-d4', 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now());
+select set_config('ch.t1', pg_temp.sdi('d2', 'h2')::text, false);
+select ok(pg_temp.refused('b2','c2','IT'), 'an accepted upload alone keeps the gate shut: no document verdict yet');
+select is(pg_temp.verdict(current_setting('ch.t1')::uuid, 'rejected'), 'true', 'the SdI refuses the document');
+select ok(pg_temp.refused('b2','c2','IT'), 'an accepted upload with a rejected document keeps the gate shut');
+select is(pg_temp.acceptances(), 0, 'and records no acceptance');
+select set_config('ch.t2', pg_temp.sdi('d4', 'h4')::text, false);
+select is(pg_temp.verdict(current_setting('ch.t2')::uuid, 'accepted'), 'true', 'the SdI accepts the document');
+select ok(not pg_temp.refused('b2','c2','IT'), 'an accepted document opens the gate, through the real writer');
+select is((select environment || '|' || (receipt ->> 'transmission_id')
+             from public.national_channel_acceptances
             where workspace_id = '00000000-0000-4000-8000-0000003159b2'),
-          'sandbox', 'a uat transmission is a sandbox acceptance, and the row says so');
+          'sandbox|' || current_setting('ch.t2'),
+          'a uat transmission is a sandbox acceptance of that transmission, and the row says so');
+select set_config('ch.at', (select accepted_at::text from public.national_channel_acceptances
+                             where workspace_id = '00000000-0000-4000-8000-0000003159b2'), false);
+select is(pg_temp.verdict(current_setting('ch.t2')::uuid, 'accepted'), 'true', 'the same verdict read again');
+select is((select count(*)::int || '|' || max(accepted_at)::text from public.national_channel_acceptances
+            where workspace_id = '00000000-0000-4000-8000-0000003159b2'),
+          '1|' || current_setting('ch.at'), 'a replay changes nothing');
+-- the binding: a sandbox acceptance holds for the issuer and configuration it tested
+update public.workspaces set vat_id = 'IT99999999999' where id = '00000000-0000-4000-8000-0000003159b2';
+select ok(pg_temp.refused('b2','c2','IT'), 'another issuer identity does not inherit the sandbox acceptance');
+update public.workspaces set vat_id = '' where id = '00000000-0000-4000-8000-0000003159b2';
+select ok(not pg_temp.refused('b2','c2','IT'), 'the tested identity does');
+insert into public.einvoice_credentials (workspace_id, provider, config)
+values ('00000000-0000-4000-8000-0000003159b2', 'it_sdi', '{"endpoint":"https://other.example"}');
+select ok(pg_temp.refused('b2','c2','IT'), 'a replaced channel configuration does not inherit it either');
 
 insert into public.verifactu_records (id, workspace_id, invoice_id, kind, chain_position, issuer_nif,
                                       invoice_number, issue_date, generated_at, huella)
