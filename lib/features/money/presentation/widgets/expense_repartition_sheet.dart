@@ -157,17 +157,11 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
     final theme = Theme.of(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final currency = appFormatOf(context).moneyIn(workspace?.currencyCode);
-    // #3680 — the split is computed over the members as read; the history is
-    // listed as read. Neither is ever an empty answer of a failed read.
-    final membersRead = ref.watch(workspaceMembersProvider);
-    final historyRead = ref.watch(expenseRepartitionsProvider);
-    final standIn = ReadsAnswer.of([membersRead, historyRead]).standIn(
-      onRetry: () => ref
-        ..invalidate(workspaceMembersProvider)
-        ..invalidate(expenseRepartitionsProvider),
-    );
+    // #3680 — the split and the history over reads that answered.
+    final standIn = readsStandIn(
+        ref, [workspaceMembersProvider, expenseRepartitionsProvider]);
     if (standIn != null) return standIn;
-    final members = membersRead.requireValue;
+    final members = ref.watch(workspaceMembersProvider).requireValue;
     final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     final pool = _members(members, names);
     final cents = _cents;
@@ -175,7 +169,7 @@ class _RepartitionWizardState extends ConsumerState<_RepartitionWizard> {
         ? const <RepartitionShare>[]
         : distributeExpense(
             amountCents: cents, members: pool, method: _method);
-    final history = historyRead.requireValue;
+    final history = ref.watch(expenseRepartitionsProvider).requireValue;
     final expenseComplete = _title.text.trim().isNotEmpty && cents != null;
     final canSubmit = !_busy && expenseComplete && shares.isNotEmpty;
     final steps = <WizardStepSpec>[

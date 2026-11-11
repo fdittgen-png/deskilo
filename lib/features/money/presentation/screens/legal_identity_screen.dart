@@ -230,12 +230,12 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             ),
           ]);
 
-  /// What a VAT-registered space adds: the rates are a link, and a
-  /// warning only when there is no rate to charge.
-  List<Widget> _vatFields(AppLocalizations l10n, List<VatRate> rates) {
+  /// What a VAT-registered space adds: the rates are a link, a warning only without a rate (#3680: of rates read).
+  List<Widget> _vatFields(AppLocalizations l10n) {
+    if (readsStandIn(ref, [vatRatesProvider]) case final s?) return [s];
+    final rates = ref.watch(vatRatesProvider).requireValue;
     return [
-          // Only a workspace that charges VAT and has no rate to charge
-          // it at is in trouble — the rest is a link, not a warning.
+          // Only a VAT-charging workspace without a rate is in trouble — the rest is a link.
           // #895 — the customer's tax, across the border.
           if (_regime == VatRegime.vatRegistered)
             SwitchListTile(
@@ -411,11 +411,6 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    // #3680 — "no rate yet" is said of rates that were read.
-    final ratesRead = ref.watch(vatRatesProvider);
-    final ratesStandIn = ReadsAnswer.of([ratesRead]).standIn(
-      onRetry: () => ref.invalidate(vatRatesProvider),
-    );
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
@@ -449,10 +444,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           _regimeRow(l10n),
-          if (ratesStandIn != null)
-            ratesStandIn
-          else
-            ..._vatFields(l10n, ratesRead.requireValue),
+          ..._vatFields(l10n),
           const SizedBox(height: AppSpacing.md),
           ..._identifierFields(l10n),
           const SizedBox(height: AppSpacing.md),

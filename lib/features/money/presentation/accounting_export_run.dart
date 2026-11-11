@@ -199,8 +199,7 @@ class AccountingExportRun {
     ),
     reference: taxReference, dayOf: workspaceDayOf,
   );
-  // #3680 — an export names every member: it waits for the names, and a
-  // failed read fails the run instead of exporting blank names.
+  // #3680 — an export waits for every name; a failed read fails the run.
   memberNames = await ref.read(memberNamesProvider.future);
   if (!context.mounted) return;
   noteDevelopmentBooks(context, development: development);

@@ -202,15 +202,12 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final sitesRead = ref.watch(sitesProvider);
     final today = ref.watch(clockProvider).now();
     if (workspace == null) return const SizedBox.shrink();
     // #3680 — the sites a profile is for, as read.
-    final sitesStandIn = ReadsAnswer.of([sitesRead]).standIn(
-      onRetry: () => ref.invalidate(sitesProvider),
-    );
+    final sitesStandIn = readsStandIn(ref, [sitesProvider]);
     if (sitesStandIn != null) return sitesStandIn;
-    final sites = sitesRead.requireValue;
+    final sites = ref.watch(sitesProvider).requireValue;
     final draft = _draft(workspace.id, workspace.currencyCode, today);
     final problems = draft == null
         ? const <BookProfileProblem>[]
@@ -416,16 +413,10 @@ class BookProfileSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     // #3680 — the profiles as read, or their failure: never "none".
-    final profilesRead = ref.watch(bookProfilesProvider);
-    final sitesRead = ref.watch(sitesProvider);
-    final standIn = ReadsAnswer.of([profilesRead, sitesRead]).standIn(
-      onRetry: () => ref
-        ..invalidate(bookProfilesProvider)
-        ..invalidate(sitesProvider),
-    );
+    final standIn = readsStandIn(ref, [bookProfilesProvider, sitesProvider]);
     if (standIn != null) return standIn;
-    final profiles = profilesRead.requireValue;
-    final sites = {for (final s in sitesRead.requireValue) s.id: s};
+    final profiles = ref.watch(bookProfilesProvider).requireValue;
+    final sites = {for (final s in ref.watch(sitesProvider).requireValue) s.id: s};
     final dates = appFormatOf(context).dates(DateShape.date);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

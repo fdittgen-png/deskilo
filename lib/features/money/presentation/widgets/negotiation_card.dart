@@ -42,18 +42,11 @@ class NegotiationCard extends ConsumerWidget {
     if (value == null) return const SizedBox.shrink();
     final deal = value.active;
     final pending = value.pending;
-    // #3680 — the deal's prices are listed against the items as read; an
-    // unread catalogue hides no negotiated price silently.
-    final servicesRead = ref.watch(servicesProvider);
-    final packagesRead = ref.watch(packagesProvider);
-    final standIn = ReadsAnswer.of([servicesRead, packagesRead]).standIn(
-      onRetry: () => ref
-        ..invalidate(servicesProvider)
-        ..invalidate(packagesProvider),
-    );
+    // #3680 — the deal's prices against the items as read, never hidden.
+    final standIn = readsStandIn(ref, [servicesProvider, packagesProvider]);
     if (standIn != null) return standIn;
-    final services = servicesRead.requireValue;
-    final packages = packagesRead.requireValue;
+    final services = ref.watch(servicesProvider).requireValue;
+    final packages = ref.watch(packagesProvider).requireValue;
     final monthFormat = appFormatOf(context).dates(DateShape.monthYear);
 
     final defaultLabel = l10n.negotiationDefaultColumn;

@@ -141,9 +141,12 @@ Future<void> sendMemberAgreement(
         return;
       }
       final docL10n = l10nForLanguage(language);
+      // #3680 — the agreement's facts as read, awaited.
+      final facts = await readAgreementFacts(ref);
+      if (!context.mounted) return;
       final data = agreementReportData(
           reportStringsFor(context, l10n: docL10n, localeName: language),
-          agreementFactsOf(ref),
+          facts,
           memberName: name,
           subscriptionPct: member.subscriptionPct, reference: requireWorkspaceTaxReference(ref));
       final report = renderLetterDoc(context, ref,

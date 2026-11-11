@@ -78,6 +78,17 @@ final invoicingFailedSourcesProvider =
       },
     );
 
+/// #3680 — a status read is still running: nothing is counted yet (an
+/// unread match is not "unpaid"). A failed one is a named source instead.
+final invoicingStatusesWaitingProvider = Provider.autoDispose<bool>(
+  (ref) => [
+    ref.watch(invoiceMatchesProvider),
+    ref.watch(invoiceRemindersProvider),
+    ref.watch(invoiceTransmissionsProvider),
+    ref.watch(eventsProvider),
+  ].any((r) => !r.hasValue && !r.hasError),
+);
+
 /// Reads [source] again.
 void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
     switch (source) {

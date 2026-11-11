@@ -114,8 +114,11 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     final l10n = context.l10n;
     final invoicesAsync = ref.watch(invoicesProvider);
     return switch (invoicesAsync) {
+      // #3680 — a row's status reads the matches and reminders: listed
+      // only when they answered.
       AsyncData(value: final invoices) =>
-        _body(context, l10n, invoices),
+        readsStandIn(ref, [invoiceMatchesProvider, invoiceRemindersProvider]) ??
+            _body(context, l10n, invoices),
       AsyncError() => Center(
           child: Text(
             l10n.workspaceGenericError,
@@ -136,18 +139,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         title: l10n.invoicesEmpty,
       );
     }
-    // #3680 — a row's status reads the matches and reminders: the archive
-    // is listed only when they answered.
-    final matchesAsync = ref.watch(invoiceMatchesProvider);
-    final remindersAsync = ref.watch(invoiceRemindersProvider);
-    final standIn = ReadsAnswer.of([matchesAsync, remindersAsync]).standIn(
-      onRetry: () => ref
-        ..invalidate(invoiceMatchesProvider)
-        ..invalidate(invoiceRemindersProvider),
-    );
-    if (standIn != null) return standIn;
-    final matches = matchesAsync.requireValue;
-    final reminders = remindersAsync.requireValue;
+    final matches = ref.watch(invoiceMatchesProvider).requireValue;
+    final reminders = ref.watch(invoiceRemindersProvider).requireValue;
     final dateFormat = appFormatOf(context).dates(DateShape.date);
 
     // A correction chain, never a fork (0061): who replaced whom.

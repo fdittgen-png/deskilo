@@ -7,6 +7,7 @@
 // list.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderBase;
 
 import '../cache/read_failure.dart';
 import '../l10n/context_l10n.dart';
@@ -138,3 +139,20 @@ class ReadsAnswer {
       ? ReadFailureBanner(error: failure!, onRetry: onRetry)
       : const LoadingView();
 }
+
+/// #3680 — the stand-in for [providers] while they did not all answer (the
+/// progress, or the failure with Try again repeating every one of them);
+/// null once they did. One line at a screen that reads a list:
+///
+///     final standIn = readsStandIn(ref, [suppliersProvider(id)]);
+///     if (standIn != null) return standIn;
+Widget? readsStandIn(
+  WidgetRef ref,
+  List<ProviderBase<AsyncValue<Object?>>> providers,
+) => ReadsAnswer.of([for (final p in providers) ref.watch(p)]).standIn(
+  onRetry: () {
+    for (final p in providers) {
+      ref.invalidate(p);
+    }
+  },
+);

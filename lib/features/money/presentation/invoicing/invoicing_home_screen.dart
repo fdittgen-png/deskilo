@@ -23,7 +23,6 @@ import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
@@ -217,17 +216,8 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   }
 
   Widget _home(BuildContext context, List<Invoice> invoices) {
-    // #3680 — while a status read is still running, nothing is counted:
-    // an unread match is not "unpaid". A failed one is named below.
-    final statuses = [
-      ref.watch(invoiceMatchesProvider),
-      ref.watch(invoiceRemindersProvider),
-      ref.watch(invoiceTransmissionsProvider),
-      ref.watch(eventsProvider),
-    ];
-    if (statuses.any((r) => !r.hasValue && !r.hasError)) {
-      return const LoadingView();
-    }
+    // #3680 — while a status read is still running, nothing is counted.
+    if (ref.watch(invoicingStatusesWaitingProvider)) return const LoadingView();
     final format = appFormatOf(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final now = ref.watch(clockProvider).now();

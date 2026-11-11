@@ -11,6 +11,8 @@ import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/presentation/report_facts_of.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +54,14 @@ Future<List<Map<String, Object?>>> agreementLines(
               if (ref.watch(floorPlanProvider(level.id)).value == null) {
                 return const SizedBox.shrink();
               }
+            }
+            // #3680 — the agreement is built only from reads that answered:
+            // wait for its prices too, as the letter's warm-up does.
+            if (!ref.watch(feeBandsProvider).hasValue ||
+                !ref.watch(servicesProvider).hasValue ||
+                !ref.watch(packagesProvider).hasValue ||
+                !ref.watch(accessoriesProvider()).hasValue) {
+              return const SizedBox.shrink();
             }
             lines = (agreementReportData(
               reportStringsFor(context, localeName: 'en'),

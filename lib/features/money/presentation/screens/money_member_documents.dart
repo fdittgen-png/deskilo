@@ -27,6 +27,7 @@ import '../../domain/invoice_line_text.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_data_letters.dart';
+import '../../domain/report_facts.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
@@ -92,9 +93,18 @@ class MoneyMemberDocuments {
       await _ref.read(usageReadProvider(period).future);
       if (!_context.mounted) return;
     }
+    // #3680 — the facts are read (awaited) for the letter being printed.
+    final agreement =
+        docId == 'agreement' ? await readAgreementFacts(_ref) : null;
+    final payments = docId != 'agreement' && docId != 'usage'
+        ? await readPaymentsFacts(_ref, period)
+        : null;
+    if (!_context.mounted) return;
     final data = _letterData(
         docId, period, docL10n, language,
-        (id: me.id, name: names[me.id] ?? '', pct: me.subscriptionPct));
+        (id: me.id, name: names[me.id] ?? '', pct: me.subscriptionPct),
+        agreement: agreement,
+        payments: payments);
     final report = renderLetterDoc(_context, _ref,
         docId: docId, data: data, language: language);
     final title = switch (docId) {
@@ -126,12 +136,14 @@ class MoneyMemberDocuments {
     String period,
     AppLocalizations docL10n,
     String language,
-    ({String id, String name, int pct}) who,
-  ) =>
+    ({String id, String name, int pct}) who, {
+    AgreementFacts? agreement,
+    PaymentsFacts? payments,
+  }) =>
       switch (docId) {
         'agreement' => agreementReportData(
             reportStringsFor(_context, l10n: docL10n, localeName: language),
-            agreementFactsOf(_ref),
+            agreement!,
             memberName: who.name,
             subscriptionPct: who.pct, reference: requireWorkspaceTaxReference(_ref)),
         'usage' => usageReportData(_context, _ref,
@@ -142,7 +154,7 @@ class MoneyMemberDocuments {
             localeName: language),
         _ => paymentsReportData(
             reportStringsFor(_context, l10n: docL10n, localeName: language),
-            paymentsFactsOf(_ref, period),
+            payments!,
             period: period,
             memberName: who.name, reference: requireWorkspaceTaxReference(_ref)),
       };
