@@ -15,9 +15,9 @@ import '../../providers/auth_providers.dart';
 /// Signing in by badge (#662): scan, then PIN, on one sheet.
 ///
 /// One sheet, two steps — which is what the user asked for, and it is
-/// not cosmetic. The scan is what makes it possible to say "Hello Alex,
-/// your PIN?" instead of asking a shared tablet's user to type an
-/// address in front of whoever is in the room.
+/// not cosmetic. The scan is what lets the sheet ask "Your PIN?" instead
+/// of asking a shared tablet's user to type an address in front of
+/// whoever is in the room; the person is named once the PIN is right.
 ///
 /// WHAT THIS SHEET REFUSES TO EXPLAIN. Every failure except a lockout
 /// says the same sentence. An unknown card, a card whose owner never set
@@ -225,9 +225,12 @@ class _BadgeSignInSheetState extends ConsumerState<_BadgeSignInSheet> {
       ];
 
   List<Widget> _pinStep(AppLocalizations l10n, BadgeIdentity who) => [
-        // Greeting them by name is the whole reason the steps are split.
+        // The scan names nobody (GHSA-9525-vh85-5hjg): the sheet asks for
+        // the PIN, and the person is named once it is right.
         Text(
-          l10n.badgeSignInHello(who.displayName),
+          who.displayName.isEmpty
+              ? l10n.badgeSignInYourPin
+              : l10n.badgeSignInHello(who.displayName),
           key: const ValueKey('badge-signin-hello'),
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.center,

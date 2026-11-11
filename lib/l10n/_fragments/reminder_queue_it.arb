@@ -1,0 +1,21 @@
+{
+  "reminderQueueTitle": "Solleciti da condividere",
+  "reminderQueueIntro": "Lei condivide ogni sollecito. Viene registrato solo se è stato davvero condiviso.",
+  "reminderQueueLevel": "Sollecito {level}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · scade oggi} =1{{number} · 1 giorno di ritardo} other{{number} · {days} giorni di ritardo}}",
+  "reminderQueueShare": "Condividi",
+  "reminderQueueShareNext": "Condividi la prossima · {customer}",
+  "reminderQueueShared": "Condiviso",
+  "reminderQueueNotRecorded": "Non è stato registrato nulla: la condivisione è stata chiusa.",
+  "reminderQueueFailed": "Non è stato possibile condividerla. Riprovi.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 sollecito condiviso} other{{count} solleciti condivisi}}",
+  "reminderQueueResultNone": "Nessun sollecito condiviso",
+  "reminderQueueResultSubtitle": "Ognuno è registrato sulla sua fattura.",
+  "reminderQueueDone": "Fatto",
+  "reminderQueueDoneEmpty": "Niente da condividere",
+  "reminderQueueCheckFirst": "Da verificare prima: denaro ricevuto e non assegnato",
+  "reminderQueueSharedNotRecorded": "Condiviso, ma non registrato sulla fattura. Lo registri: non verrà condiviso di nuovo.",
+  "reminderQueueRecord": "Registra",
+  "reminderQueueNotRecordedHeading": "Condivisi, non registrati",
+  "reminderQueueRecordStays": "Finché non viene registrato, la fattura mostra ancora questo sollecito come dovuto."
+}

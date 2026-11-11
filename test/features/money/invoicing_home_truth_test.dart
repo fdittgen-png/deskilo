@@ -58,38 +58,43 @@ final _sample = [
   _r('07', due: '2026-11-25', customer: 'Praxis'),
 ];
 
-InvoicingHomeData _data({Set<InvoicingSource> failed = const {}}) =>
-    InvoicingHomeData(
-      receivables: _sample,
-      today: _today,
-      month: 'November',
-      currency: 'CHF',
-      mode: ReminderMode.byHand,
-      failed: failed,
-    );
+InvoicingHomeData _data({
+  Set<InvoicingSource> failed = const {},
+  bool creditsKnown = true,
+}) => InvoicingHomeData(
+  receivables: _sample,
+  today: _today,
+  month: 'November',
+  currency: 'CHF',
+  mode: ReminderMode.byHand,
+  failed: failed,
+  creditsKnown: creditsKnown,
+);
 
-InvoicingHomeActions _actions({ValueChanged<InvoicingSource>? onRetry}) =>
-    InvoicingHomeActions(
-      onOpenInvoice: (_) {},
-      onOpenCustomer: (_) {},
-      onCustomerAction: (_, _) {},
-      onTodo: (_) {},
-      onRules: () {},
-      onRetry: onRetry ?? (_) {},
-      onNewInvoice: () {},
-    );
+InvoicingHomeActions _actions({
+  ValueChanged<InvoicingSource>? onRetry,
+  ValueChanged<TodoKind>? onTodo,
+}) => InvoicingHomeActions(
+  onOpenInvoice: (_) {},
+  onOpenCustomer: (_) {},
+  onCustomerAction: (_, _) {},
+  onTodo: onTodo ?? (_) {},
+  onRetry: onRetry ?? (_) {},
+  onNewInvoice: () {},
+);
 
 Future<void> _pump(
   WidgetTester tester,
   InvoicingHomeData data, {
   ValueChanged<InvoicingSource>? onRetry,
+  ValueChanged<TodoKind>? onTodo,
 }) async {
   await pumpApp(
     tester,
     Scaffold(
       body: InvoicingHome(
         data: data,
-        actions: _actions(onRetry: onRetry),
+        actions: _actions(onRetry: onRetry, onTodo: onTodo),
       ),
     ),
     size: const Size(800, 3000),
@@ -145,10 +150,38 @@ void main() {
     });
   });
 
-  testWidgets('each To do entry opens the list of exactly what it counts', (
-    tester,
-  ) async {
-    await _pump(tester, _data());
+  testWidgets('until the received payments are read, no reminder is '
+      'offered and the entry says it is checking', (tester) async {
+    final opened = <TodoKind>[];
+    await _pump(tester, _data(creditsKnown: false), onTodo: opened.add);
+
+    expect(find.text('Checking received payments…'), findsOne);
+    final entry = find.byKey(const ValueKey('invoicing-todo-shareReminders'));
+    await tester.ensureVisible(entry);
+    await tester.tap(entry, warnIfMissed: false);
+    await tester.pumpAndSettle();
+    expect(opened, isEmpty, reason: 'the queue waits for the read');
+    expect(find.text('Remind'), findsNothing);
+  });
+
+  test('a customer holding money not assigned is matched first, never '
+      'reminded', () {
+    final reminded = _sample.firstWhere((r) => r.invoiceId == '01');
+    expect(todoKindOf(reminded, ReminderMode.byHand), TodoKind.shareReminders);
+    expect(
+      todoKindOf(
+        reminded,
+        ReminderMode.byHand,
+        holdsUnassigned: {reminded.customerId},
+      ),
+      TodoKind.matchPayments,
+    );
+  });
+
+  testWidgets('each To do entry opens the list of exactly what it counts; '
+      'the reminders by hand open their queue', (tester) async {
+    final opened = <TodoKind>[];
+    await _pump(tester, _data(), onTodo: opened.add);
     final l = AppLocalizations.of(tester.element(find.byType(InvoicingHome)))!;
     final todo = todoOf(_sample, mode: ReminderMode.byHand);
     expect(
@@ -162,6 +195,10 @@ void main() {
     for (final t in todo) {
       await tester.tap(find.byKey(ValueKey('invoicing-todo-${t.kind.name}')));
       await tester.pumpAndSettle();
+      if (t.kind == TodoKind.shareReminders) {
+        expect(opened.last, TodoKind.shareReminders, reason: 'the queue');
+        continue;
+      }
 
       final customers = {
         for (final r in _sample)

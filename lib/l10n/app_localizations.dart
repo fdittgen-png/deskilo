@@ -3067,6 +3067,12 @@ abstract class AppLocalizations {
   /// **'Use my e-mail instead'**
   String get badgeSignInUseEmail;
 
+  /// #662 the badge sheet asks for the PIN after a scan; the person is named once the PIN is right
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN?'**
+  String get badgeSignInYourPin;
+
   /// Instruction in the tap-the-card prompt
   ///
   /// In en, this message translates to:
@@ -10463,6 +10469,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The customer capacity was not saved.'**
   String get customerCapacitySaveError;
+
+  /// #3587 R1-g: the customer page (customerPageCredit)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit: {amount}'**
+  String customerPageCredit(String amount);
+
+  /// #3587 R1-g: the customer page (customerPageCreditHint)
+  ///
+  /// In en, this message translates to:
+  /// **'Payments no invoice has taken yet.'**
+  String get customerPageCreditHint;
+
+  /// #3587 R1-g: the customer page (customerPageInvoices)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get customerPageInvoices;
+
+  /// #3587 R1-g: the customer page's main action while they hold money no invoice has taken; opens Payments to match
+  ///
+  /// In en, this message translates to:
+  /// **'Match the payment'**
+  String get customerPageMatch;
+
+  /// #3587 R1-g: the customer page (customerPageNothingOwed)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing owed'**
+  String get customerPageNothingOwed;
+
+  /// #3587 R1-g: the customer page (customerPageOwes)
+  ///
+  /// In en, this message translates to:
+  /// **'Owes'**
+  String get customerPageOwes;
+
+  /// #3587 R1-g: the customer page (customerPageStory)
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get customerPageStory;
+
+  /// #3587 R1-g: the customer page (customerStoryDeclared)
+  ///
+  /// In en, this message translates to:
+  /// **'Says they paid invoice {number}'**
+  String customerStoryDeclared(String number);
+
+  /// #3587 R1-g: the customer page (customerStoryIssued)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} issued'**
+  String customerStoryIssued(String number);
+
+  /// #3587 R1-g: the customer page (customerStoryNow)
+  ///
+  /// In en, this message translates to:
+  /// **'Now: {words}'**
+  String customerStoryNow(String words);
+
+  /// #3587 R1-g: the customer page (customerStoryPaid)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} paid'**
+  String customerStoryPaid(String number);
+
+  /// #3587 R1-g: the customer page (customerStoryReminders)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
+  String customerStoryReminders(int count, String number);
 
   /// #2862 data report: dataReportArchived
   ///
@@ -24574,6 +24652,12 @@ abstract class AppLocalizations {
   /// **'You are all caught up.'**
   String get invoicingCaughtUp;
 
+  /// #3587 To do: the reminders entry while the received payments are still being read
+  ///
+  /// In en, this message translates to:
+  /// **'Checking received payments…'**
+  String get invoicingCheckingPayments;
+
   /// #3587 table column
   ///
   /// In en, this message translates to:
@@ -24802,24 +24886,6 @@ abstract class AppLocalizations {
   /// **'Received in {month}'**
   String invoicingReceivedIn(String month);
 
-  /// #3587 the To do card's last line, automatic reminders
-  ///
-  /// In en, this message translates to:
-  /// **'Reminders go out by themselves, in the app.'**
-  String get invoicingRemindersAutomatic;
-
-  /// #3587 the To do card's last line, reminders by hand
-  ///
-  /// In en, this message translates to:
-  /// **'Reminders are shared by hand.'**
-  String get invoicingRemindersByHand;
-
-  /// #3587 opens the reminder rules
-  ///
-  /// In en, this message translates to:
-  /// **'Rules'**
-  String get invoicingRules;
-
   /// #3587 top bar: open the search field
   ///
   /// In en, this message translates to:
@@ -24831,6 +24897,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A customer or a number'**
   String get invoicingSearchHint;
+
+  /// #3587 a source name: what customers paid that no invoice has taken
+  ///
+  /// In en, this message translates to:
+  /// **'Customer credits'**
+  String get invoicingSourceCredits;
 
   /// #3587 one line when a source failed; no figure it fed is shown
   ///
@@ -33431,6 +33503,60 @@ abstract class AppLocalizations {
   /// **'Wisetag or Wise payment link'**
   String get paymentInstructionsWiseLabel;
 
+  /// #3587 R1-f: payments to match (paymentMatchCandidate)
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · {amount} open'**
+  String paymentMatchCandidate(String number, String amount);
+
+  /// #3587 R1-f: payments to match (paymentMatchDecide)
+  ///
+  /// In en, this message translates to:
+  /// **'Another amount: choose how to settle the difference'**
+  String get paymentMatchDecide;
+
+  /// #3587 R1-f: payments to match (paymentMatchEmpty)
+  ///
+  /// In en, this message translates to:
+  /// **'No payment is waiting for an invoice.'**
+  String get paymentMatchEmpty;
+
+  /// #3587 R1-f: payments to match (paymentMatchFailed)
+  ///
+  /// In en, this message translates to:
+  /// **'The payments could not be read.'**
+  String get paymentMatchFailed;
+
+  /// #3587 R1-f: payments to match (paymentMatchHeader)
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} received {date}'**
+  String paymentMatchHeader(String amount, String date);
+
+  /// #3587 R1-f: payments to match (paymentMatchIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'A payment was received and is not assigned yet. Choose the invoice it pays.'**
+  String get paymentMatchIntro;
+
+  /// #3587 R1-f: said when matching a payment to an invoice was refused
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be matched. Try again.'**
+  String get paymentMatchRefused;
+
+  /// #3587 R1-f: payments to match (paymentMatchSame)
+  ///
+  /// In en, this message translates to:
+  /// **'Same amount'**
+  String get paymentMatchSame;
+
+  /// #3587 R1-f: payments to match (paymentMatchTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Payments to match'**
+  String get paymentMatchTitle;
+
   /// Payment-method chip/label: SEPA/bank transfer (#154).
   ///
   /// In en, this message translates to:
@@ -38727,6 +38853,24 @@ abstract class AppLocalizations {
   /// **'Reminder history'**
   String get reminderHistoryTitle;
 
+  /// #3587 R1-f: how reminders go out and the entry to their rules (reminderModeAutomatic)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders go out by themselves, in the app.'**
+  String get reminderModeAutomatic;
+
+  /// #3587 R1-f: how reminders go out and the entry to their rules (reminderModeByHand)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are shared by hand.'**
+  String get reminderModeByHand;
+
+  /// #3587 R1-f: how reminders go out and the entry to their rules (reminderModeRules)
+  ///
+  /// In en, this message translates to:
+  /// **'Rules'**
+  String get reminderModeRules;
+
   /// #1922 reminder evidence: reminderOriginAutomatic
   ///
   /// In en, this message translates to:
@@ -38792,6 +38936,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment reminder'**
   String get reminderPdfTitleFriendly;
+
+  /// #3587 R1-f: reminder queue (reminderQueueCheckFirst)
+  ///
+  /// In en, this message translates to:
+  /// **'Check first: money received and not assigned'**
+  String get reminderQueueCheckFirst;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueDetail)
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}'**
+  String reminderQueueDetail(int days, String number);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueDone)
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get reminderQueueDone;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to share'**
+  String get reminderQueueDoneEmpty;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueFailed)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be shared. Try again.'**
+  String get reminderQueueFailed;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'You share each reminder yourself. It is recorded only when it was really shared.'**
+  String get reminderQueueIntro;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}'**
+  String reminderQueueLevel(int level);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was recorded: the share was closed.'**
+  String get reminderQueueNotRecorded;
+
+  /// #3587 R1-f: result page heading of the reminders shared but not recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Shared, not recorded'**
+  String get reminderQueueNotRecordedHeading;
+
+  /// #3587 R1-f: records a reminder that was already shared, without sharing it again
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get reminderQueueRecord;
+
+  /// #3587 R1-f: result page note under the reminders shared but not recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Until it is recorded, the invoice still shows this reminder as due.'**
+  String get reminderQueueRecordStays;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder shared'**
+  String get reminderQueueResultNone;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Each one is recorded on its invoice.'**
+  String get reminderQueueResultSubtitle;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 reminder shared} other{{count} reminders shared}}'**
+  String reminderQueueResultTitle(int count);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueShare)
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get reminderQueueShare;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueShareNext)
+  ///
+  /// In en, this message translates to:
+  /// **'Share the next one · {customer}'**
+  String reminderQueueShareNext(String customer);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueShared)
+  ///
+  /// In en, this message translates to:
+  /// **'Shared'**
+  String get reminderQueueShared;
+
+  /// #3587 R1-f: a reminder left the device but recording its level failed; its action records only
+  ///
+  /// In en, this message translates to:
+  /// **'Shared, but not recorded on the invoice. Record it: it will not be shared again.'**
+  String get reminderQueueSharedNotRecorded;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders to share'**
+  String get reminderQueueTitle;
 
   /// #1922 reminder evidence: reminderStatusAccepted
   ///
@@ -42987,6 +43245,18 @@ abstract class AppLocalizations {
   /// **'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
   String get settingHintRetentionUsYears;
 
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'How many scans may come from one place within the badge lockout window before the scan answers wait. Can only be tightened.'**
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'How often one badge may be scanned within the badge lockout window before the scan answers wait. Can only be tightened.'**
+  String get settingHintSecurityBadgeIdentifyPerTagLimit;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -43008,7 +43278,7 @@ abstract class AppLocalizations {
   /// Shown as a text in settings labels (workspace).
   ///
   /// In en, this message translates to:
-  /// **'Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.'**
+  /// **'Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.'**
   String get settingHintSecurityBadgeWorkspaceFailureLimit;
 
   /// #2485 settings: Setting hint.
@@ -43436,6 +43706,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Record retention, US state (years)'**
   String get settingLabelRetentionUsYears;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Scans from one place'**
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Scans of one badge'**
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit;
 
   /// #2485 settings: Setting label.
   ///

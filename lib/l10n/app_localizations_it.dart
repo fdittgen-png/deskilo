@@ -1822,6 +1822,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get badgeSignInUseEmail => 'Usa la mia e-mail';
 
   @override
+  String get badgeSignInYourPin => 'Il suo PIN?';
+
+  @override
   String get badgeTapCardHint =>
       'Avvicini la tessera RFID/NFC al retro del dispositivo.';
 
@@ -6408,6 +6411,61 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get customerCapacitySaveError =>
       'La qualità del cliente non è stata salvata.';
+
+  @override
+  String customerPageCredit(String amount) {
+    return 'Credito: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Pagamenti che nessuna fattura ha ancora preso.';
+
+  @override
+  String get customerPageInvoices => 'Fatture';
+
+  @override
+  String get customerPageMatch => 'Abbina il pagamento';
+
+  @override
+  String get customerPageNothingOwed => 'Niente da pagare';
+
+  @override
+  String get customerPageOwes => 'Deve';
+
+  @override
+  String get customerPageStory => 'Storia';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Dice di aver pagato la fattura $number';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Fattura $number emessa';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Adesso: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Fattura $number pagata';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count solleciti condivisi per $number',
+      one: 'Sollecito condiviso per $number',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get dataReportArchived => 'Archiviato';
@@ -14945,6 +15003,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicingCaughtUp => 'È tutto in ordine.';
 
   @override
+  String get invoicingCheckingPayments => 'Verifica dei pagamenti ricevuti…';
+
+  @override
   String get invoicingColCustomer => 'Cliente';
 
   @override
@@ -15102,20 +15163,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get invoicingRemindersAutomatic =>
-      'I solleciti partono da soli, nell’app.';
-
-  @override
-  String get invoicingRemindersByHand => 'I solleciti si condividono a mano.';
-
-  @override
-  String get invoicingRules => 'Regole';
-
-  @override
   String get invoicingSearch => 'Cerca';
 
   @override
   String get invoicingSearchHint => 'Un cliente o un numero';
+
+  @override
+  String get invoicingSourceCredits => 'Crediti dei clienti';
 
   @override
   String invoicingSourceFailed(String source) {
@@ -20361,6 +20415,40 @@ class AppLocalizationsIt extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag o link di pagamento Wise';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount aperti';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Altro importo: sceglie come saldare la differenza';
+
+  @override
+  String get paymentMatchEmpty => 'Nessun pagamento attende una fattura.';
+
+  @override
+  String get paymentMatchFailed => 'Non è stato possibile leggere i pagamenti.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount ricevuti il $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.';
+
+  @override
+  String get paymentMatchRefused =>
+      'Non è stato possibile abbinare il pagamento. Riprovi.';
+
+  @override
+  String get paymentMatchSame => 'Stesso importo';
+
+  @override
+  String get paymentMatchTitle => 'Pagamenti da abbinare';
+
+  @override
   String get paymentMethodBankTransfer => 'Bonifico';
 
   @override
@@ -23530,6 +23618,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderHistoryTitle => 'Cronologia dei solleciti';
 
   @override
+  String get reminderModeAutomatic => 'I solleciti partono da soli, nell\'app.';
+
+  @override
+  String get reminderModeByHand => 'I solleciti si condividono a mano.';
+
+  @override
+  String get reminderModeRules => 'Regole';
+
+  @override
   String get reminderOriginAutomatic => 'automatico';
 
   @override
@@ -23563,6 +23660,91 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Promemoria di pagamento';
+
+  @override
+  String get reminderQueueCheckFirst =>
+      'Da verificare prima: denaro ricevuto e non assegnato';
+
+  @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days giorni di ritardo',
+      one: '$number · 1 giorno di ritardo',
+      zero: '$number · scade oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Fatto';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Niente da condividere';
+
+  @override
+  String get reminderQueueFailed =>
+      'Non è stato possibile condividerla. Riprovi.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Lei condivide ogni sollecito. Viene registrato solo se è stato davvero condiviso.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Sollecito $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Non è stato registrato nulla: la condivisione è stata chiusa.';
+
+  @override
+  String get reminderQueueNotRecordedHeading => 'Condivisi, non registrati';
+
+  @override
+  String get reminderQueueRecord => 'Registra';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Finché non viene registrato, la fattura mostra ancora questo sollecito come dovuto.';
+
+  @override
+  String get reminderQueueResultNone => 'Nessun sollecito condiviso';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Ognuno è registrato sulla sua fattura.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count solleciti condivisi',
+      one: '1 sollecito condiviso',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Condividi';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Condividi la prossima · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Condiviso';
+
+  @override
+  String get reminderQueueSharedNotRecorded =>
+      'Condiviso, ma non registrato sulla fattura. Lo registri: non verrà condiviso di nuovo.';
+
+  @override
+  String get reminderQueueTitle => 'Solleciti da condividere';
 
   @override
   String get reminderStatusAccepted =>
@@ -26082,6 +26264,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più della regola federale. Un periodo più lungo vale per tutti i documenti; uno più breve non cambia nulla. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'Quante letture possono venire da un luogo nel periodo di blocco prima che la lettura chieda di attendere. Il limite può solo essere ridotto.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'Quante volte un badge può essere letto nel periodo di blocco prima che la lettura chieda di attendere. Il limite può solo essere ridotto.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Quanti tentativi di PIN errati sono consentiti su un badge durante il tempo di blocco. Può solo essere ridotto.';
 
@@ -26095,7 +26285,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Tentativi di PIN falliti nello spazio durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Il limite può solo essere ridotto.';
+      'Badge diversi dello spazio con un PIN errato durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Un solo badge non lo raggiunge. Il limite può solo essere ridotto.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26363,6 +26553,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Conservazione negli USA, stato (anni)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Letture da un luogo';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Letture di un badge';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>

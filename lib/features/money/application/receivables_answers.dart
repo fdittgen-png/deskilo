@@ -116,8 +116,14 @@ typedef Todo = ({TodoKind kind, Tally tally});
 /// The "To do" entry [r] counts in, in [mode], or null: the one predicate
 /// that both counts an entry and selects the list it opens. A hold stops
 /// the reminders only: a payment declared on a held invoice is still
-/// confirmed.
-TodoKind? todoKindOf(Receivable r, ReminderMode mode) {
+/// confirmed. A customer in [holdsUnassigned] holds money received and not
+/// assigned (`holdsUnassignedMoney`): their open invoices are matched first
+/// and never reminded.
+TodoKind? todoKindOf(
+  Receivable r,
+  ReminderMode mode, {
+  Set<String> holdsUnassigned = const {},
+}) {
   switch (r.stage) {
     case ReceivableStage.draft:
       return TodoKind.issueDrafts;
@@ -130,7 +136,9 @@ TodoKind? todoKindOf(Receivable r, ReminderMode mode) {
   }
   if (r.eInvoiceRejected) return TodoKind.rejectedEInvoices;
   if (r.paymentDeclared) return TodoKind.confirmPayments;
-  if (r.paymentToMatch) return TodoKind.matchPayments;
+  if (r.paymentToMatch || holdsUnassigned.contains(r.customerId)) {
+    return TodoKind.matchPayments;
+  }
   if (reminderToShare(r, mode)) return TodoKind.shareReminders;
   return null;
 }
@@ -144,6 +152,7 @@ List<Todo> todoOf(
   Iterable<Receivable> invoices, {
   Iterable<ToInvoice> toInvoice = const [],
   required ReminderMode mode,
+  Set<String> holdsUnassigned = const {},
 }) {
   final tallies = {for (final k in TodoKind.values) k: Tally.empty};
   for (final t in toInvoice) {
@@ -153,7 +162,7 @@ List<Todo> todoOf(
     );
   }
   for (final r in invoices) {
-    final kind = todoKindOf(r, mode);
+    final kind = todoKindOf(r, mode, holdsUnassigned: holdsUnassigned);
     if (kind != null) {
       tallies[kind] = tallies[kind]!.plus(r.currency, r.openMinor);
     }
@@ -216,11 +225,13 @@ class CustomerLine {
 /// [invoices] (the list's current selection) as one line per customer on
 /// [today] in [mode]: late customers first — among them those whose every
 /// reminder was sent — the most late first, then the larger amount when both
-/// owe in one same currency, then by name.
+/// owe in one same currency, then by name. A customer in [holdsUnassigned]
+/// is offered Match, never a reminder.
 List<CustomerLine> customerRowsOf(
   Iterable<Receivable> invoices, {
   required DateTime today,
   required ReminderMode mode,
+  Set<String> holdsUnassigned = const {},
 }) {
   final byCustomer = <String, List<Receivable>>{};
   for (final r in invoices) {
@@ -228,7 +239,7 @@ List<CustomerLine> customerRowsOf(
   }
   final rows = [
     for (final MapEntry(key: id, value: rs) in byCustomer.entries)
-      _rowOf(id, rs, today, mode),
+      _rowOf(id, rs, today, mode, holdsUnassigned),
   ];
   return rows..sort(_byUrgency);
 }
@@ -256,6 +267,7 @@ CustomerLine _rowOf(
   List<Receivable> rs,
   DateTime today,
   ReminderMode mode,
+  Set<String> holdsUnassigned,
 ) {
   int dueKey(Receivable r) => r.dueOn?.millisecondsSinceEpoch ?? 0;
   rs.sort((a, b) => dueKey(a).compareTo(dueKey(b)));
@@ -268,7 +280,12 @@ CustomerLine _rowOf(
       if (daysLate == null || days > daysLate) daysLate = days;
     }
   }
-  int count(TodoKind kind) => rs.where((r) => todoKindOf(r, mode) == kind).length;
+  int count(TodoKind kind) => rs
+      .where(
+        (r) =>
+            todoKindOf(r, mode, holdsUnassigned: holdsUnassigned) == kind,
+      )
+      .length;
   return CustomerLine(
     customerId: id,
     customerName: rs.first.customerName,

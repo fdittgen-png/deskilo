@@ -11,9 +11,10 @@
 // only by the service role that lives in this function's environment.
 //
 // TWO STEPS, ONE FORM.
-//   {uid}        -> who is this? display name + avatar flag. No e-mail,
-//                   no user id (#3091), no attempt consumed: a fumbled scan must not lock a
-//                   member out before they have typed anything.
+//   {uid}        -> the scan. The same answer for every well-formed tag:
+//                   nobody is named before the PIN. Counted in the database
+//                   per tag and per source (GHSA-9525-vh85-5hjg); past either
+//                   ceiling it answers "locked" (wait).
 //   {uid, pin}   -> a one-time token the client exchanges for a session
 //                   via supabase.auth.verifyOtp. The session is minted by
 //                   GoTrue from an e-mail this function never returns.
@@ -25,15 +26,7 @@
 
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
-import {
-  callerOf,
-  identifyAnswer,
-  IdentifyLimiter,
-  UID_PATTERN,
-} from "./badge_guard.ts";
-
-// #3091 — the identify step needs no PIN, so it has its own ceiling per caller.
-const identifyLimiter = new IdentifyLimiter();
+import { callerOf, identifyAnswer, UID_PATTERN } from "./badge_guard.ts";
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -82,14 +75,13 @@ Deno.serve(async (req) => {
   // register_nfc_badge applies. Reject anything else before it reaches
   // the database rather than hashing arbitrary input.
   if (!uid || !UID_PATTERN.test(uid)) return refused("refused");
-  if (pin === undefined && !identifyLimiter.allow(callerOf(req))) {
-    return refused("locked"); // the same wait-a-while answer a lockout gives
-  }
   if (pin !== undefined && !/^[0-9]{4,8}$/.test(pin)) return refused("refused");
 
   const { data, error } = await supabase.rpc("badge_auth_verify", {
     p_uid: uid,
     p_pin: pin ?? null,
+    // The source is hashed in the database and only ever counted.
+    p_source: callerOf(req),
   });
   if (error) {
     console.error("badge_auth_verify failed", error.message);
@@ -99,11 +91,9 @@ Deno.serve(async (req) => {
     return refused(data?.reason === "locked" ? "locked" : "refused");
   }
 
-  // IDENTIFY — hand back just enough for the form to say whose PIN it is
-  // asking for. Never the e-mail: that would make a scanned tag a way to
-  // harvest addresses.
+  // SCAN — the same answer for every tag: the form asks for the PIN.
   if (pin === undefined) {
-    return json(identifyAnswer(data));
+    return json(identifyAnswer());
   }
 
   // AUTHENTICATE — the PIN matched. Turn the verified user into a

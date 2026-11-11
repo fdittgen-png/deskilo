@@ -2367,6 +2367,10 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "Your PIN?",
+  "@badgeSignInYourPin": {
+    "description": "#662 the badge sheet asks for the PIN after a scan; the person is named once the PIN is right"
+  },
   "badgeTapCardHint": "Hold the RFID/NFC card to the back of the device.",
   "@badgeTapCardHint": {
     "description": "Instruction in the tap-the-card prompt"
@@ -8527,6 +8531,87 @@
   "customerCapacitySaveError": "The customer capacity was not saved.",
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
+  },
+  "customerPageCredit": "Credit: {amount}",
+  "@customerPageCredit": {
+    "description": "#3587 R1-g: the customer page (customerPageCredit)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "customerPageCreditHint": "Payments no invoice has taken yet.",
+  "@customerPageCreditHint": {
+    "description": "#3587 R1-g: the customer page (customerPageCreditHint)"
+  },
+  "customerPageInvoices": "Invoices",
+  "@customerPageInvoices": {
+    "description": "#3587 R1-g: the customer page (customerPageInvoices)"
+  },
+  "customerPageMatch": "Match the payment",
+  "@customerPageMatch": {
+    "description": "#3587 R1-g: the customer page's main action while they hold money no invoice has taken; opens Payments to match"
+  },
+  "customerPageNothingOwed": "Nothing owed",
+  "@customerPageNothingOwed": {
+    "description": "#3587 R1-g: the customer page (customerPageNothingOwed)"
+  },
+  "customerPageOwes": "Owes",
+  "@customerPageOwes": {
+    "description": "#3587 R1-g: the customer page (customerPageOwes)"
+  },
+  "customerPageStory": "Story",
+  "@customerPageStory": {
+    "description": "#3587 R1-g: the customer page (customerPageStory)"
+  },
+  "customerStoryDeclared": "Says they paid invoice {number}",
+  "@customerStoryDeclared": {
+    "description": "#3587 R1-g: the customer page (customerStoryDeclared)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryIssued": "Invoice {number} issued",
+  "@customerStoryIssued": {
+    "description": "#3587 R1-g: the customer page (customerStoryIssued)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryNow": "Now: {words}",
+  "@customerStoryNow": {
+    "description": "#3587 R1-g: the customer page (customerStoryNow)",
+    "placeholders": {
+      "words": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryPaid": "Invoice {number} paid",
+  "@customerStoryPaid": {
+    "description": "#3587 R1-g: the customer page (customerStoryPaid)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryReminders": "{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}",
+  "@customerStoryReminders": {
+    "description": "#3587 R1-g: the customer page (customerStoryReminders)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "dataReportArchived": "Archived",
   "@dataReportArchived": {
@@ -19601,6 +19686,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Checking received payments…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Customer",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -19801,18 +19890,6 @@
       }
     }
   },
-  "invoicingRemindersAutomatic": "Reminders go out by themselves, in the app.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Reminders are shared by hand.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Rules",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
-  },
   "invoicingSearch": "Search",
   "@invoicingSearch": {
     "description": "#3587 top bar: open the search field"
@@ -19820,6 +19897,10 @@
   "invoicingSearchHint": "A customer or a number",
   "@invoicingSearchHint": {
     "description": "#3587 search field hint"
+  },
+  "invoicingSourceCredits": "Customer credits",
+  "@invoicingSourceCredits": {
+    "description": "#3587 a source name: what customers paid that no invoice has taken"
   },
   "invoicingSourceFailed": "{source} could not be read.",
   "@invoicingSourceFailed": {
@@ -26866,6 +26947,58 @@
   "@paymentInstructionsWiseLabel": {
     "description": "Label of the Wise field in the workspace settings (#192). Wise and Wisetag are brand names."
   },
+  "paymentMatchCandidate": "{number} · {amount} open",
+  "@paymentMatchCandidate": {
+    "description": "#3587 R1-f: payments to match (paymentMatchCandidate)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMatchDecide": "Another amount: choose how to settle the difference",
+  "@paymentMatchDecide": {
+    "description": "#3587 R1-f: payments to match (paymentMatchDecide)"
+  },
+  "paymentMatchEmpty": "No payment is waiting for an invoice.",
+  "@paymentMatchEmpty": {
+    "description": "#3587 R1-f: payments to match (paymentMatchEmpty)"
+  },
+  "paymentMatchFailed": "The payments could not be read.",
+  "@paymentMatchFailed": {
+    "description": "#3587 R1-f: payments to match (paymentMatchFailed)"
+  },
+  "paymentMatchHeader": "{amount} received {date}",
+  "@paymentMatchHeader": {
+    "description": "#3587 R1-f: payments to match (paymentMatchHeader)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMatchIntro": "A payment was received and is not assigned yet. Choose the invoice it pays.",
+  "@paymentMatchIntro": {
+    "description": "#3587 R1-f: payments to match (paymentMatchIntro)"
+  },
+  "paymentMatchRefused": "The payment could not be matched. Try again.",
+  "@paymentMatchRefused": {
+    "description": "#3587 R1-f: said when matching a payment to an invoice was refused"
+  },
+  "paymentMatchSame": "Same amount",
+  "@paymentMatchSame": {
+    "description": "#3587 R1-f: payments to match (paymentMatchSame)"
+  },
+  "paymentMatchTitle": "Payments to match",
+  "@paymentMatchTitle": {
+    "description": "#3587 R1-f: payments to match (paymentMatchTitle)"
+  },
   "paymentMethodBankTransfer": "Bank transfer",
   "@paymentMethodBankTransfer": {
     "description": "Payment-method chip/label: SEPA/bank transfer (#154)."
@@ -30978,6 +31111,18 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Reminders go out by themselves, in the app.",
+  "@reminderModeAutomatic": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeAutomatic)"
+  },
+  "reminderModeByHand": "Reminders are shared by hand.",
+  "@reminderModeByHand": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeByHand)"
+  },
+  "reminderModeRules": "Rules",
+  "@reminderModeRules": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeRules)"
+  },
   "reminderOriginAutomatic": "automatic",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"
@@ -31021,6 +31166,105 @@
   "reminderPdfTitleFriendly": "Payment reminder",
   "@reminderPdfTitleFriendly": {
     "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderQueueCheckFirst": "Check first: money received and not assigned",
+  "@reminderQueueCheckFirst": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
+  },
+  "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
+  "@reminderQueueDetail": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueDone": "Done",
+  "@reminderQueueDone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDone)"
+  },
+  "reminderQueueDoneEmpty": "Nothing to share",
+  "@reminderQueueDoneEmpty": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
+  },
+  "reminderQueueFailed": "Could not be shared. Try again.",
+  "@reminderQueueFailed": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
+  },
+  "reminderQueueIntro": "You share each reminder yourself. It is recorded only when it was really shared.",
+  "@reminderQueueIntro": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueIntro)"
+  },
+  "reminderQueueLevel": "Reminder {level}",
+  "@reminderQueueLevel": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel)",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
+  "@reminderQueueNotRecorded": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)"
+  },
+  "reminderQueueNotRecordedHeading": "Shared, not recorded",
+  "@reminderQueueNotRecordedHeading": {
+    "description": "#3587 R1-f: result page heading of the reminders shared but not recorded"
+  },
+  "reminderQueueRecord": "Record",
+  "@reminderQueueRecord": {
+    "description": "#3587 R1-f: records a reminder that was already shared, without sharing it again"
+  },
+  "reminderQueueRecordStays": "Until it is recorded, the invoice still shows this reminder as due.",
+  "@reminderQueueRecordStays": {
+    "description": "#3587 R1-f: result page note under the reminders shared but not recorded"
+  },
+  "reminderQueueResultNone": "No reminder shared",
+  "@reminderQueueResultNone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
+  },
+  "reminderQueueResultSubtitle": "Each one is recorded on its invoice.",
+  "@reminderQueueResultSubtitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)"
+  },
+  "reminderQueueResultTitle": "{count, plural, =1{1 reminder shared} other{{count} reminders shared}}",
+  "@reminderQueueResultTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueShare": "Share",
+  "@reminderQueueShare": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShare)"
+  },
+  "reminderQueueShareNext": "Share the next one · {customer}",
+  "@reminderQueueShareNext": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShareNext)",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueShared": "Shared",
+  "@reminderQueueShared": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShared)"
+  },
+  "reminderQueueSharedNotRecorded": "Shared, but not recorded on the invoice. Record it: it will not be shared again.",
+  "@reminderQueueSharedNotRecorded": {
+    "description": "#3587 R1-f: a reminder left the device but recording its level failed; its action records only"
+  },
+  "reminderQueueTitle": "Reminders to share",
+  "@reminderQueueTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueTitle)"
   },
   "reminderStatusAccepted": "Accepted by the push service — not proof it was read",
   "@reminderStatusAccepted": {
@@ -34143,6 +34387,14 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "How many scans may come from one place within the badge lockout window before the scan answers wait. Can only be tightened.",
+  "@settingHintSecurityBadgeIdentifyPerSourceLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "How often one badge may be scanned within the badge lockout window before the scan answers wait. Can only be tightened.",
+  "@settingHintSecurityBadgeIdentifyPerTagLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
   "settingHintSecurityBadgeLockoutFailures": "How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -34155,7 +34407,7 @@
   "@settingHintSecurityBadgePinMinLength": {
     "description": "#3091 settings: Setting hint."
   },
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.",
   "@settingHintSecurityBadgeWorkspaceFailureLimit": {
     "description": "Shown as a text in settings labels (workspace)."
   },
@@ -34442,6 +34694,14 @@
   "settingLabelRetentionUsYears": "Record retention, US state (years)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
+  },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Scans from one place",
+  "@settingLabelSecurityBadgeIdentifyPerSourceLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Scans of one badge",
+  "@settingLabelSecurityBadgeIdentifyPerTagLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Badge PIN attempts before a lock",
   "@settingLabelSecurityBadgeLockoutFailures": {

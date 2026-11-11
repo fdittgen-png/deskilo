@@ -816,6 +816,7 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "Ihre PIN?",
   "badgeTapCardHint": "Halten Sie die RFID/NFC-Karte an die Rückseite des Geräts.",
   "badgeTapCardTitle": "Karte registrieren",
   "badgeTokenOnce": "Speichern Sie diesen QR jetzt — er wird nur einmal angezeigt.",
@@ -4162,6 +4163,18 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageCredit": "Guthaben: {amount}",
+  "customerPageCreditHint": "Zahlungen, die noch keine Rechnung beglichen haben.",
+  "customerPageInvoices": "Rechnungen",
+  "customerPageMatch": "Zahlung zuordnen",
+  "customerPageNothingOwed": "Nichts offen",
+  "customerPageOwes": "Schuldet",
+  "customerPageStory": "Verlauf",
+  "customerStoryDeclared": "Sagt, Rechnung {number} bezahlt zu haben",
+  "customerStoryIssued": "Rechnung {number} ausgestellt",
+  "customerStoryNow": "Jetzt: {words}",
+  "customerStoryPaid": "Rechnung {number} bezahlt",
+  "customerStoryReminders": "{count, plural, =1{Mahnung für {number} geteilt} other{{count} Mahnungen für {number} geteilt}}",
   "dataReportArchived": "Archiviert",
   "dataReportColumnAttended": "Anwesend",
   "dataReportColumnCancelled": "Storniert",
@@ -9533,6 +9546,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Eingegangene Zahlungen werden geprüft…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Kunde",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9733,18 +9750,6 @@
       }
     }
   },
-  "invoicingRemindersAutomatic": "Mahnungen gehen von selbst hinaus, in der App.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Mahnungen werden von Hand geteilt.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Regeln",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
-  },
   "invoicingSearch": "Suchen",
   "@invoicingSearch": {
     "description": "#3587 top bar: open the search field"
@@ -9752,6 +9757,10 @@
   "invoicingSearchHint": "Ein Kunde oder eine Nummer",
   "@invoicingSearchHint": {
     "description": "#3587 search field hint"
+  },
+  "invoicingSourceCredits": "Guthaben der Kunden",
+  "@invoicingSourceCredits": {
+    "description": "#3587 a source name: what customers paid that no invoice has taken"
   },
   "invoicingSourceFailed": "{source} konnte nicht gelesen werden.",
   "@invoicingSourceFailed": {
@@ -12661,6 +12670,15 @@
   "paymentInstructionsValueCopied": "In die Zwischenablage kopiert.",
   "paymentInstructionsWeroLabel": "Wero-Telefonnummer",
   "paymentInstructionsWiseLabel": "Wisetag oder Wise-Zahlungslink",
+  "paymentMatchCandidate": "{number} · {amount} offen",
+  "paymentMatchDecide": "Anderer Betrag: Sie wählen, wie die Differenz beglichen wird",
+  "paymentMatchEmpty": "Keine Zahlung wartet auf eine Rechnung.",
+  "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
+  "paymentMatchHeader": "{amount} eingegangen am {date}",
+  "paymentMatchIntro": "Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.",
+  "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.",
+  "paymentMatchSame": "Gleicher Betrag",
+  "paymentMatchTitle": "Zahlungen zuordnen",
   "paymentMethodBankTransfer": "Überweisung",
   "paymentMethodCard": "Karte",
   "paymentMethodCash": "Bar",
@@ -14751,6 +14769,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Mahnungen gehen von selbst hinaus, in der App.",
+  "reminderModeByHand": "Mahnungen werden von Hand geteilt.",
+  "reminderModeRules": "Regeln",
   "reminderOriginAutomatic": "automatisch",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"
@@ -14771,6 +14792,25 @@
   "reminderPdfOpeningFriendly": "dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.",
   "reminderPdfTitleFirm": "Mahnung",
   "reminderPdfTitleFriendly": "Zahlungserinnerung",
+  "reminderQueueCheckFirst": "Zuerst prüfen: Geld eingegangen und nicht zugeordnet",
+  "reminderQueueDetail": "{days, plural, =0{{number} · heute fällig} =1{{number} · 1 Tag überfällig} other{{number} · {days} Tage überfällig}}",
+  "reminderQueueDone": "Fertig",
+  "reminderQueueDoneEmpty": "Nichts zu teilen",
+  "reminderQueueFailed": "Konnte nicht geteilt werden. Bitte erneut versuchen.",
+  "reminderQueueIntro": "Sie teilen jede Mahnung selbst. Sie wird nur vermerkt, wenn sie wirklich geteilt wurde.",
+  "reminderQueueLevel": "Mahnung {level}",
+  "reminderQueueNotRecorded": "Nichts wurde vermerkt: das Teilen wurde geschlossen.",
+  "reminderQueueNotRecordedHeading": "Geteilt, nicht vermerkt",
+  "reminderQueueRecord": "Vermerken",
+  "reminderQueueRecordStays": "Bis sie vermerkt ist, zeigt die Rechnung diese Mahnung weiterhin als fällig.",
+  "reminderQueueResultNone": "Keine Mahnung geteilt",
+  "reminderQueueResultSubtitle": "Jede wird auf ihrer Rechnung vermerkt.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 Mahnung geteilt} other{{count} Mahnungen geteilt}}",
+  "reminderQueueShare": "Teilen",
+  "reminderQueueShareNext": "Nächste teilen · {customer}",
+  "reminderQueueShared": "Geteilt",
+  "reminderQueueSharedNotRecorded": "Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.",
+  "reminderQueueTitle": "Zu teilende Mahnungen",
   "reminderStatusAccepted": "Vom Benachrichtigungsdienst angenommen — kein Nachweis, dass sie gelesen wurde",
   "@reminderStatusAccepted": {
     "description": "#1922 reminder evidence: reminderStatusAccepted"
@@ -16909,6 +16949,8 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Wie viele Scans innerhalb des Sperrzeitraums von einem Ort kommen dürfen, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Wie oft ein Badge innerhalb des Sperrzeitraums gescannt werden darf, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.",
   "settingHintSecurityBadgeLockoutFailures": "Wie viele falsche PIN-Eingaben an einem Badge innerhalb der Sperrzeit erlaubt sind. Kann nur verringert werden.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -16918,7 +16960,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Verschiedene Badges des Bereichs mit falscher PIN innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Ein einzelnes Badge erreicht die Grenze nicht. Die Grenze kann nur gesenkt werden.",
   "settingHintSecurityInvitationExpiryDays": "Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -17095,6 +17137,8 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Scans von einem Ort",
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Scans eines Badges",
   "settingLabelSecurityBadgeLockoutFailures": "PIN-Versuche am Badge vor der Sperre",
   "@settingLabelSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting label."

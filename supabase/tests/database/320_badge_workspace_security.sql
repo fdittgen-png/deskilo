@@ -81,7 +81,7 @@ $$;
 do $instrument$
 declare v_def text;
 begin
-  select pg_get_functiondef('public.badge_auth_verify(text,text)'::regprocedure) into v_def;
+  select pg_get_functiondef('public.badge_auth_verify(text,text,text)'::regprocedure) into v_def;
   if regexp_count(v_def,'extensions\.crypt\(') <> 1 then
     raise exception 'expected one verifier crypt call';
   end if;
@@ -112,7 +112,7 @@ select public.badge_token_hash('3091999999999998'),false from generate_series(1,
 select is(pg_temp.crypt_calls('3091999999999998','482615'),1,'a tag lock still does one crypt');
 select is(public.badge_auth_verify('abcd','482615')->>'reason','refused','a short UID is refused');
 select ok(not has_function_privilege('authenticated','public.record_badge_auth_failure(text,uuid)','EXECUTE'),'the failure recorder is not a public authenticated API');
-select ok(not has_function_privilege('anon','public.badge_auth_verify(text,text)','EXECUTE'),'anonymous clients cannot bypass the Edge boundary');
+select ok(not has_function_privilege('anon','public.badge_auth_verify(text,text,text)','EXECUTE'),'anonymous clients cannot bypass the Edge boundary');
 select ok(not has_table_privilege('authenticated','public.badge_auth_attempts','select'),'clients cannot read the attempt log');
 select is(public.event_type_view_permissions('badge_security_alert'),array['workspaceSettings'],'the alert has an explicit workspace administration view permission');
 select is((select count(*)::int from pg_policies where schemaname='public' and tablename='badge_auth_attempts' and permissive='PERMISSIVE'),0,'the workspace attack log still has no permissive client policy');
