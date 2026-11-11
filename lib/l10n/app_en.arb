@@ -9624,6 +9624,14 @@
   "@deskDetail": {
     "description": "Detail-sheet line naming a whole-desk reservation"
   },
+  "deskNavCollapse": "Narrow the menu",
+  "@deskNavCollapse": {
+    "description": "#3603 the desk sidebar's control that narrows it to the rail of icons"
+  },
+  "deskNavExpand": "Widen the menu",
+  "@deskNavExpand": {
+    "description": "#3603 the desk rail's control that widens it to the sidebar with labels"
+  },
   "deskSupplementLabel": "Desk reservations",
   "@deskSupplementLabel": {
     "description": "Bill line: sum of whole-desk reservation prices this period (0059)"

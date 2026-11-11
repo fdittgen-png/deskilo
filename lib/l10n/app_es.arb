@@ -4696,6 +4696,8 @@
     "description": "#988/#990 deployments: deploymentToProd"
   },
   "deskDetail": "Mesa entera",
+  "deskNavCollapse": "Estrechar el menú",
+  "deskNavExpand": "Ensanchar el menú",
   "deskSupplementLabel": "Reservas de mesa",
   "developerClear": "Vaciar registro",
   "developerEmpty": "Aún no hay entradas de registro.",

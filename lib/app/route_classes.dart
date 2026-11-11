@@ -33,11 +33,29 @@ enum RouteClass {
   unknown,
 }
 
+/// #3603 — what a route is SHOWN in, apart from what it needs to open
+/// ([RouteClass]): the desk (the business's navigation beside the page from
+/// the expanded window class), the kiosk (the one pinned screen: no
+/// navigation, search or shortcuts), the account's own pages, or a public
+/// page.
+enum RouteChrome { desk, kiosk, account, public }
+
 /// One registered route pattern and its class. `:name` matches a segment.
 class RouteRule {
-  const RouteRule(this.pattern, this.kind);
+  const RouteRule(this.pattern, this.kind, [this._chrome]);
   final String pattern;
   final RouteClass kind;
+  final RouteChrome? _chrome;
+
+  /// The chrome this route is shown in: declared where it differs from
+  /// what its class implies (the kiosk's routes), else derived from it.
+  RouteChrome get chrome =>
+      _chrome ??
+      switch (kind) {
+        RouteClass.workspace => RouteChrome.desk,
+        RouteClass.nativeAccount || RouteClass.operator => RouteChrome.account,
+        RouteClass.publicEntry || RouteClass.unknown => RouteChrome.public,
+      };
 
   bool matches(String path) {
     final want = pattern.split('/');
@@ -139,8 +157,9 @@ const List<RouteRule> routeRules = [
   RouteRule('/installation/assistants', RouteClass.nativeAccount),
   RouteRule('/settings/assistants', RouteClass.workspace),
   RouteRule('/settings/assistant-setup', RouteClass.workspace),
-  RouteRule('/kiosk-gate', RouteClass.workspace),
-  RouteRule('/kiosk', RouteClass.workspace),
+  // #3603 — workspace routes for authorization, the kiosk's own chrome.
+  RouteRule('/kiosk-gate', RouteClass.workspace, RouteChrome.kiosk),
+  RouteRule('/kiosk', RouteClass.workspace, RouteChrome.kiosk),
   RouteRule('/pending', RouteClass.workspace),
   RouteRule('/messages', RouteClass.workspace),
   RouteRule('/calendar', RouteClass.workspace),
@@ -227,6 +246,10 @@ RouteRule? matchRoute(String path) {
   }
   return null;
 }
+
+/// The chrome [path] (no query) is shown in; an unknown path is public.
+RouteChrome chromeOf(String path) =>
+    matchRoute(path)?.chrome ?? RouteChrome.public;
 
 /// The class of [path] (no query), or [RouteClass.unknown].
 RouteClass classifyRoute(String path) =>

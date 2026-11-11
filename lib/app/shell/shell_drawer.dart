@@ -29,10 +29,12 @@ import '../../features/workspace/presentation/widgets/setup_resume_banner.dart'
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'desk_rail.dart';
 import 'purchase_approval_badge.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_drawer_tiles.dart';
+import 'shell_nav_groups.dart';
 
 part 'shell_drawer.g.dart';
 
@@ -123,6 +125,7 @@ class ShellDrawer extends ConsumerWidget {
     required this.onBranch,
     required this.pendingEvents,
     this.permanent = false,
+    this.rail = false,
     this.navs,
   });
 
@@ -136,11 +139,14 @@ class ShellDrawer extends ConsumerWidget {
   final int pendingEvents;
   final bool permanent;
 
+  /// #3603 — the desk's narrow form: icons with short labels, the groups
+  /// as flyouts. Only with [permanent].
+  final bool rail;
+
   // #1306 — the bar's own icon table; one list, one set of icons.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final labels = l10n;
     final theme = Theme.of(context);
     final path = GoRouterState.of(context).uri.path;
     final features = ref.watch(enabledFeaturesSyncProvider);
@@ -196,6 +202,11 @@ class ShellDrawer extends ConsumerWidget {
       onSection: onSection,
     );
     final account = entries.account();
+    final groups = navGroupsOf(
+      entries,
+      administration: administration,
+      reporting: reporting,
+    );
 
     // Every badge opens the content it counts (#1306 S3): the events
     // entry while the bell is on, the Calendar entry when the calendar
@@ -216,11 +227,21 @@ class ShellDrawer extends ConsumerWidget {
           ? PurchaseApprovalBadge(value: approvals)
           : null,
     );
-    Widget group(String id, String title, IconData icon, Set<String> keys,
-        {List<DrawerEntry>? from, List<Widget> after = const []}) => DrawerGroup(
-      id: id, title: title, icon: icon,
-      entries: [for (final e in from ?? administration) if (keys.contains(e.key)) e],
-      path: path, tile: tile, after: after,
+    // #3603 — the desk's rail: the same destinations and groups.
+    if (rail) {
+      return DeskRail(
+        destinations: navigation,
+        groups: groups,
+        account: account,
+        path: path,
+        badgeOf: badgeOf,
+        onBackToMe: () => go('/me', push: false),
+      );
+    }
+    Widget group(NavGroup g) => DrawerGroup(
+      id: g.id, title: g.title, icon: g.icon, entries: g.entries,
+      path: path, tile: tile,
+      after: [for (final s in g.sub) if (!s.isEmpty) group(s)],
     );
 
     final content = SafeArea(
@@ -243,29 +264,13 @@ class ShellDrawer extends ConsumerWidget {
             ),
             const Divider(),
             for (final e in navigation) tile(e),
-            if (reporting.isNotEmpty) ...[
+            if (!groups.first.isEmpty) ...[
               const Divider(),
-              group(
-                'reporting',
-                labels.uxNavReporting,
-                Icons.analytics_outlined,
-                {for (final e in reporting) e.key},
-                from: reporting,
-              ),
+              group(groups.first),
             ],
             if (administration.isNotEmpty) const Divider(),
-            // Each group hides itself when empty. A financial permission
-            // must not depend on having an unrelated administration door.
-            group('people', labels.uxNavPeople, Icons.group_outlined, {
-              'drawer-members',
-              'drawer-roles',
-              'drawer-nfc-config',
-            }),
-            ..._financeGroups(group, tile, entries, administration),
-            group('workspace', labels.uxNavWorkspace, Icons.business_outlined, {
-              'drawer-setup-guide',
-              'drawer-availability',
-            }),
+            // Each group hides itself when empty (shell_nav_groups.dart).
+            for (final g in groups.skip(1)) group(g),
             const Divider(),
             for (final e in account) tile(e),
           ],
@@ -289,64 +294,3 @@ Widget _drawerHeading(String name, ThemeData theme) => Padding(
     const WorkspaceEmblem(key: ValueKey('drawer-emblem')),
   ]),
 );
-
-typedef _GroupBuilder = Widget Function(
-  String id,
-  String title,
-  IconData icon,
-  Set<String> keys, {
-  List<DrawerEntry>? from,
-  List<Widget> after,
-});
-
-/// The sales and finance groups of the drawer (#3071): Sales & collections
-/// holds what is sold and what is collected (invoices, pricing, payment
-/// instructions, online payments), Purchases opens its page, Cash &
-/// accounting carries the cash page and the accounting and VAT sub-group.
-List<Widget> _financeGroups(
-  _GroupBuilder group,
-  Widget Function(DrawerEntry) tile,
-  DrawerEntries entries,
-  List<DrawerEntry> administration,
-) {
-  final labels = entries.l10n;
-  final money = entries.money();
-  final accounting = entries.accounting();
-  final all = [...money, ...administration];
-  return [
-    group('sales', labels.uxNavSales, Icons.sell_outlined, {
-      'drawer-sales',
-      'drawer-invoices',
-      'drawer-services',
-      'drawer-accessories',
-      'drawer-billing',
-      'drawer-payment-methods',
-      'drawer-payment-config',
-    }, from: all),
-    group('purchases', labels.navPurchasesGroup, Icons.shopping_cart_outlined, {
-      'drawer-purchases',
-      'drawer-suppliers',
-      'drawer-purchase-approvals',
-      'drawer-purchases-to-pay',
-    }, from: all),
-    group(
-      'finance',
-      labels.uxNavFinance,
-      Icons.receipt_long_outlined,
-      {'drawer-cash'},
-      from: all,
-      after: [
-      // Built only with a door inside: an empty sub-group would keep the
-      // Finance header for a member with no finance entry at all.
-      if (accounting.isNotEmpty)
-          group(
-            'accounting',
-            labels.hubAccountingTitle,
-            Icons.menu_book_outlined,
-            {for (final e in accounting) e.key},
-            from: accounting,
-          ),
-      ],
-    ),
-  ];
-}

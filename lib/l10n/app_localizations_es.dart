@@ -7332,6 +7332,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deskDetail => 'Mesa entera';
 
   @override
+  String get deskNavCollapse => 'Estrechar el menú';
+
+  @override
+  String get deskNavExpand => 'Ensanchar el menú';
+
+  @override
   String get deskSupplementLabel => 'Reservas de mesa';
 
   @override

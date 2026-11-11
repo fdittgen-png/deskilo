@@ -7293,6 +7293,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deskDetail => 'Whole desk';
 
   @override
+  String get deskNavCollapse => 'Narrow the menu';
+
+  @override
+  String get deskNavExpand => 'Widen the menu';
+
+  @override
   String get deskSupplementLabel => 'Desk reservations';
 
   @override

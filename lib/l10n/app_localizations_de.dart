@@ -7348,6 +7348,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deskDetail => 'Ganzer Tisch';
 
   @override
+  String get deskNavCollapse => 'Menü schmaler';
+
+  @override
+  String get deskNavExpand => 'Menü breiter';
+
+  @override
   String get deskSupplementLabel => 'Tisch-Reservierungen';
 
   @override

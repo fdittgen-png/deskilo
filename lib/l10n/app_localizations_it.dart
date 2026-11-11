@@ -7335,6 +7335,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deskDetail => 'Tavolo intero';
 
   @override
+  String get deskNavCollapse => 'Restringi il menu';
+
+  @override
+  String get deskNavExpand => 'Allarga il menu';
+
+  @override
   String get deskSupplementLabel => 'Prenotazioni di tavolo';
 
   @override

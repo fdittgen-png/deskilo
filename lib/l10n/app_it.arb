@@ -4696,6 +4696,8 @@
     "description": "#988/#990 deployments: deploymentToProd"
   },
   "deskDetail": "Tavolo intero",
+  "deskNavCollapse": "Restringi il menu",
+  "deskNavExpand": "Allarga il menu",
   "deskSupplementLabel": "Prenotazioni di tavolo",
   "developerClear": "Svuota registro",
   "developerEmpty": "Ancora nessuna voce nel registro.",

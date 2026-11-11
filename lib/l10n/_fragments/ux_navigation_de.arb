@@ -3,5 +3,7 @@
   "uxNavSales": "Verkauf & Zahlungseingang",
   "uxNavFinance": "Geld & Buchhaltung",
   "uxNavWorkspace": "Workspace einrichten",
-  "uxNavReporting": "Reporting"
+  "uxNavReporting": "Reporting",
+  "deskNavCollapse": "Menü schmaler",
+  "deskNavExpand": "Menü breiter"
 }

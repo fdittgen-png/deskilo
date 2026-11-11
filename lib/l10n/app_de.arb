@@ -4696,6 +4696,8 @@
     "description": "#988/#990 deployments: deploymentToProd"
   },
   "deskDetail": "Ganzer Tisch",
+  "deskNavCollapse": "Menü schmaler",
+  "deskNavExpand": "Menü breiter",
   "deskSupplementLabel": "Tisch-Reservierungen",
   "developerClear": "Protokoll leeren",
   "developerEmpty": "Noch keine Protokolleinträge.",

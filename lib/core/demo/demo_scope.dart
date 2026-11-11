@@ -64,6 +64,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../app/feature_sheets_wiring.dart';
 import '../../app/realtime_invalidations.dart';
+import '../../app/shell/desk_navigation.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../features/auth/providers/oauth_consent_providers.dart';
@@ -399,6 +400,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
           .overrideWithValue(fixture.prefs.shellBarHidden),
       shellSwipeCoachStoreProvider
           .overrideWithValue(fixture.prefs.shellSwipeCoach),
+      deskRailCollapsedStoreProvider
+          .overrideWithValue(fixture.prefs.deskRailCollapsed),
       pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
       webMcpSwitchStoreProvider.overrideWithValue(fixture.prefs.webMcpSwitch),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
