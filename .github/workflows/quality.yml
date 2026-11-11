@@ -917,12 +917,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          [ "${{ steps.dl_gate.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-gate dl_gate:testshard-gate
-          [ "${{ steps.dl_money.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-money dl_money:testshard-money
-          [ "${{ steps.dl_workspace.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-workspace dl_workspace:testshard-workspace
-          [ "${{ steps.dl_rest.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-rest dl_rest:testshard-rest
-          [ "${{ steps.dl_money2.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-money2 dl_money2:testshard-money2
-          [ "${{ steps.dl_core.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-core dl_core:testshard-core
+          # Which attempt each shard's result came from, for the report.
+          mkdir -p report
+          : > report/shard-attempts.psv
+          for pair in gate:${{ steps.dl_gate.outcome }} money:${{ steps.dl_money.outcome }} \
+                      workspace:${{ steps.dl_workspace.outcome }} rest:${{ steps.dl_rest.outcome }} \
+                      money2:${{ steps.dl_money2.outcome }} core:${{ steps.dl_core.outcome }}; do
+            shard=${pair%%:*}
+            if [ "${pair#*:}" = "success" ]; then
+              echo "$shard|$GITHUB_RUN_ATTEMPT" >> report/shard-attempts.psv
+              continue
+            fi
+            bash scripts/fallback_attempt_rows.sh "shards/testshard-$shard" "dl_$shard:testshard-$shard"
+            got=$(cut -d'|' -f2 "shards/testshard-$shard/attempts.txt" 2>/dev/null | tail -1)
+            echo "$shard|${got##*-attempt-}" >> report/shard-attempts.psv
+          done
 
       # What the shards were promised, re-derived from this tree: every
       # test file exactly once, none unclassified, none shared.
