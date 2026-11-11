@@ -18706,6 +18706,18 @@ abstract class AppLocalizations {
   /// **'Your credit'**
   String get financesYourCredit;
 
+  /// #3286 form error summary: moves the focus to the first field with a problem
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the first problem'**
+  String get formErrorSummaryGoTo;
+
+  /// #3286 form error summary: how many fields have a problem
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}'**
+  String formErrorSummaryTitle(int count);
+
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
   /// In en, this message translates to:

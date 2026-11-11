@@ -14905,6 +14905,19 @@
   "@financesYourCredit": {
     "description": "#3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them."
   },
+  "formErrorSummaryGoTo": "Go to the first problem",
+  "@formErrorSummaryGoTo": {
+    "description": "#3286 form error summary: moves the focus to the first field with a problem"
+  },
+  "formErrorSummaryTitle": "{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}",
+  "@formErrorSummaryTitle": {
+    "description": "#3286 form error summary: how many fields have a problem",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
   "@gebuevProcedureAccessBody": {
     "description": "#2377 The Swiss archive's procedures document: access logging (GeBüV art. 8)."

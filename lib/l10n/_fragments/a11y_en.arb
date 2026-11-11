@@ -26,5 +26,18 @@
   "a11yRecentre": "Fit the plan to the screen",
   "@a11yRecentre": {
     "description": "Tooltip on the plan canvas's recentre button, which sizes the whole level to the viewport (#1235)."
+  },
+  "formErrorSummaryTitle": "{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}",
+  "formErrorSummaryGoTo": "Go to the first problem",
+  "@formErrorSummaryTitle": {
+    "description": "#3286 form error summary: how many fields have a problem",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@formErrorSummaryGoTo": {
+    "description": "#3286 form error summary: moves the focus to the first field with a problem"
   }
 }

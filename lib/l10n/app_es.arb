@@ -7489,6 +7489,8 @@
   "financesTypeAll": "Todos los documentos",
   "financesTypeCreditNote": "Nota de crédito",
   "financesYourCredit": "Su saldo a favor",
+  "formErrorSummaryGoTo": "Ir al primer problema",
+  "formErrorSummaryTitle": "{count, plural, =1{1 campo requiere su atención} other{{count} campos requieren su atención}}",
   "gebuevProcedureAccessBody": "Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.",
   "gebuevProcedureAccessHeading": "Accesos (art. 8)",
   "gebuevProcedureCarriersBody": "Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.",

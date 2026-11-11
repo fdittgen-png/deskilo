@@ -11380,6 +11380,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get financesYourCredit => 'Votre avoir';
 
   @override
+  String get formErrorSummaryGoTo => 'Aller au premier problème';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count champs demandent votre attention',
+      one: '1 champ demande votre attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Chaque export comptable et chaque téléchargement d\'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d\'audit liste ces accès à côté des documents.';
 

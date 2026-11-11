@@ -11349,6 +11349,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesYourCredit => 'Su saldo a favor';
 
   @override
+  String get formErrorSummaryGoTo => 'Ir al primer problema';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count campos requieren su atención',
+      one: '1 campo requiere su atención',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.';
 

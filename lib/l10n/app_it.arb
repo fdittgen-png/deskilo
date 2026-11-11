@@ -7489,6 +7489,8 @@
   "financesTypeAll": "Tutti i documenti",
   "financesTypeCreditNote": "Nota di credito",
   "financesYourCredit": "Il suo credito",
+  "formErrorSummaryGoTo": "Vai al primo problema",
+  "formErrorSummaryTitle": "{count, plural, =1{1 campo richiede la Sua attenzione} other{{count} campi richiedono la Sua attenzione}}",
   "gebuevProcedureAccessBody": "Ogni esportazione contabile e ogni download di un archivio è registrato nel registro delle esportazioni: chi, quando, quale file e la sua impronta. La pista di controllo elenca questi accessi accanto ai documenti.",
   "gebuevProcedureAccessHeading": "Accessi (art. 8)",
   "gebuevProcedureCarriersBody": "Questo archivio si legge con qualsiasi programma zip ed editor di testo. Una copia dell'intero spazio è provata da un'esportazione dello spazio completata, registrata con la sua impronta: la lista di preparazione indica quando è stata fatta l'ultima e ne chiede una nuova quando è vecchia.",

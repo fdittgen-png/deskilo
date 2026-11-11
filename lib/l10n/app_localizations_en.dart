@@ -11274,6 +11274,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesYourCredit => 'Your credit';
 
   @override
+  String get formErrorSummaryGoTo => 'Go to the first problem';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fields need your attention',
+      one: '1 field needs your attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.';
 

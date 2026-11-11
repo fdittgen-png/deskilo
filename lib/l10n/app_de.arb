@@ -7489,6 +7489,8 @@
   "financesTypeAll": "Alle Dokumente",
   "financesTypeCreditNote": "Gutschrift",
   "financesYourCredit": "Ihr Guthaben",
+  "formErrorSummaryGoTo": "Zum ersten Problem",
+  "formErrorSummaryTitle": "{count, plural, =1{1 Feld braucht Ihre Aufmerksamkeit} other{{count} Felder brauchen Ihre Aufmerksamkeit}}",
   "gebuevProcedureAccessBody": "Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.",
   "gebuevProcedureAccessHeading": "Zugriffe (Art. 8)",
   "gebuevProcedureCarriersBody": "Dieses Archiv lässt sich mit jedem Zip-Programm und Texteditor lesen. Eine Kopie des ganzen Space wird durch einen abgeschlossenen Export des Space belegt, der mit seinem Hashwert festgehalten wird: die Bereitschafts-Checkliste zeigt, wann der letzte erstellt wurde, und verlangt einen neuen, wenn er alt ist.",

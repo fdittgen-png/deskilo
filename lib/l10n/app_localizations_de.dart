@@ -11367,6 +11367,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesYourCredit => 'Ihr Guthaben';
 
   @override
+  String get formErrorSummaryGoTo => 'Zum ersten Problem';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Felder brauchen Ihre Aufmerksamkeit',
+      one: '1 Feld braucht Ihre Aufmerksamkeit',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.';
 
