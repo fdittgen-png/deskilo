@@ -67,7 +67,8 @@ void main() {
   test('the newest migration of each classified function gates it with '
       'exactly its classes', () {
     // #1851 C — the server half of the matrix: for each function, the
-    // newest migration that patches it, and the classes its gate names.
+    // newest migration that patches or restates it, and the classes its
+    // gate names.
     final migrations = Directory('supabase/migrations')
         .listSync()
         .whereType<File>()
@@ -87,10 +88,18 @@ void main() {
       String? patch;
       for (final f in migrations) {
         final sql = f.readAsStringSync();
-        final at = sql.indexOf("pg_get_functiondef('public.$fn(");
-        if (at < 0) continue;
-        final end = sql.indexOf('pg_get_functiondef(', at + 20);
-        patch = sql.substring(at, end < 0 ? sql.length : end);
+        final starts = [
+          sql.indexOf("pg_get_functiondef('public.$fn("),
+          sql.indexOf('create or replace function public.$fn('),
+        ].where((i) => i >= 0);
+        if (starts.isEmpty) continue;
+        final at = starts.reduce((a, b) => a < b ? a : b);
+        final ends = [
+          sql.indexOf('pg_get_functiondef(', at + 20),
+          sql.indexOf('create or replace function', at + 20),
+        ].where((i) => i >= 0);
+        final end = ends.isEmpty ? sql.length : ends.reduce((a, b) => a < b ? a : b);
+        patch = sql.substring(at, end);
         break;
       }
       expect(patch, isNotNull, reason: '$fn is not patched');

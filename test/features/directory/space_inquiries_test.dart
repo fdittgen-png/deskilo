@@ -8,6 +8,8 @@
 // field to write in; the message opens the inquiry's thread. The hosts
 // find it in the space's Inquiries view — shown to owners and admins
 // while the workspace has `spaceInquiries` on — and can close it.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
@@ -98,6 +100,48 @@ void main() {
       messenger.inboxRows.single['context_kind'],
       MessageContextKind.inquiryOut.wire,
     );
+  });
+
+  testWidgets('#3745: an inquiry whose answer is lost, sent again, reaches '
+      'the space once', (tester) async {
+    final messenger = _LostFirstAnswer()
+      ..roster['ws-remote'] = const [
+        HostRosterEntry(name: 'Alice', role: 'owner'),
+      ];
+    await pump(
+      tester,
+      const PublicWorkspaceView(workspace: space),
+      messenger: messenger,
+    );
+    await tester.tap(find.byKey(const ValueKey('write-to-hosts')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.enterText(
+      find.byKey(const ValueKey('inquiry-body')),
+      'Do you have a day pass?',
+    );
+    await tester.tap(find.byKey(const ValueKey('inquiry-send')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(
+      find.byKey(const ValueKey('inquiry-sheet')),
+      findsOneWidget,
+      reason: 'the answer was lost: the sheet stays, with the text',
+    );
+    await tester.tap(find.byKey(const ValueKey('inquiry-send')));
+    await tester.pumpAndSettle();
+    expect(messenger.requestIds, hasLength(2));
+    expect(
+      messenger.requestIds.toSet(),
+      hasLength(1),
+      reason: 'the repeat carries the same request id',
+    );
+    expect(
+      messenger.threads.values.expand((t) => t).length,
+      1,
+      reason: 'and the space received the inquiry once',
+    );
+    expect(find.byKey(const ValueKey('context-thread')), findsOneWidget);
   });
 
   testWidgets('a space nobody answers offers nothing to write in', (
@@ -212,4 +256,21 @@ void main() {
       expect(find.byKey(const ValueKey('space-inquiries-entry')), findsNothing);
     });
   });
+}
+
+/// The space receives the first send, but its answer never comes back.
+class _LostFirstAnswer extends FakeMessengerRepository {
+  final requestIds = <String?>[];
+
+  @override
+  Future<String> startInquiry(
+    String workspace,
+    String body, {
+    String? requestId,
+  }) async {
+    requestIds.add(requestId);
+    final id = await super.startInquiry(workspace, body, requestId: requestId);
+    if (requestIds.length == 1) throw TimeoutException('answer lost');
+    return id;
+  }
 }
