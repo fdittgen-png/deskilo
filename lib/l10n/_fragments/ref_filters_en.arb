@@ -35,6 +35,18 @@
   "@refFilterAmount": {
     "description": "Shown as the label in ref picker sheet (workspace), and 1 other place."
   },
+  "refFilterAmountRange": "Amount {low} – {high}",
+  "@refFilterAmountRange": {
+    "description": "#3652 The caption of an amount filter with its range, e.g. \"Amount 10 \u2013 50\".",
+    "placeholders": {
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      }
+    }
+  },
   "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
     "description": "Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).",

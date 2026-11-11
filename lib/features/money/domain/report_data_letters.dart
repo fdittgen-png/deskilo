@@ -155,19 +155,19 @@ Map<String, Object?> agreementReportData(
     for (final level in facts.levels)
       if (level.bookableAsWhole && level.priceCents > 0)
         {
-          'label': '${level.name} — ${strings.levelReservations}',
+          'label': strings.supplementOf(level.name, strings.levelReservations),
           'amount': currency.formatMinor(level.priceCents),
         },
     for (final office in facts.offices)
       if (office.bookableAsWhole && office.priceCents > 0)
         {
-          'label': '${office.name} — ${strings.officeReservations}',
+          'label': strings.supplementOf(office.name, strings.officeReservations),
           'amount': currency.formatMinor(office.priceCents),
         },
     for (final desk in facts.desks)
       if (desk.bookableAsWhole && desk.priceCents > 0)
         {
-          'label': '${desk.name} — ${strings.deskReservations}',
+          'label': strings.supplementOf(desk.name, strings.deskReservations),
           'amount': currency.formatMinor(desk.priceCents),
         },
     for (final accessory in facts.accessories)

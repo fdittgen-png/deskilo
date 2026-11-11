@@ -393,9 +393,9 @@ class _PurchaseDetailView extends ConsumerWidget {
         ],
         _decisionBar(detail),
         const SizedBox(height: AppSpacing.sm),
-        Text('${l10n.purchasesSupplier}: $supplier'),
+        Text(l10n.labelWithValue(l10n.purchasesSupplier, supplier)),
         if (s.reference.isNotEmpty)
-          Text('${l10n.purchasesReference}: ${s.reference}'),
+          Text(l10n.labelWithValue(l10n.purchasesReference, s.reference)),
         if (detail.dueOn != null)
           Text(
             l10n.purchasesDueOn(
@@ -423,7 +423,7 @@ class _PurchaseDetailView extends ConsumerWidget {
             trailing: Text(money.formatMinor(line.grossCents)),
           ),
         Text(
-          '${l10n.purchasesTotal}: ${money.formatMinor(detail.grossCents)}',
+          l10n.labelWithValue(l10n.purchasesTotal, money.formatMinor(detail.grossCents)),
           key: const ValueKey('purchase-total'),
         ),
         // Another currency than the space's: the rate the books read it at.

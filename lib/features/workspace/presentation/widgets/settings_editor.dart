@@ -106,7 +106,7 @@ class _SettingTile extends ConsumerWidget {
       ?settingRangeLabel(l10n, d),
       if (d.floor != null) l10n.settingFloorNote('${d.floor}', unit),
       settingOriginLabel(l10n, set.originOf(d.key)),
-      if (!d.editable) '${l10n.settingGuardrail}: ${d.note.isEmpty ? l10n.settingGuardrailFallback : d.note}',
+      if (!d.editable) l10n.labelWithValue(l10n.settingGuardrail, d.note.isEmpty ? l10n.settingGuardrailFallback : d.note),
     ];
     final theme = Theme.of(context);
     // The label and its text take the full width; the value and its buttons

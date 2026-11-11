@@ -110,7 +110,7 @@ class InstanceAdministratorsSection extends ConsumerWidget {
     final l10n = context.l10n;
     final can = o.secondFactor && !busy;
     String name(InstanceMember m) =>
-        m.me ? '${m.name} (${l10n.instanceYou})' : m.name;
+        m.me ? l10n.valueInParens(m.name, l10n.instanceYou) : m.name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

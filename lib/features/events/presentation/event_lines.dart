@@ -176,7 +176,7 @@ String eventLine(
   // #2085 — a role given or taken back already names its member.
   if (_appendsSubject(event)) {
     final subject = names[event.subjectMemberId] ?? '';
-    line = '$line ${l10n.eventForSubject(subject)}';
+    line = l10n.sentencePair(line, l10n.eventForSubject(subject));
   }
   return line;
 }

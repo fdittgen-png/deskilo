@@ -81,10 +81,12 @@ class InvoiceDetailsSection extends ConsumerWidget {
         ),
         children: [
           line(
-            '${l.invoicePdfIssuedOn} ${dates.format(invoice.issuedAt)}'
-            '${invoice.issuerName.isEmpty ? '' : ' · ${l.invoicePdfIssuedBy} ${invoice.issuerName}'}',
+            [
+              l.invoicePdfIssuedOnDate(dates.format(invoice.issuedAt)),
+              if (invoice.issuerName.isNotEmpty) l.invoicePdfIssuedByName(invoice.issuerName),
+            ].join(' · '),
           ),
-          line('${l.invoicePdfBilledTo}: ${facts.billedTo}'),
+          line(l.labelWithValue(l.invoicePdfBilledTo, facts.billedTo)),
           if (facts.showKindRow) sections.kindRow(context),
           line(invoicePeriodLabel(context, invoice)),
           ...sections.amounts(context, association: association),

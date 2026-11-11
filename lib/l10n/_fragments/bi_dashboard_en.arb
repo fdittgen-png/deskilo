@@ -12,6 +12,27 @@
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
+  "@biProjectionNext": {
+    "description": "#3652 The next projected period: its value, the range around it and the projection label.",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "biRunningLabel": "running",
   "@biRunningLabel": {
     "description": "Business analytics dashboard: biRunningLabel"

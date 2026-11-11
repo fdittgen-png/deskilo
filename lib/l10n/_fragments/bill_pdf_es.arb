@@ -1,6 +1,7 @@
 {
   "@@locale": "es",
   "billPdfTitle": "Factura mensual",
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
   "billPdfExport": "Exportar la factura como PDF",
   "reportCoaTitle": "Plan de cuentas — vista previa",
   "@reportCoaTitle": {

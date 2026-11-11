@@ -9,6 +9,7 @@
     "description": "Business analytics dashboard: biEvolutionTitle"
   },
   "biProjectionLabel": "Estimación",
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },

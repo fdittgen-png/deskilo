@@ -12,7 +12,7 @@ import '../domain/setup_status.dart';
 typedef LaunchReportLine = ({String label, String value, String detail});
 
 String _stateOf(AppLocalizations l10n, SetupStepStatus s) =>
-    '${l10n.setupStepTitle(s.step)}: ${l10n.setupStateName(s.state.name)}';
+    l10n.labelWithValue(l10n.setupStepTitle(s.step), l10n.setupStateName(s.state.name));
 
 List<LaunchReportLine> launchReportLines(
   AppLocalizations l10n,

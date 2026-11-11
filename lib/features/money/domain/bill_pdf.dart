@@ -39,7 +39,12 @@ class BillPdfStrings {
     required this.balance,
     required this.settled,
     required this.outstanding,
+    this.continuationLine = '{workspace} — {title} — {member} — {period}',
   });
+
+  /// #3652 -- the strip on pages 2+ as ONE message with `{workspace}`,
+  /// `{title}`, `{member}` and `{period}`.
+  final String continuationLine;
 
   /// Document title, e.g. "Monthly bill".
   final String title;
@@ -186,8 +191,11 @@ class _BillRows {
       ];
 
   List<ReportBlock> continuation() => [
-        ReportText('${bill.workspaceName} — ${strings.title} — '
-            '${bill.memberName} — ${bill.periodLabel}'),
+        ReportText(strings.continuationLine
+            .replaceAll('{workspace}', bill.workspaceName)
+            .replaceAll('{title}', strings.title)
+            .replaceAll('{member}', bill.memberName)
+            .replaceAll('{period}', bill.periodLabel)),
         const ReportDivider(),
       ];
 
