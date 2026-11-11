@@ -1,0 +1,177 @@
+{
+  "assignPaymentAction": "Assign to invoices",
+  "@assignPaymentAction": {
+    "description": "#3671: assign a payment to invoices (assignPaymentAction)"
+  },
+  "assignPaymentActionFor": "Assign {amount} to invoices",
+  "@assignPaymentActionFor": {
+    "description": "#3671: assign a payment to invoices (assignPaymentActionFor)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentReceived": "Received {amount}",
+  "@assignPaymentReceived": {
+    "description": "#3671: assign a payment to invoices (assignPaymentReceived)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentUsedHead": "Received {received} · already assigned {assigned} · left {left}",
+  "@assignPaymentUsedHead": {
+    "description": "#3671: assign a payment to invoices (assignPaymentUsedHead)",
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "assigned": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentRowCaption": "Due {date} · {amount} still due",
+  "@assignPaymentRowCaption": {
+    "description": "#3671: assign a payment to invoices (assignPaymentRowCaption)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentRowCaptionNoDate": "{amount} still due",
+  "@assignPaymentRowCaptionNoDate": {
+    "description": "#3671: assign a payment to invoices (assignPaymentRowCaptionNoDate)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentTickLabel": "Pay invoice {number}",
+  "@assignPaymentTickLabel": {
+    "description": "#3671: assign a payment to invoices (assignPaymentTickLabel)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentAmountLabel": "Amount for invoice {number}",
+  "@assignPaymentAmountLabel": {
+    "description": "#3671: assign a payment to invoices (assignPaymentAmountLabel)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentRowOver": "More than what is due on this invoice",
+  "@assignPaymentRowOver": {
+    "description": "#3671: assign a payment to invoices (assignPaymentRowOver)"
+  },
+  "assignPaymentOver": "More than what is left of the payment",
+  "@assignPaymentOver": {
+    "description": "#3671: assign a payment to invoices (assignPaymentOver)"
+  },
+  "assignPaymentStays": "{amount} stays as credit",
+  "@assignPaymentStays": {
+    "description": "#3671: assign a payment to invoices (assignPaymentStays)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "assignPaymentStaysNone": "Nothing stays as credit",
+  "@assignPaymentStaysNone": {
+    "description": "#3671: assign a payment to invoices (assignPaymentStaysNone)"
+  },
+  "assignPaymentNoteLabel": "Note for the invoices paid in part",
+  "@assignPaymentNoteLabel": {
+    "description": "#3671: assign a payment to invoices (assignPaymentNoteLabel)"
+  },
+  "assignPaymentNoteDefault": "The payment covered only part of this invoice.",
+  "@assignPaymentNoteDefault": {
+    "description": "#3671: assign a payment to invoices (assignPaymentNoteDefault)"
+  },
+  "assignPaymentNoOpen": "No open invoice for this customer: the payment stays as credit.",
+  "@assignPaymentNoOpen": {
+    "description": "#3671: assign a payment to invoices (assignPaymentNoOpen)"
+  },
+  "assignPaymentReadFailedPayment": "The payment could not be read.",
+  "@assignPaymentReadFailedPayment": {
+    "description": "#3671: assign a payment to invoices (assignPaymentReadFailedPayment)"
+  },
+  "assignPaymentReadFailedInvoices": "The invoices could not be read.",
+  "@assignPaymentReadFailedInvoices": {
+    "description": "#3671: assign a payment to invoices (assignPaymentReadFailedInvoices)"
+  },
+  "assignPaymentFull": "{count, plural, =1{1 invoice paid in full} other{{count} invoices paid in full}}",
+  "@assignPaymentFull": {
+    "description": "#3671: assign a payment to invoices (assignPaymentFull)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assignPaymentPart": "{count, plural, =1{1 invoice paid in part} other{{count} invoices paid in part}}",
+  "@assignPaymentPart": {
+    "description": "#3671: assign a payment to invoices (assignPaymentPart)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assignPaymentPending": "Waits for approval",
+  "@assignPaymentPending": {
+    "description": "#3671: assign a payment to invoices (assignPaymentPending)"
+  },
+  "assignRefusePayer": "An invoice is not this customer's. Nothing was recorded.",
+  "@assignRefusePayer": {
+    "description": "#3671: assign a payment to invoices (assignRefusePayer)"
+  },
+  "assignRefuseBusiness": "This payment was not found in this business. Nothing was recorded.",
+  "@assignRefuseBusiness": {
+    "description": "#3671: assign a payment to invoices (assignRefuseBusiness)"
+  },
+  "assignRefuseCurrency": "An invoice is not in the business's currency. Nothing was recorded.",
+  "@assignRefuseCurrency": {
+    "description": "#3671: assign a payment to invoices (assignRefuseCurrency)"
+  },
+  "assignRefuseDuplicate": "An invoice appears twice. Nothing was recorded.",
+  "@assignRefuseDuplicate": {
+    "description": "#3671: assign a payment to invoices (assignRefuseDuplicate)"
+  },
+  "assignRefusePartOver": "A part is more than what is due on its invoice. Nothing was recorded.",
+  "@assignRefusePartOver": {
+    "description": "#3671: assign a payment to invoices (assignRefusePartOver)"
+  },
+  "assignRefuseSumOver": "The parts are more than what is left of the payment. Nothing was recorded.",
+  "@assignRefuseSumOver": {
+    "description": "#3671: assign a payment to invoices (assignRefuseSumOver)"
+  },
+  "assignRefuseUsed": "The payment was used in the meantime. It is read again: check the amounts.",
+  "@assignRefuseUsed": {
+    "description": "#3671: assign a payment to invoices (assignRefuseUsed)"
+  },
+  "assignRefuseNote": "A part below what is due needs a note.",
+  "@assignRefuseNote": {
+    "description": "#3671: assign a payment to invoices (assignRefuseNote)"
+  },
+  "assignRefuseGeneric": "The payment could not be assigned. Nothing was recorded. Try again.",
+  "@assignRefuseGeneric": {
+    "description": "#3671: assign a payment to invoices (assignRefuseGeneric)"
+  }
+}

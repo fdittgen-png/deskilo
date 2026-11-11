@@ -190,6 +190,25 @@ void main() {
     expect(_key('payment-match-p2-older'), findsOneWidget);
   });
 
+  testWidgets('each payment has "Assign to invoices", which opens the sheet '
+      'on that payment; a partly used one says what is already assigned', (
+    tester,
+  ) async {
+    repo
+      ..open = [older, exact]
+      ..ledger.addAll([_payment('p1', 12000), _payment('p2', 9000)])
+      ..usePayment('p2', 4000);
+    await pump(tester);
+    expect(_key('payment-match-assign-p1'), findsOneWidget);
+    expect(_key('payment-match-assign-p2'), findsOneWidget);
+    expect(_key('payment-match-used-p2'), findsOneWidget);
+    expect(_key('payment-match-used-p1'), findsNothing);
+    await tester.tap(_key('payment-match-assign-p1'));
+    await tester.pumpAndSettle();
+    expect(find.text('Record a payment'), findsOneWidget);
+    expect(_key('assign-payment-confirm'), findsOneWidget);
+  });
+
   testWidgets('a double tap matches once, and no other card can match while '
       'it runs', (tester) async {
     repo

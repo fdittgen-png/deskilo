@@ -1580,6 +1580,180 @@ abstract class AppLocalizations {
   /// **'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.'**
   String get archiveSwissNeedsExportLog;
 
+  /// #3671: assign a payment to invoices (assignPaymentAction)
+  ///
+  /// In en, this message translates to:
+  /// **'Assign to invoices'**
+  String get assignPaymentAction;
+
+  /// #3671: assign a payment to invoices (assignPaymentActionFor)
+  ///
+  /// In en, this message translates to:
+  /// **'Assign {amount} to invoices'**
+  String assignPaymentActionFor(String amount);
+
+  /// #3671: assign a payment to invoices (assignPaymentAmountLabel)
+  ///
+  /// In en, this message translates to:
+  /// **'Amount for invoice {number}'**
+  String assignPaymentAmountLabel(String number);
+
+  /// #3671: assign a payment to invoices (assignPaymentFull)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 invoice paid in full} other{{count} invoices paid in full}}'**
+  String assignPaymentFull(int count);
+
+  /// #3671: assign a payment to invoices (assignPaymentNoOpen)
+  ///
+  /// In en, this message translates to:
+  /// **'No open invoice for this customer: the payment stays as credit.'**
+  String get assignPaymentNoOpen;
+
+  /// #3671: assign a payment to invoices (assignPaymentNoteDefault)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment covered only part of this invoice.'**
+  String get assignPaymentNoteDefault;
+
+  /// #3671: assign a payment to invoices (assignPaymentNoteLabel)
+  ///
+  /// In en, this message translates to:
+  /// **'Note for the invoices paid in part'**
+  String get assignPaymentNoteLabel;
+
+  /// #3671: assign a payment to invoices (assignPaymentOver)
+  ///
+  /// In en, this message translates to:
+  /// **'More than what is left of the payment'**
+  String get assignPaymentOver;
+
+  /// #3671: assign a payment to invoices (assignPaymentPart)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 invoice paid in part} other{{count} invoices paid in part}}'**
+  String assignPaymentPart(int count);
+
+  /// #3671: assign a payment to invoices (assignPaymentPending)
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for approval'**
+  String get assignPaymentPending;
+
+  /// #3671: assign a payment to invoices (assignPaymentReadFailedInvoices)
+  ///
+  /// In en, this message translates to:
+  /// **'The invoices could not be read.'**
+  String get assignPaymentReadFailedInvoices;
+
+  /// #3671: assign a payment to invoices (assignPaymentReadFailedPayment)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be read.'**
+  String get assignPaymentReadFailedPayment;
+
+  /// #3671: assign a payment to invoices (assignPaymentReceived)
+  ///
+  /// In en, this message translates to:
+  /// **'Received {amount}'**
+  String assignPaymentReceived(String amount);
+
+  /// #3671: assign a payment to invoices (assignPaymentRowCaption)
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date} · {amount} still due'**
+  String assignPaymentRowCaption(String date, String amount);
+
+  /// #3671: assign a payment to invoices (assignPaymentRowCaptionNoDate)
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} still due'**
+  String assignPaymentRowCaptionNoDate(String amount);
+
+  /// #3671: assign a payment to invoices (assignPaymentRowOver)
+  ///
+  /// In en, this message translates to:
+  /// **'More than what is due on this invoice'**
+  String get assignPaymentRowOver;
+
+  /// #3671: assign a payment to invoices (assignPaymentStays)
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} stays as credit'**
+  String assignPaymentStays(String amount);
+
+  /// #3671: assign a payment to invoices (assignPaymentStaysNone)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing stays as credit'**
+  String get assignPaymentStaysNone;
+
+  /// #3671: assign a payment to invoices (assignPaymentTickLabel)
+  ///
+  /// In en, this message translates to:
+  /// **'Pay invoice {number}'**
+  String assignPaymentTickLabel(String number);
+
+  /// #3671: assign a payment to invoices (assignPaymentUsedHead)
+  ///
+  /// In en, this message translates to:
+  /// **'Received {received} · already assigned {assigned} · left {left}'**
+  String assignPaymentUsedHead(String received, String assigned, String left);
+
+  /// #3671: assign a payment to invoices (assignRefuseBusiness)
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was not found in this business. Nothing was recorded.'**
+  String get assignRefuseBusiness;
+
+  /// #3671: assign a payment to invoices (assignRefuseCurrency)
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice is not in the business\'s currency. Nothing was recorded.'**
+  String get assignRefuseCurrency;
+
+  /// #3671: assign a payment to invoices (assignRefuseDuplicate)
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice appears twice. Nothing was recorded.'**
+  String get assignRefuseDuplicate;
+
+  /// #3671: assign a payment to invoices (assignRefuseGeneric)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be assigned. Nothing was recorded. Try again.'**
+  String get assignRefuseGeneric;
+
+  /// #3671: assign a payment to invoices (assignRefuseNote)
+  ///
+  /// In en, this message translates to:
+  /// **'A part below what is due needs a note.'**
+  String get assignRefuseNote;
+
+  /// #3671: assign a payment to invoices (assignRefusePartOver)
+  ///
+  /// In en, this message translates to:
+  /// **'A part is more than what is due on its invoice. Nothing was recorded.'**
+  String get assignRefusePartOver;
+
+  /// #3671: assign a payment to invoices (assignRefusePayer)
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice is not this customer\'s. Nothing was recorded.'**
+  String get assignRefusePayer;
+
+  /// #3671: assign a payment to invoices (assignRefuseSumOver)
+  ///
+  /// In en, this message translates to:
+  /// **'The parts are more than what is left of the payment. Nothing was recorded.'**
+  String get assignRefuseSumOver;
+
+  /// #3671: assign a payment to invoices (assignRefuseUsed)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment was used in the meantime. It is read again: check the amounts.'**
+  String get assignRefuseUsed;
+
   /// #1827 Assistant setup: assistantSetupActorConfigurer
   ///
   /// In en, this message translates to:

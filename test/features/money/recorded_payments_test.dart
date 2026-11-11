@@ -9,6 +9,7 @@ import 'package:deskilo/core/demo/data/finance_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/money/data/supabase_recorded_payments_repository.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -291,6 +292,68 @@ void main() {
         to: DateTime(2025, 6, 30),
       );
       expect(june.items, isEmpty);
+    });
+
+    test('a payment split over two invoices is two items whose amounts add '
+        'up to the payment (#3671)', () async {
+      final money = FakeMoneyRepository();
+      final workspaces = FakeWorkspaceRepository.withWorkspace();
+      final ws = workspaces.workspaces.first.id;
+      Invoice invoice(String id, int total) => Invoice(
+        id: id,
+        workspaceId: ws,
+        memberId: 'm-1',
+        number: 'F-$id',
+        issuedAt: DateTime.utc(2025, 5),
+        period: '2025-05',
+        title: 'May',
+        lines: const [],
+        totalCents: total,
+        currency: 'EUR',
+        memberName: 'Payer One',
+        memberAddress: '',
+        workspaceName: 'Test Space',
+        workspaceAddress: '',
+        issuerName: 'M',
+        signature: 's',
+      );
+      money.invoices.addAll([invoice('a', 6000), invoice('b', 4000)]);
+      money.ledger.add(
+        LedgerEntry(
+          id: 'pay',
+          memberId: 'm-1',
+          kind: LedgerKind.credit,
+          category: LedgerCategory.payment,
+          amountCents: 10000,
+          description: 'Transfer',
+          period: '2025-04',
+          createdAt: DateTime.utc(2025, 4, 28),
+        ),
+      );
+      await money.applyPaymentToInvoices(
+        workspaceId: ws,
+        paymentLedgerId: 'pay',
+        allocations: [
+          (invoiceId: 'a', amountCents: 6000),
+          (invoiceId: 'b', amountCents: 4000),
+        ],
+      );
+      final repo = DemoRecordedPaymentsRepository(
+        money: money,
+        workspaces: workspaces,
+      );
+      final today = money.invoiceMatchesStore['a']!.matchedAt;
+      final page = await repo.page(
+        ws,
+        from: DateTime(today.year, today.month, today.day - 1),
+        to: DateTime(today.year, today.month, today.day + 1),
+      );
+      expect(page.items.map((p) => p.id).toSet(), {'a:pay', 'b:pay'});
+      expect(
+        {for (final p in page.items) p.invoiceId: p.amountMinor},
+        {'a': 6000, 'b': 4000},
+      );
+      expect(page.items.fold(0, (sum, p) => sum + p.amountMinor), 10000);
     });
   });
 }

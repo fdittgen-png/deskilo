@@ -926,6 +926,139 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Verfahrensdokumentation dieses Schweizer Archivs hält fest, dass jeder Download im Exportprotokoll steht, und dieser Space führt keines: schalten Sie zuerst die Buchungsperioden oder die Buchhaltungssysteme ein.';
 
   @override
+  String get assignPaymentAction => 'Rechnungen zuordnen';
+
+  @override
+  String assignPaymentActionFor(String amount) {
+    return '$amount Rechnungen zuordnen';
+  }
+
+  @override
+  String assignPaymentAmountLabel(String number) {
+    return 'Betrag für Rechnung $number';
+  }
+
+  @override
+  String assignPaymentFull(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen vollständig bezahlt',
+      one: '1 Rechnung vollständig bezahlt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentNoOpen =>
+      'Keine offene Rechnung für diesen Kunden: Die Zahlung bleibt als Guthaben.';
+
+  @override
+  String get assignPaymentNoteDefault =>
+      'Die Zahlung deckte nur einen Teil dieser Rechnung ab.';
+
+  @override
+  String get assignPaymentNoteLabel =>
+      'Notiz zu den teilweise bezahlten Rechnungen';
+
+  @override
+  String get assignPaymentOver => 'Mehr, als von der Zahlung übrig ist';
+
+  @override
+  String assignPaymentPart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen teilweise bezahlt',
+      one: '1 Rechnung teilweise bezahlt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentPending => 'Wartet auf Freigabe';
+
+  @override
+  String get assignPaymentReadFailedInvoices =>
+      'Die Rechnungen konnten nicht gelesen werden.';
+
+  @override
+  String get assignPaymentReadFailedPayment =>
+      'Die Zahlung konnte nicht gelesen werden.';
+
+  @override
+  String assignPaymentReceived(String amount) {
+    return 'Erhalten: $amount';
+  }
+
+  @override
+  String assignPaymentRowCaption(String date, String amount) {
+    return 'Fällig $date · noch offen $amount';
+  }
+
+  @override
+  String assignPaymentRowCaptionNoDate(String amount) {
+    return 'Noch offen: $amount';
+  }
+
+  @override
+  String get assignPaymentRowOver => 'Mehr, als auf dieser Rechnung offen ist';
+
+  @override
+  String assignPaymentStays(String amount) {
+    return '$amount bleiben als Guthaben';
+  }
+
+  @override
+  String get assignPaymentStaysNone => 'Es bleibt kein Guthaben';
+
+  @override
+  String assignPaymentTickLabel(String number) {
+    return 'Rechnung $number bezahlen';
+  }
+
+  @override
+  String assignPaymentUsedHead(String received, String assigned, String left) {
+    return 'Erhalten $received · bereits zugeordnet $assigned · übrig $left';
+  }
+
+  @override
+  String get assignRefuseBusiness =>
+      'Diese Zahlung wurde in diesem Unternehmen nicht gefunden. Nichts wurde erfasst.';
+
+  @override
+  String get assignRefuseCurrency =>
+      'Eine Rechnung ist nicht in der Währung des Unternehmens. Nichts wurde erfasst.';
+
+  @override
+  String get assignRefuseDuplicate =>
+      'Eine Rechnung kommt doppelt vor. Nichts wurde erfasst.';
+
+  @override
+  String get assignRefuseGeneric =>
+      'Die Zahlung konnte nicht zugeordnet werden. Nichts wurde erfasst. Versuchen Sie es erneut.';
+
+  @override
+  String get assignRefuseNote =>
+      'Ein Teilbetrag unter dem offenen Betrag braucht eine Notiz.';
+
+  @override
+  String get assignRefusePartOver =>
+      'Ein Teilbetrag ist höher als der offene Betrag seiner Rechnung. Nichts wurde erfasst.';
+
+  @override
+  String get assignRefusePayer =>
+      'Eine Rechnung gehört nicht diesem Kunden. Nichts wurde erfasst.';
+
+  @override
+  String get assignRefuseSumOver =>
+      'Die Teilbeträge sind höher als der Rest der Zahlung. Nichts wurde erfasst.';
+
+  @override
+  String get assignRefuseUsed =>
+      'Die Zahlung wurde inzwischen verwendet. Sie wird neu gelesen: Prüfen Sie die Beträge.';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Wer: jemand, der die Konfiguration dieses Arbeitsbereichs verwaltet';
 

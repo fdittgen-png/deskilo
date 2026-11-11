@@ -9,6 +9,7 @@ import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
+import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
@@ -46,7 +47,6 @@ import 'money/demo_money_seeds.dart';
 import 'money/demo_payment_gateway_repository.dart';
 import 'money/demo_report_template_repository.dart';
 import 'money/demo_tax_reporting_repository.dart';
-
 export 'money/demo_invoice_action_commands.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
@@ -446,6 +446,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<UsageRead> readUsageRecords({required String workspaceId, required String period, String? memberId}) => accountQueries.readUsageRecords(workspaceId: workspaceId, period: period, memberId: memberId);
   @override Future<String> requestUsageCorrection(String recordId, {String reason = ''}) => accountCommands.requestUsageCorrection(recordId, reason: reason);
   @override Future<String> requestUsageRecordDelete(String recordId, {String reason = ''}) => accountCommands.requestUsageRecordDelete(recordId, reason: reason);
+  @override Future<PaymentApplied> applyPaymentToInvoices({required String workspaceId, required String paymentLedgerId, required List<PaymentAllocation> allocations, String note = ''}) => invoiceCommands.applyPaymentToInvoices(workspaceId: workspaceId, paymentLedgerId: paymentLedgerId, allocations: allocations, note: note);
   @override Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId) => invoiceQueries.fetchInvoiceMatches(workspaceId);
   @override Future<Statement> fetchStatement(String memberId, String period) => accountQueries.fetchStatement(memberId, period);
   @override Future<MemberAccount> fetchMemberAccount(String memberId) => accountQueries.fetchMemberAccount(memberId);

@@ -160,6 +160,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<void> placeDunningHold(String invoiceId, {required String reason, String note = ''}) => _dunning.placeDunningHold(invoiceId, reason: reason, note: note);
   @override Future<void> releaseDunningHold(String invoiceId) => _dunning.releaseDunningHold(invoiceId);
   @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = '', int? amountCents}) => _commands.matchInvoice(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note, amountCents: amountCents);
+  @override Future<PaymentApplied> applyPaymentToInvoices({required String workspaceId, required String paymentLedgerId, required List<PaymentAllocation> allocations, String note = ''}) => _commands.applyPaymentToInvoices(workspaceId: workspaceId, paymentLedgerId: paymentLedgerId, allocations: allocations, note: note);
   @override Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId) => _invoices.fetchInvoiceMatches(workspaceId);
   @override Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(String workspaceId) => _invoices.fetchInvoiceInstalments(workspaceId);
   @override Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) => _invoices.fetchReminderEvidence(invoiceId);

@@ -26,6 +26,7 @@ import '../../application/payment_candidates.dart';
 import '../../application/unassigned_money.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_followup_actions.dart' show matchInvoiceToPayment;
+import 'assign_payment_sheet.dart';
 import 'invoicing_reads.dart';
 
 class PaymentsToMatchScreen extends ConsumerStatefulWidget {
@@ -181,6 +182,15 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
               row: row,
               currency: widget.currency,
               onMatch: working ? null : (c) => _match(row, c),
+              onAssign: working
+                  ? null
+                  : () => showAssignPayment(
+                      context,
+                      paymentId: row.payment.id,
+                      customerId: row.customerId,
+                      customerName: row.customerName,
+                      currency: widget.currency,
+                    ),
             ),
           ),
         ],
@@ -194,6 +204,7 @@ class _PaymentCard extends ConsumerWidget {
     required this.row,
     required this.currency,
     required this.onMatch,
+    required this.onAssign,
   });
 
   final PaymentToMatch row;
@@ -203,6 +214,10 @@ class _PaymentCard extends ConsumerWidget {
 
   /// Null while a match runs: every candidate waits.
   final void Function(MatchCandidate candidate)? onMatch;
+
+  /// Opens "Assign to invoices" for this payment (#3671); null while a match
+  /// runs.
+  final VoidCallback? onAssign;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -219,13 +234,23 @@ class _PaymentCard extends ConsumerWidget {
           Text(row.customerName, style: theme.textTheme.titleSmall),
           Text(
             l10n.paymentMatchHeader(
-              money.formatMinor(payment.amountCents),
-              format.date(payment.on),
+              money.formatMinor(payment.leftCents),
+              format.date(payment.entry.on),
             ),
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
+          if (payment.isPartlyUsed)
+            Text(
+              l10n.assignPaymentUsedHead(
+                money.formatMinor(payment.receivedCents),
+                money.formatMinor(payment.assignedCents),
+                money.formatMinor(payment.leftCents),
+              ),
+              key: ValueKey('payment-match-used-${payment.id}'),
+              style: theme.textTheme.bodySmall,
+            ),
           const SizedBox(height: AppSpacing.sm),
           for (final c in row.candidates)
             Padding(
@@ -265,6 +290,15 @@ class _PaymentCard extends ConsumerWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              key: ValueKey('payment-match-assign-${payment.id}'),
+              style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+              onPressed: onAssign,
+              child: Text(l10n.assignPaymentAction),
+            ),
+          ),
         ],
       ),
     );

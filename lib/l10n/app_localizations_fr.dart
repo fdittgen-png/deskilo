@@ -926,6 +926,140 @@ class AppLocalizationsFr extends AppLocalizations {
       'La documentation des procédures de cette archive suisse indique que chaque téléchargement est inscrit au journal des exports, et cet espace n\'en tient pas : activez d\'abord les périodes comptables ou les systèmes comptables.';
 
   @override
+  String get assignPaymentAction => 'Affecter aux factures';
+
+  @override
+  String assignPaymentActionFor(String amount) {
+    return 'Affecter $amount aux factures';
+  }
+
+  @override
+  String assignPaymentAmountLabel(String number) {
+    return 'Montant pour la facture $number';
+  }
+
+  @override
+  String assignPaymentFull(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count factures payées en totalité',
+      one: '1 facture payée en totalité',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentNoOpen =>
+      'Aucune facture ouverte pour ce client : le paiement reste en avoir.';
+
+  @override
+  String get assignPaymentNoteDefault =>
+      'Le paiement n\'a couvert qu\'une partie de cette facture.';
+
+  @override
+  String get assignPaymentNoteLabel =>
+      'Note pour les factures payées en partie';
+
+  @override
+  String get assignPaymentOver => 'Plus que ce qui reste du paiement';
+
+  @override
+  String assignPaymentPart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count factures payées en partie',
+      one: '1 facture payée en partie',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentPending => 'En attente d\'approbation';
+
+  @override
+  String get assignPaymentReadFailedInvoices =>
+      'Les factures n\'ont pas pu être lues.';
+
+  @override
+  String get assignPaymentReadFailedPayment =>
+      'Le paiement n\'a pas pu être lu.';
+
+  @override
+  String assignPaymentReceived(String amount) {
+    return 'Reçu : $amount';
+  }
+
+  @override
+  String assignPaymentRowCaption(String date, String amount) {
+    return 'Échéance $date · $amount restent dus';
+  }
+
+  @override
+  String assignPaymentRowCaptionNoDate(String amount) {
+    return '$amount restent dus';
+  }
+
+  @override
+  String get assignPaymentRowOver =>
+      'Plus que ce qui reste dû sur cette facture';
+
+  @override
+  String assignPaymentStays(String amount) {
+    return '$amount restent en avoir';
+  }
+
+  @override
+  String get assignPaymentStaysNone => 'Rien ne reste en avoir';
+
+  @override
+  String assignPaymentTickLabel(String number) {
+    return 'Payer la facture $number';
+  }
+
+  @override
+  String assignPaymentUsedHead(String received, String assigned, String left) {
+    return 'Reçu $received · déjà affecté $assigned · reste $left';
+  }
+
+  @override
+  String get assignRefuseBusiness =>
+      'Ce paiement est introuvable dans cette entreprise. Rien n\'a été enregistré.';
+
+  @override
+  String get assignRefuseCurrency =>
+      'Une facture n\'est pas dans la devise de l\'entreprise. Rien n\'a été enregistré.';
+
+  @override
+  String get assignRefuseDuplicate =>
+      'Une facture apparaît deux fois. Rien n\'a été enregistré.';
+
+  @override
+  String get assignRefuseGeneric =>
+      'Le paiement n\'a pas pu être affecté. Rien n\'a été enregistré. Réessayez.';
+
+  @override
+  String get assignRefuseNote =>
+      'Une part inférieure au montant dû demande une note.';
+
+  @override
+  String get assignRefusePartOver =>
+      'Une part dépasse ce qui reste dû sur sa facture. Rien n\'a été enregistré.';
+
+  @override
+  String get assignRefusePayer =>
+      'Une facture n\'est pas celle de ce client. Rien n\'a été enregistré.';
+
+  @override
+  String get assignRefuseSumOver =>
+      'Les parts dépassent ce qui reste du paiement. Rien n\'a été enregistré.';
+
+  @override
+  String get assignRefuseUsed =>
+      'Le paiement a été utilisé entre-temps. Il est relu : vérifiez les montants.';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Qui : une personne qui gère la configuration de cet espace de travail';
 

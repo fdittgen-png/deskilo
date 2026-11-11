@@ -151,4 +151,26 @@ class SupabaseInvoiceCommands implements InvoiceCommands {
       },
     );
   }
+
+  @override
+  Future<PaymentApplied> applyPaymentToInvoices({
+    required String workspaceId,
+    required String paymentLedgerId,
+    required List<PaymentAllocation> allocations,
+    String note = '',
+  }) async {
+    final answer = await _client.rpc<Object?>(
+      'apply_payment_to_invoices',
+      params: {
+        'p_workspace_id': workspaceId,
+        'p_payment_ledger_id': paymentLedgerId,
+        'p_allocations': [
+          for (final a in allocations)
+            {'invoice_id': a.invoiceId, 'amount_cents': a.amountCents},
+        ],
+        'p_note': note,
+      },
+    );
+    return PaymentApplied.fromJson(answer);
+  }
 }
