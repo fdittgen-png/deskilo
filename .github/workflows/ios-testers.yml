@@ -30,10 +30,10 @@ on:
         type: boolean
         default: false
       email:
-        description: 'Tester email(s) to enroll — a single address or a comma-separated list (an invite email is sent to each)'
+        description: 'Tester email(s) to enroll — a single address or a comma-separated list; empty = the repository variable TESTER_EMAIL (an invite email is sent to each)'
         required: false
         type: string
-        default: 'fdittgen@gmail.com'
+        default: ''
       groups:
         description: 'Comma-separated beta group names. Empty = ALL external groups, or the internal group(s) when the app has no external group.'
         required: false
@@ -104,7 +104,7 @@ jobs:
           # #3094 G6 — inputs reach the script through the environment, never
           # pasted into it: a crafted value is data, not a command.
           IN_CREATE_GROUP: ${{ inputs.create_external_group }}
-          IN_EMAIL: ${{ inputs.email }}
+          IN_EMAIL: ${{ inputs.email || vars.TESTER_EMAIL }}
           IN_GROUPS: ${{ inputs.groups }}
           IN_ROLE: ${{ inputs.role }}
           IN_RESEND: ${{ inputs.resend }}
@@ -130,7 +130,7 @@ jobs:
       - name: Summary
         if: always()
         env:
-          IN_EMAIL: ${{ inputs.email }}
+          IN_EMAIL: ${{ inputs.email || vars.TESTER_EMAIL }}
           IN_GROUPS: ${{ inputs.groups != '' && inputs.groups || 'ALL external (or internal if no external group exists)' }}
           IN_ROLE: ${{ inputs.role }}
         run: |
