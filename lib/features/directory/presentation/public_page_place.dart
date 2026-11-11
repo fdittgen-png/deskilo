@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/form_kit.dart';
 import '../domain/directory_location.dart';
 import '../domain/discovery_view.dart';
 import '../providers/directory_location_providers.dart';
@@ -139,7 +140,7 @@ class _PlaceState extends ConsumerState<PublicPagePlace> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(l.portalPlaceTitle, style: theme.textTheme.titleSmall),
-          const SizedBox(height: AppSpacing.xs),
+          const FormGap.small(),
           Text(
             key: const ValueKey('public-page-place-state'),
             place == null ? l.portalPlaceNone : _coordinates(place),
@@ -167,8 +168,8 @@ class _PlaceState extends ConsumerState<PublicPagePlace> {
               style: TextStyle(color: theme.colorScheme.error),
             ),
           if (shown != null && accepted) ...[
-            const SizedBox(height: AppSpacing.xs),
-            SizedBox(height: 180, child: _map(services, shown)),
+            const FormGap.small(),
+            AspectRatio(aspectRatio: 2, child: _map(services, shown)),
             Text(l.portalPlaceTapToMove, style: theme.textTheme.bodySmall),
           ],
           Wrap(
@@ -212,6 +213,7 @@ class _PlaceState extends ConsumerState<PublicPagePlace> {
     options: MapOptions(
       initialCenter: LatLng(at.latitude, at.longitude),
       initialZoom: 16,
+      // recorder-key-exempt: MapOptions takes no key; the keyed FlutterMap is the control
       onTap: widget.enabled
           ? (_, point) => widget.onChanged(
               DirectoryLocation(point.latitude, point.longitude),

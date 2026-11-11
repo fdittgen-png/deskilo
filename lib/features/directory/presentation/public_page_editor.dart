@@ -40,12 +40,13 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
   Set<String> _following = {};
 
   /// #3689 — the stored place, kept in the draft so every save carries it.
-  DirectoryLocation? _place;
+  final _place = ValueNotifier<DirectoryLocation?>(null);
   @override
   void dispose() {
     for (final c in _controllers.values) {
       c.dispose();
     }
+    _place.dispose();
     super.dispose();
   }
 
@@ -71,7 +72,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             _controllers[field]!.text = doc[field] as String? ?? '';
           }
           _host = doc['host_type'] as String? ?? 'association';
-          _place = publicPlaceOf(doc);
+          _place.value = publicPlaceOf(doc);
           _published = page['published'] == true;
           _following = publicFollowing(page);
           _loaded = true;
@@ -107,7 +108,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             'host_type': _host,
             for (final entry in _controllers.entries)
               entry.key: entry.value.text.trim(),
-            ...publicPlaceFields(_place),
+            ...publicPlaceFields(_place.value),
           },
           following: _following,
           published: _published,
@@ -215,6 +216,19 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     onReset: () => _reset({field}),
   );
 
+  /// #3689 — where the business is on the map, beside the address it uses.
+  Widget _placeSection() => ListenableBuilder(
+    listenable: Listenable.merge([_controllers['address'], _place]),
+    builder: (context, _) => PublicPagePlace(
+      key: const ValueKey('public-page-place-section'),
+      place: _place.value,
+      address: _controllers['address']!.text,
+      scope: (_workspace, _account),
+      enabled: !_busy,
+      onChanged: (p) => _place.value = p,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -228,7 +242,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       _failed = false;
       _loading = false;
       _busy = false;
-      _place = null;
+      _place.value = null;
       for (final c in _controllers.values) {
         c.clear();
       }
@@ -272,9 +286,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                   onChanged: _busy
                       ? null
                       : (v) => setState(() => _published = v),
-                  title: Text(
-                    l.portalPublished,
-                  ),
+                  title: Text(l.portalPublished),
                 ),
                 DropdownButtonFormField<String>(
                   key: ValueKey('public-page-host-$_host'),
@@ -324,16 +336,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                       ],
                     ),
                   ),
-                ValueListenableBuilder(
-                  valueListenable: _controllers['address']!,
-                  builder: (context, address, _) => PublicPagePlace(
-                    place: _place,
-                    address: address.text,
-                    scope: (_workspace, _account),
-                    enabled: !_busy,
-                    onChanged: (p) => setState(() => _place = p),
-                  ),
-                ),
+                _placeSection(),
                 Padding(
                   padding: AppSpacing.smAll,
                   child: OutlinedButton(

@@ -2474,6 +2474,7 @@ const Set<String> uiKeys = {
   'public-page-place-not-found',
   'public-page-place-pin',
   'public-page-place-remove',
+  'public-page-place-section',
   'public-page-place-state',
   'public-page-place-use',
   'public-page-reset-all',

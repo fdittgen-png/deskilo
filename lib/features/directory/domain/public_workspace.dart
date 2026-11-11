@@ -64,12 +64,9 @@ const publicPageFields = [
   'plans',
 ];
 
-/// #3689 — where the page's business is on the map: both fields or neither.
-/// Every save carries them, so an edit of any other field keeps the pin.
-const publicPagePlaceFields = ['latitude', 'longitude'];
-
-/// The place as a save sends it: the pair, or both empty (no stored place,
-/// visitors' maps look up the address).
+/// #3689 — where the page's business is on the map, as a save sends it:
+/// the pair, or both empty (no stored place, visitors' maps look up the
+/// address). Every save carries it, so an edit of another field keeps it.
 Map<String, String> publicPlaceFields(DirectoryLocation? place) => {
   'latitude': place == null ? '' : '${place.latitude}',
   'longitude': place == null ? '' : '${place.longitude}',
