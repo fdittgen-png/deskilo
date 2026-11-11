@@ -30,6 +30,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/memory_recorder_log_backend.dart';
+import '../../helpers/mock_providers.dart' show formatPinOverrides;
 import 'fixtures/recording_fixtures.dart';
 
 class _Saver {
@@ -53,6 +54,7 @@ class _Harness {
   _Harness({bool available = true}) {
     container = ProviderContainer(
       overrides: [
+        ...formatPinOverrides(),
         recorderStoreProvider.overrideWithValue(store),
         recorderScopeProvider.overrideWithValue(canaryScope),
         taskRecorderAvailableProvider.overrideWithValue(available),

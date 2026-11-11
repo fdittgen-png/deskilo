@@ -214,6 +214,21 @@ TypedFileSaver typedSaverOf(FileSaver saver) =>
       return path == null ? const SaveFailed() : SavedFile(path);
     };
 
+/// #3647 — the formats a fixture's dates and times are written in, for a
+/// test that builds its own providers: the default format now follows the
+/// device, so a test that pins nothing reads the runner's region.
+List<Override> formatPinOverrides({String locale = 'en_GB'}) {
+  final format = AppFormat(
+    locale: locale,
+    currencyCode: 'EUR',
+    clock: ClockPref.h24,
+  );
+  return [
+    appFormatProvider.overrideWithValue(format),
+    personalFormatProvider.overrideWithValue(format),
+  ];
+}
+
 List<Override> standardTestOverrides({
   // #3587 — a test of the payments read brings its own; else the Demo's
   // reader over the money fake.
