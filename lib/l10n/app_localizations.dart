@@ -46315,6 +46315,24 @@ abstract class AppLocalizations {
   /// **'Membership at {pct} %'**
   String setupPricingLevel(int pct);
 
+  /// #3283 setup pricing: the half-days a level includes this month.
+  ///
+  /// In en, this message translates to:
+  /// **'{level}: {count, plural, =1{1 half-day} other{{count} half-days}} included'**
+  String setupPricingLevelIncludes(String level, int count);
+
+  /// #3283 setup pricing: what a percentage level buys, on this workspace's own open days this month.
+  ///
+  /// In en, this message translates to:
+  /// **'A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member\'s share is charged at the extra rate of their band. This month your space is open {days, plural, =1{1 day} other{{days} days}}:'**
+  String setupPricingLevelsBasis(int days);
+
+  /// #3283 setup pricing: the basis when the opening days could not be read.
+  ///
+  /// In en, this message translates to:
+  /// **'A level is the share of the half-days your space is open in a month: 100 % is all of them. Your opening days could not be read, so no example is shown.'**
+  String get setupPricingLevelsBasisUnknown;
+
   /// #2871 setup run steps: setupPricingLevelsBody
   ///
   /// In en, this message translates to:

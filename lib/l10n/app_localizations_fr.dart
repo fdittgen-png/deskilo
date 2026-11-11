@@ -28510,6 +28510,32 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count demi-journées incluses',
+      one: '1 demi-journée incluse',
+    );
+    return '$level : $_temp0';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '1 jour',
+    );
+    return 'Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d\'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert $_temp0 :';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes. Vos jours d\'ouverture n\'ont pas pu être lus, aucun exemple n\'est donc affiché.';
+
+  @override
   String get setupPricingLevelsBody =>
       'Les niveaux que les membres peuvent choisir. Chacun est tarifé par la tranche dans laquelle il tombe.';
 

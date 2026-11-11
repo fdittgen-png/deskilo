@@ -28488,6 +28488,32 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Halbtage',
+      one: '1 Halbtag',
+    );
+    return '$level: $_temp0 inklusive';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tage',
+      one: '1 Tag',
+    );
+    return 'Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle, und ein Halbtag über den Anteil eines Mitglieds hinaus wird zum Zusatzpreis seiner Preisstufe berechnet. Diesen Monat ist Ihr Bereich $_temp0 geöffnet:';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle. Ihre Öffnungstage konnten nicht gelesen werden, daher wird kein Beispiel gezeigt.';
+
+  @override
   String get setupPricingLevelsBody =>
       'Die Stufen, die Mitglieder wählen können. Jede kostet, was ihr Preisband vorgibt.';
 

@@ -7,7 +7,9 @@
 // saved; offering stores exactly the chosen presets beside the owner's
 // own levels. One column on a phone.
 import 'package:deskilo/app/routes/setup_run_pages.dart';
+import 'package:deskilo/features/money/domain/member_price_list.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,12 +20,19 @@ import '../../helpers/pump_app.dart';
 
 const _phone = Size(360, 2400);
 
-Future<void> _pump(WidgetTester tester, FakeMoneyRepository money) async {
+Future<void> _pump(
+  WidgetTester tester,
+  FakeMoneyRepository money, {
+  Future<int> Function()? openDays,
+}) async {
   await pumpApp(
     tester,
     const SetupStepScreen(stepId: 'pricing', runPages: setupRunPages),
     size: _phone,
-    overrides: standardTestOverrides(money: money),
+    overrides: [
+      ...standardTestOverrides(money: money),
+      monthOpenDaysProvider.overrideWith((_) => (openDays ?? () async => 21)()),
+    ],
   );
   await tester.pumpAndSettle();
 }
@@ -96,6 +105,63 @@ void main() {
       find.byKey(const ValueKey('setup-pricing-preview-none')),
       findsOneWidget,
     );
+  });
+
+  // #3283 — a level is explained on this workspace's own month: the
+  // half-days each includes for its open days, never a universal rule.
+  testWidgets('each level says how many half-days it includes this month', (
+    tester,
+  ) async {
+    await _pump(tester, _money());
+    expect(find.byKey(const ValueKey('setup-pricing-basis')), findsOneWidget);
+    expect(find.textContaining('open 21 days'), findsOneWidget);
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('setup-pricing-includes-50')))
+          .data,
+      endsWith(': 21 half-days included'),
+    );
+    expect(
+      tester
+          .widget<Text>(find.byKey(const ValueKey('setup-pricing-includes-25')))
+          .data,
+      endsWith(': 11 half-days included'),
+    );
+    expect(
+      tester
+          .widget<Text>(
+            find.byKey(const ValueKey('setup-pricing-includes-100')),
+          )
+          .data,
+      endsWith(': 42 half-days included'),
+    );
+  });
+
+  testWidgets('unread opening days say so instead of an example', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      _money(),
+      openDays: () async => throw StateError('offline'),
+    );
+    expect(
+      find.byKey(const ValueKey('setup-pricing-basis-unknown')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('half-days included'), findsNothing);
+  });
+
+  test('the entitlement rule and the open days of a month', () {
+    expect(includedHalfDays(21, 50), 21);
+    expect(includedHalfDays(21, 25), 11, reason: 'rounded up');
+    expect(includedHalfDays(0, 100), 0);
+    // May 2026: 21 weekdays, Ascension (14 May) closed.
+    expect(
+      openDaysIn(DateTime(2026, 5), [1, 2, 3, 4, 5], [DateTime(2026, 5, 14)]),
+      20,
+    );
+    expect(openDaysIn(DateTime(2026, 5), [6], const []), 5);
   });
 
   testWidgets('one column on a phone', (tester) async {

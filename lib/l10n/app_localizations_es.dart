@@ -28434,6 +28434,32 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count medias jornadas incluidas',
+      one: '1 media jornada incluida',
+    );
+    return '$level: $_temp0';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días',
+      one: '1 día',
+    );
+    return 'Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas, y una media jornada más allá de la parte de un miembro se cobra a la tarifa adicional de su tramo. Este mes su espacio abre $_temp0:';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas. No se pudieron leer sus días de apertura, así que no se muestra ningún ejemplo.';
+
+  @override
   String get setupPricingLevelsBody =>
       'Los niveles que pueden elegir los miembros. Cada uno tiene el precio de la franja en la que cae.';
 

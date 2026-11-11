@@ -28459,6 +28459,32 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mezze giornate incluse',
+      one: '1 mezza giornata inclusa',
+    );
+    return '$level: $_temp0';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days giorni',
+      one: '1 giorno',
+    );
+    return 'Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte, e una mezza giornata oltre la quota di un membro è addebitata alla tariffa aggiuntiva della sua fascia. Questo mese il suo spazio è aperto $_temp0:';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte. Non è stato possibile leggere i suoi giorni di apertura, quindi non viene mostrato alcun esempio.';
+
+  @override
   String get setupPricingLevelsBody =>
       'I livelli che i membri possono scegliere. Ognuno ha il prezzo della fascia in cui rientra.';
 

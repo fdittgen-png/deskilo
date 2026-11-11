@@ -28199,6 +28199,32 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count half-days',
+      one: '1 half-day',
+    );
+    return '$level: $_temp0 included';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days',
+      one: '1 day',
+    );
+    return 'A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member\'s share is charged at the extra rate of their band. This month your space is open $_temp0:';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'A level is the share of the half-days your space is open in a month: 100 % is all of them. Your opening days could not be read, so no example is shown.';
+
+  @override
   String get setupPricingLevelsBody =>
       'The levels members can choose. Each one is priced by the fee band it falls into.';
 
