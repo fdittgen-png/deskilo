@@ -124,11 +124,13 @@ void main() {
     final jobs = _jobs();
     final code = jobs['code'] as YamlMap;
     expect(code['name'], _required);
-    expect(code['if'], 'always()');
+    // #3670 -- evaluated even after a failed shard, skipped only when the
+    // tree was already tested.
+    expect(code['if'], "always() && needs.tested.outputs.skip != 'true'");
     // #3475 -- the static gates job is a job of the run, not a test shard
     expect(
       (code['needs'] as YamlList).toSet(),
-      {..._shardJobs.values, 'static'},
+      {..._shardJobs.values, 'static', 'tested'},
     );
     final gate = _run(code).split('scripts/job_gate.sh').last;
     for (final id in [..._shardJobs.values, 'static']) {
