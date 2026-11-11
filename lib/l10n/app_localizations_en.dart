@@ -14928,6 +14928,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoicingSourceHolds => 'Held reminders';
+
+  @override
+  String get invoicingSourceMatches => 'Payment matches';
+
+  @override
   String get invoicingSourcePayments => 'Payment history';
 
   @override
@@ -14935,6 +14941,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicingSourceToInvoice => 'The month to invoice';
+
+  @override
+  String get invoicingSourceTransmissions => 'E-invoice transmissions';
 
   @override
   String get invoicingStatusAwaitingCustomer =>
@@ -15026,9 +15035,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicingTodoDrafts => 'Issue drafts';
-
-  @override
-  String get invoicingTodoDueDate => 'Set a due date';
 
   @override
   String get invoicingTodoFix => 'Fix';

@@ -80,6 +80,8 @@ class InvoicingList extends StatelessWidget {
     required this.onOpenInvoice,
     required this.onOpenCustomer,
     required this.onCustomerAction,
+    this.todo,
+    this.onClearTodo,
   });
 
   final List<Receivable> receivables;
@@ -96,6 +98,16 @@ class InvoicingList extends StatelessWidget {
   final ValueChanged<String> onOpenCustomer;
   final void Function(String customerId, InvoiceAction action) onCustomerAction;
 
+  /// The "To do" entry the list was opened from, with its title: the list
+  /// is then exactly what that entry counts, until [onClearTodo].
+  final ({TodoKind kind, String title})? todo;
+  final VoidCallback? onClearTodo;
+
+  bool _selects(Receivable r) => switch (todo) {
+    (:final kind, title: _) => todoKindOf(r, mode) == kind,
+    null => filter.holds(r, today),
+  };
+
   @override
   Widget build(BuildContext context) => ValueListenableBuilder(
     valueListenable: query,
@@ -103,7 +115,7 @@ class InvoicingList extends StatelessWidget {
       final q = value.text.trim().toLowerCase();
       final shown = [
         for (final r in receivables)
-          if (filter.holds(r, today) &&
+          if (_selects(r) &&
               (q.isEmpty ||
                   r.customerName.toLowerCase().contains(q) ||
                   r.number.toLowerCase().contains(q)))
@@ -174,6 +186,19 @@ class InvoicingList extends StatelessWidget {
                 hint: l.invoicingSearchHint,
                 prefixIcon: const Icon(Icons.search),
                 autofocus: true,
+              ),
+            if (todo case (:final title, kind: _))
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: InputChip(
+                  key: const ValueKey('invoicing-todo-selected'),
+                  label: Text(title),
+                  selected: true,
+                  onDeleted: onClearTodo,
+                  deleteButtonTooltipMessage: MaterialLocalizations.of(
+                    context,
+                  ).closeButtonTooltip,
+                ),
               ),
             FilterChips(
               key: const ValueKey('invoicing-filters'),

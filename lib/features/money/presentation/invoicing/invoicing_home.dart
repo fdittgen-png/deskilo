@@ -28,7 +28,26 @@ import 'invoicing_words.dart';
 
 /// A source the home reads that can fail on its own; what it fed is not
 /// shown while it is missing.
-enum InvoicingSource { payments, reminders, toInvoice }
+enum InvoicingSource {
+  invoices,
+  matches,
+  reminders,
+  holds,
+  transmissions,
+  payments,
+  toInvoice;
+
+  /// The sources every invoice's status, amount owed and action is read
+  /// from: while one of them failed, no figure, list or action of the
+  /// invoices is shown, only the failure and its Try again.
+  static const Set<InvoicingSource> statuses = {
+    invoices,
+    matches,
+    reminders,
+    holds,
+    transmissions,
+  };
+}
 
 /// What the home shows: the receivables on [today], the month [toInvoice],
 /// the payments [received], the reminder [mode] and the sources that
@@ -125,14 +144,43 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   var _view = InvoicingView.customers;
   final _query = TextEditingController();
 
+  /// The "To do" entry the list shows, or null for the filter's list.
+  TodoKind? _todo;
+
+  @override
+  void initState() {
+    super.initState();
+    // A filter chosen anywhere (a chip, a legend line, More) replaces the
+    // "To do" list.
+    _filter.addListener(_clearTodo);
+  }
+
+  void _clearTodo() {
+    if (_todo != null) setState(() => _todo = null);
+  }
+
   @override
   void dispose() {
+    _filter.removeListener(_clearTodo);
     if (widget.filter == null) _filter.dispose();
     _query.dispose();
     super.dispose();
   }
 
-  void _choose(InvoicingFilter f) => _filter.value = f;
+  void _choose(InvoicingFilter f) {
+    _clearTodo();
+    _filter.value = f;
+  }
+
+  /// A "To do" entry opens the list of exactly what it counts; the month's
+  /// entry opens its own flow.
+  void _openTodo(TodoKind kind) {
+    if (kind == TodoKind.invoiceTheMonth) {
+      widget.actions.onTodo(kind);
+      return;
+    }
+    setState(() => _todo = kind);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +199,10 @@ class _InvoicingHomeState extends State<InvoicingHome> {
         builder: (context, box) {
           final wide =
               widget.wide ?? box.maxWidth >= kWideNavigationMinWidth;
+          final statusesFailed = data.failed.any(
+            InvoicingSource.statuses.contains,
+          );
+          if (statusesFailed) return _failedOnly(data.failed);
           final owed = _owedCard(context, filter);
           final todo = _todoCard(context);
           return CustomScrollView(
@@ -213,6 +265,11 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                 onOpenInvoice: widget.actions.onOpenInvoice,
                 onOpenCustomer: widget.actions.onOpenCustomer,
                 onCustomerAction: widget.actions.onCustomerAction,
+                todo: switch (_todo) {
+                  final kind? => (kind: kind, title: _todoTitle(l, kind)),
+                  null => null,
+                },
+                onClearTodo: () => setState(() => _todo = null),
               ),
             ],
           );
@@ -359,9 +416,32 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       buttonKey: ValueKey('invoicing-todo-${t.kind.name}'),
       primary: primary,
       alert: words.alert,
-      onPressed: () => widget.actions.onTodo(t.kind),
+      onPressed: () => _openTodo(t.kind),
     );
   }
+
+  /// The title of the "To do" entry [kind], as its row says it now.
+  String _todoTitle(AppLocalizations l, TodoKind kind) {
+    final data = widget.data;
+    final todo = todoOf(data.receivables, mode: data.mode).firstWhere(
+      (t) => t.kind == kind,
+      orElse: () => (kind: kind, tally: Tally.empty),
+    );
+    return todoWordsOf(l, todo, data.toInvoiceMonth).title;
+  }
+
+  /// Only the sources that failed, each with its Try again: nothing read
+  /// from them is shown as if it had been read.
+  Widget _failedOnly(Set<InvoicingSource> failed) => ListView(
+    key: const ValueKey('invoicing-failed'),
+    padding: AppSpacing.mdAll,
+    children: [
+      for (final s in failed) ...[
+        _FailedSource(source: s, onRetry: () => widget.actions.onRetry(s)),
+        const SizedBox(height: AppSpacing.sm),
+      ],
+    ],
+  );
 }
 
 /// The home of a business that has never invoiced.
@@ -415,6 +495,10 @@ class _FailedSource extends StatelessWidget {
     final l = context.l10n;
     final t = PersonalTheme.of(context);
     final name = switch (source) {
+      InvoicingSource.invoices => l.featureInvoicing,
+      InvoicingSource.matches => l.invoicingSourceMatches,
+      InvoicingSource.holds => l.invoicingSourceHolds,
+      InvoicingSource.transmissions => l.invoicingSourceTransmissions,
       InvoicingSource.payments => l.invoicingSourcePayments,
       InvoicingSource.reminders => l.invoicingSourceReminders,
       InvoicingSource.toInvoice => l.invoicingSourceToInvoice,
