@@ -47,7 +47,7 @@ select is((select modified_datetime::text from public.profiles
   current_setting('t.profile_before'),
   'and leaves the profiles row untouched');
 select isnt(public.member_profile_projection(current_setting('t.u')::uuid,
-              array['community']) -> 'community' ->> 'last_seen_at', null,
+              array['community'], current_setting('t.u')::uuid) -> 'community' ->> 'last_seen_at', null,
   'the member projection still answers last_seen_at');
 select isnt(public.account_projection(current_setting('t.u')::uuid,
               array['presence']) -> 'presence' ->> 'last_seen_at', null,
