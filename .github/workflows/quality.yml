@@ -100,6 +100,16 @@ jobs:
         run: |
           bash scripts/secret_scan_check.sh
           bash scripts/secret_scan.sh "$SCAN_BASE" "$SCAN_HEAD"
+      # #3677 -- no tool or AI mention in the range's commit messages, nor in
+      # the pull request's title and text; a master push reads the pushed
+      # commits, so a merge that carried one is seen at once.
+      - name: No tool line in commit messages or pull-request text
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: bash scripts/tool_lines_check.sh
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
