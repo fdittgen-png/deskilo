@@ -50,7 +50,7 @@ void main() {
     final money = _Held();
     await pumpInvoices(tester, money: money);
 
-    await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+    await tester.tap(find.byKey(const ValueKey('invoicing-new')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
     await tester.pumpAndSettle();

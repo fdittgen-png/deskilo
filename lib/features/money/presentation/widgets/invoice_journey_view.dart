@@ -19,6 +19,7 @@ import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_journey.dart';
 import '../invoice_status.dart';
+import '../invoicing/receivables_adapter.dart';
 
 /// #812 — whether the process view is on for this workspace.
 bool invoiceJourneyOn(WidgetRef ref) => ref
@@ -368,3 +369,18 @@ class InvoiceMoveLine extends StatelessWidget {
     );
   }
 }
+
+/// #3587 — what the payment events say about each invoice, read once for a
+/// whole list (the invoicing home): the journey's facts and the customer's
+/// own declaration. It lives beside the journey, which already reads the
+/// event feed.
+final invoiceEventFactsProvider =
+    Provider.autoDispose<InvoiceEventFacts Function(Invoice, InvoiceMatch?)>(
+      (ref) {
+        final events = ref.watch(eventsProvider).value ?? const [];
+        return (invoice, match) => (
+          journey: journeyFactsOf(invoice, match, events),
+          declaration: declarationOf(invoice, events),
+        );
+      },
+    );

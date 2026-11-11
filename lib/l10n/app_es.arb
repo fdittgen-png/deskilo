@@ -9175,13 +9175,437 @@
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
   "invoicesEmpty": "Aún no hay facturas.",
-  "invoicingBanner": "Emite y reclama las facturas de todo el espacio. Sus propias facturas y pagos están en Yo › Mis finanzas.",
-  "@invoicingBanner": {
-    "description": "invoicing hub vs my finances"
+  "invoicingActionConfirm": "Confirmar",
+  "@invoicingActionConfirm": {
+    "description": "#3587 a customer line's action: confirm a declared payment"
+  },
+  "invoicingActionMatch": "Conciliar",
+  "@invoicingActionMatch": {
+    "description": "#3587 a customer line's action: match a received payment"
+  },
+  "invoicingActionRemind": "Recordar",
+  "@invoicingActionRemind": {
+    "description": "#3587 a customer line's action: share a reminder"
+  },
+  "invoicingCaughtUp": "Todo está al día.",
+  "@invoicingCaughtUp": {
+    "description": "#3587 To do without entries"
+  },
+  "invoicingColCustomer": "Cliente",
+  "@invoicingColCustomer": {
+    "description": "#3587 table column"
+  },
+  "invoicingColDue": "Vence",
+  "@invoicingColDue": {
+    "description": "#3587 table column"
+  },
+  "invoicingColInvoice": "Factura",
+  "@invoicingColInvoice": {
+    "description": "#3587 table column"
+  },
+  "invoicingColOldest": "La más antigua",
+  "@invoicingColOldest": {
+    "description": "#3587 table column: the oldest invoice's state"
+  },
+  "invoicingColOpen": "Pendiente",
+  "@invoicingColOpen": {
+    "description": "#3587 table column: what is still owed"
+  },
+  "invoicingColOwes": "Debe",
+  "@invoicingColOwes": {
+    "description": "#3587 table column"
+  },
+  "invoicingColStatus": "Estado",
+  "@invoicingColStatus": {
+    "description": "#3587 table column"
+  },
+  "invoicingCountLine": "{customers} · {invoices}",
+  "@invoicingCountLine": {
+    "description": "#3587 above the list: customers and invoices it holds",
+    "placeholders": {
+      "customers": {
+        "type": "String"
+      },
+      "invoices": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingCustomerCount": "{count, plural, =1{1 cliente} other{{count} clientes}}",
+  "@invoicingCustomerCount": {
+    "description": "#3587 how many customers",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingDaysLate": "{days, plural, =1{1 día de retraso} other{{days} días de retraso}}",
+  "@invoicingDaysLate": {
+    "description": "#3587 lateness",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingDueIn": "{days, plural, =1{Vence en 1 día} other{Vence en {days} días}}",
+  "@invoicingDueIn": {
+    "description": "#3587 status",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingDueOn": "vence {date}",
+  "@invoicingDueOn": {
+    "description": "#3587 an invoice line's due date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingEmptyBody": "Emita su primera factura, o facture el mes cuando haya uso que facturar.",
+  "@invoicingEmptyBody": {
+    "description": "#3587 the empty state's line"
+  },
+  "invoicingEmptyNew": "Nueva factura",
+  "@invoicingEmptyNew": {
+    "description": "#3587 the empty state's button"
+  },
+  "invoicingEmptyTitle": "Aún no hay facturas",
+  "@invoicingEmptyTitle": {
+    "description": "#3587 a business with no invoice at all"
+  },
+  "invoicingEveryReminderSent": "todos los recordatorios enviados",
+  "@invoicingEveryReminderSent": {
+    "description": "#3587 after the lateness on a customer line"
+  },
+  "invoicingFilterOpen": "Abiertas",
+  "@invoicingFilterOpen": {
+    "description": "#3587 list filter"
+  },
+  "invoicingFilterOverdue": "Vencidas",
+  "@invoicingFilterOverdue": {
+    "description": "#3587 list filter"
+  },
+  "invoicingFilterPaid": "Pagadas",
+  "@invoicingFilterPaid": {
+    "description": "#3587 list filter: paid and closed"
+  },
+  "invoicingInvoiceCount": "{count, plural, =1{1 factura} other{{count} facturas}}",
+  "@invoicingInvoiceCount": {
+    "description": "#3587 how many invoices",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingInvoicedIn": "Facturado en {month}",
+  "@invoicingInvoicedIn": {
+    "description": "#3587 the month's figure",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingLegalNotes": "Avisos legales",
+  "@invoicingLegalNotes": {
+    "description": "#3587 the collapsed line holding the legal notices"
+  },
+  "invoicingMoreHow": "Cómo funciona la facturación",
+  "@invoicingMoreHow": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreMine": "Mis propias facturas",
+  "@invoicingMoreMine": {
+    "description": "#3587 More menu: the person's own invoices as a member"
+  },
+  "invoicingMorePaid": "Facturas pagadas y cerradas",
+  "@invoicingMorePaid": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreRegister": "Registro de facturas",
+  "@invoicingMoreRegister": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreRegroup": "Agrupar facturas en una",
+  "@invoicingMoreRegroup": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreSettings": "Ajustes de facturas",
+  "@invoicingMoreSettings": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreTemplate": "Plantilla PDF de factura",
+  "@invoicingMoreTemplate": {
+    "description": "#3587 More menu"
+  },
+  "invoicingNew": "Nueva",
+  "@invoicingNew": {
+    "description": "#3587 top bar: start a new invoice"
+  },
+  "invoicingNothingHere": "Nada aquí.",
+  "@invoicingNothingHere": {
+    "description": "#3587 empty filter"
+  },
+  "invoicingNothingMatches": "Nada coincide con «{query}».",
+  "@invoicingNothingMatches": {
+    "description": "#3587 empty search",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingNothingOverdue": "Nada está vencido.",
+  "@invoicingNothingOverdue": {
+    "description": "#3587 empty filter"
+  },
+  "invoicingNothingToConfirm": "Ningún pago le espera.",
+  "@invoicingNothingToConfirm": {
+    "description": "#3587 empty filter"
+  },
+  "invoicingOwed": "Por cobrar",
+  "@invoicingOwed": {
+    "description": "#3587 the owed card's label"
+  },
+  "invoicingOwedNotYetDue": "Aún no vencido",
+  "@invoicingOwedNotYetDue": {
+    "description": "#3587 owed bucket"
+  },
+  "invoicingOwedOverdue": "Vencido",
+  "@invoicingOwedOverdue": {
+    "description": "#3587 owed bucket"
+  },
+  "invoicingReceivedIn": "Cobrado en {month}",
+  "@invoicingReceivedIn": {
+    "description": "#3587 the month's figure: money received",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingRemindersAutomatic": "Los recordatorios salen solos, en la aplicación.",
+  "@invoicingRemindersAutomatic": {
+    "description": "#3587 the To do card's last line, automatic reminders"
+  },
+  "invoicingRemindersByHand": "Los recordatorios se comparten a mano.",
+  "@invoicingRemindersByHand": {
+    "description": "#3587 the To do card's last line, reminders by hand"
+  },
+  "invoicingRules": "Reglas",
+  "@invoicingRules": {
+    "description": "#3587 opens the reminder rules"
+  },
+  "invoicingSearch": "Buscar",
+  "@invoicingSearch": {
+    "description": "#3587 top bar: open the search field"
+  },
+  "invoicingSearchHint": "Un cliente o un número",
+  "@invoicingSearchHint": {
+    "description": "#3587 search field hint"
+  },
+  "invoicingSourceFailed": "{source} no se pudo leer.",
+  "@invoicingSourceFailed": {
+    "description": "#3587 one line when a source failed; no figure it fed is shown",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingSourcePayments": "El historial de pagos",
+  "@invoicingSourcePayments": {
+    "description": "#3587 a source name"
+  },
+  "invoicingSourceReminders": "El historial de recordatorios",
+  "@invoicingSourceReminders": {
+    "description": "#3587 a source name"
+  },
+  "invoicingSourceToInvoice": "El mes por facturar",
+  "@invoicingSourceToInvoice": {
+    "description": "#3587 a source name"
+  },
+  "invoicingStatusAwaitingCustomer": "Esperando la confirmación del cliente",
+  "@invoicingStatusAwaitingCustomer": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusCancelled": "Anulada",
+  "@invoicingStatusCancelled": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusCredited": "Abonada",
+  "@invoicingStatusCredited": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusDraft": "Borrador",
+  "@invoicingStatusDraft": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusDueToday": "Vence hoy",
+  "@invoicingStatusDueToday": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusEveryReminderSent": "{days, plural, =1{1 día de retraso} other{{days} días de retraso}} · todos los recordatorios enviados",
+  "@invoicingStatusEveryReminderSent": {
+    "description": "#3587 status",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingStatusOnHold": "En pausa",
+  "@invoicingStatusOnHold": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusPaid": "Pagada el {date}",
+  "@invoicingStatusPaid": {
+    "description": "#3587 status",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusPaidUndated": "Pagada",
+  "@invoicingStatusPaidUndated": {
+    "description": "#3587 status without a day"
+  },
+  "invoicingStatusPartlyPaid": "Pagada en parte · {amount} pendiente",
+  "@invoicingStatusPartlyPaid": {
+    "description": "#3587 status",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusRefundOwed": "Reembolso pendiente",
+  "@invoicingStatusRefundOwed": {
+    "description": "#3587 status: a credit note to pay out"
+  },
+  "invoicingStatusRefunded": "Reembolsada",
+  "@invoicingStatusRefunded": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusRegrouped": "Agrupada en {number}",
+  "@invoicingStatusRegrouped": {
+    "description": "#3587 status",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusRejected": "Factura electrónica rechazada",
+  "@invoicingStatusRejected": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusReminderSent": "{days, plural, =1{1 día de retraso} other{{days} días de retraso}} · recordatorio {level} enviado",
+  "@invoicingStatusReminderSent": {
+    "description": "#3587 status",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingStatusSaysPaid": "Dice haber pagado el {date}",
+  "@invoicingStatusSaysPaid": {
+    "description": "#3587 status: the customer declared a payment",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusSaysPaidUndated": "Dice haber pagado",
+  "@invoicingStatusSaysPaidUndated": {
+    "description": "#3587 status: a declared payment without a day"
+  },
+  "invoicingStatusSecondApproval": "Espera una segunda aprobación",
+  "@invoicingStatusSecondApproval": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusToMatch": "Pago recibido · por conciliar",
+  "@invoicingStatusToMatch": {
+    "description": "#3587 status"
+  },
+  "invoicingTodo": "Pendiente",
+  "@invoicingTodo": {
+    "description": "#3587 the To do card's heading"
+  },
+  "invoicingTodoConfirm": "Confirmar pagos",
+  "@invoicingTodoConfirm": {
+    "description": "#3587 To do: declared payments"
+  },
+  "invoicingTodoDrafts": "Emitir borradores",
+  "@invoicingTodoDrafts": {
+    "description": "#3587 To do: drafts"
+  },
+  "invoicingTodoDueDate": "Fijar un vencimiento",
+  "@invoicingTodoDueDate": {
+    "description": "#3587 To do: open invoices without a due date"
+  },
+  "invoicingTodoFix": "Corregir",
+  "@invoicingTodoFix": {
+    "description": "#3587 a To do entry's button for a failure"
+  },
+  "invoicingTodoMatch": "Conciliar pagos",
+  "@invoicingTodoMatch": {
+    "description": "#3587 To do: received payments to match"
+  },
+  "invoicingTodoMonth": "Facturar {month}",
+  "@invoicingTodoMonth": {
+    "description": "#3587 To do: invoice the month",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingTodoRefunds": "Pagar reembolsos",
+  "@invoicingTodoRefunds": {
+    "description": "#3587 To do: credit notes owed"
+  },
+  "invoicingTodoRejected": "{count, plural, =1{1 factura electrónica fue rechazada} other{{count} facturas electrónicas fueron rechazadas}}",
+  "@invoicingTodoRejected": {
+    "description": "#3587 To do: rejected e-invoices",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingTodoReminders": "Compartir recordatorios a mano",
+  "@invoicingTodoReminders": {
+    "description": "#3587 To do: the reminder queue (by hand only)"
+  },
+  "invoicingTodoReview": "Ver",
+  "@invoicingTodoReview": {
+    "description": "#3587 a To do entry's button"
   },
   "invoicingTools": "Herramientas de facturación",
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
+  },
+  "invoicingTryAgain": "Reintentar",
+  "@invoicingTryAgain": {
+    "description": "#3587 retry a failed source"
+  },
+  "invoicingViewCustomers": "Clientes",
+  "@invoicingViewCustomers": {
+    "description": "#3587 list view: one line per customer"
   },
   "journalBlocked": "Asigne primero estos roles en el plan de cuentas: {roles}",
   "journalFecMissingRate": "Estos documentos están en otra moneda que la contabilidad y no tienen un tipo de cambio registrado; el FEC no se ha generado: {documents}",

@@ -27,10 +27,10 @@ class _MovedMeanwhile extends FakeMoneyRepository {
   );
 }
 
+/// #3587 — the match dialog from the invoice's sheet, opened on the home.
 Future<void> _openMatch(WidgetTester tester, String invoiceId) async {
-  await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-  await tester.pumpAndSettle();
-  await tester.tap(find.byKey(ValueKey('invoice-match-$invoiceId')));
+  await openInvoice(tester, invoiceId);
+  await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
   await tester.pumpAndSettle();
 }
 

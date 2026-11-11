@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
-import '../../helpers/screens/invoices.dart' show pumpInvoices;
+import '../../helpers/mock_providers.dart';
+import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices;
 
 /// Two invoices of one member, regrouped into a third.
 Future<
@@ -54,9 +55,21 @@ Future<
   return (money: money, a: a, b: b, settlement: settlement, plain: plain);
 }
 
-Future<void> _openArchiveOn(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
+/// #3587 — an issuer downloads from the invoice's sheet, opened from the
+/// home's Paid and closed list.
+Future<void> _download(WidgetTester tester, String id) async {
+  await openInvoice(tester, id);
+  await tester.tap(find.byKey(ValueKey('invoice-download-$id')));
   await tester.pumpAndSettle();
+}
+
+/// An admin who reads every invoice but does not issue: the archive (with
+/// its nested regrouped sources) is theirs.
+FakeWorkspaceRepository _reader() {
+  final workspace = FakeWorkspaceRepository.withWorkspace();
+  workspace.myMember =
+      workspace.myMember.copyWith(isOwner: false, isAdmin: true);
+  return workspace;
 }
 
 void main() {
@@ -82,12 +95,8 @@ void main() {
         return 'Download/$fileName';
       },
     );
-    await _openArchiveOn(tester);
-
     // Alone first.
-    await tester.tap(
-        find.byKey(ValueKey('invoice-download-row-${r.settlement}')));
-    await tester.pumpAndSettle();
+    await _download(tester, r.settlement);
     expect(find.byKey(const ValueKey('invoice-annex-with')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('invoice-annex-alone')));
     await tester.pumpAndSettle();
@@ -96,9 +105,7 @@ void main() {
 
     // Then with the regrouped invoices attached.
     captured = null;
-    await tester.tap(
-        find.byKey(ValueKey('invoice-download-row-${r.settlement}')));
-    await tester.pumpAndSettle();
+    await _download(tester, r.settlement);
     await tester.tap(find.byKey(const ValueKey('invoice-annex-with')));
     await tester.pumpAndSettle();
     final withAnnexes = captured!.length;
@@ -118,9 +125,7 @@ void main() {
         return 'Download/$fileName';
       },
     );
-    await _openArchiveOn(tester);
-    await tester.tap(find.byKey(ValueKey('invoice-download-row-${r.plain}')));
-    await tester.pumpAndSettle();
+    await _download(tester, r.plain);
     expect(find.byKey(const ValueKey('invoice-annex-with')), findsNothing);
     expect(captured, isNotNull);
   });
@@ -128,8 +133,7 @@ void main() {
   testWidgets('the archive keeps the regrouping invoice AND the invoices '
       'behind it, nested under it', (tester) async {
     final r = await _regrouped();
-    await pumpInvoices(tester, money: r.money);
-    await _openArchiveOn(tester);
+    await pumpInvoices(tester, money: r.money, workspace: _reader());
     expect(find.byKey(ValueKey('invoice-${r.settlement}')), findsOneWidget);
     // Not as rows of their own...
     expect(find.byKey(ValueKey('invoice-${r.a}')), findsNothing);
