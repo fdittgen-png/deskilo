@@ -6,6 +6,7 @@
 // do" entry opens the list of exactly what it counts.
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/receivables_answers.dart';
+import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_home.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -148,6 +149,93 @@ void main() {
     expect(container.read(invoicingFailedSourcesProvider), {
       InvoicingSource.matches,
     });
+  });
+
+  // #3742 — the business's reminder rules are a source like the others: an
+  // unread or failed read is never replaced by the defaults.
+  testWidgets('failed reminder rules show no reminder state, and Try again '
+      'reads them again', (tester) async {
+    final retried = <InvoicingSource>[];
+    await _pump(
+      tester,
+      _data(failed: {InvoicingSource.rules}),
+      onRetry: retried.add,
+    );
+    expect(find.byKey(const ValueKey('invoicing-failed-rules')), findsOne);
+    expect(find.textContaining('Reminder rules'), findsOne);
+    expect(find.byKey(const ValueKey('invoicing-todo')), findsNothing);
+    expect(find.byKey(const ValueKey('invoicing-list')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('invoicing-retry-rules')));
+    expect(retried, [InvoicingSource.rules]);
+  });
+
+  test('no receivable is built on default rules: unread rules leave the '
+      'receivables unread and name the source', () async {
+    final container = ProviderContainer(
+      overrides: [
+        ...standardTestOverrides(money: FakeMoneyRepository()),
+        dunningRulesProvider.overrideWith(
+          (ref) async => throw StateError('the rules could not be read'),
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+    final failed = container.listen(invoicingFailedSourcesProvider, (_, _) {});
+    final receivables = container.listen(
+      invoicingReceivablesProvider,
+      (_, _) {},
+    );
+    addTearDown(failed.close);
+    addTearDown(receivables.close);
+    await expectLater(
+      container.read(dunningRulesProvider.future),
+      throwsStateError,
+    );
+    await container.read(invoicesProvider.future);
+    expect(container.read(invoicingFailedSourcesProvider), {
+      InvoicingSource.rules,
+    });
+    expect(container.read(invoicingReceivablesProvider), isNull);
+  });
+
+  test('a refresh that fails keeps the last rules but names them, so the '
+      'home withholds the reminders', () async {
+    var answering = true;
+    final container = ProviderContainer(
+      overrides: [
+        ...standardTestOverrides(money: FakeMoneyRepository()),
+        dunningRulesProvider.overrideWith((ref) async {
+          if (!answering) throw StateError('offline');
+          return DunningRules.defaults; // empty-ok: the fixture's stored rules
+        }),
+      ],
+      retry: (_, _) => null,
+    );
+    addTearDown(container.dispose);
+    final failed = container.listen(invoicingFailedSourcesProvider, (_, _) {});
+    addTearDown(failed.close);
+    await container.read(dunningRulesProvider.future);
+    expect(container.read(invoicingFailedSourcesProvider), isEmpty);
+    answering = false;
+    container.invalidate(dunningRulesProvider);
+    await expectLater(
+      container.read(dunningRulesProvider.future),
+      throwsStateError,
+    );
+    expect(
+      container.read(dunningRulesProvider).hasValue,
+      isTrue,
+      reason: 'the last rules read are kept',
+    );
+    expect(
+      container.read(invoicingFailedSourcesProvider),
+      contains(InvoicingSource.rules),
+    );
+    expect(
+      InvoicingSource.statuses,
+      contains(InvoicingSource.rules),
+      reason: 'a failed status source withholds the figures and actions',
+    );
   });
 
   testWidgets('until the received payments are read, no reminder is '

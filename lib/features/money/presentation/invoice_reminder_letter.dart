@@ -51,7 +51,9 @@ reminderLetterReport(
   try {
     // #3680 — the language comes from the members as read; a read that did
     // not answer fails the letter instead of choosing a language blindly.
-    final members = ref.read(workspaceMembersProvider).requireValue;
+    // #3742 — awaited: a read still running is not a failure.
+    final members = await ref.read(workspaceMembersProvider.future);
+    if (!context.mounted) throw StateError('the letter was left');
     final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
     final userId = member?.userId;
     final profile = userId == null

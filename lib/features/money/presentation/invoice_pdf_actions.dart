@@ -119,6 +119,8 @@ Future<void> downloadInvoicePdf(
   Invoice invoice,
 ) =>
     printOrRetry(context, 'downloadInvoicePdf', () async {
+      await readDocumentPolicies(ref);
+      if (!context.mounted) return;
     final l10n = context.l10n;
     final annexes = await _askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return;
@@ -165,6 +167,8 @@ Future<void> quickViewInvoice(
   bool proforma = false,
 }) =>
     printOrRetry(context, 'quickViewInvoice', () async {
+      await readDocumentPolicies(ref);
+      if (!context.mounted) return;
     final l10n = context.l10n;
     final reference = workspaceTaxReference(ref);
     if (reference == null) {
@@ -241,6 +245,8 @@ Future<void> shareInvoicePdf(
   Invoice invoice,
 ) =>
     printOrRetry(context, 'shareInvoicePdf', () async {
+      await readDocumentPolicies(ref);
+      if (!context.mounted) return;
     final l10n = context.l10n;
     final annexes = await _askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return;

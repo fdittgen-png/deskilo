@@ -14,7 +14,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_journey.dart';
 import '../invoice_status.dart';
@@ -74,11 +73,14 @@ InvoiceJourney? _journey(
   final events = watch
       ? ref.watch(eventsProvider).value
       : ref.read(eventsProvider).value;
+  // #3742 — no journey on the default rules: none until the business's own
+  // are read.
+  if (rules == null) return null;
   return InvoiceJourney.of(
     invoice: invoice,
     match: match,
     reminder: reminder,
-    rules: rules ?? DunningRules.defaults,
+    rules: rules,
     now: now,
     facts: journeyFactsOf(invoice, match, events ?? const []),
     replacedByNumber: replacedByNumber,
