@@ -59,3 +59,14 @@ scratchpad/
 # put every open pull request that adds a test in conflict.
 /docs/testing/TEST_INVENTORY.md
 fastlane/metadata/ios/review_information/phone_number.txt
+
+# #3646 — local coordination and tool state never enter the repository
+/AGENT_HANDOFF.md
+/.agent-work/
+/to-*.md
+/to-*.pos
+/prs.json
+/snapshots.jsonl
+/supabase/.temp/
+/.mcp.json
+/.claude/settings.local.json
