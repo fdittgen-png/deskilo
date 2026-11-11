@@ -65,6 +65,8 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     final data = _filter.apply(all);
     final (prod, dev) = (data.production(devIds), data.development(devIds));
     final (owed, options) = (prod.payable.length, all.workspaces);
+    // #3682 — while a source has not answered, an empty list is not "none".
+    final partial = all.notAnswered.isNotEmpty;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -117,13 +119,13 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      _Outstanding(data: prod, dev: dev),
-                      _Paid(data: prod, dev: dev),
+                      _Outstanding(data: prod, dev: dev, partial: partial),
+                      _Paid(data: prod, dev: dev, partial: partial),
                       _Payments(
                           filter: _filter,
                           devIds: devIds,
                           hostPayments: all.payments),
-                      _Reminders(data: prod, dev: dev),
+                      _Reminders(data: prod, dev: dev, partial: partial),
                     ],
                   ),
                 ),
@@ -175,9 +177,16 @@ Future<void> _openMyPayment(
   router.go('/money');
 }
 
+/// An empty list: complete only when every source answered (#3682).
+Widget _empty(BuildContext context, String key, IconData icon, String none,
+        {required bool partial}) =>
+    EmptyState(key: ValueKey(key), icon: icon,
+        title: partial ? context.l10n.financesNothingSoFar : none);
+
 class _Outstanding extends ConsumerWidget {
-  const _Outstanding({required this.data, required this.dev});
+  const _Outstanding({required this.data, required this.dev, required this.partial});
   final FinanceOverview data;
+  final bool partial;
 
   /// The development spaces' outstanding invoices, listed apart.
   final FinanceOverview dev;
@@ -191,11 +200,9 @@ class _Outstanding extends ConsumerWidget {
       onRefresh: () => refreshMyFinances(ref),
       children: [
         if (list.isEmpty)
-          EmptyState(
-            key: const ValueKey('finances-outstanding-empty'),
-            icon: Icons.check_circle_outline,
-            title: l10n.financesNothingOwed,
-          )
+          _empty(context, 'finances-outstanding-empty',
+              Icons.check_circle_outline, l10n.financesNothingOwed,
+              partial: partial)
         else ...[
           FinancesOwedSummary(data: data, now: now),
           const SizedBox(height: AppSpacing.sm),
@@ -219,9 +226,10 @@ class _Outstanding extends ConsumerWidget {
 }
 
 class _Paid extends ConsumerWidget {
-  const _Paid({required this.data, required this.dev});
+  const _Paid({required this.data, required this.dev, required this.partial});
   final FinanceOverview data;
   final FinanceOverview dev;
+  final bool partial;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -232,11 +240,8 @@ class _Paid extends ConsumerWidget {
       onRefresh: () => refreshMyFinances(ref),
       children: [
         if (list.isEmpty)
-          EmptyState(
-            key: const ValueKey('finances-paid-empty'),
-            icon: Icons.receipt_long_outlined,
-            title: l10n.financesNothingPaid,
-          )
+          _empty(context, 'finances-paid-empty', Icons.receipt_long_outlined,
+              l10n.financesNothingPaid, partial: partial)
         else
           FinanceDocumentList(
               invoices: newestFirst(list),
@@ -260,9 +265,10 @@ class _Paid extends ConsumerWidget {
 }
 
 class _Reminders extends ConsumerWidget {
-  const _Reminders({required this.data, required this.dev});
+  const _Reminders({required this.data, required this.dev, required this.partial});
   final FinanceOverview data;
   final FinanceOverview dev;
+  final bool partial;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -320,11 +326,9 @@ class _Reminders extends ConsumerWidget {
       onRefresh: () => refreshMyFinances(ref),
       children: [
         if (data.reminders.isEmpty && dev.reminders.isEmpty)
-          EmptyState(
-            key: const ValueKey('finances-reminders-empty'),
-            icon: Icons.notifications_none_outlined,
-            title: l10n.financesNoReminders,
-          ),
+          _empty(context, 'finances-reminders-empty',
+              Icons.notifications_none_outlined, l10n.financesNoReminders,
+              partial: partial),
         for (final r in data.reminders) row(r),
         if (dev.reminders.isNotEmpty) ...[
           const FinancesDevSection(),

@@ -11032,6 +11032,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesAwaitingValidation => 'Pagamento in convalida';
 
   @override
+  String get financesBeingValidated => 'In convalida';
+
+  @override
   String get financesColumnAmount => 'Importo';
 
   @override
@@ -11089,6 +11092,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesHideAmount => 'Nascondi l\'importo';
 
   @override
+  String get financesHostsUnavailable =>
+      'Non è stato possibile elencare le Sue installazioni collegate in questo momento; quanto mostrato proviene solo da questa installazione.';
+
+  @override
   String financesLinkAction(String space) {
     return 'Apri per $space';
   }
@@ -11108,6 +11115,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesNothingPaid => 'Nessuna fattura ancora saldata.';
+
+  @override
+  String get financesNothingSoFar => 'Niente tra quanto letto finora.';
 
   @override
   String get financesOpenDocument => 'Apri';

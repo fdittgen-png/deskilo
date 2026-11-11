@@ -28,8 +28,13 @@ enum FinanceState {
   static FinanceState fromWire(Object? wire) =>
       values.where((s) => s.wire == wire).firstOrNull ?? FinanceState.open;
 
-  /// Still owed (fully or in part).
+  /// Still open: not settled yet (fully or in part).
   bool get owed => this == open || this == awaitingValidation || this == partiallyPaid;
+
+  /// #3682 — still to pay. A payment being validated (0380: the business
+  /// matched my payment, its validators have not confirmed it yet) is paid
+  /// on my side: open, but neither to pay nor ever late.
+  bool get toPay => this == open || this == partiallyPaid;
 }
 
 class FinanceInvoice {
@@ -70,7 +75,7 @@ class FinanceInvoice {
   /// (#3285: one rule, `invoiceDue`). A credit note is money due to me:
   /// it is never late.
   bool overdueAt(DateTime now) =>
-      state.owed && !isCreditNote && dueOn != null && isOverdueOn(dueOn!, now);
+      state.toPay && !isCreditNote && dueOn != null && isOverdueOn(dueOn!, now);
 
   factory FinanceInvoice.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'finance_invoice');
@@ -185,6 +190,10 @@ class FinanceOverview {
   /// #2557 C5 — the connected hosts my personal account names, each with
   /// its own state, in the order they are read.
   final List<FinanceHostRead> hosts;
+
+  /// #3682 — a connected host is still being read: nothing is complete.
+  bool get stillReading =>
+      hosts.any((h) => h.status == FinanceHostStatus.reading);
 
   /// Every host whose documents are not part of what is shown: the ones
   /// that did not answer, and the connected ones not answered yet. What a
@@ -422,34 +431,46 @@ class FinanceOverview {
           if (!i.state.owed) i,
       ];
 
-  /// What I still have to pay: the owed invoices. A credit note that was not
-  /// used yet is money due TO me and is never among them (#3599).
+  /// What I still have to pay: never a credit note not used yet (money due
+  /// TO me, #3599) nor an invoice whose payment is being validated (#3682).
   List<FinanceInvoice> get payable => [
         for (final i in outstanding)
-          if (!i.isCreditNote) i,
+          if (!i.isCreditNote && i.state.toPay) i,
       ];
 
-  /// What remains open with each business, per currency: its owed invoices
-  /// less its own credit notes not used yet. A credit lowers what I pay the
-  /// business that issued it and never another one's invoice — the money
-  /// goes to one payee.
+  /// #3682 — invoices I paid whose payment the business has not confirmed.
+  bool _validating(FinanceInvoice i) =>
+      !i.isCreditNote && i.state == FinanceState.awaitingValidation;
+
+  /// What I paid that waits for confirmation, per currency: not owed.
+  Map<String, int> get beingValidatedByCurrency => _byCode([
+        for (final i in outstanding)
+          if (_validating(i)) (i.currency, i.remainingCents),
+      ]);
+
+  /// What remains open with each business, per currency: its invoices to
+  /// pay less its own credit notes not used yet. A credit lowers what I pay
+  /// the business that issued it, never another one's — one payee.
   Map<(String, String), int> get _openByPayee {
     final out = <(String, String), int>{};
-    for (final i in outstanding) {
+    for (final i in outstanding.where((i) => !_validating(i))) {
       final payee = (i.workspaceId, i.currency);
       out[payee] = (out[payee] ?? 0) + i.remainingCents;
     }
     return out;
   }
 
-  /// [sign] of what is open with each business, summed per currency and
-  /// ordered by currency code: 1 for what I owe, -1 for what I am owed.
-  Map<String, int> _openByCurrency(int sign) {
+  /// [sign] of what is open with each business, summed per currency: 1 for
+  /// what I owe, -1 for what I am owed.
+  Map<String, int> _openByCurrency(int sign) => _byCode([
+        for (final e in _openByPayee.entries)
+          if (e.value * sign > 0) (e.key.$2, e.value * sign),
+      ]);
+
+  /// [cents] summed per currency, ordered by currency code.
+  static Map<String, int> _byCode(Iterable<(String, int)> cents) {
     final out = <String, int>{};
-    for (final e in _openByPayee.entries) {
-      final cents = e.value * sign;
-      if (cents > 0) out[e.key.$2] = (out[e.key.$2] ?? 0) + cents;
-    }
+    for (final (code, c) in cents) { out[code] = (out[code] ?? 0) + c; }
     return {for (final code in out.keys.toList()..sort()) code: out[code]!};
   }
 

@@ -11028,6 +11028,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesAwaitingValidation => 'Pago en validación';
 
   @override
+  String get financesBeingValidated => 'En validación';
+
+  @override
   String get financesColumnAmount => 'Importe';
 
   @override
@@ -11086,6 +11089,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesHideAmount => 'Ocultar el importe';
 
   @override
+  String get financesHostsUnavailable =>
+      'No se han podido listar sus instalaciones conectadas en este momento; lo que se muestra procede solo de esta instalación.';
+
+  @override
   String financesLinkAction(String space) {
     return 'Abrir para $space';
   }
@@ -11105,6 +11112,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesNothingPaid => 'Aún no hay facturas saldadas.';
+
+  @override
+  String get financesNothingSoFar => 'Nada entre lo leído hasta ahora.';
 
   @override
   String get financesOpenDocument => 'Abrir';

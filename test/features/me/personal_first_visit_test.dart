@@ -6,11 +6,14 @@
 // says; the four steps are derived from what the app reads, a source still
 // loading or failed never marks one done, and the card leaves when all four
 // are done.
+import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/profile_repository.dart';
 import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:deskilo/features/me/domain/getting_started.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
+import 'package:deskilo/features/money/domain/finance_hosts.dart';
+import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -98,12 +101,14 @@ Future<GoRouter> _pump(
   _Hosts? hosts,
   FakeProfileRepository? profile,
   FakeMeRepository? me,
+  FakeAccountActivityRepository? documents,
   Size size = const Size(420, 2400),
 }) => pumpMeApp(
   tester,
   workspace: workspace ?? FakeWorkspaceRepository(workspaces: []),
   profile: profile ?? _profile(),
   me: me,
+  accountActivity: documents,
   size: size,
   extraOverrides: <Override>[
     personalShellEnabledProvider.overrideWithValue(true),
@@ -170,6 +175,25 @@ void main() {
       expect(_chip(tester, StartedStep.space), 'Next');
       expect(_chip(tester, StartedStep.booking), '');
       expect(_chip(tester, StartedStep.profile), '');
+    });
+
+    // #3682 — a connected installation whose documents could not be read
+    // leaves "nothing waits" undecided: no welcome over an unread debt.
+    testWidgets('a connected host whose documents failed: no first visit', (
+      tester,
+    ) async {
+      final documents = FakeAccountActivityRepository()
+        ..financeOverview = const FinanceOverview(
+          hosts: [
+            FinanceHostRead(
+              FinanceHost(installationId: 'inst-b', workspaceIds: ['ws-b']),
+              FinanceHostStatus.failed,
+            ),
+          ],
+        );
+      await _pump(tester, documents: documents);
+      expect(_key('me-first-visit'), findsNothing);
+      expect(_key('me-overview-documents-partial'), findsOneWidget);
     });
 
     testWidgets('the search field opens Discover with the search focused; Browse places opens it plain', (tester) async {
