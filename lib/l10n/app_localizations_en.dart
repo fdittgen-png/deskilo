@@ -8779,6 +8779,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String eventInvoiceIssuedLine(String number) {
+    return 'New invoice $number';
+  }
+
+  @override
   String eventInvoicePaid(String number, String amount) {
     return 'Invoice $number paid — $amount';
   }
@@ -23472,6 +23477,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pushCancelledTitle => 'Reservation removed';
 
   @override
+  String get pushInvoiceIssuedBody => 'A new invoice is waiting for you.';
+
+  @override
   String get pushMentionBody => 'You were mentioned in a conversation.';
 
   @override
@@ -28542,6 +28550,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get setupNotificationsEventCheckIn =>
       'A booking is about to start: time to check in';
+
+  @override
+  String get setupNotificationsEventInvoiceIssued => 'A new invoice';
 
   @override
   String get setupNotificationsEventInvoiceReminder => 'A payment reminder';

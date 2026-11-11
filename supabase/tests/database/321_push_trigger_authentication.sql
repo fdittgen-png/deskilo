@@ -2,7 +2,7 @@
 -- Every database push caller carries the Vault secret; opaque acceptance is
 -- not evidence of delivery. Legacy unconfigured installations still queue.
 begin;
-select plan(13);
+select plan(14);
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003092' || lpad(n::text,4,'0'))::uuid;
 $$;
@@ -35,7 +35,11 @@ select public.reminder_queue_push(pg_temp.u(501),pg_temp.u(302));
 select is((select count(*)::int from net.http_request_queue where url='https://push-fixture.example.test/send-push' and convert_from(body,'UTF8')::jsonb->>'event_id'=pg_temp.u(301)::text),1,'the pending event trigger queues its push');
 select is((select count(*)::int from net.http_request_queue where url='https://push-fixture.example.test/send-push' and convert_from(body,'UTF8')::jsonb->>'note_id'=pg_temp.u(601)::text),1,'the note trigger queues its push');
 select is((select count(*)::int from net.http_request_queue where url='https://push-fixture.example.test/send-push' and convert_from(body,'UTF8')::jsonb->>'event_id'=pg_temp.u(302)::text),1,'the reminder path queues its push');
-select is((select count(*)::int from net.http_request_queue where url='https://push-fixture.example.test/send-push' and headers->>'x-deskilo-push-secret'='test-only-push-secret'),3,'all three callers carry the Vault secret');
+-- #3672 (0723): a new invoice queues its customer's push too.
+select is((select count(*)::int from net.http_request_queue q join public.events e
+             on e.id = (convert_from(q.body,'UTF8')::jsonb->>'event_id')::uuid
+          where q.url='https://push-fixture.example.test/send-push' and e.type='invoice_issued'),1,'the new-invoice path queues its push');
+select is((select count(*)::int from net.http_request_queue where url='https://push-fixture.example.test/send-push' and headers->>'x-deskilo-push-secret'='test-only-push-secret'),4,'all four callers carry the Vault secret');
 select ok((select bool_and(headers->>'Authorization'='Bearer public-test-key') from net.http_request_queue where url='https://push-fixture.example.test/send-push'),'gateway authorization is retained');
 insert into net._http_response(id,status_code,content,timed_out,created)
 select net_request_id,202,'{"accepted":true}',false,now() from public.reminder_attempts where intent_id=pg_temp.u(501);

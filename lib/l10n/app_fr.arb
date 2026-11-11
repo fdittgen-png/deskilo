@@ -5809,6 +5809,7 @@
   "eventExpenseScheduleLine": "{actor} programme « {title} » — {amount} récurrent",
   "eventExpenseSubmitted": "{actor} a soumis une dépense de {amount}",
   "eventForSubject": "pour {name}",
+  "eventInvoiceIssuedLine": "Nouvelle facture {number}",
   "eventInvoicePaid": "Facture {number} payée — {amount}",
   "@eventInvoicePaid": {
     "placeholders": {
@@ -14376,6 +14377,7 @@
   "pushAllowAction": "Autoriser",
   "pushCancelledBody": "Une réservation a été retirée par un admin.",
   "pushCancelledTitle": "Réservation retirée",
+  "pushInvoiceIssuedBody": "Une nouvelle facture vous attend.",
   "pushMentionBody": "Vous avez été mentionné dans une conversation.",
   "pushMessageBody": "Vous avez un nouveau message.",
   "pushPendingBody": "Quelqu'un attend votre confirmation.",
@@ -17883,6 +17885,7 @@
   "setupNotificationsChannelsAppPush": "dans l’application et par une notification sur le téléphone",
   "setupNotificationsChannelsDevice": "par un rappel sur son propre téléphone, même sans notifications",
   "setupNotificationsEventCheckIn": "Une réservation va commencer : il est temps d’arriver",
+  "setupNotificationsEventInvoiceIssued": "Une nouvelle facture",
   "setupNotificationsEventInvoiceReminder": "Une relance de paiement",
   "setupNotificationsEventMemberMention": "Quelqu’un le cite dans une conversation",
   "setupNotificationsEventMemberNote": "Un message ou une annonce",
