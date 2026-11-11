@@ -183,6 +183,7 @@ class DemoFixture {
     seedDemoYearOfResources(reservations, workspaces, today);
     seedDemoYearOfMoney(money, today);
     applyDemoVat(money);
+    orderDemoRegister(money);
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);

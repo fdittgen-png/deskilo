@@ -5,6 +5,7 @@
 // One test per finding, each against the real Demo composition or the
 // fixture it is built from.
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
@@ -490,5 +491,34 @@ void main() {
     final text = tester.widget<Text>(find.byKey(const ValueKey('demo-bar-date')));
     expect(text.data, startsWith('Demo · '));
     expect(text.data, contains('May'));
+  });
+
+  test("the register's newest rows and its first open invoice are not the "
+      "owner's own", () {
+    final f = DemoFixture.build();
+    final register = [...f.money.invoices.where((i) => !i.isVoided)]
+      ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+    // The newest month has four invoices of other members; they lead it.
+    expect(
+      register.take(4).map((i) => i.memberId),
+      everyElement(isNot('member-1')),
+      reason: 'the owner is a paying member, not the first thing a visitor '
+          'reads in the register',
+    );
+    final firstOpen = register.firstWhere(
+      (i) => i.totalCents > 0 && !f.money.invoiceMatchesStore.containsKey(i.id),
+    );
+    expect(firstOpen.memberId, isNot('member-1'));
+    final owner = register.where((i) => i.memberId == 'member-1');
+    expect(owner, isNotEmpty, reason: 'her own invoices stay');
+  });
+
+  test('the Demo opens in the language the app is shown in', () {
+    final store = InMemoryLocaleStore()..adopt('fr');
+    expect(store.languageCode, 'fr');
+    store.adopt('de');
+    expect(store.languageCode, 'fr', reason: 'a choice in the Demo is kept');
+    final none = InMemoryLocaleStore()..adopt(null);
+    expect(none.languageCode, isNull, reason: 'the device decides then');
   });
 }

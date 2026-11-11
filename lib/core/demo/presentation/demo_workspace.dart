@@ -67,11 +67,8 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
     // #3601 — the Demo opens in the language the app is shown in: a visitor
     // who chose French is not handed a German Demo. A choice made inside the
     // Demo is kept (the store is only filled while it is empty).
-    final shown = ref.read(localeControllerProvider).value?.languageCode;
-    final store = session.fixture.prefs.locale;
-    if (shown != null && store.languageCode == null) {
-      store.languageCode = shown;
-    }
+    session.fixture.prefs.locale
+        .adopt(ref.read(localeControllerProvider).value?.languageCode);
     final container = _container = ProviderContainer(overrides: [
       ...demoOverrides(session.fixture),
       // Only the outer router handles a tab reload; the Demo router must not
