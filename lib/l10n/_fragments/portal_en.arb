@@ -123,6 +123,10 @@
   "@portalRequestProfile": {
     "description": "Shown as the text in space offers (directory)."
   },
+  "portalRequestPending": "Request pending",
+  "@portalRequestPending": {
+    "description": "Shown on the disabled button of a space offer once the request to join was sent and waits for the space's answer."
+  },
   "portalRequestSent": "Request sent. The workspace will review your profile.",
   "@portalRequestSent": {
     "description": "Shown as the text in public workspace view (directory)."

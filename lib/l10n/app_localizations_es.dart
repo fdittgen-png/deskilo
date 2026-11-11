@@ -21198,6 +21198,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Vincular un servidor al directorio global';
 
   @override
+  String get portalRequestPending => 'Solicitud pendiente';
+
+  @override
   String get portalRequestProfile => 'Pedir unirme';
 
   @override

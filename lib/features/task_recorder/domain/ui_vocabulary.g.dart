@@ -10353,6 +10353,7 @@ const Set<String> uiLabelKeys = {
   'portalReachableHeading',
   'portalRecipientHint',
   'portalRegisterDirectory',
+  'portalRequestPending',
   'portalRequestProfile',
   'portalRequestSent',
   'portalResetAll',
