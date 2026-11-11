@@ -77,6 +77,14 @@ class SetupDraftAutosave extends _$SetupDraftAutosave {
   /// The version the next write is made against; null: no draft.
   int? _version;
 
+  /// #3282 — counts the writes the server acknowledged, so a read that
+  /// started before one never puts back the older version it saw.
+  int _acknowledged = 0;
+
+  /// #3282 — the first read of the stored draft, while it runs: a save
+  /// waits for it, so it is made against the version the server holds.
+  Future<void>? _reading;
+
   /// Sent and not answered: sent again, unchanged, before anything newer.
   _Attempt? _unconfirmed;
 
@@ -103,9 +111,16 @@ class SetupDraftAutosave extends _$SetupDraftAutosave {
   /// The draft the server holds, remembered as the version to write
   /// against. Null when there is none.
   Future<SetupStepDraft?> load() async {
-    final draft = await _repository.stepDraft(_workspaceId, _step);
-    _version = draft?.version;
-    return draft;
+    final before = _acknowledged;
+    final reading = Completer<void>();
+    _reading = reading.future;
+    try {
+      final draft = await _repository.stepDraft(_workspaceId, _step);
+      if (_acknowledged == before) _version = draft?.version;
+      return draft;
+    } finally {
+      reading.complete();
+    }
   }
 
   /// The person changed the answers: saved once they pause.
@@ -180,6 +195,7 @@ class SetupDraftAutosave extends _$SetupDraftAutosave {
   });
 
   Future<void> _send() async {
+    await _reading;
     while (true) {
       final pending = _pending;
       final attempt =
@@ -205,6 +221,7 @@ class SetupDraftAutosave extends _$SetupDraftAutosave {
         );
         _unconfirmed = null;
         _version = saved.version;
+        _acknowledged++;
         _set(SetupDraftSaved(saved.updatedAt));
       } on SetupDraftConflict catch (e, st) {
         TraceLogger.instance.warn(

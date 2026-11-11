@@ -8,6 +8,8 @@
 // a draft another configurer changed meanwhile shows "Reload" and "Keep
 // mine", and keep mine writes against their version. Every case reads the
 // fake server's stored draft.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/ui/app_durations.dart';
 import 'package:deskilo/features/workspace/domain/setup_step_draft.dart';
@@ -178,5 +180,29 @@ void main() {
     final stored = await _stored(server);
     expect(stored?.payload['language'], 'de');
     expect(stored?.version, 2);
+  });
+
+  // #3282 — the stored draft arrives late: what the owner typed meanwhile is
+  // kept (never filled over), and their save is made against the version the
+  // server holds, without a false conflict.
+  testWidgets('what the owner types before the draft arrives is kept', (
+    tester,
+  ) async {
+    final server = FakeLocalSetupRepository();
+    await _seed(server, 'fr');
+    final held = server.holdDraftReads = Completer<void>();
+    await _open(tester, server);
+    await _pickLanguage(tester, 'Italiano');
+    await tester.pump(AppDurations.draftAutosave);
+    await tester.pump();
+    held.complete();
+    server.holdDraftReads = null;
+    await tester.pumpAndSettle();
+    expect(_shown('Italiano'), findsOneWidget, reason: 'not filled over');
+    await tester.pump(AppDurations.draftAutosave);
+    await tester.pumpAndSettle();
+    expect((await _stored(server))?.payload['language'], 'it');
+    expect(find.text('Draft saved'), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-draft-conflict')), findsNothing);
   });
 }

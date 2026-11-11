@@ -62,6 +62,10 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
   /// Set while the frame itself fills the form: that is not an edit.
   var _filling = false;
 
+  /// #3282 — the owner typed before the stored draft arrived: what they
+  /// typed wins, the late draft is not filled over it.
+  var _typed = false;
+
   @override
   void initState() {
     super.initState();
@@ -82,6 +86,7 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
 
   void _edited() {
     if (_filling) return;
+    _typed = true;
     ref.read(_draft.notifier).changed(widget.form.answers());
   }
 
@@ -108,7 +113,7 @@ class _SetupDraftFrameState extends ConsumerState<SetupDraftFrame> {
       );
       return;
     }
-    if (draft == null || !mounted) return;
+    if (draft == null || !mounted || _typed) return;
     _fill(draft.payload);
     _restored.value = true;
   }

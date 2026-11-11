@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import '../../../features/workspace/domain/local_setup.dart';
 import '../../../features/workspace/domain/setup_journey.dart';
 import '../../../features/workspace/domain/setup_levels.dart';
@@ -40,8 +42,13 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   int failDraftSaves = 0;
   bool draftAnswerLost = false;
 
+  /// #3282 — while set, a draft read waits for it: a test types before the
+  /// stored draft arrives.
+  Completer<void>? holdDraftReads;
+
   @override
   Future<SetupStepDraft?> stepDraft(String workspaceId, String step) async {
+    await holdDraftReads?.future;
     final row = _drafts['$workspaceId/$step'];
     final payload = row?.payload;
     if (row == null || payload == null) return null;
