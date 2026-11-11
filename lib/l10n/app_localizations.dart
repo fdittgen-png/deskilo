@@ -23284,6 +23284,168 @@ abstract class AppLocalizations {
   /// **'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
   String get invoiceMissingVies;
 
+  /// #3587 R1-e: the select-all row of the month list
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get invoiceMonthAll;
+
+  /// #3587 R1-e: one notice: the business's own essentials missing for everyone
+  ///
+  /// In en, this message translates to:
+  /// **'Your business details are incomplete: {missing}'**
+  String invoiceMonthBusinessFix(String missing);
+
+  /// #3587 R1-e: look again for the customers whose answer was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get invoiceMonthCheckAgain;
+
+  /// #3587 R1-e: leave the result page
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get invoiceMonthDone;
+
+  /// #3587 R1-e: opens the place where a missing detail is completed
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get invoiceMonthFix;
+
+  /// #3587 R1-e: chip on an invoice a validation policy holds
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for a validation'**
+  String get invoiceMonthHeld;
+
+  /// #3587 R1-e: the one filled action of the month flow, with the amount it issues
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}'**
+  String invoiceMonthIssue(int count, String amount);
+
+  /// #3587 R1-e: chip on an issued invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get invoiceMonthIssued;
+
+  /// #3587 R1-e: the issue button while it works
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing…'**
+  String get invoiceMonthIssuing;
+
+  /// #3587 R1-e: said when the person tries to leave while invoices are being issued
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing is running. Wait for it to finish.'**
+  String get invoiceMonthLeaveBlocked;
+
+  /// #3587 R1-e: status of a customer whose details block the invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a fix'**
+  String get invoiceMonthNeedsFix;
+
+  /// #3587 R1-e: how many listed customers cannot be invoiced until fixed
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 needs a fix} other{{count} need a fix}}'**
+  String invoiceMonthNeedsFixCount(int count);
+
+  /// #3587 R1-e: caption of a customer whose details block the invoice: the status and what is missing, as one message
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a fix: {missing}'**
+  String invoiceMonthNeedsFixLine(String missing);
+
+  /// #3587 R1-e: heading of what the server did not issue
+  ///
+  /// In en, this message translates to:
+  /// **'Not done'**
+  String get invoiceMonthNotDone;
+
+  /// #3587 R1-e: reason line when the server refused without a usable reason
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be issued. Try again.'**
+  String get invoiceMonthNotIssued;
+
+  /// #3587 R1-e: the line that says an issued invoice is immutable
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice can no longer be edited; a mistake is corrected with a replacement.'**
+  String get invoiceMonthNote;
+
+  /// #3587 R1-e: tooltip: preview a customer's proforma before issuing
+  ///
+  /// In en, this message translates to:
+  /// **'Preview the proforma'**
+  String get invoiceMonthProforma;
+
+  /// #3587 R1-e: result title when nothing was issued
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice issued'**
+  String get invoiceMonthResultNone;
+
+  /// #3587 R1-e: result page subtitle when nothing was issued
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice exists yet for what is listed below.'**
+  String get invoiceMonthResultNoneSubtitle;
+
+  /// #3587 R1-e: result title when only some invoices were issued
+  ///
+  /// In en, this message translates to:
+  /// **'{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}'**
+  String invoiceMonthResultPartial(int issued, int total);
+
+  /// #3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}'**
+  String invoiceMonthResultSubtitle(int count);
+
+  /// #3587 R1-e: result page title when something was issued
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 invoice issued} other{{count} invoices issued}}'**
+  String invoiceMonthResultTitle(int count);
+
+  /// #3587 R1-e: retry only the customers the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Retry for these'**
+  String get invoiceMonthRetry;
+
+  /// #3587 R1-e: how many customers are selected of those listed, and their total
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}'**
+  String invoiceMonthSelected(int count, int total, String amount);
+
+  /// #3587 R1-e: where what was not issued stays
+  ///
+  /// In en, this message translates to:
+  /// **'What was not done stays in To do.'**
+  String get invoiceMonthStays;
+
+  /// #3587 R1-e: title of the Invoice-the-month flow
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {month}'**
+  String invoiceMonthTitle(String month);
+
+  /// #3587 R1-e: reason line when the answer was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be confirmed: it may exist. Check again.'**
+  String get invoiceMonthUnknown;
+
   /// Open tab empty state
   ///
   /// In en, this message translates to:

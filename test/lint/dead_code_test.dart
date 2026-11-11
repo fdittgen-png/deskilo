@@ -18,10 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/core/ui/kit/result_page.dart::ResultPage':
-      '#3587 R1-d/R1-e/R1-f — the invoice page and the flows read it',
-  'lib/core/ui/kit/select_row.dart::SelectRow':
-      '#3587 R1-d/R1-e/R1-f — the invoice page and the flows read it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':

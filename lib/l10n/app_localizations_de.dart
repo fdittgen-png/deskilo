@@ -14153,6 +14153,148 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)';
 
   @override
+  String get invoiceMonthAll => 'Alle';
+
+  @override
+  String invoiceMonthBusinessFix(String missing) {
+    return 'Die Angaben Ihres Betriebs sind unvollständig: $missing';
+  }
+
+  @override
+  String get invoiceMonthCheckAgain => 'Erneut prüfen';
+
+  @override
+  String get invoiceMonthDone => 'Fertig';
+
+  @override
+  String get invoiceMonthFix => 'Ergänzen';
+
+  @override
+  String get invoiceMonthHeld => 'Wartet auf eine Freigabe';
+
+  @override
+  String invoiceMonthIssue(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen ausstellen · $amount',
+      one: '1 Rechnung ausstellen · $amount',
+      zero: 'Rechnungen ausstellen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthIssued => 'Ausgestellt';
+
+  @override
+  String get invoiceMonthIssuing => 'Wird ausgestellt…';
+
+  @override
+  String get invoiceMonthLeaveBlocked =>
+      'Die Rechnungen werden gerade ausgestellt. Bitte warten Sie, bis es fertig ist.';
+
+  @override
+  String get invoiceMonthNeedsFix => 'Muss ergänzt werden';
+
+  @override
+  String invoiceMonthNeedsFixCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count müssen ergänzt werden',
+      one: '1 muss ergänzt werden',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthNeedsFixLine(String missing) {
+    return 'Muss ergänzt werden: $missing';
+  }
+
+  @override
+  String get invoiceMonthNotDone => 'Nicht erledigt';
+
+  @override
+  String get invoiceMonthNotIssued =>
+      'Konnte nicht ausgestellt werden. Bitte erneut versuchen.';
+
+  @override
+  String get invoiceMonthNote =>
+      'Eine ausgestellte Rechnung kann nicht mehr geändert werden; ein Fehler wird mit einer Ersatzrechnung korrigiert.';
+
+  @override
+  String get invoiceMonthProforma => 'Proforma ansehen';
+
+  @override
+  String get invoiceMonthResultNone => 'Keine Rechnung ausgestellt';
+
+  @override
+  String get invoiceMonthResultNoneSubtitle =>
+      'Für das Folgende existiert noch keine Rechnung.';
+
+  @override
+  String invoiceMonthResultPartial(int issued, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      issued,
+      locale: localeName,
+      other: '$issued von $total Rechnungen ausgestellt',
+      one: '$issued von $total Rechnungen ausgestellt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthResultSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Jeder Kunde sieht sie jetzt in seinem Konto.',
+      one: 'Der Kunde sieht sie jetzt in seinem Konto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen ausgestellt',
+      one: '1 Rechnung ausgestellt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthRetry => 'Für diese wiederholen';
+
+  @override
+  String invoiceMonthSelected(int count, int total, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count von $total ausgewählt · $amount',
+      one: '1 von $total ausgewählt · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthStays =>
+      'Was nicht erledigt wurde, bleibt unter „Zu erledigen“.';
+
+  @override
+  String invoiceMonthTitle(String month) {
+    return '$month abrechnen';
+  }
+
+  @override
+  String get invoiceMonthUnknown =>
+      'Nicht bestätigt: Sie könnte existieren. Erneut prüfen.';
+
+  @override
   String get invoiceNoOpen => 'Keine offenen Rechnungen.';
 
   @override
