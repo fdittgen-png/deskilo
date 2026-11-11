@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
   "billSubscription": "Abonnement {pct} %",
-  "billEntitlement": "{used} demi-journées facturées sur {included} ({openDays} jours d'ouverture)",
+  "billEntitlement": "{used} sur {included, plural, =1{1 demi-journée facturée} other{{included} demi-journées facturées}} ({openDays, plural, =1{1 jour d'ouverture} other{{openDays} jours d'ouverture}})",
   "billOverage": "{extra, plural, one{{extra} demi-journée supplémentaire} other{{extra} demi-journées supplémentaires}}",
   "billServices": "Services consommés",
   "billServicesTotal": "Total des services",

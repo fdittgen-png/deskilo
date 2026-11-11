@@ -9,7 +9,7 @@
   },
   "reminderQueueLevel": "Reminder {level}",
   "@reminderQueueLevel": {
-    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel)",
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation.",
     "placeholders": {
       "level": {
         "type": "int"

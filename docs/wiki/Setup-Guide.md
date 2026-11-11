@@ -806,7 +806,7 @@ You want one place that says, for the main features, what members get, what it n
 | **Member photos on the plan** | Occupants' photos on seats. | | Nobody |
 | **Workspace vocabulary** | The space's own words for a few labels. | | Owner |
 | **Workspace colours** | The brand colour and room colours. | | Owner |
-| **Public workspace listing** | A public page with what you choose to show. | | Owner |
+| **Public workspace listing** | A public page with what you choose to show, and where you are on the map. | | Owner |
 
 *Reservations & usage*
 

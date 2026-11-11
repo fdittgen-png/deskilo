@@ -5,7 +5,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../domain/ledger_entry.dart';
+import '../../application/payment_candidates.dart';
 
 /// What the match dialog returns (0068): the selected REGISTERED
 /// payment plus the resolution its amount demands.
@@ -34,7 +34,7 @@ class MatchInvoiceDialog extends StatefulWidget {
   final MoneyFormat currency;
 
   /// The member's not-yet-consumed registered payments.
-  final List<LedgerEntry> payments;
+  final List<PaymentLeft> payments;
 
   /// The payment the dialog opens on, when it is one of [payments].
   final String? selected;
@@ -58,7 +58,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
     super.dispose();
   }
 
-  LedgerEntry? get _payment => widget.payments
+  PaymentLeft? get _payment => widget.payments
       .where((entry) => entry.id == _paymentId)
       .firstOrNull;
 
@@ -66,7 +66,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
     final l10n = context.l10n;
     final payment = _payment;
     if (payment == null) return;
-    final paid = payment.amountCents;
+    final paid = payment.leftCents;
     final resolution = paid == widget.dueCents
         ? 'exact'
         : paid > widget.dueCents
@@ -91,7 +91,7 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
     final l10n = context.l10n;
     final dateFormat = appFormatOf(context).dates(DateShape.date);
     final payment = _payment;
-    final paid = payment?.amountCents;
+    final paid = payment?.leftCents;
     final over = paid != null && paid > widget.dueCents;
     final under = paid != null && paid < widget.dueCents;
     return AlertDialog(
@@ -125,16 +125,16 @@ class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    for (final entry in widget.payments)
+                    for (final left in widget.payments)
                       RadioListTile<String>(
-                        key: ValueKey('invoice-match-payment-${entry.id}'),
-                        value: entry.id,
+                        key: ValueKey('invoice-match-payment-${left.id}'),
+                        value: left.id,
                         contentPadding: EdgeInsets.zero,
                         dense: true,
                         title: Text(
-                          '${widget.currency.formatMinor(entry.amountCents)}'
-                          ' · ${dateFormat.format(entry.on)}'
-                          '${entry.description.isEmpty ? '' : ' · ${entry.description}'}',
+                          '${widget.currency.formatMinor(left.leftCents)}'
+                          ' · ${dateFormat.format(left.entry.on)}'
+                          '${left.entry.description.isEmpty ? '' : ' · ${left.entry.description}'}',
                         ),
                       ),
                   ],

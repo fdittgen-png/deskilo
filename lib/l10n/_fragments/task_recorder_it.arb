@@ -12,7 +12,7 @@
   "taskRecorderRecordThisTask": "Registra questa attività",
   "taskRecorderDisclosureTitle": "Prima di registrare",
   "taskRecorderDisclosureBody": "Il registratore annota i passaggi che compie sulle schermate di questo spazio — quale schermata, quale azione, cosa ha risposto l'app — solo su questo dispositivo. Non conserva mai ciò che digita, né nomi, importi, messaggi, codici o password. Accesso, pagamento, messaggi e altre schermate protette lasciano solo un segno. Nulla viene inviato: decide Lei cosa esportare.",
-  "taskRecorderLimits": "Fino a {steps} passaggi o {minutes} minuti per registrazione. Le registrazioni vengono eliminate da questo dispositivo dopo {days} giorni; un file esportato è suo e resta dove lo ha salvato.",
+  "taskRecorderLimits": "Fino a {steps, plural, =1{1 passaggio} other{{steps} passaggi}} o {minutes, plural, =1{1 minuto} other{{minutes} minuti}} per registrazione. Le registrazioni vengono eliminate da questo dispositivo dopo {days, plural, =1{1 giorno} other{{days} giorni}}; un file esportato è suo e resta dove lo ha salvato.",
   "taskRecorderStart": "Avvia registrazione",
   "taskRecorderUnavailable": "La registrazione non è attivata in questo spazio.",
   "taskRecorderSignedOut": "Acceda per registrare un'attività.",

@@ -47,7 +47,7 @@
   "setupStepHintLease": "Miete und Nebenkosten, die der Bereich zahlt.",
   "setupStepHintAssets": "Was dem Bereich gehört und wie es an Wert verliert.",
   "setupStepHintLook": "Die Farben des Bereichs und seine eigenen Wörter.",
-  "setupStepHintPublicPage": "Was Menschen außerhalb des Bereichs sehen können.",
+  "setupStepHintPublicPage": "Was Menschen außerhalb des Bereichs sehen können, auch wo Sie auf der Karte sind.",
   "setupStepHintLegalIdentity": "Die Angaben, die jede Rechnung tragen muss.",
   "setupStepHintVat": "Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.",
   "setupStepHintNumbering": "Wie Rechnungsnummern aufgebaut sind.",

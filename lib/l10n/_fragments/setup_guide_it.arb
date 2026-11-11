@@ -47,7 +47,7 @@
   "setupStepHintLease": "L'affitto e le spese che lo spazio paga.",
   "setupStepHintAssets": "Ciò che lo spazio possiede e come perde valore.",
   "setupStepHintLook": "I colori dello spazio e le sue parole.",
-  "setupStepHintPublicPage": "Cosa possono vedere le persone esterne allo spazio.",
+  "setupStepHintPublicPage": "Cosa possono vedere le persone esterne allo spazio, compreso dove si trova sulla mappa.",
   "setupStepHintLegalIdentity": "I dati che ogni fattura deve riportare.",
   "setupStepHintVat": "Le aliquote che applica e le sue dichiarazioni.",
   "setupStepHintNumbering": "Come si formano i numeri di fattura.",

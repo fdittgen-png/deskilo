@@ -422,6 +422,37 @@
     "description": "Workspace admission history and discussion (#1791)"
   },
   "archiveSwissNeedsExportLog": "Die Verfahrensdokumentation dieses Schweizer Archivs hält fest, dass jeder Download im Exportprotokoll steht, und dieser Space führt keines: schalten Sie zuerst die Buchungsperioden oder die Buchhaltungssysteme ein.",
+  "assignPaymentAction": "Rechnungen zuordnen",
+  "assignPaymentActionFor": "{amount} Rechnungen zuordnen",
+  "assignPaymentAmountLabel": "Betrag für Rechnung {number}",
+  "assignPaymentFull": "{count, plural, =1{1 Rechnung vollständig bezahlt} other{{count} Rechnungen vollständig bezahlt}}",
+  "assignPaymentNoOpen": "Keine offene Rechnung für diesen Kunden: Die Zahlung bleibt als Guthaben.",
+  "assignPaymentNoteDefault": "Die Zahlung deckte nur einen Teil dieser Rechnung ab.",
+  "assignPaymentNoteLabel": "Notiz zu den teilweise bezahlten Rechnungen",
+  "assignPaymentOver": "Mehr, als von der Zahlung übrig ist",
+  "assignPaymentPart": "{count, plural, =1{1 Rechnung teilweise bezahlt} other{{count} Rechnungen teilweise bezahlt}}",
+  "assignPaymentPending": "Wartet auf Freigabe",
+  "assignPaymentReadFailedInvoices": "Die Rechnungen konnten nicht gelesen werden.",
+  "assignPaymentReadFailedPayment": "Die Zahlung konnte nicht gelesen werden.",
+  "assignPaymentReceived": "Erhalten: {amount}",
+  "assignPaymentRowCaption": "Fällig {date} · noch offen {amount}",
+  "assignPaymentRowCaptionNoDate": "Noch offen: {amount}",
+  "assignPaymentRowOver": "Mehr, als auf dieser Rechnung offen ist",
+  "assignPaymentRowWaiting": "{number}: Eine Zahlung dazu wartet auf Freigabe; sie nimmt jetzt keinen Teil.",
+  "assignPaymentStays": "{amount} bleiben als Guthaben",
+  "assignPaymentStaysNone": "Es bleibt kein Guthaben",
+  "assignPaymentTickLabel": "Rechnung {number} bezahlen",
+  "assignPaymentUsedHead": "Erhalten {received} · bereits zugeordnet {assigned} · übrig {left}",
+  "assignRefuseBusiness": "Diese Zahlung wurde in diesem Unternehmen nicht gefunden. Nichts wurde erfasst.",
+  "assignRefuseCurrency": "Eine Rechnung ist nicht in der Währung des Unternehmens. Nichts wurde erfasst.",
+  "assignRefuseDuplicate": "Eine Rechnung kommt doppelt vor. Nichts wurde erfasst.",
+  "assignRefuseGeneric": "Die Zahlung konnte nicht zugeordnet werden. Nichts wurde erfasst. Versuchen Sie es erneut.",
+  "assignRefuseNotAllowed": "Sie dürfen in diesem Unternehmen keine Zahlungen zuordnen. Nichts wurde erfasst.",
+  "assignRefuseNote": "Ein Teilbetrag unter dem offenen Betrag braucht eine Notiz.",
+  "assignRefusePartOver": "Ein Teilbetrag ist höher als der offene Betrag seiner Rechnung. Nichts wurde erfasst.",
+  "assignRefusePayer": "Eine Rechnung gehört nicht diesem Kunden. Nichts wurde erfasst.",
+  "assignRefuseSumOver": "Die Teilbeträge sind höher als der Rest der Zahlung. Nichts wurde erfasst.",
+  "assignRefuseUsed": "Die Zahlung wurde inzwischen verwendet. Sie wird neu gelesen: Prüfen Sie die Beträge.",
   "assistantSetupActorConfigurer": "Wer: jemand, der die Konfiguration dieses Arbeitsbereichs verwaltet",
   "assistantSetupActorDatabaseAdministrator": "Wer: ein Datenbankadministrator",
   "assistantSetupActorInstanceOperator": "Wer: der Instanzinhaber oder eine Vertretung",
@@ -862,7 +893,7 @@
   "bankImportAction": "Auszug importieren",
   "bankImportFailed": "Der Auszug konnte nicht importiert werden. Nichts wurde hinzugefügt.",
   "bankImportRepeated": "Diese Datei wurde bereits importiert. Nichts wurde hinzugefügt.",
-  "bankImported": "Importiert: {created} neu, {known} bereits bekannt, {review} zu prüfen.",
+  "bankImported": "Importiert: {created, plural, =1{1 neuer Eintrag} other{{created} neue Einträge}}, {known, plural, =1{1 bereits bekannt} other{{known} bereits bekannt}}, {review} zu prüfen.",
   "bankLineDuplicate": "Duplikat",
   "bankLineMatched": "Begleicht {number}",
   "bankLineMoneyOut": "Ausgang, abzugleichen",
@@ -2350,7 +2381,7 @@
   "@biPrintWorkspace": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biProjectionBasis": "Eine Gerade durch die letzten {count} vollständigen Perioden, fortgeführt. Der schattierte Bereich ist die wahrscheinliche Spanne. Eine Schätzung, kein Versprechen.",
+  "biProjectionBasis": "Eine Gerade durch {count, plural, =1{die letzte vollständige Periode} other{die letzten {count} vollständigen Perioden}}, fortgeführt. Der schattierte Bereich ist die wahrscheinliche Spanne. Eine Schätzung, kein Versprechen.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -2364,7 +2395,7 @@
     "description": "Business analytics dashboard: biProjectionLabel"
   },
   "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
-  "biProjectionNotEnough": "Noch nicht genug Verlauf für eine Prognose: bisher {have} vollständige Perioden, {need} nötig.",
+  "biProjectionNotEnough": "Noch nicht genug Verlauf für eine Prognose: bisher {have, plural, =1{1 vollständige Periode} other{{have} vollständige Perioden}}, {need, plural, =1{1 nötig} other{{need} nötig}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {
@@ -2716,7 +2747,7 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "billEntitlement": "{used} von {included} halben Tagen abgerechnet ({openDays} Öffnungstage)",
+  "billEntitlement": "{used} von {included, plural, =1{1 halben Tag} other{{included} halben Tagen}} abgerechnet ({openDays, plural, =1{1 Öffnungstag} other{{openDays} Öffnungstage}})",
   "billInvoiceCard": "Rechnung {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -3725,7 +3756,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n} eigene Farben, in dieser Reihenfolge.",
+  "coloursRoomsOwn": "{n, plural, =1{1 eigene Farbe, in dieser Reihenfolge.} other{{n} eigene Farben, in dieser Reihenfolge.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -3738,7 +3769,7 @@
   "@coloursRoomsProduct": {
     "description": "#1289 colours screen: no own fills yet"
   },
-  "coloursRoomsSaved": "{n} Raumfarben gespeichert.",
+  "coloursRoomsSaved": "{n, plural, =1{1 Raumfarbe gespeichert.} other{{n} Raumfarben gespeichert.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -3755,7 +3786,7 @@
   "@coloursTitle": {
     "description": "#1289 colours screen: the title"
   },
-  "coloursTooMany": "Der Plan malt höchstens {most} Raumfarben.",
+  "coloursTooMany": "Der Plan malt höchstens {most, plural, =1{1 Raumfarbe} other{{most} Raumfarben}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {
@@ -5733,7 +5764,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "eventBadgeSecurityAlert": "Die Badge-Anmeldung ist nach {failures} Fehlversuchen innerhalb von {minutes} Minuten gesperrt. Prüfen Sie die Badges und bitten Sie Mitglieder, sich bis zum Ablauf der Sperre per E-Mail anzumelden.",
+  "eventBadgeSecurityAlert": "Die Badge-Anmeldung ist nach {failures, plural, =1{1 Fehlversuch} other{{failures} Fehlversuchen}} innerhalb von {minutes, plural, =1{1 Minute} other{{minutes} Minuten}} gesperrt. Prüfen Sie die Badges und bitten Sie Mitglieder, sich bis zum Ablauf der Sperre per E-Mail anzumelden.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -5858,7 +5889,7 @@
       }
     }
   },
-  "eventQuotaRequested": "{actor} beantragt {halfDays} zusätzliche halbe Tage für {period}",
+  "eventQuotaRequested": "{actor} beantragt {halfDays, plural, =1{1 zusätzlichen halben Tag} other{{halfDays} zusätzliche halbe Tage}} für {period}",
   "eventReject": "Ablehnen",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
   "eventRepeatedMarker": "×{count}",
@@ -5995,7 +6026,7 @@
   "eventUsageRecordDeleteLine": "{actor} möchte einen Nutzungssatz entfernen ({space})",
   "eventValidatedBy": "Bestätigt von {name} · {when}",
   "eventValidationStage": "Freigabe {stage} von {required} angefragt",
-  "eventValidations": "{current}/{required} Bestätigungen",
+  "eventValidations": "{current}/{required, plural, =1{1 Bestätigung} other{{required} Bestätigungen}}",
   "eventsEmpty": "Noch keine Ereignisse.",
   "eventsFilterAll": "Alle",
   "eventsPendingHeader": "Wartet auf Ihre Bestätigung",
@@ -7406,7 +7437,7 @@
   "@financesOutstanding": {
     "description": "Me › Finances"
   },
-  "financesOverdueCount": "{count} überfällig",
+  "financesOverdueCount": "{count, plural, =1{1 überfällig} other{{count} überfällig}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {
@@ -8135,9 +8166,9 @@
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Es gibt nur personal_home und workspace_host; operator_set_installation_roles schreibt eine gültige Menge.",
   "instanceDoctorRolesUnknownTitle": "Installationsrollen sind keine bekannte Menge",
   "instanceDoctorRun": "Sicherheitsprüfung starten",
-  "instanceDoctorSchemaNoVersionDetail": "{tables} Tabellen existieren, aber keine Schemaversion: Diese Instanz ist älter als Migration 0226 und hinkt einer App hinterher, die {required} braucht. Die Installation hebt sie anhand des Aufgezeichneten an.\n        Abhilfe: dart run tool/instance.dart install --ref <ref>\n        Wenn sie nicht erkennt, wo sie fortsetzen soll, zuerst: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, =1{1 Tabelle existiert} other{{tables} Tabellen existieren}}, aber keine Schemaversion: Diese Instanz ist älter als Migration 0226 und hinkt einer App hinterher, die {required} braucht. Die Installation hebt sie anhand des Aufgezeichneten an.\n        Abhilfe: dart run tool/instance.dart install --ref <ref>\n        Wenn sie nicht erkennt, wo sie fortsetzen soll, zuerst: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "instanceDoctorSchemaNoVersionTitle": "Das Schema hat keine Version",
-  "instanceDoctorSignupsNobodyDetail": "{created} haben sich registriert, 0 bestätigt. Die Registrierung ist nicht nur langsam — niemand hat sie abgeschlossen.\n        Prüfen Sie zuerst die Site-URL oben: Darauf verweist die Mail.",
+  "instanceDoctorSignupsNobodyDetail": "{created, plural, =1{1 hat sich registriert} other{{created} haben sich registriert}}, 0 bestätigt. Die Registrierung ist nicht nur langsam — niemand hat sie abgeschlossen.\n        Prüfen Sie zuerst die Site-URL oben: Darauf verweist die Mail.",
   "instanceDoctorSignupsNobodyTitle": "Seit sieben Tagen hat niemand bestätigt",
   "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 Leserichtlinie, die den Ordner nennt, dem die Datei gehört} other{{count} Leserichtlinien, jede nennt den Ordner, dem die Datei gehört}}",
   "instanceDoctorStorageScopedTitle": "Speicherzugriffe sind eingegrenzt",
@@ -8263,7 +8294,7 @@
   "instanceReadyCurrent": "DesKilo-Version {version} ist installiert und aktuell: das Schema braucht nichts.",
   "instanceReadyInstall": "Das Projekt ist leer: alles wird installiert.",
   "instanceReadyResume": "{pending, plural, one{Eine DesKilo-Installation brach mittendrin ab: {pending} Migration fehlen noch, und nur diese laufen.} other{Eine DesKilo-Installation brach mittendrin ab: {pending} Migrationen fehlen noch, und nur diese laufen.}}",
-  "instanceReadyUpgrade": "DesKilo-Version {version} ist installiert: nur die {pending} fehlenden Migrationen laufen.",
+  "instanceReadyUpgrade": "DesKilo-Version {version} ist installiert: {pending, plural, =1{nur die 1 fehlende Migration läuft} other{nur die {pending} fehlenden Migrationen laufen}}.",
   "instanceRegion": "Region (die nächste zum Raum)",
   "@instanceRegion": {
     "description": "#977 instance wizard: instanceRegion"
@@ -8415,7 +8446,7 @@
   "invoiceActionUnknownBody": "Die Anfrage wurde gesendet, aber die Antwort kam nicht an – sie wurde möglicherweise schon ausgeführt. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu finden.",
   "invoiceAllCaughtUp": "Alles erledigt — nichts zu berechnen.",
   "invoiceAlreadyInvoiced": "Dieser Monat ist für dieses Mitglied bereits berechnet.",
-  "invoiceAnnexSummary": "Anhang: {movements} Bewegungen, {checkIns} Check-ins",
+  "invoiceAnnexSummary": "Anhang: {movements, plural, =1{1 Bewegung} other{{movements} Bewegungen}}, {checkIns, plural, =1{1 Check-in} other{{checkIns} Check-ins}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -8703,7 +8734,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} ausgestellt, {failed} fehlgeschlagen.",
+  "invoiceIssuedPartial": "{issued, plural, =1{1 ausgestellt} other{{issued} ausgestellt}}, {failed, plural, =1{1 fehlgeschlagen} other{{failed} fehlgeschlagen}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -9466,7 +9497,7 @@
   "@invoiceStatusRemainderCancelled": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
-  "invoiceSummaryOpen": "{count} offen · {amount} ausstehend",
+  "invoiceSummaryOpen": "{count, plural, =1{1 offen} other{{count} offen}} · {amount} ausstehend",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -10188,7 +10219,7 @@
       }
     }
   },
-  "journeyOverdueCount": "{count} überfällig",
+  "journeyOverdueCount": "{count, plural, =1{1 überfällig} other{{count} überfällig}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {
@@ -11023,7 +11054,7 @@
   "libraryApplyChanges": "{count, plural, =0{Nichts ausgewählt} =1{1 Änderung anwenden} other{{count} Änderungen anwenden}}",
   "libraryCarriesSettings": "mit ihren Einstellungen",
   "libraryConfirmSensitive": "Das ändert: {groups}. Anwenden?",
-  "libraryCounts": "{levels} Ebenen · {desks} Tische · {seats} Plätze",
+  "libraryCounts": "{levels, plural, =1{1 Ebene} other{{levels} Ebenen}} · {desks, plural, =1{1 Tisch} other{{desks} Tische}} · {seats, plural, =1{1 Platz} other{{seats} Plätze}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {
@@ -11753,7 +11784,7 @@
   "@memberMonthInProgress": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "+{count} weitere",
+  "memberMoreInvoices": "{count, plural, =1{+1 weitere} other{+{count} weitere}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -12078,10 +12109,10 @@
   "moneyNoInvoicesYet": "Noch keine Rechnung — der Monat wird nach Abschluss vom Workspace abgerechnet.",
   "moneyNoteLabel": "Notiz (optional)",
   "moneyNothingOpen": "Nichts offen — Sie sind auf dem Laufenden.",
-  "moneyOpenInvoicesSummary": "{count} offen · {amount} fällig",
+  "moneyOpenInvoicesSummary": "{count, plural, =1{1 offen} other{{count} offen}} · {amount} fällig",
   "moneyOpenInvoicesTitle": "Offene Rechnungen",
   "moneyOverage": "{count, plural, =1{Mehrnutzung (1 zusätzlicher halber Tag)} other{Mehrnutzung ({count} zusätzliche halbe Tage)}}",
-  "moneyOverdueBanner": "{count} überfällig — {amount} zu begleichen",
+  "moneyOverdueBanner": "{count, plural, =1{1 überfällig} other{{count} überfällig}} — {amount} zu begleichen",
   "moneyOverdueBy": "{days, plural, =0{Heute fällig} =1{Überfällig seit 1 Tag} other{Überfällig seit {days} Tagen}}",
   "moneyPayNow": "Jetzt zahlen",
   "moneyPaymentDateLabel": "Zahlungsdatum",
@@ -12108,7 +12139,7 @@
   "moneySubmitExpense": "Ausgabe einreichen",
   "moneySubmitPayment": "Zur Bestätigung einreichen",
   "moneySubscriptionPct": "Abo {pct} %",
-  "moneyUsage": "{used} von {included} halben Tagen genutzt",
+  "moneyUsage": "{used} von {included, plural, =1{1 halben Tag} other{{included} halben Tagen}} genutzt",
   "moneyUsageUnlimited": "{used, plural, one{{used} halber Tag genutzt} other{{used} halbe Tage genutzt}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mein Badge",
@@ -12689,6 +12720,7 @@
   "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
   "paymentMatchHeader": "{amount} eingegangen am {date}",
   "paymentMatchIntro": "Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.",
+  "paymentMatchInvoiceGone": "Diese Rechnung ist nicht mehr offen: Die Liste wird neu gelesen.",
   "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.",
   "paymentMatchSame": "Gleicher Betrag",
   "paymentMatchTitle": "Zahlungen zuordnen",
@@ -13118,7 +13150,7 @@
   "planReservedBy": "Reserviert von {name}",
   "planSeatBlocked": "Dieser Platz ist wegen Wartung gesperrt.",
   "planSendForConfirmation": "Zur Bestätigung senden",
-  "planSlotError": "Buchungen müssen im {minutes}-Minuten-Raster beginnen und enden.",
+  "planSlotError": "Buchungen müssen im {minutes, plural, =1{1-Minuten-Raster} other{{minutes}-Minuten-Raster}} beginnen und enden.",
   "planStartNow": "Beginnt jetzt",
   "planStartsAt": "Beginnt um {time}",
   "planStateFree": "Frei",
@@ -13253,6 +13285,16 @@
   "portalPerson": "Privater Anbieter",
   "portalPersonHidden": "Person",
   "portalPhone": "Öffentliche Telefonnummer",
+  "portalPlaceAt": "Markierung bei {latitude}, {longitude}",
+  "portalPlaceFailed": "Der Kartendienst hat nicht geantwortet. Versuchen Sie es erneut.",
+  "portalPlaceFind": "Adresse auf der Karte finden",
+  "portalPlaceFound": "Gefunden: {place}. Übernehmen Sie ihn oder tippen Sie auf die Karte, um die Markierung zu versetzen.",
+  "portalPlaceNone": "Kein Ort gespeichert: die Karte eines Besuchers sucht die Adresse.",
+  "portalPlaceNotFound": "Für diese Adresse wurde kein Ort gefunden. Prüfen Sie die Adresse und versuchen Sie es erneut.",
+  "portalPlaceRemove": "Ort entfernen",
+  "portalPlaceTapToMove": "Tippen Sie auf die Karte, um die Markierung zu versetzen.",
+  "portalPlaceTitle": "Wo Sie auf der Karte sind",
+  "portalPlaceUse": "Diesen Ort übernehmen",
   "portalPlans": "Angebote und Preise",
   "portalPreview": "Externe Ansicht",
   "portalPublicPlan": "Öffentlicher Grundriss",
@@ -13540,7 +13582,7 @@
   "processCoordinationDesc": "Aktivitäten, Nachrichten und Entscheidungen koordinieren.",
   "processDocumentsInformation": "Dokumente und Informationen",
   "processDocumentsInformationDesc": "Informationen des Arbeitsbereichs erstellen, teilen und exportieren.",
-  "processFeatureCount": "{enabled} von {total} Funktionen an",
+  "processFeatureCount": "{enabled} von {total, plural, =1{1 Funktion an} other{{total} Funktionen an}}",
   "processFeatureOff": "Aus",
   "processFeatureOn": "An",
   "processFeatureWaiting": "An, wartet auf {feature}",
@@ -13577,7 +13619,7 @@
   "processStateAvailable": "Verfügbar",
   "processStateNeedsAttention": "Handlungsbedarf",
   "processStatePartial": "Teilweise",
-  "processSubprocessCount": "{active} von {total} Teilprozessen aktiv",
+  "processSubprocessCount": "{active} von {total, plural, =1{1 Teilprozess aktiv} other{{total} Teilprozessen aktiv}}",
   "processSwitchHint": "Tippen Sie auf eine Funktion, um sie bei den Schaltern zu ändern.",
   "processSwitchOff": "Ausschalten",
   "processSwitchOn": "Einschalten",
@@ -15930,7 +15972,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Buchbar in {minutes}-Minuten-Slots",
+  "reserveSlotMinutes": "Buchbar in {minutes, plural, =1{1-Minuten-Slots} other{{minutes}-Minuten-Slots}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {
@@ -16596,7 +16638,7 @@
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
   "sampleDataClear": "Beispieldaten löschen",
-  "sampleDataCounts": "Dieser Bereich enthält Beispieldaten: {members} Mitglieder, {bookings} Buchungen, {payments} Zahlungen.",
+  "sampleDataCounts": "Dieser Bereich enthält Beispieldaten: {members, plural, =1{1 Mitglied} other{{members} Mitglieder}}, {bookings, plural, =1{1 Buchung} other{{bookings} Buchungen}}, {payments, plural, =1{1 Zahlung} other{{payments} Zahlungen}}.",
   "sampleDataExplain": "Füllen Sie diesen Testbereich mit einigen Beispielmitgliedern, ihren Buchungen der letzten und der kommenden zwei Wochen und einigen Zahlungen, gebildet aus Ihren eigenen Plätzen und Preisen. Es wird nichts an jemanden gesendet, und Sie können alles wieder löschen.",
   "sampleDataFill": "Mit Beispieldaten füllen",
   "sampleDataFillFailed": "Die Beispieldaten konnten nicht angelegt werden.",
@@ -17462,7 +17504,7 @@
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Sobald eine Freigabe vorliegt.} other{Sobald {required} Freigaben vorliegen.}} Eine Ablehnung schließt sie, und niemand gibt die eigene Anfrage frei.",
   "setupApprovalsFlowRequest": "Ein Mitglied fragt an",
   "setupApprovalsFlowRequestBody": "Eine Erstattung, eine gelöschte Buchung, eine Ausgabe …",
-  "setupApprovalsFlowValidators": "{required} von {people} geben frei",
+  "setupApprovalsFlowValidators": "{required, plural, =1{1 von {people} gibt frei} other{{required} von {people} geben frei}}",
   "setupApprovalsFlowWho": "{owners, plural, =1{Der Eigentümer} other{{owners} Eigentümer}} und {admins, plural, =0{kein Administrator} =1{1 Administrator} other{{admins} Administratoren}}",
   "setupApprovalsOpenRules": "Regeln je Art von Anfrage",
   "setupApprovalsOwnRulesNone": "Jede Anfrage folgt der Standardregel oben.",
@@ -17945,7 +17987,7 @@
   "setupStepHintPaymentMethods": "Ihre Bankverbindung und Zahlungshinweise.",
   "setupStepHintPlaces": "Zeichnen Sie die Räume, Tische und Plätze, die Mitglieder buchen.",
   "setupStepHintPricing": "Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.",
-  "setupStepHintPublicPage": "Was Menschen außerhalb des Bereichs sehen können.",
+  "setupStepHintPublicPage": "Was Menschen außerhalb des Bereichs sehen können, auch wo Sie auf der Karte sind.",
   "setupStepHintPurchases": "Was der Bereich kauft und bei wem.",
   "setupStepHintRecovery": "Die Daten des Bereichs einmal exportieren.",
   "setupStepHintReminders": "Wann und wie an offene Rechnungen erinnert wird.",
@@ -18689,7 +18731,7 @@
   "supportPrepare": "Vorschau vorbereiten",
   "supportPrivacy": "Enthalten sind nur begrenzte Ereigniszähler dieses Geräts und bekannte Prüfergebnisse. Identitäten, Serveradressen, Zugangsdaten, Geschäftsdaten und Rohprotokolle sind ausgeschlossen. Unbekannte Prüfungen sind nicht verfügbar; ein Betreiber kann doctor --support-json separat ausführen. Geteilte Dateien können nicht zurückgerufen werden.",
   "supportSaved": "Lokal gespeichert",
-  "supportSize": "Vorschau: {bytes} Bytes",
+  "supportSize": "Vorschau: {bytes, plural, =1{1 Byte} other{{bytes} Bytes}}",
   "@supportSize": {
     "placeholders": {
       "bytes": {
@@ -18858,7 +18900,7 @@
   "taskExportValuePlan": "Raumplan",
   "taskExportValuePolicy": "eine Buchungsregel",
   "taskExportValueQuota": "ein Kontingent",
-  "taskExportValueRedacted": "nicht gespeichert ({length} Zeichen)",
+  "taskExportValueRedacted": "nicht gespeichert ({length, plural, =1{1 Zeichen} other{{length} Zeichen}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {
@@ -18968,7 +19010,7 @@
   "taskRecorderFieldTime": "Uhrzeit",
   "taskRecorderIndicator": "{count, plural, =1{Aufgabe wird aufgezeichnet: 1 Schritt} other{Aufgabe wird aufgezeichnet: {count} Schritte}}",
   "taskRecorderLeaveOut": "Vom Export ausnehmen",
-  "taskRecorderLimits": "Bis zu {steps} Schritte oder {minutes} Minuten pro Aufzeichnung. Aufzeichnungen werden nach {days} Tagen von diesem Gerät gelöscht; eine exportierte Datei gehört Ihnen und bleibt, wo Sie sie gespeichert haben.",
+  "taskRecorderLimits": "Bis zu {steps, plural, =1{1 Schritt} other{{steps} Schritte}} oder {minutes, plural, =1{1 Minute} other{{minutes} Minuten}} pro Aufzeichnung. Aufzeichnungen werden nach {days, plural, =1{1 Tag} other{{days} Tagen}} von diesem Gerät gelöscht; eine exportierte Datei gehört Ihnen und bleibt, wo Sie sie gespeichert haben.",
   "taskRecorderMyRecordings": "Meine Aufzeichnungen auf diesem Gerät",
   "taskRecorderNameHint": "Optional. Ohne Eingabe trägt die Aufnahme die Startzeit als Namen.",
   "taskRecorderNameLabel": "Diese Aufgabe benennen",
@@ -19891,7 +19933,7 @@
   "usageWas": "war {before}",
   "uxAdvancedSection": "Erweitert",
   "uxAlertsFilterEmpty": "Keine Meldungen entsprechen diesen Filtern.",
-  "uxAttentionSummary": "{updates} neue Meldungen · {pending} ausstehende Entscheidungen",
+  "uxAttentionSummary": "{updates, plural, =1{1 neue Meldung} other{{updates} neue Meldungen}} · {pending, plural, =1{1 ausstehende Entscheidung} other{{pending} ausstehende Entscheidungen}}",
   "@uxAttentionSummary": {
     "placeholders": {
       "updates": {
@@ -19990,7 +20032,7 @@
   "validationSpecificAdmins": "Bestimmte Admins",
   "validationStepApplies": "es wird wirksam",
   "validationStepOwnerToo": "und der Inhaber, immer",
-  "validationStepQuorum": "{who} — beliebige {count}",
+  "validationStepQuorum": "{who} — {count, plural, =1{beliebige 1} other{beliebige {count}}}",
   "validationStepRaised": "Jemand fragt",
   "validationStepSequential": "{who} — {count} nacheinander",
   "validationThresholdNote": "Kleinere Beträge gelten sofort.",
@@ -21515,7 +21557,7 @@
     "description": "#1532: workspaceXmlImportPartial"
   },
   "workspaceXmlImportPreviewAccessories": "Zubehör: {count}",
-  "workspaceXmlImportPreviewConfiguration": "Konfiguration: {settings} Einstellungen, {rows} Zeilen in {tables} Tabellen",
+  "workspaceXmlImportPreviewConfiguration": "Konfiguration: {settings, plural, =1{1 Einstellung} other{{settings} Einstellungen}}, {rows, plural, =1{1 Zeile} other{{rows} Zeilen}} in {tables, plural, =1{1 Tabelle} other{{tables} Tabellen}}",
   "@workspaceXmlImportPreviewConfiguration": {
     "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
     "placeholders": {

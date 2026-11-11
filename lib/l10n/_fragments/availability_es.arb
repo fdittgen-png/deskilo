@@ -15,7 +15,7 @@
   "availabilityGranularity30": "Franjas de 30 minutos",
   "availabilityGranularity60": "Franjas de 1 hora",
   "availabilityGranularityFullDay": "Solo días completos",
-  "planSlotError": "Las reservas deben empezar y terminar en la cuadrícula de {minutes} minutos.",
+  "planSlotError": "Las reservas deben empezar y terminar en {minutes, plural, =1{la cuadrícula de 1 minuto} other{la cuadrícula de {minutes} minutos}}.",
   "planFullDayError": "Aquí las reservas cubren el día completo.",
   "availabilityGranularityHours": "Horas reales (de–a exacto, medias/jornadas como atajos)",
   "availabilityWorkHoursTitle": "Horario laboral",

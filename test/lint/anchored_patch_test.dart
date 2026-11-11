@@ -34,6 +34,11 @@ const _reviewed = {
   // the change is the optional part (p_amount_cents) and "what is left of the
   // payment" in place of "the payment has a row". pgTAP 388 and 199.
   'match_invoice@0717',
+  // #3671/0718 restates match_invoice from the LIVE dev definition (the
+  // 0717 body, pg_get_functiondef) and changes only the locks (invoice,
+  // aggregate, payment `for update`) and what is still due on a standing
+  // partial (invoice_still_due_cents). pgTAP 389, 388 and 199.
+  'match_invoice@0718',
   // #2356/0407 restates set_vat_rates from the LIVE dev definition
   // (pg_get_functiondef): 0170's anchored group_key / outside_base /
   // exemption_reason columns and 0180's has_permission('manageBilling')

@@ -12,7 +12,7 @@
   "taskRecorderRecordThisTask": "Diese Aufgabe aufzeichnen",
   "taskRecorderDisclosureTitle": "Bevor Sie aufzeichnen",
   "taskRecorderDisclosureBody": "Der Rekorder notiert die Schritte, die Sie auf den Bildschirmen dieses Arbeitsbereichs ausführen — welcher Bildschirm, welche Aktion, was die App geantwortet hat — nur auf diesem Gerät. Er speichert nie, was Sie eingeben, keine Namen, Beträge, Nachrichten, Codes oder Passwörter. Anmeldung, Zahlung, Nachrichten und andere geschützte Bildschirme hinterlassen nur eine Markierung. Nichts wird hochgeladen: Sie entscheiden, was Sie exportieren.",
-  "taskRecorderLimits": "Bis zu {steps} Schritte oder {minutes} Minuten pro Aufzeichnung. Aufzeichnungen werden nach {days} Tagen von diesem Gerät gelöscht; eine exportierte Datei gehört Ihnen und bleibt, wo Sie sie gespeichert haben.",
+  "taskRecorderLimits": "Bis zu {steps, plural, =1{1 Schritt} other{{steps} Schritte}} oder {minutes, plural, =1{1 Minute} other{{minutes} Minuten}} pro Aufzeichnung. Aufzeichnungen werden nach {days, plural, =1{1 Tag} other{{days} Tagen}} von diesem Gerät gelöscht; eine exportierte Datei gehört Ihnen und bleibt, wo Sie sie gespeichert haben.",
   "taskRecorderStart": "Aufzeichnung starten",
   "taskRecorderUnavailable": "Die Aufzeichnung ist in diesem Arbeitsbereich nicht eingeschaltet.",
   "taskRecorderSignedOut": "Melden Sie sich an, um eine Aufgabe aufzuzeichnen.",

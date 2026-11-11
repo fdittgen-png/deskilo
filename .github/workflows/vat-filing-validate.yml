@@ -61,14 +61,16 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+      # #3739 -- the package mirror being unreachable is not a finding about
+      # the change: on a pull request the steps below are then skipped with a
+      # notice; on master the job fails as before.
       - name: xmllint
-        run: |
-          command -v xmllint || {
-            sudo apt-get update -q
-            sudo apt-get install -y --no-install-recommends libxml2-utils
-          }
-      - run: flutter pub get
+        id: xmllint
+        run: bash scripts/install_or_skip.sh xmllint libxml2-utils
+      - if: steps.xmllint.outputs.available == 'true'
+        run: flutter pub get
       - name: Build the samples
+        if: steps.xmllint.outputs.available == 'true'
         env:
           VAT_FILING_SAMPLES_DIR: ${{ runner.temp }}/vat-filing-samples
         run: >-
@@ -77,6 +79,7 @@ jobs:
           test/features/money/vat_registers_es_it_test.dart
           test/features/money/vat_filing_files_test.dart
       - name: Read each against its schema
+        if: steps.xmllint.outputs.available == 'true'
         run: bash tool/vat_filing/validate.sh "${{ runner.temp }}/vat-filing-samples"
       - uses: actions/upload-artifact@v4
         if: always()
