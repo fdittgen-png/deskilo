@@ -1024,6 +1024,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This payment was not found in this business. Nothing was recorded.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'This payment was already deducted on an invoice issued since: it cannot pay another invoice. Nothing was recorded.';
+
+  @override
   String get assignRefuseCurrency =>
       'An invoice is not in the business\'s currency. Nothing was recorded.';
 
@@ -1034,6 +1038,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'The payment could not be assigned. Nothing was recorded. Try again.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'An invoice was paid or changed in the meantime. It is read again: check the amounts.';
 
   @override
   String get assignRefuseNotAllowed =>

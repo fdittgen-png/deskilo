@@ -102,7 +102,8 @@ class DemoLondonData {
       decider: () => space.memberOf(actor()),
     );
     seedCityDecisions(events, 'uk', now);
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events)
+      ..invoiceCommands.currency = 'GBP';
     seedCityExpenses(money, demoLondonSpaceId, 'uk', now);
     seedLondonMoney(money, now);
     // The return of the closed quarter, prepared by the engine every space

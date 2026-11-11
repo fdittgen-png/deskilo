@@ -1032,6 +1032,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Zahlung wurde in diesem Unternehmen nicht gefunden. Nichts wurde erfasst.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'Diese Zahlung wurde bereits auf einer seitdem ausgestellten Rechnung abgezogen: Sie kann keine andere Rechnung begleichen. Nichts wurde erfasst.';
+
+  @override
   String get assignRefuseCurrency =>
       'Eine Rechnung ist nicht in der Währung des Unternehmens. Nichts wurde erfasst.';
 
@@ -1042,6 +1046,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'Die Zahlung konnte nicht zugeordnet werden. Nichts wurde erfasst. Versuchen Sie es erneut.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'Eine Rechnung wurde inzwischen bezahlt oder geändert. Sie wird neu gelesen: Prüfen Sie die Beträge.';
 
   @override
   String get assignRefuseNotAllowed =>

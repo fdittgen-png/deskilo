@@ -1030,6 +1030,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo pagamento non è stato trovato in questa attività. Non è stato registrato nulla.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'Questo pagamento è già stato detratto su una fattura emessa da allora: non può pagare un\'altra fattura. Non è stato registrato nulla.';
+
+  @override
   String get assignRefuseCurrency =>
       'Una fattura non è nella valuta dell\'attività. Non è stato registrato nulla.';
 
@@ -1040,6 +1044,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'Una fattura è stata pagata o modificata nel frattempo. Viene riletta: controlli gli importi.';
 
   @override
   String get assignRefuseNotAllowed =>

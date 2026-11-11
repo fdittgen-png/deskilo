@@ -29,5 +29,7 @@
   "assignRefuseNote": "Una parte inferior a lo debido necesita una nota.",
   "assignRefuseGeneric": "No se pudo asignar el pago. No se registró nada. Inténtelo de nuevo.",
   "assignPaymentRowWaiting": "{number}: un pago de esta factura espera aprobación; ahora no admite ninguna parte.",
-  "assignRefuseNotAllowed": "No puede asignar pagos en esta empresa. No se registró nada."
+  "assignRefuseNotAllowed": "No puede asignar pagos en esta empresa. No se registró nada.",
+  "assignRefuseInvoiceChanged": "Una factura se pagó o cambió entretanto. Se lee de nuevo: revise los importes.",
+  "assignRefuseCreditDeducted": "Este pago ya se descontó en una factura emitida después: no puede pagar otra factura. No se registró nada."
 }

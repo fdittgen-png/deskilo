@@ -132,6 +132,13 @@ enum PaymentRefusal {
   partBeyondInvoice,
   sumBeyondLeft,
   usedMeanwhile,
+
+  /// An invoice was paid, voided or replaced in the meantime (#3671).
+  invoiceChanged,
+
+  /// The payment was deducted on an invoice issued since: it pays nothing
+  /// else, and trying again will not change that.
+  creditDeducted,
   noteRequired,
   notAllowed,
   generic;
@@ -154,11 +161,16 @@ enum PaymentRefusal {
     }
     if (has('more than what is left')) return sumBeyondLeft;
     if (has('add up to more than the payment') ||
-        has('payment already matched') ||
-        has('invoice already matched') ||
-        has('nothing is due on this invoice')) {
+        has('payment already matched')) {
       return usedMeanwhile;
     }
+    if (has('invoice already matched') ||
+        has('nothing is due on this invoice') ||
+        has('invoice is voided') ||
+        has('invoice is settled')) {
+      return invoiceChanged;
+    }
+    if (has('credit already deducted')) return creditDeducted;
     if (has('note is required')) return noteRequired;
     if (has('not authenticated') || has('may not issue invoices')) {
       return notAllowed;

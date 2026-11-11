@@ -1712,6 +1712,12 @@ abstract class AppLocalizations {
   /// **'This payment was not found in this business. Nothing was recorded.'**
   String get assignRefuseBusiness;
 
+  /// #3671: assign a payment to invoices (assignRefuseCreditDeducted)
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was already deducted on an invoice issued since: it cannot pay another invoice. Nothing was recorded.'**
+  String get assignRefuseCreditDeducted;
+
   /// #3671: assign a payment to invoices (assignRefuseCurrency)
   ///
   /// In en, this message translates to:
@@ -1729,6 +1735,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The payment could not be assigned. Nothing was recorded. Try again.'**
   String get assignRefuseGeneric;
+
+  /// #3671: assign a payment to invoices (assignRefuseInvoiceChanged)
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice was paid or changed in the meantime. It is read again: check the amounts.'**
+  String get assignRefuseInvoiceChanged;
 
   /// #3671: assign a payment to invoices (assignRefuseNotAllowed)
   ///

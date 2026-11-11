@@ -20,6 +20,10 @@ class DemoInvoiceCommands implements InvoiceCommands {
 
   final FakeMoneyRepository _m;
 
+  /// The business's currency (the workspace's, on the server): what this
+  /// space issues invoices in and the only one a payment settles (#3671).
+  String currency = 'EUR';
+
   @override
   Future<String> createInvoice({
     required String workspaceId,
@@ -87,7 +91,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       title: period,
       lines: lines,
       totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
-      currency: 'EUR',
+      currency: currency,
       // Distinguishable snapshots for the archive filters.
       memberName: memberId == 'member-1' ? 'Flo' : 'Ana',
       memberAddress: '1 Rue Test, 34120 Pézenas',

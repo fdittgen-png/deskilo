@@ -45,10 +45,7 @@ Future<PaymentApplied> applyPaymentInDemo(
   if ({for (final a in allocations) a.invoiceId}.length != allocations.length) {
     throw StateError('an invoice appears twice');
   }
-  // The money store knows no business: its currency is the invoices'.
-  final currency = m.invoices
-      .map((i) => i.currency)
-      .firstWhere((c) => c.isNotEmpty, orElse: () => '');
+  final currency = m.invoiceCommands.currency;
   var total = 0;
   final parts = <(String invoiceId, int amount, bool exact)>[];
   for (final a in allocations) {
@@ -57,7 +54,7 @@ Future<PaymentApplied> applyPaymentInDemo(
     if (invoice == null || invoice.memberId != payment.memberId) {
       throw StateError('an invoice is not of this payer');
     }
-    if (currency.isNotEmpty && invoice.currency != currency) {
+    if (invoice.currency != currency) {
       throw StateError("an invoice is not in the business's currency");
     }
     final due = _demoStillDue(m, invoice);
@@ -133,13 +130,11 @@ List<InvoiceCapacity> paymentCapacityInDemo(
 ) {
   final payment = m.ledger.where((e) => e.id == paymentLedgerId).firstOrNull;
   if (payment == null) throw StateError('unknown payment');
-  final currency = m.invoices
-      .map((i) => i.currency)
-      .firstWhere((c) => c.isNotEmpty, orElse: () => '');
+  final currency = m.invoiceCommands.currency;
   final out = <(DateTime, InvoiceCapacity)>[];
   for (final i in m.invoices) {
     if (i.memberId != payment.memberId ||
-        (currency.isNotEmpty && i.currency != currency) ||
+        i.currency != currency ||
         i.isVoided ||
         i.settledByInvoiceId != null) {
       continue;

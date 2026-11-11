@@ -29,5 +29,7 @@
   "assignRefuseNote": "Une part inférieure au montant dû demande une note.",
   "assignRefuseGeneric": "Le paiement n'a pas pu être affecté. Rien n'a été enregistré. Réessayez.",
   "assignPaymentRowWaiting": "{number} : un paiement de cette facture attend une validation ; elle ne prend rien pour l'instant.",
-  "assignRefuseNotAllowed": "Vous ne pouvez pas affecter de paiements dans cette entreprise. Rien n'a été enregistré."
+  "assignRefuseNotAllowed": "Vous ne pouvez pas affecter de paiements dans cette entreprise. Rien n'a été enregistré.",
+  "assignRefuseInvoiceChanged": "Une facture a été payée ou modifiée entre-temps. Elle est relue : vérifiez les montants.",
+  "assignRefuseCreditDeducted": "Ce paiement a déjà été déduit sur une facture émise depuis : il ne peut pas en régler une autre. Rien n'a été enregistré."
 }

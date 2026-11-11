@@ -1385,6 +1385,10 @@
   "@assignRefuseBusiness": {
     "description": "#3671: assign a payment to invoices (assignRefuseBusiness)"
   },
+  "assignRefuseCreditDeducted": "This payment was already deducted on an invoice issued since: it cannot pay another invoice. Nothing was recorded.",
+  "@assignRefuseCreditDeducted": {
+    "description": "#3671: assign a payment to invoices (assignRefuseCreditDeducted)"
+  },
   "assignRefuseCurrency": "An invoice is not in the business's currency. Nothing was recorded.",
   "@assignRefuseCurrency": {
     "description": "#3671: assign a payment to invoices (assignRefuseCurrency)"
@@ -1396,6 +1400,10 @@
   "assignRefuseGeneric": "The payment could not be assigned. Nothing was recorded. Try again.",
   "@assignRefuseGeneric": {
     "description": "#3671: assign a payment to invoices (assignRefuseGeneric)"
+  },
+  "assignRefuseInvoiceChanged": "An invoice was paid or changed in the meantime. It is read again: check the amounts.",
+  "@assignRefuseInvoiceChanged": {
+    "description": "#3671: assign a payment to invoices (assignRefuseInvoiceChanged)"
   },
   "assignRefuseNotAllowed": "You may not assign payments in this business. Nothing was recorded.",
   "@assignRefuseNotAllowed": {

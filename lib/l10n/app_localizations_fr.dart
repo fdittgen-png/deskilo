@@ -1033,6 +1033,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce paiement est introuvable dans cette entreprise. Rien n\'a été enregistré.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'Ce paiement a déjà été déduit sur une facture émise depuis : il ne peut pas en régler une autre. Rien n\'a été enregistré.';
+
+  @override
   String get assignRefuseCurrency =>
       'Une facture n\'est pas dans la devise de l\'entreprise. Rien n\'a été enregistré.';
 
@@ -1043,6 +1047,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'Le paiement n\'a pas pu être affecté. Rien n\'a été enregistré. Réessayez.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'Une facture a été payée ou modifiée entre-temps. Elle est relue : vérifiez les montants.';
 
   @override
   String get assignRefuseNotAllowed =>

@@ -89,7 +89,8 @@ class DemoNewYorkData {
       decider: () => space.memberOf(actor()),
     );
     seedCityDecisions(events, 'ny', now);
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events)
+      ..invoiceCommands.currency = 'USD';
     seedCityExpenses(money, demoNewYorkSpaceId, 'ny', now);
     seedCityMoney(money, space, (
       workspaceId: demoNewYorkSpaceId,

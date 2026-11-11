@@ -1030,6 +1030,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encuentra este pago en esta empresa. No se registró nada.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'Este pago ya se descontó en una factura emitida después: no puede pagar otra factura. No se registró nada.';
+
+  @override
   String get assignRefuseCurrency =>
       'Una factura no está en la moneda de la empresa. No se registró nada.';
 
@@ -1040,6 +1044,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'No se pudo asignar el pago. No se registró nada. Inténtelo de nuevo.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'Una factura se pagó o cambió entretanto. Se lee de nuevo: revise los importes.';
 
   @override
   String get assignRefuseNotAllowed =>
