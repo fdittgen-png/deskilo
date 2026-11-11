@@ -10,6 +10,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 /// The one file that may call the two reads.
 const _definition = 'lib/features/money/application/unassigned_money.dart';
 
@@ -20,15 +22,15 @@ final _call = RegExp(r'\.(fetchConsumedPaymentIds|movedCreditIds)\(');
 void main() {
   test('the consumed payments are read through their one definition', () {
     final callers = <String>[];
-    for (final layer in ['application', 'presentation', 'providers']) {
-      final dir = Directory('lib/features/money/$layer');
-      for (final file in dir.listSync(recursive: true).whereType<File>()) {
-        final path = file.path.replaceAll(r'\', '/');
-        if (!path.endsWith('.dart') || path == _definition) continue;
-        final lines = file.readAsLinesSync();
-        for (var i = 0; i < lines.length; i++) {
-          if (_call.hasMatch(lines[i])) callers.add('$path:${i + 1}');
-        }
+    for (final file in handWrittenDartFilesIn([
+      for (final layer in ['application', 'presentation', 'providers'])
+        'lib/features/money/$layer',
+    ])) {
+      final path = file.path.replaceAll(r'\', '/');
+      if (path == _definition) continue;
+      final lines = file.readAsLinesSync();
+      for (var i = 0; i < lines.length; i++) {
+        if (_call.hasMatch(lines[i])) callers.add('$path:${i + 1}');
       }
     }
     expect(
