@@ -6419,6 +6419,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get customerPageInvoices => 'Facturas';
 
   @override
+  String get customerPageMatch => 'Conciliar el pago';
+
+  @override
   String get customerPageNothingOwed => 'Nada pendiente';
 
   @override

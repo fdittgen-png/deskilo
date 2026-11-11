@@ -1138,6 +1138,7 @@ Map<String, _Getter> _part3() => {
   'composerMention': (l) => l.composerMention,
   'countryNameMT': (l) => l.countryNameMT,
   'creditMoveConfirm': (l) => l.creditMoveConfirm,
+  'customerPageMatch': (l) => l.customerPageMatch,
   'dataReportColumnPaid': (l) => l.dataReportColumnPaid,
   'datevClientNumber': (l) => l.datevClientNumber,
   'datevCostCentre': (l) => l.datevCostCentre,

@@ -6422,6 +6422,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get customerPageInvoices => 'Fatture';
 
   @override
+  String get customerPageMatch => 'Abbina il pagamento';
+
+  @override
   String get customerPageNothingOwed => 'Niente da pagare';
 
   @override

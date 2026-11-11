@@ -6436,6 +6436,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get customerPageInvoices => 'Rechnungen';
 
   @override
+  String get customerPageMatch => 'Zahlung zuordnen';
+
+  @override
   String get customerPageNothingOwed => 'Nichts offen';
 
   @override

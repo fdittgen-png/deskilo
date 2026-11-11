@@ -10482,6 +10482,12 @@ abstract class AppLocalizations {
   /// **'Invoices'**
   String get customerPageInvoices;
 
+  /// #3587 R1-g: the customer page's main action while they hold money no invoice has taken; opens Payments to match
+  ///
+  /// In en, this message translates to:
+  /// **'Match the payment'**
+  String get customerPageMatch;
+
   /// #3587 R1-g: the customer page (customerPageNothingOwed)
   ///
   /// In en, this message translates to:

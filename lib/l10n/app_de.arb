@@ -4165,6 +4165,7 @@
   "customerPageCredit": "Guthaben: {amount}",
   "customerPageCreditHint": "Zahlungen, die noch keine Rechnung beglichen haben.",
   "customerPageInvoices": "Rechnungen",
+  "customerPageMatch": "Zahlung zuordnen",
   "customerPageNothingOwed": "Nichts offen",
   "customerPageOwes": "Schuldet",
   "customerPageStory": "Verlauf",

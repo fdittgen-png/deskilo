@@ -4165,6 +4165,7 @@
   "customerPageCredit": "Saldo a favor: {amount}",
   "customerPageCreditHint": "Pagos que ninguna factura ha tomado todavía.",
   "customerPageInvoices": "Facturas",
+  "customerPageMatch": "Conciliar el pago",
   "customerPageNothingOwed": "Nada pendiente",
   "customerPageOwes": "Debe",
   "customerPageStory": "Historial",

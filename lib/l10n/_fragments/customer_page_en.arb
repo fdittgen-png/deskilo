@@ -75,5 +75,9 @@
         "type": "String"
       }
     }
+  },
+  "customerPageMatch": "Match the payment",
+  "@customerPageMatch": {
+    "description": "#3587 R1-g: the customer page's main action while they hold money no invoice has taken; opens Payments to match"
   }
 }

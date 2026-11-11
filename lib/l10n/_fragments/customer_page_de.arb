@@ -9,5 +9,6 @@
   "customerStoryPaid": "Rechnung {number} bezahlt",
   "customerStoryDeclared": "Sagt, Rechnung {number} bezahlt zu haben",
   "customerStoryReminders": "{count, plural, =1{Mahnung für {number} geteilt} other{{count} Mahnungen für {number} geteilt}}",
-  "customerStoryNow": "Jetzt: {words}"
+  "customerStoryNow": "Jetzt: {words}",
+  "customerPageMatch": "Zahlung zuordnen"
 }

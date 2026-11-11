@@ -6435,6 +6435,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get customerPageInvoices => 'Factures';
 
   @override
+  String get customerPageMatch => 'Rapprocher le paiement';
+
+  @override
   String get customerPageNothingOwed => 'Rien à payer';
 
   @override

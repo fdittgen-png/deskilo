@@ -123,4 +123,46 @@ void main() {
       );
     });
   });
+
+  group('holdsUnassignedMoney', () {
+    test('money held in a currency the customer has an open invoice in', () {
+      expect(
+        holdsUnassignedMoney(
+          credit: const {'EUR': 9900},
+          customerInvoices: [_inv('a')],
+        ),
+        isTrue,
+      );
+    });
+
+    test('not when the money is in another currency than any open invoice', () {
+      expect(
+        holdsUnassignedMoney(
+          credit: const {'CHF': 9900},
+          customerInvoices: [_inv('a')],
+        ),
+        isFalse,
+      );
+    });
+
+    test('not when no invoice is open (it is the customer\'s credit)', () {
+      expect(
+        holdsUnassignedMoney(
+          credit: const {'EUR': 9900},
+          customerInvoices: [_inv('a', stage: ReceivableStage.paid)],
+        ),
+        isFalse,
+      );
+    });
+
+    test('not for a zero credit', () {
+      expect(
+        holdsUnassignedMoney(
+          credit: const {'EUR': 0},
+          customerInvoices: [_inv('a')],
+        ),
+        isFalse,
+      );
+    });
+  });
 }

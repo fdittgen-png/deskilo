@@ -8,7 +8,6 @@
 // the list.
 import 'package:flutter/material.dart';
 
-import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -20,8 +19,10 @@ import '../../../../core/ui/kit/split_bar.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/kit/story.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
+import '../../application/payment_candidates.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import 'invoicing_dates.dart';
 import 'invoicing_words.dart';
 
 class CustomerPage extends StatelessWidget {
@@ -66,7 +67,13 @@ class CustomerPage extends StatelessWidget {
       today: today,
       mode: mode,
     ).where((r) => r.customerId == customerId).firstOrNull;
-    final action = row?.action;
+    // We do not chase a customer whose money we hold unassigned: while they
+    // do (in a currency they have an open invoice in), the page's action is to
+    // match it; Remind stays on the invoice's own page.
+    final holds =
+        credit != null &&
+        holdsUnassignedMoney(credit: credit!, customerInvoices: mine);
+    final action = holds ? InvoiceAction.match : row?.action;
     return Scaffold(
       appBar: AppBar(title: Text(name)),
       body: Column(
@@ -77,7 +84,7 @@ class CustomerPage extends StatelessWidget {
               children: [
                 _owed(context, mine),
                 if (credit case final held? when held.values.any((v) => v > 0))
-                  ..._credit(context, held),
+                  ..._credit(context, held, holds: holds),
                 const SizedBox(height: AppSpacing.md),
                 KitLabel(l.customerPageInvoices),
                 const SizedBox(height: AppSpacing.sm),
@@ -98,6 +105,7 @@ class CustomerPage extends StatelessWidget {
                   child: Text(switch (action) {
                     InvoiceAction.shareReminder => l.invoicingActionRemind,
                     InvoiceAction.confirmPayment => l.invoicingActionConfirm,
+                    _ when holds => l.customerPageMatch,
                     _ => l.invoicingActionMatch,
                   }),
                 ),
@@ -181,7 +189,11 @@ class CustomerPage extends StatelessWidget {
   }
 
   /// "Credit: …" per currency, with what it is.
-  List<Widget> _credit(BuildContext context, Map<String, int> held) {
+  List<Widget> _credit(
+    BuildContext context,
+    Map<String, int> held, {
+    required bool holds,
+  }) {
     final l = context.l10n;
     final format = appFormatOf(context);
     final theme = Theme.of(context);
@@ -206,6 +218,16 @@ class CustomerPage extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
+            if (holds)
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton(
+                  key: const ValueKey('customer-page-credit-match'),
+                  style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+                  onPressed: () => onAction(InvoiceAction.match),
+                  child: Text(l.customerPageMatch),
+                ),
+              ),
           ],
         ),
       ),
@@ -223,9 +245,7 @@ class CustomerPage extends StatelessWidget {
       caption: Text(
         r.dueOn == null
             ? ''
-            : l.invoicingDueOn(
-                format.dates(DateShape.monthDay).format(r.dueOn!),
-              ),
+            : l.invoicingDueOn(invoicingDay(format, r.dueOn!, today)),
       ),
       amount: format
           .moneyIn(r.currency)
@@ -233,7 +253,7 @@ class CustomerPage extends StatelessWidget {
             r.stage == ReceivableStage.paid ? r.totalMinor : r.openMinor,
           ),
       trailing: StatusChip(
-        label: statusWordsOf(l, format, r, status),
+        label: statusWordsOf(l, format, r, status, today: today),
         tone: statusToneOf(status.kind),
       ),
       onTap: () => onOpenInvoice(r.invoiceId),
@@ -248,7 +268,7 @@ class CustomerPage extends StatelessWidget {
   ) {
     final l = context.l10n;
     final format = appFormatOf(context);
-    String day(DateTime d) => format.dates(DateShape.monthDay).format(d);
+    String day(DateTime d) => invoicingDay(format, d, today);
     final events = <(DateTime, StoryLine)>[
       for (final r in mine) ...[
         (
@@ -286,6 +306,7 @@ class CustomerPage extends StatelessWidget {
         format,
         row.invoices.first,
         invoiceStatusOf(row.invoices.first, today),
+        today: today,
       );
     }
     return KitCard(

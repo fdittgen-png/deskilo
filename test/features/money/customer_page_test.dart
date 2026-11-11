@@ -144,6 +144,56 @@ void main() {
     expect(ran, InvoiceAction.shareReminder);
   });
 
+  testWidgets('money held unassigned in a currency with an open invoice: the '
+      'bar says Match the payment, not Remind', (tester) async {
+    InvoiceAction? ran;
+    await _pump(
+      tester,
+      invoices,
+      credit: {'EUR': 9900},
+      onAction: (a) => ran = a,
+    );
+    expect(
+      find.text('Match the payment'),
+      findsNWidgets(2),
+      reason: 'bar + credit card',
+    );
+    expect(find.text('Remind'), findsNothing);
+    await tester.tap(_key('customer-page-action'));
+    expect(ran, InvoiceAction.match);
+    ran = null;
+    await tester.tap(_key('customer-page-credit-match'));
+    expect(ran, InvoiceAction.match);
+  });
+
+  testWidgets('credit in a currency they owe nothing in does not change the '
+      'bar', (tester) async {
+    await _pump(tester, [invoices.first], credit: {'CHF': 5000});
+    expect(find.text('Remind'), findsOneWidget);
+    expect(find.text('Match the payment'), findsNothing);
+  });
+
+  testWidgets('a date of another year says its year', (tester) async {
+    await _pump(tester, [
+      _inv(
+        '0040',
+        stage: ReceivableStage.paid,
+        open: 0,
+        issued: DateTime(2025, 8, 5),
+        due: DateTime(2025, 8, 19),
+        paid: DateTime(2025, 8, 25),
+      ),
+      _inv('0063'),
+    ], size: const Size(390, 3000));
+    expect(find.textContaining('Aug 19, 2025'), findsOneWidget);
+    expect(find.textContaining('Aug 25, 2025'), findsWidgets);
+    expect(
+      find.textContaining('due Sep 21'),
+      findsOneWidget,
+      reason: 'this year: no year',
+    );
+  });
+
   testWidgets('a customer who owes nothing says so and has no bar', (
     tester,
   ) async {

@@ -8545,6 +8545,10 @@
   "@customerPageInvoices": {
     "description": "#3587 R1-g: the customer page (customerPageInvoices)"
   },
+  "customerPageMatch": "Match the payment",
+  "@customerPageMatch": {
+    "description": "#3587 R1-g: the customer page's main action while they hold money no invoice has taken; opens Payments to match"
+  },
   "customerPageNothingOwed": "Nothing owed",
   "@customerPageNothingOwed": {
     "description": "#3587 R1-g: the customer page (customerPageNothingOwed)"

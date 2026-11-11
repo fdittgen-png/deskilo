@@ -4165,6 +4165,7 @@
   "customerPageCredit": "Avoir : {amount}",
   "customerPageCreditHint": "Paiements qu'aucune facture n'a encore pris.",
   "customerPageInvoices": "Factures",
+  "customerPageMatch": "Rapprocher le paiement",
   "customerPageNothingOwed": "Rien à payer",
   "customerPageOwes": "Doit",
   "customerPageStory": "Historique",

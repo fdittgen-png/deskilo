@@ -6386,6 +6386,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customerPageInvoices => 'Invoices';
 
   @override
+  String get customerPageMatch => 'Match the payment';
+
+  @override
   String get customerPageNothingOwed => 'Nothing owed';
 
   @override
