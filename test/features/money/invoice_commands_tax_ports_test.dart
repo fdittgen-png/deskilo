@@ -76,6 +76,23 @@ class _Commands implements InvoiceCommands {
     String note = '',
     int? amountCents,
   }) async => calls.add('match:$invoiceId:$resolution');
+
+  @override
+  Future<PaymentApplied> applyPaymentToInvoices({
+    required String workspaceId,
+    required String paymentLedgerId,
+    required List<PaymentAllocation> allocations,
+    String note = '',
+  }) async {
+    calls.add('apply:$paymentLedgerId:${allocations.length}');
+    return const PaymentApplied(invoices: 1, leftCents: 0);
+  }
+
+  @override
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
+  }) async => const [];
 }
 
 class _Tax implements TaxReportingRepository {
@@ -264,6 +281,11 @@ void main() {
       paymentLedgerId: 'p1',
       resolution: 'exact',
     );
+    await repo.applyPaymentToInvoices(
+      workspaceId: 'w1',
+      paymentLedgerId: 'p1',
+      allocations: [(invoiceId: 'i1', amountCents: 100)],
+    );
     await repo.fetchVatDeclarations('w1');
     await repo.fetchVatRates('w1');
     await repo.setVatRates('w1', const []);
@@ -274,6 +296,7 @@ void main() {
       'remind:i1',
       'credit:i2',
       'match:i1:exact',
+      'apply:p1:1',
     ]);
     expect(tax.calls, ['declarations:w1', 'rates:w1', 'setRates:w1']);
   });

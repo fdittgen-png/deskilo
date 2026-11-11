@@ -4,7 +4,9 @@
 // currency (never one sum), their credit only when it was read, their invoices
 // in the words of the home's lines, their story, and the one next action in the
 // bottom bar; no rule of the experience breaks at 320, 390 and 1280 px.
+import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/customer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,6 +56,8 @@ Future<void> _pump(
   Size size = const Size(390, 844),
   void Function(String)? onInvoice,
   void Function(InvoiceAction)? onAction,
+  List<PaymentLeft> payments = const [],
+  void Function(PaymentLeft)? onAssign,
 }) async {
   await pumpApp(
     tester,
@@ -63,6 +67,8 @@ Future<void> _pump(
       today: _today,
       mode: mode,
       credit: credit,
+      payments: payments,
+      onAssign: onAssign,
       onOpenInvoice: onInvoice ?? (_) {},
       onAction: onAction ?? (_) {},
     ),
@@ -148,6 +154,32 @@ void main() {
     expect(find.text('Remind'), findsOneWidget);
     await tester.tap(_key('customer-page-action'));
     expect(ran, InvoiceAction.shareReminder);
+  });
+
+  testWidgets('the credit line offers "Assign" for each payment left, with '
+      'what is left of it (#3671)', (tester) async {
+    final entry = LedgerEntry(
+      id: 'p1',
+      memberId: 'kalo',
+      kind: LedgerKind.credit,
+      category: LedgerCategory.payment,
+      amountCents: 12000,
+      description: 'Transfer',
+      period: '2026-03',
+      createdAt: DateTime(2026, 3, 20),
+    );
+    final left = PaymentLeft.of(entry, const PaymentUse(usedCents: {'p1': 7000}));
+    PaymentLeft? assigned;
+    await _pump(
+      tester,
+      invoices,
+      credit: {'EUR': 5000},
+      payments: [left],
+      onAssign: (p) => assigned = p,
+    );
+    expect(find.text('Assign €50.00 to invoices'), findsOneWidget);
+    await tester.tap(_key('customer-page-credit-assign-p1'));
+    expect(assigned?.id, 'p1');
   });
 
   testWidgets('while the credit is not read, no Remind is offered', (

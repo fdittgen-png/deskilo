@@ -123,6 +123,14 @@ class DemoRecordedPaymentsRepository implements RecordedPaymentsRepository {
 
   static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
 
+  /// One item per part, as the junction keeps them (#3671): a payment split
+  /// over two invoices is two items of their own amounts. An invoice with no
+  /// part row is read from its one match.
+  static List<InvoiceMatch> _partsOf(FakeMoneyRepository money) => [
+    for (final e in money.invoiceMatchesStore.entries)
+      ...(money.invoiceMatchPaymentsStore[e.key] ?? [e.value]),
+  ];
+
   @override
   Future<RecordedPaymentsPage> page(
     String workspaceId, {
@@ -139,7 +147,7 @@ class DemoRecordedPaymentsRepository implements RecordedPaymentsRepository {
     final byId = {for (final i in money.invoices) i.id: i};
     final ledger = {for (final e in money.ledger) e.id: e};
     final rows = <RecordedPayment>[];
-    for (final m in money.invoiceMatchesStore.values) {
+    for (final m in _partsOf(money)) {
       final invoice = byId[m.invoiceId];
       final paymentId = m.paymentLedgerId;
       if (paymentId == null ||

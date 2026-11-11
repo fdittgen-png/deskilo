@@ -7,7 +7,7 @@
   "memberMakeMember": "Rolle Administrator:in entziehen",
   "memberRoleChangeRequested": "Rollenwechsel zur Freigabe gesendet.",
   "eventTypeQuota": "Zusätzliche halbe Tage",
-  "eventQuotaRequested": "{actor} beantragt {halfDays} zusätzliche halbe Tage für {period}",
+  "eventQuotaRequested": "{actor} beantragt {halfDays, plural, =1{1 zusätzlichen halben Tag} other{{halfDays} zusätzliche halbe Tage}} für {period}",
   "quotaExceededError": "Monatliches Halbtage-Kontingent erreicht — beantragen Sie zusätzliche halbe Tage unter Meine Finanzen.",
   "quotaRequestButton": "Zusätzliche halbe Tage beantragen",
   "quotaRequestTitle": "Zusätzliche halbe Tage beantragen",

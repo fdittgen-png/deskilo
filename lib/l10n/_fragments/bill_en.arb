@@ -2,14 +2,14 @@
   "@@locale": "en",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
-    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount",
+    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage.",
     "placeholders": {
       "pct": {
         "type": "int"
       }
     }
   },
-  "billEntitlement": "{used} of {included} half-days billed ({openDays} days open)",
+  "billEntitlement": "{used} of {included, plural, =1{1 half-day} other{{included} half-days}} billed ({openDays, plural, =1{1 day} other{{openDays} days}} open)",
   "@billEntitlement": {
     "description": "Entitlement line under the subscription header",
     "placeholders": {

@@ -91,7 +91,7 @@
   "@bankFormatRead": {
     "description": "#2380 Format dialog and CSV sheet: read the file."
   },
-  "bankImported": "Imported: {created} new, {known} already known, {review} to review.",
+  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.",
   "@bankImported": {
     "description": "#2380 Snack: what an import did.",
     "placeholders": {
@@ -158,7 +158,7 @@
   },
   "bankRefusedAtLine": "{reason} (line {line})",
   "@bankRefusedAtLine": {
-    "description": "#2380 Refusal: the reason and the line it was found at.",
+    "description": "#2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number.",
     "placeholders": {
       "reason": {
         "type": "String"
@@ -412,7 +412,7 @@
   },
   "bankCsvColumn": "Column {n} ({first})",
   "@bankCsvColumn": {
-    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell.",
+    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number.",
     "placeholders": {
       "n": {
         "type": "int"

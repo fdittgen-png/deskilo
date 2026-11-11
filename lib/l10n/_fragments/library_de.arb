@@ -6,7 +6,7 @@
   "libraryStartFrom": "Aus der Bibliothek beginnen",
   "libraryYours": "Ihre Vorlagen",
   "libraryEmpty": "Noch nichts hier. Speichern Sie diesen Raum als Vorlage oder warten Sie, bis jemand eine mit Ihnen teilt.",
-  "libraryCounts": "{levels} Ebenen · {desks} Tische · {seats} Plätze",
+  "libraryCounts": "{levels, plural, =1{1 Ebene} other{{levels} Ebenen}} · {desks, plural, =1{1 Tisch} other{{desks} Tische}} · {seats, plural, =1{1 Platz} other{{seats} Plätze}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {

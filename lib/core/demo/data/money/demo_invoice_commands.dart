@@ -10,6 +10,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../money_repository.dart';
 import 'demo_document_numbering.dart';
+import 'demo_payment_apply.dart';
 
 /// #2591 — what a person does to an invoice, in the demo: answered from one
 /// space's in-memory money store ([FakeMoneyRepository]); every other port of
@@ -392,32 +393,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       );
       return;
     }
-    // #841 — a governed match carries the event that has to be
-    // validated, exactly as invoice_matches.event_id does on the server,
-    // so the document can show who released it.
-    String? eventId;
-    final eventRepository = _m.eventRepository;
-    if (_m.matchPolicyConfigured && eventRepository != null) {
-      eventId = 'invpay-${eventRepository.events.length + 1}';
-      eventRepository.events.add(
-        WorkspaceEvent(
-          id: eventId,
-          workspaceId: invoice.workspaceId,
-          type: EventType.invoicePayment,
-          action: EventAction.created,
-          // #3293 — whoever recorded the match, not the first member.
-          actorMemberId: eventRepository.respondingMemberId,
-          subjectMemberId: invoice.memberId,
-          payload: {
-            'invoice_id': invoiceId,
-            'paid_cents': paidCents,
-            'resolution': resolution,
-          },
-          status: EventStatus.pending,
-          createdAt: _m.clock(),
-        ),
-      );
-    }
+    final eventId = _governedEvent(invoice, paidCents, resolution);
     _m.invoiceMatchesStore[invoiceId] = InvoiceMatch(
       invoiceId: invoiceId,
       paidCents: paidCents,
@@ -430,4 +406,55 @@ class DemoInvoiceCommands implements InvoiceCommands {
       eventId: eventId,
     );
   }
+
+  /// #841 — a governed match carries the event that has to be validated,
+  /// exactly as invoice_matches.event_id does on the server, so the document
+  /// can show who released it. Null when no policy governs matches.
+  String? _governedEvent(Invoice invoice, int paidCents, String resolution) {
+    final eventRepository = _m.eventRepository;
+    if (!_m.matchPolicyConfigured || eventRepository == null) return null;
+    final eventId = 'invpay-${eventRepository.events.length + 1}';
+    eventRepository.events.add(
+      WorkspaceEvent(
+        id: eventId,
+        workspaceId: invoice.workspaceId,
+        type: EventType.invoicePayment,
+        action: EventAction.created,
+        // #3293 — whoever recorded the match, not the first member.
+        actorMemberId: eventRepository.respondingMemberId,
+        subjectMemberId: invoice.memberId,
+        payload: {
+          'invoice_id': invoice.id,
+          'paid_cents': paidCents,
+          'resolution': resolution,
+        },
+        status: EventStatus.pending,
+        createdAt: _m.clock(),
+      ),
+    );
+    return eventId;
+  }
+
+  /// #3671 — one payment over several invoices (`demo_payment_apply.dart`).
+  @override
+  Future<PaymentApplied> applyPaymentToInvoices({
+    required String workspaceId,
+    required String paymentLedgerId,
+    required List<PaymentAllocation> allocations,
+    String note = '',
+  }) => applyPaymentInDemo(
+    _m,
+    matchInvoice,
+    paymentLedgerId: paymentLedgerId,
+    allocations: allocations,
+    note: note,
+  );
+
+  /// #3671 — what each open invoice of the payer can take now
+  /// (`demo_payment_apply.dart`).
+  @override
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
+  }) async => paymentCapacityInDemo(_m, paymentLedgerId);
 }

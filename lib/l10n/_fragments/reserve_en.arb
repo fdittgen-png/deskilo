@@ -36,7 +36,7 @@
   },
   "monthFreeCount": "{free}/{total}",
   "@monthFreeCount": {
-    "description": "Free-desks-of-total label in a month calendar cell (#7)",
+    "description": "Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
     "placeholders": {
       "free": {
         "type": "int"
