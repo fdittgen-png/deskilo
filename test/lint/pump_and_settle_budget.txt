@@ -61,7 +61,7 @@
 11 test/features/money/invoice_journey_test.dart
 21 test/features/money/invoice_register_test.dart
 11 test/features/money/invoice_template_test.dart
-81 test/features/money/invoices_test.dart
+80 test/features/money/invoices_test.dart
 13 test/features/money/invoicing_navigation_ux_test.dart
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart

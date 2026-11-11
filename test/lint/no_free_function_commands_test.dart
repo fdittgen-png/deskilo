@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// Free-function commands in presentation/ on 2026-10-11.
-const _budget = 114;
+const _budget = 113;
 
 void main() {
   test('free-function commands only go down (ratchet)', () {
