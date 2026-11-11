@@ -152,11 +152,11 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "reservationDeleteRequestButton": "Request deletion",
+  "reservationDeleteRequestButton": "Request cancellation",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?",
+  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },

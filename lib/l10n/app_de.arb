@@ -9319,7 +9319,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Digitale Signatur (SHA-256)",
+  "invoicePdfSignature": "Dokument-Fingerabdruck (SHA-256)",
   "invoicePdfSubtotal": "Zwischensumme",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
@@ -15843,11 +15843,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Löschung beantragen",
+  "reservationDeleteRequestButton": "Stornierung beantragen",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?",
+  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Bis zur Entscheidung bleibt die Buchung unverändert; nichts wird automatisch erstattet oder gelöscht.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -19894,6 +19894,7 @@
       }
     }
   },
+  "uxBookingAllowanceLeft": "{count, plural, =0{Kein halber Tag mehr in Ihrem Kontingent diesen Monat} =1{1 halber Tag übrig in Ihrem Kontingent diesen Monat} other{{count} halbe Tage übrig in Ihrem Kontingent diesen Monat}}",
   "uxBookingChargePending": "Gebühr und Kontingentverbrauch hängen vom Tarif des Mitglieds ab und werden auf der Abrechnung ausgewiesen.",
   "uxBookingCheckInHelp": "Bei Bestätigung dieser Reservierung auch meine Anwesenheit melden.",
   "uxBookingFor": "Buchung für",

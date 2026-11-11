@@ -24192,7 +24192,7 @@ abstract class AppLocalizations {
   /// PDF: caption above the integrity fingerprint
   ///
   /// In en, this message translates to:
-  /// **'Digital signature (SHA-256)'**
+  /// **'Document fingerprint (SHA-256)'**
   String get invoicePdfSignature;
 
   /// #2362 sales tax: invoicePdfSubtotal
@@ -41075,13 +41075,13 @@ abstract class AppLocalizations {
   /// Reservation deletion requests (#492)
   ///
   /// In en, this message translates to:
-  /// **'Request deletion'**
+  /// **'Request cancellation'**
   String get reservationDeleteRequestButton;
 
   /// Reservation deletion requests (#492)
   ///
   /// In en, this message translates to:
-  /// **'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?'**
+  /// **'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.'**
   String get reservationDeleteRequestExplain;
 
   /// Reservation deletion requests (#492)
@@ -52542,6 +52542,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{updates} new updates · {pending} awaiting your decision'**
   String uxAttentionSummary(int updates, int pending);
+
+  /// Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}'**
+  String uxBookingAllowanceLeft(int count);
 
   /// Shown as the text in booking review summary (reservations).
   ///

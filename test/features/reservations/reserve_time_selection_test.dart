@@ -229,8 +229,8 @@ void main() {
       );
     });
 
-    testWidgets('T07 — "check in right away" follows the EDITED window: '
-        'offered for the morning (contains now), gone for the afternoon', (
+    testWidgets('T07 — checking in follows the EDITED window: the selector offers '
+        'it for the morning (contains now), no second switch; gone for the afternoon', (
       tester,
     ) async {
       await pumpHub(
@@ -240,7 +240,10 @@ void main() {
       );
       await _openSeat(tester);
       await _tap(tester, 'booking-am');
-      expect(_key('booking-check-in-now'), findsOneWidget);
+      // #3284 — the mode selector is the one way to check in when offered.
+      expect(_key('booking-sheet-booking-mode-selector'), findsOneWidget);
+      expect(_key('booking-mode-check-in'), findsOneWidget);
+      expect(_key('booking-check-in-now'), findsNothing);
       await _tap(tester, 'booking-pm');
       expect(_key('booking-check-in-now'), findsNothing);
     });

@@ -14,6 +14,8 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../helpers/tool_process.dart';
+
 late Directory _tmp;
 
 /// A repository with one base commit and a second commit on top: a
@@ -165,7 +167,7 @@ void main() {
 
   test('a usage error is an exit code, not a verdict — Dart ignores what '
       '`int main` returns', () {
-    final r = Process.runSync('dart', ['run', 'tool/ci_classify.dart']);
+    final r = runToolSync('tool/ci_classify.dart', const <String>[]);
     expect(r.exitCode, 2, reason: '${r.stdout}${r.stderr}');
   });
 

@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../tool/quality_rows/rows.dart';
 import '../../tool/quality_rows/shard_io.dart';
 import '../../tool/quality_rows/shards.dart';
+import '../helpers/tool_process.dart';
 
 String _event(Map<String, Object?> e) => jsonEncode(e);
 
@@ -633,8 +634,7 @@ void main() {
     // formatted as yaml", exit 254) and left this test without output.
     ProcessResult rows(ShardPlan plan) {
       File('${dir.path}/plan.json').writeAsStringSync(jsonEncode(plan.toJson()));
-      return Process.runSync('dart', [
-        'tool/quality_rows.dart',
+      return runToolSync('tool/quality_rows.dart', [
         '--plan', '${dir.path}/plan.json',
         '--shards', dir.path,
         '--manifest', '.github/quality-manifest.psv',
@@ -741,8 +741,7 @@ void main() {
 
     test('an unreadable plan exits 1 with a red Tests row', () {
       File('${dir.path}/plan.json').writeAsStringSync('{');
-      final r = Process.runSync('dart', [
-        'tool/quality_rows.dart',
+      final r = runToolSync('tool/quality_rows.dart', [
         '--plan', '${dir.path}/plan.json',
         '--shards', dir.path,
         '--manifest', '.github/quality-manifest.psv',

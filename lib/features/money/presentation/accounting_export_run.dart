@@ -133,15 +133,14 @@ class AccountingExportRun {
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
   DocumentNumbering get repo => ref.read(documentNumberingProvider);
 
+  void refreshSources() => ref.invalidate(memberNamesProvider); // #3680 Retry
+
   /// Gathers the books, asks which format and for its details, and
   /// exports.
   Future<void> start() async {
   if (ref.read(currentWorkspaceProvider).value == null) return;
   if (invoices.isEmpty) {
-    AppSnack.info(
-      context,
-      l10n.invoiceAccountingExportEmpty,
-    );
+    AppSnack.info(context, l10n.invoiceAccountingExportEmpty);
     return;
   }
   year = invoices

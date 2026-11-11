@@ -14,6 +14,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/code_health.dart';
+import '../helpers/tool_process.dart';
 
 String _fixture(String name) =>
     File('test/tool/code_health_fixtures/$name.fixture').readAsStringSync();
@@ -113,8 +114,7 @@ void main() {
     try {
       File('${dir.path}/ok.dart').writeAsStringSync(_fixture('if_chain'));
       File('${dir.path}/bad.dart').writeAsStringSync(_fixture('unparsable'));
-      final r = Process.runSync(
-          'dart', ['run', 'tool/code_health.dart', dir.path]);
+      final r = runToolSync('tool/code_health.dart', [dir.path]);
       expect(r.exitCode, 1, reason: '${r.stdout}${r.stderr}');
       expect(r.stderr, contains('bad.dart'));
       expect(r.stderr, contains('PARSE ERROR'));
