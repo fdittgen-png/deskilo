@@ -1,4 +1,9 @@
 {
   "payConfigSettlementsFetch": "Auszahlungen abrufen",
-  "payConfigSettlementsFetched": "{count} Auszahlungen erfasst"
+  "payConfigSettlementsFetched": "{count} Auszahlungen erfasst",
+  "payConfigSettlementsReviewTitle": "Zu prüfende Abrechnungsmeldungen",
+  "payConfigSettlementCostsChanged": "{settlement}: Der Anbieter hat die Kosten nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.",
+  "payConfigSettlementAmountChanged": "{settlement}: Der Anbieter hat den Betrag nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.",
+  "payConfigSettlementCurrencyMismatch": "{settlement}: Ein Kostenposten ist in einer anderen Währung als die Abrechnung. Nichts davon wurde gebucht.",
+  "payConfigSettlementsReviewUnreadable": "Die zu prüfenden Abrechnungsmeldungen konnten nicht gelesen werden."
 }

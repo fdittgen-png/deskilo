@@ -1,4 +1,9 @@
 {
   "payConfigSettlementsFetch": "Obtener los pagos",
-  "payConfigSettlementsFetched": "{count} pagos registrados"
+  "payConfigSettlementsFetched": "{count} pagos registrados",
+  "payConfigSettlementsReviewTitle": "Liquidaciones por revisar",
+  "payConfigSettlementCostsChanged": "{settlement}: el proveedor cambió sus costes después de registrarse. No se contabilizó nada del nuevo informe.",
+  "payConfigSettlementAmountChanged": "{settlement}: el proveedor cambió su importe después de registrarse. No se contabilizó nada del nuevo informe.",
+  "payConfigSettlementCurrencyMismatch": "{settlement}: un coste está en otra moneda que la liquidación. No se contabilizó nada.",
+  "payConfigSettlementsReviewUnreadable": "No se pudieron leer las liquidaciones por revisar."
 }

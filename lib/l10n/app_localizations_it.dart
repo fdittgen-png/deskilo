@@ -1030,6 +1030,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo pagamento non è stato trovato in questa attività. Non è stato registrato nulla.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'Questo pagamento è già stato detratto su una fattura emessa da allora: non può pagare un\'altra fattura. Non è stato registrato nulla.';
+
+  @override
   String get assignRefuseCurrency =>
       'Una fattura non è nella valuta dell\'attività. Non è stato registrato nulla.';
 
@@ -1040,6 +1044,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'Una fattura è stata pagata o modificata nel frattempo. Viene riletta: controlli gli importi.';
 
   @override
   String get assignRefuseNotAllowed =>
@@ -20820,12 +20828,34 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payConfigSecretSet => 'Impostato — lasci vuoto per mantenere';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement: il fornitore ha modificato l\'importo dopo la registrazione. Nulla del nuovo resoconto è stato contabilizzato.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement: il fornitore ha modificato i costi dopo la registrazione. Nulla del nuovo resoconto è stato contabilizzato.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement: un costo è in una valuta diversa da quella della liquidazione. Nulla è stato contabilizzato.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Recupera i pagamenti';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count pagamenti registrati';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle => 'Liquidazioni da verificare';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'Non è stato possibile leggere le liquidazioni da verificare.';
 
   @override
   String get payConfigTitle => 'Pagamenti online';

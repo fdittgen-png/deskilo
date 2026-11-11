@@ -2,6 +2,7 @@
 import 'payment_intent.dart';
 import 'payment_provider.dart';
 import 'payment_test_check.dart';
+import 'settlement_fetch.dart';
 
 /// #2591 — online payments: the attempts, which providers the workspace
 /// can charge with, the owner's credentials, and starting a checkout.
@@ -38,9 +39,10 @@ abstract interface class PaymentGatewayRepository {
 
   /// #3504 -- reads the provider's settlements ON DEMAND (Mollie reports its
   /// payouts and costs on settlements) and records each paid one as a payout
-  /// with its period costs. Answers how many settlements were recorded and how
-  /// many were not paid yet. Billing managers only, with online payments on.
-  Future<({int imported, int skipped})> fetchProviderSettlements(
+  /// with its period costs. Answers what the recorder decided and the reports
+  /// waiting for review (#3510). Billing managers only, with online payments
+  /// on.
+  Future<SettlementFetch> fetchProviderSettlements(
     String workspaceId,
     PaymentProvider provider,
   );

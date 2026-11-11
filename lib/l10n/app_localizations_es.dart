@@ -1030,6 +1030,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encuentra este pago en esta empresa. No se registró nada.';
 
   @override
+  String get assignRefuseCreditDeducted =>
+      'Este pago ya se descontó en una factura emitida después: no puede pagar otra factura. No se registró nada.';
+
+  @override
   String get assignRefuseCurrency =>
       'Una factura no está en la moneda de la empresa. No se registró nada.';
 
@@ -1040,6 +1044,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'No se pudo asignar el pago. No se registró nada. Inténtelo de nuevo.';
+
+  @override
+  String get assignRefuseInvoiceChanged =>
+      'Una factura se pagó o cambió entretanto. Se lee de nuevo: revise los importes.';
 
   @override
   String get assignRefuseNotAllowed =>
@@ -20794,12 +20802,34 @@ class AppLocalizationsEs extends AppLocalizations {
       'Definido — déjelo en blanco para conservarlo';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement: el proveedor cambió su importe después de registrarse. No se contabilizó nada del nuevo informe.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement: el proveedor cambió sus costes después de registrarse. No se contabilizó nada del nuevo informe.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement: un coste está en otra moneda que la liquidación. No se contabilizó nada.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Obtener los pagos';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count pagos registrados';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle => 'Liquidaciones por revisar';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'No se pudieron leer las liquidaciones por revisar.';
 
   @override
   String get payConfigTitle => 'Pagos en línea';

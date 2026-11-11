@@ -3,6 +3,7 @@
 // Exit 0: selected generators made no changes (or none were selected).
 // Exit 1: generation changed content; exit 2: discovery or execution failed.
 // This is local tooling, not evidence that the full CI suite passed.
+import 'dart:convert';
 import 'dart:io';
 
 import 'preflight/affected_tests.dart';
@@ -34,7 +35,15 @@ int run(List<String> args, {
         .replaceFirst(RegExp(r'\r?\n$'), '');
     final git = PreflightGit(root, execute);
     final paths = git.changedPaths(base);
-    if (listOnly) _listTests(root, paths);
+    if (listOnly) {
+      _listTests(root, paths, (path) {
+        try {
+          return git.text(['show', '$base:$path']);
+        } on Object {
+          return null; // a new file has no text before
+        }
+      });
+    }
     if (paths.isEmpty) {
       stdout.writeln('preflight v$preflightVersion: no changed inputs; no generators run');
       return 0;
@@ -85,7 +94,11 @@ int run(List<String> args, {
 }
 
 /// #3715 -- the tests the branch's diff drags in (the table plus importers).
-void _listTests(String root, Iterable<String> paths) {
+void _listTests(
+  String root,
+  Iterable<String> paths,
+  String? Function(String path) before,
+) {
   // A tree without the table (a fixture, an older checkout) lists nothing and
   // says so; the table's own lint keeps it present in this repository.
   if (!File('$root/tool/preflight/test_map.json').existsSync()) {
@@ -94,17 +107,59 @@ void _listTests(String root, Iterable<String> paths) {
     );
     return;
   }
-  final tests = affectedTests(
-    paths,
-    readTestMap(File('$root/tool/preflight/test_map.json')),
-    readTestSources(root),
-    skipImporters:
-        readNoImporterSearch(File('$root/tool/preflight/test_map.json')),
-  );
+  final table = readTestMap(File('$root/tool/preflight/test_map.json'));
+  // #3751 -- what no local test can stand in for (a replay, a remote run).
+  for (final note in notesFor(paths, table)) {
+    stdout.writeln('before the pull request opens: $note');
+  }
+  final sources = readTestSources(root);
+  final tests = {
+    ...affectedTests(
+      paths,
+      table,
+      sources,
+      skipImporters:
+          readNoImporterSearch(File('$root/tool/preflight/test_map.json')),
+    ),
+    ..._staleSentenceTests(root, paths, before, sources),
+  }.toList()..sort();
   stdout.writeln('tests to run before the push (beyond the lint folder): '
       '${tests.length}');
   for (final t in tests) {
     stdout.writeln('  $t');
   }
   stdout.writeln('tests to run: ${tests.length}');
+}
+
+final _englishFragment = RegExp(r'^lib/l10n/_fragments/[^/]+_en\.arb$');
+
+/// #3752 -- the tests that still assert the old text of a changed English
+/// sentence. A fragment that cannot be read either side lists nothing: the
+/// list never fails for it.
+Set<String> _staleSentenceTests(
+  String root,
+  Iterable<String> paths,
+  String? Function(String path) before,
+  Map<String, String> sources,
+) {
+  final out = <String>{};
+  for (final path in paths.where(_englishFragment.hasMatch)) {
+    try {
+      final old = before(path);
+      if (old == null) continue;
+      final file = File('$root/$path');
+      out.addAll(
+        testsOfChangedSentences(
+          jsonDecode(old) as Map<String, dynamic>,
+          file.existsSync()
+              ? jsonDecode(file.readAsStringSync()) as Map<String, dynamic>
+              : const <String, dynamic>{},
+          sources,
+        ),
+      );
+    } on FormatException {
+      continue;
+    }
+  }
+  return out;
 }
