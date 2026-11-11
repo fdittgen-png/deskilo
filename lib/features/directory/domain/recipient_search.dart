@@ -193,10 +193,3 @@ List<Recipient> suggestRecipients(
   });
   return [for (final r in ranked.take(limit)) r.$3];
 }
-
-/// Up to two initials of [name], for the avatar of a row without a photo.
-String initialsOf(String name) {
-  final words = name.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
-  final letters = [for (final w in words.take(2)) w[0].toUpperCase()];
-  return letters.isEmpty ? '?' : letters.join();
-}

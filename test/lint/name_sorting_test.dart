@@ -12,7 +12,19 @@ void main() {
     final files = filesUnder(['lib'])
         .where((f) => !f.path.startsWith('lib/core/text/'));
     final kinds = [
-      LiteralKind('lower-cased compareTo', RegExp(r'toLowerCase\(\)\.compareTo\(')),
+      LiteralKind(
+        'lower-cased compareTo',
+        RegExp(r'toLowerCase\(\)\s*\.compareTo\('),
+      ),
+      // #3654 -- the multi-line and the map-lookup shapes.
+      LiteralKind(
+        'person-name compareTo',
+        RegExp(r'\.(memberName|fullName|displayName|firstName|lastName)\s*\.compareTo\('),
+      ),
+      LiteralKind(
+        'name lookup compareTo',
+        RegExp(r"names\[[^\]]+\]\s*\?\?\s*''\)\s*\.compareTo\("),
+      ),
       LiteralKind(
         'name compareTo',
         RegExp(r'\.(name|title|label|displayName)\.compareTo\('),
