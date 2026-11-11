@@ -20,6 +20,7 @@ import '../../auth/providers/auth_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/public_workspace.dart';
+import '../providers/pending_admissions_provider.dart';
 
 class SpaceOffers extends ConsumerStatefulWidget {
   const SpaceOffers({
@@ -81,7 +82,11 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
               .firstOrNull
         : null;
     final myRead = here ? ref.watch(myWorkspacesProvider) : null;
-    final unknown = myRead != null && !myRead.hasValue;
+    final pendingRead = ref.watch(pendingAdmissionsProvider);
+    // Nothing is offered while either read is running or failed (#3683, #3696).
+    final unknown =
+        (myRead != null && !myRead.hasValue) || !pendingRead.hasValue;
+    final pending = _pending || (pendingRead.value?.contains(workspace.id) ?? false);
     final email = workspace.text('email').trim();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -96,21 +101,23 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
               label: Text(l.portalEnterSpace),
               onPressed: () => enterSpace(context, ref, mine),
             )
-          else if (unknown && myRead.hasError && !myRead.isLoading)
+          else if (unknown && ((myRead?.hasError ?? false) || pendingRead.hasError) && !(myRead?.isLoading ?? false) && !pendingRead.isLoading)
             ReadFailureBanner(
-              error: myRead.error!,
-              onRetry: () => ref.invalidate(myWorkspacesProvider),
+              error: (myRead?.error ?? pendingRead.error)!,
+              onRetry: () => ref
+                ..invalidate(myWorkspacesProvider)
+                ..invalidate(pendingAdmissionsProvider),
             )
           else
             FilledButton.icon(
               key: const ValueKey('portal-request-membership'),
               icon: Icon(
-                _pending ? Icons.hourglass_top : Icons.person_add_outlined,
+                pending ? Icons.hourglass_top : Icons.person_add_outlined,
               ),
               label: Text(
-                _pending ? l.portalRequestPending : l.portalRequestProfile,
+                pending ? l.portalRequestPending : l.portalRequestProfile,
               ),
-              onPressed: unknown || _sending || _pending ? null : _request,
+              onPressed: unknown || _sending || pending ? null : _request,
             ),
           ?widget.secondary,
           if (email.isNotEmpty)

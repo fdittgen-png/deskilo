@@ -19,7 +19,7 @@ import '../../app/private_values_wiring.dart';
 import '../../features/calendar/providers/calendar_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart'
-    show myReservationsSourcesFromMe;
+    show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
@@ -198,6 +198,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ),
     // #2553 C2 — read for every space the persona's personal home names.
     myReservationsSourcesFromMe,
+    // #3696 — the Demo's pending requests are read the same way.
+    pendingAdmissionsFromMe,
     // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
     // are the personal home's own, answered by its own read.
     financeHostsFromMe,
