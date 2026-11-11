@@ -212,8 +212,12 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
             subtitle: entity.requires.isEmpty
                 ? null
                 : Text(
-                    '${l10n.deploymentRequires} '
-                    '${entity.requires.map((r) => _deploymentEntityName(l10n, r)).join(', ')}'),
+                    l10n.deploymentRequiresList(
+                        entity.requires
+                            .map((r) => _deploymentEntityName(l10n, r))
+                            .join(', '),
+                      ),
+                  ),
             onChanged: _busy || twin == null || !allowed
                 ? null
                 : (v) => _toggle(entity.key, v ?? false),

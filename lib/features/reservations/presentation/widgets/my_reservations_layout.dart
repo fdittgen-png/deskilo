@@ -12,13 +12,11 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/personal_theme.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/my_reservations.dart';
 import '../../domain/my_reservations_composition.dart';
 import '../../domain/reservation.dart';
-
-/// A content width from which a card takes the expanded padding.
-const double _expandedMinWidth = 600;
 
 /// #2553 C4 -- how My reservations lays its rows out at a content width: a
 /// card with the #2551 compact or expanded padding, or, from a medium
@@ -28,10 +26,12 @@ enum MyReservationsLayout {
   expanded,
   table;
 
-  static MyReservationsLayout of(double width) {
-    if (width >= PersonalShellMetrics.railMinWidth) return table;
-    return width >= _expandedMinWidth ? expanded : compact;
-  }
+  static MyReservationsLayout of(double width) =>
+      switch (WindowClass.ofWidth(width)) {
+        WindowClass.compact => compact,
+        WindowClass.medium => expanded,
+        _ => table,
+      };
 
   /// The card's padding: 16 compact, 24 expanded.
   EdgeInsets get cardPadding =>

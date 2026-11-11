@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/state/policy_read.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/bank/reconciliation_report.dart';
 import '../providers/bank_statement_providers.dart';
+import '../providers/money_providers.dart';
 import 'bank_reconciliation_pdf.dart';
 import 'bank_reconciliation_words.dart';
 import 'invoice_documents.dart';
@@ -47,6 +49,12 @@ class BankReconciliationActions {
       workspaceId: workspaceId,
       statementId: statementId,
       sourceLimits: ref.read(bankImportSettingsProvider).limits,
+    );
+    // #3742 — the letter is printed with the owner's template, read.
+    await readPolicy(
+      ref,
+      invoicePdfTemplateProvider,
+      invoicePdfTemplateProvider.future,
     );
     if (!context.mounted) return;
     final workspaceState = ref.read(currentWorkspaceProvider);

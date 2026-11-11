@@ -147,7 +147,15 @@ void main() {
 
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('invoice-page-remind')));
-      await tester.pump();
+      // #3742 — the reminder reads its rules and template first, then
+      // builds, shares and records: let that real work finish.
+      for (var i = 0; i < 200 && money.invoiceReminders[invoice.id] == null; i++) {
+        await tester.pump();
+        await Future<void>.delayed(Duration.zero);
+      }
+      if (money.invoiceReminders[invoice.id] == null) {
+        fail('the reminder was not recorded');
+      }
     });
     await tester.pumpAndSettle();
 

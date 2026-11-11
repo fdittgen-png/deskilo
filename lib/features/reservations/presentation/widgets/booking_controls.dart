@@ -11,6 +11,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../workspace/domain/booking_granularity.dart';
@@ -74,7 +75,7 @@ class WindowControls extends StatelessWidget {
         message: label,
         child: ChoiceChip(
           key: ValueKey('$keyPrefix-$keySuffix'),
-          label: MediaQuery.sizeOf(context).width >= 600
+          label: WindowClass.of(context).atLeast(WindowClass.medium)
               ? Row(mainAxisSize: MainAxisSize.min, children: [
                   DayHalvesGlyph(am: halves.am, pm: halves.pm, semanticLabel: label),
                   const SizedBox(width: AppSpacing.xs), Text(name),

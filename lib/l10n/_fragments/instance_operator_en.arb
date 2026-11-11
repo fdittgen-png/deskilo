@@ -44,9 +44,14 @@
   "@instanceTurnOnConfirm": {
     "description": "#1827 B — instance operator console for the installation's assistants"
   },
-  "instanceBlockers": "Still missing:",
-  "@instanceBlockers": {
-    "description": "#1827 B — instance operator console for the installation's assistants"
+  "instanceBlockersList": "Still missing: {blockers}",
+  "@instanceBlockersList": {
+    "description": "Operator view: what still blocks the assistant, as a list.",
+    "placeholders": {
+      "blockers": {
+        "type": "String"
+      }
+    }
   },
   "instanceBlockerNoAdmin": "a database administrator",
   "@instanceBlockerNoAdmin": {

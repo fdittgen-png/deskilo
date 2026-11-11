@@ -70,7 +70,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
   }
 
   RepartitionRule _effectiveRule() =>
-      _rule ?? ref.read(repartitionRuleProvider).value ?? const RepartitionRule();
+      _rule ?? ref.read(repartitionRuleProvider).value ?? const RepartitionRule(); // empty-ok: the steps that use the rule wait for it (build)
 
   List<RepartitionMember> _pool() {
     final rule = _effectiveRule();
@@ -164,8 +164,12 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     // the rule and booking steps wait for it, or say it failed.
     final membersRead = ref.watch(workspaceMembersProvider);
     ref.watch(memberNamesProvider);
-    final membersStandIn = ReadsAnswer.of([membersRead]).standIn(
-      onRetry: () => ref.invalidate(workspaceMembersProvider),
+    // #3742 — and over the business's own split rule, read.
+    final ruleRead = ref.watch(repartitionRuleProvider);
+    final membersStandIn = ReadsAnswer.of([membersRead, ruleRead]).standIn(
+      onRetry: () => ref
+        ..invalidate(workspaceMembersProvider)
+        ..invalidate(repartitionRuleProvider),
     );
     final currency = appFormatOf(context).moneyIn(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final rule = _effectiveRule();

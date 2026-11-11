@@ -62,6 +62,7 @@
   "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
   "planFromLabel": "Von",
   "planToLabel": "Bis",
+  "planToTime": "Bis {time}",
   "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
   "planClosedDay": "An diesem Tag geschlossen",
   "planAvailabilityLoading": "Öffnungstage werden geprüft…",

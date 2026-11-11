@@ -21,6 +21,7 @@
   "invoicePdfIssuedByName": "Emitida por {name}",
   "invoicePdfBilledTo": "Facturar a",
   "invoicePdfSignature": "Huella del documento (SHA-256)",
+  "invoicePdfSignatureValue": "Huella del documento (SHA-256) {fingerprint}",
   "addressTitle": "Dirección",
   "addressNone": "Sin dirección",
   "addressSaved": "Dirección guardada",
@@ -41,7 +42,7 @@
   },
   "invoiceVoided": "Factura marcada como errónea.",
   "invoiceReplaceAction": "Emitir reemplazo",
-  "invoicePdfVoided": "ERRÓNEA — anulada el",
+  "invoicePdfVoidedOn": "ERRÓNEA — anulada el {date}",
   "invoicePdfReplaces": "Reemplaza a",
   "invoicePdfReplacesNumber": "Reemplaza a {number}",
   "invoiceNothingToInvoice": "Nada registrado este mes — nada que facturar.",
@@ -344,6 +345,7 @@
     "description": "E-invoicing config: customer delivery section help (#568)"
   },
   "invoiceSendRejected": "La plataforma la rechazó.",
+  "invoiceSendRejectedDetail": "La plataforma la rechazó. {detail}",
   "invoiceSentOn": "Enviada el {date} · {status}",
   "@invoiceSentOn": {
     "placeholders": {

@@ -12,6 +12,7 @@ import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/book_reports.dart';
@@ -52,7 +53,9 @@ class BookReportPrint {
     required String kindId,
     required JournalPosted books,
     required Map<String, Object?> letterhead,
-  }) async {
+  }) => printOrRetry(context, 'book report', () async {
+    await readDocumentPolicies(ref); // #3742 — the template and rules, read
+    if (!context.mounted) return;
     final l10n = context.l10n;
     final ledger = BookLedger(
       postings: books.postings,
@@ -107,5 +110,5 @@ class BookReportPrint {
         return (bytes: pdf.bytes, fileName: '$stem.pdf');
       },
     );
-  }
+  });
 }

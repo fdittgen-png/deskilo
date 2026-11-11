@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/state/policy_read.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../domain/billing_rules.dart';
 import '../../domain/invoicing_wizard.dart';
 import '../../providers/invoicing_wizard_providers.dart';
@@ -33,9 +36,20 @@ class _InvoicingWizardScreenState extends ConsumerState<InvoicingWizardScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      final rules = ref.read(billingRulesProvider).value ?? const BillingRules();
+      // #3742 — the run is suggested from the business's own rules, read;
+      // when they cannot be read, the wizard says so instead of guessing.
+      final BillingRules rules;
+      try {
+        rules = await readPolicy(ref, billingRulesProvider, billingRulesProvider.future);
+      } on Object catch (e, st) {
+        TraceLogger.instance.error('money', 'billing rules read failed',
+            error: e, stackTrace: st);
+        if (mounted) AppSnack.error(context, context.l10n.readStateFailed);
+        return;
+      }
+      if (!mounted) return;
       final now = ref.read(clockProvider).now();
       ref
           .read(invoicingWizardControllerProvider.notifier)

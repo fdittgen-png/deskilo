@@ -135,8 +135,10 @@ class _ReceiptSheet {
             key: const ValueKey('purchase-order-receive-day'),
             icon: const Icon(Icons.event_outlined),
             label: Text(
-              '${l10n.purchaseOrderReceivedOn}: '
-              '${MaterialLocalizations.of(context).formatMediumDate(day)}',
+              l10n.labelWithValue(
+              l10n.purchaseOrderReceivedOn,
+              MaterialLocalizations.of(context).formatMediumDate(day),
+            ),
             ),
             onPressed: () async {
               final picked = await showDatePicker(

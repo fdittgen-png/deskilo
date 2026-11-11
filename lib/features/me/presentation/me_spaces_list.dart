@@ -12,6 +12,7 @@ import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_sheet.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/server_label.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
@@ -88,7 +89,15 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
 
   Future<void> _pickGroup(BuildContext context, String key) async {
     final l10n = context.l10n;
-    final prefs = ref.read(spacePrefsProvider).value ?? SpacePrefs.empty;
+    // #3749 — the stored layout, or nothing: a picker built on an empty
+    // layout would offer no group and move from the wrong one.
+    final SpacePrefs prefs;
+    try {
+      prefs = await ref.read(spacePrefsProvider.future);
+    } on Object {
+      return;
+    }
+    if (!context.mounted) return;
     final current = prefs.groupIdOf(key);
     final picked = await showAppSheet<_GroupChoice>(
       context: context,
@@ -141,7 +150,9 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
+    final prefsStandIn = readsStandIn(ref, [spacePrefsProvider]);
+    if (prefsStandIn != null) return prefsStandIn;
+    final prefs = ref.watch(spacePrefsProvider).requireValue;
     final notifier = ref.read(spacePrefsProvider.notifier);
     final layout = MeSpacesLayout.of(
       prefs: prefs,

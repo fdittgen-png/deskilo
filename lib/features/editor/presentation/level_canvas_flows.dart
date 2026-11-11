@@ -69,8 +69,7 @@ class LevelCanvasFlows {
       title: l10n.editorNewOffice,
       label: l10n.editorOfficeNameLabel,
       initial:
-          '${l10n.editorOfficeNameDefault} '
-          '${plan.offices.length + 1}',
+          l10n.editorOfficeNameNumbered(plan.offices.length + 1),
     );
     if (name == null || name.isEmpty) return;
     if (!context.mounted) return;
@@ -109,8 +108,7 @@ class LevelCanvasFlows {
       workspaceId,
       officeId: office.id,
       name:
-          '${context.l10n.editorDeskNameDefault} '
-          '${plan.desksOf(office.id).length + 1}',
+          context.l10n.editorDeskNameNumbered(plan.desksOf(office.id).length + 1),
       rect: rect,
     );
     _refresh();

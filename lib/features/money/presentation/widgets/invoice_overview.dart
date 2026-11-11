@@ -89,11 +89,13 @@ InvoiceExposure? watchExposure(WidgetRef ref, String memberId, String currency) 
   // #3680 — nor while the matches are not read: an unread match is not
   // "overdue".
   final matches = ref.watch(invoiceMatchesProvider).value;
-  if (invoices == null || matches == null) return null;
+  // #3742 — nor before the business's own reminder rules.
+  final rules = ref.watch(dunningRulesProvider).value;
+  if (invoices == null || matches == null || rules == null) return null;
   return InvoiceExposure.of(
     invoices: invoices.where((i) => i.memberId == memberId),
     matches: matches,
-    rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
+    rules: rules,
     now: ref.watch(clockProvider).now(),
     fallbackCurrency: currency,
   );

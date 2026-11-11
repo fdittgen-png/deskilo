@@ -25,7 +25,7 @@ final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
   (ref) => ReceivablesReader(
     matches: ref.watch(invoiceMatchesProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
     reminders: ref.watch(invoiceRemindersProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
-    rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
+    rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults, // empty-ok: no receivable is built before it answered (below)
     now: ref.watch(clockProvider).now(),
     // The business's calendar day, from the workspace's own context.
     dayOf: ref.watch(invoicingBusinessProvider).dayOf,
@@ -51,6 +51,8 @@ final invoicingReceivablesProvider = Provider.autoDispose<List<Receivable>?>(
       ref.watch(invoiceRemindersProvider),
       ref.watch(invoiceTransmissionsProvider),
       ref.watch(eventsProvider),
+      // #3742 — the business's reminder rules, never their defaults.
+      ref.watch(dunningRulesProvider),
     ];
     if (statuses.any((r) => !r.hasValue)) return null;
     return switch (ref.watch(invoicesProvider).value) {
@@ -76,6 +78,7 @@ final invoicingFailedSourcesProvider =
         if (ref.watch(unassignedMoneyProvider).hasError)
           InvoicingSource.credits,
         if (ref.watch(eventsProvider).hasError) InvoicingSource.declarations,
+        if (ref.watch(dunningRulesProvider).hasError) InvoicingSource.rules,
       },
     );
 
@@ -87,6 +90,7 @@ final invoicingStatusesWaitingProvider = Provider.autoDispose<bool>(
     ref.watch(invoiceRemindersProvider),
     ref.watch(invoiceTransmissionsProvider),
     ref.watch(eventsProvider),
+    ref.watch(dunningRulesProvider),
   ].any((r) => !r.hasValue && !r.hasError),
 );
 
@@ -102,6 +106,7 @@ void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
       ),
       InvoicingSource.credits => ref.invalidate(unassignedMoneyProvider),
       InvoicingSource.declarations => ref.invalidate(eventsProvider),
+      InvoicingSource.rules => ref.invalidate(dunningRulesProvider),
       InvoicingSource.payments || InvoicingSource.toInvoice => null,
     };
 

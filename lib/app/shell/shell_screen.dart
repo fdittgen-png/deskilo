@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
+import '../../core/ui/adaptive/window_class.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/money/presentation/widgets/invoice_form_sheet.dart';
@@ -77,7 +78,7 @@ class ShellScreen extends ConsumerWidget {
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
     final webShell = ref.watch(webShellProvider);
-    final wideNavigation = webShell && MediaQuery.sizeOf(context).width >= 900 &&
+    final wideNavigation = webShell && WindowClass.of(context).atLeast(WindowClass.expanded) &&
         MediaQuery.textScalerOf(context).scale(100) <= 150;
     Widget navigation({bool permanent = false}) => ShellDrawer(
       permanent: permanent,

@@ -137,8 +137,9 @@ class EventsFilterBar extends ConsumerWidget {
                       FilterChip(
                         key: const ValueKey('notes-filter-unread'),
                         label: Text(
-                          '${l10n.notesFilterUnread}'
-                          '${unreadCount == 0 ? '' : ' ($unreadCount)'}',
+                          unreadCount == 0
+                              ? l10n.notesFilterUnread
+                              : l10n.notesFilterUnreadCount(unreadCount),
                         ),
                         selected: filter.read == ReadFilter.unread,
                         visualDensity: VisualDensity.compact,

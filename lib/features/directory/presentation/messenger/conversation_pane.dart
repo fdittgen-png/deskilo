@@ -26,9 +26,11 @@ import 'workspace_conversation_pane.dart';
 @visibleForTesting
 abstract final class MessengerMetrics {
   /// The conversation list beside an open thread.
+  // content-fit: the conversation list keeps names and previews readable
   static const double listWidth = 360;
 
   /// The narrowest thread worth laying beside the list.
+  // content-fit: a thread needs room for a message bubble and its time
   static const double minThreadWidth = 360;
 }
 

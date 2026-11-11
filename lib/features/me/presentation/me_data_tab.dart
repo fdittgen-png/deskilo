@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import 'me_shell.dart';
@@ -57,10 +58,6 @@ String meDataRoute({
       if (workspaceId != null && workspaceId.isNotEmpty) 'workspace': workspaceId,
     }).toString();
 
-/// Below this width the view switch shows icons with tooltips: three
-/// labelled segments do not fit beside each other on a phone.
-const double _labelledSwitchMinWidth = 600;
-
 class MeDataTab extends ConsumerWidget {
   const MeDataTab({
     super.key,
@@ -94,7 +91,8 @@ class MeDataTab extends ConsumerWidget {
               AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.sm),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final labelled = constraints.maxWidth >= _labelledSwitchMinWidth;
+              final labelled =
+                  WindowClass.ofWidth(constraints.maxWidth).atLeast(WindowClass.medium);
               return SegmentedButton<MeDataView>(
                 key: const ValueKey('me-data-views'),
                 showSelectedIcon: false,

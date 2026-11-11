@@ -4667,10 +4667,7 @@
   "@deploymentPullFromProd": {
     "description": "#998 deployment pull: deploymentPullFromProd"
   },
-  "deploymentRequires": "necesita",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
-  },
+  "deploymentRequiresList": "necesita {entities}",
   "deploymentRollback": "Deshacer",
   "@deploymentRollback": {
     "description": "#988/#990 deployments: deploymentRollback"
@@ -5305,8 +5302,8 @@
     "description": "#587 delete despite reservations — audit substitution warning"
   },
   "editorDeskFull": "No queda sitio en esta mesa.",
-  "editorDeskNameDefault": "Mesa",
   "editorDeskNameLabel": "Nombre de la mesa",
+  "editorDeskNameNumbered": "Mesa {number}",
   "editorDeskProperties": "Mesa",
   "editorDuplicate": "Duplicar",
   "editorEmptyFloorAction": "Dibujar la primera sala",
@@ -5327,8 +5324,8 @@
   "editorNoAccessories": "Todavía no hay accesorios — añádalos en Ajustes → Accesorios.",
   "editorNoAccessoriesAction": "Aún no hay equipamiento — configúrelo",
   "editorNoLevels": "Aún no hay plantas. Añada la primera planta de su espacio.",
-  "editorOfficeNameDefault": "Oficina",
   "editorOfficeNameLabel": "Nombre de la oficina",
+  "editorOfficeNameNumbered": "Oficina {number}",
   "editorOfficeProperties": "Oficina",
   "editorOpenTooltip": "Editar espacio",
   "editorOrientationHint": "Hacia dónde mira la silla en el plano.",
@@ -8093,7 +8090,7 @@
   "instanceAttentionUnrecorded": "Las tablas de DesKilo están, pero no se registró ninguna migración. Registre primero lo que tiene con `dart run tool/instance.dart record`.",
   "instanceBlock": "Bloquear",
   "instanceBlockerNoAdmin": "un administrador de la base",
-  "instanceBlockers": "Todavía falta:",
+  "instanceBlockersList": "Todavía falta: {blockers}",
   "instanceCheckToken": "Comprobar el token",
   "@instanceCheckToken": {
     "description": "#977 instance wizard: instanceCheckToken"
@@ -9368,12 +9365,13 @@
     }
   },
   "invoicePdfSignature": "Huella del documento (SHA-256)",
+  "invoicePdfSignatureValue": "Huella del documento (SHA-256) {fingerprint}",
   "invoicePdfSubtotal": "Subtotal",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
   },
   "invoicePdfTitle": "Factura",
-  "invoicePdfVoided": "ERRÓNEA — anulada el",
+  "invoicePdfVoidedOn": "ERRÓNEA — anulada el {date}",
   "invoicePickMember": "Elija un miembro para ver lo que registró su mes.",
   "invoicePreviewUnavailable": "No se pudo leer la vista previa, así que no se muestra nada y no se puede emitir nada. Cambie de mes o inténtelo de nuevo.",
   "invoiceProformaAction": "Factura proforma",
@@ -9485,6 +9483,7 @@
     "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
   },
   "invoiceSendRejected": "La plataforma la rechazó.",
+  "invoiceSendRejectedDetail": "La plataforma la rechazó. {detail}",
   "invoiceSendStatusAccepted": "aceptada",
   "invoiceSendStatusFailed": "no transmitida",
   "invoiceSendStatusInProgress": "en curso",
@@ -12409,6 +12408,7 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
+  "notesFilterUnreadCount": "No leídos ({unread})",
   "notifCategoryCheckIns": "Registros",
   "notifCategoryMembers": "Miembros",
   "notifCategoryMoney": "Dinero",
@@ -13182,6 +13182,7 @@
   "planStateFree": "Libre",
   "planStateYours": "Suyo",
   "planToLabel": "Hasta",
+  "planToTime": "Hasta {time}",
   "planUntil": "hasta las {time}",
   "planUntilDateLabel": "Repetir hasta",
   "planUntilLabel": "Hasta",
@@ -19918,8 +19919,8 @@
   "usageAskExplain": "Reservó {booked} y estuvo {present}. Pida que las {saved} no usadas dejen de facturarse. Lo decide otra persona, nunca usted.",
   "usageAskSubmit": "Pedir",
   "usageAskSubmitted": "Pedido. Lo decide otra persona.",
-  "usageBilled": "Facturado",
-  "usageBooked": "Reservado",
+  "usageBilledDuration": "Facturado {duration}",
+  "usageBookedDuration": "Reservado {duration}",
   "usageCorrected": "Corregido",
   "usageDelete": "Eliminar este registro",
   "usageDeleteSubmitted": "Eliminación solicitada.",
@@ -19954,7 +19955,7 @@
       }
     }
   },
-  "usagePresent": "Presente",
+  "usagePresentDuration": "Presente {duration}",
   "usageReasonLabel": "Por qué (opcional)",
   "usageReportButton": "Informe de consumo del mes",
   "@usageReportButton": {

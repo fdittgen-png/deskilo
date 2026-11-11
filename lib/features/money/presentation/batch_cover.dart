@@ -25,6 +25,7 @@ Future<({
   required Map<String, Object?> data,
 }) async {
   final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
+  await readDocumentPolicies(ref); // #3742 — the template and rules, read
   await warmLetterDocProviders(ref, docId);
   if (!context.mounted || ref.read(currentWorkspaceProvider).value?.id != workspaceId) return null;
   final report = renderLetterDoc(context, ref, docId: docId, data: data);

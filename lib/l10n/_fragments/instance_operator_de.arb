@@ -11,7 +11,7 @@
   "instanceTurnOn": "Für alle Arbeitsbereiche einschalten",
   "instanceTurnOff": "Ausschalten",
   "instanceTurnOnConfirm": "Assistenten werden in jedem Arbeitsbereich nutzbar, der sie anbietet. Sie können sie jederzeit wieder ausschalten.",
-  "instanceBlockers": "Es fehlt noch:",
+  "instanceBlockersList": "Es fehlt noch: {blockers}",
   "instanceBlockerNoAdmin": "ein Datenbankadministrator",
   "instanceAdminsTitle": "Datenbankadministratoren",
   "instanceAdminsHelp": "Sie entscheiden, wer Assistenten nutzen darf. Wählbar ist nur, wer seine Identität für Assistenten bestätigt hat.",

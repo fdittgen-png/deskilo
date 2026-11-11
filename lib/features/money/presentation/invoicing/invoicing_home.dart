@@ -40,7 +40,10 @@ enum InvoicingSource {
   toInvoice,
 
   /// #3680 — the customers' payment declarations (read from the events).
-  declarations;
+  declarations,
+
+  /// #3742 — the business's reminder rules.
+  rules;
 
   /// The sources every invoice's status, amount owed and action is read
   /// from: while one of them failed, no figure, list or action of the
@@ -53,6 +56,7 @@ enum InvoicingSource {
     transmissions,
     credits,
     declarations,
+    rules,
   };
 }
 
@@ -216,7 +220,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       builder: (context, filter, _) => LayoutBuilder(
         builder: (context, box) {
           final wide =
-              widget.wide ?? box.maxWidth >= kWideNavigationMinWidth;
+              widget.wide ?? isWideNavigationWidth(box.maxWidth);
           final statusesFailed = data.failed.any(
             InvoicingSource.statuses.contains,
           );

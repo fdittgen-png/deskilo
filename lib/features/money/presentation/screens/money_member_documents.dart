@@ -62,6 +62,8 @@ class MoneyMemberDocuments {
           refresh: () => refreshLetterDocSources(_ref, docId));
 
   Future<void> _memberDoc(String docId, String period) async {
+    await readDocumentPolicies(_ref); // #3742
+    if (!_context.mounted) return;
     final l10n = _context.l10n;
     await warmLetterDocProviders(_ref, docId);
     if (!_context.mounted) return;
