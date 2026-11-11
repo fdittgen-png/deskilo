@@ -10,6 +10,7 @@
 #   BASE=<sha> HEAD=<sha> PR_TITLE=... PR_BODY=... scripts/tool_lines_check.sh
 set -uo pipefail
 
+rule_since=1794373200  # 2026-11-11T05:00:00Z: the rule's start; older commits are left as they are (owner 2026-11-11). Remove once no open branch predates it.
 head=${HEAD:-HEAD}
 base=${BASE:-}
 # Anchored to the shapes a tool writes, never a bare phrase: the footer line
@@ -42,6 +43,7 @@ if ! shas=$(git rev-list "${range[@]}" 2>&1); then
 fi
 while IFS= read -r sha; do
   [ -n "$sha" ] || continue
+  [ "$(git log -1 --format=%at "$sha")" -ge "$rule_since" ] || continue
   scan "commit ${sha:0:9}" "$(git log -1 --format=%B "$sha")"
 done <<< "$shas"
 [ -z "${PR_TITLE:-}" ] || scan "the pull request title" "$PR_TITLE"

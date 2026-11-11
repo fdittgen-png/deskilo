@@ -14,10 +14,15 @@ void main() {
   ProcessResult git(List<String> args) =>
       Process.runSync('git', args, workingDirectory: repo.path);
 
-  String commit(String message) {
+  String commit(String message, {String date = '2026-11-12T12:00:00Z'}) {
     File('${repo.path}/f').writeAsStringSync('$message${counter++}');
     git(['add', '-A']);
-    git(['commit', '-q', '-m', message]);
+    Process.runSync(
+      'git',
+      ['commit', '-q', '-m', message],
+      workingDirectory: repo.path,
+      environment: {'GIT_AUTHOR_DATE': date, 'GIT_COMMITTER_DATE': date},
+    );
     return (git(['rev-parse', 'HEAD']).stdout as String).trim();
   }
 
@@ -108,6 +113,15 @@ void main() {
     final text = File('.github/workflows/tool-lines.yml').readAsStringSync();
     expect(text, contains('edited'));
     expect(text, contains('scripts/tool_lines_check.sh'));
+  });
+
+  test('a commit authored before the rule passes, the same after it fails', () {
+    final base = commit('seventh');
+    const line = 'Co-Authored-By: Claude <noreply@anthropic.com>';
+    final before = commit('old\n\n$line', date: '2026-11-10T12:00:00Z');
+    expect(check(base, before).exitCode, 0, reason: 'older commits stay');
+    final after = commit('new\n\n$line', date: '2026-11-11T06:00:00Z');
+    expect(check(base, after).exitCode, 1);
   });
 
   test('the static job runs it on a pull request and on a push', () {
