@@ -1,0 +1,123 @@
+# Copyright (c) 2026 Florian DITTGEN
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Tools · Database preview
+
+# #3751 — what `quality · database` will say about a migration, known before
+# its pull request opens.
+#
+# The committed contract (assets/instance/contract.txt) and the policy list
+# (assets/instance/policies.txt) are read from a replay of every migration
+# onto an empty database. A constraint, a trigger or a body digest moved by an
+# anchored patch cannot be predicted without that replay, and a plan count is
+# only checked by pg_prove. On 11 Nov 2026 three Quality runs failed for
+# exactly that, each after about 25 minutes, and each correction needed a
+# second run.
+#
+# This is the same replay, the same three checks and nothing else: one job,
+# about eight minutes. Run it on the pushed branch, before the pull request:
+#
+#   gh workflow run db-preview.yml --ref <branch>
+#
+# It uploads the contract and the policy list the replay produced, ready to
+# commit, and fails when a check failed. It gates nothing: the Quality run
+# stays the gate, and its database job is unchanged.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: db-preview-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    name: database preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # The local stack pulls the Supabase images from GHCR as this job (#3144).
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      # The versions quality.yml pins: the replay must be the same one.
+      - uses: ./.github/actions/supabase-cli
+      - uses: ./.github/actions/deno
+
+      - name: Migration replay
+        id: migrations
+        continue-on-error: true
+        uses: ./.github/actions/local-stack
+
+      - name: Policies equal the migrations
+        id: policies
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: |
+          set -o pipefail
+          psql "$DB_URL" -v ON_ERROR_STOP=1 -At \
+            -c "select schemaname || '.' || tablename || '.' || policyname
+                  from pg_policies where schemaname in ('public', 'storage')
+                 order by 1" > replay-policies.txt
+          grep -vE '^[[:space:]]*(#|$)' assets/instance/policies.txt > committed-policies.txt
+          if ! diff -u committed-policies.txt replay-policies.txt; then
+            echo "::error::assets/instance/policies.txt is not what the migrations build — copy the + side into the file (keep its header)"
+            exit 1
+          fi
+          echo "policies: $(wc -l < replay-policies.txt | tr -d ' ') match"
+
+      - name: Effective contract
+        id: contract
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: bash scripts/contract_check.sh "$DB_URL"
+
+      - name: Database disciplines
+        id: pgtap
+        if: steps.migrations.outcome == 'success'
+        continue-on-error: true
+        env:
+          DB_URL: ${{ steps.migrations.outputs.db-url }}
+        run: |
+          set -o pipefail
+          mkdir -p preview
+          { echo "# source $GITHUB_SHA"; supabase test db 2>&1; } | tee preview/pgtap.log
+          python3 -B scripts/workspace_alignment_check.py "$DB_URL" | tee preview/alignment.log
+
+      # The two committed files as the replay built them, each under the
+      # header it has today: copy them over the committed ones.
+      - name: The files to commit
+        if: always()
+        run: |
+          mkdir -p preview
+          if [ -s report/contract.txt ]; then cp report/contract.txt preview/contract.txt; fi
+          if [ -s replay-policies.txt ]; then
+            { grep -E '^[[:space:]]*#' assets/instance/policies.txt; cat replay-policies.txt; } > preview/policies.txt
+          fi
+          ls -l preview
+
+      - name: What the database looked like when it failed
+        if: steps.migrations.outcome == 'failure' || steps.pgtap.outcome == 'failure'
+        run: supabase logs db || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: database-preview
+          path: preview/
+
+      - name: Verdict
+        if: always()
+        env:
+          REPLAY: ${{ steps.migrations.outcome }}
+          POLICIES: ${{ steps.policies.outcome }}
+          CONTRACT: ${{ steps.contract.outcome }}
+          PGTAP: ${{ steps.pgtap.outcome }}
+        run: bash scripts/db_preview_verdict.sh

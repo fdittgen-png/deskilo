@@ -7,12 +7,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-/// One row of the table: any of [patterns] -> [tests].
+/// One row of the table: any of [patterns] -> [tests], and optionally a
+/// [note]: a step no local test can stand in for, said with the list.
 class TestMapRow {
-  const TestMapRow(this.patterns, this.tests);
+  const TestMapRow(this.patterns, this.tests, {this.note});
 
   final List<String> patterns;
   final List<String> tests;
+  final String? note;
 }
 
 /// The patterns of generated files whose importers are not searched.
@@ -31,9 +33,20 @@ List<TestMapRow> readTestMap(File file) {
       TestMapRow(
         (row['patterns'] as List).cast<String>(),
         (row['tests'] as List).cast<String>(),
+        note: row['note'] as String?,
       ),
   ];
 }
+
+/// The notes of the rows [changed] matches, in the table's order.
+List<String> notesFor(Iterable<String> changed, List<TestMapRow> table) => [
+  for (final row in table)
+    if (row.note case final note?)
+      if (changed.any(
+        (p) => row.patterns.any((m) => patternRegExp(m).hasMatch(p)),
+      ))
+        note,
+];
 
 /// [pattern] as a regular expression: `**` crosses folders, `*` stays in one.
 RegExp patternRegExp(String pattern) {
@@ -95,6 +108,83 @@ List<String> affectedTests(
       changed.where((p) => p.startsWith('test/') && p.endsWith('_test.dart')),
     );
   return out.toList()..sort();
+}
+
+/// The index of the brace that closes the one at [open] in [s], or -1.
+int _closing(String s, int open) {
+  var depth = 0;
+  for (var k = open; k < s.length; k++) {
+    if (s[k] == '{') depth++;
+    if (s[k] == '}' && --depth == 0) return k;
+  }
+  return -1;
+}
+
+final _icuHead = RegExp(r'^\s*\w+\s*,\s*(plural|select|selectordinal)\s*,');
+
+/// The runs of plain text of an ARB [message]: what stays when placeholders
+/// and plural or select syntax go (the text of every case is kept).
+List<String> _plainRuns(String message) {
+  final out = <String>[];
+  final run = StringBuffer();
+  var i = 0;
+  while (i < message.length) {
+    if (message[i] != '{') {
+      run.write(message[i++]);
+      continue;
+    }
+    out.add(run.toString());
+    run.clear();
+    final end = _closing(message, i);
+    if (end < 0) break;
+    final inner = message.substring(i + 1, end);
+    final head = _icuHead.firstMatch(inner);
+    if (head != null) {
+      for (var j = head.end; j < inner.length; j++) {
+        if (inner[j] != '{') continue;
+        final caseEnd = _closing(inner, j);
+        if (caseEnd < 0) break;
+        out.addAll(_plainRuns(inner.substring(j + 1, caseEnd)));
+        j = caseEnd;
+      }
+    }
+    i = end + 1;
+  }
+  return out..add(run.toString());
+}
+
+/// The pieces of [message] worth searching for: plain text of at least two
+/// words and [min] characters. One word alone ("settings,") is also an
+/// identifier in half the test tree, so it is not searched.
+Set<String> literalPieces(String message, {int min = 6}) => {
+  for (final run in _plainRuns(message).map((r) => r.trim()))
+    if (run.length >= min && run.contains(' ')) run,
+};
+
+/// #3752 -- the tests that still hold a piece of an English sentence whose
+/// text changed or went between [before] and [after] (two ARB maps): an
+/// assertion on the old wording, wherever it lives. Only pieces the new text
+/// no longer has are searched.
+Set<String> testsOfChangedSentences(
+  Map<String, Object?> before,
+  Map<String, Object?> after,
+  Map<String, String> testSources,
+) {
+  final gone = <String>{};
+  for (final MapEntry(:key, :value) in before.entries) {
+    if (key.startsWith('@') || value is! String || after[key] == value) continue;
+    final now = after[key];
+    gone.addAll(
+      literalPieces(value).difference(
+        now is String ? literalPieces(now) : const <String>{},
+      ),
+    );
+  }
+  if (gone.isEmpty) return {};
+  return {
+    for (final MapEntry(:key, :value) in testSources.entries)
+      if (gone.any(value.contains)) key,
+  };
 }
 
 /// Every `*_test.dart` under `test/` of [root], path -> content.
