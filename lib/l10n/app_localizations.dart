@@ -33560,6 +33560,24 @@ abstract class AppLocalizations {
   /// **'Set — leave blank to keep'**
   String get payConfigSecretSet;
 
+  /// #3510 settlement reports refused and kept for review
+  ///
+  /// In en, this message translates to:
+  /// **'{settlement}: the provider changed its amount after it was recorded. Nothing of the new report was booked.'**
+  String payConfigSettlementAmountChanged(String settlement);
+
+  /// #3510 settlement reports refused and kept for review
+  ///
+  /// In en, this message translates to:
+  /// **'{settlement}: the provider changed its costs after it was recorded. Nothing of the new report was booked.'**
+  String payConfigSettlementCostsChanged(String settlement);
+
+  /// #3510 settlement reports refused and kept for review
+  ///
+  /// In en, this message translates to:
+  /// **'{settlement}: a cost is in another currency than the settlement. Nothing of it was booked.'**
+  String payConfigSettlementCurrencyMismatch(String settlement);
+
   /// #3504 on-demand settlements of a payment provider
   ///
   /// In en, this message translates to:
@@ -33571,6 +33589,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} payouts recorded'**
   String payConfigSettlementsFetched(String count);
+
+  /// #3510 settlement reports refused and kept for review
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement reports to review'**
+  String get payConfigSettlementsReviewTitle;
+
+  /// #3510 settlement reports refused and kept for review
+  ///
+  /// In en, this message translates to:
+  /// **'The settlement reports to review could not be read.'**
+  String get payConfigSettlementsReviewUnreadable;
 
   /// Owner screen to configure online-payment providers (0047)
   ///

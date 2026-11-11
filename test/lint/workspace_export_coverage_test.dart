@@ -216,6 +216,9 @@ const Map<String, String> _notExported = {
   'provider_settlement_costs':
       '#3504 -- the costs a payment provider kept in a settlement, as it reported them: '
           'the provider issues and keeps them; the payout they belong to is a provider_payouts row',
+  'provider_settlement_reviews':
+      '#3510 -- settlement reports of a payment provider that the recorder refused and '
+          'kept for review: the provider issues and keeps the reports; nothing of them is booked here',
   'national_channel_acceptances':
       '#3159 — the receipt of a national e-invoicing channel (SdI, Verifactu) that '
           'accepted a submission of the space: the channel issues and keeps it; it '

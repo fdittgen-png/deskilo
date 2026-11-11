@@ -20843,12 +20843,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String get payConfigSecretSet => 'Gesetzt — leer lassen zum Behalten';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement: Der Anbieter hat den Betrag nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement: Der Anbieter hat die Kosten nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement: Ein Kostenposten ist in einer anderen Währung als die Abrechnung. Nichts davon wurde gebucht.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Auszahlungen abrufen';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count Auszahlungen erfasst';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle =>
+      'Zu prüfende Abrechnungsmeldungen';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'Die zu prüfenden Abrechnungsmeldungen konnten nicht gelesen werden.';
 
   @override
   String get payConfigTitle => 'Online-Zahlungen';

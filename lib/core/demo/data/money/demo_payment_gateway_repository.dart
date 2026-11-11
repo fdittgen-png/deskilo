@@ -3,6 +3,7 @@ import 'package:deskilo/features/money/domain/payment_gateway_repository.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/payment_test_check.dart';
+import 'package:deskilo/features/money/domain/settlement_fetch.dart';
 
 import '../money_repository.dart';
 
@@ -33,10 +34,10 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   /// #3504 -- the Demo has no provider to read: it says one settlement was
   /// recorded, so the action can be rehearsed.
   @override
-  Future<({int imported, int skipped})> fetchProviderSettlements(
+  Future<SettlementFetch> fetchProviderSettlements(
     String workspaceId,
     PaymentProvider provider,
-  ) async => (imported: 1, skipped: 0);
+  ) async => const SettlementFetch(imported: 1);
 
   /// The demo is a rehearsal: it opens no payment, and its keys are the
   /// installation's, which the test cannot read.

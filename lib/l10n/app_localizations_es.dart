@@ -20794,12 +20794,34 @@ class AppLocalizationsEs extends AppLocalizations {
       'Definido — déjelo en blanco para conservarlo';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement: el proveedor cambió su importe después de registrarse. No se contabilizó nada del nuevo informe.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement: el proveedor cambió sus costes después de registrarse. No se contabilizó nada del nuevo informe.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement: un coste está en otra moneda que la liquidación. No se contabilizó nada.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Obtener los pagos';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count pagos registrados';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle => 'Liquidaciones por revisar';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'No se pudieron leer las liquidaciones por revisar.';
 
   @override
   String get payConfigTitle => 'Pagos en línea';

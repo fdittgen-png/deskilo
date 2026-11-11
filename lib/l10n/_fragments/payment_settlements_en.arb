@@ -11,5 +11,40 @@
         "type": "String"
       }
     }
+  },
+  "payConfigSettlementsReviewTitle": "Settlement reports to review",
+  "@payConfigSettlementsReviewTitle": {
+    "description": "#3510 settlement reports refused and kept for review"
+  },
+  "payConfigSettlementCostsChanged": "{settlement}: the provider changed its costs after it was recorded. Nothing of the new report was booked.",
+  "@payConfigSettlementCostsChanged": {
+    "description": "#3510 settlement reports refused and kept for review",
+    "placeholders": {
+      "settlement": {
+        "type": "String"
+      }
+    }
+  },
+  "payConfigSettlementAmountChanged": "{settlement}: the provider changed its amount after it was recorded. Nothing of the new report was booked.",
+  "@payConfigSettlementAmountChanged": {
+    "description": "#3510 settlement reports refused and kept for review",
+    "placeholders": {
+      "settlement": {
+        "type": "String"
+      }
+    }
+  },
+  "payConfigSettlementCurrencyMismatch": "{settlement}: a cost is in another currency than the settlement. Nothing of it was booked.",
+  "@payConfigSettlementCurrencyMismatch": {
+    "description": "#3510 settlement reports refused and kept for review",
+    "placeholders": {
+      "settlement": {
+        "type": "String"
+      }
+    }
+  },
+  "payConfigSettlementsReviewUnreadable": "The settlement reports to review could not be read.",
+  "@payConfigSettlementsReviewUnreadable": {
+    "description": "#3510 settlement reports refused and kept for review"
   }
 }

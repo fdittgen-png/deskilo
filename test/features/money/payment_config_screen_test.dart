@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
+import 'package:deskilo/features/money/domain/settlement_fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -164,4 +165,65 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('1 payouts recorded'), findsOneWidget);
   });
+
+  testWidgets('#3510 a fetch lists the settlement reports waiting for '
+      'review, each with why; a failed read of them is said', (tester) async {
+    final money = _Settlements(const SettlementFetch(
+      imported: 0,
+      unchanged: 2,
+      reviews: [
+        SettlementReview(
+          settlementId: 'stl_3',
+          reason: SettlementReviewReason.costsChanged,
+        ),
+        SettlementReview(
+          settlementId: 'stl_9',
+          reason: SettlementReviewReason.currencyMismatch,
+        ),
+      ],
+    ))
+      ..paymentStatus[PaymentProvider.mollie] = const PaymentProviderStatus(
+        configured: true,
+        secretKeysSet: {'api_key'},
+      );
+    await pumpConfig(tester, money: money);
+    final fetch = find.byKey(const ValueKey('payment-fetch-settlements'));
+    await tester.ensureVisible(fetch);
+    await tester.tap(fetch);
+    await tester.pumpAndSettle();
+    expect(find.text('Settlement reports to review'), findsOneWidget);
+    expect(
+      find.text('stl_3: the provider changed its costs after it was '
+          'recorded. Nothing of the new report was booked.'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('stl_9: a cost is in another currency than the settlement. '
+          'Nothing of it was booked.'),
+      findsOneWidget,
+    );
+
+    money.answer = const SettlementFetch(imported: 0, reviews: null);
+    await tester.ensureVisible(fetch);
+    await tester.tap(fetch);
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('settlement-reviews-unreadable')),
+      findsOneWidget,
+    );
+    expect(find.text('Settlement reports to review'), findsNothing);
+  });
+}
+
+/// The provider's settlements as one fetch answers them.
+class _Settlements extends FakeMoneyRepository {
+  _Settlements(this.answer);
+
+  SettlementFetch answer;
+
+  @override
+  Future<SettlementFetch> fetchProviderSettlements(
+    String workspaceId,
+    PaymentProvider provider,
+  ) async => answer;
 }

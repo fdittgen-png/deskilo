@@ -20650,12 +20650,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payConfigSecretSet => 'Set — leave blank to keep';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement: the provider changed its amount after it was recorded. Nothing of the new report was booked.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement: the provider changed its costs after it was recorded. Nothing of the new report was booked.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement: a cost is in another currency than the settlement. Nothing of it was booked.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Fetch payouts';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count payouts recorded';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle => 'Settlement reports to review';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'The settlement reports to review could not be read.';
 
   @override
   String get payConfigTitle => 'Online payments';

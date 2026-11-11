@@ -20856,12 +20856,35 @@ class AppLocalizationsFr extends AppLocalizations {
   String get payConfigSecretSet => 'Défini — laisser vide pour conserver';
 
   @override
+  String payConfigSettlementAmountChanged(String settlement) {
+    return '$settlement : le prestataire a modifié son montant après son enregistrement. Rien du nouveau relevé n\'a été comptabilisé.';
+  }
+
+  @override
+  String payConfigSettlementCostsChanged(String settlement) {
+    return '$settlement : le prestataire a modifié ses frais après son enregistrement. Rien du nouveau relevé n\'a été comptabilisé.';
+  }
+
+  @override
+  String payConfigSettlementCurrencyMismatch(String settlement) {
+    return '$settlement : un frais est dans une autre devise que le versement. Rien n\'en a été comptabilisé.';
+  }
+
+  @override
   String get payConfigSettlementsFetch => 'Récupérer les versements';
 
   @override
   String payConfigSettlementsFetched(String count) {
     return '$count versements enregistrés';
   }
+
+  @override
+  String get payConfigSettlementsReviewTitle =>
+      'Relevés de versement à vérifier';
+
+  @override
+  String get payConfigSettlementsReviewUnreadable =>
+      'Les relevés de versement à vérifier n\'ont pas pu être lus.';
 
   @override
   String get payConfigTitle => 'Paiements en ligne';
