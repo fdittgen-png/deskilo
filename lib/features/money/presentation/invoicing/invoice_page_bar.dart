@@ -14,6 +14,8 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../application/confirmed_payment.dart';
 import '../../application/receivables.dart';
+import '../../application/unassigned_money.dart';
+import '../../providers/credit_move_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
@@ -131,12 +133,13 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
         final ledger = await ref
             .read(memberAccountQueriesProvider)
             .fetchLedger(invoice.memberId);
-        final consumed = {
-          for (final m in matches.values) ?m.paymentLedgerId,
-          ...await ref
-              .read(invoiceQueriesProvider)
-              .fetchConsumedPaymentIds(business.id),
-        };
+        // One definition of a consumed payment, the moved credits included.
+        final consumed = await readConsumedPaymentIds(
+          invoices: ref.read(invoiceQueriesProvider),
+          moves: ref.read(creditMoveCommandsProvider),
+          workspaceId: business.id,
+          matched: [for (final m in matches.values) m.paymentLedgerId],
+        );
         final payment = confirmedPaymentFor(
           ledger,
           customerId: invoice.memberId,

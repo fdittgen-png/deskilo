@@ -9,12 +9,14 @@ import 'dart:async';
 
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/money/application/unassigned_money.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/presentation/widgets/invoice_journey_view.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_evidence_providers.dart';
@@ -127,6 +129,10 @@ Future<void> _pump(
       ),
       if (ledger != null) memberAccountQueriesProvider.overrideWithValue(ledger),
       dunningRulesProvider.overrideWith((ref) async => const DunningRules()),
+      // The bar waits for the money received and not assigned: read, none.
+      unassignedMoneyProvider.overrideWith(
+        (ref) async => const UnassignedMoney(currency: 'CHF', paymentsOf: {}),
+      ),
       dunningHoldsProvider.overrideWith(
         (ref) async => held ? const {"0063": "dispute"} : const {},
       ),
