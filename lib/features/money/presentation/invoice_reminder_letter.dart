@@ -16,7 +16,6 @@ import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/domain/member.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -51,7 +50,7 @@ reminderLetterReport(
   var language = '';
   try {
     final members =
-        ref.read(workspaceMembersProvider).value ?? const <Member>[];
+        ref.read(workspaceMembersProvider).value ?? const [];
     final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
     final userId = member?.userId;
     final profile = userId == null

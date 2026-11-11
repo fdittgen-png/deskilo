@@ -39,8 +39,6 @@
 
       "lib/features/money/presentation/accounting_export_run.dart": 571,
 
-      "lib/features/money/presentation/invoice_documents.dart": 575,
-
       "lib/features/money/presentation/report_defaults.dart": 637,
 
       "lib/features/money/presentation/screens/billing_screen.dart": 576,
