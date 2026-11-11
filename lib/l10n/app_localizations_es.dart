@@ -924,6 +924,148 @@ class AppLocalizationsEs extends AppLocalizations {
       'La documentación de los procedimientos de este archivo suizo indica que cada descarga queda registrada en el registro de exportaciones, y este espacio no lleva ninguno: active primero los periodos contables o los sistemas contables.';
 
   @override
+  String get assignPaymentAction => 'Asignar a facturas';
+
+  @override
+  String assignPaymentActionFor(String amount) {
+    return 'Asignar $amount a facturas';
+  }
+
+  @override
+  String assignPaymentAmountLabel(String number) {
+    return 'Importe para la factura $number';
+  }
+
+  @override
+  String assignPaymentFull(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count facturas pagadas por completo',
+      one: '1 factura pagada por completo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentNoOpen =>
+      'Ninguna factura abierta de este cliente: el pago queda como saldo a favor.';
+
+  @override
+  String get assignPaymentNoteDefault =>
+      'El pago cubrió solo una parte de esta factura.';
+
+  @override
+  String get assignPaymentNoteLabel =>
+      'Nota para las facturas pagadas en parte';
+
+  @override
+  String get assignPaymentOver => 'Más de lo que queda del pago';
+
+  @override
+  String assignPaymentPart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count facturas pagadas en parte',
+      one: '1 factura pagada en parte',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentPending => 'Pendiente de aprobación';
+
+  @override
+  String get assignPaymentReadFailedInvoices =>
+      'No se pudieron leer las facturas.';
+
+  @override
+  String get assignPaymentReadFailedPayment => 'No se pudo leer el pago.';
+
+  @override
+  String assignPaymentReceived(String amount) {
+    return 'Recibido: $amount';
+  }
+
+  @override
+  String assignPaymentRowCaption(String date, String amount) {
+    return 'Vence $date · pendiente $amount';
+  }
+
+  @override
+  String assignPaymentRowCaptionNoDate(String amount) {
+    return 'Pendiente: $amount';
+  }
+
+  @override
+  String get assignPaymentRowOver =>
+      'Más de lo que queda por pagar en esta factura';
+
+  @override
+  String assignPaymentRowWaiting(String number) {
+    return '$number: un pago de esta factura espera aprobación; ahora no admite ninguna parte.';
+  }
+
+  @override
+  String assignPaymentStays(String amount) {
+    return '$amount quedan como saldo a favor';
+  }
+
+  @override
+  String get assignPaymentStaysNone => 'No queda saldo a favor';
+
+  @override
+  String assignPaymentTickLabel(String number) {
+    return 'Pagar la factura $number';
+  }
+
+  @override
+  String assignPaymentUsedHead(String received, String assigned, String left) {
+    return 'Recibido $received · ya asignado $assigned · queda $left';
+  }
+
+  @override
+  String get assignRefuseBusiness =>
+      'No se encuentra este pago en esta empresa. No se registró nada.';
+
+  @override
+  String get assignRefuseCurrency =>
+      'Una factura no está en la moneda de la empresa. No se registró nada.';
+
+  @override
+  String get assignRefuseDuplicate =>
+      'Una factura aparece dos veces. No se registró nada.';
+
+  @override
+  String get assignRefuseGeneric =>
+      'No se pudo asignar el pago. No se registró nada. Inténtelo de nuevo.';
+
+  @override
+  String get assignRefuseNotAllowed =>
+      'No puede asignar pagos en esta empresa. No se registró nada.';
+
+  @override
+  String get assignRefuseNote =>
+      'Una parte inferior a lo debido necesita una nota.';
+
+  @override
+  String get assignRefusePartOver =>
+      'Una parte supera lo que queda por pagar de su factura. No se registró nada.';
+
+  @override
+  String get assignRefusePayer =>
+      'Una factura no es de este cliente. No se registró nada.';
+
+  @override
+  String get assignRefuseSumOver =>
+      'Las partes superan lo que queda del pago. No se registró nada.';
+
+  @override
+  String get assignRefuseUsed =>
+      'El pago se usó entretanto. Se lee de nuevo: revise los importes.';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Quién: alguien que gestiona la configuración de este espacio de trabajo';
 
@@ -2011,7 +2153,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String bankImported(int created, int known, int review) {
-    return 'Importado: $created nuevos, $known ya conocidos, $review por revisar.';
+    String _temp0 = intl.Intl.pluralLogic(
+      created,
+      locale: localeName,
+      other: '$created entradas nuevas',
+      one: '1 entrada nueva',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      known,
+      locale: localeName,
+      other: '$known ya conocidas',
+      one: '1 ya conocida',
+    );
+    return 'Importado: $_temp0, $_temp1, $review por revisar.';
   }
 
   @override
@@ -3735,7 +3889,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String biProjectionBasis(int count) {
-    return 'Una recta trazada sobre los últimos $count periodos completos, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'los últimos $count periodos completos',
+      one: 'el último periodo completo',
+    );
+    return 'Una recta trazada sobre $_temp0, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.';
   }
 
   @override
@@ -3754,7 +3914,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String biProjectionNotEnough(int have, int need) {
-    return 'Aún no hay historial suficiente para proyectar: $have periodos completos hasta ahora, se necesitan $need.';
+    String _temp0 = intl.Intl.pluralLogic(
+      have,
+      locale: localeName,
+      other: '$have periodos completos',
+      one: '1 periodo completo',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      need,
+      locale: localeName,
+      other: 'se necesitan $need',
+      one: 'se necesita 1',
+    );
+    return 'Aún no hay historial suficiente para proyectar: $_temp0 hasta ahora, $_temp1.';
   }
 
   @override
@@ -4407,7 +4579,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String billEntitlement(int used, int included, int openDays) {
-    return '$used de $included medias jornadas facturadas ($openDays días de apertura)';
+    String _temp0 = intl.Intl.pluralLogic(
+      included,
+      locale: localeName,
+      other: '$included medias jornadas facturadas',
+      one: '1 media jornada facturada',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      openDays,
+      locale: localeName,
+      other: '$openDays días de apertura',
+      one: '1 día de apertura',
+    );
+    return '$used de $_temp0 ($_temp1)';
   }
 
   @override
@@ -5828,7 +6012,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String coloursRoomsOwn(int n) {
-    return '$n colores propios, en este orden.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n colores propios, en este orden.',
+      one: '1 color propio, en este orden.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5837,7 +6027,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String coloursRoomsSaved(int n) {
-    return '$n colores de salas guardados.';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n colores de salas guardados.',
+      one: '1 color de sala guardado.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5849,7 +6045,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String coloursTooMany(int most) {
-    return 'El plano pinta como máximo $most colores de salas.';
+    String _temp0 = intl.Intl.pluralLogic(
+      most,
+      locale: localeName,
+      other: '$most colores de salas',
+      one: '1 color de sala',
+    );
+    return 'El plano pinta como máximo $_temp0.';
   }
 
   @override
@@ -8509,7 +8711,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String eventBadgeSecurityAlert(int failures, int minutes) {
-    return 'El acceso con tarjeta se ha bloqueado tras $failures intentos fallidos en $minutes minutos. Revise las tarjetas y pida a los miembros que accedan por correo mientras termina el bloqueo.';
+    String _temp0 = intl.Intl.pluralLogic(
+      failures,
+      locale: localeName,
+      other: '$failures intentos fallidos',
+      one: '1 intento fallido',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes minutos',
+      one: '1 minuto',
+    );
+    return 'El acceso con tarjeta se ha bloqueado tras $_temp0 en $_temp1. Revise las tarjetas y pida a los miembros que accedan por correo mientras termina el bloqueo.';
   }
 
   @override
@@ -8647,7 +8861,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String eventQuotaRequested(String actor, int halfDays, String period) {
-    return '$actor solicita $halfDays medias jornadas extra para $period';
+    String _temp0 = intl.Intl.pluralLogic(
+      halfDays,
+      locale: localeName,
+      other: '$halfDays medias jornadas extra',
+      one: '1 media jornada extra',
+    );
+    return '$actor solicita $_temp0 para $period';
   }
 
   @override
@@ -8840,7 +9060,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String eventValidations(int current, int required) {
-    return '$current/$required validaciones';
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required validaciones',
+      one: '1 validación',
+    );
+    return '$current/$_temp0';
   }
 
   @override
@@ -11315,7 +11541,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String financesOverdueCount(int count) {
-    return '$count vencidas';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vencidas',
+      one: '1 vencida',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -13025,7 +13257,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String instanceDoctorSchemaNoVersionDetail(int tables, int required) {
-    return 'Existen $tables tablas, pero ninguna versión de esquema: esta instancia es anterior a la migración 0226 y va por detrás de una app que necesita $required. La instalación la actualiza a partir de lo que registró.\n        Solución: dart run tool/instance.dart install --ref <ref>\n        Si no sabe por dónde seguir, primero: dart run tool/instance.dart record --ref <ref> --through <NNNN>';
+    String _temp0 = intl.Intl.pluralLogic(
+      tables,
+      locale: localeName,
+      other: 'Existen $tables tablas',
+      one: 'Existe 1 tabla',
+    );
+    return '$_temp0, pero ninguna versión de esquema: esta instancia es anterior a la migración 0226 y va por detrás de una app que necesita $required. La instalación la actualiza a partir de lo que registró.\n        Solución: dart run tool/instance.dart install --ref <ref>\n        Si no sabe por dónde seguir, primero: dart run tool/instance.dart record --ref <ref> --through <NNNN>';
   }
 
   @override
@@ -13034,7 +13272,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String instanceDoctorSignupsNobodyDetail(int created) {
-    return '$created se registraron, 0 confirmaron. El registro no es solo lento: nadie lo ha completado.\n        Revise primero la URL del sitio de arriba: es a la que apunta el correo.';
+    String _temp0 = intl.Intl.pluralLogic(
+      created,
+      locale: localeName,
+      other: '$created se registraron',
+      one: '1 se registró',
+    );
+    return '$_temp0, 0 confirmaron. El registro no es solo lento: nadie lo ha completado.\n        Revise primero la URL del sitio de arriba: es a la que apunta el correo.';
   }
 
   @override
@@ -13366,7 +13610,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String instanceReadyUpgrade(int version, int pending) {
-    return 'La versión $version de DesKilo está instalada: solo se ejecutarán las $pending migraciones que faltan.';
+    String _temp0 = intl.Intl.pluralLogic(
+      pending,
+      locale: localeName,
+      other: 'solo se ejecutarán las $pending migraciones que faltan',
+      one: 'solo se ejecutará la migración que falta',
+    );
+    return 'La versión $version de DesKilo está instalada: $_temp0.';
   }
 
   @override
@@ -13718,7 +13968,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String invoiceAnnexSummary(int movements, int checkIns) {
-    return 'Anexo: $movements movimientos, $checkIns registros de entrada';
+    String _temp0 = intl.Intl.pluralLogic(
+      movements,
+      locale: localeName,
+      other: '$movements movimientos',
+      one: '1 movimiento',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      checkIns,
+      locale: localeName,
+      other: '$checkIns registros de entrada',
+      one: '1 registro de entrada',
+    );
+    return 'Anexo: $_temp0, $_temp1';
   }
 
   @override
@@ -14125,7 +14387,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String invoiceIssuedPartial(int issued, int failed) {
-    return '$issued emitidas, $failed con error.';
+    String _temp0 = intl.Intl.pluralLogic(
+      issued,
+      locale: localeName,
+      other: '$issued emitidas',
+      one: '1 emitida',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      failed,
+      locale: localeName,
+      other: '$failed con error',
+      one: '1 con error',
+    );
+    return '$_temp0, $_temp1.';
   }
 
   @override
@@ -15042,7 +15316,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String invoiceSummaryOpen(int count, String amount) {
-    return '$count abiertas · $amount pendiente';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count abiertas',
+      one: '1 abierta',
+    );
+    return '$_temp0 · $amount pendiente';
   }
 
   @override
@@ -15714,7 +15994,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String journeyOverdueCount(int count) {
-    return '$count atrasadas';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count atrasadas',
+      one: '1 atrasada',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -16820,7 +17106,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String libraryCounts(int levels, int desks, int seats) {
-    return '$levels niveles · $desks mesas · $seats plazas';
+    String _temp0 = intl.Intl.pluralLogic(
+      levels,
+      locale: localeName,
+      other: '$levels niveles',
+      one: '1 nivel',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      desks,
+      locale: localeName,
+      other: '$desks mesas',
+      one: '1 mesa',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      seats,
+      locale: localeName,
+      other: '$seats plazas',
+      one: '1 plaza',
+    );
+    return '$_temp0 · $_temp1 · $_temp2';
   }
 
   @override
@@ -18797,7 +19101,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String memberMoreInvoices(int count) {
-    return '+$count más';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '+$count más',
+      one: '+1 más',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -19399,7 +19709,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String moneyOpenInvoicesSummary(int count, String amount) {
-    return '$count abiertas · $amount pendientes';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count abiertas',
+      one: '1 abierta',
+    );
+    return '$_temp0 · $amount pendientes';
   }
 
   @override
@@ -19418,7 +19734,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String moneyOverdueBanner(int count, String amount) {
-    return '$count vencidas — $amount por liquidar';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vencidas',
+      one: '1 vencida',
+    );
+    return '$_temp0 — $amount por liquidar';
   }
 
   @override
@@ -19487,7 +19809,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String moneyUsage(int used, int included) {
-    return '$used de $included medias jornadas usadas';
+    String _temp0 = intl.Intl.pluralLogic(
+      included,
+      locale: localeName,
+      other: '$included medias jornadas usadas',
+      one: '1 media jornada usada',
+    );
+    return '$used de $_temp0';
   }
 
   @override
@@ -20613,6 +20941,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Se recibió un pago que aún no está asignado. Elija la factura que paga.';
 
   @override
+  String get paymentMatchInvoiceGone =>
+      'Esta factura ya no está abierta: la lista se vuelve a leer.';
+
+  @override
   String get paymentMatchRefused =>
       'No se pudo conciliar el pago. Inténtelo de nuevo.';
 
@@ -21197,7 +21529,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String planSlotError(int minutes) {
-    return 'Las reservas deben empezar y terminar en la cuadrícula de $minutes minutos.';
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'la cuadrícula de $minutes minutos',
+      one: 'la cuadrícula de 1 minuto',
+    );
+    return 'Las reservas deben empezar y terminar en $_temp0.';
   }
 
   @override
@@ -22007,7 +22345,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String processFeatureCount(int enabled, int total) {
-    return '$enabled de $total funciones activadas';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total funciones activadas',
+      one: '1 función activada',
+    );
+    return '$enabled de $_temp0';
   }
 
   @override
@@ -22156,7 +22500,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String processSubprocessCount(int active, int total) {
-    return '$active de $total subprocesos activos';
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total subprocesos activos',
+      one: '1 subproceso activo',
+    );
+    return '$active de $_temp0';
   }
 
   @override
@@ -25162,7 +25512,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String reserveSlotMinutes(int minutes) {
-    return 'Reserva en franjas de $minutes minutos';
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'franjas de $minutes minutos',
+      one: 'franjas de 1 minuto',
+    );
+    return 'Reserva en $_temp0';
   }
 
   @override
@@ -25834,7 +26190,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String sampleDataCounts(int members, int bookings, int payments) {
-    return 'Este espacio contiene datos de ejemplo: $members miembros, $bookings reservas, $payments pagos.';
+    String _temp0 = intl.Intl.pluralLogic(
+      members,
+      locale: localeName,
+      other: '$members miembros',
+      one: '1 miembro',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      bookings,
+      locale: localeName,
+      other: '$bookings reservas',
+      one: '1 reserva',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      payments,
+      locale: localeName,
+      other: '$payments pagos',
+      one: '1 pago',
+    );
+    return 'Este espacio contiene datos de ejemplo: $_temp0, $_temp1, $_temp2.';
   }
 
   @override
@@ -27151,7 +27525,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String setupApprovalsFlowValidators(int required, int people) {
-    return '$required de $people aprueban';
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required de $people aprueban',
+      one: '1 de $people aprueba',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -29657,7 +30037,13 @@ class AppLocalizationsEs extends AppLocalizations {
         intl.NumberFormat.decimalPattern(localeName);
     final String bytesString = bytesNumberFormat.format(bytes);
 
-    return 'Vista previa: $bytesString bytes';
+    String _temp0 = intl.Intl.pluralLogic(
+      bytes,
+      locale: localeName,
+      other: '$bytesString bytes',
+      one: '1 byte',
+    );
+    return 'Vista previa: $_temp0';
   }
 
   @override
@@ -30157,7 +30543,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String taskExportValueRedacted(int length) {
-    return 'no guardado ($length caracteres)';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: '$length caracteres',
+      one: '1 carácter',
+    );
+    return 'no guardado ($_temp0)';
   }
 
   @override
@@ -30519,7 +30911,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String taskRecorderLimits(int steps, int minutes, int days) {
-    return 'Hasta $steps pasos o $minutes minutos por grabación. Las grabaciones se borran de este dispositivo después de $days días; un archivo exportado es suyo y se queda donde lo guardó.';
+    String _temp0 = intl.Intl.pluralLogic(
+      steps,
+      locale: localeName,
+      other: '$steps pasos',
+      one: '1 paso',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes minutos',
+      one: '1 minuto',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días',
+      one: '1 día',
+    );
+    return 'Hasta $_temp0 o $_temp1 por grabación. Las grabaciones se borran de este dispositivo después de $_temp2; un archivo exportado es suyo y se queda donde lo guardó.';
   }
 
   @override
@@ -32130,7 +32540,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String uxAttentionSummary(int updates, int pending) {
-    return '$updates novedades · $pending decisiones pendientes';
+    String _temp0 = intl.Intl.pluralLogic(
+      updates,
+      locale: localeName,
+      other: '$updates novedades',
+      one: '1 novedad',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      pending,
+      locale: localeName,
+      other: '$pending decisiones pendientes',
+      one: '1 decisión pendiente',
+    );
+    return '$_temp0 · $_temp1';
   }
 
   @override
@@ -32401,7 +32823,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String validationStepQuorum(int count, String who) {
-    return '$who — $count cualesquiera';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count cualesquiera',
+      one: '1 cualquiera',
+    );
+    return '$who — $_temp0';
   }
 
   @override
@@ -34297,7 +34725,25 @@ class AppLocalizationsEs extends AppLocalizations {
     int tables,
     int rows,
   ) {
-    return 'Configuración: $settings ajustes, $rows filas en $tables tablas';
+    String _temp0 = intl.Intl.pluralLogic(
+      settings,
+      locale: localeName,
+      other: '$settings ajustes',
+      one: '1 ajuste',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      rows,
+      locale: localeName,
+      other: '$rows filas',
+      one: '1 fila',
+    );
+    String _temp2 = intl.Intl.pluralLogic(
+      tables,
+      locale: localeName,
+      other: '$tables tablas',
+      one: '1 tabla',
+    );
+    return 'Configuración: $_temp0, $_temp1 en $_temp2';
   }
 
   @override

@@ -11,6 +11,7 @@ import '../../../events/providers/event_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/unassigned_money.dart';
 import '../../domain/dunning.dart';
+import '../../domain/invoice_commands.dart';
 import '../../providers/bank_statement_providers.dart'
     show WorkspaceFeature, enabledFeaturesSyncProvider;
 import '../../providers/credit_move_providers.dart';
@@ -108,6 +109,23 @@ void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
       InvoicingSource.rules => ref.invalidate(dunningRulesProvider),
       InvoicingSource.payments || InvoicingSource.toInvoice => null,
     };
+
+/// #3671 — what each open invoice of a payment's payer can take of it now:
+/// the server's own list (`payment_invoice_capacity_v1`), so the sheet never
+/// offers a part the server refuses. Read again after every match; one
+/// attempt, so a failure is said at once with Try again.
+final paymentCapacityProvider = FutureProvider.autoDispose
+    .family<Map<String, InvoiceCapacity>, String>(
+      (ref, paymentId) async {
+        final id = ref.watch(invoicingBusinessProvider.select((b) => b.id));
+        await ref.watch(invoiceMatchesProvider.future);
+        final rows = await ref
+            .watch(invoiceCommandsProvider)
+            .paymentInvoiceCapacity(workspaceId: id, paymentLedgerId: paymentId);
+        return {for (final c in rows) c.invoiceId: c};
+      },
+      retry: (_, _) => null,
+    );
 
 /// Money received and not assigned, in ONE read: the workspace's ledger
 /// (one `fetchWorkspaceLedger`), the payments matches consumed (one read of

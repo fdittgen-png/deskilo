@@ -7,6 +7,7 @@
 // come.
 
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
@@ -35,6 +36,9 @@ LedgerEntry _pay(
   createdAt: DateTime(2026, 3, 20),
   occurredOn: DateTime(2026, 3, 18),
 );
+
+PaymentLeft _left(String id, {String member = 'anna', int cents = 12000}) =>
+    PaymentLeft.of(_pay(id, member: member, cents: cents), PaymentUse.none);
 
 Receivable _inv(
   String id, {
@@ -158,12 +162,12 @@ void main() {
     repo.junction = [('part', 4000), ('part', 3000), ('full', 5000)];
     final money = await read(container());
     expect(money.paymentsOf.keys.toSet(), {'anna', 'cleo'});
-    expect(money.paymentsOf['anna']!.single.amountCents, 5000);
+    expect(money.paymentsOf['anna']!.single.leftCents, 5000);
     expect(money.creditOf('anna'), {'EUR': 5000});
     // 'latest' has no junction row: free with its whole amount.
     expect(money.creditOf('cleo'), {'EUR': 7000});
     final rows = money.toMatch([_inv('a1', open: 5000)]);
-    expect(rows.single.payment.amountCents, 5000);
+    expect(rows.single.payment.leftCents, 5000);
     expect(rows.single.candidates.single.fit.name, 'exact');
   });
 
@@ -201,8 +205,8 @@ void main() {
     final money = UnassignedMoney(
       currency: 'EUR',
       paymentsOf: {
-        'anna': [_pay('prepaid')],
-        'ben': [_pay('credit', member: 'ben', cents: 3000)],
+        'anna': [_left('prepaid')],
+        'ben': [_left('credit', member: 'ben', cents: 3000)],
       },
     );
     // No confirmed payment event after the invoice: the old event-based
@@ -229,7 +233,7 @@ void main() {
     final money = UnassignedMoney(
       currency: 'EUR',
       paymentsOf: {
-        'anna': [_pay('p1')],
+        'anna': [_left('p1')],
       },
     );
     final rows = money.toMatch([_inv('eur'), _inv('usd', currency: 'USD')]);

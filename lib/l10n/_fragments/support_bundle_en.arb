@@ -19,7 +19,7 @@
   "@supportPrepare": {
     "description": "Shown as the text in support bundle screen (help)."
   },
-  "supportSize": "Preview: {bytes} bytes",
+  "supportSize": "Preview: {bytes, plural, =1{1 byte} other{{bytes} bytes}}",
   "@supportSize": {
     "description": "Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).",
     "placeholders": {

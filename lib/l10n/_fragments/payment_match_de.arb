@@ -7,5 +7,6 @@
   "paymentMatchDecide": "Anderer Betrag: Sie wählen, wie die Differenz beglichen wird",
   "paymentMatchEmpty": "Keine Zahlung wartet auf eine Rechnung.",
   "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
-  "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen."
+  "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.",
+  "paymentMatchInvoiceGone": "Diese Rechnung ist nicht mehr offen: Die Liste wird neu gelesen."
 }

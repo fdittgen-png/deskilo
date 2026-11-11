@@ -4,7 +4,7 @@
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"
   },
-  "moneyUsage": "{used} of {included} half-days used",
+  "moneyUsage": "{used} of {included, plural, =1{1 half-day} other{{included} half-days}} used",
   "@moneyUsage": {
     "description": "Statement usage line for quota plans",
     "placeholders": {
@@ -456,7 +456,7 @@
   "@moneyFaceDocuments": {
     "description": "Shown as a text in money faces view (money)."
   },
-  "moneyOverdueBanner": "{count} overdue — {amount} to settle",
+  "moneyOverdueBanner": "{count, plural, =1{1 overdue} other{{count} overdue}} — {amount} to settle",
   "moneyPayNow": "Pay now",
   "@moneyPayNow": {
     "description": "Shown as a tooltip in my invoices list (money), and 2 other places."
@@ -465,7 +465,7 @@
   "@moneyOpenInvoicesTitle": {
     "description": "Shown as a text in invoice overview (money)."
   },
-  "moneyOpenInvoicesSummary": "{count} open · {amount} due",
+  "moneyOpenInvoicesSummary": "{count, plural, =1{1 open} other{{count} open}} · {amount} due",
   "moneyDueIn": "{days, plural, =1{Due in 1 day} other{Due in {days} days}}",
   "moneyOverdueBy": "{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}",
   "moneyNothingOpen": "Nothing open — you are up to date.",
@@ -516,7 +516,7 @@
     }
   },
   "@moneyRemindedTimes": {
-    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int).",
+    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -553,7 +553,7 @@
     "description": "Shown as a text in services screen (money), and 1 other place."
   },
   "@serviceStockCount": {
-    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).",
+    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
     "placeholders": {
       "count": {
         "type": "int"
@@ -647,7 +647,7 @@
   },
   "negotiationPercent": "{value} %",
   "@negotiationPercent": {
-    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int).",
+    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage.",
     "placeholders": {
       "value": {
         "type": "int"
@@ -672,7 +672,7 @@
   },
   "scheduledExpensesFinished": "Ended and rejected ({count})",
   "@scheduledExpensesFinished": {
-    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected.",
+    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
     "placeholders": {
       "count": {
         "type": "int"

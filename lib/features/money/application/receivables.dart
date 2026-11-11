@@ -77,6 +77,35 @@ class Receivable {
     this.regroupedInto = '',
   });
 
+  /// This invoice with [open] as what is still due on it: the server's
+  /// figure, which also leaves out the parts awaiting approval (#3671).
+  Receivable withOpenMinor(int open) => Receivable(
+    invoiceId: invoiceId,
+    customerId: customerId,
+    customerName: customerName,
+    number: number,
+    currency: currency,
+    totalMinor: totalMinor,
+    issuedOn: issuedOn,
+    stage: stage,
+    dueOn: dueOn,
+    dueDateSet: dueDateSet,
+    paymentDeclared: paymentDeclared,
+    declaredEventId: declaredEventId,
+    declaredOn: declaredOn,
+    awaitingCustomerConfirmation: awaitingCustomerConfirmation,
+    paymentToMatch: paymentToMatch,
+    awaitingSecondApproval: awaitingSecondApproval,
+    onHold: onHold,
+    eInvoiceRejected: eInvoiceRejected,
+    remindersSent: remindersSent,
+    remindersExhausted: remindersExhausted,
+    reminderDueLevel: reminderDueLevel,
+    paidOn: paidOn,
+    regroupedInto: regroupedInto,
+    openMinor: open,
+  );
+
   final String invoiceId;
   final String customerId;
   final String customerName;

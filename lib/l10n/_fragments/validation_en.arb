@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "eventValidations": "{current}/{required} validations",
+  "eventValidations": "{current}/{required, plural, =1{1 validation} other{{required} validations}}",
   "@eventValidations": {
     "description": "Quorum progress on a pending event (#130): accepts so far / accepts required",
     "placeholders": {
@@ -50,7 +50,7 @@
   },
   "validationTrailStep": "Step {order}",
   "@validationTrailStep": {
-    "description": "#841 - leader of one entry when the rule asks one validation at a time",
+    "description": "#841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps.",
     "placeholders": {
       "order": {
         "type": "int"
@@ -68,7 +68,7 @@
   },
   "eventValidationStage": "Validation {stage} of {required} requested",
   "@eventValidationStage": {
-    "description": "#848 - which step of a chained rule is open",
+    "description": "#848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps.",
     "placeholders": {
       "stage": {
         "type": "int"

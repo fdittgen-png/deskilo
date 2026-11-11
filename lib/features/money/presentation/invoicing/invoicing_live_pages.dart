@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
+import '../../application/payment_candidates.dart';
 import '../../application/receivables.dart';
 import '../../application/reminder_queue.dart';
 import '../../providers/money_providers.dart';
+import 'assign_payment_sheet.dart';
 import 'customer_page.dart';
 import 'invoicing_reads.dart';
 import 'reminder_queue_screen.dart';
@@ -61,12 +63,28 @@ class LiveCustomerPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = _now(ref);
+    final known = unassignedMoneyKnown(ref.watch(unassignedMoneyProvider));
+    final payments = known?.paymentsOf[customerId] ?? const <PaymentLeft>[];
+    final name =
+        (now.receivables ?? const <Receivable>[])
+            .where((r) => r.customerId == customerId)
+            .firstOrNull
+            ?.customerName ??
+        '';
     return CustomerPage(
       customerId: customerId,
       receivables: now.receivables ?? const [],
       today: now.today,
       mode: now.mode,
       credit: now.money?.creditOf(customerId),
+      payments: payments,
+      onAssign: (payment) => showAssignPayment(
+        context,
+        paymentId: payment.id,
+        customerId: customerId,
+        customerName: name,
+        currency: ref.read(invoicingBusinessProvider).currency,
+      ),
       onOpenInvoice: onOpenInvoice,
       onAction: onAction,
     );

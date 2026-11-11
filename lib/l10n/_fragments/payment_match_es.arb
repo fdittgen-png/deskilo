@@ -7,5 +7,6 @@
   "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
   "paymentMatchEmpty": "Ningún pago espera una factura.",
   "paymentMatchFailed": "No se pudieron leer los pagos.",
-  "paymentMatchRefused": "No se pudo conciliar el pago. Inténtelo de nuevo."
+  "paymentMatchRefused": "No se pudo conciliar el pago. Inténtelo de nuevo.",
+  "paymentMatchInvoiceGone": "Esta factura ya no está abierta: la lista se vuelve a leer."
 }

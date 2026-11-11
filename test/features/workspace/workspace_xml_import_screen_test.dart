@@ -472,7 +472,7 @@ void main() {
     );
     await tapImportTile(tester);
 
-    expect(find.textContaining('Configuration: 2 settings, 1 rows in 1 tables'),
+    expect(find.textContaining('Configuration: 2 settings, 1 row in 1 table'),
         findsOneWidget);
     await confirmImport(tester);
 
@@ -546,7 +546,7 @@ void main() {
 
       await tester.tap(find.byKey(const Key('configurationTransferSwitchOn')));
       await tester.pumpAndSettle();
-      expect(find.textContaining('Configuration: 2 settings, 1 rows in 1 tables'),
+      expect(find.textContaining('Configuration: 2 settings, 1 row in 1 table'),
           findsOneWidget);
       await confirmImport(tester);
 

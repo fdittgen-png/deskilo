@@ -350,7 +350,7 @@
   },
   "backendVersionCurrent": "Up to date (schema {version})",
   "@backendVersionCurrent": {
-    "description": "#1309 Server screen",
+    "description": "#1309 Server screen. The number is not a count: it is a schema version.",
     "placeholders": {
       "version": {
         "type": "int"
@@ -359,7 +359,7 @@
   },
   "backendVersionBehind": "Needs an update: this app needs schema {version}",
   "@backendVersionBehind": {
-    "description": "#1309 Server screen",
+    "description": "#1309 Server screen. The number is not a count: it is a schema version.",
     "placeholders": {
       "version": {
         "type": "int"

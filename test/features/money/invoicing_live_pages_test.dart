@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
+import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -42,15 +43,20 @@ final _annaPaid = UnassignedMoney(
   currency: 'EUR',
   paymentsOf: {
     'Anna': [
-      LedgerEntry(
-        id: 'p1',
-        memberId: 'Anna',
-        kind: LedgerKind.credit,
-        category: LedgerCategory.payment,
-        amountCents: 12000,
-        description: 'Transfer',
-        period: '2026-03',
-        createdAt: DateTime(2026, 3, 20),
+      PaymentLeft(
+        entry: LedgerEntry(
+          id: 'p1',
+          memberId: 'Anna',
+          kind: LedgerKind.credit,
+          category: LedgerCategory.payment,
+          amountCents: 12000,
+          description: 'Transfer',
+          period: '2026-03',
+          createdAt: DateTime(2026, 3, 20),
+        ),
+        receivedCents: 12000,
+        assignedCents: 0,
+        leftCents: 12000,
       ),
     ],
   },

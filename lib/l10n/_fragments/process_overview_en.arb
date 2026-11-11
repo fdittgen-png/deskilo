@@ -31,7 +31,7 @@
   "@processStateNeedsAttention": {
     "description": "#1327 the process-first overview of the Features screen"
   },
-  "processSubprocessCount": "{active} of {total} subprocesses active",
+  "processSubprocessCount": "{active} of {total, plural, =1{1 subprocess active} other{{total} subprocesses active}}",
   "@processSubprocessCount": {
     "description": "#1327 the process-first overview of the Features screen",
     "placeholders": {
@@ -43,7 +43,7 @@
       }
     }
   },
-  "processFeatureCount": "{enabled} of {total} features on",
+  "processFeatureCount": "{enabled} of {total, plural, =1{1 feature on} other{{total} features on}}",
   "@processFeatureCount": {
     "description": "#1327 the process-first overview of the Features screen",
     "placeholders": {

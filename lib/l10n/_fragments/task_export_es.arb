@@ -134,7 +134,7 @@
   "taskExportLimitRecreated": "Las ilustraciones se recrean a partir de los datos seguros de la grabación, con nombres de puestos inventados; no son capturas de la pantalla.",
   "taskExportStale": "El guion gráfico corresponde a otra versión de esta grabación. Revíselo antes de exportar.",
   "taskExportWordButton": "Exportar como documento de Word",
-  "taskExportValueRedacted": "no guardado ({length} caracteres)",
+  "taskExportValueRedacted": "no guardado ({length, plural, =1{1 carácter} other{{length} caracteres}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {
