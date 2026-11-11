@@ -24,6 +24,7 @@ import '../../providers/conversation_pane_providers.dart';
 import '../../providers/inbox_marks.dart';
 import '../../providers/message_marks_providers.dart';
 import '../../providers/messenger_providers.dart';
+import '../../providers/pending_send_ids_provider.dart';
 import 'account_group_reach_sheet.dart';
 import 'account_group_sheet.dart';
 import 'block_person.dart';
@@ -195,6 +196,9 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
     if (ref.read(conversationSendsProvider)[_draft.key] != null) return;
     setState(() => _busy = true);
     String? landed;
+    // #3745 — a send repeated after a lost answer keeps its request id.
+    final ids = ref.read(pendingSendIdsProvider);
+    final key = _draft.key;
     final ok = await _draft.deliver(text, runMessenger(
       context,
       message: 'send message failed',
@@ -207,6 +211,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
               contextId: _contextId,
               body: text,
               peer: widget.peer,
+              requestId: ids.idFor(key, text),
             );
       },
     )) ?? false;
@@ -220,6 +225,7 @@ class _ContextThreadState extends ConsumerState<ContextThreadScreen> {
       }
     });
     if (ok) {
+      ids.settled(key);
       ref
         ..invalidate(_provider)
         ..invalidate(messengerInboxProvider);

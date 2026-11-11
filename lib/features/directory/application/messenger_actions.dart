@@ -106,9 +106,19 @@ class MessengerActions {
   Future<void> edit(MessageKind kind, String messageId, String body) =>
       repository.edit(kind, messageId, _body(body));
 
-  Future<String> startInquiry(String workspace, String body) {
+  /// [requestId] (#3745): the id the app keeps for this text until the
+  /// outcome is known, so a repeat after a lost answer arrives once.
+  Future<String> startInquiry(
+    String workspace,
+    String body, {
+    String? requestId,
+  }) {
     if (workspace.isEmpty) throw ArgumentError('workspace required');
-    return repository.startInquiry(workspace, _body(body));
+    return repository.startInquiry(
+      workspace,
+      _body(body),
+      requestId: requestId,
+    );
   }
 
   /// Sends into the conversation [kind]/[contextId]. An account
@@ -122,6 +132,7 @@ class MessengerActions {
     required String contextId,
     required String body,
     String? peer,
+    String? requestId,
   }) async {
     final text = _body(body);
     switch (kind) {
@@ -132,7 +143,11 @@ class MessengerActions {
         return repository.sendAccountMessage(peer, text);
       case MessageContextKind.inquiryIn || MessageContextKind.inquiryOut:
         if (contextId.isEmpty) throw ArgumentError('inquiry required');
-        await repository.sendInquiryMessage(contextId, text);
+        await repository.sendInquiryMessage(
+          contextId,
+          text,
+          requestId: requestId,
+        );
         return contextId;
       case MessageContextKind.space:
         if (contextId.isEmpty) throw ArgumentError('conversation required');

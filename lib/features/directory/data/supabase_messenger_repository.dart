@@ -327,18 +327,26 @@ class SupabaseMessengerRepository with SupabaseInboxPages implements MessengerRe
   ];
 
   @override
-  Future<String> startInquiry(String workspace, String body) async =>
-      (await _rpc<dynamic>('start_space_inquiry', {
-        'p_workspace': workspace,
-        'p_body': body,
-      })).toString();
+  Future<String> startInquiry(
+    String workspace,
+    String body, {
+    String? requestId,
+  }) async => (await _rpc<dynamic>('start_space_inquiry_v1', {
+    'p_workspace': workspace,
+    'p_body': body,
+    'p_request_id': requestId,
+  })).toString();
 
   @override
-  Future<String> sendInquiryMessage(String inquiry, String body) async =>
-      (await _rpc<dynamic>('send_inquiry_message', {
-        'p_inquiry': inquiry,
-        'p_body': body,
-      })).toString();
+  Future<String> sendInquiryMessage(
+    String inquiry,
+    String body, {
+    String? requestId,
+  }) async => (await _rpc<dynamic>('send_inquiry_message_v1', {
+    'p_inquiry': inquiry,
+    'p_body': body,
+    'p_request_id': requestId,
+  })).toString();
 
   @override
   Future<List<InquirySummary>> myInquiries() async => [

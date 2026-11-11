@@ -362,8 +362,15 @@ class FakeMessengerRepository with DemoInboxPages implements MessengerRepository
   }
 
   @override
-  Future<String> startInquiry(String workspace, String body) async {
+  Future<String> startInquiry(
+    String workspace,
+    String body, {
+    String? requestId,
+  }) async {
     _check();
+    if (_repeat(requestId, 'start|$workspace|${body.trim()}') case final id?) {
+      return id;
+    }
     final id = 'inquiry-${++_ids}';
     _post(
       threadKey(MessageContextKind.inquiryOut, id),
@@ -378,15 +385,44 @@ class FakeMessengerRepository with DemoInboxPages implements MessengerRepository
       'last_at': now.toIso8601String(),
       'unread': 0,
     });
+    _remember(requestId, 'start|$workspace|${body.trim()}', id);
     return id;
   }
 
   @override
-  Future<String> sendInquiryMessage(String inquiry, String body) async {
+  Future<String> sendInquiryMessage(
+    String inquiry,
+    String body, {
+    String? requestId,
+  }) async {
     _check();
+    if (_repeat(requestId, 'reply|$inquiry|${body.trim()}') case final id?) {
+      return id;
+    }
     final message = _message(body, kind: MessageKind.inquiryMessage);
     _post(threadKey(MessageContextKind.inquiryOut, inquiry), message);
+    _remember(requestId, 'reply|$inquiry|${body.trim()}', message.id);
     return message.id;
+  }
+
+  /// #3745 — the first outcome of a request id, as
+  /// `inquiry_request_outcome` (0720): the same content answers it, other
+  /// content is refused, a new id is null.
+  final _requests = <String, ({String content, String outcome})>{};
+
+  String? _repeat(String? requestId, String content) {
+    final first = requestId == null ? null : _requests[requestId];
+    if (first == null) return null;
+    if (first.content != content) {
+      throw StateError('this request id was used for another message');
+    }
+    return first.outcome;
+  }
+
+  void _remember(String? requestId, String content, String outcome) {
+    if (requestId != null) {
+      _requests[requestId] = (content: content, outcome: outcome);
+    }
   }
 
   @override

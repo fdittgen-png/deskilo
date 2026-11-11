@@ -9,6 +9,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../domain/messenger.dart';
 import '../../domain/public_workspace.dart';
 import '../../providers/messenger_providers.dart';
+import '../../providers/pending_send_ids_provider.dart';
 import '../directory_pages.dart';
 import 'context_thread_screen.dart';
 import 'refusal_text.dart';
@@ -70,6 +71,9 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
     final l10n = context.l10n;
     setState(() => _busy = true);
     String? inquiry;
+    // #3745 — the same text keeps its request id until the space answers.
+    final ids = ref.read(pendingSendIdsProvider);
+    final key = 'inquiry-start:${widget.workspace.id}';
     final ok = await runMessenger(
       context,
       message: 'start inquiry failed',
@@ -78,12 +82,17 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
       action: () async {
         inquiry = await ref
             .read(messengerActionsProvider(source: _source))
-            .startInquiry(widget.workspace.id, text);
+            .startInquiry(
+              widget.workspace.id,
+              text,
+              requestId: ids.idFor(key, text),
+            );
       },
     );
     if (!mounted) return;
     setState(() => _busy = false);
     if (ok) {
+      ids.settled(key);
       ref.invalidate(messengerInboxProvider);
       Navigator.of(context).pop(inquiry);
     }
