@@ -31,6 +31,7 @@ String biDimensionName(AppLocalizations l10n, String dimension) =>
     };
 
 /// The width below which the view switch shows icons only (see _viewSwitch).
+// content-fit: the view switch shows its labels only where they fit
 const double _viewSwitchLabelledWidth = 420;
 
 class BiToolbar extends StatelessWidget {

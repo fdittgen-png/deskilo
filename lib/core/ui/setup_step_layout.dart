@@ -18,6 +18,7 @@ class SetupStepLayout extends StatelessWidget {
   });
 
   /// The width from which the panes stand side by side.
+  // content-fit: the form and its member preview need this room side by side
   static const double wideWidth = 720;
 
   final Widget form;

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
@@ -310,9 +311,6 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
   }
 }
 
-/// The window width from which the documents read as rows.
-const double _rowsWindowWidth = 840;
-
 /// A bounded, centred column of Me › Finances: a list of money rows is read, not scanned
 /// edge to edge.
 class FinancesColumn extends StatelessWidget {
@@ -334,7 +332,9 @@ class FinancesColumn extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: box.maxWidth >= _rowsWindowWidth ? 1200 : 760,
+            maxWidth: WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.expanded)
+                ? 1200
+                : 760,
           ),
           child: onRefresh == null
               ? list

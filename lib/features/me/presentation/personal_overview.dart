@@ -47,6 +47,7 @@ import 'personal_overview_sections.dart';
 import 'personal_space_compact_row.dart';
 
 /// The narrowest the right-hand column may be in the 2:1 layout.
+// content-fit: the right-hand third keeps room for a card's figures
 const double _rightMinWidth = 290;
 
 /// The gap between the two columns, and between sections.

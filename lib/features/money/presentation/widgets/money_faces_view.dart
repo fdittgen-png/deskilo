@@ -13,6 +13,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/money_face.dart';
 import '../../providers/money_face_controller.dart';
 
+// content-fit: two face cards side by side keep their figures readable
+const double _twoColumnsMinWidth = 480;
+
 /// The label of a face, as the tab and the help hint call it.
 String _moneyFaceLabel(AppLocalizations l10n, MoneyFace face) => switch (face) {
       MoneyFace.statement => l10n.invoiceTemplateDocStatement,
@@ -49,7 +52,7 @@ class MoneyActionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
         builder: (context, constraints) {
-          final singleColumn = constraints.maxWidth < 480 ||
+          final singleColumn = constraints.maxWidth < _twoColumnsMinWidth ||
               MediaQuery.textScalerOf(context).scale(100) > 130;
           final buttonWidth = singleColumn ? constraints.maxWidth
               : (constraints.maxWidth - AppSpacing.sm) / 2;

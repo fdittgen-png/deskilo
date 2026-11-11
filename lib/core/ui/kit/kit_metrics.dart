@@ -22,6 +22,7 @@ abstract final class KitMetrics {
   static const double buttonGap = 8;
 
   /// The widest a dropdown grows on a wide line (#3545).
+  // content-fit: a dropdown never stretches past the length of its longest choice
   static const double dropdownMaxWidth = 240;
 
   /// The size of the progress mark inside a busy button.

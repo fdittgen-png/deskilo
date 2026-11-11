@@ -60,6 +60,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
     if (ok) showWorkbookExportResult(context, result);
   }
 
+  // content-fit: two templates are compared side by side only when both stay readable
   static const wideWidth = 720.0;
 
   @override

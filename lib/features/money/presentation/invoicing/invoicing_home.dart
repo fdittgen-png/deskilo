@@ -220,7 +220,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       builder: (context, filter, _) => LayoutBuilder(
         builder: (context, box) {
           final wide =
-              widget.wide ?? box.maxWidth >= kWideNavigationMinWidth;
+              widget.wide ?? isWideNavigationWidth(box.maxWidth);
           final statusesFailed = data.failed.any(
             InvoicingSource.statuses.contains,
           );
