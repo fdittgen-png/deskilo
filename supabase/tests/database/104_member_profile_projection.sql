@@ -63,7 +63,7 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000018
 set local role authenticated;
 select is(jsonb_array_length(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])),1,'a space mate reads the subject');
 select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0->'community'->>'display_name','Subject Person','the space mate sees the name');
-select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0->'community'->>'whatsapp','+33600001833','the space mate sees the shared WhatsApp number');
+select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0->'community'->>'whatsapp','','by default the WhatsApp number stays with the person (GHSA-6m6w-2j3m-rm75)');
 select ok(not (public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0 ? 'operational'),'the space mate gets no operational group');
 select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])::text ilike '%canary%',false,'no private canary reaches the space mate');
 select is((select array_agg(k order by k) from jsonb_object_keys(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0) k),
@@ -168,7 +168,8 @@ select is(jsonb_array_length(public.member_profiles('00000000-0000-4000-8000-000
 reset role;
 select ok(not has_function_privilege('anon','public.member_profiles(uuid,uuid[])','execute'),'anonymous callers cannot read a member profile');
 select ok(not has_function_privilege('anon','public.preview_my_member_profile(text)','execute'),'nor preview one');
-select ok(not has_function_privilege('authenticated','public.member_profile_projection(uuid,text[])','execute')
+select ok(not has_function_privilege('authenticated','public.member_profile_projection(uuid,text[],uuid)','execute')
+      and not has_function_privilege('authenticated','public.community_field_shown(uuid,text,uuid)','execute')
       and not has_function_privilege('authenticated','public.member_profile_purposes(uuid,uuid)','execute'),'the internal functions are granted to no client');
 
 select * from finish();
