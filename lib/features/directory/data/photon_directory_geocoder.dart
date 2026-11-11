@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 
 import '../domain/directory_location.dart';
@@ -10,10 +11,18 @@ import '../domain/discovery_view.dart';
 /// Only user-requested public addresses; no autocomplete or bulk geocoding.
 /// Photon permits moderate use; deployments can supply their own endpoint.
 class PhotonDirectoryGeocoder implements DirectoryGeocoder {
-  PhotonDirectoryGeocoder(this.client, {Uri? endpoint})
-    : endpoint = endpoint ?? Uri.parse(MapServices.configured.geocoder);
+  PhotonDirectoryGeocoder(
+    this.client, {
+    Uri? endpoint,
+    this.identified = !kIsWeb,
+  }) : endpoint = endpoint ?? Uri.parse(MapServices.configured.geocoder);
   final http.Client client;
   final Uri endpoint;
+
+  /// #3684 -- whether the request names the app in its User-Agent, as the
+  /// public services ask. The native apps do; in a browser the browser
+  /// sets its own and a page may not replace it.
+  final bool identified;
   static const cacheLimit = 128;
   static const requestTimeout = Duration(seconds: 10);
   final _cache = <String, Future<DirectoryLocation?>>{};
@@ -33,13 +42,17 @@ class PhotonDirectoryGeocoder implements DirectoryGeocoder {
 
   Future<DirectoryLocation?> _lookup(String query) async {
     try {
-      // #2488 -- a public request: no credentials or headers of this app,
-      // and no redirect followed, so a configured endpoint cannot bounce
-      // the lookup to another host.
+      // #2488 -- a public request: no credentials of this app, and no
+      // redirect followed, so a configured endpoint cannot bounce the
+      // lookup to another host. #3684 -- the User-Agent names the app,
+      // never the person.
       final request = http.Request(
         'GET',
         endpoint.replace(queryParameters: {'q': query, 'limit': '1'}),
       )..followRedirects = false;
+      if (identified) {
+        request.headers['User-Agent'] = MapServices.userAgent;
+      }
       final response = await http.Response.fromStream(
         await client.send(request).timeout(requestTimeout),
       ).timeout(requestTimeout);

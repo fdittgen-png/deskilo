@@ -9389,9 +9389,17 @@
   "@directoryLocationMissing": {
     "description": "Shown as a text in directory map (directory)."
   },
+  "directoryMapOpenFailed": "The map could not be opened.",
+  "@directoryMapOpenFailed": {
+    "description": "Shown as an error snackbar in directory screen (directory) when the map could not be opened."
+  },
   "directoryNoUpcoming": "No upcoming reservations",
   "@directoryNoUpcoming": {
     "description": "Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead"
+  },
+  "directoryNothingToPin": "None of these places could be placed on the map.",
+  "@directoryNothingToPin": {
+    "description": "Shown as a text in directory map (directory), in place of the map when no loaded place has a pin."
   },
   "directoryOnline": "Online",
   "@directoryOnline": {
@@ -9401,9 +9409,27 @@
   "@directoryOpenGroup": {
     "description": "Tile above the directory list opening the owner-configured WhatsApp group invite link (#231/#232); shown to every member, hidden when no link is set"
   },
+  "directoryPinsLookupFailed": "{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}",
+  "@directoryPinsLookupFailed": {
+    "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryPinsNoAddress": "{count, plural, =1{1 has no published address.} other{{count} have no published address.}}",
+  "@directoryPinsNoAddress": {
+    "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -9430,6 +9456,10 @@
   "directoryReservedToday": "Reserved today",
   "@directoryReservedToday": {
     "description": "Directory status chip: member has an active reservation later today"
+  },
+  "directoryTilesFailed": "The map background could not be loaded.",
+  "@directoryTilesFailed": {
+    "description": "Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows."
   },
   "directoryTitle": "Members",
   "@directoryTitle": {

@@ -366,6 +366,7 @@ const Set<String> demoOverriddenProviders = {
   'personalMessageDirectoryRepositoryProvider', // #2472 (P)
   'savedPlacesStoreProvider', // #2555 — saved public pages, device-local
   'discoveryViewStoreProvider', // #2555 — list or map, the map provider accepted
+  'directoryLocationMemoryProvider', // #3684 — the places the map found, device-local
   'meRepositoryProvider', // #1823
   'linkedMeRepositoryProvider',
   'workspaceHostRepositoryProvider',

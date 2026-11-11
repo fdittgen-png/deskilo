@@ -7056,13 +7056,32 @@ class AppLocalizationsDe extends AppLocalizations {
       'Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.';
 
   @override
+  String get directoryMapOpenFailed =>
+      'Die Karte konnte nicht geöffnet werden.';
+
+  @override
   String get directoryNoUpcoming => 'Keine anstehenden Reservierungen';
+
+  @override
+  String get directoryNothingToPin =>
+      'Keiner dieser Orte konnte auf der Karte platziert werden.';
 
   @override
   String get directoryOnline => 'Online';
 
   @override
   String get directoryOpenGroup => 'WhatsApp-Gruppe öffnen';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count konnten nicht nachgeschlagen werden.',
+      one: '1 konnte nicht nachgeschlagen werden.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7072,6 +7091,17 @@ class AppLocalizationsDe extends AppLocalizations {
       other:
           '$count Arbeitsbereiche konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.',
       one: '1 Arbeitsbereich konnte nicht auf der Karte platziert werden; seine Karte steht darunter.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count haben keine veröffentlichte Adresse.',
+      one: '1 hat keine veröffentlichte Adresse.',
     );
     return '$_temp0';
   }
@@ -7089,6 +7119,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Heute reserviert';
+
+  @override
+  String get directoryTilesFailed =>
+      'Der Kartenhintergrund konnte nicht geladen werden.';
 
   @override
   String get directoryTitle => 'Mitglieder';

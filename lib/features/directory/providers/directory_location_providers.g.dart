@@ -56,6 +56,116 @@ final class DirectoryGeocoderProvider
 
 String _$directoryGeocoderHash() => r'cb43baf49aec6f59cdeba41f1ff542bb0fc1658a';
 
+/// #3684 -- the places found on this device, so a second visit asks the
+/// geocoder nothing again.
+
+@ProviderFor(directoryLocationMemory)
+final directoryLocationMemoryProvider = DirectoryLocationMemoryProvider._();
+
+/// #3684 -- the places found on this device, so a second visit asks the
+/// geocoder nothing again.
+
+final class DirectoryLocationMemoryProvider
+    extends
+        $FunctionalProvider<
+          DirectoryLocationMemory,
+          DirectoryLocationMemory,
+          DirectoryLocationMemory
+        >
+    with $Provider<DirectoryLocationMemory> {
+  /// #3684 -- the places found on this device, so a second visit asks the
+  /// geocoder nothing again.
+  DirectoryLocationMemoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'directoryLocationMemoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$directoryLocationMemoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<DirectoryLocationMemory> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  DirectoryLocationMemory create(Ref ref) {
+    return directoryLocationMemory(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DirectoryLocationMemory value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DirectoryLocationMemory>(value),
+    );
+  }
+}
+
+String _$directoryLocationMemoryHash() =>
+    r'1500c0d34893dc158886f30735bfbcfd01f6bedd';
+
+/// #3684 -- the one queue every address lookup waits in: one request at a
+/// time, paused between them, remembered answers first.
+
+@ProviderFor(directoryLookups)
+final directoryLookupsProvider = DirectoryLookupsProvider._();
+
+/// #3684 -- the one queue every address lookup waits in: one request at a
+/// time, paused between them, remembered answers first.
+
+final class DirectoryLookupsProvider
+    extends
+        $FunctionalProvider<
+          DirectoryLookups,
+          DirectoryLookups,
+          DirectoryLookups
+        >
+    with $Provider<DirectoryLookups> {
+  /// #3684 -- the one queue every address lookup waits in: one request at a
+  /// time, paused between them, remembered answers first.
+  DirectoryLookupsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'directoryLookupsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$directoryLookupsHash();
+
+  @$internal
+  @override
+  $ProviderElement<DirectoryLookups> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  DirectoryLookups create(Ref ref) {
+    return directoryLookups(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DirectoryLookups value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DirectoryLookups>(value),
+    );
+  }
+}
+
+String _$directoryLookupsHash() => r'ca9b8fb0b849b4dc744c9b380cedcfee6d816054';
+
 @ProviderFor(directoryAddressLocation)
 final directoryAddressLocationProvider = DirectoryAddressLocationFamily._();
 
@@ -115,7 +225,7 @@ final class DirectoryAddressLocationProvider
 }
 
 String _$directoryAddressLocationHash() =>
-    r'edbcd663e0cfd2ec82a4ea3c6dad312d0635b9b8';
+    r'eacd6690001b9ab7b3dba45ccdda8b392892f027';
 
 final class DirectoryAddressLocationFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<DirectoryLocation?>, String> {
