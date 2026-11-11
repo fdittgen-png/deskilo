@@ -91,7 +91,7 @@ void main() {
       expect(find.byType(FilledButton), findsOneWidget);
       expect(
         find.text(
-          'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.',
+          'When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.',
         ),
         findsOneWidget,
       );
