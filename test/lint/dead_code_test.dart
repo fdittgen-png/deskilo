@@ -18,6 +18,10 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The read-only fact of the form kit: screens that show a disabled field
+  // for a value the person may not edit adopt it as they are touched.
+  'lib/core/ui/labeled_rows.dart::ReadOnlyFact':
+      '#3286 — read-only facts read as one phrase, not as disabled fields',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
