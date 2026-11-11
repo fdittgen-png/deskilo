@@ -5403,6 +5403,7 @@ Map<String, _Getter> _part15() => {
   'policySimultaneousDesc': (l) => l.policySimultaneousDesc,
   'portalDescription': (l) => l.portalDescription,
   'portalPublication': (l) => l.portalPublication,
+  'portalRequestPending': (l) => l.portalRequestPending,
   'portalUseCode': (l) => l.portalUseCode,
   'privacyAdminLoadFailed': (l) => l.privacyAdminLoadFailed,
   'privacyAdminStore': (l) => l.privacyAdminStore,

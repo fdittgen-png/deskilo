@@ -13192,6 +13192,7 @@
   "portalReachableHeading": "Personas a las que puede escribir",
   "portalRecipientHint": "Escriba un nombre: las sugerencias aparecen desde la primera letra",
   "portalRegisterDirectory": "Vincular un servidor al directorio global",
+  "portalRequestPending": "Solicitud pendiente",
   "portalRequestProfile": "Pedir unirme",
   "portalRequestSent": "Solicitud enviada. El espacio revisará su perfil.",
   "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",

@@ -21237,6 +21237,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Server mit dem globalen Verzeichnis verbinden';
 
   @override
+  String get portalRequestPending => 'Anfrage ausstehend';
+
+  @override
   String get portalRequestProfile => 'Beitritt anfragen';
 
   @override

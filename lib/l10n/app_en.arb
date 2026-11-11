@@ -27968,6 +27968,10 @@
   "@portalRegisterDirectory": {
     "description": "Shown as the title in directory link dialog (directory), and 1 other place."
   },
+  "portalRequestPending": "Request pending",
+  "@portalRequestPending": {
+    "description": "Shown on the disabled button of a space offer once the request to join was sent and waits for the space's answer."
+  },
   "portalRequestProfile": "Ask to join",
   "@portalRequestProfile": {
     "description": "Shown as the text in space offers (directory)."

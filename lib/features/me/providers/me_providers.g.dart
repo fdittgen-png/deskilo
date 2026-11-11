@@ -540,7 +540,7 @@ final class PersonalWorkspaceRefsProvider
 }
 
 String _$personalWorkspaceRefsHash() =>
-    r'69d0d76da6cc0132448ac6e3a8eb92ace24203d2';
+    r'69fe75a316f866e127780be3a38f11bc23b26f6b';
 
 /// #2557 C2 — the personal part of my data, read on my personal home while
 /// My data's personal view shows it; dropped when it closes, so each visit

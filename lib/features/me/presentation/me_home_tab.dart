@@ -128,7 +128,7 @@ class MeHomeTab extends ConsumerWidget {
                     ..invalidate(linkedServerSpacesProvider),
                 )
               else if (!answered)
-                const SizedBox(height: 72, child: LoadingView())
+                const Padding(padding: AppSpacing.lgAll, child: LoadingView())
               else if (nothing)
                 EmptyState(
                   key: const ValueKey('me-home-empty'),

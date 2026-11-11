@@ -30,6 +30,7 @@
   "portalAdmin": "Administrator",
   "portalChat": "Chat",
   "portalRequestProfile": "Beitritt anfragen",
+  "portalRequestPending": "Anfrage ausstehend",
   "portalRequestSent": "Anfrage gesendet. Der Workspace prüft Ihr Profil.",
   "portalList": "Liste",
   "portalMap": "Karte",

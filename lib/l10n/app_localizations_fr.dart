@@ -21251,6 +21251,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalRegisterDirectory => 'Relier un serveur à l’annuaire global';
 
   @override
+  String get portalRequestPending => 'Demande en attente';
+
+  @override
   String get portalRequestProfile => 'Demander à rejoindre';
 
   @override

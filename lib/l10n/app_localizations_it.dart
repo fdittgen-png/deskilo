@@ -21211,6 +21211,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Collega un server alla directory globale';
 
   @override
+  String get portalRequestPending => 'Richiesta in attesa';
+
+  @override
   String get portalRequestProfile => 'Chiedi di unirti';
 
   @override

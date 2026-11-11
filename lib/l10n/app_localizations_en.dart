@@ -21038,6 +21038,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalRegisterDirectory => 'Link a server to the global directory';
 
   @override
+  String get portalRequestPending => 'Request pending';
+
+  @override
   String get portalRequestProfile => 'Ask to join';
 
   @override

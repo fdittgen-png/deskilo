@@ -34889,6 +34889,12 @@ abstract class AppLocalizations {
   /// **'Link a server to the global directory'**
   String get portalRegisterDirectory;
 
+  /// Shown on the disabled button of a space offer once the request to join was sent and waits for the space's answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Request pending'**
+  String get portalRequestPending;
+
   /// Shown as the text in space offers (directory).
   ///
   /// In en, this message translates to:
