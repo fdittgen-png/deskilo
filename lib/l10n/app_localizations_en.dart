@@ -14173,6 +14173,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovalRecorded =>
+      'Your approval is recorded; it waits for the others.';
+
+  @override
   String get invoicePageApprovals => 'Approvals of the payment';
 
   @override
@@ -14200,6 +14204,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoicePageConfirmedMatched =>
       'Payment confirmed and matched to this invoice.';
+
+  @override
+  String get invoicePageDecisionRefused =>
+      'Your decision on this payment was not recorded.';
 
   @override
   String get invoicePageInvoiced => 'Invoiced';
@@ -14366,6 +14374,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicePageToday => 'Today';
+
+  @override
+  String get invoicePageUnreadable => 'This invoice can no longer be read.';
 
   @override
   String get invoicePageView => 'View';

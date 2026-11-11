@@ -17,7 +17,7 @@ import '../domain/workspace_event.dart';
 
 // #3587 — a decision on an event, for the screens that already read events
 // through these providers (the invoice page confirms a declared payment).
-export '../application/decide_event.dart' show decideEvent;
+export '../application/decide_event.dart' show decideEvent, decideEventAndRead;
 
 part 'event_providers.g.dart';
 

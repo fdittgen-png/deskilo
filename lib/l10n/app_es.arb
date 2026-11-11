@@ -8934,6 +8934,10 @@
       }
     }
   },
+  "invoicePageApprovalRecorded": "Su aprobación está registrada; espera a los demás.",
+  "@invoicePageApprovalRecorded": {
+    "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
+  },
   "invoicePageApprovals": "Aprobaciones del pago",
   "@invoicePageApprovals": {
     "description": "#3587 R1-d the collapsed validation trail under the story"
@@ -8970,6 +8974,10 @@
   "invoicePageConfirmedMatched": "Pago confirmado y conciliado con esta factura.",
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
+  },
+  "invoicePageDecisionRefused": "Su decisión sobre este pago no se registró.",
+  "@invoicePageDecisionRefused": {
+    "description": "#3587 when a decision on a declared payment is refused and no known refusal applies"
   },
   "invoicePageInvoiced": "Facturado",
   "@invoicePageInvoiced": {
@@ -9203,6 +9211,10 @@
   "invoicePageToday": "Hoy",
   "@invoicePageToday": {
     "description": "#3587 R1-d the story's last line's day"
+  },
+  "invoicePageUnreadable": "Esta factura ya no se puede leer.",
+  "@invoicePageUnreadable": {
+    "description": "#3587 the invoice page of an invoice that can no longer be read"
   },
   "invoicePageView": "Ver",
   "@invoicePageView": {

@@ -14307,6 +14307,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovalRecorded =>
+      'Ihre Zustimmung ist erfasst; sie wartet auf die anderen.';
+
+  @override
   String get invoicePageApprovals => 'Freigaben der Zahlung';
 
   @override
@@ -14334,6 +14338,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoicePageConfirmedMatched =>
       'Zahlung bestätigt und dieser Rechnung zugeordnet.';
+
+  @override
+  String get invoicePageDecisionRefused =>
+      'Ihre Entscheidung zu dieser Zahlung wurde nicht erfasst.';
 
   @override
   String get invoicePageInvoiced => 'Berechnet';
@@ -14503,6 +14511,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicePageToday => 'Heute';
+
+  @override
+  String get invoicePageUnreadable =>
+      'Diese Rechnung kann nicht mehr gelesen werden.';
 
   @override
   String get invoicePageView => 'Ansehen';

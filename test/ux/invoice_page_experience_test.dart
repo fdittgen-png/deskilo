@@ -5,9 +5,13 @@
 // declared payment (Confirm / Not received), and a paid one (no bar), at
 // 320, 390 and 1280 px, text scale 1.0 and 1.3, light and dark. With
 // SHEET=1 it writes build/sheets/invoice_page/<state>--<width>--<theme>.png.
+import 'dart:async';
+
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/member_account_queries.dart';
 import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
@@ -18,6 +22,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../helpers/pump_app.dart';
 import 'experience_guards.dart';
@@ -83,7 +88,14 @@ Future<void> _pump(
   required bool dark,
   required double scale,
   bool held = false,
-  Future<String?> Function(WidgetRef, String, {required bool accept})? decision,
+  bool remindersFail = false,
+  Future<DeclaredPaymentDecided> Function(
+    WidgetRef,
+    String, {
+    required bool accept,
+  })?
+  decision,
+  MemberAccountQueries? ledger,
 }) async {
   await pumpApp(
     tester,
@@ -109,8 +121,11 @@ Future<void> _pump(
         },
       ),
       invoiceRemindersProvider.overrideWith(
-        (ref) async => {'0063': (count: 1, last: DateTime(2026, 9, 28))},
+        (ref) async => remindersFail
+            ? throw StateError('reminders unreadable')
+            : {'0063': (count: 1, last: DateTime(2026, 9, 28))},
       ),
+      if (ledger != null) memberAccountQueriesProvider.overrideWithValue(ledger),
       dunningRulesProvider.overrideWith((ref) async => const DunningRules()),
       dunningHoldsProvider.overrideWith(
         (ref) async => held ? const {"0063": "dispute"} : const {},
@@ -148,6 +163,13 @@ Future<void> _pump(
     textScale: scale,
   );
   await tester.pumpAndSettle();
+}
+
+/// Lets a tapped action answer and its message or route animate in: the
+/// calls here answer at once, so a bounded pump is enough.
+Future<void> _answer(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
 }
 
 void main() {
@@ -206,16 +228,153 @@ void main() {
       scale: 1,
       decision: (ref, eventId, {required accept}) async {
         asked++;
-        return 'Someone else has already decided this payment.';
+        throw const PostgrestException(message: 'event already decided');
       },
     );
     await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));
-    await tester.pumpAndSettle();
+    await _answer(tester);
     expect(asked, 1);
     expect(
-      find.text('Someone else has already decided this payment.'),
+      find.text(
+        'Someone has already decided this. The list shows the outcome.',
+      ),
       findsOneWidget,
     );
+  });
+
+  testWidgets('a refusal without a reason is said in words', (tester) async {
+    await _pump(
+      tester,
+      '0071',
+      width: 390,
+      dark: false,
+      scale: 1,
+      decision: (ref, eventId, {required accept}) async =>
+          throw const PostgrestException(message: ''),
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));
+    await _answer(tester);
+    expect(
+      find.text('Your decision on this payment was not recorded.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('a confirmation the quorum keeps pending matches nothing', (
+    tester,
+  ) async {
+    final ledger = _CountingLedger();
+    await _pump(
+      tester,
+      '0071',
+      width: 390,
+      dark: false,
+      scale: 1,
+      ledger: ledger,
+      decision: (ref, eventId, {required accept}) async =>
+          DeclaredPaymentDecided.waitsForOthers,
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));
+    await _answer(tester);
+    expect(
+      find.text('Your approval is recorded; it waits for the others.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Payment confirmed'), findsNothing);
+    expect(ledger.reads, 0, reason: 'no payment is looked up to match');
+  });
+
+  testWidgets('an approved confirmation goes on to the match', (tester) async {
+    final ledger = _CountingLedger();
+    await _pump(
+      tester,
+      '0071',
+      width: 390,
+      dark: false,
+      scale: 1,
+      ledger: ledger,
+      decision: (ref, eventId, {required accept}) async =>
+          DeclaredPaymentDecided.approved,
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));
+    await _answer(tester);
+    expect(ledger.reads, 1);
+  });
+
+  testWidgets('a second tap while the first call runs sends nothing', (
+    tester,
+  ) async {
+    final answer = Completer<DeclaredPaymentDecided>();
+    var asked = 0;
+    await _pump(
+      tester,
+      '0071',
+      width: 390,
+      dark: false,
+      scale: 1,
+      decision: (ref, eventId, {required accept}) {
+        asked++;
+        return answer.future;
+      },
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-page-not-received')));
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));
+    await tester.tap(find.byKey(const ValueKey('invoice-page-not-received')));
+    await tester.pump();
+    expect(asked, 1);
+    answer.complete(DeclaredPaymentDecided.ended);
+    await _answer(tester);
+    expect(find.text('Marked as not received.'), findsOneWidget);
+    // Once it answered, the bar takes a tap again.
+    await tester.tap(find.byKey(const ValueKey('invoice-page-not-received')));
+    await _answer(tester);
+    expect(asked, 2);
+  });
+
+  testWidgets('while a source the bar reads has failed, the bar stays away', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      '0071',
+      width: 390,
+      dark: false,
+      scale: 1,
+      remindersFail: true,
+    );
+    expect(find.byKey(const ValueKey('invoice-page-confirm')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-page-not-received')), findsNothing);
+  });
+
+  testWidgets('an invoice no longer readable says so and closes', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      Builder(
+        builder: (context) => Scaffold(
+          body: TextButton(
+            key: const ValueKey('open-gone'),
+            onPressed: () => openInvoicePage(context, 'gone'),
+            child: const Text('open'),
+          ),
+        ),
+      ),
+      overrides: [
+        clockProvider.overrideWithValue(FixedClock(_now)),
+        invoicesProvider.overrideWith((ref) async => [_late]),
+      ],
+      size: const Size(390, 800),
+    );
+    await _answer(tester);
+    await tester.tap(find.byKey(const ValueKey('open-gone')));
+    await _answer(tester);
+    expect(find.text('This invoice can no longer be read.'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('invoice-page-close')));
+    await _answer(tester);
+    expect(find.byKey(const ValueKey('invoice-page-gone')), findsNothing);
+    expect(find.byKey(const ValueKey('open-gone')), findsOneWidget);
   });
 
   // #3587 -- the three states the coordinator reads on one sheet: on hold
@@ -278,4 +437,18 @@ void main() {
       expect(problems, isEmpty);
     });
   }
+}
+
+/// Counts the ledger reads the match after a confirmation starts with.
+class _CountingLedger implements MemberAccountQueries {
+  int reads = 0;
+
+  @override
+  Future<List<LedgerEntry>> fetchLedger(String memberId) async {
+    reads++;
+    return const [];
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

@@ -14282,6 +14282,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovalRecorded =>
+      'La sua approvazione è registrata; attende gli altri.';
+
+  @override
   String get invoicePageApprovals => 'Approvazioni del pagamento';
 
   @override
@@ -14309,6 +14313,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoicePageConfirmedMatched =>
       'Pagamento confermato e abbinato a questa fattura.';
+
+  @override
+  String get invoicePageDecisionRefused =>
+      'La sua decisione su questo pagamento non è stata registrata.';
 
   @override
   String get invoicePageInvoiced => 'Fatturato';
@@ -14477,6 +14485,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoicePageToday => 'Oggi';
+
+  @override
+  String get invoicePageUnreadable =>
+      'Questa fattura non può più essere letta.';
 
   @override
   String get invoicePageView => 'Vedi';
