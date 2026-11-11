@@ -1439,7 +1439,7 @@ final class InvoicePdfTemplateProvider
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: noPolicyRetry,
         name: r'invoicePdfTemplateProvider',
         isAutoDispose: false,
         dependencies: null,
@@ -1462,7 +1462,7 @@ final class InvoicePdfTemplateProvider
 }
 
 String _$invoicePdfTemplateHash() =>
-    r'5dea8960777bb3d50de8ed26154edc129636d3e8';
+    r'57e0cbc324186ddf5903a584bd0e71e9ac9b4ce0';
 
 /// The workspace's report-image library (#488) — the names templates
 /// can reference with `![name]`.
@@ -1617,7 +1617,7 @@ final class DunningRulesProvider
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: noPolicyRetry,
         name: r'dunningRulesProvider',
         isAutoDispose: false,
         dependencies: null,
@@ -1639,7 +1639,7 @@ final class DunningRulesProvider
   }
 }
 
-String _$dunningRulesHash() => r'55ee8bc5b8cf5cd84ee0a37683dd87e8435d03a6';
+String _$dunningRulesHash() => r'9a3edf8a86f8647610a91955f51baaf6f4e549cd';
 
 /// #802 — when the two automatic invoice runs happen; defaults while
 /// nothing is stored, which is what every workspace starts with.
@@ -1664,7 +1664,7 @@ final class BillingRulesProvider
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: noPolicyRetry,
         name: r'billingRulesProvider',
         isAutoDispose: false,
         dependencies: null,
@@ -1686,7 +1686,7 @@ final class BillingRulesProvider
   }
 }
 
-String _$billingRulesHash() => r'12ec5427139ca3844831899f4ae42bb8f1113542';
+String _$billingRulesHash() => r'cbb741e58a183646d354d30ac1c3107b95a69005';
 
 /// The member's REAL cross-month position (#512): credit on account,
 /// open remainders from any month, refunds due, net. Watches the
@@ -2406,7 +2406,7 @@ final class RepartitionRuleProvider
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: noPolicyRetry,
         name: r'repartitionRuleProvider',
         isAutoDispose: true,
         dependencies: null,
@@ -2428,7 +2428,7 @@ final class RepartitionRuleProvider
   }
 }
 
-String _$repartitionRuleHash() => r'1b38fcfcd2e2fadd60093673b02c72c04a9b2e44';
+String _$repartitionRuleHash() => r'5dc738c66a6074d0f67d592582f1d7b811c061cb';
 
 /// member id -> name, for the lists that name a member (the To-pay claims).
 

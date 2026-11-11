@@ -42,7 +42,8 @@ final _shapes = [
 const _ceilings = <String, int>{
   'lib/features/money': 0,
   // Re-measured with the #3742 shapes (a default object in place of an
-  // unread value): the same count of places, now seen. Money is at 0.
+  // unread value): five places that were there, now seen — the spaces'
+  // layout read as `SpacePrefs.empty`; #3749 brings them down to 14.
   'lib/features/me': 19,
   'lib/features/reservations': 28,
 };
