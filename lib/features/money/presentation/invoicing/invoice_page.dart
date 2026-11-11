@@ -25,12 +25,17 @@ import '../../../../core/ui/kit/story.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/confirmed_payment.dart';
+import '../../application/invoice_detail_facts.dart';
 import '../../application/receivables.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
+import '../dunning_hold_actions.dart';
 import '../invoice_actions.dart';
+import '../invoice_status.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
+import '../widgets/invoice_detail_sheet.dart' show InvoiceApprovals;
 import '../widgets/invoice_journey_view.dart';
+import '../widgets/reminder_evidence_list.dart';
 import 'invoice_page_parts.dart';
 import 'invoicing_reads.dart';
 
@@ -63,6 +68,19 @@ class InvoicePage extends ConsumerWidget {
       return const Scaffold(body: LoadingView());
     }
     final read = ref.watch(invoicingReaderProvider).read([invoice]);
+    final match =
+        (ref.watch(invoiceMatchesProvider).value ?? const {})[invoice.id];
+    final lifecycle = invoiceLifecycleOf(invoice, match);
+    final replacement = invoices
+        ?.where((i) => i.replacesInvoiceId == invoice.id)
+        .firstOrNull;
+    final heldReason = ref.watch(dunningHoldsProvider).value?[invoice.id];
+    final facts = InvoiceDetailFacts.of(
+      invoice,
+      match,
+      canIssue: true,
+      showMemberName: false,
+    );
     final r = read.isEmpty ? null : read.first;
     // The business's calendar day, from the workspace's own context.
     final today = ref
@@ -77,7 +95,12 @@ class InvoicePage extends ConsumerWidget {
         automaticallyImplyLeading: onClose == null,
         title: Text(l.invoicePageTitle(invoice.number)),
         actions: [
-          InvoiceMoreMenu(invoice: invoice, receivable: r),
+          InvoiceMoreMenu(
+            invoice: invoice,
+            receivable: r,
+            awaitsReplacement:
+                lifecycle == InvoiceLifecycle.erroneous && replacement == null,
+          ),
           if (onClose != null)
             IconButton(
               key: const ValueKey('invoice-page-close'),
@@ -94,7 +117,15 @@ class InvoicePage extends ConsumerWidget {
         padding: AppSpacing.mdAll,
         children: [
           if (r != null) ...[
-            InvoiceSummaryCard(invoice: invoice, receivable: r, today: today),
+            InvoiceSummaryCard(
+              invoice: invoice,
+              receivable: r,
+              today: today,
+              termNote: facts.showMaturityReview
+                  ? l.invoiceMaturityReview
+                  : null,
+              closure: _closureOf(context, invoice, match, replacement),
+            ),
             const SizedBox(height: AppSpacing.md),
             KitCard(
               key: const ValueKey('invoice-page-story'),
@@ -103,7 +134,31 @@ class InvoicePage extends ConsumerWidget {
                 spacing: AppSpacing.sm,
                 children: [
                   KitLabel(l.invoicePageWhatHappened),
-                  _story(context, ref, r, today),
+                  _story(context, ref, r, today, heldReason),
+                  // The reminders sent and their evidence, and who released
+                  // the payment: collapsed, so the page stays calm.
+                  if (r.remindersSent > 0)
+                    Material(
+                      // Its tile paints on the card, not under it.
+                      type: MaterialType.transparency,
+                      child: ExpansionTile(
+                        key: const ValueKey('invoice-page-reminders'),
+                        tilePadding: EdgeInsets.zero,
+                        title: Text(l.invoicePageReminders(r.remindersSent)),
+                        children: [ReminderEvidenceList(invoiceId: invoice.id)],
+                      ),
+                    ),
+                  if (match?.eventId case final eventId?)
+                    Material(
+                      // Its tile paints on the card, not under it.
+                      type: MaterialType.transparency,
+                      child: ExpansionTile(
+                        key: const ValueKey('invoice-page-approvals'),
+                        tilePadding: EdgeInsets.zero,
+                        title: Text(l.invoicePageApprovals),
+                        children: [InvoiceApprovals(eventId: eventId)],
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -117,11 +172,53 @@ class InvoicePage extends ConsumerWidget {
     );
   }
 
+  /// How a cancelled invoice ended, never a bare "Cancelled": replaced by
+  /// another (which opens it), not replaced yet, or its remainder written
+  /// off. Null while the invoice has not ended that way.
+  Widget? _closureOf(
+    BuildContext context,
+    Invoice invoice,
+    InvoiceMatch? match,
+    Invoice? replacement,
+  ) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final quiet = TextStyle(color: theme.colorScheme.onSurfaceVariant);
+    switch (invoiceLifecycleOf(invoice, match)) {
+      case InvoiceLifecycle.erroneous:
+        if (replacement == null) {
+          return Text(l.invoicePageCancelledNotReplaced, style: quiet);
+        }
+        return InkWell(
+          key: const ValueKey('invoice-page-replaced-by'),
+          onTap: () => openInvoicePage(context, replacement.id),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              l.invoicePageCancelledReplaced(replacement.number),
+              style: TextStyle(color: theme.colorScheme.primary),
+            ),
+          ),
+        );
+      case InvoiceLifecycle.remainderCancelled:
+        final rest = invoice.totalCents - (match?.paidCents ?? 0);
+        return Text(
+          l.invoicePageRemainderWrittenOff(
+            appFormatOf(context).moneyIn(invoice.currency).formatMinor(rest),
+          ),
+          style: quiet,
+        );
+      case _:
+        return null;
+    }
+  }
+
   Widget _story(
     BuildContext context,
     WidgetRef ref,
     Receivable r,
     DateTime today,
+    String? heldReason,
   ) {
     final l = context.l10n;
     final format = appFormatOf(context);
@@ -146,7 +243,7 @@ class InvoicePage extends ConsumerWidget {
         ),
       if (r.paidOn != null) (text: l.invoicePageStoryPaid, when: day(r.paidOn)),
     ];
-    final now = _nowOf(l, format, r, today);
+    final now = _nowOf(l, format, r, today, heldReason);
     return Story(
       lines: lines,
       now: now == null ? null : (text: now, when: l.invoicePageToday),
@@ -159,6 +256,7 @@ class InvoicePage extends ConsumerWidget {
     AppFormat format,
     Receivable r,
     DateTime today,
+    String? heldReason,
   ) {
     if (r.stage == ReceivableStage.refundOwed) return l.invoicePageNowRefund;
     if (!r.isOutstanding) return null;
@@ -167,7 +265,12 @@ class InvoicePage extends ConsumerWidget {
     if (r.awaitingSecondApproval) return l.invoicePageNowApproval;
     if (r.paymentToMatch) return l.invoicePageNowToMatch;
     if (r.awaitingCustomerConfirmation) return l.invoicePageNowCustomer;
-    if (r.onHold) return l.invoicePageNowHold;
+    if (r.onHold) {
+      // On hold, and why: the reason the issuer gave.
+      return heldReason == null
+          ? l.invoicePageNowHold
+          : l.invoiceHeldNote(dunningHoldReasonLabel(l, heldReason));
+    }
     if (r.isLateOn(today)) {
       if (r.remindersExhausted) return l.invoicePageNowEveryReminder;
       if (r.reminderDueLevel case final level?) {

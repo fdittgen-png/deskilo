@@ -8905,6 +8905,23 @@
       }
     }
   },
+  "invoicePageApprovals": "Approvazioni del pagamento",
+  "@invoicePageApprovals": {
+    "description": "#3587 R1-d the collapsed validation trail under the story"
+  },
+  "invoicePageCancelledNotReplaced": "Annullata perché emessa per errore · non ancora sostituita",
+  "@invoicePageCancelledNotReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"
+  },
+  "invoicePageCancelledReplaced": "Annullata · sostituita da {number}",
+  "@invoicePageCancelledReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake and replaced",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageClose": "Chiudi",
   "@invoicePageClose": {
     "description": "#3587 R1-d closes the side panel"
@@ -8964,6 +8981,10 @@
   "invoicePageMoreHold": "Sospendi i solleciti",
   "@invoicePageMoreHold": {
     "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreIssueReplacement": "Emettere la fattura sostitutiva",
+  "@invoicePageMoreIssueReplacement": {
+    "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
   },
   "invoicePageMoreQuickView": "Vedi il PDF",
   "@invoicePageMoreQuickView": {
@@ -9083,6 +9104,24 @@
   "invoicePageRefund": "Registra il rimborso",
   "@invoicePageRefund": {
     "description": "#3587 R1-d bottom bar on a credit note"
+  },
+  "invoicePageRemainderWrittenOff": "Chiusa · resto di {amount} stralciato",
+  "@invoicePageRemainderWrittenOff": {
+    "description": "#3587 R1-d summary of an invoice whose remainder was written off",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageReminders": "Solleciti ({count})",
+  "@invoicePageReminders": {
+    "description": "#3587 R1-d the collapsed reminder history under the story",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoicePageShareReminder": "Condividi il sollecito {level}",
   "@invoicePageShareReminder": {

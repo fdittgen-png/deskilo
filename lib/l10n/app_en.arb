@@ -18535,6 +18535,23 @@
       }
     }
   },
+  "invoicePageApprovals": "Approvals of the payment",
+  "@invoicePageApprovals": {
+    "description": "#3587 R1-d the collapsed validation trail under the story"
+  },
+  "invoicePageCancelledNotReplaced": "Cancelled as issued by mistake · not replaced yet",
+  "@invoicePageCancelledNotReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"
+  },
+  "invoicePageCancelledReplaced": "Cancelled · replaced by {number}",
+  "@invoicePageCancelledReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake and replaced",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageClose": "Close",
   "@invoicePageClose": {
     "description": "#3587 R1-d closes the side panel"
@@ -18594,6 +18611,10 @@
   "invoicePageMoreHold": "Hold reminders",
   "@invoicePageMoreHold": {
     "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreIssueReplacement": "Issue the replacement",
+  "@invoicePageMoreIssueReplacement": {
+    "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
   },
   "invoicePageMoreQuickView": "View the PDF",
   "@invoicePageMoreQuickView": {
@@ -18713,6 +18734,24 @@
   "invoicePageRefund": "Record the refund",
   "@invoicePageRefund": {
     "description": "#3587 R1-d bottom bar on a credit note"
+  },
+  "invoicePageRemainderWrittenOff": "Closed · remainder of {amount} written off",
+  "@invoicePageRemainderWrittenOff": {
+    "description": "#3587 R1-d summary of an invoice whose remainder was written off",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageReminders": "Reminders ({count})",
+  "@invoicePageReminders": {
+    "description": "#3587 R1-d the collapsed reminder history under the story",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoicePageShareReminder": "Share reminder {level}",
   "@invoicePageShareReminder": {

@@ -467,12 +467,11 @@ void main() {
     }
 
     await openInvoice(tester, 'inv-1');
-    // #3587 gap: the page says the invoice is cancelled, not which
-    // invoice replaced it (the detail sheet said "Replaced by …").
+    // The summary says which invoice replaced it, and opens it.
     expect(
       find.descendant(
-        of: find.byKey(const ValueKey('invoice-page-summary')),
-        matching: find.text('Cancelled'),
+        of: find.byKey(const ValueKey('invoice-page-replaced-by')),
+        matching: find.textContaining('replaced by'),
       ),
       findsOneWidget,
     );
@@ -901,11 +900,8 @@ void main() {
   });
 
   testWidgets(
-      'PROFORMA (0072): the Open card re-sends the issued invoice as a '
-      'payment request, and its actions are ICONS so nothing clips',
-      skip: true, // #3587 gap: no surface of the new home re-sends an
-      // issued invoice as a proforma (the Open card was its only door).
-      (tester) async {
+      'PROFORMA (0072): an issued invoice is re-sent as a payment request '
+      'from its page (More)', (tester) async {
     final shared = <String>[];
     final money = await seededMoney(matched: false);
     await pumpInvoices(
@@ -914,29 +910,12 @@ void main() {
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add(fileName);
-              return FileShareOutcome.sent;
+        return FileShareOutcome.sent;
       },
     );
     final invoice = money.invoices.single;
-
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
-
-    // Field report: three localized labels side by side ran off the card.
-    // One named verb at most; the others stay icons.
-    expect(find.text('Send a reminder'), findsNothing);
-    expect(find.text('Mark as paid'), findsOneWidget);
-    for (final action in ['void-open', 'proforma', 'remind', 'match']) {
-      expect(
-        find.byKey(ValueKey('invoice-$action-${invoice.id}')),
-        findsOneWidget,
-        reason: '$action must stay reachable as an icon',
-      );
-    }
-
-    await tester
-        .tap(find.byKey(ValueKey('invoice-proforma-${invoice.id}')));
-    await tester.pumpAndSettle();
+    await openInvoice(tester, invoice.id);
+    await invoicePageMore(tester, 'invoice-more-proforma');
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('proforma-share')));
       await tester.pump();

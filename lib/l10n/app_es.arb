@@ -8905,6 +8905,23 @@
       }
     }
   },
+  "invoicePageApprovals": "Aprobaciones del pago",
+  "@invoicePageApprovals": {
+    "description": "#3587 R1-d the collapsed validation trail under the story"
+  },
+  "invoicePageCancelledNotReplaced": "Anulada por emitirse por error · aún sin sustituir",
+  "@invoicePageCancelledNotReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"
+  },
+  "invoicePageCancelledReplaced": "Anulada · sustituida por {number}",
+  "@invoicePageCancelledReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake and replaced",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePageClose": "Cerrar",
   "@invoicePageClose": {
     "description": "#3587 R1-d closes the side panel"
@@ -8964,6 +8981,10 @@
   "invoicePageMoreHold": "Pausar los recordatorios",
   "@invoicePageMoreHold": {
     "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreIssueReplacement": "Emitir la factura sustitutiva",
+  "@invoicePageMoreIssueReplacement": {
+    "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
   },
   "invoicePageMoreQuickView": "Ver el PDF",
   "@invoicePageMoreQuickView": {
@@ -9083,6 +9104,24 @@
   "invoicePageRefund": "Registrar el reembolso",
   "@invoicePageRefund": {
     "description": "#3587 R1-d bottom bar on a credit note"
+  },
+  "invoicePageRemainderWrittenOff": "Cerrada · resto de {amount} dado por perdido",
+  "@invoicePageRemainderWrittenOff": {
+    "description": "#3587 R1-d summary of an invoice whose remainder was written off",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageReminders": "Recordatorios ({count})",
+  "@invoicePageReminders": {
+    "description": "#3587 R1-d the collapsed reminder history under the story",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoicePageShareReminder": "Compartir el recordatorio {level}",
   "@invoicePageShareReminder": {

@@ -14159,6 +14159,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovals => 'Freigaben der Zahlung';
+
+  @override
+  String get invoicePageCancelledNotReplaced =>
+      'Als irrtümlich ausgestellt storniert · noch nicht ersetzt';
+
+  @override
+  String invoicePageCancelledReplaced(String number) {
+    return 'Storniert · ersetzt durch $number';
+  }
+
+  @override
   String get invoicePageClose => 'Schließen';
 
   @override
@@ -14206,6 +14218,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicePageMoreHold => 'Mahnungen anhalten';
+
+  @override
+  String get invoicePageMoreIssueReplacement => 'Ersatzrechnung ausstellen';
 
   @override
   String get invoicePageMoreQuickView => 'PDF ansehen';
@@ -14291,6 +14306,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicePageRefund => 'Erstattung erfassen';
+
+  @override
+  String invoicePageRemainderWrittenOff(String amount) {
+    return 'Abgeschlossen · Rest von $amount abgeschrieben';
+  }
+
+  @override
+  String invoicePageReminders(int count) {
+    return 'Mahnungen ($count)';
+  }
 
   @override
   String invoicePageShareReminder(int level) {

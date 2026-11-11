@@ -40,12 +40,8 @@ void main() {
     await expectLater(money.remindInvoice(invoice.id), throwsStateError);
 
     await _openOpenInvoice(tester, invoice.id);
-    // The page says the reminders are held (#3587 gap: it does not name
-    // the hold's reason, which the detail sheet did).
-    expect(
-      find.text('On hold: no reminder goes out until you release it'),
-      findsOneWidget,
-    );
+    // The page's "now" line says the reminders are held, and why.
+    expect(find.textContaining('Reminders on hold:'), findsOneWidget);
     await openInvoicePageMore(tester);
     expect(find.text('Release the hold'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('invoice-more-hold')));
@@ -54,8 +50,6 @@ void main() {
   });
 
   testWidgets('a due date nobody agreed to says reminders wait for review',
-      skip: true, // #3587 gap: the invoice page does not say that no payment
-      // term was agreed; the detail sheet it replaced did.
       (
     tester,
   ) async {
@@ -67,8 +61,12 @@ void main() {
     final Invoice invoice = money.invoices.single;
     await pumpInvoices(tester, money: money);
     await _openOpenInvoice(tester, invoice.id);
+    // A quiet line in the summary, under the due date.
     expect(
-      find.textContaining('No agreed payment term was recorded'),
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-page-term-note')),
+        matching: find.textContaining('No agreed payment term was recorded'),
+      ),
       findsOneWidget,
     );
   });

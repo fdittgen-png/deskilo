@@ -62,9 +62,6 @@ void main() {
 
   testWidgets('the invoice document shows the ordered trail and what is '
       'still owed',
-      skip: true, // #3587 gap: the invoice page shows no validation trail
-      // (who released the match, who is still owed); the detail sheet it
-      // replaced for issuers did.
       (tester) async {
     final r = await _governedMatch(tester);
     final eventId = r.money.invoiceMatchesStore[r.id]!.eventId!;
@@ -78,6 +75,11 @@ void main() {
     ));
 
     await openInvoice(tester, r.id);
+    // Who released the payment sits collapsed under the story.
+    final approvals = find.byKey(const ValueKey('invoice-page-approvals'));
+    await tester.ensureVisible(approvals);
+    await tester.tap(approvals);
+    await tester.pumpAndSettle();
 
     expect(find.byType(ValidationTrail), findsOneWidget);
     expect(find.text('Validation trail'), findsOneWidget);

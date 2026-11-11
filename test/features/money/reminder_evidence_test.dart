@@ -82,15 +82,17 @@ void main() {
 
   testWidgets('a reminder sent by hand shows in the sheet as the sender\'s '
       'statement, and the history refreshes on demand',
-      skip: true, // #3587 gap: the invoice page has no reminder history
-      // (the evidence per attempt and its refresh); the detail sheet it
-      // replaced for issuers did.
       (tester) async {
     final money = await seededMoney(matched: false);
     final invoice = money.invoices.single;
     await money.remindInvoice(invoice.id);
     await pumpInvoices(tester, money: money);
     await openInvoice(tester, invoice.id);
+    // The history sits collapsed under the story; it opens in place.
+    final reminders = find.byKey(const ValueKey('invoice-page-reminders'));
+    await tester.ensureVisible(reminders);
+    await tester.tap(reminders);
+    await tester.pumpAndSettle();
 
     final history = find.byKey(const ValueKey('invoice-reminder-evidence'));
     await tester.ensureVisible(history);

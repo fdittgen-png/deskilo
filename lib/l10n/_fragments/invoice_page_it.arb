@@ -96,5 +96,17 @@
   "invoicePageConfirmedAwaitsApproval": "Pagamento confermato. L’abbinamento attende una seconda approvazione.",
   "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
   "invoicePageMatchRefused": "Il pagamento non è stato abbinato a questa fattura.",
-  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"}
+  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"},
+  "invoicePageReminders": "Solleciti ({count})",
+  "@invoicePageReminders": {"description": "#3587 R1-d the collapsed reminder history under the story", "placeholders": {"count": {"type": "int"}}},
+  "invoicePageApprovals": "Approvazioni del pagamento",
+  "@invoicePageApprovals": {"description": "#3587 R1-d the collapsed validation trail under the story"},
+  "invoicePageCancelledReplaced": "Annullata · sostituita da {number}",
+  "@invoicePageCancelledReplaced": {"description": "#3587 R1-d summary of an invoice issued by mistake and replaced", "placeholders": {"number": {"type": "String"}}},
+  "invoicePageCancelledNotReplaced": "Annullata perché emessa per errore · non ancora sostituita",
+  "@invoicePageCancelledNotReplaced": {"description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"},
+  "invoicePageRemainderWrittenOff": "Chiusa · resto di {amount} stralciato",
+  "@invoicePageRemainderWrittenOff": {"description": "#3587 R1-d summary of an invoice whose remainder was written off", "placeholders": {"amount": {"type": "String"}}},
+  "invoicePageMoreIssueReplacement": "Emettere la fattura sostitutiva",
+  "@invoicePageMoreIssueReplacement": {"description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"}
 }

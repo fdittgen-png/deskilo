@@ -8,10 +8,12 @@
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
+import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
 import 'package:deskilo/features/money/presentation/widgets/invoice_journey_view.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/reminder_evidence_providers.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,6 +55,16 @@ final _late = _invoice('0063', due: DateTime(2026, 9, 21));
 final _declared = _invoice('0071', due: DateTime(2026, 10, 12), total: 42000);
 final _paid = _invoice('0058', due: DateTime(2026, 10, 15), total: 64000);
 
+/// Issued by mistake and replaced by 0051.
+final _cancelled = _invoice(
+  '0050',
+  due: DateTime(2026, 10),
+).copyWith(voidedAt: DateTime(2026, 9, 20));
+final _replacement = _invoice(
+  '0051',
+  due: DateTime(2026, 10, 5),
+).copyWith(replacesInvoiceId: '0050', replacesNumber: '2026-0050');
+
 /// The declared payment is the customer's own pending event on 0071.
 const _declaredFacts = (
   journey: (
@@ -70,8 +82,8 @@ Future<void> _pump(
   required double width,
   required bool dark,
   required double scale,
-  Future<String?> Function(WidgetRef, String, {required bool accept})?
-  decision,
+  bool held = false,
+  Future<String?> Function(WidgetRef, String, {required bool accept})? decision,
 }) async {
   await pumpApp(
     tester,
@@ -83,7 +95,9 @@ Future<void> _pump(
     ),
     overrides: [
       clockProvider.overrideWithValue(FixedClock(_now)),
-      invoicesProvider.overrideWith((ref) async => [_late, _declared, _paid]),
+      invoicesProvider.overrideWith(
+        (ref) async => [_late, _declared, _paid, _cancelled, _replacement],
+      ),
       invoiceMatchesProvider.overrideWith(
         (ref) async => {
           '0058': InvoiceMatch(
@@ -97,11 +111,24 @@ Future<void> _pump(
       invoiceRemindersProvider.overrideWith(
         (ref) async => {'0063': (count: 1, last: DateTime(2026, 9, 28))},
       ),
-      dunningRulesProvider.overrideWith(
-        (ref) async => const DunningRules(),
+      dunningRulesProvider.overrideWith((ref) async => const DunningRules()),
+      dunningHoldsProvider.overrideWith(
+        (ref) async => held ? const {"0063": "dispute"} : const {},
       ),
-      dunningHoldsProvider.overrideWith((ref) async => const {}),
       invoiceTransmissionsProvider.overrideWith((ref) async => const {}),
+      // One reminder shared by hand on 0063, as its history shows it.
+      reminderEvidenceProvider.overrideWith(
+        (ref, invoiceId) async => [
+          if (invoiceId == '0063')
+            ReminderEvidence(
+              intentId: 'r-1',
+              level: 1,
+              origin: 'share',
+              status: 'sent',
+              preparedAt: DateTime(2026, 9, 28),
+            ),
+        ],
+      ),
       if (decision != null)
         declaredPaymentDecisionProvider.overrideWithValue(decision),
       invoiceEventFactsProvider.overrideWithValue(
@@ -190,4 +217,65 @@ void main() {
       findsOneWidget,
     );
   });
+
+  // #3587 -- the three states the coordinator reads on one sheet: on hold
+  // with its reason, cancelled and replaced, the reminders opened.
+  for (final (state, id, held) in [
+    ('on-hold', '0063', true),
+    ('cancelled-replaced', '0050', false),
+    ('reminders-opened', '0063', false),
+  ]) {
+    testWidgets('the invoice page · $state', (tester) async {
+      await loadSheetFonts();
+      final semantics = tester.ensureSemantics();
+      final problems = <String, Set<String>>{};
+      for (final dark in [false, true]) {
+        for (final scale in guardScales) {
+          for (final width in guardWidths) {
+            await _pump(
+              tester,
+              id,
+              width: width,
+              dark: dark,
+              scale: scale,
+              held: held,
+            );
+            if (state == 'reminders-opened') {
+              await tester.tap(
+                find.byKey(const ValueKey('invoice-page-reminders')),
+              );
+              await tester.pumpAndSettle();
+            }
+            final tag = '$width px, ×$scale, ${dark ? 'dark' : 'light'}';
+            for (final p in guardProblems(tester, width: width)) {
+              problems.putIfAbsent(p, () => {}).add(tag);
+            }
+            if (scale == 1.0 && width != 320) {
+              await writeSheet(
+                tester,
+                sheet: 'invoice_page',
+                name: '$state--${width.toInt()}--${dark ? 'dark' : 'light'}',
+              );
+            }
+          }
+        }
+      }
+      switch (state) {
+        case 'on-hold':
+          expect(find.textContaining('Reminders on hold:'), findsOneWidget);
+        case 'cancelled-replaced':
+          expect(
+            find.byKey(const ValueKey('invoice-page-replaced-by')),
+            findsOne,
+          );
+        case _:
+          expect(
+            find.byKey(const ValueKey('invoice-reminder-evidence')),
+            findsOne,
+          );
+      }
+      semantics.dispose();
+      expect(problems, isEmpty);
+    });
+  }
 }

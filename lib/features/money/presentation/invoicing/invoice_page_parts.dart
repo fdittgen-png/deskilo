@@ -19,6 +19,7 @@ import '../../application/receivables.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../invoice_proforma.dart';
 import '../report_strings_l10n.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
 import 'invoicing_words.dart';
@@ -47,11 +48,19 @@ class InvoiceSummaryCard extends StatelessWidget {
     required this.invoice,
     required this.receivable,
     required this.today,
+    this.termNote,
+    this.closure,
   });
 
   final Invoice invoice;
   final Receivable receivable;
   final DateTime today;
+
+  /// A quiet line under the due date: no payment term was agreed.
+  final String? termNote;
+
+  /// How a cancelled invoice ended, in place of the open amount's line.
+  final Widget? closure;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +86,11 @@ class InvoiceSummaryCard extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                paid ? total : money.formatMinor(r.openMinor),
+                // What is still open while it is owed (or a refund owed); the
+                // document's total once its story has ended.
+                r.isOutstanding || r.stage == ReceivableStage.refundOwed
+                    ? money.formatMinor(r.openMinor)
+                    : total,
                 style: theme.textTheme.headlineMedium?.emphasised.copyWith(
                   fontFeatures: const [FontFeature.tabularFigures()],
                 ),
@@ -88,17 +101,27 @@ class InvoiceSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            paid
-                ? l.invoicePagePaidInFull
-                : due == null
-                ? l.invoicePageOpenOfUndated(total)
-                : l.invoicePageOpenOf(
-                    total,
-                    format.dates(DateShape.monthDay).format(due),
-                  ),
-            style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
-          ),
+          ?closure,
+          if (closure == null)
+            Text(
+              paid
+                  ? l.invoicePagePaidInFull
+                  : due == null
+                  ? l.invoicePageOpenOfUndated(total)
+                  : l.invoicePageOpenOf(
+                      total,
+                      format.dates(DateShape.monthDay).format(due),
+                    ),
+              style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+            ),
+          if (termNote case final note?)
+            Text(
+              note,
+              key: const ValueKey('invoice-page-term-note'),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
         ],
       ),
     );
@@ -199,10 +222,15 @@ class InvoiceMoreMenu extends ConsumerWidget {
     super.key,
     required this.invoice,
     required this.receivable,
+    this.awaitsReplacement = false,
   });
 
   final Invoice invoice;
   final Receivable? receivable;
+
+  /// Cancelled as issued by mistake and not replaced yet: the replacement
+  /// can still be issued.
+  final bool awaitsReplacement;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -263,6 +291,14 @@ class InvoiceMoreMenu extends ConsumerWidget {
             invoice,
           ),
         ),
+      // An issued invoice re-sent as a payment request; the document does
+      // not change.
+      if (outstanding)
+        (
+          'invoice-more-proforma',
+          l.invoiceProformaAction,
+          () => shareProforma(context, ref, invoice),
+        ),
       if (outstanding) ...[
         ('invoice-more-reminders', l.invoicePageMoreReminders, null),
         (
@@ -276,8 +312,19 @@ class InvoiceMoreMenu extends ConsumerWidget {
           ),
         ),
       ],
-      if (open || partly) ...[
+      if (open || partly || awaitsReplacement) ...[
         ('invoice-more-corrections', l.invoicePageMoreCorrections, null),
+        if (awaitsReplacement)
+          (
+            'invoice-more-issue-replacement',
+            l.invoicePageMoreIssueReplacement,
+            () => InvoicePageActions.run(
+              context,
+              ref,
+              sheet.InvoiceAction.replace,
+              invoice,
+            ),
+          ),
         if (open) ...[
           (
             'invoice-more-replace',

@@ -23290,6 +23290,24 @@ abstract class AppLocalizations {
   /// **'{days} days'**
   String invoiceOpenAge(int days);
 
+  /// #3587 R1-d the collapsed validation trail under the story
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals of the payment'**
+  String get invoicePageApprovals;
+
+  /// #3587 R1-d summary of an invoice issued by mistake, no replacement yet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled as issued by mistake · not replaced yet'**
+  String get invoicePageCancelledNotReplaced;
+
+  /// #3587 R1-d summary of an invoice issued by mistake and replaced
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled · replaced by {number}'**
+  String invoicePageCancelledReplaced(String number);
+
   /// #3587 R1-d closes the side panel
   ///
   /// In en, this message translates to:
@@ -23379,6 +23397,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hold reminders'**
   String get invoicePageMoreHold;
+
+  /// #3587 R1-d More: corrections, an invoice cancelled as issued by mistake
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the replacement'**
+  String get invoicePageMoreIssueReplacement;
 
   /// #3587 R1-d More: document
   ///
@@ -23523,6 +23547,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Record the refund'**
   String get invoicePageRefund;
+
+  /// #3587 R1-d summary of an invoice whose remainder was written off
+  ///
+  /// In en, this message translates to:
+  /// **'Closed · remainder of {amount} written off'**
+  String invoicePageRemainderWrittenOff(String amount);
+
+  /// #3587 R1-d the collapsed reminder history under the story
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders ({count})'**
+  String invoicePageReminders(int count);
 
   /// #3587 R1-d bottom bar
   ///

@@ -96,5 +96,17 @@
   "invoicePageConfirmedAwaitsApproval": "Payment confirmed. The match waits for a second approval.",
   "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
   "invoicePageMatchRefused": "The payment could not be matched to this invoice.",
-  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"}
+  "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"},
+  "invoicePageReminders": "Reminders ({count})",
+  "@invoicePageReminders": {"description": "#3587 R1-d the collapsed reminder history under the story", "placeholders": {"count": {"type": "int"}}},
+  "invoicePageApprovals": "Approvals of the payment",
+  "@invoicePageApprovals": {"description": "#3587 R1-d the collapsed validation trail under the story"},
+  "invoicePageCancelledReplaced": "Cancelled · replaced by {number}",
+  "@invoicePageCancelledReplaced": {"description": "#3587 R1-d summary of an invoice issued by mistake and replaced", "placeholders": {"number": {"type": "String"}}},
+  "invoicePageCancelledNotReplaced": "Cancelled as issued by mistake · not replaced yet",
+  "@invoicePageCancelledNotReplaced": {"description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"},
+  "invoicePageRemainderWrittenOff": "Closed · remainder of {amount} written off",
+  "@invoicePageRemainderWrittenOff": {"description": "#3587 R1-d summary of an invoice whose remainder was written off", "placeholders": {"amount": {"type": "String"}}},
+  "invoicePageMoreIssueReplacement": "Issue the replacement",
+  "@invoicePageMoreIssueReplacement": {"description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"}
 }

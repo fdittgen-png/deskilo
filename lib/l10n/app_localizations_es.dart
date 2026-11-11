@@ -14132,6 +14132,18 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovals => 'Aprobaciones del pago';
+
+  @override
+  String get invoicePageCancelledNotReplaced =>
+      'Anulada por emitirse por error · aún sin sustituir';
+
+  @override
+  String invoicePageCancelledReplaced(String number) {
+    return 'Anulada · sustituida por $number';
+  }
+
+  @override
   String get invoicePageClose => 'Cerrar';
 
   @override
@@ -14178,6 +14190,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoicePageMoreHold => 'Pausar los recordatorios';
+
+  @override
+  String get invoicePageMoreIssueReplacement => 'Emitir la factura sustitutiva';
 
   @override
   String get invoicePageMoreQuickView => 'Ver el PDF';
@@ -14261,6 +14276,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoicePageRefund => 'Registrar el reembolso';
+
+  @override
+  String invoicePageRemainderWrittenOff(String amount) {
+    return 'Cerrada · resto de $amount dado por perdido';
+  }
+
+  @override
+  String invoicePageReminders(int count) {
+    return 'Recordatorios ($count)';
+  }
 
   @override
   String invoicePageShareReminder(int level) {
