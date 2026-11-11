@@ -62,6 +62,27 @@ class InvoicePage extends ConsumerWidget {
   /// Set when the page is a panel beside the list: its close button.
   final VoidCallback? onClose;
 
+  /// The page before its invoice is read, or once it cannot be: a way out.
+  Widget _waiting(BuildContext context, {required bool unreadable}) => Scaffold(
+    key: ValueKey('invoice-page-$invoiceId'),
+    appBar: AppBar(
+      automaticallyImplyLeading: false,
+      actions: [_closeButton(context)],
+    ),
+    body: unreadable
+        ? Center(
+            child: Padding(
+              padding: AppSpacing.mdAll,
+              child: Text(
+                context.l10n.invoicePageUnreadable,
+                key: const ValueKey('invoice-page-unreadable'),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        : const LoadingView(),
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
@@ -74,25 +95,9 @@ class InvoicePage extends ConsumerWidget {
     if (invoice == null || !matchRead.hasValue && !matchRead.hasError) {
       // Still loading, or no longer readable: either way the page keeps a
       // way out.
-      final unreadable = invoice == null && (read.hasError || invoices != null);
-      return Scaffold(
-        key: ValueKey('invoice-page-$invoiceId'),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          actions: [_closeButton(context)],
-        ),
-        body: unreadable
-            ? Center(
-                child: Padding(
-                  padding: AppSpacing.mdAll,
-                  child: Text(
-                    l.invoicePageUnreadable,
-                    key: const ValueKey('invoice-page-unreadable'),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
-            : const LoadingView(),
+      return _waiting(
+        context,
+        unreadable: invoice == null && (read.hasError || invoices != null),
       );
     }
     final receivables = ref.watch(invoicingReaderProvider).read([invoice]);
