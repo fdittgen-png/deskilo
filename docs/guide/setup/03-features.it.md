@@ -403,7 +403,7 @@ Vuole un unico punto che dica, per le funzionalità principali, che cosa ricevon
 | **Foto dei membri sulla piantina** | Le foto degli occupanti sui posti. | | Nessuno |
 | **Lessico dello spazio** | Le parole proprie dello spazio per alcune etichette. | | Proprietario |
 | **Colori dello spazio** | Il colore del marchio e i colori delle sale. | | Proprietario |
-| **Scheda pubblica dello spazio** | Una pagina pubblica con ciò che sceglie di mostrare. | | Proprietario |
+| **Scheda pubblica dello spazio** | Una pagina pubblica con ciò che sceglie di mostrare, e dove si trova sulla mappa. | | Proprietario |
 
 *Prenotazioni e utilizzo*
 

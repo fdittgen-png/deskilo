@@ -63,5 +63,15 @@
   "spacePreviewPrivacy": "Wenn Sie anfragen, sieht dieser Betrieb Ihren Namen und Ihr Foto. Als Mitglied sehen seine Administratoren die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.",
   "spaceRunByCompany": "Betrieben von einem Unternehmen",
   "spaceRunByAssociation": "Betrieben von einem Verein",
-  "spaceRunByPerson": "Betrieben von einer Privatperson"
+  "spaceRunByPerson": "Betrieben von einer Privatperson",
+  "portalPlaceTitle": "Wo Sie auf der Karte sind",
+  "portalPlaceNone": "Kein Ort gespeichert: die Karte eines Besuchers sucht die Adresse.",
+  "portalPlaceAt": "Markierung bei {latitude}, {longitude}",
+  "portalPlaceFind": "Adresse auf der Karte finden",
+  "portalPlaceFound": "Gefunden: {place}. Übernehmen Sie ihn oder tippen Sie auf die Karte, um die Markierung zu versetzen.",
+  "portalPlaceUse": "Diesen Ort übernehmen",
+  "portalPlaceNotFound": "Für diese Adresse wurde kein Ort gefunden. Prüfen Sie die Adresse und versuchen Sie es erneut.",
+  "portalPlaceFailed": "Der Kartendienst hat nicht geantwortet. Versuchen Sie es erneut.",
+  "portalPlaceRemove": "Ort entfernen",
+  "portalPlaceTapToMove": "Tippen Sie auf die Karte, um die Markierung zu versetzen."
 }

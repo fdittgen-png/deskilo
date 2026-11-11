@@ -21590,6 +21590,44 @@ class AppLocalizationsFr extends AppLocalizations {
   String get portalPhone => 'Téléphone public';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Repère à $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed =>
+      'Le service de carte n\'a pas répondu. Réessayez.';
+
+  @override
+  String get portalPlaceFind => 'Trouver l\'adresse sur la carte';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Trouvé : $place. Utilisez-le, ou touchez la carte pour déplacer le repère.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'Aucun lieu enregistré : la carte d\'un visiteur recherche l\'adresse.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'Aucun lieu trouvé pour cette adresse. Vérifiez l\'adresse et réessayez.';
+
+  @override
+  String get portalPlaceRemove => 'Retirer le lieu';
+
+  @override
+  String get portalPlaceTapToMove =>
+      'Touchez la carte pour déplacer le repère.';
+
+  @override
+  String get portalPlaceTitle => 'Où vous êtes sur la carte';
+
+  @override
+  String get portalPlaceUse => 'Utiliser ce lieu';
+
+  @override
   String get portalPlans => 'Formules et tarifs';
 
   @override
@@ -28771,7 +28809,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'Ce que les personnes extérieures à l\'espace peuvent voir.';
+      'Ce que les personnes extérieures à l\'espace peuvent voir, y compris où vous êtes sur la carte.';
 
   @override
   String get setupStepHintPurchases =>

@@ -47,7 +47,7 @@
   "setupStepHintLease": "Le loyer et les charges que l'espace paie.",
   "setupStepHintAssets": "Ce que l'espace possède et comment cela se déprécie.",
   "setupStepHintLook": "Les couleurs de l'espace et ses propres mots.",
-  "setupStepHintPublicPage": "Ce que les personnes extérieures à l'espace peuvent voir.",
+  "setupStepHintPublicPage": "Ce que les personnes extérieures à l'espace peuvent voir, y compris où vous êtes sur la carte.",
   "setupStepHintLegalIdentity": "Les mentions que chaque facture doit porter.",
   "setupStepHintVat": "Les taux que vous appliquez et vos déclarations.",
   "setupStepHintNumbering": "Comment les numéros de facture sont construits.",

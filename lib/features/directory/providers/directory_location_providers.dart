@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:flutter_map/flutter_map.dart' show TileProvider;
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,6 +24,11 @@ DirectoryGeocoder directoryGeocoder(Ref ref) {
     endpoint: Uri.parse(ref.watch(mapServicesProvider).geocoder),
   );
 }
+
+/// #3689 -- the tiles of a map outside Discover (the public-page editor's
+/// pin): null is the network; a test gives its own.
+@Riverpod(keepAlive: true)
+TileProvider? mapTileProvider(Ref ref) => null;
 
 /// #3684 -- the places found on this device, so a second visit asks the
 /// geocoder nothing again.

@@ -11,10 +11,12 @@ import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'directory_pages.dart';
+import 'public_page_place.dart';
 import 'public_workspace_view.dart';
 
 class PublicPageEditor extends ConsumerStatefulWidget {
@@ -36,6 +38,9 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
   /// #2086 — the inherited fields that still follow the workspace
   /// information; editing one makes it the owner's override.
   Set<String> _following = {};
+
+  /// #3689 — the stored place, kept in the draft so every save carries it.
+  DirectoryLocation? _place;
   @override
   void dispose() {
     for (final c in _controllers.values) {
@@ -66,6 +71,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             _controllers[field]!.text = doc[field] as String? ?? '';
           }
           _host = doc['host_type'] as String? ?? 'association';
+          _place = publicPlaceOf(doc);
           _published = page['published'] == true;
           _following = publicFollowing(page);
           _loaded = true;
@@ -101,6 +107,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             'host_type': _host,
             for (final entry in _controllers.entries)
               entry.key: entry.value.text.trim(),
+            ...publicPlaceFields(_place),
           },
           following: _following,
           published: _published,
@@ -221,6 +228,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       _failed = false;
       _loading = false;
       _busy = false;
+      _place = null;
       for (final c in _controllers.values) {
         c.clear();
       }
@@ -316,6 +324,16 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                       ],
                     ),
                   ),
+                ValueListenableBuilder(
+                  valueListenable: _controllers['address']!,
+                  builder: (context, address, _) => PublicPagePlace(
+                    place: _place,
+                    address: address.text,
+                    scope: (_workspace, _account),
+                    enabled: !_busy,
+                    onChanged: (p) => setState(() => _place = p),
+                  ),
+                ),
                 Padding(
                   padding: AppSpacing.smAll,
                   child: OutlinedButton(

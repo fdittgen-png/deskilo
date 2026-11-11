@@ -191,7 +191,7 @@
   "@setupStepHintLook": {
     "description": "#3485 setupStepHint: the label for case 'look'."
   },
-  "setupStepHintPublicPage": "What people outside the space can see.",
+  "setupStepHintPublicPage": "What people outside the space can see, including where you are on the map.",
   "@setupStepHintPublicPage": {
     "description": "#3485 setupStepHint: the label for case 'public_page'."
   },
