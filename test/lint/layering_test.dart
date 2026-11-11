@@ -140,6 +140,9 @@ const Set<String> _knownPairs = {
   // #2553 C4: My reservations shows the guest visits as their own kind,
   // read through the visits' own producer and card (a lower layer).
   'reservations -> visits',
+  // #3284: the booking review shows the half-days left this month, read
+  // through money's own statement producer (money never reads bookings).
+  'reservations -> money',
   'members -> reservations',
   'members -> workspace',
   'money -> events',

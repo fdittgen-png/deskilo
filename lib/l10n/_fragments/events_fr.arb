@@ -50,11 +50,11 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "reservationDeleteRequestButton": "Demander la suppression",
+  "reservationDeleteRequestButton": "Demander l'annulation",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n'a-t-elle jamais été utilisée (elle est supprimée) ?",
+  "reservationDeleteRequestExplain": "Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n'a-t-elle jamais été utilisée (elle est supprimée) ? En attendant leur décision, la réservation reste inchangée ; rien n'est remboursé ni supprimé automatiquement.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },

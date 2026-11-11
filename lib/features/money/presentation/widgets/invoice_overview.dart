@@ -210,12 +210,13 @@ class InvoiceSummaryCard extends ConsumerWidget {
                     ),
                   ],
                   const SizedBox(height: AppSpacing.sm),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  // #3285 — both actions stay whole on a phone: they wrap.
+                  Wrap(
+                    alignment: WrapAlignment.end,
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.xs,
                     children: [
                       ?howItWorks,
-                      if (howItWorks != null)
-                        const SizedBox(width: AppSpacing.sm),
                       FilledButton.icon(
                         key: const ValueKey('money-summary-pay'),
                         onPressed: () => ref
