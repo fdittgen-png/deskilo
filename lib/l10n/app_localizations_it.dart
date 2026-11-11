@@ -10869,6 +10869,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureRegionalFormatsTitle => 'Regione e formati';
 
   @override
+  String get featureReminderEmailDesc =>
+      'Un sollecito di pagamento può partire anche via e-mail, dal server, con il mittente della sua attività, nella lingua dei documenti del cliente. Ogni livello parte una sola volta; la risposta del fornitore è conservata con il sollecito. Disattivato: i solleciti arrivano solo nel feed e come notifica.';
+
+  @override
+  String get featureReminderEmailTitle => 'Solleciti via e-mail';
+
+  @override
   String get featureReportDesignExchangeDesc =>
       'Ogni modello di report può essere scritto in un file che si descrive da sé e riletto. Il file porta il modello e inoltre il significato dei campi, il markup ammesso e i segnaposto esistenti, così una persona o uno strumento può modificarlo fuori dall’app e restituirlo. Un file di un altro report, o di una versione più recente, viene rifiutato con la motivazione. Disattivato: i modelli si modificano solo nell’editor.';
 

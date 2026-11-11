@@ -10886,6 +10886,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureRegionalFormatsTitle => 'Region & Formate';
 
   @override
+  String get featureReminderEmailDesc =>
+      'Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung.';
+
+  @override
+  String get featureReminderEmailTitle => 'Mahnungen per E-Mail';
+
+  @override
   String get featureReportDesignExchangeDesc =>
       'Jede Berichtsvorlage lässt sich als eine selbsterklärende Datei ausgeben und wieder einlesen. Die Datei enthält die Vorlage sowie die Bedeutung ihrer Felder, das erlaubte Markup und die vorhandenen Platzhalter — so kann sie außerhalb der App bearbeitet und zurückgegeben werden. Eine Datei für einen anderen Bericht oder aus einer neueren Version wird mit Begründung abgelehnt. Aus: Vorlagen sind nur im Designer änderbar.';
 

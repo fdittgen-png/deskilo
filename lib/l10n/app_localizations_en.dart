@@ -10794,6 +10794,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureRegionalFormatsTitle => 'Region & formats';
 
   @override
+  String get featureReminderEmailDesc =>
+      'A payment reminder can also be sent by e-mail, from the server, with your business\'s own sender, in the customer\'s document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only.';
+
+  @override
+  String get featureReminderEmailTitle => 'Reminders by e-mail';
+
+  @override
   String get featureReportDesignExchangeDesc =>
       'Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.';
 

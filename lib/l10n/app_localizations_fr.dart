@@ -10896,6 +10896,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureRegionalFormatsTitle => 'Région et formats';
 
   @override
+  String get featureReminderEmailDesc =>
+      'Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l\'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n\'arrivent que dans le fil et par notification.';
+
+  @override
+  String get featureReminderEmailTitle => 'Relances par e-mail';
+
+  @override
   String get featureReportDesignExchangeDesc =>
       'Chaque maquette de rapport peut être écrite dans un fichier qui se décrit lui-même, puis relue. Le fichier contient la maquette ainsi que le sens de ses champs, le balisage accepté et les variables disponibles : une personne ou un outil peut donc l\'éditer hors de l\'application et la rendre. Un fichier destiné à un autre rapport, ou issu d\'une version plus récente, est refusé avec sa raison. Désactivé : les maquettes ne se modifient que dans l\'éditeur.';
 

@@ -10868,6 +10868,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureRegionalFormatsTitle => 'Región y formatos';
 
   @override
+  String get featureReminderEmailDesc =>
+      'Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación.';
+
+  @override
+  String get featureReminderEmailTitle =>
+      'Recordatorios por correo electrónico';
+
+  @override
   String get featureReportDesignExchangeDesc =>
       'Cada diseño de informe puede escribirse en un archivo que se explica a sí mismo y volver a leerse. El archivo lleva el diseño y además qué significan sus campos, qué marcado admite y qué variables existen, así una persona o una herramienta puede editarlo fuera de la app y devolverlo. Un archivo de otro informe, o de una versión más nueva, se rechaza con el motivo. Desactivado: los diseños solo se editan en el editor.';
 
