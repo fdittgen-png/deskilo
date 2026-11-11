@@ -365,3 +365,15 @@ class _InvoiceDetailBody extends ConsumerWidget {
   }
 
 }
+
+/// #3587 — who released an invoice's payment, in what order and when: the
+/// validation trail of its match, for the invoice page.
+class InvoiceApprovals extends StatelessWidget {
+  const InvoiceApprovals({super.key, required this.eventId});
+
+  /// The event that governs the match.
+  final String eventId;
+
+  @override
+  Widget build(BuildContext context) => EventValidationTrail(eventId: eventId);
+}

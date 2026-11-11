@@ -13,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices;
+import '../../helpers/screens/invoices.dart' show invoicePageMore, openInvoice, pumpInvoices;
 
 /// Two invoices of one member, regrouped into a third.
 Future<
@@ -55,12 +55,11 @@ Future<
   return (money: money, a: a, b: b, settlement: settlement, plain: plain);
 }
 
-/// #3587 — an issuer downloads from the invoice's sheet, opened from the
-/// home's Paid and closed list.
+/// #3587 R1-d — an issuer downloads from the invoice page's More, opened
+/// from the home's Paid and closed list.
 Future<void> _download(WidgetTester tester, String id) async {
   await openInvoice(tester, id);
-  await tester.tap(find.byKey(ValueKey('invoice-download-$id')));
-  await tester.pumpAndSettle();
+  await invoicePageMore(tester, 'invoice-more-download');
 }
 
 /// An admin who reads every invoice but does not issue: the archive (with

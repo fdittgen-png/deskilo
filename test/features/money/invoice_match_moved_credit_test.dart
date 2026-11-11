@@ -27,10 +27,11 @@ class _MovedMeanwhile extends FakeMoneyRepository {
   );
 }
 
-/// #3587 — the match dialog from the invoice's sheet, opened on the home.
+/// #3587 R1-d — the match dialog from the invoice page's bottom bar,
+/// opened on the home.
 Future<void> _openMatch(WidgetTester tester, String invoiceId) async {
   await openInvoice(tester, invoiceId);
-  await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
+  await tester.tap(find.byKey(const ValueKey('invoice-page-match')));
   await tester.pumpAndSettle();
 }
 
@@ -53,6 +54,7 @@ void main() {
       tester,
       money: money,
       creditMoves: moves,
+      events: registeredPayment('member-1', invoice.totalCents),
     );
 
     await _openMatch(tester, invoice.id);
@@ -74,7 +76,11 @@ void main() {
       period: currentTestPeriod(),
     );
     final pay = money.seedPayment('member-1', money.invoices.single.totalCents);
-    await pumpInvoices(tester, money: money);
+    await pumpInvoices(
+      tester,
+      money: money,
+      events: registeredPayment('member-1', money.invoices.single.totalCents),
+    );
 
     await _openMatch(tester, id);
     await tester.tap(find.byKey(ValueKey('invoice-match-payment-$pay')));

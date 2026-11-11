@@ -12,8 +12,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/screens/invoice_writeoff.dart' show partialMatch;
 import '../../helpers/screens/invoices.dart' show
+        closeInvoicePage,
+        invoicePageMore,
         openInvoice,
+        openInvoicePageMore,
         pumpInvoices,
+        registeredPayment,
         seededMoney,
         showInvoicesByInvoice,
         showPaidInvoices;
@@ -67,13 +71,16 @@ void main() {
     expect(row, findsOneWidget);
     expect(find.descendant(of: row, matching: find.textContaining('Partly paid')),
         findsOneWidget);
-    // #506 — further payments stay matchable against the remainder;
-    // voiding stays off (the invoice is matched and definitive).
+    // Cancelling and replacing stay off (the invoice is matched and
+    // definitive); the page's More offers the write-off (#3587 R1-d).
     await openInvoice(tester, invoice.id);
-    expect(find.byKey(const ValueKey('invoice-match-action')), findsOneWidget);
-    expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
+    await openInvoicePageMore(tester);
+    expect(find.byKey(const ValueKey('invoice-more-writeoff')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-more-cancel')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-more-replace')), findsNothing);
     await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
+    await closeInvoicePage(tester);
 
     // The closed list does NOT hold it.
     await showPaidInvoices(tester);
@@ -81,12 +88,46 @@ void main() {
   });
 
   testWidgets(
-      'the write-off request: the dialog explains the validation, the '
-      'pending chip replaces the button (#504)',
-      skip: true, // #3587 gap: the home and the invoice's sheet offer no
-      // write-off request; the Open card was its door (the wizard's
-      // payments step still has one, behind its flag).
-      (tester) async {});
+      'a further payment registered on a PARTIALLY PAID invoice is matched '
+      'from its page (#506)', (tester) async {
+    final money = await seededMoney(matched: false);
+    final invoice = money.invoices.single;
+    money.invoiceMatchesStore[invoice.id] = partialMatch(invoice.id);
+    await pumpInvoices(
+      tester,
+      money: money,
+      events: registeredPayment('member-1', 5000),
+    );
+
+    // #3587 R1-d — the page's bottom bar matches it against the remainder.
+    await openInvoice(tester, invoice.id);
+    expect(find.text('A payment is on the account: match it'), findsOneWidget);
+    expect(
+      tester.widget(find.byKey(const ValueKey('invoice-page-match'))),
+      isA<FilledButton>(),
+    );
+  });
+
+  testWidgets(
+      'the write-off request: the dialog explains the validation and the '
+      'request is filed (#504)', (tester) async {
+    final money = await seededMoney(matched: false);
+    final invoice = money.invoices.single;
+    money.invoiceMatchesStore[invoice.id] = partialMatch(invoice.id);
+    await pumpInvoices(tester, money: money);
+
+    // #3587 R1-d — the invoice page's More → Write off the rest.
+    await openInvoice(tester, invoice.id);
+    await invoicePageMore(tester, 'invoice-more-writeoff');
+    expect(find.textContaining('validators confirm'), findsOneWidget);
+    await tester.enterText(
+      find.byKey(const ValueKey('invoice-writeoff-reason')),
+      'member left the association',
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-writeoff-submit')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Write-off requested'), findsOneWidget);
+  });
 
   testWidgets(
       'once the write-off is VALIDATED the invoice moves to the closed list '
@@ -102,11 +143,19 @@ void main() {
     final row = find.byKey(ValueKey('invoicing-row-${invoice.id}'));
     expect(row, findsNothing);
 
-    // ...but on the closed one, and its sheet says how it closed.
+    // ...but on the closed one, and its page says it is closed: cancelled,
+    // nothing left to chase (#3587 R1-d).
     await showPaidInvoices(tester);
     expect(row, findsOneWidget);
     await openInvoice(tester, invoice.id);
-    expect(find.textContaining('emainder cancelled'), findsWidgets);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-page-summary')),
+        matching: find.text('Cancelled'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('invoice-page-match')), findsNothing);
   });
 
 }

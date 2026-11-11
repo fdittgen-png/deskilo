@@ -384,3 +384,21 @@ final invoiceEventFactsProvider =
         );
       },
     );
+
+/// #3587 — the decision on a customer's declared payment (Confirm / Not
+/// received), handed to the invoicing screens through the journey that
+/// already reads the event feed. It answers null on success, else the
+/// server's words after reading the feed again.
+final declaredPaymentDecisionProvider =
+    Provider<
+      Future<String?> Function(WidgetRef ref, String eventId, {required bool accept})
+    >(
+      (_) =>
+          (ref, eventId, {required accept}) async {
+            final refused = await decideEvent(ref, eventId, accept: accept);
+            // Refused (decided by someone else, or gone): read the feed
+            // again, so the page shows the true state, not a stale Confirm.
+            if (refused != null) ref.invalidate(eventsProvider);
+            return refused;
+          },
+    );

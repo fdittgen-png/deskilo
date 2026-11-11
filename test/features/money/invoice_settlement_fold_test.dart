@@ -23,7 +23,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/invoices.dart'
-    show openInvoice, pumpInvoices, showInvoicesByInvoice;
+    show openInvoice, openInvoicePageMore, pumpInvoices, showInvoicesByInvoice;
 import '../../helpers/test_workspace_context.dart';
 
 /// Two open invoices of member-1 regrouped into one.
@@ -132,13 +132,17 @@ void main() {
         findsOneWidget);
     expect(find.byKey(ValueKey('invoicing-row-${s.a}')), findsNothing);
     expect(find.byKey(ValueKey('invoicing-row-${s.b}')), findsNothing);
-    // A source is on the closed list; its sheet says where it went and
-    // keeps the PDF, never a reminder or a match.
+    // A source is on the closed list; its page (#3587 R1-d) says where it
+    // went and keeps the PDF, never a reminder, a match or a correction.
     await openInvoice(tester, s.a);
     expect(find.textContaining('Regrouped in INV-2026-9999'), findsWidgets);
-    expect(find.byKey(ValueKey('invoice-download-${s.a}')), findsOneWidget);
-    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
-    expect(find.byKey(const ValueKey('invoice-match-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-page-remind')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-page-match')), findsNothing);
+    await openInvoicePageMore(tester);
+    expect(find.byKey(const ValueKey('invoice-more-download')), findsOneWidget);
+    expect(find.byKey(const ValueKey('invoice-more-hold')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-more-replace')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-more-cancel')), findsNothing);
   });
 
   testWidgets('with the flag off the sources stay peers', (tester) async {

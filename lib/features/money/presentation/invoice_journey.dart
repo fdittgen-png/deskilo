@@ -169,9 +169,10 @@ InvoiceJourneyFacts journeyFactsOf(
 
 /// The customer's own pending payment declaration on [invoice]'s member
 /// (the latest one): the event that Confirm and Not received decide, and the
-/// day the customer says they paid (else the day they said so). Payment
+/// day the customer says they paid (else the day they said so) and the
+/// amount they say they paid. Payment
 /// events are per member, not per invoice, as [journeyFactsOf] reads them.
-({String eventId, DateTime paidOn})? declarationOf(
+({String eventId, DateTime paidOn, int amountCents})? declarationOf(
   Invoice invoice,
   Iterable<WorkspaceEvent> events,
 ) {
@@ -187,7 +188,11 @@ InvoiceJourneyFacts journeyFactsOf(
   }
   if (latest == null) return null;
   final paidOn = DateTime.tryParse(latest.payload['paid_on'] as String? ?? '');
-  return (eventId: latest.id, paidOn: paidOn ?? latest.createdAt);
+  return (
+    eventId: latest.id,
+    paidOn: paidOn ?? latest.createdAt,
+    amountCents: (latest.payload['amount_cents'] as num?)?.toInt() ?? 0,
+  );
 }
 
 /// The journey of one invoice: its lifecycle, the state of each step, the

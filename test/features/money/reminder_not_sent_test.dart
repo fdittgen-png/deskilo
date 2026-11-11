@@ -78,12 +78,13 @@ void main() {
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();
-    // #3587 — the reminder is sent from the invoice's sheet.
+    // #3587 R1-d — the reminder is shared from the invoice page's bottom
+    // bar (the invoice is overdue, so it is the page's main action).
     await openInvoice(tester, id);
 
     // The PDF build does real async work, like the journey test.
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
+      await tester.tap(find.byKey(const ValueKey('invoice-page-remind')));
       await tester.pumpAndSettle();
     });
     await tester.pumpAndSettle();

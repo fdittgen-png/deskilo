@@ -14033,6 +14033,207 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovals => 'Approvals of the payment';
+
+  @override
+  String get invoicePageCancelledNotReplaced =>
+      'Cancelled as issued by mistake · not replaced yet';
+
+  @override
+  String invoicePageCancelledReplaced(String number) {
+    return 'Cancelled · replaced by $number';
+  }
+
+  @override
+  String get invoicePageClose => 'Close';
+
+  @override
+  String get invoicePageConfirm => 'Confirm payment';
+
+  @override
+  String get invoicePageConfirmed => 'Payment confirmed.';
+
+  @override
+  String get invoicePageConfirmedAwaitsApproval =>
+      'Payment confirmed. The match waits for a second approval.';
+
+  @override
+  String get invoicePageConfirmedMatched =>
+      'Payment confirmed and matched to this invoice.';
+
+  @override
+  String get invoicePageInvoiced => 'Invoiced';
+
+  @override
+  String get invoicePageMarkedNotReceived => 'Marked as not received.';
+
+  @override
+  String get invoicePageMatch => 'Match the payment';
+
+  @override
+  String get invoicePageMatchRefused =>
+      'The payment could not be matched to this invoice.';
+
+  @override
+  String get invoicePageMoreCancel => 'Cancel this invoice, issued by mistake';
+
+  @override
+  String get invoicePageMoreCorrections => 'Corrections';
+
+  @override
+  String get invoicePageMoreDocument => 'Document';
+
+  @override
+  String get invoicePageMoreDownload => 'Download the PDF';
+
+  @override
+  String get invoicePageMoreEInvoice => 'E-invoice';
+
+  @override
+  String get invoicePageMoreHold => 'Hold reminders';
+
+  @override
+  String get invoicePageMoreIssueReplacement => 'Issue the replacement';
+
+  @override
+  String get invoicePageMoreQuickView => 'View the PDF';
+
+  @override
+  String get invoicePageMoreRelease => 'Release the hold';
+
+  @override
+  String get invoicePageMoreReminders => 'Reminders';
+
+  @override
+  String get invoicePageMoreReplace => 'Correct with a replacement';
+
+  @override
+  String get invoicePageMoreShare => 'Share the PDF';
+
+  @override
+  String get invoicePageMoreWriteOff => 'Write off the rest';
+
+  @override
+  String get invoicePageNotReceived => 'Not received';
+
+  @override
+  String get invoicePageNowApproval => 'Waits for a second approval';
+
+  @override
+  String get invoicePageNowCustomer => 'Waiting for the customer to confirm';
+
+  @override
+  String get invoicePageNowDeclared => 'Check your bank, then confirm';
+
+  @override
+  String invoicePageNowDue(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String get invoicePageNowEveryReminder =>
+      'Every reminder is sent. Call, hold or write off.';
+
+  @override
+  String get invoicePageNowHold =>
+      'On hold: no reminder goes out until you release it';
+
+  @override
+  String get invoicePageNowRefund => 'The business owes this refund';
+
+  @override
+  String get invoicePageNowRejected =>
+      'The e-invoice was rejected: fix it and send it again';
+
+  @override
+  String invoicePageNowReminder(int level) {
+    return 'Reminder $level is due';
+  }
+
+  @override
+  String get invoicePageNowToMatch => 'A payment is on the account: match it';
+
+  @override
+  String get invoicePageNowWaiting => 'Waiting for payment';
+
+  @override
+  String invoicePageOpenOf(String total, String date) {
+    return 'open of $total · due $date';
+  }
+
+  @override
+  String invoicePageOpenOfUndated(String total) {
+    return 'open of $total';
+  }
+
+  @override
+  String get invoicePagePaidInFull => 'Paid in full';
+
+  @override
+  String get invoicePagePdf => 'Invoice PDF';
+
+  @override
+  String get invoicePagePdfHint => 'as the customer received it';
+
+  @override
+  String get invoicePageRefund => 'Record the refund';
+
+  @override
+  String invoicePageRemainderWrittenOff(String amount) {
+    return 'Closed · remainder of $amount written off';
+  }
+
+  @override
+  String invoicePageReminders(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Reminders ($count)',
+      one: 'Reminders (1)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicePageShareReminder(int level) {
+    return 'Share reminder $level';
+  }
+
+  @override
+  String invoicePageStoryDeclared(String customer) {
+    return '$customer says it is paid';
+  }
+
+  @override
+  String get invoicePageStoryDue => 'Due date';
+
+  @override
+  String get invoicePageStoryIssued =>
+      'Issued · the customer sees it in their account';
+
+  @override
+  String get invoicePageStoryPaid => 'Paid';
+
+  @override
+  String invoicePageStoryReminder(int level) {
+    return 'Reminder $level sent';
+  }
+
+  @override
+  String invoicePageTitle(String number) {
+    return 'Invoice $number';
+  }
+
+  @override
+  String get invoicePageToday => 'Today';
+
+  @override
+  String get invoicePageView => 'View';
+
+  @override
+  String get invoicePageWhatHappened => 'What happened';
+
+  @override
   String get invoicePdfActivity => 'Bookings & payments';
 
   @override
@@ -22875,7 +23076,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String reminderHistoryLine(int level, String origin, String date) {
-    return 'Level $level · $origin · $date';
+    return 'Reminder $level · $origin · $date';
   }
 
   @override

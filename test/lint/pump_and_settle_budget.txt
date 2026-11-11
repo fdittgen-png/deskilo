@@ -53,7 +53,7 @@
 11 test/features/money/billing_v2_integration_test.dart
 10 test/features/money/book_chart_sheet_test.dart
 14 test/features/money/book_profile_sheet_test.dart
-24 test/features/money/einvoice_send_test.dart
+23 test/features/money/einvoice_send_test.dart
 17 test/features/money/expense_repartition_test.dart
 13 test/features/money/expense_schedule_test.dart
 11 test/features/money/finance_attention_test.dart
@@ -61,7 +61,7 @@
 11 test/features/money/invoice_journey_test.dart
 21 test/features/money/invoice_register_test.dart
 11 test/features/money/invoice_template_test.dart
-86 test/features/money/invoices_test.dart
+81 test/features/money/invoices_test.dart
 13 test/features/money/invoicing_navigation_ux_test.dart
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart
