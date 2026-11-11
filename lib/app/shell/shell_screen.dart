@@ -9,8 +9,7 @@ import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/events/providers/event_providers.dart';
-import '../../features/workspace/domain/workspace_feature.dart';
-import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/money/presentation/widgets/invoice_form_sheet.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'shell_app_bar.dart';
@@ -58,19 +57,30 @@ class ShellScreen extends ConsumerWidget {
     final attention = ref.watch(workspaceAttentionProvider);
     final calendarBadge =
         decisionSignalOnCalendar(features) ? pendingEvents : 0;
-    // #1306 — the one destination list the drawer renders too.
-    final visibleBranches =
-        visibleShellBranches(features, ref.watch(myPermissionsProvider));
+    // #1306 / #3551 — the one destination table the bar and the drawer
+    // render: a business with places keeps its branch list exactly; one
+    // without leads with Overview, Clients, Invoices, Messages.
+    final permissions = ref.watch(myPermissionsProvider);
+    final navs = shellNavFor(features, permissions);
+    final visibleBranches = [for (final n in navs) n.branch];
     // Unknown permissions (the membership did not load) hide nothing: the
     // hub itself explains what went wrong.
-    // #3550 — a business without places has no Reserve button.
-    final showReserve = features.contains(WorkspaceFeature.placeBooking) &&
-        (ref.watch(myMemberProvider).value == null ||
-            ref
-                .watch(myPermissionsProvider)
-                .contains(WorkspacePermission.makeReservations));
-    final selectedPosition =
-        visibleBranches.indexOf(navigationShell.currentIndex);
+    final center = shellCenterActionFor(
+      features,
+      permissions,
+      membershipKnown: ref.watch(myMemberProvider).value != null,
+    );
+    final newInvoice = center == ShellCenterAction.newInvoice;
+    final path = GoRouterState.of(context).uri.path;
+    final selectedPosition = navs.indexWhere(
+      (n) => n.selectedAt(branch: navigationShell.currentIndex, path: path),
+    );
+    void openNav(ShellNav nav) => nav.location != null
+        ? context.go(nav.location!)
+        : navigationShell.goBranch(
+            nav.branch,
+            initialLocation: nav.branch == navigationShell.currentIndex,
+          );
 
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
@@ -79,7 +89,7 @@ class ShellScreen extends ConsumerWidget {
         MediaQuery.textScalerOf(context).scale(100) <= 150;
     Widget navigation({bool permanent = false}) => ShellDrawer(
       permanent: permanent,
-      tabTitles: tabTitles, visibleBranches: visibleBranches,
+      tabTitles: tabTitles, visibleBranches: visibleBranches, navs: navs,
       currentIndex: navigationShell.currentIndex, pendingEvents: pendingEvents,
       onBranch: (branch) => navigationShell.goBranch(branch,
           initialLocation: branch == navigationShell.currentIndex),
@@ -91,7 +101,7 @@ class ShellScreen extends ConsumerWidget {
       // one progress, a real full-screen view. The web shell has no bar
       // to follow, and neither does a shell without one.
       appBar: ShellTitleBar(
-        collapsible: !webShell && visibleBranches.isNotEmpty,
+        collapsible: !webShell && navs.isNotEmpty,
         appBar: AppBar(
           // #1823 — the chip names the space; the tab sits under it.
           title: SpaceChip(
@@ -140,41 +150,57 @@ class ShellScreen extends ConsumerWidget {
       // back. With the bar showing this is false, so every tab lays out
       // exactly as it always did.
       extendBody: barHidden,
-      bottomNavigationBar: webShell || (visibleBranches.isEmpty && !showReserve)
+      bottomNavigationBar:
+          webShell || (navs.isEmpty && center == ShellCenterAction.none)
           ? null
           : ShellBottomBar(
-              // -1 when no side tab matches the active branch — on the
+              // -1 when no side tab matches what is on screen — on the
               // Reserve hub (the centre button carries the indication
               // instead) and for one redirect frame of a gated branch.
-              // Never coerce to 0: that painted Plan as selected while
-              // the hub was the loaded form.
               selectedIndex: selectedPosition,
-              showReserve: showReserve,
-              reserveSelected:
+              showReserve: center != ShellCenterAction.none,
+              reserveSelected: center == ShellCenterAction.reserve &&
                   navigationShell.currentIndex == ShellBranch.reserve,
-              onDestinationSelected: (position) => navigationShell.goBranch(
-                visibleBranches[position],
-                initialLocation:
-                    visibleBranches[position] == navigationShell.currentIndex,
-              ),
+              onDestinationSelected: (position) => openNav(navs[position]),
               destinations: [
-                for (final branch in visibleBranches)
-                  shellDestinationFor(
-                    branch,
-                    tabTitles: tabTitles,
-                    calendarBadge: calendarBadge,
-                    moneyBadge: attention.money,
-                    unreadMessages: unreadMessages,
-                  ),
+                for (final nav in navs)
+                  if (nav.id == 'overview')
+                    ShellDestination(
+                      icon: const Icon(Icons.space_dashboard_outlined),
+                      selectedIcon: const Icon(Icons.space_dashboard),
+                      label: l10n.overviewTitle,
+                    )
+                  else
+                    shellDestinationFor(
+                      nav.branch,
+                      tabTitles: tabTitles,
+                      calendarBadge: calendarBadge,
+                      moneyBadge: attention.money,
+                      unreadMessages: unreadMessages,
+                    ),
               ],
-              reserveLabel: lexiconText(context, key: 'shellReserveButton', fallback: l10n.shellReserveButton),
+              reserveLabel: newInvoice
+                  ? l10n.invoiceCreate
+                  : lexiconText(
+                      context,
+                      key: 'shellReserveButton',
+                      fallback: l10n.shellReserveButton,
+                    ),
+              centerIcon: newInvoice
+                  ? Icons.post_add_outlined
+                  : Icons.event_seat_outlined,
+              centerSelectedIcon:
+                  newInvoice ? Icons.post_add : Icons.event_seat,
               // A branch switch, not a push — the bar (and this button)
-              // stay visible and functional on the hub.
-              onReservePressed: () => navigationShell.goBranch(
-                ShellBranch.reserve,
-                initialLocation:
-                    navigationShell.currentIndex == ShellBranch.reserve,
-              ),
+              // stay visible and functional on the hub. #3551 — without
+              // places it opens the invoice form where the person is.
+              onReservePressed: newInvoice
+                  ? () => showInvoiceIssueSheet(context, ref)
+                  : () => navigationShell.goBranch(
+                      ShellBranch.reserve,
+                      initialLocation:
+                          navigationShell.currentIndex == ShellBranch.reserve,
+                    ),
             ),
     );
   }

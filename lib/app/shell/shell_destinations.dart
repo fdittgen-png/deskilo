@@ -65,6 +65,98 @@ List<int> visibleShellBranches(
         ShellBranch.money,
     ];
 
+/// #3551 — one destination of the bar and the menu: the branch that holds
+/// it and, where a branch holds two destinations, the location it opens and
+/// the paths it is selected on. Branch 0 holds both the overview and the
+/// messages of a business without places; each is selected by its location.
+class ShellNav {
+  const ShellNav(this.id, this.branch, {this.location});
+
+  /// Stable id: `overview`, `messages`, `calendar`, `directory`, `money`.
+  final String id;
+  final int branch;
+
+  /// The location a destination of a shared branch opens; null for a
+  /// destination that is its whole branch (opened with `goBranch`).
+  final String? location;
+
+  /// Whether this destination is the one on screen.
+  bool selectedAt({required int branch, required String path}) =>
+      location == null ? this.branch == branch : path.startsWith(location!);
+}
+
+const _branchIds = {
+  ShellBranch.messages: 'messages',
+  ShellBranch.calendar: 'calendar',
+  ShellBranch.directory: 'directory',
+  ShellBranch.money: 'money',
+};
+
+/// #3551 — THE destinations, in bar order. A business that books places
+/// keeps exactly the branch list of [visibleShellBranches]. One that books
+/// none leads with what it works with: Overview, Clients, Invoices,
+/// Messages, then the Calendar; Services stay inside Invoices (Sales).
+List<ShellNav> shellNavFor(
+  Set<WorkspaceFeature> features,
+  Set<WorkspacePermission> permissions,
+) {
+  final branches = visibleShellBranches(features, permissions);
+  if (features.contains(WorkspaceFeature.placeBooking)) {
+    return [for (final b in branches) ShellNav(_branchIds[b]!, b)];
+  }
+  return [
+    if (features.contains(WorkspaceFeature.workspaceOverview))
+      const ShellNav(
+        'overview',
+        ShellBranch.messages,
+        location: '/workspace-overview',
+      ),
+    if (branches.contains(ShellBranch.directory))
+      const ShellNav('directory', ShellBranch.directory),
+    if (branches.contains(ShellBranch.money))
+      const ShellNav('money', ShellBranch.money),
+    if (branches.contains(ShellBranch.messages))
+      const ShellNav('messages', ShellBranch.messages, location: '/messages'),
+    if (branches.contains(ShellBranch.calendar))
+      const ShellNav('calendar', ShellBranch.calendar),
+  ];
+}
+
+/// #3551 — what the raised centre button does.
+enum ShellCenterAction { reserve, newInvoice, none }
+
+/// The centre action: the booking where places are booked (for someone who
+/// may book, or while the membership is not known yet); without places, a
+/// new invoice where invoicing is on and the member may issue; else none.
+ShellCenterAction shellCenterActionFor(
+  Set<WorkspaceFeature> features,
+  Set<WorkspacePermission> permissions, {
+  bool membershipKnown = true,
+}) {
+  if (features.contains(WorkspaceFeature.placeBooking)) {
+    return !membershipKnown ||
+            permissions.contains(WorkspacePermission.makeReservations)
+        ? ShellCenterAction.reserve
+        : ShellCenterAction.none;
+  }
+  return features.contains(WorkspaceFeature.invoicing) &&
+          features.contains(WorkspaceFeature.moneyTab) &&
+          permissions.contains(WorkspacePermission.issueInvoices)
+      ? ShellCenterAction.newInvoice
+      : ShellCenterAction.none;
+}
+
+/// #3551 — where a workspace opens when nothing more specific was asked for:
+/// the floor plan of a business that books places; the overview (what needs
+/// the person, then the figures) of one that books none — a practice, a
+/// studio, a salon; the inbox when the overview is switched off too.
+String landingRouteFor(Set<WorkspaceFeature> features) =>
+    features.contains(WorkspaceFeature.placeBooking)
+        ? '/reserve'
+        : features.contains(WorkspaceFeature.workspaceOverview)
+        ? '/workspace-overview'
+        : '/messages';
+
 /// The icon a destination shows, outlined or filled when [selected] — one
 /// table for the bar and the drawer.
 IconData shellBranchIcon(int branch, {bool selected = false}) =>
