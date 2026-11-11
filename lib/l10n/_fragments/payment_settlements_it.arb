@@ -5,5 +5,11 @@
   "payConfigSettlementCostsChanged": "{settlement}: il fornitore ha modificato i costi dopo la registrazione. Nulla del nuovo resoconto è stato contabilizzato.",
   "payConfigSettlementAmountChanged": "{settlement}: il fornitore ha modificato l'importo dopo la registrazione. Nulla del nuovo resoconto è stato contabilizzato.",
   "payConfigSettlementCurrencyMismatch": "{settlement}: un costo è in una valuta diversa da quella della liquidazione. Nulla è stato contabilizzato.",
-  "payConfigSettlementsReviewUnreadable": "Non è stato possibile leggere le liquidazioni da verificare."
+  "payConfigSettlementsReviewUnreadable": "Non è stato possibile leggere le liquidazioni da verificare.",
+  "eventTypeSettlementReview": "Liquidazione da verificare",
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{il fornitore ha modificato i costi dopo la registrazione} amount_changed{il fornitore ha modificato l'importo dopo la registrazione} currency_mismatch{un costo è in una valuta diversa da quella della liquidazione} other{il resoconto differisce da quanto registrato}}. Nulla è stato contabilizzato; attende una verifica.",
+  "payConfigSettlementHandle": "Segna come gestito",
+  "payConfigSettlementHandleNote": "Cosa è stato fatto",
+  "payConfigSettlementHandledTitle": "Gestiti",
+  "payConfigSettlementHandledLine": "{sentence} Gestito: {note}"
 }

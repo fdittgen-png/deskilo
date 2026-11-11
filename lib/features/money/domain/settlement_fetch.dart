@@ -5,6 +5,7 @@
 // reports that wait for a person's review: a settlement the provider changed
 // after it was recorded, or a cost in another currency than its settlement.
 // The recorder refuses those and keeps them; nothing of them is booked.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// Why the recorder refused a settlement report.
 enum SettlementReviewReason {
@@ -21,10 +22,52 @@ enum SettlementReviewReason {
 
 /// A refused settlement report, kept for review.
 class SettlementReview {
-  const SettlementReview({required this.settlementId, required this.reason});
+  const SettlementReview({
+    required this.settlementId,
+    required this.reason,
+    this.id = '',
+    this.handledAt,
+    this.handledNote = '',
+  });
 
+  /// A row of `provider_settlement_reviews`; null when its reason is not one
+  /// this build knows.
+  static SettlementReview? fromRow(Object? row) {
+    final r = JsonReader.of(row, context: 'provider_settlement_reviews');
+    final reason = SettlementReviewReason.fromWire(r.raw('reason'));
+    if (reason == null) return null;
+    return SettlementReview(
+      id: r.stringOr('id'),
+      settlementId: r.stringOr('settlement_id'),
+      reason: reason,
+      handledAt: r.dateTimeOrNull('handled_at'),
+      handledNote: r.stringOr('handled_note'),
+    );
+  }
+
+  final String id;
   final String settlementId;
   final SettlementReviewReason reason;
+
+  /// #3510 — when a person marked it handled, and what they wrote; null and
+  /// '' while it waits.
+  final DateTime? handledAt;
+  final String handledNote;
+
+  bool get handled => handledAt != null;
+}
+
+/// The longest note a hand-off keeps (0722's check).
+const int settlementReviewNoteMax = 1000;
+
+/// #3510 — the settlement reports kept for review, waiting and handled, and
+/// the hand-off that ends one (billing managers of its own business).
+abstract interface class SettlementReviews {
+  /// The workspace's reviews, newest report first.
+  Future<List<SettlementReview>> fetchSettlementReviews(String workspaceId);
+
+  /// Marks [reviewId] handled with [note]; false when it was handled already.
+  Future<bool> markSettlementReviewHandled(String reviewId, String note);
 }
 
 class SettlementFetch {
@@ -32,7 +75,6 @@ class SettlementFetch {
     required this.imported,
     this.unchanged = 0,
     this.skipped = 0,
-    this.reviews = const [],
   });
 
   /// Settlements recorded for the first time.
@@ -43,8 +85,4 @@ class SettlementFetch {
 
   /// Settlements not paid or failed yet, or malformed.
   final int skipped;
-
-  /// Every report of this provider that waits for review, this fetch's
-  /// refusals included; null when they could not be read.
-  final List<SettlementReview>? reviews;
 }

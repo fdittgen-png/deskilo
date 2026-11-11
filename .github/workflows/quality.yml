@@ -1238,6 +1238,8 @@ jobs:
           bash scripts/hmrc_recovery_race.sh "$DB_URL"
           # #3346 — a payment credit is moved or matched, never both.
           bash scripts/credit_move_match_race.sh "$DB_URL"
+          # #3510 — two readers of one settlement: one books, the other answers unchanged.
+          bash scripts/settlement_record_race.sh "$DB_URL"
           # #3335 — one e-invoice dispatch owner under real concurrent claims.
           bash scripts/einvoice_claim_race.sh "$DB_URL"
           # #3336 — admission of new work and a capability state change serialise.

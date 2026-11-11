@@ -6,6 +6,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/demo/data/money/demo_settlement_reviews.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/settlement_fetch.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import '../../helpers/mock_providers.dart';
 Future<FakeMoneyRepository> pumpConfig(
   WidgetTester tester, {
   FakeMoneyRepository? money,
+  SettlementReviews? reviews,
 }) async {
   money ??= FakeMoneyRepository();
   await tester.binding.setSurfaceSize(const Size(800, 1600));
@@ -32,6 +34,7 @@ Future<FakeMoneyRepository> pumpConfig(
           featureFlags: const {'onlinePayments': true},
         ),
         money: money,
+        settlementReviews: reviews,
       ),
       child: const DeskiloApp(),
     ),
@@ -166,64 +169,73 @@ void main() {
     expect(find.text('1 payouts recorded'), findsOneWidget);
   });
 
-  testWidgets('#3510 a fetch lists the settlement reports waiting for '
-      'review, each with why; a failed read of them is said', (tester) async {
-    final money = _Settlements(const SettlementFetch(
-      imported: 0,
-      unchanged: 2,
-      reviews: [
-        SettlementReview(
-          settlementId: 'stl_3',
-          reason: SettlementReviewReason.costsChanged,
-        ),
-        SettlementReview(
-          settlementId: 'stl_9',
-          reason: SettlementReviewReason.currencyMismatch,
-        ),
-      ],
-    ))
+  testWidgets('#3510 the settlement reports waiting for review are listed '
+      'with why, without a fetch; one is marked handled with a note and '
+      'stays readable', (tester) async {
+    final reviews = DemoSettlementReviews();
+    final money = FakeMoneyRepository()
       ..paymentStatus[PaymentProvider.mollie] = const PaymentProviderStatus(
         configured: true,
         secretKeysSet: {'api_key'},
       );
-    await pumpConfig(tester, money: money);
-    final fetch = find.byKey(const ValueKey('payment-fetch-settlements'));
-    await tester.ensureVisible(fetch);
-    await tester.tap(fetch);
-    await tester.pumpAndSettle();
+    await pumpConfig(tester, money: money, reviews: reviews);
     expect(find.text('Settlement reports to review'), findsOneWidget);
-    expect(
-      find.text('stl_3: the provider changed its costs after it was '
-          'recorded. Nothing of the new report was booked.'),
-      findsOneWidget,
+    const why = 'stl_demo_0426: the provider changed its costs after it was '
+        'recorded. Nothing of the new report was booked.';
+    expect(find.text(why), findsOneWidget);
+    final handle = find.byKey(const ValueKey('settlement-review-handle-review-demo-1'));
+    await tester.ensureVisible(handle);
+    await tester.tap(handle);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    final confirm = find.byKey(const ValueKey('settlement-review-handle-confirm'));
+    expect(tester.widget<FilledButton>(confirm).onPressed, isNull,
+        reason: 'no hand-off without a note');
+    await tester.enterText(
+      find.byKey(const ValueKey('settlement-review-note')),
+      'Mollie corrected a fee; booked through a correction',
     );
-    expect(
-      find.text('stl_9: a cost is in another currency than the settlement. '
-          'Nothing of it was booked.'),
-      findsOneWidget,
-    );
-
-    money.answer = const SettlementFetch(imported: 0, reviews: null);
-    await tester.ensureVisible(fetch);
-    await tester.tap(fetch);
+    await tester.pump();
+    await tester.tap(confirm);
     await tester.pumpAndSettle();
+    expect(reviews.reviews.single.handled, isTrue);
+    expect(find.text('Settlement reports to review'), findsNothing);
+    expect(find.text('Handled'), findsOneWidget);
     expect(
-      find.byKey(const ValueKey('settlement-reviews-unreadable')),
+      find.text('$why Handled: Mollie corrected a fee; booked through a correction'),
       findsOneWidget,
     );
-    expect(find.text('Settlement reports to review'), findsNothing);
+  });
+
+  testWidgets('#3510 a failed read of the reviews is said, with Try again', (
+    tester,
+  ) async {
+    final reviews = _FailingReviews();
+    final money = FakeMoneyRepository()
+      ..paymentStatus[PaymentProvider.mollie] = const PaymentProviderStatus(
+        configured: true,
+        secretKeysSet: {'api_key'},
+      );
+    await pumpConfig(tester, money: money, reviews: reviews);
+    expect(find.byKey(const ValueKey('settlement-reviews-unreadable')), findsOneWidget);
+    reviews.fail = false;
+    final retry = find.byKey(const ValueKey('settlement-reviews-retry'));
+    await tester.ensureVisible(retry);
+    await tester.tap(retry);
+    await tester.pump();
+    await tester.pump();
+    expect(find.byKey(const ValueKey('settlement-reviews-unreadable')), findsNothing);
+    expect(find.text('Settlement reports to review'), findsOneWidget);
   });
 }
 
-/// The provider's settlements as one fetch answers them.
-class _Settlements extends FakeMoneyRepository {
-  _Settlements(this.answer);
-
-  SettlementFetch answer;
+/// The Demo's review, behind a read that fails until told otherwise.
+class _FailingReviews extends DemoSettlementReviews {
+  bool fail = true;
 
   @override
-  Future<SettlementFetch> fetchProviderSettlements(
-    String workspaceId,
-    PaymentProvider provider,
-  ) async => answer;
+  Future<List<SettlementReview>> fetchSettlementReviews(String workspaceId) async {
+    if (fail) throw Exception('offline');
+    return super.fetchSettlementReviews(workspaceId);
+  }
 }

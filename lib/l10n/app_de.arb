@@ -5967,6 +5967,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{Der Anbieter hat die Kosten nach der Erfassung geändert} amount_changed{Der Anbieter hat den Betrag nach der Erfassung geändert} currency_mismatch{Ein Kostenposten ist in einer anderen Währung als die Abrechnung} other{Die Meldung weicht vom Erfassten ab}}. Nichts davon wurde gebucht; sie wartet auf Prüfung.",
   "eventSourceNotFound": "Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.",
   "eventSystemDecider": "System",
   "eventTypeAdjustment": "Korrektur",
@@ -6026,6 +6027,7 @@
   },
   "eventTypeRoleChange": "Rollenwechsel",
   "eventTypeServiceCharge": "Leistung",
+  "eventTypeSettlementReview": "Zu prüfende Abrechnung",
   "eventTypeSpaceReservation": "Ganzraum-Reservierungen",
   "eventTypeSubscriptionChange": "Abonnementänderung",
   "@eventTypeSubscriptionChange": {
@@ -12682,6 +12684,10 @@
   "payConfigSettlementAmountChanged": "{settlement}: Der Anbieter hat den Betrag nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.",
   "payConfigSettlementCostsChanged": "{settlement}: Der Anbieter hat die Kosten nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.",
   "payConfigSettlementCurrencyMismatch": "{settlement}: Ein Kostenposten ist in einer anderen Währung als die Abrechnung. Nichts davon wurde gebucht.",
+  "payConfigSettlementHandle": "Als erledigt markieren",
+  "payConfigSettlementHandleNote": "Was getan wurde",
+  "payConfigSettlementHandledLine": "{sentence} Erledigt: {note}",
+  "payConfigSettlementHandledTitle": "Erledigt",
   "payConfigSettlementsFetch": "Auszahlungen abrufen",
   "payConfigSettlementsFetched": "{count} Auszahlungen erfasst",
   "payConfigSettlementsReviewTitle": "Zu prüfende Abrechnungsmeldungen",

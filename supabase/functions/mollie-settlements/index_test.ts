@@ -28,6 +28,7 @@ function fakes(opts: { may?: R; on?: R; config?: R; rpc?: R; reviews?: R } = {})
         select: () => chain,
         eq: () => chain,
         maybeSingle: () => Promise.resolve(opts.config ?? { data: { config: { api_key: "test_key" } }, error: null }),
+        is: () => chain,
         order: () => chain,
         limit: () => Promise.resolve(opts.reviews ?? { data: [], error: null }),
       };
