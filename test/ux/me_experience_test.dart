@@ -31,9 +31,7 @@ const List<double> _scales = [1.0, 1.3];
 /// What today's screens still do wrong: `<screen>|<state>` -> rule -> cells.
 /// Only falls (#3545).
 const Map<String, Map<String, int>> _known = {
-  'data|empty': {'target under 48 dp': 4},
-  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6},
-  'spaces|one source failed': {'a failed source is not said': 12},
+  'data|populated': {'overflow or exception': 2},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {
@@ -47,12 +45,17 @@ bool _isFilled(WidgetTester tester, Element element) {
 
 /// Every node of the semantics tree that can be tapped, with its size and
 /// whether it is named.
-List<({Size size, bool named})> _tappable(WidgetTester tester) {
+List<({Size size, bool named, bool scrolled})> _tappable(WidgetTester tester) {
   // ignore: deprecated_member_use
   final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
-  final out = <({Size size, bool named})>[];
-  void walk(SemanticsNode node) {
+  final out = <({Size size, bool named, bool scrolled})>[];
+  void walk(SemanticsNode node, {bool scrolled = false}) {
     final data = node.getSemanticsData();
+    // A tab strip that scrolls sideways clips the tabs at its edge: the
+    // semantics rect of a partly visible tab is the visible part, not the
+    // tab. Its width is not measured; its height still is.
+    final scrollsSideways = data.hasAction(SemanticsAction.scrollLeft) ||
+        data.hasAction(SemanticsAction.scrollRight);
     final tappable = data.hasAction(SemanticsAction.tap) &&
         !data.flagsCollection.isHidden &&
         !node.isInvisible;
@@ -66,13 +69,14 @@ List<({Size size, bool named})> _tappable(WidgetTester tester) {
     if (tappable && !insideNamedTap) {
       out.add((
         size: node.rect.size,
+        scrolled: scrolled,
         named: data.label.trim().isNotEmpty ||
             data.value.trim().isNotEmpty ||
             data.tooltip.trim().isNotEmpty,
       ));
     }
     node.visitChildren((child) {
-      walk(child);
+      walk(child, scrolled: scrolled || scrollsSideways);
       return true;
     });
   }
@@ -134,7 +138,8 @@ void main() {
                 flag('more than one filled button', tag);
               }
               for (final node in _tappable(tester)) {
-                if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
+                if ((!node.scrolled && node.size.width < 48 - 0.5) ||
+                    node.size.height < 48 - 0.5) {
                   flag('target under 48 dp', tag);
                 }
                 if (!node.named) flag('unnamed control', tag);
