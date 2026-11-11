@@ -8057,6 +8057,15 @@
   "@consentVersion": {
     "description": "Shown as the text in consent screen (profile), and 1 other place."
   },
+  "consentVersionNumber": "Version {version}",
+  "@consentVersionNumber": {
+    "description": "#3652 The version of a consent text or privacy notice, e.g. \"Version 3\".",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "consentWhatBody": "Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server's notice: who runs it, where the data is and who receives it.",
   "@consentWhatBody": {
     "description": "Shown as the text in privacy policy (core)."
@@ -19258,6 +19267,15 @@
   "@invoicePdfReplaces": {
     "description": "Label before the replaced invoice's number (row, sheet banner, PDF)"
   },
+  "invoicePdfReplacesNumber": "Replaces {number}",
+  "@invoicePdfReplacesNumber": {
+    "description": "#3652 Banner on a corrective invoice: the number of the invoice it replaces.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePdfReserved": "reserved",
   "@invoicePdfReserved": {
     "description": "PDF annex suffix on a booked-but-not-attended row"
@@ -28985,6 +29003,15 @@
   "@profilePhotoNone": {
     "description": "Subtitle of the Photo entry when the member has no photo yet."
   },
+  "profilePhotoRefused": "The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.",
+  "@profilePhotoRefused": {
+    "description": "#3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count.",
+    "placeholders": {
+      "megabytes": {
+        "type": "int"
+      }
+    }
+  },
   "profilePhotoRemove": "Remove photo",
   "@profilePhotoRemove": {
     "description": "Action in the photo sheet: delete the current profile photo."
@@ -31180,6 +31207,15 @@
   "@reminderPdfDaysOpen": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
+  "reminderPdfDaysOpenLine": "Open for {days} days",
+  "@reminderPdfDaysOpenLine": {
+    "description": "#3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
   "reminderPdfLevelLabel": "Reminder level",
   "@reminderPdfLevelLabel": {
     "description": "Mahnwesen / reminder letters (#472)"
@@ -31199,6 +31235,15 @@
   "reminderPdfTitleFriendly": "Payment reminder",
   "@reminderPdfTitleFriendly": {
     "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfTitleLevel": "Reminder {level}",
+  "@reminderPdfTitleLevel": {
+    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\". The number is a position, not a count.",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
   },
   "reminderQueueCheckFirst": "Check first: money received and not assigned",
   "@reminderQueueCheckFirst": {
@@ -31724,6 +31769,15 @@
   "reportDocPurchaseOrder": "Purchase order",
   "@reportDocPurchaseOrder": {
     "description": "#3307 purchase orders"
+  },
+  "reportDocPurchaseOrderTitle": "Purchase order {reference}",
+  "@reportDocPurchaseOrderTitle": {
+    "description": "#3652 Title of a printed purchase order, with its reference.",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
   },
   "reportDocSpaceCodes": "Space QR cards",
   "@reportDocSpaceCodes": {
@@ -40563,6 +40617,27 @@
   "@taxRefValidFrom": {
     "description": "#2477 tax reference: Field: first day a version is in force."
   },
+  "taxRefValidFromDate": "Valid from {date}",
+  "@taxRefValidFromDate": {
+    "description": "#3652 A tax reference value that is valid from a date, with no end.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "taxRefValidFromUntilDate": "Valid from {from} until {until}",
+  "@taxRefValidFromUntilDate": {
+    "description": "#3652 A tax reference value that is valid from one date until another.",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
   "taxRefValidUntil": "until",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."
@@ -42708,6 +42783,15 @@
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
   },
+  "vatSinceDate": "since {date}",
+  "@vatSinceDate": {
+    "description": "#3652 A VAT rate row: the date from which the rate applies.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "vatTaxPointEarlierOf": "On the invoice or the payment, whichever comes first",
   "@vatTaxPointEarlierOf": {
     "description": "#2355 vat tax point: vatTaxPointEarlierOf"
@@ -42786,6 +42870,15 @@
   "vatUntil": "until",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatUntilDate": "until {date}",
+  "@vatUntilDate": {
+    "description": "#3652 A VAT rate row: the date until which the rate applies.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "viesCheckExplainer": "VIES is the EU's register of VAT numbers. A valid answer, with its consultation number, is the evidence that this customer is a business; a reverse-charged invoice is issued only after one.",
   "@viesCheckExplainer": {

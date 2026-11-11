@@ -72,6 +72,12 @@ Future<void> _pickPhoto(
     _invalidateAvatar(ref, userId);
     if (!context.mounted) return;
     AppSnack.success(context, l10n.profilePhotoSaved);
+  } on ProfilePhotoRefused {
+    if (!context.mounted) return;
+    AppSnack.error(
+      context,
+      l10n.profilePhotoRefused(profilePhotoMaxMegabytes),
+    );
   } on Object catch (e, st) {
     debugPrint('profile photo upload failed: $e\n$st');
     TraceLogger.instance.error(

@@ -67,7 +67,7 @@ class PurchaseOrderPrint {
         docId: 'purchase_order',
         data: data,
       ),
-      title: '${l10n.reportDocPurchaseOrder} ${order.reference}',
+      title: l10n.reportDocPurchaseOrderTitle(order.reference),
     );
   }
 

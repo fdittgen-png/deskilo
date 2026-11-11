@@ -6083,6 +6083,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get consentVersion => 'Version';
 
   @override
+  String consentVersionNumber(String version) {
+    return 'Version $version';
+  }
+
+  @override
   String get consentWhatBody =>
       'Your account (e-mail, display name, hashed password), your profile as you fill it (photo, status, address, WhatsApp number — each optional), and what you do in a space: bookings and check-ins, messages, expenses and consumptions, your subscription, invoices and payments. All of it is stored on the server your space runs on: on the shared reference server, in the EU (Supabase, eu-central-1); on a server a community runs itself, wherever its operator chose. Settings → Privacy & data shows that server\'s notice: who runs it, where the data is and who receives it.';
 
@@ -14680,6 +14685,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePdfReplaces => 'Replaces';
 
   @override
+  String invoicePdfReplacesNumber(String number) {
+    return 'Replaces $number';
+  }
+
+  @override
   String get invoicePdfReserved => 'reserved';
 
   @override
@@ -21934,6 +21944,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profilePhotoNone => 'Tap to add a photo';
 
   @override
+  String profilePhotoRefused(int megabytes) {
+    return 'The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to $megabytes MB.';
+  }
+
+  @override
   String get profilePhotoRemove => 'Remove photo';
 
   @override
@@ -23595,6 +23610,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderPdfDaysOpen => 'Open for';
 
   @override
+  String reminderPdfDaysOpenLine(String days) {
+    return 'Open for $days days';
+  }
+
+  @override
   String get reminderPdfLevelLabel => 'Reminder level';
 
   @override
@@ -23610,6 +23630,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Payment reminder';
+
+  @override
+  String reminderPdfTitleLevel(int level) {
+    return 'Reminder $level';
+  }
 
   @override
   String get reminderQueueCheckFirst =>
@@ -24038,6 +24063,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportDocPurchaseOrder => 'Purchase order';
+
+  @override
+  String reportDocPurchaseOrderTitle(String reference) {
+    return 'Purchase order $reference';
+  }
 
   @override
   String get reportDocSpaceCodes => 'Space QR cards';
@@ -31005,6 +31035,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefValidFrom => 'Valid from';
 
   @override
+  String taxRefValidFromDate(String date) {
+    return 'Valid from $date';
+  }
+
+  @override
+  String taxRefValidFromUntilDate(String from, String until) {
+    return 'Valid from $from until $until';
+  }
+
+  @override
   String get taxRefValidUntil => 'until';
 
   @override
@@ -32740,6 +32780,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatSince => 'since';
 
   @override
+  String vatSinceDate(String date) {
+    return 'since $date';
+  }
+
+  @override
   String get vatTaxPointEarlierOf =>
       'On the invoice or the payment, whichever comes first';
 
@@ -32798,6 +32843,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatUntil => 'until';
+
+  @override
+  String vatUntilDate(String date) {
+    return 'until $date';
+  }
 
   @override
   String get viesCheckExplainer =>

@@ -268,9 +268,9 @@ class VatRateValidityLines extends StatelessWidget {
                 [
                   draft.label.text,
                   if (draft.validFrom != '1900-01-01')
-                    '${l10n.vatSince} ${draft.validFrom}',
-                  if (draft.validTo != null)
-                    '${l10n.vatUntil} ${draft.validTo}',
+                    l10n.vatSinceDate(draft.validFrom),
+                  if (draft.validTo case final until?)
+                    l10n.vatUntilDate(until),
                 ].join(' · '),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
