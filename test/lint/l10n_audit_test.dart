@@ -158,4 +158,25 @@ Widget build(BuildContext context) => Column(children: [
 ''';
     expect(auditSource('lib/y.dart', allowed), isEmpty);
   });
+
+  test('a string in a list-literal position is user-facing text (#3462)', () {
+    const planted = '''
+final doc = Archive(
+  readmeLines: [
+    'A sentence a reader will see, planted for this test.',
+    l10n.fromTheCatalogue,
+    'keep_this_key',
+  ],
+);
+''';
+    final found = auditSource('lib/z.dart', planted);
+    expect(found, hasLength(1));
+    expect(found.single.position, contains('list item'));
+    expect(found.single.line, 3);
+    // reverted: the same list through the catalogue is clean
+    expect(
+      auditSource('lib/z.dart', 'x(readmeLines: [l10n.a, l10n.b]);'),
+      isEmpty,
+    );
+  });
 }

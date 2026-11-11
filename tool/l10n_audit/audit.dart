@@ -32,6 +32,10 @@ const Map<String, String> uiPositions = {
   'title': 'title',
   'subtitle': 'subtitle',
   'confirmDismissLabel': 'dismiss label',
+  // #3462 -- positions that take a LIST of strings, read item by item.
+  'readmeLines': 'document lines',
+  'bullets': 'bullet list',
+  'paragraphs': 'paragraphs',
 };
 
 /// Widgets and calls whose next positional argument is displayed text.
@@ -90,6 +94,17 @@ final _neverShown = RegExp(
 /// new literal in one of these files fails the lint until somebody
 /// writes down why it belongs to the same class.
 const Map<String, ({int allowed, String reason})> classifiedLiterals = {
+  // #3462 -- the archive add-ons' README lines: a verbatim English document
+  // that cites the statute it rests on (ETA s.286, ITA s.230, § 146 AO); the
+  // file is written for the tax authority's reader, not the interface's.
+  'packages/deskilo_jurisdiction_ca/lib/src/ca_archive.dart': (
+    allowed: 5,
+    reason: 'a verbatim English README with its statutory citations',
+  ),
+  'packages/deskilo_jurisdiction_de/lib/src/de_archive.dart': (
+    allowed: 4,
+    reason: 'a verbatim English README with its statutory citations',
+  ),
   // #3429 — the FEC's journal names: the regulatory file states them in
   // French whatever language the reader uses (the DGFiP's file, not interface
   // text), so they are not translated.
@@ -218,6 +233,53 @@ String? _literalAt(String line, int start) {
   return null;
 }
 
+/// #3462 -- the string literals that are items of the list literal opening
+/// at [col] on [lines]`[row]` (`lines: ['a', 'b']`, wrapped or not): the
+/// positions `uiPositions` name accept a list as well as one string. Only
+/// the list's own items count; a literal inside a call or a nested list in
+/// it does not. Returns (line index, literal) pairs.
+List<(int, String)> _listItems(List<String> lines, int row, int col) {
+  final out = <(int, String)>[];
+  var depth = 0;
+  for (var r = row; r < lines.length && r < row + 60; r++) {
+    final line = lines[r];
+    var c = r == row ? col : 0;
+    while (c < line.length) {
+      final ch = line[c];
+      if (ch == '/' && c + 1 < line.length && line[c + 1] == '/') break;
+      if (ch == "'" || ch == '"') {
+        final raw = c > 0 && line[c - 1] == 'r';
+        final literal = _literalAt(line, c);
+        if (literal == null) return out;
+        if (depth == 1) {
+          // an item only when the list's comma or bracket precedes it
+          final before = line.substring(0, c).trimRight();
+          final item = before.isEmpty ||
+              before.endsWith(',') ||
+              before.endsWith('[') ||
+              (raw && before.endsWith('r'));
+          if (item) out.add((r, literal));
+        }
+        // skip past the literal's closing quote on this line
+        var end = c + 1;
+        while (end < line.length && line[end] != ch) {
+          if (line[end] == r'\\') end++;
+          end++;
+        }
+        c = end + 1;
+        continue;
+      }
+      if (ch == '[' || ch == '(' || ch == '{') depth++;
+      if (ch == ']' || ch == ')' || ch == '}') {
+        depth--;
+        if (depth == 0) return out;
+      }
+      c++;
+    }
+  }
+  return out;
+}
+
 /// True when the literal at [index] is the fallback of a `??`, on this
 /// line or continued from the previous one.
 bool _isFallback(String line, int index, String? previous) {
@@ -278,6 +340,25 @@ List<Finding> auditSource(String path, String source) {
       }
       if (at < text.length - 1 && text[at] == 'r') at++;
       if (at >= text.length) continue;
+      if (text[at] == '[' && !strict) {
+        for (final (itemRow, literal) in _listItems(lines, lineNo, at)) {
+          if (literal.trim().isEmpty ||
+              _localizedInterpolation.hasMatch(literal) ||
+              _onlyInterpolations(literal) ||
+              _technical.hasMatch(literal) ||
+              _colourCode.hasMatch(literal) ||
+              _placeholderOnly.hasMatch(literal)) {
+            continue;
+          }
+          out.add(Finding(
+            path: path,
+            line: itemRow + 1,
+            position: '$position (list item)',
+            literal: literal,
+          ));
+        }
+        continue;
+      }
       if (text[at] != "'" && text[at] != '"') continue;
       if (_isFallback(text, at, lineNo == 0 ? null : lines[lineNo - 1])) {
         continue;
