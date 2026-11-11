@@ -17,7 +17,8 @@ class TestMapRow {
 
 /// The patterns of generated files whose importers are not searched.
 List<String> readNoImporterSearch(File file) =>
-    ((jsonDecode(file.readAsStringSync()) as Map<String, dynamic>)['no_importer_search']
+    ((jsonDecode(file.readAsStringSync())
+                as Map<String, dynamic>)['no_importer_search']
             as List?)
         ?.cast<String>() ??
     const [];
@@ -98,7 +99,8 @@ List<String> affectedTests(
 
 /// Every `*_test.dart` under `test/` of [root], path -> content.
 Map<String, String> readTestSources(String root) => {
-  for (final f in Directory('$root/test').listSync(recursive: true))
-    if (f is File && f.path.endsWith('_test.dart'))
-      f.path.substring(root.length + 1): f.readAsStringSync(),
+  if (Directory('$root/test').existsSync())
+    for (final f in Directory('$root/test').listSync(recursive: true))
+      if (f is File && f.path.endsWith('_test.dart'))
+        f.path.substring(root.length + 1): f.readAsStringSync(),
 };

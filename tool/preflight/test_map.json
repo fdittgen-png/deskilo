@@ -10,7 +10,16 @@
       "tests": [
         "test/app/route_outcomes_golden_test.dart",
         "test/features/task_recorder/coverage_manifest_test.dart",
-        "test/lint/route_registry_test.dart"
+        "test/lint/route_registry_test.dart",
+        "test/lint/recorder_vocabulary_drift_test.dart"
+      ]
+    },
+    {
+      "patterns": [
+        "tool/**"
+      ],
+      "tests": [
+        "test/tool/"
       ]
     },
     {

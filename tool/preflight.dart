@@ -86,6 +86,14 @@ int run(List<String> args, {
 
 /// #3715 -- the tests the branch's diff drags in (the table plus importers).
 void _listTests(String root, Iterable<String> paths) {
+  // A tree without the table (a fixture, an older checkout) lists nothing and
+  // says so; the table's own lint keeps it present in this repository.
+  if (!File('$root/tool/preflight/test_map.json').existsSync()) {
+    stdout.writeln(
+      'tests to run: none listed (no tool/preflight/test_map.json)',
+    );
+    return;
+  }
   final tests = affectedTests(
     paths,
     readTestMap(File('$root/tool/preflight/test_map.json')),
