@@ -1027,6 +1027,7 @@ const Set<String> uiKeys = {
   'document-category',
   'document-delete-confirm',
   'document-language',
+  'document-language-choices',
   'document-language-option-follows',
   'document-library-button',
   'document-provider',
