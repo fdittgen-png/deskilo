@@ -10,14 +10,9 @@ import '../ui/adaptive/window_class.dart';
 
 part 'navigation_style.g.dart';
 
-/// The narrowest window, in logical pixels, whose menu keeps its
-/// destinations in a permanent sidebar instead of a drawer.
-/// #3602 — the workspace's navigation sits beside the content from the
-/// expanded window class (840) on: the bound is WindowClass's, defined once.
-const double kWideNavigationMinWidth = WindowClass.expandedMinWidth;
-
-/// Whether a window [width] keeps the permanent sidebar
-/// ([kWideNavigationMinWidth]): the one question "phone or desk?" asks.
+/// Whether a window [width] keeps the permanent sidebar instead of a drawer:
+/// the one question "phone or desk?" asks. #3602 — from the expanded window
+/// class on; the bound is WindowClass's, defined once.
 bool isWideNavigationWidth(double width) =>
     WindowClass.ofWidth(width).atLeast(WindowClass.expanded);
 

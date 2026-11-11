@@ -43,8 +43,10 @@ enum WindowClass {
 
   /// The class of the WINDOW [context] is shown in: its physical size over
   /// its pixel ratio, read from the view, so a framed `MediaQuery` (the
-  /// app's reading frame) does not change the answer.
+  /// app's reading frame) does not change the answer. The size dependency
+  /// rebuilds [context] on a resize: the view itself does not notify.
   static WindowClass of(BuildContext context) {
+    MediaQuery.maybeSizeOf(context);
     final view = View.of(context);
     return ofWidth(view.physicalSize.width / view.devicePixelRatio);
   }

@@ -6,9 +6,9 @@
 // lib/core/ui/adaptive/, every comparison of a width with a number — a
 // literal, or a numeric constant (local or anywhere in lib/) that is not
 // marked as a content fit. The count only falls; the message lists file:line.
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// The comparisons left after #3602, all of them content fits still to be
 /// named or window postures still to move. Never raise it.
@@ -90,7 +90,9 @@ List<int> windowComparisons(
   final lines = text.split('\n');
   for (var i = 0; i < lines.length; i++) {
     final line = lines[i];
-    if (line.trimLeft().startsWith('//') || line.contains('content-fit:')) {
+    if (line.trimLeft().startsWith('//') ||
+        line.contains('content-fit:') ||
+        (i > 0 && lines[i - 1].contains('content-fit:'))) {
       continue;
     }
     for (final m in _comparison.allMatches(line)) {
@@ -107,11 +109,8 @@ List<int> windowComparisons(
 }
 
 Map<String, String> _lib() => {
-  for (final f in Directory('lib').listSync(recursive: true).whereType<File>())
-    if (f.path.endsWith('.dart') &&
-        !f.path.endsWith('.g.dart') &&
-        !f.path.endsWith('.freezed.dart'))
-      f.path.replaceAll(r'\', '/'): f.readAsStringSync(),
+  for (final f in handWrittenDartFiles('lib'))
+    f.path.replaceAll(r'\', '/'): f.readAsStringSync(),
 };
 
 void main() {

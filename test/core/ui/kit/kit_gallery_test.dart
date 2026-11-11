@@ -43,7 +43,7 @@ class _GalleryState extends State<_Gallery> {
   @override
   Widget build(BuildContext context) {
     final t = PersonalTheme.of(context);
-    final wide = MediaQuery.sizeOf(context).width >= kWideNavigationMinWidth;
+    final wide = isWideNavigationWidth(MediaQuery.sizeOf(context).width);
     Color bar(StatusTone tone) =>
         statusColorsOf(t, tone, scheme: Theme.of(context).colorScheme).$2;
     final legend = [
