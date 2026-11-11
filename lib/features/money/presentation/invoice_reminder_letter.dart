@@ -38,8 +38,8 @@ import 'report_strings_l10n.dart';
 /// default: a reminder must never fail on a template.
 Future<({InvoiceReport report, String title, AppLocalizations l10n})>
 reminderLetterReport(
-  BuildContext context,
   WidgetRef ref,
+  BuildContext context,
   Invoice invoice, {
   required int level,
   required TaxReferenceSet reference,
@@ -49,8 +49,7 @@ reminderLetterReport(
   // preference → workspace language → country language).
   var language = '';
   try {
-    final members =
-        ref.read(workspaceMembersProvider).value ?? const [];
+    final members = ref.read(workspaceMembersProvider).value ?? const [];
     final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
     final userId = member?.userId;
     final profile = userId == null
@@ -58,20 +57,22 @@ reminderLetterReport(
         : ref.read(memberProfilesProvider).value?[userId];
     language = resolveMemberReportLanguage(
       ref,
-      memberLocale: member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
+      memberLocale:
+          member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
     );
   } on AmbiguousReportLanguage {
     language = '';
   }
-  final l10n = language.isEmpty
-      ? context.l10n
-      : l10nForLanguage(language);
+  final l10n = language.isEmpty ? context.l10n : l10nForLanguage(language);
   final title = level <= 1
       ? (l10n.reminderPdfTitleFriendly)
       : '${l10n.reminderPdfTitleFirm} $level';
   final data = reminderReportData(
-    reportStringsFor(context,
-        l10n: l10n, localeName: language.isEmpty ? null : language),
+    reportStringsFor(
+      context,
+      l10n: l10n,
+      localeName: language.isEmpty ? null : language,
+    ),
     reminderFactsOf(ref, invoice),
     invoice,
     level: level,
@@ -102,8 +103,8 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
   // Read before any await: the context is not used across a gap.
   final mark = developmentMark(context, ref);
   final letter = await reminderLetterReport(
-    context,
     ref,
+    context,
     invoice,
     level: level,
     reference: reference,

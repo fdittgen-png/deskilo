@@ -151,8 +151,8 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     Invoice invoice,
   ) async {
     final letter = await reminderLetterReport(
-      context,
       ref,
+      context,
       invoice,
       level: line.level,
       reference: requireWorkspaceTaxReference(ref),
@@ -169,9 +169,10 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
         ? const <String, Uint8List>{}
         : await resolveReportImages(ref, letter.report);
     if (!mounted) return;
-    final share = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(
-        builder: (_) => _LetterPreviewPage(
+    final share = await showDialog<bool>(
+      context: context,
+      builder: (_) => Dialog.fullscreen(
+        child: _LetterPreviewPage(
           title: letter.title,
           report: letter.report,
           images: images,
