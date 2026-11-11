@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/demo/presentation/demo_workspace.dart' show DemoEnvironment;
 import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';
@@ -127,9 +128,12 @@ class GettingStartedCard extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final title =
         l10n.gettingStartedTitle(facts.workspaceName);
-    final environment = !facts.production
-        ? (l10n.gettingStartedEnvDev)
-        : (l10n.gettingStartedEnvProd);
+    // #3282 — the Demo is neither: it names no environment at all.
+    final environment = DemoEnvironment.maybeOf(context) != null
+        ? null
+        : !facts.production
+        ? l10n.gettingStartedEnvDev
+        : l10n.gettingStartedEnvProd;
     final lines = <String>[
       if (hint.standing != null) GettingStartedCopy.standing(l10n, hint.standing!),
       GettingStartedCopy.reason(l10n, hint),
@@ -203,6 +207,7 @@ class GettingStartedCard extends ConsumerWidget {
                   ),
                 ],
               ),
+              if (environment != null)
               Text(
                 environment,
                 key: const ValueKey('getting-started-environment'),

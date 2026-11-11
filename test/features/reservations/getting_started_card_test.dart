@@ -92,6 +92,24 @@ void main() {
     expect(hub.workspace.flagWrites, isEmpty);
   });
 
+  // #3282 — a live space names its environment; the Demo names none (it is
+  // neither production nor development).
+  testWidgets('the Demo card names no environment', (tester) async {
+    await pumpCard(tester);
+    expect(
+      find.byKey(const ValueKey('getting-started-environment')),
+      findsOneWidget,
+    );
+    await tester.pumpWidget(const SizedBox());
+    await pumpCard(tester, demo: true);
+    expect(find.byKey(_card), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('getting-started-environment')),
+      findsNothing,
+    );
+    expect(find.text('Production workspace'), findsNothing);
+  });
+
   testWidgets("Choose a time opens the hub's own date picker and books "
       'nothing', (tester) async {
     final hub = await pumpCard(tester);

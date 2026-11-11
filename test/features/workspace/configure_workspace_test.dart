@@ -4,7 +4,6 @@
 // Settings' "Manage workspace": the guide for whoever may configure (the
 // permission its routes ask), else the deepest page the reader may open.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/features/workspace/domain/configure_workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter/material.dart';

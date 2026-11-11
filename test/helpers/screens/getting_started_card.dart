@@ -9,6 +9,8 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/presentation/demo_workspace.dart' show DemoEnvironment;
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
@@ -54,6 +56,8 @@ Future<Hub> pumpCard(
   String? languageCode,
   FakeLocalSetupRepository? localSetup,
   LinkLauncher? launcher,
+  // #3282 — the card as the Demo shows it.
+  bool demo = false,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
@@ -96,7 +100,15 @@ Future<Hub> pumpCard(
               '# User Guide\n\n## 4. Reserve hub\n\nHi.\n',
         ),
       ],
-      child: const DeskiloApp(),
+      child: demo
+          ? DemoEnvironment(
+              persona: DemoPersona.member,
+              onReset: () {},
+              onViewAs: (_) {},
+              onLeave: () {},
+              child: const DeskiloApp(),
+            )
+          : const DeskiloApp(),
     ),
   );
   await tester.pumpAndSettle();

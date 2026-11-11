@@ -43,7 +43,21 @@ List<Widget> workspaceSettingsTiles(
   required bool isOwner,
   required bool hasTwin,
 }) {
+  // #3282 — Manage workspace opens with the menu's own door.
+  final configure = configureWorkspaceRoute(
+    permissions: perms,
+    features: features,
+    setupOpen: features.contains(WorkspaceFeature.setupGuide),
+  );
   final workspace = <Widget>[
+    if (configure != null)
+      ListTile(
+        key: const ValueKey('settings-configure-workspace'),
+        leading: const Icon(Icons.tune_outlined),
+        title: Text(l10n.configureWorkspaceTitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push(configure),
+      ),
     if (workspaceReportsAvailable(features, perms, isAdmin: canAdminister))
       ListTile(key: const ValueKey('settings-reports'),
         leading: const Icon(Icons.summarize_outlined),
