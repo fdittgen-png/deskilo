@@ -5380,6 +5380,7 @@ Map<String, _Getter> _part15() => {
   'invoicingColCustomer': (l) => l.invoicingColCustomer,
   'invoicingColDue': (l) => l.invoicingColDue,
   'invoicingColOpen': (l) => l.invoicingColOpen,
+  'invoicingSourceDeclarations': (l) => l.invoicingSourceDeclarations,
   'journeyHowTitle': (l) => l.journeyHowTitle,
   'jpkKrPdFieldJournalNumber': (l) => l.jpkKrPdFieldJournalNumber,
   'jpkKrPdGapInvalidYear': (l) => l.jpkKrPdGapInvalidYear,

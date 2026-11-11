@@ -68,10 +68,15 @@ class InvoicePage extends ConsumerWidget {
     final read = ref.watch(invoicesProvider);
     final invoices = read.value;
     final invoice = invoices?.where((i) => i.id == invoiceId).firstOrNull;
-    if (invoice == null) {
+    // #3680 — the page states the invoice's status only once its match is
+    // read; a failed match read is a named source that withholds actions.
+    final matchRead = ref.watch(invoiceMatchesProvider);
+    final matchWaiting = !matchRead.hasValue && !matchRead.hasError;
+    if (invoice == null || matchWaiting) {
       // Still loading, or no longer readable: either way the page keeps a
       // way out.
-      final unreadable = read.hasError || invoices != null;
+      final unreadable =
+          invoice == null && (read.hasError || invoices != null);
       return Scaffold(
         key: ValueKey('invoice-page-$invoiceId'),
         appBar: AppBar(
@@ -93,8 +98,7 @@ class InvoicePage extends ConsumerWidget {
       );
     }
     final receivables = ref.watch(invoicingReaderProvider).read([invoice]);
-    final match =
-        (ref.watch(invoiceMatchesProvider).value ?? const {})[invoice.id];
+    final match = (matchRead.value ?? const {})[invoice.id]; // empty-ok: a failed read is a named source; the page offers no action then
     final lifecycle = invoiceLifecycleOf(invoice, match);
     final replacement = invoices
         ?.where((i) => i.replacesInvoiceId == invoice.id)

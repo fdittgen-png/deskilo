@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -135,8 +136,18 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         title: l10n.invoicesEmpty,
       );
     }
-    final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
-    final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
+    // #3680 — a row's status reads the matches and reminders: the archive
+    // is listed only when they answered.
+    final matchesAsync = ref.watch(invoiceMatchesProvider);
+    final remindersAsync = ref.watch(invoiceRemindersProvider);
+    final standIn = ReadsAnswer.of([matchesAsync, remindersAsync]).standIn(
+      onRetry: () => ref
+        ..invalidate(invoiceMatchesProvider)
+        ..invalidate(invoiceRemindersProvider),
+    );
+    if (standIn != null) return standIn;
+    final matches = matchesAsync.requireValue;
+    final reminders = remindersAsync.requireValue;
     final dateFormat = appFormatOf(context).dates(DateShape.date);
 
     // A correction chain, never a fork (0061): who replaced whom.

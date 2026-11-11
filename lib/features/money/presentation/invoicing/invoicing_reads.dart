@@ -7,6 +7,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
+import '../../../events/providers/event_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/unassigned_money.dart';
 import '../../domain/dunning.dart';
@@ -48,6 +49,7 @@ final invoicingReceivablesProvider = Provider.autoDispose<List<Receivable>?>(
       ref.watch(invoiceMatchesProvider),
       ref.watch(invoiceRemindersProvider),
       ref.watch(invoiceTransmissionsProvider),
+      ref.watch(eventsProvider),
     ];
     if (statuses.any((r) => !r.hasValue)) return null;
     return switch (ref.watch(invoicesProvider).value) {
@@ -72,6 +74,7 @@ final invoicingFailedSourcesProvider =
           InvoicingSource.transmissions,
         if (ref.watch(unassignedMoneyProvider).hasError)
           InvoicingSource.credits,
+        if (ref.watch(eventsProvider).hasError) InvoicingSource.declarations,
       },
     );
 
@@ -86,6 +89,7 @@ void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
         invoiceTransmissionsProvider,
       ),
       InvoicingSource.credits => ref.invalidate(unassignedMoneyProvider),
+      InvoicingSource.declarations => ref.invalidate(eventsProvider),
       InvoicingSource.payments || InvoicingSource.toInvoice => null,
     };
 

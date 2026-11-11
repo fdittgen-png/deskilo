@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -50,13 +51,26 @@ class MyInvoicesList extends ConsumerWidget {
     final fold = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.settlementFold);
-    final all = ref.watch(invoicesProvider).value ?? const <Invoice>[];
+    // #3680 — "no invoices yet" is said of a list that was read; the
+    // statuses wait for the matches and reminders.
+    final invoicesAsync = ref.watch(invoicesProvider);
+    final matchesAsync = ref.watch(invoiceMatchesProvider);
+    final remindersAsync = ref.watch(invoiceRemindersProvider);
+    final standIn = ReadsAnswer.of([invoicesAsync, matchesAsync, remindersAsync])
+        .standIn(
+          onRetry: () => ref
+            ..invalidate(invoicesProvider)
+            ..invalidate(invoiceMatchesProvider)
+            ..invalidate(invoiceRemindersProvider),
+        );
+    if (standIn != null) return standIn;
+    final all = invoicesAsync.requireValue;
     final invoices = all
         .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
         .toList()
       ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
-    final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
-    final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
+    final matches = matchesAsync.requireValue;
+    final reminders = remindersAsync.requireValue;
     final now = ref.watch(clockProvider).now();
     final dateFormat = appFormatOf(context).dates(DateShape.date);
     if (invoices.isEmpty) {

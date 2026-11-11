@@ -24922,6 +24922,12 @@ abstract class AppLocalizations {
   /// **'Customer credits'**
   String get invoicingSourceCredits;
 
+  /// The name of the invoicing source that could not be read: the customers' declarations that they paid (read from the events). Shown in "{source} could not be read."
+  ///
+  /// In en, this message translates to:
+  /// **'Payment declarations'**
+  String get invoicingSourceDeclarations;
+
   /// #3587 one line when a source failed; no figure it fed is shown
   ///
   /// In en, this message translates to:

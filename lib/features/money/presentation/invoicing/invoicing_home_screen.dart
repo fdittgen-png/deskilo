@@ -23,6 +23,7 @@ import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../events/providers/event_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
@@ -216,6 +217,17 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   }
 
   Widget _home(BuildContext context, List<Invoice> invoices) {
+    // #3680 — while a status read is still running, nothing is counted:
+    // an unread match is not "unpaid". A failed one is named below.
+    final statuses = [
+      ref.watch(invoiceMatchesProvider),
+      ref.watch(invoiceRemindersProvider),
+      ref.watch(invoiceTransmissionsProvider),
+      ref.watch(eventsProvider),
+    ];
+    if (statuses.any((r) => !r.hasValue && !r.hasError)) {
+      return const LoadingView();
+    }
     final format = appFormatOf(context);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final now = ref.watch(clockProvider).now();
@@ -226,7 +238,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final today = dayOf(now);
     final rules =
         ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
-    final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
+    final matches = ref.watch(invoiceMatchesProvider).value ?? const {}; // empty-ok: a failed read is a named source whose figures are withheld; a running one waits below
     final overview = ref.watch(invoicingOverviewProvider);
     final window = (
       workspaceId: workspace?.id ?? '',
@@ -262,7 +274,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ],
       // Each payment dated by its match on the business's calendar.
       received: [
-        for (final p in received.value ?? const <ReceivedPayment>[])
+        for (final p in received.value ?? const <ReceivedPayment>[]) // empty-ok: a failed read is the named source `payments`
           (currency: p.currency, minor: p.minor, on: dayOf(p.on)),
       ],
       failed: {

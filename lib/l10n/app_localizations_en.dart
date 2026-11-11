@@ -15165,6 +15165,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingSourceCredits => 'Customer credits';
 
   @override
+  String get invoicingSourceDeclarations => 'Payment declarations';
+
+  @override
   String invoicingSourceFailed(String source) {
     return '$source could not be read.';
   }

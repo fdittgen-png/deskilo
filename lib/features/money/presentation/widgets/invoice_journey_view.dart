@@ -377,7 +377,7 @@ class InvoiceMoveLine extends StatelessWidget {
 final invoiceEventFactsProvider =
     Provider.autoDispose<InvoiceEventFacts Function(Invoice, InvoiceMatch?)>(
       (ref) {
-        final events = ref.watch(eventsProvider).value ?? const [];
+        final events = ref.watch(eventsProvider).value ?? const []; // empty-ok: a failed read is the source `declarations`, whose figures and actions the invoicing screens withhold
         return (invoice, match) => (
           journey: journeyFactsOf(invoice, match, events),
           declaration: declarationOf(invoice, events),
