@@ -32,6 +32,26 @@ final RegExp _workspaceFormatter = RegExp(
   r'\.money\(|\.moneyCompact\(|\.moneyIn\(|\bmoneyFormat\(',
 );
 
+/// #3647 — the formats a personal surface must not read: the one that
+/// follows the route ([appFormatProvider] / `appFormatOf`), which a sheet
+/// or a test can reach from a business's layer, and the business's own. A
+/// personal surface names `personalFormatProvider` / `personalFormatOf`.
+final RegExp _businessFormat = RegExp(
+  r'\bappFormatProvider\b|\bappFormatOf\(|\bbusinessFormatProvider\b',
+);
+
+List<String> _offenders(RegExp rule, List<File> files) => [
+      for (final file in files)
+        for (final (n, line) in file.readAsLinesSync().indexed)
+          if (rule.hasMatch(line.split('//').first))
+            '${file.path}:${n + 1}: ${line.trim()}',
+    ];
+
+List<File> _personalFiles() => [
+      ...handWrittenDartFiles('lib/features/me'),
+      for (final path in _personalMoneyFiles) File(path),
+    ];
+
 void main() {
   test('every listed personal file exists', () {
     for (final path in _personalMoneyFiles) {
@@ -46,26 +66,42 @@ void main() {
   });
 
   test('a personal surface formats money with moneyNamed only', () {
-    final files = [
-      ...handWrittenDartFiles('lib/features/me'),
-      for (final path in _personalMoneyFiles) File(path),
-    ];
-    final offenders = <String>[];
-    for (final file in files) {
-      final lines = file.readAsLinesSync();
-      for (final (n, line) in lines.indexed) {
-        final code = line.split('//').first;
-        if (_workspaceFormatter.hasMatch(code)) {
-          offenders.add('${file.path}:${n + 1}: ${line.trim()}');
-        }
-      }
-    }
+    final offenders = _offenders(_workspaceFormatter, _personalFiles());
     expect(
       offenders,
       isEmpty,
       reason:
           'use appFormat.moneyNamed(record.currency).formatMinor(…) on '
           'a personal surface (#3599):\n${offenders.join('\n')}',
+    );
+  });
+
+  test('a personal surface reads the personal format only', () {
+    final offenders = _offenders(_businessFormat, _personalFiles());
+    expect(
+      offenders,
+      isEmpty,
+      reason:
+          'read ref.watch(personalFormatProvider) or personalFormatOf(context) '
+          'on a personal surface (#3647):\n${offenders.join('\n')}',
+    );
+  });
+
+  test('the personal-format rule sees a planted offender', () {
+    final dir = Directory.systemTemp.createTempSync('personal_format_lint');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final planted = File('${dir.path}/planted.dart')
+      ..writeAsStringSync([
+        'final a = ref.watch(appFormatProvider);',
+        'final b = appFormatOf(context).date(at);',
+        'final c = ref.watch(businessFormatProvider);',
+        '// appFormatOf(context) in a comment is not code',
+        'final d = ref.watch(personalFormatProvider);',
+        'final e = personalFormatOf(context).date(at);',
+      ].join('\n'));
+    expect(
+      _offenders(_businessFormat, [planted]).map((o) => o.split(':')[1]),
+      ['1', '2', '3'],
     );
   });
 

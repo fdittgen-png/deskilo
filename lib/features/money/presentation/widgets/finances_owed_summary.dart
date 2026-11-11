@@ -24,7 +24,7 @@ class FinancesOwedSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final money = appFormatOf(context);
+    final money = personalFormatOf(context);
     final toPay = data.owedByCurrency;
     final credit = data.inMyFavourByCurrency;
     final validating = data.beingValidatedByCurrency;

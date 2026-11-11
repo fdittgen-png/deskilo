@@ -7186,6 +7186,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get discoveryView => 'Vedi';
 
   @override
+  String get documentLanguageFollows => 'Segue la lingua dell\'app';
+
+  @override
+  String get documentLanguageHint =>
+      'Promemoria, documenti e messaggi push sono redatti in questa lingua. Una volta che ne sceglie una, cambiare la lingua dell\'app non la modifica più.';
+
+  @override
+  String get documentLanguageTitle => 'Lingua di lettere e notifiche';
+
+  @override
   String get documentsAdd => 'Aggiungi un documento';
 
   @override
@@ -15913,6 +15923,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kioskTapHint => 'Tocchi un posto per fare check-in';
+
+  @override
+  String languageAvailableHint(String fallback) {
+    return 'DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un\'altra lingua, viene mostrato in $fallback.';
+  }
 
   @override
   String get languageNameCS => 'Ceco';

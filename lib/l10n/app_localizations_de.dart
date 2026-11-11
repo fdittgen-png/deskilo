@@ -7202,6 +7202,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoveryView => 'Ansehen';
 
   @override
+  String get documentLanguageFollows => 'Folgt der Sprache der App';
+
+  @override
+  String get documentLanguageHint =>
+      'Erinnerungen, Dokumente und Push-Nachrichten werden in dieser Sprache verfasst. Sobald Sie eine wählen, ändert ein Wechsel der App-Sprache sie nicht mehr.';
+
+  @override
+  String get documentLanguageTitle =>
+      'Sprache von Schreiben und Benachrichtigungen';
+
+  @override
   String get documentsAdd => 'Dokument hinzufügen';
 
   @override
@@ -15937,6 +15948,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get kioskTapHint => 'Tippen Sie auf einen Platz zum Einchecken';
+
+  @override
+  String languageAvailableHint(String fallback) {
+    return 'DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf $fallback.';
+  }
 
   @override
   String get languageNameCS => 'Tschechisch';

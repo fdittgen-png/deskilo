@@ -230,3 +230,13 @@ RouteRule? matchRoute(String path) {
 /// The class of [path] (no query), or [RouteClass.unknown].
 RouteClass classifyRoute(String path) =>
     matchRoute(path)?.kind ?? RouteClass.unknown;
+
+/// Whether [path] is the person's own layer rather than a space's: every
+/// registered route that needs no membership, except the account routes
+/// that render a space's own sections. It decides the chrome (Me's colours
+/// or the space's) and the format (the person's or the business's).
+bool isPersonalLayer(String path) => switch (classifyRoute(path)) {
+      RouteClass.nativeAccount => !workspaceChromeAccountRoutes.contains(path),
+      RouteClass.publicEntry || RouteClass.operator => true,
+      RouteClass.workspace || RouteClass.unknown => false,
+    };

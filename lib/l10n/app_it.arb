@@ -4719,6 +4719,9 @@
   "discoveryStartBody": "Digiti una città, un servizio o un nome.",
   "discoveryStartTitle": "Che cosa cerca?",
   "discoveryView": "Vedi",
+  "documentLanguageFollows": "Segue la lingua dell'app",
+  "documentLanguageHint": "Promemoria, documenti e messaggi push sono redatti in questa lingua. Una volta che ne sceglie una, cambiare la lingua dell'app non la modifica più.",
+  "documentLanguageTitle": "Lingua di lettere e notifiche",
   "documentsAdd": "Aggiungi un documento",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -10333,6 +10336,7 @@
   "kioskRevertTitle": "Dispositivo chiosco",
   "kioskScanQr": "Scansiona il badge QR",
   "kioskTapHint": "Tocchi un posto per fare check-in",
+  "languageAvailableHint": "DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un'altra lingua, viene mostrato in {fallback}.",
   "languageNameCS": "Ceco",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"

@@ -327,10 +327,15 @@ List<Override> standardTestOverrides({
     // "8:00 AM" under en_US, which is right for that member and wrong for
     // a fixture that pins "08:00". The app honours the preference; the
     // tests pin one.
-    if (pinFormats)
+    if (pinFormats) ...[
       appFormatProvider.overrideWithValue(
         AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
       ),
+      // #3647 — a personal surface reads the person's format directly.
+      personalFormatProvider.overrideWithValue(
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+      ),
+    ],
     // #1303 — a fixed device locale: onboarding seeds its country from it,
     // and a test must not depend on the machine running it.
     deviceLocaleProvider.overrideWithValue(deviceLocale ?? const Locale('de', 'DE')),

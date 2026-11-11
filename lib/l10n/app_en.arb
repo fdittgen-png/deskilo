@@ -9589,6 +9589,18 @@
   "@discoveryView": {
     "description": "Shown as a text in demo scope (core), and 1 other place."
   },
+  "documentLanguageFollows": "Follows the app's language",
+  "@documentLanguageFollows": {
+    "description": "Option and value of the letters-and-notifications language: it follows the interface language"
+  },
+  "documentLanguageHint": "Reminders, documents and push messages are written in this language. Once you choose one, changing the app's language no longer changes it.",
+  "@documentLanguageHint": {
+    "description": "Explanation in the dialog choosing the language of letters and notifications"
+  },
+  "documentLanguageTitle": "Language of letters and notifications",
+  "@documentLanguageTitle": {
+    "description": "Title of the setting (Region & formats) for the language reminders, documents and push messages are written in"
+  },
   "documentsAdd": "Add a document",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -21028,6 +21040,16 @@
   "kioskTapHint": "Tap a seat to check in",
   "@kioskTapHint": {
     "description": "Header hint on the kiosk plan view"
+  },
+  "languageAvailableHint": "DesKilo is available in the languages below. A device set to any other language shows it in {fallback}.",
+  "@languageAvailableHint": {
+    "description": "Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees",
+    "placeholders": {
+      "fallback": {
+        "type": "String",
+        "example": "English"
+      }
+    }
   },
   "languageNameCS": "Czech",
   "@languageNameCS": {

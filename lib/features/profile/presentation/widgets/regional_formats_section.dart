@@ -18,6 +18,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_preferences.dart';
 import '../../providers/personal_preferences_providers.dart';
 import '../../providers/profile_providers.dart';
+import 'document_language_tile.dart';
 import 'preference_scope_controls.dart';
 
 /// Settings → Region & formats (#711): the member's own numbers, dates,
@@ -165,6 +166,9 @@ class RegionalFormatsScreen extends ConsumerWidget {
               timeZoneMode: on ? TimeZoneMode.device : TimeZoneMode.workspace,
             )),
           ),
+          // #3647 — its own preference, on the account: the interface
+          // language no longer decides it once the person chose one.
+          const DocumentLanguageTile(),
         ],
       ),
     );

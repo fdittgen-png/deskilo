@@ -13,7 +13,27 @@ abstract final class PersonalPreference {
   static const paymentProvider = 'payment_provider';
   /// #2552 XPRIV-01 — 'masked' or 'shown'; a personal default only.
   static const privateValues = 'private_values';
-  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme, paymentProvider, privateValues};
+  /// Whether [documentLocale] (letters and notifications) follows the
+  /// interface language or was chosen on its own; a personal default only.
+  static const documentLocaleMode = 'document_locale_mode';
+  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme, paymentProvider, privateValues, documentLocaleMode};
+  /// The keys a business may hold its own exception of (the reset clears them).
+  static Set<String> get workspaceKeys => keys.difference({documentLocaleMode});
+}
+
+/// How the language of letters and notifications is decided: it follows the
+/// interface language (every account that never chose, so a stored value
+/// stays as it is), or the person chose it and the interface language never
+/// writes it again.
+enum DocumentLocaleMode {
+  follows('follows'),
+  chosen('chosen');
+
+  const DocumentLocaleMode(this.wire);
+  final String wire;
+
+  static DocumentLocaleMode fromWire(String? wire) =>
+      values.where((m) => m.wire == wire).firstOrNull ?? follows;
 }
 
 class PersonalPreferences {

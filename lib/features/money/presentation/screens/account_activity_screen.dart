@@ -120,10 +120,10 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
                                         entry.reference,
                                         entry.description,
                                         _status(l10n, entry.status),
-                                        appFormatOf(context).dates(DateShape.date).format(appFormatOf(context).wall(entry.occurredAt)),
+                                        personalFormatOf(context).dates(DateShape.date).format(personalFormatOf(context).wall(entry.occurredAt)),
                                         if (entry.amountCents
                                             case final amount?)
-                                          appFormatOf(context).moneyNamed(entry.currency)
+                                          personalFormatOf(context).moneyNamed(entry.currency)
                                               .formatMinor(amount),
                                         if (entry.minutes case final minutes?)
                                           l10n.accountUsageMinutes(minutes),
