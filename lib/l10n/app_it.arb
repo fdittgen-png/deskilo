@@ -2716,7 +2716,7 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "billEntitlement": "{used, plural, =1{1 mezza giornata fatturata} other{{used} mezze giornate fatturate}} su {included} ({openDays, plural, =1{1 giorno di apertura} other{{openDays} giorni di apertura}})",
+  "billEntitlement": "{used} su {included, plural, =1{1 mezza giornata fatturata} other{{included} mezze giornate fatturate}} ({openDays, plural, =1{1 giorno di apertura} other{{openDays} giorni di apertura}})",
   "billInvoiceCard": "Fattura {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -9319,7 +9319,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Firma digitale (SHA-256)",
+  "invoicePdfSignature": "Impronta del documento (SHA-256)",
   "invoicePdfSubtotal": "Subtotale",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
@@ -12108,7 +12108,7 @@
   "moneySubmitExpense": "Invia una spesa",
   "moneySubmitPayment": "Invia per conferma",
   "moneySubscriptionPct": "Abbonamento {pct} %",
-  "moneyUsage": "{used, plural, =1{1 mezza giornata usata} other{{used} mezze giornate usate}} su {included}",
+  "moneyUsage": "{used} su {included, plural, =1{1 mezza giornata usata} other{{included} mezze giornate usate}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} mezza giornata usata} other{{used} mezze giornate usate}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Il mio badge",
@@ -15843,11 +15843,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Richiedi eliminazione",
+  "reservationDeleteRequestButton": "Richiedi annullamento",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?",
+  "reservationDeleteRequestExplain": "Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)? Fino alla decisione la prenotazione resta invariata; nulla viene rimborsato né eliminato automaticamente.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -19894,6 +19894,7 @@
       }
     }
   },
+  "uxBookingAllowanceLeft": "{count, plural, =0{Nessuna mezza giornata rimasta nel suo pacchetto questo mese} =1{1 mezza giornata rimasta nel suo pacchetto questo mese} other{{count} mezze giornate rimaste nel suo pacchetto questo mese}}",
   "uxBookingChargePending": "L’importo e l’uso della quota dipendono dal piano del socio e vengono saldati nell’estratto conto.",
   "uxBookingCheckInHelp": "Indicare anche la mia presenza alla conferma di questa prenotazione.",
   "uxBookingFor": "Prenotazione per",
@@ -19981,7 +19982,7 @@
   "validationSpecificAdmins": "Admin specifici",
   "validationStepApplies": "diventa effettivo",
   "validationStepOwnerToo": "e il proprietario, sempre",
-  "validationStepQuorum": "{who} — {count} qualsiasi",
+  "validationStepQuorum": "{who} — {count, plural, =1{1 qualsiasi} other{{count} qualsiasi}}",
   "validationStepRaised": "Qualcuno chiede",
   "validationStepSequential": "{who} — {count} in sequenza",
   "validationThresholdNote": "Gli importi minori si applicano subito.",

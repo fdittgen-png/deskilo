@@ -14982,7 +14982,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Firma digital (SHA-256)';
+  String get invoicePdfSignature => 'Huella del documento (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotal';
@@ -25209,11 +25209,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motivo (opcional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Solicitar eliminación';
+  String get reservationDeleteRequestButton => 'Solicitar cancelación';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)?';
+      'Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)? Hasta su decisión, la reserva se mantiene; nada se reembolsa ni se elimina automáticamente.';
 
   @override
   String get reservationDeleteSubmit => 'Enviar solicitud';
@@ -32370,6 +32370,18 @@ class AppLocalizationsEs extends AppLocalizations {
       one: '1 decisión pendiente',
     );
     return '$_temp0 · $_temp1';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Quedan $count medias jornadas en su bono este mes',
+      one: 'Queda 1 media jornada en su bono este mes',
+      zero: 'No quedan medias jornadas en su bono este mes',
+    );
+    return '$_temp0';
   }
 
   @override

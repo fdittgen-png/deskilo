@@ -351,7 +351,7 @@ class _BookingSheetState extends State<BookingSheet> {
             if (overlap) const BookingOverlapNotice(),
             if (refusal != null) _refusalRow(refusal, l10n),
             if (_showRepeat) _moreOptions(l10n),
-            if (_liveWindow) _checkInSwitch(l10n),
+            if (_liveWindow && !_offerModes) _checkInSwitch(l10n), // #3284 one "present"
             if (widget.seatId != null) BookingRateOption(seatId: widget.seatId!),
             if (widget.allowBlocking)
               BookingManagementOptions(onBlock: () => Navigator.of(context).pop(
@@ -367,7 +367,7 @@ class _BookingSheetState extends State<BookingSheet> {
                   ? null
                   : () => Navigator.of(context).pop(
                 BookingChoice(
-                  checkInNow: _liveWindow && _checkInNow,
+                  checkInNow: _liveWindow && !_offerModes && _checkInNow,
                   walkUp: _walkUp,
                   _start,
                   _end,
@@ -404,6 +404,8 @@ class _BookingSheetState extends State<BookingSheet> {
   Widget _summary(AppLocalizations l10n) => BookingReviewSummary(
               resource: [...widget.resourceContext, widget.seatName],
               resourcePriceLabel: widget.resourcePriceLabel,
+              allowance: _forMemberId == null || !_hasProviderScope(context) ? null
+                  : (memberId: _forMemberId!, period: _day.toIso8601String().substring(0, 7)),
               person: widget.members.where((m) => m.id == _forMemberId)
                   .firstOrNull?.name ?? l10n.levelAssignMyself,
               window: (start: _start, end: _end), timezone: widget.timezone, walkUp: _walkUp,
@@ -467,8 +469,7 @@ class _BookingSheetState extends State<BookingSheet> {
   Widget _checkInSwitch(AppLocalizations l10n) => SwitchListTile(
                 key: const ValueKey('booking-check-in-now'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(
-                    l10n.kioskCheckInRightAway),
+                title: Text(l10n.kioskCheckInRightAway),
                 subtitle: Text(l10n.uxBookingCheckInHelp),
                 value: _checkInNow,
                 onChanged: (v) {

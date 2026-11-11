@@ -15,7 +15,7 @@
   "availabilityGranularity30": "Créneaux de 30 minutes",
   "availabilityGranularity60": "Créneaux d'une heure",
   "availabilityGranularityFullDay": "Journées entières uniquement",
-  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, one{la grille de {minutes} minute} other{la grille de {minutes} minutes}}.",
+  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, =1{la grille de 1 minute} other{la grille de {minutes} minutes}}.",
   "planFullDayError": "Ici, les réservations couvrent la journée entière.",
   "availabilityGranularityHours": "Heures réelles (de–à exact, demi/journées en raccourcis)",
   "availabilityWorkHoursTitle": "Horaires de travail",

@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:math' as math;
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
@@ -123,60 +122,53 @@ class InvoiceJourneyBar extends StatelessWidget {
         for (final step in InvoiceStep.values)
           '${invoiceStepLabel(l10n, step)}: ${_stepStateLabel(l10n, steps[step]!)}',
       ].join(', '),
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: math.max(constraints.maxWidth, 400),
-            child: Row(
-              key: const ValueKey('invoice-journey-bar'),
-              children: [
-                for (final (i, step) in InvoiceStep.values.indexed)
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: i == 0
-                                  ? const SizedBox.shrink()
-                                  : _connector(scheme, steps[step]!),
-                            ),
-                            _Dot(state: steps[step]!),
-                            Expanded(
-                              child: i == InvoiceStep.values.length - 1
-                                  ? const SizedBox.shrink()
-                                  : _connector(
-                                      scheme,
-                                      steps[InvoiceStep.values[i + 1]]!,
-                                    ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          invoiceStepLabel(l10n, step),
-                          key: ValueKey('invoice-journey-step-${step.name}'),
-                          style: labelStyle?.copyWith(
-                            color: switch (steps[step]!) {
-                              InvoiceStepState.current => scheme.primary,
-                              InvoiceStepState.cancelled => scheme.error,
-                              InvoiceStepState.done => scheme.onSurface,
-                              InvoiceStepState.todo => scheme.outline,
-                            },
-                            fontWeight: steps[step] == InvoiceStepState.current
-                                ? FontWeight.bold
-                                : null,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
+      // #3285 — fits a phone: four columns, labels wrap, no sideways scroll.
+      child: Row(
+        key: const ValueKey('invoice-journey-bar'),
+        children: [
+          for (final (i, step) in InvoiceStep.values.indexed)
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: i == 0
+                            ? const SizedBox.shrink()
+                            : _connector(scheme, steps[step]!),
+                      ),
+                      _Dot(state: steps[step]!),
+                      Expanded(
+                        child: i == InvoiceStep.values.length - 1
+                            ? const SizedBox.shrink()
+                            : _connector(
+                                scheme,
+                                steps[InvoiceStep.values[i + 1]]!,
+                              ),
+                      ),
+                    ],
                   ),
-              ],
+                  const SizedBox(height: 2),
+                  Text(
+                    invoiceStepLabel(l10n, step),
+                    key: ValueKey('invoice-journey-step-${step.name}'),
+                    style: labelStyle?.copyWith(
+                      color: switch (steps[step]!) {
+                        InvoiceStepState.current => scheme.primary,
+                        InvoiceStepState.cancelled => scheme.error,
+                        InvoiceStepState.done => scheme.onSurface,
+                        InvoiceStepState.todo => scheme.outline,
+                      },
+                      fontWeight: steps[step] == InvoiceStepState.current
+                          ? FontWeight.bold
+                          : null,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
+        ],
       ),
     );
   }

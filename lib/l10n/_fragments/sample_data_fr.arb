@@ -2,7 +2,7 @@
   "sampleDataTitle": "Données d'exemple",
   "sampleDataExplain": "Remplissez cet espace de test avec quelques membres d'exemple, leurs réservations des deux dernières et des deux prochaines semaines et quelques paiements, construits à partir de vos propres places et de vos prix. Rien n'est envoyé à personne, et vous pouvez tout effacer ensuite.",
   "sampleDataFill": "Remplir avec des données d'exemple",
-  "sampleDataCounts": "Cet espace contient des données d'exemple : {members, plural, one{{members} membre} other{{members} membres}}, {bookings, plural, one{{bookings} réservation} other{{bookings} réservations}}, {payments, plural, one{{payments} paiement} other{{payments} paiements}}.",
+  "sampleDataCounts": "Cet espace contient des données d'exemple : {members, plural, =1{1 membre} other{{members} membres}}, {bookings, plural, =1{1 réservation} other{{bookings} réservations}}, {payments, plural, =1{1 paiement} other{{payments} paiements}}.",
   "sampleDataClear": "Effacer les données d'exemple",
   "sampleDataNotCleared": "Non effacées : les données d'exemple sont toujours dans cet espace.",
   "sampleDataFillFailed": "Les données d'exemple n'ont pas pu être créées."

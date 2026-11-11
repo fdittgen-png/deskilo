@@ -15,6 +15,8 @@ import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/invoice_action.dart';
+import '../domain/money_face.dart';
+import '../providers/money_face_controller.dart';
 import '../providers/money_providers.dart';
 import 'dunning_hold_actions.dart';
 import 'invoice_einvoice_actions.dart';
@@ -183,5 +185,8 @@ Future<void> runInvoiceAction(
       ref,
       replaces: invoice,
     ),
+    InvoiceAction.pay => Future(() => ref
+        .read(moneyFaceControllerProvider.notifier)
+        .show(MoneyFace.payments)),
   };
 }

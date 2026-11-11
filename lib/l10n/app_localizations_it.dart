@@ -4436,9 +4436,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String billEntitlement(int used, int included, int openDays) {
     String _temp0 = intl.Intl.pluralLogic(
-      used,
+      included,
       locale: localeName,
-      other: '$used mezze giornate fatturate',
+      other: '$included mezze giornate fatturate',
       one: '1 mezza giornata fatturata',
     );
     String _temp1 = intl.Intl.pluralLogic(
@@ -4447,7 +4447,7 @@ class AppLocalizationsIt extends AppLocalizations {
       other: '$openDays giorni di apertura',
       one: '1 giorno di apertura',
     );
-    return '$_temp0 su $included ($_temp1)';
+    return '$used su $_temp0 ($_temp1)';
   }
 
   @override
@@ -14990,7 +14990,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Firma digitale (SHA-256)';
+  String get invoicePdfSignature => 'Impronta del documento (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotale';
@@ -19692,12 +19692,12 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String moneyUsage(int used, int included) {
     String _temp0 = intl.Intl.pluralLogic(
-      used,
+      included,
       locale: localeName,
-      other: '$used mezze giornate usate',
+      other: '$included mezze giornate usate',
       one: '1 mezza giornata usata',
     );
-    return '$_temp0 su $included';
+    return '$used su $_temp0';
   }
 
   @override
@@ -25232,11 +25232,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motivo (facoltativo)';
 
   @override
-  String get reservationDeleteRequestButton => 'Richiedi eliminazione';
+  String get reservationDeleteRequestButton => 'Richiedi annullamento';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?';
+      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)? Fino alla decisione la prenotazione resta invariata; nulla viene rimborsato né eliminato automaticamente.';
 
   @override
   String get reservationDeleteSubmit => 'Invia richiesta';
@@ -32409,6 +32409,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mezze giornate rimaste nel suo pacchetto questo mese',
+      one: '1 mezza giornata rimasta nel suo pacchetto questo mese',
+      zero: 'Nessuna mezza giornata rimasta nel suo pacchetto questo mese',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'L’importo e l’uso della quota dipendono dal piano del socio e vengono saldati nell’estratto conto.';
 
@@ -32666,7 +32678,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String validationStepQuorum(int count, String who) {
-    return '$who — $count qualsiasi';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count qualsiasi',
+      one: '1 qualsiasi',
+    );
+    return '$who — $_temp0';
   }
 
   @override

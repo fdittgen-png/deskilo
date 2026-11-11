@@ -102,7 +102,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n, plural, one{{n} couleur à vous, dans cet ordre.} other{{n} couleurs à vous, dans cet ordre.}}",
+  "coloursRoomsOwn": "{n, plural, =1{1 couleur à vous, dans cet ordre.} other{{n} couleurs à vous, dans cet ordre.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -111,7 +111,7 @@
       }
     }
   },
-  "coloursRoomsSaved": "{n, plural, one{{n} couleur de salle enregistrée.} other{{n} couleurs de salles enregistrées.}}",
+  "coloursRoomsSaved": "{n, plural, =1{1 couleur de salle enregistrée.} other{{n} couleurs de salles enregistrées.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -120,7 +120,7 @@
       }
     }
   },
-  "coloursTooMany": "Le plan peint au plus {most, plural, one{{most} couleur de salle} other{{most} couleurs de salles}}.",
+  "coloursTooMany": "Le plan peint au plus {most, plural, =1{1 couleur de salle} other{{most} couleurs de salles}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {

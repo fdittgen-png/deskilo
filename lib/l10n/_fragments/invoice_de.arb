@@ -20,7 +20,7 @@
   "invoicePdfIssuedBy": "Ausgestellt von",
   "invoicePdfIssuedByName": "Ausgestellt von {name}",
   "invoicePdfBilledTo": "Rechnung an",
-  "invoicePdfSignature": "Digitale Signatur (SHA-256)",
+  "invoicePdfSignature": "Dokument-Fingerabdruck (SHA-256)",
   "addressTitle": "Adresse",
   "addressNone": "Keine Adresse",
   "addressSaved": "Adresse gespeichert",

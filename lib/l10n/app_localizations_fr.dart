@@ -2019,13 +2019,13 @@ class AppLocalizationsFr extends AppLocalizations {
       created,
       locale: localeName,
       other: '$created nouvelles écritures',
-      one: '$created nouvelle écriture',
+      one: '1 nouvelle écriture',
     );
     String _temp1 = intl.Intl.pluralLogic(
       known,
       locale: localeName,
       other: '$known déjà connues',
-      one: '$known déjà connue',
+      one: '1 déjà connue',
     );
     return 'Importé : $_temp0, $_temp1, $review à vérifier.';
   }
@@ -3780,13 +3780,13 @@ class AppLocalizationsFr extends AppLocalizations {
       have,
       locale: localeName,
       other: '$have périodes complètes',
-      one: '$have période complète',
+      one: '1 période complète',
     );
     String _temp1 = intl.Intl.pluralLogic(
       need,
       locale: localeName,
       other: '$need nécessaires',
-      one: '$need nécessaire',
+      one: '1 nécessaire',
     );
     return 'Pas encore assez d\'historique pour projeter : $_temp0 pour l\'instant, $_temp1.';
   }
@@ -4444,18 +4444,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String billEntitlement(int used, int included, int openDays) {
     String _temp0 = intl.Intl.pluralLogic(
-      used,
+      included,
       locale: localeName,
-      other: '$used demi-journées facturées',
-      one: '$used demi-journée facturée',
+      other: '$included demi-journées facturées',
+      one: '1 demi-journée facturée',
     );
     String _temp1 = intl.Intl.pluralLogic(
       openDays,
       locale: localeName,
       other: '$openDays jours d\'ouverture',
-      one: '$openDays jour d\'ouverture',
+      one: '1 jour d\'ouverture',
     );
-    return '$_temp0 sur $included ($_temp1)';
+    return '$used sur $_temp0 ($_temp1)';
   }
 
   @override
@@ -5885,7 +5885,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n couleurs à vous, dans cet ordre.',
-      one: '$n couleur à vous, dans cet ordre.',
+      one: '1 couleur à vous, dans cet ordre.',
     );
     return '$_temp0';
   }
@@ -5900,7 +5900,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n couleurs de salles enregistrées.',
-      one: '$n couleur de salle enregistrée.',
+      one: '1 couleur de salle enregistrée.',
     );
     return '$_temp0';
   }
@@ -5918,7 +5918,7 @@ class AppLocalizationsFr extends AppLocalizations {
       most,
       locale: localeName,
       other: '$most couleurs de salles',
-      one: '$most couleur de salle',
+      one: '1 couleur de salle',
     );
     return 'Le plan peint au plus $_temp0.';
   }
@@ -8590,13 +8590,13 @@ class AppLocalizationsFr extends AppLocalizations {
       failures,
       locale: localeName,
       other: '$failures échecs',
-      one: '$failures échec',
+      one: '1 échec',
     );
     String _temp1 = intl.Intl.pluralLogic(
       minutes,
       locale: localeName,
       other: '$minutes minutes',
-      one: '$minutes minute',
+      one: '1 minute',
     );
     return 'La connexion par badge est suspendue après $_temp0 en $_temp1. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.';
   }
@@ -8740,7 +8740,7 @@ class AppLocalizationsFr extends AppLocalizations {
       halfDays,
       locale: localeName,
       other: '$halfDays demi-journées supplémentaires',
-      one: '$halfDays demi-journée supplémentaire',
+      one: '1 demi-journée supplémentaire',
     );
     return '$actor demande $_temp0 pour $period';
   }
@@ -8942,7 +8942,7 @@ class AppLocalizationsFr extends AppLocalizations {
       required,
       locale: localeName,
       other: '$required validations',
-      one: '$required validation',
+      one: '1 validation',
     );
     return '$current/$_temp0';
   }
@@ -11434,7 +11434,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en retard',
-      one: '$count en retard',
+      one: '1 en retard',
     );
     return '$_temp0';
   }
@@ -13155,7 +13155,7 @@ class AppLocalizationsFr extends AppLocalizations {
       tables,
       locale: localeName,
       other: '$tables tables existent',
-      one: '$tables table existe',
+      one: '1 table existe',
     );
     return '$_temp0, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige $required. L\'installation la met à niveau à partir de ce qu\'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d\'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>';
   }
@@ -13170,7 +13170,7 @@ class AppLocalizationsFr extends AppLocalizations {
       created,
       locale: localeName,
       other: '$created inscrits',
-      one: '$created inscrit',
+      one: '1 inscrit',
     );
     return '$_temp0, 0 confirmé. L\'inscription n\'est pas seulement lente — personne ne l\'a terminée.\n        Vérifiez d\'abord l\'URL du site ci-dessus : c\'est celle du lien de l\'e-mail.';
   }
@@ -13509,7 +13509,7 @@ class AppLocalizationsFr extends AppLocalizations {
       pending,
       locale: localeName,
       other: 'seules les $pending migrations manquantes seront exécutées',
-      one: 'seule $pending migration manquante sera exécutée',
+      one: 'seule 1 migration manquante sera exécutée',
     );
     return 'La version $version de DesKilo est installée : $_temp0.';
   }
@@ -13866,13 +13866,13 @@ class AppLocalizationsFr extends AppLocalizations {
       movements,
       locale: localeName,
       other: '$movements mouvements',
-      one: '$movements mouvement',
+      one: '1 mouvement',
     );
     String _temp1 = intl.Intl.pluralLogic(
       checkIns,
       locale: localeName,
       other: '$checkIns pointages',
-      one: '$checkIns pointage',
+      one: '1 pointage',
     );
     return 'Annexe : $_temp0, $_temp1';
   }
@@ -14284,9 +14284,15 @@ class AppLocalizationsFr extends AppLocalizations {
       issued,
       locale: localeName,
       other: '$issued émises',
-      one: '$issued émise',
+      one: '1 émise',
     );
-    return '$_temp0, $failed en échec.';
+    String _temp1 = intl.Intl.pluralLogic(
+      failed,
+      locale: localeName,
+      other: '$failed en échec',
+      one: '1 en échec',
+    );
+    return '$_temp0, $_temp1.';
   }
 
   @override
@@ -15016,7 +15022,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Signature numérique (SHA-256)';
+  String get invoicePdfSignature => 'Empreinte du document (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Sous-total';
@@ -15212,7 +15218,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en cours',
-      one: '$count en cours',
+      one: '1 en cours',
     );
     return '$_temp0 · $amount dus';
   }
@@ -15891,7 +15897,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en retard',
-      one: '$count en retard',
+      one: '1 en retard',
     );
     return '$_temp0';
   }
@@ -17005,19 +17011,19 @@ class AppLocalizationsFr extends AppLocalizations {
       levels,
       locale: localeName,
       other: '$levels niveaux',
-      one: '$levels niveau',
+      one: '1 niveau',
     );
     String _temp1 = intl.Intl.pluralLogic(
       desks,
       locale: localeName,
       other: '$desks tables',
-      one: '$desks table',
+      one: '1 table',
     );
     String _temp2 = intl.Intl.pluralLogic(
       seats,
       locale: localeName,
       other: '$seats places',
-      one: '$seats place',
+      one: '1 place',
     );
     return '$_temp0 · $_temp1 · $_temp2';
   }
@@ -19014,7 +19020,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '+$count autres',
-      one: '+$count autre',
+      one: '+1 autre',
     );
     return '$_temp0';
   }
@@ -19626,7 +19632,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count ouvertes',
-      one: '$count ouverte',
+      one: '1 ouverte',
     );
     return '$_temp0 · $amount dus';
   }
@@ -19651,7 +19657,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en retard',
-      one: '$count en retard',
+      one: '1 en retard',
     );
     return '$_temp0 — $amount à régler';
   }
@@ -19724,12 +19730,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String moneyUsage(int used, int included) {
     String _temp0 = intl.Intl.pluralLogic(
-      used,
+      included,
       locale: localeName,
-      other: '$used demi-journées utilisées',
-      one: '$used demi-journée utilisée',
+      other: '$included demi-journées utilisées',
+      one: '1 demi-journée utilisée',
     );
-    return '$_temp0 sur $included';
+    return '$used sur $_temp0';
   }
 
   @override
@@ -21448,7 +21454,7 @@ class AppLocalizationsFr extends AppLocalizations {
       minutes,
       locale: localeName,
       other: 'la grille de $minutes minutes',
-      one: 'la grille de $minutes minute',
+      one: 'la grille de 1 minute',
     );
     return 'Les réservations doivent commencer et finir sur $_temp0.';
   }
@@ -22226,12 +22232,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String processFeatureCount(int enabled, int total) {
     String _temp0 = intl.Intl.pluralLogic(
-      enabled,
+      total,
       locale: localeName,
-      other: '$enabled fonctionnalités actives',
-      one: '$enabled fonctionnalité active',
+      other: '$total fonctionnalités actives',
+      one: '1 fonctionnalité active',
     );
-    return '$_temp0 sur $total';
+    return '$enabled sur $_temp0';
   }
 
   @override
@@ -22381,12 +22387,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String processSubprocessCount(int active, int total) {
     String _temp0 = intl.Intl.pluralLogic(
-      active,
+      total,
       locale: localeName,
-      other: '$active sous-processus actifs',
-      one: '$active sous-processus actif',
+      other: '$total sous-processus actifs',
+      one: '1 sous-processus actif',
     );
-    return '$_temp0 sur $total';
+    return '$active sur $_temp0';
   }
 
   @override
@@ -25275,11 +25281,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motif (facultatif)';
 
   @override
-  String get reservationDeleteRequestButton => 'Demander la suppression';
+  String get reservationDeleteRequestButton => 'Demander l\'annulation';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n\'a-t-elle jamais été utilisée (elle est supprimée) ?';
+      'Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n\'a-t-elle jamais été utilisée (elle est supprimée) ? En attendant leur décision, la réservation reste inchangée ; rien n\'est remboursé ni supprimé automatiquement.';
 
   @override
   String get reservationDeleteSubmit => 'Envoyer la demande';
@@ -25399,7 +25405,7 @@ class AppLocalizationsFr extends AppLocalizations {
       minutes,
       locale: localeName,
       other: 'créneaux de $minutes minutes',
-      one: 'créneaux de $minutes minute',
+      one: 'créneaux de 1 minute',
     );
     return 'Réservée par $_temp0';
   }
@@ -26078,19 +26084,19 @@ class AppLocalizationsFr extends AppLocalizations {
       members,
       locale: localeName,
       other: '$members membres',
-      one: '$members membre',
+      one: '1 membre',
     );
     String _temp1 = intl.Intl.pluralLogic(
       bookings,
       locale: localeName,
       other: '$bookings réservations',
-      one: '$bookings réservation',
+      one: '1 réservation',
     );
     String _temp2 = intl.Intl.pluralLogic(
       payments,
       locale: localeName,
       other: '$payments paiements',
-      one: '$payments paiement',
+      one: '1 paiement',
     );
     return 'Cet espace contient des données d\'exemple : $_temp0, $_temp1, $_temp2.';
   }
@@ -27412,7 +27418,7 @@ class AppLocalizationsFr extends AppLocalizations {
       required,
       locale: localeName,
       other: '$required sur $people approuvent',
-      one: '$required sur $people approuve',
+      one: '1 sur $people approuve',
     );
     return '$_temp0';
   }
@@ -29937,7 +29943,7 @@ class AppLocalizationsFr extends AppLocalizations {
       bytes,
       locale: localeName,
       other: '$bytesString octets',
-      one: '$bytesString octet',
+      one: '1 octet',
     );
     return 'Aperçu : $_temp0';
   }
@@ -30448,7 +30454,7 @@ class AppLocalizationsFr extends AppLocalizations {
       length,
       locale: localeName,
       other: '$length caractères',
-      one: '$length caractère',
+      one: '1 caractère',
     );
     return 'non conservé ($_temp0)';
   }
@@ -30822,19 +30828,19 @@ class AppLocalizationsFr extends AppLocalizations {
       steps,
       locale: localeName,
       other: '$steps étapes',
-      one: '$steps étape',
+      one: '1 étape',
     );
     String _temp1 = intl.Intl.pluralLogic(
       minutes,
       locale: localeName,
       other: '$minutes minutes',
-      one: '$minutes minute',
+      one: '1 minute',
     );
     String _temp2 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
       other: '$days jours',
-      one: '$days jour',
+      one: '1 jour',
     );
     return 'Jusqu\'à $_temp0 ou $_temp1 par enregistrement. Les enregistrements sont effacés de cet appareil après $_temp2 ; un fichier exporté vous appartient et reste là où vous l\'avez enregistré.';
   }
@@ -32455,15 +32461,27 @@ class AppLocalizationsFr extends AppLocalizations {
       updates,
       locale: localeName,
       other: '$updates nouveautés',
-      one: '$updates nouveauté',
+      one: '1 nouveauté',
     );
     String _temp1 = intl.Intl.pluralLogic(
       pending,
       locale: localeName,
       other: '$pending décisions en attente',
-      one: '$pending décision en attente',
+      one: '1 décision en attente',
     );
     return '$_temp0 · $_temp1';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count demi-journées restantes dans votre forfait ce mois-ci',
+      one: '1 demi-journée restante dans votre forfait ce mois-ci',
+      zero: 'Plus aucune demi-journée dans votre forfait ce mois-ci',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -32723,7 +32741,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String validationStepQuorum(int count, String who) {
-    return '$who — $count au choix';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count au choix',
+      one: '1 au choix',
+    );
+    return '$who — $_temp0';
   }
 
   @override
@@ -34626,19 +34650,19 @@ class AppLocalizationsFr extends AppLocalizations {
       settings,
       locale: localeName,
       other: '$settings réglages',
-      one: '$settings réglage',
+      one: '1 réglage',
     );
     String _temp1 = intl.Intl.pluralLogic(
       rows,
       locale: localeName,
       other: '$rows lignes',
-      one: '$rows ligne',
+      one: '1 ligne',
     );
     String _temp2 = intl.Intl.pluralLogic(
       tables,
       locale: localeName,
       other: '$tables tables',
-      one: '$tables table',
+      one: '1 table',
     );
     return 'Configuration : $_temp0, $_temp1 dans $_temp2';
   }

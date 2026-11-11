@@ -2574,7 +2574,7 @@
   "@bankImportRepeated": {
     "description": "#2380 Snack: this very file was imported before."
   },
-  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known} already known, {review} to review.",
+  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.",
   "@bankImported": {
     "description": "#2380 Snack: what an import did.",
     "placeholders": {
@@ -19371,7 +19371,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Digital signature (SHA-256)",
+  "invoicePdfSignature": "Document fingerprint (SHA-256)",
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
   },
@@ -32754,11 +32754,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Request deletion",
+  "reservationDeleteRequestButton": "Request cancellation",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?",
+  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -41601,6 +41601,15 @@
       }
     }
   },
+  "uxBookingAllowanceLeft": "{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}",
+  "@uxBookingAllowanceLeft": {
+    "description": "Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "uxBookingChargePending": "The charge and allowance used depend on the member’s plan and are settled on the statement.",
   "@uxBookingChargePending": {
     "description": "Shown as the text in booking review summary (reservations)."
@@ -41913,7 +41922,7 @@
   "@validationStepOwnerToo": {
     "description": "#1221 the validation screen, grouped by the process a rule interrupts"
   },
-  "validationStepQuorum": "{who} — {count, plural, =1{any one} other{any {count}}}",
+  "validationStepQuorum": "{who} — {count, plural, =1{any 1} other{any {count}}}",
   "@validationStepQuorum": {
     "description": "#1221 the middle step: who decides and how many are needed",
     "placeholders": {

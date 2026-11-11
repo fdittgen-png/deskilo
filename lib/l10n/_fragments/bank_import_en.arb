@@ -91,7 +91,7 @@
   "@bankFormatRead": {
     "description": "#2380 Format dialog and CSV sheet: read the file."
   },
-  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known} already known, {review} to review.",
+  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.",
   "@bankImported": {
     "description": "#2380 Snack: what an import did.",
     "placeholders": {

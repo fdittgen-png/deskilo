@@ -2018,7 +2018,13 @@ class AppLocalizationsDe extends AppLocalizations {
       other: '$created neue Einträge',
       one: '1 neuer Eintrag',
     );
-    return 'Importiert: $_temp0, $known bereits bekannt, $review zu prüfen.';
+    String _temp1 = intl.Intl.pluralLogic(
+      known,
+      locale: localeName,
+      other: '$known bereits bekannt',
+      one: '1 bereits bekannt',
+    );
+    return 'Importiert: $_temp0, $_temp1, $review zu prüfen.';
   }
 
   @override
@@ -15011,7 +15017,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Digitale Signatur (SHA-256)';
+  String get invoicePdfSignature => 'Dokument-Fingerabdruck (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Zwischensumme';
@@ -25263,11 +25269,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Grund (optional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Löschung beantragen';
+  String get reservationDeleteRequestButton => 'Stornierung beantragen';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?';
+      'Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Bis zur Entscheidung bleibt die Buchung unverändert; nichts wird automatisch erstattet oder gelöscht.';
 
   @override
   String get reservationDeleteSubmit => 'Anfrage senden';
@@ -32448,6 +32454,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count halbe Tage übrig in Ihrem Kontingent diesen Monat',
+      one: '1 halber Tag übrig in Ihrem Kontingent diesen Monat',
+      zero: 'Kein halber Tag mehr in Ihrem Kontingent diesen Monat',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'Gebühr und Kontingentverbrauch hängen vom Tarif des Mitglieds ab und werden auf der Abrechnung ausgewiesen.';
 
@@ -32706,7 +32724,7 @@ class AppLocalizationsDe extends AppLocalizations {
       count,
       locale: localeName,
       other: 'beliebige $count',
-      one: 'eine beliebige',
+      one: 'beliebige 1',
     );
     return '$who — $_temp0';
   }

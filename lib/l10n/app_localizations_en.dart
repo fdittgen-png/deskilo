@@ -2002,7 +2002,13 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$created new entries',
       one: '1 new entry',
     );
-    return 'Imported: $_temp0, $known already known, $review to review.';
+    String _temp1 = intl.Intl.pluralLogic(
+      known,
+      locale: localeName,
+      other: '$known already known',
+      one: '1 already known',
+    );
+    return 'Imported: $_temp0, $_temp1, $review to review.';
   }
 
   @override
@@ -14868,7 +14874,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Digital signature (SHA-256)';
+  String get invoicePdfSignature => 'Document fingerprint (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotal';
@@ -25015,11 +25021,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Reason (optional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Request deletion';
+  String get reservationDeleteRequestButton => 'Request cancellation';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?';
+      'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.';
 
   @override
   String get reservationDeleteSubmit => 'Send request';
@@ -32095,6 +32101,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count half-days left in your allowance this month',
+      one: '1 half-day left in your allowance this month',
+      zero: 'No half-days left in your allowance this month',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'The charge and allowance used depend on the member’s plan and are settled on the statement.';
 
@@ -32351,7 +32369,7 @@ class AppLocalizationsEn extends AppLocalizations {
       count,
       locale: localeName,
       other: 'any $count',
-      one: 'any one',
+      one: 'any 1',
     );
     return '$who — $_temp0';
   }
