@@ -32,10 +32,14 @@ on:
 
 concurrency:
   group: quality-${{ github.ref }}-${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.event_name || 'change' }}
-  # A newer push to the same ref supersedes the run in flight: a pull request's
-  # new head, and on master the next merge — several merges in a row cost one
-  # run, not one each. The nightly and a dispatched run are never cancelled.
-  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+  # A pull request's new head supersedes its run in flight. On master a run in
+  # flight FINISHES (#3750): cancelled by the next merge, its summary jobs
+  # reported a failure and the commit was marked as failed although nothing
+  # had failed — 12 of 30 commits on 11 Nov 2026. The next merge waits its
+  # turn, and of several waiting merges only the newest runs, so merges in a
+  # row still cost one run, not one each. The nightly and a dispatched run
+  # keep their own group and are never cancelled.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   FLUTTER_VERSION: "3.47.5"

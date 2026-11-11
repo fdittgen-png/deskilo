@@ -94,9 +94,14 @@ void _listTests(String root, Iterable<String> paths) {
     );
     return;
   }
+  final table = readTestMap(File('$root/tool/preflight/test_map.json'));
+  // #3751 -- what no local test can stand in for (a replay, a remote run).
+  for (final note in notesFor(paths, table)) {
+    stdout.writeln('before the pull request opens: $note');
+  }
   final tests = affectedTests(
     paths,
-    readTestMap(File('$root/tool/preflight/test_map.json')),
+    table,
     readTestSources(root),
     skipImporters:
         readNoImporterSearch(File('$root/tool/preflight/test_map.json')),

@@ -7,12 +7,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-/// One row of the table: any of [patterns] -> [tests].
+/// One row of the table: any of [patterns] -> [tests], and optionally a
+/// [note]: a step no local test can stand in for, said with the list.
 class TestMapRow {
-  const TestMapRow(this.patterns, this.tests);
+  const TestMapRow(this.patterns, this.tests, {this.note});
 
   final List<String> patterns;
   final List<String> tests;
+  final String? note;
 }
 
 /// The patterns of generated files whose importers are not searched.
@@ -31,9 +33,20 @@ List<TestMapRow> readTestMap(File file) {
       TestMapRow(
         (row['patterns'] as List).cast<String>(),
         (row['tests'] as List).cast<String>(),
+        note: row['note'] as String?,
       ),
   ];
 }
+
+/// The notes of the rows [changed] matches, in the table's order.
+List<String> notesFor(Iterable<String> changed, List<TestMapRow> table) => [
+  for (final row in table)
+    if (row.note case final note?)
+      if (changed.any(
+        (p) => row.patterns.any((m) => patternRegExp(m).hasMatch(p)),
+      ))
+        note,
+];
 
 /// [pattern] as a regular expression: `**` crosses folders, `*` stays in one.
 RegExp patternRegExp(String pattern) {

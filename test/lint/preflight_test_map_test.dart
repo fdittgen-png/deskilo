@@ -57,6 +57,26 @@ void main() {
       );
     });
 
+    test('#3751 a migration or a database test: the preview is named, with '
+        'its command; a change elsewhere is not told to run it', () {
+      for (final changed in const [
+        'supabase/migrations/0718_apply_payment_to_invoices.sql',
+        'supabase/tests/database/389_apply_payment_to_invoices.sql',
+        'assets/instance/contract.txt',
+      ]) {
+        final notes = notesFor([changed], table);
+        expect(notes, hasLength(1), reason: changed);
+        expect(notes.single, contains('gh workflow run db-preview.yml --ref'));
+      }
+      expect(notesFor(['lib/app/router.dart', 'supabase/functions/x.ts'], table),
+          isEmpty);
+    });
+
+    test('a workflow or a script: the tool tests', () {
+      expect(list(['.github/workflows/quality.yml']), contains('test/tool/'));
+      expect(list(['scripts/contract_check.sh']), contains('test/tool/'));
+    });
+
     test('an ARB fragment', () {
       expect(list(['lib/l10n/_fragments/portal_en.arb']), contains('test/i18n/'));
     });
