@@ -26,7 +26,6 @@ import '../../domain/bill_sections.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
-import '../../domain/ledger_entry.dart';
 import '../../domain/report_data_letters.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
@@ -61,8 +60,8 @@ class MoneyMemberDocuments {
     await warmLetterDocProviders(_ref, docId);
     if (!_context.mounted) return;
     final me = _ref.read(myMemberProvider).value;
-    final names = _ref.read(memberNamesProvider).value ?? const {};
-    if (me == null) return;
+    final names = await _ref.read(memberNamesProvider.future);
+    if (me == null || !_context.mounted) return;
     // #496 — MY documents print in MY language chain.
     final String language;
     try {
@@ -162,8 +161,10 @@ class MoneyMemberDocuments {
     final workspace = _ref.read(currentWorkspaceProvider).value;
     final member = _ref.read(myMemberProvider).value;
     if (workspace == null || member == null) return;
-    final ledger = _ref.read(myLedgerProvider).value ?? const <LedgerEntry>[];
-    final pendingEvents = _ref.read(eventsProvider).value ?? const [];
+    // #3680 — the bill is printed from reads that answered, or not at all.
+    final ledger = await _ref.read(myLedgerProvider.future);
+    final pendingEvents = await _ref.read(eventsProvider.future);
+    if (!context.mounted) return;
     final memberName =
         _ref.read(memberNamesProvider).value?[member.id] ?? '';
     final monthLabel = appFormatOf(context).dates(DateShape.monthYear).format(month);

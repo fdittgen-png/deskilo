@@ -117,7 +117,8 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
   /// server. A refusal is said in the server's words and the bar keeps
   /// "Match the payment".
   Future<ConfirmOutcome> _matchConfirmed(Invoice invoice, Receivable r) async {
-    final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+    final matches = await ref.read(invoiceMatchesProvider.future);
+    if (!mounted) return ConfirmOutcome.confirmedOnly;
     final declared = ref
         .read(invoiceEventFactsProvider)(invoice, matches[invoice.id])
         .declaration;

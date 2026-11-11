@@ -371,7 +371,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
         'vat_registered') {
       return null;
     }
-    final rates = ref.read(vatRatesProvider).value ?? const <VatRate>[];
+    final rates = ref.read(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate shows no "incl. VAT" helper, never a wrong one
     final chosen = _tariffVatRateId;
     // An inactive/unknown chosen rate falls back to the default — the
     // services resolution, mirrored server-side (0109).

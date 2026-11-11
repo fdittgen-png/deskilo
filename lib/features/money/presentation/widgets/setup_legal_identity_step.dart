@@ -27,10 +27,10 @@ import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_facts.dart';
 import '../../providers/money_providers.dart';
-import '../report_facts_of.dart';
 import 'legal_identity_sections.dart';
 import 'setup_sample_invoice.dart';
 
@@ -58,7 +58,7 @@ class SetupLegalIdentityStep extends ConsumerStatefulWidget {
 class _SetupLegalIdentityStepState
     extends ConsumerState<SetupLegalIdentityStep> {
   /// The identity as stored: what an invoice prints today.
-  late final _stored = sampleInvoiceFactsOf(ref).workspace;
+  late final _stored = ref.read(currentWorkspaceProvider).value;
   late final _regime = ValueNotifier(vatRegimeFromWire(_stored?.vatRegime));
 
   /// The fields as stored, by key.

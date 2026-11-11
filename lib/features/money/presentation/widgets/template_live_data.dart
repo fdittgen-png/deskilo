@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/report_data.dart';
 import '../../domain/report_data_letters.dart';
@@ -20,10 +21,24 @@ import '../report_strings_l10n.dart';
 /// previewed against.
 Map<String, Object?>? liveReportData(
     BuildContext context, WidgetRef ref, String doc) {
+  // #3680 — the live data is drawn only from reads that answered: one still
+  // running or failed leaves the preview on the sample, never on a document
+  // built from an empty list.
+  try {
+    return _liveReportData(context, ref, doc);
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn('reports', 'live preview data not answered',
+        error: e, stackTrace: st);
+    return null;
+  }
+}
+
+Map<String, Object?>? _liveReportData(
+    BuildContext context, WidgetRef ref, String doc) {
   // No reference yet: no live data, the preview falls back to the sample.
   final reference = workspaceTaxReference(ref);
   if (reference == null) return null;
-  final invoices = ref.read(invoicesProvider).value ?? const [];
+  final invoices = ref.read(invoicesProvider).requireValue;
   final liveWorkspace = ref.read(currentWorkspaceProvider).value;
   switch (doc) {
     case 'invoice':
@@ -42,7 +57,7 @@ Map<String, Object?>? liveReportData(
           ref.read(myStatementProvider(period)).value;
       final workspace = ref.read(currentWorkspaceProvider).value;
       final me = ref.read(myMemberProvider).value;
-      final names = ref.read(memberNamesProvider).value ?? const {};
+      final names = ref.read(memberNamesProvider).requireValue;
       if (statement == null || workspace == null) return null;
       return statementReportData(
         reportStringsFor(context),
@@ -55,7 +70,7 @@ Map<String, Object?>? liveReportData(
       );
     case 'agreement':
       final me = ref.read(myMemberProvider).value;
-      final names = ref.read(memberNamesProvider).value ?? const {};
+      final names = ref.read(memberNamesProvider).requireValue;
       if (me == null) return null;
       return agreementReportData(
           reportStringsFor(context), agreementFactsOf(ref),
@@ -63,7 +78,7 @@ Map<String, Object?>? liveReportData(
           subscriptionPct: me.subscriptionPct, reference: reference);
     case 'payments':
       final me = ref.read(myMemberProvider).value;
-      final names = ref.read(memberNamesProvider).value ?? const {};
+      final names = ref.read(memberNamesProvider).requireValue;
       final now = ref.read(clockProvider).now();
       final period =
           yearMonth(now.year, now.month);

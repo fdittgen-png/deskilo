@@ -51,7 +51,7 @@ Future<void> showExpenseSheet(
       .read(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.supplyExpenses);
   final existing = suppliesOn
-      ? (ref.read(servicesProvider).value ?? const <ServiceItem>[])
+      ? await ref.read(servicesProvider.future)
       : const <ServiceItem>[];
   var isSupply = false;
   ServiceItem? supplyItem;

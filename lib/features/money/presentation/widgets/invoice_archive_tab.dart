@@ -90,7 +90,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         invoice: invoice,
         match: match,
         settledByNumber: settledByNumberOf(
-            invoice, ref.read(invoicesProvider).value ?? const []),
+            invoice, ref.read(invoicesProvider).requireValue),
         canIssue: widget.canIssue,
         isEu: widget.isEu,
         reminder: reminder,
@@ -236,7 +236,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   // of what was owed, reachable only from here.
                   if (!fold || invoice.settles.isEmpty) return row;
                   final all =
-                      ref.read(invoicesProvider).value ?? const <Invoice>[];
+                      ref.read(invoicesProvider).requireValue;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

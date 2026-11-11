@@ -80,12 +80,14 @@ class SuppliersView extends ConsumerWidget {
       return;
     }
     final command = ref.read(supplierCommandProvider);
+    final existing = await ref.read(suppliersProvider(workspaceId).future);
+    if (!context.mounted) return;
     final result = await showSupplierDialog(
       context,
       supplier,
       reference: reference,
       lookupWorkspaceId: lookupOn ? workspaceId : null,
-      existing: ref.read(suppliersProvider(workspaceId)).value ?? const [],
+      existing: existing,
       onSave: (draft) => command.save(workspaceId, draft),
     );
     if (result == null || !context.mounted) return;

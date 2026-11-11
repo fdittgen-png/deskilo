@@ -174,7 +174,7 @@ class MyInvoicesList extends ConsumerWidget {
     );
     // #831 — the regrouped sources under their settlement, PDF only.
     if (invoice.settles.isEmpty) return card;
-    final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
+    final all = ref.read(invoicesProvider).requireValue;
     final currency = appFormatOf(context).moneyIn(invoice.currency);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -208,7 +208,7 @@ class MyInvoicesList extends ConsumerWidget {
         invoice: invoice,
         match: match,
         settledByNumber: settledByNumberOf(
-            invoice, ref.read(invoicesProvider).value ?? const []),
+            invoice, ref.read(invoicesProvider).requireValue),
         canIssue: mayIssueInvoices(ref),
         isEu: workspaceIsEu(ref, country),
         reminder: reminder,
