@@ -22751,7 +22751,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderQueueIntro =>
-      'Reminders are shared by hand. A share records one level, and only if it left.';
+      'You share each reminder yourself. It is recorded only when it was really shared.';
 
   @override
   String reminderQueueLevel(int level) {
@@ -22766,13 +22766,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderQueueNotShared => 'Not shared';
 
   @override
-  String get reminderQueuePreview => 'Preview';
-
-  @override
   String get reminderQueueResultNone => 'No reminder shared';
 
   @override
-  String get reminderQueueResultSubtitle => 'Each share recorded one level.';
+  String get reminderQueueResultSubtitle =>
+      'Each one is recorded on its invoice.';
 
   @override
   String reminderQueueResultTitle(int count) {

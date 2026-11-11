@@ -28,7 +28,6 @@ import '../../../l10n/app_localizations.dart';
 import '../../events/providers/event_providers.dart';
 import '../../plan/providers/accessory_providers.dart';
 import '../../plan/providers/floor_plan_providers.dart';
-import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -39,7 +38,6 @@ import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
-import '../domain/report_data_letters.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_pdf_file_parts.dart';
@@ -47,12 +45,12 @@ import 'invoice_status.dart';
 import 'period_label.dart';
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
-import 'report_image_resolve.dart';
 import 'report_layout_actions.dart';
 import 'report_layout_defaults.dart';
 import 'report_strings_l10n.dart';
 import 'swiss_qr_page.dart';
 
+export 'invoice_reminder_letter.dart';
 export 'letter_doc_pdf.dart';
 export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
 export 'report_image_resolve.dart' show resolveReportImages;
@@ -467,77 +465,6 @@ bool rendersCopy(WidgetRef ref) {
 /// Records a payment reminder (0066) and hands the invoice PDF to the share
 /// sheet with a localized reminder message — mail, WhatsApp, whatever the
 /// device offers.
-/// Renders the reminder LETTER for [invoice] at [level] (#472): the
-/// owner's band set for that level, else the shipped localized default.
-/// A broken custom band set falls back to the default — a reminder must
-/// never fail on a template.
-Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
-  BuildContext context,
-  WidgetRef ref,
-  Invoice invoice, {
-  required int level,
-  required TaxReferenceSet reference,
-  ReportBands? draftBands,
-}) async {
-  // #496 — the reminder letter prints in the MEMBER's language (their
-  // preference → workspace language → country language).
-  var language = '';
-  try {
-    final members =
-        ref.read(workspaceMembersProvider).value ?? const <Member>[];
-    final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
-    final userId = member?.userId;
-    final profile = userId == null
-        ? null
-        : ref.read(memberProfilesProvider).value?[userId];
-    language = resolveMemberReportLanguage(
-      ref,
-      memberLocale: member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
-    );
-  } on AmbiguousReportLanguage {
-    language = '';
-  }
-  final l10n = language.isEmpty
-      ? context.l10n
-      : l10nForLanguage(language);
-  final title = level <= 1
-      ? (l10n.reminderPdfTitleFriendly)
-      : '${l10n.reminderPdfTitleFirm} $level';
-  final data = reminderReportData(
-    reportStringsFor(context,
-        l10n: l10n, localeName: language.isEmpty ? null : language),
-    reminderFactsOf(ref, invoice),
-    invoice,
-    level: level,
-    reference: reference,
-  );
-  final template = invoicePdfTemplateFor(ref).forLocale(language);
-  final bands = draftBands ?? template.reminderBands(level);
-  final fallback = defaultReminderBands(level, l10n);
-  final texted = withOwnerTexts(data, template.texts);
-  final report =
-      (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
-      renderReportBands(bands: fallback, data: texted)!;
-  final pageLabel = l10n.invoicePdfPage;
-  final mark = developmentMark(context, ref);
-  Future<pw.Font> font(String asset) async =>
-      pw.Font.ttf(await rootBundle.load(asset));
-  final bytes = await buildBandedLetterPdf(
-    report: report,
-    reportImages: await resolveReportImages(ref, report),
-    pageLabel: pageLabel,
-    documentTitle: '$title ${invoice.number}',
-    baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
-    boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
-    watermark: mark,
-  );
-  return (
-    bytes: bytes,
-    fileName: '${safeFileSlug('$title ${invoice.number}')}.pdf',
-    title: title,
-  );
-}
-
 /// #831 — the watermark of a regrouped source: "Regrouped in INV-…", or
 /// '' for every other document.
 String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {

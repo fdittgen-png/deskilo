@@ -46,8 +46,6 @@ const Map<String, String> _allowed = {
       '#3587 R1-c — the invoicing home reads it',
   'lib/features/money/application/reminder_queue.dart::reminderQueueOf':
       '#3587 R1-f — the reminders queue screen reads it',
-  'lib/features/money/application/reminder_queue.dart::shareQueuedReminder':
-      '#3587 R1-f — the reminders queue screen shares through it',
   'lib/features/money/presentation/invoice_journey.dart::declarationOf':
       '#3587 R1-c — the invoicing home reads it',
   'lib/features/money/presentation/invoicing/receivables_adapter.dart::ReceivablesReader':

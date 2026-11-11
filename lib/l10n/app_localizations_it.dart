@@ -22937,7 +22937,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderQueueIntro =>
-      'I solleciti si condividono a mano. Una condivisione registra un livello, e solo se è partita.';
+      'Lei condivide ogni sollecito. Viene registrato solo se è stato davvero condiviso.';
 
   @override
   String reminderQueueLevel(int level) {
@@ -22952,14 +22952,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderQueueNotShared => 'Non condivisi';
 
   @override
-  String get reminderQueuePreview => 'Anteprima';
-
-  @override
   String get reminderQueueResultNone => 'Nessun sollecito condiviso';
 
   @override
   String get reminderQueueResultSubtitle =>
-      'Ogni condivisione ha registrato un livello.';
+      'Ognuno è registrato sulla sua fattura.';
 
   @override
   String reminderQueueResultTitle(int count) {

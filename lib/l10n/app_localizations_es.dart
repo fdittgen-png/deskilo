@@ -22923,7 +22923,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reminderQueueIntro =>
-      'Los recordatorios se comparten a mano. Compartir registra un nivel, y solo si salió.';
+      'Usted comparte cada recordatorio. Solo se registra si de verdad se compartió.';
 
   @override
   String reminderQueueLevel(int level) {
@@ -22938,13 +22938,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reminderQueueNotShared => 'No compartidos';
 
   @override
-  String get reminderQueuePreview => 'Vista previa';
-
-  @override
   String get reminderQueueResultNone => 'Ningún recordatorio compartido';
 
   @override
-  String get reminderQueueResultSubtitle => 'Cada envío registró un nivel.';
+  String get reminderQueueResultSubtitle =>
+      'Cada uno queda registrado en su factura.';
 
   @override
   String reminderQueueResultTitle(int count) {

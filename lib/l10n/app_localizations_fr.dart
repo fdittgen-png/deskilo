@@ -22982,7 +22982,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderQueueIntro =>
-      'Les relances se partagent à la main. Un partage enregistre un niveau, et seulement s\'il est parti.';
+      'Vous partagez chaque relance vous-même. Elle n\'est enregistrée que si elle a vraiment été partagée.';
 
   @override
   String reminderQueueLevel(int level) {
@@ -22997,14 +22997,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderQueueNotShared => 'Non partagées';
 
   @override
-  String get reminderQueuePreview => 'Aperçu';
-
-  @override
   String get reminderQueueResultNone => 'Aucune relance partagée';
 
   @override
   String get reminderQueueResultSubtitle =>
-      'Chaque partage a enregistré un niveau.';
+      'Chacune est enregistrée sur sa facture.';
 
   @override
   String reminderQueueResultTitle(int count) {

@@ -30208,7 +30208,7 @@
   "@reminderQueueFailed": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
   },
-  "reminderQueueIntro": "Reminders are shared by hand. A share records one level, and only if it left.",
+  "reminderQueueIntro": "You share each reminder yourself. It is recorded only when it was really shared.",
   "@reminderQueueIntro": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueIntro)"
   },
@@ -30229,15 +30229,11 @@
   "@reminderQueueNotShared": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotShared)"
   },
-  "reminderQueuePreview": "Preview",
-  "@reminderQueuePreview": {
-    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueuePreview)"
-  },
   "reminderQueueResultNone": "No reminder shared",
   "@reminderQueueResultNone": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
   },
-  "reminderQueueResultSubtitle": "Each share recorded one level.",
+  "reminderQueueResultSubtitle": "Each one is recorded on its invoice.",
   "@reminderQueueResultSubtitle": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)"
   },

@@ -37818,7 +37818,7 @@ abstract class AppLocalizations {
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueIntro)
   ///
   /// In en, this message translates to:
-  /// **'Reminders are shared by hand. A share records one level, and only if it left.'**
+  /// **'You share each reminder yourself. It is recorded only when it was really shared.'**
   String get reminderQueueIntro;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel)
@@ -37839,12 +37839,6 @@ abstract class AppLocalizations {
   /// **'Not shared'**
   String get reminderQueueNotShared;
 
-  /// #3587 R1-f: the by-hand reminder queue (reminderQueuePreview)
-  ///
-  /// In en, this message translates to:
-  /// **'Preview'**
-  String get reminderQueuePreview;
-
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)
   ///
   /// In en, this message translates to:
@@ -37854,7 +37848,7 @@ abstract class AppLocalizations {
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)
   ///
   /// In en, this message translates to:
-  /// **'Each share recorded one level.'**
+  /// **'Each one is recorded on its invoice.'**
   String get reminderQueueResultSubtitle;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)

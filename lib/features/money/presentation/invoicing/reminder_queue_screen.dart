@@ -24,11 +24,13 @@ import '../../../../core/ui/kit/result_page.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/reminder_queue.dart';
+import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../invoice_documents.dart';
 import '../invoice_journey.dart' show invoiceRemainingCents;
-import '../report_actions.dart';
+import '../widgets/report_page_style.dart';
+import '../widgets/report_preview.dart';
 
 class ReminderQueueScreen extends ConsumerStatefulWidget {
   const ReminderQueueScreen({
@@ -36,6 +38,7 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
     required this.queue,
     required this.today,
     @visibleForTesting this.letterOf,
+    @visibleForTesting this.previewOf,
   });
 
   /// The lines waiting, as [reminderQueueOf] drew them.
@@ -48,6 +51,14 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
   /// letter. A test hands in a plain one: the rendering has its own tests.
   final Future<ReminderLetter> Function(QueuedReminder line, Invoice invoice)?
   letterOf;
+
+  /// Builds a line's letter as it is shown on screen; a test hands in a plain
+  /// one for the same reason.
+  final Future<({String title, InvoiceReport report})> Function(
+    QueuedReminder line,
+    Invoice invoice,
+  )?
+  previewOf;
 
   @override
   ConsumerState<ReminderQueueScreen> createState() =>
@@ -134,24 +145,40 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     }
   }
 
+  /// The real letter: the owner's bands, in the member's language.
+  Future<({String title, InvoiceReport report})> _previewOf(
+    QueuedReminder line,
+    Invoice invoice,
+  ) async {
+    final letter = await reminderLetterReport(
+      context,
+      ref,
+      invoice,
+      level: line.level,
+      reference: requireWorkspaceTaxReference(ref),
+    );
+    return (title: '${letter.title} ${invoice.number}', report: letter.report);
+  }
+
+  /// The letter on screen, as it will be shared; Share is in that view's bar.
   Future<void> _preview(QueuedReminder line) async {
     final invoice = await _invoiceOf(line.invoiceId);
     if (invoice == null || !mounted) return;
-    await runReportActions(
-      context,
-      ref,
-      keyPrefix: 'reminder-queue-preview',
-      buildPdf: () async {
-        final pdf = await buildReminderPdfFile(
-          context,
-          ref,
-          invoice,
-          level: line.level,
-          reference: requireWorkspaceTaxReference(ref),
-        );
-        return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
-      },
+    final letter = await (widget.previewOf ?? _previewOf)(line, invoice);
+    final images = widget.previewOf != null
+        ? const <String, Uint8List>{}
+        : await resolveReportImages(ref, letter.report);
+    if (!mounted) return;
+    final share = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (_) => _LetterPreviewPage(
+          title: letter.title,
+          report: letter.report,
+          images: images,
+        ),
+      ),
     );
+    if (share == true && mounted) await _share(line);
   }
 
   @override
@@ -236,11 +263,12 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
+          // A closed share is a notice, not an error: nothing went wrong.
           if (handled == ReminderHandled.notRecorded)
             Text(
               l10n.reminderQueueNotRecorded,
               key: ValueKey('reminder-queue-status-${line.invoiceId}'),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+              style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
             ),
           if (handled == ReminderHandled.failed)
             Text(
@@ -255,7 +283,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
                 key: ValueKey('reminder-queue-preview-${line.invoiceId}'),
                 style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
                 onPressed: busy ? null : () => _preview(line),
-                child: Text(l10n.reminderQueuePreview),
+                child: Text(l10n.invoiceTemplatePreview),
               ),
               FilledButton.tonal(
                 key: ValueKey('reminder-queue-share-${line.invoiceId}'),
@@ -289,6 +317,54 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
       staysNote: l10n.reminderQueueStays,
       doneLabel: l10n.reminderQueueDone,
       onDone: () => Navigator.of(context).maybePop(),
+    );
+  }
+}
+
+/// The reminder letter, laid out as the PDF will be, with Share in the bar.
+class _LetterPreviewPage extends StatelessWidget {
+  const _LetterPreviewPage({
+    required this.title,
+    required this.report,
+    required this.images,
+  });
+
+  final String title;
+  final InvoiceReport report;
+  final Map<String, Uint8List> images;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: AppSpacing.mdAll,
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Container(
+                  width: ReportPage.width,
+                  color: ReportPage.paper,
+                  padding: ReportPage.margins,
+                  child: ReportBlocksView(report: report, images: images),
+                ),
+              ),
+            ),
+          ),
+          BottomActionBar(
+            actions: [
+              FilledButton(
+                key: const ValueKey('reminder-queue-preview-share'),
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(l10n.reminderQueueShare),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

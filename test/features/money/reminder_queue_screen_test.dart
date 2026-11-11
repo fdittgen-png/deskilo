@@ -12,6 +12,7 @@ import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/reminder_queue.dart';
+import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/presentation/invoicing/reminder_queue_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,6 +82,14 @@ void main() {
           return ReminderQueueScreen(
             queue: queue(),
             today: today,
+            previewOf: (line, invoice) async => (
+              title: 'Reminder ${invoice.number}',
+              report: const InvoiceReport(
+                header: [ReportText('Dear customer')],
+                body: [ReportText('Please pay invoice')],
+                footer: [],
+              ),
+            ),
             letterOf: (line, invoice) async => (
               bytes: Uint8List.fromList([1]),
               fileName: 'reminder.pdf',
@@ -164,6 +173,23 @@ void main() {
     expect(find.text('Shared'), findsNWidgets(2));
     expect(repo.invoiceReminders[ids.first]?.length ?? 0, 1);
     expect(repo.invoiceReminders[ids.last]?.length ?? 0, 1);
+  });
+
+  testWidgets('Preview shows the letter on screen and Share is in its bar', (
+    tester,
+  ) async {
+    await pump(tester);
+    await tester.tap(_key('reminder-queue-preview-${ids.last}'));
+    await tester.pumpAndSettle();
+    expect(find.text('Please pay invoice'), findsOneWidget);
+    expect(
+      repo.invoiceReminders[ids.last]?.length ?? 0,
+      0,
+      reason: 'a preview shares nothing',
+    );
+    await tapReal(tester, _key('reminder-queue-preview-share'));
+    expect(repo.invoiceReminders[ids.last]?.length ?? 0, 1);
+    expect(find.text('Share the next one · Anna Alder'), findsOneWidget);
   });
 
   for (final (width, scale) in [(320.0, 1.3), (390.0, 1.0), (1280.0, 1.0)]) {

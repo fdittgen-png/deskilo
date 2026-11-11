@@ -29,10 +29,6 @@ const Map<String, String> _allowed = {
       '#3587 release 1 train — the invoicing home opens the flow',
   'lib/features/money/presentation/invoicing/reminder_queue_screen.dart::ReminderQueueScreen':
       '#3587 release 1 train — the invoicing home opens the queue',
-  'lib/features/money/application/reminder_queue.dart::ReminderLetter':
-      '#3587 R1-f — the queue screen builds the letter it shares',
-  'lib/features/money/application/reminder_queue.dart::ReminderQueue':
-      '#3587 R1-f — the queue screen holds and draws it',
 };
 
 void main() {

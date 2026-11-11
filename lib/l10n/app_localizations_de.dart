@@ -22974,7 +22974,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reminderQueueIntro =>
-      'Mahnungen werden von Hand geteilt. Ein Teilen vermerkt eine Stufe, und nur wenn es abgeschickt wurde.';
+      'Sie teilen jede Mahnung selbst. Sie wird nur vermerkt, wenn sie wirklich geteilt wurde.';
 
   @override
   String reminderQueueLevel(int level) {
@@ -22989,14 +22989,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderQueueNotShared => 'Nicht geteilt';
 
   @override
-  String get reminderQueuePreview => 'Vorschau';
-
-  @override
   String get reminderQueueResultNone => 'Keine Mahnung geteilt';
 
   @override
   String get reminderQueueResultSubtitle =>
-      'Jedes Teilen hat eine Stufe vermerkt.';
+      'Jede wird auf ihrer Rechnung vermerkt.';
 
   @override
   String reminderQueueResultTitle(int count) {
