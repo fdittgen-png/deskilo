@@ -4,6 +4,8 @@
 // answer sets each process's level with its reason and applying writes
 // exactly the planned change; switching anything off asks first, and a
 // "no" writes nothing.
+import 'dart:async';
+
 import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -13,6 +15,7 @@ import 'package:deskilo/features/workspace/presentation/screens/setup_levels_scr
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
@@ -182,6 +185,102 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Because you issue invoices'), findsOneWidget);
+  });
+
+  // #3283 — a save that cannot land says why and writes nothing; Apply
+  // stays to try again, and a retry writes the planned change once.
+  Future<void> apply(WidgetTester tester) async {
+    await tester.tap(find.byKey(const ValueKey('setup-levels-apply')));
+    await tester.pumpAndSettle();
+    final yes = find.byKey(const ValueKey('setup-levels-confirm-off-yes'));
+    if (yes.evaluate().isNotEmpty) {
+      await tester.tap(yes);
+      await tester.pumpAndSettle();
+    }
+  }
+
+  testWidgets('a conflicting save writes nothing and says so', (tester) async {
+    final repo = await _pump(tester);
+    repo.flagConflictNext = true;
+    await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
+    await tester.pumpAndSettle();
+    await apply(tester);
+    expect(repo.flagWrites, isEmpty);
+    expect(find.byType(SnackBar), findsOneWidget);
+  });
+
+  testWidgets('a right withdrawn meanwhile: refused, nothing written', (
+    tester,
+  ) async {
+    final repo = await _pump(tester);
+    repo.flagWriteErrorNext = const PostgrestException(
+      message: 'permission denied',
+      code: '42501',
+    );
+    await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
+    await tester.pumpAndSettle();
+    await apply(tester);
+    expect(repo.flagWrites, isEmpty);
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(find.text('Workspace saved.'), findsNothing);
+  });
+
+  testWidgets('a failed save says so; Try again writes the change once', (
+    tester,
+  ) async {
+    final repo = await _pump(tester);
+    final expected = _planFor(repo, setupPresets[SetupPreset.complet]!);
+    repo.flagWriteErrorNext = TimeoutException('offline');
+    await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
+    await tester.pumpAndSettle();
+    await apply(tester);
+    expect(repo.flagWrites, isEmpty);
+    expect(
+      find.text('The choices could not be saved. Try again.'),
+      findsOneWidget,
+    );
+    await tester.pump(const Duration(seconds: 6)); // the notice leaves
+    await tester.pumpAndSettle();
+    await apply(tester);
+    expect(repo.flagWrites, [expected.flags]);
+  });
+
+  testWidgets('each question carries a business example', (tester) async {
+    await _pump(tester);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('setup-question-issue_invoices')),
+        matching: find.textContaining('numbered invoice'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('the summary counts the open answers and takes the focus to '
+      'the first, unfolding its group', (tester) async {
+    await _pump(tester);
+    expect(find.byKey(const ValueKey('form-error-summary-go')), findsNothing);
+    await tester.tap(
+      find.byKey(const ValueKey('setup-question-door_tablet-unknown')),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('form-error-summary-go')));
+    await tester.pumpAndSettle();
+    final question = find.byKey(const ValueKey('setup-question-door_tablet'));
+    expect(question, findsOneWidget);
+    final focused = FocusManager.instance.primaryFocus?.context;
+    expect(
+      focused != null &&
+          find
+              .ancestor(
+                of: find.byElementPredicate((e) => e == focused),
+                matching: question,
+              )
+              .evaluate()
+              .isNotEmpty,
+      isTrue,
+      reason: 'the focus is on the first open question',
+    );
   });
 }
 

@@ -168,6 +168,10 @@ abstract class FakeWorkspaceState {
   final flagExpectations = <Map<String, bool>?>[];
   bool flagConflictNext = false;
 
+  /// #3283 — the next flag write fails with this (a lost connection, or the
+  /// server's refusal once the right was withdrawn); nothing is written.
+  Exception? flagWriteErrorNext;
+
   /// Every flag map handed to [setFeatureFlags], in order (#963 pins
   /// that a toggle writes only what it changes).
   final List<Map<String, bool>> flagWrites = [];
