@@ -84,6 +84,15 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
+  "notesFilterUnreadCount": "Unread ({count})",
+  "@notesFilterUnreadCount": {
+    "description": "Filter chip: unread notes with their count, e.g. \"Unread (3)\".",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "notesFilterEmpty": "No unread messages — all caught up.",
   "@notesFilterEmpty": {
     "description": "Empty state of the unread filter (#539)"

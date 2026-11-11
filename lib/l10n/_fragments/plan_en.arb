@@ -280,6 +280,15 @@
   "@planToLabel": {
     "description": "Tooltip of the browse-window end time chip in the plan header (#184)"
   },
+  "planToTime": "To {time}",
+  "@planToTime": {
+    "description": "The end time of a booking period on its button, e.g. \"To 17:30\".",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "planEndBeforeStart": "End must be after start.",
   "@planEndBeforeStart": {
     "description": "Snackbar when the picked browse-window end is not after its start (#184)"

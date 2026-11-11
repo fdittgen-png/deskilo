@@ -40,10 +40,7 @@
   "@deploymentKindConfiguration": {
     "description": "#988/#990 deployments: deploymentKindConfiguration"
   },
-  "deploymentRequires": "richiede",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
-  },
+  "deploymentRequiresList": "richiede {entities}",
   "deploymentToProd": "Distribuisci in PROD…",
   "@deploymentToProd": {
     "description": "#988/#990 deployments: deploymentToProd"

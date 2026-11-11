@@ -54,8 +54,7 @@ class InstanceRuntimeSection extends ConsumerWidget {
         if (!o.enabled && o.blockers.isNotEmpty)
           Text(
             key: const ValueKey('instance-blockers'),
-            l10n.sentencePair(
-              l10n.instanceBlockers,
+            l10n.instanceBlockersList(
               o.blockers.map((b) => _blocker(l10n, b)).join(', '),
             ),
           ),

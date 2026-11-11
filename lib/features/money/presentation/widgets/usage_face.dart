@@ -142,16 +142,10 @@ class UsageRecordCard extends ConsumerWidget {
             const SizedBox(height: 2),
             Text(
               [
-                l10n.sentencePair(
-                  l10n.usageBooked,
-                  usageDuration(record.reservedMinutes),
-                ),
+                l10n.usageBookedDuration(usageDuration(record.reservedMinutes)),
                 if (record.actualMinutes case final actual?)
-                  l10n.sentencePair(l10n.usagePresent, usageDuration(actual)),
-                l10n.sentencePair(
-                  l10n.usageBilled,
-                  usageDuration(record.countedMinutes),
-                ),
+                  l10n.usagePresentDuration(usageDuration(actual)),
+                l10n.usageBilledDuration(usageDuration(record.countedMinutes)),
               ].join(' · '),
               style: theme.textTheme.bodySmall
                   ?.copyWith(color: theme.colorScheme.onSurfaceVariant),

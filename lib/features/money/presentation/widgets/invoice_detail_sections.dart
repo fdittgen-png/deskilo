@@ -286,8 +286,7 @@ class InvoiceDetailSections {
           ),
         ),
       line(
-        l10n.sentencePair(
-        l10n.invoicePdfSignature,
+        l10n.invoicePdfSignatureValue(
         '${invoice.signature.substring(0, invoice.signature.length < 12 ? invoice.signature.length : 12)}…',
       ),
       ),

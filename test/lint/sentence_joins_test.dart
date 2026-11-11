@@ -48,6 +48,38 @@ void main() {
     });
   });
 
+  group('a space-only shared pattern is a join in another form', () {
+    test('planted (d): sentencePair with a translated piece', () {
+      expect(
+        sentenceJoins(_fn('  return l10n.sentencePair(l10n.booked, a);')),
+        hasLength(1),
+      );
+    });
+
+    test('sentencePair with a translated local', () {
+      expect(
+        sentenceJoins(
+          _fn(
+            '  final label = l10n.booked;\n'
+            '  return l10n.sentencePair(label, a);',
+          ),
+        ),
+        hasLength(1),
+      );
+    });
+
+    test('labelWithValue and titleDashDetail carry a separator', () {
+      expect(
+        sentenceJoins(_fn('  return l10n.labelWithValue(l10n.x, a);')),
+        isEmpty,
+      );
+      expect(
+        sentenceJoins(_fn('  return l10n.titleDashDetail(l10n.x, a);')),
+        isEmpty,
+      );
+    });
+  });
+
   group('independent pieces are allowed', () {
     test('the allowed separators', () {
       for (final sep in [' · ', ' | ', r'\n']) {
@@ -62,13 +94,6 @@ void main() {
     test('adjacent literals joined by an allowed separator', () {
       expect(
         sentenceJoins(_fn("  return '\${l10n.x} · '\n      '\$a';")),
-        isEmpty,
-      );
-    });
-
-    test('a shared pattern message call is not a join', () {
-      expect(
-        sentenceJoins(_fn('  return l10n.labelWithValue(l10n.x, a);')),
         isEmpty,
       );
     });

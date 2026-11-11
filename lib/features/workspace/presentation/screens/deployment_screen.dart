@@ -212,8 +212,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
             subtitle: entity.requires.isEmpty
                 ? null
                 : Text(
-                    l10n.sentencePair(
-                        l10n.deploymentRequires,
+                    l10n.deploymentRequiresList(
                         entity.requires
                             .map((r) => _deploymentEntityName(l10n, r))
                             .join(', '),

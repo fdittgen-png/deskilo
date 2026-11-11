@@ -139,10 +139,7 @@ class EventsFilterBar extends ConsumerWidget {
                         label: Text(
                           unreadCount == 0
                               ? l10n.notesFilterUnread
-                              : l10n.sentencePair(
-                                  l10n.notesFilterUnread,
-                                  '($unreadCount)',
-                                ),
+                              : l10n.notesFilterUnreadCount(unreadCount),
                         ),
                         selected: filter.read == ReadFilter.unread,
                         visualDensity: VisualDensity.compact,

@@ -136,13 +136,23 @@
   "@editorOfficeNameLabel": {
     "description": "Label of the office-name input"
   },
-  "editorOfficeNameDefault": "Office",
-  "@editorOfficeNameDefault": {
-    "description": "Default office name prefix; a number is appended"
+  "editorOfficeNameNumbered": "Office {number}",
+  "@editorOfficeNameNumbered": {
+    "description": "Default name of a new office: the next number, e.g. \"Office 3\".",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
   },
-  "editorDeskNameDefault": "Desk",
-  "@editorDeskNameDefault": {
-    "description": "Default desk name prefix; a number is appended"
+  "editorDeskNameNumbered": "Desk {number}",
+  "@editorDeskNameNumbered": {
+    "description": "Default name of a new desk: the next number, e.g. \"Desk 2\".",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
   },
   "editorDeskNameLabel": "Desk name",
   "@editorDeskNameLabel": {

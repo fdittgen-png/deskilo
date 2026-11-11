@@ -9,11 +9,14 @@
 // The source is parsed with the analyzer, so a join is classified by its
 // expression, not by its line: adjacent literals, an interpolation and a
 // `+` chain are one sequence of text and values.
+import 'dart:convert';
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/source/line_info.dart';
+
+import 'lint_sources.dart';
 
 /// A translated read: `l10n.key`, `l10n?.key`, `strings.key`,
 /// `context.l10n.key`.
@@ -26,6 +29,27 @@ final RegExp _controlTag = RegExp(
   r'\{%-?\s*(?:if|elsif|else|endif|for|endfor|unless|endunless|case|when|'
   r'endcase)\b[^%{}]*-?%\}',
 );
+
+/// The shared messages whose text puts nothing but a space between its
+/// placeholders (`{first} {second}`): a join in another form. A call to one
+/// with a translated piece as an argument hides the join from the string
+/// scan, so it IS a join. Read from the English ARB fragments, so a new
+/// pattern of the same shape is covered without an edit here.
+final Set<String> _spaceOnlyPatterns = () {
+  final out = <String>{};
+  final placeholder = RegExp(r'\{\w+\}');
+  for (final f in filesWithExtension('lib/l10n/_fragments', '_en.arb')) {
+    final json = jsonDecode(f.readAsStringSync()) as Map<String, dynamic>;
+    for (final MapEntry(:key, :value) in json.entries) {
+      if (key.startsWith('@') || value is! String) continue;
+      if (placeholder.allMatches(value).length >= 2 &&
+          value.replaceAll(placeholder, '').trim().isEmpty) {
+        out.add(key);
+      }
+    }
+  }
+  return out;
+}();
 
 /// One piece of a string expression: literal text, or a value (then [expr]
 /// is set and [text] is its source).
@@ -140,6 +164,24 @@ class _JoinFinder extends RecursiveAstVisitor<void> {
         return;
       }
     }
+  }
+
+  @override
+  void visitMethodInvocation(MethodInvocation node) {
+    if (_spaceOnlyPatterns.contains(node.methodName.name)) {
+      final locals = _translatedLocals(node);
+      final translated = node.argumentList.arguments.any((a) {
+        final src = a.toSource();
+        return _read.hasMatch(src) ||
+            (a is SimpleIdentifier && locals.contains(src));
+      });
+      if (translated) {
+        final src = node.toSource().replaceAll('\n', ' ');
+        final line = lineInfo.getLocation(node.offset).lineNumber;
+        out.add('$line: ${src.length > 90 ? src.substring(0, 90) : src}');
+      }
+    }
+    super.visitMethodInvocation(node);
   }
 
   @override

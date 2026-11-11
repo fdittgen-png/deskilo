@@ -4667,10 +4667,7 @@
   "@deploymentPullFromProd": {
     "description": "#998 deployment pull: deploymentPullFromProd"
   },
-  "deploymentRequires": "braucht",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
-  },
+  "deploymentRequiresList": "braucht {entities}",
   "deploymentRollback": "Zurückrollen",
   "@deploymentRollback": {
     "description": "#988/#990 deployments: deploymentRollback"
@@ -5305,8 +5302,8 @@
     "description": "#587 delete despite reservations — audit substitution warning"
   },
   "editorDeskFull": "Auf diesem Tisch ist kein Platz mehr.",
-  "editorDeskNameDefault": "Tisch",
   "editorDeskNameLabel": "Name des Tisches",
+  "editorDeskNameNumbered": "Tisch {number}",
   "editorDeskProperties": "Tisch",
   "editorDuplicate": "Duplizieren",
   "editorEmptyFloorAction": "Ersten Raum zeichnen",
@@ -5327,8 +5324,8 @@
   "editorNoAccessories": "Noch kein Zubehör — legen Sie es unter Einstellungen → Zubehör an.",
   "editorNoAccessoriesAction": "Noch keine Ausstattung — jetzt einrichten",
   "editorNoLevels": "Noch keine Etagen. Fügen Sie die erste Etage Ihres Workspace hinzu.",
-  "editorOfficeNameDefault": "Büro",
   "editorOfficeNameLabel": "Name des Büros",
+  "editorOfficeNameNumbered": "Büro {number}",
   "editorOfficeProperties": "Büro",
   "editorOpenTooltip": "Workspace bearbeiten",
   "editorOrientationHint": "Wohin der Stuhl auf dem Plan schaut.",
@@ -8091,7 +8088,7 @@
   "instanceAttentionUnrecorded": "DesKilo-Tabellen sind vorhanden, aber keine Migration wurde erfasst. Erfassen Sie zuerst den Stand mit `dart run tool/instance.dart record`.",
   "instanceBlock": "Sperren",
   "instanceBlockerNoAdmin": "ein Datenbankadministrator",
-  "instanceBlockers": "Es fehlt noch:",
+  "instanceBlockersList": "Es fehlt noch: {blockers}",
   "instanceCheckToken": "Token prüfen",
   "@instanceCheckToken": {
     "description": "#977 instance wizard: instanceCheckToken"
@@ -9366,12 +9363,13 @@
     }
   },
   "invoicePdfSignature": "Dokument-Fingerabdruck (SHA-256)",
+  "invoicePdfSignatureValue": "Dokument-Fingerabdruck (SHA-256) {fingerprint}",
   "invoicePdfSubtotal": "Zwischensumme",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
   },
   "invoicePdfTitle": "Rechnung",
-  "invoicePdfVoided": "FEHLERHAFT — storniert am",
+  "invoicePdfVoidedOn": "FEHLERHAFT — storniert am {date}",
   "invoicePickMember": "Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.",
   "invoicePreviewUnavailable": "Die Vorschau konnte nicht gelesen werden, daher wird nichts angezeigt und nichts kann ausgestellt werden. Monat wechseln oder erneut versuchen.",
   "invoiceProformaAction": "Proforma-Rechnung",
@@ -9483,6 +9481,7 @@
     "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
   },
   "invoiceSendRejected": "Die Plattform hat sie abgelehnt.",
+  "invoiceSendRejectedDetail": "Die Plattform hat sie abgelehnt. {detail}",
   "invoiceSendStatusAccepted": "angenommen",
   "invoiceSendStatusFailed": "nicht übermittelt",
   "invoiceSendStatusInProgress": "in Bearbeitung",
@@ -12407,6 +12406,7 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
+  "notesFilterUnreadCount": "Ungelesen ({count})",
   "notifCategoryCheckIns": "Check-ins",
   "notifCategoryMembers": "Mitglieder",
   "notifCategoryMoney": "Finanzen",
@@ -13176,6 +13176,7 @@
   "planStateFree": "Frei",
   "planStateYours": "Ihrer",
   "planToLabel": "Bis",
+  "planToTime": "Bis {time}",
   "planUntil": "bis {time}",
   "planUntilDateLabel": "Wiederholen bis",
   "planUntilLabel": "Bis",
@@ -19912,8 +19913,8 @@
   "usageAskExplain": "Sie haben {booked} gebucht und waren {present} da. Bitten Sie darum, die nicht genutzten {saved} nicht zu berechnen. Jemand anderes entscheidet — nie Sie.",
   "usageAskSubmit": "Anfragen",
   "usageAskSubmitted": "Angefragt. Jemand anderes entscheidet.",
-  "usageBilled": "Berechnet",
-  "usageBooked": "Gebucht",
+  "usageBilledDuration": "Berechnet {duration}",
+  "usageBookedDuration": "Gebucht {duration}",
   "usageCorrected": "Korrigiert",
   "usageDelete": "Diesen Satz entfernen",
   "usageDeleteSubmitted": "Entfernung angefragt.",
@@ -19948,7 +19949,7 @@
       }
     }
   },
-  "usagePresent": "Anwesend",
+  "usagePresentDuration": "Anwesend {duration}",
   "usageReasonLabel": "Warum (optional)",
   "usageReportButton": "Verbrauchsbericht des Monats",
   "@usageReportButton": {

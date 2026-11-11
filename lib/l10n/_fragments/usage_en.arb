@@ -8,17 +8,32 @@
   "@usageEmpty": {
     "description": "#833 - no usage records this month"
   },
-  "usageBooked": "Booked",
-  "@usageBooked": {
-    "description": "#833 - the reserved window"
+  "usageBookedDuration": "Booked {duration}",
+  "@usageBookedDuration": {
+    "description": "Usage row: the reserved duration, e.g. \"Booked 2 h\".",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   },
-  "usagePresent": "Present",
-  "@usagePresent": {
-    "description": "#833 - time actually checked in"
+  "usagePresentDuration": "Present {duration}",
+  "@usagePresentDuration": {
+    "description": "Usage row: the time actually present, e.g. \"Present 1 h\".",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   },
-  "usageBilled": "Billed",
-  "@usageBilled": {
-    "description": "#833 - the time that bills"
+  "usageBilledDuration": "Billed {duration}",
+  "@usageBilledDuration": {
+    "description": "Usage row: the billed duration, e.g. \"Billed 2 h\".",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   },
   "usageNoShow": "Nobody checked in — the booking bills in full",
   "@usageNoShow": {

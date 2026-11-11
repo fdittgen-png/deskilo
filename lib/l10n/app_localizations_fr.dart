@@ -7323,7 +7323,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deploymentPullFromProd => 'Tirer depuis la PROD…';
 
   @override
-  String get deploymentRequires => 'nécessite';
+  String deploymentRequiresList(String entities) {
+    return 'nécessite $entities';
+  }
 
   @override
   String get deploymentRollback => 'Revenir en arrière';
@@ -8184,10 +8186,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get editorDeskFull => 'Plus de place sur cette table.';
 
   @override
-  String get editorDeskNameDefault => 'Table';
+  String get editorDeskNameLabel => 'Nom de la table';
 
   @override
-  String get editorDeskNameLabel => 'Nom de la table';
+  String editorDeskNameNumbered(int number) {
+    return 'Table $number';
+  }
 
   @override
   String get editorDeskProperties => 'Table';
@@ -8256,10 +8260,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun étage pour l\'instant. Ajoutez le premier étage de votre espace.';
 
   @override
-  String get editorOfficeNameDefault => 'Bureau';
+  String get editorOfficeNameLabel => 'Nom du bureau';
 
   @override
-  String get editorOfficeNameLabel => 'Nom du bureau';
+  String editorOfficeNameNumbered(int number) {
+    return 'Bureau $number';
+  }
 
   @override
   String get editorOfficeProperties => 'Bureau';
@@ -13060,7 +13066,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get instanceBlockerNoAdmin => 'un administrateur de la base';
 
   @override
-  String get instanceBlockers => 'Il manque encore :';
+  String instanceBlockersList(String blockers) {
+    return 'Il manque encore : $blockers';
+  }
 
   @override
   String get instanceCheckToken => 'Vérifier le jeton';
@@ -15227,13 +15235,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicePdfSignature => 'Empreinte du document (SHA-256)';
 
   @override
+  String invoicePdfSignatureValue(String fingerprint) {
+    return 'Empreinte du document (SHA-256) $fingerprint';
+  }
+
+  @override
   String get invoicePdfSubtotal => 'Sous-total';
 
   @override
   String get invoicePdfTitle => 'Facture';
 
   @override
-  String get invoicePdfVoided => 'ERRONÉE — annulée le';
+  String invoicePdfVoidedOn(String date) {
+    return 'ERRONÉE — annulée le $date';
+  }
 
   @override
   String get invoicePickMember =>
@@ -15360,6 +15375,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceSendRejected => 'La plateforme l’a refusée.';
+
+  @override
+  String invoiceSendRejectedDetail(String detail) {
+    return 'La plateforme l’a refusée. $detail';
+  }
 
   @override
   String get invoiceSendStatusAccepted => 'acceptée';
@@ -20469,6 +20489,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notesFilterUnread => 'Non lus';
 
   @override
+  String notesFilterUnreadCount(int count) {
+    return 'Non lus ($count)';
+  }
+
+  @override
   String get notifCategoryCheckIns => 'Check-ins';
 
   @override
@@ -21704,6 +21729,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get planToLabel => 'À';
+
+  @override
+  String planToTime(String time) {
+    return 'À $time';
+  }
 
   @override
   String planUntil(String time) {
@@ -32810,10 +32840,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get usageAskSubmitted => 'Demandé. Quelqu\'un d\'autre décide.';
 
   @override
-  String get usageBilled => 'Facturé';
+  String usageBilledDuration(String duration) {
+    return 'Facturé $duration';
+  }
 
   @override
-  String get usageBooked => 'Réservé';
+  String usageBookedDuration(String duration) {
+    return 'Réservé $duration';
+  }
 
   @override
   String get usageCorrected => 'Corrigé';
@@ -32865,7 +32899,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get usagePresent => 'Présent';
+  String usagePresentDuration(String duration) {
+    return 'Présent $duration';
+  }
 
   @override
   String get usageReasonLabel => 'Pourquoi (facultatif)';
