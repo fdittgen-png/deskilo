@@ -183,3 +183,44 @@ final class MemberCreditBalanceFamily extends $Family
   @override
   String toString() => r'memberCreditBalanceProvider';
 }
+
+/// #3283 — the days this month the workspace is open (its open weekdays
+/// less its closures), the basis a percentage level is explained on.
+
+@ProviderFor(monthOpenDays)
+final monthOpenDaysProvider = MonthOpenDaysProvider._();
+
+/// #3283 — the days this month the workspace is open (its open weekdays
+/// less its closures), the basis a percentage level is explained on.
+
+final class MonthOpenDaysProvider
+    extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
+    with $FutureModifier<int>, $FutureProvider<int> {
+  /// #3283 — the days this month the workspace is open (its open weekdays
+  /// less its closures), the basis a percentage level is explained on.
+  MonthOpenDaysProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'monthOpenDaysProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$monthOpenDaysHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<int> create(Ref ref) {
+    return monthOpenDays(ref);
+  }
+}
+
+String _$monthOpenDaysHash() => r'46ed20762d0ebd2b64e2133549dd021195bf3263';

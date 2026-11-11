@@ -9,7 +9,7 @@
 import 'package:deskilo/app/routes/setup_run_pages.dart';
 import 'package:deskilo/features/money/domain/member_price_list.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
-import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

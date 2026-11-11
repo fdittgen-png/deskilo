@@ -30,7 +30,6 @@ import '../domain/fee_band.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
-import '../domain/member_price_list.dart' show openDaysIn;
 import '../domain/money_repository.dart';
 import '../domain/number_sequence.dart';
 import '../domain/package.dart';
@@ -598,15 +597,3 @@ Future<RepartitionRule> repartitionRule(Ref ref) async {
 @riverpod
 Map<String, String> memberLabels(Ref ref) =>
     ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
-
-/// #3283 — the days this month the workspace is open (its open weekdays
-/// less its closures), the basis a percentage level is explained on.
-@riverpod
-Future<int> monthOpenDays(Ref ref) async {
-  final now = ref.watch(clockProvider).now();
-  return openDaysIn(
-    DateTime(now.year, now.month),
-    await ref.watch(openWeekdaysProvider.future),
-    [for (final c in await ref.watch(closureDaysProvider.future)) c.day],
-  );
-}

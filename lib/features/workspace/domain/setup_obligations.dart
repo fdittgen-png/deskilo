@@ -10,6 +10,7 @@
 // explain the questions they belong to. `web/setup.html` shows the same
 // rows, written out from the bundled copy by `tool/build_setup_l10n.dart`.
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
+import 'package:meta/meta.dart';
 import '../../../core/vat/tax_reference_active.dart';
 
 enum SetupObligationKind {
@@ -110,6 +111,7 @@ List<SetupObligation> setupObligations(
 /// #3283 — the law a row cites, as an owner reads it: the reference store's
 /// notes for its maintainers (a code file, an issue number) are left out,
 /// the citation itself is kept word for word.
+@visibleForTesting
 String readableSource(String raw) {
   var s = raw
       // "einvoice_mandates.dart (#2358): …" and "#2362: …" lead a note.
