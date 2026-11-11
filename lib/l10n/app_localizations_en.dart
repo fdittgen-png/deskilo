@@ -6632,6 +6632,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get demoSessionBadge => 'Demo';
 
   @override
+  String demoSessionBadgeDate(String date) {
+    return 'Demo · $date';
+  }
+
+  @override
   String get demoSessionBadgeHint =>
       'You are exploring a demonstration space. Nothing here leaves this device.';
 

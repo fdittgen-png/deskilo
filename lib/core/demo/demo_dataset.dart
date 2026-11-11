@@ -9,8 +9,9 @@
 // value is obviously fictional, so a screenshot is safe to publish.
 //
 // Everything is placed relative to [DemoFixture.seededAt], never to a
-// literal date, so a demo opened next year still shows a booking for
-// today (ADR 0028).
+// literal date. The demo's "today" is fixed on one day (13 May 2026, see
+// fixture_clock.dart) whatever the real date, so the story always has a
+// booking for today; the Demo bar names that date (ADR 0028, #3601).
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
@@ -482,6 +483,12 @@ List<String> validateDemoFixture({
   for (final invoice in money.invoices) {
     if (!memberIds.contains(invoice.memberId)) {
       problems.add('invoice ${invoice.number}: no member ${invoice.memberId}');
+    }
+    // #3601 — the customer named on an invoice is the member it belongs to.
+    final named = workspaces.memberNames[invoice.memberId];
+    if (named != null && invoice.memberName != named) {
+      problems.add('invoice ${invoice.number}: names "${invoice.memberName}" '
+          'but member ${invoice.memberId} is "$named"');
     }
     // A credit note is negative by nature, and names what it corrects.
     final creditNote =

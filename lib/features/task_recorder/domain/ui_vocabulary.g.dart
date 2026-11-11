@@ -775,6 +775,7 @@ const Set<String> uiKeys = {
   'demo-badge-bruno',
   'demo-badge-chiara',
   'demo-badge-chiara-lost',
+  'demo-bar-date',
   'demo-bill-approval',
   'demo-bill-approval-fx',
   'demo-bill-bank',

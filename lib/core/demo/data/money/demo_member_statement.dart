@@ -157,6 +157,10 @@ Statement demoMemberStatement(
       .where((e) =>
           e.memberId == memberId &&
           e.period == period &&
+          // #3601 — the subscription is charged once: by the fee band above.
+          // Its ledger line is what the invoicing wizard bills, not a second
+          // charge of the same month.
+          e.category != LedgerCategory.subscription &&
           (e.kind != LedgerKind.credit || !consumed.contains(e.id)))
       .fold(0, (int n, e) =>
           n + (e.kind == LedgerKind.credit ? e.amountCents : -e.amountCents));

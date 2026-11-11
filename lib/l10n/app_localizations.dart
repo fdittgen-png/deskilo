@@ -10902,6 +10902,12 @@ abstract class AppLocalizations {
   /// **'Demo'**
   String get demoSessionBadge;
 
+  /// The demo bar names the date the demonstration is fixed at: the demo shows one invented day, whatever the date really is.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo · {date}'**
+  String demoSessionBadgeDate(String date);
+
   /// #1375 demo session: demoSessionBadgeHint
   ///
   /// In en, this message translates to:

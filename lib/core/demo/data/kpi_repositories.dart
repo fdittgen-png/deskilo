@@ -12,8 +12,9 @@ import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
-
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../features/workspace/domain/closure_day.dart';
 import 'floor_plan_repository.dart';
 import 'purchase_repository.dart';
 import 'reservation_repository.dart';
@@ -26,7 +27,12 @@ class DemoCapacityKpiRepository implements KpiRepository {
     required this.plan,
     required this.reservations,
     required this.now,
+    this.closureDays = const [],
   });
+
+  /// The space's closure days: a closed day offers no seat-hour (#3601), as
+  /// the KPI's own definition says ("minus closure days").
+  final Iterable<ClosureDay> closureDays;
 
   final FakeFloorPlanRepository plan;
   final FakeReservationRepository reservations;
@@ -56,10 +62,18 @@ class DemoCapacityKpiRepository implements KpiRepository {
             desks.contains(s.deskId))
           s.id,
     };
+    final closed = {
+      for (final c in closureDays)
+        if (c.workspaceId == workspaceId)
+          DateTime(c.day.year, c.day.month, c.day.day),
+    };
     var days = 0, openDays = 0;
     for (var d = from; d.isBefore(to); d = d.add(const Duration(days: 1))) {
       days++;
-      if (d.weekday <= DateTime.friday) openDays++;
+      if (d.weekday <= DateTime.friday &&
+          !closed.contains(DateTime(d.year, d.month, d.day))) {
+        openDays++;
+      }
     }
     var reserved = 0.0;
     for (final r in reservations.reservations) {

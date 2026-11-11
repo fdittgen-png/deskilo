@@ -258,7 +258,7 @@ void _seedUsageInvoices(FakeMoneyRepository money, DateTime now) {
       _line('Parking P2, 9 days', 5400, 20),
       _line('EV charging, 71 kWh', 2485, 20),
     ], 2),
-    _usageInvoice('demo-usage-bruno', 'member-2', 'Bruno Okafor', lastMonth, [
+    _usageInvoice('demo-usage-bruno', 'member-2', 'Bruno Kessler', lastMonth, [
       _line('Parking P1, 4 days', 2400, 20),
     ], 3),
   ]);

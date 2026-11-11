@@ -8914,6 +8914,16 @@
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
   },
+  "demoSessionBadgeDate": "Demo · {date}",
+  "@demoSessionBadgeDate": {
+    "description": "The demo bar names the date the demonstration is fixed at: the demo shows one invented day, whatever the date really is.",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "May 13, 2026"
+      }
+    }
+  },
   "demoSessionBadgeHint": "You are exploring a demonstration space. Nothing here leaves this device.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
