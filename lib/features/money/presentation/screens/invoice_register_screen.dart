@@ -86,16 +86,21 @@ class _InvoiceRegisterScreenState
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final invoicesAsync = ref.watch(invoicesProvider);
-    final rawMatches = ref.watch(invoiceMatchesProvider).value ?? const {};
+    final matchesAsync = ref.watch(invoiceMatchesProvider);
+    final remindersAsync = ref.watch(invoiceRemindersProvider);
+    // #3680 — a row's status reads the matches and reminders: the table is
+    // drawn only when they answered (an unread match is not "open").
+    final statuses = ReadsAnswer.of([matchesAsync, remindersAsync]);
+    final rawMatches = matchesAsync.value ?? const {}; // empty-ok: the table waits for `statuses`
     // #831 — a regrouped invoice reads paid through its settlement; the
     // settlement row keeps its own status.
     final matches = {
       ...rawMatches,
       ...accountingView(
-              ref.watch(invoicesProvider).value ?? const [], rawMatches)
+              invoicesAsync.value ?? const [], rawMatches) // empty-ok: the table waits for the invoices (AsyncReadBody)
           .matches,
     };
-    final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
+    final reminders = remindersAsync.value ?? const {}; // empty-ok: the table waits for `statuses`
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;
     final permissions = ref.watch(myPermissionsProvider);
@@ -128,10 +133,11 @@ class _InvoiceRegisterScreenState
               icon: const Icon(Icons.plagiarism_outlined),
               // #3061 — one export at a time: the button is off from the
               // tap until the run ends, however it ends.
-              onPressed: _exporting
+              // #3680 — nothing to export before the invoices answered.
+              onPressed: _exporting || !invoicesAsync.hasValue
                   ? null
                   : () => _export(
-                      _visible(invoicesAsync.value ?? const [], canIssue || canExport),
+                      _visible(invoicesAsync.requireValue, canIssue || canExport),
                       label: _year?.toString() ??
                           (_period == null
                               ? l10n.invoiceRegisterAllYears
@@ -147,7 +153,13 @@ class _InvoiceRegisterScreenState
           child: AsyncReadBody<List<Invoice>>(
             value: invoicesAsync,
             onRetry: () => ref.invalidate(invoicesProvider),
-            data: (invoices) => _table(
+            data: (invoices) =>
+                statuses.standIn(
+                  onRetry: () => ref
+                    ..invalidate(invoiceMatchesProvider)
+                    ..invalidate(invoiceRemindersProvider),
+                ) ??
+                _table(
               context,
               l10n,
               invoices: _visible(invoices, canIssue),

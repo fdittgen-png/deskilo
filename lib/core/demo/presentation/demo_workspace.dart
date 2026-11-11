@@ -256,7 +256,7 @@ class DemoControls extends StatelessWidget {
                     // "why can I not see that button" always has an
                     // answer in view.
                     label: Text(personaLabel(l10n, persona)),
-                    onPressed: () => env.onViewAs(_next(persona)),
+                    onPressed: () => viewAs(context, env, _next(persona)),
                   ),
                   TextButton.icon(
                     key: resetKey,
@@ -284,10 +284,24 @@ class DemoControls extends StatelessWidget {
     );
   }
 
-  /// Puts the demo back as it started, and says so.
+  /// Looks through [persona]. What was said to the previous one goes first
+  /// (#3286): a message, or its action, of the old viewpoint never shows in
+  /// the new one.
+  static void viewAs(
+    BuildContext context,
+    DemoEnvironment env,
+    DemoPersona persona,
+  ) {
+    ScaffoldMessenger.maybeOf(context)?.clearSnackBars();
+    env.onViewAs(persona);
+  }
+
+  /// Puts the demo back as it started, and says so. The messages of the
+  /// session that ends go first (#3286); the notice of the reset stays.
   static void resetWithNotice(BuildContext context, DemoEnvironment env) {
     final l10n = context.l10n;
     final messenger = ScaffoldMessenger.maybeOf(context);
+    messenger?.clearSnackBars();
     env.onReset();
     messenger?.showSnackBar(
       SnackBar(

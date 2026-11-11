@@ -67,5 +67,9 @@
   "personalInfoPreview": "On your documents",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
+  },
+  "personalInfoCompanyScope": "Applies to your whole account, not to one workspace.",
+  "@personalInfoCompanyScope": {
+    "description": "#3281 personalInfoCompanyScope"
   }
 }

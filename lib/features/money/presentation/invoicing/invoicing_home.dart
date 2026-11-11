@@ -37,7 +37,10 @@ enum InvoicingSource {
   transmissions,
   credits,
   payments,
-  toInvoice;
+  toInvoice,
+
+  /// #3680 — the customers' payment declarations (read from the events).
+  declarations;
 
   /// The sources every invoice's status, amount owed and action is read
   /// from: while one of them failed, no figure, list or action of the
@@ -49,6 +52,7 @@ enum InvoicingSource {
     holds,
     transmissions,
     credits,
+    declarations,
   };
 }
 

@@ -12,6 +12,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
@@ -80,12 +81,14 @@ class SuppliersView extends ConsumerWidget {
       return;
     }
     final command = ref.read(supplierCommandProvider);
+    final existing = await ref.read(suppliersProvider(workspaceId).future);
+    if (!context.mounted) return;
     final result = await showSupplierDialog(
       context,
       supplier,
       reference: reference,
       lookupWorkspaceId: lookupOn ? workspaceId : null,
-      existing: ref.read(suppliersProvider(workspaceId)).value ?? const [],
+      existing: existing,
       onSave: (draft) => command.save(workspaceId, draft),
     );
     if (result == null || !context.mounted) return;
@@ -185,8 +188,13 @@ class SuppliersView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final all =
-        ref.watch(suppliersProvider(workspaceId)).value ?? const <Supplier>[];
+    final allRead = ref.watch(suppliersProvider(workspaceId));
+    // #3680 — the list as read, or its failure: never "no supplier".
+    final standIn = ReadsAnswer.of([allRead]).standIn(
+      onRetry: () => ref.invalidate(suppliersProvider(workspaceId)),
+    );
+    if (standIn != null) return standIn;
+    final all = allRead.requireValue;
     final needle = query.trim().toLowerCase();
     final suppliers = needle.isEmpty
         ? all

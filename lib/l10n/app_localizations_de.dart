@@ -11403,6 +11403,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesYourCredit => 'Ihr Guthaben';
 
   @override
+  String get formErrorSummaryGoTo => 'Zum ersten Problem';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Felder brauchen Ihre Aufmerksamkeit',
+      one: '1 Feld braucht Ihre Aufmerksamkeit',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.';
 
@@ -12024,7 +12038,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get helpContents => 'Inhalt';
 
   @override
-  String get helpDotTooltip => 'Handbuch öffnen';
+  String helpDotTooltipFor(String topic) {
+    return 'Handbuch öffnen: $topic';
+  }
 
   @override
   String get helpGuidedTasks => 'Geführte Aufgaben';
@@ -15352,6 +15368,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingSourceCredits => 'Guthaben der Kunden';
 
   @override
+  String get invoicingSourceDeclarations => 'Zahlungsmeldungen';
+
+  @override
   String invoicingSourceFailed(String source) {
     return '$source konnte nicht gelesen werden.';
   }
@@ -18334,6 +18353,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meFinanceGlanceOwed => 'Zu zahlen:';
 
   @override
+  String get meFinanceGlanceSemantics => 'Zu zahlen: meine Finanzen öffnen';
+
+  @override
   String get meFindPlaceBrowse => 'Orte ansehen';
 
   @override
@@ -18368,10 +18390,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meGroupDelete => 'Gruppe löschen';
-
-  @override
-  String get meGroupEmptyFavorites =>
-      'Geben Sie einem Space ein Herz, dann wartet er hier.';
 
   @override
   String get meGroupEmptyOwn => 'Verschieben Sie Spaces über ihr Menü hierher.';
@@ -20951,6 +20969,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get personalInfoCompany => 'Firma (optional)';
+
+  @override
+  String get personalInfoCompanyScope =>
+      'Gilt für Ihr ganzes Konto, nicht für einen einzelnen Arbeitsbereich.';
 
   @override
   String get personalInfoEmail => 'E-Mail für Dokumente';
@@ -33377,9 +33399,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityElsewhereTitle => 'Auf meinen anderen Servern';
 
   @override
+  String get visibilityHomeDetails => 'Details zum Zuhause';
+
+  @override
   String visibilityHomeHeader(String name) {
     return 'Persönliches Zuhause: $name';
   }
+
+  @override
+  String get visibilityHomePlain => 'Ihr persönliches Zuhause';
 
   @override
   String get visibilityIdentity => 'Name und Foto';

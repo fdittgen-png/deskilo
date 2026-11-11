@@ -79,6 +79,29 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('a message of the previous persona goes with the switch',
+      (tester) async {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: appShapedLikeTheRealOne(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    ScaffoldMessenger.of(tester.element(find.byType(Scaffold))).showSnackBar(
+      const SnackBar(content: Text('Booked')),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Booked'), findsOneWidget);
+
+    await tester.tap(find.byKey(DemoControls.viewAsKey));
+    await tester.pumpAndSettle();
+    expect(find.text('Booked'), findsNothing);
+  });
+
   testWidgets('the bar honours reduced motion, because it has no motion to '
       'reduce', (tester) async {
     // #1381 — the Demo surfaces are the bar and the entry sheet. Neither

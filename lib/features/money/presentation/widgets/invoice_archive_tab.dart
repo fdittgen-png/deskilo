@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -90,7 +91,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         invoice: invoice,
         match: match,
         settledByNumber: settledByNumberOf(
-            invoice, ref.read(invoicesProvider).value ?? const []),
+            invoice, ref.read(invoicesProvider).requireValue),
         canIssue: widget.canIssue,
         isEu: widget.isEu,
         reminder: reminder,
@@ -113,8 +114,11 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
     final l10n = context.l10n;
     final invoicesAsync = ref.watch(invoicesProvider);
     return switch (invoicesAsync) {
+      // #3680 — a row's status reads the matches and reminders: listed
+      // only when they answered.
       AsyncData(value: final invoices) =>
-        _body(context, l10n, invoices),
+        readsStandIn(ref, [invoiceMatchesProvider, invoiceRemindersProvider]) ??
+            _body(context, l10n, invoices),
       AsyncError() => Center(
           child: Text(
             l10n.workspaceGenericError,
@@ -135,8 +139,8 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
         title: l10n.invoicesEmpty,
       );
     }
-    final matches = ref.watch(invoiceMatchesProvider).value ?? const {};
-    final reminders = ref.watch(invoiceRemindersProvider).value ?? const {};
+    final matches = ref.watch(invoiceMatchesProvider).requireValue;
+    final reminders = ref.watch(invoiceRemindersProvider).requireValue;
     final dateFormat = appFormatOf(context).dates(DateShape.date);
 
     // A correction chain, never a fork (0061): who replaced whom.
@@ -236,7 +240,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   // of what was owed, reachable only from here.
                   if (!fold || invoice.settles.isEmpty) return row;
                   final all =
-                      ref.read(invoicesProvider).value ?? const <Invoice>[];
+                      ref.read(invoicesProvider).requireValue;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

@@ -11310,6 +11310,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesYourCredit => 'Your credit';
 
   @override
+  String get formErrorSummaryGoTo => 'Go to the first problem';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fields need your attention',
+      one: '1 field needs your attention',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.';
 
@@ -11922,7 +11936,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpContents => 'Contents';
 
   @override
-  String get helpDotTooltip => 'Open the guide';
+  String helpDotTooltipFor(String topic) {
+    return 'Open the guide: $topic';
+  }
 
   @override
   String get helpGuidedTasks => 'Guided tasks';
@@ -15206,6 +15222,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingSourceCredits => 'Customer credits';
 
   @override
+  String get invoicingSourceDeclarations => 'Payment declarations';
+
+  @override
   String invoicingSourceFailed(String source) {
     return '$source could not be read.';
   }
@@ -18159,6 +18178,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meFinanceGlanceOwed => 'To pay:';
 
   @override
+  String get meFinanceGlanceSemantics => 'To pay: open my finances';
+
+  @override
   String get meFindPlaceBrowse => 'Browse places';
 
   @override
@@ -18193,10 +18215,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meGroupDelete => 'Delete group';
-
-  @override
-  String get meGroupEmptyFavorites =>
-      'Give a space a heart and it waits for you here.';
 
   @override
   String get meGroupEmptyOwn => 'Move spaces here from their menu.';
@@ -20750,6 +20768,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get personalInfoCompany => 'Company (optional)';
+
+  @override
+  String get personalInfoCompanyScope =>
+      'Applies to your whole account, not to one workspace.';
 
   @override
   String get personalInfoEmail => 'E-mail for documents';
@@ -33010,9 +33032,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get visibilityElsewhereTitle => 'On my other servers';
 
   @override
+  String get visibilityHomeDetails => 'Home details';
+
+  @override
   String visibilityHomeHeader(String name) {
     return 'Personal home: $name';
   }
+
+  @override
+  String get visibilityHomePlain => 'Your personal home';
 
   @override
   String get visibilityIdentity => 'Name and photo';

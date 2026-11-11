@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/roles/audience_roles.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/room_rental.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../providers/room_rental_providers.dart';
 
 /// #2575 -- who else a rented room is open to: roles and plans as chips,
@@ -42,8 +42,13 @@ class RoomAudiencePickers extends ConsumerWidget {
     final label = Theme.of(context).textTheme.labelLarge;
     final language = Localizations.localeOf(context).languageCode;
     final roles = ref.watch(audienceRolesProvider);
-    final plans =
-        ref.watch(roomPlansProvider(workspaceId)).value ?? const <RoomPlan>[];
+    final plansRead = ref.watch(roomPlansProvider(workspaceId));
+    // #3680 — the choices are offered only from a list that was read.
+    final standIn = ReadsAnswer.of([plansRead]).standIn(
+      onRetry: () => ref.invalidate(roomPlansProvider(workspaceId)),
+    );
+    if (standIn != null) return standIn;
+    final plans = plansRead.requireValue;
     final members = ref.watch(audienceMembersProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

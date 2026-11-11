@@ -14974,6 +14974,19 @@
   "@financesYourCredit": {
     "description": "#3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them."
   },
+  "formErrorSummaryGoTo": "Go to the first problem",
+  "@formErrorSummaryGoTo": {
+    "description": "#3286 form error summary: moves the focus to the first field with a problem"
+  },
+  "formErrorSummaryTitle": "{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}",
+  "@formErrorSummaryTitle": {
+    "description": "#3286 form error summary: how many fields have a problem",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
   "@gebuevProcedureAccessBody": {
     "description": "#2377 The Swiss archive's procedures document: access logging (GeBüV art. 8)."
@@ -15822,9 +15835,15 @@
   "@helpContents": {
     "description": "Shown as a tooltip in help screen (help)."
   },
-  "helpDotTooltip": "Open the guide",
-  "@helpDotTooltip": {
-    "description": "Shown as a tooltip in help dot (core)."
+  "helpDotTooltipFor": "Open the guide: {topic}",
+  "@helpDotTooltipFor": {
+    "description": "#3286 help dot tooltip and accessible name: names the topic it documents",
+    "placeholders": {
+      "topic": {
+        "type": "String",
+        "example": "Legal identity"
+      }
+    }
   },
   "helpGuidedTasks": "Guided tasks",
   "@helpGuidedTasks": {
@@ -20008,6 +20027,10 @@
   "@invoicingSourceCredits": {
     "description": "#3587 a source name: what customers paid that no invoice has taken"
   },
+  "invoicingSourceDeclarations": "Payment declarations",
+  "@invoicingSourceDeclarations": {
+    "description": "The name of the invoicing source that could not be read: the customers' declarations that they paid (read from the events). Shown in \"{source} could not be read.\""
+  },
   "invoicingSourceFailed": "{source} could not be read.",
   "@invoicingSourceFailed": {
     "description": "#3587 one line when a source failed; no figure it fed is shown",
@@ -24005,6 +24028,10 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "To pay: open my finances",
+  "@meFinanceGlanceSemantics": {
+    "description": "#3281 meFinanceGlanceSemantics"
+  },
   "meFindPlaceBrowse": "Browse places",
   "@meFindPlaceBrowse": {
     "description": "#3545 First visit: the button that opens Discover's start state."
@@ -24059,10 +24086,6 @@
   "meGroupDelete": "Delete group",
   "@meGroupDelete": {
     "description": "Shown as a text in me spaces chrome (me)."
-  },
-  "meGroupEmptyFavorites": "Give a space a heart and it waits for you here.",
-  "@meGroupEmptyFavorites": {
-    "description": "Shown as a text in me spaces list (me)."
   },
   "meGroupEmptyOwn": "Move spaces here from their menu.",
   "@meGroupEmptyOwn": {
@@ -27501,6 +27524,10 @@
   "personalInfoCompany": "Company (optional)",
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoCompanyScope": "Applies to your whole account, not to one workspace.",
+  "@personalInfoCompanyScope": {
+    "description": "#3281 personalInfoCompanyScope"
   },
   "personalInfoEmail": "E-mail for documents",
   "@personalInfoEmail": {
@@ -43159,6 +43186,10 @@
   "@visibilityElsewhereTitle": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
   },
+  "visibilityHomeDetails": "Home details",
+  "@visibilityHomeDetails": {
+    "description": "#3281 visibilityHomeDetails"
+  },
   "visibilityHomeHeader": "Personal home: {name}",
   "@visibilityHomeHeader": {
     "description": "#2558 privacy card: names the personal home whose settings these are; name is its server address",
@@ -43168,6 +43199,10 @@
         "example": "coworkonti.example"
       }
     }
+  },
+  "visibilityHomePlain": "Your personal home",
+  "@visibilityHomePlain": {
+    "description": "#3281 visibilityHomePlain"
   },
   "visibilityIdentity": "Name and photo",
   "@visibilityIdentity": {

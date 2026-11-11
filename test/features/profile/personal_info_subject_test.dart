@@ -36,4 +36,16 @@ void main() {
     expect(find.textContaining('before their name'), findsOneWidget);
     expect(find.textContaining('before your name'), findsNothing);
   });
+
+  // #3281: the one Company field says it is the account-wide value.
+  testWidgets('Company says it is the account-wide value', (tester) async {
+    await pumpForm(tester, managed: false);
+    expect(find.text('Company (optional)'), findsOneWidget);
+    expect(
+      find.text('Applies to your whole account, not to one workspace.'),
+      findsOneWidget,
+    );
+    await pumpForm(tester, managed: true);
+    expect(find.textContaining('whole account'), findsNothing);
+  });
 }

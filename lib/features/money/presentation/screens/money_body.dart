@@ -69,7 +69,9 @@ class MoneyBody extends ConsumerWidget {
     );
     return MoneyAttentionBody(
       enabled: data.eventsTabOn,
-      child: switch (data.statementAsync) {
+      // #3680 — the bill is never drawn from a read that did not answer.
+      child: data.reads.standIn(onRetry: () => MoneyViewData.retry(ref)) ??
+          switch (data.statementAsync) {
         AsyncData() when data.financeFacesOn =>
           MoneyFacesView(
             periodHeader: periodHeader,

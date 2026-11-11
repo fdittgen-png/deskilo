@@ -596,4 +596,4 @@ Future<RepartitionRule> repartitionRule(Ref ref) async {
 /// member id -> name, for the lists that name a member (the To-pay claims).
 @riverpod
 Map<String, String> memberLabels(Ref ref) =>
-    ref.watch(memberNamesProvider).value ?? const {};
+    ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure

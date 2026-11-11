@@ -105,9 +105,12 @@ class WorkspaceSettingsReports {
           return;
         }
         final docL10n = l10nForLanguage(language);
+        // #3680 — the workspace's facts as read, awaited.
+        final facts = await readWorkspaceFacts(ref, docL10n);
+        if (!context.mounted) return;
         final data = workspaceReportData(
             reportStringsFor(context, l10n: docL10n, localeName: language),
-            workspaceFactsOf(ref, docL10n), reference: requireWorkspaceTaxReference(ref));
+            facts, reference: requireWorkspaceTaxReference(ref));
         final report = renderLetterDoc(context, ref,
             docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,

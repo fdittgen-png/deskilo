@@ -10,6 +10,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -104,10 +105,16 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final members = (ref.watch(workspaceMembersProvider).value ?? const [])
+    final membersRead = ref.watch(workspaceMembersProvider);
+    // #3680 — the choices are offered only from a list that was read.
+    final standIn = ReadsAnswer.of([membersRead]).standIn(
+      onRetry: () => ref.invalidate(workspaceMembersProvider),
+    );
+    if (standIn != null) return SafeArea(child: standIn);
+    final members = membersRead.requireValue
         .where((m) => m.status == MemberStatus.active && !m.isKiosk)
         .toList();
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     final currency = ref.watch(currentWorkspaceProvider).value?.currencyCode ?? '';
     return SafeArea(
       child: SingleChildScrollView(

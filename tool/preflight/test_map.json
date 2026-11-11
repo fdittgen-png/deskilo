@@ -5,7 +5,14 @@
       "patterns": [
         "lib/app/routes/**",
         "lib/app/route_classes.dart",
-        "lib/app/router.dart"
+        "lib/app/router.dart",
+        "lib/app/shell/shell_routes.dart",
+        "lib/app/shell/shell_destinations.dart",
+        "lib/app/route_redirect.dart",
+        "lib/app/route_access.dart",
+        "lib/app/route_policy.dart",
+        "lib/core/navigation/page_spec.dart",
+        "lib/features/me/presentation/me_personal_shell.dart"
       ],
       "tests": [
         "test/app/route_outcomes_golden_test.dart",

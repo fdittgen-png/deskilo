@@ -29,7 +29,8 @@ Future<void> openFocusedInvoice(
   final invoices = await ref.read(invoicesProvider.future);
   final invoice = invoices.where((i) => i.id == focus.invoiceId).firstOrNull;
   if (!context.mounted || invoice == null) return;
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
+  final matches = await ref.read(invoiceMatchesProvider.future);
+  if (!context.mounted) return;
   await showInvoiceDetailSheet(
     context,
     ref: ref,

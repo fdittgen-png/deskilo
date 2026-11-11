@@ -472,7 +472,8 @@ String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
   final l10n = context.l10n;
   final number = settledByNumberOf(
     invoice,
-    ref.read(invoicesProvider).value ?? const [],
+    // #3680 — a settled stamp is printed from the archive as read.
+    ref.read(invoicesProvider).requireValue,
   );
   return l10n.invoicePdfSettledIn(number);
 }
@@ -482,7 +483,8 @@ String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
 /// nothing, or when the archive has not loaded them.
 List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
   if (invoice.settles.isEmpty) return const [];
-  final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
+  // #3680 — never an empty list for an archive that did not answer.
+  final all = ref.read(invoicesProvider).requireValue;
   return [
     for (final source in invoice.settles)
       ...all.where((i) => i.id == source.invoiceId),

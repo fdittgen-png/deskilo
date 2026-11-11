@@ -9,6 +9,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/theme.dart';
 import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -137,6 +138,9 @@ Future<void> _pump(
         (ref) async => held ? const {"0063": "dispute"} : const {},
       ),
       invoiceTransmissionsProvider.overrideWith((ref) async => const {}),
+      // #3680 — the declarations are a named source of the page: answered
+      // here (the facts themselves are stubbed below).
+      eventsProvider.overrideWith((ref) async => const []),
       // One reminder shared by hand on 0063, as its history shows it.
       reminderEvidenceProvider.overrideWith(
         (ref, invoiceId) async => [

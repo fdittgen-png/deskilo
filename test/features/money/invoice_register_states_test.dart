@@ -69,6 +69,7 @@ Future<ReadProbe<List<Invoice>>> _pump(
   String? from,
   String? to,
   _Source? source,
+  ReadProbe<Map<String, InvoiceMatch>>? matches,
 }) async {
   final probe = ReadProbe<List<Invoice>>();
   await pumpStateScreen(
@@ -79,6 +80,7 @@ Future<ReadProbe<List<Invoice>>> _pump(
       invoicesProvider.overrideWith((ref) => probe()),
       testReadyWorkspaceContext(),
       if (source != null) accountingExportSourceProvider.overrideWithValue(source),
+      if (matches != null) invoiceMatchesProvider.overrideWith((ref) => matches()),
     ],
   );
   await tester.pump();
@@ -256,5 +258,28 @@ void main() {
     expect(find.textContaining('disk full'), findsNothing);
     expect(find.byKey(const ValueKey('invoice-register-period')), findsOneWidget);
     expect(tester.widget<IconButton>(export).onPressed, isNotNull);
+  });
+
+  testWidgets('#3680 — a failed read of the matches draws no row and no '
+      'status: the failure with Try again instead', (tester) async {
+    final all = await _invoices();
+    final matches = ReadProbe<Map<String, InvoiceMatch>>();
+    final probe = await _pump(tester, matches: matches);
+    probe.answer(all);
+    await tester.pump();
+    expect(find.byType(LoadingView), findsOneWidget,
+        reason: 'the statuses are still being read');
+    expect(_row(all.first), findsNothing);
+    matches.fail(const SocketException('no route'));
+    await tester.pump();
+    expect(find.byKey(_failure), findsOneWidget);
+    expect(_row(all.first), findsNothing,
+        reason: 'an unread match is not "open"');
+    await tester.tap(find.byKey(_retry));
+    await tester.pump();
+    expect(matches.calls, 2);
+    matches.answer(const {});
+    await tester.pump();
+    expect(_row(all.first), findsOneWidget);
   });
 }

@@ -323,7 +323,8 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
   /// either DOWNLOADS it or hands it to the share sheet (#474).
   Future<void> editorPdf({required bool download}) async {
     final l10n = context.l10n;
-    final invoices = ref.read(invoicesProvider).value ?? const [];
+    final invoices = await ref.read(invoicesProvider.future);
+    if (!mounted) return;
     if (invoices.isEmpty) {
       AppSnack.info(
         context,

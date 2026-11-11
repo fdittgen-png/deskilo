@@ -30,7 +30,7 @@ final _shapes = [
 
 /// The ceiling per area, as measured on 11 Nov 2026 (it only falls).
 const _ceilings = <String, int>{
-  'lib/features/money': 103,
+  'lib/features/money': 0,
   'lib/features/me': 14,
   'lib/features/reservations': 28,
 };
