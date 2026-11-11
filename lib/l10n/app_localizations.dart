@@ -3067,6 +3067,12 @@ abstract class AppLocalizations {
   /// **'Use my e-mail instead'**
   String get badgeSignInUseEmail;
 
+  /// #662 the badge sheet asks for the PIN after a scan; the person is named once the PIN is right
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN?'**
+  String get badgeSignInYourPin;
+
   /// Instruction in the tap-the-card prompt
   ///
   /// In en, this message translates to:
@@ -42879,6 +42885,18 @@ abstract class AppLocalizations {
   /// **'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.'**
   String get settingHintRetentionUsYears;
 
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'How many scans may come from one place within the badge lockout window before the scan answers wait. Can only be tightened.'**
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'How often one badge may be scanned within the badge lockout window before the scan answers wait. Can only be tightened.'**
+  String get settingHintSecurityBadgeIdentifyPerTagLimit;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -42900,7 +42918,7 @@ abstract class AppLocalizations {
   /// Shown as a text in settings labels (workspace).
   ///
   /// In en, this message translates to:
-  /// **'Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.'**
+  /// **'Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.'**
   String get settingHintSecurityBadgeWorkspaceFailureLimit;
 
   /// #2485 settings: Setting hint.
@@ -43328,6 +43346,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Record retention, US state (years)'**
   String get settingLabelRetentionUsYears;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Scans from one place'**
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Scans of one badge'**
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit;
 
   /// #2485 settings: Setting label.
   ///

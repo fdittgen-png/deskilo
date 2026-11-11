@@ -2367,6 +2367,10 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "Your PIN?",
+  "@badgeSignInYourPin": {
+    "description": "#662 the badge sheet asks for the PIN after a scan; the person is named once the PIN is right"
+  },
   "badgeTapCardHint": "Hold the RFID/NFC card to the back of the device.",
   "@badgeTapCardHint": {
     "description": "Instruction in the tap-the-card prompt"
@@ -34055,6 +34059,14 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "How many scans may come from one place within the badge lockout window before the scan answers wait. Can only be tightened.",
+  "@settingHintSecurityBadgeIdentifyPerSourceLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "How often one badge may be scanned within the badge lockout window before the scan answers wait. Can only be tightened.",
+  "@settingHintSecurityBadgeIdentifyPerTagLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
   "settingHintSecurityBadgeLockoutFailures": "How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -34067,7 +34079,7 @@
   "@settingHintSecurityBadgePinMinLength": {
     "description": "#3091 settings: Setting hint."
   },
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.",
   "@settingHintSecurityBadgeWorkspaceFailureLimit": {
     "description": "Shown as a text in settings labels (workspace)."
   },
@@ -34354,6 +34366,14 @@
   "settingLabelRetentionUsYears": "Record retention, US state (years)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
+  },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Scans from one place",
+  "@settingLabelSecurityBadgeIdentifyPerSourceLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Scans of one badge",
+  "@settingLabelSecurityBadgeIdentifyPerTagLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
   },
   "settingLabelSecurityBadgeLockoutFailures": "Badge PIN attempts before a lock",
   "@settingLabelSecurityBadgeLockoutFailures": {

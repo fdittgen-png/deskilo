@@ -4,7 +4,7 @@
   "badgePinReviewNotice": "La longitud de este PIN antiguo es desconocida o inferior al mínimo actual. Pida al miembro que lo cambie en sus propios ajustes. Su PIN actual sigue funcionando.",
   "badgePinReviewUnavailable": "El estado de revisión del PIN no está disponible. Reinténtelo antes de dar por hecho que cumple el mínimo actual.",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Límite de fallos de tarjeta del espacio",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Intentos de PIN fallidos en este espacio durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Solo se puede reducir.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -14,5 +14,9 @@
         "type": "int"
       }
     }
-  }
+  },
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Lecturas de una credencial",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Cuántas veces puede leerse una credencial durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.",
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Lecturas desde un lugar",
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Cuántas lecturas pueden venir de un mismo lugar durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir."
 }

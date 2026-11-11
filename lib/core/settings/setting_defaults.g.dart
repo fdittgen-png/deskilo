@@ -140,6 +140,10 @@ abstract final class SettingDefaults {
   static const String recordsHostingCountry = '';
   /// `retention.us_years`
   static const int retentionUsYears = 0;
+  /// `security.badge_identify_per_source_limit`
+  static const int securityBadgeIdentifyPerSourceLimit = 30;
+  /// `security.badge_identify_per_tag_limit`
+  static const int securityBadgeIdentifyPerTagLimit = 10;
   /// `security.badge_lockout_failures`
   static const int securityBadgeLockoutFailures = 5;
   /// `security.badge_lockout_minutes`

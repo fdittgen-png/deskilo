@@ -816,6 +816,7 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "Votre code PIN ?",
   "badgeTapCardHint": "Approchez la carte RFID/NFC de l'arrière de l'appareil.",
   "badgeTapCardTitle": "Enregistrer une carte",
   "badgeTokenOnce": "Enregistrez ce QR maintenant — il n'est affiché qu'une seule fois.",
@@ -16870,6 +16871,8 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Combien de lectures peuvent venir d’un même endroit pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Combien de fois un badge peut être lu pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.",
   "settingHintSecurityBadgeLockoutFailures": "Nombre d'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -16879,7 +16882,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Le moins de chiffres qu'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu'à leur changement.",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Badges différents de cet espace avec un PIN erroné pendant la période de verrouillage avant suspension et alerte des propriétaires. Un seul badge ne peut pas l’atteindre. Ce plafond peut seulement être réduit.",
   "settingHintSecurityInvitationExpiryDays": "Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -17056,6 +17059,8 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Lectures depuis un même endroit",
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Lectures d’un même badge",
   "settingLabelSecurityBadgeLockoutFailures": "Essais de code PIN du badge avant verrouillage",
   "@settingLabelSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting label."

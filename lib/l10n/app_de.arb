@@ -816,6 +816,7 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "Ihre PIN?",
   "badgeTapCardHint": "Halten Sie die RFID/NFC-Karte an die Rückseite des Geräts.",
   "badgeTapCardTitle": "Karte registrieren",
   "badgeTokenOnce": "Speichern Sie diesen QR jetzt — er wird nur einmal angezeigt.",
@@ -16870,6 +16871,8 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Wie viele Scans innerhalb des Sperrzeitraums von einem Ort kommen dürfen, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Wie oft ein Badge innerhalb des Sperrzeitraums gescannt werden darf, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.",
   "settingHintSecurityBadgeLockoutFailures": "Wie viele falsche PIN-Eingaben an einem Badge innerhalb der Sperrzeit erlaubt sind. Kann nur verringert werden.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -16879,7 +16882,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Verschiedene Badges des Bereichs mit falscher PIN innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Ein einzelnes Badge erreicht die Grenze nicht. Die Grenze kann nur gesenkt werden.",
   "settingHintSecurityInvitationExpiryDays": "Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -17056,6 +17059,8 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Scans von einem Ort",
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Scans eines Badges",
   "settingLabelSecurityBadgeLockoutFailures": "PIN-Versuche am Badge vor der Sperre",
   "@settingLabelSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting label."

@@ -4,7 +4,7 @@
   "badgePinReviewNotice": "Die Länge dieser älteren PIN ist unbekannt oder unterschreitet das aktuelle Minimum. Bitten Sie das Mitglied, sie in den eigenen Einstellungen zu ändern. Die bisherige PIN bleibt gültig.",
   "badgePinReviewUnavailable": "Der PIN-Prüfstatus ist nicht verfügbar. Versuchen Sie es erneut, bevor Sie annehmen, dass diese PIN das aktuelle Minimum erfüllt.",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Grenze für Badge-Fehlversuche im Bereich",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Verschiedene Badges des Bereichs mit falscher PIN innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Ein einzelnes Badge erreicht die Grenze nicht. Die Grenze kann nur gesenkt werden.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -14,5 +14,9 @@
         "type": "int"
       }
     }
-  }
+  },
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Scans eines Badges",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Wie oft ein Badge innerhalb des Sperrzeitraums gescannt werden darf, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.",
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Scans von einem Ort",
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Wie viele Scans innerhalb des Sperrzeitraums von einem Ort kommen dürfen, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden."
 }

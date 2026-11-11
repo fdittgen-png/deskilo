@@ -1828,6 +1828,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get badgeSignInUseEmail => 'Utiliser mon e-mail à la place';
 
   @override
+  String get badgeSignInYourPin => 'Votre code PIN ?';
+
+  @override
   String get badgeTapCardHint =>
       'Approchez la carte RFID/NFC de l\'arrière de l\'appareil.';
 
@@ -26053,6 +26056,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s\'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'Combien de lectures peuvent venir d’un même endroit pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'Combien de fois un badge peut être lu pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Nombre d\'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.';
 
@@ -26066,7 +26077,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.';
+      'Badges différents de cet espace avec un PIN erroné pendant la période de verrouillage avant suspension et alerte des propriétaires. Un seul badge ne peut pas l’atteindre. Ce plafond peut seulement être réduit.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26331,6 +26342,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Conservation aux États-Unis, État (années)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Lectures depuis un même endroit';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Lectures d’un même badge';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>

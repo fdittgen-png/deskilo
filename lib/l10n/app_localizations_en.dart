@@ -1813,6 +1813,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get badgeSignInUseEmail => 'Use my e-mail instead';
 
   @override
+  String get badgeSignInYourPin => 'Your PIN?';
+
+  @override
   String get badgeTapCardHint =>
       'Hold the RFID/NFC card to the back of the device.';
 
@@ -25783,6 +25786,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'How many scans may come from one place within the badge lockout window before the scan answers wait. Can only be tightened.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'How often one badge may be scanned within the badge lockout window before the scan answers wait. Can only be tightened.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'How many wrong PIN attempts on a badge are allowed within the lockout time. Can only be lowered.';
 
@@ -25796,7 +25807,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.';
+      'Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26041,6 +26052,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Record retention, US state (years)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Scans from one place';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Scans of one badge';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
