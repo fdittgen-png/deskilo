@@ -6048,6 +6048,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get consentVersion => 'Version';
 
   @override
+  String consentVersionNumber(String version) {
+    return 'Version $version';
+  }
+
+  @override
   String get consentWhatBody =>
       'Votre compte (e-mail, nom affiché, mot de passe haché), votre profil tel que vous le remplissez (photo, statut, adresse, numéro WhatsApp — chacun facultatif), et ce que vous faites dans un espace : réservations et pointages, messages, dépenses et consommations, votre abonnement, factures et paiements. Tout est stocké sur le serveur où vit votre espace : sur le serveur de référence partagé, dans l\'UE (Supabase, eu-central-1) ; sur un serveur qu\'une communauté fait tourner elle-même, là où son opérateur l\'a choisi. Réglages → Confidentialité et données affiche la notice de ce serveur : qui le fait tourner, où sont les données et qui les reçoit.';
 
@@ -14715,6 +14720,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoicePdfReplaces => 'Remplace';
+
+  @override
+  String invoicePdfReplacesNumber(String number) {
+    return 'Remplace $number';
+  }
 
   @override
   String get invoicePdfReserved => 'réservé';
@@ -23704,6 +23714,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderPdfDaysOpen => 'Ouverte depuis';
 
   @override
+  String reminderPdfDaysOpenLine(String days) {
+    return 'Ouverte depuis $days jours';
+  }
+
+  @override
   String get reminderPdfLevelLabel => 'Niveau de relance';
 
   @override
@@ -23719,6 +23734,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Rappel de paiement';
+
+  @override
+  String reminderPdfTitleLevel(int level) {
+    return 'Relance $level';
+  }
 
   @override
   String get reminderQueueCheckFirst =>
@@ -24152,6 +24172,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportDocPurchaseOrder => 'Bon de commande';
+
+  @override
+  String reportDocPurchaseOrderTitle(String reference) {
+    return 'Bon de commande $reference';
+  }
 
   @override
   String get reportDocSpaceCodes => 'Cartes QR des espaces';
@@ -31209,6 +31234,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefValidFrom => 'Valable à partir du';
 
   @override
+  String taxRefValidFromDate(String date) {
+    return 'Valable à partir du $date';
+  }
+
+  @override
+  String taxRefValidFromUntilDate(String from, String until) {
+    return 'Valable à partir du $from jusqu\'au $until';
+  }
+
+  @override
   String get taxRefValidUntil => 'jusqu\'au';
 
   @override
@@ -32961,6 +32996,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get vatSince => 'depuis le';
 
   @override
+  String vatSinceDate(String date) {
+    return 'depuis le $date';
+  }
+
+  @override
   String get vatTaxPointEarlierOf =>
       'À la facture ou au paiement, au premier des deux';
 
@@ -33019,6 +33059,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatUntil => 'jusqu\'au';
+
+  @override
+  String vatUntilDate(String date) {
+    return 'jusqu\'au $date';
+  }
 
   @override
   String get viesCheckExplainer =>

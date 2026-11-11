@@ -35,5 +35,6 @@
   "purchaseOrderSummary": "{supplier} · {total}",
   "purchaseOrderRefused": "La commande n’a pas été modifiée. Vérifiez les saisies et réessayez.",
   "reportDocPurchaseOrder": "Bon de commande",
+  "reportDocPurchaseOrderTitle": "Bon de commande {reference}",
   "reportExpectedDelivery": "Livraison prévue"
 }

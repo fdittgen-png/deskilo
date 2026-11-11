@@ -262,6 +262,15 @@
   "@consentVersion": {
     "description": "Shown as the text in consent screen (profile), and 1 other place."
   },
+  "consentVersionNumber": "Version {version}",
+  "@consentVersionNumber": {
+    "description": "#3652 The version of a consent text or privacy notice, e.g. \"Version 3\".",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "consentAcceptedOn": "Accepted on {date} ({version})",
   "@consentAcceptedOn": {
     "description": "Shown as the text in consent screen (profile). Placeholders: {date} (String), {version} (String).",

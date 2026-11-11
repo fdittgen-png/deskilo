@@ -156,6 +156,15 @@
   "@reportDocPurchaseOrder": {
     "description": "#3307 purchase orders"
   },
+  "reportDocPurchaseOrderTitle": "Purchase order {reference}",
+  "@reportDocPurchaseOrderTitle": {
+    "description": "#3652 Title of a printed purchase order, with its reference.",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportExpectedDelivery": "Expected delivery",
   "@reportExpectedDelivery": {
     "description": "#3307 purchase orders"

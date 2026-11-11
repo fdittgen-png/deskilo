@@ -141,6 +141,15 @@
   "@invoicePdfReplaces": {
     "description": "Label before the replaced invoice's number (row, sheet banner, PDF)"
   },
+  "invoicePdfReplacesNumber": "Replaces {number}",
+  "@invoicePdfReplacesNumber": {
+    "description": "#3652 Banner on a corrective invoice: the number of the invoice it replaces.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceNothingToInvoice": "Nothing tracked for this month — nothing to invoice.",
   "@invoiceNothingToInvoice": {
     "description": "Issue form: the picked month has no tracked positions (0062)"
@@ -987,6 +996,15 @@
   "@reminderPdfTitleFirm": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
+  "reminderPdfTitleLevel": "Reminder {level}",
+  "@reminderPdfTitleLevel": {
+    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\".",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "reminderPdfOpeningFriendly": "this is a friendly reminder that the invoice below is still open. Perhaps it simply slipped through — no worries.",
   "@reminderPdfOpeningFriendly": {
     "description": "Mahnwesen / reminder letters (#472)"
@@ -998,6 +1016,15 @@
   "reminderPdfDaysOpen": "Open for",
   "@reminderPdfDaysOpen": {
     "description": "Mahnwesen / reminder letters (#472)"
+  },
+  "reminderPdfDaysOpenLine": "Open for {days} days",
+  "@reminderPdfDaysOpenLine": {
+    "description": "#3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.",
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
   },
   "reminderPdfDays": "days",
   "@reminderPdfDays": {

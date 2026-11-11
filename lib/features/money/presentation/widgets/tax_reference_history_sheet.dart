@@ -79,8 +79,7 @@ Future<void> showTaxReferenceHistorySheet(
                     : taxValueSummary(v.value),
               ),
               subtitle: Text(
-                '${l10n.taxRefValidFrom} ${v.validFrom}'
-                '${v.validTo == null ? '' : ' · ${l10n.taxRefValidUntil} ${v.validTo}'}'
+                '${v.validTo == null ? l10n.taxRefValidFromDate(v.validFrom) : l10n.taxRefValidFromUntilDate(v.validFrom, v.validTo!)}'
                 ' · ${v.source}',
               ),
               trailing: commands == null || v.confirmed

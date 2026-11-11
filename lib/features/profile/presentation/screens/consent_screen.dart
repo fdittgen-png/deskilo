@@ -82,7 +82,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   const SizedBox(height: AppSpacing.md),
                 ],
                 Text(
-                  '${l10n.consentVersion} $requiredVersion',
+                  l10n.consentVersionNumber(requiredVersion),
                   style: theme.textTheme.bodySmall
                       ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                 ),

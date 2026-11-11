@@ -6036,6 +6036,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get consentVersion => 'Versione';
 
   @override
+  String consentVersionNumber(String version) {
+    return 'Versione $version';
+  }
+
+  @override
   String get consentWhatBody =>
       'Il suo account (e-mail, nome visualizzato, password cifrata), il suo profilo come lo compila (foto, stato, indirizzo, numero WhatsApp — ciascuno facoltativo), e ciò che fa in uno spazio: prenotazioni e check-in, messaggi, spese e consumi, il suo abbonamento, fatture e pagamenti. Tutto è conservato sul server su cui gira il suo spazio: sul server di riferimento condiviso, nell\'UE (Supabase, eu-central-1); su un server che una comunità gestisce da sé, dove il suo operatore ha scelto. Impostazioni → Privacy e dati mostra l\'informativa di quel server: chi lo gestisce, dove sono i dati e chi li riceve.';
 
@@ -14682,6 +14687,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoicePdfReplaces => 'Sostituisce';
+
+  @override
+  String invoicePdfReplacesNumber(String number) {
+    return 'Sostituisce $number';
+  }
 
   @override
   String get invoicePdfReserved => 'riservato';
@@ -23655,6 +23665,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderPdfDaysOpen => 'Aperta da';
 
   @override
+  String reminderPdfDaysOpenLine(String days) {
+    return 'Aperta da $days giorni';
+  }
+
+  @override
   String get reminderPdfLevelLabel => 'Livello di sollecito';
 
   @override
@@ -23670,6 +23685,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Promemoria di pagamento';
+
+  @override
+  String reminderPdfTitleLevel(int level) {
+    return 'Sollecito $level';
+  }
 
   @override
   String get reminderQueueCheckFirst =>
@@ -24102,6 +24122,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportDocPurchaseOrder => 'Ordine di acquisto';
+
+  @override
+  String reportDocPurchaseOrderTitle(String reference) {
+    return 'Ordine di acquisto $reference';
+  }
 
   @override
   String get reportDocSpaceCodes => 'Schede QR degli spazi';
@@ -31143,6 +31168,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefValidFrom => 'Valido dal';
 
   @override
+  String taxRefValidFromDate(String date) {
+    return 'Valido dal $date';
+  }
+
+  @override
+  String taxRefValidFromUntilDate(String from, String until) {
+    return 'Valido dal $from fino al $until';
+  }
+
+  @override
   String get taxRefValidUntil => 'fino al';
 
   @override
@@ -32893,6 +32928,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatSince => 'dal';
 
   @override
+  String vatSinceDate(String date) {
+    return 'dal $date';
+  }
+
+  @override
   String get vatTaxPointEarlierOf =>
       'Alla fattura o al pagamento, se anteriore';
 
@@ -32951,6 +32991,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatUntil => 'fino al';
+
+  @override
+  String vatUntilDate(String date) {
+    return 'fino al $date';
+  }
 
   @override
   String get viesCheckExplainer =>

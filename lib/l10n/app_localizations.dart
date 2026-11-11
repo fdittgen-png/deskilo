@@ -9792,6 +9792,12 @@ abstract class AppLocalizations {
   /// **'Version'**
   String get consentVersion;
 
+  /// #3652 The version of a consent text or privacy notice, e.g. "Version 3".
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String consentVersionNumber(String version);
+
   /// Shown as the text in privacy policy (core).
   ///
   /// In en, this message translates to:
@@ -24099,6 +24105,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Replaces'**
   String get invoicePdfReplaces;
+
+  /// #3652 Banner on a corrective invoice: the number of the invoice it replaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces {number}'**
+  String invoicePdfReplacesNumber(String number);
 
   /// PDF annex suffix on a booked-but-not-attended row
   ///
@@ -38919,6 +38931,12 @@ abstract class AppLocalizations {
   /// **'Open for'**
   String get reminderPdfDaysOpen;
 
+  /// #3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.
+  ///
+  /// In en, this message translates to:
+  /// **'Open for {days} days'**
+  String reminderPdfDaysOpenLine(String days);
+
   /// Mahnwesen / reminder letters (#472)
   ///
   /// In en, this message translates to:
@@ -38948,6 +38966,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment reminder'**
   String get reminderPdfTitleFriendly;
+
+  /// #3652 Title of a reminder letter of a given level, e.g. "Reminder 2".
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}'**
+  String reminderPdfTitleLevel(int level);
 
   /// #3587 R1-f: reminder queue (reminderQueueCheckFirst)
   ///
@@ -39674,6 +39698,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchase order'**
   String get reportDocPurchaseOrder;
+
+  /// #3652 Title of a printed purchase order, with its reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order {reference}'**
+  String reportDocPurchaseOrderTitle(String reference);
 
   /// Shown as a text in report kind labels (money).
   ///
@@ -51308,6 +51338,18 @@ abstract class AppLocalizations {
   /// **'Valid from'**
   String get taxRefValidFrom;
 
+  /// #3652 A tax reference value that is valid from a date, with no end.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid from {date}'**
+  String taxRefValidFromDate(String date);
+
+  /// #3652 A tax reference value that is valid from one date until another.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid from {from} until {until}'**
+  String taxRefValidFromUntilDate(String from, String until);
+
   /// #2477 tax reference: Word before the day a version ends.
   ///
   /// In en, this message translates to:
@@ -54146,6 +54188,12 @@ abstract class AppLocalizations {
   /// **'since'**
   String get vatSince;
 
+  /// #3652 A VAT rate row: the date from which the rate applies.
+  ///
+  /// In en, this message translates to:
+  /// **'since {date}'**
+  String vatSinceDate(String date);
+
   /// #2355 vat tax point: vatTaxPointEarlierOf
   ///
   /// In en, this message translates to:
@@ -54241,6 +54289,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'until'**
   String get vatUntil;
+
+  /// #3652 A VAT rate row: the date until which the rate applies.
+  ///
+  /// In en, this message translates to:
+  /// **'until {date}'**
+  String vatUntilDate(String date);
 
   /// #2354 VIES evidence: viesCheckExplainer
   ///

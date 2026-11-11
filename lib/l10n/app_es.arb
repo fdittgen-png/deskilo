@@ -3863,6 +3863,7 @@
   "consentTitle": "Sus datos, sus derechos",
   "consentUnavailable": "No se pudo cargar su cuenta, así que todavía no hay nada que aceptar.",
   "consentVersion": "Versión",
+  "consentVersionNumber": "Versión {version}",
   "consentWhatBody": "Su cuenta (e-mail, nombre visible, contraseña cifrada), su perfil tal como lo rellena (foto, estado, dirección, número de WhatsApp — cada uno opcional), y lo que hace en un espacio: reservas y registros de entrada, mensajes, gastos y consumos, su suscripción, facturas y pagos. Todo se guarda en el servidor donde funciona su espacio: en el servidor de referencia compartido, en la UE (Supabase, eu-central-1); en un servidor que una comunidad gestiona por su cuenta, donde su operador haya elegido. Ajustes → Privacidad y datos muestra el aviso de ese servidor: quién lo gestiona, dónde están los datos y quién los recibe.",
   "consentWhatTitle": "Qué procesa DesKilo",
   "consentWhoBody": "El acceso sigue los roles y se aplica en el servidor: las reservas las ve el espacio (el plano muestra la ocupación); sus finanzas y su acuerdo comercial solo usted, los propietarios y los admins con el permiso correspondiente. Cada dato de su perfil solo lo ve el público que elige en Quién me ve; nada es público si usted no lo elige.",
@@ -9296,6 +9297,7 @@
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
   },
   "invoicePdfReplaces": "Reemplaza a",
+  "invoicePdfReplacesNumber": "Reemplaza a {number}",
   "invoicePdfReserved": "reservado",
   "invoicePdfSalesTax": "Impuesto sobre las ventas",
   "@invoicePdfSalesTax": {
@@ -14789,11 +14791,13 @@
   "reminderPdfClosing": "Si ya ha pagado, ignore esta carta.",
   "reminderPdfDays": "días",
   "reminderPdfDaysOpen": "Abierta desde hace",
+  "reminderPdfDaysOpenLine": "Abierta desde hace {days} días",
   "reminderPdfLevelLabel": "Nivel de recordatorio",
   "reminderPdfOpeningFirm": "a pesar de nuestro recordatorio anterior, la factura de abajo sigue sin pagar. Por favor, liquida el importe sin demora.",
   "reminderPdfOpeningFriendly": "este es un recordatorio amistoso: la factura de abajo sigue abierta. Seguramente un simple despiste — sin problema.",
   "reminderPdfTitleFirm": "Recordatorio",
   "reminderPdfTitleFriendly": "Recordatorio de pago",
+  "reminderPdfTitleLevel": "Recordatorio {level}",
   "reminderQueueCheckFirst": "Compruebe primero: dinero recibido y no asignado",
   "reminderQueueDetail": "{days, plural, =0{{number} · vence hoy} =1{{number} · 1 día de retraso} other{{number} · {days} días de retraso}}",
   "reminderQueueDone": "Hecho",
@@ -15062,6 +15066,7 @@
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
   "reportDocPurchaseOrder": "Pedido de compra",
+  "reportDocPurchaseOrderTitle": "Pedido de compra {reference}",
   "reportDocSpaceCodes": "Tarjetas QR de espacios",
   "reportDocStatus": "Situación del espacio",
   "@reportDocStatus": {
@@ -19592,6 +19597,8 @@
   "@taxRefValidFrom": {
     "description": "#2477 tax reference: Field: first day a version is in force."
   },
+  "taxRefValidFromDate": "Válido desde {date}",
+  "taxRefValidFromUntilDate": "Válido desde {from} hasta {until}",
   "taxRefValidUntil": "hasta",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."
@@ -20842,6 +20849,7 @@
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
   },
+  "vatSinceDate": "desde el {date}",
   "vatTaxPointEarlierOf": "Con la factura o el pago, lo que ocurra primero",
   "@vatTaxPointEarlierOf": {
     "description": "#2355 vat tax point: vatTaxPointEarlierOf"
@@ -20910,6 +20918,7 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "vatUntilDate": "hasta el {date}",
   "viesCheckExplainer": "VIES es el registro europeo de números de IVA. Una respuesta válida, con su número de consulta, prueba que este cliente es una empresa; una factura con inversión del sujeto pasivo solo se emite después.",
   "viesCheckFailed": "No se pudo consultar VIES. Inténtelo más tarde.",
   "viesCheckNow": "Comprobar ahora",

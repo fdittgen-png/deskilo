@@ -110,6 +110,7 @@
   "consentCheckbox": "Ho letto questo testo e accetto il modo in cui DesKilo tratta i miei dati.",
   "consentAccept": "Accetta e continua",
   "consentVersion": "Versione",
+  "consentVersionNumber": "Versione {version}",
   "consentAcceptedOn": "Accettato il {date} ({version})",
   "consentReadInHelp": "Leggi nell'aiuto",
   "consentReadOnWiki": "Leggi nella guida online",

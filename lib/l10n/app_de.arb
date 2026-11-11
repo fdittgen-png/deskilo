@@ -3863,6 +3863,7 @@
   "consentTitle": "Ihre Daten, Ihre Rechte",
   "consentUnavailable": "Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.",
   "consentVersion": "Version",
+  "consentVersionNumber": "Version {version}",
   "consentWhatBody": "Ihr Konto (E-Mail, Anzeigename, gehashtes Passwort), Ihr Profil, wie Sie es ausfüllen (Foto, Status, Adresse, WhatsApp-Nummer — je optional), und was Sie in einem Space tun: Reservierungen und Check-ins, Nachrichten, Ausgaben und Verbräuche, Ihr Abonnement, Rechnungen und Zahlungen. Alles liegt auf dem Server, auf dem Ihr Space läuft: auf dem gemeinsamen Referenzserver in der EU (Supabase, eu-central-1); auf einem Server, den eine Gemeinschaft selbst betreibt, dort, wo ihr Betreiber es gewählt hat. Einstellungen → Datenschutz & Daten zeigt den Hinweis dieses Servers: wer ihn betreibt, wo die Daten liegen und wer sie erhält.",
   "consentWhatTitle": "Was DesKilo verarbeitet",
   "consentWhoBody": "Der Zugriff folgt den Rollen und wird serverseitig durchgesetzt: Buchungen sieht der Space (der Plan zeigt die Belegung); Ihre Finanzen und Ihre Geschäftsvereinbarung nur Sie, die Inhaber und die Admins mit der passenden Berechtigung. Jede Angabe Ihres Profils sieht nur das Publikum, das Sie unter Wer mich sieht wählen; nichts ist öffentlich, wenn Sie es nicht wählen.",
@@ -9296,6 +9297,7 @@
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
   },
   "invoicePdfReplaces": "Ersetzt",
+  "invoicePdfReplacesNumber": "Ersetzt {number}",
   "invoicePdfReserved": "reserviert",
   "invoicePdfSalesTax": "Sales Tax",
   "@invoicePdfSalesTax": {
@@ -14789,11 +14791,13 @@
   "reminderPdfClosing": "Sollten Sie bereits gezahlt haben, betrachten Sie dieses Schreiben bitte als gegenstandslos.",
   "reminderPdfDays": "Tagen",
   "reminderPdfDaysOpen": "Offen seit",
+  "reminderPdfDaysOpenLine": "Offen seit {days} Tagen",
   "reminderPdfLevelLabel": "Mahnstufe",
   "reminderPdfOpeningFirm": "trotz unserer vorherigen Mahnung ist die untenstehende Rechnung weiterhin unbezahlt. Bitte begleichen Sie den Betrag umgehend.",
   "reminderPdfOpeningFriendly": "dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.",
   "reminderPdfTitleFirm": "Mahnung",
   "reminderPdfTitleFriendly": "Zahlungserinnerung",
+  "reminderPdfTitleLevel": "Mahnung {level}",
   "reminderQueueCheckFirst": "Zuerst prüfen: Geld eingegangen und nicht zugeordnet",
   "reminderQueueDetail": "{days, plural, =0{{number} · heute fällig} =1{{number} · 1 Tag überfällig} other{{number} · {days} Tage überfällig}}",
   "reminderQueueDone": "Fertig",
@@ -15062,6 +15066,7 @@
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
   "reportDocPurchaseOrder": "Bestellung",
+  "reportDocPurchaseOrderTitle": "Bestellung {reference}",
   "reportDocSpaceCodes": "QR-Karten der Plätze",
   "reportDocStatus": "Lage des Arbeitsbereichs",
   "@reportDocStatus": {
@@ -19592,6 +19597,8 @@
   "@taxRefValidFrom": {
     "description": "#2477 tax reference: Field: first day a version is in force."
   },
+  "taxRefValidFromDate": "Gültig ab {date}",
+  "taxRefValidFromUntilDate": "Gültig ab {from} bis {until}",
   "taxRefValidUntil": "bis",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."
@@ -20842,6 +20849,7 @@
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
   },
+  "vatSinceDate": "ab {date}",
   "vatTaxPointEarlierOf": "Mit Rechnung oder Zahlung, je nachdem, was zuerst erfolgt",
   "@vatTaxPointEarlierOf": {
     "description": "#2355 vat tax point: vatTaxPointEarlierOf"
@@ -20910,6 +20918,7 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "vatUntilDate": "bis {date}",
   "viesCheckExplainer": "VIES ist das EU-Verzeichnis der USt-IdNrn. Eine gültige Antwort mit ihrer Abfragenummer belegt, dass dieser Kunde ein Unternehmen ist; eine Rechnung mit Steuerschuldnerschaft des Empfängers wird erst danach ausgestellt.",
   "viesCheckFailed": "VIES konnte nicht abgefragt werden. Versuchen Sie es später erneut.",
   "viesCheckNow": "Jetzt prüfen",
