@@ -97,7 +97,7 @@
   "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
   "invoicePageMatchRefused": "Il pagamento non è stato abbinato a questa fattura.",
   "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"},
-  "invoicePageReminders": "Solleciti ({count})",
+  "invoicePageReminders": "{count, plural, =1{Solleciti (1)} other{Solleciti ({count})}}",
   "@invoicePageReminders": {"description": "#3587 R1-d the collapsed reminder history under the story", "placeholders": {"count": {"type": "int"}}},
   "invoicePageApprovals": "Approvazioni del pagamento",
   "@invoicePageApprovals": {"description": "#3587 R1-d the collapsed validation trail under the story"},

@@ -9114,7 +9114,7 @@
       }
     }
   },
-  "invoicePageReminders": "Relances ({count})",
+  "invoicePageReminders": "{count, plural, =1{Relances (1)} other{Relances ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {
@@ -14635,7 +14635,7 @@
   "registerPaymentSubmit": "Enregistrer",
   "registerPaymentTitle": "Enregistrer un paiement",
   "reminderBody": "{target} commence à {time}",
-  "reminderHistoryLine": "Niveau {level} · {origin} · {date}",
+  "reminderHistoryLine": "Relance {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {

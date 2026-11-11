@@ -62,12 +62,11 @@ void main() {
     await pumpInvoices(tester, money: money);
     await _openOpenInvoice(tester, invoice.id);
     // A quiet line in the summary, under the due date.
+    final note = find.byKey(const ValueKey('invoice-page-term-note'));
+    expect(note, findsOneWidget);
     expect(
-      find.descendant(
-        of: find.byKey(const ValueKey('invoice-page-term-note')),
-        matching: find.textContaining('No agreed payment term was recorded'),
-      ),
-      findsOneWidget,
+      tester.widget<Text>(note).data,
+      contains('No agreed payment term was recorded'),
     );
   });
 }

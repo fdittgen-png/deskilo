@@ -97,7 +97,7 @@
   "@invoicePageConfirmedAwaitsApproval": {"description": "#3587 R1-d message after Confirm when the match needs a second approval"},
   "invoicePageMatchRefused": "The payment could not be matched to this invoice.",
   "@invoicePageMatchRefused": {"description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"},
-  "invoicePageReminders": "Reminders ({count})",
+  "invoicePageReminders": "{count, plural, =1{Reminders (1)} other{Reminders ({count})}}",
   "@invoicePageReminders": {"description": "#3587 R1-d the collapsed reminder history under the story", "placeholders": {"count": {"type": "int"}}},
   "invoicePageApprovals": "Approvals of the payment",
   "@invoicePageApprovals": {"description": "#3587 R1-d the collapsed validation trail under the story"},

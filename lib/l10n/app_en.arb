@@ -18744,7 +18744,7 @@
       }
     }
   },
-  "invoicePageReminders": "Reminders ({count})",
+  "invoicePageReminders": "{count, plural, =1{Reminders (1)} other{Reminders ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {
@@ -30654,7 +30654,7 @@
       }
     }
   },
-  "reminderHistoryLine": "Level {level} · {origin} · {date}",
+  "reminderHistoryLine": "Reminder {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {

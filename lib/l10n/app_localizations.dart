@@ -23557,7 +23557,7 @@ abstract class AppLocalizations {
   /// #3587 R1-d the collapsed reminder history under the story
   ///
   /// In en, this message translates to:
-  /// **'Reminders ({count})'**
+  /// **'{count, plural, =1{Reminders (1)} other{Reminders ({count})}}'**
   String invoicePageReminders(int count);
 
   /// #3587 R1-d bottom bar
@@ -38370,7 +38370,7 @@ abstract class AppLocalizations {
   /// #1922 reminder evidence: reminderHistoryLine
   ///
   /// In en, this message translates to:
-  /// **'Level {level} · {origin} · {date}'**
+  /// **'Reminder {level} · {origin} · {date}'**
   String reminderHistoryLine(int level, String origin, String date);
 
   /// #1922 reminder evidence: reminderHistoryRefresh

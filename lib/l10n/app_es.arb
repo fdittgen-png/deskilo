@@ -9114,7 +9114,7 @@
       }
     }
   },
-  "invoicePageReminders": "Recordatorios ({count})",
+  "invoicePageReminders": "{count, plural, =1{Recordatorios (1)} other{Recordatorios ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {
@@ -14635,7 +14635,7 @@
   "registerPaymentSubmit": "Registrar",
   "registerPaymentTitle": "Registrar un pago",
   "reminderBody": "{target} empieza a las {time}",
-  "reminderHistoryLine": "Nivel {level} · {origin} · {date}",
+  "reminderHistoryLine": "Recordatorio {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {

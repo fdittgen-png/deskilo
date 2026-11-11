@@ -39,6 +39,14 @@ import '../widgets/reminder_evidence_list.dart';
 import 'invoice_page_parts.dart';
 import 'invoicing_reads.dart';
 
+/// What the story needs beyond the receivable: the hold's reason, and the
+/// day a cancelled invoice was cancelled with the number that replaced it.
+typedef _StoryFacts = ({
+  String? heldReason,
+  DateTime? cancelledOn,
+  String? replacedBy,
+});
+
 /// Opens [invoiceId]'s page over the current one (a phone, a narrow
 /// window), full screen.
 Future<void> openInvoicePage(BuildContext context, String invoiceId) =>
@@ -134,7 +142,13 @@ class InvoicePage extends ConsumerWidget {
                 spacing: AppSpacing.sm,
                 children: [
                   KitLabel(l.invoicePageWhatHappened),
-                  _story(context, ref, r, today, heldReason),
+                  _story(context, ref, r, today, (
+                    heldReason: heldReason,
+                    cancelledOn: lifecycle == InvoiceLifecycle.erroneous
+                        ? invoice.voidedAt
+                        : null,
+                    replacedBy: replacement?.number,
+                  )),
                   // The reminders sent and their evidence, and who released
                   // the payment: collapsed, so the page stays calm.
                   if (r.remindersSent > 0)
@@ -218,8 +232,9 @@ class InvoicePage extends ConsumerWidget {
     WidgetRef ref,
     Receivable r,
     DateTime today,
-    String? heldReason,
+    _StoryFacts facts,
   ) {
+    final (:heldReason, :cancelledOn, :replacedBy) = facts;
     final l = context.l10n;
     final format = appFormatOf(context);
     String day(DateTime? d) =>
@@ -242,6 +257,14 @@ class InvoicePage extends ConsumerWidget {
           when: day(r.declaredOn),
         ),
       if (r.paidOn != null) (text: l.invoicePageStoryPaid, when: day(r.paidOn)),
+      // A cancellation ends the story, dated, saying how it ended.
+      if (cancelledOn != null)
+        (
+          text: replacedBy == null
+              ? l.invoicePageCancelledNotReplaced
+              : l.invoicePageCancelledReplaced(replacedBy),
+          when: day(cancelledOn),
+        ),
     ];
     final now = _nowOf(l, format, r, today, heldReason);
     return Story(

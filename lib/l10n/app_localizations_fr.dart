@@ -14322,7 +14322,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String invoicePageReminders(int count) {
-    return 'Relances ($count)';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Relances ($count)',
+      one: 'Relances (1)',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -23298,7 +23304,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String reminderHistoryLine(int level, String origin, String date) {
-    return 'Niveau $level · $origin · $date';
+    return 'Relance $level · $origin · $date';
   }
 
   @override

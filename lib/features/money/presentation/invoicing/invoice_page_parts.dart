@@ -232,8 +232,11 @@ class InvoiceMoreMenu extends ConsumerWidget {
   /// can still be issued.
   final bool awaitsReplacement;
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  /// The entries in their worded sections; a header has no action.
+  List<(String, String?, VoidCallback?)> _entries(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final l = context.l10n;
     final r = receivable;
     final outstanding = r?.isOutstanding ?? false;
@@ -355,6 +358,12 @@ class InvoiceMoreMenu extends ConsumerWidget {
           ),
       ],
     ];
+    return entries;
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final entries = _entries(context, ref);
     return PopupMenuButton<int>(
       key: const ValueKey('invoice-page-more'),
       tooltip: MaterialLocalizations.of(context).moreButtonTooltip,

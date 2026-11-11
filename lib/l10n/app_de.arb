@@ -9114,7 +9114,7 @@
       }
     }
   },
-  "invoicePageReminders": "Mahnungen ({count})",
+  "invoicePageReminders": "{count, plural, =1{Mahnungen (1)} other{Mahnungen ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {
@@ -14635,7 +14635,7 @@
   "registerPaymentSubmit": "Erfassen",
   "registerPaymentTitle": "Zahlung erfassen",
   "reminderBody": "{target} beginnt um {time}",
-  "reminderHistoryLine": "Stufe {level} · {origin} · {date}",
+  "reminderHistoryLine": "Mahnung {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {
