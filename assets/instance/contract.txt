@@ -2205,7 +2205,7 @@ routine public.bank_import_actor(p_workspace_id uuid, p_permission text) -> uuid
 routine public.bank_line_facts(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8baef224cb0c
 routine public.bank_line_hash(p_account text, p_booking date, p_value date, p_amount bigint, p_currency text, p_reference text, p_end_to_end text, p_iban text, p_remittance text) -> text | function | invoker | immutable | exec:service_role | body:7a38c4adb37d
 routine public.bank_line_out_facts(p_workspace_id uuid, p_payment_id uuid) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8dd5d2736bc3
-routine public.bank_line_status(l bank_statement_lines) -> text | function | definer | stable | exec:service_role | body:313425c5a2ff
+routine public.bank_line_status(l bank_statement_lines) -> text | function | definer | stable | exec:service_role | body:c2547a6a1f67
 routine public.bank_original_access(p_workspace_id uuid, p_write boolean) -> boolean | function | definer | stable | exec:authenticated,service_role | body:9f5560438710
 routine public.bank_original_imported(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:2f8318b4a884
 routine public.bank_original_workspace(p_name text) -> uuid | function | invoker | immutable | exec:authenticated,service_role | body:3c7a058ad2d5
@@ -2421,6 +2421,7 @@ routine public.give_lease_notice_v1(p_workspace_id uuid, p_lease_id uuid, p_revi
 routine public.grant_database_admin_internal(p_target uuid, p_can_provision boolean, p_granted_by text) -> jsonb | function | definer | volatile | exec:service_role | body:f424674c09a4
 routine public.grant_workspace_template(p_template_id uuid, p_email text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:234a872cde5d
 routine public.guard_oauth_client_purpose() -> trigger | function | invoker | volatile | exec: | body:a18b6684527b
+routine public.guard_payment_allocation_sum() -> trigger | function | definer | volatile | exec:service_role | body:9ebd0ca2d377
 routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p_current jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2c13fd7d108
 routine public.guest_participation_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:f9dca924a932
 routine public.guest_participation_self_view(p guest_participations) -> jsonb | function | invoker | stable | exec:service_role | body:bfd6829ac539
@@ -2569,7 +2570,7 @@ routine public.mark_purchase_order_sent_v1(p_workspace_id uuid, p_order_id uuid,
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:97151b4a926c
 routine public.match_bank_line_v1(p_line_id uuid, p_invoice_id uuid, p_resolution text, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc175d03524e
 routine public.match_einvoice(p_inbox_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dbae7df91e2e
-routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text) -> void | function | definer | volatile | exec:authenticated,service_role | body:1e9db86583a4
+routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text, p_amount_cents integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:3debef1ec335
 routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ed8832a5c76f
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cf38d20d7ed6
@@ -2855,6 +2856,7 @@ routine public.payment_instructions_plan(p_workspace_id uuid, p_args jsonb) -> j
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.payment_test_check(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:17dae5ea6441
+routine public.payment_used_cents(p_ledger uuid) -> bigint | function | definer | stable | exec:service_role | body:0510e4d33ba7
 routine public.personal_account_recognised() -> boolean | function | definer | stable | exec:authenticated,service_role | body:6e6491901997
 routine public.personal_data_admin_role_names() -> jsonb | function | invoker | immutable | exec:service_role | body:5eba61ffd006
 routine public.personal_directory_relationships(p_user uuid) -> TABLE(network_id text, permitted_name text, fresh boolean) | function | definer | stable | exec: | body:471dbd6482ea
