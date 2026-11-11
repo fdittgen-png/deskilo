@@ -60,6 +60,7 @@ const Map<String, String> _notWorkspace = {
   '/developer': 'device — local trace diagnostics (#144, #2521)',
   '/help': 'entry',
   '/privacy': 'entry',
+  '/me/formats': 'account — the person\'s own Region & formats, from Me (#3697)',
   '/linked-accounts': 'account',
   '/scan-join': 'account',
   '/mcp/confirm/:id': 'account',

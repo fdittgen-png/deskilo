@@ -118,7 +118,7 @@
   "@bankRefusedTooLarge": {
     "description": "#2380 Refusal: the file is larger than the setting allows."
   },
-  "bankRefusedTooManyLines": "The file has more than {max} movements. Split it by period at the bank. Nothing was imported.",
+  "bankRefusedTooManyLines": "{max, plural, one{The file has more than {max} movement. Split it by period at the bank. Nothing was imported.} other{The file has more than {max} movements. Split it by period at the bank. Nothing was imported.}}",
   "@bankRefusedTooManyLines": {
     "description": "#2380 Refusal: more movements than one import takes.",
     "placeholders": {
@@ -365,7 +365,7 @@
   "@bankCsvNone": {
     "description": "#2380 CSV sheet: no column chosen."
   },
-  "bankCsvNeedsAccount": "Name the account, in at most {max} characters.",
+  "bankCsvNeedsAccount": "{max, plural, one{Name the account, in at most {max} character.} other{Name the account, in at most {max} characters.}}",
   "@bankCsvNeedsAccount": {
     "description": "#2380 CSV sheet: the account is missing or longer than its column.",
     "placeholders": {

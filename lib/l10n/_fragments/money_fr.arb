@@ -2,7 +2,7 @@
   "@@locale": "fr",
   "moneyBaseFee": "Abonnement de base",
   "moneyUsage": "{used} demi-journées utilisées sur {included}",
-  "moneyUsageUnlimited": "{used} demi-journées utilisées",
+  "moneyUsageUnlimited": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}}",
   "moneyOverage": "{count, plural, =1{Dépassement (1 demi-journée supplémentaire)} other{Dépassement ({count} demi-journées supplémentaires)}}",
   "moneyCredits": "Paiements et crédits",
   "moneyStatementSettled": "Réglé",

@@ -2,7 +2,7 @@
   "@@locale": "de",
   "billSubscription": "Abo {pct} %",
   "billEntitlement": "{used} von {included} halben Tagen abgerechnet ({openDays} Öffnungstage)",
-  "billOverage": "{extra} zusätzliche halbe Tage",
+  "billOverage": "{extra, plural, one{{extra} zusätzlicher halber Tag} other{{extra} zusätzliche halbe Tage}}",
   "billServices": "Bezogene Leistungen",
   "billServicesTotal": "Summe Leistungen",
   "billOpenPositions": "Offene Posten",

@@ -381,6 +381,9 @@ Map<String, Object?> setupLevelsData() => {
               for (final q in setupQuestions)
                 if (r.anyOf.contains(q)) q,
             ],
+            // #3702 — only for a business that books (true) or books no (false)
+            // places; omitted when the rule does not care.
+            'places': ?r.whenPlaces,
           },
       ],
   },

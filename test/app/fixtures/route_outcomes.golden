@@ -47,6 +47,7 @@ signed-out on  /me/account -> /auth
 signed-out on  /me/account/connections -> /auth
 signed-out on  /me/data -> /auth
 signed-out on  /me/discover -> /auth
+signed-out on  /me/formats -> /auth
 signed-out on  /me/messages -> /auth
 signed-out on  /me/messages/:ref -> /auth
 signed-out on  /me/messages/inquiries -> /auth
@@ -179,6 +180,7 @@ signed-out off /me/account -> /auth
 signed-out off /me/account/connections -> /auth
 signed-out off /me/data -> /auth
 signed-out off /me/discover -> /auth
+signed-out off /me/formats -> /auth
 signed-out off /me/messages -> /auth
 signed-out off /me/messages/:ref -> /auth
 signed-out off /me/messages/inquiries -> /auth
@@ -311,6 +313,7 @@ no-space on  /me/account -> /me
 no-space on  /me/account/connections -> /connections
 no-space on  /me/data -> /account-activity
 no-space on  /me/discover -> /me
+no-space on  /me/formats -> (open)
 no-space on  /me/messages -> /me
 no-space on  /me/messages/:ref -> /account-messages
 no-space on  /me/messages/inquiries -> /me
@@ -443,6 +446,7 @@ no-space off /me/account -> /me
 no-space off /me/account/connections -> /connections
 no-space off /me/data -> /account-activity
 no-space off /me/discover -> /me
+no-space off /me/formats -> (open)
 no-space off /me/messages -> /me
 no-space off /me/messages/:ref -> /account-messages
 no-space off /me/messages/inquiries -> /me
@@ -575,6 +579,7 @@ member on  /me/account -> /me
 member on  /me/account/connections -> /connections
 member on  /me/data -> /account-activity
 member on  /me/discover -> /me
+member on  /me/formats -> (open)
 member on  /me/messages -> /me
 member on  /me/messages/:ref -> /account-messages
 member on  /me/messages/inquiries -> /me
@@ -707,6 +712,7 @@ member off /me/account -> /me
 member off /me/account/connections -> /connections
 member off /me/data -> /account-activity
 member off /me/discover -> /me
+member off /me/formats -> (open)
 member off /me/messages -> /me
 member off /me/messages/:ref -> /account-messages
 member off /me/messages/inquiries -> /me
@@ -839,6 +845,7 @@ admin on  /me/account -> /me
 admin on  /me/account/connections -> /connections
 admin on  /me/data -> /account-activity
 admin on  /me/discover -> /me
+admin on  /me/formats -> (open)
 admin on  /me/messages -> /me
 admin on  /me/messages/:ref -> /account-messages
 admin on  /me/messages/inquiries -> /me
@@ -971,6 +978,7 @@ admin off /me/account -> /me
 admin off /me/account/connections -> /connections
 admin off /me/data -> /account-activity
 admin off /me/discover -> /me
+admin off /me/formats -> (open)
 admin off /me/messages -> /me
 admin off /me/messages/:ref -> /account-messages
 admin off /me/messages/inquiries -> /me
@@ -1103,6 +1111,7 @@ owner on  /me/account -> /me
 owner on  /me/account/connections -> /connections
 owner on  /me/data -> /account-activity
 owner on  /me/discover -> /me
+owner on  /me/formats -> (open)
 owner on  /me/messages -> /me
 owner on  /me/messages/:ref -> /account-messages
 owner on  /me/messages/inquiries -> /me
@@ -1235,6 +1244,7 @@ owner off /me/account -> /me
 owner off /me/account/connections -> /connections
 owner off /me/data -> /account-activity
 owner off /me/discover -> /me
+owner off /me/formats -> (open)
 owner off /me/messages -> /me
 owner off /me/messages/:ref -> /account-messages
 owner off /me/messages/inquiries -> /me

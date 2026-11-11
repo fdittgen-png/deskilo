@@ -31,11 +31,6 @@ const List<double> _scales = [1.0, 1.3];
 /// What today's screens still do wrong: `<screen>|<state>` -> rule -> cells.
 /// Only falls (#3545).
 const Map<String, Map<String, int>> _known = {
-  'account|empty': {'target under 48 dp': 12, 'unnamed control': 12},
-  'account|populated': {'target under 48 dp': 12, 'unnamed control': 12},
-  'data|empty': {'target under 48 dp': 4, 'unnamed control': 8},
-  'data|populated': {'overflow or exception': 2, 'target under 48 dp': 6, 'unnamed control': 8},
-  'spaces|one source failed': {'a failed source is not said': 12},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {
@@ -49,25 +44,38 @@ bool _isFilled(WidgetTester tester, Element element) {
 
 /// Every node of the semantics tree that can be tapped, with its size and
 /// whether it is named.
-List<({Size size, bool named})> _tappable(WidgetTester tester) {
+List<({Size size, bool named, bool scrolled})> _tappable(WidgetTester tester) {
   // ignore: deprecated_member_use
   final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
-  final out = <({Size size, bool named})>[];
-  void walk(SemanticsNode node) {
+  final out = <({Size size, bool named, bool scrolled})>[];
+  void walk(SemanticsNode node, {bool scrolled = false}) {
     final data = node.getSemanticsData();
+    // A tab strip that scrolls sideways clips the tabs at its edge: the
+    // semantics rect of a partly visible tab is the visible part, not the
+    // tab. Its width is not measured; its height still is.
+    final scrollsSideways = data.hasAction(SemanticsAction.scrollLeft) ||
+        data.hasAction(SemanticsAction.scrollRight);
     final tappable = data.hasAction(SemanticsAction.tap) &&
         !data.flagsCollection.isHidden &&
         !node.isInvisible;
-    if (tappable) {
+    // A switch inside its list tile is the tile's own control: the tile (the
+    // named parent with the same tap) is the target a person meets.
+    final parent = node.parent?.getSemanticsData();
+    final insideNamedTap = parent != null &&
+        parent.hasAction(SemanticsAction.tap) &&
+        parent.label.trim().isNotEmpty &&
+        data.label.trim().isEmpty;
+    if (tappable && !insideNamedTap) {
       out.add((
         size: node.rect.size,
+        scrolled: scrolled,
         named: data.label.trim().isNotEmpty ||
             data.value.trim().isNotEmpty ||
             data.tooltip.trim().isNotEmpty,
       ));
     }
     node.visitChildren((child) {
-      walk(child);
+      walk(child, scrolled: scrolled || scrollsSideways);
       return true;
     });
   }
@@ -116,7 +124,7 @@ void main() {
                 // Tall enough that no row is cut by the viewport: a clipped row's
                 // semantics rect is shorter than the row and would read as a
                 // target under 48 dp.
-                size: Size(width, width < 600 ? 3000 : 1100),
+                size: Size(width, 9000),
                 extraOverrides: scenario.overrides,
               );
               await goTo(tester, router, screen.route);
@@ -129,7 +137,8 @@ void main() {
                 flag('more than one filled button', tag);
               }
               for (final node in _tappable(tester)) {
-                if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
+                if ((!node.scrolled && node.size.width < 48 - 0.5) ||
+                    node.size.height < 48 - 0.5) {
                   flag('target under 48 dp', tag);
                 }
                 if (!node.named) flag('unnamed control', tag);

@@ -8,7 +8,7 @@
   "accountInvoiceRegrouped": "Inclus dans une facture de regroupement",
   "accountInvoiceIssued": "Facture émise",
   "accountUsageCorrected": "Consommation facturable corrigée",
-  "accountUsageMinutes": "{minutes} minutes",
+  "accountUsageMinutes": "{minutes, plural, one{{minutes} minute} other{{minutes} minutes}}",
   "accountPaymentPreference": "Paiement en ligne préféré",
   "accountPaymentAsk": "Choisir au paiement",
   "@accountUsageMinutes": {

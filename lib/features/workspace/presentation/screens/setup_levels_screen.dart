@@ -26,6 +26,7 @@ import '../../../../l10n/dictionary_labels.dart';
 import '../../application/process_activation.dart';
 import '../../application/setup_journey_save.dart';
 import '../../domain/feature_flags_write.dart';
+import '../../domain/setup_candidate.dart';
 import '../../domain/setup_journey.dart';
 import '../../domain/setup_level_change.dart';
 import '../../domain/setup_levels.dart';
@@ -35,6 +36,7 @@ import '../../providers/held_setup_choices.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/setup_choices_bar.dart';
+import '../widgets/setup_held_notes.dart';
 import '../widgets/setup_level_preview.dart';
 import '../widgets/setup_obligations_card.dart';
 import '../widgets/setup_process_choice.dart';
@@ -63,6 +65,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
 
   /// Until the owner answers, every process stays at what the space does.
   var _answered = false;
+  final _touched = <String>{}; // answered since the last apply or reset
 
   /// The saved answers were taken over once; a later save does not
   /// overwrite what the owner is answering.
@@ -93,12 +96,20 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     final stored = resolveEnabledFeatures(workspace.featureFlags);
     final country = workspace.countryCode;
     final current = currentSetupLevels(stored, country: country);
-    final saved = _restoreOnce(journey, current, workspace.id);
-    final recommended = recommendSetupLevels(_answers);
-    final vector = {
-      for (final p in SetupProcess.values)
-        p: _chosen[p] ?? (_answered ? recommended[p]!.level : current[p]!),
-    };
+    // #3702 — the stored flag, not the reached level (one off feature is not "no places").
+    final books = stored.contains(WorkspaceFeature.placeBooking);
+    final saved =
+        _restoreOnce(journey, current, workspace.id, booksPlaces: books);
+    // #3702 — places-aware; one answer recomputes only what it names.
+    final recommended = recommendSetupLevels(_answers, booksPlaces: books);
+    final checked = setupCandidate(
+      current: current,
+      recommended: recommended,
+      chosen: _chosen,
+      touched: _touched,
+      answered: _answered,
+    );
+    final (:vector, :held) = checked;
     final change = planSetupLevels(
       stored: stored,
       current: current,
@@ -166,6 +177,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
                     icon: Icons.link_off,
                     text: _gapWords(l10n, gap),
                   ),
+                ...setupHeldNotes(held, vector, (String gap) => _gapWords(l10n, gap)),
                 Container(
                   key: _reviewKey,
                   child: SetupLevelPreview(change: change),
@@ -269,23 +281,23 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       ..clear()
       ..addAll(levels ?? {});
     if (levels == null) _answered = true;
+    if (levels == null) _touched.addAll(setupQuestions);
   });
 
   /// The saved journey; its answers are taken over once loaded, and again
   /// once a conflict reloaded it. Without one, the questions open from what
   /// the space already does (#3076).
-  SetupJourney? _restoreOnce(
-    AsyncValue<SetupJourney?> journey,
-    SetupLevelVector current,
-    String workspaceId,
-  ) {
+  SetupJourney? _restoreOnce(AsyncValue<SetupJourney?> journey,
+      SetupLevelVector current, String workspaceId,
+      {required bool booksPlaces}) {
     final saved = journey.value;
     if (!_restored && journey.hasValue && !journey.isLoading) {
       _restored = true;
       _unknown.clear();
       _answers = saved?.answers ?? setupAnswersFromLevels(current);
       if (saved != null) {
-        final suggested = recommendSetupLevels(saved.answers);
+        final suggested =
+            recommendSetupLevels(saved.answers, booksPlaces: booksPlaces);
         for (final p in SetupProcess.values) {
           final level = saved.levels[p];
           if (level != null &&
@@ -300,6 +312,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       if (held != null) {
         _answers = held.answers;
         _answered = held.answered;
+        if (held.answered) _touched.addAll(setupQuestions);
         _chosen
           ..clear()
           ..addAll(held.chosen);
@@ -401,6 +414,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       setState(() {
         if (!unknown) _answers = _answers.withAnswer(key, yes: yes);
         _answered = true;
+        _touched.add(key);
         unknown ? _unknown.add(key) : _unknown.remove(key);
       });
 
@@ -441,6 +455,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           );
           // The space now does what was chosen: the levels read from it.
           _answered = false;
+          _touched.clear();
           _chosen.clear();
         } on SetupJourneyConflict {
           // The features are applied; the answers someone else saved are
@@ -450,6 +465,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           );
           _restored = false;
           _answered = false;
+          _touched.clear();
           _chosen.clear();
         } on FeatureFlagsConflict {
           // Nothing was written: the owner looks again at what is there.

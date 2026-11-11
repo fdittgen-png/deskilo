@@ -147,7 +147,7 @@ function load(locale, stored, { browser = 'fr-FR', remembered = null, modelConte
   eval(l10nSource);
   eval(patch(src) + `
 ;globalThis.__STEPS=STEPS; globalThis.__FEATURES=FEATURES; globalThis.__exportXml=exportXml; globalThis.__S=S;
-globalThis.__chooseLevel=applyLevel; globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
+globalThis.__chooseLevel=applyLevel; globalThis.__applyLevels=applyLevels; globalThis.__recommend=recommendLevels; globalThis.__answer=answerQuestion; globalThis.__levelsNow=levelsNow; globalThis.__parseBack=parseBack;
 globalThis.__applicable=()=>applicable().map(st=>st.id); globalThis.__go=go; globalThis.__setExpert=setExpert; globalThis.__cur=()=>cur;
 globalThis.__setMode=setMode; globalThis.__migrate=migrate; globalThis.__shown=shownAnswers; globalThis.__unknown=markUnknown; globalThis.__note=unknownNote;
 `);
@@ -207,14 +207,20 @@ if (process.argv.includes('--recommend-all')) {
   const P = globalThis.window.__setup;
   const questions = globalThis.window.SETUP_LEVELS.questions;
   const ticked = () => Object.entries(P.S.features).filter(([, v]) => v).map(([k]) => k).sort();
-  const out = { country: P.S.country, initial: ticked(), combos: [] };
+  // #3702 — `--no-places` starts from a business that books no places (its
+  // bookings level is none), without choosing that level by hand.
+  if (process.argv.includes('--no-places')) globalThis.__applyLevels([['bookings', 'none']]);
+  // `--partial-places`: place booking is on and one feature of the first
+  // bookings level is off, so the level is not "reached" but the business books.
+  if (process.argv.includes('--partial-places')) P.S.features.placeFeedback = false;
+  const out = { country: P.S.country, initial: ticked(), initialLevels: globalThis.__levelsNow(), booksPlaces: !!P.S.features.placeBooking, combos: [] };
   // Answering touches only the switches and the journey: putting those two
   // back is a fresh page, without drawing it 4096 times.
   const fresh = JSON.stringify({ features: P.S.features, journey: P.S.journey });
   for (let bits = 0; bits < 1 << questions.length; bits++) {
     Object.assign(P.S, JSON.parse(fresh));
     questions.forEach((q, i) => globalThis.__answer(q, (bits & (1 << i)) !== 0));
-    const rec = globalThis.__recommend(P.S.journey.answers);
+    const rec = globalThis.__recommend(P.S.journey.answers, out.booksPlaces);
     out.combos.push({ bits, recommended: Object.fromEntries(Object.entries(rec).map(([p, r]) => [p, `${r.level}/${r.reason}`])),
       levels: globalThis.__levelsNow(), on: ticked() });
   }
