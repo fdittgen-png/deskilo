@@ -411,21 +411,21 @@ List<String> setupVectorGaps(SetupLevelVector vector) => [
           '${process.name}.${level.id} → ${needed.name}.$minimum',
 ];
 
-/// Which level holds a recomputed level where it is: [by]'s [level] needs it.
-typedef SetupHold = ({SetupProcess by, String level});
-
 /// #3702 — [candidate] (the levels the screen holds, with the [recomputed]
 /// processes at their recommended level) checked against the levels' needs: a
 /// recomputed level is never set below what a KEPT level needs (money is not
 /// lowered under `invoices` while tax stays at `vat`). Returns the vector and,
-/// for each process raised, the kept level that holds it there.
-({SetupLevelVector vector, Map<SetupProcess, SetupHold> held})
+/// for each process raised, the kept level (`by`, `level`) that holds it there.
+({
+  SetupLevelVector vector,
+  Map<SetupProcess, ({SetupProcess by, String level})> held,
+})
 holdRecomputedAtNeeds(
   SetupLevelVector candidate,
   Set<SetupProcess> recomputed,
 ) {
   final vector = {...candidate};
-  final held = <SetupProcess, SetupHold>{};
+  final held = <SetupProcess, ({SetupProcess by, String level})>{};
   for (final MapEntry(key: process, value: chosen) in candidate.entries) {
     if (recomputed.contains(process)) continue;
     for (final level in setupLevels[process]!.take(

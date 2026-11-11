@@ -64,6 +64,20 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
     }
   }
 
+  /// Whether an answer this page needs is not there yet, and the failure of
+  /// one that failed: nothing is offered while either read is running or has
+  /// failed (#3683, #3696).
+  ({bool unknown, Object? failure}) _reads({required bool here}) {
+    final reads = [
+      if (here) ref.watch(myWorkspacesProvider),
+      ref.watch(pendingAdmissionsProvider),
+    ];
+    final failed = reads
+        .where((r) => r.hasError && !r.isLoading && !r.hasValue)
+        .firstOrNull;
+    return (unknown: reads.any((r) => !r.hasValue), failure: failed?.error);
+  }
+
   @override
   Widget build(BuildContext context) {
     final workspace = widget.workspace;
@@ -81,12 +95,11 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
               .where((w) => w.id == workspace.id)
               .firstOrNull
         : null;
-    final myRead = here ? ref.watch(myWorkspacesProvider) : null;
-    final pendingRead = ref.watch(pendingAdmissionsProvider);
-    // Nothing is offered while either read is running or failed (#3683, #3696).
-    final unknown =
-        (myRead != null && !myRead.hasValue) || !pendingRead.hasValue;
-    final pending = _pending || (pendingRead.value?.contains(workspace.id) ?? false);
+    final (:unknown, :failure) = _reads(here: here);
+    final pending =
+        _pending ||
+        (ref.watch(pendingAdmissionsProvider).value?.contains(workspace.id) ??
+            false);
     final email = workspace.text('email').trim();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -101,9 +114,9 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
               label: Text(l.portalEnterSpace),
               onPressed: () => enterSpace(context, ref, mine),
             )
-          else if (unknown && ((myRead?.hasError ?? false) || pendingRead.hasError) && !(myRead?.isLoading ?? false) && !pendingRead.isLoading)
+          else if (failure != null)
             ReadFailureBanner(
-              error: (myRead?.error ?? pendingRead.error)!,
+              error: failure,
               onRetry: () => ref
                 ..invalidate(myWorkspacesProvider)
                 ..invalidate(pendingAdmissionsProvider),

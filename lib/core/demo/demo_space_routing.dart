@@ -196,10 +196,8 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     myReservationActionsProvider.overrideWithValue(
       DemoMyReservationActions(myReservations),
     ),
-    // #2553 C2 — read for every space the persona's personal home names.
-    myReservationsSourcesFromMe,
-    // #3696 — the Demo's pending requests are read the same way.
-    pendingAdmissionsFromMe,
+    // #2553 C2 / #3696 — read for every space the persona's personal home names.
+    myReservationsSourcesFromMe, pendingAdmissionsFromMe,
     // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
     // are the personal home's own, answered by its own read.
     financeHostsFromMe,
