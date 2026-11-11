@@ -364,6 +364,23 @@ extension DictionaryLabels on AppLocalizations {
     _ => key,
   };
 
+  /// #3283 — a business example under setup question [key].
+  String setupQuestionExample(String key) => switch (key) {
+    'approve_bookings' => setupQuestionExampleApproveBookings,
+    'several_rooms_or_sites' => setupQuestionExampleSeveralRoomsOrSites,
+    'public_page' => setupQuestionExamplePublicPage,
+    'members_owe_money' => setupQuestionExampleMembersOweMoney,
+    'issue_invoices' => setupQuestionExampleIssueInvoices,
+    'pay_online' => setupQuestionExamplePayOnline,
+    'vat_registered' => setupQuestionExampleVatRegistered,
+    'association' => setupQuestionExampleAssociation,
+    'keep_books' => setupQuestionExampleKeepBooks,
+    'tracks_purchases' => setupQuestionExampleTracksPurchases,
+    'door_tablet' => setupQuestionExampleDoorTablet,
+    'organised' => setupQuestionExampleOrganised,
+    _ => '',
+  };
+
   /// The `setupMilestoneName` label for [key].
   String setupMilestoneName(String key) => switch (key) {
     'bookable' => setupMilestoneNameBookable,

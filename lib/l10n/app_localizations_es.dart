@@ -28048,6 +28048,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupLevelsApply => 'Aplicar';
 
   @override
+  String get setupLevelsApplyFailed =>
+      'No se pudieron guardar las opciones. Inténtelo de nuevo.';
+
+  @override
   String get setupLevelsChoice => 'Lo que necesita';
 
   @override
@@ -28577,6 +28581,54 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupQuestionDoorTablet =>
       'Una tableta en la entrada registra las llegadas';
+
+  @override
+  String get setupQuestionExampleApproveBookings =>
+      'Por ejemplo: un miembro pide la sala de reuniones para el jueves y la responsable la confirma.';
+
+  @override
+  String get setupQuestionExampleAssociation =>
+      'Por ejemplo: los miembros eligen una junta y celebran una asamblea general cada año.';
+
+  @override
+  String get setupQuestionExampleDoorTablet =>
+      'Por ejemplo: los miembros pasan su tarjeta por una tableta en la entrada al llegar.';
+
+  @override
+  String get setupQuestionExampleIssueInvoices =>
+      'Por ejemplo: una empresa miembro necesita cada mes una factura numerada para su contabilidad.';
+
+  @override
+  String get setupQuestionExampleKeepBooks =>
+      'Por ejemplo: su gestor le pide los libros del año y los extractos bancarios.';
+
+  @override
+  String get setupQuestionExampleMembersOweMoney =>
+      'Por ejemplo: una membresía mensual, un pase de día o café e impresiones en la cuenta.';
+
+  @override
+  String get setupQuestionExampleOrganised =>
+      'Por ejemplo: un gasto por encima de un importe fijado necesita la aprobación de dos miembros de la junta.';
+
+  @override
+  String get setupQuestionExamplePayOnline =>
+      'Por ejemplo: un miembro paga el extracto del mes con tarjeta desde su teléfono.';
+
+  @override
+  String get setupQuestionExamplePublicPage =>
+      'Por ejemplo: alguien que busca un puesto cerca encuentra su página y le escribe.';
+
+  @override
+  String get setupQuestionExampleSeveralRoomsOrSites =>
+      'Por ejemplo: un espacio abierto, dos salas de reuniones y una segunda dirección en la ciudad.';
+
+  @override
+  String get setupQuestionExampleTracksPurchases =>
+      'Por ejemplo: el alquiler, la limpieza y la cafetera que compra para el espacio.';
+
+  @override
+  String get setupQuestionExampleVatRegistered =>
+      'Por ejemplo: sus facturas muestran el IVA y usted presenta declaraciones de IVA.';
 
   @override
   String get setupQuestionIssueInvoices => 'Emite facturas';

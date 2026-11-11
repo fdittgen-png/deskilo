@@ -74,9 +74,11 @@ void main() {
     expect(
       tester.getTopLeft(outcome).dy,
       lessThan(
-        tester.getTopLeft(find.byKey(const ValueKey('setup-levels-on'))).dy,
+        tester
+            .getTopLeft(find.byKey(const ValueKey('setup-levels-details')))
+            .dy,
       ),
-      reason: 'the plain sentence comes before the exact switches',
+      reason: 'the plain sentence comes before the folded exact switches',
     );
   });
 

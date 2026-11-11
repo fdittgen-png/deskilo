@@ -11,6 +11,8 @@
 // with them on any device; beside the questions, what the law of the
 // space's country asks, from the tax reference data. Each level can be
 // seen in the demo's complete space, except from inside the demo.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +21,7 @@ import '../../../../core/demo/presentation/demo_entry_sheet.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/form_error_summary.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -40,6 +43,7 @@ import '../widgets/setup_held_notes.dart';
 import '../widgets/setup_level_preview.dart';
 import '../widgets/setup_obligations_card.dart';
 import '../widgets/setup_process_choice.dart';
+import '../widgets/setup_question_group.dart';
 
 class SetupLevelsScreen extends ConsumerStatefulWidget {
   const SetupLevelsScreen({super.key});
@@ -79,6 +83,56 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   final _unknown = <String>{};
   var _busy = false;
   final _reviewKey = GlobalKey();
+
+  /// #3283 — the groups unfold and each question takes the focus, for the
+  /// error summary's way to the first unresolved one.
+  static const _questionGroups = {
+    'bookings': ['approve_bookings', 'several_rooms_or_sites', 'public_page'],
+    'money': [
+      'members_owe_money',
+      'issue_invoices',
+      'pay_online',
+      'vat_registered',
+    ],
+    'operations': [
+      'association',
+      'keep_books',
+      'tracks_purchases',
+      'door_tablet',
+      'organised',
+    ],
+  };
+  final _groups = {
+    for (final id in _questionGroups.keys) id: ExpansibleController(),
+  };
+  final _focus = <String, FocusNode>{};
+
+  @override
+  void dispose() {
+    for (final c in _groups.values) {
+      c.dispose();
+    }
+    for (final f in _focus.values) {
+      f.dispose();
+    }
+    super.dispose();
+  }
+
+  void _goToFirstUnknown() {
+    for (final MapEntry(key: id, value: questions) in _questionGroups.entries) {
+      final first = questions.where(_unknown.contains).firstOrNull;
+      if (first == null) continue;
+      _groups[id]!.expand();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final focus = _focus[first];
+        if (focus?.context case final context?) {
+          unawaited(Scrollable.ensureVisible(context));
+        }
+        focus?.requestFocus();
+      });
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,35 +189,29 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
                 if (saved?.updatedByName case final String name)
                   Text(l10n.setupJourneySavedBy(name)),
                 const SizedBox(height: AppSpacing.md),
-                _questionGroup(
-                  l10n,
-                  'bookings',
-                  l10n.setupChoicesBookings,
-                  const [
-                    'approve_bookings',
-                    'several_rooms_or_sites',
-                    'public_page',
-                  ],
-                  open: true,
+                // #3283 — the unresolved answers, and a way to the first.
+                FormErrorSummary(
+                  count: _unknown.length,
+                  onGoToFirst: _goToFirstUnknown,
                 ),
-                _questionGroup(l10n, 'money', l10n.setupChoicesMoney, const [
-                  'members_owe_money',
-                  'issue_invoices',
-                  'pay_online',
-                  'vat_registered',
-                ]),
-                _questionGroup(
-                  l10n,
-                  'operations',
-                  l10n.setupChoicesOperations,
-                  const [
-                    'association',
-                    'keep_books',
-                    'tracks_purchases',
-                    'door_tablet',
-                    'organised',
-                  ],
-                ),
+                for (final MapEntry(key: id, value: questions)
+                    in _questionGroups.entries)
+                  SetupQuestionGroup(
+                    id: id,
+                    title: switch (id) {
+                      'bookings' => l10n.setupChoicesBookings,
+                      'money' => l10n.setupChoicesMoney,
+                      _ => l10n.setupChoicesOperations,
+                    },
+                    questions: questions,
+                    answers: _answers,
+                    unknown: _unknown,
+                    busy: _busy,
+                    open: id == 'bookings',
+                    controller: _groups[id]!,
+                    focusOf: (q) => _focus.putIfAbsent(q, FocusNode.new),
+                    onAnswer: _answer,
+                  ),
                 ExpansionTile(
                   key: const ValueKey('setup-choice-guidance'),
                   title: Text(l10n.setupGuidanceTitle),
@@ -199,35 +247,6 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       ],
     );
   }
-
-  Widget _questionGroup(
-    AppLocalizations l10n,
-    String id,
-    String title,
-    List<String> questions, {
-    bool open = false,
-  }) => Card(
-    child: ExpansionTile(
-      key: ValueKey('setup-questions-$id'),
-      initiallyExpanded: open,
-      title: Text(title),
-      leading: Icon(switch (id) {
-        'bookings' => Icons.calendar_month_outlined,
-        'money' => Icons.payments_outlined,
-        _ => Icons.settings_outlined,
-      }),
-      subtitle: questions.any(_unknown.contains)
-          ? Text(
-              questions
-                  .where(_unknown.contains)
-                  .map(l10n.setupQuestion)
-                  .join(' · '),
-            )
-          : null,
-      childrenPadding: AppSpacing.mdAll,
-      children: _questions(l10n, questions),
-    ),
-  );
 
   Widget _advanced(
     AppLocalizations l10n,
@@ -373,40 +392,6 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
               saved.answers != _answers ||
               SetupProcess.values.any((p) => saved.levels[p] != vector[p])));
 
-  /// Who saved the answers last, and each question with its answer.
-  List<Widget> _questions(AppLocalizations l10n, List<String> questions) => [
-    for (final key in questions) ...[
-      SwitchListTile(
-        key: ValueKey('setup-question-$key'),
-        contentPadding: EdgeInsets.zero,
-        title: Text(l10n.setupQuestion(key)),
-        value: _answers[key],
-        onChanged: _busy ? null : (v) => _answer(key, yes: v),
-        subtitle: _unknown.contains(key) ? Text(l10n.setupAnswerUnknown) : null,
-      ),
-      // #3076 — the third answer: the safe level, and what stays there.
-      Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: FilterChip(
-          key: ValueKey('setup-question-$key-unknown'),
-          label: Semantics(
-            label: l10n.setupChoicesQuestionUnknown(l10n.setupQuestion(key)),
-            excludeSemantics: true, child: Text(l10n.setupAnswerUnknown)),
-          selected: _unknown.contains(key),
-          tooltip: l10n.setupChoicesQuestionUnknown(l10n.setupQuestion(key)),
-          onSelected: _busy
-              ? null
-              : (on) => _answer(key, yes: _answers[key], unknown: on),
-        ),
-      ),
-      if (_unknown.contains(key))
-        Text(
-          _unknownNote(l10n, key),
-          key: ValueKey('setup-question-$key-note'),
-        ),
-    ],
-  ];
-
   void _answer(String key, {required bool yes, bool unknown = false}) =>
       setState(() {
         if (!unknown) _answers = _answers.withAnswer(key, yes: yes);
@@ -414,9 +399,6 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
         _touched.add(key);
         unknown ? _unknown.add(key) : _unknown.remove(key);
       });
-
-  String _unknownNote(AppLocalizations l10n, String question) =>
-      l10n.setupChoicesNeedsDecision;
 
   Future<void> _apply(
     Workspace workspace,
@@ -433,6 +415,8 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       context,
       domain: 'workspace',
       message: 'setup levels apply failed',
+      // #3283 — a failed save says so; Apply stays to try again.
+      errorText: l10n.setupLevelsApplyFailed,
       action: () async {
         try {
           await applySetupLevels(

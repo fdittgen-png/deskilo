@@ -8,6 +8,7 @@ import '../../domain/setup_level_change.dart';
 import '../../domain/setup_step_reach.dart';
 import '../../domain/workspace_feature.dart';
 import '../feature_copy.dart';
+import '../feature_names.dart';
 
 /// What applying would switch on and off, every feature by name.
 class SetupLevelPreview extends StatelessWidget {
@@ -25,10 +26,13 @@ class SetupLevelPreview extends StatelessWidget {
       Key key,
     ) => [
       Text(heading, key: key, style: Theme.of(context).textTheme.titleSmall),
+      // #3283 — the exact switch, named, and what it does.
       for (final f in fs)
         Padding(
           padding: const EdgeInsets.only(top: AppSpacing.xs),
-          child: Text('• ${featureDescription(l10n, f)}'),
+          child: Text(
+            '• ${l10n.labelWithValue(featureName(l10n, f), featureDescription(l10n, f))}',
+          ),
         ),
     ];
     return Card(
@@ -54,30 +58,42 @@ class SetupLevelPreview extends StatelessWidget {
                 ),
               const SizedBox(height: AppSpacing.sm),
             ],
-            if (change.switchOn.isNotEmpty)
-              ...outcomes(
-                l10n.setupLevelsSwitchOn,
-                change.switchOn,
-                const ValueKey('setup-levels-on'),
+            // #3283 — the exact switches, folded: the sentences above say
+            // what changes, the details are one tap away.
+            if (!change.isEmpty)
+              ExpansionTile(
+                key: const ValueKey('setup-levels-details'),
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                title: Text(l10n.setupChoicesSummary(change.flags.length)),
+                children: [
+                  if (change.switchOn.isNotEmpty)
+                    ...outcomes(
+                      l10n.setupLevelsSwitchOn,
+                      change.switchOn,
+                      const ValueKey('setup-levels-on'),
+                    ),
+                  if (setupStepsFor(change.switchOn) case final steps
+                      when steps.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      l10n.setupLevelsStepsFollow(
+                        steps.map((s) => l10n.setupStepTitle(s.id)).join(', '),
+                      ),
+                      key: const ValueKey('setup-levels-steps'),
+                    ),
+                  ],
+                  if (change.switchOff.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.sm),
+                    ...outcomes(
+                      l10n.setupLevelsSwitchOff,
+                      change.switchOff,
+                      const ValueKey('setup-levels-off'),
+                    ),
+                  ],
+                ],
               ),
-            if (setupStepsFor(change.switchOn) case final steps
-                when steps.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                l10n.setupLevelsStepsFollow(
-                  steps.map((s) => l10n.setupStepTitle(s.id)).join(', '),
-                ),
-                key: const ValueKey('setup-levels-steps'),
-              ),
-            ],
-            if (change.switchOff.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.sm),
-              ...outcomes(
-                l10n.setupLevelsSwitchOff,
-                change.switchOff,
-                const ValueKey('setup-levels-off'),
-              ),
-            ],
           ],
         ),
       ),

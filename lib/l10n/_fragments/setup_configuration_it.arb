@@ -28,5 +28,18 @@
   "setupStateMarkedDone": "Configurato, segnato come fatto da lei",
   "setupStateEnabled": "Attivato, ancora da configurare",
   "setupStateNeedsDecision": "Richiede la sua decisione",
-  "setupTaskBreadcrumb": "{workspace} › Configurare lo spazio › {task}"
+  "setupTaskBreadcrumb": "{workspace} › Configurare lo spazio › {task}",
+  "setupQuestionExampleApproveBookings": "Per esempio: un membro chiede la sala riunioni per giovedì e la responsabile la conferma.",
+  "setupQuestionExampleSeveralRoomsOrSites": "Per esempio: un open space, due sale riunioni e un secondo indirizzo in città.",
+  "setupQuestionExamplePublicPage": "Per esempio: qualcuno che cerca una scrivania vicino trova la sua pagina e le scrive.",
+  "setupQuestionExampleMembersOweMoney": "Per esempio: un abbonamento mensile, un pass giornaliero o caffè e stampe sul conto.",
+  "setupQuestionExampleIssueInvoices": "Per esempio: un'azienda membro ha bisogno ogni mese di una fattura numerata per la sua contabilità.",
+  "setupQuestionExamplePayOnline": "Per esempio: un membro paga l'estratto del mese con carta dal telefono.",
+  "setupQuestionExampleVatRegistered": "Per esempio: le sue fatture riportano l'IVA e lei presenta le dichiarazioni IVA.",
+  "setupQuestionExampleAssociation": "Per esempio: i membri eleggono un consiglio e tengono un'assemblea generale ogni anno.",
+  "setupQuestionExampleKeepBooks": "Per esempio: il suo commercialista chiede i libri dell'anno e gli estratti bancari.",
+  "setupQuestionExampleTracksPurchases": "Per esempio: l'affitto, le pulizie e la macchina del caffè che acquista per lo spazio.",
+  "setupQuestionExampleDoorTablet": "Per esempio: i membri passano il badge su un tablet all'ingresso quando arrivano.",
+  "setupQuestionExampleOrganised": "Per esempio: una spesa oltre un importo stabilito richiede l'approvazione di due membri del consiglio.",
+  "setupLevelsApplyFailed": "Non è stato possibile salvare le scelte. Riprovi."
 }

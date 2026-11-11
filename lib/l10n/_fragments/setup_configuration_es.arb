@@ -28,5 +28,18 @@
   "setupStateMarkedDone": "Configurado, marcado como hecho por usted",
   "setupStateEnabled": "Activado, aún por configurar",
   "setupStateNeedsDecision": "Necesita su decisión",
-  "setupTaskBreadcrumb": "{workspace} › Configurar el espacio › {task}"
+  "setupTaskBreadcrumb": "{workspace} › Configurar el espacio › {task}",
+  "setupQuestionExampleApproveBookings": "Por ejemplo: un miembro pide la sala de reuniones para el jueves y la responsable la confirma.",
+  "setupQuestionExampleSeveralRoomsOrSites": "Por ejemplo: un espacio abierto, dos salas de reuniones y una segunda dirección en la ciudad.",
+  "setupQuestionExamplePublicPage": "Por ejemplo: alguien que busca un puesto cerca encuentra su página y le escribe.",
+  "setupQuestionExampleMembersOweMoney": "Por ejemplo: una membresía mensual, un pase de día o café e impresiones en la cuenta.",
+  "setupQuestionExampleIssueInvoices": "Por ejemplo: una empresa miembro necesita cada mes una factura numerada para su contabilidad.",
+  "setupQuestionExamplePayOnline": "Por ejemplo: un miembro paga el extracto del mes con tarjeta desde su teléfono.",
+  "setupQuestionExampleVatRegistered": "Por ejemplo: sus facturas muestran el IVA y usted presenta declaraciones de IVA.",
+  "setupQuestionExampleAssociation": "Por ejemplo: los miembros eligen una junta y celebran una asamblea general cada año.",
+  "setupQuestionExampleKeepBooks": "Por ejemplo: su gestor le pide los libros del año y los extractos bancarios.",
+  "setupQuestionExampleTracksPurchases": "Por ejemplo: el alquiler, la limpieza y la cafetera que compra para el espacio.",
+  "setupQuestionExampleDoorTablet": "Por ejemplo: los miembros pasan su tarjeta por una tableta en la entrada al llegar.",
+  "setupQuestionExampleOrganised": "Por ejemplo: un gasto por encima de un importe fijado necesita la aprobación de dos miembros de la junta.",
+  "setupLevelsApplyFailed": "No se pudieron guardar las opciones. Inténtelo de nuevo."
 }

@@ -8,6 +8,7 @@ import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/feature_copy.dart';
+import 'package:deskilo/features/workspace/presentation/feature_names.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_levels_screen.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +104,7 @@ void main() {
     expect(expected.isEmpty, isFalse, reason: 'the fixture must move');
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
     await tester.pumpAndSettle();
+    await _unfoldDetails(tester);
     expect(find.byKey(const ValueKey('setup-levels-on')), findsOneWidget);
     // #2871: the preview names the guide's steps that set those features up.
     expect(
@@ -129,6 +131,9 @@ void main() {
     final expected = _planFor(repo, setupPresets[SetupPreset.complet]!);
     await tester.tap(find.byKey(const ValueKey('setup-preset-complet')));
     await tester.pumpAndSettle();
+    // #3283 — folded until asked for.
+    expect(find.byKey(const ValueKey('setup-levels-on')), findsNothing);
+    await _unfoldDetails(tester);
     final l10n = AppLocalizationsEn();
     final bullets = tester
         .widgetList<Text>(
@@ -140,7 +145,8 @@ void main() {
         .map((t) => t.data)
         .toList();
     expect(bullets, [
-      for (final f in expected.switchOn) '• ${featureDescription(l10n, f)}',
+      for (final f in expected.switchOn)
+        '• ${l10n.labelWithValue(featureName(l10n, f), featureDescription(l10n, f))}',
     ]);
     expect(
       tester.widget<Text>(find.byKey(const ValueKey('setup-levels-on'))).data,
@@ -177,4 +183,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Because you issue invoices'), findsOneWidget);
   });
+}
+
+/// #3283 — the exact switches are behind the review's disclosure.
+Future<void> _unfoldDetails(WidgetTester tester) async {
+  final details = find.byKey(const ValueKey('setup-levels-details'));
+  await tester.ensureVisible(details);
+  await tester.tap(details);
+  await tester.pumpAndSettle();
 }
