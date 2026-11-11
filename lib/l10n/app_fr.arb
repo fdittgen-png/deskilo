@@ -12623,6 +12623,15 @@
   "paymentInstructionsValueCopied": "Copié dans le presse-papiers.",
   "paymentInstructionsWeroLabel": "Numéro de téléphone Wero",
   "paymentInstructionsWiseLabel": "Wisetag ou lien de paiement Wise",
+  "paymentMatchCandidate": "{number} · {amount} dus",
+  "paymentMatchDecide": "Autre montant : vous choisissez comment régler l'écart",
+  "paymentMatchEmpty": "Aucun paiement n'attend de facture.",
+  "paymentMatchFailed": "Les paiements n'ont pas pu être lus.",
+  "paymentMatchHeader": "{amount} reçus le {date}",
+  "paymentMatchIntro": "Un paiement a été reçu et n'est pas encore affecté. Choisissez la facture qu'il règle.",
+  "paymentMatchRefused": "Le paiement n'a pas pu être rapproché. Réessayez.",
+  "paymentMatchSame": "Même montant",
+  "paymentMatchTitle": "Paiements à rapprocher",
   "paymentMethodBankTransfer": "Virement",
   "paymentMethodCard": "Carte",
   "paymentMethodCash": "Espèces",
@@ -14712,6 +14721,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Les relances partent d'elles-mêmes, dans l'application.",
+  "reminderModeByHand": "Les relances se partagent à la main.",
+  "reminderModeRules": "Règles",
   "reminderOriginAutomatic": "automatique",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"

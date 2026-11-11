@@ -20307,6 +20307,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag oder Wise-Zahlungslink';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount offen';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Anderer Betrag: Sie wählen, wie die Differenz beglichen wird';
+
+  @override
+  String get paymentMatchEmpty => 'Keine Zahlung wartet auf eine Rechnung.';
+
+  @override
+  String get paymentMatchFailed =>
+      'Die Zahlungen konnten nicht gelesen werden.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount eingegangen am $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.';
+
+  @override
+  String get paymentMatchRefused =>
+      'Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.';
+
+  @override
+  String get paymentMatchSame => 'Gleicher Betrag';
+
+  @override
+  String get paymentMatchTitle => 'Zahlungen zuordnen';
+
+  @override
   String get paymentMethodBankTransfer => 'Überweisung';
 
   @override
@@ -23484,6 +23519,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reminderHistoryTitle => 'Mahnverlauf';
+
+  @override
+  String get reminderModeAutomatic =>
+      'Mahnungen gehen von selbst hinaus, in der App.';
+
+  @override
+  String get reminderModeByHand => 'Mahnungen werden von Hand geteilt.';
+
+  @override
+  String get reminderModeRules => 'Regeln';
 
   @override
   String get reminderOriginAutomatic => 'automatisch';

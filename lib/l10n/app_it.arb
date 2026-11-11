@@ -12623,6 +12623,15 @@
   "paymentInstructionsValueCopied": "Copiato negli appunti.",
   "paymentInstructionsWeroLabel": "Numero di telefono Wero",
   "paymentInstructionsWiseLabel": "Wisetag o link di pagamento Wise",
+  "paymentMatchCandidate": "{number} · {amount} aperti",
+  "paymentMatchDecide": "Altro importo: sceglie come saldare la differenza",
+  "paymentMatchEmpty": "Nessun pagamento attende una fattura.",
+  "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
+  "paymentMatchHeader": "{amount} ricevuti il {date}",
+  "paymentMatchIntro": "È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.",
+  "paymentMatchRefused": "Non è stato possibile abbinare il pagamento. Riprovi.",
+  "paymentMatchSame": "Stesso importo",
+  "paymentMatchTitle": "Pagamenti da abbinare",
   "paymentMethodBankTransfer": "Bonifico",
   "paymentMethodCard": "Carta",
   "paymentMethodCash": "Contanti",
@@ -14712,6 +14721,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "I solleciti partono da soli, nell'app.",
+  "reminderModeByHand": "I solleciti si condividono a mano.",
+  "reminderModeRules": "Regole",
   "reminderOriginAutomatic": "automatico",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"

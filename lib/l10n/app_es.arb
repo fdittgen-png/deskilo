@@ -12623,6 +12623,15 @@
   "paymentInstructionsValueCopied": "Copiado al portapapeles.",
   "paymentInstructionsWeroLabel": "Número de teléfono de Wero",
   "paymentInstructionsWiseLabel": "Wisetag o enlace de pago de Wise",
+  "paymentMatchCandidate": "{number} · {amount} pendientes",
+  "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
+  "paymentMatchEmpty": "Ningún pago espera una factura.",
+  "paymentMatchFailed": "No se pudieron leer los pagos.",
+  "paymentMatchHeader": "{amount} recibidos el {date}",
+  "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
+  "paymentMatchRefused": "No se pudo conciliar el pago. Inténtelo de nuevo.",
+  "paymentMatchSame": "Mismo importe",
+  "paymentMatchTitle": "Pagos por conciliar",
   "paymentMethodBankTransfer": "Transferencia",
   "paymentMethodCard": "Tarjeta",
   "paymentMethodCash": "Efectivo",
@@ -14712,6 +14721,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Los recordatorios salen solos, en la aplicación.",
+  "reminderModeByHand": "Los recordatorios se comparten a mano.",
+  "reminderModeRules": "Reglas",
   "reminderOriginAutomatic": "automático",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"

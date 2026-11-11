@@ -20122,6 +20122,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag or Wise payment link';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount open';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Another amount: choose how to settle the difference';
+
+  @override
+  String get paymentMatchEmpty => 'No payment is waiting for an invoice.';
+
+  @override
+  String get paymentMatchFailed => 'The payments could not be read.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount received $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'A payment was received and is not assigned yet. Choose the invoice it pays.';
+
+  @override
+  String get paymentMatchRefused =>
+      'The payment could not be matched. Try again.';
+
+  @override
+  String get paymentMatchSame => 'Same amount';
+
+  @override
+  String get paymentMatchTitle => 'Payments to match';
+
+  @override
   String get paymentMethodBankTransfer => 'Bank transfer';
 
   @override
@@ -23258,6 +23292,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderHistoryTitle => 'Reminder history';
+
+  @override
+  String get reminderModeAutomatic =>
+      'Reminders go out by themselves, in the app.';
+
+  @override
+  String get reminderModeByHand => 'Reminders are shared by hand.';
+
+  @override
+  String get reminderModeRules => 'Rules';
 
   @override
   String get reminderOriginAutomatic => 'automatic';

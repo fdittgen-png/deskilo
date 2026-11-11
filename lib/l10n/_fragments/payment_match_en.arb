@@ -1,0 +1,54 @@
+{
+  "paymentMatchTitle": "Payments to match",
+  "@paymentMatchTitle": {
+    "description": "#3587 R1-f: payments to match (paymentMatchTitle)"
+  },
+  "paymentMatchIntro": "A payment was received and is not assigned yet. Choose the invoice it pays.",
+  "@paymentMatchIntro": {
+    "description": "#3587 R1-f: payments to match (paymentMatchIntro)"
+  },
+  "paymentMatchHeader": "{amount} received {date}",
+  "@paymentMatchHeader": {
+    "description": "#3587 R1-f: payments to match (paymentMatchHeader)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMatchCandidate": "{number} · {amount} open",
+  "@paymentMatchCandidate": {
+    "description": "#3587 R1-f: payments to match (paymentMatchCandidate)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMatchSame": "Same amount",
+  "@paymentMatchSame": {
+    "description": "#3587 R1-f: payments to match (paymentMatchSame)"
+  },
+  "paymentMatchDecide": "Another amount: choose how to settle the difference",
+  "@paymentMatchDecide": {
+    "description": "#3587 R1-f: payments to match (paymentMatchDecide)"
+  },
+  "paymentMatchEmpty": "No payment is waiting for an invoice.",
+  "@paymentMatchEmpty": {
+    "description": "#3587 R1-f: payments to match (paymentMatchEmpty)"
+  },
+  "paymentMatchFailed": "The payments could not be read.",
+  "@paymentMatchFailed": {
+    "description": "#3587 R1-f: payments to match (paymentMatchFailed)"
+  },
+  "paymentMatchRefused": "The payment could not be matched. Try again.",
+  "@paymentMatchRefused": {
+    "description": "#3587 R1-f: said when matching a payment to an invoice was refused"
+  }
+}

@@ -20263,6 +20263,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag o enlace de pago de Wise';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount pendientes';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Otro importe: usted elige cómo saldar la diferencia';
+
+  @override
+  String get paymentMatchEmpty => 'Ningún pago espera una factura.';
+
+  @override
+  String get paymentMatchFailed => 'No se pudieron leer los pagos.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount recibidos el $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Se recibió un pago que aún no está asignado. Elija la factura que paga.';
+
+  @override
+  String get paymentMatchRefused =>
+      'No se pudo conciliar el pago. Inténtelo de nuevo.';
+
+  @override
+  String get paymentMatchSame => 'Mismo importe';
+
+  @override
+  String get paymentMatchTitle => 'Pagos por conciliar';
+
+  @override
   String get paymentMethodBankTransfer => 'Transferencia';
 
   @override
@@ -23433,6 +23467,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reminderHistoryTitle => 'Historial de recordatorios';
+
+  @override
+  String get reminderModeAutomatic =>
+      'Los recordatorios salen solos, en la aplicación.';
+
+  @override
+  String get reminderModeByHand => 'Los recordatorios se comparten a mano.';
+
+  @override
+  String get reminderModeRules => 'Reglas';
 
   @override
   String get reminderOriginAutomatic => 'automático';

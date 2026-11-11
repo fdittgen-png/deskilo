@@ -12623,6 +12623,15 @@
   "paymentInstructionsValueCopied": "In die Zwischenablage kopiert.",
   "paymentInstructionsWeroLabel": "Wero-Telefonnummer",
   "paymentInstructionsWiseLabel": "Wisetag oder Wise-Zahlungslink",
+  "paymentMatchCandidate": "{number} · {amount} offen",
+  "paymentMatchDecide": "Anderer Betrag: Sie wählen, wie die Differenz beglichen wird",
+  "paymentMatchEmpty": "Keine Zahlung wartet auf eine Rechnung.",
+  "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
+  "paymentMatchHeader": "{amount} eingegangen am {date}",
+  "paymentMatchIntro": "Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.",
+  "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.",
+  "paymentMatchSame": "Gleicher Betrag",
+  "paymentMatchTitle": "Zahlungen zuordnen",
   "paymentMethodBankTransfer": "Überweisung",
   "paymentMethodCard": "Karte",
   "paymentMethodCash": "Bar",
@@ -14712,6 +14721,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Mahnungen gehen von selbst hinaus, in der App.",
+  "reminderModeByHand": "Mahnungen werden von Hand geteilt.",
+  "reminderModeRules": "Regeln",
   "reminderOriginAutomatic": "automatisch",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"

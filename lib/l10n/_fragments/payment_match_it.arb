@@ -1,0 +1,11 @@
+{
+  "paymentMatchTitle": "Pagamenti da abbinare",
+  "paymentMatchIntro": "È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.",
+  "paymentMatchHeader": "{amount} ricevuti il {date}",
+  "paymentMatchCandidate": "{number} · {amount} aperti",
+  "paymentMatchSame": "Stesso importo",
+  "paymentMatchDecide": "Altro importo: sceglie come saldare la differenza",
+  "paymentMatchEmpty": "Nessun pagamento attende una fattura.",
+  "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
+  "paymentMatchRefused": "Non è stato possibile abbinare il pagamento. Riprovi."
+}
