@@ -6424,6 +6424,61 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Kundeneigenschaft wurde nicht gespeichert.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Guthaben: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Zahlungen, die noch keine Rechnung beglichen haben.';
+
+  @override
+  String get customerPageInvoices => 'Rechnungen';
+
+  @override
+  String get customerPageMatch => 'Zahlung zuordnen';
+
+  @override
+  String get customerPageNothingOwed => 'Nichts offen';
+
+  @override
+  String get customerPageOwes => 'Schuldet';
+
+  @override
+  String get customerPageStory => 'Verlauf';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Sagt, Rechnung $number bezahlt zu haben';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Rechnung $number ausgestellt';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Jetzt: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Rechnung $number bezahlt';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen für $number geteilt',
+      one: 'Mahnung für $number geteilt',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archiviert';
 
   @override
@@ -14963,6 +15018,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingCaughtUp => 'Alles ist erledigt.';
 
   @override
+  String get invoicingCheckingPayments =>
+      'Eingegangene Zahlungen werden geprüft…';
+
+  @override
   String get invoicingColCustomer => 'Kunde';
 
   @override
@@ -15120,20 +15179,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get invoicingRemindersAutomatic =>
-      'Mahnungen gehen von selbst hinaus, in der App.';
-
-  @override
-  String get invoicingRemindersByHand => 'Mahnungen werden von Hand geteilt.';
-
-  @override
-  String get invoicingRules => 'Regeln';
-
-  @override
   String get invoicingSearch => 'Suchen';
 
   @override
   String get invoicingSearchHint => 'Ein Kunde oder eine Nummer';
+
+  @override
+  String get invoicingSourceCredits => 'Guthaben der Kunden';
 
   @override
   String invoicingSourceFailed(String source) {
@@ -20370,6 +20422,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag oder Wise-Zahlungslink';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount offen';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Anderer Betrag: Sie wählen, wie die Differenz beglichen wird';
+
+  @override
+  String get paymentMatchEmpty => 'Keine Zahlung wartet auf eine Rechnung.';
+
+  @override
+  String get paymentMatchFailed =>
+      'Die Zahlungen konnten nicht gelesen werden.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount eingegangen am $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.';
+
+  @override
+  String get paymentMatchRefused =>
+      'Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.';
+
+  @override
+  String get paymentMatchSame => 'Gleicher Betrag';
+
+  @override
+  String get paymentMatchTitle => 'Zahlungen zuordnen';
+
+  @override
   String get paymentMethodBankTransfer => 'Überweisung';
 
   @override
@@ -23552,6 +23639,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderHistoryTitle => 'Mahnverlauf';
 
   @override
+  String get reminderModeAutomatic =>
+      'Mahnungen gehen von selbst hinaus, in der App.';
+
+  @override
+  String get reminderModeByHand => 'Mahnungen werden von Hand geteilt.';
+
+  @override
+  String get reminderModeRules => 'Regeln';
+
+  @override
   String get reminderOriginAutomatic => 'automatisch';
 
   @override
@@ -23586,6 +23683,91 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Zahlungserinnerung';
+
+  @override
+  String get reminderQueueCheckFirst =>
+      'Zuerst prüfen: Geld eingegangen und nicht zugeordnet';
+
+  @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days Tage überfällig',
+      one: '$number · 1 Tag überfällig',
+      zero: '$number · heute fällig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Fertig';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Nichts zu teilen';
+
+  @override
+  String get reminderQueueFailed =>
+      'Konnte nicht geteilt werden. Bitte erneut versuchen.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Sie teilen jede Mahnung selbst. Sie wird nur vermerkt, wenn sie wirklich geteilt wurde.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Mahnung $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Nichts wurde vermerkt: das Teilen wurde geschlossen.';
+
+  @override
+  String get reminderQueueNotRecordedHeading => 'Geteilt, nicht vermerkt';
+
+  @override
+  String get reminderQueueRecord => 'Vermerken';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Bis sie vermerkt ist, zeigt die Rechnung diese Mahnung weiterhin als fällig.';
+
+  @override
+  String get reminderQueueResultNone => 'Keine Mahnung geteilt';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Jede wird auf ihrer Rechnung vermerkt.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen geteilt',
+      one: '1 Mahnung geteilt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Teilen';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Nächste teilen · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Geteilt';
+
+  @override
+  String get reminderQueueSharedNotRecorded =>
+      'Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.';
+
+  @override
+  String get reminderQueueTitle => 'Zu teilende Mahnungen';
 
   @override
   String get reminderStatusAccepted =>

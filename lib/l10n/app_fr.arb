@@ -4162,6 +4162,18 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageCredit": "Avoir : {amount}",
+  "customerPageCreditHint": "Paiements qu'aucune facture n'a encore pris.",
+  "customerPageInvoices": "Factures",
+  "customerPageMatch": "Rapprocher le paiement",
+  "customerPageNothingOwed": "Rien à payer",
+  "customerPageOwes": "Doit",
+  "customerPageStory": "Historique",
+  "customerStoryDeclared": "Dit avoir payé la facture {number}",
+  "customerStoryIssued": "Facture {number} émise",
+  "customerStoryNow": "Maintenant : {words}",
+  "customerStoryPaid": "Facture {number} payée",
+  "customerStoryReminders": "{count, plural, =1{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
   "dataReportArchived": "Archivé",
   "dataReportColumnAttended": "Présences",
   "dataReportColumnCancelled": "Annulées",
@@ -9530,6 +9542,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Vérification des paiements reçus…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Client",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9730,18 +9746,6 @@
       }
     }
   },
-  "invoicingRemindersAutomatic": "Les relances partent d’elles-mêmes, dans l’application.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Les relances se partagent à la main.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Règles",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
-  },
   "invoicingSearch": "Rechercher",
   "@invoicingSearch": {
     "description": "#3587 top bar: open the search field"
@@ -9749,6 +9753,10 @@
   "invoicingSearchHint": "Un client ou un numéro",
   "@invoicingSearchHint": {
     "description": "#3587 search field hint"
+  },
+  "invoicingSourceCredits": "Avoirs des clients",
+  "@invoicingSourceCredits": {
+    "description": "#3587 a source name: what customers paid that no invoice has taken"
   },
   "invoicingSourceFailed": "{source} n’a pas pu être lu.",
   "@invoicingSourceFailed": {
@@ -12657,6 +12665,15 @@
   "paymentInstructionsValueCopied": "Copié dans le presse-papiers.",
   "paymentInstructionsWeroLabel": "Numéro de téléphone Wero",
   "paymentInstructionsWiseLabel": "Wisetag ou lien de paiement Wise",
+  "paymentMatchCandidate": "{number} · {amount} dus",
+  "paymentMatchDecide": "Autre montant : vous choisissez comment régler l'écart",
+  "paymentMatchEmpty": "Aucun paiement n'attend de facture.",
+  "paymentMatchFailed": "Les paiements n'ont pas pu être lus.",
+  "paymentMatchHeader": "{amount} reçus le {date}",
+  "paymentMatchIntro": "Un paiement a été reçu et n'est pas encore affecté. Choisissez la facture qu'il règle.",
+  "paymentMatchRefused": "Le paiement n'a pas pu être rapproché. Réessayez.",
+  "paymentMatchSame": "Même montant",
+  "paymentMatchTitle": "Paiements à rapprocher",
   "paymentMethodBankTransfer": "Virement",
   "paymentMethodCard": "Carte",
   "paymentMethodCash": "Espèces",
@@ -14747,6 +14764,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Les relances partent d'elles-mêmes, dans l'application.",
+  "reminderModeByHand": "Les relances se partagent à la main.",
+  "reminderModeRules": "Règles",
   "reminderOriginAutomatic": "automatique",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"
@@ -14767,6 +14787,25 @@
   "reminderPdfOpeningFriendly": "petit rappel amical : la facture ci-dessous est encore ouverte. Un simple oubli, sans doute — pas d'inquiétude.",
   "reminderPdfTitleFirm": "Relance",
   "reminderPdfTitleFriendly": "Rappel de paiement",
+  "reminderQueueCheckFirst": "À vérifier d'abord : argent reçu et non affecté",
+  "reminderQueueDetail": "{days, plural, =0{{number} · échue aujourd'hui} =1{{number} · 1 jour de retard} other{{number} · {days} jours de retard}}",
+  "reminderQueueDone": "Terminé",
+  "reminderQueueDoneEmpty": "Rien à partager",
+  "reminderQueueFailed": "N'a pas pu être partagée. Réessayez.",
+  "reminderQueueIntro": "Vous partagez chaque relance vous-même. Elle n'est enregistrée que si elle a vraiment été partagée.",
+  "reminderQueueLevel": "Relance {level}",
+  "reminderQueueNotRecorded": "Rien n'a été enregistré : le partage a été fermé.",
+  "reminderQueueNotRecordedHeading": "Partagées, non enregistrées",
+  "reminderQueueRecord": "Enregistrer",
+  "reminderQueueRecordStays": "Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due.",
+  "reminderQueueResultNone": "Aucune relance partagée",
+  "reminderQueueResultSubtitle": "Chacune est enregistrée sur sa facture.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 relance partagée} other{{count} relances partagées}}",
+  "reminderQueueShare": "Partager",
+  "reminderQueueShareNext": "Partager la suivante · {customer}",
+  "reminderQueueShared": "Partagée",
+  "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
+  "reminderQueueTitle": "Relances à partager",
   "reminderStatusAccepted": "Acceptée par le service de notifications — ce n'est pas une preuve de lecture",
   "@reminderStatusAccepted": {
     "description": "#1922 reminder evidence: reminderStatusAccepted"

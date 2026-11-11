@@ -1,0 +1,21 @@
+{
+  "reminderQueueTitle": "Zu teilende Mahnungen",
+  "reminderQueueIntro": "Sie teilen jede Mahnung selbst. Sie wird nur vermerkt, wenn sie wirklich geteilt wurde.",
+  "reminderQueueLevel": "Mahnung {level}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · heute fällig} =1{{number} · 1 Tag überfällig} other{{number} · {days} Tage überfällig}}",
+  "reminderQueueShare": "Teilen",
+  "reminderQueueShareNext": "Nächste teilen · {customer}",
+  "reminderQueueShared": "Geteilt",
+  "reminderQueueNotRecorded": "Nichts wurde vermerkt: das Teilen wurde geschlossen.",
+  "reminderQueueFailed": "Konnte nicht geteilt werden. Bitte erneut versuchen.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 Mahnung geteilt} other{{count} Mahnungen geteilt}}",
+  "reminderQueueResultNone": "Keine Mahnung geteilt",
+  "reminderQueueResultSubtitle": "Jede wird auf ihrer Rechnung vermerkt.",
+  "reminderQueueDone": "Fertig",
+  "reminderQueueDoneEmpty": "Nichts zu teilen",
+  "reminderQueueCheckFirst": "Zuerst prüfen: Geld eingegangen und nicht zugeordnet",
+  "reminderQueueSharedNotRecorded": "Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.",
+  "reminderQueueRecord": "Vermerken",
+  "reminderQueueNotRecordedHeading": "Geteilt, nicht vermerkt",
+  "reminderQueueRecordStays": "Bis sie vermerkt ist, zeigt die Rechnung diese Mahnung weiterhin als fällig."
+}

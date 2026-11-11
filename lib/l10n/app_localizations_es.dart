@@ -6407,6 +6407,61 @@ class AppLocalizationsEs extends AppLocalizations {
       'La condición del cliente no se ha guardado.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Saldo a favor: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Pagos que ninguna factura ha tomado todavía.';
+
+  @override
+  String get customerPageInvoices => 'Facturas';
+
+  @override
+  String get customerPageMatch => 'Conciliar el pago';
+
+  @override
+  String get customerPageNothingOwed => 'Nada pendiente';
+
+  @override
+  String get customerPageOwes => 'Debe';
+
+  @override
+  String get customerPageStory => 'Historial';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Dice haber pagado la factura $number';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Factura $number emitida';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Ahora: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Factura $number pagada';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recordatorios compartidos para $number',
+      one: 'Recordatorio compartido para $number',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archivado';
 
   @override
@@ -14927,6 +14982,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicingCaughtUp => 'Todo está al día.';
 
   @override
+  String get invoicingCheckingPayments => 'Comprobando los pagos recibidos…';
+
+  @override
   String get invoicingColCustomer => 'Cliente';
 
   @override
@@ -15084,21 +15142,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get invoicingRemindersAutomatic =>
-      'Los recordatorios salen solos, en la aplicación.';
-
-  @override
-  String get invoicingRemindersByHand =>
-      'Los recordatorios se comparten a mano.';
-
-  @override
-  String get invoicingRules => 'Reglas';
-
-  @override
   String get invoicingSearch => 'Buscar';
 
   @override
   String get invoicingSearchHint => 'Un cliente o un número';
+
+  @override
+  String get invoicingSourceCredits => 'Saldos a favor de los clientes';
 
   @override
   String invoicingSourceFailed(String source) {
@@ -20322,6 +20372,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag o enlace de pago de Wise';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount pendientes';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Otro importe: usted elige cómo saldar la diferencia';
+
+  @override
+  String get paymentMatchEmpty => 'Ningún pago espera una factura.';
+
+  @override
+  String get paymentMatchFailed => 'No se pudieron leer los pagos.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount recibidos el $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Se recibió un pago que aún no está asignado. Elija la factura que paga.';
+
+  @override
+  String get paymentMatchRefused =>
+      'No se pudo conciliar el pago. Inténtelo de nuevo.';
+
+  @override
+  String get paymentMatchSame => 'Mismo importe';
+
+  @override
+  String get paymentMatchTitle => 'Pagos por conciliar';
+
+  @override
   String get paymentMethodBankTransfer => 'Transferencia';
 
   @override
@@ -23497,6 +23581,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reminderHistoryTitle => 'Historial de recordatorios';
 
   @override
+  String get reminderModeAutomatic =>
+      'Los recordatorios salen solos, en la aplicación.';
+
+  @override
+  String get reminderModeByHand => 'Los recordatorios se comparten a mano.';
+
+  @override
+  String get reminderModeRules => 'Reglas';
+
+  @override
   String get reminderOriginAutomatic => 'automático';
 
   @override
@@ -23530,6 +23624,90 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Recordatorio de pago';
+
+  @override
+  String get reminderQueueCheckFirst =>
+      'Compruebe primero: dinero recibido y no asignado';
+
+  @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days días de retraso',
+      one: '$number · 1 día de retraso',
+      zero: '$number · vence hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Hecho';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Nada que compartir';
+
+  @override
+  String get reminderQueueFailed => 'No se pudo compartir. Inténtelo de nuevo.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Usted comparte cada recordatorio. Solo se registra si de verdad se compartió.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Recordatorio $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'No se registró nada: se cerró el menú de compartir.';
+
+  @override
+  String get reminderQueueNotRecordedHeading => 'Compartidos, sin registrar';
+
+  @override
+  String get reminderQueueRecord => 'Registrar';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Hasta que se registre, la factura sigue mostrando este recordatorio como pendiente.';
+
+  @override
+  String get reminderQueueResultNone => 'Ningún recordatorio compartido';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Cada uno queda registrado en su factura.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recordatorios compartidos',
+      one: '1 recordatorio compartido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Compartir';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Compartir la siguiente · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Compartido';
+
+  @override
+  String get reminderQueueSharedNotRecorded =>
+      'Compartido, pero no registrado en la factura. Regístrelo: no se compartirá de nuevo.';
+
+  @override
+  String get reminderQueueTitle => 'Recordatorios por compartir';
 
   @override
   String get reminderStatusAccepted =>
