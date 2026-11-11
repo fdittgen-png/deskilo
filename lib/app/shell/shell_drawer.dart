@@ -123,10 +123,14 @@ class ShellDrawer extends ConsumerWidget {
     required this.onBranch,
     required this.pendingEvents,
     this.permanent = false,
+    this.navs,
   });
 
   final List<String> tabTitles;
   final List<int> visibleBranches;
+
+  /// #3551 — the destinations of the shell's table; null: one per branch.
+  final List<ShellNav>? navs;
   final int currentIndex;
   final ValueChanged<int> onBranch;
   final int pendingEvents;
@@ -160,6 +164,8 @@ class ShellDrawer extends ConsumerWidget {
       accountMenu: accountMenu,
       permanent: permanent,
       visibleBranches: visibleBranches,
+      navs: navs,
+      path: path,
       tabTitles: tabTitles,
       currentIndex: currentIndex,
       onBranch: onBranch,

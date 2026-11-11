@@ -43,6 +43,8 @@ class DrawerEntries {
     required this.accountMenu,
     required this.permanent,
     required this.visibleBranches,
+    this.navs,
+    this.path = '',
     required this.tabTitles,
     required this.currentIndex,
     required this.onBranch,
@@ -57,6 +59,12 @@ class DrawerEntries {
   final bool accountMenu;
   final bool permanent;
   final List<int> visibleBranches;
+
+  /// #3551 — the shell's destination table; null: one entry per branch.
+  final List<ShellNav>? navs;
+
+  /// The location on screen, for a destination selected by its location.
+  final String path;
   final List<String> tabTitles;
   final int currentIndex;
   final ValueChanged<int> onBranch;
@@ -86,7 +94,7 @@ class DrawerEntries {
 
   List<DrawerEntry> navigation() {
     return <DrawerEntry>[
-      if (may(WorkspacePermission.makeReservations))
+      if (mayOnPlaces(WorkspacePermission.makeReservations))
         DrawerEntry(
           'drawer-reserve',
           shellBranchIcon(ShellBranch.reserve),
@@ -101,17 +109,29 @@ class DrawerEntries {
           },
           selected: currentIndex == ShellBranch.reserve,
         ),
-      for (final branch in visibleBranches)
-        DrawerEntry(
-          'drawer-tab-$branch',
-          shellBranchIcon(branch),
-          tabTitles[branch],
-          () {
-            if (!permanent) Navigator.of(context).pop();
-            onBranch(branch);
-          },
-          selected: currentIndex == branch,
-        ),
+      for (final nav in navs ??
+          [for (final b in visibleBranches) ShellNav('$b', b)])
+        if (nav.location == null)
+          DrawerEntry(
+            'drawer-tab-${nav.branch}',
+            shellBranchIcon(nav.branch),
+            tabTitles[nav.branch],
+            () {
+              if (!permanent) Navigator.of(context).pop();
+              onBranch(nav.branch);
+            },
+            selected: currentIndex == nav.branch,
+          )
+        else
+          DrawerEntry(
+            'drawer-nav-${nav.id}',
+            nav.id == 'overview'
+                ? Icons.space_dashboard_outlined
+                : shellBranchIcon(nav.branch),
+            nav.id == 'overview' ? l10n.overviewTitle : tabTitles[nav.branch],
+            () => go(nav.location!, push: false),
+            selected: nav.selectedAt(branch: currentIndex, path: path),
+          ),
       // Events live in the calendar when it holds the alerts: no entry then.
       if (features.contains(WorkspaceFeature.eventsTab) &&
           !calendarHoldsAlerts(features) &&

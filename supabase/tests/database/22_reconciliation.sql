@@ -143,6 +143,9 @@ select ok('match_credit_amount' = any(pg_temp.findings()),
   'a credit for 4200 against a match that says 5000 is reported');
 
 -- An additional payment pointing at a ledger row that says something else.
+-- Since 0717 the table refuses parts beyond their payment; the damage is
+-- planted past that guard, as an older or direct write could have left it.
+alter table public.invoice_match_payments disable trigger invoice_match_payments_allocation_sum;
 do $extra$
 declare v uuid;
 begin
@@ -159,6 +162,7 @@ begin
           current_setting('deskilo.recon.inv')::uuid, v, 9900, 'exact');
 end;
 $extra$;
+alter table public.invoice_match_payments enable trigger invoice_match_payments_allocation_sum;
 
 select ok('extra_payment_unbacked' = any(pg_temp.findings()),
   'an additional payment of 9900 backed by a ledger row of 100 is reported');
