@@ -26,12 +26,24 @@ class SetupLevelPreview extends StatelessWidget {
       Key key,
     ) => [
       Text(heading, key: key, style: Theme.of(context).textTheme.titleSmall),
-      // #3283 — the exact switch, named, and what it does.
+      // #3283 — the exact switch by the title the Features screen gives it
+      // (one definition, featureName), and what it does below.
       for (final f in fs)
         Padding(
+          key: ValueKey('setup-levels-switch-${f.name}'),
           padding: const EdgeInsets.only(top: AppSpacing.xs),
-          child: Text(
-            '• ${l10n.labelWithValue(featureName(l10n, f), featureDescription(l10n, f))}',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                featureName(l10n, f),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              Text(
+                featureDescription(l10n, f),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
           ),
         ),
     ];

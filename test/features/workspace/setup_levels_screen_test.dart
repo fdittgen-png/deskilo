@@ -138,19 +138,18 @@ void main() {
     expect(find.byKey(const ValueKey('setup-levels-on')), findsNothing);
     await _unfoldDetails(tester);
     final l10n = AppLocalizationsEn();
-    final bullets = tester
-        .widgetList<Text>(
-          find.descendant(
-            of: find.byKey(const ValueKey('setup-levels-preview')),
-            matching: find.textContaining('• '),
-          ),
-        )
-        .map((t) => t.data)
-        .toList();
-    expect(bullets, [
-      for (final f in expected.switchOn)
-        '• ${l10n.labelWithValue(featureName(l10n, f), featureDescription(l10n, f))}',
-    ]);
+    // #3283 — each switch: its Features-screen title, its description below.
+    for (final f in expected.switchOn) {
+      final row = find.byKey(ValueKey('setup-levels-switch-${f.name}'));
+      expect(row, findsOneWidget, reason: f.name);
+      final texts = tester
+          .widgetList<Text>(
+            find.descendant(of: row, matching: find.byType(Text)),
+          )
+          .map((t) => t.data)
+          .toList();
+      expect(texts, [featureName(l10n, f), featureDescription(l10n, f)]);
+    }
     expect(
       tester.widget<Text>(find.byKey(const ValueKey('setup-levels-on'))).data,
       'Your space gets:',
