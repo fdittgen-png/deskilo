@@ -11,6 +11,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_money_seed.dart';
+import 'package:deskilo/features/money/application/save_service.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
@@ -183,6 +184,26 @@ void main() {
     );
     expect(find.textContaining('50 min'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  test('the duration bounds are the domain\'s: 5 and 1440 minutes are '
+      'accepted, 4 and 1441 are a duration problem', () {
+    Set<ServiceProblem> of(int minutes) => serviceProblems(
+      ServiceDraft(
+        name: 'Session',
+        priceCents: 0,
+        details: ServiceDetails(durationMinutes: minutes),
+      ),
+    );
+    expect(of(ServiceLimits.minMinutes), isEmpty);
+    expect(of(ServiceLimits.maxMinutes), isEmpty);
+    expect(of(ServiceLimits.minMinutes - 1), {ServiceProblem.duration});
+    expect(of(ServiceLimits.maxMinutes + 1), {ServiceProblem.duration});
+    expect(
+      serviceProblems(const ServiceDraft(name: 'Session', priceCents: 0)),
+      isEmpty,
+      reason: 'no duration is a service that is not time-based',
+    );
   });
 
   test("the Demo's practice has six services in two categories, its sessions "

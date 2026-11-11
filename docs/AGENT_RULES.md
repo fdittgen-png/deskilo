@@ -316,7 +316,7 @@ Binding for every session and every agent.
 
 ## Git rules
 
-- Branch off `master`; conventional commits; PRs < 400 lines (excluding generated); squash-merge; `Refs #NN` for a partial PR, `Closes #NN` only when the whole acceptance is met (see [Ready, Done and closure](#ready-done-and-closure)).
+- Branch off `master`; conventional commits; one pull request per issue; a large issue in two or three where that helps the review or the run — no line limit (owner, 11 November 2026, #3542); squash-merge; `Refs #NN` for a partial PR, `Closes #NN` only when the whole acceptance is met (see [Ready, Done and closure](#ready-done-and-closure)).
 - Forbidden: direct commits to `master`, force-push to `master`, `--no-verify`, amending pushed commits.
 - A branch is brought up to date by merging `master` into it, never by resetting it onto `master`: the reset keeps the old tree and silently puts every file master changed back (`tool/stale_base_guard.dart` fails such a pull request, #3688).
 
