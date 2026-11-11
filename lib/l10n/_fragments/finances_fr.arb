@@ -116,5 +116,17 @@
         "type": "String"
       }
     }
+  },
+  "financesBeingValidated": "En cours de validation",
+  "@financesBeingValidated": {
+    "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
+  },
+  "financesNothingSoFar": "Rien parmi ce qui a été lu jusqu’ici.",
+  "@financesNothingSoFar": {
+    "description": "Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed"
+  },
+  "financesHostsUnavailable": "Vos installations connectées n’ont pas pu être listées pour le moment ; ce qui s’affiche provient de cette installation uniquement.",
+  "@financesHostsUnavailable": {
+    "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
   }
 }

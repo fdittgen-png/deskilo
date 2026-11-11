@@ -66,9 +66,12 @@ List<AttentionItem>? attentionItemsOf(
 ) {
   final documents = ref.watch(financeOverviewProvider);
   final inbox = ref.watch(messengerInboxProvider);
-  final owed = documents.value
-      ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
-      .payable;
+  // #3682 — a host still reading or that did not answer leaves the
+  // documents unread: nothing is decided from part of them.
+  final read = documents.value;
+  final owed = read == null || read.notAnswered.isNotEmpty
+      ? null
+      : read.production(ref.watch(myDevelopmentWorkspaceIdsProvider)).payable;
   if (owed == null || inbox.value == null || refs == null) return null;
   return attentionItems(
     documents: [
@@ -87,6 +90,16 @@ List<AttentionItem>? attentionItemsOf(
     refs: refs,
     inbox: inbox.value,
   );
+}
+
+/// #3682 — whether a connected host is still being read, and whether, once
+/// none is, a source of my documents did not answer (a host that failed or
+/// an unread list of hosts): either keeps "nothing needs you" unsaid.
+(bool, bool) _hostsCoverage(WidgetRef ref) {
+  final read = ref.watch(financeOverviewProvider).value;
+  if (read == null) return (false, false);
+  final reading = read.stillReading;
+  return (reading, !reading && read.notAnswered.isNotEmpty);
 }
 
 /// My own unpaid documents, undecided requests and unread conversations,
@@ -129,10 +142,10 @@ class NeedsAttentionSection extends ConsumerWidget {
     );
     bool failed(AsyncValue<Object?> a) => a.hasError && !a.isLoading;
     final sources = [documents, refs, inbox];
-    final reading = sources.any((a) => !a.hasValue && !failed(a));
+    final (hostsReading, partialDocuments) = _hostsCoverage(ref);
+    final reading =
+        hostsReading || sources.any((a) => !a.hasValue && !failed(a));
     final settled = sources.every((a) => a.hasValue && !failed(a));
-    final partialDocuments =
-        documents.value?.unavailableSources.isNotEmpty ?? false;
     final read = inbox.value;
     // #2556 — a source that failed or cannot be reached is said beside the
     // others, never counted as nothing waiting.

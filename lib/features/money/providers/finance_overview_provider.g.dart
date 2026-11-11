@@ -79,7 +79,7 @@ final class FinanceOverviewComposerProvider
 }
 
 String _$financeOverviewComposerHash() =>
-    r'50b8683459de253343bfba1ab4f8087bc58b3d29';
+    r'5fff956d545807771529ddf955df350020cb9926';
 
 /// Me › Finances: my invoices and reminders across every workspace (0380),
 /// each read where its documents live. The personal home answers for the

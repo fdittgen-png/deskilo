@@ -60,6 +60,52 @@ void main() {
     expect(find.byKey(const ValueKey('me-home-finance-glance')), findsNothing);
   });
 
+  // #3682 — paid, the business has not confirmed yet: neither owed nor late.
+  testWidgets('a payment being validated is neither in the total nor '
+      'overdue', (tester) async {
+    final repo = FakeAccountActivityRepository()
+      ..financeOverview = FinanceOverview(
+        invoices: [
+          invoice(
+            'v',
+            total: 12000,
+            state: FinanceState.awaitingValidation,
+            due: DateTime(2000),
+          ),
+          invoice('b', ws: 'Office B', total: 3000, due: DateTime(2999)),
+        ],
+      );
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      accountActivity: repo,
+    );
+    await goTo(tester, router, '/me');
+    await tester.tap(
+      find.byKey(const ValueKey('me-home-finance-glance-amount-EUR')),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('30'), findsOneWidget);
+    expect(find.textContaining('150'), findsNothing);
+    expect(find.text('1 overdue'), findsNothing);
+  });
+
+  testWidgets('only a payment being validated: no card', (tester) async {
+    final repo = FakeAccountActivityRepository()
+      ..financeOverview = FinanceOverview(
+        invoices: [
+          invoice('v', state: FinanceState.awaitingValidation, due: DateTime(2000)),
+        ],
+      );
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      accountActivity: repo,
+    );
+    await goTo(tester, router, '/me');
+    expect(find.byKey(const ValueKey('me-home-finance-glance')), findsNothing);
+  });
+
   testWidgets('the home total ignores a development space; its invoice opens '
       'in that development space', (tester) async {
     final spaces = twoSpaces();

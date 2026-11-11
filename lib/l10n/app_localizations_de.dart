@@ -11012,6 +11012,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesAwaitingValidation => 'Zahlung wird geprüft';
 
   @override
+  String get financesBeingValidated => 'Wird bestätigt';
+
+  @override
   String get financesColumnAmount => 'Betrag';
 
   @override
@@ -11070,6 +11073,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesHideAmount => 'Betrag ausblenden';
 
   @override
+  String get financesHostsUnavailable =>
+      'Ihre verbundenen Installationen konnten gerade nicht aufgelistet werden; angezeigt wird nur, was von dieser Installation stammt.';
+
+  @override
   String financesLinkAction(String space) {
     return 'Für $space öffnen';
   }
@@ -11089,6 +11096,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesNothingPaid => 'Noch keine beglichene Rechnung.';
+
+  @override
+  String get financesNothingSoFar =>
+      'Nichts unter dem, was bisher gelesen wurde.';
 
   @override
   String get financesOpenDocument => 'Öffnen';
