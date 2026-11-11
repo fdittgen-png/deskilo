@@ -122,6 +122,6 @@ void main() {
         .map((t) => t.data ?? '')
         .join(' ');
     expect(words, isNot(contains('Find or join a space')), reason: words);
-    expect(words, contains('Book your first desk'), reason: words);
+    expect(words, contains('Make your first booking'), reason: words);
   });
 }
