@@ -37,21 +37,29 @@ Future<bool> runInvoiceIssue(
     case InvoiceIssueHeld():
       AppSnack.info(context, l10n.validationSentForApproval);
     case InvoiceIssueRefused(:final error):
-      TraceLogger.instance.error('money', 'invoice issue refused', error: error);
-      AppSnack.error(
-        context,
-        error is InvoiceIssueDeclined
-            ? l10n.invoiceIssueDeclined
-            : _refusalText(l10n, error.toString()),
+      TraceLogger.instance.error(
+        'money',
+        'invoice issue refused',
+        error: error,
       );
+      AppSnack.error(context, invoiceRefusalText(l10n, error));
     case InvoiceIssueUnknown():
       break;
   }
   return false;
 }
 
-// 0067 — one active invoice per member+month (pinned substring).
-String _refusalText(AppLocalizations l10n, String text) {
+/// The words of a refused issue, ONE helper for every surface that issues:
+/// a request a validator declined, an already-invoiced month (0067, pinned
+/// substring), the feature switched off, essentials missing, or [fallback]
+/// (the generic sentence when none is given).
+String invoiceRefusalText(
+  AppLocalizations l10n,
+  Object error, {
+  String? fallback,
+}) {
+  if (error is InvoiceIssueDeclined) return l10n.invoiceIssueDeclined;
+  final text = error.toString();
   if (text.contains('already invoiced')) return l10n.invoiceAlreadyInvoiced;
   if (text.contains('invoice_feature_disabled')) {
     return l10n.invoiceFeatureDisabled;
@@ -59,5 +67,5 @@ String _refusalText(AppLocalizations l10n, String text) {
   if (text.contains('invoice_essentials_missing')) {
     return l10n.invoiceEssentialsRefused;
   }
-  return l10n.workspaceGenericError;
+  return fallback ?? l10n.workspaceGenericError;
 }

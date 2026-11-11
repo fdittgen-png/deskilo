@@ -43,6 +43,7 @@ import 'credit_providers.dart';
 import 'money_queries_providers.dart';
 
 export '../domain/bill_sections.dart' show currentPeriod;
+export 'credit_providers.dart' show InvoicingBusiness, invoicingBusinessProvider;
 export 'money_queries_providers.dart';
 
 part 'money_providers.g.dart';

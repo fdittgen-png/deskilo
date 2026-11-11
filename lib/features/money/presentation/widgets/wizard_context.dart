@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
-import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -191,58 +190,10 @@ String wizardRunLabel(AppLocalizations l10n, WizardRun run) => switch (run) {
       WizardRun.endOfMonth => l10n.wizardRunEnd,
     };
 
-/// #827 — the door to the wizard on the invoicing hub: names the run the
-/// date calls for. Hidden with the flag off.
-class WizardEntryCard extends ConsumerWidget {
-  const WizardEntryCard({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
-    if (!ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.invoicingWizard)) {
-      return const SizedBox.shrink();
-    }
-    final rules = ref.watch(billingRulesProvider).value ?? const BillingRules();
-    final run = suggestedRun(ref.watch(clockProvider).now(), rules);
-    final theme = Theme.of(context);
-    return Card(
-      key: const ValueKey('invoice-wizard-card'),
-      margin: const EdgeInsets.fromLTRB(
-          AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 0),
-      child: InkWell(
-        key: const ValueKey('wizard-context-invoice-wizard-action'),
-        onTap: () => _openInvoicingWizard(context, run: run),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-          child: Row(children: [
-            Icon(Icons.auto_fix_high_outlined,
-                color: theme.colorScheme.primary),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.invoiceWizardAction,
-                      style: theme.textTheme.titleSmall),
-                  Text(wizardRunLabel(l10n, run),
-                      style: theme.textTheme.bodySmall),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_right),
-          ]),
-        ),
-      ),
-    );
-  }
-}
-
 /// #827 — opens the wizard: the route where a router hosts the caller,
 /// a plain page push otherwise.
-Future<void> _openInvoicingWizard(BuildContext context, {WizardRun? run}) async {
+/// Opens the month-close wizard (#827), on [run] when it is known.
+Future<void> openInvoicingWizard(BuildContext context, {WizardRun? run}) async {
   await openLocation<void>(
     context,
     run == null ? '/invoicing/wizard' : '/invoicing/wizard?run=${run.name}',
