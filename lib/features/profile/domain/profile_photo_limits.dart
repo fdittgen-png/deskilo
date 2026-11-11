@@ -9,10 +9,10 @@
 const int profilePhotoMaxMegabytes = 5;
 
 /// The bucket's size limit in bytes.
-const int profilePhotoMaxBytes = profilePhotoMaxMegabytes * 1024 * 1024;
+const int _maxBytes = profilePhotoMaxMegabytes * 1024 * 1024;
 
 /// The content types the bucket accepts (mirrors `avatars` in 0716).
-const List<String> profilePhotoContentTypes = [
+const List<String> _contentTypes = [
   'image/jpeg',
   'image/png',
   'image/webp',
@@ -29,8 +29,8 @@ class ProfilePhotoRefused implements Exception {
 
 /// Throws [ProfilePhotoRefused] when the size or the type break the limits.
 void checkProfilePhoto(int length, String contentType) {
-  if (length > profilePhotoMaxBytes ||
-      !profilePhotoContentTypes.contains(contentType.toLowerCase())) {
+  if (length > _maxBytes ||
+      !_contentTypes.contains(contentType.toLowerCase())) {
     throw const ProfilePhotoRefused();
   }
 }

@@ -7,13 +7,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('a photo within the limit and of an accepted type passes', () {
-    checkProfilePhoto(profilePhotoMaxBytes, 'image/png');
+    checkProfilePhoto(profilePhotoMaxMegabytes * 1024 * 1024, 'image/png');
     checkProfilePhoto(1, 'image/WEBP');
   });
 
   test('a photo over the limit is refused', () {
     expect(
-      () => checkProfilePhoto(profilePhotoMaxBytes + 1, 'image/jpeg'),
+      () => checkProfilePhoto(
+        profilePhotoMaxMegabytes * 1024 * 1024 + 1,
+        'image/jpeg',
+      ),
       throwsA(isA<ProfilePhotoRefused>()),
     );
   });

@@ -345,11 +345,11 @@ class SupabaseProfileRepository implements ProfileRepository {
             bytes,
             fileOptions: FileOptions(contentType: contentType, upsert: true),
           );
-    } on StorageException catch (e) {
+    } on StorageException catch (e, st) {
       // The bucket's own refusal: too large (413) or a type it does not
       // accept (415) reads like the check made before the upload (#3710).
       if (e.statusCode == '413' || e.statusCode == '415') {
-        throw const ProfilePhotoRefused();
+        Error.throwWithStackTrace(const ProfilePhotoRefused(), st);
       }
       rethrow;
     }
