@@ -17,7 +17,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Buchbar in {minutes}-Minuten-Slots",
+  "reserveSlotMinutes": "Buchbar in {minutes, plural, =1{1-Minuten-Slots} other{{minutes}-Minuten-Slots}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {

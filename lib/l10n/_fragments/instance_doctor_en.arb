@@ -76,7 +76,7 @@
   },
   "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
   "@instanceDoctorProbeFailedDetail": {
-    "description": "#3489 Detail of a failed probe.",
+    "description": "#3489 Detail of a failed probe. The number is not a count: it is an HTTP status code.",
     "placeholders": {
       "status": {
         "type": "int"
@@ -90,7 +90,7 @@
   "@instanceDoctorSignupsNobodyTitle": {
     "description": "#3489 Nobody confirmed a sign-up in seven days."
   },
-  "instanceDoctorSignupsNobodyDetail": "{created} signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.",
+  "instanceDoctorSignupsNobodyDetail": "{created, plural, =1{1 signed up} other{{created} signed up}}, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.",
   "@instanceDoctorSignupsNobodyDetail": {
     "description": "#3489 Detail: sign-ups but no confirmation.",
     "placeholders": {
@@ -103,7 +103,7 @@
   "@instanceDoctorSchemaNoVersionTitle": {
     "description": "#3489 The schema records no version."
   },
-  "instanceDoctorSchemaNoVersionDetail": "{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, =1{1 table exists} other{{tables} tables exist}}, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "@instanceDoctorSchemaNoVersionDetail": {
     "description": "#3489 Detail: tables exist but no schema version.",
     "placeholders": {

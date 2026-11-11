@@ -104,7 +104,7 @@
       }
     }
   },
-  "invoiceSummaryOpen": "{count} en cours · {amount} dus",
+  "invoiceSummaryOpen": "{count, plural, =1{1 en cours} other{{count} en cours}} · {amount} dus",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -209,7 +209,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Annexe : {movements} mouvements, {checkIns} pointages",
+  "invoiceAnnexSummary": "Annexe : {movements, plural, =1{1 mouvement} other{{movements} mouvements}}, {checkIns, plural, =1{1 pointage} other{{checkIns} pointages}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -236,7 +236,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued} émises, {failed} en échec.",
+  "invoiceIssuedPartial": "{issued, plural, =1{1 émise} other{{issued} émises}}, {failed, plural, =1{1 en échec} other{{failed} en échec}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -956,7 +956,7 @@
   "journeyStageCollect": "À encaisser",
   "journeyStageConfirm": "À confirmer",
   "journeyStageClosed": "Closes",
-  "journeyOverdueCount": "{count} en retard",
+  "journeyOverdueCount": "{count, plural, =1{1 en retard} other{{count} en retard}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {

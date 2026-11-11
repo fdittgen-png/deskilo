@@ -24,7 +24,7 @@
   "@libraryEmpty": {
     "description": "Shown as a title in template gallery (workspace)."
   },
-  "libraryCounts": "{levels} levels · {desks} desks · {seats} seats",
+  "libraryCounts": "{levels, plural, =1{1 level} other{{levels} levels}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
   "@libraryCounts": {
     "description": "Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).",
     "placeholders": {
