@@ -124,8 +124,7 @@ Future<void> sendMemberAgreement(
     message: 'agreement share failed',
     errorText: l10n.workspaceGenericError,
     action: () async {
-      await readDocumentPolicies(ref); // #3742 — the template and rules, read
-      await warmLetterDocProviders(ref, 'agreement');
+      await (readDocumentPolicies(ref), warmLetterDocProviders(ref, 'agreement')).wait;
       final facts = await readAgreementFacts(ref); // #3680 — as read, awaited
       if (!context.mounted) return;
       // #496 — the agreement prints in the MEMBER's language.
