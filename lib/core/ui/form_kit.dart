@@ -29,6 +29,7 @@ import 'package:flutter/semantics.dart';
 
 import '../theme/app_spacing.dart';
 import 'app_sheet.dart';
+import 'form_error_summary.dart';
 import 'inline_banner.dart';
 
 /// Per-field problems: the field's key → the localized sentence shown
@@ -42,11 +43,16 @@ class FormErrorsScope extends InheritedWidget {
     super.key,
     required this.errors,
     required this.onEdit,
+    this.focusNodeFor,
     required super.child,
   });
 
   final FieldErrors errors;
   final ValueChanged<String> onEdit;
+
+  /// The focus node of the field under a key, so the form can move the
+  /// focus to the first problem (#3286); null where the form does not.
+  final FocusNode Function(String key)? focusNodeFor;
 
   static FormErrorsScope? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<FormErrorsScope>();
@@ -161,7 +167,8 @@ class AppTextField extends StatelessWidget {
       controller: controller,
       readOnly: readOnly,
       onTap: onTap,
-      focusNode: focusNode,
+      focusNode: focusNode ??
+          (fieldKey == null ? null : scope?.focusNodeFor?.call(fieldKey!)),
       enabled: enabled,
       autofocus: autofocus,
       obscureText: obscureText,
@@ -289,10 +296,27 @@ class _AppFormSheetState extends State<AppFormSheet> {
   bool _saving = false;
   String? _problem;
   FieldErrors _fieldErrors = const {};
+  final Map<String, FocusNode> _focus = {};
+
+  FocusNode _nodeFor(String key) => _focus.putIfAbsent(key, FocusNode.new);
+
+  /// #3286: the focus goes to the first field with a problem.
+  void _focusFirstProblem() {
+    for (final key in _fieldErrors.keys) {
+      final node = _focus[key];
+      if (node != null && node.context != null) {
+        node.requestFocus();
+        return;
+      }
+    }
+  }
 
   @override
   void dispose() {
     widget.onDispose?.call();
+    for (final node in _focus.values) {
+      node.dispose();
+    }
     super.dispose();
   }
 
@@ -303,6 +327,9 @@ class _AppFormSheetState extends State<AppFormSheet> {
       setState(() {
         _problem = null;
         _fieldErrors = errors;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _focusFirstProblem();
       });
       unawaited(
         SemanticsService.sendAnnouncement(
@@ -360,8 +387,13 @@ class _AppFormSheetState extends State<AppFormSheet> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const FormGap(),
+                  FormErrorSummary(
+                    count: _fieldErrors.length,
+                    onGoToFirst: _focusFirstProblem,
+                  ),
                   FormErrorsScope(
                     errors: _fieldErrors,
+                    focusNodeFor: _nodeFor,
                     onEdit: (key) => setState(
                       () => _fieldErrors = {..._fieldErrors}..remove(key),
                     ),

@@ -10,5 +10,7 @@
   "visibilitySpaceHere": "in questa casa personale",
   "visibilitySpaceOnServer": "sul server {installation}",
   "visibilityWidenAdded": "Aggiunti: {spaces}",
-  "visibilityWidenRemoved": "Rimossi: {spaces}"
+  "visibilityWidenRemoved": "Rimossi: {spaces}",
+  "visibilityHomePlain": "La casa personale",
+  "visibilityHomeDetails": "Dettagli della casa personale"
 }

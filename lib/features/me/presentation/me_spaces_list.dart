@@ -199,7 +199,12 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
         },
         onDelete: () => notifier.removeGroup(id),
       ),
-      if (!folded && keys.isEmpty && layout.explainsEmpty(id))
+      // #3281: an empty Favorites is only its header; the heart on a space
+      // is the way in, no block of explanation is allocated to it.
+      if (!folded &&
+          keys.isEmpty &&
+          id != SpaceGroup.favoritesGroup &&
+          layout.explainsEmpty(id))
         Padding(
           key: ValueKey('me-group-empty-$id'),
           padding: const EdgeInsets.fromLTRB(
@@ -209,9 +214,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             AppSpacing.md,
           ),
           child: Text(
-            id == SpaceGroup.favoritesGroup
-                ? (l10n.meGroupEmptyFavorites)
-                : (l10n.meGroupEmptyOwn),
+            l10n.meGroupEmptyOwn,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),

@@ -7494,6 +7494,8 @@
   "financesTypeAll": "Alle Dokumente",
   "financesTypeCreditNote": "Gutschrift",
   "financesYourCredit": "Ihr Guthaben",
+  "formErrorSummaryGoTo": "Zum ersten Problem",
+  "formErrorSummaryTitle": "{count, plural, =1{1 Feld braucht Ihre Aufmerksamkeit} other{{count} Felder brauchen Ihre Aufmerksamkeit}}",
   "gebuevProcedureAccessBody": "Jeder Buchhaltungsexport und jeder Download eines Archivs wird im Exportprotokoll festgehalten: wer, wann, welche Datei und ihr Hashwert. Der Prüfpfad führt diese Zugriffe neben den Belegen auf.",
   "gebuevProcedureAccessHeading": "Zugriffe (Art. 8)",
   "gebuevProcedureCarriersBody": "Dieses Archiv lässt sich mit jedem Zip-Programm und Texteditor lesen. Eine Kopie des ganzen Space wird durch einen abgeschlossenen Export des Space belegt, der mit seinem Hashwert festgehalten wird: die Bereitschafts-Checkliste zeigt, wann der letzte erstellt wurde, und verlangt einen neuen, wenn er alt ist.",
@@ -7722,7 +7724,7 @@
   "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
   "handoffVoided": "Storniert",
   "helpContents": "Inhalt",
-  "helpDotTooltip": "Handbuch öffnen",
+  "helpDotTooltipFor": "Handbuch öffnen: {topic}",
   "helpGuidedTasks": "Geführte Aufgaben",
   "helpHintAvailability": "Öffnungstage und Arbeitszeiten festlegen und Schließtage eintragen, die niemand buchen kann.",
   "helpHintBadges": "Druckbares QR-Badge ausstellen oder NFC-Karte registrieren; verlorene Badges jederzeit sperren.",
@@ -11561,6 +11563,7 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "Zu zahlen: meine Finanzen öffnen",
   "meFindPlaceBrowse": "Orte ansehen",
   "meFindPlaceHint": "Yoga, ein Arbeitsplatz, eine Massage …",
   "meFindPlaceTitle": "Einen Ort in der Nähe finden",
@@ -11571,7 +11574,6 @@
   "meGreetingNoName": "Willkommen",
   "meGroupAdd": "Neue Gruppe",
   "meGroupDelete": "Gruppe löschen",
-  "meGroupEmptyFavorites": "Geben Sie einem Space ein Herz, dann wartet er hier.",
   "meGroupEmptyOwn": "Verschieben Sie Spaces über ihr Menü hierher.",
   "meGroupFavorites": "Favoriten",
   "meGroupInstallations": "Verbundene Installationen",
@@ -12950,6 +12952,7 @@
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
   },
+  "personalInfoCompanyScope": "Gilt für Ihr ganzes Konto, nicht für einen einzelnen Arbeitsbereich.",
   "personalInfoEmail": "E-Mail für Dokumente",
   "@personalInfoEmail": {
     "description": "#886 personal-information form / feature: personalInfoEmail"
@@ -20984,7 +20987,9 @@
   "visibilityContact": "WhatsApp und E-Mail",
   "visibilityElsewhereIntro": "Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Raum mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Räume.",
   "visibilityElsewhereTitle": "Auf meinen anderen Servern",
+  "visibilityHomeDetails": "Details zum Zuhause",
   "visibilityHomeHeader": "Persönliches Zuhause: {name}",
+  "visibilityHomePlain": "Ihr persönliches Zuhause",
   "visibilityIdentity": "Name und Foto",
   "visibilityIntro": "Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.",
   "visibilityLegacyDirtyBody": "Ihre Änderung an „{field}“ auf {server} ist noch nicht gespeichert. Sie gehört zu diesem Konto und wandert nicht zu einem anderen.",

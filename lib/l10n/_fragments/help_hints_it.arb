@@ -50,7 +50,7 @@
   "helpHintMoneyDocumentsTopic": "Documenti",
   "helpHintMoneyPaymentsTipSupplyTopic": "Servizi e Accessori",
   "helpHintMembersTipNegotiationTopic": "Negoziazioni di prezzo",
-  "helpDotTooltip": "Apri la guida",
+  "helpDotTooltipFor": "Apri la guida: {topic}",
   "helpTopicLegalIdentity": "Identità legale",
   "helpTopicEinvoice": "fattura elettronica",
   "helpTopicReportEditor": "editor dei report",

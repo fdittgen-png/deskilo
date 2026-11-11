@@ -652,6 +652,21 @@ void main() {
       expect(_key('me-overview-attention-none'), findsNothing);
     });
 
+    // #3286: a failed host never zeroes the healthy one's amount.
+    testWidgets('one host failed: the healthy EUR invoice stays beside the '
+        'partial note, nothing is totalled', (tester) async {
+      final documents = FakeAccountActivityRepository()
+        ..financeOverview = FinanceOverview(
+          invoices: [invoice('eur', ws: 'One', due: DateTime(2999))],
+          hosts: const [FinanceHostRead(_lyonDocs, FinanceHostStatus.failed)],
+        );
+      await _pump(tester, documents: documents);
+      expect(_key('me-overview-documents-partial'), findsOneWidget);
+      expect(_key('me-overview-document|ws-One|eur'), findsOneWidget);
+      expect(_key('me-overview-attention-none'), findsNothing);
+      expect(find.textContaining('CHF'), findsNothing);
+    });
+
     testWidgets('a connected host whose documents are still read: reading, '
         'never "nothing needs you"', (tester) async {
       final documents = FakeAccountActivityRepository()

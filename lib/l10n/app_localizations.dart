@@ -18747,6 +18747,18 @@ abstract class AppLocalizations {
   /// **'Your credit'**
   String get financesYourCredit;
 
+  /// #3286 form error summary: moves the focus to the first field with a problem
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the first problem'**
+  String get formErrorSummaryGoTo;
+
+  /// #3286 form error summary: how many fields have a problem
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}'**
+  String formErrorSummaryTitle(int count);
+
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
   ///
   /// In en, this message translates to:
@@ -19731,11 +19743,11 @@ abstract class AppLocalizations {
   /// **'Contents'**
   String get helpContents;
 
-  /// Shown as a tooltip in help dot (core).
+  /// #3286 help dot tooltip and accessible name: names the topic it documents
   ///
   /// In en, this message translates to:
-  /// **'Open the guide'**
-  String get helpDotTooltip;
+  /// **'Open the guide: {topic}'**
+  String helpDotTooltipFor(String topic);
 
   /// #1867 live guide host
   ///
@@ -29774,6 +29786,12 @@ abstract class AppLocalizations {
   /// **'To pay:'**
   String get meFinanceGlanceOwed;
 
+  /// #3281 meFinanceGlanceSemantics
+  ///
+  /// In en, this message translates to:
+  /// **'To pay: open my finances'**
+  String get meFinanceGlanceSemantics;
+
   /// #3545 First visit: the button that opens Discover's start state.
   ///
   /// In en, this message translates to:
@@ -29833,12 +29851,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete group'**
   String get meGroupDelete;
-
-  /// Shown as a text in me spaces list (me).
-  ///
-  /// In en, this message translates to:
-  /// **'Give a space a heart and it waits for you here.'**
-  String get meGroupEmptyFavorites;
 
   /// Shown as a text in me spaces list (me).
   ///
@@ -34167,6 +34179,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Company (optional)'**
   String get personalInfoCompany;
+
+  /// #3281 personalInfoCompanyScope
+  ///
+  /// In en, this message translates to:
+  /// **'Applies to your whole account, not to one workspace.'**
+  String get personalInfoCompanyScope;
 
   /// #886 personal-information form / feature: personalInfoEmail
   ///
@@ -54553,11 +54571,23 @@ abstract class AppLocalizations {
   /// **'On my other servers'**
   String get visibilityElsewhereTitle;
 
+  /// #3281 visibilityHomeDetails
+  ///
+  /// In en, this message translates to:
+  /// **'Home details'**
+  String get visibilityHomeDetails;
+
   /// #2558 privacy card: names the personal home whose settings these are; name is its server address
   ///
   /// In en, this message translates to:
   /// **'Personal home: {name}'**
   String visibilityHomeHeader(String name);
+
+  /// #3281 visibilityHomePlain
+  ///
+  /// In en, this message translates to:
+  /// **'Your personal home'**
+  String get visibilityHomePlain;
 
   /// Visibility field: name and photo.
   ///

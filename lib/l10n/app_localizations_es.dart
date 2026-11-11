@@ -11385,6 +11385,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesYourCredit => 'Su saldo a favor';
 
   @override
+  String get formErrorSummaryGoTo => 'Ir al primer problema';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count campos requieren su atención',
+      one: '1 campo requiere su atención',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.';
 
@@ -12002,7 +12016,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get helpContents => 'Índice';
 
   @override
-  String get helpDotTooltip => 'Abrir la guía';
+  String helpDotTooltipFor(String topic) {
+    return 'Abrir la guía: $topic';
+  }
 
   @override
   String get helpGuidedTasks => 'Tareas guiadas';
@@ -18293,6 +18309,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meFinanceGlanceOwed => 'A pagar:';
 
   @override
+  String get meFinanceGlanceSemantics => 'Por pagar: abrir mis finanzas';
+
+  @override
   String get meFindPlaceBrowse => 'Ver lugares';
 
   @override
@@ -18327,10 +18346,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get meGroupDelete => 'Eliminar grupo';
-
-  @override
-  String get meGroupEmptyFavorites =>
-      'Dele un corazón a un espacio y le esperará aquí.';
 
   @override
   String get meGroupEmptyOwn => 'Mueva espacios aquí desde su menú.';
@@ -20898,6 +20913,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get personalInfoCompany => 'Empresa (opcional)';
+
+  @override
+  String get personalInfoCompanyScope =>
+      'Se aplica a toda su cuenta, no a un solo espacio.';
 
   @override
   String get personalInfoEmail => 'E-mail para documentos';
@@ -33296,9 +33315,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityElsewhereTitle => 'En mis otros servidores';
 
   @override
+  String get visibilityHomeDetails => 'Detalles del espacio personal';
+
+  @override
   String visibilityHomeHeader(String name) {
     return 'Hogar personal: $name';
   }
+
+  @override
+  String get visibilityHomePlain => 'Su espacio personal';
 
   @override
   String get visibilityIdentity => 'Nombre y foto';

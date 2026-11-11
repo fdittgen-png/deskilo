@@ -5,5 +5,7 @@
   "a11yFinishEditing": "Termina la modifica",
   "a11yZoomIn": "Ingrandisci",
   "a11yZoomOut": "Riduci",
-  "a11yRecentre": "Adatta la pianta allo schermo"
+  "a11yRecentre": "Adatta la pianta allo schermo",
+  "formErrorSummaryTitle": "{count, plural, =1{1 campo richiede la Sua attenzione} other{{count} campi richiedono la Sua attenzione}}",
+  "formErrorSummaryGoTo": "Vai al primo problema"
 }

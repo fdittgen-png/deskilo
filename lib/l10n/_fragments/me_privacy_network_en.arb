@@ -73,5 +73,13 @@
         "example": "Lyon"
       }
     }
+  },
+  "visibilityHomePlain": "Your personal home",
+  "@visibilityHomePlain": {
+    "description": "#3281 visibilityHomePlain"
+  },
+  "visibilityHomeDetails": "Home details",
+  "@visibilityHomeDetails": {
+    "description": "#3281 visibilityHomeDetails"
   }
 }

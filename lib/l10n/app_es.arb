@@ -7494,6 +7494,8 @@
   "financesTypeAll": "Todos los documentos",
   "financesTypeCreditNote": "Nota de crédito",
   "financesYourCredit": "Su saldo a favor",
+  "formErrorSummaryGoTo": "Ir al primer problema",
+  "formErrorSummaryTitle": "{count, plural, =1{1 campo requiere su atención} other{{count} campos requieren su atención}}",
   "gebuevProcedureAccessBody": "Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.",
   "gebuevProcedureAccessHeading": "Accesos (art. 8)",
   "gebuevProcedureCarriersBody": "Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.",
@@ -7722,7 +7724,7 @@
   "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
   "handoffVoided": "Anuladas",
   "helpContents": "Índice",
-  "helpDotTooltip": "Abrir la guía",
+  "helpDotTooltipFor": "Abrir la guía: {topic}",
   "helpGuidedTasks": "Tareas guiadas",
   "helpHintAvailability": "Defina los días de apertura y el horario, y añada días de cierre que nadie puede reservar.",
   "helpHintBadges": "Emita una credencial QR imprimible o registre una tarjeta NFC; revoque credenciales perdidas en cualquier momento.",
@@ -11561,6 +11563,7 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "Por pagar: abrir mis finanzas",
   "meFindPlaceBrowse": "Ver lugares",
   "meFindPlaceHint": "Yoga, un puesto, un masaje…",
   "meFindPlaceTitle": "Encuentra un lugar cerca",
@@ -11571,7 +11574,6 @@
   "meGreetingNoName": "Le damos la bienvenida",
   "meGroupAdd": "Nuevo grupo",
   "meGroupDelete": "Eliminar grupo",
-  "meGroupEmptyFavorites": "Dele un corazón a un espacio y le esperará aquí.",
   "meGroupEmptyOwn": "Mueva espacios aquí desde su menú.",
   "meGroupFavorites": "Favoritos",
   "meGroupInstallations": "Instalaciones conectadas",
@@ -12950,6 +12952,7 @@
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
   },
+  "personalInfoCompanyScope": "Se aplica a toda su cuenta, no a un solo espacio.",
   "personalInfoEmail": "E-mail para documentos",
   "@personalInfoEmail": {
     "description": "#886 personal-information form / feature: personalInfoEmail"
@@ -20984,7 +20987,9 @@
   "visibilityContact": "WhatsApp y correo",
   "visibilityElsewhereIntro": "En un servidor conectado tiene la cuenta de ese servidor. Quienes allí no comparten ningún espacio con usted ven lo que permite a cualquier persona con sesión iniciada; sus datos de contacto y su presencia nunca salen de sus espacios.",
   "visibilityElsewhereTitle": "En mis otros servidores",
+  "visibilityHomeDetails": "Detalles del espacio personal",
   "visibilityHomeHeader": "Hogar personal: {name}",
+  "visibilityHomePlain": "Su espacio personal",
   "visibilityIdentity": "Nombre y foto",
   "visibilityIntro": "Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.",
   "visibilityLegacyDirtyBody": "Su cambio en «{field}» en {server} aún no está guardado. Pertenece a esa cuenta y no pasa a otra.",
