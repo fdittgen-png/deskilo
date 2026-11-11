@@ -201,6 +201,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.matrixChange: Icons.admin_panel_settings_outlined,
       EventType.badgeSecurityAlert: Icons.security_outlined,
       EventType.privacyIncident: Icons.privacy_tip_outlined,
+      EventType.settlementReview: Icons.rule_outlined,
       EventType.paymentInstructionsChange: Icons.account_balance_outlined,
       EventType.unknown: Icons.info_outline,
     };

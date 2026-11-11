@@ -61,6 +61,7 @@ Set<WorkspacePermission> eventTypeViewPermissions(String type) {
     'badge_security_alert' => const ['workspaceSettings'],
     'payment_instructions_change' => const ['manageIntegrations'],
     'privacy_incident' => const ['managePrivacy'],
+    'settlement_review' => const ['viewFinances'],
     _ => const ['manageConfiguration'],
   };
   return {

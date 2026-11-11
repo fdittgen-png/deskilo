@@ -5,5 +5,11 @@
   "payConfigSettlementCostsChanged": "{settlement}: Der Anbieter hat die Kosten nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.",
   "payConfigSettlementAmountChanged": "{settlement}: Der Anbieter hat den Betrag nach der Erfassung geändert. Nichts aus der neuen Meldung wurde gebucht.",
   "payConfigSettlementCurrencyMismatch": "{settlement}: Ein Kostenposten ist in einer anderen Währung als die Abrechnung. Nichts davon wurde gebucht.",
-  "payConfigSettlementsReviewUnreadable": "Die zu prüfenden Abrechnungsmeldungen konnten nicht gelesen werden."
+  "payConfigSettlementsReviewUnreadable": "Die zu prüfenden Abrechnungsmeldungen konnten nicht gelesen werden.",
+  "eventTypeSettlementReview": "Zu prüfende Abrechnung",
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{Der Anbieter hat die Kosten nach der Erfassung geändert} amount_changed{Der Anbieter hat den Betrag nach der Erfassung geändert} currency_mismatch{Ein Kostenposten ist in einer anderen Währung als die Abrechnung} other{Die Meldung weicht vom Erfassten ab}}. Nichts davon wurde gebucht; sie wartet auf Prüfung.",
+  "payConfigSettlementHandle": "Als erledigt markieren",
+  "payConfigSettlementHandleNote": "Was getan wurde",
+  "payConfigSettlementHandledTitle": "Erledigt",
+  "payConfigSettlementHandledLine": "{sentence} Erledigt: {note}"
 }

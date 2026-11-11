@@ -9019,6 +9019,20 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventSettlementReview(String settlement, String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'costs_changed':
+          'Der Anbieter hat die Kosten nach der Erfassung geändert',
+      'amount_changed':
+          'Der Anbieter hat den Betrag nach der Erfassung geändert',
+      'currency_mismatch':
+          'Ein Kostenposten ist in einer anderen Währung als die Abrechnung',
+      'other': 'Die Meldung weicht vom Erfassten ab',
+    });
+    return '$settlement: $_temp0. Nichts davon wurde gebucht; sie wartet auf Prüfung.';
+  }
+
+  @override
   String get eventSourceNotFound =>
       'Zu dieser Anfrage wurde kein Einkaufsbeleg abgelegt, oder Sie dürfen ihn nicht sehen.';
 
@@ -9109,6 +9123,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeServiceCharge => 'Leistung';
+
+  @override
+  String get eventTypeSettlementReview => 'Zu prüfende Abrechnung';
 
   @override
   String get eventTypeSpaceReservation => 'Ganzraum-Reservierungen';
@@ -20923,6 +20940,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String payConfigSettlementCurrencyMismatch(String settlement) {
     return '$settlement: Ein Kostenposten ist in einer anderen Währung als die Abrechnung. Nichts davon wurde gebucht.';
   }
+
+  @override
+  String get payConfigSettlementHandle => 'Als erledigt markieren';
+
+  @override
+  String get payConfigSettlementHandleNote => 'Was getan wurde';
+
+  @override
+  String payConfigSettlementHandledLine(String sentence, String note) {
+    return '$sentence Erledigt: $note';
+  }
+
+  @override
+  String get payConfigSettlementHandledTitle => 'Erledigt';
 
   @override
   String get payConfigSettlementsFetch => 'Auszahlungen abrufen';

@@ -11858,6 +11858,18 @@
       }
     }
   },
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{the provider changed its costs after it was recorded} amount_changed{the provider changed its amount after it was recorded} currency_mismatch{a cost is in another currency than the settlement} other{the report differs from what was recorded}}. Nothing of it was booked; it waits for review.",
+  "@eventSettlementReview": {
+    "description": "#3510 the alert that a settlement report waits for review",
+    "placeholders": {
+      "settlement": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "eventSourceNotFound": "No purchase document was filed for this request, or you may not see it.",
   "@eventSourceNotFound": {
     "description": "#2573 open the purchase an expense request was filed as"
@@ -11977,6 +11989,10 @@
   "eventTypeServiceCharge": "Service",
   "@eventTypeServiceCharge": {
     "description": "Event type label / filter chip for service charges"
+  },
+  "eventTypeSettlementReview": "Settlement to review",
+  "@eventTypeSettlementReview": {
+    "description": "#3510 the alert that a settlement report waits for review"
   },
   "eventTypeSpaceReservation": "Whole-space reservations",
   "@eventTypeSpaceReservation": {
@@ -27211,6 +27227,30 @@
         "type": "String"
       }
     }
+  },
+  "payConfigSettlementHandle": "Mark handled",
+  "@payConfigSettlementHandle": {
+    "description": "#3510 marking a settlement review handled"
+  },
+  "payConfigSettlementHandleNote": "What was done",
+  "@payConfigSettlementHandleNote": {
+    "description": "#3510 marking a settlement review handled"
+  },
+  "payConfigSettlementHandledLine": "{sentence} Handled: {note}",
+  "@payConfigSettlementHandledLine": {
+    "description": "#3510 marking a settlement review handled",
+    "placeholders": {
+      "sentence": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "payConfigSettlementHandledTitle": "Handled",
+  "@payConfigSettlementHandledTitle": {
+    "description": "#3510 marking a settlement review handled"
   },
   "payConfigSettlementsFetch": "Fetch payouts",
   "@payConfigSettlementsFetch": {

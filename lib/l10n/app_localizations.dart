@@ -14391,6 +14391,12 @@ abstract class AppLocalizations {
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
 
+  /// #3510 the alert that a settlement report waits for review
+  ///
+  /// In en, this message translates to:
+  /// **'{settlement}: {reason, select, costs_changed{the provider changed its costs after it was recorded} amount_changed{the provider changed its amount after it was recorded} currency_mismatch{a cost is in another currency than the settlement} other{the report differs from what was recorded}}. Nothing of it was booked; it waits for review.'**
+  String eventSettlementReview(String settlement, String reason);
+
   /// #2573 open the purchase an expense request was filed as
   ///
   /// In en, this message translates to:
@@ -14570,6 +14576,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Service'**
   String get eventTypeServiceCharge;
+
+  /// #3510 the alert that a settlement report waits for review
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement to review'**
+  String get eventTypeSettlementReview;
 
   /// Event/validation domain: whole desk/office/level reservations (0059)
   ///
@@ -33679,6 +33691,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{settlement}: a cost is in another currency than the settlement. Nothing of it was booked.'**
   String payConfigSettlementCurrencyMismatch(String settlement);
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'Mark handled'**
+  String get payConfigSettlementHandle;
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'What was done'**
+  String get payConfigSettlementHandleNote;
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'{sentence} Handled: {note}'**
+  String payConfigSettlementHandledLine(String sentence, String note);
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'Handled'**
+  String get payConfigSettlementHandledTitle;
 
   /// #3504 on-demand settlements of a payment provider
   ///

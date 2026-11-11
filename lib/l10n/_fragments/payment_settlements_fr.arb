@@ -5,5 +5,11 @@
   "payConfigSettlementCostsChanged": "{settlement} : le prestataire a modifié ses frais après son enregistrement. Rien du nouveau relevé n'a été comptabilisé.",
   "payConfigSettlementAmountChanged": "{settlement} : le prestataire a modifié son montant après son enregistrement. Rien du nouveau relevé n'a été comptabilisé.",
   "payConfigSettlementCurrencyMismatch": "{settlement} : un frais est dans une autre devise que le versement. Rien n'en a été comptabilisé.",
-  "payConfigSettlementsReviewUnreadable": "Les relevés de versement à vérifier n'ont pas pu être lus."
+  "payConfigSettlementsReviewUnreadable": "Les relevés de versement à vérifier n'ont pas pu être lus.",
+  "eventTypeSettlementReview": "Versement à vérifier",
+  "eventSettlementReview": "{settlement} : {reason, select, costs_changed{le prestataire a modifié ses frais après son enregistrement} amount_changed{le prestataire a modifié son montant après son enregistrement} currency_mismatch{un frais est dans une autre devise que le versement} other{le relevé diffère de ce qui a été enregistré}}. Rien n'en a été comptabilisé ; il attend une vérification.",
+  "payConfigSettlementHandle": "Marquer comme traité",
+  "payConfigSettlementHandleNote": "Ce qui a été fait",
+  "payConfigSettlementHandledTitle": "Traités",
+  "payConfigSettlementHandledLine": "{sentence} Traité : {note}"
 }

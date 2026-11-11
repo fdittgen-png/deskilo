@@ -11,6 +11,7 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
   final labels = <EventType, String>{
     EventType.badgeSecurityAlert: l10n.eventTypeBadgeSecurityAlert,
     EventType.privacyIncident: l10n.eventTypePrivacyIncident,
+    EventType.settlementReview: l10n.eventTypeSettlementReview,
     EventType.paymentInstructionsChange:
         l10n.eventTypePaymentInstructionsChange,
     EventType.reservation: l10n.eventTypeReservation,

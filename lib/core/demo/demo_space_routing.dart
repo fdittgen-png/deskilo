@@ -27,6 +27,7 @@ import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/hmrc_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
+import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -43,6 +44,7 @@ import 'data/bank_statement_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
+import 'data/money/demo_settlement_reviews.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
 import 'data/plan_resource_repository.dart';
@@ -294,6 +296,10 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   documentNumberingProvider.overrideWith((ref) => money(ref).numbering),
   paymentGatewayRepositoryProvider.overrideWith(
     (ref) => money(ref).paymentGateway,
+  ),
+  // #3510 — one settlement report waits for review in the Demo.
+  settlementReviewsRepositoryProvider.overrideWith(
+    (ref) => DemoSettlementReviews(),
   ),
   eInvoiceTransmissionsProvider.overrideWith((ref) => money(ref).eInvoices),
   // #2365

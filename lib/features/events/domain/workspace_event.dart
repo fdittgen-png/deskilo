@@ -107,6 +107,11 @@ enum EventType {
   /// the personal data admin or an owner; each holder of managePrivacy is told.
   privacyIncident('privacy_incident'),
 
+  /// #3510 — a payment provider's settlement report was refused and kept for
+  /// review (changed after it was recorded, or a cost in another currency);
+  /// each member who may see the finances is told once.
+  settlementReview('settlement_review'),
+
   /// #3672 — a new invoice told to its customer (the feed entry; its push is
   /// queued from the server). One per invoice, applied, never a request.
   invoiceIssued('invoice_issued'),
