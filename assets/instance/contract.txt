@@ -3505,6 +3505,7 @@ trigger events.events_apply_validated_0181 CREATE TRIGGER events_apply_validated
 trigger events.events_commitment_variance_apply CREATE TRIGGER events_commitment_variance_apply AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION commitment_variance_apply()
 trigger events.events_lease_change_apply CREATE TRIGGER events_lease_change_apply AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION lease_change_apply()
 trigger events.events_notify_pending CREATE TRIGGER events_notify_pending AFTER INSERT OR UPDATE OF status, actor_member_id ON public.events FOR EACH ROW EXECUTE FUNCTION notify_pending_event()
+trigger events.events_recheck_invoice_payment_part CREATE TRIGGER events_recheck_invoice_payment_part AFTER UPDATE OF status ON public.events FOR EACH ROW WHEN (((new.type = 'invoice_payment'::text) AND (old.status = 'pending'::text) AND (new.status = 'confirmed'::text))) EXECUTE FUNCTION recheck_invoice_payment_part()
 trigger events.expense_event_schedule_vat CREATE TRIGGER expense_event_schedule_vat BEFORE INSERT ON public.events FOR EACH ROW EXECUTE FUNCTION expense_event_schedule_vat()
 trigger events.purchase_expense_event_bridge CREATE TRIGGER purchase_expense_event_bridge AFTER INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'expense'::text)) EXECUTE FUNCTION purchase_expense_event_bridge()
 trigger events.purchase_expense_event_stamp CREATE TRIGGER purchase_expense_event_stamp BEFORE INSERT ON public.events FOR EACH ROW WHEN ((new.type = 'expense'::text)) EXECUTE FUNCTION purchase_expense_event_stamp()

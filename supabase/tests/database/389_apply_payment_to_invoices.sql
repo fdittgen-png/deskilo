@@ -215,11 +215,11 @@ select is(pg_temp.decide('p2', 'b', true), 'ok', 'P2 is approved');
 select isnt(pg_temp.match_r('b', 'p3', 'exact', 5000, ''), 'ok', 'nor after it: B is paid');
 -- C owes 50.00: P4 20.00 as a partial and P5 30.00 as the exact rest wait
 -- together. P4 is refused, so P5 no longer settles C: its approval refuses.
-select pg_temp.match_r('c', 'p4', 'under_accepted', 2000, 'a part');
+do $s$ begin perform pg_temp.match_r('c', 'p4', 'under_accepted', 2000, 'a part'); end $s$;
 select is(pg_temp.match_r('c', 'p5', 'exact', 3000, ''), 'ok', 'P5 settles the rest beside the pending P4');
 select is(pg_temp.cap_of('p3', 'c') ->> 'still_due_cents', '0',
           'C: what is still due leaves out both waiting parts');
-select pg_temp.decide('p4', 'c', false);
+do $s$ begin perform pg_temp.decide('p4', 'c', false); end $s$;
 select is(pg_temp.decide('p5', 'c', true),
           'ERROR: the invoice changed while this part waited for approval',
           'an approval checks its part again: with P4 refused, P5 is not the rest');
