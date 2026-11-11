@@ -69,6 +69,13 @@ List<NotificationLine> notificationLines(Set<WorkspaceFeature> on) {
         audience: NotifiedAudience.members,
         channels: inApp,
       ),
+    // #3672 — a new invoice is told to its customer.
+    if (on.contains(WorkspaceFeature.invoicing))
+      NotificationLine(
+        'invoice_issued',
+        audience: NotifiedAudience.members,
+        channels: inApp,
+      ),
     if (on.contains(WorkspaceFeature.dunning))
       NotificationLine(
         'invoice_reminder',

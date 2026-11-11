@@ -184,6 +184,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.reservationDelete: Icons.delete_outline,
       EventType.invoiceWriteoff: Icons.money_off_csred_outlined,
       EventType.invoiceReminder: Icons.notification_important_outlined,
+      EventType.invoiceIssued: Icons.receipt_outlined,
       EventType.priceNegotiation: Icons.handshake_outlined,
       EventType.expenseSchedule: Icons.event_repeat_outlined,
       EventType.expenseRepartition: Icons.call_split,

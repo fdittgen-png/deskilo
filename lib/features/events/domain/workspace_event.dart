@@ -107,6 +107,10 @@ enum EventType {
   /// the personal data admin or an owner; each holder of managePrivacy is told.
   privacyIncident('privacy_incident'),
 
+  /// #3672 — a new invoice told to its customer (the feed entry; its push is
+  /// queued from the server). One per invoice, applied, never a request.
+  invoiceIssued('invoice_issued'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

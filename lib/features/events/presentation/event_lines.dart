@@ -111,6 +111,10 @@ String eventLine(
           event.payload['number'] as String? ?? '',
           amount,
         ),
+    (EventType.invoiceIssued, _) => l10n.eventInvoiceIssuedLine(
+          event.payload['number'] as String? ?? '',
+          amount,
+        ),
     (EventType.invoiceReminder, _) => l10n.eventInvoiceReminderLine(
           event.payload['number'] as String? ?? '',
           (event.payload['level'] as num?)?.toInt() ?? 1,

@@ -1,0 +1,26 @@
+{
+  "eventTypeInvoiceIssued": "New invoice",
+  "@eventTypeInvoiceIssued": {
+    "description": "#3672 a new invoice told to its customer"
+  },
+  "eventInvoiceIssuedLine": "New invoice {number} — {amount}",
+  "@eventInvoiceIssuedLine": {
+    "description": "#3672 a new invoice told to its customer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pushInvoiceIssuedBody": "A new invoice is waiting for you.",
+  "@pushInvoiceIssuedBody": {
+    "description": "#3672 a new invoice told to its customer"
+  },
+  "setupNotificationsEventInvoiceIssued": "A new invoice",
+  "@setupNotificationsEventInvoiceIssued": {
+    "description": "#3672 a new invoice told to its customer"
+  }
+}

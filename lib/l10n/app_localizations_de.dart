@@ -8853,6 +8853,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventInvoiceIssuedLine(String number, String amount) {
+    return 'Neue Rechnung $number — $amount';
+  }
+
+  @override
   String eventInvoicePaid(String number, String amount) {
     return 'Rechnung $number bezahlt — $amount';
   }
@@ -9040,6 +9045,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceIssue => 'Rechnungsstellung';
+
+  @override
+  String get eventTypeInvoiceIssued => 'Neue Rechnung';
 
   @override
   String get eventTypeInvoicePayment => 'Rechnungszahlung';
@@ -23645,6 +23653,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pushCancelledTitle => 'Reservierung entfernt';
 
   @override
+  String get pushInvoiceIssuedBody => 'Eine neue Rechnung wartet auf Sie.';
+
+  @override
   String get pushMentionBody => 'Sie wurden in einer Unterhaltung erwähnt.';
 
   @override
@@ -28780,6 +28791,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupNotificationsEventCheckIn =>
       'Eine Buchung beginnt gleich: Zeit zum Einchecken';
+
+  @override
+  String get setupNotificationsEventInvoiceIssued => 'Eine neue Rechnung';
 
   @override
   String get setupNotificationsEventInvoiceReminder =>

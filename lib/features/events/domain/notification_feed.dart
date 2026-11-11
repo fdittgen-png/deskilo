@@ -130,6 +130,7 @@ const _moneyEvents = <EventType>{
   EventType.invoicePaymentReversed,
   EventType.invoiceWriteoff,
   EventType.invoiceReminder,
+  EventType.invoiceIssued,
   EventType.priceNegotiation,
   EventType.invoiceIssue,
   EventType.invoiceVoid,

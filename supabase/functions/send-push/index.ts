@@ -45,6 +45,8 @@ const BODIES: Record<Locale, Record<string, string>> = {
     member_mention: "You were mentioned in a conversation.",
     // #726 -- automatic dunning: the subject member, nobody else.
     invoice_reminder: "A payment reminder is waiting for you.",
+    // #3672 -- a new invoice: its customer, nobody else.
+    invoice_issued: "A new invoice is waiting for you.",
     update: "You have an update.",
   },
   fr: {
@@ -53,6 +55,7 @@ const BODIES: Record<Locale, Record<string, string>> = {
     member_note: "Vous avez un nouveau message.",
     member_mention: "Vous avez été mentionné dans une conversation.",
     invoice_reminder: "Un rappel de paiement vous attend.",
+    invoice_issued: "Une nouvelle facture vous attend.",
     update: "Vous avez du nouveau.",
   },
   de: {
@@ -61,6 +64,7 @@ const BODIES: Record<Locale, Record<string, string>> = {
     member_note: "Sie haben eine neue Nachricht.",
     member_mention: "Sie wurden in einer Unterhaltung erwähnt.",
     invoice_reminder: "Eine Zahlungserinnerung wartet auf Sie.",
+    invoice_issued: "Eine neue Rechnung wartet auf Sie.",
     update: "Es gibt etwas Neues für Sie.",
   },
   es: {
@@ -69,6 +73,7 @@ const BODIES: Record<Locale, Record<string, string>> = {
     member_note: "Tiene un mensaje nuevo.",
     member_mention: "Le han mencionado en una conversación.",
     invoice_reminder: "Tiene un recordatorio de pago.",
+    invoice_issued: "Tiene una factura nueva.",
     update: "Tiene una novedad.",
   },
   it: {
@@ -77,9 +82,33 @@ const BODIES: Record<Locale, Record<string, string>> = {
     member_note: "Ha un nuovo messaggio.",
     member_mention: "È stato menzionato in una conversazione.",
     invoice_reminder: "La attende un promemoria di pagamento.",
+    invoice_issued: "La attende una nuova fattura.",
     update: "Ha una novità.",
   },
 };
+
+/** The kinds about an invoice: they reach the invoice's customer even when
+ * that customer is who acted (the owner's own invoice; the sweep acts as the
+ * owner) — #726 reminders, #3672 a new invoice. */
+export const INVOICE_KINDS = new Set(["invoice_reminder", "invoice_issued"]);
+
+/** Who an event's push is for, among the workspace's active members other
+ * than its actor: a removed reservation tells its subject and the admins and
+ * owners; every other kind its subject only, and an invoice kind its
+ * customer even when the customer is the actor. */
+export function eventRecipients(
+  kind: string,
+  members: { id: string; is_admin?: boolean; is_owner?: boolean }[],
+  subject: string,
+): { id: string }[] {
+  const chosen = members.filter((m) =>
+    kind === "reservation_cancelled"
+      ? m.id === subject || m.is_admin || m.is_owner
+      : m.id === subject
+  );
+  if (INVOICE_KINDS.has(kind) && chosen.length === 0) return [{ id: subject }];
+  return chosen;
+}
 
 /** The visible text of [kind] in [locale]: generic, whatever the kind. */
 export function notificationText(
@@ -551,6 +580,8 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<void> {
       ? "reservation_cancelled"
       : event.type === "invoice_reminder"
       ? "invoice_reminder"
+      : event.type === "invoice_issued"
+      ? "invoice_issued"
       : null;
     if (!eventKind) return;
     kind = eventKind;
@@ -569,16 +600,7 @@ async function deliver(req: Request, supabase: SupabaseClient): Promise<void> {
           .order("id")
           .range(from, to),
     );
-    recipients = members.filter((m) =>
-      kind === "reservation_cancelled"
-        ? m.id === event.subject_member_id || m.is_admin || m.is_owner
-        : m.id === event.subject_member_id
-    );
-    // The sweep acts AS the owner; a reminder for the owner's own
-    // invoice must still reach them.
-    if (kind === "invoice_reminder" && recipients.length === 0) {
-      recipients = [{ id: event.subject_member_id }];
-    }
+    recipients = eventRecipients(kind, members, event.subject_member_id);
   }
   if (recipients.length === 0) return;
 
