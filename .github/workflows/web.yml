@@ -92,10 +92,12 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     needs: [classify]
-    # Always evaluated, so the check reports on every pull request — built,
-    # or stood down with the reason. The release train and a dispatch are
-    # not pull requests and always build.
-    if: always()
+    # Evaluated after a classifier that failed too, so the check reports on
+    # every pull request — built, or stood down with the reason. The release
+    # train and a dispatch are not pull requests and always build. #3753: not
+    # `always()`, which survives a cancellation — the build of a superseded
+    # head ran to its end and the new head's build waited behind it.
+    if: ${{ !cancelled() }}
     env:
       WEB_REQUIRED: ${{ needs.classify.outputs.web != 'not_applicable' }}
     steps:

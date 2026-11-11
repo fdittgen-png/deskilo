@@ -65,6 +65,7 @@ is fixed, not rerun.
 | Status · Play track availability | `play-availability.yml` | what Play actually serves, per track |
 | Tools · Add iOS TestFlight tester | `ios-testers.yml` | invite one person |
 | Tools · Dev APK (sideload) | `dev-apk.yml` | a one-off APK from any ref |
+| Tools · Database preview | `db-preview.yml` | what `quality · database` will say about a migration, before its pull request opens: the replay from empty, the policies, the effective contract and the database tests in one job of about eight minutes; uploads the contract and the policy list ready to commit (#3751) |
 
 ## Rules
 
