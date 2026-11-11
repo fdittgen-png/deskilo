@@ -2090,6 +2090,25 @@ Usted quiere decidir, elemento por elemento, quién ve su nombre, su biografía,
 
 **Véase también:** [Perfil público](help:user.privacy.public-profile) · [Quién puede ver mis datos](help:user.privacy.visibility)
 
+### Lo que ve un negocio al que se une
+
+**Público:** Todos
+
+Quiere saber qué sabe de usted un negocio cuando pide unirse y una vez que es miembro.
+
+**Pasos**
+
+1. Abra [Yo](app:/me?tab=me) y baje hasta **Privacidad**.
+2. Toque **Lo que ve un negocio al que se une**.
+
+**Conviene saber**
+
+- Cuando pide unirse, el negocio ve su nombre y su foto. Su dirección de correo no se muestra con la solicitud.
+- Una vez miembro, todos en el espacio ven su nombre y su foto. Su número de WhatsApp, su estado y cuándo estuvo por última vez siguen lo que elija en **Quién me ve**.
+- Los administradores que le facturan o llevan el registro de miembros ven lo que necesitan para facturarle: nombre, empresa, dirección, teléfono, correo, número de IVA, identificador legal e idioma preferido. Su cumpleaños, si lo indicó, solo lo ven quienes llevan el registro de miembros.
+
+**Véase también:** [Elegir quién me ve](help:user.privacy.audiences)
+
 ### Publicar un perfil público
 
 **Público:** Todos

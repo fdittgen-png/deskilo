@@ -12,6 +12,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
+import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../application/confirmed_payment.dart';
 import '../../application/receivables.dart';
 import '../../providers/money_providers.dart';
@@ -176,11 +177,14 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
     // While an action runs, every action of the bar is off.
     VoidCallback? guard(Future<void> Function() action) =>
         _busy ? null : () => _run(action);
+    // The kit button holds itself busy while its action runs (#3679); the
+    // bar's own flag keeps the OTHER actions off meanwhile.
     Widget filled(String key, String label, Future<void> Function() action) =>
-        FilledButton(
+        KitActionButton(
           key: ValueKey(key),
-          onPressed: guard(action),
-          child: Text(label, textAlign: TextAlign.center),
+          label: label,
+          showProgress: false,
+          onPressed: _busy ? null : () => _run(action),
         );
     if (r.paymentDeclared && r.declaredEventId != null) {
       return BottomActionBar(

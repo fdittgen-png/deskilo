@@ -7056,13 +7056,32 @@ class AppLocalizationsDe extends AppLocalizations {
       'Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.';
 
   @override
+  String get directoryMapOpenFailed =>
+      'Die Karte konnte nicht geöffnet werden.';
+
+  @override
   String get directoryNoUpcoming => 'Keine anstehenden Reservierungen';
+
+  @override
+  String get directoryNothingToPin =>
+      'Keiner dieser Orte konnte auf der Karte platziert werden.';
 
   @override
   String get directoryOnline => 'Online';
 
   @override
   String get directoryOpenGroup => 'WhatsApp-Gruppe öffnen';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count konnten nicht nachgeschlagen werden.',
+      one: '1 konnte nicht nachgeschlagen werden.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7072,6 +7091,17 @@ class AppLocalizationsDe extends AppLocalizations {
       other:
           '$count Arbeitsbereiche konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.',
       one: '1 Arbeitsbereich konnte nicht auf der Karte platziert werden; seine Karte steht darunter.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count haben keine veröffentlichte Adresse.',
+      one: '1 hat keine veröffentlichte Adresse.',
     );
     return '$_temp0';
   }
@@ -7089,6 +7119,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Heute reserviert';
+
+  @override
+  String get directoryTilesFailed =>
+      'Der Kartenhintergrund konnte nicht geladen werden.';
 
   @override
   String get directoryTitle => 'Mitglieder';
@@ -15950,6 +15984,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kioskTapHint => 'Tippen Sie auf einen Platz zum Einchecken';
 
   @override
+  String get kitActionBusy => 'Läuft …';
+
+  @override
   String languageAvailableHint(String fallback) {
     return 'DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf $fallback.';
   }
@@ -17965,6 +18002,21 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Ihre Adresse konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get meBusinessSeesAdmins =>
+      'Seine Administratoren, die Ihnen Rechnungen stellen oder das Mitgliederverzeichnis führen: Ihren Namen, Ihre Firma, Adresse, Telefonnummer, E-Mail, USt-IdNr., rechtliche Kennung und bevorzugte Sprache, die sie zum Abrechnen brauchen, und Ihren Geburtstag, wenn Sie ihn angegeben haben, für die, die das Mitgliederverzeichnis führen.';
+
+  @override
+  String get meBusinessSeesAsk =>
+      'Wenn Sie den Beitritt anfragen: Ihren Namen und Ihr Foto.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Als Mitglied alle im Bereich: Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihren Status und wann Sie zuletzt da waren nur so, wie Sie es unter Wer mich sieht wählen.';
+
+  @override
+  String get meBusinessSeesTitle => 'Was ein Betrieb sieht, dem Sie beitreten';
 
   @override
   String get meContextPersonal => 'Persönlich';
@@ -21262,6 +21314,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get portalRegisterDirectory =>
       'Server mit dem globalen Verzeichnis verbinden';
+
+  @override
+  String get portalRequestPending => 'Anfrage ausstehend';
 
   @override
   String get portalRequestProfile => 'Beitritt anfragen';
@@ -28555,7 +28610,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Wenn Sie anfragen, sieht dieser Betrieb Ihre E-Mail-Adresse. Als Mitglied sehen seine Administratoren Ihren Namen sowie die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.';
+      'Wenn Sie anfragen, sieht dieser Betrieb Ihren Namen und Ihr Foto. Als Mitglied sehen seine Administratoren die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.';
 
   @override
   String get spaceQrSizeLabel => 'Größe des QR-Codes';

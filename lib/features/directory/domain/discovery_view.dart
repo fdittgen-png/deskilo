@@ -67,6 +67,12 @@ class MapServices {
     );
   }
 
+  /// #3684 -- the app as the map services see it: the tile layer names
+  /// this package, and the geocoder's requests on the native apps carry
+  /// it in their User-Agent. It identifies the app, never the person.
+  static const appPackage = 'org.deskilo.app';
+  static const userAgent = 'DesKilo ($appPackage)';
+
   static const tilesKey = 'directory.tile_url_template';
   static const geocoderKey = 'directory.geocoder_url';
 

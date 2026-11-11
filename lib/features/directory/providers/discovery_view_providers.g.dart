@@ -147,7 +147,7 @@ final class DiscoveryViewProvider
   DiscoveryView create() => DiscoveryView();
 }
 
-String _$discoveryViewHash() => r'cac863c42f388666b30d27a81ec9fa64287587b3';
+String _$discoveryViewHash() => r'7fbc364c86b7955c4d4ec313519f44a8d836244c';
 
 /// List or map, and the map provider accepted, for the signed-in person
 /// at their personal home on this device. Signed out, the choice is held

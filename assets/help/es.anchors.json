@@ -92,6 +92,7 @@
   "user.profile.settings.linked-accounts": "Cuentas vinculadas",
   "user.privacy.visibility": "Privacidad: quién puede ver mis datos",
   "user.privacy.audiences": "Elegir quién me ve",
+  "user.privacy.business-sees": "Lo que ve un negocio al que se une",
   "user.privacy.public-profile": "Publicar un perfil público",
   "user.privacy.export": "Exportar mis datos",
   "user.privacy.erase": "Borrar mis datos",

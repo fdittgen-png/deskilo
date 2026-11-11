@@ -15,12 +15,13 @@ import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/public_workspace.dart';
 
-class SpaceOffers extends ConsumerWidget {
+class SpaceOffers extends ConsumerStatefulWidget {
   const SpaceOffers({
     super.key,
     required this.workspace,
@@ -30,14 +31,41 @@ class SpaceOffers extends ConsumerWidget {
 
   final PublicWorkspace workspace;
 
-  /// The admission request, as the page already made it.
-  final Future<void> Function() onRequest;
+  /// The admission request, as the page already made it; true when the
+  /// server took it (#3683: then the button gives way to "Request pending").
+  final Future<bool> Function() onRequest;
 
   /// The outlined action beside the one filled action (Message the space).
   final Widget? secondary;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SpaceOffers> createState() => _SpaceOffersState();
+}
+
+class _SpaceOffersState extends ConsumerState<SpaceOffers> {
+  bool _sending = false;
+  bool _pending = false;
+
+  /// One request at a time: a second tap while it runs does nothing.
+  Future<void> _request() async {
+    if (_sending || _pending) return;
+    setState(() => _sending = true);
+    var sent = false;
+    try {
+      sent = await widget.onRequest();
+    } finally {
+      if (mounted) {
+        setState(() {
+          _sending = false;
+          _pending = sent;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final workspace = widget.workspace;
     final l = context.l10n;
     final signedIn = ref.watch(authStateProvider).value != null;
     // A membership can only be recognised on this server: the page's id
@@ -45,11 +73,15 @@ class SpaceOffers extends ConsumerWidget {
     final here =
         signedIn &&
         workspace.source == ref.watch(connectedInstallationsProvider).origin;
+    // #3683 -- a business of mine is recognised only once the list of my
+    // businesses was read: while it loads or failed, no request is offered.
     final mine = here
         ? (ref.watch(myWorkspacesProvider).value ?? const <Workspace>[])
               .where((w) => w.id == workspace.id)
               .firstOrNull
         : null;
+    final myRead = here ? ref.watch(myWorkspacesProvider) : null;
+    final unknown = myRead != null && !myRead.hasValue;
     final email = workspace.text('email').trim();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -64,14 +96,23 @@ class SpaceOffers extends ConsumerWidget {
               label: Text(l.portalEnterSpace),
               onPressed: () => enterSpace(context, ref, mine),
             )
+          else if (unknown && myRead.hasError && !myRead.isLoading)
+            ReadFailureBanner(
+              error: myRead.error!,
+              onRetry: () => ref.invalidate(myWorkspacesProvider),
+            )
           else
             FilledButton.icon(
               key: const ValueKey('portal-request-membership'),
-              icon: const Icon(Icons.person_add_outlined),
-              label: Text(l.portalRequestProfile),
-              onPressed: onRequest,
+              icon: Icon(
+                _pending ? Icons.hourglass_top : Icons.person_add_outlined,
+              ),
+              label: Text(
+                _pending ? l.portalRequestPending : l.portalRequestProfile,
+              ),
+              onPressed: unknown || _sending || _pending ? null : _request,
             ),
-          ?secondary,
+          ?widget.secondary,
           if (email.isNotEmpty)
             TextButton.icon(
               key: const ValueKey('portal-copy-email'),

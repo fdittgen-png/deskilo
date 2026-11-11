@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -7,12 +9,14 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
-import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../domain/directory_location.dart';
+import '../domain/discovery_view.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_location_providers.dart';
 import '../providers/discovery_view_providers.dart';
+import 'directory_map_notices.dart';
+import 'directory_map_pins.dart';
 
 typedef _Point = ({PublicWorkspace workspace, DirectoryLocation location});
 
@@ -51,19 +55,53 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
   bool _ready = false;
   static const _detailZoom = 16.0;
 
-  /// Addresses geocoded per page; the cards beyond stay unpinned.
+  /// Addresses geocoded per page; the cards beyond stay unpinned. Only a
+  /// place that has an address and no stored coordinates uses one.
   static const _maxLookups = 20;
 
-  /// The lookup of an unselected workspace; [waiting] collects the ones
-  /// still being looked up, which are not yet counted as unplaced.
-  static DirectoryLocation? _lookedUp(
-      PublicWorkspace w, WidgetRef ref, bool allowed, List<Object> waiting) {
-    if (!allowed || w.location != null) return null;
-    final address = w.text('address').trim();
-    if (address.isEmpty) return null;
-    final answer = ref.watch(directoryAddressLocationProvider(address));
-    if (answer.isLoading) waiting.add(w);
-    return answer.value;
+  /// #3684 -- how many background tiles may fail before the map says so:
+  /// one missing tile at the edge of the world is not worth a line, a
+  /// background that does not load at all is.
+  static const _tileFailureThreshold = 3;
+
+  /// A line over the map keeps clear of the camera buttons on its right:
+  /// their 48 dp column and its margins.
+  static const _clearOfControls = 64.0;
+
+  int _tileFailures = 0;
+  bool _tilesFailed = false;
+
+  /// A new attempt is a new tile layer: every tile is asked again.
+  int _tileAttempt = 0;
+  final _failedTiles = <ImageProvider>[];
+
+  /// Whether the map has been drawn: once shown, it stays, so its camera
+  /// and controller are never rebuilt under the person.
+  bool _shown = false;
+
+  /// A tile could not be loaded. Called while the layer lays out its
+  /// tiles, so the line is set after the current frame's work.
+  void _tileFailed(TileImage tile, Object error, StackTrace? stackTrace) {
+    _failedTiles.add(tile.imageProvider);
+    if (_tilesFailed || ++_tileFailures < _tileFailureThreshold) return;
+    _tilesFailed = true;
+    scheduleMicrotask(() {
+      if (mounted) setState(() {});
+    });
+  }
+
+  /// Try again: the failed tiles are forgotten and every tile is asked
+  /// again.
+  void _reloadTiles() {
+    for (final image in _failedTiles) {
+      unawaited(image.evict());
+    }
+    _failedTiles.clear();
+    setState(() {
+      _tileFailures = 0;
+      _tilesFailed = false;
+      _tileAttempt++;
+    });
   }
 
   @override
@@ -204,29 +242,110 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
     ));
   }
 
-  /// How many of [all] have no pin: no address, not found, failed or
-  /// beyond the bounded lookups. A place still being looked up is not
-  /// counted yet, nor the selected [own]: unplaced, it has its own status
-  /// line.
-  static int _unplacedOf(List<PublicWorkspace> all, List<_Point> located,
-      List<Object> waiting, PublicWorkspace? own) {
-    final placed = {for (final p in located) p.workspace};
-    return all
-        .where((w) => !placed.contains(w) && !waiting.contains(w) && w != own)
-        .length;
+  /// Says how many cards have no pin and why: no address, or a lookup
+  /// that failed, with Try again for every failed one. A place still being
+  /// looked up is not counted yet, nor the selected place: unplaced, it
+  /// has its own status line. Nothing when all are placed.
+  Widget _pinsMissing(_Pins pins) {
+    final l = context.l10n;
+    if (pins.unplaced == 0) return const SizedBox.shrink();
+    final failed = pins.failed;
+    return DirectoryMapNotice(
+      icon: Icons.location_off_outlined,
+      lines: [
+        (const ValueKey('directory-pins-missing'), l.directoryPinsMissing(pins.unplaced)),
+        if (pins.noAddress > 0)
+          (const ValueKey('directory-pins-no-address'), l.directoryPinsNoAddress(pins.noAddress)),
+        if (failed.isNotEmpty)
+          (const ValueKey('directory-pins-failed'), l.directoryPinsLookupFailed(failed.length)),
+      ],
+      retryKey: const ValueKey('directory-pins-retry'),
+      onRetry: failed.isEmpty
+          ? null
+          : () {
+              for (final address in failed) {
+                ref.invalidate(directoryAddressLocationProvider(address));
+              }
+            },
+    );
   }
 
-  /// Says how many cards have no pin; nothing when all are placed.
-  static Widget _pinsMissing(BuildContext context, int count) => count == 0
-      ? const SizedBox.shrink()
-      : Padding(
-          padding: AppSpacing.smAll,
-          child: Text(
-            context.l10n.directoryPinsMissing(count),
-            key: const ValueKey('directory-pins-missing'),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        );
+  /// Where each loaded place stands: placed, still being looked up, or
+  /// unplaced and why. [target] is looked up apart, uncounted by the cap.
+  _Pins _place(PublicWorkspace? target, AsyncValue<DirectoryLocation?>? lookup) {
+    var lookups = 0;
+    final pins = _Pins();
+    for (final w in widget.workspaces) {
+      if (w.location case final at?) {
+        pins.located.add((workspace: w, location: at));
+        continue;
+      }
+      final address = w.text('address').trim();
+      final own = w == target;
+      if (address.isEmpty) {
+        if (!own) {
+          pins
+            ..noAddress += 1
+            ..unplaced += 1;
+        }
+        continue;
+      }
+      final answer = own
+          ? lookup
+          : lookups++ < _maxLookups
+              ? ref.watch(directoryAddressLocationProvider(address))
+              : null;
+      if (answer?.value case final at?) {
+        pins.located.add((workspace: w, location: at));
+      } else if (answer != null && answer.isLoading) {
+        pins.waiting++;
+      } else if (!own) {
+        pins.unplaced++;
+        if (answer != null && answer.hasError) pins.failed.add(address);
+      }
+    }
+    return pins;
+  }
+
+  /// The camera the map first opens on: every located place in view, or
+  /// the selected one up close.
+  /// Taken once, when the map is first drawn: the map applies an initial
+  /// fit whenever one appears, so a later one would undo the person's own
+  /// camera.
+  ({LatLng center, CameraFit? fit})? _initial;
+
+  MapOptions _options(List<_Point> located, PublicWorkspace? target) {
+    final initial = _initial ??= () {
+      final own = located.where((p) => p.workspace == target).firstOrNull;
+      final first = (own ?? located.first).location;
+      return (
+        center: LatLng(first.latitude, first.longitude),
+        fit: own != null || located.length == 1
+            ? null
+            : CameraFit.bounds(
+                bounds: LatLngBounds.fromPoints([
+                  for (final p in located)
+                    LatLng(p.location.latitude, p.location.longitude),
+                ]),
+                padding: const EdgeInsets.all(64),
+                maxZoom: _detailZoom,
+              ),
+      );
+    }();
+    return MapOptions(
+      interactionOptions: const InteractionOptions(
+        keyboardOptions: KeyboardOptions(autofocus: false),
+      ),
+      initialCenter: initial.center,
+      initialZoom: _detailZoom,
+      initialCameraFit: initial.fit,
+      onPositionChanged: _moved,
+      onMapReady: () {
+        _ready = true;
+        _focus(located, target, animate: false);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,18 +359,11 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         ? ref.watch(directoryAddressLocationProvider(address)) : null;
     // #2473 — every workspace is a pin: a card without coordinates is placed
     // from its public address (one cached lookup per address); a failed one stays a card.
-    var lookups = 0;
-    final waiting = <Object>[];
-    final located = [
-      for (final w in widget.workspaces)
-        if (w.location ??
-                (w == target
-                    ? lookup?.value
-                    : _lookedUp(w, ref, lookups++ < _maxLookups, waiting))
-            case final point?)
-          (workspace: w, location: point),
-    ];
+    final pins = _place(target, lookup);
+    final located = pins.located;
     _follow(located, target);
+    final show = _shown || located.isNotEmpty;
+    _shown = show;
     return Column(children: [
       if (needsLookup)
         Padding(
@@ -274,26 +386,34 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
                 tooltip: l.commonRetry, icon: const Icon(Icons.refresh)),
           ]),
         ),
-      _pinsMissing(
-          context, _unplacedOf(widget.workspaces, located, waiting, target)),
-      Expanded(child: Stack(children: [FlutterMap(
-      mapController: _controller,
-      options: MapOptions(
-        interactionOptions: const InteractionOptions(
-          keyboardOptions: KeyboardOptions(autofocus: false),
-        ),
-        initialCenter: located.isEmpty
-            ? const LatLng(48.86, 2.35)
-            : LatLng(located.first.location.latitude, located.first.location.longitude),
-        initialZoom: located.isEmpty ? 4 : _detailZoom,
-        onPositionChanged: _moved,
-        onMapReady: () { _ready = true; _focus(located, target, animate: false); },
+      _pinsMissing(pins),
+      Expanded(
+        child: show
+            ? _map(located, target)
+            : widget.workspaces.isEmpty
+                ? const SizedBox.expand()
+                : DirectoryMapPlaceholder(
+                    key: const ValueKey('directory-map-nothing'),
+                    busy: pins.waiting > 0,
+                    text: pins.waiting > 0
+                        ? l.directoryLocating
+                        : l.directoryNothingToPin,
+                  ),
       ),
+    ]);
+  }
+
+  Widget _map(List<_Point> located, PublicWorkspace? target) => Stack(children: [
+    FlutterMap(
+      mapController: _controller,
+      options: _options(located, target),
       children: [
         TileLayer(
+          key: ValueKey('directory-map-tiles-$_tileAttempt'),
           tileProvider: widget.tileProvider,
           urlTemplate: ref.watch(mapServicesProvider).tiles,
-          userAgentPackageName: 'org.deskilo.app',
+          userAgentPackageName: MapServices.appPackage,
+          errorTileCallback: _tileFailed,
         ),
         MarkerClusterLayerWidget(
           options: MarkerClusterLayerOptions(
@@ -307,7 +427,7 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
                   width: p.workspace == target ? 168 : 132,
                   height: p.workspace == target ? 66 : 56,
                   alignment: Alignment.topCenter,
-                  child: _Pin(
+                  child: DirectoryMapPin(
                     key: ValueKey('directory-pin-${p.workspace.source}/${p.workspace.id}'),
                     name: p.workspace.name,
                     selected: p.workspace == target,
@@ -315,7 +435,8 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
                   ),
                 ),
             ],
-            builder: (context, markers) => _ClusterBubble(count: markers.length),
+            builder: (context, markers) =>
+                DirectoryClusterBubble(count: markers.length),
           ),
         ),
         RichAttributionWidget(
@@ -331,104 +452,42 @@ class _DirectoryMapState extends ConsumerState<DirectoryMap>
         ),
       ],
     ),
-      _controls(located, target),
-    ])),
-    ]);
-  }
-}
-
-/// A workspace on the map: a pill with its name. The selected one grows,
-/// takes the accent and points at its place; the others stay quiet.
-class _Pin extends StatelessWidget {
-  const _Pin({super.key, required this.name, required this.selected, required this.onTap});
-
-  final String name;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Semantics(
-      label: name,
-      button: true,
-      selected: selected,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
-          curve: Curves.easeOutCubic,
-          decoration: BoxDecoration(
-            color: selected ? scheme.primary : scheme.surface,
-            borderRadius: AppRadius.mdAll,
-            boxShadow: [
-              BoxShadow(
-                color: scheme.shadow.withValues(alpha: selected ? 0.35 : 0.2),
-                blurRadius: selected ? 10 : 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Material(
-            type: MaterialType.transparency,
-            child: InkWell(
-              key: key == null ? null : ValueKey('${(key! as ValueKey<String>).value}-tap'),
-              borderRadius: AppRadius.mdAll,
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: Text(
-                  name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: selected ? scheme.onPrimary : scheme.onSurface,
-                      ),
-                ),
-              ),
+    _controls(located, target),
+    if (_tilesFailed)
+      Positioned(
+        top: AppSpacing.sm,
+        left: AppSpacing.sm,
+        right: _clearOfControls,
+        child: DirectoryMapNotice(
+          key: const ValueKey('directory-map-tiles-failed'),
+          icon: Icons.cloud_off_outlined,
+          elevated: true,
+          lines: [
+            (
+              const ValueKey('directory-map-tiles-failed-text'),
+              context.l10n.directoryTilesFailed,
             ),
-          ),
-        ),
-        // The little tail that points at the place.
-        Icon(
-          Icons.arrow_drop_down,
-          size: 18,
-          color: selected ? scheme.primary : scheme.surface,
-        ),
-      ]),
-    );
-  }
-}
-
-/// Several workspaces close together: one round bubble with how many.
-class _ClusterBubble extends StatelessWidget {
-  const _ClusterBubble({required this.count});
-
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Semantics(
-      label: '$count',
-      button: true,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: scheme.tertiaryContainer,
-          shape: BoxShape.circle,
-          border: Border.all(color: scheme.surface, width: 3),
-          boxShadow: [
-            BoxShadow(color: scheme.shadow.withValues(alpha: 0.25), blurRadius: 6),
           ],
-        ),
-        child: Center(
-          child: Text(
-            '$count',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: scheme.onTertiaryContainer,
-                ),
-          ),
+          retryKey: const ValueKey('directory-map-tiles-retry'),
+          onRetry: _reloadTiles,
         ),
       ),
-    );
-  }
+  ]);
+}
+
+/// Where the loaded places stand on the map.
+class _Pins {
+  final located = <_Point>[];
+
+  /// Places still being looked up, or waiting their turn: not counted yet.
+  int waiting = 0;
+
+  /// Places without a pin, the selected one aside.
+  int unplaced = 0;
+
+  /// Of those: places that have no address at all.
+  int noAddress = 0;
+
+  /// Of those: the addresses whose lookup failed, for Try again.
+  final failed = <String>[];
 }

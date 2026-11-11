@@ -14,6 +14,7 @@
 library;
 
 import 'package:meta/meta.dart';
+import '../../../core/text/collation.dart';
 
 /// ISO 3166-2 code → region name.
 @visibleForTesting
@@ -165,28 +166,13 @@ const holidayRegionNames = <String, String>{
 /// The name of [code], or [code] itself when the table does not know it.
 String holidayRegionName(String code) => holidayRegionNames[code] ?? code;
 
-const _folds = {
-  'ä': 'a', 'ö': 'o', 'ü': 'u', 'é': 'e', 'è': 'e', 'á': 'a', 'í': 'i',
-  'ó': 'o', 'ç': 'c', 'ñ': 'n', 'ô': 'o', 'à': 'a', 'ê': 'e', //
-};
-
-String _sortKey(String name) {
-  final lower = name.toLowerCase();
-  final b = StringBuffer();
-  for (final r in lower.runes) {
-    final c = String.fromCharCode(r);
-    b.write(_folds[c] ?? c);
-  }
-  return b.toString();
-}
-
 /// [codes] ordered by their region name (accents and case ignored), the
 /// code breaking a tie. A code without a name sorts by the code.
 List<String> sortHolidayRegions(Iterable<String> codes) {
   final list = codes.toSet().toList()
     ..sort((a, b) {
-    final byName = _sortKey(holidayRegionName(a))
-        .compareTo(_sortKey(holidayRegionName(b)));
+    final byName =
+        compareNames(holidayRegionName(a), holidayRegionName(b));
     return byName != 0 ? byName : a.compareTo(b);
   });
   return list;

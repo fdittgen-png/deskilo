@@ -12,6 +12,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/report_language.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
@@ -237,9 +238,7 @@ class WorkspaceSettingsReports {
       List<Member> members, Map<String, String> names) {
   // Members sorted by name, like the directory.
   final sortedMembers = [...members]..sort(
-      (a, b) => (names[a.id] ?? '')
-          .toLowerCase()
-          .compareTo((names[b.id] ?? '').toLowerCase()),
+      (a, b) => compareNames(names[a.id] ?? '', names[b.id] ?? ''),
     );
   String memberDetails(Member member) {
     final parts = <String>[
