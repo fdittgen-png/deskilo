@@ -204,12 +204,16 @@ class FakeStore implements TransmissionStore {
   ) {
     const r = this.rows.get(id)!;
     if (phase && r.phase !== "uncertain") return Promise.resolve(false);
+    // the SQL evaluates the receipt CASE against the OLD row (#3576)
+    const oldPhase = r.phase;
+    const oldReceipt = r.receipt;
     if (phase) {
       r.phase = phase;
       r.external_id = externalId || r.external_id;
     }
     if (
-      receipt && !(r.phase === "accepted" && Object.keys(r.receipt).length > 0)
+      receipt &&
+      !(oldPhase === "accepted" && Object.keys(oldReceipt).length > 0)
     ) r.receipt = receipt;
     if (verdict) r.verdict = verdict;
     r.queryError = queryError ?? "";
@@ -999,4 +1003,277 @@ Deno.test("Peppol mock: one BIS document to the participant id, the MLR stored, 
   assertEquals(again.body.external_id, "G-7");
   assertEquals(sent.length, 1);
   assertEquals(s.rows.size, 1);
+});
+
+// ── #3576 — retained-ID recovery of an uncertain transmission ─────────────
+// Supported: an uncertain row that KEPT its provider id is asked about, with
+// the credentials of its STORED environment. Not supported (and not tested
+// here as if it were): finding a lost transmission by a pre-dispatch key.
+
+const UAT_CFG = {
+  base_url: "https://prod.test",
+  api_key: "prod-key",
+  legal_entity_id: "1",
+  base_url_uat: "https://uat.test",
+  api_key_uat: "uat-key",
+  legal_entity_id_uat: "2",
+};
+const UAT_EVIDENCE_URL =
+  "https://uat.test/api/v2/document_submissions/G-UAT/evidence/sending";
+const PARTIAL = { partial: "before lookup" };
+
+/** A Peppol government row stored for UAT, made through prepare (so its key
+ * and binding are the real ones a later send recomputes), then left uncertain
+ * with a retained id, a partial receipt, an owner and a generation. */
+async function retainedUat(externalId = "G-UAT") {
+  const s = new FakeStore();
+  s.provider = "peppol";
+  s.config = { ...UAT_CFG };
+  const prepared = await s.prepare({
+    workspaceId: WS,
+    invoiceId: INV,
+    provider: "peppol",
+    destination: "government",
+    environment: "uat",
+    actor: USER,
+    byName: "T",
+    format: "peppolBis",
+    hash: await hash("<xml>one</xml>"),
+    fileName: "F-1.pdf",
+    mimeType: "application/pdf",
+    receiverScheme: "0208",
+    receiverId: "0202239951",
+    bytes: new TextEncoder().encode("<xml>one</xml>") as Uint8Array<
+      ArrayBuffer
+    >,
+    declared: {},
+  });
+  const row = s.rows.get(prepared.id!)!;
+  row.phase = "uncertain";
+  row.external_id = externalId;
+  row.owner = "o";
+  row.generation = 1;
+  row.receipt = { ...PARTIAL };
+  return { s, id: row.id };
+}
+
+/** A network stub that records every request it sees. */
+function recorder(answer: () => Response | Promise<Response>) {
+  const seen: { url: string; method: string; auth: string }[] = [];
+  const fetchImpl = ((input: string | URL | Request, init?: RequestInit) => {
+    const url = String(input instanceof Request ? input.url : input);
+    seen.push({
+      url,
+      method: init?.method ?? "GET",
+      auth: new Headers(init?.headers).get("Authorization") ?? "",
+    });
+    return Promise.resolve(answer());
+  }) as typeof fetch;
+  return { seen, fetchImpl };
+}
+
+const acknowledged = () =>
+  new Response(
+    JSON.stringify({ messageLevelResponse: "AP", status: "ACKNOWLEDGED" }),
+    { status: 200 },
+  );
+
+const statusBody = (id: string, extra: Record<string, unknown> = {}) => ({
+  workspace_id: WS,
+  action: "status",
+  transmission_id: id,
+  ...extra,
+});
+
+const expectedUatGet = [
+  { url: UAT_EVIDENCE_URL, method: "GET", auth: "Bearer uat-key" },
+];
+
+Deno.test("R1 retained-ID recovery: an uncertain row with its id settles accepted on a successful status, keeping row, binding and artifact", async () => {
+  const { s, id } = await retainedUat();
+  const before = structuredClone(s.rows.get(id)!);
+  const net = recorder(acknowledged);
+  const r = await read(await call(s, net.fetchImpl, statusBody(id)));
+  const row = s.rows.get(id)!;
+  assertEquals(r.body.phase, "accepted");
+  assertEquals(r.body.document_status, "accepted");
+  assertEquals(row.phase, "accepted");
+  assertEquals((row.verdict as { status?: string }).status, "accepted");
+  // the correlated evidence REPLACES the partial prior receipt
+  assertEquals(row.receipt, {
+    guid: "G-UAT",
+    evidence: { messageLevelResponse: "AP", status: "ACKNOWLEDGED" },
+  });
+  assertEquals(row.key, before.key);
+  assertEquals(row.binding, before.binding);
+  assertEquals(row.owner, before.owner);
+  assertEquals(row.generation, before.generation);
+  assertEquals(row.external_id, "G-UAT");
+  assertEquals(row.artifact, before.artifact);
+  assertEquals(s.rows.size, 1);
+  assertEquals(net.seen, expectedUatGet);
+});
+
+Deno.test("R2 retained-ID recovery: a status request without an environment asks the stored UAT endpoint with the UAT token only", async () => {
+  const { s, id } = await retainedUat();
+  const net = recorder(acknowledged);
+  await call(s, net.fetchImpl, statusBody(id));
+  assertEquals(net.seen, expectedUatGet);
+  assertEquals(
+    net.seen.some((q) =>
+      q.url.includes("prod.test") || q.auth.includes("prod")
+    ),
+    false,
+  );
+});
+
+Deno.test("R3 retained-ID recovery: a status request saying prod cannot redirect recovery away from the stored UAT environment", async () => {
+  const { s, id } = await retainedUat();
+  const net = recorder(acknowledged);
+  await call(s, net.fetchImpl, statusBody(id, { environment: "prod" }));
+  assertEquals(net.seen, expectedUatGet);
+});
+
+Deno.test("R4 retained-ID recovery: a document rejection on an uncertain row is a verdict beside accepted transport and uploads nothing", async () => {
+  const s = new FakeStore();
+  s.provider = "it_sdi";
+  s.config = {
+    base_url: "https://sdi.test",
+    login_url: "https://login.test/login",
+    username: "u@x.it",
+    password: "p",
+  };
+  s.rows.set("t40", {
+    id: "t40",
+    key: "k",
+    binding: "b",
+    workspace_id: WS,
+    provider: "it_sdi",
+    phase: "uncertain",
+    external_id: "u-1",
+    detail: "",
+    environment: "prod",
+    destination: "government",
+    format: "fatturaPa",
+    receipt: { ...PARTIAL },
+    owner: "o",
+    generation: 1,
+    deadline: 0,
+    verdict: {},
+    queryError: "",
+    resolvedBy: "",
+    artifact: {
+      bytes: new Uint8Array() as Uint8Array<ArrayBuffer>,
+      sha256: "",
+      fileName: "",
+      mimeType: "",
+      receiverScheme: "",
+      receiverId: "",
+    },
+  });
+  const before = structuredClone(s.rows.get("t40")!);
+  const answers: Record<string, unknown> = {
+    "https://login.test/login": { token: "jwt" },
+    "https://sdi.test/invoices/u-1": { marking: "rejected" },
+    "https://sdi.test/invoices/u-1/notifications": [
+      { type: "NS", message: "00404 duplicate" },
+    ],
+  };
+  const net = recorder(() => new Response("{}"));
+  const fetchImpl = ((input: string | URL | Request, init?: RequestInit) => {
+    const url = String(input instanceof Request ? input.url : input);
+    void net.fetchImpl(input, init);
+    return Promise.resolve(
+      new Response(JSON.stringify(answers[url] ?? {}), { status: 200 }),
+    );
+  }) as typeof fetch;
+  const r = await read(await call(s, fetchImpl, statusBody("t40")));
+  const row = s.rows.get("t40")!;
+  assertEquals(r.body.phase, "accepted");
+  assertEquals(r.body.document_status, "rejected");
+  assertEquals(row.phase, "accepted");
+  assertEquals((row.verdict as { status?: string }).status, "rejected");
+  assertEquals(row.id, before.id);
+  assertEquals(row.key, before.key);
+  assertEquals(row.binding, before.binding);
+  assertEquals(row.generation, before.generation);
+  assertEquals(row.artifact, before.artifact);
+  assertEquals(s.rows.size, 1);
+  // the login POST is allowed; an invoice upload is not
+  const uploads = net.seen.filter((q) =>
+    q.method === "POST" && !q.url.endsWith("/login")
+  );
+  assertEquals(uploads.length, 0);
+});
+
+for (
+  const [name, answer] of [
+    ["401", () => new Response("expired token", { status: 401 })],
+    ["503", () => new Response("busy", { status: 503 })],
+    ["timeout", () => {
+      throw new DOMException("timed out", "TimeoutError");
+    }],
+  ] as [string, () => Response][]
+) {
+  Deno.test(`R5 retained-ID recovery: a ${name} status query leaves the uncertain row untouched, records the query error and uploads nothing`, async () => {
+    const { s, id } = await retainedUat();
+    const before = structuredClone(s.rows.get(id)!);
+    const net = recorder(answer);
+    const r = await read(await call(s, net.fetchImpl, statusBody(id)));
+    const row = s.rows.get(id)!;
+    assertEquals(r.body.phase, "uncertain");
+    assertEquals(r.body.document_status, "unknown");
+    assertEquals(row.phase, "uncertain");
+    assertEquals(row.external_id, before.external_id);
+    assertEquals(row.receipt, before.receipt);
+    assertEquals(row.binding, before.binding);
+    assertEquals(row.generation, before.generation);
+    assertEquals(row.artifact, before.artifact);
+    assertEquals(row.verdict, {});
+    assertEquals(row.queryError !== "", true);
+    assertEquals(s.rows.size, 1);
+    assertEquals(net.seen, expectedUatGet);
+    assertEquals(net.seen.filter((q) => q.method === "POST").length, 0);
+  });
+}
+
+Deno.test("R6 retained-ID recovery: an uncertain Peppol row WITHOUT an id says lookup unavailable, makes no provider call and invents no identifier", async () => {
+  const { s, id } = await retainedUat("");
+  const before = structuredClone(s.rows.get(id)!);
+  const net = recorder(acknowledged);
+  for (let i = 0; i < 2; i++) {
+    const r = await read(await call(s, net.fetchImpl, statusBody(id)));
+    assertEquals(r.body.phase, "uncertain");
+    assertEquals(r.body.lookup, "unavailable");
+  }
+  assertEquals(net.seen.length, 0);
+  assertEquals(s.rows.get(id), before);
+  assertEquals(s.rows.size, 1);
+});
+
+Deno.test("R7 retained-ID recovery: after the lookup settles the row, sending the same transmission again answers it and uploads nothing", async () => {
+  const { s, id } = await retainedUat();
+  const net = recorder(acknowledged);
+  await call(s, net.fetchImpl, statusBody(id));
+  const settled = structuredClone(s.rows.get(id)!);
+  assertEquals(settled.phase, "accepted");
+  const sendNet = recorder(ok);
+  const again = await read(
+    await call(
+      s,
+      sendNet.fetchImpl,
+      bodyOf({
+        format: "peppolBis",
+        receiver_scheme: "0208",
+        receiver_id: "0202239951",
+        environment: "uat",
+      }),
+    ),
+  );
+  assertEquals(again.body.phase, "accepted");
+  assertEquals(again.body.external_id, "G-UAT");
+  assertEquals(again.body.transmission_id, id);
+  assertEquals(sendNet.seen.length, 0);
+  assertEquals(s.rows.size, 1);
+  assertEquals(s.rows.get(id), settled);
 });
