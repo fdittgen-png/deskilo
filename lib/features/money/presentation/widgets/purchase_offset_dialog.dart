@@ -9,6 +9,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/purchase.dart';
 import '../../providers/money_providers.dart';
@@ -123,10 +124,17 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final money = appFormatOf(context).moneyIn(widget.claim.currency);
-    final invoices = ref.watch(invoicesProvider).value ?? const <Invoice>[];
-    final matches =
-        ref.watch(invoiceMatchesProvider).value ??
-        const <String, InvoiceMatch>{};
+    // #3680 — the open invoices to offset are read, never assumed none.
+    final invoicesRead = ref.watch(invoicesProvider);
+    final matchesRead = ref.watch(invoiceMatchesProvider);
+    final standIn = ReadsAnswer.of([invoicesRead, matchesRead]).standIn(
+      onRetry: () => ref
+        ..invalidate(invoicesProvider)
+        ..invalidate(invoiceMatchesProvider),
+    );
+    if (standIn != null) return AlertDialog(content: standIn);
+    final invoices = invoicesRead.requireValue;
+    final matches = matchesRead.requireValue;
     final open = openInvoicesOf(widget.claim.creditorId, invoices, matches);
     return AlertDialog(
       title: Text(l10n.purchasesOffsetTitle),

@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -410,7 +411,11 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
+    // #3680 — "no rate yet" is said of rates that were read.
+    final ratesRead = ref.watch(vatRatesProvider);
+    final ratesStandIn = ReadsAnswer.of([ratesRead]).standIn(
+      onRetry: () => ref.invalidate(vatRatesProvider),
+    );
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
@@ -444,7 +449,10 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           _regimeRow(l10n),
-          ..._vatFields(l10n, rates),
+          if (ratesStandIn != null)
+            ratesStandIn
+          else
+            ..._vatFields(l10n, ratesRead.requireValue),
           const SizedBox(height: AppSpacing.md),
           ..._identifierFields(l10n),
           const SizedBox(height: AppSpacing.md),

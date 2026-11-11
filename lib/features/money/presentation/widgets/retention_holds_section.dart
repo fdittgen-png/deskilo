@@ -31,7 +31,7 @@ class RetentionHoldsSection extends ConsumerWidget {
     final theme = Theme.of(context);
     final loaded = ref.watch(retentionHoldsProvider);
     final holds = [
-      for (final h in loaded.value ?? const <RetentionHold>[])
+      for (final h in loaded.value ?? const <RetentionHold>[]) // empty-ok: a failed or running read is said below, never "no hold"
         if (h.active) h,
     ];
     final scope = ref.watch(accountingSystemsScopeProvider);

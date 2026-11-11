@@ -7,6 +7,7 @@ import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
@@ -85,7 +86,12 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final library = ref.watch(reportImagesProvider);
-    final images = library.value ?? const [];
+    // #3680 — the library as read, or its failure: never "no images".
+    final standIn = ReadsAnswer.of([library]).standIn(
+      onRetry: () => ref.invalidate(reportImagesProvider),
+    );
+    if (standIn != null) return AlertDialog(content: standIn);
+    final images = library.requireValue;
     return AlertDialog(
       title: Text(l10n.reportImagesTitle),
       content: SizedBox(

@@ -12,10 +12,10 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
 import '../../domain/book_chart.dart';
@@ -202,9 +202,15 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final sites = ref.watch(sitesProvider).value ?? const <Site>[];
+    final sitesRead = ref.watch(sitesProvider);
     final today = ref.watch(clockProvider).now();
     if (workspace == null) return const SizedBox.shrink();
+    // #3680 — the sites a profile is for, as read.
+    final sitesStandIn = ReadsAnswer.of([sitesRead]).standIn(
+      onRetry: () => ref.invalidate(sitesProvider),
+    );
+    if (sitesStandIn != null) return sitesStandIn;
+    final sites = sitesRead.requireValue;
     final draft = _draft(workspace.id, workspace.currencyCode, today);
     final problems = draft == null
         ? const <BookProfileProblem>[]
@@ -409,10 +415,17 @@ class BookProfileSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final profiles = ref.watch(bookProfilesProvider).value ?? const [];
-    final sites = {
-      for (final s in ref.watch(sitesProvider).value ?? const <Site>[]) s.id: s,
-    };
+    // #3680 — the profiles as read, or their failure: never "none".
+    final profilesRead = ref.watch(bookProfilesProvider);
+    final sitesRead = ref.watch(sitesProvider);
+    final standIn = ReadsAnswer.of([profilesRead, sitesRead]).standIn(
+      onRetry: () => ref
+        ..invalidate(bookProfilesProvider)
+        ..invalidate(sitesProvider),
+    );
+    if (standIn != null) return standIn;
+    final profiles = profilesRead.requireValue;
+    final sites = {for (final s in sitesRead.requireValue) s.id: s};
     final dates = appFormatOf(context).dates(DateShape.date);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

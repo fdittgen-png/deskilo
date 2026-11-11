@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/accounting_connection_commands.dart';
@@ -158,8 +159,13 @@ class AccountingDeliverButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final connections =
-        ref.watch(accountingConnectionsProvider(workspaceId)).value ?? const [];
+    final connectionsRead = ref.watch(accountingConnectionsProvider(workspaceId));
+    // #3680 — the choices are offered only from a list that was read.
+    final standIn = ReadsAnswer.of([connectionsRead]).standIn(
+      onRetry: () => ref.invalidate(accountingConnectionsProvider(workspaceId)),
+    );
+    if (standIn != null) return standIn;
+    final connections = connectionsRead.requireValue;
     return Wrap(
       spacing: AppSpacing.sm,
       children: [

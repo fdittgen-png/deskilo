@@ -94,7 +94,7 @@ class ServicesScreen extends ConsumerWidget {
     final chargesVat =
         ref.watch(currentWorkspaceProvider).value?.vatRegime ==
             'vat_registered';
-    final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
+    final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate names no VAT suffix, never a wrong one
     final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final inactiveColor = Theme.of(context).disabledColor;
 

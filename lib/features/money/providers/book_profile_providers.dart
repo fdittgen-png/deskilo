@@ -88,7 +88,7 @@ final accountingSystemsScopeProvider = Provider.autoDispose<AccountingSystemsSco
       for (final s in [...?ref.watch(sitesProvider).value]) s.id: s.name,
     },
     permissions: {for (final p in ref.watch(myPermissionsProvider)) p.wireName},
-    memberNames: ref.watch(memberNamesProvider).value ?? const {},
+    memberNames: ref.watch(memberNamesProvider).value ?? const {}, // empty-ok: names are labels; an unread one is left blank, never a figure
     owner: ref.watch(myMemberProvider).value?.isOwner ?? false,
   ),
 );

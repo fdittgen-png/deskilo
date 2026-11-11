@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -126,13 +127,18 @@ class _MoveCreditDialogState extends ConsumerState<_MoveCreditDialog> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final names =
-        ref.watch(memberNamesProvider).value ?? const <String, String>{};
+        ref.watch(memberNamesProvider).value ?? const <String, String>{}; // empty-ok: names are labels; an unread one is left blank, never a figure
     // Someone still in the space, and not the biller: the server refuses a
     // member who left and a move onto, or off, the biller's own account.
     final me = ref.watch(myMemberProvider).value?.id;
+    final membersRead = ref.watch(workspaceMembersProvider);
+    // #3680 — the choices are offered only from a list that was read.
+    final standIn = ReadsAnswer.of([membersRead]).standIn(
+      onRetry: () => ref.invalidate(workspaceMembersProvider),
+    );
+    if (standIn != null) return AlertDialog(content: standIn);
     final members = [
-      for (final m
-          in ref.watch(workspaceMembersProvider).value ?? const <Member>[])
+      for (final m in membersRead.requireValue)
         if (m.id != widget.fromMemberId &&
             m.id != me &&
             m.status != MemberStatus.exited &&
