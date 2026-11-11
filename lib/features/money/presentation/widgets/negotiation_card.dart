@@ -51,8 +51,7 @@ class NegotiationCard extends ConsumerWidget {
 
     final defaultLabel = l10n.negotiationDefaultColumn;
     final mineLabel = l10n.negotiationMineColumn;
-    // content-fit: the default and the negotiated price side by side
-    bool compact(BoxConstraints c) => c.maxWidth < 480 ||
+    bool compact(BoxConstraints c) => c.maxWidth < 480 || // content-fit: two prices side by side
         MediaQuery.textScalerOf(context).scale(100) > 130;
     Widget row(String label, String defaults, String? mine, {Key? key}) {
       final tariff = Text(defaults, textAlign: TextAlign.end,
