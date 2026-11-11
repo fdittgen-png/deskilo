@@ -9012,6 +9012,20 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String eventSettlementReview(String settlement, String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'costs_changed':
+          'le prestataire a modifié ses frais après son enregistrement',
+      'amount_changed':
+          'le prestataire a modifié son montant après son enregistrement',
+      'currency_mismatch':
+          'un frais est dans une autre devise que le versement',
+      'other': 'le relevé diffère de ce qui a été enregistré',
+    });
+    return '$settlement : $_temp0. Rien n\'en a été comptabilisé ; il attend une vérification.';
+  }
+
+  @override
   String get eventSourceNotFound =>
       'Aucun document d\'achat n\'a été classé pour cette demande, ou vous ne pouvez pas le voir.';
 
@@ -9102,6 +9116,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeServiceCharge => 'Service';
+
+  @override
+  String get eventTypeSettlementReview => 'Versement à vérifier';
 
   @override
   String get eventTypeSpaceReservation => 'Réservations d\'espaces entiers';
@@ -20928,6 +20945,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String payConfigSettlementCurrencyMismatch(String settlement) {
     return '$settlement : un frais est dans une autre devise que le versement. Rien n\'en a été comptabilisé.';
   }
+
+  @override
+  String get payConfigSettlementHandle => 'Marquer comme traité';
+
+  @override
+  String get payConfigSettlementHandleNote => 'Ce qui a été fait';
+
+  @override
+  String payConfigSettlementHandledLine(String sentence, String note) {
+    return '$sentence Traité : $note';
+  }
+
+  @override
+  String get payConfigSettlementHandledTitle => 'Traités';
 
   @override
   String get payConfigSettlementsFetch => 'Récupérer les versements';

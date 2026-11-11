@@ -269,7 +269,9 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.payload.containsKey('role_key');
   // #3132 — the bank-account notice is about the owner by design: it names
   // who changed it, and would read oddly "for" the owner it tells.
-  if (namesMember || event.type == EventType.paymentInstructionsChange) {
+  if (namesMember ||
+      event.type == EventType.paymentInstructionsChange ||
+      event.type == EventType.settlementReview) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -291,6 +293,10 @@ String _noticeOrFallbackLine(
   EventType.privacyIncident => l10n.eventPrivacyIncident(
     '${event.payload['kind'] ?? ''}',
     '${event.payload['note'] ?? ''}',
+  ),
+  EventType.settlementReview => l10n.eventSettlementReview(
+    '${event.payload['settlement_id'] ?? ''}',
+    '${event.payload['reason'] ?? ''}',
   ),
   EventType.paymentInstructionsChange => l10n.eventPaymentInstructionsChange(
     actor,

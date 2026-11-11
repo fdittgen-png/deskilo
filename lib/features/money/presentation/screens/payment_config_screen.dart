@@ -16,6 +16,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/settlement_fetch.dart';
 import '../../providers/money_providers.dart';
+import '../../providers/settlement_review_providers.dart';
 import '../payment_provider_labels.dart';
 import '../widgets/settlement_review_list.dart';
 
@@ -119,9 +120,6 @@ class _ProviderCard extends ConsumerStatefulWidget {
 class _ProviderCardState extends ConsumerState<_ProviderCard> {
   final Map<String, TextEditingController> _controllers = {};
 
-  /// #3510 -- the last fetch's answer: its reports waiting for review.
-  SettlementFetch? _fetched;
-
   @override
   void initState() {
     super.initState();
@@ -209,8 +207,15 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
     }
     if (!mounted) return;
     AppSnack.success(context, l10n.payConfigSettlementsFetched('${result?.imported ?? 0}'));
-    setState(() => _fetched = result);
+    // #3510: what the fetch refused is read with the rest of the reviews.
+    ref.invalidate(settlementReviewListProvider(workspace.id));
   }
+
+  /// #3510 -- Mollie's settlement reports kept for review are listed in its
+  /// card, in the current workspace.
+  String? _reviewsWorkspace() => widget.provider == PaymentProvider.mollie
+      ? ref.watch(currentWorkspaceProvider).value?.id
+      : null;
 
   Future<void> _remove() async {
     final l10n = context.l10n;
@@ -340,7 +345,8 @@ class _ProviderCardState extends ConsumerState<_ProviderCard> {
                 ),
               ],
             ),
-            if (_fetched case final fetched?) SettlementReviewList(fetched),
+            if (_reviewsWorkspace() case final ws?)
+              SettlementReviewList(workspaceId: ws),
           ],
         ),
       ),
