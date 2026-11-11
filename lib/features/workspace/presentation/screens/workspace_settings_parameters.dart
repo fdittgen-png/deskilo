@@ -12,10 +12,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
 import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../money/presentation/widgets/billing_rules_dialog.dart';
-import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
-import '../../../money/presentation/widgets/purchase_order_mail_sheet.dart';
-import '../../../money/providers/purchase_order_providers.dart';
+import '../../../money/presentation/widgets/money_settings_rows.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
@@ -396,7 +393,7 @@ class WorkspaceParameterTiles {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    onTap: () => showDunningRulesDialog(context, ref),
+                    onTap: () => MoneySettingsRows.openReminderRules(context, ref),
                   ),
                   // #3673 — the business's one e-mail sender: its orders
                   // and its reminders by e-mail go out with it.
@@ -446,22 +443,16 @@ class WorkspaceParameterTiles {
                       subtitle: Text(
                         l10n.billingRulesSubtitle,
                       ),
-                      onTap: () => showBillingRulesDialog(context, ref),
+                      onTap: () => MoneySettingsRows.openBillingRules(context, ref),
                     ),
       ];
 
-  /// #3673 — opens the business's e-mail sender, filled from the server.
+  /// #3673 — opens the business's e-mail sender.
   Future<void> _openMailSender() async {
     final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
-    if (workspaceId == null) return;
-    final current = await ref.read(
-      purchaseOrderMailSettingsProvider(workspaceId).future,
-    );
-    if (!context.mounted) return;
-    await PurchaseOrderMailSheet(context, ref).open(
-      workspaceId: workspaceId,
-      current: current,
-    );
+    if (workspaceId != null) {
+      await MoneySettingsRows.openMailSender(context, ref, workspaceId);
+    }
   }
 
   /// #763 — a control with no free suffix slot gets the ? at its side.

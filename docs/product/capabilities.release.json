@@ -2113,6 +2113,12 @@
       "capabilities": []
     },
     {
+      "key": "reminderEmail",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "reportDesignExchange",
       "maturity": "beta",
       "lifecycle": "active",

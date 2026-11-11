@@ -182,6 +182,8 @@ as $registry$
   }'::jsonb
 $registry$;
 
+revoke execute on function public.feature_registry() from public, anon;
+
 create or replace function public.save_business_mail_sender_v1(
   p_workspace_id uuid, p_sender_email text, p_sender_name text, p_api_key text, p_revision int
 ) returns jsonb language plpgsql security definer set search_path = public, vault as $fn$

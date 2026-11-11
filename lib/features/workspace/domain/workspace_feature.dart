@@ -416,11 +416,7 @@ enum WorkspaceFeature {
   mtdSubmission,
   purchaseOrders,
   guestPasses,
-  placeBooking,
-
-  /// #3673 — payment reminders also sent by e-mail, from the server, with
-  /// the business's own sender. Child of dunning; off until switched on.
-  reminderEmail;
+  placeBooking, reminderEmail; // #3673: reminders by e-mail (manifest part 3)
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
