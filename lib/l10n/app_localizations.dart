@@ -11675,11 +11675,11 @@ abstract class AppLocalizations {
   /// **'Pull from PROD…'**
   String get deploymentPullFromProd;
 
-  /// #988/#990 deployments: deploymentRequires
+  /// Deployment entity subtitle: the entities this one needs.
   ///
   /// In en, this message translates to:
-  /// **'needs'**
-  String get deploymentRequires;
+  /// **'needs {entities}'**
+  String deploymentRequiresList(String entities);
 
   /// #988/#990 deployments: deploymentRollback
   ///
@@ -13079,17 +13079,17 @@ abstract class AppLocalizations {
   /// **'No room left on this desk.'**
   String get editorDeskFull;
 
-  /// Default desk name prefix; a number is appended
-  ///
-  /// In en, this message translates to:
-  /// **'Desk'**
-  String get editorDeskNameDefault;
-
   /// Label of the desk-name input
   ///
   /// In en, this message translates to:
   /// **'Desk name'**
   String get editorDeskNameLabel;
+
+  /// Default name of a new desk: its next position number in a name, not a count, e.g. "Desk 2".
+  ///
+  /// In en, this message translates to:
+  /// **'Desk {number}'**
+  String editorDeskNameNumbered(int number);
 
   /// Title of the desk property dialog
   ///
@@ -13211,17 +13211,17 @@ abstract class AppLocalizations {
   /// **'No levels yet. Add the first floor of your workspace.'**
   String get editorNoLevels;
 
-  /// Default office name prefix; a number is appended
-  ///
-  /// In en, this message translates to:
-  /// **'Office'**
-  String get editorOfficeNameDefault;
-
   /// Label of the office-name input
   ///
   /// In en, this message translates to:
   /// **'Office name'**
   String get editorOfficeNameLabel;
+
+  /// Default name of a new office: its next position number in a name, not a count, e.g. "Office 3".
+  ///
+  /// In en, this message translates to:
+  /// **'Office {number}'**
+  String editorOfficeNameNumbered(int number);
 
   /// Title of the office property sheet
   ///
@@ -14206,6 +14206,12 @@ abstract class AppLocalizations {
   /// **'for {name}'**
   String eventForSubject(String name);
 
+  /// #3672 a new invoice told to its customer
+  ///
+  /// In en, this message translates to:
+  /// **'New invoice {number}'**
+  String eventInvoiceIssuedLine(String number);
+
   /// Events feed line for a matched invoice payment
   ///
   /// In en, this message translates to:
@@ -14397,6 +14403,12 @@ abstract class AppLocalizations {
   /// **'{name} ×{quantity} — {amount}'**
   String eventServiceChargeTitle(String name, int quantity, String amount);
 
+  /// #3510 the alert that a settlement report waits for review
+  ///
+  /// In en, this message translates to:
+  /// **'{settlement}: {reason, select, costs_changed{the provider changed its costs after it was recorded} amount_changed{the provider changed its amount after it was recorded} currency_mismatch{a cost is in another currency than the settlement} other{the report differs from what was recorded}}. Nothing of it was booked; it waits for review.'**
+  String eventSettlementReview(String settlement, String reason);
+
   /// #2573 open the purchase an expense request was filed as
   ///
   /// In en, this message translates to:
@@ -14570,6 +14582,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Service'**
   String get eventTypeServiceCharge;
+
+  /// #3510 the alert that a settlement report waits for review
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement to review'**
+  String get eventTypeSettlementReview;
 
   /// Event/validation domain: whole desk/office/level reservations (0059)
   ///
@@ -21249,11 +21267,11 @@ abstract class AppLocalizations {
   /// **'a database administrator'**
   String get instanceBlockerNoAdmin;
 
-  /// #1827 B — instance operator console for the installation's assistants
+  /// Operator view: what still blocks the assistant, as a list.
   ///
   /// In en, this message translates to:
-  /// **'Still missing:'**
-  String get instanceBlockers;
+  /// **'Still missing: {blockers}'**
+  String instanceBlockersList(String blockers);
 
   /// #977 instance wizard: instanceCheckToken
   ///
@@ -24495,6 +24513,12 @@ abstract class AppLocalizations {
   /// **'Document fingerprint (SHA-256)'**
   String get invoicePdfSignature;
 
+  /// Invoice detail: the document fingerprint caption with the shortened fingerprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Document fingerprint (SHA-256) {fingerprint}'**
+  String invoicePdfSignatureValue(String fingerprint);
+
   /// #2362 sales tax: invoicePdfSubtotal
   ///
   /// In en, this message translates to:
@@ -24507,11 +24531,11 @@ abstract class AppLocalizations {
   /// **'Invoice'**
   String get invoicePdfTitle;
 
-  /// PDF banner + row label prefix before the void date
+  /// PDF: the erroneous-document mark with the date it was voided.
   ///
   /// In en, this message translates to:
-  /// **'ERRONEOUS — voided on'**
-  String get invoicePdfVoided;
+  /// **'ERRONEOUS — voided on {date}'**
+  String invoicePdfVoidedOn(String date);
 
   /// Issue sheet placeholder before a member is chosen
   ///
@@ -24722,6 +24746,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The platform refused it.'**
   String get invoiceSendRejected;
+
+  /// Snackbar: the platform refused the invoice, with its stated reason.
+  ///
+  /// In en, this message translates to:
+  /// **'The platform refused it. {detail}'**
+  String invoiceSendRejectedDetail(String detail);
 
   /// Transmission status word
   ///
@@ -32930,6 +32960,12 @@ abstract class AppLocalizations {
   /// **'Unread'**
   String get notesFilterUnread;
 
+  /// Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. "Unread (3)".
+  ///
+  /// In en, this message translates to:
+  /// **'Unread ({unread})'**
+  String notesFilterUnreadCount(int unread);
+
   /// Shown as a text in event labels (events).
   ///
   /// In en, this message translates to:
@@ -33691,6 +33727,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{settlement}: a cost is in another currency than the settlement. Nothing of it was booked.'**
   String payConfigSettlementCurrencyMismatch(String settlement);
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'Mark handled'**
+  String get payConfigSettlementHandle;
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'What was done'**
+  String get payConfigSettlementHandleNote;
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'{sentence} Handled: {note}'**
+  String payConfigSettlementHandledLine(String sentence, String note);
+
+  /// #3510 marking a settlement review handled
+  ///
+  /// In en, this message translates to:
+  /// **'Handled'**
+  String get payConfigSettlementHandledTitle;
 
   /// #3504 on-demand settlements of a payment provider
   ///
@@ -35007,6 +35067,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To'**
   String get planToLabel;
+
+  /// The end time of a booking period on its button, e.g. "To 17:30".
+  ///
+  /// In en, this message translates to:
+  /// **'To {time}'**
+  String planToTime(String time);
 
   /// Suffix showing when the current booking ends
   ///
@@ -38179,6 +38245,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reservation removed'**
   String get pushCancelledTitle;
+
+  /// #3672 a new invoice told to its customer
+  ///
+  /// In en, this message translates to:
+  /// **'A new invoice is waiting for you.'**
+  String get pushInvoiceIssuedBody;
 
   /// #2559 generic push body for a mention: no sender, no conversation name
   ///
@@ -46429,6 +46501,12 @@ abstract class AppLocalizations {
   /// **'A booking is about to start: time to check in'**
   String get setupNotificationsEventCheckIn;
 
+  /// #3672 a new invoice told to its customer
+  ///
+  /// In en, this message translates to:
+  /// **'A new invoice'**
+  String get setupNotificationsEventInvoiceIssued;
+
   /// #3485 setupNotificationsEvent: the label for case 'invoice_reminder'.
   ///
   /// In en, this message translates to:
@@ -53029,17 +53107,17 @@ abstract class AppLocalizations {
   /// **'Asked. Somebody else decides it.'**
   String get usageAskSubmitted;
 
-  /// #833 - the time that bills
+  /// Usage row: the billed duration, e.g. "Billed 2 h".
   ///
   /// In en, this message translates to:
-  /// **'Billed'**
-  String get usageBilled;
+  /// **'Billed {duration}'**
+  String usageBilledDuration(String duration);
 
-  /// #833 - the reserved window
+  /// Usage row: the reserved duration, e.g. "Booked 2 h".
   ///
   /// In en, this message translates to:
-  /// **'Booked'**
-  String get usageBooked;
+  /// **'Booked {duration}'**
+  String usageBookedDuration(String duration);
 
   /// #833 - an accepted early-departure correction
   ///
@@ -53113,11 +53191,11 @@ abstract class AppLocalizations {
   /// **'Recorded: {count}'**
   String usagePrepared(int count);
 
-  /// #833 - time actually checked in
+  /// Usage row: the time actually present, e.g. "Present 1 h".
   ///
   /// In en, this message translates to:
-  /// **'Present'**
-  String get usagePresent;
+  /// **'Present {duration}'**
+  String usagePresentDuration(String duration);
 
   /// #833 - optional reason on the request
   ///

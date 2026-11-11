@@ -130,6 +130,7 @@ const _moneyEvents = <EventType>{
   EventType.invoicePaymentReversed,
   EventType.invoiceWriteoff,
   EventType.invoiceReminder,
+  EventType.invoiceIssued,
   EventType.priceNegotiation,
   EventType.invoiceIssue,
   EventType.invoiceVoid,
@@ -137,6 +138,7 @@ const _moneyEvents = <EventType>{
   EventType.leaseChange,
   EventType.commitmentVariance,
   EventType.paymentInstructionsChange,
+  EventType.settlementReview,
 };
 
 /// The category a workspace event belongs to. A check-in/check-out is a

@@ -40,9 +40,14 @@
   "@deploymentKindConfiguration": {
     "description": "#988/#990 deployments: deploymentKindConfiguration"
   },
-  "deploymentRequires": "needs",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
+  "deploymentRequiresList": "needs {entities}",
+  "@deploymentRequiresList": {
+    "description": "Deployment entity subtitle: the entities this one needs.",
+    "placeholders": {
+      "entities": {
+        "type": "String"
+      }
+    }
   },
   "deploymentToProd": "Deploy to PROD…",
   "@deploymentToProd": {

@@ -38,7 +38,11 @@ void main() {
     'move, favourite and rate a space; the layout survives a restart',
     (tester) async {
       SharedPreferences.setMockInitialValues({});
-      final router = await pumpMeApp(tester, workspace: twoSpaces());
+      final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      spacePrefs: const PrefsSpacePrefsStore(),
+    );
       await goTo(tester, router, '/me');
       double top(String key) =>
           tester.getTopLeft(find.byKey(ValueKey('me-space-pair-$key'))).dy;

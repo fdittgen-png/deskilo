@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -36,67 +37,71 @@ Future<void> shareProforma(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
-) async {
-  final l10n = context.l10n;
-  if (!invoice.lines.any((line) => line.amountCents > 0)) {
-    AppSnack.info(
-      context,
-      l10n.invoiceProformaNothing,
-    );
-    return;
-  }
-  // The workspace's own reference states the mentions: without it the person
-  // is told, not left with a dead tap.
-  final reference = workspaceTaxReference(ref);
-  if (reference == null) {
-    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
-    return;
-  }
-  // #514 — quick view / save / share, like every report exit.
-  await runReportActions(
-    context,
-    ref,
-    keyPrefix: 'proforma',
-    logMessage: 'proforma share failed',
-    render: () {
-      final template = invoicePdfTemplateFor(ref);
-      var bands = template.proformaBands ?? template.invoiceBands;
-      if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
-      return renderReportBands(
-        bands: bands,
-        data: withOwnerTexts(
-          invoiceReportData(
-            reportStringsFor(context),
-            invoice,
-            memberTerms: memberTermsFor(ref, invoice.memberId),
-            memberCapacity: memberCapacityFor(ref, invoice.memberId),
-        dueAt: invoiceDueAt(ref, invoice),
-            proforma: true,
-            copy: false,
-            workspace: ref.read(currentWorkspaceProvider).value, reference: reference,
-          ),
-          template.texts,
-        ),
-      );
-    },
-    buildPdf: () async {
-      final pdf = await buildInvoicePdfFile(
+) =>
+    // #3742 — the document's policies are read first, under the print guard.
+    printOrRetry(context, 'proforma', () async {
+      await readDocumentPolicies(ref);
+      if (!context.mounted) return;
+    final l10n = context.l10n;
+    if (!invoice.lines.any((line) => line.amountCents > 0)) {
+      AppSnack.info(
         context,
-        invoice,
-    InvoicePdfFileOptions(reference: reference,
-      // #920 — through layoutImage, so the shipped layouts' `logo`
-      // resolves to whatever the owner actually called theirs.
-      reportImage: (String name) => layoutImage(ref, name),
-      memberTerms: memberTermsFor(ref, invoice.memberId),
-            memberCapacity: memberCapacityFor(ref, invoice.memberId),
-        dueAt: invoiceDueAt(ref, invoice),
-        proforma: true,
-        template: invoicePdfTemplateFor(ref),
-        workspace: ref.read(currentWorkspaceProvider).value));
-      return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
-    },
-  );
-}
+        l10n.invoiceProformaNothing,
+      );
+      return;
+    }
+    // The workspace's own reference states the mentions: without it the person
+    // is told, not left with a dead tap.
+    final reference = workspaceTaxReference(ref);
+    if (reference == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+      return;
+    }
+    // #514 — quick view / save / share, like every report exit.
+    await runReportActions(
+      context,
+      ref,
+      keyPrefix: 'proforma',
+      logMessage: 'proforma share failed',
+      render: () {
+        final template = invoicePdfTemplateFor(ref);
+        var bands = template.proformaBands ?? template.invoiceBands;
+        if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
+        return renderReportBands(
+          bands: bands,
+          data: withOwnerTexts(
+            invoiceReportData(
+              reportStringsFor(context),
+              invoice,
+              memberTerms: memberTermsFor(ref, invoice.memberId),
+              memberCapacity: memberCapacityFor(ref, invoice.memberId),
+          dueAt: invoiceDueAt(ref, invoice),
+              proforma: true,
+              copy: false,
+              workspace: ref.read(currentWorkspaceProvider).value, reference: reference,
+            ),
+            template.texts,
+          ),
+        );
+      },
+      buildPdf: () async {
+        final pdf = await buildInvoicePdfFile(
+          context,
+          invoice,
+      InvoicePdfFileOptions(reference: reference,
+        // #920 — through layoutImage, so the shipped layouts' `logo`
+        // resolves to whatever the owner actually called theirs.
+        reportImage: (String name) => layoutImage(ref, name),
+        memberTerms: memberTermsFor(ref, invoice.memberId),
+              memberCapacity: memberCapacityFor(ref, invoice.memberId),
+          dueAt: invoiceDueAt(ref, invoice),
+          proforma: true,
+          template: invoicePdfTemplateFor(ref),
+          workspace: ref.read(currentWorkspaceProvider).value));
+        return (bytes: Uint8List.fromList(pdf.bytes), fileName: pdf.fileName);
+      },
+    );
+    });
 
 /// Builds the proforma of a month that has NOT been invoiced yet: the
 /// server's own derivation (the same RPC the issue sheet previews) dressed

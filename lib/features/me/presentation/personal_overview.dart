@@ -26,10 +26,10 @@ import 'package:go_router/go_router.dart';
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/ui/async_read_body.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../visits/presentation/my_visits_section.dart';
@@ -47,6 +47,7 @@ import 'personal_overview_sections.dart';
 import 'personal_space_compact_row.dart';
 
 /// The narrowest the right-hand column may be in the 2:1 layout.
+// content-fit: the right-hand third keeps room for a card's figures
 const double _rightMinWidth = 290;
 
 /// The gap between the two columns, and between sections.
@@ -210,17 +211,21 @@ class _SpacesSection extends ConsumerWidget {
     final answer = ref.watch(personalWorkspaceRefsProvider);
     final local = ref.watch(myWorkspacesProvider).value ?? const <Workspace>[];
     final linked = ref.watch(linkedServerSpacesProvider).value ?? const [];
-    final failed = answer.hasError && !answer.isLoading;
-    final refs = failed ? null : refsOfCurrentAccount(answer);
+    // #3749 — the person's own layout answers too: unread, the preview
+    // waits; failed, the section says so (Try again repeats both reads).
+    final prefsRead = ref.watch(spacePrefsProvider);
+    final prefsFailed = ReadsAnswer.of([prefsRead]).failure != null;
+    final failed = answer.hasError && !answer.isLoading || prefsFailed;
+    final prefs = prefsRead.value;
+    final refs = failed || prefs == null ? null : refsOfCurrentAccount(answer);
     final nothing = refs != null && noSpaceAtAll(refs, local, linked);
-    final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
     // Favourites first, then the spaces I entered most recently here.
     final preview = refs == null
         ? const <PersonalSpaceRow>[]
         : personalSpacePreview(
             refs,
             local,
-            prefs: prefs,
+            prefs: prefs!,
             count: _spacesPreview,
           );
     return OverviewSection(
@@ -232,7 +237,9 @@ class _SpacesSection extends ConsumerWidget {
           SourceUnavailable(
             key: const ValueKey('me-overview-spaces-unavailable'),
             text: l10n.mySpacesUnavailable,
-            onRetry: () => ref.invalidate(personalWorkspaceRefsProvider),
+            onRetry: () => ref
+              ..invalidate(personalWorkspaceRefsProvider)
+              ..invalidate(spacePrefsProvider),
           )
         else if (refs == null)
           const SectionLoading(key: ValueKey('me-overview-spaces-loading'))

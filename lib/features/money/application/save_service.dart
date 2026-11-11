@@ -22,7 +22,7 @@ class ServiceDraft {
     this.vatRateId = '',
     this.supplyClass = SupplyClass.property,
     this.details = const ServiceDetails(),
-    this.durationValid = true,
+    this.durationIsMinutes = true,
   });
 
   final String name;
@@ -36,8 +36,9 @@ class ServiceDraft {
   final SupplyClass supplyClass;
   final ServiceDetails details;
 
-  /// False when the typed duration is not whole minutes in range.
-  final bool durationValid;
+  /// False when the typed duration is not a whole number of minutes (the
+  /// range of [ServiceDetails.durationMinutes] is checked here, not there).
+  final bool durationIsMinutes;
 }
 
 /// A field of the draft that cannot be saved as it is.
@@ -47,7 +48,9 @@ enum ServiceProblem { name, price, duration }
 Set<ServiceProblem> serviceProblems(ServiceDraft draft) => {
   if (draft.name.trim().isEmpty) ServiceProblem.name,
   if (draft.priceCents == null || draft.priceCents! < 0) ServiceProblem.price,
-  if (!draft.durationValid) ServiceProblem.duration,
+  if (!draft.durationIsMinutes ||
+      !ServiceLimits.durationAccepted(draft.details.durationMinutes))
+    ServiceProblem.duration,
 };
 
 class SaveService {

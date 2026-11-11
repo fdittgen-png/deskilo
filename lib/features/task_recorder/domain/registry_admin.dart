@@ -73,6 +73,7 @@ const Set<String> validationRuleKeys = {
   'invoice_payment_reversed',
   'reservation_delete',
   'invoice_reminder',
+  'invoice_issued',
   'price_negotiation',
   'expense_schedule',
   'expense_repartition',
@@ -90,6 +91,7 @@ const Set<String> validationRuleKeys = {
   'commitment_variance',
   'badge_security_alert',
   'privacy_incident',
+  'settlement_review',
   'payment_instructions_change',
 };
 

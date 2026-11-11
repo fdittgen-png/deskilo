@@ -26,11 +26,23 @@ final _shapes = [
     'maybeWhen orElse empty',
     RegExp(r'\.maybeWhen\([^;]*?orElse:\s*\(\)\s*=>\s*(const\s*)?[\[{<]'),
   ),
+  // #3742 — a default object in place of an unread policy is the same lie:
+  // `.value ?? Rules.defaults`, `.value ?? const Rules()`, `.asData?.value ??`.
+  LiteralKind(
+    'value ?? default object',
+    RegExp(
+      r'\.value\s*\?\?\s*(const\s+)?[A-Z]\w*'
+      r'(\.(defaults|empty|none|initial)\b|\(\s*\))',
+    ),
+  ),
+  LiteralKind('asData?.value ??', RegExp(r'\.asData\?\.value\s*\?\?')),
 ];
 
 /// The ceiling per area, as measured on 11 Nov 2026 (it only falls).
 const _ceilings = <String, int>{
   'lib/features/money': 0,
+  // #3742 widened the shapes (a default object in place of an unread
+  // value); #3749 removed the five places they found in Me.
   'lib/features/me': 14,
   'lib/features/reservations': 28,
 };
@@ -75,6 +87,9 @@ void main() {
       'final y = ref.watch(p).value ?? <String>[];',
       'final z = ref.watch(p).valueOrNull ?? 0;',
       'a.maybeWhen(data: (d) => d, orElse: () => const []);',
+      'final r = ref.watch(p).value ?? DunningRules.defaults;',
+      'final r = ref.watch(p).value ?? const DunningRules();',
+      'final r = ref.watch(p).asData?.value ?? x;',
     ];
     for (final line in planted) {
       expect(_shapes.any((k) => k.pattern.hasMatch(line)), isTrue, reason: line);
@@ -83,6 +98,11 @@ void main() {
       _shapes.any((k) => k.pattern.hasMatch('final a = v.value ?? 0;')),
       isFalse,
       reason: 'a scalar default is a different question',
+    );
+    expect(
+      _shapes.any((k) => k.pattern.hasMatch('final a = v.value ?? fallback;')),
+      isFalse,
+      reason: 'a named variable is the reader\'s own choice',
     );
   });
 }

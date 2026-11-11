@@ -40,9 +40,17 @@ typedef PersonalSpaceMove = ({VoidCallback? up, VoidCallback? down});
 const Size _target = Size(0, PersonalShellMetrics.minTarget);
 
 class PersonalSpaceCard extends ConsumerWidget {
-  const PersonalSpaceCard({super.key, required this.row, this.move});
+  const PersonalSpaceCard({
+    super.key,
+    required this.row,
+    required this.prefs,
+    this.move,
+  });
 
   final PersonalSpaceRow row;
+
+  /// #3749 — the person's layout as the page read it (never a default).
+  final SpacePrefs prefs;
 
   /// Null hides Move up/down (the Overview's preview).
   final PersonalSpaceMove? move;
@@ -52,7 +60,6 @@ class PersonalSpaceCard extends ConsumerWidget {
     final l10n = context.l10n;
     final tokens = PersonalTheme.of(context);
     final theme = Theme.of(context);
-    final prefs = ref.watch(spacePrefsProvider).value ?? SpacePrefs.empty;
     final main = row.main;
     final id = main.ref.networkId;
     final unverified = main.ref.freshness == RefFreshness.unavailable;

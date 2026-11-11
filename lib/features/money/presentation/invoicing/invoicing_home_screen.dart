@@ -20,8 +20,8 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/navigation_style.dart';
-import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
@@ -131,8 +131,8 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ),
       body: LayoutBuilder(
         builder: (context, box) {
-          _desk = box.maxWidth >= PersonalShellMetrics.sidebarMinWidth;
-          _wide = box.maxWidth >= kWideNavigationMinWidth;
+          _desk = WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.large);
+          _wide = isWideNavigationWidth(box.maxWidth);
           final home = switch (invoices) {
             AsyncData(:final value) => _home(context, value),
             AsyncError() => _home(context, const []),
@@ -226,8 +226,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf ??
         (DateTime d) => DateTime(d.year, d.month, d.day);
     final today = dayOf(now);
-    final rules =
-        ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
+    final rules = ref.watch(dunningRulesProvider).value ?? DunningRules.defaults; // empty-ok: the home waits for the statuses, the rules among them, and names a failed read
     final matches = ref.watch(invoiceMatchesProvider).value ?? const {}; // empty-ok: a failed read is a named source whose figures are withheld; a running one waits below
     final overview = ref.watch(invoicingOverviewProvider);
     final window = (

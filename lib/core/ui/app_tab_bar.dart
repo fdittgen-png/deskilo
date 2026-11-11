@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
+import 'adaptive/window_class.dart';
 
 /// The pill look shared by every horizontal menu.
 abstract final class AppTabStyle {
@@ -31,8 +32,6 @@ abstract final class AppTabStyle {
     horizontal: AppSpacing.lg,
   );
 
-  /// Below this width the menus take their phone form.
-  static const double phoneWidth = 600;
 
   static TextStyle label(BuildContext context) =>
       (Theme.of(context).textTheme.labelLarge ?? const TextStyle()).copyWith(
@@ -273,7 +272,7 @@ class _SectionJumpBarState extends State<SectionJumpBar> {
       child: LayoutBuilder(
         builder: (context, box) {
           // Wide: every pill, flowing onto a second row if it must.
-          if (box.maxWidth >= AppTabStyle.phoneWidth) {
+          if (WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.medium)) {
             return Wrap(
               spacing: AppSpacing.xs,
               runSpacing: AppSpacing.xs,

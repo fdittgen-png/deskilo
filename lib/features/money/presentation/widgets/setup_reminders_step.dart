@@ -53,9 +53,9 @@ class SetupRemindersStep extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) =>
       switch (ref.watch(dunningRulesProvider)) {
-        AsyncValue(hasValue: true, :final value) => _RemindersPage(
+        AsyncValue(hasValue: true, :final value?) => _RemindersPage(
           step: this,
-          stored: value ?? DunningRules.defaults,
+          stored: value,
         ),
         AsyncError() => Padding(
           padding: AppSpacing.lgAll,

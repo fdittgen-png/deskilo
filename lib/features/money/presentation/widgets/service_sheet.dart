@@ -24,10 +24,6 @@ import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import 'vat_rate_field.dart';
 
-/// The shortest and the longest duration a service may name (0711's check).
-const int _minMinutes = 5;
-const int _maxMinutes = 1440;
-
 /// Opens and saves the service editor.
 abstract final class ServiceEditor {
   /// Edits [service], or creates one when it is null, in the current
@@ -71,13 +67,13 @@ abstract final class ServiceEditor {
 }
 
 /// The duration typed into the field: null when blank, else the minutes;
-/// [valid] is false when it is not whole minutes in range.
-({int? minutes, bool valid}) _parseDuration(String text) {
+/// [isMinutes] is false when it is not a whole number (its range is the
+/// domain's: serviceProblems).
+({int? minutes, bool isMinutes}) _parseDuration(String text) {
   final t = text.trim();
-  if (t.isEmpty) return (minutes: null, valid: true);
+  if (t.isEmpty) return (minutes: null, isMinutes: true);
   final n = int.tryParse(t);
-  final ok = n != null && n >= _minMinutes && n <= _maxMinutes;
-  return (minutes: ok ? n : null, valid: ok);
+  return (minutes: n, isMinutes: n != null);
 }
 
 class _ServiceSheet extends ConsumerStatefulWidget {
@@ -142,7 +138,7 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
       active: _active,
       vatRateId: _vatRateId,
       supplyClass: _supplyClass,
-      durationValid: duration.valid,
+      durationIsMinutes: duration.isMinutes,
       details: ServiceDetails(
         description: _description.text,
         durationMinutes: duration.minutes,
@@ -210,7 +206,7 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
                   ? l10n.fieldProblemRequired
                   : null,
               autofocus: widget.service == null,
-              maxLength: 80,
+              maxLength: ServiceLimits.nameMaxLength,
             ),
             AppTextField(
               key: const ValueKey('services-price'),
@@ -231,7 +227,7 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
               controller: _description,
               label: l10n.servicesDescription,
               maxLines: 3,
-              maxLength: 2000,
+              maxLength: ServiceLimits.descriptionMaxLength,
             ),
             AppTextField(
               key: const ValueKey('services-duration'),
@@ -239,7 +235,10 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
               label: l10n.servicesDuration,
               helper: l10n.servicesDurationHint,
               error: _problems.contains(ServiceProblem.duration)
-                  ? l10n.servicesDurationRange('$_minMinutes', '$_maxMinutes')
+                  ? l10n.servicesDurationRange(
+                      '${ServiceLimits.minMinutes}',
+                      '${ServiceLimits.maxMinutes}',
+                    )
                   : null,
               keyboardType: TextInputType.number,
             ),
@@ -324,7 +323,7 @@ class _CategoryFieldState extends State<_CategoryField> {
           controller: controller,
           focusNode: focusNode,
           label: context.l10n.servicesCategory,
-          maxLength: 40,
+          maxLength: ServiceLimits.categoryMaxLength,
         ),
     optionsViewBuilder: (context, onSelected, options) => Align(
       alignment: Alignment.topLeft,

@@ -308,8 +308,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             // same address as the four lists it replaced.
             id: '${space.kind.name}-${space.id}',
             label: space.kind == SpaceKind.level
-                ? '${level.name} — '
-                    '${l10n.noteRefWholeLevel}'
+                ? l10n.titleDashDetail(level.name, l10n.noteRefWholeLevel)
                 : space.label,
             icon: switch (space.kind) {
               SpaceKind.level => Icons.layers_outlined,

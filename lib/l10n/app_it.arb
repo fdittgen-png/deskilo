@@ -4669,10 +4669,7 @@
   "@deploymentPullFromProd": {
     "description": "#998 deployment pull: deploymentPullFromProd"
   },
-  "deploymentRequires": "richiede",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
-  },
+  "deploymentRequiresList": "richiede {entities}",
   "deploymentRollback": "Torna indietro",
   "@deploymentRollback": {
     "description": "#988/#990 deployments: deploymentRollback"
@@ -5307,8 +5304,8 @@
     "description": "#587 delete despite reservations — audit substitution warning"
   },
   "editorDeskFull": "Non c’è più posto su questo tavolo.",
-  "editorDeskNameDefault": "Scrivania",
   "editorDeskNameLabel": "Nome della scrivania",
+  "editorDeskNameNumbered": "Scrivania {number}",
   "editorDeskProperties": "Scrivania",
   "editorDuplicate": "Duplica",
   "editorEmptyFloorAction": "Disegna la prima stanza",
@@ -5329,8 +5326,8 @@
   "editorNoAccessories": "Ancora nessun accessorio — li aggiunga in Impostazioni → Accessori.",
   "editorNoAccessoriesAction": "Nessun accessorio — configurali",
   "editorNoLevels": "Ancora nessun piano. Aggiunga il primo piano del suo spazio.",
-  "editorOfficeNameDefault": "Ufficio",
   "editorOfficeNameLabel": "Nome dell'ufficio",
+  "editorOfficeNameNumbered": "Ufficio {number}",
   "editorOfficeProperties": "Ufficio",
   "editorOpenTooltip": "Modifica spazio",
   "editorOrientationHint": "Da che parte guarda la sedia sulla pianta.",
@@ -5814,6 +5811,7 @@
   "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente",
   "eventExpenseSubmitted": "{actor} ha inviato una spesa di {amount}",
   "eventForSubject": "per {name}",
+  "eventInvoiceIssuedLine": "Nuova fattura {number}",
   "eventInvoicePaid": "Fattura {number} pagata — {amount}",
   "@eventInvoicePaid": {
     "placeholders": {
@@ -5969,6 +5967,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{il fornitore ha modificato i costi dopo la registrazione} amount_changed{il fornitore ha modificato l'importo dopo la registrazione} currency_mismatch{un costo è in una valuta diversa da quella della liquidazione} other{il resoconto differisce da quanto registrato}}. Nulla è stato contabilizzato; attende una verifica.",
   "eventSourceNotFound": "Nessun documento di acquisto è stato archiviato per questa richiesta, oppure non può vederlo.",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Rettifica",
@@ -6028,6 +6027,7 @@
   },
   "eventTypeRoleChange": "Cambio di ruolo",
   "eventTypeServiceCharge": "Servizio",
+  "eventTypeSettlementReview": "Liquidazione da verificare",
   "eventTypeSpaceReservation": "Prenotazioni di spazi interi",
   "eventTypeSubscriptionChange": "Cambio di abbonamento",
   "@eventTypeSubscriptionChange": {
@@ -8095,7 +8095,7 @@
   "instanceAttentionUnrecorded": "Le tabelle di DesKilo ci sono, ma nessuna migrazione è stata registrata. Registri prima ciò che contiene con `dart run tool/instance.dart record`.",
   "instanceBlock": "Blocca",
   "instanceBlockerNoAdmin": "un amministratore della base",
-  "instanceBlockers": "Manca ancora:",
+  "instanceBlockersList": "Manca ancora: {blockers}",
   "instanceCheckToken": "Verifica il token",
   "@instanceCheckToken": {
     "description": "#977 instance wizard: instanceCheckToken"
@@ -9370,12 +9370,13 @@
     }
   },
   "invoicePdfSignature": "Impronta del documento (SHA-256)",
+  "invoicePdfSignatureValue": "Impronta del documento (SHA-256) {fingerprint}",
   "invoicePdfSubtotal": "Subtotale",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
   },
   "invoicePdfTitle": "Fattura",
-  "invoicePdfVoided": "ERRATA — annullata il",
+  "invoicePdfVoidedOn": "ERRATA — annullata il {date}",
   "invoicePickMember": "Scelga un membro per vedere cosa ha registrato il suo mese.",
   "invoicePreviewUnavailable": "L’anteprima non è stata letta, quindi non viene mostrato nulla e nulla può essere emesso. Cambi mese o riprovi.",
   "invoiceProformaAction": "Fattura proforma",
@@ -9487,6 +9488,7 @@
     "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
   },
   "invoiceSendRejected": "La piattaforma l’ha rifiutata.",
+  "invoiceSendRejectedDetail": "La piattaforma l’ha rifiutata. {detail}",
   "invoiceSendStatusAccepted": "accettata",
   "invoiceSendStatusFailed": "non trasmessa",
   "invoiceSendStatusInProgress": "in corso",
@@ -12411,6 +12413,7 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
+  "notesFilterUnreadCount": "Non letti ({unread})",
   "notifCategoryCheckIns": "Check-in",
   "notifCategoryMembers": "Membri",
   "notifCategoryMoney": "Finanze",
@@ -12686,6 +12689,10 @@
   "payConfigSettlementAmountChanged": "{settlement}: il fornitore ha modificato l'importo dopo la registrazione. Nulla del nuovo resoconto è stato contabilizzato.",
   "payConfigSettlementCostsChanged": "{settlement}: il fornitore ha modificato i costi dopo la registrazione. Nulla del nuovo resoconto è stato contabilizzato.",
   "payConfigSettlementCurrencyMismatch": "{settlement}: un costo è in una valuta diversa da quella della liquidazione. Nulla è stato contabilizzato.",
+  "payConfigSettlementHandle": "Segna come gestito",
+  "payConfigSettlementHandleNote": "Cosa è stato fatto",
+  "payConfigSettlementHandledLine": "{sentence} Gestito: {note}",
+  "payConfigSettlementHandledTitle": "Gestiti",
   "payConfigSettlementsFetch": "Recupera i pagamenti",
   "payConfigSettlementsFetched": "{count} pagamenti registrati",
   "payConfigSettlementsReviewTitle": "Liquidazioni da verificare",
@@ -13180,6 +13187,7 @@
   "planStateFree": "Libero",
   "planStateYours": "Suo",
   "planToLabel": "Alle",
+  "planToTime": "Alle {time}",
   "planUntil": "fino alle {time}",
   "planUntilDateLabel": "Ripeti fino al",
   "planUntilLabel": "Fino alle",
@@ -14373,6 +14381,7 @@
   "pushAllowAction": "Consenti",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
+  "pushInvoiceIssuedBody": "La attende una nuova fattura.",
   "pushMentionBody": "È stato menzionato in una conversazione.",
   "pushMessageBody": "Ha un nuovo messaggio.",
   "pushPendingBody": "Qualcuno attende la sua conferma.",
@@ -17880,6 +17889,7 @@
   "setupNotificationsChannelsAppPush": "nell’app e come notifica sul telefono",
   "setupNotificationsChannelsDevice": "come promemoria sul proprio telefono, anche senza notifiche",
   "setupNotificationsEventCheckIn": "Una prenotazione sta per iniziare: è ora del check-in",
+  "setupNotificationsEventInvoiceIssued": "Una nuova fattura",
   "setupNotificationsEventInvoiceReminder": "Un sollecito di pagamento",
   "setupNotificationsEventMemberMention": "Qualcuno lo cita in una conversazione",
   "setupNotificationsEventMemberNote": "Un messaggio o un annuncio",
@@ -19916,8 +19926,8 @@
   "usageAskExplain": "Ha prenotato {booked} ed è stato presente {present}. Chieda che le {saved} non usate non siano fatturate. Decide qualcun altro, mai Lei.",
   "usageAskSubmit": "Chiedi",
   "usageAskSubmitted": "Richiesto. Decide qualcun altro.",
-  "usageBilled": "Fatturato",
-  "usageBooked": "Prenotato",
+  "usageBilledDuration": "Fatturato {duration}",
+  "usageBookedDuration": "Prenotato {duration}",
   "usageCorrected": "Corretto",
   "usageDelete": "Rimuovi questo rilevamento",
   "usageDeleteSubmitted": "Rimozione richiesta.",
@@ -19952,7 +19962,7 @@
       }
     }
   },
-  "usagePresent": "Presente",
+  "usagePresentDuration": "Presente {duration}",
   "usageReasonLabel": "Perché (facoltativo)",
   "usageReportButton": "Report dei consumi del mese",
   "@usageReportButton": {

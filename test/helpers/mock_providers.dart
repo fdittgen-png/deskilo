@@ -33,6 +33,7 @@ import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
+import 'package:deskilo/core/demo/data/money/demo_settlement_reviews.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
@@ -72,6 +73,7 @@ import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
+import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/oauth_consent.dart';
@@ -110,6 +112,7 @@ import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/recorded_payments_providers.dart'
     show recordedPaymentsRepositoryProvider;
+import 'package:deskilo/features/money/providers/settlement_review_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
@@ -235,6 +238,8 @@ List<Override> standardTestOverrides({
   RecordedPaymentsRepository? recordedPayments,
   // #3349 — a test of the credit move brings its own; else the Demo's.
   CreditMoveRepository? creditMoves,
+  // #3510 — no settlement report waits for review unless a test brings one.
+  SettlementReviews? settlementReviews,
   FakeMeRepository? me,
   FakeLinkedMeRepository? linkedMe,
   // #2590 — a test of the usage month's preparation brings its own.
@@ -269,6 +274,7 @@ List<Override> standardTestOverrides({
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
   ResumePlaceStore? resumePlaces,
+  SpacePrefsStore? spacePrefs,
   CreationDraftStore? creationDraft,
   PendingInvitationStore? pendingInvitation,
   FakeActionConfirmationRepository? actionConfirmations,
@@ -498,6 +504,9 @@ List<Override> standardTestOverrides({
     calendarRepositoryProvider
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
     ..._moneyOverrides(moneyRepo, creditMoves),
+    settlementReviewsRepositoryProvider.overrideWithValue(
+      settlementReviews ?? DemoSettlementReviews.empty(),
+    ),
     // #3587 — the payments the invoicing home's "Received in" reads: the
     // Demo's reader over the same money fake (no server here otherwise).
     if (recordedPayments != null)
@@ -597,6 +606,10 @@ List<Override> standardTestOverrides({
     // Where an account was last: in memory, so no test resumes another's.
     resumePlaceStoreProvider
         .overrideWithValue(resumePlaces ?? InMemoryResumePlaceStore()),
+    // #3749 — my layout of Me › Home is read, never assumed: in memory, so
+    // every test has a store that answers.
+    spacePrefsStoreProvider
+        .overrideWithValue(spacePrefs ?? InMemorySpacePrefsStore()),
     // #1636 — the pending creation draft: in memory, per test.
     creationDraftStoreProvider
         .overrideWithValue(creationDraft ?? InMemoryCreationDraftStore()),

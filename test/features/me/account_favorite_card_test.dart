@@ -48,9 +48,9 @@ Future<InMemorySpacePrefsStore> _pump(
     tester,
     workspace: twoSpaces(serverDefault: null),
     me: me,
+    spacePrefs: store,
     extraOverrides: [
       personalShellEnabledProvider.overrideWithValue(true),
-      spacePrefsStoreProvider.overrideWithValue(store),
     ],
   );
   await goTo(tester, router, '/me/spaces');

@@ -19,6 +19,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/accounting_view.dart';
 import '../domain/report_data.dart';
@@ -171,44 +172,48 @@ Future<void> showVatReport(
   WidgetRef ref, {
   required DateTime start,
   required DateTime end,
-}) async {
-  final l10n = context.l10n;
-  // Read once, here: everything below states this reference, even if the
-  // context goes away while the report loads.
-  final reference = workspaceTaxReference(ref);
-  final dayOf = readyWorkspaceDayOf(ref);
-  if (reference == null || dayOf == null) {
-    AppSnack.error(context, l10n.workspaceTaxContextNotReady);
-    return;
-  }
-  final report = await _loadVatReport(
-    ref,
-    start: start,
-    end: end,
-    reference: reference,
-    dayOf: dayOf,
-  );
-  if (!context.mounted) return;
-  final data = _vatReportData(context, ref, report, reference);
-  final rendered =
-      renderLetterDoc(context, ref, docId: 'vat', data: data);
-  final title = l10n.reportDocVat;
-  await runReportActions(
-    context,
-    ref,
-    keyPrefix: 'vat-report',
-    logMessage: 'vat report pdf failed',
-    render: () => rendered,
-    buildPdf: () async {
-      final pdf = await letterDocPdf(context, ref,
-          report: rendered,
-          title: title,
-          layoutXml: letterLayoutXml(ref, docId: 'vat'),
-          data: data);
-      return (bytes: pdf.bytes, fileName: '${_stem(report)}.pdf');
-    },
-  );
-}
+}) =>
+    // #3742 — a source that did not answer ends in the message with Retry.
+    printOrRetry(context, 'vat report', () async {
+    final l10n = context.l10n;
+    // Read once, here: everything below states this reference, even if the
+    // context goes away while the report loads.
+    final reference = workspaceTaxReference(ref);
+    final dayOf = readyWorkspaceDayOf(ref);
+    if (reference == null || dayOf == null) {
+      AppSnack.error(context, l10n.workspaceTaxContextNotReady);
+      return;
+    }
+    final report = await _loadVatReport(
+      ref,
+      start: start,
+      end: end,
+      reference: reference,
+      dayOf: dayOf,
+    );
+    // #3742 — the owner's template, read: never an empty one.
+    await readDocumentPolicies(ref);
+    if (!context.mounted) return;
+    final data = _vatReportData(context, ref, report, reference);
+    final rendered =
+        renderLetterDoc(context, ref, docId: 'vat', data: data);
+    final title = l10n.reportDocVat;
+    await runReportActions(
+      context,
+      ref,
+      keyPrefix: 'vat-report',
+      logMessage: 'vat report pdf failed',
+      render: () => rendered,
+      buildPdf: () async {
+        final pdf = await letterDocPdf(context, ref,
+            report: rendered,
+            title: title,
+            layoutXml: letterLayoutXml(ref, docId: 'vat'),
+            data: data);
+        return (bytes: pdf.bytes, fileName: '${_stem(report)}.pdf');
+      },
+    );
+    });
 
 /// The accountant's CSV, saved like every export.
 Future<void> saveVatReportCsv(

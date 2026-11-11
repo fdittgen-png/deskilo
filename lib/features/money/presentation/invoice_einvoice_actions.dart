@@ -23,6 +23,7 @@ import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -169,8 +170,7 @@ void _announce(
     context,
     submission.detail.isEmpty
         ? (l10n.invoiceSendRejected)
-        : '${l10n.invoiceSendRejected} '
-              '${submission.detail}',
+        : l10n.invoiceSendRejectedDetail(submission.detail),
   );
 }
 
@@ -183,57 +183,61 @@ Future<void> exportEInvoice(
   WidgetRef ref,
   Invoice invoice, {
   required String countryCode,
-}) async {
-  // Read once, before the sheet opens: the readiness verdict and the route
-  // state this reference; without it the person is told, not left with a
-  // dead tap (#3403).
-  final reference = workspaceTaxReference(ref);
-  if (reference == null) {
-    AppSnack.error(context, context.l10n.accountingExportContextNotReady);
-    return;
-  }
-  final route = eInvoiceRouteFor(countryCode, reference: reference);
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  if (route == null || workspace == null) return;
-  // The invoice's own snapshot, or the live workspace identity for
-  // pre-0069 documents (see sellerOf).
-  final subject = (
-    invoice: invoice,
-    seller: sellerOf(invoice, workspace),
-    buyer: buyerOf(invoice, workspace),
-    liveSeller: workspaceParty(workspace),
-    iban: workspaceIban(workspace),
-    workspaceId: workspace.id,
-  );
-  final roles = _eInvoiceRoles(ref);
-  final gateway = await _probeEInvoiceGateway(ref);
-  if (!context.mounted) return;
-  final run = _EInvoiceExportRun(context, ref, subject);
-  final export = await run.ask(
-    reference: reference,
-    route: route,
-    gateway: gateway,
-    roles: roles,
-  );
-  if (export == null || !context.mounted) return;
-  if (export == EInvoiceExport.fixIdentity) {
-    unawaited(context.push('/legal-identity'));
-    return;
-  }
-  if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
-    await run.send(
-      gateway: gateway,
-      toCustomer: export == EInvoiceExport.sendCustomer,
+}) =>
+    // #3742 — the document's policies are read first, under the print guard.
+    printOrRetry(context, 'einvoice export', () async {
+      await readDocumentPolicies(ref);
+      if (!context.mounted) return;
+    // Read once, before the sheet opens: the readiness verdict and the route
+    // state this reference; without it the person is told, not left with a
+    // dead tap (#3403).
+    final reference = workspaceTaxReference(ref);
+    if (reference == null) {
+      AppSnack.error(context, context.l10n.accountingExportContextNotReady);
+      return;
+    }
+    final route = eInvoiceRouteFor(countryCode, reference: reference);
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (route == null || workspace == null) return;
+    // The invoice's own snapshot, or the live workspace identity for
+    // pre-0069 documents (see sellerOf).
+    final subject = (
+      invoice: invoice,
+      seller: sellerOf(invoice, workspace),
+      buyer: buyerOf(invoice, workspace),
+      liveSeller: workspaceParty(workspace),
+      iban: workspaceIban(workspace),
+      workspaceId: workspace.id,
     );
-    return;
-  }
-  if (export == EInvoiceExport.facturXDownload ||
-      export == EInvoiceExport.facturXShare) {
-    await run.facturX(share: export == EInvoiceExport.facturXShare);
-    return;
-  }
-  await run.ublXml(share: export == EInvoiceExport.share);
-}
+    final roles = _eInvoiceRoles(ref);
+    final gateway = await _probeEInvoiceGateway(ref);
+    if (!context.mounted) return;
+    final run = _EInvoiceExportRun(context, ref, subject);
+    final export = await run.ask(
+      reference: reference,
+      route: route,
+      gateway: gateway,
+      roles: roles,
+    );
+    if (export == null || !context.mounted) return;
+    if (export == EInvoiceExport.fixIdentity) {
+      unawaited(context.push('/legal-identity'));
+      return;
+    }
+    if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
+      await run.send(
+        gateway: gateway,
+        toCustomer: export == EInvoiceExport.sendCustomer,
+      );
+      return;
+    }
+    if (export == EInvoiceExport.facturXDownload ||
+        export == EInvoiceExport.facturXShare) {
+      await run.facturX(share: export == EInvoiceExport.facturXShare);
+      return;
+    }
+    await run.ublXml(share: export == EInvoiceExport.share);
+    });
 
 
 /// One invoice on its way out as an e-invoice: the parties it names (its

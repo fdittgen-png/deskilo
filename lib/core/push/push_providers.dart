@@ -96,6 +96,7 @@ PushTexts _pushTexts(AppLocalizations l10n) => PushTexts(
         'member_note' => l10n.pushMessageBody,
         'member_mention' => l10n.pushMentionBody,
         'invoice_reminder' => l10n.pushReminderBody,
+        'invoice_issued' => l10n.pushInvoiceIssuedBody,
         _ => l10n.pushUpdateBody,
       },
     );

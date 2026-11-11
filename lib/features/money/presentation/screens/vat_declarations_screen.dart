@@ -23,6 +23,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/print_or_retry.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -335,7 +336,8 @@ class _VatDeclarationsScreenState
           size: 18),
       label: Text(
           l10n.vatDeclPdf),
-      onPressed: () async {
+      onPressed: () => printOrRetry(context, 'vat declaration', () async {
+        await readDocumentPolicies(ref); // #3742 — the template and rules, read
         await warmLetterDocProviders(ref, 'vat_declaration');
         if (!context.mounted) return;
         await runReportActions(
@@ -349,7 +351,7 @@ class _VatDeclarationsScreenState
         buildPdf: () =>
             _buildPdf(declaration),
         );
-      },
+      }),
     ),
     OutlinedButton.icon(
       key: ValueKey(

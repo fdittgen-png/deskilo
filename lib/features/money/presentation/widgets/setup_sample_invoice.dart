@@ -42,6 +42,8 @@ InvoiceReport? setupSampleReport(
   // #3680 — nor while the VAT rates are not read: the sample's tax would be
   // a guess.
   if (!ref.watch(vatRatesProvider).hasValue) return null;
+  // #3742 — nor before the owner's template texts are read.
+  if (!ref.watch(invoicePdfTemplateProvider).hasValue) return null;
   final l10n = context.l10n;
   final template = invoicePdfTemplateFor(ref);
   final data = withOwnerTexts(

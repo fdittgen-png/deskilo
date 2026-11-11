@@ -120,6 +120,7 @@ class WizardContext {
     final reminders = ref.watch(invoiceRemindersProvider);
     final events = ref.watch(eventsProvider);
     final previews = ref.watch(wizardPreviewsProvider(period));
+    final rules = ref.watch(dunningRulesProvider);
     final members = ref.watch(workspaceMembersProvider);
     final names = ref.watch(memberNamesProvider);
     return WizardContext(
@@ -139,11 +140,11 @@ class WizardContext {
       invoices: invoices.value ?? const [], // empty-ok: steps wait for `reads`
       matches: matches.value ?? const {}, // empty-ok: steps wait for `reads`
       reminders: reminders.value ?? const {}, // empty-ok: steps wait for `reads`
-      dunning: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
+      dunning: rules.value ?? DunningRules.defaults, // empty-ok: steps wait for `reads`, the rules among them
       events: events.value ?? const [], // empty-ok: steps wait for `reads`
       previews: previews.value ?? const {}, // empty-ok: steps wait for `reads`
       reads: ReadsAnswer.of(
-        [members, names, invoices, matches, reminders, events, previews],
+        [members, names, invoices, matches, reminders, events, previews, rules],
       ),
       retry: () => ref
         ..invalidate(workspaceMembersProvider)

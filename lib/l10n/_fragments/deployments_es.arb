@@ -40,10 +40,7 @@
   "@deploymentKindConfiguration": {
     "description": "#988/#990 deployments: deploymentKindConfiguration"
   },
-  "deploymentRequires": "necesita",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
-  },
+  "deploymentRequiresList": "necesita {entities}",
   "deploymentToProd": "Desplegar en PROD…",
   "@deploymentToProd": {
     "description": "#988/#990 deployments: deploymentToProd"

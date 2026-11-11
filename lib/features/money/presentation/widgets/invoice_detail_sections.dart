@@ -242,8 +242,7 @@ class InvoiceDetailSections {
         ),
       if (invoice.replacesNumber.isNotEmpty)
         line(
-          '${l10n.invoicePdfReplaces} '
-          '${invoice.replacesNumber}',
+          l10n.invoicePdfReplacesNumber(invoice.replacesNumber),
         ),
       if (replacedByNumber.isNotEmpty)
         line(l10n.invoiceReplacedBy(replacedByNumber)),
@@ -287,8 +286,9 @@ class InvoiceDetailSections {
           ),
         ),
       line(
-        '${l10n.invoicePdfSignature} '
+        l10n.invoicePdfSignatureValue(
         '${invoice.signature.substring(0, invoice.signature.length < 12 ? invoice.signature.length : 12)}…',
+      ),
       ),
     ];
   }

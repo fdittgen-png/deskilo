@@ -58,7 +58,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final overview = ref.watch(financeOverviewProvider);
-    final all = overview.value ?? const FinanceOverview();
+    final all = overview.value ?? const FinanceOverview(); // empty-ok: the body shows it only on data; loading and a failure have their own faces (below)
     // Me is production. A development space's documents are test data:
     // shown apart, in the development colour, and never counted.
     final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);

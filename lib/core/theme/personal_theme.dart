@@ -13,6 +13,7 @@
 import 'package:flutter/material.dart';
 
 import '../navigation/navigation_style.dart' show kWideNavigationMaxTextScale;
+import '../ui/adaptive/window_class.dart';
 
 /// The semantic colours of the personal layer, light and dark.
 @immutable
@@ -189,10 +190,10 @@ class PersonalTheme extends ThemeExtension<PersonalTheme> {
 /// (AppSpacing, AppRadius) keep their values; these are the shell's own.
 abstract final class PersonalShellMetrics {
   /// A window at least this wide keeps the destinations in a sidebar.
-  static const double sidebarMinWidth = 1200;
+  static const double sidebarMinWidth = WindowClass.largeMinWidth;
 
   /// From here to [sidebarMinWidth] the destinations are a rail.
-  static const double railMinWidth = 840;
+  static const double railMinWidth = WindowClass.expandedMinWidth;
   static const double sidebarWidth = 248;
   static const double railWidth = 80;
 
@@ -284,10 +285,11 @@ PersonalLayout personalLayoutOf({
   required bool menuPreferred,
 }) {
   if (textScalePercent <= kWideNavigationMaxTextScale) {
-    if (width >= PersonalShellMetrics.sidebarMinWidth) {
+    final window = WindowClass.ofWidth(width);
+    if (window.atLeast(WindowClass.large)) {
       return PersonalLayout.sidebar;
     }
-    if (width >= PersonalShellMetrics.railMinWidth) return PersonalLayout.rail;
+    if (window.atLeast(WindowClass.expanded)) return PersonalLayout.rail;
   }
   return menuPreferred || height < PersonalShellMetrics.menuMinHeight
       ? PersonalLayout.menu

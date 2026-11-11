@@ -13,6 +13,7 @@ import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
+import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -72,6 +73,7 @@ Future<GoRouter> pumpMeApp(
   Size size = const Size(800, 1600),
   LinkLauncher? launcher,
   ResumePlaceStore? resumePlaces,
+  SpacePrefsStore? spacePrefs,
   FakeProfileRepository? profile,
   Clock? clock,
   TimeZoneMode? timeZoneMode,
@@ -96,6 +98,7 @@ Future<GoRouter> pumpMeApp(
         contacts: contacts,
         guestVisits: guestVisits,
         resumePlaces: resumePlaces,
+        spacePrefs: spacePrefs,
         profile: profile,
         clock: clock,
         timeZoneMode: timeZoneMode ?? TimeZoneMode.workspace,

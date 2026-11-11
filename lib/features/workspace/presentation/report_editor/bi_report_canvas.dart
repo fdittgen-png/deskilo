@@ -27,7 +27,10 @@ import 'bi_report_visual_body.dart';
 
 /// The grid's column counts and the width each needs.
 const _wideColumns = 12, _mediumColumns = 4;
-const _wideWidth = 960.0, _mediumWidth = 560.0;
+// content-fit: twelve columns need this room for a readable tile each
+const _wideWidth = 960.0;
+// content-fit: four columns need this room for a readable tile each
+const _mediumWidth = 560.0;
 
 /// The height of one grid row; a card grows past it when its text does.
 const _rowHeight = 72.0;

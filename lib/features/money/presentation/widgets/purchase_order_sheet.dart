@@ -230,8 +230,10 @@ class _OrderForm {
         child: Text(
           expectedOn == null
               ? l10n.purchaseOrderExpected
-              : '${l10n.purchaseOrderExpected}: '
-                    '${material.formatMediumDate(expectedOn!)}',
+              : l10n.labelWithValue(
+                    l10n.purchaseOrderExpected,
+                    material.formatMediumDate(expectedOn!),
+                  ),
         ),
       ),
       const FormGap(),

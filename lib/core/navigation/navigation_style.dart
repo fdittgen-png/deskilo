@@ -6,16 +6,15 @@ import 'package:flutter/foundation.dart'
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../storage/prefs_stores.dart';
+import '../ui/adaptive/window_class.dart';
 
 part 'navigation_style.g.dart';
 
-/// The narrowest window, in logical pixels, whose menu keeps its
-/// destinations in a permanent sidebar instead of a drawer.
-const double kWideNavigationMinWidth = 900;
-
-/// Whether a window [width] keeps the permanent sidebar
-/// ([kWideNavigationMinWidth]): the one question "phone or desk?" asks.
-bool isWideNavigationWidth(double width) => width >= kWideNavigationMinWidth;
+/// Whether a window [width] keeps the permanent sidebar instead of a drawer:
+/// the one question "phone or desk?" asks. #3602 — from the expanded window
+/// class on; the bound is WindowClass's, defined once.
+bool isWideNavigationWidth(double width) =>
+    WindowClass.ofWidth(width).atLeast(WindowClass.expanded);
 
 /// The largest text scale, in percent, at which that sidebar still leaves
 /// the page room beside it.

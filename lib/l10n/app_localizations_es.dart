@@ -7316,7 +7316,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deploymentPullFromProd => 'Traer desde PROD…';
 
   @override
-  String get deploymentRequires => 'necesita';
+  String deploymentRequiresList(String entities) {
+    return 'necesita $entities';
+  }
 
   @override
   String get deploymentRollback => 'Deshacer';
@@ -8175,10 +8177,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editorDeskFull => 'No queda sitio en esta mesa.';
 
   @override
-  String get editorDeskNameDefault => 'Mesa';
+  String get editorDeskNameLabel => 'Nombre de la mesa';
 
   @override
-  String get editorDeskNameLabel => 'Nombre de la mesa';
+  String editorDeskNameNumbered(int number) {
+    return 'Mesa $number';
+  }
 
   @override
   String get editorDeskProperties => 'Mesa';
@@ -8248,10 +8252,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no hay plantas. Añada la primera planta de su espacio.';
 
   @override
-  String get editorOfficeNameDefault => 'Oficina';
+  String get editorOfficeNameLabel => 'Nombre de la oficina';
 
   @override
-  String get editorOfficeNameLabel => 'Nombre de la oficina';
+  String editorOfficeNameNumbered(int number) {
+    return 'Oficina $number';
+  }
 
   @override
   String get editorOfficeProperties => 'Oficina';
@@ -8841,6 +8847,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventInvoiceIssuedLine(String number) {
+    return 'Nueva factura $number';
+  }
+
+  @override
   String eventInvoicePaid(String number, String amount) {
     return 'Factura $number pagada — $amount';
   }
@@ -9002,6 +9013,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventSettlementReview(String settlement, String reason) {
+    String _temp0 = intl.Intl.selectLogic(reason, {
+      'costs_changed': 'el proveedor cambió sus costes después de registrarse',
+      'amount_changed': 'el proveedor cambió su importe después de registrarse',
+      'currency_mismatch': 'un coste está en otra moneda que la liquidación',
+      'other': 'el informe difiere de lo registrado',
+    });
+    return '$settlement: $_temp0. No se contabilizó nada; espera revisión.';
+  }
+
+  @override
   String get eventSourceNotFound =>
       'No se archivó ningún documento de compra para esta solicitud, o no puede verlo.';
 
@@ -9089,6 +9111,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeServiceCharge => 'Servicio';
+
+  @override
+  String get eventTypeSettlementReview => 'Liquidación por revisar';
 
   @override
   String get eventTypeSpaceReservation => 'Reservas de espacios enteros';
@@ -13042,7 +13067,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceBlockerNoAdmin => 'un administrador de la base';
 
   @override
-  String get instanceBlockers => 'Todavía falta:';
+  String instanceBlockersList(String blockers) {
+    return 'Todavía falta: $blockers';
+  }
 
   @override
   String get instanceCheckToken => 'Comprobar el token';
@@ -15202,13 +15229,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicePdfSignature => 'Huella del documento (SHA-256)';
 
   @override
+  String invoicePdfSignatureValue(String fingerprint) {
+    return 'Huella del documento (SHA-256) $fingerprint';
+  }
+
+  @override
   String get invoicePdfSubtotal => 'Subtotal';
 
   @override
   String get invoicePdfTitle => 'Factura';
 
   @override
-  String get invoicePdfVoided => 'ERRÓNEA — anulada el';
+  String invoicePdfVoidedOn(String date) {
+    return 'ERRÓNEA — anulada el $date';
+  }
 
   @override
   String get invoicePickMember =>
@@ -15335,6 +15369,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceSendRejected => 'La plataforma la rechazó.';
+
+  @override
+  String invoiceSendRejectedDetail(String detail) {
+    return 'La plataforma la rechazó. $detail';
+  }
 
   @override
   String get invoiceSendStatusAccepted => 'aceptada';
@@ -20423,6 +20462,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notesFilterUnread => 'No leídos';
 
   @override
+  String notesFilterUnreadCount(int unread) {
+    return 'No leídos ($unread)';
+  }
+
+  @override
   String get notifCategoryCheckIns => 'Registros';
 
   @override
@@ -20882,6 +20926,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String payConfigSettlementCurrencyMismatch(String settlement) {
     return '$settlement: un coste está en otra moneda que la liquidación. No se contabilizó nada.';
   }
+
+  @override
+  String get payConfigSettlementHandle => 'Marcar como tratado';
+
+  @override
+  String get payConfigSettlementHandleNote => 'Qué se hizo';
+
+  @override
+  String payConfigSettlementHandledLine(String sentence, String note) {
+    return '$sentence Tratado: $note';
+  }
+
+  @override
+  String get payConfigSettlementHandledTitle => 'Tratados';
 
   @override
   String get payConfigSettlementsFetch => 'Obtener los pagos';
@@ -21651,6 +21709,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get planToLabel => 'Hasta';
+
+  @override
+  String planToTime(String time) {
+    return 'Hasta $time';
+  }
 
   @override
   String planUntil(String time) {
@@ -23594,6 +23657,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pushCancelledTitle => 'Reserva eliminada';
+
+  @override
+  String get pushInvoiceIssuedBody => 'Tiene una factura nueva.';
 
   @override
   String get pushMentionBody => 'Le han mencionado en una conversación.';
@@ -28742,6 +28808,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una reserva está a punto de empezar: hora de registrarse';
 
   @override
+  String get setupNotificationsEventInvoiceIssued => 'Una factura nueva';
+
+  @override
   String get setupNotificationsEventInvoiceReminder =>
       'Un recordatorio de pago';
 
@@ -32725,10 +32794,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get usageAskSubmitted => 'Pedido. Lo decide otra persona.';
 
   @override
-  String get usageBilled => 'Facturado';
+  String usageBilledDuration(String duration) {
+    return 'Facturado $duration';
+  }
 
   @override
-  String get usageBooked => 'Reservado';
+  String usageBookedDuration(String duration) {
+    return 'Reservado $duration';
+  }
 
   @override
   String get usageCorrected => 'Corregido';
@@ -32779,7 +32852,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get usagePresent => 'Presente';
+  String usagePresentDuration(String duration) {
+    return 'Presente $duration';
+  }
 
   @override
   String get usageReasonLabel => 'Por qué (opcional)';

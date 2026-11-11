@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/state/policy_read.dart';
 import '../../../core/text/collation.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -297,7 +298,7 @@ Future<List<Invoice>> invoices(Ref ref) async {
 /// Invoice-PDF template of the active workspace (#454); empty while no
 /// workspace is selected. The renderer additionally gates on the
 /// invoicePdfTemplate feature flag at the call site.
-@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: true, retry: noPolicyRetry)
 Future<InvoicePdfTemplate> invoicePdfTemplate(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return InvoicePdfTemplate.empty;
@@ -328,7 +329,7 @@ Future<Uint8List?> reportImageBytes(Ref ref, String name) async {
 
 /// Dunning policy of the active workspace (#472); defaults while none
 /// is stored. The Open tab derives reminder suggestions from it.
-@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: true, retry: noPolicyRetry)
 Future<DunningRules> dunningRules(Ref ref) async {
   // #2484 — the first reminder's delay is a SETTING (the workspace's
   // snapshot); without one (server and bundled registry both unreachable)
@@ -342,6 +343,7 @@ Future<DunningRules> dunningRules(Ref ref) async {
         },
       );
   final workspace = await ref.watch(currentWorkspaceProvider.future);
+  // #3742 — no workspace, no business whose rules these would replace.
   if (workspace == null) return DunningRules.defaults;
   final rules = await ref.watch(dunningRepositoryProvider).fetchDunningRules(workspace.id);
   return rules.withSettings(await settings);
@@ -349,7 +351,7 @@ Future<DunningRules> dunningRules(Ref ref) async {
 
 /// #802 — when the two automatic invoice runs happen; defaults while
 /// nothing is stored, which is what every workspace starts with.
-@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: true, retry: noPolicyRetry)
 Future<BillingRules> billingRules(Ref ref) async {
   // #1218 — the repository is watched BEFORE the gap: a bare `ref.watch`
   // after an await throws if the provider was disposed while in flight.
@@ -586,7 +588,7 @@ Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
 }
 
 /// #934 — the remembered repartition rule.
-@riverpod
+@Riverpod(retry: noPolicyRetry)
 Future<RepartitionRule> repartitionRule(Ref ref) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const RepartitionRule();

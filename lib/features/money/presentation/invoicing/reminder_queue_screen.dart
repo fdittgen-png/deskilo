@@ -102,6 +102,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
 
   /// The invoice [id], once the archive has answered.
   Future<Invoice?> _invoiceOf(String id) async {
+    await readDocumentPolicies(ref); // #3742 — the letter's policies, read
     final invoices = await ref.read(invoicesProvider.future);
     return invoices.where((i) => i.id == id).firstOrNull;
   }
@@ -114,10 +115,8 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
       invoice,
       ref.read(invoiceMatchesProvider).value?[invoice.id],
     );
-    final message = l10n.invoiceReminderMessage(
-      invoice.number,
-      money.formatMinor(owed),
-    );
+    final message =
+        l10n.invoiceReminderMessage(invoice.number, money.formatMinor(owed));
     final pdf = await buildReminderPdfFile(
       context,
       ref,

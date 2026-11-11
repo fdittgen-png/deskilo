@@ -413,6 +413,7 @@ extension DictionaryLabels on AppLocalizations {
     'member_note' => setupNotificationsEventMemberNote,
     'member_mention' => setupNotificationsEventMemberMention,
     'invoice_reminder' => setupNotificationsEventInvoiceReminder,
+    'invoice_issued' => setupNotificationsEventInvoiceIssued,
     _ => event,
   };
 

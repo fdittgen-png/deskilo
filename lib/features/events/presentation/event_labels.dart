@@ -11,6 +11,7 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
   final labels = <EventType, String>{
     EventType.badgeSecurityAlert: l10n.eventTypeBadgeSecurityAlert,
     EventType.privacyIncident: l10n.eventTypePrivacyIncident,
+    EventType.settlementReview: l10n.eventTypeSettlementReview,
     EventType.paymentInstructionsChange:
         l10n.eventTypePaymentInstructionsChange,
     EventType.reservation: l10n.eventTypeReservation,
@@ -36,6 +37,7 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
     EventType.matrixChange: l10n.eventTypeMatrixChange,
     EventType.invoiceWriteoff: l10n.eventTypeInvoiceWriteoff,
     EventType.invoiceReminder: l10n.eventTypeInvoiceReminder,
+    EventType.invoiceIssued: l10n.invoiceCreate,
     EventType.priceNegotiation: l10n.eventTypePriceNegotiation,
     EventType.expenseSchedule: l10n.eventTypeExpenseSchedule,
     EventType.expenseRepartition: l10n.eventTypeExpenseRepartition,

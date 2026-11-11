@@ -17,13 +17,13 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/story.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/invoice_detail_facts.dart';
 import '../../application/receivables.dart';
-import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../dunning_hold_actions.dart';
 import '../invoice_status.dart';
@@ -62,6 +62,27 @@ class InvoicePage extends ConsumerWidget {
   /// Set when the page is a panel beside the list: its close button.
   final VoidCallback? onClose;
 
+  /// The page before its invoice is read, or once it cannot be: a way out.
+  Widget _waiting(BuildContext context, {required bool unreadable}) => Scaffold(
+    key: ValueKey('invoice-page-$invoiceId'),
+    appBar: AppBar(
+      automaticallyImplyLeading: false,
+      actions: [_closeButton(context)],
+    ),
+    body: unreadable
+        ? Center(
+            child: Padding(
+              padding: AppSpacing.mdAll,
+              child: Text(
+                context.l10n.invoicePageUnreadable,
+                key: const ValueKey('invoice-page-unreadable'),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        : const LoadingView(),
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
@@ -74,25 +95,9 @@ class InvoicePage extends ConsumerWidget {
     if (invoice == null || !matchRead.hasValue && !matchRead.hasError) {
       // Still loading, or no longer readable: either way the page keeps a
       // way out.
-      final unreadable = invoice == null && (read.hasError || invoices != null);
-      return Scaffold(
-        key: ValueKey('invoice-page-$invoiceId'),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          actions: [_closeButton(context)],
-        ),
-        body: unreadable
-            ? Center(
-                child: Padding(
-                  padding: AppSpacing.mdAll,
-                  child: Text(
-                    l.invoicePageUnreadable,
-                    key: const ValueKey('invoice-page-unreadable'),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
-            : const LoadingView(),
+      return _waiting(
+        context,
+        unreadable: invoice == null && (read.hasError || invoices != null),
       );
     }
     final receivables = ref.watch(invoicingReaderProvider).read([invoice]);
@@ -113,8 +118,10 @@ class InvoicePage extends ConsumerWidget {
     final today = ref
         .watch(invoicingBusinessProvider)
         .dayOf(ref.watch(clockProvider).now());
-    final rules =
-        ref.watch(dunningRulesProvider).value ?? DunningRules.defaults;
+    // #3742 — the page is built from the receivables, which wait for the
+    // rules; a rules read that fails is named on the home with Try again.
+    final rules = ref.watch(dunningRulesProvider).value;
+    if (rules == null) return readsStandIn(ref, [dunningRulesProvider])!;
     final mode = rules.automatic ? ReminderMode.automatic : ReminderMode.byHand;
     return Scaffold(
       key: ValueKey('invoice-page-$invoiceId'),

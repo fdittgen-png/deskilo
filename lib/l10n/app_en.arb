@@ -9600,9 +9600,14 @@
   "@deploymentPullFromProd": {
     "description": "#998 deployment pull: deploymentPullFromProd"
   },
-  "deploymentRequires": "needs",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
+  "deploymentRequiresList": "needs {entities}",
+  "@deploymentRequiresList": {
+    "description": "Deployment entity subtitle: the entities this one needs.",
+    "placeholders": {
+      "entities": {
+        "type": "String"
+      }
+    }
   },
   "deploymentRollback": "Roll back",
   "@deploymentRollback": {
@@ -10675,13 +10680,18 @@
   "@editorDeskFull": {
     "description": "#1216 duplicating a seat found no free cell on its desk"
   },
-  "editorDeskNameDefault": "Desk",
-  "@editorDeskNameDefault": {
-    "description": "Default desk name prefix; a number is appended"
-  },
   "editorDeskNameLabel": "Desk name",
   "@editorDeskNameLabel": {
     "description": "Label of the desk-name input"
+  },
+  "editorDeskNameNumbered": "Desk {number}",
+  "@editorDeskNameNumbered": {
+    "description": "Default name of a new desk: its next position number in a name, not a count, e.g. \"Desk 2\".",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
   },
   "editorDeskProperties": "Desk",
   "@editorDeskProperties": {
@@ -10763,13 +10773,18 @@
   "@editorNoLevels": {
     "description": "Empty state of the editor before any level exists"
   },
-  "editorOfficeNameDefault": "Office",
-  "@editorOfficeNameDefault": {
-    "description": "Default office name prefix; a number is appended"
-  },
   "editorOfficeNameLabel": "Office name",
   "@editorOfficeNameLabel": {
     "description": "Label of the office-name input"
+  },
+  "editorOfficeNameNumbered": "Office {number}",
+  "@editorOfficeNameNumbered": {
+    "description": "Default name of a new office: its next position number in a name, not a count, e.g. \"Office 3\".",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
   },
   "editorOfficeProperties": "Office",
   "@editorOfficeProperties": {
@@ -11525,6 +11540,15 @@
       }
     }
   },
+  "eventInvoiceIssuedLine": "New invoice {number}",
+  "@eventInvoiceIssuedLine": {
+    "description": "#3672 a new invoice told to its customer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "eventInvoicePaid": "Invoice {number} paid — {amount}",
   "@eventInvoicePaid": {
     "description": "Events feed line for a matched invoice payment",
@@ -11854,6 +11878,18 @@
       }
     }
   },
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{the provider changed its costs after it was recorded} amount_changed{the provider changed its amount after it was recorded} currency_mismatch{a cost is in another currency than the settlement} other{the report differs from what was recorded}}. Nothing of it was booked; it waits for review.",
+  "@eventSettlementReview": {
+    "description": "#3510 the alert that a settlement report waits for review",
+    "placeholders": {
+      "settlement": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "eventSourceNotFound": "No purchase document was filed for this request, or you may not see it.",
   "@eventSourceNotFound": {
     "description": "#2573 open the purchase an expense request was filed as"
@@ -11969,6 +12005,10 @@
   "eventTypeServiceCharge": "Service",
   "@eventTypeServiceCharge": {
     "description": "Event type label / filter chip for service charges"
+  },
+  "eventTypeSettlementReview": "Settlement to review",
+  "@eventTypeSettlementReview": {
+    "description": "#3510 the alert that a settlement report waits for review"
   },
   "eventTypeSpaceReservation": "Whole-space reservations",
   "@eventTypeSpaceReservation": {
@@ -17002,9 +17042,14 @@
   "@instanceBlockerNoAdmin": {
     "description": "#1827 B — instance operator console for the installation's assistants"
   },
-  "instanceBlockers": "Still missing:",
-  "@instanceBlockers": {
-    "description": "#1827 B — instance operator console for the installation's assistants"
+  "instanceBlockersList": "Still missing: {blockers}",
+  "@instanceBlockersList": {
+    "description": "Operator view: what still blocks the assistant, as a list.",
+    "placeholders": {
+      "blockers": {
+        "type": "String"
+      }
+    }
   },
   "instanceCheckToken": "Check the token",
   "@instanceCheckToken": {
@@ -19639,6 +19684,15 @@
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
   },
+  "invoicePdfSignatureValue": "Document fingerprint (SHA-256) {fingerprint}",
+  "@invoicePdfSignatureValue": {
+    "description": "Invoice detail: the document fingerprint caption with the shortened fingerprint.",
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePdfSubtotal": "Subtotal",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
@@ -19647,9 +19701,14 @@
   "@invoicePdfTitle": {
     "description": "PDF: the word before the invoice number"
   },
-  "invoicePdfVoided": "ERRONEOUS — voided on",
-  "@invoicePdfVoided": {
-    "description": "PDF banner + row label prefix before the void date"
+  "invoicePdfVoidedOn": "ERRONEOUS — voided on {date}",
+  "@invoicePdfVoidedOn": {
+    "description": "PDF: the erroneous-document mark with the date it was voided.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "invoicePickMember": "Pick a member to see what their month tracked.",
   "@invoicePickMember": {
@@ -19831,6 +19890,15 @@
   "invoiceSendRejected": "The platform refused it.",
   "@invoiceSendRejected": {
     "description": "Snackbar: the platform refused it"
+  },
+  "invoiceSendRejectedDetail": "The platform refused it. {detail}",
+  "@invoiceSendRejectedDetail": {
+    "description": "Snackbar: the platform refused the invoice, with its stated reason.",
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
   },
   "invoiceSendStatusAccepted": "accepted",
   "@invoiceSendStatusAccepted": {
@@ -26627,6 +26695,15 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
+  "notesFilterUnreadCount": "Unread ({unread})",
+  "@notesFilterUnreadCount": {
+    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\".",
+    "placeholders": {
+      "unread": {
+        "type": "int"
+      }
+    }
+  },
   "notifCategoryCheckIns": "Check-ins",
   "@notifCategoryCheckIns": {
     "description": "Shown as a text in event labels (events)."
@@ -27211,6 +27288,30 @@
         "type": "String"
       }
     }
+  },
+  "payConfigSettlementHandle": "Mark handled",
+  "@payConfigSettlementHandle": {
+    "description": "#3510 marking a settlement review handled"
+  },
+  "payConfigSettlementHandleNote": "What was done",
+  "@payConfigSettlementHandleNote": {
+    "description": "#3510 marking a settlement review handled"
+  },
+  "payConfigSettlementHandledLine": "{sentence} Handled: {note}",
+  "@payConfigSettlementHandledLine": {
+    "description": "#3510 marking a settlement review handled",
+    "placeholders": {
+      "sentence": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "payConfigSettlementHandledTitle": "Handled",
+  "@payConfigSettlementHandledTitle": {
+    "description": "#3510 marking a settlement review handled"
   },
   "payConfigSettlementsFetch": "Fetch payouts",
   "@payConfigSettlementsFetch": {
@@ -28234,6 +28335,15 @@
   "planToLabel": "To",
   "@planToLabel": {
     "description": "Tooltip of the browse-window end time chip in the plan header (#184)"
+  },
+  "planToTime": "To {time}",
+  "@planToTime": {
+    "description": "The end time of a booking period on its button, e.g. \"To 17:30\".",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   },
   "planUntil": "until {time}",
   "@planUntil": {
@@ -30742,6 +30852,10 @@
   "pushCancelledTitle": "Reservation removed",
   "@pushCancelledTitle": {
     "description": "Push title when an admin removed a reservation (#424)"
+  },
+  "pushInvoiceIssuedBody": "A new invoice is waiting for you.",
+  "@pushInvoiceIssuedBody": {
+    "description": "#3672 a new invoice told to its customer"
   },
   "pushMentionBody": "You were mentioned in a conversation.",
   "@pushMentionBody": {
@@ -37092,6 +37206,10 @@
   "@setupNotificationsEventCheckIn": {
     "description": "#3485 setupNotificationsEvent: the label for case 'check_in'."
   },
+  "setupNotificationsEventInvoiceIssued": "A new invoice",
+  "@setupNotificationsEventInvoiceIssued": {
+    "description": "#3672 a new invoice told to its customer"
+  },
   "setupNotificationsEventInvoiceReminder": "A payment reminder",
   "@setupNotificationsEventInvoiceReminder": {
     "description": "#3485 setupNotificationsEvent: the label for case 'invoice_reminder'."
@@ -42028,13 +42146,23 @@
   "@usageAskSubmitted": {
     "description": "#833 - confirmation snack"
   },
-  "usageBilled": "Billed",
-  "@usageBilled": {
-    "description": "#833 - the time that bills"
+  "usageBilledDuration": "Billed {duration}",
+  "@usageBilledDuration": {
+    "description": "Usage row: the billed duration, e.g. \"Billed 2 h\".",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   },
-  "usageBooked": "Booked",
-  "@usageBooked": {
-    "description": "#833 - the reserved window"
+  "usageBookedDuration": "Booked {duration}",
+  "@usageBookedDuration": {
+    "description": "Usage row: the reserved duration, e.g. \"Booked 2 h\".",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   },
   "usageCorrected": "Corrected",
   "@usageCorrected": {
@@ -42094,9 +42222,14 @@
       }
     }
   },
-  "usagePresent": "Present",
-  "@usagePresent": {
-    "description": "#833 - time actually checked in"
+  "usagePresentDuration": "Present {duration}",
+  "@usagePresentDuration": {
+    "description": "Usage row: the time actually present, e.g. \"Present 1 h\".",
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
   },
   "usageReasonLabel": "Why (optional)",
   "@usageReasonLabel": {

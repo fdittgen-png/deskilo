@@ -10,6 +10,7 @@ import '../../../core/backend/backend_settings.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
@@ -185,7 +186,8 @@ class VisibilityCard extends ConsumerWidget {
       // #2558 — wide: the editor and the saved preview side by side, 60:40;
       // otherwise the preview follows the editor.
       child: LayoutBuilder(
-        builder: (context, box) => previewed && box.maxWidth >= _wideCard
+        builder: (context, box) => previewed &&
+                WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.expanded)
             ? Row(
                 key: const ValueKey('visibility-wide'),
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,9 +210,6 @@ class VisibilityCard extends ConsumerWidget {
     );
   }
 }
-
-/// The card width from which the saved preview sits beside the editor.
-const double _wideCard = 900;
 
 /// Picks one audience; "chosen spaces" also picks the spaces.
 /// #2558 — the spaces come from the personal home's list; a saved space

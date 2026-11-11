@@ -11,7 +11,7 @@
   "instanceTurnOn": "Activar para todos los espacios",
   "instanceTurnOff": "Desactivar",
   "instanceTurnOnConfirm": "Los asistentes pasan a poder usarse en cada espacio que los ofrece. Puede desactivarlos en cualquier momento.",
-  "instanceBlockers": "Todavía falta:",
+  "instanceBlockersList": "Todavía falta: {blockers}",
   "instanceBlockerNoAdmin": "un administrador de la base",
   "instanceAdminsTitle": "Administradores de la base",
   "instanceAdminsHelp": "Deciden quién puede usar asistentes. Solo pueden elegirse personas que confirmaron su identidad para asistentes.",

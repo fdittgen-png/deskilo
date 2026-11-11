@@ -22,6 +22,7 @@ import '../../../core/backend/backend_settings.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/navigation_style.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../directory/presentation/directory_screen.dart';
 import '../../directory/providers/messenger_providers.dart';
@@ -209,7 +210,7 @@ class _MeShellState extends ConsumerState<MeShell> {
         ? Badge.count(count: unread, maxCount: 99, child: Icon(data)) : Icon(data);
     final menu = ref.watch(webShellProvider);
     final wideNavigation = menu &&
-        MediaQuery.sizeOf(context).width >= kWideNavigationMinWidth &&
+        WindowClass.of(context).atLeast(WindowClass.expanded) &&
         MediaQuery.textScalerOf(context).scale(100) <= kWideNavigationMaxTextScale;
     final selected = MeTab.legacy.indexOf(_tab);
     Widget destination(MeTab tab, {required bool permanent}) => ListTile(
