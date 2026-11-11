@@ -6410,6 +6410,58 @@ class AppLocalizationsIt extends AppLocalizations {
       'La qualità del cliente non è stata salvata.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Credito: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Pagamenti che nessuna fattura ha ancora preso.';
+
+  @override
+  String get customerPageInvoices => 'Fatture';
+
+  @override
+  String get customerPageNothingOwed => 'Niente da pagare';
+
+  @override
+  String get customerPageOwes => 'Deve';
+
+  @override
+  String get customerPageStory => 'Storia';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Dice di aver pagato la fattura $number';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Fattura $number emessa';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Adesso: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Fattura $number pagata';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count solleciti condivisi per $number',
+      one: 'Sollecito condiviso per $number',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archiviato';
 
   @override

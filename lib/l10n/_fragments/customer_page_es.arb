@@ -1,0 +1,13 @@
+{
+  "customerPageOwes": "Debe",
+  "customerPageNothingOwed": "Nada pendiente",
+  "customerPageCredit": "Saldo a favor: {amount}",
+  "customerPageCreditHint": "Pagos que ninguna factura ha tomado todavía.",
+  "customerPageInvoices": "Facturas",
+  "customerPageStory": "Historial",
+  "customerStoryIssued": "Factura {number} emitida",
+  "customerStoryPaid": "Factura {number} pagada",
+  "customerStoryDeclared": "Dice haber pagado la factura {number}",
+  "customerStoryReminders": "{count, plural, =1{Recordatorio compartido para {number}} other{{count} recordatorios compartidos para {number}}}",
+  "customerStoryNow": "Ahora: {words}"
+}

@@ -6407,6 +6407,58 @@ class AppLocalizationsEs extends AppLocalizations {
       'La condición del cliente no se ha guardado.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Saldo a favor: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Pagos que ninguna factura ha tomado todavía.';
+
+  @override
+  String get customerPageInvoices => 'Facturas';
+
+  @override
+  String get customerPageNothingOwed => 'Nada pendiente';
+
+  @override
+  String get customerPageOwes => 'Debe';
+
+  @override
+  String get customerPageStory => 'Historial';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Dice haber pagado la factura $number';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Factura $number emitida';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Ahora: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Factura $number pagada';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recordatorios compartidos para $number',
+      one: 'Recordatorio compartido para $number',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archivado';
 
   @override

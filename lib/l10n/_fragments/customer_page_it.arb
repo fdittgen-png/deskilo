@@ -1,0 +1,13 @@
+{
+  "customerPageOwes": "Deve",
+  "customerPageNothingOwed": "Niente da pagare",
+  "customerPageCredit": "Credito: {amount}",
+  "customerPageCreditHint": "Pagamenti che nessuna fattura ha ancora preso.",
+  "customerPageInvoices": "Fatture",
+  "customerPageStory": "Storia",
+  "customerStoryIssued": "Fattura {number} emessa",
+  "customerStoryPaid": "Fattura {number} pagata",
+  "customerStoryDeclared": "Dice di aver pagato la fattura {number}",
+  "customerStoryReminders": "{count, plural, =1{Sollecito condiviso per {number}} other{{count} solleciti condivisi per {number}}}",
+  "customerStoryNow": "Adesso: {words}"
+}

@@ -8528,6 +8528,83 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageCredit": "Credit: {amount}",
+  "@customerPageCredit": {
+    "description": "#3587 R1-g: the customer page (customerPageCredit)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "customerPageCreditHint": "Payments no invoice has taken yet.",
+  "@customerPageCreditHint": {
+    "description": "#3587 R1-g: the customer page (customerPageCreditHint)"
+  },
+  "customerPageInvoices": "Invoices",
+  "@customerPageInvoices": {
+    "description": "#3587 R1-g: the customer page (customerPageInvoices)"
+  },
+  "customerPageNothingOwed": "Nothing owed",
+  "@customerPageNothingOwed": {
+    "description": "#3587 R1-g: the customer page (customerPageNothingOwed)"
+  },
+  "customerPageOwes": "Owes",
+  "@customerPageOwes": {
+    "description": "#3587 R1-g: the customer page (customerPageOwes)"
+  },
+  "customerPageStory": "Story",
+  "@customerPageStory": {
+    "description": "#3587 R1-g: the customer page (customerPageStory)"
+  },
+  "customerStoryDeclared": "Says they paid invoice {number}",
+  "@customerStoryDeclared": {
+    "description": "#3587 R1-g: the customer page (customerStoryDeclared)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryIssued": "Invoice {number} issued",
+  "@customerStoryIssued": {
+    "description": "#3587 R1-g: the customer page (customerStoryIssued)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryNow": "Now: {words}",
+  "@customerStoryNow": {
+    "description": "#3587 R1-g: the customer page (customerStoryNow)",
+    "placeholders": {
+      "words": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryPaid": "Invoice {number} paid",
+  "@customerStoryPaid": {
+    "description": "#3587 R1-g: the customer page (customerStoryPaid)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStoryReminders": "{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}",
+  "@customerStoryReminders": {
+    "description": "#3587 R1-g: the customer page (customerStoryReminders)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "dataReportArchived": "Archived",
   "@dataReportArchived": {
     "description": "#2862 data report: dataReportArchived"

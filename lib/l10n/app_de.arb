@@ -4162,6 +4162,17 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageCredit": "Guthaben: {amount}",
+  "customerPageCreditHint": "Zahlungen, die noch keine Rechnung beglichen haben.",
+  "customerPageInvoices": "Rechnungen",
+  "customerPageNothingOwed": "Nichts offen",
+  "customerPageOwes": "Schuldet",
+  "customerPageStory": "Verlauf",
+  "customerStoryDeclared": "Sagt, Rechnung {number} bezahlt zu haben",
+  "customerStoryIssued": "Rechnung {number} ausgestellt",
+  "customerStoryNow": "Jetzt: {words}",
+  "customerStoryPaid": "Rechnung {number} bezahlt",
+  "customerStoryReminders": "{count, plural, =1{Mahnung für {number} geteilt} other{{count} Mahnungen für {number} geteilt}}",
   "dataReportArchived": "Archiviert",
   "dataReportColumnAttended": "Anwesend",
   "dataReportColumnCancelled": "Storniert",

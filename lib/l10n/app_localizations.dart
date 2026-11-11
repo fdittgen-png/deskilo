@@ -10464,6 +10464,72 @@ abstract class AppLocalizations {
   /// **'The customer capacity was not saved.'**
   String get customerCapacitySaveError;
 
+  /// #3587 R1-g: the customer page (customerPageCredit)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit: {amount}'**
+  String customerPageCredit(String amount);
+
+  /// #3587 R1-g: the customer page (customerPageCreditHint)
+  ///
+  /// In en, this message translates to:
+  /// **'Payments no invoice has taken yet.'**
+  String get customerPageCreditHint;
+
+  /// #3587 R1-g: the customer page (customerPageInvoices)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get customerPageInvoices;
+
+  /// #3587 R1-g: the customer page (customerPageNothingOwed)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing owed'**
+  String get customerPageNothingOwed;
+
+  /// #3587 R1-g: the customer page (customerPageOwes)
+  ///
+  /// In en, this message translates to:
+  /// **'Owes'**
+  String get customerPageOwes;
+
+  /// #3587 R1-g: the customer page (customerPageStory)
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get customerPageStory;
+
+  /// #3587 R1-g: the customer page (customerStoryDeclared)
+  ///
+  /// In en, this message translates to:
+  /// **'Says they paid invoice {number}'**
+  String customerStoryDeclared(String number);
+
+  /// #3587 R1-g: the customer page (customerStoryIssued)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} issued'**
+  String customerStoryIssued(String number);
+
+  /// #3587 R1-g: the customer page (customerStoryNow)
+  ///
+  /// In en, this message translates to:
+  /// **'Now: {words}'**
+  String customerStoryNow(String words);
+
+  /// #3587 R1-g: the customer page (customerStoryPaid)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} paid'**
+  String customerStoryPaid(String number);
+
+  /// #3587 R1-g: the customer page (customerStoryReminders)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
+  String customerStoryReminders(int count, String number);
+
   /// #2862 data report: dataReportArchived
   ///
   /// In en, this message translates to:

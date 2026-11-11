@@ -4162,6 +4162,17 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageCredit": "Avoir : {amount}",
+  "customerPageCreditHint": "Paiements qu'aucune facture n'a encore pris.",
+  "customerPageInvoices": "Factures",
+  "customerPageNothingOwed": "Rien à payer",
+  "customerPageOwes": "Doit",
+  "customerPageStory": "Historique",
+  "customerStoryDeclared": "Dit avoir payé la facture {number}",
+  "customerStoryIssued": "Facture {number} émise",
+  "customerStoryNow": "Maintenant : {words}",
+  "customerStoryPaid": "Facture {number} payée",
+  "customerStoryReminders": "{count, plural, =1{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
   "dataReportArchived": "Archivé",
   "dataReportColumnAttended": "Présences",
   "dataReportColumnCancelled": "Annulées",
