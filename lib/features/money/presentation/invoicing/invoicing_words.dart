@@ -11,6 +11,7 @@ import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import 'invoicing_dates.dart';
 
 /// The tone of a status (#3587's final list).
 StatusTone statusToneOf(InvoiceStatusKind kind) => switch (kind) {
@@ -40,10 +41,15 @@ String statusWordsOf(
   AppLocalizations l,
   AppFormat format,
   Receivable r,
-  InvoiceStatus s,
-) {
-  String day(DateTime? d) =>
-      d == null ? '' : format.dates(DateShape.monthDay).format(d);
+  InvoiceStatus s, {
+  DateTime? today,
+}) {
+  // With [today], a date of another year says its year.
+  String day(DateTime? d) => d == null
+      ? ''
+      : today == null
+      ? format.dates(DateShape.monthDay).format(d)
+      : invoicingDay(format, d, today);
   return switch (s.kind) {
     InvoiceStatusKind.draft => l.invoicingStatusDraft,
     InvoiceStatusKind.dueIn => l.invoicingDueIn(s.number),

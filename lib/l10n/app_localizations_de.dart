@@ -6424,6 +6424,61 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Kundeneigenschaft wurde nicht gespeichert.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Guthaben: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Zahlungen, die noch keine Rechnung beglichen haben.';
+
+  @override
+  String get customerPageInvoices => 'Rechnungen';
+
+  @override
+  String get customerPageMatch => 'Zahlung zuordnen';
+
+  @override
+  String get customerPageNothingOwed => 'Nichts offen';
+
+  @override
+  String get customerPageOwes => 'Schuldet';
+
+  @override
+  String get customerPageStory => 'Verlauf';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Sagt, Rechnung $number bezahlt zu haben';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Rechnung $number ausgestellt';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Jetzt: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Rechnung $number bezahlt';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen für $number geteilt',
+      one: 'Mahnung für $number geteilt',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archiviert';
 
   @override

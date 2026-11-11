@@ -85,3 +85,22 @@ List<MatchCandidate> candidatesFor({
       ),
   ];
 }
+
+/// A customer's credit: the payments no invoice has taken yet, in one amount
+/// (the ledger holds one currency, the business's own).
+int creditMinorOf(Iterable<LedgerEntry> unmatched) =>
+    unmatched.fold(0, (sum, e) => sum + e.amountCents);
+
+/// Whether a customer holds money no invoice has taken in a currency in which
+/// they also have an open invoice: the ONE predicate of Payments to match, of
+/// the customer page's main action, of the reminder queue's "check first" and
+/// of the home's To-do count. We do not chase a customer whose money we hold
+/// unassigned.
+bool holdsUnassignedMoney({
+  required Map<String, int> credit,
+  required Iterable<Receivable> customerInvoices,
+}) => credit.entries.any(
+  (c) =>
+      c.value > 0 &&
+      customerInvoices.any((r) => r.isOutstanding && r.currency == c.key),
+);

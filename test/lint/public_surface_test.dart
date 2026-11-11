@@ -16,7 +16,10 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
-const Map<String, String> _allowed = {};
+const Map<String, String> _allowed = {
+  'lib/features/money/application/payment_candidates.dart::MatchFit':
+      '#3587 R1-f — the payments to match screen and the customer credit read it',
+};
 
 void main() {
   final findings = scanPublicSurface(Directory.current.path);

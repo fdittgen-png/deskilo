@@ -6375,6 +6375,60 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer capacity was not saved.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Credit: $amount';
+  }
+
+  @override
+  String get customerPageCreditHint => 'Payments no invoice has taken yet.';
+
+  @override
+  String get customerPageInvoices => 'Invoices';
+
+  @override
+  String get customerPageMatch => 'Match the payment';
+
+  @override
+  String get customerPageNothingOwed => 'Nothing owed';
+
+  @override
+  String get customerPageOwes => 'Owes';
+
+  @override
+  String get customerPageStory => 'Story';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Says they paid invoice $number';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Invoice $number issued';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Now: $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Invoice $number paid';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reminders shared for $number',
+      one: 'Reminder shared for $number',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archived';
 
   @override
