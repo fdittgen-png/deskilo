@@ -12,7 +12,11 @@ set -uo pipefail
 
 head=${HEAD:-HEAD}
 base=${BASE:-}
-pattern='generated with|co-authored-by:.*(claude|anthropic|copilot|chatgpt|codex)|claude-session:|claude\.ai/code|noreply@anthropic\.com|^🤖'
+# Anchored to the shapes a tool writes, never a bare phrase: the footer line
+# ("Generated with [Tool]", with or without its robot), the trailer lines (a
+# co-author trailer is recognised by the tool's address, not by a first name),
+# the session trailer and a session link.
+pattern='^[[:space:]]*(🤖[[:space:]]*)?generated with[[:space:]]+\[?(claude|codex|copilot|chatgpt|cursor)|^[[:space:]]*co-authored-by:.*<[^>]*@(anthropic\.com|openai\.com)>|^[[:space:]]*claude-session:|https?://claude\.ai/code/session'
 status=0
 
 scan() { # label, text
@@ -31,10 +35,15 @@ if [ -z "$base" ] || [ "${base//0/}" = "" ]; then
 else
   range=("$base..$head")
 fi
+# A range that cannot be read is a failure of its own, never a pass.
+if ! shas=$(git rev-list "${range[@]}" 2>&1); then
+  echo "::error::the commit range ${range[*]} cannot be read, so no commit message was checked: $shas"
+  exit 2
+fi
 while IFS= read -r sha; do
   [ -n "$sha" ] || continue
   scan "commit ${sha:0:9}" "$(git log -1 --format=%B "$sha")"
-done < <(git rev-list "${range[@]}")
+done <<< "$shas"
 [ -z "${PR_TITLE:-}" ] || scan "the pull request title" "$PR_TITLE"
 [ -z "${PR_BODY:-}" ] || scan "the pull request text" "$PR_BODY"
 exit $status

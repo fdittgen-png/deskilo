@@ -179,4 +179,17 @@ final doc = Archive(
       isEmpty,
     );
   });
+
+  test('an escaped quote inside a list item does not end the item (#3462)', () {
+    const planted = r'''
+final doc = Archive(
+  readmeLines: [
+    'It\'s a sentence a reader will see, with an escaped quote.',
+    'A second sentence a reader will see as well.',
+  ],
+);
+''';
+    final found = auditSource('lib/z.dart', planted);
+    expect(found.map((f) => f.line), [3, 4]);
+  });
 }

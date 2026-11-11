@@ -7,34 +7,34 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
+final _shape = RegExp(
+  r'KitActionButton\([^;]*?onPressed:\s*\(\)\s*(\{[^}]*unawaited\(|=>\s*unawaited\()',
+  dotAll: true,
+);
+
 void main() {
   test('no kit action button is fed through unawaited (#3679)', () {
-    final shape = RegExp(
-      r'KitActionButton\([^;]*?onPressed:\s*\(\)\s*\{[^}]*unawaited\(',
-      dotAll: true,
-    );
     final offenders = <String>[];
     for (final f in handWrittenDartFilesIn([
       'lib/features/money',
       'lib/features/me',
     ])) {
-      if (shape.hasMatch(f.readAsStringSync())) offenders.add(f.path);
+      if (_shape.hasMatch(f.readAsStringSync())) offenders.add(f.path);
     }
     expect(offenders, isEmpty,
         reason: 'pass the async callback itself so the kit holds the button '
             'busy until it completes:\n${offenders.join('\n')}');
   });
 
-  test('the lint can fail: the planted shape is found', () {
-    const planted = '''
+  test('the lint can fail: both planted shapes are found', () {
+    const block = '''
 KitActionButton(label: 'x', onPressed: () {
   unawaited(save());
 })''';
-    expect(
-      RegExp(r'KitActionButton\([^;]*?onPressed:\s*\(\)\s*\{[^}]*unawaited\(',
-              dotAll: true)
-          .hasMatch(planted),
-      isTrue,
-    );
+    const arrow = "KitActionButton(label: 'x', onPressed: () => unawaited(save()))";
+    const fine = "KitActionButton(label: 'x', onPressed: save)";
+    expect(_shape.hasMatch(block), isTrue);
+    expect(_shape.hasMatch(arrow), isTrue);
+    expect(_shape.hasMatch(fine), isFalse);
   });
 }

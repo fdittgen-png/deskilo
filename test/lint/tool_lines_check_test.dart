@@ -48,7 +48,7 @@ void main() {
   test('a footer, a session link and a trailer in a commit fail, named', () {
     final base = commit('second');
     for (final line in [
-      'Generated with a tool',
+      'Generated with Claude Code',
       'Co-Authored-By: Claude <noreply@anthropic.com>',
       'Claude-Session: https://claude.ai/code/session_x',
     ]) {
@@ -62,16 +62,52 @@ void main() {
   test('a planted line in the pull request text or title fails', () {
     final base = commit('third');
     final head = commit('fix: y');
-    final body = check(base, head, env: {'PR_BODY': 'ok\n🤖 Generated with x'});
+    final body = check(base, head, env: {'PR_BODY': 'ok\n\u{1F916} Generated with [Claude Code](x)'});
     expect(body.exitCode, 1);
     expect('${body.stdout}', contains('the pull request text'));
     final title = check(
       base,
       head,
-      env: {'PR_TITLE': 'x. Co-authored-by: Claude'},
+      env: {'PR_TITLE': 'Generated with Claude Code'},
     );
     expect(title.exitCode, 1);
     expect('${title.stdout}', contains('the pull request title'));
+  });
+
+  test('a phrase in prose and a person named Claude are not tool lines', () {
+    final base = commit('fourth');
+    final head = commit(
+      'fix: x\n\nThe report is generated with the nightly job.\n\n'
+      'Co-Authored-By: Claude Martin <claude.martin@example.org>\n'
+      'Reviewed in a Claude Code session note kept out of the text? no.',
+    );
+    final r = check(base, head);
+    expect(r.exitCode, 0, reason: '${r.stdout}');
+  });
+
+  test('the footer and the address trailer fail only in their shapes', () {
+    final base = commit('fifth');
+    for (final line in [
+      '\u{1F916} Generated with [Claude Code](https://example.org)',
+      'Generated with Claude Code',
+      'Co-authored-by: Anyone <noreply@anthropic.com>',
+    ]) {
+      final r = check(base, commit('fix: z\n\n$line'));
+      expect(r.exitCode, 1, reason: line);
+    }
+  });
+
+  test('a range that cannot be read fails loudly, not as a pass', () {
+    commit('sixth');
+    final r = check('0123456789abcdef0123456789abcdef01234567', 'HEAD');
+    expect(r.exitCode, 2, reason: '${r.stdout}');
+    expect('${r.stdout}', contains('cannot be read'));
+  });
+
+  test('an edit of the pull request text is checked too', () {
+    final text = File('.github/workflows/tool-lines.yml').readAsStringSync();
+    expect(text, contains('edited'));
+    expect(text, contains('scripts/tool_lines_check.sh'));
   });
 
   test('the static job runs it on a pull request and on a push', () {

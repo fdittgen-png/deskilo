@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/context_l10n.dart';
+import 'kit_metrics.dart';
 
 class KitActionButton extends StatefulWidget {
   const KitActionButton({
@@ -16,6 +17,7 @@ class KitActionButton extends StatefulWidget {
     required this.onPressed,
     this.tonal = false,
     this.busy = false,
+    this.showProgress = true,
   });
 
   final String label;
@@ -29,6 +31,11 @@ class KitActionButton extends StatefulWidget {
 
   /// A busy state the screen already keeps; it adds to the button's own.
   final bool busy;
+
+  /// Whether the busy state draws the progress mark. An action that opens a
+  /// dialog and waits for the person keeps the button busy without an endless
+  /// animation: pass false there; the button is disabled all the same.
+  final bool showProgress;
 
   @override
   State<KitActionButton> createState() => _KitActionButtonState();
@@ -54,13 +61,13 @@ class _KitActionButtonState extends State<KitActionButton> {
   @override
   Widget build(BuildContext context) {
     final enabled = widget.onPressed != null && !_busy;
-    final child = _busy
+    final child = _busy && widget.showProgress
         ? Row(
             mainAxisSize: MainAxisSize.min,
-            spacing: 8,
+            spacing: KitMetrics.buttonGap,
             children: [
               const SizedBox.square(
-                dimension: 18,
+                dimension: KitMetrics.progressMark,
                 child: CircularProgressIndicator(strokeWidth: 2),
               ),
               Flexible(child: Text(widget.label)),

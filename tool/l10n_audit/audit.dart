@@ -263,7 +263,7 @@ List<(int, String)> _listItems(List<String> lines, int row, int col) {
         // skip past the literal's closing quote on this line
         var end = c + 1;
         while (end < line.length && line[end] != ch) {
-          if (line[end] == r'\\') end++;
+          if (line[end] == '\\') end++;
           end++;
         }
         c = end + 1;
