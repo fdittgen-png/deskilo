@@ -97,7 +97,8 @@ void main() {
             'test/features/other_test.dart': "import 'package:deskilo/x.dart';",
           },
         ),
-        ['test/features/me/space_offers_test.dart'],
+        // #3765 — a providers file also lists the Demo's container tests.
+        ['test/core/demo/', 'test/features/me/space_offers_test.dart'],
       );
     });
 

@@ -104,6 +104,16 @@
         "test/core/demo/"
       ],
       "note": "#3765 -- a shared test helper (the standard overrides, pumpApp) changes every test that imports it; these folders hold the ones a store or override change reached. CI runs the rest."
+    },
+    {
+      "patterns": [
+        "lib/features/*/presentation/**",
+        "lib/features/*/providers/**"
+      ],
+      "tests": [
+        "test/core/demo/"
+      ],
+      "note": "#3765 -- the Demo's container tests are the cheapest whole-app check (they caught an unread template the listed tests missed); about 3 minutes locally."
     }
   ],
   "no_importer_search": [
