@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3745 (0720) -- an inquiry or a reply repeated after a lost answer
+-- #3745 (0721) -- an inquiry or a reply repeated after a lost answer
 -- arrives once: the same request id with the same content answers the
 -- first outcome and writes nothing; the same id with other content is
 -- refused; two ids are two messages; a send without an id behaves as

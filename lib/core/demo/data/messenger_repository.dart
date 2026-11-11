@@ -375,7 +375,7 @@ class FakeMessengerRepository with DemoInboxPages, DemoAccountBlocks implements 
     return message.id;
   }
 
-  /// #3745 — the inquiry sends' request ids, as 0720 keeps them.
+  /// #3745 — the inquiry sends' request ids, as 0721 keeps them.
   final _requests = DemoInquiryRequests();
 
   @override

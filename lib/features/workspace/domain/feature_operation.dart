@@ -61,7 +61,7 @@ bool featureOperationAllowed({
 @visibleForTesting
 const Map<WorkspaceFeature, Map<String, FeatureOperation>>
 featureOperationClasses = {
-  // 0324; since 0720 (#3745) the versioned functions carry the gate and
+  // 0324; since 0721 (#3745) the versioned functions carry the gate and
   // the older two call them.
   WorkspaceFeature.spaceInquiries: {
     'start_space_inquiry_v1': FeatureOperation.acceptNew,

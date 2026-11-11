@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3745 -- the first outcome of an inquiry send's request id in the demo, as
-// `inquiry_request_outcome` (0720) keeps it: the same content answers it,
+// `inquiry_request_outcome` (0721) keeps it: the same content answers it,
 // other content is refused, a new id is null.
 class DemoInquiryRequests {
   final _first = <String, ({String content, String outcome})>{};

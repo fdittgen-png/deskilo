@@ -155,4 +155,4 @@ grant execute on function public.send_inquiry_message(uuid, text) to authenticat
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(720);
+select public.set_deskilo_schema_version(721);
