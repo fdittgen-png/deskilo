@@ -20,6 +20,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// What the device remembered before a visitor ever tapped "Explore".
@@ -33,6 +34,10 @@ const Map<String, Object> _realDevice = {
 };
 
 void main() {
+  // The bar names the demo's date; the app's localization delegates load
+  // the date data in production, these tests mount the bar without them.
+  setUpAll(() => initializeDateFormatting('en'));
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('the offer explains the space before anybody walks into it', (

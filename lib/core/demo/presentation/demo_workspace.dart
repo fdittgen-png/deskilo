@@ -26,8 +26,12 @@ import '../../../app/demo_visit.dart';
 import '../../../app/router.dart';
 import '../../../features/workspace/providers/active_workspace_providers.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../i18n/app_format.dart';
+import '../../i18n/format_controller.dart';
 import '../../l10n/context_l10n.dart';
+import '../../locale/locale_controller.dart';
 import '../../theme/app_spacing.dart';
+import '../../time/clock.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
 import '../demo_persona.dart';
@@ -60,6 +64,11 @@ class _DemoWorkspaceState extends ConsumerState<DemoWorkspace> {
     if (_key == session.scopeKey && existing != null) return existing;
     existing?.dispose();
     _key = session.scopeKey;
+    // #3601 — the Demo opens in the language the app is shown in: a visitor
+    // who chose French is not handed a German Demo. A choice made inside the
+    // Demo is kept (the store is only filled while it is empty).
+    session.fixture.prefs.locale
+        .adopt(ref.read(localeControllerProvider).value?.languageCode);
     final container = _container = ProviderContainer(overrides: [
       ...demoOverrides(session.fixture),
       // Only the outer router handles a tab reload; the Demo router must not
@@ -220,11 +229,20 @@ class DemoControls extends StatelessWidget {
                 children: [
                   Semantics(
                     label: l10n.demoSessionBadgeHint,
-                    child: Text(
-                      l10n.demoSessionBadge,
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: scheme.onSecondaryContainer,
-                          ),
+                    // #3601 — the demo lives on one fixed day: the bar says which.
+                    child: Consumer(
+                      builder: (context, ref, _) => Text(
+                        l10n.demoSessionBadgeDate(
+                          ref
+                              .watch(appFormatProvider)
+                              .dates(DateShape.date)
+                              .format(ref.watch(clockProvider).now()),
+                        ),
+                        key: const ValueKey('demo-bar-date'),
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: scheme.onSecondaryContainer,
+                            ),
+                      ),
                     ),
                   ),
                   // A cycling button, not a menu: this bar renders in

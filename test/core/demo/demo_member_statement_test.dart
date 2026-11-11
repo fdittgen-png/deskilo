@@ -79,6 +79,9 @@ int _ledgerOf(FakeMoneyRepository m, String member, String period) {
   var n = 0;
   for (final e in m.ledger) {
     if (e.memberId != member || e.period != period) continue;
+    // #3601 -- the subscription is charged once, as the band's fee; its
+    // ledger line is what the invoicing wizard bills, not a second charge.
+    if (e.category == LedgerCategory.subscription) continue;
     if (e.kind == LedgerKind.charge) {
       n -= e.amountCents;
     } else if (!consumed.contains(e.id)) {
@@ -160,7 +163,7 @@ void main() {
                   .where((b) => b.fromPct < pct && pct <= b.toPct)
                   .firstOrNull;
               final ledger = _ledgerOf(s.money, member.id, period);
-              if (ledger != 0) withLedger++;
+              if (ledger != 0 || (band?.feeCents ?? 0) != 0) withLedger++;
               // The count itself is pinned by hand below (#3314); here the
               // arithmetic around it.
               final used = st.usedHalfDays;

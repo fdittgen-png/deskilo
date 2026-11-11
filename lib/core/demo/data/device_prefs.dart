@@ -55,6 +55,13 @@ class InMemoryLocaleStore implements LocaleStore {
 
   @override
   Future<void> write(String? code) async => languageCode = code;
+
+  /// #3601 — the Demo opens in the language the app is shown in: [shown] is
+  /// taken only while the session has no language of its own, so a choice made
+  /// inside the Demo is kept.
+  void adopt(String? shown) {
+    if (shown != null && languageCode == null) languageCode = shown;
+  }
 }
 
 /// In-memory [ThemeStore] (#160).

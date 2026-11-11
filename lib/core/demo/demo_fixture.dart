@@ -55,6 +55,7 @@ import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
+import 'seed/demo_money_finish.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_people_seed.dart';
@@ -181,8 +182,7 @@ class DemoFixture {
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoYearOfResources(reservations, workspaces, today);
-    seedDemoYearOfMoney(money, today);
-    applyDemoVat(money);
+    finishDemoMoney(money, today);
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);

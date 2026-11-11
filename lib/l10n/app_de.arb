@@ -4341,6 +4341,7 @@
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
   },
+  "demoSessionBadgeDate": "Demo · {date}",
   "demoSessionBadgeHint": "Sie erkunden einen Demonstrationsbereich. Nichts davon verlässt dieses Gerät.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"

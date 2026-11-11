@@ -15,6 +15,7 @@ import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 /// A screen inside the scope: it reads the repository the scope provides,
 /// exactly as a real one does.
@@ -46,6 +47,10 @@ class _LevelsState extends ConsumerState<_Levels> {
 }
 
 void main() {
+  // The bar names the demo's date; the app's localization delegates load the
+  // date data in production, this test mounts the bar without them.
+  setUpAll(() => initializeDateFormatting('en'));
+
   testWidgets('Reset restores the dataset the visitor started from', (
     tester,
   ) async {
@@ -133,7 +138,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Demo'), findsOneWidget);
+    expect(find.textContaining('Demo · '), findsOneWidget);
     expect(
       find.bySemanticsLabel(RegExp('demonstration space')),
       findsOneWidget,

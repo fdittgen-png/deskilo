@@ -267,7 +267,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
   final main = _seedMainBooks(fixture);
   return [
       // The clock first: everything the fixture seeded is relative to it,
-      // so a demo opened next year still shows a booking for today.
+      // and it stands still on one fixed day, which the Demo bar names.
       clockProvider.overrideWithValue(FixedClock(fixture.seededAt)),
 
       // The repositories. Each of these would otherwise be constructed
