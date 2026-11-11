@@ -7,6 +7,7 @@ import '../../../core/i18n/format_prefs.dart';
 import '../domain/personal_info.dart';
 import '../domain/privacy_notice.dart';
 import '../domain/profile.dart';
+import '../domain/profile_photo_limits.dart';
 import '../domain/profile_projection.dart';
 import '../domain/profile_repository.dart';
 import '../domain/rights_request.dart';
@@ -336,13 +337,22 @@ class SupabaseProfileRepository implements ProfileRepository {
     }
     final path = _avatarPath(userId);
     // Self-only storage RLS (0038); upsert overwrites a previous photo.
-    await _client.storage
-        .from('avatars')
-        .uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: contentType, upsert: true),
-        );
+    try {
+      await _client.storage
+          .from('avatars')
+          .uploadBinary(
+            path,
+            bytes,
+            fileOptions: FileOptions(contentType: contentType, upsert: true),
+          );
+    } on StorageException catch (e) {
+      // The bucket's own refusal: too large (413) or a type it does not
+      // accept (415) reads like the check made before the upload (#3710).
+      if (e.statusCode == '413' || e.statusCode == '415') {
+        throw const ProfilePhotoRefused();
+      }
+      rethrow;
+    }
     await _client
         .from('profiles')
         .update({'avatar_path': path})

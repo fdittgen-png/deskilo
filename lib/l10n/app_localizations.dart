@@ -36053,6 +36053,12 @@ abstract class AppLocalizations {
   /// **'Tap to add a photo'**
   String get profilePhotoNone;
 
+  /// #3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.'**
+  String profilePhotoRefused(int megabytes);
+
   /// Action in the photo sheet: delete the current profile photo.
   ///
   /// In en, this message translates to:

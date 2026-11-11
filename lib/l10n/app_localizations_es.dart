@@ -21952,6 +21952,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profilePhotoNone => 'Toque para añadir una foto';
 
   @override
+  String profilePhotoRefused(int megabytes) {
+    return 'La foto es demasiado grande o de un tipo no admitido. Usa una foto JPEG, PNG o WebP de hasta $megabytes MB.';
+  }
+
+  @override
   String get profilePhotoRemove => 'Quitar foto';
 
   @override

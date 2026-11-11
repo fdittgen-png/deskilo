@@ -13573,6 +13573,7 @@
   "processWorkspaceAccessDesc": "Gérer les adhésions, les rôles et l’accès aux locaux.",
   "profilePhotoChoose": "Choisir une photo",
   "profilePhotoNone": "Toucher pour ajouter une photo",
+  "profilePhotoRefused": "La photo est trop volumineuse ou d'un type non accepté. Utilisez une photo JPEG, PNG ou WebP de {megabytes} Mo au maximum.",
   "profilePhotoRemove": "Supprimer la photo",
   "profilePhotoRemoved": "Photo supprimée",
   "profilePhotoSaveFailed": "Impossible de mettre à jour la photo",

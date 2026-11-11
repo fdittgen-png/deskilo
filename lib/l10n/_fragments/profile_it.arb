@@ -22,6 +22,7 @@
   "profilePhotoSaved": "Foto aggiornata",
   "profilePhotoRemoved": "Foto rimossa",
   "profilePhotoSaveFailed": "Impossibile aggiornare la foto",
+  "profilePhotoRefused": "La foto è troppo grande o di un tipo non accettato. Usa una foto JPEG, PNG o WebP fino a {megabytes} MB.",
   "settingsBillingReports": "Fatturazione e report",
   "defaultPeriodTitle": "Periodo di prenotazione predefinito",
   "defaultPeriodNone": "Nessuna preferenza (giornata intera)",
