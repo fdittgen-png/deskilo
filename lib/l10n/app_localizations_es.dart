@@ -28746,6 +28746,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se ha podido añadir el servicio. Inténtelo de nuevo.';
 
   @override
+  String get setupStateEnabled => 'Activado, aún por configurar';
+
+  @override
+  String get setupStateMarkedDone =>
+      'Configurado, marcado como hecho por usted';
+
+  @override
   String get setupStateNameBlocked => 'Espera otro paso';
 
   @override
@@ -28762,6 +28769,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupStateNameReady => 'Hecho';
+
+  @override
+  String get setupStateNeedsDecision => 'Necesita su decisión';
+
+  @override
+  String get setupStateVerified => 'Configurado y comprobado';
 
   @override
   String get setupStepDone => 'Hecho';

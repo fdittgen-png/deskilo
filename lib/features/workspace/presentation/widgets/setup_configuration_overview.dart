@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_status.dart';
+import '../setup_step_words.dart';
 
 class SetupConfigurationOverview extends StatelessWidget {
   const SetupConfigurationOverview({
@@ -127,7 +128,7 @@ class SetupTaskContext extends StatelessWidget {
             Text(
               step == null
                   ? l10n.setupOverviewUnchecked
-                  : l10n.setupStateName(step.state.name),
+                  : setupStepWord(l10n, step),
             ),
             if (step != null && step.blockedBy.isNotEmpty)
               Text(

@@ -23,5 +23,9 @@
   "setupChoicesReset": "Empfohlene Stufen verwenden",
   "setupChoicesSaving": "Wird gespeichert…",
   "configureWorkspaceTitle": "Bereich konfigurieren",
-  "setupAdvancedSettings": "Erweiterte Einstellungen"
+  "setupAdvancedSettings": "Erweiterte Einstellungen",
+  "setupStateVerified": "Eingerichtet und geprüft",
+  "setupStateMarkedDone": "Eingerichtet, von Ihnen als erledigt markiert",
+  "setupStateEnabled": "Eingeschaltet, noch einzurichten",
+  "setupStateNeedsDecision": "Braucht Ihre Entscheidung"
 }

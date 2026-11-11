@@ -17944,12 +17944,16 @@
   "setupServicesPreviewEmpty": "Ancora nessun servizio: i membri non hanno nulla da aggiungere al conto.",
   "setupServicesPreviewNote": "I membri scelgono da questo elenco quando aggiungono un consumo al conto.",
   "setupServicesSaveFailed": "Non è stato possibile aggiungere il servizio. Riprovi.",
+  "setupStateEnabled": "Attivato, ancora da configurare",
+  "setupStateMarkedDone": "Configurato, segnato come fatto da lei",
   "setupStateNameBlocked": "Attende un altro passo",
   "setupStateNameDeferred": "Messo da parte",
   "setupStateNameNeedsConfiguration": "Da fare",
   "setupStateNameNeedsOperator": "Interviene il suo operatore",
   "setupStateNameNotApplicable": "Non usato",
   "setupStateNameReady": "Fatto",
+  "setupStateNeedsDecision": "Richiede la sua decisione",
+  "setupStateVerified": "Configurato e verificato",
   "setupStepDone": "Fatto",
   "@setupStepDone": {
     "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."

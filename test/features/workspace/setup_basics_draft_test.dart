@@ -205,4 +205,22 @@ void main() {
     expect(find.text('Draft saved'), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-draft-conflict')), findsNothing);
   });
+
+  testWidgets('a draft that could not be read says so; Try again restores it', (
+    tester,
+  ) async {
+    final server = FakeLocalSetupRepository();
+    await _seed(server, 'fr');
+    server.failDraftReads = 1;
+    await _open(tester, server);
+    expect(
+      find.byKey(const ValueKey('setup-draft-read-failed')),
+      findsOneWidget,
+    );
+    expect(_shown('Français'), findsNothing);
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('setup-draft-read-failed')), findsNothing);
+    expect(_shown('Français'), findsOneWidget);
+  });
 }

@@ -24,6 +24,7 @@ import '../../domain/setup_status.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../setup_step_words.dart';
 import '../widgets/sample_data_card.dart';
 import '../widgets/setup_advanced_settings.dart';
 import '../widgets/setup_configuration_overview.dart';
@@ -433,7 +434,7 @@ class _StepTile extends StatelessWidget {
       title: Text(l10n.setupStepTitle(step.step)),
       subtitle: Text(
         [
-          _stateWord(l10n, step.state),
+          setupStepWord(l10n, step),
           ?waitsFor,
           if (step.state == SetupStepState.needsConfiguration)
             l10n.setupStepHint(step.step),
@@ -470,8 +471,6 @@ Widget? _stepAction(
   );
 }
 
-String _stateWord(AppLocalizations l10n, SetupStepState state) =>
-    l10n.setupStateName(state.name);
 
 IconData _icon(SetupStepState state) => switch (state) {
   SetupStepState.ready => Icons.check_circle_outline,

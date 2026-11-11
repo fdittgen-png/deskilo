@@ -17944,12 +17944,16 @@
   "setupServicesPreviewEmpty": "Noch kein Service: Mitglieder können ihrer Rechnung nichts hinzufügen.",
   "setupServicesPreviewNote": "Aus dieser Liste wählen Mitglieder, wenn sie ihrer Rechnung einen Verbrauch hinzufügen.",
   "setupServicesSaveFailed": "Der Service konnte nicht hinzugefügt werden. Versuchen Sie es erneut.",
+  "setupStateEnabled": "Eingeschaltet, noch einzurichten",
+  "setupStateMarkedDone": "Eingerichtet, von Ihnen als erledigt markiert",
   "setupStateNameBlocked": "Wartet auf einen anderen Schritt",
   "setupStateNameDeferred": "Zurückgestellt",
   "setupStateNameNeedsConfiguration": "Zu tun",
   "setupStateNameNeedsOperator": "Ihr Betreiber ist dran",
   "setupStateNameNotApplicable": "Nicht genutzt",
   "setupStateNameReady": "Erledigt",
+  "setupStateNeedsDecision": "Braucht Ihre Entscheidung",
+  "setupStateVerified": "Eingerichtet und geprüft",
   "setupStepDone": "Fertig",
   "@setupStepDone": {
     "description": "#3076 — on the last step page of the guide: goes back to the guide, nothing is left."

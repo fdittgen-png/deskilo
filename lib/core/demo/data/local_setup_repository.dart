@@ -46,9 +46,16 @@ class FakeLocalSetupRepository implements LocalSetupRepository {
   /// stored draft arrives.
   Completer<void>? holdDraftReads;
 
+  /// #3282 — the next draft reads that fail.
+  int failDraftReads = 0;
+
   @override
   Future<SetupStepDraft?> stepDraft(String workspaceId, String step) async {
     await holdDraftReads?.future;
+    if (failDraftReads > 0) {
+      failDraftReads--;
+      throw StateError('the draft read failed');
+    }
     final row = _drafts['$workspaceId/$step'];
     final payload = row?.payload;
     if (row == null || payload == null) return null;

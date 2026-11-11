@@ -46813,6 +46813,18 @@ abstract class AppLocalizations {
   /// **'The service could not be added. Try again.'**
   String get setupServicesSaveFailed;
 
+  /// #3282 a setup step whose feature is on but not configured yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Switched on, still to configure'**
+  String get setupStateEnabled;
+
+  /// #3282 a setup step the server cannot verify, which the owner marked done.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured, marked done by you'**
+  String get setupStateMarkedDone;
+
   /// #3485 setupStateName: the label for case 'blocked'.
   ///
   /// In en, this message translates to:
@@ -46848,6 +46860,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get setupStateNameReady;
+
+  /// #3282 a setup step the server cannot verify, still open: the owner decides.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs your decision'**
+  String get setupStateNeedsDecision;
+
+  /// #3282 a setup step the server checked and found configured.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured and checked'**
+  String get setupStateVerified;
 
   /// #3076 — on the last step page of the guide: goes back to the guide, nothing is left.
   ///

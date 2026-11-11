@@ -23,5 +23,9 @@
   "setupChoicesReset": "Utiliser les niveaux conseillés",
   "setupChoicesSaving": "Enregistrement…",
   "configureWorkspaceTitle": "Configurer l'espace",
-  "setupAdvancedSettings": "Réglages avancés"
+  "setupAdvancedSettings": "Réglages avancés",
+  "setupStateVerified": "Configuré et vérifié",
+  "setupStateMarkedDone": "Configuré, marqué fait par vous",
+  "setupStateEnabled": "Activé, encore à configurer",
+  "setupStateNeedsDecision": "Attend votre décision"
 }

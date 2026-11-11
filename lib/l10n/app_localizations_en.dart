@@ -28503,6 +28503,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'The service could not be added. Try again.';
 
   @override
+  String get setupStateEnabled => 'Switched on, still to configure';
+
+  @override
+  String get setupStateMarkedDone => 'Configured, marked done by you';
+
+  @override
   String get setupStateNameBlocked => 'Waits for another step';
 
   @override
@@ -28519,6 +28525,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupStateNameReady => 'Done';
+
+  @override
+  String get setupStateNeedsDecision => 'Needs your decision';
+
+  @override
+  String get setupStateVerified => 'Configured and checked';
 
   @override
   String get setupStepDone => 'Done';

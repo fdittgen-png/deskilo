@@ -28801,6 +28801,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Service konnte nicht hinzugefügt werden. Versuchen Sie es erneut.';
 
   @override
+  String get setupStateEnabled => 'Eingeschaltet, noch einzurichten';
+
+  @override
+  String get setupStateMarkedDone =>
+      'Eingerichtet, von Ihnen als erledigt markiert';
+
+  @override
   String get setupStateNameBlocked => 'Wartet auf einen anderen Schritt';
 
   @override
@@ -28817,6 +28824,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupStateNameReady => 'Erledigt';
+
+  @override
+  String get setupStateNeedsDecision => 'Braucht Ihre Entscheidung';
+
+  @override
+  String get setupStateVerified => 'Eingerichtet und geprüft';
 
   @override
   String get setupStepDone => 'Fertig';
