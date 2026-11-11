@@ -8975,6 +8975,7 @@
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
   },
+  "invoicePageDecisionRecorded": "Ihre Antwort ist erfasst; sie wartet auf die anderen.",
   "invoicePageDecisionRefused": "Ihre Entscheidung zu dieser Zahlung wurde nicht erfasst.",
   "@invoicePageDecisionRefused": {
     "description": "#3587 when a decision on a declared payment is refused and no known refusal applies"

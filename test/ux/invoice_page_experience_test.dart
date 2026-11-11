@@ -284,6 +284,27 @@ void main() {
     expect(ledger.reads, 0, reason: 'no payment is looked up to match');
   });
 
+  testWidgets('a Not received the quorum keeps pending says so', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      '0071',
+      width: 390,
+      dark: false,
+      scale: 1,
+      decision: (ref, eventId, {required accept}) async =>
+          DeclaredPaymentDecided.waitsForOthers,
+    );
+    await tester.tap(find.byKey(const ValueKey('invoice-page-not-received')));
+    await _answer(tester);
+    expect(
+      find.text('Your answer is recorded; it waits for the others.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('not received'), findsNothing);
+  });
+
   testWidgets('an approved confirmation goes on to the match', (tester) async {
     final ledger = _CountingLedger();
     await _pump(

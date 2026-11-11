@@ -76,7 +76,12 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
     );
     if (!done || !mounted) return;
     if (!accept) {
-      AppSnack.info(context, l.invoicePageMarkedNotReceived);
+      AppSnack.info(
+        context,
+        decided == DeclaredPaymentDecided.waitsForOthers
+            ? l.invoicePageDecisionRecorded
+            : l.invoicePageMarkedNotReceived,
+      );
       return;
     }
     switch (decided) {

@@ -524,6 +524,7 @@ Map<String, _Getter> _part1() => {
   'invoiceMatchNoteLabel': (l) => l.invoiceMatchNoteLabel,
   'invoiceMissingVatTreatment': (l) => l.invoiceMissingVatTreatment,
   'invoicePageClose': (l) => l.invoicePageClose,
+  'invoicePageDecisionRecorded': (l) => l.invoicePageDecisionRecorded,
   'invoicePageMoreReminders': (l) => l.invoicePageMoreReminders,
   'invoicePageRefund': (l) => l.invoicePageRefund,
   'invoiceTabToInvoice': (l) => l.invoiceTabToInvoice,

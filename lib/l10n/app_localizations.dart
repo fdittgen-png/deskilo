@@ -23518,6 +23518,12 @@ abstract class AppLocalizations {
   /// **'Payment confirmed and matched to this invoice.'**
   String get invoicePageConfirmedMatched;
 
+  /// #3587 after Not received when the decision still waits for other approvers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer is recorded; it waits for the others.'**
+  String get invoicePageDecisionRecorded;
+
   /// #3587 when a decision on a declared payment is refused and no known refusal applies
   ///
   /// In en, this message translates to:

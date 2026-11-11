@@ -8737,6 +8737,7 @@ const Set<String> uiLabelKeys = {
   'invoicePageConfirmed',
   'invoicePageConfirmedAwaitsApproval',
   'invoicePageConfirmedMatched',
+  'invoicePageDecisionRecorded',
   'invoicePageDecisionRefused',
   'invoicePageInvoiced',
   'invoicePageMarkedNotReceived',

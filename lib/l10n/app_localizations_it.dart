@@ -14315,6 +14315,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Pagamento confermato e abbinato a questa fattura.';
 
   @override
+  String get invoicePageDecisionRecorded =>
+      'La sua risposta è registrata; attende gli altri.';
+
+  @override
   String get invoicePageDecisionRefused =>
       'La sua decisione su questo pagamento non è stata registrata.';
 

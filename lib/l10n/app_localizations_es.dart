@@ -14311,6 +14311,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Pago confirmado y conciliado con esta factura.';
 
   @override
+  String get invoicePageDecisionRecorded =>
+      'Su respuesta queda registrada; espera a los demás.';
+
+  @override
   String get invoicePageDecisionRefused =>
       'Su decisión sobre este pago no se registró.';
 

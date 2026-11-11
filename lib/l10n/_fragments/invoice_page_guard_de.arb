@@ -1,8 +1,15 @@
 {
   "invoicePageApprovalRecorded": "Ihre Zustimmung ist erfasst; sie wartet auf die anderen.",
-  "@invoicePageApprovalRecorded": {"description": "#3587 message after Confirm when the declared payment still waits for other approvers"},
+  "@invoicePageApprovalRecorded": {
+    "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
+  },
   "invoicePageDecisionRefused": "Ihre Entscheidung zu dieser Zahlung wurde nicht erfasst.",
-  "@invoicePageDecisionRefused": {"description": "#3587 when a decision on a declared payment is refused and no known refusal applies"},
+  "@invoicePageDecisionRefused": {
+    "description": "#3587 when a decision on a declared payment is refused and no known refusal applies"
+  },
   "invoicePageUnreadable": "Diese Rechnung kann nicht mehr gelesen werden.",
-  "@invoicePageUnreadable": {"description": "#3587 the invoice page of an invoice that can no longer be read"}
+  "@invoicePageUnreadable": {
+    "description": "#3587 the invoice page of an invoice that can no longer be read"
+  },
+  "invoicePageDecisionRecorded": "Ihre Antwort ist erfasst; sie wartet auf die anderen."
 }

@@ -14346,6 +14346,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Paiement confirmé et rapproché de cette facture.';
 
   @override
+  String get invoicePageDecisionRecorded =>
+      'Votre réponse est enregistrée ; elle attend les autres.';
+
+  @override
   String get invoicePageDecisionRefused =>
       'Votre décision sur ce paiement n’a pas été enregistrée.';
 

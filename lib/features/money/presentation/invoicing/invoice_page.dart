@@ -212,13 +212,10 @@ class InvoicePage extends ConsumerWidget {
     icon: const Icon(Icons.close),
   );
 
-  /// Whether a source the bottom bar decides from has failed: the matches,
-  /// the reminders, the holds or the e-invoice transmissions.
+  /// Whether a source the bottom bar decides from has failed: the
+  /// invoices, matches, reminders, holds or e-invoice transmissions.
   static bool _barSourceFailed(WidgetRef ref) =>
-      ref.watch(invoiceMatchesProvider).hasError ||
-      ref.watch(invoiceRemindersProvider).hasError ||
-      ref.watch(dunningHoldsProvider).hasError ||
-      ref.watch(invoiceTransmissionsProvider).hasError;
+      ref.watch(invoicingFailedSourcesProvider).isNotEmpty;
 
   /// How a cancelled invoice ended, never a bare "Cancelled": replaced by
   /// another (which opens it), not replaced yet, or its remainder written

@@ -14340,6 +14340,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zahlung bestätigt und dieser Rechnung zugeordnet.';
 
   @override
+  String get invoicePageDecisionRecorded =>
+      'Ihre Antwort ist erfasst; sie wartet auf die anderen.';
+
+  @override
   String get invoicePageDecisionRefused =>
       'Ihre Entscheidung zu dieser Zahlung wurde nicht erfasst.';
 
