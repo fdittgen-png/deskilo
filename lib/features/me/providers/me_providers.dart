@@ -9,6 +9,7 @@ import '../../../core/backend/context_clients.dart'
     show ActiveInstallationHostResolver;
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../directory/providers/admission_requests_provider.dart';
 import '../../reservations/providers/reservation_providers.dart';
 import '../application/account_favorite.dart';
 import '../application/me_actions.dart';
@@ -118,6 +119,8 @@ Future<List<LinkedServerSpaces>> linkedServerSpaces(Ref ref) async {
 /// A refusal or a malformed answer is final: no silent retries.
 @Riverpod(retry: personalRefsRetry)
 Future<PersonalWorkspaceRefs> personalWorkspaceRefs(Ref ref) {
+  // A request to join sent from a space page makes this read again (#3683).
+  ref.watch(admissionRequestsSentProvider);
   if (ref.watch(authStateProvider).value == null) {
     return Future.value(PersonalWorkspaceRefs.none);
   }

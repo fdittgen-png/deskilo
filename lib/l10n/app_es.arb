@@ -4696,14 +4696,19 @@
   "directoryLocate": "Localizar en el mapa",
   "directoryLocating": "Localizando la dirección pública…",
   "directoryLocationMissing": "Ubicación no disponible. El propietario puede publicar coordenadas precisas.",
+  "directoryMapOpenFailed": "No se pudo abrir el mapa.",
   "directoryNoUpcoming": "Sin reservas próximas",
+  "directoryNothingToPin": "Ninguno de estos lugares se pudo situar en el mapa.",
   "directoryOnline": "En línea",
   "directoryOpenGroup": "Abrir el grupo de WhatsApp",
+  "directoryPinsLookupFailed": "{count, plural, =1{1 no se pudo buscar.} other{{count} no se pudieron buscar.}}",
   "directoryPinsMissing": "{count, plural, =1{1 espacio no se pudo situar en el mapa; su ficha está debajo.} other{{count} espacios no se pudieron situar en el mapa; sus fichas están debajo.}}",
+  "directoryPinsNoAddress": "{count, plural, =1{1 no tiene dirección publicada.} other{{count} no tienen dirección publicada.}}",
   "directoryReservationsHeading": "Reservas",
   "directoryReservedNow": "Reservado ahora",
   "directoryReservedNowSeat": "Reservado ahora · {seat}",
   "directoryReservedToday": "Reservado hoy",
+  "directoryTilesFailed": "No se pudo cargar el fondo del mapa.",
   "directoryTitle": "Miembros",
   "directoryWhatsapp": "Chatear por WhatsApp",
   "discoveryBookmark": "Guardar",
@@ -10341,6 +10346,7 @@
   "kioskRevertTitle": "Dispositivo quiosco",
   "kioskScanQr": "Escanear la tarjeta QR",
   "kioskTapHint": "Toque un asiento para registrarse",
+  "kitActionBusy": "En curso…",
   "languageNameCS": "Checo",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -11497,6 +11503,22 @@
   "meAccountInMe": "Mi cuenta está en Yo",
   "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son suyos en todos los espacios.",
   "meAddressSaveFailed": "No se pudo guardar su dirección. Inténtelo de nuevo.",
+  "meBusinessSeesAdmins": "Sus administradores que le facturan o llevan el registro de miembros: su nombre, empresa, dirección, teléfono, correo, número de IVA, identificador legal e idioma preferido, que necesitan para facturarle, y su cumpleaños si lo indicó, para quienes llevan el registro de miembros.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "Cuando pide unirse: su nombre y su foto.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Una vez miembro, todos en el espacio: su nombre y su foto. Su número de WhatsApp, su estado y cuándo estuvo por última vez solo según lo que elija en Quién me ve.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "Lo que ve un negocio al que se une",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Personal",
   "meCreateSpace": "Crear un espacio",
   "meDataPersonalExport": "Exportar datos personales",
@@ -13221,6 +13243,7 @@
   "portalReachableHeading": "Personas a las que puede escribir",
   "portalRecipientHint": "Escriba un nombre: las sugerencias aparecen desde la primera letra",
   "portalRegisterDirectory": "Vincular un servidor al directorio global",
+  "portalRequestPending": "Solicitud pendiente",
   "portalRequestProfile": "Pedir unirme",
   "portalRequestSent": "Solicitud enviada. El espacio revisará su perfil.",
   "portalResetAll": "Restablecer todos los datos públicos con la información del espacio",
@@ -18093,7 +18116,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su dirección de correo. Una vez miembro, sus administradores verán su nombre y los datos de contacto y facturación que necesitan para facturarle.",
+  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.",
   "spaceQrSizeLabel": "Tamaño del código QR",
   "spaceRatingClear": "Sin valoración",
   "spaceRunByAssociation": "Gestionado por una asociación",

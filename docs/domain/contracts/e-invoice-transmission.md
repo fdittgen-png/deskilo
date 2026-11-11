@@ -3,153 +3,134 @@
 
 ## Baseline
 
-- Source commit: 0e61749f2f0920a4117735bb416b98ce3919dc7e
-- Refs: #3335 (prepare before send, idempotent retry, uncertain outcome), #3336 (provenance and capability lifecycle, which hangs on this attempt identity), #2358 (the national channels), #3328 (the modular epic)
-- Canonical sources: `docs/decisions/0010-e-invoice-transmission.md` (the app produces the document, a provider transmits it), `supabase/migrations/0071_einvoice_transmission.sql` (the attempt log), `supabase/migrations/0414_einvoice_channels.sql` (format, receipt), `supabase/functions/send-e-invoice/index.ts` (the handler), `supabase/functions/_shared/accounting_delivery.ts` (the delivery state machine whose words this page reuses)
-- Required review: [#3335 implementation review](https://github.com/fdittgen-png/deskilo/issues/3335#issuecomment-6659675069). Its safeguards and case table remain acceptance requirements, mapped to O1–O14 below. Proposed behaviour is not implemented at this baseline.
+- Refs: #3335 (prepare before send, idempotent retry, uncertain outcome), #3336 (provenance and capability lifecycle, which hangs on this transmission's identity), #2358 (the national channels), #3328 (the modular epic)
+- Canonical sources: `docs/decisions/0010-e-invoice-transmission.md` (the app produces the document, a provider transmits it), `supabase/migrations/0071_einvoice_transmission.sql` (the transmission log), `supabase/migrations/0414_einvoice_channels.sql` (format, receipt), `supabase/migrations/0689_einvoice_prepare_before_send.sql` (the durable record, the claim, the outcome and manual-resolution functions, the stored artifact), `supabase/migrations/0694_transmission_envelope.sql` (the current `prepare_einvoice_v1`, with its provenance envelope), `supabase/functions/send-e-invoice/handler.ts` (the decisions), `supabase/functions/send-e-invoice/store.ts` (the database calls), `supabase/functions/send-e-invoice/connectors.ts` (the installed providers and the classification of their answers)
+- Design review: [#3335 implementation review](https://github.com/fdittgen-png/deskilo/issues/3335#issuecomment-6659675069). Its case table is the Evidence section below, O1 to O14.
+
+The decisions live in `handler.ts`; `index.ts` is only the Deno entrypoint.
 
 ## Concepts and identity
 
 | concept | meaning | identity |
 |---|---|---|
 | issued invoice | the immutable, signed document the workspace issued | `invoices.id`, inside its workspace |
-| destination | who the mandate points at: the government platform, or the customer's own delivery service | `government` / `customer` — separate credentials, never a fallback for each other |
-| environment | which platform instance: production, the provider's test instance, a developer one | `prod` / `uat` / `dev` — endpoint and secret strictly per environment |
-| provider | the channel adapter: generic upload, Peppol access point, French PA, SdI, KSeF, ANAF | the workspace's configured provider; the customer leg is always the generic upload |
-| artifact | the bytes the client built with the same builder as the download, and their SHA-256 | the digest; the bytes themselves are not stored today |
-| **logical transmission** | one business submission of this invoice, scoped by installation, workspace/issuer, provider target, destination and environment | **proposed:** a stable business key, independent of request ids and payload digest. The first preparation pins bytes, format and recipient; changing them cannot bypass an unresolved or acknowledged submission (D2). Today each HTTP request is its own attempt |
-| attempt | today one send-log row; **proposed:** the durable record for one logical transmission | one stable `invoice_transmissions` record per business key, created before dispatch; retries are dispatch generations on that same record |
-| receipt | what the provider said about the document — Peppol evidence, PA lifecycle, SdI notification, KSeF number and UPO, ANAF state | `receipt`, `receipt_at`, `external_id` on the attempt |
-| transport progress | local dispatch progress and what is known about the upload | the attempt's state; a dispatch claim is not evidence of remote acceptance |
-| document verdict | what the authority eventually decided about the document | **proposed:** a separate fact on the attempt; today a later rejection overwrites the state |
+| destination | who the mandate points at: the government platform, or the customer's own delivery service | `government` / `customer`: separate credentials, never a fallback for each other; the customer leg always uses the generic upload |
+| environment | which platform instance: production, the provider's test instance, a developer one | `prod` / `uat` / `dev`: endpoint and secret strictly per environment |
+| provider | the channel adapter: generic upload, Peppol access point, French PA, SdI, KSeF, ANAF | the workspace's configured provider, among the installed connectors; a provider with no installed connector sends nothing |
+| artifact | the exact bytes that may leave, with their SHA-256, file name, media type and receiver | one row of `invoice_transmission_artifacts`, linked by the transmission id and the same-workspace foreign key; written with the transmission, never readable by a client |
+| **logical transmission** | one business submission of one invoice to one destination in one environment through one provider | one non-legacy `invoice_transmissions` row per `workspace_id\|invoice_id\|provider\|destination\|environment`, its `business_key`, enforced by the unique index `invoice_transmissions_business_key_uq`. A request id and the document digest are not part of the identity |
+| binding | what the first preparation pinned | `binding_hash`: the digest of the document digest, format, receiver scheme and receiver id. A replay with another binding conflicts; it never opens a second submission |
+| legacy row | a transmission written before preparation existed | a null `business_key`; preparation returns a matching accepted legacy row as the original instead of transmitting again |
+| dispatch generation | one claimed attempt to post the stored artifact | `owner_id`, `generation` and `deadline` on the same row; each claim advances `generation` |
+| upload receipt | what the provider said about the upload: Peppol evidence, PA lifecycle, SdI notification, KSeF number and UPO, ANAF state | `receipt`, `receipt_at`, `external_id` |
+| document verdict | what the authority later decided about the document | `verdict`, a fact beside the receipt |
+| status-query failure | a later status question that could not be answered | `query_error`, a fact beside the receipt |
 
-Transport progress and document verdict are different facts. An upload
-receipt, a failed status query and a final rejection must stay
-distinguishable: the first is evidence that bytes left, the other two
-are not evidence that they did not.
+The stable row is not a request: the same row is dispatched again, with a
+new generation, when its earlier failure proved nothing was accepted. A
+fresh HTTP request is one dispatch generation; the durable row is the
+transmission. Upload acceptance, the document verdict and a failed status
+query are different facts: the first is evidence that bytes left, the
+other two are not evidence that they did not.
 
 ## Relationships and cardinalities
 
 | question | answer | qualification |
 |---|---|---|
-| For one attempt, how many issued invoices? | exactly one | the composite key keeps it inside the invoice's workspace (`supabase/migrations/0242_tenant_reference_integrity.sql`) |
-| For one issued invoice, how many attempt records? | none or more, across distinct business transmission keys | today each send adds a log row; proposed retries reuse the record for their key, with a new dispatch generation only when permitted |
-| For one logical transmission, how many attempts *in flight or uncertain*? | **proposed:** at most one | today: unbounded — two concurrent requests each send |
-| For one attempt, how many receipts? | today one mutable receipt value; proposed: upload evidence and later verdict/query facts kept separately | a failed query never erases evidence of an upload |
-| For one attempt, how many artifacts? | **proposed:** one persisted artifact, pinned by digest | different bytes, format or recipient conflict even with a new request id; correction is outside this retry slice (D2) |
+| For one transmission, how many issued invoices? | exactly one | the composite key keeps it inside the invoice's workspace (`supabase/migrations/0242_tenant_reference_integrity.sql`) |
+| For one issued invoice, how many transmission rows? | none or more, one per distinct provider, destination and environment | rows written before preparation have no business key and stay a plain log |
+| For one transmission, how many dispatches in flight? | at most one | the claim moves the row to `sent` with a new owner and generation; a second claim finds it claimed |
+| For one transmission, how many artifacts? | exactly one | pinned by the binding; the same-workspace foreign key keeps it with its transmission |
+| For one transmission, how many receipts? | one upload receipt, with the verdict and the status-query failure kept beside it | a later fact never erases the upload receipt |
 | For one workspace, how many provider configurations? | one, with per-destination and per-environment secrets | `einvoice_credentials`, read only by the service role |
 
 ## States and transitions
 
 Declared states: `prepared`, `sent`, `accepted`, `rejected`, `failed`, `uncertain`.
 
-Today the row is written **after** the provider answered and knows only
-`accepted`, `rejected`, `failed` (0071). The following table is **proposed**
-for #3335. `sent` means dispatch was claimed; `accepted` records upload acceptance; `rejected` requires affirmative upload/admission refusal. A document verdict is a separate fact.
-Accounting delivery supplies identity/recovery precedents, not an identical protocol.
+The column is `phase`. The legacy column `status` is a three-value
+projection of it (see Processing). `sent` means a dispatch was claimed;
+`accepted` records that the provider took the upload; `rejected` records an
+affirmative refusal of the upload; a document verdict is a separate fact.
+There is no stored transition from `failed` back to `prepared`: a failed
+transmission is claimed again directly, on the same row and artifact.
 
 | from | event | guard | to | effects |
 |---|---|---|---|---|
-| (none) | prepare | active native member with issuing authority; workspace is `prod`; provider configured; no existing business key | `prepared` | atomically create the unique attempt with persisted artifact and pinned binding; nothing has left |
-| (none) | prepare (replay) | caller remains authorised; business key exists; bytes, format and recipient match its binding | *(that attempt's state)* | return the existing attempt; no second row or upload; changed binding is a named conflict regardless of request id |
-| `prepared` | claim dispatch | atomic claim of a new dispatch generation; no live owner or unresolved prior dispatch; any prior dispatch proved no acceptance | `sent` | commit owner, generation and deadline before posting; send the attempt key where provider idempotency is supported |
-| `failed` | retry | caller remains authorised; original binding; failure proves no possible acceptance | `prepared` | reuse the same attempt and stored bytes; no upload before a new atomic claim |
-| `sent` | provider took the upload | the connector returned the platform's acknowledgement | `accepted` | `external_id`, receipt, `receipt_at`; the answer to the client |
-| `sent` | provider refused upload/admission | affirmative refusal before acceptance, not an arbitrary non-2xx response | `rejected` | sanitised transport-refusal detail; never overwrite upload evidence with a later document verdict |
-| `sent` | provider unreachable | the connector certifies that no byte can have been accepted | `failed` | the sanitised detail; the attempt may be dispatched again |
-| `sent` | answer lost | the process died, the response timed out after the upload could have landed, or the outcome write failed; or the in-flight deadline passed with no outcome recorded | `uncertain` | nothing is resent; the attempt keeps its pre-dispatch facts |
-| `uncertain` | lookup finds upload evidence or a document verdict | correlated lookup matches the original attempt/binding | `accepted` | retain upload evidence and a separate verdict, including document rejection; no create |
-| `uncertain` | lookup proves upload/admission refusal | correlated evidence establishes refusal before acceptance | `rejected` | attach the transport refusal to the original attempt; no create |
-| `uncertain` | lookup unsupported or inconclusive | no correlated proof of acceptance/refusal; timeout or temporary not-found is insufficient | `uncertain` | preserve unresolved state; use verified manual evidence where lookup cannot resolve it, including the generic adapter; no resend |
-| `uncertain` | manual upload/document-verdict resolution | current issuing authority (D5); correlated upload or document-verdict evidence; compare-and-set still uncertain | `accepted` | record actor/reason/evidence; document rejection is a separate verdict, not transport refusal; repeat cannot change it |
-| `uncertain` | manual upload/admission refusal | same authority and atomic guard; affirmative refusal before acceptance | `rejected` | record attributable transport-refusal evidence; no upload |
-| `uncertain` | manual no-acceptance | same authority and atomic guard; affirmative evidence proves no acceptance, not timeout or temporary not-found | `failed` | record the evidence; only the guarded retry above can dispatch |
-| `accepted` | status query answers | the provider's later verdict about the document | `accepted` | the verdict and receipt are stored as a second fact; the upload receipt is not erased — **proposed**; today the row's state becomes `rejected` |
-| `accepted` | status query fails | network, authorisation or timeout | `accepted` | the failure is recorded beside the receipt, never over it |
+| (none) | prepare | the invoice exists in the workspace; no row with this business key and no accepted legacy row | `prepared` | `prepare_einvoice_v1` inserts the row and its artifact in one function call and writes the transmission envelope; nothing has left |
+| (none) | prepare, matching replay | the business key exists and the binding matches | *(that row's phase)* | the existing row is returned; no second row, artifact or upload |
+| (none) | prepare, changed binding | the business key exists and the binding differs | *(that row's phase)* | answer `binding_changed`; nothing changes, whatever the request id |
+| `prepared` | claim | the handler verified the stored artifact; `claim_einvoice_dispatch_v1` wins | `sent` | `owner_id`, `generation + 1` and `deadline` are committed before the post |
+| `failed` | claim | the same atomic claim | `sent` | the same row and stored artifact; `generation + 1` |
+| `sent` | provider accepted the upload | the outcome is recorded by the current owner and generation (`record_einvoice_outcome_v1`) | `accepted` | `external_id`, `receipt`, `receipt_at` |
+| `sent` | provider refused the upload | an explicit refusal: a 4xx other than 401, 403, 404, 408, 409 and 429, or a document answer the connector read | `rejected` | the sanitised detail; the provider's own words stay in the server log |
+| `sent` | nothing can have been accepted | the request that carries the document never left, or the credential or endpoint was refused (401, 403, 404, the destination guard, an unsupported format, a missing connector) | `failed` | the sanitised detail; the row may be claimed again |
+| `sent` | the answer cannot be trusted | after dispatch: a thrown error, a 5xx, 408, 409, 429 or an unreadable answer; or the outcome write was lost | `uncertain` | nothing is resent; a lost outcome write leaves the row `sent` until its deadline expires |
+| `sent` | the deadline passes | `expire_einvoice_dispatches_v1`, also run by the claim, finds `deadline < now()` | `uncertain` | nothing is resent; `DISPATCH_WINDOW_SECONDS` in `handler.ts` is 150, a fixed constant and not a per-workspace setting |
+| `uncertain` | a late outcome arrives | the same owner and generation as the last claim | `accepted` | the outcome function admits `sent` or `uncertain` rows; a stale owner or generation changes nothing |
+| `uncertain` | a late outcome arrives | the same owner and generation | `rejected` | as above |
+| `uncertain` | a late outcome arrives | the same owner and generation | `failed` | as above |
+| `uncertain` | status query answers | an external id was retained and the connector read a document answer from a successful reply (`record_einvoice_lookup_v1`) | `accepted` | the receipt and a separate verdict are stored; a document rejection is a rejected verdict beside accepted transport |
+| `uncertain` | status query cannot resolve | no retained external id, an unsupported lookup, or a failed query | `uncertain` | no external id: the answer is `lookup: unavailable` and nothing is written; a failed query writes only `query_error`; no resend |
+| `uncertain` | manual resolution | `resolve_einvoice_manually_v1`: an active native member with the send authority, a nonblank reason and evidence, still `uncertain` | `accepted` | `resolved_by`, `resolved_reason`, `resolved_evidence`, `resolved_at`; an optional verdict beside it |
+| `uncertain` | manual resolution | the same authority and compare-and-set | `rejected` | the same attribution; a transport refusal |
+| `uncertain` | manual resolution | the same authority and compare-and-set | `failed` | the same attribution; only a claim can dispatch it again |
+| `accepted` | status query answers | the connector read a document answer | `accepted` | the verdict is stored; the upload receipt is kept; `query_error` is cleared |
+| `accepted` | status query fails | network, authorisation or timeout | `accepted` | the failure is written to `query_error`, never over the receipt |
+
+A second manual resolution finds the row no longer `uncertain` and
+changes nothing. A lookup never moves a row to `rejected`: the SQL function
+would admit that argument, and the status branch of `handle` does not send
+it.
 
 ## Invariants
 
-| invariant | status | enforcement |
-|---|---|---|
-| a transmission attempt never points into another workspace | held | composite foreign key, 0242 |
-| a client cannot claim an invoice was sent | held | `invoice_transmissions` has a select policy only; the service role writes |
-| a development workspace sends nothing to anyone | held | the handler refuses before any credential is used (#917) |
-| a delegated token never transmits an invoice | held | `refuseDelegated` at the top of the handler (#1614) |
-| the customer leg never falls back to the government credentials, nor a sandbox key to the production one | held | `configForDestination`, `configFor` |
-| every possible dispatch has a durable attempt before it leaves | not held; proposed correction | the insert currently follows `submit`; a crash can lose the attempt. **This is the defect #3335 corrects** |
-| one logical transmission has at most one attempt in flight | proposed | an atomic claim with owner and generation, as `record_accounting_delivery` answers `in_flight` (`supabase/tests/database/324_accounting_delivery_in_flight.sql`) |
-| a business-key replay returns the original attempt; changing request id, bytes, format or recipient cannot bypass an unresolved or acknowledged transmission | proposed | unique business identity plus immutable payload binding, as the booking claim pins its payload (`supabase/migrations/0353_booking_intent_recovery.sql`) |
-| an `uncertain` attempt is never resent automatically | proposed | the state machine admits no `uncertain` → `sent` transition |
-| an upload receipt is never erased by a failed status query | proposed | the verdict is a second fact on the row |
-| an older client cannot trigger an unsafe resend | proposed | the server deduplicates on the logical identity regardless of the request shape; the client's decoder (`lib/features/money/domain/einvoice_gateway.dart` maps an unknown state to `failed`) must not be the only guard |
-| the manual resolution is attributable and repeat-safe | proposed | permission check, recorded actor and evidence, refusal of a second resolution |
+| invariant | enforcement |
+|---|---|
+| a transmission never points into another workspace | the tenant foreign key on `invoice_id` (`supabase/migrations/0242_tenant_reference_integrity.sql`) and `invoice_transmission_artifacts_same_workspace` (0689) |
+| a client cannot claim an invoice was sent or read its bytes | `invoice_transmissions` has a select policy only; the artifacts table has no client policy and no client grant; the prepare, claim, outcome, lookup and resolve functions are granted to the service role only (0689, 0694) |
+| a development workspace sends nothing to anyone | the handler refuses a non-production workspace before any credential is used (#917) |
+| a delegated token never transmits an invoice | `refuseDelegated` at the top of `handle` (#1614) |
+| the customer leg never falls back to the government credentials, nor a sandbox key to the production one | `configForDestination` and `configFor` in `handler.ts`; destination and environment are part of the business key |
+| every dispatch has a durable record before it leaves | the handler order: `prepare_einvoice_v1` (row and artifact in one call), artifact read and digest check, then the claim, then the post |
+| one logical transmission has at most one record | the unique index `invoice_transmissions_business_key_uq` with `on conflict do nothing` in `prepare_einvoice_v1` |
+| a changed document, format or receiver cannot bypass an existing submission | `binding_hash` compared in `prepare_einvoice_v1`; answer `binding_changed` |
+| at most one dispatch owner at a time | the single update in `claim_einvoice_dispatch_v1`, which moves only `prepared` or `failed` rows to `sent` |
+| an `uncertain` row is never resent automatically | the claim admits only `prepared` and `failed`; the handler answers any other existing phase as it stands |
+| a late or stale writer changes nothing | `record_einvoice_outcome_v1` matches `generation` and `owner_id` |
+| an upload receipt is never erased by a status answer or a failed query | `record_einvoice_lookup_v1` keeps a non-empty receipt of an accepted row; `query_error` and `verdict` are separate columns |
+| an older client cannot trigger an unsafe resend | the server deduplicates on the business key whatever the request shape; `invoice_transmissions_sync_phase` and `legacyStatus` give an older reader an honest `status` |
+| a manual resolution is attributable and cannot repeat | `resolve_einvoice_manually_v1`: authority check, reason and evidence, compare-and-set on `uncertain`, recorded actor |
 
 ## Processing
 
-- **Trigger and actor:** the person who may issue invoices presses *Send* on an issued invoice; the client builds the bytes and posts them to `send-e-invoice`. An owner, an admin, or a member holding `issueInvoices` through a role.
-- **Prerequisites:** the invoice exists in the caller's workspace; the workspace is production; the provider is configured for the chosen destination and environment.
-- **Durable boundaries (proposed):** persist and verify the artifact · atomically prepare/deduplicate · atomically claim · post · conditionally record against the current owner/generation. The HTTP effect is outside the database transaction; stale writers cannot replace a newer outcome.
-- **Outcomes to the client:** the attempt's state and its sanitised detail. A replay receives the existing attempt. A concurrent request receives *in flight*. An `uncertain` attempt is shown as unresolved with the actions the provider supports (look up, or record a verified outcome), never a blind *retry*.
-- **External effect:** one HTTP upload to the provider per dispatch claim. The provider's own words never reach the client (#3090).
-- **Recovery:** expiry after possible dispatch means `uncertain`, never permission to resend. Only proven pre-dispatch preparation or a proven no-acceptance failure may be claimed again. Lookup uses a pre-recorded correlation key where supported; otherwise retain unresolved/manual-check state. Recovery uses the stored provider, destination, environment and artifact, never mutable request defaults.
-- **Connector classification:** current `Submission` collapses thrown errors into `failed` and non-2xx into `rejected`; neither proves no acceptance. The implementation must distinguish known no-effect, possible dispatch and explicit document verdict. Lost/malformed responses after possible acceptance stay uncertain; failed status queries preserve receipt facts. Map this boundary to O1/O4/O9/O10; retain request/security tests, revise blanket error expectations.
-- **Compatibility:** before exposing new states, specify submission-response and history-read representations for a pinned previous supported client and the new client (D6). A new decoder does not update an old one. Server deduplication always applies; legacy projection or capability refusal must be proven through that actual reader without calling uncertainty failure or acceptance.
+- **Trigger and actor:** an owner, an admin, or a member holding `issueInvoices` through a role presses *Send* on an issued invoice. The client builds the bytes and posts them to `send-e-invoice`.
+- **Sequence:** authorize (a signed-in active member with that authority; not a delegated token; a production workspace) · prepare and deduplicate · read and verify the stored artifact · claim · HTTP post of the stored artifact · record against the claim's owner and generation. The HTTP effect is outside the database transaction.
+- **Outcomes to the client:** `status` and `phase`, with a sanitised detail. A replay receives the existing row. A request that loses the claim, or that finds the row in flight or uncertain, receives the unresolved answer, never a blind retry. The provider's own words never reach the client (#3090).
+- **External effect:** one HTTP upload to the provider per claimed dispatch generation.
+- **Recovery:** a dispatch that may have landed is `uncertain` and is never resent. Only a row that never dispatched (`prepared`) or whose failure proved no acceptance (`failed`) may be claimed again. Recovery uses the stored provider, destination, environment and artifact, never the request's defaults. A status query is possible only for a row in `accepted` or `uncertain` that retained an `external_id`. A transmission with no retained external id, or on a provider with no lookup, stays `uncertain` until the verified manual resolution settles it; no connector finds a submission by a key recorded before the upload.
+- **Classification:** `classify` in `connectors.ts` decides what an answer proves, using the connector's dispatch marker (`onDispatch`): before the document request left, nothing was accepted; after it, only an explicit refusal is a rejection.
+- **Compatibility:** `phase` carries the six states. `status` stays a three-value projection: accepted and rejected stay themselves; prepared, sent and uncertain read as failed with the detail "In progress or unresolved - do not resend". An older decoder therefore cannot tell uncertainty from failure; the server's deduplication prevents its retry from causing another upload. The current client reads `phase` first (`lib/features/money/domain/einvoice_gateway.dart`).
 
 ## Evidence
 
-Existing test sources to retain; this page is not a new execution receipt:
+A path below is source-level test coverage, not a record that a run passed. Where the obligation is broader than the assertions, the covered part is stated.
 
-| rule | executed by |
-|---|---|
-| each connector's exact request and how each answer becomes an outcome; the KSeF cryptography end to end | `supabase/functions/send-e-invoice/connectors_test.ts` |
-| the client sends through the gateway when a platform is configured and offers no button otherwise | `test/features/money/einvoice_send_test.dart` |
-| receipts land on the transmission they answer | `test/features/money/einvoice_receipts_test.dart` |
-| the delivery state machine honours a supplied `in_flight` result and reads back before creating; SQL tests the time window sequentially | `supabase/functions/_shared/accounting_delivery_test.ts`, `supabase/tests/database/324_accounting_delivery_in_flight.sql`; neither is a two-session dispatch proof |
-| a transmission row stays inside its workspace | `supabase/tests/database/42_tenant_reference_integrity.sql` |
-
-Obligations the proposed rules derive. Each names its oracle — the
-state and the effects to inspect, not the returned label: two
-concurrent requests can each answer *success* and still violate the
-one-in-flight rule.
-
-| # | given / action | expected | oracle | layer |
-|---|---|---|---|---|
-| O1 | artifact storage or the prepare write fails | no upload; no `sent` or `accepted` row | the mocked provider saw no request; the table holds no row or a `prepared` one | handler test with an injected store failure |
-| O2 | two concurrent requests, same business key, different request ids | one attempt and dispatch owner; loser receives existing/in-flight state | one durable identity; at most one provider upload | controlled two-session database claim test plus injected-provider handler test |
-| O3 | process dies after preparation, proven before any dispatch claim | same attempt may be claimed later | original artifact/id; no earlier upload | database claim test plus handler interruption fixture |
-| O4 | possible provider acceptance, then lost/malformed response, process death or outcome-write failure; ownership expires | durable uncertainty; no automatic re-dispatch, including through a fresh owner | original attempt; one upload; expiry and retries cause no second upload | handler failure injection plus database expiry test |
-| O5 | from `uncertain`, the provider supports lookup by the pre-recorded key | the found result attaches to the original attempt | same attempt id; receipt present; no second upload | connector test with a mocked lookup |
-| O6 | from `uncertain`, the generic adapter | the attempt stays `uncertain`, visible, with no automatic repeat | zero uploads over any number of status calls | handler test |
-| O7 | a successful transmission is replayed | the existing receipt is returned | no new row; no upload | handler test |
-| O8 | changed bytes/format/recipient with the same or a fresh request id while unresolved/acknowledged; stale owner writes late | named conflict/refusal; no duplicate dispatch or replacement of winning facts | pinned artifact/recipient and winning outcome unchanged; no new business attempt/upload | database mutation assertions plus handler provider count |
-| O9 | a status poll times out or loses authorisation after an accepted upload | the receipt stays; the failure is recorded beside it | `receipt` unchanged; state still `accepted` | handler test |
-| O10 | affirmative upload refusal vs correlated later document rejection, through response/lookup/manual resolution | transport `rejected` only for upload refusal; known uploaded document stays/becomes `accepted` with separate rejected verdict | original attempt, preserved upload evidence, separate verdict and sanitised fixed detail | connector plus handler/database outcome tests |
-| O11 | the government and customer legs, or UAT and production, of one invoice | distinct logical transmissions and credentials; recovery uses the stored destination and environment | two rows with different identity; the recovery request carried no environment and still hit the right endpoint | handler test |
-| O12 | anonymous, inactive, delegated or other-workspace actor requests send, history or artifact; authorised control | forbidden operation/read refused; permitted control works | existing fixture unchanged; no forbidden data or provider call; explicit refusal | actual handler plus database/storage access tests under caller roles |
-| O13 | pinned previous client omits fields and reads/replays unresolved history; new client reads the same attempt | old wire/read path is honest or explicitly compatibility-refused; new UI shows unresolved; no unsafe resend | actual old decoder/request fixture, pinned by commit; no duplicate row/upload after its retry | legacy gateway/history fixture, new decoder/UI and handler tests |
-| O14 | a manual resolution without the permission or the evidence, or a second resolution | refused; a valid one is attributable | actor and reason on the row; the second call changes nothing | pgTAP |
-
-The pgTAP files take their number at push time (the migration rule);
-this page names them by what they prove, not by a number that does not
-exist yet.
-
-## Open decisions
-
-| # | decision | who |
+| # | rule | executed by |
 |---|---|---|
-| D1 | whether `uncertain` is one state with a *resolvable by lookup / by a person* attribute, or two states; this page uses one state | the implementer of #3335, in the pull request, with the reviewer |
-| D2 | **resolved:** bytes, format and recipient are immutable binding, not new-submission identity; changing them conflicts. An explicit correction route is outside this retry slice | delegated design review: prevents a new digest/request id bypassing the same business submission |
-| D3 | whether the document verdict becomes a column beside the state or a row in a verdict log; today the status action overwrites the state with `rejected` and that behaviour has readers | the implementer, with the readers of `test/features/money/einvoice_receipts_test.dart` in view |
-| D4 | the in-flight deadline: the edge function's wall-clock budget, as the deliveries use | the implementer; a configured value with a UI point if it is to vary per workspace (the no-hardcoded-value rule) |
-| D5 | **resolved:** reuse the current send authority: native token, active workspace member, owner/admin or `issueInvoices`; scope to the original attempt and require actor/reason/evidence plus atomic uncertainty guard | delegated design review: existing authority, no new permission machinery; timeout/not-found alone never proves no acceptance |
-| D6 | exact submission/history compatibility design and previous supported client commit; demonstrate O13 before exposing new states | implementer and reviewer; server deduplication cannot substitute for honest reads |
+| O1 | a failed prepare or an artifact whose digest does not match uploads nothing and leaves no `sent` row | `supabase/functions/send-e-invoice/handler_test.ts` (failed prepare; artifact digest mismatch; no upload) |
+| O2 | two simultaneous requests for one business key post once | the same handler test, simultaneous requests; `scripts/einvoice_claim_race.sh` for two SQL sessions; `supabase/tests/database/365_einvoice_prepare_before_send.sql` for identity and claim assertions |
+| O3 | a record prepared and never dispatched is claimed by the next request | `handler_test.ts` (prepared before dispatch); the claim assertions of pgTAP 365 |
+| O4 | a lost answer, a failed outcome write, a 5xx or an expired dispatch is uncertain and is not resent | `handler_test.ts` (lost response, failed outcome write, 5xx, expired dispatch); the expiry and stale-owner checks of pgTAP 365 |
+| O5 | lookup by a key recorded before the upload: none, unsupported by the installed connectors. Recovery by a retained external id is a different, narrower shipped path and is not evidence for this obligation; #3576 covers that boundary | none |
+| O6 | the generic adapter stays uncertain over any number of status calls | `handler_test.ts` (generic adapter stays uncertain) |
+| O7 | a replay of an accepted transmission returns its receipt and uploads nothing | `handler_test.ts` (accepted replay; no second upload) |
+| O8 | changed bytes, format or receiver conflict; a stale owner records nothing | `handler_test.ts` (changed binding); the changed-binding, stale-generation and owner assertions of pgTAP 365 |
+| O9 | a failed status query leaves the upload receipt | `handler_test.ts` (failed status query preserves the receipt); the lookup assertions of pgTAP 365 |
+| O10 | an upload refusal and a later document rejection are different facts | `handler_test.ts` (a later SdI document rejection); the manual verdict and transport assertions of pgTAP 365; `supabase/functions/send-e-invoice/connectors_test.ts` for the classification |
+| O11 | government and customer legs, and environments, are separate transmissions with separate credentials | `handler_test.ts` (government and customer separation); the destination and environment identity assertions of pgTAP 365. The handler fixtures use the production environment: recovery with an omitted or contradicting environment on a stored non-production row is not yet exercised (#3576) |
+| O12 | unauthorised, delegated and other-workspace callers reach neither the provider nor the record | the authorization tests of `handler_test.ts`; the service-role-only claim and artifact privilege assertions of pgTAP 365; `supabase/tests/database/42_tenant_reference_integrity.sql` for same-workspace integrity. This is not a full artifact-access matrix |
+| O13 | an older client's request and read of an unresolved row stay honest and cannot cause a second upload | `handler_test.ts` (the O13 test and the legacy-request replay tests); `test/features/money/einvoice_unresolved_test.dart`. The legacy projection is limited as stated in Processing; these are not an execution of a historical client build |
+| O14 | manual resolution needs the authority, a reason and evidence, and cannot repeat | the manual-resolution assertions of pgTAP 365; the authority, reason, evidence and repeat tests of `handler_test.ts` |
 
-## Stop condition
-
-#3335 closes when O1–O14 and the linked review requirements are verified
-through the existing gateway, D6 is demonstrated with its pinned client,
-and connector tests retain their safety coverage with corrected outcome
-classification. A newer decoder alone is not compatibility proof. No country-package
-extraction, no universal delivery framework and no live-provider
-qualification belong to it. #3336's provenance envelope hangs its
-attempt identity on the `prepared` row this page introduces.
+Ancillary client evidence: `test/features/money/einvoice_send_test.dart` (the client sends through the gateway when a platform is configured and offers no button otherwise) and `test/features/money/einvoice_receipts_test.dart` (receipts land on the transmission they answer).

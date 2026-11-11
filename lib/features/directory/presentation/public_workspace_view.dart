@@ -20,6 +20,7 @@ import '../../../core/ui/personal_kit/me_card.dart';
 import '../../../core/ui/server_label.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
+import '../providers/admission_requests_provider.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'connect_with_identity_sheet.dart';
@@ -158,22 +159,25 @@ class PublicWorkspaceView extends ConsumerWidget {
     await showInquirySheet(context, workspace);
   }
 
-  Future<void> _apply(
+  /// True when the server took the request.
+  Future<bool> _apply(
     BuildContext context,
     WidgetRef ref,
     PublicWorkspace workspace,
   ) async {
     final l = context.l10n;
+    // The container outlives the page: My spaces is refreshed either way.
+    final container = ProviderScope.containerOf(context);
     final connection = await _connected(
       context,
       ref,
       SecondaryConnectAction.apply,
     );
-    if (connection == _Connection.none || !context.mounted) return;
+    if (connection == _Connection.none || !context.mounted) return false;
     if (connection == _Connection.now && !await _confirmApply(context)) {
-      return;
+      return false;
     }
-    if (!context.mounted) return;
+    if (!context.mounted) return false;
     // #1847 B — an action this app could not negotiate with that
     // server is refused before anything is sent; say so once.
     PublicActionRefusal? refusal;
@@ -206,12 +210,17 @@ class PublicWorkspaceView extends ConsumerWidget {
           ),
         );
       }
-      return;
+      return false;
+    }
+    if (ok) {
+      // #3683 -- My spaces and "Needs you" show the request at once.
+      container.read(admissionRequestsSentProvider.notifier).sent();
     }
     if (ok && context.mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(l.portalRequestSent)));
     }
+    return ok;
   }
 
   /// What the space published, then its contacts.

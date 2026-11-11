@@ -100,7 +100,10 @@ void main() {
     expect(find.byKey(_view(_one)), findsOneWidget);
     // The card is not a control: only its buttons are.
     expect(find.byType(ListTile), findsNothing);
-    await tester.tap(find.byKey(const ValueKey('directory-portal-list')));
+    await tester.tap(find.descendant(
+      of: find.byKey(const ValueKey('directory-view-switch')),
+      matching: find.text('Map'),
+    ));
     await tester.pumpAndSettle();
     // The map provider is named before the map loads (#2555 C2).
     expect(find.byType(DirectoryMap), findsNothing);

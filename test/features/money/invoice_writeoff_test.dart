@@ -4,6 +4,7 @@
 // tab — the remainder is owed — until the outstanding amount is
 // cancelled through the VALIDATION framework. Only the validated
 // write-off archives it.
+import 'package:deskilo/core/ui/kit/kit_action_button.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ void main() {
     expect(find.text('A payment is on the account: match it'), findsOneWidget);
     expect(
       tester.widget(find.byKey(const ValueKey('invoice-page-match'))),
-      isA<FilledButton>(),
+      isA<KitActionButton>(),
     );
   });
 

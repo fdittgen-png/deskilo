@@ -1,0 +1,6 @@
+{
+  "kitActionBusy": "Working…",
+  "@kitActionBusy": {
+    "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
+  }
+}

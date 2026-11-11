@@ -1,0 +1,18 @@
+{
+  "meBusinessSeesTitle": "Cosa vede un’attività a cui si unisce",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
+  "meBusinessSeesAsk": "Quando chiede di unirsi: il suo nome e la sua foto.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Una volta socio, tutti nello spazio: il suo nome e la sua foto. Il suo numero WhatsApp, il suo stato e quando è stato presente l’ultima volta solo come sceglie in Chi mi vede.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesAdmins": "I suoi amministratori che le fatturano o tengono il registro dei soci: il suo nome, la società, l’indirizzo, il telefono, l’e-mail, la partita IVA, l’identificativo legale e la lingua preferita, necessari per fatturarle, e il suo compleanno se lo ha indicato, per chi tiene il registro dei soci.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  }
+}

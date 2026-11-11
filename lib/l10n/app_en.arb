@@ -9470,9 +9470,17 @@
   "@directoryLocationMissing": {
     "description": "Shown as a text in directory map (directory)."
   },
+  "directoryMapOpenFailed": "The map could not be opened.",
+  "@directoryMapOpenFailed": {
+    "description": "Shown as an error snackbar in directory screen (directory) when the map could not be opened."
+  },
   "directoryNoUpcoming": "No upcoming reservations",
   "@directoryNoUpcoming": {
     "description": "Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead"
+  },
+  "directoryNothingToPin": "None of these places could be placed on the map.",
+  "@directoryNothingToPin": {
+    "description": "Shown as a text in directory map (directory), in place of the map when no loaded place has a pin."
   },
   "directoryOnline": "Online",
   "@directoryOnline": {
@@ -9482,9 +9490,27 @@
   "@directoryOpenGroup": {
     "description": "Tile above the directory list opening the owner-configured WhatsApp group invite link (#231/#232); shown to every member, hidden when no link is set"
   },
+  "directoryPinsLookupFailed": "{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}",
+  "@directoryPinsLookupFailed": {
+    "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryPinsNoAddress": "{count, plural, =1{1 has no published address.} other{{count} have no published address.}}",
+  "@directoryPinsNoAddress": {
+    "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).",
     "placeholders": {
       "count": {
         "type": "int"
@@ -9511,6 +9537,10 @@
   "directoryReservedToday": "Reserved today",
   "@directoryReservedToday": {
     "description": "Directory status chip: member has an active reservation later today"
+  },
+  "directoryTilesFailed": "The map background could not be loaded.",
+  "@directoryTilesFailed": {
+    "description": "Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows."
   },
   "directoryTitle": "Members",
   "@directoryTitle": {
@@ -21106,6 +21136,10 @@
   "@kioskTapHint": {
     "description": "Header hint on the kiosk plan view"
   },
+  "kitActionBusy": "Working…",
+  "@kitActionBusy": {
+    "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
+  },
   "languageNameCS": "Czech",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -23698,6 +23732,22 @@
   "meAddressSaveFailed": "Could not save your address. Please try again.",
   "@meAddressSaveFailed": {
     "description": "Error when saving the postal address from My account failed."
+  },
+  "meBusinessSeesAdmins": "Its administrators who invoice you or keep its member records: your name, company, address, phone, e-mail, VAT number, legal id and preferred language, which they need to invoice you, and your birthday if you gave it, for those who keep the member records.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "When you ask to join: your name and photo.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "What a business you join can see",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
   },
   "meContextPersonal": "Personal",
   "@meContextPersonal": {
@@ -28108,6 +28158,10 @@
   "portalRegisterDirectory": "Link a server to the global directory",
   "@portalRegisterDirectory": {
     "description": "Shown as the title in directory link dialog (directory), and 1 other place."
+  },
+  "portalRequestPending": "Request pending",
+  "@portalRequestPending": {
+    "description": "Shown on the disabled button of a space offer once the request to join was sent and waits for the space's answer."
   },
   "portalRequestProfile": "Ask to join",
   "@portalRequestProfile": {
@@ -37422,7 +37476,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.",
+  "spacePreviewPrivacy": "When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.",
   "@spacePreviewPrivacy": {
     "description": "#3545 F: the line under the actions of a space's public page: what asking to join shares"
   },

@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -137,7 +138,7 @@ class _MoveCreditDialogState extends ConsumerState<_MoveCreditDialog> {
             m.status != MemberStatus.exited &&
             !m.isKiosk)
           m,
-    ]..sort((a, b) => (names[a.id] ?? '').compareTo(names[b.id] ?? ''));
+    ]..sort((a, b) => compareNames(names[a.id] ?? '', names[b.id] ?? ''));
     return AlertDialog(
       title: Text(l10n.creditMoveTitle),
       content: SingleChildScrollView(

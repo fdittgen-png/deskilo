@@ -30,6 +30,7 @@
   "portalAdmin": "Amministratore",
   "portalChat": "Chat",
   "portalRequestProfile": "Chiedi di unirti",
+  "portalRequestPending": "Richiesta in attesa",
   "portalRequestSent": "Richiesta inviata. Lo spazio esaminerà il suo profilo.",
   "portalList": "Elenco",
   "portalMap": "Mappa",
@@ -59,7 +60,7 @@
   "portalDirectoryCount": "{name} ({count})",
   "portalWriteTo": "Scrivere a {name}",
   "spaceMessageSpace": "Invia un messaggio",
-  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.",
+  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.",
   "spaceRunByCompany": "Gestito da un'azienda",
   "spaceRunByAssociation": "Gestito da un'associazione",
   "spaceRunByPerson": "Gestito da una persona"

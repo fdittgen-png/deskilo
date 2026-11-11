@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -69,11 +70,7 @@ class ProfilesScreen extends ConsumerWidget {
                     : AppEnvironmentColors.productionOf(
                         Theme.of(context).brightness),
                 foregroundColor: Colors.white,
-                child: Text(
-                  workspace.name.isEmpty
-                      ? '?'
-                      : workspace.name.substring(0, 1).toUpperCase(),
-                ),
+                child: Text(initialOf(workspace.name)),
               ),
             ),
             title: Text(workspace.name, style: Theme.of(context).textTheme.primaryValue?.strong),
