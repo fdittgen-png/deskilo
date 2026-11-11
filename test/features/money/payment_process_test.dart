@@ -213,8 +213,8 @@ void main() {
   });
 
   testWidgets(
-      'the hub summary strip splits the two DIRECTIONS: to collect at '
-      'the REMAINING value, to refund for open credit notes (#510)',
+      'the invoicing home splits the two DIRECTIONS: owed at the '
+      'REMAINING value, to refund for open credit notes (#510)',
       (tester) async {
     final money = await seededMoney(matched: false);
     final invoice = money.invoices.single;
@@ -230,22 +230,14 @@ void main() {
 
     final remaining =
         '€${((invoice.totalCents - 5000) / 100).toStringAsFixed(2)}';
-    // #812 — the stage strip: To collect carries the REMAINING sum; the
-    // credit note is the issuer's move (refund), so it sits under To
-    // confirm rather than inflating what members owe.
-    expect(find.text('$remaining outstanding'), findsOneWidget);
+    // #3587 — the owed card in place of the stage strip: what is owed is
+    // the REMAINING sum; the credit note is the issuer's move (a refund to
+    // pay out, in To do), never inflating what members owe.
+    final owed = find.byKey(const ValueKey('invoicing-owed'));
+    expect(find.descendant(of: owed, matching: find.text(remaining)),
+        findsWidgets);
     expect(
-      find.descendant(
-        of: find.byKey(const ValueKey('invoice-stage-collect')),
-        matching: find.text('1'),
-      ),
-      findsOneWidget,
-    );
-    expect(
-      find.descendant(
-        of: find.byKey(const ValueKey('invoice-stage-confirm')),
-        matching: find.text('1'),
-      ),
+      find.byKey(const ValueKey('invoicing-todo-payOutRefunds')),
       findsOneWidget,
     );
   });

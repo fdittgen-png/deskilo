@@ -21,6 +21,8 @@ import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/finance_kpi_repository.dart'
+    show DemoRecordedPaymentsRepository;
 import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/instance_repository.dart';
@@ -95,12 +97,16 @@ import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
+import 'package:deskilo/features/money/domain/recorded_payments.dart'
+    show RecordedPaymentsRepository;
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/recorded_payments_providers.dart'
+    show recordedPaymentsRepositoryProvider;
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
@@ -206,6 +212,9 @@ TypedFileSaver typedSaverOf(FileSaver saver) =>
     };
 
 List<Override> standardTestOverrides({
+  // #3587 — a test of the payments read brings its own; else the Demo's
+  // reader over the money fake.
+  RecordedPaymentsRepository? recordedPayments,
   // #3349 — a test of the credit move brings its own; else the Demo's.
   CreditMoveRepository? creditMoves,
   FakeMeRepository? me,
@@ -310,6 +319,7 @@ List<Override> standardTestOverrides({
     return repo;
   }();
   final planRepo = floorPlan ?? FakeFloorPlanRepository();
+  final moneyRepo = money ?? FakeMoneyRepository();
   return [
     // No disk in a widget test: a recording lives in memory.
     recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
@@ -464,7 +474,19 @@ List<Override> standardTestOverrides({
         .overrideWithValue(events ?? FakeEventRepository()),
     calendarRepositoryProvider
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
-    ..._moneyOverrides(money ?? FakeMoneyRepository(), creditMoves),
+    ..._moneyOverrides(moneyRepo, creditMoves),
+    // #3587 — the payments the invoicing home's "Received in" reads: the
+    // Demo's reader over the same money fake (no server here otherwise).
+    if (recordedPayments != null)
+      recordedPaymentsRepositoryProvider.overrideWithValue(recordedPayments)
+    else if (moneyRepo is FakeMoneyRepository &&
+        workspaceRepo is FakeWorkspaceRepository)
+      recordedPaymentsRepositoryProvider.overrideWithValue(
+        DemoRecordedPaymentsRepository(
+          money: moneyRepo,
+          workspaces: workspaceRepo,
+        ),
+      ),
     // #2590 — recording a month's usage is a command with no server here.
     usagePreparationProvider.overrideWithValue(
       usagePreparation ?? const FakeUsagePreparation(),

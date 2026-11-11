@@ -8,7 +8,7 @@
   "@reminderHistoryRefresh": {
     "description": "#1922 reminder evidence: reminderHistoryRefresh"
   },
-  "reminderHistoryLine": "Stufe {level} · {origin} · {date}",
+  "reminderHistoryLine": "Mahnung {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {

@@ -169,9 +169,10 @@ InvoiceJourneyFacts journeyFactsOf(
 
 /// The customer's own pending payment declaration on [invoice]'s member
 /// (the latest one): the event that Confirm and Not received decide, and the
-/// day the customer says they paid (else the day they said so). Payment
+/// day the customer says they paid (else the day they said so) and the
+/// amount they say they paid. Payment
 /// events are per member, not per invoice, as [journeyFactsOf] reads them.
-({String eventId, DateTime paidOn})? declarationOf(
+({String eventId, DateTime paidOn, int amountCents})? declarationOf(
   Invoice invoice,
   Iterable<WorkspaceEvent> events,
 ) {
@@ -187,7 +188,11 @@ InvoiceJourneyFacts journeyFactsOf(
   }
   if (latest == null) return null;
   final paidOn = DateTime.tryParse(latest.payload['paid_on'] as String? ?? '');
-  return (eventId: latest.id, paidOn: paidOn ?? latest.createdAt);
+  return (
+    eventId: latest.id,
+    paidOn: paidOn ?? latest.createdAt,
+    amountCents: (latest.payload['amount_cents'] as num?)?.toInt() ?? 0,
+  );
 }
 
 /// The journey of one invoice: its lifecycle, the state of each step, the
@@ -354,53 +359,6 @@ class InvoiceJourney {
         ? InvoiceMove.memberPaysRemainder
         : InvoiceMove.memberPays;
   }
-}
-
-/// The issuer's four stages, for the hub's strip: what the open list
-/// holds, split by whose move it is.
-typedef InvoiceStageCounts = ({
-  int toIssue,
-  int toCollect,
-  int toCollectCents,
-  int overdue,
-  int toConfirm,
-  int closed,
-});
-
-/// Folds the journeys of every open invoice into the stage counts. A
-/// credit note to refund counts as a confirmation-side move (the issuer
-/// acts), never as money to collect.
-InvoiceStageCounts stageCountsOf({
-  required int toIssue,
-  required Iterable<InvoiceJourney> open,
-  required int closed,
-}) {
-  var toCollect = 0;
-  var toCollectCents = 0;
-  var overdue = 0;
-  var toConfirm = 0;
-  for (final journey in open) {
-    switch (journey.move) {
-      case InvoiceMove.memberPays:
-      case InvoiceMove.memberPaysRemainder:
-        toCollect++;
-        toCollectCents += journey.remainingCents;
-        if (journey.overdue) overdue++;
-      case InvoiceMove.none:
-      case InvoiceMove.issuerReplaces:
-        break;
-      default:
-        toConfirm++;
-    }
-  }
-  return (
-    toIssue: toIssue,
-    toCollect: toCollect,
-    toCollectCents: toCollectCents,
-    overdue: overdue,
-    toConfirm: toConfirm,
-    closed: closed,
-  );
 }
 
 /// #1913 — what is still owed on [invoice]: the whole total while open or
