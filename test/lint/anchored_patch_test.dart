@@ -29,6 +29,11 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #3671/0717 restates match_invoice from the LIVE dev definition
+  // (pg_get_functiondef), so every earlier anchored rule is carried verbatim;
+  // the change is the optional part (p_amount_cents) and "what is left of the
+  // payment" in place of "the payment has a row". pgTAP 388 and 199.
+  'match_invoice@0717',
   // #2356/0407 restates set_vat_rates from the LIVE dev definition
   // (pg_get_functiondef): 0170's anchored group_key / outside_base /
   // exemption_reason columns and 0180's has_permission('manageBilling')

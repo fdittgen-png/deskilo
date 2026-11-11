@@ -259,6 +259,7 @@ returns text language sql stable security definer set search_path = public as $f
        having count(*) > 0), 'recorded')
     else l.state end;
 $fn$;
+revoke execute on function public.bank_line_status(public.bank_statement_lines) from public, anon;
 
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
 returns text
