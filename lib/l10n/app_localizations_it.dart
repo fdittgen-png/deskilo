@@ -5474,6 +5474,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get businessKindTitle => 'Che tipo di attività è?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'Il mittente dei suoi ordini e dei solleciti via e-mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'Invio e-mail, nelle impostazioni dell\'attività';
+
+  @override
   String get buyPackageButton => 'Acquista un pacchetto';
 
   @override
@@ -10895,6 +10903,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureRegionalFormatsTitle => 'Regione e formati';
+
+  @override
+  String get featureReminderEmailDesc =>
+      'Un sollecito di pagamento può partire anche via e-mail, dal server, con il mittente della sua attività, nella lingua dei documenti del cliente. Ogni livello parte una sola volta; la risposta del fornitore è conservata con il sollecito. Disattivato: i solleciti arrivano solo nel feed e come notifica.';
+
+  @override
+  String get featureReminderEmailTitle => 'Solleciti via e-mail';
 
   @override
   String get featureReportDesignExchangeDesc =>

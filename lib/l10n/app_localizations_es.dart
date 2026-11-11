@@ -5474,6 +5474,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get businessKindTitle => '¿Qué tipo de negocio es?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'El remitente de sus pedidos y recordatorios por correo electrónico';
+
+  @override
+  String get businessMailSenderWhere =>
+      'Envío de correos, en la configuración de la empresa';
+
+  @override
   String get buyPackageButton => 'Comprar un paquete';
 
   @override
@@ -10891,6 +10899,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureRegionalFormatsTitle => 'Región y formatos';
+
+  @override
+  String get featureReminderEmailDesc =>
+      'Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación.';
+
+  @override
+  String get featureReminderEmailTitle =>
+      'Recordatorios por correo electrónico';
 
   @override
   String get featureReportDesignExchangeDesc =>

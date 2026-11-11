@@ -7,6 +7,7 @@
 // finance reader reads and prints. The server decides every write.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
@@ -21,7 +22,6 @@ import '../../domain/purchase.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
 import '../purchase_order_print.dart';
-import '../widgets/purchase_order_mail_sheet.dart';
 import '../widgets/purchase_order_receipt_actions.dart';
 import '../widgets/purchase_order_send_actions.dart';
 import '../widgets/purchase_order_sheet.dart';
@@ -55,21 +55,17 @@ class PurchaseOrdersScreen extends ConsumerWidget {
         title: Text(l10n.purchaseOrdersTitle),
         actions: [
           // #3307 — how the space e-mails its orders, for its billing
-          // manager.
+          // manager. #3673: the business's one sender is set in its own
+          // settings; this opens them.
           if (workspace != null &&
               MoneyViewData.purchasePermissionNames(
                 ref,
               ).contains('manageBilling'))
             IconButton(
               key: const ValueKey('purchase-order-mail-settings'),
-              tooltip: l10n.purchaseOrderMailSettings,
+              tooltip: l10n.businessMailSenderWhere,
               icon: const Icon(Icons.forward_to_inbox_outlined),
-              onPressed: () async => PurchaseOrderMailSheet(context, ref).open(
-                workspaceId: workspace.id,
-                current: await ref.read(
-                  purchaseOrderMailSettingsProvider(workspace.id).future,
-                ),
-              ),
+              onPressed: () => context.push('/workspace-settings'),
             ),
         ],
       ),

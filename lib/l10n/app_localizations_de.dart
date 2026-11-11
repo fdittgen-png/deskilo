@@ -5481,6 +5481,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get businessKindTitle => 'Was für ein Unternehmen ist es?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'Der Absender Ihrer Bestellungen und Mahnungen per E-Mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'E-Mail-Versand, in den Unternehmenseinstellungen';
+
+  @override
   String get buyPackageButton => 'Paket kaufen';
 
   @override
@@ -10912,6 +10920,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureRegionalFormatsTitle => 'Region & Formate';
+
+  @override
+  String get featureReminderEmailDesc =>
+      'Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung.';
+
+  @override
+  String get featureReminderEmailTitle => 'Mahnungen per E-Mail';
 
   @override
   String get featureReportDesignExchangeDesc =>

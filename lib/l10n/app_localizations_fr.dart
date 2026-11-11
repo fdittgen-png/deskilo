@@ -5482,6 +5482,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get businessKindTitle => 'Quel genre d’activité est-ce ?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'L\'expéditeur de vos bons de commande et de vos relances par e-mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'Envoi d\'e-mails, dans les paramètres de l\'entreprise';
+
+  @override
   String get buyPackageButton => 'Acheter un forfait';
 
   @override
@@ -10922,6 +10930,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureRegionalFormatsTitle => 'Région et formats';
+
+  @override
+  String get featureReminderEmailDesc =>
+      'Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l\'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n\'arrivent que dans le fil et par notification.';
+
+  @override
+  String get featureReminderEmailTitle => 'Relances par e-mail';
 
   @override
   String get featureReportDesignExchangeDesc =>

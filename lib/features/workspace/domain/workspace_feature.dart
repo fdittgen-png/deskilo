@@ -416,7 +416,7 @@ enum WorkspaceFeature {
   mtdSubmission,
   purchaseOrders,
   guestPasses,
-  placeBooking;
+  placeBooking, reminderEmail; // #3673: reminders by e-mail (manifest part 3)
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

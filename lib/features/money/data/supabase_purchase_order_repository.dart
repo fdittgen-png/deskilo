@@ -95,11 +95,11 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
   Future<PurchaseOrderMailSettings?> fetchMailSettings(
     String workspaceId,
   ) async {
-    final row = await _client
-        .from('purchase_order_mail_settings')
-        .select('sender_email, sender_name, has_api_key, revision')
-        .eq('workspace_id', workspaceId)
-        .maybeSingle();
+    // #3673 — the business's one e-mail sender (0724); never the key.
+    final row = await _client.rpc<Object?>(
+      'business_mail_sender_v1',
+      params: {'p_workspace_id': workspaceId},
+    );
     return row == null ? null : PurchaseOrderMailSettings.fromJson(row);
   }
 
@@ -109,7 +109,7 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
     PurchaseOrderMailDraft draft,
   ) async => PurchaseOrderMailSettings.fromJson(
     await _client.rpc<Object?>(
-      'save_purchase_order_mail_settings_v1',
+      'save_business_mail_sender_v1',
       params: {
         'p_workspace_id': workspaceId,
         'p_sender_email': draft.senderEmail.trim(),

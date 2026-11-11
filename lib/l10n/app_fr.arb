@@ -3296,6 +3296,8 @@
   "businessKindSwitchesOff": "Désactive : {features}",
   "businessKindSwitchesOn": "Active : {features}",
   "businessKindTitle": "Quel genre d’activité est-ce ?",
+  "businessMailSenderSubtitle": "L'expéditeur de vos bons de commande et de vos relances par e-mail",
+  "businessMailSenderWhere": "Envoi d'e-mails, dans les paramètres de l'entreprise",
   "buyPackageButton": "Acheter un forfait",
   "buyPackageDays": "{days, plural, one{{days} jour} other{{days} jours}}",
   "buyPackageDone": "Jours ajoutés — profitez-en.",
@@ -6939,6 +6941,8 @@
   "@featureRegionalFormatsTitle": {
     "description": "#711 - globalization"
   },
+  "featureReminderEmailDesc": "Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n'arrivent que dans le fil et par notification.",
+  "featureReminderEmailTitle": "Relances par e-mail",
   "featureReportDesignExchangeDesc": "Chaque maquette de rapport peut être écrite dans un fichier qui se décrit lui-même, puis relue. Le fichier contient la maquette ainsi que le sens de ses champs, le balisage accepté et les variables disponibles : une personne ou un outil peut donc l'éditer hors de l'application et la rendre. Un fichier destiné à un autre rapport, ou issu d'une version plus récente, est refusé avec sa raison. Désactivé : les maquettes ne se modifient que dans l'éditeur.",
   "featureReportDesignExchangeTitle": "Exporter et importer les maquettes",
   "featureReportDesignerDesc": "L'éditeur de rapports en plein écran : éléments modifiés sur place dans leur vraie typographie, glisser pour réordonner, palette d'insertion, sélecteur de champs avec recherche, annuler et rétablir, taille et alignement des images, garde-fou avant d'abandonner, modèles et réinitialisation derrière une confirmation, l'erreur du modèle expliquée, conception et aperçu côte à côte sur grand écran. Désactivé : l'éditeur en feuille.",

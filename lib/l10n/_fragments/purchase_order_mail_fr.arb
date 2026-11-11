@@ -12,5 +12,7 @@
   "purchaseOrderMailSenderName": "Nom de l’expéditeur",
   "purchaseOrderMailKey": "Clé d’API Resend",
   "purchaseOrderMailKeyKept": "Une clé est enregistrée. Laissez vide pour la garder ; elle n’est plus jamais affichée.",
-  "purchaseOrderMailInvalid": "Une adresse d’expédition, un nom sans < > ni guillemets, et au premier enregistrement la clé d’API"
+  "purchaseOrderMailInvalid": "Une adresse d’expédition, un nom sans < > ni guillemets, et au premier enregistrement la clé d’API",
+  "businessMailSenderSubtitle": "L'expéditeur de vos bons de commande et de vos relances par e-mail",
+  "businessMailSenderWhere": "Envoi d'e-mails, dans les paramètres de l'entreprise"
 }

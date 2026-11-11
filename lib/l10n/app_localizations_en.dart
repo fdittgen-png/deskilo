@@ -5438,6 +5438,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get businessKindTitle => 'What kind of business is it?';
 
   @override
+  String get businessMailSenderSubtitle =>
+      'The sender of your purchase orders and reminders by e-mail';
+
+  @override
+  String get businessMailSenderWhere =>
+      'E-mail sending, in the business settings';
+
+  @override
   String get buyPackageButton => 'Buy a package';
 
   @override
@@ -10817,6 +10825,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureRegionalFormatsTitle => 'Region & formats';
+
+  @override
+  String get featureReminderEmailDesc =>
+      'A payment reminder can also be sent by e-mail, from the server, with your business\'s own sender, in the customer\'s document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only.';
+
+  @override
+  String get featureReminderEmailTitle => 'Reminders by e-mail';
 
   @override
   String get featureReportDesignExchangeDesc =>
