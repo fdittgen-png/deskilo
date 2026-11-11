@@ -53,9 +53,8 @@ Future<void> savePersonalLanguage(WidgetRef ref, Locale? locale, {bool? workspac
   final controller = ref.read(localeControllerProvider.notifier);
   if (account != null) {
     await ref.read(personalSettingsProvider.notifier).save({
-      // #3656 -- the interface language only: the language documents are
-      // printed in is its own preference and is never overwritten here.
       PersonalPreference.uiLocale: locale?.languageCode ?? '',
+      PersonalPreference.documentLocale: locale?.languageCode ?? '',
     }, workspaceOnly: scoped);
   }
   if (!scoped && ref.context.mounted && ref.read(personalPreferenceContextProvider).account == account) await controller.set(locale);
