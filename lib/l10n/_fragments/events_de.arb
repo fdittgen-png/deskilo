@@ -50,11 +50,11 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "reservationDeleteRequestButton": "Löschung beantragen",
+  "reservationDeleteRequestButton": "Stornierung beantragen",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?",
+  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Bis zur Entscheidung bleibt die Buchung unverändert; nichts wird automatisch erstattet oder gelöscht.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },

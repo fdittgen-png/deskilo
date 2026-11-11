@@ -31,7 +31,7 @@ void main() {
     final match = money.invoiceMatchesStore[invoice.id]!;
     expect(match.paidCents, invoice.totalCents);
     expect(match.resolution, 'exact');
-    expect(money.consumedPaymentIds, contains(paymentId));
+    expect(money.usedPaymentCents[paymentId], isNotNull);
   });
 
   test('a second payment SMALLER than the remainder keeps the invoice '

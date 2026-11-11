@@ -4,7 +4,7 @@
 // payment, the payment is on the customer's account. When it pays the
 // invoice's open amount exactly, the invoice page matches it in the same
 // gesture; this finds that payment: the newest payment of exactly that
-// amount, of the same customer, that no match has consumed yet. A ledger
+// amount left (`PaymentUse.remainingOf` > 0), of the same customer. A ledger
 // entry does not name the event it came from, so another unconsumed
 // payment of the same amount from the same customer is the same money and
 // settles the invoice just as well. The account is kept in the workspace's
@@ -12,6 +12,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../domain/ledger_entry.dart';
+import 'payment_candidates.dart';
 
 /// The id of [customerId]'s payment in [ledger] to match after a
 /// confirmation of [amountCents] on an invoice in [invoiceCurrency], or null
@@ -22,7 +23,7 @@ String? confirmedPaymentFor(
   required int amountCents,
   required String invoiceCurrency,
   required String accountCurrency,
-  required Set<String> consumed,
+  required PaymentUse use,
 }) {
   if (invoiceCurrency != accountCurrency) return null;
   LedgerEntry? newest;
@@ -30,8 +31,8 @@ String? confirmedPaymentFor(
     if (entry.memberId == customerId &&
         entry.kind == LedgerKind.credit &&
         entry.category == LedgerCategory.payment &&
-        entry.amountCents == amountCents &&
-        !consumed.contains(entry.id) &&
+        use.remainingOf(entry) > 0 &&
+        use.remainingOf(entry) == amountCents &&
         (newest == null || entry.createdAt.isAfter(newest.createdAt))) {
       newest = entry;
     }

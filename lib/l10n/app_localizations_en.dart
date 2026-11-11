@@ -14745,7 +14745,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Digital signature (SHA-256)';
+  String get invoicePdfSignature => 'Document fingerprint (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotal';
@@ -24820,11 +24820,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Reason (optional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Request deletion';
+  String get reservationDeleteRequestButton => 'Request cancellation';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?';
+      'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.';
 
   @override
   String get reservationDeleteSubmit => 'Send request';
@@ -31957,6 +31957,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates new updates · $pending awaiting your decision';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count half-days left in your allowance this month',
+      one: '1 half-day left in your allowance this month',
+      zero: 'No half-days left in your allowance this month',
+    );
+    return '$_temp0';
   }
 
   @override

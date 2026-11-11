@@ -13,6 +13,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/mcp_coverage/coverage.dart';
+import '../helpers/tool_process.dart';
 
 Map<String, dynamic> _json(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
@@ -208,9 +209,7 @@ void main() {
       ..writeAsStringSync(_report(coverage));
     final stale = File('${dir.path}/stale.log')
       ..writeAsStringSync(_report(coverage, sha: 'fedcba9'));
-    ProcessResult cli(File log) => Process.runSync('dart', [
-      'run',
-      'tool/mcp_coverage.dart',
+    ProcessResult cli(File log) => runToolSync('tool/mcp_coverage.dart', [
       '--pgtap',
       log.path,
       '--sha',

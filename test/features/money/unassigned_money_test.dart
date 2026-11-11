@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3587 R1-f -- money received and not assigned is ONE answer: one definition
-// of a consumed payment (the matches, every payment of an aggregate match,
-// the credits moved away), one read of the workspace's ledger, and one rule
+// of what is left of a payment (the parts the junction settles, the credits
+// moved away), one read of the workspace's ledger, and one rule
 // of who holds money, from which the home's count and Payments to match both
 // come.
 
@@ -58,7 +58,7 @@ Receivable _inv(
 class _Repo extends FakeMoneyRepository {
   int workspaceReads = 0;
   int memberReads = 0;
-  Set<String> junction = {};
+  List<(String, int)> junction = [];
 
   @override
   Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async {
@@ -76,8 +76,9 @@ class _Repo extends FakeMoneyRepository {
   }
 
   @override
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async =>
-      junction;
+  Future<List<(String, int)>> fetchConsumedPaymentIds(
+    String workspaceId,
+  ) async => junction;
 }
 
 class _Moves implements CreditMoveRepository {
@@ -138,13 +139,43 @@ void main() {
       _pay('moved'),
       _pay('free', member: 'ben'),
     ]);
-    repo.junction = {'aggregate'};
+    repo.junction = [('aggregate', 12000)];
     moves.moved = {'moved'};
     final money = await read(container());
     final receivables = [_inv('a1'), _inv('b1', customer: 'ben')];
     expect(money.paymentsOf.keys, ['ben']);
     expect(money.creditOf('anna'), {'EUR': 0}, reason: 'read, and zero');
     expect(money.holdersAmong(receivables), {'ben'});
+  });
+
+  test('a payment partly used is offered with what is left, a fully used one '
+      'and one only named by an aggregate match are not / are free', () async {
+    repo.ledger.addAll([
+      _pay('part'),
+      _pay('full', member: 'ben', cents: 5000),
+      _pay('latest', member: 'cleo', cents: 7000),
+    ]);
+    repo.junction = [('part', 4000), ('part', 3000), ('full', 5000)];
+    final money = await read(container());
+    expect(money.paymentsOf.keys.toSet(), {'anna', 'cleo'});
+    expect(money.paymentsOf['anna']!.single.amountCents, 5000);
+    expect(money.creditOf('anna'), {'EUR': 5000});
+    // 'latest' has no junction row: free with its whole amount.
+    expect(money.creditOf('cleo'), {'EUR': 7000});
+    final rows = money.toMatch([_inv('a1', open: 5000)]);
+    expect(rows.single.payment.amountCents, 5000);
+    expect(rows.single.candidates.single.fit.name, 'exact');
+  });
+
+  test('the use of a payment: unused, partly used, fully used, moved', () {
+    final use = paymentUseOf(
+      junction: [('a', 100), ('a', 200), ('b', 1000)],
+      moved: {'m'},
+    );
+    expect(use.remainingOf(_pay('free', cents: 1000)), 1000);
+    expect(use.remainingOf(_pay('a', cents: 1000)), 700);
+    expect(use.remainingOf(_pay('b', cents: 1000)), 0);
+    expect(use.remainingOf(_pay('m', cents: 1000)), 0);
   });
 
   test('one read of the workspace ledger for fifty customers, and a '

@@ -14893,7 +14893,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Signature numérique (SHA-256)';
+  String get invoicePdfSignature => 'Empreinte du document (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Sous-total';
@@ -25080,11 +25080,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motif (facultatif)';
 
   @override
-  String get reservationDeleteRequestButton => 'Demander la suppression';
+  String get reservationDeleteRequestButton => 'Demander l\'annulation';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n\'a-t-elle jamais été utilisée (elle est supprimée) ?';
+      'Les réservations passées ou pointées ne sont pas supprimées directement. Un propriétaire ou un admin décidera : le pointage a-t-il simplement été oublié (la réservation reste), ou n\'a-t-elle jamais été utilisée (elle est supprimée) ? En attendant leur décision, la réservation reste inchangée ; rien n\'est remboursé ni supprimé automatiquement.';
 
   @override
   String get reservationDeleteSubmit => 'Envoyer la demande';
@@ -32329,6 +32329,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates nouveautés · $pending décisions en attente';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count demi-journées restantes dans votre forfait ce mois-ci',
+      one: '1 demi-journée restante dans votre forfait ce mois-ci',
+      zero: 'Plus aucune demi-journée dans votre forfait ce mois-ci',
+    );
+    return '$_temp0';
   }
 
   @override

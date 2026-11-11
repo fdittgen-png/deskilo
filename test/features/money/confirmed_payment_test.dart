@@ -6,6 +6,7 @@
 // invoice in another currency than the account's; and what the gesture
 // ended in, read from the match the server now has.
 import 'package:deskilo/features/money/application/confirmed_payment.dart';
+import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,9 +29,11 @@ LedgerEntry _entry(
   createdAt: DateTime(2026, 11, day),
 );
 
+PaymentUse _used(Map<String, int> cents) => PaymentUse(usedCents: cents);
+
 String? _pick(
   List<LedgerEntry> ledger, {
-  Set<String> consumed = const {},
+  PaymentUse use = PaymentUse.none,
   String invoiceCurrency = 'CHF',
 }) => confirmedPaymentFor(
   ledger,
@@ -38,7 +41,7 @@ String? _pick(
   amountCents: 42000,
   invoiceCurrency: invoiceCurrency,
   accountCurrency: 'CHF',
-  consumed: consumed,
+  use: use,
 );
 
 void main() {
@@ -51,8 +54,16 @@ void main() {
       _entry('adjust', 42000, category: LedgerCategory.adjustment, day: 10),
     ];
     expect(_pick(ledger), 'new');
-    expect(_pick(ledger, consumed: {'new'}), 'old');
-    expect(_pick(ledger, consumed: {'new', 'old'}), isNull);
+    expect(_pick(ledger, use: _used({'new': 42000})), 'old');
+    expect(_pick(ledger, use: _used({'new': 42000, 'old': 42000})), isNull);
+  });
+
+  test('a payment partly used is free for what is left of it only', () {
+    final ledger = [_entry('part', 50000)];
+    expect(_pick(ledger), isNull, reason: '50000 is not 42000');
+    expect(_pick(ledger, use: _used({'part': 8000})), 'part');
+    expect(_pick(ledger, use: _used({'part': 50000})), isNull);
+    expect(_pick(ledger, use: _used({'part': 9000})), isNull);
   });
 
   test('never another customer\'s payment, never across currencies', () {

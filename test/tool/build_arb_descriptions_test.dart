@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import '../helpers/tool_process.dart';
 
 void main() {
   late Directory root;
@@ -27,9 +28,7 @@ void main() {
     }
     final list = File('${root.path}/undescribed.txt')
       ..writeAsStringSync('# recorded\n${recorded.join('\n')}\n');
-    return Process.run('dart', [
-      'run',
-      'tool/build_arb.dart',
+    return runTool('tool/build_arb.dart', [
       '--fragments',
       fragments.path,
       '--out',

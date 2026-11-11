@@ -127,7 +127,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => _templates.uploadReportImage(workspaceId, name: name, bytes: bytes, contentType: contentType);
   @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => _templates.fetchReportImage(workspaceId, name);
   @override Future<void> settleCreditInvoice(String invoiceId, {String note = ''}) => _commands.settleCreditInvoice(invoiceId, note: note);
-  @override Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) => _invoices.fetchConsumedPaymentIds(workspaceId);
+  @override Future<List<(String, int)>> fetchConsumedPaymentIds(String workspaceId) => _invoices.fetchConsumedPaymentIds(workspaceId);
   @override Future<MemberAccount> fetchMemberAccount(String memberId) => _accounts.fetchMemberAccount(memberId);
   @override Future<DunningRules> fetchDunningRules(String workspaceId) => _dunning.fetchDunningRules(workspaceId);
   @override Future<String> settleInvoices({required String workspaceId, required String memberId, required List<String> invoiceIds, String note = ''}) => _commands.settleInvoices(workspaceId: workspaceId, memberId: memberId, invoiceIds: invoiceIds, note: note);
@@ -159,7 +159,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<Map<String, String>> fetchDunningHolds(String workspaceId) => _dunning.fetchDunningHolds(workspaceId);
   @override Future<void> placeDunningHold(String invoiceId, {required String reason, String note = ''}) => _dunning.placeDunningHold(invoiceId, reason: reason, note: note);
   @override Future<void> releaseDunningHold(String invoiceId) => _dunning.releaseDunningHold(invoiceId);
-  @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = ''}) => _commands.matchInvoice(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note);
+  @override Future<void> matchInvoice({required String invoiceId, required String paymentLedgerId, required String resolution, String note = '', int? amountCents}) => _commands.matchInvoice(invoiceId: invoiceId, paymentLedgerId: paymentLedgerId, resolution: resolution, note: note, amountCents: amountCents);
   @override Future<Map<String, InvoiceMatch>> fetchInvoiceMatches(String workspaceId) => _invoices.fetchInvoiceMatches(workspaceId);
   @override Future<Map<String, List<TaxPointPayment>>> fetchInvoiceInstalments(String workspaceId) => _invoices.fetchInvoiceInstalments(workspaceId);
   @override Future<List<ReminderEvidence>> fetchReminderEvidence(String invoiceId) => _invoices.fetchReminderEvidence(invoiceId);
