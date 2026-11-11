@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/bi_analysis.dart';
 
+// content-fit: the ring and its legend side by side
+const double _legendBesideMinWidth = 420;
+
 /// A distinguishable colour for part [index], drawn from the theme.
 Color _biPartColor(ColorScheme scheme, int index) {
   final base = HSLColor.fromColor(scheme.primary);
@@ -120,7 +123,7 @@ class BiShareBreakdown extends StatelessWidget {
       ],
     );
     return LayoutBuilder(
-      builder: (context, box) => box.maxWidth > 420
+      builder: (context, box) => box.maxWidth > _legendBesideMinWidth
           ? Row(
               children: [ring, const SizedBox(width: AppSpacing.lg), Expanded(child: legend)],
             )

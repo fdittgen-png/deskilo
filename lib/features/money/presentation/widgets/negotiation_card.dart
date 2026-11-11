@@ -20,6 +20,9 @@ import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
 
+// content-fit: the default and the negotiated price side by side
+const double _columnsMinWidth = 480;
+
 /// #739 — the member's own prices against the workspace tariff, on the
 /// Documents face: what everyone pays, what I pay, since when — and who
 /// can see this (the GDPR sheet, with the log of who did).
@@ -51,7 +54,7 @@ class NegotiationCard extends ConsumerWidget {
 
     final defaultLabel = l10n.negotiationDefaultColumn;
     final mineLabel = l10n.negotiationMineColumn;
-    bool compact(BoxConstraints c) => c.maxWidth < 480 ||
+    bool compact(BoxConstraints c) => c.maxWidth < _columnsMinWidth ||
         MediaQuery.textScalerOf(context).scale(100) > 130;
     Widget row(String label, String defaults, String? mine, {Key? key}) {
       final tariff = Text(defaults, textAlign: TextAlign.end,

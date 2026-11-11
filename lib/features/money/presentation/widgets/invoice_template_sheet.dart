@@ -8,6 +8,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -243,7 +244,8 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
   Widget _content(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final wide = widget.asPage && MediaQuery.sizeOf(context).width >= 1000;
+    final wide =
+        widget.asPage && WindowClass.of(context).atLeast(WindowClass.large);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,

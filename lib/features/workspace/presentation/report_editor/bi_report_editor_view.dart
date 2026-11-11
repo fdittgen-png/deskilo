@@ -22,6 +22,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../application/report_editor/bi_report_commands.dart';
 import '../../application/report_editor/bi_report_editor.dart';
@@ -37,8 +38,6 @@ import 'bi_report_labels.dart';
 import 'bi_report_pages_panel.dart';
 import 'bi_report_properties.dart';
 
-/// From this width the catalogue and the properties sit beside the grid.
-const _wideLayout = 900.0;
 const _sideWidth = 260.0;
 
 class BiReportEditorView extends ConsumerStatefulWidget {
@@ -229,7 +228,8 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
             appBar: _appBar(s, canShare: canShare),
             body: LayoutBuilder(
               builder: (context, constraints) =>
-                  constraints.maxWidth >= _wideLayout
+                  WindowClass.ofWidth(constraints.maxWidth)
+                      .atLeast(WindowClass.expanded)
                   ? _wide(s)
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -9,6 +9,7 @@ class WizardFormLayout extends StatelessWidget {
   const WizardFormLayout({super.key, required this.header, required this.footer,
     required this.child, this.maxWidth = shortFormWidth});
 
+  // content-fit: a short form's fields keep a readable width; below it the steps stack
   static const double shortFormWidth = 560;
   static const double pinnedFooterMinHeight = 420;
   final Widget header;

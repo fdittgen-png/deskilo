@@ -79,6 +79,14 @@ List<int> windowComparisons(
   Map<String, ({double value, bool contentFit})> constants,
 ) {
   final found = <int>[];
+  // A private name means this file's own constant, never another file's.
+  final local = numericConstants({'': text});
+  final scoped = {
+    for (final e in constants.entries)
+      if (!e.key.startsWith('_')) e.key: e.value,
+    for (final e in local.entries)
+      if (e.key.startsWith('_')) e.key: e.value,
+  };
   final lines = text.split('\n');
   for (var i = 0; i < lines.length; i++) {
     final line = lines[i];
@@ -88,8 +96,8 @@ List<int> windowComparisons(
     for (final m in _comparison.allMatches(line)) {
       final (a, b) = (m.group(1)!, m.group(3)!);
       if (a.startsWith('WindowClass') || b.startsWith('WindowClass')) continue;
-      if ((_isWidth(a) && _windowNumber(b, constants)) ||
-          (_isWidth(b) && _windowNumber(a, constants))) {
+      if ((_isWidth(a) && _windowNumber(b, scoped)) ||
+          (_isWidth(b) && _windowNumber(a, scoped))) {
         found.add(i + 1);
         break;
       }

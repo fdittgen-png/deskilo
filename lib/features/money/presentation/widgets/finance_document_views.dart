@@ -20,14 +20,12 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/private_value.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/finance_overview.dart';
 import 'dev_label.dart';
 import 'own_finance_export_menu.dart';
-
-/// From this width on, the documents are rows; below it, cards.
-const double _rowsMinWidth = 800;
 
 /// The payment state, as the server derived it. A credit note nothing was
 /// matched to is not an unpaid debt of mine: it is a credit not used yet.
@@ -74,7 +72,7 @@ class FinanceDocumentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
-      final wide = box.maxWidth >= _rowsMinWidth;
+      final wide = WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.expanded);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -18,6 +18,7 @@ import '../../../../core/l10n/context_l10n.dart';
 /// editor" became "Rep…", so the one word telling you where you are was
 /// the one that went. Chosen so every phone folds and a tablet or desktop
 /// window does not.
+// content-fit: the app bar shows the period buttons only where their labels fit
 const double _kNarrowAppBar = 420;
 
 /// The designer's undo/redo pair, in whichever shape the width allows.
