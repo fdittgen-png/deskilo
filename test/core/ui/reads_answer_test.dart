@@ -32,9 +32,22 @@ void main() {
     expect(a.standIn(onRetry: () {}), isA<ReadFailureBanner>());
   });
 
-  test('a refresh that failed keeps the value it had: still answered', () {
-    final refreshed = failed.copyWithPrevious(one);
+  test('a refresh that failed keeps the value it had: still answered', () async {
+    var fail = false;
+    final read = FutureProvider<List<int>>((ref) async {
+      if (fail) throw StateError('down');
+      return [1];
+    });
+    final container = ProviderContainer(retry: (_, _) => null);
+    addTearDown(container.dispose);
+    container.listen(read, (_, _) {});
+    await container.read(read.future);
+    fail = true;
+    container.invalidate(read);
+    await expectLater(container.read(read.future), throwsStateError);
+    final refreshed = container.read(read);
     expect(refreshed.hasError, isTrue);
+    expect(refreshed.hasValue, isTrue);
     expect(ReadsAnswer.of([refreshed]).answered, isTrue);
   });
 }
