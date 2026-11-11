@@ -5,6 +5,7 @@
 // resolution (exact, over, under) is derived from the remainder, a part may
 // be named, and a part above the remainder is refused as the SQL refuses it.
 import 'package:deskilo/core/i18n/money_format.dart';
+import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/widgets/match_invoice_dialog.dart';
 import 'package:flutter/material.dart';
@@ -13,18 +14,24 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/pump_app.dart';
 import '../../helpers/screens/invoices.dart' show seededMoney;
 
-/// A payment of 120.00 of which 70.00 is used: the free entry carries what
-/// is left, 50.00.
-final _left = LedgerEntry(
+/// A payment of 120.00 of which 70.00 is used: 50.00 is left.
+final _entry = LedgerEntry(
   id: 'part',
   memberId: 'anna',
   kind: LedgerKind.credit,
   category: LedgerCategory.payment,
-  amountCents: 5000,
+  amountCents: 12000,
   description: 'Transfer',
   period: '2026-03',
   createdAt: DateTime(2026, 3, 20),
   occurredOn: DateTime(2026, 3, 18),
+);
+
+final _left = PaymentLeft(
+  entry: _entry,
+  receivedCents: 12000,
+  assignedCents: 7000,
+  leftCents: 5000,
 );
 
 void main() {

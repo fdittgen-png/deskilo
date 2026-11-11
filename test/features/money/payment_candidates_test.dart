@@ -87,10 +87,15 @@ void main() {
         use: const PaymentUse(usedCents: {'a': 5000}),
         invoices: const [],
       );
-      expect(r.map((e) => (e.id, e.amountCents)), [
+      expect(r.map((e) => (e.id, e.leftCents)), [
         ('a', _pay('a').amountCents - 5000),
         ('b', _pay('b').amountCents),
       ]);
+      expect(r.first.receivedCents, _pay('a').amountCents);
+      expect(r.first.assignedCents, 5000);
+      expect(r.first.entry.amountCents, _pay('a').amountCents,
+          reason: 'the entry is as received, never a doctored amount');
+      expect(r.last.isPartlyUsed, isFalse);
       expect(creditMinorOf(r), _pay('a').amountCents - 5000 + _pay('b').amountCents);
     });
   });

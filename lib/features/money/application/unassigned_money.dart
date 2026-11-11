@@ -47,8 +47,8 @@ Future<PaymentUse> readPaymentUse({
 );
 
 /// The payments of each customer that no invoice has taken
-/// (`unmatchedPaymentsOf`; each entry carries what is left of it), from one read of the whole [ledger].
-Map<String, List<LedgerEntry>> unassignedPaymentsByCustomer({
+/// (`unmatchedPaymentsOf`; each a [PaymentLeft]), from one read of the whole [ledger].
+Map<String, List<PaymentLeft>> unassignedPaymentsByCustomer({
   required List<LedgerEntry> ledger,
   required PaymentUse use,
   required List<Invoice> invoices,
@@ -78,7 +78,7 @@ Map<String, List<LedgerEntry>> unassignedPaymentsByCustomer({
 typedef PaymentToMatch = ({
   String customerId,
   String customerName,
-  LedgerEntry payment,
+  PaymentLeft payment,
   List<MatchCandidate> candidates,
 });
 
@@ -92,7 +92,7 @@ class UnassignedMoney {
 
   /// customer id -> their payments no invoice has taken, newest first; a
   /// customer who holds nothing is absent.
-  final Map<String, List<LedgerEntry>> paymentsOf;
+  final Map<String, List<PaymentLeft>> paymentsOf;
 
   /// What [customerId] holds, per currency; a customer who holds nothing
   /// holds zero (read, and nothing), never "not read".
@@ -136,7 +136,7 @@ class UnassignedMoney {
       final theirs = byCustomer[c]!;
       for (final payment in paymentsOf[c]!) {
         final candidates = candidatesFor(
-          paymentMinor: payment.amountCents,
+          paymentMinor: payment.leftCents,
           currency: currency,
           customerInvoices: theirs,
         );

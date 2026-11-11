@@ -920,6 +920,145 @@ class AppLocalizationsEn extends AppLocalizations {
       'This Swiss archive\'s procedures document states that every download is written to the export log, and this space keeps none: switch on the book periods or the accounting systems first.';
 
   @override
+  String get assignPaymentAction => 'Assign to invoices';
+
+  @override
+  String assignPaymentActionFor(String amount) {
+    return 'Assign $amount to invoices';
+  }
+
+  @override
+  String assignPaymentAmountLabel(String number) {
+    return 'Amount for invoice $number';
+  }
+
+  @override
+  String assignPaymentFull(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices paid in full',
+      one: '1 invoice paid in full',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentNoOpen =>
+      'No open invoice for this customer: the payment stays as credit.';
+
+  @override
+  String get assignPaymentNoteDefault =>
+      'The payment covered only part of this invoice.';
+
+  @override
+  String get assignPaymentNoteLabel => 'Note for the invoices paid in part';
+
+  @override
+  String get assignPaymentOver => 'More than what is left of the payment';
+
+  @override
+  String assignPaymentPart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices paid in part',
+      one: '1 invoice paid in part',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentPending => 'Waits for approval';
+
+  @override
+  String get assignPaymentReadFailedInvoices =>
+      'The invoices could not be read.';
+
+  @override
+  String get assignPaymentReadFailedPayment => 'The payment could not be read.';
+
+  @override
+  String assignPaymentReceived(String amount) {
+    return 'Received $amount';
+  }
+
+  @override
+  String assignPaymentRowCaption(String date, String amount) {
+    return 'Due $date · $amount still due';
+  }
+
+  @override
+  String assignPaymentRowCaptionNoDate(String amount) {
+    return '$amount still due';
+  }
+
+  @override
+  String get assignPaymentRowOver => 'More than what is due on this invoice';
+
+  @override
+  String assignPaymentRowWaiting(String number) {
+    return '$number: a payment of it awaits approval; it takes no part now.';
+  }
+
+  @override
+  String assignPaymentStays(String amount) {
+    return '$amount stays as credit';
+  }
+
+  @override
+  String get assignPaymentStaysNone => 'Nothing stays as credit';
+
+  @override
+  String assignPaymentTickLabel(String number) {
+    return 'Pay invoice $number';
+  }
+
+  @override
+  String assignPaymentUsedHead(String received, String assigned, String left) {
+    return 'Received $received · already assigned $assigned · left $left';
+  }
+
+  @override
+  String get assignRefuseBusiness =>
+      'This payment was not found in this business. Nothing was recorded.';
+
+  @override
+  String get assignRefuseCurrency =>
+      'An invoice is not in the business\'s currency. Nothing was recorded.';
+
+  @override
+  String get assignRefuseDuplicate =>
+      'An invoice appears twice. Nothing was recorded.';
+
+  @override
+  String get assignRefuseGeneric =>
+      'The payment could not be assigned. Nothing was recorded. Try again.';
+
+  @override
+  String get assignRefuseNotAllowed =>
+      'You may not assign payments in this business. Nothing was recorded.';
+
+  @override
+  String get assignRefuseNote => 'A part below what is due needs a note.';
+
+  @override
+  String get assignRefusePartOver =>
+      'A part is more than what is due on its invoice. Nothing was recorded.';
+
+  @override
+  String get assignRefusePayer =>
+      'An invoice is not this customer\'s. Nothing was recorded.';
+
+  @override
+  String get assignRefuseSumOver =>
+      'The parts are more than what is left of the payment. Nothing was recorded.';
+
+  @override
+  String get assignRefuseUsed =>
+      'The payment was used in the meantime. It is read again: check the amounts.';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Who: someone who manages this workspace\'s configuration';
 
@@ -20654,6 +20793,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get paymentMatchIntro =>
       'A payment was received and is not assigned yet. Choose the invoice it pays.';
+
+  @override
+  String get paymentMatchInvoiceGone =>
+      'This invoice is no longer open: the list is read again.';
 
   @override
   String get paymentMatchRefused =>

@@ -9,6 +9,7 @@
 // server stays the authority (a validation quorum may keep it waiting).
 import 'dart:async';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show Invoice;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +27,7 @@ import '../../application/payment_candidates.dart';
 import '../../application/unassigned_money.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_followup_actions.dart' show matchInvoiceToPayment;
+import 'assign_payment_sheet.dart';
 import 'invoicing_reads.dart';
 
 class PaymentsToMatchScreen extends ConsumerStatefulWidget {
@@ -72,11 +74,44 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     final l10n = context.l10n;
     if (c.fit == MatchFit.needsDecision) {
       // The dialog that asks how to settle a difference, opened on the
-      // payment of the card that was tapped.
-      final invoice = (await ref.read(invoicesProvider.future))
-          .where((i) => i.id == c.invoice.invoiceId)
-          .firstOrNull;
-      if (invoice == null || !mounted) return;
+      // payment of the card that was tapped. #3285: the invoices are read
+      // under the same guard as the match, ONCE (no provider retries): a
+      // failed read is said at once with Try again, which keeps this payment
+      // and this invoice.
+      final Invoice? invoice;
+      try {
+        invoice = (await ref
+                .read(invoiceQueriesProvider)
+                .fetchInvoices(ref.read(invoicingBusinessProvider).id))
+            .where((i) => i.id == c.invoice.invoiceId)
+            .firstOrNull;
+      } on Object catch (e, st) {
+        TraceLogger.instance.error(
+          'money',
+          'invoices read failed before a match',
+          error: e,
+          stackTrace: st,
+        );
+        if (!mounted) return;
+        AppSnack.error(
+          context,
+          l10n.assignPaymentReadFailedInvoices,
+          action: SnackBarAction(
+            key: const ValueKey('payment-match-read-retry'),
+            label: l10n.commonRetry,
+            onPressed: () => unawaited(_match(row, c)),
+          ),
+        );
+        return;
+      }
+      if (!mounted) return;
+      if (invoice == null) {
+        ref
+          ..invalidate(invoiceMatchesProvider)
+          ..invalidate(invoicesProvider);
+        AppSnack.error(context, l10n.paymentMatchInvoiceGone);
+        return;
+      }
       await matchInvoiceToPayment(
         context,
         ref,
@@ -181,6 +216,15 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
               row: row,
               currency: widget.currency,
               onMatch: working ? null : (c) => _match(row, c),
+              onAssign: working
+                  ? null
+                  : () => showAssignPayment(
+                      context,
+                      paymentId: row.payment.id,
+                      customerId: row.customerId,
+                      customerName: row.customerName,
+                      currency: widget.currency,
+                    ),
             ),
           ),
         ],
@@ -194,6 +238,7 @@ class _PaymentCard extends ConsumerWidget {
     required this.row,
     required this.currency,
     required this.onMatch,
+    required this.onAssign,
   });
 
   final PaymentToMatch row;
@@ -203,6 +248,10 @@ class _PaymentCard extends ConsumerWidget {
 
   /// Null while a match runs: every candidate waits.
   final void Function(MatchCandidate candidate)? onMatch;
+
+  /// Opens "Assign to invoices" for this payment (#3671); null while a match
+  /// runs.
+  final VoidCallback? onAssign;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -219,13 +268,23 @@ class _PaymentCard extends ConsumerWidget {
           Text(row.customerName, style: theme.textTheme.titleSmall),
           Text(
             l10n.paymentMatchHeader(
-              money.formatMinor(payment.amountCents),
-              format.date(payment.on),
+              money.formatMinor(payment.leftCents),
+              format.date(payment.entry.on),
             ),
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
+          if (payment.isPartlyUsed)
+            Text(
+              l10n.assignPaymentUsedHead(
+                money.formatMinor(payment.receivedCents),
+                money.formatMinor(payment.assignedCents),
+                money.formatMinor(payment.leftCents),
+              ),
+              key: ValueKey('payment-match-used-${payment.id}'),
+              style: theme.textTheme.bodySmall,
+            ),
           const SizedBox(height: AppSpacing.sm),
           for (final c in row.candidates)
             Padding(
@@ -265,6 +324,15 @@ class _PaymentCard extends ConsumerWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              key: ValueKey('payment-match-assign-${payment.id}'),
+              style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+              onPressed: onAssign,
+              child: Text(l10n.assignPaymentAction),
+            ),
+          ),
         ],
       ),
     );

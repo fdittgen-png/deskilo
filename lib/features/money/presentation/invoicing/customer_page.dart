@@ -35,6 +35,8 @@ class CustomerPage extends StatelessWidget {
     required this.onOpenInvoice,
     required this.onAction,
     this.credit,
+    this.payments = const [],
+    this.onAssign,
   });
 
   final String customerId;
@@ -51,6 +53,11 @@ class CustomerPage extends StatelessWidget {
   /// The credit per currency in minor units; null while it was not read: no
   /// figure is shown that was not read.
   final Map<String, int>? credit;
+
+  /// The payments no invoice has taken, newest first (#3671): each has its
+  /// "Assign to invoices" on the credit line; with [onAssign] null, none.
+  final List<PaymentLeft> payments;
+  final ValueChanged<PaymentLeft>? onAssign;
 
   List<Receivable> get _mine => [
     for (final r in receivables)
@@ -223,6 +230,25 @@ class CustomerPage extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
+            if (holds && onAssign != null)
+              for (final p in payments)
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton(
+                    key: ValueKey('customer-page-credit-assign-${p.id}'),
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(48, 48),
+                    ),
+                    onPressed: () => onAssign!(p),
+                    child: Text(
+                      l.assignPaymentActionFor(
+                        format
+                            .moneyIn(held.keys.first)
+                            .formatMinor(p.leftCents),
+                      ),
+                    ),
+                  ),
+                ),
             if (holds)
               Align(
                 alignment: AlignmentDirectional.centerStart,

@@ -13,6 +13,10 @@ part 'navigation_style.g.dart';
 /// destinations in a permanent sidebar instead of a drawer.
 const double kWideNavigationMinWidth = 900;
 
+/// Whether a window [width] keeps the permanent sidebar
+/// ([kWideNavigationMinWidth]): the one question "phone or desk?" asks.
+bool isWideNavigationWidth(double width) => width >= kWideNavigationMinWidth;
+
 /// The largest text scale, in percent, at which that sidebar still leaves
 /// the page room beside it.
 const double kWideNavigationMaxTextScale = 150;
