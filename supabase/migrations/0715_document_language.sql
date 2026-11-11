@@ -4,7 +4,7 @@
 -- Additive: one more accepted key in an existing writer; no table, column,
 -- policy or other function changes, and no stored preference is rewritten.
 --
--- NNNN (#3647) -- the language of letters and notifications
+-- 0715 (#3647) -- the language of letters and notifications
 -- (`preferred_locale`: reminders, member documents, push messages) is its
 -- own preference. `document_locale_mode` says how it is decided:
 --
@@ -80,4 +80,4 @@ revoke execute on function public.set_personal_preferences(jsonb,uuid,uuid) from
 grant execute on function public.set_personal_preferences(jsonb,uuid,uuid) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(NNNN);
+select public.set_deskilo_schema_version(715);
