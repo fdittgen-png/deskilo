@@ -145,7 +145,9 @@ class SupabaseInvoiceCommands implements InvoiceCommands {
         'p_payment_ledger_id': paymentLedgerId,
         'p_resolution': resolution,
         'p_note': note,
-        'p_amount_cents': amountCents,
+        // Only when given: an installation before 0717 has no fifth
+        // parameter, and every match there must keep working (#3671).
+        'p_amount_cents': ?amountCents,
       },
     );
   }
