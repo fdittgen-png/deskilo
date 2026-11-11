@@ -45,6 +45,8 @@
     "description": "#2477 tax reference: Badge: nobody checked the value against its source."
   },
   "taxRefValidFrom": "Valido dal",
+  "taxRefValidFromUntilDate": "Valido dal {from} fino al {until}",
+  "taxRefValidFromDate": "Valido dal {date}",
   "@taxRefValidFrom": {
     "description": "#2477 tax reference: Field: first day a version is in force."
   },

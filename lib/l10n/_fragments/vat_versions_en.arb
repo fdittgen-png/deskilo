@@ -20,9 +20,27 @@
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
   },
+  "vatSinceDate": "since {date}",
+  "@vatSinceDate": {
+    "description": "#3652 A VAT rate row: the date from which the rate applies.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "vatUntil": "until",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
+  },
+  "vatUntilDate": "until {date}",
+  "@vatUntilDate": {
+    "description": "#3652 A VAT rate row: the date until which the rate applies.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "vatChangeByLaw": "Change by law",
   "@vatChangeByLaw": {

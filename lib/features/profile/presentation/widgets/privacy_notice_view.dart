@@ -72,7 +72,7 @@ class PrivacyNoticeView extends StatelessWidget {
         if (showVersion) ...[
           const SizedBox(height: AppSpacing.xs),
           Text(
-            '${l10n.consentVersion} ${notice.version}',
+            l10n.consentVersionNumber(notice.version),
             style: muted,
           ),
         ],

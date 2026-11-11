@@ -41,6 +41,7 @@ import '../../../workspace/presentation/widgets/my_badge_tile.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/personal_preferences.dart';
 import '../../domain/profile.dart';
+import '../../domain/profile_photo_limits.dart';
 import '../../providers/personal_appearance_providers.dart';
 import '../../providers/personal_preferences_providers.dart';
 import '../../providers/profile_providers.dart';

@@ -6,6 +6,7 @@
 import 'dart:typed_data';
 
 import '../../../core/i18n/format_prefs.dart';
+import '../domain/profile_photo_limits.dart';
 import '../domain/profile_repository.dart';
 
 class MyProfileEdits {
@@ -14,8 +15,11 @@ class MyProfileEdits {
   final ProfileRepository _profiles;
 
   /// My profile photo (0038).
-  Future<void> setPhoto(Uint8List bytes, {String? contentType}) =>
-      _profiles.setAvatar(bytes: bytes, contentType: contentType ?? 'image/jpeg');
+  Future<void> setPhoto(Uint8List bytes, {String? contentType}) {
+    final type = contentType ?? 'image/jpeg';
+    checkProfilePhoto(bytes.length, type); // before the upload (#3710)
+    return _profiles.setAvatar(bytes: bytes, contentType: type);
+  }
 
   Future<void> removePhoto() => _profiles.clearAvatar();
 

@@ -3863,6 +3863,7 @@
   "consentTitle": "Vos données, vos droits",
   "consentUnavailable": "Votre compte n'a pas pu être chargé ; il n'y a donc rien à accepter pour l'instant.",
   "consentVersion": "Version",
+  "consentVersionNumber": "Version {version}",
   "consentWhatBody": "Votre compte (e-mail, nom affiché, mot de passe haché), votre profil tel que vous le remplissez (photo, statut, adresse, numéro WhatsApp — chacun facultatif), et ce que vous faites dans un espace : réservations et pointages, messages, dépenses et consommations, votre abonnement, factures et paiements. Tout est stocké sur le serveur où vit votre espace : sur le serveur de référence partagé, dans l'UE (Supabase, eu-central-1) ; sur un serveur qu'une communauté fait tourner elle-même, là où son opérateur l'a choisi. Réglages → Confidentialité et données affiche la notice de ce serveur : qui le fait tourner, où sont les données et qui les reçoit.",
   "consentWhatTitle": "Ce que DesKilo traite",
   "consentWhoBody": "L'accès suit les rôles et est appliqué côté serveur : les réservations sont visibles de l'espace (le plan montre l'occupation) ; vos finances et votre accord commercial seulement de vous, des propriétaires et des admins qui détiennent la permission correspondante. Chaque élément de votre profil n'est montré qu'au public que vous choisissez sous Qui me voit ; rien n'est public sans votre choix.",
@@ -9296,6 +9297,7 @@
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
   },
   "invoicePdfReplaces": "Remplace",
+  "invoicePdfReplacesNumber": "Remplace {number}",
   "invoicePdfReserved": "réservé",
   "invoicePdfSalesTax": "Taxe de vente",
   "@invoicePdfSalesTax": {
@@ -13573,6 +13575,7 @@
   "processWorkspaceAccessDesc": "Gérer les adhésions, les rôles et l’accès aux locaux.",
   "profilePhotoChoose": "Choisir une photo",
   "profilePhotoNone": "Toucher pour ajouter une photo",
+  "profilePhotoRefused": "La photo est trop volumineuse ou d'un type non accepté. Utilisez une photo JPEG, PNG ou WebP de {megabytes} Mo au maximum.",
   "profilePhotoRemove": "Supprimer la photo",
   "profilePhotoRemoved": "Photo supprimée",
   "profilePhotoSaveFailed": "Impossible de mettre à jour la photo",
@@ -14788,11 +14791,13 @@
   "reminderPdfClosing": "Si vous avez déjà payé, veuillez ne pas tenir compte de ce courrier.",
   "reminderPdfDays": "jours",
   "reminderPdfDaysOpen": "Ouverte depuis",
+  "reminderPdfDaysOpenLine": "Ouverte depuis {days} jours",
   "reminderPdfLevelLabel": "Niveau de relance",
   "reminderPdfOpeningFirm": "malgré notre relance précédente, la facture ci-dessous reste impayée. Merci de régler le montant sans délai.",
   "reminderPdfOpeningFriendly": "petit rappel amical : la facture ci-dessous est encore ouverte. Un simple oubli, sans doute — pas d'inquiétude.",
   "reminderPdfTitleFirm": "Relance",
   "reminderPdfTitleFriendly": "Rappel de paiement",
+  "reminderPdfTitleLevel": "Relance {level}",
   "reminderQueueCheckFirst": "À vérifier d'abord : argent reçu et non affecté",
   "reminderQueueDetail": "{days, plural, =0{{number} · échue aujourd'hui} =1{{number} · 1 jour de retard} other{{number} · {days} jours de retard}}",
   "reminderQueueDone": "Terminé",
@@ -15061,6 +15066,7 @@
     "description": "Report suite: agreement/payments/workspace docs (#494)"
   },
   "reportDocPurchaseOrder": "Bon de commande",
+  "reportDocPurchaseOrderTitle": "Bon de commande {reference}",
   "reportDocSpaceCodes": "Cartes QR des espaces",
   "reportDocStatus": "Situation de l'espace",
   "@reportDocStatus": {
@@ -19592,6 +19598,8 @@
   "@taxRefValidFrom": {
     "description": "#2477 tax reference: Field: first day a version is in force."
   },
+  "taxRefValidFromDate": "Valable à partir du {date}",
+  "taxRefValidFromUntilDate": "Valable à partir du {from} jusqu'au {until}",
   "taxRefValidUntil": "jusqu'au",
   "@taxRefValidUntil": {
     "description": "#2477 tax reference: Word before the day a version ends."
@@ -20842,6 +20850,7 @@
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
   },
+  "vatSinceDate": "depuis le {date}",
   "vatTaxPointEarlierOf": "À la facture ou au paiement, au premier des deux",
   "@vatTaxPointEarlierOf": {
     "description": "#2355 vat tax point: vatTaxPointEarlierOf"
@@ -20910,6 +20919,7 @@
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
+  "vatUntilDate": "jusqu'au {date}",
   "viesCheckExplainer": "VIES est le registre européen des numéros de TVA. Une réponse valide, avec son numéro de consultation, prouve que ce client est une entreprise ; une facture autoliquidée n'est émise qu'après une telle réponse.",
   "viesCheckFailed": "VIES n'a pas pu être interrogé. Réessayez plus tard.",
   "viesCheckNow": "Vérifier maintenant",

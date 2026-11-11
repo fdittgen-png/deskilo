@@ -17,10 +17,12 @@
     "description": "#985 VAT versions and counterparty: featureVatCounterpartyDesc"
   },
   "vatSince": "desde el",
+  "vatSinceDate": "desde el {date}",
   "@vatSince": {
     "description": "#985 VAT versions and counterparty: vatSince"
   },
   "vatUntil": "hasta el",
+  "vatUntilDate": "hasta el {date}",
   "@vatUntil": {
     "description": "#985 VAT versions and counterparty: vatUntil"
   },
