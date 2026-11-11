@@ -94,6 +94,15 @@
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
   },
+  "invoicePdfSignatureValue": "Document fingerprint (SHA-256) {fingerprint}",
+  "@invoicePdfSignatureValue": {
+    "description": "Invoice detail: the document fingerprint caption with the shortened fingerprint.",
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
   "addressTitle": "Address",
   "@addressTitle": {
     "description": "Settings tile: the member's postal address (printed on invoices)"
@@ -151,9 +160,14 @@
   "@invoiceReplaceAction": {
     "description": "Menu action opening the prefilled replacement form"
   },
-  "invoicePdfVoided": "ERRONEOUS — voided on",
-  "@invoicePdfVoided": {
-    "description": "PDF banner + row label prefix before the void date"
+  "invoicePdfVoidedOn": "ERRONEOUS — voided on {date}",
+  "@invoicePdfVoidedOn": {
+    "description": "PDF: the erroneous-document mark with the date it was voided.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "invoicePdfReplaces": "Replaces",
   "@invoicePdfReplaces": {
@@ -780,6 +794,15 @@
   "invoiceSendRejected": "The platform refused it.",
   "@invoiceSendRejected": {
     "description": "Snackbar: the platform refused it"
+  },
+  "invoiceSendRejectedDetail": "The platform refused it. {detail}",
+  "@invoiceSendRejectedDetail": {
+    "description": "Snackbar: the platform refused the invoice, with its stated reason.",
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
   },
   "invoiceSentOn": "Sent {date} · {status}",
   "@invoiceSentOn": {

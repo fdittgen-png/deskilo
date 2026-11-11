@@ -183,8 +183,10 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
                 if (d != null) setState(() => _paidOn = d);
               },
               child: Text(
-                '${l10n.purchasesPayDate}: '
-                '${material.formatMediumDate(_paidOn ?? _today)}',
+                l10n.labelWithValue(
+                l10n.purchasesPayDate,
+                material.formatMediumDate(_paidOn ?? _today),
+              ),
               ),
             ),
             if (_invalid)

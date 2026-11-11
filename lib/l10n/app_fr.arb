@@ -4667,10 +4667,7 @@
   "@deploymentPullFromProd": {
     "description": "#998 deployment pull: deploymentPullFromProd"
   },
-  "deploymentRequires": "nécessite",
-  "@deploymentRequires": {
-    "description": "#988/#990 deployments: deploymentRequires"
-  },
+  "deploymentRequiresList": "nécessite {entities}",
   "deploymentRollback": "Revenir en arrière",
   "@deploymentRollback": {
     "description": "#988/#990 deployments: deploymentRollback"
@@ -5305,8 +5302,8 @@
     "description": "#587 delete despite reservations — audit substitution warning"
   },
   "editorDeskFull": "Plus de place sur cette table.",
-  "editorDeskNameDefault": "Table",
   "editorDeskNameLabel": "Nom de la table",
+  "editorDeskNameNumbered": "Table {number}",
   "editorDeskProperties": "Table",
   "editorDuplicate": "Dupliquer",
   "editorEmptyFloorAction": "Dessiner la première pièce",
@@ -5327,8 +5324,8 @@
   "editorNoAccessories": "Aucun accessoire pour l'instant — ajoutez-les dans Réglages → Accessoires.",
   "editorNoAccessoriesAction": "Aucun équipement — les configurer",
   "editorNoLevels": "Aucun étage pour l'instant. Ajoutez le premier étage de votre espace.",
-  "editorOfficeNameDefault": "Bureau",
   "editorOfficeNameLabel": "Nom du bureau",
+  "editorOfficeNameNumbered": "Bureau {number}",
   "editorOfficeProperties": "Bureau",
   "editorOpenTooltip": "Modifier l'espace",
   "editorOrientationHint": "Le sens dans lequel la chaise est tournée sur le plan.",
@@ -8091,7 +8088,7 @@
   "instanceAttentionUnrecorded": "Les tables DesKilo sont là, mais aucune migration n'a été enregistrée. Enregistrez d'abord ce qu'il contient avec `dart run tool/instance.dart record`.",
   "instanceBlock": "Bloquer",
   "instanceBlockerNoAdmin": "un administrateur de la base",
-  "instanceBlockers": "Il manque encore :",
+  "instanceBlockersList": "Il manque encore : {blockers}",
   "instanceCheckToken": "Vérifier le jeton",
   "@instanceCheckToken": {
     "description": "#977 instance wizard: instanceCheckToken"
@@ -9366,12 +9363,13 @@
     }
   },
   "invoicePdfSignature": "Empreinte du document (SHA-256)",
+  "invoicePdfSignatureValue": "Empreinte du document (SHA-256) {fingerprint}",
   "invoicePdfSubtotal": "Sous-total",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
   },
   "invoicePdfTitle": "Facture",
-  "invoicePdfVoided": "ERRONÉE — annulée le",
+  "invoicePdfVoidedOn": "ERRONÉE — annulée le {date}",
   "invoicePickMember": "Choisissez un membre pour voir ce que son mois a enregistré.",
   "invoicePreviewUnavailable": "L’aperçu n’a pas pu être lu : rien n’est affiché et rien ne peut être émis. Changez de mois ou réessayez.",
   "invoiceProformaAction": "Facture proforma",
@@ -9483,6 +9481,7 @@
     "description": "E-invoice sheet: post the document to the customer's delivery service (#568)"
   },
   "invoiceSendRejected": "La plateforme l’a refusée.",
+  "invoiceSendRejectedDetail": "La plateforme l’a refusée. {detail}",
   "invoiceSendStatusAccepted": "acceptée",
   "invoiceSendStatusFailed": "non transmise",
   "invoiceSendStatusInProgress": "en cours",
@@ -12407,6 +12406,7 @@
   "@notesFilterUnread": {
     "description": "Messages-inbox filter chip showing only unread messages (#539)"
   },
+  "notesFilterUnreadCount": "Non lus ({unread})",
   "notifCategoryCheckIns": "Check-ins",
   "notifCategoryMembers": "Membres",
   "notifCategoryMoney": "Finances",
@@ -13176,6 +13176,7 @@
   "planStateFree": "Libre",
   "planStateYours": "À vous",
   "planToLabel": "À",
+  "planToTime": "À {time}",
   "planUntil": "jusqu'à {time}",
   "planUntilDateLabel": "Répéter jusqu'au",
   "planUntilLabel": "Jusqu'à",
@@ -19912,8 +19913,8 @@
   "usageAskExplain": "Vous avez réservé {booked} et vous êtes resté {present}. Demandez que les {saved} non utilisées cessent d'être facturées. Quelqu'un d'autre décide — jamais vous.",
   "usageAskSubmit": "Demander",
   "usageAskSubmitted": "Demandé. Quelqu'un d'autre décide.",
-  "usageBilled": "Facturé",
-  "usageBooked": "Réservé",
+  "usageBilledDuration": "Facturé {duration}",
+  "usageBookedDuration": "Réservé {duration}",
   "usageCorrected": "Corrigé",
   "usageDelete": "Supprimer ce relevé",
   "usageDeleteSubmitted": "Suppression demandée.",
@@ -19948,7 +19949,7 @@
       }
     }
   },
-  "usagePresent": "Présent",
+  "usagePresentDuration": "Présent {duration}",
   "usageReasonLabel": "Pourquoi (facultatif)",
   "usageReportButton": "Rapport de consommation du mois",
   "@usageReportButton": {

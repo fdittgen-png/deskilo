@@ -225,8 +225,10 @@ class _OrderTile extends ConsumerWidget {
             Text(l10n.purchaseOrderSummary(order.supplierName, total)),
             if (order.expectedOn case final d?)
               Text(
-                '${l10n.purchaseOrderExpected}: '
-                '${MaterialLocalizations.of(context).formatMediumDate(d)}',
+                l10n.labelWithValue(
+                  l10n.purchaseOrderExpected,
+                  MaterialLocalizations.of(context).formatMediumDate(d),
+                ),
               ),
             const FormGap.small(),
             Wrap(

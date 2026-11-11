@@ -210,8 +210,10 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
           child: Text(
             _day == null
                 ? l10n.purchasesFxRateDate
-                : '${l10n.purchasesFxRateDate}: '
-                      '${MaterialLocalizations.of(context).formatMediumDate(_day!)}',
+                : l10n.labelWithValue(
+                    l10n.purchasesFxRateDate,
+                    MaterialLocalizations.of(context).formatMediumDate(_day!),
+                  ),
           ),
         ),
       ],

@@ -24,8 +24,7 @@ InvoicePdfStrings invoicePdfStringsOf(
   final voidedAt = invoice.voidedAt;
   final voidedLabel = voidedAt == null
       ? ''
-      : '${l10n.invoicePdfVoided} '
-            '${dateFormat.format(voidedAt)}';
+      : l10n.invoicePdfVoidedOn(dateFormat.format(voidedAt));
   return InvoicePdfStrings(
     // #508 — a NEGATIVE document is titled as the credit note it is.
     invoiceTitle: invoice.totalCents < 0
