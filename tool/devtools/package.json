@@ -1,0 +1,13 @@
+{
+  "name": "deskilo-devtools",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": { "node": ">=24.22.1 <25" },
+  "scripts": {
+    "context": "node context.mjs",
+    "skills": "node skills.mjs",
+    "test": "node --test *.test.mjs"
+  },
+  "devDependencies": { "repomix": "1.19.0" }
+}

@@ -57,7 +57,7 @@ describes in one section, more only where the guide has a section per part.
    left alone (the default), the rule that is easy to get wrong. Consequences, not
    mechanisms. Labels exactly as the app shows them in that guide's language.
 4. **Images**: an existing image is `<p><img src="images/<id>.jpg" width="240"></p>`
-   (`build_help` rewrites it to `![](assets/help/images/…)`), one topic-sized image
+   (`build_help` rewrites it to a Markdown image under `assets/help/images/`), one topic-sized image
    beside its paragraph. A missing one is a slot, `<!-- image: <id> -->`, which renders
    as nothing — `dart run tool/media.dart slots` lists the waiting ones, `/doc-shots`
    fills them without touching a sentence. Never an `<img>` to a file that does not

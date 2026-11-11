@@ -55,6 +55,15 @@ decide: post the reasoned decision on the issue, then implement and commit.
 Never leave useful work uncommitted; remove merged worktrees; branch, merge
 and conflict rules: `docs/AGENT_RULES.md#decide-commit-never-park-owner-2026-10-25`.
 
+## Focused context and skill checks
+
+For a targeted source export or structural skill validation, use the pinned
+project package documented in [tool/devtools/README.md](tool/devtools/README.md).
+Choose the forms, MCP or delivery scope; review the export and its provenance
+before sharing it. Skill fixture checks are not agent-performance benchmarks.
+Check the existing packages under `tool/` before adding another utility. These
+optional commands supplement the execution loop; they do not replace its gates.
+
 ## Non-negotiables in one breath
 
 One registry-touching branch at a time. Harness a migration before you apply it.

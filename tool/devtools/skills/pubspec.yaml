@@ -1,0 +1,6 @@
+name: deskilo_skill_checks
+publish_to: none
+environment:
+  sdk: ^3.13.0
+dependencies:
+  skills_lint: 0.5.3+1
