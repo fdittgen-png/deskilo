@@ -2355,6 +2355,7 @@ routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void
 routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7541cf6a1fbe
 routine public.einvoice_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:7b9035a41e2d
 routine public.einvoice_credentials_resolved(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:77e05a44c17e
+routine public.einvoice_document_accepted(p_phase text, p_verdict jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:eafb190010a5
 routine public.einvoice_match_candidates(p_inbox_id uuid) -> TABLE(event_id uuid, filed_on date, category text, note text, amount_cents bigint, status text) | function | definer | stable | exec:authenticated,service_role | body:6bb909710ea4
 routine public.einvoice_secret_name(p_workspace_id uuid, p_key text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:45f8d16fc252
 routine public.einvoice_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c92d49ab02ea
@@ -2809,8 +2810,9 @@ routine public.my_workspace_applications(p_before_at timestamp with time zone, p
 routine public.my_workspace_hosts_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fd101ad4aefc
 routine public.my_workspace_inbox_v1(p_before_at timestamp with time zone, p_before_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c3dd6d3ba4e1
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
-routine public.national_channel_accepted(p_workspace_id uuid, p_country text) -> boolean | function | definer | stable | exec:service_role | body:3c894718aa89
-routine public.national_channel_from_transmission() -> trigger | function | definer | volatile | exec:service_role | body:f4aaa0750bb4
+routine public.national_channel_accepted(p_workspace_id uuid, p_country text) -> boolean | function | definer | stable | exec:service_role | body:e34bde1ed90d
+routine public.national_channel_binding(p_workspace_id uuid, p_channel text) -> text | function | definer | stable | exec:service_role | body:eb090529cdbf
+routine public.national_channel_from_transmission() -> trigger | function | definer | volatile | exec:service_role | body:45867485dade
 routine public.national_channel_from_verifactu() -> trigger | function | definer | volatile | exec:service_role | body:70ca77cbb29e
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
 routine public.next_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | volatile | exec:service_role | body:fd6010808751
@@ -2983,7 +2985,7 @@ routine public.record_file_deliveries_v1(p_workspace_id uuid, p_target_id text, 
 routine public.record_hmrc_acceptance(p_declaration_id uuid, p_holder text, p_form_bundle text, p_processing_date text, p_charge_ref text) -> void | function | definer | volatile | exec:service_role | body:37f114405089
 routine public.record_invoice_reminder(p_invoice_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:687099ad233c
 routine public.record_member_reimbursement_v1(p_workspace_id uuid, p_obligation_id uuid, p_amount_cents bigint, p_revision integer, p_request_id uuid, p_paid_on date, p_method text, p_reference text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6903fd94329d
-routine public.record_national_channel_acceptance_v1(p_workspace_id uuid, p_country text, p_channel text, p_environment text, p_receipt jsonb, p_accepted_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:service_role | body:376bd1c78d0c
+routine public.record_national_channel_acceptance_v1(p_workspace_id uuid, p_country text, p_channel text, p_environment text, p_receipt jsonb, p_accepted_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:service_role | body:6148c5f781af
 routine public.record_payment(p_workspace_id uuid, p_member_id uuid, p_amount_cents integer, p_note text, p_method text, p_paid_on date, p_period text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:e81915235895
 routine public.record_privacy_incident(p_workspace_id uuid, p_kind text, p_note text) -> integer | function | definer | volatile | exec:authenticated,service_role | body:9601cdaa88e2
 routine public.record_provenance(p_workspace_id uuid, p_kind text, p_result_id uuid, p_issuer jsonb, p_declared jsonb, p_artifacts jsonb, p_rule_revision jsonb) -> void | function | definer | volatile | exec:service_role | body:82d54feb6444
@@ -3559,7 +3561,8 @@ trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_colu
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmission_artifacts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmission_artifacts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmissions.invoice_transmissions_sync_phase CREATE TRIGGER invoice_transmissions_sync_phase BEFORE INSERT OR UPDATE ON public.invoice_transmissions FOR EACH ROW EXECUTE FUNCTION invoice_transmissions_sync_phase()
-trigger invoice_transmissions.national_channel_from_transmission CREATE TRIGGER national_channel_from_transmission AFTER INSERT OR UPDATE OF status ON public.invoice_transmissions FOR EACH ROW WHEN ((new.status = 'accepted'::text)) EXECUTE FUNCTION national_channel_from_transmission()
+trigger invoice_transmissions.national_channel_from_transmission_insert CREATE TRIGGER national_channel_from_transmission_insert AFTER INSERT ON public.invoice_transmissions FOR EACH ROW WHEN (einvoice_document_accepted(new.phase, new.verdict)) EXECUTE FUNCTION national_channel_from_transmission()
+trigger invoice_transmissions.national_channel_from_transmission_update CREATE TRIGGER national_channel_from_transmission_update AFTER UPDATE ON public.invoice_transmissions FOR EACH ROW WHEN ((einvoice_document_accepted(new.phase, new.verdict) AND (NOT einvoice_document_accepted(old.phase, old.verdict)))) EXECUTE FUNCTION national_channel_from_transmission()
 trigger invoice_transmissions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmissions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoices.book_period_void_guard CREATE TRIGGER book_period_void_guard BEFORE UPDATE OF voided_at ON public.invoices FOR EACH ROW EXECUTE FUNCTION book_period_void_guard()
 trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_freeze()
