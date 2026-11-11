@@ -32468,20 +32468,8 @@ abstract class AppLocalizations {
   /// #3587 R1-f: payments to match (paymentMatchIntro)
   ///
   /// In en, this message translates to:
-  /// **'A payment reached the customer\'s account. Choose the invoice it settles.'**
+  /// **'A payment was received and is not assigned yet. Choose the invoice it pays.'**
   String get paymentMatchIntro;
-
-  /// #3587 R1-f: payments to match (paymentMatchNoInvoice)
-  ///
-  /// In en, this message translates to:
-  /// **'No open invoice of this customer fits.'**
-  String get paymentMatchNoInvoice;
-
-  /// #3587 R1-f: payments to match (paymentMatchNone)
-  ///
-  /// In en, this message translates to:
-  /// **'None of these'**
-  String get paymentMatchNone;
 
   /// #3587 R1-f: said when matching a payment to an invoice was refused
   ///

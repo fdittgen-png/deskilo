@@ -19734,14 +19734,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentMatchIntro =>
-      'Un pagamento è arrivato sul conto del cliente. Scelga la fattura che salda.';
-
-  @override
-  String get paymentMatchNoInvoice =>
-      'Nessuna fattura aperta di questo cliente corrisponde.';
-
-  @override
-  String get paymentMatchNone => 'Nessuna di queste';
+      'È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.';
 
   @override
   String get paymentMatchRefused =>

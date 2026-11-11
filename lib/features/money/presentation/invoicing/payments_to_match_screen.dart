@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/status_chip.dart';
@@ -62,15 +63,6 @@ class PaymentsToMatchScreen extends ConsumerStatefulWidget {
 class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
   late Future<List<PaymentToMatch>> _rows = _read();
 
-  /// Payments the person set aside ("None of these"): they stay unmatched.
-  final ValueNotifier<Set<String>> _aside = ValueNotifier({});
-
-  @override
-  void dispose() {
-    _aside.dispose();
-    super.dispose();
-  }
-
   Future<List<PaymentToMatch>> _read() async {
     final custom = widget.loader;
     if (custom != null) return custom();
@@ -105,14 +97,18 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
         consumed: consumed,
         invoices: invoices,
       )) {
+        final candidates = candidatesFor(
+          paymentMinor: payment.amountCents,
+          currency: widget.currency,
+          customerInvoices: theirs,
+        );
+        // Money with no open invoice to pay is the customer's credit (shown
+        // on their page), not something to do here.
+        if (candidates.isEmpty) continue;
         rows.add((
           customer: customer,
           payment: payment,
-          candidates: candidatesFor(
-            paymentMinor: payment.amountCents,
-            currency: widget.currency,
-            customerInvoices: theirs,
-          ),
+          candidates: candidates,
         ));
       }
     }
@@ -143,7 +139,13 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
             paymentLedgerId: row.payment.id,
             resolution: 'exact',
           );
-    } on Object catch (e) {
+    } on Object catch (e, st) {
+      TraceLogger.instance.error(
+        'money',
+        'payment match refused',
+        error: e,
+        stackTrace: st,
+      );
       if (!mounted) return;
       AppSnack.error(
         context,
@@ -194,13 +196,10 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
           if (!snapshot.hasData) {
             return const LoadingView();
           }
-          return ValueListenableBuilder<Set<String>>(
-            valueListenable: _aside,
-            builder: (context, aside, _) => _list(context, [
-              for (final r in snapshot.data!)
-                if (!aside.contains(r.payment.id)) r,
-            ]),
-          );
+          return _list(context, [
+            for (final r in snapshot.data!)
+              if (r.candidates.isNotEmpty) r,
+          ]);
         },
       ),
     );
@@ -223,11 +222,7 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
         QuietLine(l10n.paymentMatchIntro, icon: Icons.info_outline),
         for (final row in rows) ...[
           const SizedBox(height: AppSpacing.md),
-          _PaymentCard(
-            row: row,
-            onMatch: (c) => _match(row, c),
-            onNone: () => _aside.value = {..._aside.value, row.payment.id},
-          ),
+          _PaymentCard(row: row, onMatch: (c) => _match(row, c)),
         ],
       ],
     );
@@ -235,15 +230,10 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
 }
 
 class _PaymentCard extends ConsumerWidget {
-  const _PaymentCard({
-    required this.row,
-    required this.onMatch,
-    required this.onNone,
-  });
+  const _PaymentCard({required this.row, required this.onMatch});
 
   final PaymentToMatch row;
   final void Function(MatchCandidate candidate) onMatch;
-  final VoidCallback onNone;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -268,42 +258,34 @@ class _PaymentCard extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
-          if (row.candidates.isEmpty)
-            Text(
-              l10n.paymentMatchNoInvoice,
-              key: ValueKey('payment-match-no-invoice-${payment.id}'),
-            )
-          else
-            for (final c in row.candidates)
-              Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                child: OutlinedButton(
-                  key: ValueKey(
-                    'payment-match-${payment.id}-${c.invoice.invoiceId}',
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48),
-                  ),
-                  onPressed: () => onMatch(c),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          l10n.paymentMatchCandidate(
-                            c.invoice.number,
-                            money.formatMinor(c.invoice.openMinor),
-                          ),
+          for (final c in row.candidates)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+              child: _CandidateButton(
+                exact: c.fit == MatchFit.exact,
+                key: ValueKey(
+                  'payment-match-${payment.id}-${c.invoice.invoiceId}',
+                ),
+                onPressed: () => onMatch(c),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.paymentMatchCandidate(
+                          c.invoice.number,
+                          money.formatMinor(c.invoice.openMinor),
                         ),
                       ),
-                      if (c.fit == MatchFit.exact)
-                        StatusChip(
-                          label: l10n.paymentMatchSame,
-                          tone: StatusTone.ok,
-                        ),
-                    ],
-                  ),
+                    ),
+                    if (c.fit == MatchFit.exact)
+                      StatusChip(
+                        label: l10n.paymentMatchSame,
+                        tone: StatusTone.ok,
+                      ),
+                  ],
                 ),
               ),
+            ),
           if (row.candidates.any((c) => c.fit == MatchFit.needsDecision))
             Text(
               l10n.paymentMatchDecide,
@@ -311,17 +293,39 @@ class _PaymentCard extends ConsumerWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              key: ValueKey('payment-match-none-${payment.id}'),
-              style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-              onPressed: onNone,
-              child: Text(l10n.paymentMatchNone),
-            ),
-          ),
         ],
       ),
     );
+  }
+}
+
+/// The invoice a payment could settle: the one of the same amount stands out
+/// (tonal), the others are outlined.
+class _CandidateButton extends StatelessWidget {
+  const _CandidateButton({
+    super.key,
+    required this.exact,
+    required this.onPressed,
+    required this.child,
+  });
+
+  final bool exact;
+  final VoidCallback onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    const size = Size.fromHeight(48);
+    return exact
+        ? FilledButton.tonal(
+            style: FilledButton.styleFrom(minimumSize: size),
+            onPressed: onPressed,
+            child: child,
+          )
+        : OutlinedButton(
+            style: OutlinedButton.styleFrom(minimumSize: size),
+            onPressed: onPressed,
+            child: child,
+          );
   }
 }

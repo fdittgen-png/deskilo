@@ -26068,17 +26068,9 @@
       }
     }
   },
-  "paymentMatchIntro": "A payment reached the customer's account. Choose the invoice it settles.",
+  "paymentMatchIntro": "A payment was received and is not assigned yet. Choose the invoice it pays.",
   "@paymentMatchIntro": {
     "description": "#3587 R1-f: payments to match (paymentMatchIntro)"
-  },
-  "paymentMatchNoInvoice": "No open invoice of this customer fits.",
-  "@paymentMatchNoInvoice": {
-    "description": "#3587 R1-f: payments to match (paymentMatchNoInvoice)"
-  },
-  "paymentMatchNone": "None of these",
-  "@paymentMatchNone": {
-    "description": "#3587 R1-f: payments to match (paymentMatchNone)"
   },
   "paymentMatchRefused": "The payment could not be matched. Try again.",
   "@paymentMatchRefused": {

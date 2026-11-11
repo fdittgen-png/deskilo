@@ -151,24 +151,20 @@ void main() {
     );
   });
 
-  testWidgets('"None of these" sets the payment aside and matches nothing', (
-    tester,
-  ) async {
-    await pump(tester, () async => [row('p1', 12000, invoices)]);
-    await tester.tap(_key('payment-match-none-p1'));
-    await tester.pumpAndSettle();
-    expect(repo.matched, isEmpty);
-    expect(_key('payment-match-empty'), findsOneWidget);
-  });
-
-  testWidgets('a payment no open invoice fits says so', (tester) async {
+  testWidgets('a payment with no open invoice to pay is the customer\'s '
+      'credit, not a to-do: it is not listed', (tester) async {
     await pump(
       tester,
       () async => [
-        row('p1', 9900, [invoices.first]).copyWithNone(),
+        (
+          customer: invoices.first,
+          payment: _payment('p9', 9900),
+          candidates: const <MatchCandidate>[],
+        ),
       ],
     );
-    expect(_key('payment-match-no-invoice-p1'), findsOneWidget);
+    expect(find.text('No payment is waiting for an invoice.'), findsOneWidget);
+    expect(find.text('Anna Alder'), findsNothing);
   });
 
   testWidgets('nothing waiting is said, and a failed read has a retry', (
@@ -190,15 +186,11 @@ void main() {
   });
 
   // The picture a pull request attaches (SHEET=1), at a phone's own height.
-  testWidgets('sheet: two payments, one with no open invoice', (tester) async {
+  testWidgets('sheet: two payments', (tester) async {
     await loadSheetFonts();
     await pump(
       tester,
-      () async => [
-        row('p1', 12000, invoices),
-        row('p2', 7777, invoices),
-        row('p3', 9900, [invoices.first]).copyWithNone(),
-      ],
+      () async => [row('p1', 12000, invoices), row('p2', 7777, invoices)],
     );
     await writeSheet(tester, sheet: 'payments-to-match', name: 'list');
   });
@@ -217,10 +209,4 @@ void main() {
       semantics.dispose();
     });
   }
-}
-
-extension on PaymentToMatch {
-  /// The same payment with no candidate.
-  PaymentToMatch copyWithNone() =>
-      (customer: customer, payment: payment, candidates: const []);
 }

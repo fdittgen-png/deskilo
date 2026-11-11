@@ -19576,13 +19576,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentMatchIntro =>
-      'A payment reached the customer\'s account. Choose the invoice it settles.';
-
-  @override
-  String get paymentMatchNoInvoice => 'No open invoice of this customer fits.';
-
-  @override
-  String get paymentMatchNone => 'None of these';
+      'A payment was received and is not assigned yet. Choose the invoice it pays.';
 
   @override
   String get paymentMatchRefused =>

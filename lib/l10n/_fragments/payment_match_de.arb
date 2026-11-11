@@ -1,12 +1,10 @@
 {
   "paymentMatchTitle": "Zahlungen zuordnen",
-  "paymentMatchIntro": "Eine Zahlung ist auf dem Konto des Kunden eingegangen. Wählen Sie die Rechnung, die sie begleicht.",
+  "paymentMatchIntro": "Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.",
   "paymentMatchHeader": "{amount} eingegangen am {date}",
   "paymentMatchCandidate": "{number} · {amount} offen",
   "paymentMatchSame": "Gleicher Betrag",
   "paymentMatchDecide": "Anderer Betrag: Sie wählen, wie die Differenz beglichen wird",
-  "paymentMatchNone": "Keine davon",
-  "paymentMatchNoInvoice": "Keine offene Rechnung dieses Kunden passt.",
   "paymentMatchEmpty": "Keine Zahlung wartet auf eine Rechnung.",
   "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
   "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen."

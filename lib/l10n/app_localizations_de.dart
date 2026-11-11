@@ -19758,14 +19758,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentMatchIntro =>
-      'Eine Zahlung ist auf dem Konto des Kunden eingegangen. Wählen Sie die Rechnung, die sie begleicht.';
-
-  @override
-  String get paymentMatchNoInvoice =>
-      'Keine offene Rechnung dieses Kunden passt.';
-
-  @override
-  String get paymentMatchNone => 'Keine davon';
+      'Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.';
 
   @override
   String get paymentMatchRefused =>

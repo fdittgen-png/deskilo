@@ -19770,14 +19770,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paymentMatchIntro =>
-      'Un paiement est arrivé sur le compte du client. Choisissez la facture qu\'il règle.';
-
-  @override
-  String get paymentMatchNoInvoice =>
-      'Aucune facture ouverte de ce client ne convient.';
-
-  @override
-  String get paymentMatchNone => 'Aucune de celles-ci';
+      'Un paiement a été reçu et n\'est pas encore affecté. Choisissez la facture qu\'il règle.';
 
   @override
   String get paymentMatchRefused =>

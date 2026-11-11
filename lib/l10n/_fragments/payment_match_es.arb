@@ -1,12 +1,10 @@
 {
   "paymentMatchTitle": "Pagos por conciliar",
-  "paymentMatchIntro": "Un pago llegó a la cuenta del cliente. Elija la factura que salda.",
+  "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
   "paymentMatchHeader": "{amount} recibidos el {date}",
   "paymentMatchCandidate": "{number} · {amount} pendientes",
   "paymentMatchSame": "Mismo importe",
   "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
-  "paymentMatchNone": "Ninguna de estas",
-  "paymentMatchNoInvoice": "Ninguna factura abierta de este cliente encaja.",
   "paymentMatchEmpty": "Ningún pago espera una factura.",
   "paymentMatchFailed": "No se pudieron leer los pagos.",
   "paymentMatchRefused": "No se pudo conciliar el pago. Inténtelo de nuevo."
