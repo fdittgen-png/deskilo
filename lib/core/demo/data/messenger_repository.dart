@@ -6,14 +6,16 @@ import '../../../features/directory/domain/group_details.dart';
 import '../../../features/directory/domain/message_marks.dart';
 import '../../../features/directory/domain/messenger.dart';
 import '../../../features/directory/domain/messenger_repository.dart';
+import 'demo_account_blocks.dart';
 import 'demo_inbox_pages.dart';
+import 'demo_inquiry_requests.dart';
 
 /// #1824 — the messenger on one in-memory server. It keeps the rules the
 /// server keeps, because the widget tests read their outcome from here: a
 /// forward copies the message into the target with its origin, leaves a
 /// notice in the source and a `forwarded` event on it; a locked message
 /// refuses; a capture leaves a notice. #2556: [DemoInboxPages] pages it.
-class FakeMessengerRepository with DemoInboxPages implements MessengerRepository {
+class FakeMessengerRepository with DemoInboxPages, DemoAccountBlocks implements MessengerRepository {
   FakeMessengerRepository({DateTime? now, String me = 'Me', String Function()? actingName})
     : now = now ?? DateTime.utc(2026, 7, 15, 9), _me = actingName ?? (() => me);
   final DateTime now;
@@ -294,28 +296,8 @@ class FakeMessengerRepository with DemoInboxPages implements MessengerRepository
     requestLog.add('$conversation:${accept ? 'accept' : 'ignore'}');
   }
 
-  /// The accounts the person blocked (0387).
-  final blocked = <String, String>{};
-
   @override
-  Future<List<BlockedAccount>> myBlocks() async {
-    _check();
-    return [
-      for (final e in blocked.entries) BlockedAccount(userId: e.key, name: e.value),
-    ];
-  }
-
-  @override
-  Future<void> blockAccount(String user) async {
-    _check();
-    blocked.putIfAbsent(user, () => user);
-  }
-
-  @override
-  Future<void> unblockAccount(String user) async {
-    _check();
-    blocked.remove(user);
-  }
+  void checkAvailable() => _check();
 
   /// The flags the fake keeps per workspace conversation, and the calls made.
   final flagLog = <String>[];
@@ -362,15 +344,9 @@ class FakeMessengerRepository with DemoInboxPages implements MessengerRepository
   }
 
   @override
-  Future<String> startInquiry(
-    String workspace,
-    String body, {
-    String? requestId,
-  }) async {
+  Future<String> startInquiry(String workspace, String body, {String? requestId}) async {
     _check();
-    if (_repeat(requestId, 'start|$workspace|${body.trim()}') case final id?) {
-      return id;
-    }
+    if (_requests.repeat(requestId, 'start|$workspace|${body.trim()}') case final id?) return id;
     final id = 'inquiry-${++_ids}';
     _post(
       threadKey(MessageContextKind.inquiryOut, id),
@@ -385,45 +361,22 @@ class FakeMessengerRepository with DemoInboxPages implements MessengerRepository
       'last_at': now.toIso8601String(),
       'unread': 0,
     });
-    _remember(requestId, 'start|$workspace|${body.trim()}', id);
+    _requests.remember(requestId, 'start|$workspace|${body.trim()}', id);
     return id;
   }
 
   @override
-  Future<String> sendInquiryMessage(
-    String inquiry,
-    String body, {
-    String? requestId,
-  }) async {
+  Future<String> sendInquiryMessage(String inquiry, String body, {String? requestId}) async {
     _check();
-    if (_repeat(requestId, 'reply|$inquiry|${body.trim()}') case final id?) {
-      return id;
-    }
+    if (_requests.repeat(requestId, 'reply|$inquiry|${body.trim()}') case final id?) return id;
     final message = _message(body, kind: MessageKind.inquiryMessage);
     _post(threadKey(MessageContextKind.inquiryOut, inquiry), message);
-    _remember(requestId, 'reply|$inquiry|${body.trim()}', message.id);
+    _requests.remember(requestId, 'reply|$inquiry|${body.trim()}', message.id);
     return message.id;
   }
 
-  /// #3745 — the first outcome of a request id, as
-  /// `inquiry_request_outcome` (0720): the same content answers it, other
-  /// content is refused, a new id is null.
-  final _requests = <String, ({String content, String outcome})>{};
-
-  String? _repeat(String? requestId, String content) {
-    final first = requestId == null ? null : _requests[requestId];
-    if (first == null) return null;
-    if (first.content != content) {
-      throw StateError('this request id was used for another message');
-    }
-    return first.outcome;
-  }
-
-  void _remember(String? requestId, String content, String outcome) {
-    if (requestId != null) {
-      _requests[requestId] = (content: content, outcome: outcome);
-    }
-  }
+  /// #3745 — the inquiry sends' request ids, as 0720 keeps them.
+  final _requests = DemoInquiryRequests();
 
   @override
   Future<List<InquirySummary>> myInquiries() async => inquiries;

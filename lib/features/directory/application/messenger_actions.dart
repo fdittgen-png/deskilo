@@ -5,6 +5,7 @@ import '../domain/group_details.dart';
 import '../domain/message_marks.dart';
 import '../domain/messenger.dart';
 import '../domain/messenger_repository.dart';
+import '../domain/pending_send_ids.dart';
 
 /// #1824 — what a person asks the messenger to do, decided once.
 ///
@@ -12,9 +13,16 @@ import '../domain/messenger_repository.dart';
 /// decides what is a valid request and which call it is. The server
 /// re-checks every rule — a locked message, a flag switched off, a
 /// conversation the caller left — and its refusal is what counts.
+/// #3745 — the request ids of the inquiry sends whose outcome is not known
+/// yet, for the whole session: a send repeated after a lost answer (also from
+/// a reopened sheet or thread) carries the same id and arrives once.
+final _sessionSendIds = PendingSendIds();
+
 class MessengerActions {
-  const MessengerActions(this.repository);
+  MessengerActions(this.repository, {PendingSendIds? sendIds})
+    : _sendIds = sendIds ?? _sessionSendIds;
   final MessengerRepository repository;
+  final PendingSendIds _sendIds;
 
   /// The refusal the server worded, or null for a fault — so a thread
   /// can say WHY instead of "try again".
@@ -106,19 +114,18 @@ class MessengerActions {
   Future<void> edit(MessageKind kind, String messageId, String body) =>
       repository.edit(kind, messageId, _body(body));
 
-  /// [requestId] (#3745): the id the app keeps for this text until the
-  /// outcome is known, so a repeat after a lost answer arrives once.
-  Future<String> startInquiry(
-    String workspace,
-    String body, {
-    String? requestId,
-  }) {
+  /// #3745 — the same text keeps its request id until the space answers.
+  Future<String> startInquiry(String workspace, String body) async {
     if (workspace.isEmpty) throw ArgumentError('workspace required');
-    return repository.startInquiry(
+    final text = _body(body);
+    final key = 'inquiry-start:$workspace';
+    final inquiry = await repository.startInquiry(
       workspace,
-      _body(body),
-      requestId: requestId,
+      text,
+      requestId: _sendIds.idFor(key, text),
     );
+    _sendIds.settled(key);
+    return inquiry;
   }
 
   /// Sends into the conversation [kind]/[contextId]. An account
@@ -132,7 +139,6 @@ class MessengerActions {
     required String contextId,
     required String body,
     String? peer,
-    String? requestId,
   }) async {
     final text = _body(body);
     switch (kind) {
@@ -143,11 +149,13 @@ class MessengerActions {
         return repository.sendAccountMessage(peer, text);
       case MessageContextKind.inquiryIn || MessageContextKind.inquiryOut:
         if (contextId.isEmpty) throw ArgumentError('inquiry required');
+        final key = 'inquiry-reply:$contextId';
         await repository.sendInquiryMessage(
           contextId,
           text,
-          requestId: requestId,
+          requestId: _sendIds.idFor(key, text),
         );
+        _sendIds.settled(key);
         return contextId;
       case MessageContextKind.space:
         if (contextId.isEmpty) throw ArgumentError('conversation required');

@@ -114,13 +114,15 @@ void main() {
       messenger: messenger,
     );
     await tester.tap(find.byKey(const ValueKey('write-to-hosts')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     await tester.enterText(
       find.byKey(const ValueKey('inquiry-body')),
       'Do you have a day pass?',
     );
     await tester.tap(find.byKey(const ValueKey('inquiry-send')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(
       find.byKey(const ValueKey('inquiry-sheet')),
       findsOneWidget,
