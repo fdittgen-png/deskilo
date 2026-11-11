@@ -2811,8 +2811,8 @@ routine public.my_workspace_hosts_v1() -> jsonb | function | definer | stable | 
 routine public.my_workspace_inbox_v1(p_before_at timestamp with time zone, p_before_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c3dd6d3ba4e1
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
 routine public.national_channel_accepted(p_workspace_id uuid, p_country text) -> boolean | function | definer | stable | exec:service_role | body:e34bde1ed90d
-routine public.national_channel_binding(p_workspace_id uuid, p_channel text) -> text | function | definer | stable | exec:service_role | body:053f7249e2b1
-routine public.national_channel_from_transmission() -> trigger | function | definer | volatile | exec:service_role | body:00e193719510
+routine public.national_channel_binding(p_workspace_id uuid, p_channel text) -> text | function | definer | stable | exec:service_role | body:eb090529cdbf
+routine public.national_channel_from_transmission() -> trigger | function | definer | volatile | exec:service_role | body:45867485dade
 routine public.national_channel_from_verifactu() -> trigger | function | definer | volatile | exec:service_role | body:70ca77cbb29e
 routine public.negotiated_item_price(p_member_id uuid, p_kind text, p_item_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:ec49e4e0e2a2
 routine public.next_document_number(p_workspace_id uuid, p_journal text) -> text | function | definer | volatile | exec:service_role | body:fd6010808751

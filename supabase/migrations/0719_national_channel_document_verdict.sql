@@ -24,7 +24,8 @@
 -- Every acceptance records national_channel_binding (the recorder stamps
 -- it): a digest of the
 -- channel, the issuer's identity (VAT and legal id) and the channel's
--- configuration (provider, settings, last change). The gate counts a
+-- configuration (provider, settings, last change as an epoch, so the digest
+-- does not depend on the session's time zone or date style). The gate counts a
 -- sandbox acceptance only while that binding is still the current one, so a
 -- replaced issuer or configuration does not inherit a test it never passed.
 -- A production acceptance is the channel's own answer to real documents and
@@ -43,7 +44,8 @@ returns text language sql stable security definer set search_path = public as $f
   select encode(sha256(convert_to(concat_ws('|',
            p_channel, w.vat_id, w.legal_id,
            case when p_channel = 'es_verifactu' then ''
-                else concat_ws('|', c.provider, c.config::text, c.updated_at::text) end),
+                else concat_ws('|', c.provider, c.config::text,
+                               extract(epoch from c.updated_at)::text) end),
          'utf8')), 'hex')
     from public.workspaces w
     left join public.einvoice_credentials c on c.workspace_id = w.id
@@ -102,12 +104,21 @@ revoke execute on function public.record_national_channel_acceptance_v1(uuid, te
 grant execute on function public.record_national_channel_acceptance_v1(uuid, text, text, text, jsonb, timestamptz)
   to service_role;
 
+-- A sandbox verdict can arrive days after the send. Credentials saved after
+-- the transmission was prepared are not what the authority answered, so
+-- such a verdict records nothing: the binding is taken when the verdict is
+-- recorded, and it must still describe the configuration that sent.
 create or replace function public.national_channel_from_transmission()
 returns trigger language plpgsql security definer set search_path = public as $fn$
 declare
   v_cc text := case new.provider
     when 'it_sdi' then 'IT' when 'pl_ksef' then 'PL' when 'ro_efactura' then 'RO' end;
 begin
+  if new.environment <> 'prod' and exists (
+       select 1 from public.einvoice_credentials c
+        where c.workspace_id = new.workspace_id and c.updated_at > new.created_datetime) then
+    return new;
+  end if;
   if v_cc is not null
      and coalesce((public.issuing_gate_of(v_cc) ->> 'national_channel_required')::boolean, false) then
     perform public.record_national_channel_acceptance_v1(

@@ -7,12 +7,12 @@
 -- the table takes no insert from authenticated and the recorder is the
 -- service role's only. Rolled back.
 begin;
-select plan(28);
+select plan(34);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000003159'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
  'authenticated','authenticated',suffix||'@ch3159.test','',now(),now(),now()
-  from unnest(array['a1','a2','a3']) suffix;
+  from unnest(array['a1','a2','a3','a4']) suffix;
 insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags,invoice_legal) values
  ('00000000-0000-4000-8000-0000003159b1','IT accepted','IT','EUR','Europe/Rome','00000000-0000-4000-8000-0000003159a1','dev','{"invoicing":true}','{}'),
  ('00000000-0000-4000-8000-0000003159b2','IT not yet','IT','EUR','Europe/Rome','00000000-0000-4000-8000-0000003159a2','dev','{"invoicing":true}','{}'),
@@ -85,10 +85,11 @@ select ('00000000-0000-4000-8000-0000003159'||w)::uuid, ('00000000-0000-4000-800
 -- #3746: the channel's answer reaches the gate through the real writers
 -- (prepare, claim, outcome, lookup), and only a positive DOCUMENT verdict
 -- counts: an accepted upload whose document the SdI refused does not.
-create or replace function pg_temp.sdi(p_inv text, p_hash text) returns uuid language plpgsql as $f$
-declare v_id uuid; v_owner uuid := '00000000-0000-4000-8000-0000003159a2';
+create or replace function pg_temp.sdi(p_inv text, p_hash text, p_ws text default 'b2', p_user text default 'a2')
+returns uuid language plpgsql as $f$
+declare v_id uuid; v_owner uuid := ('00000000-0000-4000-8000-0000003159' || p_user)::uuid;
 begin
-  v_id := (public.prepare_einvoice_v1('00000000-0000-4000-8000-0000003159b2',
+  v_id := (public.prepare_einvoice_v1(('00000000-0000-4000-8000-0000003159' || p_ws)::uuid,
              ('00000000-0000-4000-8000-0000003159' || p_inv)::uuid, 'it_sdi', 'government', 'uat',
              v_owner, 'T', 'fatturapa', p_hash, 'f.xml', 'application/xml', '', '', '\x01'::bytea) ->> 'id')::uuid;
   perform public.claim_einvoice_dispatch_v1(v_id, v_owner, 150);
@@ -109,7 +110,10 @@ insert into public.invoices (id, workspace_id, member_id, issuer_member_id, numb
                              currency, member_name, workspace_name, issuer_name, signature, issued_at)
 values ('00000000-0000-4000-8000-0000003159d4', '00000000-0000-4000-8000-0000003159b2',
         '00000000-0000-4000-8000-0000003159c2', '00000000-0000-4000-8000-0000003159c2',
-        'T-d4', 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now());
+        'T-d4', 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now()),
+       ('00000000-0000-4000-8000-0000003159d7', '00000000-0000-4000-8000-0000003159b2',
+        '00000000-0000-4000-8000-0000003159c2', '00000000-0000-4000-8000-0000003159c2',
+        'T-d7', 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now());
 select set_config('ch.t1', pg_temp.sdi('d2', 'h2')::text, false);
 select ok(pg_temp.refused('b2','c2','IT'), 'an accepted upload alone keeps the gate shut: no document verdict yet');
 select is(pg_temp.verdict(current_setting('ch.t1')::uuid, 'rejected'), 'true', 'the SdI refuses the document');
@@ -137,6 +141,41 @@ select ok(not pg_temp.refused('b2','c2','IT'), 'the tested identity does');
 insert into public.einvoice_credentials (workspace_id, provider, config)
 values ('00000000-0000-4000-8000-0000003159b2', 'it_sdi', '{"endpoint":"https://other.example"}');
 select ok(pg_temp.refused('b2','c2','IT'), 'a replaced channel configuration does not inherit it either');
+-- The new configuration earns its own acceptance (the earlier one dated an
+-- hour back, as a later test would be), and that acceptance does not
+-- depend on the session that reads it.
+update public.national_channel_acceptances set accepted_at = accepted_at - interval '1 hour'
+ where workspace_id = '00000000-0000-4000-8000-0000003159b2';
+select is(pg_temp.verdict(pg_temp.sdi('d7', 'h7'), 'accepted'), 'true', 'the new configuration sends and is accepted');
+select ok(not pg_temp.refused('b2','c2','IT'), 'and its acceptance opens the gate');
+set local timezone = 'Pacific/Kiritimati';
+set local datestyle = 'SQL, DMY';
+select ok(not pg_temp.refused('b2','c2','IT'), 'another session time zone and date style leave the gate open');
+reset timezone;
+reset datestyle;
+
+-- Credentials saved between the send and the verdict: the verdict is not
+-- the new configuration's, and records nothing.
+insert into public.workspaces(id,name,country_code,currency_code,timezone,created_by,environment,feature_flags,invoice_legal)
+values ('00000000-0000-4000-8000-0000003159b4','IT late verdict','IT','EUR','Europe/Rome',
+        '00000000-0000-4000-8000-0000003159a4','dev','{"invoicing":true}','{}');
+insert into public.members(id,workspace_id,user_id,is_owner,is_admin,status,customer_capacity)
+values ('00000000-0000-4000-8000-0000003159c4','00000000-0000-4000-8000-0000003159b4',
+        '00000000-0000-4000-8000-0000003159a4',true,true,'active','business');
+insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
+                             currency, member_name, workspace_name, issuer_name, signature, issued_at)
+values ('00000000-0000-4000-8000-0000003159d6', '00000000-0000-4000-8000-0000003159b4',
+        '00000000-0000-4000-8000-0000003159c4', '00000000-0000-4000-8000-0000003159c4',
+        'T-d6', 'T', '[]'::jsonb, 1000, 'EUR', 'A', 'B', 'O', 'sig', now());
+select set_config('ch.t6', pg_temp.sdi('d6', 'h6', 'b4', 'a4')::text, false);
+insert into public.einvoice_credentials (workspace_id, provider, config, updated_at)
+values ('00000000-0000-4000-8000-0000003159b4', 'it_sdi', '{"endpoint":"https://new.example"}',
+        now() + interval '1 minute');
+select is(pg_temp.verdict(current_setting('ch.t6')::uuid, 'accepted'), 'true', 'the SdI accepts the document later');
+select is((select count(*)::int from public.national_channel_acceptances
+            where workspace_id = '00000000-0000-4000-8000-0000003159b4'), 0,
+          'credentials saved after the send: the verdict records nothing');
+select ok(pg_temp.refused('b4','c4','IT'), 'and the gate stays shut');
 
 insert into public.verifactu_records (id, workspace_id, invoice_id, kind, chain_position, issuer_nif,
                                       invoice_number, issue_date, generated_at, huella)
