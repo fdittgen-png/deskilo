@@ -12,6 +12,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../domain/einvoice_inbox.dart';
 import '../../domain/purchase.dart';
 import '../../providers/einvoice_inbox_providers.dart';
@@ -85,8 +86,13 @@ class _LinkInboxDialogState extends ConsumerState<_LinkInboxDialog> {
         if (s.kind == 'inbox') s.id,
     };
     final inbox = ref.watch(eInvoiceInboxProvider(widget.workspaceId));
+    // #3680 — the inbox is offered as read, or its failure is said.
+    final standIn = ReadsAnswer.of([inbox]).standIn(
+      onRetry: () => ref.invalidate(eInvoiceInboxProvider(widget.workspaceId)),
+    );
+    if (standIn != null) return AlertDialog(content: standIn);
     final offered = [
-      for (final d in inbox.value ?? const <InboxDocument>[])
+      for (final d in inbox.requireValue)
         if (d.status != InboxStatus.rejected && !linked.contains(d.id)) d,
     ];
     return AlertDialog(

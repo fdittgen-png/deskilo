@@ -20,6 +20,7 @@
   "vatServiceRateDefault": "Taux par défaut de l'espace",
   "vatPdfNet": "Total HT",
   "vatPdfVat": "TVA",
+  "vatPdfVatRate": "TVA {rate}",
   "fecAccountVat": "TVA collectée",
   "vatKeptRate": "Un taux encore utilisé par une facture ou un service est conservé, désactivé.",
   "fecAccountVatPending": "TVA collectée en attente d'exigibilité",

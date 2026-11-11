@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -229,12 +230,12 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             ),
           ]);
 
-  /// What a VAT-registered space adds: the rates are a link, and a
-  /// warning only when there is no rate to charge.
-  List<Widget> _vatFields(AppLocalizations l10n, List<VatRate> rates) {
+  /// What a VAT-registered space adds: the rates are a link, a warning only without a rate (#3680: of rates read).
+  List<Widget> _vatFields(AppLocalizations l10n) {
+    if (readsStandIn(ref, [vatRatesProvider]) case final s?) return [s];
+    final rates = ref.watch(vatRatesProvider).requireValue;
     return [
-          // Only a workspace that charges VAT and has no rate to charge
-          // it at is in trouble — the rest is a link, not a warning.
+          // Only a VAT-charging workspace without a rate is in trouble — the rest is a link.
           // #895 — the customer's tax, across the border.
           if (_regime == VatRegime.vatRegistered)
             SwitchListTile(
@@ -410,7 +411,6 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[];
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
@@ -444,7 +444,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           _regimeRow(l10n),
-          ..._vatFields(l10n, rates),
+          ..._vatFields(l10n),
           const SizedBox(height: AppSpacing.md),
           ..._identifierFields(l10n),
           const SizedBox(height: AppSpacing.md),

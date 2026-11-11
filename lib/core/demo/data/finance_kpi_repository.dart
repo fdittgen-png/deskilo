@@ -152,7 +152,8 @@ class DemoRecordedPaymentsRepository implements RecordedPaymentsRepository {
       final entry = ledger[paymentId];
       rows.add(
         RecordedPayment(
-          id: paymentId,
+          // One row per invoice and payment, as the junction row's id.
+          id: '${m.invoiceId}:$paymentId',
           matchedAt: m.matchedAt,
           paidOn: entry?.occurredOn,
           amountMinor: m.paidCents,

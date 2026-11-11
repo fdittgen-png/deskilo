@@ -1,4 +1,10 @@
 {
+  "titleAndBody": "{title}. {body}",
+  "commaPair": "{first}, {second}",
+  "sentencePair": "{first} {second}",
+  "valueInParens": "{value} ({note})",
+  "titleDashDetail": "{first} — {second}",
+  "labelWithValue": "{label}: {value}",
   "@@locale": "it",
   "appTitle": "DesKilo",
   "tabPlan": "Piantina",

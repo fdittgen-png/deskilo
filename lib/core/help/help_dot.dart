@@ -47,7 +47,9 @@ class HelpDot extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     return IconButton(
       key: ValueKey('help-dot-$topic'),
-      tooltip: l10n.helpDotTooltip,
+      // #3286: named by what it documents, so repeated dots on one screen
+      // are told apart by a screen reader.
+      tooltip: l10n.helpDotTooltipFor(topic),
       // The FINGER gets 48; the ink and the glyph stay small.
       constraints: const BoxConstraints.tightFor(width: 48, height: 48),
       padding: EdgeInsets.zero,

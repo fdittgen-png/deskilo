@@ -245,21 +245,18 @@ Future<void> matchInvoiceToPayment(
   final ledger = await ref
       .read(memberAccountQueriesProvider)
       .fetchLedger(invoice.memberId);
-  final matches = ref.read(invoiceMatchesProvider).value ?? const {};
-  // #506 — the junction knows EVERY consumed payment (an aggregate
-  // match only remembers its last one).
+  final matches = await ref.read(invoiceMatchesProvider.future);
+  // #506/#3671 — the junction knows what EVERY match used of each payment.
   // #3349 — a credit moved to another member is no longer this member's
   // money: neither the original nor its reversal is offered. The one
-  // definition of consumed (`consumedPaymentIdsOf`).
+  // definition of what is left (`paymentUseOf`).
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final matched = [for (final match in matches.values) match.paymentLedgerId];
-  final consumed = workspace == null
-      ? consumedPaymentIdsOf(matched: matched, junction: {}, moved: {})
-      : await readConsumedPaymentIds(
+  final use = workspace == null
+      ? PaymentUse.none
+      : await readPaymentUse(
           invoices: invoiceQueries,
           moves: ref.read(creditMoveCommandsProvider),
           workspaceId: workspace.id,
-          matched: matched,
         );
   // A standing PARTIAL match shifts the target: further payments are
   // measured against what is STILL DUE.
@@ -274,11 +271,11 @@ Future<void> matchInvoiceToPayment(
   // #512 — a credit BAKED into an issued invoice was spent there, and
   // account credits (avoir excess) settle too; newest payment first by the
   // day the money moved (0070): `unmatchedPaymentsOf`, as Payments to match.
-  final memberInvoices = ref.read(invoicesProvider).value ?? const <Invoice>[];
+  final memberInvoices = await ref.read(invoicesProvider.future);
   final payments = unmatchedPaymentsOf(
     memberId: invoice.memberId,
     ledger: ledger,
-    consumed: consumed,
+    use: use,
     invoices: memberInvoices,
   );
   if (!context.mounted) return;

@@ -14,11 +14,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/package.dart';
-import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 
 /// #739 — the member's own prices against the workspace tariff, on the
@@ -43,8 +42,11 @@ class NegotiationCard extends ConsumerWidget {
     if (value == null) return const SizedBox.shrink();
     final deal = value.active;
     final pending = value.pending;
-    final services = ref.watch(servicesProvider).value ?? const <ServiceItem>[];
-    final packages = ref.watch(packagesProvider).value ?? const <Package>[];
+    // #3680 — the deal's prices against the items as read, never hidden.
+    final standIn = readsStandIn(ref, [servicesProvider, packagesProvider]);
+    if (standIn != null) return standIn;
+    final services = ref.watch(servicesProvider).requireValue;
+    final packages = ref.watch(packagesProvider).requireValue;
     final monthFormat = appFormatOf(context).dates(DateShape.monthYear);
 
     final defaultLabel = l10n.negotiationDefaultColumn;

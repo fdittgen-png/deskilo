@@ -13,5 +13,6 @@
   "meFinanceGlanceOwed": "Da pagare:",
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
-  }
+  },
+  "meFinanceGlanceSemantics": "Da pagare: apri le mie finanze"
 }

@@ -156,7 +156,7 @@ void seedDemoMoneyStory(
         occurredOn: on,
       ),
     );
-    money.consumedPaymentIds.add(ledgerId);
+    money.usePayment(ledgerId, cents);
     money.invoiceMatchesStore[invoiceId] = InvoiceMatch(
       invoiceId: invoiceId,
       paidCents: cents,

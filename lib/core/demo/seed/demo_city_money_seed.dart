@@ -296,7 +296,7 @@ class _CityMoney {
         occurredOn: paid,
       ),
     );
-    money.consumedPaymentIds.add(paymentId);
+    money.usePayment(paymentId, amount);
     money.invoiceMatchesStore[id] = InvoiceMatch(
       invoiceId: id,
       paidCents: amount,

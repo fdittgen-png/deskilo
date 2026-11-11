@@ -341,7 +341,13 @@ class FinanceGlance extends ConsumerWidget {
         key: const ValueKey('me-home-finance-glance'),
         color: tone.withValues(alpha: .10),
         borderRadius: AppRadius.xlAll,
-        child: InkWell(
+        child: Semantics(
+          // #3281/#3286: a named button into Me > Finances; each amount
+          // stays its own node (and its own reveal) inside it.
+          container: true,
+          button: true,
+          label: l10n.meFinanceGlanceSemantics,
+          child: InkWell(
           key: const ValueKey('me-home-tab-finance-glance-owed'),
           borderRadius: AppRadius.xlAll,
           onTap: () => context.push(myFinancesRoute()),
@@ -396,6 +402,7 @@ class FinanceGlance extends ConsumerWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

@@ -301,8 +301,13 @@ class _DashboardBuilder {
           : (l10n.biProjectionNotEnough(series.history.length, _need)),
       projectionNext: next == null
           ? null
-          : '${periodLabel(next.period)}: ${format(next.value)} '
-                '(${format(next.low)} – ${format(next.high)}) · ${l10n.biProjectionLabel}',
+          : l10n.biProjectionNext(
+              periodLabel(next.period),
+              format(next.value),
+              format(next.low),
+              format(next.high),
+              l10n.biProjectionLabel,
+            ),
       format: format,
       periodLabel: periodLabel,
       shortLabel: (p) => _biShortPeriodLabel(p, locale),

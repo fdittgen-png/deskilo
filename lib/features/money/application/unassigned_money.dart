@@ -5,10 +5,10 @@
 // reminder queue's "check first", the customer page and Payments to match all
 // read this one answer, so they cannot disagree about who is matched first.
 //
-// What counts as consumed is said once too (`consumedPaymentIdsOf`): the
-// payment a match remembers, every payment of an aggregate match (the
-// junction, #506), and the credits moved to another member (#3349). The
-// match dialog reads the same set.
+// What is left of a payment is said once too (`paymentUseOf`, #3671): its
+// amount minus the parts the junction rows settle (#506), and nothing at all
+// for a credit moved to another member (#3349). The match dialog reads the
+// same use.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 
@@ -18,33 +18,39 @@ import 'credit_move_commands.dart';
 import 'payment_candidates.dart';
 import 'receivables.dart';
 
-/// The payments no invoice may take again: the one each match remembers
-/// ([matched]), every payment an aggregate match consumed ([junction]) and
-/// the credits moved to another member ([moved]).
-Set<String> consumedPaymentIdsOf({
-  required Iterable<String?> matched,
-  required Set<String> junction,
+/// How much of each payment the matches used, as `(payment id, cents)` pairs
+/// from the junction (`invoice_match_payments`, #3671): a payment's used
+/// amount is the sum of its parts, pending rows included. The per-invoice
+/// aggregate's latest payment is NOT counted: it names no part. The credits
+/// moved to another member ([moved]) exclude a whole payment.
+@visibleForTesting
+PaymentUse paymentUseOf({
+  required Iterable<(String paymentId, int cents)> junction,
   required Set<String> moved,
-}) => {for (final id in matched) ?id, ...junction, ...moved};
+}) {
+  final used = <String, int>{};
+  for (final (id, cents) in junction) {
+    used[id] = (used[id] ?? 0) + cents;
+  }
+  return PaymentUse(usedCents: used, moved: moved);
+}
 
-/// Reads the consumed payments of [workspaceId] (`consumedPaymentIdsOf`):
-/// one read of the junction and one of the moved credits.
-Future<Set<String>> readConsumedPaymentIds({
+/// Reads the use of the payments of [workspaceId] (`paymentUseOf`): one read
+/// of the junction and one of the moved credits.
+Future<PaymentUse> readPaymentUse({
   required InvoiceQueries invoices,
   required CreditMoveCommands moves,
   required String workspaceId,
-  required Iterable<String?> matched,
-}) async => consumedPaymentIdsOf(
-  matched: matched,
+}) async => paymentUseOf(
   junction: await invoices.fetchConsumedPaymentIds(workspaceId),
   moved: await moves.movedCreditIds(workspaceId),
 );
 
 /// The payments of each customer that no invoice has taken
-/// (`unmatchedPaymentsOf`), from one read of the whole [ledger].
+/// (`unmatchedPaymentsOf`; each entry carries what is left of it), from one read of the whole [ledger].
 Map<String, List<LedgerEntry>> unassignedPaymentsByCustomer({
   required List<LedgerEntry> ledger,
-  required Set<String> consumed,
+  required PaymentUse use,
   required List<Invoice> invoices,
 }) {
   final byMember = <String, List<LedgerEntry>>{};
@@ -60,7 +66,7 @@ Map<String, List<LedgerEntry>> unassignedPaymentsByCustomer({
       if (unmatchedPaymentsOf(
             memberId: member,
             ledger: entries,
-            consumed: consumed,
+            use: use,
             invoices: invoicesOf[member] ?? const [],
           )
           case final free when free.isNotEmpty)

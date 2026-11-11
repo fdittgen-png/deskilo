@@ -3739,6 +3739,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get biProjectionLabel => 'Stima';
 
   @override
+  String biProjectionNext(
+    String period,
+    String value,
+    String low,
+    String high,
+    String label,
+  ) {
+    return '$period: $value ($low – $high) · $label';
+  }
+
+  @override
   String biProjectionNotEnough(int have, int need) {
     return 'Storico ancora insufficiente per proiettare: finora $have periodi completi, ne servono $need.';
   }
@@ -4443,6 +4454,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get billPaymentsCredits => 'Pagamenti e crediti';
+
+  @override
+  String billPdfContinuation(
+    String workspace,
+    String title,
+    String member,
+    String period,
+  ) {
+    return '$workspace — $title — $member — $period';
+  }
 
   @override
   String get billPdfExport => 'Esporta la fattura come PDF';
@@ -5834,6 +5855,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get comingSoon => 'Prossimamente';
+
+  @override
+  String commaPair(String first, String second) {
+    return '$first, $second';
+  }
 
   @override
   String get commonCancel => 'Annulla';
@@ -8022,6 +8048,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get editorSeatNameLabel => 'Nome del posto';
+
+  @override
+  String editorSeatNameNumbered(String number) {
+    return 'Posto $number';
+  }
 
   @override
   String get editorSeatNfcDuplicate =>
@@ -11357,6 +11388,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesYourCredit => 'Il suo credito';
 
   @override
+  String get formErrorSummaryGoTo => 'Vai al primo problema';
+
+  @override
+  String formErrorSummaryTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count campi richiedono la Sua attenzione',
+      one: '1 campo richiede la Sua attenzione',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get gebuevProcedureAccessBody =>
       'Ogni esportazione contabile e ogni download di un archivio è registrato nel registro delle esportazioni: chi, quando, quale file e la sua impronta. La pista di controllo elenca questi accessi accanto ai documenti.';
 
@@ -11973,7 +12018,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpContents => 'Indice';
 
   @override
-  String get helpDotTooltip => 'Apri la guida';
+  String helpDotTooltipFor(String topic) {
+    return 'Apri la guida: $topic';
+  }
 
   @override
   String get helpGuidedTasks => 'Attività guidate';
@@ -14767,7 +14814,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicePdfIssuedBy => 'Emessa da';
 
   @override
+  String invoicePdfIssuedByName(String name) {
+    return 'Emessa da $name';
+  }
+
+  @override
   String get invoicePdfIssuedOn => 'Emessa il';
+
+  @override
+  String invoicePdfIssuedOnDate(String date) {
+    return 'Emessa il $date';
+  }
 
   @override
   String get invoicePdfPage => 'Pagina';
@@ -14801,7 +14858,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Firma digitale (SHA-256)';
+  String get invoicePdfSignature => 'Impronta del documento (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotale';
@@ -15281,6 +15338,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoicingSourceCredits => 'Crediti dei clienti';
+
+  @override
+  String get invoicingSourceDeclarations => 'Dichiarazioni di pagamento';
 
   @override
   String invoicingSourceFailed(String source) {
@@ -16136,6 +16196,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get kitActionBusy => 'In corso…';
+
+  @override
+  String labelWithValue(String label, String value) {
+    return '$label: $value';
+  }
 
   @override
   String languageAvailableHint(String fallback) {
@@ -18266,6 +18331,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get meFinanceGlanceOwed => 'Da pagare:';
 
   @override
+  String get meFinanceGlanceSemantics => 'Da pagare: apri le mie finanze';
+
+  @override
   String get meFindPlaceBrowse => 'Vedi i posti';
 
   @override
@@ -18300,10 +18368,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meGroupDelete => 'Elimina gruppo';
-
-  @override
-  String get meGroupEmptyFavorites =>
-      'Dia un cuore a uno spazio e la aspetta qui.';
 
   @override
   String get meGroupEmptyOwn => 'Sposti qui gli spazi dal loro menu.';
@@ -20878,6 +20942,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get personalInfoCompany => 'Società (facoltativo)';
+
+  @override
+  String get personalInfoCompanyScope =>
+      'Vale per l\'intero account, non per un solo spazio.';
 
   @override
   String get personalInfoEmail => 'E-mail per i documenti';
@@ -23571,6 +23639,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get refFilterAmount => 'Importo';
 
   @override
+  String refFilterAmountRange(String low, String high) {
+    return 'Importo $low – $high';
+  }
+
+  @override
   String get refFilterClear => 'Cancella i filtri';
 
   @override
@@ -24955,11 +25028,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motivo (facoltativo)';
 
   @override
-  String get reservationDeleteRequestButton => 'Richiedi eliminazione';
+  String get reservationDeleteRequestButton => 'Richiedi annullamento';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?';
+      'Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)? Fino alla decisione la prenotazione resta invariata; nulla viene rimborsato né eliminato automaticamente.';
 
   @override
   String get reservationDeleteSubmit => 'Invia richiesta';
@@ -25991,6 +26064,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String seatDayTitle(String seat) {
     return 'Postazione $seat oggi';
+  }
+
+  @override
+  String sentencePair(String first, String second) {
+    return '$first $second';
   }
 
   @override
@@ -31881,6 +31959,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Per chiamare le cose a modo suo — posti, piani, prenotazioni: cambi i termini.';
 
   @override
+  String titleAndBody(String title, String body) {
+    return '$title. $body';
+  }
+
+  @override
+  String titleDashDetail(String first, String second) {
+    return '$first — $second';
+  }
+
+  @override
   String get ukFacilitiesPackage =>
       'Vendiamo un pacchetto di servizi per ufficio';
 
@@ -32042,6 +32130,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates novità · $pending decisioni in attesa';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mezze giornate rimaste nel suo pacchetto questo mese',
+      one: '1 mezza giornata rimasta nel suo pacchetto questo mese',
+      zero: 'Nessuna mezza giornata rimasta nel suo pacchetto questo mese',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -32630,6 +32730,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get valuationTitle => 'Valutazioni del commercialista';
 
   @override
+  String valueInParens(String value, String note) {
+    return '$value ($note)';
+  }
+
+  @override
   String get vatAccountField => 'Conto IVA';
 
   @override
@@ -32977,6 +33082,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vatPdfVat => 'IVA';
 
   @override
+  String vatPdfVatRate(String rate) {
+    return 'IVA $rate';
+  }
+
+  @override
   String get vatRateDefaultTooltip =>
       'Aliquota predefinita — usata dagli abbonamenti e da tutto ciò che non ne ha una propria';
 
@@ -33254,9 +33364,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get visibilityElsewhereTitle => 'Sui miei altri server';
 
   @override
+  String get visibilityHomeDetails => 'Dettagli della casa personale';
+
+  @override
   String visibilityHomeHeader(String name) {
     return 'Casa personale: $name';
   }
+
+  @override
+  String get visibilityHomePlain => 'La casa personale';
 
   @override
   String get visibilityIdentity => 'Nome e foto';

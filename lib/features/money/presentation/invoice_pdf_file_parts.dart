@@ -59,6 +59,13 @@ InvoicePdfStrings invoicePdfStringsOf(
     activity: l10n.invoicePdfActivity,
     reserved: l10n.invoicePdfReserved,
     page: l10n.invoicePdfPage,
+    titleNumbered: invoice.totalCents < 0
+        ? l10n.billCreditNoteCard('{value}')
+        : l10n.billInvoiceCard('{value}'),
+    issuedOnDated: l10n.invoicePdfIssuedOnDate('{value}'),
+    issuedByNamed: l10n.invoicePdfIssuedByName('{value}'),
+    replacesNumbered: l10n.invoicePdfReplacesNumber('{value}'),
+    vatRated: l10n.vatPdfVatRate('{value}'),
   );
 }
 

@@ -125,7 +125,9 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final router = await pumpMeApp(tester, workspace: twoSpaces());
     await goTo(tester, router, '/me');
-    expect(find.byKey(const ValueKey('me-group-empty-favorites')), findsOneWidget);
+    // #3281: an empty Favorites keeps its header and no explainer block.
+    expect(find.byKey(const ValueKey('me-group-favorites')), findsOneWidget);
+    expect(find.byKey(const ValueKey('me-group-empty-favorites')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('space-menu-space:ws-2')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('space-menu-space:ws-2-favorite')));

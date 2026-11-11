@@ -2,4 +2,7 @@
 #
 #   <function id or file path> :: <reason, at least 15 characters>
 #
-# Nothing is listed today; a line is a reviewed decision.
+# A line is a reviewed decision.
+lib/features/money/presentation/widgets/book_profile_sheet.dart#_BookProfileSheetState.build(BuildContext context) :: #3680: one guard that shows the failed or waiting read instead of an empty list
+lib/features/money/presentation/widgets/expense_repartition_sheet.dart#_RepartitionWizardState.build(BuildContext context) :: #3680: one guard that shows the failed or waiting read instead of an empty list
+lib/features/money/presentation/widgets/negotiation_card.dart#NegotiationCard.build(BuildContext context,WidgetRef ref) :: #3680: one guard that shows the failed or waiting read instead of an empty list

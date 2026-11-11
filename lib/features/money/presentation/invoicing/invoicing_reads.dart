@@ -7,6 +7,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
+import '../../../events/providers/event_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/unassigned_money.dart';
 import '../../domain/dunning.dart';
@@ -21,14 +22,14 @@ import 'receivables_adapter.dart';
 /// The reader of the invoices as receivables, now.
 final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
   (ref) => ReceivablesReader(
-    matches: ref.watch(invoiceMatchesProvider).value ?? const {},
-    reminders: ref.watch(invoiceRemindersProvider).value ?? const {},
+    matches: ref.watch(invoiceMatchesProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
+    reminders: ref.watch(invoiceRemindersProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
     rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
     now: ref.watch(clockProvider).now(),
     // The business's calendar day, from the workspace's own context.
     dayOf: ref.watch(invoicingBusinessProvider).dayOf,
     eventFactsOf: ref.watch(invoiceEventFactsProvider),
-    transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {},
+    transmissions: ref.watch(invoiceTransmissionsProvider).value ?? const {}, // empty-ok: no receivable is built before it answered (below)
     held: {...?ref.watch(dunningHoldsProvider).value?.keys},
     fold: ref
         .watch(enabledFeaturesSyncProvider)
@@ -39,10 +40,22 @@ final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
 /// The invoices as receivables now, through [invoicingReaderProvider]; null
 /// while the invoices are not read. The pages opened from the home read this,
 /// never a copy taken when they opened.
+/// #3680 — nor while the matches, reminders or transmissions it reads are
+/// not answered: an unread match is not "unpaid", an unread reminder not
+/// "never reminded". A failed one is named on the home with Try again.
 final invoicingReceivablesProvider = Provider.autoDispose<List<Receivable>?>(
-  (ref) => switch (ref.watch(invoicesProvider).value) {
-    final invoices? => ref.watch(invoicingReaderProvider).read(invoices),
-    null => null,
+  (ref) {
+    final statuses = [
+      ref.watch(invoiceMatchesProvider),
+      ref.watch(invoiceRemindersProvider),
+      ref.watch(invoiceTransmissionsProvider),
+      ref.watch(eventsProvider),
+    ];
+    if (statuses.any((r) => !r.hasValue)) return null;
+    return switch (ref.watch(invoicesProvider).value) {
+      final invoices? => ref.watch(invoicingReaderProvider).read(invoices),
+      null => null,
+    };
   },
 );
 
@@ -61,8 +74,20 @@ final invoicingFailedSourcesProvider =
           InvoicingSource.transmissions,
         if (ref.watch(unassignedMoneyProvider).hasError)
           InvoicingSource.credits,
+        if (ref.watch(eventsProvider).hasError) InvoicingSource.declarations,
       },
     );
+
+/// #3680 — a status read is still running: nothing is counted yet (an
+/// unread match is not "unpaid"). A failed one is a named source instead.
+final invoicingStatusesWaitingProvider = Provider.autoDispose<bool>(
+  (ref) => [
+    ref.watch(invoiceMatchesProvider),
+    ref.watch(invoiceRemindersProvider),
+    ref.watch(invoiceTransmissionsProvider),
+    ref.watch(eventsProvider),
+  ].any((r) => !r.hasValue && !r.hasError),
+);
 
 /// Reads [source] again.
 void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
@@ -75,6 +100,7 @@ void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
         invoiceTransmissionsProvider,
       ),
       InvoicingSource.credits => ref.invalidate(unassignedMoneyProvider),
+      InvoicingSource.declarations => ref.invalidate(eventsProvider),
       InvoicingSource.payments || InvoicingSource.toInvoice => null,
     };
 
@@ -96,19 +122,19 @@ final unassignedMoneyProvider = FutureProvider.autoDispose<UnassignedMoney>((
   final moves = ref.watch(creditMoveCommandsProvider);
   final accounts = ref.watch(memberAccountQueriesProvider);
   final invoices = await ref.watch(invoicesProvider.future);
-  final matches = await ref.watch(invoiceMatchesProvider.future);
-  final consumed = await readConsumedPaymentIds(
+  // A match writes junction rows: it refreshes this answer.
+  await ref.watch(invoiceMatchesProvider.future);
+  final use = await readPaymentUse(
     invoices: invoiceQueries,
     moves: moves,
     workspaceId: id,
-    matched: [for (final m in matches.values) m.paymentLedgerId],
   );
   final ledger = await accounts.fetchWorkspaceLedger(id);
   return UnassignedMoney(
     currency: currency,
     paymentsOf: unassignedPaymentsByCustomer(
       ledger: ledger,
-      consumed: consumed,
+      use: use,
       invoices: invoices,
     ),
   );

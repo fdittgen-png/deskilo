@@ -20,6 +20,7 @@
   "vatServiceRateDefault": "Predefinita dello spazio",
   "vatPdfNet": "Imponibile",
   "vatPdfVat": "IVA",
+  "vatPdfVatRate": "IVA {rate}",
   "fecAccountVat": "IVA incassata",
   "vatKeptRate": "Un'aliquota ancora usata da una fattura o da un servizio viene conservata, disattivata.",
   "fecAccountVatPending": "IVA a debito non ancora esigibile",

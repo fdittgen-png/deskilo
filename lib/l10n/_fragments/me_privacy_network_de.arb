@@ -10,5 +10,7 @@
   "visibilitySpaceHere": "in diesem persönlichen Zuhause",
   "visibilitySpaceOnServer": "auf Server {installation}",
   "visibilityWidenAdded": "Hinzugefügt: {spaces}",
-  "visibilityWidenRemoved": "Entfernt: {spaces}"
+  "visibilityWidenRemoved": "Entfernt: {spaces}",
+  "visibilityHomePlain": "Ihr persönliches Zuhause",
+  "visibilityHomeDetails": "Details zum Zuhause"
 }

@@ -1,6 +1,7 @@
 {
   "@@locale": "de",
   "billPdfTitle": "Monatsrechnung",
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
   "billPdfExport": "Rechnung als PDF exportieren",
   "reportCoaTitle": "Kontenrahmen — Vorschau",
   "@reportCoaTitle": {

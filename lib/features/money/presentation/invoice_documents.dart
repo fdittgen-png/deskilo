@@ -13,6 +13,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -39,6 +40,7 @@ import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
+import '../providers/usage_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
@@ -148,6 +150,17 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
   }
   await quiet(() => ref.read(memberNamesProvider.future));
 }
+
+/// #3680 — what Retry asks again: the sources [warmLetterDocProviders] reads.
+void refreshLetterDocSources(WidgetRef ref, String docId) => <ProviderOrFamily>[
+      invoicePdfTemplateProvider, memberNamesProvider,
+      if (docId == 'agreement' || docId == 'workspace') ...[
+        feeBandsProvider, servicesProvider, levelsProvider, floorPlanProvider],
+      if (docId == 'agreement') ...[packagesProvider, accessoriesProvider],
+      if (docId == 'workspace') ...[workspaceMembersProvider, openWeekdaysProvider],
+      if (docId == 'payments') ...[myLedgerProvider, eventsProvider],
+      if (docId == 'usage') ...[memberStatementProvider, usageReadProvider],
+    ].forEach(ref.invalidate);
 
 /// Renders letter document [docId] through the workspace's template
 /// bands (or the shipped default — a broken template never blocks, the
@@ -336,7 +349,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       layoutXml: layoutXml,
       data: withOwnerTexts(reportData, template.texts),
       what: invoice.number.isEmpty ? stem : invoice.number,
-      documentTitle: '${strings.invoiceTitle} ${invoice.number}',
+      documentTitle: strings.titleLine(invoice.number),
       pageLabel: strings.page,
       font: _asset,
       image: options.reportImage,
@@ -472,19 +485,8 @@ String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
   final l10n = context.l10n;
   final number = settledByNumberOf(
     invoice,
-    ref.read(invoicesProvider).value ?? const [],
+    // #3680 — a settled stamp is printed from the archive as read.
+    ref.read(invoicesProvider).requireValue,
   );
   return l10n.invoicePdfSettledIn(number);
-}
-
-/// #837 — the invoices [invoice] regrouped, resolved from the archive in
-/// the order its own snapshot lists them. Empty when it regroups
-/// nothing, or when the archive has not loaded them.
-List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
-  if (invoice.settles.isEmpty) return const [];
-  final all = ref.read(invoicesProvider).value ?? const <Invoice>[];
-  return [
-    for (final source in invoice.settles)
-      ...all.where((i) => i.id == source.invoiceId),
-  ];
 }

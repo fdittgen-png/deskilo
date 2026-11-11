@@ -9,6 +9,7 @@
     "description": "Business analytics dashboard: biEvolutionTitle"
   },
   "biProjectionLabel": "Stima",
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },

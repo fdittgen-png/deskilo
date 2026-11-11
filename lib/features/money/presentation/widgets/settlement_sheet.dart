@@ -135,7 +135,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final names = ref.watch(memberNamesProvider).value ?? const {};
+    final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one shows the id, never a figure
     final open = ref.watch(invoicingOverviewProvider).value?.open ??
         const <OpenInvoiceEntry>[];
     final counts = <String, int>{};

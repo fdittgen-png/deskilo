@@ -133,15 +133,14 @@ class AccountingExportRun {
   InvoiceQueries get invoiceQueries => ref.read(invoiceQueriesProvider);
   DocumentNumbering get repo => ref.read(documentNumberingProvider);
 
+  void refreshSources() => ref.invalidate(memberNamesProvider); // #3680 Retry
+
   /// Gathers the books, asks which format and for its details, and
   /// exports.
   Future<void> start() async {
   if (ref.read(currentWorkspaceProvider).value == null) return;
   if (invoices.isEmpty) {
-    AppSnack.info(
-      context,
-      l10n.invoiceAccountingExportEmpty,
-    );
+    AppSnack.info(context, l10n.invoiceAccountingExportEmpty);
     return;
   }
   year = invoices
@@ -199,8 +198,8 @@ class AccountingExportRun {
     ),
     reference: taxReference, dayOf: workspaceDayOf,
   );
-  memberNames =
-      ref.read(memberNamesProvider).value ?? const <String, String>{};
+  // #3680 — an export waits for every name; a failed read fails the run.
+  memberNames = await ref.read(memberNamesProvider.future);
   if (!context.mounted) return;
   noteDevelopmentBooks(context, development: development);
   await _perform();

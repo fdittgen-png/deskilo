@@ -14,6 +14,7 @@ import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/money/presentation/invoice_status.dart';
 import 'package:deskilo/features/money/presentation/widgets/invoice_journey_view.dart';
+import 'package:deskilo/features/money/providers/money_face_controller.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
@@ -339,8 +340,9 @@ void main() {
       FakeEventRepository? events,
       Map<String, dynamic> flags = const {},
       bool hub = true,
+      double width = 800,
     }) async {
-      tester.view.physicalSize = const Size(800, 1600);
+      tester.view.physicalSize = Size(width, 1600);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.reset);
       events ??= FakeEventRepository();
@@ -560,6 +562,39 @@ void main() {
       expect(find.byKey(const ValueKey('invoice-process-sheet')), findsOneWidget);
     });
 
+    testWidgets('#3285 — the member\'s detail leads with Pay, which opens '
+        'Payments', (tester) async {
+      final money = FakeMoneyRepository();
+      final id = await openInvoice(money);
+      await pump(tester, money: money, hub: false);
+      await tester.tap(find.byKey(ValueKey('my-invoice-$id')));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      final pay = find.byKey(const ValueKey('invoice-detail-pay'));
+      expect(pay, findsOneWidget);
+      await tester.ensureVisible(pay);
+      await tester.tap(pay);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(pay, findsNothing);
+      final container =
+          ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+      expect(container.read(moneyFaceControllerProvider), MoneyFace.payments);
+    });
+
+    // #3285 — the summary's How it works and Pay now wrap on a phone.
+    testWidgets('the invoices summary fits a 390 px phone', (tester) async {
+      final money = FakeMoneyRepository();
+      await openInvoice(money);
+      await pump(tester, money: money, hub: false, width: 390);
+      ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+          .read(moneyFaceControllerProvider.notifier)
+          .show(MoneyFace.invoices);
+      await tester.pump();
+      expect(find.byKey(const ValueKey('money-summary-pay')), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('the member reads the workspace\'s side after declaring',
         (tester) async {
       final money = FakeMoneyRepository();
@@ -605,6 +640,39 @@ void main() {
       expect(find.byKey(const ValueKey('invoice-page-more')), findsOneWidget);
     });
   });
+
+  // #3285 — on a phone (the row and the detail keep a 16 px gutter) the four
+  // steps fit: no sideways scroll, every label wholly inside the bar.
+  for (final width in const [320.0, 390.0]) {
+    testWidgets('the bar fits a ${width.toInt()} px phone', (tester) async {
+      tester.view.physicalSize = Size(width, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: InvoiceJourneyBar(journey: _journey(_invoice())),
+          ),
+        ),
+      ));
+      final bar = find.byKey(const ValueKey('invoice-journey-bar'));
+      expect(
+          find.ancestor(of: bar, matching: find.byType(SingleChildScrollView)),
+          findsNothing);
+      final edge = tester.getRect(bar);
+      for (final step in InvoiceStep.values) {
+        final rect = tester.getRect(
+            find.byKey(ValueKey('invoice-journey-step-${step.name}')));
+        expect(rect.left, greaterThanOrEqualTo(edge.left));
+        expect(rect.right, lessThanOrEqualTo(edge.right));
+      }
+      expect(edge.right, lessThanOrEqualTo(width));
+      expect(tester.takeException(), isNull);
+    });
+  }
 
   testWidgets('journey semantics use localized step states', (tester) async {
     final handle = tester.ensureSemantics();

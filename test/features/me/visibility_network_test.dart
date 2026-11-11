@@ -228,6 +228,12 @@ void main() {
         'keeps the rest behind More sharing settings', (tester) async {
       await _account(tester, me);
       expect(_key('visibility-home'), findsOneWidget);
+      // #3281: words first; the server address is behind a details tile.
+      expect(find.text('Your personal home'), findsOneWidget);
+      expect(find.textContaining('Personal home: '), findsNothing);
+      await tester.tap(find.text('Your personal home'));
+      await tester.pumpAndSettle();
+      expect(_key('visibility-home-detail'), findsOneWidget);
       expect(find.textContaining('Personal home: '), findsOneWidget);
       expect(find.text('Who can see my contact details?'), findsOneWidget);
       expect(find.text('Who can write to me?'), findsOneWidget);

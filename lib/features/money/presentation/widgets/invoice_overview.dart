@@ -86,10 +86,13 @@ class InvoiceExposure {
 /// The member's exposure from the providers, or null while loading.
 InvoiceExposure? watchExposure(WidgetRef ref, String memberId, String currency) {
   final invoices = ref.watch(invoicesProvider).value;
-  if (invoices == null) return null;
+  // #3680 — nor while the matches are not read: an unread match is not
+  // "overdue".
+  final matches = ref.watch(invoiceMatchesProvider).value;
+  if (invoices == null || matches == null) return null;
   return InvoiceExposure.of(
     invoices: invoices.where((i) => i.memberId == memberId),
-    matches: ref.watch(invoiceMatchesProvider).value ?? const {},
+    matches: matches,
     rules: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
     now: ref.watch(clockProvider).now(),
     fallbackCurrency: currency,
@@ -207,12 +210,13 @@ class InvoiceSummaryCard extends ConsumerWidget {
                     ),
                   ],
                   const SizedBox(height: AppSpacing.sm),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  // #3285 — both actions stay whole on a phone: they wrap.
+                  Wrap(
+                    alignment: WrapAlignment.end,
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.xs,
                     children: [
                       ?howItWorks,
-                      if (howItWorks != null)
-                        const SizedBox(width: AppSpacing.sm),
                       FilledButton.icon(
                         key: const ValueKey('money-summary-pay'),
                         onPressed: () => ref

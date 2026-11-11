@@ -50,19 +50,24 @@ class SupabaseInvoiceQueries implements InvoiceQueries {
   }
 
   @override
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async {
+  Future<List<(String, int)>> fetchConsumedPaymentIds(
+    String workspaceId,
+  ) async {
     // #2587 — paged to the end: a list cut at the server's cap would offer
-    // an already-consumed payment again. The match command still rechecks
-    // (and the unique payment_ledger_id refuses) the stale candidate.
+    // an already-used payment again. The match command still rechecks
+    // (and the parts' sum guard refuses) the stale candidate.
     final rows = await fetchAllPages(
       table: 'invoice_match_payments',
       build: () => _client
           .from('invoice_match_payments')
-          .select('id, payment_ledger_id')
+          .select('id, payment_ledger_id, amount_cents')
           .eq('workspace_id', workspaceId)
           .order('id', ascending: true),
     );
-    return {for (final row in rows) row['payment_ledger_id'] as String};
+    return [
+      for (final row in rows)
+        (row['payment_ledger_id'] as String, (row['amount_cents'] as num).toInt()),
+    ];
   }
 
   @override

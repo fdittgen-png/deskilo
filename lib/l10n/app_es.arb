@@ -2363,6 +2363,7 @@
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
   "biProjectionNotEnough": "Aún no hay historial suficiente para proyectar: {have} periodos completos hasta ahora, se necesitan {need}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
@@ -2763,6 +2764,7 @@
     }
   },
   "billPaymentsCredits": "Pagos y créditos",
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
   "billPdfExport": "Exportar la factura como PDF",
   "billPdfTitle": "Factura mensual",
   "billPendingBadge": "pendiente de validación",
@@ -3763,6 +3765,7 @@
     }
   },
   "comingSoon": "Próximamente",
+  "commaPair": "{first}, {second}",
   "commonCancel": "Cancelar",
   "commonClose": "Cerrar",
   "commonCopy": "Copiar",
@@ -5331,6 +5334,7 @@
   "editorRotate": "Girar",
   "editorSeatNameDefault": "Asiento",
   "editorSeatNameLabel": "Nombre del asiento",
+  "editorSeatNameNumbered": "Asiento {number}",
   "editorSeatNfcDuplicate": "Esta etiqueta ya está vinculada a otra silla.",
   "editorSeatNfcHelp": "UID de la etiqueta en hexadecimal — dejar vacío para ninguna.",
   "editorSeatNfcLabel": "Etiqueta NFC/RFID",
@@ -7490,6 +7494,8 @@
   "financesTypeAll": "Todos los documentos",
   "financesTypeCreditNote": "Nota de crédito",
   "financesYourCredit": "Su saldo a favor",
+  "formErrorSummaryGoTo": "Ir al primer problema",
+  "formErrorSummaryTitle": "{count, plural, =1{1 campo requiere su atención} other{{count} campos requieren su atención}}",
   "gebuevProcedureAccessBody": "Cada exportación contable y cada descarga de un archivo queda registrada en el registro de exportaciones: quién, cuándo, qué archivo y su huella. La pista de auditoría enumera estos accesos junto a los documentos.",
   "gebuevProcedureAccessHeading": "Accesos (art. 8)",
   "gebuevProcedureCarriersBody": "Este archivo se lee con cualquier herramienta zip y editor de texto. Una copia de todo el espacio se prueba con una exportación del espacio terminada, registrada con su huella: la lista de preparación muestra cuándo se hizo la última y pide una nueva cuando es antigua.",
@@ -7718,7 +7724,7 @@
   "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
   "handoffVoided": "Anuladas",
   "helpContents": "Índice",
-  "helpDotTooltip": "Abrir la guía",
+  "helpDotTooltipFor": "Abrir la guía: {topic}",
   "helpGuidedTasks": "Tareas guiadas",
   "helpHintAvailability": "Defina los días de apertura y el horario, y añada días de cierre que nadie puede reservar.",
   "helpHintBadges": "Emita una credencial QR imprimible o registre una tarjeta NFC; revoque credenciales perdidas en cualquier momento.",
@@ -9288,7 +9294,9 @@
     "description": "#2362 sales tax: invoicePdfExemptCertificate"
   },
   "invoicePdfIssuedBy": "Emitida por",
+  "invoicePdfIssuedByName": "Emitida por {name}",
   "invoicePdfIssuedOn": "Emitida el",
+  "invoicePdfIssuedOnDate": "Emitida el {date}",
   "invoicePdfPage": "Página",
   "invoicePdfPayments": "Pagos",
   "invoicePdfProforma": "Proforma",
@@ -9311,7 +9319,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Firma digital (SHA-256)",
+  "invoicePdfSignature": "Huella del documento (SHA-256)",
   "invoicePdfSubtotal": "Subtotal",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
@@ -9765,6 +9773,7 @@
   "@invoicingSourceCredits": {
     "description": "#3587 a source name: what customers paid that no invoice has taken"
   },
+  "invoicingSourceDeclarations": "Declaraciones de pago",
   "invoicingSourceFailed": "{source} no se pudo leer.",
   "@invoicingSourceFailed": {
     "description": "#3587 one line when a source failed; no figure it fed is shown",
@@ -10354,6 +10363,7 @@
   "kioskScanQr": "Escanear la tarjeta QR",
   "kioskTapHint": "Toque un asiento para registrarse",
   "kitActionBusy": "En curso…",
+  "labelWithValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo está disponible en los idiomas siguientes. En un dispositivo configurado en otro idioma, se muestra en {fallback}.",
   "languageNameCS": "Checo",
   "@languageNameCS": {
@@ -11554,6 +11564,7 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "Por pagar: abrir mis finanzas",
   "meFindPlaceBrowse": "Ver lugares",
   "meFindPlaceHint": "Yoga, un puesto, un masaje…",
   "meFindPlaceTitle": "Encuentra un lugar cerca",
@@ -11564,7 +11575,6 @@
   "meGreetingNoName": "Le damos la bienvenida",
   "meGroupAdd": "Nuevo grupo",
   "meGroupDelete": "Eliminar grupo",
-  "meGroupEmptyFavorites": "Dele un corazón a un espacio y le esperará aquí.",
   "meGroupEmptyOwn": "Mueva espacios aquí desde su menú.",
   "meGroupFavorites": "Favoritos",
   "meGroupInstallations": "Instalaciones conectadas",
@@ -12943,6 +12953,7 @@
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
   },
+  "personalInfoCompanyScope": "Se aplica a toda su cuenta, no a un solo espacio.",
   "personalInfoEmail": "E-mail para documentos",
   "@personalInfoEmail": {
     "description": "#886 personal-information form / feature: personalInfoEmail"
@@ -14638,6 +14649,7 @@
   "refFacetWorkspace": "Espacio",
   "refFilterAll": "Todo",
   "refFilterAmount": "Importe",
+  "refFilterAmountRange": "Importe {low} – {high}",
   "refFilterClear": "Borrar filtros",
   "refFilterFindIn": "Buscar en {facet}",
   "@refFilterFindIn": {
@@ -15831,11 +15843,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Solicitar eliminación",
+  "reservationDeleteRequestButton": "Solicitar cancelación",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)?",
+  "reservationDeleteRequestExplain": "Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)? Hasta su decisión, la reserva se mantiene; nada se reembolsa ni se elimina automáticamente.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -16682,6 +16694,7 @@
       }
     }
   },
+  "sentencePair": "{first} {second}",
   "seriesBookedCount": "{count, plural, =1{1 reserva creada} other{{count} reservas creadas}}",
   "seriesPreviewBookOthers": "{count, plural, =1{Reservar la otra fecha} other{Reservar las otras {count} fechas}}",
   "seriesPreviewFailing": "Estas fechas no se pueden reservar:",
@@ -19753,6 +19766,8 @@
   "tipWorkspaceSettingsPay": "Para indicar a los miembros cómo pagarle: rellene las instrucciones de pago.",
   "tipWorkspaceSettingsSave": "Para conservar sus cambios: toque «Guardar» abajo antes de salir.",
   "tipWorkspaceSettingsWording": "Para llamar las cosas a su manera —puestos, plantas, reservas—: cambie los términos.",
+  "titleAndBody": "{title}. {body}",
+  "titleDashDetail": "{first} — {second}",
   "ukFacilitiesPackage": "Vendemos un paquete de servicios de oficina",
   "@ukFacilitiesPackage": {
     "description": "#2359: ukFacilitiesPackage"
@@ -19879,6 +19894,7 @@
       }
     }
   },
+  "uxBookingAllowanceLeft": "{count, plural, =0{No quedan medias jornadas en su bono este mes} =1{Queda 1 media jornada en su bono este mes} other{Quedan {count} medias jornadas en su bono este mes}}",
   "uxBookingChargePending": "El importe y el uso de la cuota dependen del plan del miembro y se liquidan en el extracto.",
   "uxBookingCheckInHelp": "Marcar también mi presencia al confirmar esta reserva.",
   "uxBookingFor": "Reserva para",
@@ -20355,6 +20371,7 @@
   "@valuationTitle": {
     "description": "#2576 accountant valuations"
   },
+  "valueInParens": "{value} ({note})",
   "vatAccountField": "Cuenta de IVA",
   "vatAccountHint": "Cuenta donde la exportación contable registra el IVA recaudado. Vacío = 445710.",
   "vatAddRate": "Añadir un tipo",
@@ -20752,6 +20769,7 @@
   },
   "vatPdfNet": "Base",
   "vatPdfVat": "IVA",
+  "vatPdfVatRate": "IVA {rate}",
   "vatRateDefaultTooltip": "Tipo por defecto: lo usan las cuotas y todo lo que no tenga tipo propio",
   "vatRateIncomplete": "Cada tipo necesita un nombre y un porcentaje entre 0 y 99,99.",
   "vatRateLabelField": "Nombre",
@@ -20971,7 +20989,9 @@
   "visibilityContact": "WhatsApp y correo",
   "visibilityElsewhereIntro": "En un servidor conectado tiene la cuenta de ese servidor. Quienes allí no comparten ningún espacio con usted ven lo que permite a cualquier persona con sesión iniciada; sus datos de contacto y su presencia nunca salen de sus espacios.",
   "visibilityElsewhereTitle": "En mis otros servidores",
+  "visibilityHomeDetails": "Detalles del espacio personal",
   "visibilityHomeHeader": "Hogar personal: {name}",
+  "visibilityHomePlain": "Su espacio personal",
   "visibilityIdentity": "Nombre y foto",
   "visibilityIntro": "Cada parte de su cuenta elige su propio público. Nada es público si usted no lo elige.",
   "visibilityLegacyDirtyBody": "Su cambio en «{field}» en {server} aún no está guardado. Pertenece a esa cuenta y no pasa a otra.",

@@ -39,6 +39,8 @@ enum InvoiceAction {
   replace,
   // #1913 — place or release a dunning hold.
   dunningHold,
+  // #3285 — the member's own next move: open where they pay.
+  pay,
 }
 
 /// What the invoice sheet shows (#2494): the invoice and the facts around it
@@ -56,6 +58,7 @@ class InvoiceDetailView {
     this.transmission,
     this.journey,
     this.settledByNumber = '',
+    this.payer = false,
   });
 
   final Invoice invoice;
@@ -75,6 +78,9 @@ class InvoiceDetailView {
 
   /// #831 — the settlement a regrouped source went into.
   final String settledByNumber;
+
+  /// #3285 — opened from the reader's own invoices: they are the payer.
+  final bool payer;
 }
 
 /// Whether the signed-in member may issue invoices here: the right the sheet
@@ -175,6 +181,12 @@ class _InvoiceDetailBody extends ConsumerWidget {
           );
           final all = actions.build(context, l10n, status, expected);
           return [
+            if (_memberPays) FilledButton.icon(
+              key: const ValueKey('invoice-detail-pay'),
+              icon: const Icon(Icons.payments_outlined),
+              label: Text(l10n.moneyPayNow),
+              onPressed: () => Navigator.of(context).pop(InvoiceAction.pay),
+            ),
             // The expected next move first, the rest after it.
             for (final e in all)
               if (e.$1 == expected && actions.allowed(e.$1)) e.$2,
@@ -182,6 +194,12 @@ class _InvoiceDetailBody extends ConsumerWidget {
               if (e.$1 != expected && actions.allowed(e.$1)) e.$2,
           ];
   }
+
+  /// #3285 — paying is the member's move: it leads, filled, in the sheet.
+  bool get _memberPays => view.payer && switch (journey?.move) {
+        InvoiceMove.memberPays || InvoiceMove.memberPaysRemainder => true,
+        _ => false,
+      };
 
   /// #812 — the action the journey expects from an issuer, if any.
   InvoiceAction get _expected => !canIssue
@@ -324,18 +342,18 @@ class _InvoiceDetailBody extends ConsumerWidget {
     final l10n = context.l10n;
     final dateFormat = appFormatOf(context).dates(DateShape.date);
     return [
-      _line(context, '${l10n.invoicePdfIssuedOn} '
-          '${dateFormat.format(invoice.issuedAt)}'
-          '${invoice.issuerName.isEmpty ? '' : ' · '
-              '${l10n.invoicePdfIssuedBy} '
-              '${invoice.issuerName}'}'),
+      _line(context, [
+        l10n.invoicePdfIssuedOnDate(dateFormat.format(invoice.issuedAt)),
+        if (invoice.issuerName.isNotEmpty)
+          l10n.invoicePdfIssuedByName(invoice.issuerName),
+      ].join(' · ')),
       // #1913 — why reminders stop, and a due date nobody agreed
       // to, said where the issuer decides.
       if (facts.heldReason case final reason?)
         _line(context,
             l10n.invoiceHeldNote(dunningHoldReasonLabel(l10n, reason))),
       if (facts.showMaturityReview) _line(context, l10n.invoiceMaturityReview),
-      _line(context, '${l10n.invoicePdfBilledTo}: ${facts.billedTo}'),
+      _line(context, l10n.labelWithValue(l10n.invoicePdfBilledTo, facts.billedTo)),
     ];
   }
 

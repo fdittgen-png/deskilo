@@ -15,6 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
@@ -166,7 +167,13 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final sources = ref.watch(exchangeRateSourcesProvider).value ?? const [];
+    final sourcesRead = ref.watch(exchangeRateSourcesProvider);
+    // #3680 — the sources a rate is taken from, as read.
+    final standIn = ReadsAnswer.of([sourcesRead]).standIn(
+      onRetry: () => ref.invalidate(exchangeRateSourcesProvider),
+    );
+    if (standIn != null) return standIn;
+    final sources = sourcesRead.requireValue;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -16,6 +16,7 @@ import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
 import '../../domain/report_data_sample.dart';
 import '../../domain/report_facts.dart';
+import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import '../invoice_documents.dart' show invoicePdfTemplateFor;
 import '../report_defaults.dart';
@@ -38,6 +39,9 @@ InvoiceReport? setupSampleReport(
   // the mentions on: no sample is drawn rather than one built on a guess.
   final reference = watchWorkspaceTaxReference(ref);
   if (reference == null) return null;
+  // #3680 — nor while the VAT rates are not read: the sample's tax would be
+  // a guess.
+  if (!ref.watch(vatRatesProvider).hasValue) return null;
   final l10n = context.l10n;
   final template = invoicePdfTemplateFor(ref);
   final data = withOwnerTexts(

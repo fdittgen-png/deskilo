@@ -15,6 +15,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/locale/report_language.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/print_or_retry.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../profile/providers/profile_providers.dart';
@@ -26,8 +27,8 @@ import '../../domain/bill_sections.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
-import '../../domain/ledger_entry.dart';
 import '../../domain/report_data_letters.dart';
+import '../../domain/report_facts.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/usage_providers.dart';
@@ -56,13 +57,17 @@ class MoneyMemberDocuments {
 
   /// #494 — one of the member's self-service letter documents: quick
   /// in-app view, download, or share.
-  Future<void> memberDoc(String docId, String period) async {
+  Future<void> memberDoc(String docId, String period) =>
+      printOrRetry(_context, 'member document', () => _memberDoc(docId, period),
+          refresh: () => refreshLetterDocSources(_ref, docId));
+
+  Future<void> _memberDoc(String docId, String period) async {
     final l10n = _context.l10n;
     await warmLetterDocProviders(_ref, docId);
     if (!_context.mounted) return;
     final me = _ref.read(myMemberProvider).value;
-    final names = _ref.read(memberNamesProvider).value ?? const {};
-    if (me == null) return;
+    final names = await _ref.read(memberNamesProvider.future);
+    if (me == null || !_context.mounted) return;
     // #496 — MY documents print in MY language chain.
     final String language;
     try {
@@ -93,9 +98,18 @@ class MoneyMemberDocuments {
       await _ref.read(usageReadProvider(period).future);
       if (!_context.mounted) return;
     }
+    // #3680 — the facts are read (awaited) for the letter being printed.
+    final agreement =
+        docId == 'agreement' ? await readAgreementFacts(_ref) : null;
+    final payments = docId != 'agreement' && docId != 'usage'
+        ? await readPaymentsFacts(_ref, period)
+        : null;
+    if (!_context.mounted) return;
     final data = _letterData(
         docId, period, docL10n, language,
-        (id: me.id, name: names[me.id] ?? '', pct: me.subscriptionPct));
+        (id: me.id, name: names[me.id] ?? '', pct: me.subscriptionPct),
+        agreement: agreement,
+        payments: payments);
     final report = renderLetterDoc(_context, _ref,
         docId: docId, data: data, language: language);
     final title = switch (docId) {
@@ -127,12 +141,14 @@ class MoneyMemberDocuments {
     String period,
     AppLocalizations docL10n,
     String language,
-    ({String id, String name, int pct}) who,
-  ) =>
+    ({String id, String name, int pct}) who, {
+    AgreementFacts? agreement,
+    PaymentsFacts? payments,
+  }) =>
       switch (docId) {
         'agreement' => agreementReportData(
             reportStringsFor(_context, l10n: docL10n, localeName: language),
-            agreementFactsOf(_ref),
+            agreement!,
             memberName: who.name,
             subscriptionPct: who.pct, reference: requireWorkspaceTaxReference(_ref)),
         'usage' => usageReportData(_context, _ref,
@@ -143,7 +159,7 @@ class MoneyMemberDocuments {
             localeName: language),
         _ => paymentsReportData(
             reportStringsFor(_context, l10n: docL10n, localeName: language),
-            paymentsFactsOf(_ref, period),
+            payments!,
             period: period,
             memberName: who.name, reference: requireWorkspaceTaxReference(_ref)),
       };
@@ -155,6 +171,14 @@ class MoneyMemberDocuments {
     Statement statement, {
     required DateTime month,
     required String nowPeriod,
+  }) =>
+      printOrRetry(_context, 'bill',
+          () => _exportBill(statement, month: month, nowPeriod: nowPeriod));
+
+  Future<void> _exportBill(
+    Statement statement, {
+    required DateTime month,
+    required String nowPeriod,
   }) async {
     final context = _context;
     final l10n = context.l10n;
@@ -162,8 +186,10 @@ class MoneyMemberDocuments {
     final workspace = _ref.read(currentWorkspaceProvider).value;
     final member = _ref.read(myMemberProvider).value;
     if (workspace == null || member == null) return;
-    final ledger = _ref.read(myLedgerProvider).value ?? const <LedgerEntry>[];
-    final pendingEvents = _ref.read(eventsProvider).value ?? const [];
+    // #3680 — the bill is printed from reads that answered, or not at all.
+    final ledger = await _ref.read(myLedgerProvider.future);
+    final pendingEvents = await _ref.read(eventsProvider.future);
+    if (!context.mounted) return;
     final memberName =
         _ref.read(memberNamesProvider).value?[member.id] ?? '';
     final monthLabel = appFormatOf(context).dates(DateShape.monthYear).format(month);
@@ -228,6 +254,7 @@ class MoneyMemberDocuments {
         balance: l10n.bookReportBalance,
         settled: l10n.billSettled,
         outstanding: l10n.billOutstanding,
+        continuationLine: l10n.billPdfContinuation('{workspace}', '{title}', '{member}', '{period}'),
       );
 
   /// #514 — the shared triad, for the bill too: the statement report (owner

@@ -94,9 +94,14 @@ class PendingDecisionsSection extends ConsumerWidget {
           AppSpacing.lg,
           AppSpacing.xs,
         ),
-        child: Text(
-          l10n.eventsPendingHeader,
-          style: Theme.of(context).textTheme.titleSmall,
+        // #3286: a named section of its own, so a screen reader can jump to
+        // the approvals apart from the calendar's filters.
+        child: Semantics(
+          header: true,
+          child: Text(
+            l10n.eventsPendingHeader,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
         ),
       ),
       // #440: one COMPACT row per pending decision — message,

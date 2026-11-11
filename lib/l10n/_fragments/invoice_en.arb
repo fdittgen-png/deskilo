@@ -64,15 +64,33 @@
   "@invoicePdfIssuedOn": {
     "description": "PDF: label before the issue date"
   },
+  "invoicePdfIssuedOnDate": "Issued on {date}",
+  "@invoicePdfIssuedOnDate": {
+    "description": "#3652 The issue date line of an invoice, e.g. \"Issued on 3 March 2026\".",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePdfIssuedBy": "Issued by",
   "@invoicePdfIssuedBy": {
     "description": "PDF: label before the issuer name"
+  },
+  "invoicePdfIssuedByName": "Issued by {name}",
+  "@invoicePdfIssuedByName": {
+    "description": "#3652 The issuer line of an invoice, e.g. \"Issued by Acme\".",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "invoicePdfBilledTo": "Billed to",
   "@invoicePdfBilledTo": {
     "description": "PDF: label above the member block"
   },
-  "invoicePdfSignature": "Digital signature (SHA-256)",
+  "invoicePdfSignature": "Document fingerprint (SHA-256)",
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
   },

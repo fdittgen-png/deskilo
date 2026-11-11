@@ -8,9 +8,12 @@ import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
+import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/presentation/report_facts_of.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/plan/providers/accessory_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +55,14 @@ Future<List<Map<String, Object?>>> agreementLines(
               if (ref.watch(floorPlanProvider(level.id)).value == null) {
                 return const SizedBox.shrink();
               }
+            }
+            // #3680 — the agreement is built only from reads that answered:
+            // wait for its prices too, as the letter's warm-up does.
+            if (!ref.watch(feeBandsProvider).hasValue ||
+                !ref.watch(servicesProvider).hasValue ||
+                !ref.watch(packagesProvider).hasValue ||
+                !ref.watch(accessoriesProvider()).hasValue) {
+              return const SizedBox.shrink();
             }
             lines = (agreementReportData(
               reportStringsFor(context, localeName: 'en'),
@@ -162,6 +173,43 @@ void main() {
     expect(agreement!.header, contains('Financial agreement'));
     // The invoice's own bands stayed untouched.
     expect(money.pdfTemplate.invoiceBands.hasBands, isFalse);
+  });
+
+  // #3680 — the agreement awaits its sources: one that did not answer ends
+  // in the read-failed message with Retry, never an uncaught error and never
+  // a document; Retry prints it once the source answers.
+  testWidgets('a failed source ends in the message with Retry, not in a '
+      'document', (tester) async {
+    var answering = false;
+    await pumpInvoices(tester, money: await seededMoney(), overrides: [
+      servicesProvider.overrideWith((ref) async {
+        if (!answering) throw StateError('offline');
+        return const <ServiceItem>[];
+      }),
+    ]);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('money-face-documents')));
+    await tester.pumpAndSettle();
+    final agreement = find.byKey(const ValueKey('agreement-report-button'));
+    await tester.ensureVisible(agreement);
+    await tester.tap(agreement);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(
+        find.descendant(
+            of: find.byType(SnackBar),
+            matching: find.text('This could not be loaded. Try again.')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('member-doc-quick')), findsNothing);
+    expect(tester.takeException(), isNull);
+
+    answering = true;
+    await tester.tap(find.byKey(const ValueKey('print-read-retry')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byKey(const ValueKey('member-doc-quick')), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('the Money tab offers the self-service documents with '

@@ -4869,6 +4869,27 @@
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
+  "@biProjectionNext": {
+    "description": "#3652 The next projected period: its value, the range around it and the projection label.",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "biProjectionNotEnough": "Not enough history to project yet: {have} complete periods so far, {need} needed.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
@@ -5857,6 +5878,24 @@
   "billPaymentsCredits": "Payments & credits",
   "@billPaymentsCredits": {
     "description": "Bill section header for confirmed credits of the period"
+  },
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
+  "@billPdfContinuation": {
+    "description": "#3652 The strip on pages 2 and later of a bill: workspace, title, member and period.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
   },
   "billPdfExport": "Export bill as PDF",
   "@billPdfExport": {
@@ -7708,6 +7747,18 @@
   "comingSoon": "Coming soon",
   "@comingSoon": {
     "description": "Placeholder body shown on tabs whose feature is not yet implemented"
+  },
+  "commaPair": "{first}, {second}",
+  "@commaPair": {
+    "description": "#3652 Two short phrases separated by a comma, e.g. a label and its state.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
   },
   "commonCancel": "Cancel",
   "@commonCancel": {
@@ -10547,6 +10598,15 @@
   "editorSeatNameLabel": "Seat name",
   "@editorSeatNameLabel": {
     "description": "Label of the seat-name input"
+  },
+  "editorSeatNameNumbered": "Seat {number}",
+  "@editorSeatNameNumbered": {
+    "description": "#3652 The default name of a new seat with its position in the desk, e.g. \"Seat 2\". The number is a position, not a count.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "editorSeatNfcDuplicate": "This tag is already linked to another chair.",
   "@editorSeatNfcDuplicate": {
@@ -14914,6 +14974,19 @@
   "@financesYourCredit": {
     "description": "#3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them."
   },
+  "formErrorSummaryGoTo": "Go to the first problem",
+  "@formErrorSummaryGoTo": {
+    "description": "#3286 form error summary: moves the focus to the first field with a problem"
+  },
+  "formErrorSummaryTitle": "{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}",
+  "@formErrorSummaryTitle": {
+    "description": "#3286 form error summary: how many fields have a problem",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "gebuevProcedureAccessBody": "Each accounting export and each archive download is written to the export log: who made it, when, which file and its digest. The audit trail lists these accesses beside the documents.",
   "@gebuevProcedureAccessBody": {
     "description": "#2377 The Swiss archive's procedures document: access logging (GeBüV art. 8)."
@@ -15762,9 +15835,15 @@
   "@helpContents": {
     "description": "Shown as a tooltip in help screen (help)."
   },
-  "helpDotTooltip": "Open the guide",
-  "@helpDotTooltip": {
-    "description": "Shown as a tooltip in help dot (core)."
+  "helpDotTooltipFor": "Open the guide: {topic}",
+  "@helpDotTooltipFor": {
+    "description": "#3286 help dot tooltip and accessible name: names the topic it documents",
+    "placeholders": {
+      "topic": {
+        "type": "String",
+        "example": "Legal identity"
+      }
+    }
   },
   "helpGuidedTasks": "Guided tasks",
   "@helpGuidedTasks": {
@@ -19224,9 +19303,27 @@
   "@invoicePdfIssuedBy": {
     "description": "PDF: label before the issuer name"
   },
+  "invoicePdfIssuedByName": "Issued by {name}",
+  "@invoicePdfIssuedByName": {
+    "description": "#3652 The issuer line of an invoice, e.g. \"Issued by Acme\".",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePdfIssuedOn": "Issued on",
   "@invoicePdfIssuedOn": {
     "description": "PDF: label before the issue date"
+  },
+  "invoicePdfIssuedOnDate": "Issued on {date}",
+  "@invoicePdfIssuedOnDate": {
+    "description": "#3652 The issue date line of an invoice, e.g. \"Issued on 3 March 2026\".",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "invoicePdfPage": "Page",
   "@invoicePdfPage": {
@@ -19274,7 +19371,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Digital signature (SHA-256)",
+  "invoicePdfSignature": "Document fingerprint (SHA-256)",
   "@invoicePdfSignature": {
     "description": "PDF: caption above the integrity fingerprint"
   },
@@ -19929,6 +20026,10 @@
   "invoicingSourceCredits": "Customer credits",
   "@invoicingSourceCredits": {
     "description": "#3587 a source name: what customers paid that no invoice has taken"
+  },
+  "invoicingSourceDeclarations": "Payment declarations",
+  "@invoicingSourceDeclarations": {
+    "description": "The name of the invoicing source that could not be read: the customers' declarations that they paid (read from the events). Shown in \"{source} could not be read.\""
   },
   "invoicingSourceFailed": "{source} could not be read.",
   "@invoicingSourceFailed": {
@@ -21183,6 +21284,18 @@
   "kitActionBusy": "Working…",
   "@kitActionBusy": {
     "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
+  },
+  "labelWithValue": "{label}: {value}",
+  "@labelWithValue": {
+    "description": "#3652 A label with its value on one line, e.g. \"Total: 12.00\". One message so the language places the colon (French has a space before it).",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "languageAvailableHint": "DesKilo is available in the languages below. A device set to any other language shows it in {fallback}.",
   "@languageAvailableHint": {
@@ -23915,6 +24028,10 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "To pay: open my finances",
+  "@meFinanceGlanceSemantics": {
+    "description": "#3281 meFinanceGlanceSemantics"
+  },
   "meFindPlaceBrowse": "Browse places",
   "@meFindPlaceBrowse": {
     "description": "#3545 First visit: the button that opens Discover's start state."
@@ -23969,10 +24086,6 @@
   "meGroupDelete": "Delete group",
   "@meGroupDelete": {
     "description": "Shown as a text in me spaces chrome (me)."
-  },
-  "meGroupEmptyFavorites": "Give a space a heart and it waits for you here.",
-  "@meGroupEmptyFavorites": {
-    "description": "Shown as a text in me spaces list (me)."
   },
   "meGroupEmptyOwn": "Move spaces here from their menu.",
   "@meGroupEmptyOwn": {
@@ -27411,6 +27524,10 @@
   "personalInfoCompany": "Company (optional)",
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoCompanyScope": "Applies to your whole account, not to one workspace.",
+  "@personalInfoCompanyScope": {
+    "description": "#3281 personalInfoCompanyScope"
   },
   "personalInfoEmail": "E-mail for documents",
   "@personalInfoEmail": {
@@ -30910,6 +31027,18 @@
   "@refFilterAmount": {
     "description": "Shown as the label in ref picker sheet (workspace), and 1 other place."
   },
+  "refFilterAmountRange": "Amount {low} – {high}",
+  "@refFilterAmountRange": {
+    "description": "#3652 The caption of an amount filter with its range, e.g. \"Amount 10 – 50\".",
+    "placeholders": {
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      }
+    }
+  },
   "refFilterClear": "Clear filters",
   "@refFilterClear": {
     "description": "Shown as the text in ref picker sheet (workspace)."
@@ -32625,11 +32754,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Request deletion",
+  "reservationDeleteRequestButton": "Request cancellation",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?",
+  "reservationDeleteRequestExplain": "Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -33943,6 +34072,18 @@
     "description": "#903 seat day timeline: seatDayTitle",
     "placeholders": {
       "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "sentencePair": "{first} {second}",
+  "@sentencePair": {
+    "description": "#3652 Two sentences read as one text, separated by a space.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
         "type": "String"
       }
     }
@@ -41218,6 +41359,30 @@
   "@tipWorkspaceSettingsWording": {
     "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /settings/wording."
   },
+  "titleAndBody": "{title}. {body}",
+  "@titleAndBody": {
+    "description": "#3652 A title and its body read as two sentences, e.g. for a screen reader.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "body": {
+        "type": "String"
+      }
+    }
+  },
+  "titleDashDetail": "{first} — {second}",
+  "@titleDashDetail": {
+    "description": "#3652 Two parts of one title joined by a dash, e.g. \"Desk 4 — Desk reservations\".",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
   "ukFacilitiesPackage": "We sell a serviced package of facilities",
   "@ukFacilitiesPackage": {
     "description": "#2359: ukFacilitiesPackage"
@@ -41432,6 +41597,15 @@
         "type": "int"
       },
       "pending": {
+        "type": "int"
+      }
+    }
+  },
+  "uxBookingAllowanceLeft": "{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}",
+  "@uxBookingAllowanceLeft": {
+    "description": "Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.",
+    "placeholders": {
+      "count": {
         "type": "int"
       }
     }
@@ -42202,6 +42376,18 @@
   "@valuationTitle": {
     "description": "#2576 accountant valuations"
   },
+  "valueInParens": "{value} ({note})",
+  "@valueInParens": {
+    "description": "#3652 A value followed by a short note in parentheses, e.g. \"Anna (you)\".",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "vatAccountField": "VAT account",
   "@vatAccountField": {
     "description": "FEC account for collected VAT"
@@ -42629,6 +42815,15 @@
   "@vatPdfVat": {
     "description": "Invoice PDF: the VAT caption, followed by the rate"
   },
+  "vatPdfVatRate": "VAT {rate}",
+  "@vatPdfVatRate": {
+    "description": "#3652 The caption of a VAT subtotal with its rate, e.g. \"VAT 20 %\".",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "vatRateDefaultTooltip": "Default rate — used by subscriptions and by anything without its own rate",
   "@vatRateDefaultTooltip": {
     "description": "Tooltip of the default-rate radio"
@@ -43000,6 +43195,10 @@
   "@visibilityElsewhereTitle": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
   },
+  "visibilityHomeDetails": "Home details",
+  "@visibilityHomeDetails": {
+    "description": "#3281 visibilityHomeDetails"
+  },
   "visibilityHomeHeader": "Personal home: {name}",
   "@visibilityHomeHeader": {
     "description": "#2558 privacy card: names the personal home whose settings these are; name is its server address",
@@ -43009,6 +43208,10 @@
         "example": "coworkonti.example"
       }
     }
+  },
+  "visibilityHomePlain": "Your personal home",
+  "@visibilityHomePlain": {
+    "description": "#3281 visibilityHomePlain"
   },
   "visibilityIdentity": "Name and photo",
   "@visibilityIdentity": {

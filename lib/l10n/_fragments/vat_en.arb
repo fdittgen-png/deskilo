@@ -80,6 +80,15 @@
   "@vatPdfVat": {
     "description": "Invoice PDF: the VAT caption, followed by the rate"
   },
+  "vatPdfVatRate": "VAT {rate}",
+  "@vatPdfVatRate": {
+    "description": "#3652 The caption of a VAT subtotal with its rate, e.g. \"VAT 20 %\".",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "fecAccountVat": "Collected VAT",
   "@fecAccountVat": {
     "description": "FEC export: label of the collected-VAT account"

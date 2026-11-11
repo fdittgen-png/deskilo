@@ -7,6 +7,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
@@ -38,7 +39,8 @@ class WizardContext {
     required this.dunning,
     required this.events,
     required this.previews,
-    required this.loading,
+    required this.reads,
+    required this.retry,
     required this.issuingEnabled,
     required this.settlementEnabled,
   });
@@ -58,8 +60,18 @@ class WizardContext {
   final List<WorkspaceEvent> events;
   final Map<String, ({List<InvoiceLine> lines, int totalCents})> previews;
 
-  /// True while any of the lists is still on its first load.
-  final bool loading;
+  /// #3680 — whether the lists answered: a step lists or says "nothing to
+  /// do" only then; [standIn] shows the progress or the failure instead.
+  final ReadsAnswer reads;
+
+  /// Repeats the reads.
+  final VoidCallback retry;
+
+  /// True while a list is not answered (still running, or failed).
+  bool get loading => !reads.answered;
+
+  /// The progress or the failure with Try again; null when answered.
+  Widget? get standIn => reads.standIn(onRetry: retry);
   final bool issuingEnabled;
 
   /// Whether a member's open invoices may be regrouped into one.
@@ -108,6 +120,8 @@ class WizardContext {
     final reminders = ref.watch(invoiceRemindersProvider);
     final events = ref.watch(eventsProvider);
     final previews = ref.watch(wizardPreviewsProvider(period));
+    final members = ref.watch(workspaceMembersProvider);
+    final names = ref.watch(memberNamesProvider);
     return WizardContext(
       state: state,
       period: period,
@@ -119,18 +133,26 @@ class WizardContext {
       now: now,
       workspaceId: workspace?.id ?? '',
       currency: ref.watch(appFormatProvider).moneyIn(workspace?.currencyCode),
-      members: ref.watch(workspaceMembersProvider).value ?? const [],
-      names: ref.watch(memberNamesProvider).value ?? const {},
-      invoices: invoices.value ?? const [],
-      matches: matches.value ?? const {},
-      reminders: reminders.value ?? const {},
+      // The lists below are used only while `reads` answered.
+      members: members.value ?? const [], // empty-ok: steps wait for `reads`
+      names: names.value ?? const {}, // empty-ok: steps wait for `reads`
+      invoices: invoices.value ?? const [], // empty-ok: steps wait for `reads`
+      matches: matches.value ?? const {}, // empty-ok: steps wait for `reads`
+      reminders: reminders.value ?? const {}, // empty-ok: steps wait for `reads`
       dunning: ref.watch(dunningRulesProvider).value ?? DunningRules.defaults,
-      events: events.value ?? const [],
-      previews: previews.value ?? const {},
-      loading: invoices.isLoading ||
-          matches.isLoading ||
-          events.isLoading ||
-          previews.isLoading,
+      events: events.value ?? const [], // empty-ok: steps wait for `reads`
+      previews: previews.value ?? const {}, // empty-ok: steps wait for `reads`
+      reads: ReadsAnswer.of(
+        [members, names, invoices, matches, reminders, events, previews],
+      ),
+      retry: () => ref
+        ..invalidate(workspaceMembersProvider)
+        ..invalidate(memberNamesProvider)
+        ..invalidate(invoicesProvider)
+        ..invalidate(invoiceMatchesProvider)
+        ..invalidate(invoiceRemindersProvider)
+        ..invalidate(eventsProvider)
+        ..invalidate(wizardPreviewsProvider(period)),
     );
   }
 }

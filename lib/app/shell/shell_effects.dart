@@ -39,6 +39,7 @@ import '../webmcp_confirmation_sheet.dart';
 import '../webmcp_confirmations.dart';
 import '../webmcp_wiring.dart';
 import 'shell_session.dart';
+import 'snack_scope.dart';
 
 /// Starts every shell-wide effect. Called from the shell's build; the
 /// watches and listeners belong to that build's element, as before.
@@ -52,6 +53,7 @@ void watchShellEffects(WidgetRef ref, AppLocalizations l10n) {
   _scheduleCheckInReminders(ref, l10n);
   _announceWebMcpActions(ref, l10n);
   _askWebMcpConfirmations(ref);
+  watchSnackScope(ref);
 }
 
 /// #2504 — an assistant's request that needs the person: the sheet opens,

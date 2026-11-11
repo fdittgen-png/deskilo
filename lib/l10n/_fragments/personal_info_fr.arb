@@ -67,5 +67,6 @@
   "personalInfoPreview": "Sur vos documents",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
-  }
+  },
+  "personalInfoCompanyScope": "Valable pour tout votre compte, pas pour un seul espace."
 }

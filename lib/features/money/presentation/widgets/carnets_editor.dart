@@ -7,6 +7,7 @@ import '../../../../core/i18n/workspace_currency.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../application/carnets.dart';
 import '../../providers/credit_providers.dart';
@@ -72,7 +73,13 @@ class _CarnetsEditorState extends ConsumerState<CarnetsEditor> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final products = ref.watch(creditProductsProvider).value ?? const [];
+    final productsRead = ref.watch(creditProductsProvider);
+    // #3680 — the choices are offered only from a list that was read.
+    final standIn = ReadsAnswer.of([productsRead]).standIn(
+      onRetry: () => ref.invalidate(creditProductsProvider),
+    );
+    if (standIn != null) return standIn;
+    final products = productsRead.requireValue;
     final money = appFormatOf(context).moneyIn(WorkspaceCurrency.code);
     return Column(
       key: const ValueKey('carnets-editor'),

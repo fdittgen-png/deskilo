@@ -17,6 +17,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -121,7 +122,13 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
     GuestPassDraft draft,
     MoneyFormat currency,
   ) {
-    final places = ref.watch(guestPassPlacesProvider(workspace.id)).value ?? const [];
+    // #3680 — the places a pass is sold for, as read.
+    final placesRead = ref.watch(guestPassPlacesProvider(workspace.id));
+    final placesStandIn = ReadsAnswer.of([placesRead]).standIn(
+      onRetry: () => ref.invalidate(guestPassPlacesProvider(workspace.id)),
+    );
+    if (placesStandIn != null) return placesStandIn;
+    final places = placesRead.requireValue;
     return PersonalInfoForm(
       key: ValueKey('guest-pass-form-$_requestId'),
       managed: true,
