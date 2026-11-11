@@ -29,6 +29,12 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #3745/0721 restates start_space_inquiry and send_inquiry_message from
+  // the LIVE dev definitions (0316 with 0324's feature_operation_allowed
+  // gate) as start_space_inquiry_v1 / send_inquiry_message_v1, and the
+  // older two delegate to them. pgTAP 390, 101 and 110.
+  'start_space_inquiry@0721',
+  'send_inquiry_message@0721',
   // #3671/0717 restates match_invoice from the LIVE dev definition
   // (pg_get_functiondef), so every earlier anchored rule is carried verbatim;
   // the change is the optional part (p_amount_cents) and "what is left of the

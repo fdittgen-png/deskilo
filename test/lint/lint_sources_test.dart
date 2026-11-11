@@ -57,6 +57,12 @@ bool _callsDirectory(String source) {
 }
 
 void main() {
+  test('nested caches are generated on Unix and Windows', () {
+    expect(isGenerated('tool/widgetbook/.dart_tool/main.dart'), isTrue);
+    expect(isGenerated(r'tool\widgetbook\.dart_tool\main.dart'), isTrue);
+    expect(isGenerated(r'tool\widgetbook\lib\main.dart'), isFalse);
+  });
+
   test('only the listed lint files build their own Directory walk', () {
     final calling = {
       for (final f in Directory('test/lint').listSync().whereType<File>())

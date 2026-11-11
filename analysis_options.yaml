@@ -9,6 +9,7 @@ analyzer:
   # managed member were both that shape.
   exclude:
     - build/**
+    - tool/widgetbook/** # Independent package; CI runs its verify.sh.
     - android/**
     - ios/**
     - web/**
