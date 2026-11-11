@@ -68,27 +68,30 @@ InvoicingHomeData _data({Set<InvoicingSource> failed = const {}}) =>
       failed: failed,
     );
 
-InvoicingHomeActions _actions({ValueChanged<InvoicingSource>? onRetry}) =>
-    InvoicingHomeActions(
-      onOpenInvoice: (_) {},
-      onOpenCustomer: (_) {},
-      onCustomerAction: (_, _) {},
-      onTodo: (_) {},
-      onRetry: onRetry ?? (_) {},
-      onNewInvoice: () {},
-    );
+InvoicingHomeActions _actions({
+  ValueChanged<InvoicingSource>? onRetry,
+  ValueChanged<TodoKind>? onTodo,
+}) => InvoicingHomeActions(
+  onOpenInvoice: (_) {},
+  onOpenCustomer: (_) {},
+  onCustomerAction: (_, _) {},
+  onTodo: onTodo ?? (_) {},
+  onRetry: onRetry ?? (_) {},
+  onNewInvoice: () {},
+);
 
 Future<void> _pump(
   WidgetTester tester,
   InvoicingHomeData data, {
   ValueChanged<InvoicingSource>? onRetry,
+  ValueChanged<TodoKind>? onTodo,
 }) async {
   await pumpApp(
     tester,
     Scaffold(
       body: InvoicingHome(
         data: data,
-        actions: _actions(onRetry: onRetry),
+        actions: _actions(onRetry: onRetry, onTodo: onTodo),
       ),
     ),
     size: const Size(800, 3000),
@@ -144,10 +147,24 @@ void main() {
     });
   });
 
-  testWidgets('each To do entry opens the list of exactly what it counts', (
-    tester,
-  ) async {
-    await _pump(tester, _data());
+  test('a customer holding money not assigned is matched first, never '
+      'reminded', () {
+    final reminded = _sample.firstWhere((r) => r.invoiceId == '01');
+    expect(todoKindOf(reminded, ReminderMode.byHand), TodoKind.shareReminders);
+    expect(
+      todoKindOf(
+        reminded,
+        ReminderMode.byHand,
+        holdsUnassigned: {reminded.customerId},
+      ),
+      TodoKind.matchPayments,
+    );
+  });
+
+  testWidgets('each To do entry opens the list of exactly what it counts; '
+      'the reminders by hand open their queue', (tester) async {
+    final opened = <TodoKind>[];
+    await _pump(tester, _data(), onTodo: opened.add);
     final l = AppLocalizations.of(tester.element(find.byType(InvoicingHome)))!;
     final todo = todoOf(_sample, mode: ReminderMode.byHand);
     expect(
@@ -161,6 +178,10 @@ void main() {
     for (final t in todo) {
       await tester.tap(find.byKey(ValueKey('invoicing-todo-${t.kind.name}')));
       await tester.pumpAndSettle();
+      if (t.kind == TodoKind.shareReminders) {
+        expect(opened.last, TodoKind.shareReminders, reason: 'the queue');
+        continue;
+      }
 
       final customers = {
         for (final r in _sample)

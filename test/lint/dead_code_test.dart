@@ -18,18 +18,8 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  'lib/features/money/application/payment_candidates.dart::candidatesFor':
-      '#3587 R1-f — the payments to match screen and the customer credit read it',
-  'lib/features/money/application/payment_candidates.dart::creditMinorOf':
-      '#3587 R1-f — the payments to match screen and the customer credit read it',
-  'lib/features/money/application/payment_candidates.dart::unmatchedPaymentsOf':
-      '#3587 R1-f — the payments to match screen and the customer credit read it',
-  'lib/features/money/presentation/invoicing/customer_page.dart::CustomerPage':
-      '#3587 train 3 — the invoicing home opens it',
   // The workbook's sources as data: the export coverage lint reads them now,
   // the about-this-export sheet will list them for the operator.
-  'lib/features/money/presentation/invoicing/reminder_mode_line.dart::ReminderModeLine':
-      '#3587 release 1 train — the home places it at the foot of To do',
   'lib/features/workspace/domain/workspace_export_sources.dart::workspaceExportSources':
       '#2861 — the about sheet names each source and what it leaves out',
   // The countries the store holds rates for: the unchanged vat_versions_test
