@@ -41,10 +41,9 @@ final _shapes = [
 /// The ceiling per area, as measured on 11 Nov 2026 (it only falls).
 const _ceilings = <String, int>{
   'lib/features/money': 0,
-  // Re-measured with the #3742 shapes (a default object in place of an
-  // unread value): five places that were there, now seen — the spaces'
-  // layout read as `SpacePrefs.empty`; #3749 brings them down to 14.
-  'lib/features/me': 19,
+  // #3742 widened the shapes (a default object in place of an unread
+  // value); #3749 removed the five places they found in Me.
+  'lib/features/me': 14,
   'lib/features/reservations': 28,
 };
 
