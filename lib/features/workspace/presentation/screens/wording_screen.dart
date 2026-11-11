@@ -271,7 +271,7 @@ class _TermTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(renamed ? word! : product),
       subtitle: Text(
-        '${l10n.wordingDefaultLabel}: $product',
+        l10n.labelWithValue(l10n.wordingDefaultLabel, product),
         style: Theme.of(context).textTheme.bodySmall,
       ),
       trailing: renamed

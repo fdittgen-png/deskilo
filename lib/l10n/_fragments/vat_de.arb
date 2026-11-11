@@ -20,6 +20,7 @@
   "vatServiceRateDefault": "Standard des Spaces",
   "vatPdfNet": "Netto",
   "vatPdfVat": "MwSt.",
+  "vatPdfVatRate": "MwSt. {rate}",
   "fecAccountVat": "Vereinnahmte Steuer",
   "vatKeptRate": "Ein Satz, den eine Rechnung oder eine Leistung noch nutzt, bleibt erhalten und wird deaktiviert.",
   "fecAccountVatPending": "Umsatzsteuer, noch nicht fällig",

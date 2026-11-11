@@ -2363,6 +2363,7 @@
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
   "biProjectionNotEnough": "Storico ancora insufficiente per proiettare: finora {have} periodi completi, ne servono {need}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
@@ -2763,6 +2764,7 @@
     }
   },
   "billPaymentsCredits": "Pagamenti e crediti",
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
   "billPdfExport": "Esporta la fattura come PDF",
   "billPdfTitle": "Fattura mensile",
   "billPendingBadge": "in attesa di convalida",
@@ -3763,6 +3765,7 @@
     }
   },
   "comingSoon": "Prossimamente",
+  "commaPair": "{first}, {second}",
   "commonCancel": "Annulla",
   "commonClose": "Chiudi",
   "commonCopy": "Copia",
@@ -5331,6 +5334,7 @@
   "editorRotate": "Ruota",
   "editorSeatNameDefault": "Posto",
   "editorSeatNameLabel": "Nome del posto",
+  "editorSeatNameNumbered": "Posto {number}",
   "editorSeatNfcDuplicate": "Questo tag è già collegato a un'altra sedia.",
   "editorSeatNfcHelp": "UID del tag in esadecimale — lasciare vuoto per nessun tag.",
   "editorSeatNfcLabel": "Tag NFC/RFID",
@@ -9290,7 +9294,9 @@
     "description": "#2362 sales tax: invoicePdfExemptCertificate"
   },
   "invoicePdfIssuedBy": "Emessa da",
+  "invoicePdfIssuedByName": "Emessa da {name}",
   "invoicePdfIssuedOn": "Emessa il",
+  "invoicePdfIssuedOnDate": "Emessa il {date}",
   "invoicePdfPage": "Pagina",
   "invoicePdfPayments": "Pagamenti",
   "invoicePdfProforma": "Proforma",
@@ -10356,6 +10362,7 @@
   "kioskScanQr": "Scansiona il badge QR",
   "kioskTapHint": "Tocchi un posto per fare check-in",
   "kitActionBusy": "In corso…",
+  "labelWithValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un'altra lingua, viene mostrato in {fallback}.",
   "languageNameCS": "Ceco",
   "@languageNameCS": {
@@ -14641,6 +14648,7 @@
   "refFacetWorkspace": "Spazio",
   "refFilterAll": "Tutto",
   "refFilterAmount": "Importo",
+  "refFilterAmountRange": "Importo {low} – {high}",
   "refFilterClear": "Cancella i filtri",
   "refFilterFindIn": "Cerca in {facet}",
   "@refFilterFindIn": {
@@ -16685,6 +16693,7 @@
       }
     }
   },
+  "sentencePair": "{first} {second}",
   "seriesBookedCount": "{count, plural, =1{1 prenotazione creata} other{{count} prenotazioni create}}",
   "seriesPreviewBookOthers": "{count, plural, =1{Prenota l'altra data} other{Prenota le altre {count} date}}",
   "seriesPreviewFailing": "Queste date non possono essere prenotate:",
@@ -19756,6 +19765,8 @@
   "tipWorkspaceSettingsPay": "Per indicare ai membri come pagarla: compili le istruzioni di pagamento.",
   "tipWorkspaceSettingsSave": "Per conservare le modifiche: tocchi «Salva» in basso prima di uscire.",
   "tipWorkspaceSettingsWording": "Per chiamare le cose a modo suo — posti, piani, prenotazioni: cambi i termini.",
+  "titleAndBody": "{title}. {body}",
+  "titleDashDetail": "{first} — {second}",
   "ukFacilitiesPackage": "Vendiamo un pacchetto di servizi per ufficio",
   "@ukFacilitiesPackage": {
     "description": "#2359: ukFacilitiesPackage"
@@ -20358,6 +20369,7 @@
   "@valuationTitle": {
     "description": "#2576 accountant valuations"
   },
+  "valueInParens": "{value} ({note})",
   "vatAccountField": "Conto IVA",
   "vatAccountHint": "Conto su cui l'esportazione contabile registra l'IVA incassata. Vuoto = 445710.",
   "vatAddRate": "Aggiungi un'aliquota",
@@ -20755,6 +20767,7 @@
   },
   "vatPdfNet": "Imponibile",
   "vatPdfVat": "IVA",
+  "vatPdfVatRate": "IVA {rate}",
   "vatRateDefaultTooltip": "Aliquota predefinita — usata dagli abbonamenti e da tutto ciò che non ne ha una propria",
   "vatRateIncomplete": "Ogni aliquota richiede un nome e una percentuale tra 0 e 99,99.",
   "vatRateLabelField": "Nome",

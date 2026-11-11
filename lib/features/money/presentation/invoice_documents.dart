@@ -336,7 +336,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       layoutXml: layoutXml,
       data: withOwnerTexts(reportData, template.texts),
       what: invoice.number.isEmpty ? stem : invoice.number,
-      documentTitle: '${strings.invoiceTitle} ${invoice.number}',
+      documentTitle: strings.titleLine(invoice.number),
       pageLabel: strings.page,
       font: _asset,
       image: options.reportImage,

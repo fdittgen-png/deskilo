@@ -54,7 +54,17 @@ class ReportStrings {
     this.subscription = _subscription,
     this.participationMonth = _participationMonth,
     this.subscriptionMonth = _subscriptionMonth,
+    this.nameDashLabel = '{name} — {label}',
   });
+
+  /// #3652 -- the label of a whole-bookable place on a statement ("Desk 4 —
+  /// Desk reservations"): ONE message holding `{name}` and `{label}`, so the
+  /// separator and the order belong to the language.
+  final String nameDashLabel;
+
+  /// [name] with the supplement [label], in the language's own order.
+  String supplementOf(String name, String label) =>
+      nameDashLabel.replaceAll('{name}', name).replaceAll('{label}', label);
 
   /// The l10n bundle's locale — `en`, `fr` — for the month NAMES; null
   /// (no bundle) renders with intl's default, as the builders always did.

@@ -58,10 +58,10 @@ class InvoiceSheet {
       ? (invoice.number.isEmpty
           ? strings.proforma
           : '${strings.proforma} · ${invoice.number}')
-      : '${strings.invoiceTitle} ${invoice.number}';
-  String get issuedOnLine => '${strings.issuedOn} $dateLabel';
-  String get issuedByLine => '${strings.issuedBy} ${invoice.issuerName}';
-  String get replacesLine => '${strings.replaces} ${invoice.replacesNumber}';
+      : strings.titleLine(invoice.number);
+  String get issuedOnLine => strings.issuedOnLine(dateLabel);
+  String get issuedByLine => strings.issuedByLine(invoice.issuerName);
+  String get replacesLine => strings.replacesLine(invoice.replacesNumber);
 
   int get chargesCents => invoice.lines
       .where((l) => l.amountCents > 0)

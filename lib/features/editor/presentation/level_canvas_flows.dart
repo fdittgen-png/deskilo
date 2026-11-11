@@ -190,7 +190,7 @@ class LevelCanvasFlows {
     await _createSeat(
       (workspaceId: workspaceId, desk: desk, anchor: free),
       orientation: seat.orientation,
-      name: '${l10n.editorSeatNameDefault} ${plan.seatsOf(desk.id).length + 1}',
+      name: l10n.editorSeatNameNumbered('${plan.seatsOf(desk.id).length + 1}'),
       // #2631 — a copy keeps what the original is.
       resource: seat.resourceKind == ResourceKind.seat
           ? null

@@ -125,7 +125,47 @@ class InvoicePdfStrings {
     required this.activity,
     required this.reserved,
     required this.page,
+    this.titleNumbered = _labelValue,
+    this.issuedOnDated = _labelValue,
+    this.issuedByNamed = _labelValue,
+    this.replacesNumbered = _labelValue,
+    this.vatRated = _labelValue,
   });
+
+  /// #3652 -- a label with its value is ONE message per label, so word order
+  /// and spacing belong to the language. Each template holds `{value}`;
+  /// the default (`{label} {value}`) is what a caller from before the
+  /// templates, or a test, still gets.
+  static const _labelValue = '{label} {value}';
+
+  /// "Invoice {value}" with the invoice number.
+  final String titleNumbered;
+
+  /// "Issued on {value}" with the date.
+  final String issuedOnDated;
+
+  /// "Issued by {value}" with the issuer.
+  final String issuedByNamed;
+
+  /// "Replaces {value}" with the replaced number.
+  final String replacesNumbered;
+
+  /// "VAT {value}" with the rate.
+  final String vatRated;
+
+  String _fill(String template, String label, String value) =>
+      template.replaceAll('{label}', label).replaceAll('{value}', value);
+
+  /// The document title with its number.
+  String titleLine(String number) => _fill(titleNumbered, invoiceTitle, number);
+
+  String issuedOnLine(String date) => _fill(issuedOnDated, issuedOn, date);
+
+  String issuedByLine(String issuer) => _fill(issuedByNamed, issuedBy, issuer);
+
+  String replacesLine(String number) => _fill(replacesNumbered, replaces, number);
+
+  String vatLine(String rate) => _fill(vatRated, vat, rate);
 
   final String invoiceTitle;
   final String issuedOn;
@@ -356,14 +396,14 @@ pw.Document _pdfDocument(InvoicePdfRequest request) {
   final colorProfile = request.colorProfile;
   final hybrid = request.facturXml.isNotEmpty && colorProfile != null;
   final doc = pw.Document(
-    title: '${strings.invoiceTitle} ${invoice.number}',
+    title: strings.titleLine(invoice.number),
     author: invoice.workspaceName,
     creator: _producer,
     producer: _producer,
     subject: periodLabel,
     metadata: hybrid
         ? PdfaRdf(
-            title: '${strings.invoiceTitle} ${invoice.number}',
+            title: strings.titleLine(invoice.number),
             author: invoice.workspaceName,
             creator: _producer,
             producer: _producer,

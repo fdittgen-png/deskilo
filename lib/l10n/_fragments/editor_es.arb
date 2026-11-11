@@ -47,6 +47,7 @@
   "editorSeatProperties": "Asiento",
   "editorSeatNameLabel": "Nombre del asiento",
   "editorSeatNameDefault": "Asiento",
+  "editorSeatNameNumbered": "Asiento {number}",
   "editorOrientationLabel": "Dirección de asiento",
   "editorChairLabel": "Tipo de silla",
   "editorAmenitiesLabel": "Equipamiento",

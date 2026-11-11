@@ -1,4 +1,76 @@
 {
+  "titleAndBody": "{title}. {body}",
+  "@titleAndBody": {
+    "description": "#3652 A title and its body read as two sentences, e.g. for a screen reader.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "body": {
+        "type": "String"
+      }
+    }
+  },
+  "commaPair": "{first}, {second}",
+  "@commaPair": {
+    "description": "#3652 Two short phrases separated by a comma, e.g. a label and its state.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "sentencePair": "{first} {second}",
+  "@sentencePair": {
+    "description": "#3652 Two sentences read as one text, separated by a space.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "valueInParens": "{value} ({note})",
+  "@valueInParens": {
+    "description": "#3652 A value followed by a short note in parentheses, e.g. \"Anna (you)\".",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "titleDashDetail": "{first} — {second}",
+  "@titleDashDetail": {
+    "description": "#3652 Two parts of one title joined by a dash, e.g. \"Desk 4 \u2014 Desk reservations\".",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "labelWithValue": "{label}: {value}",
+  "@labelWithValue": {
+    "description": "#3652 A label with its value on one line, e.g. \"Total: 12.00\". One message so the language places the colon (French has a space before it).",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "@@locale": "en",
   "appTitle": "DesKilo",
   "@appTitle": {

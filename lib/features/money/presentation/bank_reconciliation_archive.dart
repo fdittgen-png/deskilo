@@ -32,7 +32,7 @@ class BankReconciliationArchive {
     final l10n = context.l10n;
     final title = l10n.bankReconTitle;
     final coverageNotice =
-        '${l10n.bankReconCoverage}\n${l10n.bankReconBooksUnavailable}\n${l10n.bankReconClearingUnavailable}';
+        [l10n.bankReconCoverage, l10n.bankReconBooksUnavailable, l10n.bankReconClearingUnavailable].join('\n');
     final words = bankReconciliationWordsOf(l10n);
     final actorState = ref.read(authStateProvider);
     if (actorState.isLoading || actorState.hasError) {
