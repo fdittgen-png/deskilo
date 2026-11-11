@@ -1,0 +1,5 @@
+{
+  "eventInvoiceIssuedLine": "Nouvelle facture {number}",
+  "pushInvoiceIssuedBody": "Une nouvelle facture vous attend.",
+  "setupNotificationsEventInvoiceIssued": "Une nouvelle facture"
+}

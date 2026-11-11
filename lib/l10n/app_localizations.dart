@@ -14206,6 +14206,12 @@ abstract class AppLocalizations {
   /// **'for {name}'**
   String eventForSubject(String name);
 
+  /// #3672 a new invoice told to its customer
+  ///
+  /// In en, this message translates to:
+  /// **'New invoice {number}'**
+  String eventInvoiceIssuedLine(String number);
+
   /// Events feed line for a matched invoice payment
   ///
   /// In en, this message translates to:
@@ -38228,6 +38234,12 @@ abstract class AppLocalizations {
   /// **'Reservation removed'**
   String get pushCancelledTitle;
 
+  /// #3672 a new invoice told to its customer
+  ///
+  /// In en, this message translates to:
+  /// **'A new invoice is waiting for you.'**
+  String get pushInvoiceIssuedBody;
+
   /// #2559 generic push body for a mention: no sender, no conversation name
   ///
   /// In en, this message translates to:
@@ -46476,6 +46488,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A booking is about to start: time to check in'**
   String get setupNotificationsEventCheckIn;
+
+  /// #3672 a new invoice told to its customer
+  ///
+  /// In en, this message translates to:
+  /// **'A new invoice'**
+  String get setupNotificationsEventInvoiceIssued;
 
   /// #3485 setupNotificationsEvent: the label for case 'invoice_reminder'.
   ///

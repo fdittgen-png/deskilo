@@ -11540,6 +11540,15 @@
       }
     }
   },
+  "eventInvoiceIssuedLine": "New invoice {number}",
+  "@eventInvoiceIssuedLine": {
+    "description": "#3672 a new invoice told to its customer",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "eventInvoicePaid": "Invoice {number} paid — {amount}",
   "@eventInvoicePaid": {
     "description": "Events feed line for a matched invoice payment",
@@ -30836,6 +30845,10 @@
   "@pushCancelledTitle": {
     "description": "Push title when an admin removed a reservation (#424)"
   },
+  "pushInvoiceIssuedBody": "A new invoice is waiting for you.",
+  "@pushInvoiceIssuedBody": {
+    "description": "#3672 a new invoice told to its customer"
+  },
   "pushMentionBody": "You were mentioned in a conversation.",
   "@pushMentionBody": {
     "description": "#2559 generic push body for a mention: no sender, no conversation name"
@@ -37184,6 +37197,10 @@
   "setupNotificationsEventCheckIn": "A booking is about to start: time to check in",
   "@setupNotificationsEventCheckIn": {
     "description": "#3485 setupNotificationsEvent: the label for case 'check_in'."
+  },
+  "setupNotificationsEventInvoiceIssued": "A new invoice",
+  "@setupNotificationsEventInvoiceIssued": {
+    "description": "#3672 a new invoice told to its customer"
   },
   "setupNotificationsEventInvoiceReminder": "A payment reminder",
   "@setupNotificationsEventInvoiceReminder": {

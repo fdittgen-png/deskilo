@@ -476,7 +476,7 @@ constraint events.events_reservation_id_fkey FOREIGN KEY (reservation_id) REFERE
 constraint events.events_status_check CHECK ((status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text])))
 constraint events.events_subject_member_id_fkey FOREIGN KEY (subject_member_id) REFERENCES members(id) ON DELETE RESTRICT
 constraint events.events_subject_member_id_same_workspace FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
-constraint events.events_type_check CHECK (((type = 'settlement_review'::text) OR ((type = 'privacy_incident'::text) OR ((type = 'invoice_payment_reversed'::text) OR ((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))))
+constraint events.events_type_check CHECK (((type = 'invoice_issued'::text) OR ((type = 'settlement_review'::text) OR ((type = 'privacy_incident'::text) OR ((type = 'invoice_payment_reversed'::text) OR ((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text])))))))))
 constraint events.events_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint events.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint events.system_company_present CHECK ((company_id IS NOT NULL))
@@ -677,6 +677,15 @@ constraint invoice_dunning_holds.invoice_dunning_holds_released_by_fkey FOREIGN 
 constraint invoice_dunning_holds.invoice_dunning_holds_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint invoice_dunning_holds.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint invoice_dunning_holds.system_company_present CHECK ((company_id IS NOT NULL))
+constraint invoice_issue_notices.invoice_issue_notices_detail_check CHECK ((length(detail) <= 300))
+constraint invoice_issue_notices.invoice_issue_notices_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+constraint invoice_issue_notices.invoice_issue_notices_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
+constraint invoice_issue_notices.invoice_issue_notices_invoice_id_key UNIQUE (invoice_id)
+constraint invoice_issue_notices.invoice_issue_notices_pkey PRIMARY KEY (id)
+constraint invoice_issue_notices.invoice_issue_notices_push_outcome_check CHECK ((push_outcome = ANY (ARRAY['queued'::text, 'failed'::text])))
+constraint invoice_issue_notices.invoice_issue_notices_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint invoice_issue_notices.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint invoice_issue_notices.system_company_present CHECK ((company_id IS NOT NULL))
 constraint invoice_match_payments.invoice_match_payments_amount_cents_check CHECK ((amount_cents >= 0))
 constraint invoice_match_payments.invoice_match_payments_credit_ledger_id_fkey FOREIGN KEY (credit_ledger_id) REFERENCES ledger_entries(id) ON DELETE SET NULL
 constraint invoice_match_payments.invoice_match_payments_credit_ledger_id_same_workspace FOREIGN KEY (workspace_id, credit_ledger_id) REFERENCES ledger_entries(workspace_id, id) ON DELETE SET NULL (credit_ledger_id)
@@ -1862,7 +1871,7 @@ constraint usage_records.usage_records_reservation_id_key UNIQUE (reservation_id
 constraint usage_records.usage_records_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint validation_policies.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint validation_policies.system_company_present CHECK ((company_id IS NOT NULL))
-constraint validation_policies.validation_policies_event_type_check CHECK (((event_type = 'settlement_review'::text) OR ((event_type = 'privacy_incident'::text) OR ((event_type = 'payment_instructions_change'::text) OR ((event_type = 'badge_security_alert'::text) OR ((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))))
+constraint validation_policies.validation_policies_event_type_check CHECK (((event_type = 'invoice_issued'::text) OR ((event_type = 'settlement_review'::text) OR ((event_type = 'privacy_incident'::text) OR ((event_type = 'payment_instructions_change'::text) OR ((event_type = 'badge_security_alert'::text) OR ((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text])))))))))
 constraint validation_policies.validation_policies_min_amount_check CHECK ((min_amount_cents >= 0))
 constraint validation_policies.validation_policies_pkey PRIMARY KEY (id)
 constraint validation_policies.validation_policies_required_count_check CHECK (((required_count >= 1) AND (required_count <= 10)))
@@ -2384,7 +2393,7 @@ routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | in
 routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c8909f7334c8
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
-routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:732484d8f0ee
+routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:fca91f5a3c9b
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:5f4ba165c976
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
 routine public.expense_vat_payload(p_workspace_id uuid, p_vat jsonb) -> jsonb | function | definer | stable | exec:service_role | body:88b1b882d2e1
@@ -2496,6 +2505,7 @@ routine public.invoice_dunning_state(p_invoice_id uuid, p_at timestamp with time
 routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:service_role | body:4ee14bd0651f
 routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:b45c4aa29a0f
 routine public.invoice_issue_readiness(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_replaces uuid, p_correction_reason text) -> text[] | function | definer | volatile | exec:authenticated,service_role | body:0079eb2ba5e7
+routine public.invoice_issued_notice() -> trigger | function | definer | volatile | exec:service_role | body:a205147f82d9
 routine public.invoice_issuing_enabled(p_workspace_id uuid, p_kind text) -> boolean | function | invoker | stable | exec:service_role | body:789ffb6de6d5
 routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
 routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ec3dc4acff5e
@@ -3568,6 +3578,7 @@ trigger instance_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_column
 trigger instance_owner_claims.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.instance_owner_claims FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invitations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invitations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_dunning_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_issue_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_issue_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_payments.invoice_match_payments_allocation_sum CREATE TRIGGER invoice_match_payments_allocation_sum BEFORE INSERT OR UPDATE OF amount_cents, payment_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION guard_payment_allocation_sum()
 trigger invoice_match_payments.invoice_match_payments_refuse_moved CREATE TRIGGER invoice_match_payments_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_match_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -3582,6 +3593,7 @@ trigger invoice_transmissions.national_channel_from_transmission_insert CREATE T
 trigger invoice_transmissions.national_channel_from_transmission_update CREATE TRIGGER national_channel_from_transmission_update AFTER UPDATE ON public.invoice_transmissions FOR EACH ROW WHEN ((einvoice_document_accepted(new.phase, new.verdict) AND (NOT einvoice_document_accepted(old.phase, old.verdict)))) EXECUTE FUNCTION national_channel_from_transmission()
 trigger invoice_transmissions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmissions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoices.book_period_void_guard CREATE TRIGGER book_period_void_guard BEFORE UPDATE OF voided_at ON public.invoices FOR EACH ROW EXECUTE FUNCTION book_period_void_guard()
+trigger invoices.invoice_issued_notice CREATE TRIGGER invoice_issued_notice AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_issued_notice()
 trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_freeze()
 trigger invoices.invoice_maturity_freeze CREATE TRIGGER invoice_maturity_freeze AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_maturity_freeze()
 trigger invoices.invoice_provenance_stamp CREATE TRIGGER invoice_provenance_stamp AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_provenance_stamp()

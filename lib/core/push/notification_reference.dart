@@ -134,7 +134,7 @@ class NotificationReference {
 String notificationLocation(String kind) => switch (kind) {
       'pending_request' => '/pending',
       'member_note' || 'member_mention' => '/messages',
-      'invoice_reminder' => '/invoices',
+      'invoice_reminder' || 'invoice_issued' => '/invoices',
       _ => '/reserve',
     };
 
