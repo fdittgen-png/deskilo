@@ -62,3 +62,26 @@ The alternatives considered:
   rows name the issue they come from. A page is not proof.
 - If no third page is wanted within a few cycles, the convention is
   still cheap: two pages and one lint test.
+
+## Amendment — 2026-11-10 (#3571): the page states what holds
+
+The README of `docs/domain/contracts/` now defines the convention, and
+where the text above conflicts with it, the amendment wins. It supersedes
+the earlier wording of Decisions 1, 3 and 5 and of the Consequences on
+three points:
+
+- A page has seven sections, not nine: baseline, concepts and identity,
+  relationships and cardinalities, states and transitions, invariants,
+  processing, evidence. The open decisions and the stop condition are no
+  longer sections of a page.
+- A page states the rule that holds on master, updated in the pull
+  request that changes the behaviour. A proposed rule, an open decision,
+  an obligation still to be met and a stop condition belong to the issue
+  that owns the change; the page holds none of them. No invariant is
+  marked *proposed*.
+- A page pins no source commit. The lint refuses a `- Source commit:`
+  line, the headings above and the word `proposed`, and exempts only the
+  pages it lists as unreconciled, from that check alone.
+
+No decision is rewritten and no ADR is added: the text above stays as it
+was written.
