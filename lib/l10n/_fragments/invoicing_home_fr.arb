@@ -431,6 +431,5 @@
   "invoicingColStatus": "État",
   "@invoicingColStatus": {
     "description": "#3587 table column"
-  },
-  "invoicingSourceRules": "Règles de relance"
+  }
 }

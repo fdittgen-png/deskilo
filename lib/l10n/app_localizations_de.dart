@@ -15388,9 +15388,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingSourceReminders => 'Der Mahnverlauf';
 
   @override
-  String get invoicingSourceRules => 'Mahnregeln';
-
-  @override
   String get invoicingSourceToInvoice => 'Der abzurechnende Monat';
 
   @override

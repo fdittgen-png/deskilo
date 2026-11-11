@@ -434,9 +434,5 @@
   "invoicingColStatus": "Status",
   "@invoicingColStatus": {
     "description": "#3587 table column"
-  },
-  "invoicingSourceRules": "Reminder rules",
-  "@invoicingSourceRules": {
-    "description": "#3742 a failed source on the invoicing home: the business's reminder rules."
   }
 }

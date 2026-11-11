@@ -20056,10 +20056,6 @@
   "@invoicingSourceReminders": {
     "description": "#3587 a source name"
   },
-  "invoicingSourceRules": "Reminder rules",
-  "@invoicingSourceRules": {
-    "description": "#3742 a failed source on the invoicing home: the business's reminder rules."
-  },
   "invoicingSourceToInvoice": "The month to invoice",
   "@invoicingSourceToInvoice": {
     "description": "#3587 a source name"

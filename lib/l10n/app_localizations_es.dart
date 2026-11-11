@@ -15352,9 +15352,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicingSourceReminders => 'El historial de recordatorios';
 
   @override
-  String get invoicingSourceRules => 'Reglas de recordatorio';
-
-  @override
   String get invoicingSourceToInvoice => 'El mes por facturar';
 
   @override

@@ -431,6 +431,5 @@
   "invoicingColStatus": "Status",
   "@invoicingColStatus": {
     "description": "#3587 table column"
-  },
-  "invoicingSourceRules": "Mahnregeln"
+  }
 }

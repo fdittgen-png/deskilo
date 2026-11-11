@@ -431,6 +431,5 @@
   "invoicingColStatus": "Stato",
   "@invoicingColStatus": {
     "description": "#3587 table column"
-  },
-  "invoicingSourceRules": "Regole di sollecito"
+  }
 }

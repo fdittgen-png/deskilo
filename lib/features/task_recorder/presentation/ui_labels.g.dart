@@ -3295,7 +3295,6 @@ Map<String, _Getter> _part9() => {
   'invoiceRegisterTotal': (l) => l.invoiceRegisterTotal,
   'invoiceTemplateSaved': (l) => l.invoiceTemplateSaved,
   'invoicingSourceReminders': (l) => l.invoicingSourceReminders,
-  'invoicingSourceRules': (l) => l.invoicingSourceRules,
   'journeyHowClosedMember': (l) => l.journeyHowClosedMember,
   'journeyHowPaymentMember': (l) => l.journeyHowPaymentMember,
   'journeyIssuerReplaces': (l) => l.journeyIssuerReplaces,

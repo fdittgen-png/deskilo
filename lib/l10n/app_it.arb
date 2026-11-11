@@ -9799,7 +9799,6 @@
   "@invoicingSourceReminders": {
     "description": "#3587 a source name"
   },
-  "invoicingSourceRules": "Regole di sollecito",
   "invoicingSourceToInvoice": "Il mese da fatturare",
   "@invoicingSourceToInvoice": {
     "description": "#3587 a source name"

@@ -431,6 +431,5 @@
   "invoicingColStatus": "Estado",
   "@invoicingColStatus": {
     "description": "#3587 table column"
-  },
-  "invoicingSourceRules": "Reglas de recordatorio"
+  }
 }

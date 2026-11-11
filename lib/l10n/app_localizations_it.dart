@@ -15360,9 +15360,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicingSourceReminders => 'Lo storico dei solleciti';
 
   @override
-  String get invoicingSourceRules => 'Regole di sollecito';
-
-  @override
   String get invoicingSourceToInvoice => 'Il mese da fatturare';
 
   @override
