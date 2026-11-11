@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/workspace_event.dart';
 import '../providers/event_providers.dart';
 
 /// Records this member's decision on [eventId].
@@ -30,4 +31,26 @@ Future<String?> decideEvent(WidgetRef ref, String eventId,
   }
   invalidateBookingData(ref);
   return null;
+}
+
+/// #3587 — records this member's decision on [eventId] and reads the event
+/// back, because a quorum may keep it pending after this member's yes:
+/// [approved] once its effect happened, [pending] while it waits for other
+/// deciders (both false when it ended otherwise or can no longer be read).
+/// A refusal is not swallowed: the server's own error is thrown, so the
+/// caller's guarded action says it in words.
+Future<({bool approved, bool pending})> decideEventAndRead(
+  WidgetRef ref,
+  String eventId, {
+  required bool accept,
+}) async {
+  final events = ref.read(eventRepositoryProvider);
+  await events.respond(eventId, accept: accept);
+  invalidateBookingData(ref);
+  final event = await events.fetchEvent(eventId);
+  return (
+    approved: event?.status == EventStatus.confirmed ||
+        event?.status == EventStatus.applied,
+    pending: event?.isPending ?? false,
+  );
 }

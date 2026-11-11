@@ -7,10 +7,6 @@
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
   },
-  "invoicingBanner": "Vous émettez et relancez les factures de tout l’espace. Vos propres factures et paiements sont dans Moi › Mes finances.",
-  "@invoicingBanner": {
-    "description": "invoicing hub vs my finances"
-  },
   "memberInvoicesBanner": "Toutes vos factures et paiements, de tous vos espaces, sont dans Moi › Mes finances.",
   "@memberInvoicesBanner": {
     "description": "invoicing hub vs my finances"

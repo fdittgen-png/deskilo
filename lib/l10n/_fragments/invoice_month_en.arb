@@ -1,0 +1,167 @@
+{
+  "invoiceMonthTitle": "Invoice {month}",
+  "@invoiceMonthTitle": {
+    "description": "#3587 R1-e: title of the Invoice-the-month flow",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthNote": "An issued invoice can no longer be edited; a mistake is corrected with a replacement.",
+  "@invoiceMonthNote": {
+    "description": "#3587 R1-e: the line that says an issued invoice is immutable"
+  },
+  "invoiceMonthIssuing": "Issuing…",
+  "@invoiceMonthIssuing": {
+    "description": "#3587 R1-e: the issue button while it works"
+  },
+  "invoiceMonthProforma": "Preview the proforma",
+  "@invoiceMonthProforma": {
+    "description": "#3587 R1-e: tooltip: preview a customer's proforma before issuing"
+  },
+  "invoiceMonthResultTitle": "{count, plural, =1{1 invoice issued} other{{count} invoices issued}}",
+  "@invoiceMonthResultTitle": {
+    "description": "#3587 R1-e: result page title when something was issued",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceMonthResultNoneSubtitle": "No invoice exists yet for what is listed below.",
+  "@invoiceMonthResultNoneSubtitle": {
+    "description": "#3587 R1-e: result page subtitle when nothing was issued"
+  },
+  "invoiceMonthIssued": "Issued",
+  "@invoiceMonthIssued": {
+    "description": "#3587 R1-e: chip on an issued invoice"
+  },
+  "invoiceMonthHeld": "Waits for a validation",
+  "@invoiceMonthHeld": {
+    "description": "#3587 R1-e: chip on an invoice a validation policy holds"
+  },
+  "invoiceMonthNotDone": "Not done",
+  "@invoiceMonthNotDone": {
+    "description": "#3587 R1-e: heading of what the server did not issue"
+  },
+  "invoiceMonthUnknown": "Could not be confirmed: it may exist. Check again.",
+  "@invoiceMonthUnknown": {
+    "description": "#3587 R1-e: reason line when the answer was lost"
+  },
+  "invoiceMonthStays": "What was not done stays in To do.",
+  "@invoiceMonthStays": {
+    "description": "#3587 R1-e: where what was not issued stays"
+  },
+  "invoiceMonthRetry": "Retry for these",
+  "@invoiceMonthRetry": {
+    "description": "#3587 R1-e: retry only the customers the server refused"
+  },
+  "invoiceMonthCheckAgain": "Check again",
+  "@invoiceMonthCheckAgain": {
+    "description": "#3587 R1-e: look again for the customers whose answer was lost"
+  },
+  "invoiceMonthDone": "Done",
+  "@invoiceMonthDone": {
+    "description": "#3587 R1-e: leave the result page"
+  },
+  "invoiceMonthSelected": "{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}",
+  "@invoiceMonthSelected": {
+    "description": "#3587 R1-e: how many customers are selected of those listed, and their total",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthIssue": "{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}",
+  "@invoiceMonthIssue": {
+    "description": "#3587 R1-e: the one filled action of the month flow, with the amount it issues",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthNeedsFix": "Needs a fix",
+  "@invoiceMonthNeedsFix": {
+    "description": "#3587 R1-e: status of a customer whose details block the invoice"
+  },
+  "invoiceMonthNeedsFixCount": "{count, plural, =1{1 needs a fix} other{{count} need a fix}}",
+  "@invoiceMonthNeedsFixCount": {
+    "description": "#3587 R1-e: how many listed customers cannot be invoiced until fixed",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceMonthFix": "Fix",
+  "@invoiceMonthFix": {
+    "description": "#3587 R1-e: opens the place where a missing detail is completed"
+  },
+  "invoiceMonthBusinessFix": "Your business details are incomplete: {missing}",
+  "@invoiceMonthBusinessFix": {
+    "description": "#3587 R1-e: one notice: the business's own essentials missing for everyone",
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceMonthAll": "All",
+  "@invoiceMonthAll": {
+    "description": "#3587 R1-e: the select-all row of the month list"
+  },
+  "invoiceMonthResultPartial": "{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}",
+  "@invoiceMonthResultPartial": {
+    "description": "#3587 R1-e: result title when only some invoices were issued",
+    "placeholders": {
+      "issued": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceMonthResultNone": "No invoice issued",
+  "@invoiceMonthResultNone": {
+    "description": "#3587 R1-e: result title when nothing was issued"
+  },
+  "invoiceMonthResultSubtitle": "{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}",
+  "@invoiceMonthResultSubtitle": {
+    "description": "#3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceMonthNotIssued": "Could not be issued. Try again.",
+  "@invoiceMonthNotIssued": {
+    "description": "#3587 R1-e: reason line when the server refused without a usable reason"
+  },
+  "invoiceMonthNeedsFixLine": "Needs a fix: {missing}",
+  "invoiceMonthLeaveBlocked": "Issuing is running. Wait for it to finish.",
+  "@invoiceMonthNeedsFixLine": {
+    "description": "#3587 R1-e: caption of a customer whose details block the invoice: the status and what is missing, as one message",
+    "placeholders": {
+      "missing": {
+        "type": "String"
+      }
+    }
+  },
+  "@invoiceMonthLeaveBlocked": {
+    "description": "#3587 R1-e: said when the person tries to leave while invoices are being issued"
+  }
+}

@@ -64,7 +64,7 @@ class _LostAnswer extends FakeMoneyRepository {
 }
 
 Future<void> _submitTheForm(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+  await tester.tap(find.byKey(const ValueKey('invoicing-new')));
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
   await tester.pumpAndSettle();
