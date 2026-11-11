@@ -14885,7 +14885,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Digitale Signatur (SHA-256)';
+  String get invoicePdfSignature => 'Dokument-Fingerabdruck (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Zwischensumme';
@@ -21577,6 +21577,44 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalPhone => 'Öffentliche Telefonnummer';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Markierung bei $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed =>
+      'Der Kartendienst hat nicht geantwortet. Versuchen Sie es erneut.';
+
+  @override
+  String get portalPlaceFind => 'Adresse auf der Karte finden';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Gefunden: $place. Übernehmen Sie ihn oder tippen Sie auf die Karte, um die Markierung zu versetzen.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'Kein Ort gespeichert: die Karte eines Besuchers sucht die Adresse.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'Für diese Adresse wurde kein Ort gefunden. Prüfen Sie die Adresse und versuchen Sie es erneut.';
+
+  @override
+  String get portalPlaceRemove => 'Ort entfernen';
+
+  @override
+  String get portalPlaceTapToMove =>
+      'Tippen Sie auf die Karte, um die Markierung zu versetzen.';
+
+  @override
+  String get portalPlaceTitle => 'Wo Sie auf der Karte sind';
+
+  @override
+  String get portalPlaceUse => 'Diesen Ort übernehmen';
+
+  @override
   String get portalPlans => 'Angebote und Preise';
 
   @override
@@ -25065,11 +25103,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Grund (optional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Löschung beantragen';
+  String get reservationDeleteRequestButton => 'Stornierung beantragen';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?';
+      'Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Bis zur Entscheidung bleibt die Buchung unverändert; nichts wird automatisch erstattet oder gelöscht.';
 
   @override
   String get reservationDeleteSubmit => 'Anfrage senden';
@@ -28744,7 +28782,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'Was Menschen außerhalb des Bereichs sehen können.';
+      'Was Menschen außerhalb des Bereichs sehen können, auch wo Sie auf der Karte sind.';
 
   @override
   String get setupStepHintPurchases => 'Was der Bereich kauft und bei wem.';
@@ -32175,6 +32213,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates neue Meldungen · $pending ausstehende Entscheidungen';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count halbe Tage übrig in Ihrem Kontingent diesen Monat',
+      one: '1 halber Tag übrig in Ihrem Kontingent diesen Monat',
+      zero: 'Kein halber Tag mehr in Ihrem Kontingent diesen Monat',
+    );
+    return '$_temp0';
   }
 
   @override

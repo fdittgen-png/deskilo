@@ -14850,7 +14850,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Firma digital (SHA-256)';
+  String get invoicePdfSignature => 'Huella del documento (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotal';
@@ -21522,6 +21522,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalPhone => 'Teléfono público';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Marcador en $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed =>
+      'El servicio de mapas no respondió. Inténtelo de nuevo.';
+
+  @override
+  String get portalPlaceFind => 'Buscar la dirección en el mapa';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Encontrado: $place. Úselo, o toque el mapa para mover el marcador.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'No hay ningún lugar guardado: el mapa de un visitante busca la dirección.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'No se encontró ningún lugar para esta dirección. Compruebe la dirección e inténtelo de nuevo.';
+
+  @override
+  String get portalPlaceRemove => 'Quitar el lugar';
+
+  @override
+  String get portalPlaceTapToMove => 'Toque el mapa para mover el marcador.';
+
+  @override
+  String get portalPlaceTitle => 'Dónde está usted en el mapa';
+
+  @override
+  String get portalPlaceUse => 'Usar este lugar';
+
+  @override
   String get portalPlans => 'Planes y precios';
 
   @override
@@ -25005,11 +25042,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Motivo (opcional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Solicitar eliminación';
+  String get reservationDeleteRequestButton => 'Solicitar cancelación';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)?';
+      'Las reservas pasadas o con registro no se eliminan directamente. Un propietario o admin decidirá: ¿se olvidó simplemente el registro (la reserva se mantiene) o nunca se usó (se elimina)? Hasta su decisión, la reserva se mantiene; nada se reembolsa ni se elimina automáticamente.';
 
   @override
   String get reservationDeleteSubmit => 'Enviar solicitud';
@@ -28688,7 +28725,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'Lo que pueden ver las personas ajenas al espacio.';
+      'Lo que pueden ver las personas ajenas al espacio, incluido dónde está usted en el mapa.';
 
   @override
   String get setupStepHintPurchases => 'Lo que compra el espacio y a quién.';
@@ -32094,6 +32131,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates novedades · $pending decisiones pendientes';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Quedan $count medias jornadas en su bono este mes',
+      one: 'Queda 1 media jornada en su bono este mes',
+      zero: 'No quedan medias jornadas en su bono este mes',
+    );
+    return '$_temp0';
   }
 
   @override

@@ -37,7 +37,7 @@ void main() {
   }
 
   testWidgets(
-      'a PAST un-checked-in reservation offers "Request deletion" — '
+      'a PAST un-checked-in reservation offers "Request cancellation" — '
       'never a direct cancel — and files the pending event with the '
       'reason (#492)', (tester) async {
     final reservation = pastReservation();
@@ -51,7 +51,7 @@ void main() {
         find.byKey(const ValueKey('reservation-delete-request'));
     await tester.ensureVisible(requestButton);
     expect(requestButton, findsOneWidget);
-    expect(find.text('Request deletion'), findsOneWidget);
+    expect(find.text('Request cancellation'), findsOneWidget);
 
     await tester.tap(requestButton);
     await tester.pumpAndSettle();

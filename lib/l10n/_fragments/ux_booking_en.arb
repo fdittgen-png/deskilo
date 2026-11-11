@@ -26,5 +26,14 @@
   "uxManageResource": "Manage resource",
   "@uxManageResource": {
     "description": "Shown as the title in booking review summary (reservations)."
+  },
+  "uxBookingAllowanceLeft": "{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}",
+  "@uxBookingAllowanceLeft": {
+    "description": "Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

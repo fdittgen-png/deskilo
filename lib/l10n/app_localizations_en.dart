@@ -14742,7 +14742,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get invoicePdfSignature => 'Digital signature (SHA-256)';
+  String get invoicePdfSignature => 'Document fingerprint (SHA-256)';
 
   @override
   String get invoicePdfSubtotal => 'Subtotal';
@@ -21371,6 +21371,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalPhone => 'Public phone';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Pin at $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed => 'The map service did not answer. Try again.';
+
+  @override
+  String get portalPlaceFind => 'Find the address on the map';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Found: $place. Use it, or tap the map to move the pin.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'No place is stored: a visitor\'s map looks up the address.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'No place was found for this address. Check the address and try again.';
+
+  @override
+  String get portalPlaceRemove => 'Remove the place';
+
+  @override
+  String get portalPlaceTapToMove => 'Tap the map to move the pin.';
+
+  @override
+  String get portalPlaceTitle => 'Where you are on the map';
+
+  @override
+  String get portalPlaceUse => 'Use this place';
+
+  @override
   String get portalPlans => 'Plans and prices';
 
   @override
@@ -24817,11 +24853,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationDeleteReasonLabel => 'Reason (optional)';
 
   @override
-  String get reservationDeleteRequestButton => 'Request deletion';
+  String get reservationDeleteRequestButton => 'Request cancellation';
 
   @override
   String get reservationDeleteRequestExplain =>
-      'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?';
+      'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.';
 
   @override
   String get reservationDeleteSubmit => 'Send request';
@@ -28444,7 +28480,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'What people outside the space can see.';
+      'What people outside the space can see, including where you are on the map.';
 
   @override
   String get setupStepHintPurchases => 'What the space buys, and from whom.';
@@ -31822,6 +31858,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String uxAttentionSummary(int updates, int pending) {
     return '$updates new updates · $pending awaiting your decision';
+  }
+
+  @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count half-days left in your allowance this month',
+      one: '1 half-day left in your allowance this month',
+      zero: 'No half-days left in your allowance this month',
+    );
+    return '$_temp0';
   }
 
   @override

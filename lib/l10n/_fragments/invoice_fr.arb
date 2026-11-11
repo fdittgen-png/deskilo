@@ -20,7 +20,7 @@
   "invoicePdfIssuedBy": "Émise par",
   "invoicePdfIssuedByName": "Émise par {name}",
   "invoicePdfBilledTo": "Facturé à",
-  "invoicePdfSignature": "Signature numérique (SHA-256)",
+  "invoicePdfSignature": "Empreinte du document (SHA-256)",
   "addressTitle": "Adresse",
   "addressNone": "Aucune adresse",
   "addressSaved": "Adresse enregistrée",

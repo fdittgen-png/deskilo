@@ -9319,7 +9319,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Firma digitale (SHA-256)",
+  "invoicePdfSignature": "Impronta del documento (SHA-256)",
   "invoicePdfSubtotal": "Subtotale",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
@@ -13253,6 +13253,16 @@
   "portalPerson": "Privato",
   "portalPersonHidden": "Persona",
   "portalPhone": "Telefono pubblico",
+  "portalPlaceAt": "Segnaposto a {latitude}, {longitude}",
+  "portalPlaceFailed": "Il servizio di mappe non ha risposto. Riprovi.",
+  "portalPlaceFind": "Trovare l'indirizzo sulla mappa",
+  "portalPlaceFound": "Trovato: {place}. Lo usi, oppure tocchi la mappa per spostare il segnaposto.",
+  "portalPlaceNone": "Nessun luogo salvato: la mappa di un visitatore cerca l'indirizzo.",
+  "portalPlaceNotFound": "Nessun luogo trovato per questo indirizzo. Controlli l'indirizzo e riprovi.",
+  "portalPlaceRemove": "Rimuovere il luogo",
+  "portalPlaceTapToMove": "Tocchi la mappa per spostare il segnaposto.",
+  "portalPlaceTitle": "Dove si trova sulla mappa",
+  "portalPlaceUse": "Usare questo luogo",
   "portalPlans": "Piani e prezzi",
   "portalPreview": "Vista esterna",
   "portalPublicPlan": "Planimetria pubblica",
@@ -15843,11 +15853,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Richiedi eliminazione",
+  "reservationDeleteRequestButton": "Richiedi annullamento",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)?",
+  "reservationDeleteRequestExplain": "Le prenotazioni passate o con check-in non vengono eliminate direttamente. Un proprietario o admin deciderà: il check-in è stato semplicemente dimenticato (la prenotazione resta) o non è mai stata usata (viene rimossa)? Fino alla decisione la prenotazione resta invariata; nulla viene rimborsato né eliminato automaticamente.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -17937,7 +17947,7 @@
   "setupStepHintPaymentMethods": "I suoi dati bancari e le istruzioni di pagamento.",
   "setupStepHintPlaces": "Disegni le sale, le scrivanie e i posti che i membri prenotano.",
   "setupStepHintPricing": "Quanto costa un posto, un abbonamento o una giornata.",
-  "setupStepHintPublicPage": "Cosa possono vedere le persone esterne allo spazio.",
+  "setupStepHintPublicPage": "Cosa possono vedere le persone esterne allo spazio, compreso dove si trova sulla mappa.",
   "setupStepHintPurchases": "Cosa acquista lo spazio e da chi.",
   "setupStepHintRecovery": "Esporti una volta i dati dello spazio.",
   "setupStepHintReminders": "Quando e come vengono sollecitate le fatture non pagate.",
@@ -19894,6 +19904,7 @@
       }
     }
   },
+  "uxBookingAllowanceLeft": "{count, plural, =0{Nessuna mezza giornata rimasta nel suo pacchetto questo mese} =1{1 mezza giornata rimasta nel suo pacchetto questo mese} other{{count} mezze giornate rimaste nel suo pacchetto questo mese}}",
   "uxBookingChargePending": "L’importo e l’uso della quota dipendono dal piano del socio e vengono saldati nell’estratto conto.",
   "uxBookingCheckInHelp": "Indicare anche la mia presenza alla conferma di questa prenotazione.",
   "uxBookingFor": "Prenotazione per",

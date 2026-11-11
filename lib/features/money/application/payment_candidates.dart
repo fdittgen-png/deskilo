@@ -12,15 +12,43 @@ import 'package:meta/meta.dart';
 import '../domain/ledger_entry.dart';
 import 'receivables.dart';
 
-/// The payments of [memberId] that no invoice has taken: credits that are a
-/// payment or an adjustment (an avoir's excess settles too), not consumed by
-/// a match, and not spent inside an invoice issued after them (a credit baked
-/// into an invoice was spent there, #512). Newest first by the day the money
-/// moved.
+/// How much of each payment the matches have used (#3671): the sum of the
+/// parts its junction rows settle, pending rows included, and the credits
+/// moved to another member, which exclude a whole payment. Built in one place
+/// (`paymentUseOf` in `unassigned_money.dart`).
+@immutable
+class PaymentUse {
+  const PaymentUse({this.usedCents = const {}, this.moved = const {}});
+
+  /// Nothing is used: every payment is free with its full amount.
+  static const none = PaymentUse();
+
+  /// payment ledger id -> cents its matches have used.
+  final Map<String, int> usedCents;
+
+  /// The credits moved to another member.
+  final Set<String> moved;
+
+  /// What is left of [entry]: its amount minus what the matches used, and
+  /// zero for a moved credit. Never negative.
+  int remainingOf(LedgerEntry entry) {
+    if (moved.contains(entry.id)) return 0;
+    final left = entry.amountCents - (usedCents[entry.id] ?? 0);
+    return left > 0 ? left : 0;
+  }
+}
+
+/// The payments of [memberId] that no invoice has taken (all of them, or
+/// what is left of them): credits that are a payment or an adjustment (an
+/// avoir's excess settles too), with something left (`PaymentUse`), and not
+/// spent inside an invoice issued after them (a credit baked into an invoice
+/// was spent there, #512). Each entry carries its REMAINING in
+/// `amountCents` (the whole amount when nothing is used). Newest first by the
+/// day the money moved.
 List<LedgerEntry> unmatchedPaymentsOf({
   required String memberId,
   required List<LedgerEntry> ledger,
-  required Set<String> consumed,
+  required PaymentUse use,
   required List<Invoice> invoices,
 }) {
   bool baked(LedgerEntry entry) => invoices.any(
@@ -36,9 +64,9 @@ List<LedgerEntry> unmatchedPaymentsOf({
           entry.kind == LedgerKind.credit &&
           (entry.category == LedgerCategory.payment ||
               entry.category == LedgerCategory.adjustment) &&
-          !consumed.contains(entry.id) &&
+          use.remainingOf(entry) > 0 &&
           !baked(entry))
-        entry,
+        entry.copyWith(amountCents: use.remainingOf(entry)),
   ]..sort((a, b) => b.on.compareTo(a.on));
 }
 
@@ -86,7 +114,8 @@ List<MatchCandidate> candidatesFor({
   ];
 }
 
-/// A customer's credit: the payments no invoice has taken yet, in one amount
+/// A customer's credit: what is left of the payments no invoice has taken
+/// (the remaining each entry carries), in one amount
 /// (the ledger holds one currency, the business's own).
 int creditMinorOf(Iterable<LedgerEntry> unmatched) =>
     unmatched.fold(0, (sum, e) => sum + e.amountCents);

@@ -30,10 +30,11 @@ class DemoInvoiceQueries implements InvoiceQueries {
   }
 
   @override
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async => {
-    ..._m.consumedPaymentIds,
-    for (final match in _m.invoiceMatchesStore.values) ?match.paymentLedgerId,
-  };
+  Future<List<(String, int)>> fetchConsumedPaymentIds(
+    String workspaceId,
+  ) async => [
+    for (final e in _m.usedPaymentCents.entries) (e.key, e.value),
+  ];
 
   @override
   Future<List<String>> invoiceIssueReadiness({

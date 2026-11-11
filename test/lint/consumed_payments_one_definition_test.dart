@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3587 -- which payments no invoice may take again is said once
-// (`consumedPaymentIdsOf` in `unassigned_money.dart`): the payment each
-// match remembers, the payments an aggregate match consumed and the credits
-// moved to another member. A screen or a flow that reads only one of those
-// offers a payment that is no longer there to give. So the two reads behind
-// the definition are called from that file only.
+// #3587, #3671 -- what is left of a payment is said once (`paymentUseOf` in
+// `unassigned_money.dart`): the parts the junction rows settle (one payment
+// may settle several invoices) and the credits moved to another member. A
+// screen or a flow that reads only one of those offers a payment that is no
+// longer there to give. So the two reads behind the definition are called
+// from that file only.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -20,7 +20,7 @@ const _definition = 'lib/features/money/application/unassigned_money.dart';
 final _call = RegExp(r'\.(fetchConsumedPaymentIds|movedCreditIds)\(');
 
 void main() {
-  test('the consumed payments are read through their one definition', () {
+  test('what is left of a payment is read through their one definition', () {
     final callers = <String>[];
     for (final file in handWrittenDartFilesIn([
       for (final layer in ['application', 'presentation', 'providers'])
@@ -37,8 +37,8 @@ void main() {
       callers,
       isEmpty,
       reason:
-          'call readConsumedPaymentIds (or use unassignedMoneyProvider) '
-          'instead: a set built from one of the reads misses the others',
+          'call readPaymentUse (or use unassignedMoneyProvider) '
+          'instead: a use built from one of the reads misses the others',
     );
   });
 

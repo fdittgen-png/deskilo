@@ -12,6 +12,7 @@ import '../../tool/quality_rows/lcov_merge.dart';
 import '../../tool/quality_rows/selection.dart';
 import '../../tool/quality_rows/shards.dart';
 import '../../tool/test_inventory/inventory.dart';
+import '../helpers/tool_process.dart';
 
 String _event(Map<String, Object?> e) => jsonEncode(e);
 
@@ -53,7 +54,7 @@ String _stream(List<String> files) {
 }
 
 ProcessResult _dart(List<String> args) =>
-    Process.runSync('dart', ['run', 'tool/quality_shard.dart', ...args]);
+    runToolSync('tool/quality_shard.dart', args);
 
 /// #3166 — every shard of the default plan.
 const _allShards = [
@@ -279,9 +280,7 @@ void main() {
       '${dir.path}/plan.json',
     ]);
 
-    ProcessResult rows() => Process.runSync('dart', [
-      'run',
-      'tool/quality_rows.dart',
+    ProcessResult rows() => runToolSync('tool/quality_rows.dart', [
       '--plan',
       '${dir.path}/plan.json',
       '--shards',

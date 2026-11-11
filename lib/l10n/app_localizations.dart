@@ -24192,7 +24192,7 @@ abstract class AppLocalizations {
   /// PDF: caption above the integrity fingerprint
   ///
   /// In en, this message translates to:
-  /// **'Digital signature (SHA-256)'**
+  /// **'Document fingerprint (SHA-256)'**
   String get invoicePdfSignature;
 
   /// #2362 sales tax: invoicePdfSubtotal
@@ -35158,6 +35158,66 @@ abstract class AppLocalizations {
   /// **'Public phone'**
   String get portalPhone;
 
+  /// #3689 public-page editor: the stored pin's coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin at {latitude}, {longitude}'**
+  String portalPlaceAt(String latitude, String longitude);
+
+  /// #3689 public-page editor: the lookup failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The map service did not answer. Try again.'**
+  String get portalPlaceFailed;
+
+  /// #3689 public-page editor: button that looks the address up (after the map notice).
+  ///
+  /// In en, this message translates to:
+  /// **'Find the address on the map'**
+  String get portalPlaceFind;
+
+  /// #3689 public-page editor: the place the lookup proposes, by name.
+  ///
+  /// In en, this message translates to:
+  /// **'Found: {place}. Use it, or tap the map to move the pin.'**
+  String portalPlaceFound(String place);
+
+  /// #3689 public-page editor: no coordinates are stored.
+  ///
+  /// In en, this message translates to:
+  /// **'No place is stored: a visitor\'s map looks up the address.'**
+  String get portalPlaceNone;
+
+  /// #3689 public-page editor: the lookup found nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No place was found for this address. Check the address and try again.'**
+  String get portalPlaceNotFound;
+
+  /// #3689 public-page editor: removes the stored place.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the place'**
+  String get portalPlaceRemove;
+
+  /// #3689 public-page editor: how to correct the pin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the map to move the pin.'**
+  String get portalPlaceTapToMove;
+
+  /// #3689 public-page editor: the heading of the section that stores where the business is on the map.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you are on the map'**
+  String get portalPlaceTitle;
+
+  /// #3689 public-page editor: confirms the proposed place.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this place'**
+  String get portalPlaceUse;
+
   /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
@@ -41075,13 +41135,13 @@ abstract class AppLocalizations {
   /// Reservation deletion requests (#492)
   ///
   /// In en, this message translates to:
-  /// **'Request deletion'**
+  /// **'Request cancellation'**
   String get reservationDeleteRequestButton;
 
   /// Reservation deletion requests (#492)
   ///
   /// In en, this message translates to:
-  /// **'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)?'**
+  /// **'Past or checked-in bookings are not deleted directly. An owner or admin will decide: was the check-in simply forgotten (the booking stays), or was it never used (it is removed)? Until they decide, the booking stays as it is; nothing is refunded or deleted automatically.'**
   String get reservationDeleteRequestExplain;
 
   /// Reservation deletion requests (#492)
@@ -46756,7 +46816,7 @@ abstract class AppLocalizations {
   /// #3485 setupStepHint: the label for case 'public_page'.
   ///
   /// In en, this message translates to:
-  /// **'What people outside the space can see.'**
+  /// **'What people outside the space can see, including where you are on the map.'**
   String get setupStepHintPublicPage;
 
   /// #3485 setupStepHint: the label for case 'purchases'.
@@ -52542,6 +52602,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{updates} new updates · {pending} awaiting your decision'**
   String uxAttentionSummary(int updates, int pending);
+
+  /// Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}'**
+  String uxBookingAllowanceLeft(int count);
 
   /// Shown as the text in booking review summary (reservations).
   ///

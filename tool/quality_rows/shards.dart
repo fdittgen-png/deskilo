@@ -332,13 +332,18 @@ ShardResult readShard({
       'the envelope tested ${envelope.candidate}, the plan is for ${plan.candidate}',
     );
   }
-  if (envelope.runId != plan.runId || envelope.runAttempt != plan.runAttempt) {
+  // #3735: a re-run of one failed shard keeps the other shards' streams of
+  // an EARLIER attempt of the same run; the candidate check above makes them
+  // a test of this very tree. A later attempt, or another run, never counts.
+  final envelopeAttempt = int.tryParse(envelope.runAttempt);
+  final planAttempt = int.tryParse(plan.runAttempt);
+  if (envelope.runId != plan.runId ||
+      envelopeAttempt == null ||
+      planAttempt == null ||
+      envelopeAttempt > planAttempt) {
     v.add(
       'the envelope is from run ${envelope.runId}/${envelope.runAttempt}, '
-      'the plan from ${plan.runId}/${plan.runAttempt}'
-      '${envelope.runId == plan.runId ? ' — shards of different attempts '
-          'never mix: rerun the whole Quality workflow '
-          '(gh run rerun RUN_ID, without --failed or --job)' : ''}',
+      'the plan from ${plan.runId}/${plan.runAttempt}',
     );
   }
   if (envelope.selectionDigest != expected.digest) {

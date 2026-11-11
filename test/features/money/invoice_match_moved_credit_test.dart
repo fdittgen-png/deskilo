@@ -21,6 +21,7 @@ class _MovedMeanwhile extends FakeMoneyRepository {
     required String paymentLedgerId,
     required String resolution,
     String note = '',
+    int? amountCents,
   }) async => throw const PostgrestException(
     message: 'this credit was moved: it cannot pay an invoice',
     code: '22023',

@@ -200,7 +200,25 @@ void demoApplyUnmatch(
       byName: latest.byName,
     );
   }
-  money.consumedPaymentIds.remove(target.payment.id);
+  // #3671 — the payment is free again only when no row for it remains; a
+  // part another invoice holds stays used.
+  final paymentId = target.payment.id;
+  final stillHeld = money.invoiceMatchPaymentsStore.entries.any(
+    (e) => e.value.any((r) => r.paymentLedgerId == paymentId),
+  ) ||
+      money.invoiceMatchesStore.entries.any(
+        (e) =>
+            e.key != invoice.id &&
+            e.value.paymentLedgerId == paymentId &&
+            money.invoiceMatchPaymentsStore[e.key] == null,
+      ) ||
+      rest.any((r) => r.paymentLedgerId == paymentId);
+  if (stillHeld) {
+    final left = (money.usedPaymentCents[paymentId] ?? 0) - target.row.paidCents;
+    money.usedPaymentCents[paymentId] = left > 0 ? left : 0;
+  } else {
+    money.usedPaymentCents.remove(paymentId);
+  }
   final events = money.eventRepository;
   if (events == null) return;
   events.events.add(

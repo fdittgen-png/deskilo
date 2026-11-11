@@ -42,8 +42,9 @@ class _InvoiceReads implements InvoiceQueries {
   }
 
   @override
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId) async =>
-      const {};
+  Future<List<(String, int)>> fetchConsumedPaymentIds(
+    String workspaceId,
+  ) async => const [];
 
   @override
   Future<({List<InvoiceLine> lines, int totalCents})> previewInvoice({

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../money/providers/money_providers.dart';
 import '../../domain/place_feedback.dart';
 import 'booking_window_summary.dart';
 import 'place_feedback_bar.dart';
@@ -58,6 +60,7 @@ class BookingReviewSummary extends StatelessWidget {
     this.recurrence,
     this.walkUp = false,
     this.resourcePriceLabel,
+    this.allowance,
   });
   final List<String> resource;
   final String person;
@@ -67,6 +70,9 @@ class BookingReviewSummary extends StatelessWidget {
   final String? recurrence;
   final bool walkUp;
   final String? resourcePriceLabel;
+
+  /// #3284 — whose month allowance to show; null where none can be read.
+  final ({String memberId, String period})? allowance;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +98,7 @@ class BookingReviewSummary extends StatelessWidget {
             if (recurrence != null) Text('${words.planRepeatLabel}: $recurrence'),
             if (resourcePriceLabel case final price?)
               Text(price, key: const ValueKey('booking-known-price')),
+            if (allowance case final a?) BookingAllowanceLine(memberId: a.memberId, period: a.period),
             Text(
               words.uxBookingChargePending,
               key: const ValueKey('booking-charge-context'),
@@ -141,4 +148,22 @@ class BookingRateOption extends StatelessWidget {
     title: Text(context.l10n.bookingRatePlace),
     children: [PlaceFeedbackBar(kind: PlaceKind.seat, id: seatId)],
   );
+}
+
+/// #3284 — the half-days still bookable this month, as the statement read
+/// them; nothing while unread (the sentence below says how it is settled).
+class BookingAllowanceLine extends ConsumerWidget {
+  const BookingAllowanceLine({super.key, required this.memberId, required this.period});
+  final String memberId;
+  final String period;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) =>
+      switch (ref.watch(memberStatementProvider(memberId, period))) {
+        AsyncData(value: final s?) => Text(
+            context.l10n.uxBookingAllowanceLeft(s.remainingHalfDays),
+            key: const ValueKey('booking-allowance-left'),
+          ),
+        _ => const SizedBox.shrink(),
+      };
 }

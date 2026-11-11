@@ -9319,7 +9319,7 @@
       }
     }
   },
-  "invoicePdfSignature": "Digitale Signatur (SHA-256)",
+  "invoicePdfSignature": "Dokument-Fingerabdruck (SHA-256)",
   "invoicePdfSubtotal": "Zwischensumme",
   "@invoicePdfSubtotal": {
     "description": "#2362 sales tax: invoicePdfSubtotal"
@@ -13253,6 +13253,16 @@
   "portalPerson": "Privater Anbieter",
   "portalPersonHidden": "Person",
   "portalPhone": "Öffentliche Telefonnummer",
+  "portalPlaceAt": "Markierung bei {latitude}, {longitude}",
+  "portalPlaceFailed": "Der Kartendienst hat nicht geantwortet. Versuchen Sie es erneut.",
+  "portalPlaceFind": "Adresse auf der Karte finden",
+  "portalPlaceFound": "Gefunden: {place}. Übernehmen Sie ihn oder tippen Sie auf die Karte, um die Markierung zu versetzen.",
+  "portalPlaceNone": "Kein Ort gespeichert: die Karte eines Besuchers sucht die Adresse.",
+  "portalPlaceNotFound": "Für diese Adresse wurde kein Ort gefunden. Prüfen Sie die Adresse und versuchen Sie es erneut.",
+  "portalPlaceRemove": "Ort entfernen",
+  "portalPlaceTapToMove": "Tippen Sie auf die Karte, um die Markierung zu versetzen.",
+  "portalPlaceTitle": "Wo Sie auf der Karte sind",
+  "portalPlaceUse": "Diesen Ort übernehmen",
   "portalPlans": "Angebote und Preise",
   "portalPreview": "Externe Ansicht",
   "portalPublicPlan": "Öffentlicher Grundriss",
@@ -15843,11 +15853,11 @@
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestButton": "Löschung beantragen",
+  "reservationDeleteRequestButton": "Stornierung beantragen",
   "@reservationDeleteRequestButton": {
     "description": "Reservation deletion requests (#492)"
   },
-  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)?",
+  "reservationDeleteRequestExplain": "Vergangene oder eingecheckte Buchungen werden nicht direkt gelöscht. Inhaber oder Admin entscheiden: wurde der Check-in nur vergessen (die Buchung bleibt), oder wurde sie nie genutzt (sie wird entfernt)? Bis zur Entscheidung bleibt die Buchung unverändert; nichts wird automatisch erstattet oder gelöscht.",
   "@reservationDeleteRequestExplain": {
     "description": "Reservation deletion requests (#492)"
   },
@@ -17937,7 +17947,7 @@
   "setupStepHintPaymentMethods": "Ihre Bankverbindung und Zahlungshinweise.",
   "setupStepHintPlaces": "Zeichnen Sie die Räume, Tische und Plätze, die Mitglieder buchen.",
   "setupStepHintPricing": "Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.",
-  "setupStepHintPublicPage": "Was Menschen außerhalb des Bereichs sehen können.",
+  "setupStepHintPublicPage": "Was Menschen außerhalb des Bereichs sehen können, auch wo Sie auf der Karte sind.",
   "setupStepHintPurchases": "Was der Bereich kauft und bei wem.",
   "setupStepHintRecovery": "Die Daten des Bereichs einmal exportieren.",
   "setupStepHintReminders": "Wann und wie an offene Rechnungen erinnert wird.",
@@ -19894,6 +19904,7 @@
       }
     }
   },
+  "uxBookingAllowanceLeft": "{count, plural, =0{Kein halber Tag mehr in Ihrem Kontingent diesen Monat} =1{1 halber Tag übrig in Ihrem Kontingent diesen Monat} other{{count} halbe Tage übrig in Ihrem Kontingent diesen Monat}}",
   "uxBookingChargePending": "Gebühr und Kontingentverbrauch hängen vom Tarif des Mitglieds ab und werden auf der Abrechnung ausgewiesen.",
   "uxBookingCheckInHelp": "Bei Bestätigung dieser Reservierung auch meine Anwesenheit melden.",
   "uxBookingFor": "Buchung für",
