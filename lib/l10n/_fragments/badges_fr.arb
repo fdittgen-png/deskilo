@@ -16,6 +16,7 @@
   "@badgeSignInRetry": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "Votre code PIN ?",
   "badgeSignInHello": "Bonjour {name}",
   "@badgeSignInHello": {
     "description": "#662 - badge sign-in",

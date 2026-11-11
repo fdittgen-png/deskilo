@@ -1825,6 +1825,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get badgeSignInUseEmail => 'Usar mi correo en su lugar';
 
   @override
+  String get badgeSignInYourPin => '¿Su PIN?';
+
+  @override
   String get badgeTapCardHint =>
       'Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.';
 
@@ -26222,6 +26225,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más que la norma federal. Un plazo más largo se aplica a todos los registros; uno más corto no cambia nada. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'Cuántas lecturas pueden venir de un mismo lugar durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'Cuántas veces puede leerse una credencial durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Cuántos intentos de PIN erróneos se permiten en una credencial durante el tiempo de bloqueo. Solo se puede reducir.';
 
@@ -26235,7 +26246,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Intentos de PIN fallidos en este espacio durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Solo se puede reducir.';
+      'Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26503,6 +26514,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Conservación en EE. UU., estado (años)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Lecturas desde un lugar';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Lecturas de una credencial';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>

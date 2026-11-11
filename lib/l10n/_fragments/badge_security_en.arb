@@ -16,7 +16,7 @@
   "@settingLabelSecurityBadgeWorkspaceFailureLimit": {
     "description": "Shown as a text in settings labels (workspace)."
   },
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Failed PIN attempts across this workspace within the badge lockout window before sign-in pauses and owners are alerted. Can only be tightened.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.",
   "@settingHintSecurityBadgeWorkspaceFailureLimit": {
     "description": "Shown as a text in settings labels (workspace)."
   },
@@ -30,5 +30,21 @@
         "type": "int"
       }
     }
+  },
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Scans of one badge",
+  "@settingLabelSecurityBadgeIdentifyPerTagLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "How often one badge may be scanned within the badge lockout window before the scan answers wait. Can only be tightened.",
+  "@settingHintSecurityBadgeIdentifyPerTagLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Scans from one place",
+  "@settingLabelSecurityBadgeIdentifyPerSourceLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "How many scans may come from one place within the badge lockout window before the scan answers wait. Can only be tightened.",
+  "@settingHintSecurityBadgeIdentifyPerSourceLimit": {
+    "description": "Shown as a text in settings labels (workspace)."
   }
 }

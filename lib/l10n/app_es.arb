@@ -816,6 +816,7 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "¿Su PIN?",
   "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
   "badgeTapCardTitle": "Registrar una tarjeta",
   "badgeTokenOnce": "Guarde este QR ahora — solo se muestra una vez.",
@@ -16944,6 +16945,8 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Cuántas lecturas pueden venir de un mismo lugar durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Cuántas veces puede leerse una credencial durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.",
   "settingHintSecurityBadgeLockoutFailures": "Cuántos intentos de PIN erróneos se permiten en una credencial durante el tiempo de bloqueo. Solo se puede reducir.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -16953,7 +16956,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Intentos de PIN fallidos en este espacio durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Solo se puede reducir.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.",
   "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -17130,6 +17133,8 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Lecturas desde un lugar",
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Lecturas de una credencial",
   "settingLabelSecurityBadgeLockoutFailures": "Intentos de PIN de la credencial antes del bloqueo",
   "@settingLabelSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting label."

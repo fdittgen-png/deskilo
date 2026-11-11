@@ -1828,6 +1828,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get badgeSignInUseEmail => 'Stattdessen meine E-Mail verwenden';
 
   @override
+  String get badgeSignInYourPin => 'Ihre PIN?';
+
+  @override
   String get badgeTapCardHint =>
       'Halten Sie die RFID/NFC-Karte an die Rückseite des Geräts.';
 
@@ -26285,6 +26288,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'Wie viele Scans innerhalb des Sperrzeitraums von einem Ort kommen dürfen, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'Wie oft ein Badge innerhalb des Sperrzeitraums gescannt werden darf, bevor der Scan um Geduld bittet. Die Grenze kann nur gesenkt werden.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Wie viele falsche PIN-Eingaben an einem Badge innerhalb der Sperrzeit erlaubt sind. Kann nur verringert werden.';
 
@@ -26298,7 +26309,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Fehlversuche im Bereich innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Die Grenze kann nur gesenkt werden.';
+      'Verschiedene Badges des Bereichs mit falscher PIN innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Ein einzelnes Badge erreicht die Grenze nicht. Die Grenze kann nur gesenkt werden.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26555,6 +26566,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Aufbewahrung in den USA, Bundesstaat (Jahre)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Scans von einem Ort';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Scans eines Badges';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>

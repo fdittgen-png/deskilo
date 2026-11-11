@@ -1822,6 +1822,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get badgeSignInUseEmail => 'Usa la mia e-mail';
 
   @override
+  String get badgeSignInYourPin => 'Il suo PIN?';
+
+  @override
   String get badgeTapCardHint =>
       'Avvicini la tessera RFID/NFC al retro del dispositivo.';
 
@@ -26246,6 +26249,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più della regola federale. Un periodo più lungo vale per tutti i documenti; uno più breve non cambia nulla. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'Quante letture possono venire da un luogo nel periodo di blocco prima che la lettura chieda di attendere. Il limite può solo essere ridotto.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'Quante volte un badge può essere letto nel periodo di blocco prima che la lettura chieda di attendere. Il limite può solo essere ridotto.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Quanti tentativi di PIN errati sono consentiti su un badge durante il tempo di blocco. Può solo essere ridotto.';
 
@@ -26259,7 +26270,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Tentativi di PIN falliti nello spazio durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Il limite può solo essere ridotto.';
+      'Badge diversi dello spazio con un PIN errato durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Un solo badge non lo raggiunge. Il limite può solo essere ridotto.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26527,6 +26538,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Conservazione negli USA, stato (anni)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Letture da un luogo';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Letture di un badge';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
