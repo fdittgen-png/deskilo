@@ -7,8 +7,8 @@
 //     branch instead of a full commit SHA (G2): a tag can be moved;
 //   * a workflow with no top-level `permissions:` (G4): it runs with the
 //     repository's default token rights;
-//   * a `${{ inputs.… }}` expression inside a `run:` block (G6): the value is
-//     pasted into the script, so a crafted input is a command.
+//   * an input or branch-ref expression inside a `run:` block: the value is
+//     pasted into the script, so a crafted value is a command.
 //
 // Lower the number when you fix one; never raise it.
 import 'dart:io';
@@ -23,8 +23,8 @@ const int _unpinnedThirdPartyActions = 0;
 /// Workflows without a top-level `permissions:` block.
 const int _workflowsWithoutPermissions = 0;
 
-/// Lines with an `inputs` expression inside a `run:` block.
-const int _inputsInsideRun = 0;
+/// Lines with an input or branch-ref expression inside a `run:` block.
+const int _untrustedInsideRun = 0;
 
 List<File> _workflowFiles() => filesWithExtension('.github/workflows', '.yml');
 
@@ -68,10 +68,12 @@ void main() {
     );
   });
 
-  test('inputs pasted into a run block only fall', () {
+  test('inputs and branch refs pasted into a run block only fall', () {
     var hits = 0;
     final run = RegExp(r'^(\s*)(-\s*)?run:\s*(.*)$');
-    final input = RegExp(r'\$\{\{\s*(github\.event\.)?inputs\.');
+    final input = RegExp(
+      r'\$\{\{\s*((github\.event\.)?inputs\.|github\.(base_ref|head_ref)\b)',
+    );
     for (final f in _workflowFiles()) {
       final lines = f.readAsLinesSync();
       for (var i = 0; i < lines.length; i++) {
@@ -95,9 +97,9 @@ void main() {
     }
     expect(
       hits,
-      lessThanOrEqualTo(_inputsInsideRun),
-      reason: 'pass an input through `env:` and read it as "\$NAME": '
-          '$hits > $_inputsInsideRun',
+      lessThanOrEqualTo(_untrustedInsideRun),
+      reason: 'pass inputs and branch refs through `env:` as "\$NAME": '
+          '$hits > $_untrustedInsideRun',
     );
   });
 }

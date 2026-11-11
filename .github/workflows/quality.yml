@@ -163,10 +163,11 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BASE_REF: ${{ github.base_ref }}
         run: >
           dart run tool/stale_base_guard.dart
           --head "${{ github.event.pull_request.head.sha }}"
-          --base "origin/${{ github.base_ref }}"
+          --base "origin/$PR_BASE_REF"
           --title "$PR_TITLE"
 
       # The gates that are not a discipline row: they are preconditions,
