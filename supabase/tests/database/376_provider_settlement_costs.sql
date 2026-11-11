@@ -7,7 +7,7 @@
 -- or changed cost, another amount, or a cost in another currency is refused
 -- and kept for review, and nothing of it is recorded. Rolled back.
 begin;
-select plan(19);
+select plan(22);
 
 do $seed$
 declare u uuid := '00000000-0000-4000-8000-0000000037a1'; plain uuid := '00000000-0000-4000-8000-0000000037a2'; ws uuid; m uuid;
@@ -66,6 +66,15 @@ select is(pg_temp.report('stl_2', 10000, '[{"period":"2026-03","method":"ideal",
 select is((select count(*)::int from public.provider_payouts where payout_id = 'stl_2'), 0, 'and records no payout');
 select is(pg_temp.report('stl_3', 10000, '[{"period":"2026-03","method":"ideal","description":"iDEAL","cost_count":1,"amount_net_cents":29,"currency":"eur"}]') ->> 'outcome',
   'new', 'a cost that names the settlement''s own currency is recorded');
+select set_config('t.twice', '[{"period":"2026-03","method":"ideal","description":"iDEAL","cost_count":2,"amount_net_cents":58},
+  {"period":"2026-03","method":"ideal","description":"iDEAL","cost_count":1,"amount_net_cents":35}]', false);
+select is(pg_temp.report('stl_4', 20000, current_setting('t.twice')) ->> 'outcome', 'new',
+  'two lines of the same cost (two rates in one month) are recorded');
+select is((select count(*)::int || '|' || sum(cost_count)::int || '|' || sum(amount_net_cents)::int
+             from public.provider_settlement_costs where settlement_id = 'stl_4'),
+  '1|3|93', 'once, with their counts and nets summed');
+select is(pg_temp.report('stl_4', 20000, current_setting('t.twice')) ->> 'outcome', 'unchanged',
+  'and the same report again is unchanged');
 select ok(not has_function_privilege('authenticated', 'public.record_provider_settlement_v1(uuid, text, text, bigint, text, date, text, jsonb)', 'execute'),
   'a member cannot call the recorder');
 select ok(not has_table_privilege('authenticated', 'public.provider_settlement_reviews', 'insert'),

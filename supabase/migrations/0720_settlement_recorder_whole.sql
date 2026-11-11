@@ -18,6 +18,8 @@
 --    latest report and when it was first and last seen), instead of raising:
 --    a raise rolled back the very record a person needed to see. Nothing of
 --    a refused report reaches the payout or its costs;
+--  * one settlement is recorded by one caller at a time (an advisory lock),
+--    and lines of the same cost are summed into one;
 --  * the answer says what the recorder decided: `outcome` new, unchanged or
 --    refused (with its reason), so a caller counts outcomes, not calls.
 
@@ -55,7 +57,7 @@ returns jsonb language sql stable security definer set search_path = public as $
   select coalesce(jsonb_agg(jsonb_build_object(
            'period', c.period, 'method', c.method, 'description', c.description,
            'cost_count', c.cost_count, 'amount_net_cents', c.amount_net_cents, 'currency', c.currency)
-         order by c.period, c.method, c.description), '[]'::jsonb)
+         order by c.period, c.method, c.description, c.currency), '[]'::jsonb)
     from public.provider_settlement_costs c
    where c.workspace_id = p_workspace_id and c.provider = p_provider and c.settlement_id = p_settlement_id
 $fn$;
@@ -80,16 +82,30 @@ declare
   v_answer jsonb;
   v_n int := 0;
 begin
-  -- The report's costs in the canonical order; a cost names its own
-  -- currency, or is in the settlement's.
+  -- Two reports of one settlement at the same moment (the on-demand fetch
+  -- beside a scheduled poll): the second waits here and then reads what the
+  -- first booked, so it answers "unchanged" instead of inserting the costs
+  -- again into a unique violation.
+  perform pg_advisory_xact_lock(hashtextextended(
+    'provider_settlement:' || p_workspace_id::text || '|' || p_provider || '|' || p_settlement_id, 0));
+
+  -- The report's costs in the canonical form: a cost names its own currency
+  -- or is in the settlement's; lines with the same period, method,
+  -- description and currency (the same fee at two rates in one month) are
+  -- one cost with their counts and nets summed, as the table keeps one row
+  -- per period, method and description. Nothing reported is lost, and the
+  -- comparison stays total.
   select coalesce(jsonb_agg(jsonb_build_object(
-           'period', x.period, 'method', coalesce(x.method, ''), 'description', coalesce(x.description, ''),
-           'cost_count', x.cost_count, 'amount_net_cents', x.amount_net_cents,
-           'currency', upper(coalesce(nullif(x.currency, ''), v_currency)))
-         order by x.period, coalesce(x.method, ''), coalesce(x.description, '')), '[]'::jsonb)
+           'period', g.period, 'method', g.method, 'description', g.description,
+           'cost_count', g.cost_count, 'amount_net_cents', g.amount_net_cents, 'currency', g.currency)
+         order by g.period, g.method, g.description, g.currency), '[]'::jsonb)
     into v_costs
-    from jsonb_to_recordset(coalesce(p_costs, '[]'::jsonb))
-         as x(period text, method text, description text, cost_count int, amount_net_cents bigint, currency text);
+    from (select x.period, coalesce(x.method, '') as method, coalesce(x.description, '') as description,
+                 upper(coalesce(nullif(x.currency, ''), v_currency)) as currency,
+                 sum(x.cost_count)::int as cost_count, sum(x.amount_net_cents)::bigint as amount_net_cents
+            from jsonb_to_recordset(coalesce(p_costs, '[]'::jsonb))
+                 as x(period text, method text, description text, cost_count int, amount_net_cents bigint, currency text)
+           group by 1, 2, 3, 4) g;
 
   select * into v_payout from public.provider_payouts
    where workspace_id = p_workspace_id and provider = p_provider and payout_id = p_settlement_id;
