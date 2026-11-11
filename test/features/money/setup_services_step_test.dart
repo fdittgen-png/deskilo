@@ -60,26 +60,31 @@ void main() {
     );
   });
 
-  testWidgets('adding stores an active service at the typed price, and it '
-      'joins the preview; without a price nothing is stored', (tester) async {
+  // #3552 — the step opens the services screen's own sheet: a problem is
+  // said under its field and nothing is stored; a complete service is.
+  testWidgets('adding opens the same sheet: without a price nothing is '
+      'stored and the field says why; with one it joins the preview', (
+    tester,
+  ) async {
     final money = FakeMoneyRepository();
     await _pump(tester, money);
     final before = money.services.length;
 
-    await tester.enterText(
-      find.byKey(const ValueKey('setup-services-name')),
-      'Locker key',
-    );
-    await tester.tap(find.byKey(const ValueKey('setup-services-add')));
-    await tester.pump();
-    expect(money.services, hasLength(before), reason: 'no price, no write');
-
-    await tester.enterText(
-      find.byKey(const ValueKey('setup-services-price')),
-      '2.50',
-    );
     await tester.tap(find.byKey(const ValueKey('setup-services-add')));
     await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('services-name')),
+      'Locker key',
+    );
+    await _save(tester);
+    expect(money.services, hasLength(before), reason: 'no price, no write');
+    expect(find.text('A number, please.'), findsOneWidget);
+
+    await tester.enterText(
+      find.byKey(const ValueKey('services-price')),
+      '2.50',
+    );
+    await _save(tester);
     final added = money.services.last;
     expect(money.services, hasLength(before + 1));
     expect(
@@ -100,4 +105,12 @@ void main() {
     expect(find.byKey(const ValueKey('setup-step-one-column')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+}
+
+Future<void> _save(WidgetTester tester) async {
+  final save = find.byKey(const ValueKey('services-save'));
+  await Scrollable.ensureVisible(tester.element(save), alignment: 0.5);
+  await tester.pumpAndSettle();
+  await tester.tap(save);
+  await tester.pumpAndSettle();
 }
