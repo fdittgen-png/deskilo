@@ -16774,6 +16774,7 @@
   "servicesOtherCategory": "Otros servicios",
   "servicesPrice": "Precio",
   "servicesPublic": "Mostrar en nuestra página pública",
+  "servicesSaveFailed": "No se pudo guardar el servicio. Inténtelo de nuevo.",
   "servicesTitle": "Servicios",
   "settingCouldNotSave": "No se pudo guardar el ajuste",
   "@settingCouldNotSave": {

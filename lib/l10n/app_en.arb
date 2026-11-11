@@ -34466,10 +34466,10 @@
     "description": "#3552 the duration field's error: the allowed range",
     "placeholders": {
       "min": {
-        "type": "int"
+        "type": "String"
       },
       "max": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -34513,6 +34513,10 @@
   "servicesPublic": "Show on our public page",
   "@servicesPublic": {
     "description": "#3552 the service editor: whether the service is shown on the public page"
+  },
+  "servicesSaveFailed": "The service could not be saved. Try again.",
+  "@servicesSaveFailed": {
+    "description": "#3552 the service editor: saving a service failed."
   },
   "servicesTitle": "Services",
   "@servicesTitle": {

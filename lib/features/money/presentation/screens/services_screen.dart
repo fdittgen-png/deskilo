@@ -26,15 +26,20 @@ class ServicesScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref, {
     ServiceItem? service,
-  }) => ServiceEditor.open(
-    context,
-    ref,
-    service: service,
-    categories: [
-      for (final s in ref.read(allServicesProvider).value ?? const <ServiceItem>[])
-        s.category,
-    ],
-  );
+  }) async {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    await ServiceEditor.open(
+      context,
+      ref,
+      workspaceId: workspace.id,
+      service: service,
+      categories: [
+        for (final s in ref.read(allServicesProvider).value ?? const <ServiceItem>[]) // empty-ok: only suggestions; an unread list proposes none
+          s.category,
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,6 +79,7 @@ class ServicesScreen extends ConsumerWidget {
                   children: [
                     for (final service in group.services)
                       _ServiceTile(
+                        key: ValueKey('services-tile-${service.id}'),
                         service: service,
                         chargesVat: chargesVat,
                         vatRates: vatRates,
@@ -101,6 +107,7 @@ class ServicesScreen extends ConsumerWidget {
 /// stock, and whether it is inactive.
 class _ServiceTile extends StatelessWidget {
   const _ServiceTile({
+    super.key,
     required this.service,
     required this.chargesVat,
     required this.vatRates,

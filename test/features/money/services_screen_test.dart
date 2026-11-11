@@ -222,6 +222,8 @@ void main() {
 /// #3552 — the sheet is taller: a control is brought into view first.
 Future<void> _tapVisible(WidgetTester tester, Finder finder) async {
   await Scrollable.ensureVisible(tester.element(finder), alignment: 0.5);
-  await tester.pumpAndSettle();
+  for (var i = 0; i < 3; i++) {
+    await tester.pump(const Duration(milliseconds: 400));
+  }
   await tester.tap(finder);
 }

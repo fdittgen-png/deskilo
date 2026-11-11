@@ -16774,6 +16774,7 @@
   "servicesOtherCategory": "Weitere Leistungen",
   "servicesPrice": "Preis",
   "servicesPublic": "Auf unserer öffentlichen Seite zeigen",
+  "servicesSaveFailed": "Die Leistung konnte nicht gespeichert werden. Versuchen Sie es erneut.",
   "servicesTitle": "Leistungen",
   "settingCouldNotSave": "Die Einstellung konnte nicht gespeichert werden",
   "@settingCouldNotSave": {

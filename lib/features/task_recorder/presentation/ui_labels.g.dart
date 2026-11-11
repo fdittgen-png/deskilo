@@ -2055,6 +2055,7 @@ Map<String, _Getter> _part5() => {
   'serverConnectReference': (l) => l.serverConnectReference,
   'serverConnectUseHere': (l) => l.serverConnectUseHere,
   'servicesDuration': (l) => l.servicesDuration,
+  'servicesSaveFailed': (l) => l.servicesSaveFailed,
   'settingGroupBilling': (l) => l.settingGroupBilling,
   'settingHintBiSeriesMonths': (l) => l.settingHintBiSeriesMonths,
   'settingHintMcpConfirmationExpiryMinutes': (l) => l.settingHintMcpConfirmationExpiryMinutes,

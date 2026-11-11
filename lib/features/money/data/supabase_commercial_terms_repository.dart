@@ -132,25 +132,17 @@ class SupabaseCommercialTermsRepository implements CommercialTermsRepository {
   }
 
   @override
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-    ServiceDetails? details,
-  }) async {
+  Future<ServiceItem> updateService(String serviceId, ServiceChange change) async {
     final row = await _client
         .from('services')
         .update({
-          ...?details?.toRow(),
-          'supply_class': ?supplyClass?.wire,
-          'name': ?name,
-          'price_cents': ?priceCents,
-          'active': ?active,
-          if (vatRateId != null)
-            'vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
+          ...?change.details?.toRow(),
+          'supply_class': ?change.supplyClass?.wire,
+          'name': ?change.name,
+          'price_cents': ?change.priceCents,
+          'active': ?change.active,
+          if (change.vatRateId case final vat?)
+            'vat_rate_id': vat.isEmpty ? null : vat,
         })
         .eq('id', serviceId)
         .select()

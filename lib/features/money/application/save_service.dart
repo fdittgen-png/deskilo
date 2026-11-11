@@ -76,12 +76,14 @@ class SaveService {
           )
         : _terms.updateService(
             serviceId,
-            name: draft.name.trim(),
-            priceCents: draft.priceCents,
-            active: draft.active,
-            vatRateId: draft.vatRateId,
-            supplyClass: draft.supplyClass,
-            details: draft.details,
+            ServiceChange(
+              name: draft.name.trim(),
+              priceCents: draft.priceCents,
+              active: draft.active,
+              vatRateId: draft.vatRateId,
+              supplyClass: draft.supplyClass,
+              details: draft.details,
+            ),
           );
   }
 }

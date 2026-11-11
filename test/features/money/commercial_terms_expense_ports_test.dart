@@ -74,15 +74,8 @@ class _Terms implements CommercialTermsRepository {
   }) => throw UnimplementedError();
 
   @override
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-    ServiceDetails? details,
-  }) => throw UnimplementedError();
+  Future<ServiceItem> updateService(String serviceId, ServiceChange change) =>
+      throw UnimplementedError();
 
   @override
   Future<Package> createPackage(

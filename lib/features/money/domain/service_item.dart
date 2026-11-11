@@ -2,6 +2,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../core/text/collation.dart';
 
 part 'service_item.freezed.dart';
 
@@ -74,6 +75,28 @@ class ServiceDetails {
   };
 }
 
+/// #3552 — what an update of a service changes; a null field stays as it is.
+@immutable
+class ServiceChange {
+  const ServiceChange({
+    this.name,
+    this.priceCents,
+    this.active,
+    this.vatRateId,
+    this.supplyClass,
+    this.details,
+  });
+
+  final String? name;
+  final int? priceCents;
+  final bool? active;
+
+  /// '' = back to the workspace's default rate.
+  final String? vatRateId;
+  final SupplyClass? supplyClass;
+  final ServiceDetails? details;
+}
+
 /// #3552 — services grouped by their category, categories in alphabetical
 /// order and the uncategorised ('' category) last; within a group by
 /// sortOrder, then by name.
@@ -87,7 +110,7 @@ List<({String category, List<ServiceItem> services})> groupServicesByCategory(
   final keys = groups.keys.toList()
     ..sort((a, b) {
       if (a.isEmpty != b.isEmpty) return a.isEmpty ? 1 : -1;
-      return a.toLowerCase().compareTo(b.toLowerCase());
+      return compareNames(a, b);
     });
   return [
     for (final k in keys)
@@ -98,7 +121,7 @@ List<({String category, List<ServiceItem> services})> groupServicesByCategory(
             final byOrder = a.sortOrder.compareTo(b.sortOrder);
             return byOrder != 0
                 ? byOrder
-                : a.name.toLowerCase().compareTo(b.name.toLowerCase());
+                : compareNames(a.name, b.name);
           }),
       ),
   ];

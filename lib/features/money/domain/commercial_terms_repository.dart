@@ -51,15 +51,7 @@ abstract interface class CommercialTermsRepository {
   /// Owner-only: partial update of name, price, VAT rate and active flag.
   /// Deactivate = `updateService(active: false)` — services are never
   /// deleted (bill lines reference them).
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-    ServiceDetails? details,
-  });
+  Future<ServiceItem> updateService(String serviceId, ServiceChange change);
 
   /// Owner-defined day packages (migration 0042). Members read the active
   /// ones (the buy sheet); owners pass [includeInactive] for the editor.

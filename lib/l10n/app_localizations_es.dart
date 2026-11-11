@@ -26568,7 +26568,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesDurationHint => 'Déjelo vacío si no se mide en tiempo.';
 
   @override
-  String servicesDurationRange(int min, int max) {
+  String servicesDurationRange(String min, String max) {
     return 'Entre $min y $max minutos.';
   }
 
@@ -26606,6 +26606,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get servicesPublic => 'Mostrar en nuestra página pública';
+
+  @override
+  String get servicesSaveFailed =>
+      'No se pudo guardar el servicio. Inténtelo de nuevo.';
 
   @override
   String get servicesTitle => 'Servicios';

@@ -43092,7 +43092,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Between {min} and {max} minutes.'**
-  String servicesDurationRange(int min, int max);
+  String servicesDurationRange(String min, String max);
 
   /// #3552 the services list: a duration in minutes, short
   ///
@@ -43147,6 +43147,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show on our public page'**
   String get servicesPublic;
+
+  /// #3552 the service editor: saving a service failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The service could not be saved. Try again.'**
+  String get servicesSaveFailed;
 
   /// App-bar title of the owner service-catalog editor and its settings tile
   ///

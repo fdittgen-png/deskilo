@@ -19,15 +19,14 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_service.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import 'vat_rate_field.dart';
 
 /// The shortest and the longest duration a service may name (0711's check).
-const int serviceMinMinutes = 5;
-const int serviceMaxMinutes = 1440;
+const int _minMinutes = 5;
+const int _maxMinutes = 1440;
 
 /// Opens and saves the service editor.
 abstract final class ServiceEditor {
@@ -36,11 +35,10 @@ abstract final class ServiceEditor {
   static Future<void> open(
     BuildContext context,
     WidgetRef ref, {
+    required String workspaceId,
     ServiceItem? service,
     Iterable<String> categories = const [],
   }) async {
-    final workspace = ref.read(currentWorkspaceProvider).value;
-    if (workspace == null) return;
     final l10n = context.l10n;
     final draft = await showAppSheet<ServiceDraft>(
       context: context,
@@ -59,10 +57,10 @@ abstract final class ServiceEditor {
       context,
       domain: 'money',
       message: 'service save failed',
-      errorText: l10n.workspaceGenericError,
+      errorText: l10n.servicesSaveFailed,
       action: () => ref
           .read(saveServiceProvider)
-          .save(workspace.id, draft, serviceId: service?.id),
+          .save(workspaceId, draft, serviceId: service?.id),
     )) {
       return;
     }
@@ -74,11 +72,11 @@ abstract final class ServiceEditor {
 
 /// The duration typed into the field: null when blank, else the minutes;
 /// [valid] is false when it is not whole minutes in range.
-({int? minutes, bool valid}) parseServiceDuration(String text) {
+({int? minutes, bool valid}) _parseDuration(String text) {
   final t = text.trim();
   if (t.isEmpty) return (minutes: null, valid: true);
   final n = int.tryParse(t);
-  final ok = n != null && n >= serviceMinMinutes && n <= serviceMaxMinutes;
+  final ok = n != null && n >= _minMinutes && n <= _maxMinutes;
   return (minutes: ok ? n : null, valid: ok);
 }
 
@@ -135,7 +133,7 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
   }
 
   void _submit() {
-    final duration = parseServiceDuration(_duration.text);
+    final duration = _parseDuration(_duration.text);
     final draft = ServiceDraft(
       name: _name.text,
       priceCents: _price.text.trim().isEmpty
@@ -241,10 +239,7 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
               label: l10n.servicesDuration,
               helper: l10n.servicesDurationHint,
               error: _problems.contains(ServiceProblem.duration)
-                  ? l10n.servicesDurationRange(
-                      serviceMinMinutes,
-                      serviceMaxMinutes,
-                    )
+                  ? l10n.servicesDurationRange('$_minMinutes', '$_maxMinutes')
                   : null,
               keyboardType: TextInputType.number,
             ),

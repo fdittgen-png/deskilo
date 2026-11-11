@@ -15,5 +15,6 @@
   "servicesCategory": "Kategorie",
   "servicesPublic": "Auf unserer öffentlichen Seite zeigen",
   "servicesOtherCategory": "Weitere Leistungen",
-  "servicesDurationShort": "{minutes, plural, =1{1 Min.} other{{minutes} Min.}}"
+  "servicesDurationShort": "{minutes, plural, =1{1 Min.} other{{minutes} Min.}}",
+  "servicesSaveFailed": "Die Leistung konnte nicht gespeichert werden. Versuchen Sie es erneut."
 }

@@ -42,6 +42,7 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
       ServiceEditor.open(
         context,
         ref,
+        workspaceId: widget.workspaceId,
         service: service,
         categories: [for (final s in stored) s.category],
       );

@@ -16774,6 +16774,7 @@
   "servicesOtherCategory": "Autres prestations",
   "servicesPrice": "Prix",
   "servicesPublic": "Afficher sur notre page publique",
+  "servicesSaveFailed": "La prestation n'a pas pu être enregistrée. Réessayez.",
   "servicesTitle": "Services",
   "settingCouldNotSave": "Le réglage n'a pas pu être enregistré",
   "@settingCouldNotSave": {
