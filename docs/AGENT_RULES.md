@@ -259,6 +259,27 @@ Before implementation, cite the affected invariant row or contract and its delta
 
 **Glossary:** *Checkpoint* — a reviewable slice with its own consumer and tests. *Release gate* — evidence required before a capability is switched on. *Installation* — one verified backend identity; *workspace* — a business scope inside it. *Public / participant / management* — API surfaces (anonymous / authenticated / internal); distinct from the social / community / operational data purposes.
 
+## Before a merge: evidence, not claims (#3717)
+
+Five approved pull requests went red on 2026-11-11. The merge step checks, before any watcher is armed and before CI is waited on:
+
+1. **Evidence.** The body carries one line `Gate: analyze ok · lint ok · <n> listed tests ok`; without it no watcher is armed. On the head, `dart run tool/preflight.dart --base origin/master --list` names the generators and the tests the change implicates. The generators leave `git status --porcelain` empty, and the listed tests ran: the author shows the verdict line, or the merger runs them. Companions:
+   - a route → `route_outcomes_golden`, `coverage_manifest`, `route_registry`, `recorder_vocabulary_drift`;
+   - a string → `test/i18n`, and `test/` searched for the OLD text;
+   - a changed default (format, language, clock, currency, zone) → the test helper pins it, or the tests of every screen that renders it run;
+   - a new lint → `lint_sources_test`;
+   - a tool → `test/tool`;
+   - a provider or screen → `test/` searched for its other consumers.
+2. **Structure.**
+   - The scope (`git diff --shortstat origin/master...<head>`) matches the scope the pull request names.
+   - "Contained in" and "stacked on" are written only after `git merge-base --is-ancestor`.
+   - No stacked pull requests: every branch is cut from `master`, and at most two pull requests are in CI at once, on disjoint files.
+   - Nothing merges on a red base; a fix lands on the red pull request's own branch.
+3. **Contract** (a pull request the merger reviews): each acceptance line of the issue is found in the diff, and a derived value comes from the source the issue names.
+4. **Watching.** A watcher ends on the FIRST failed job of any kind and reports the failing test names at once. The author has one try at a red; after that the fix belongs to the coordinator.
+
+`scripts/merge_check.sh <pr> [worktree] [--contains <branch>]` prints steps 1–2 and one verdict line.
+
 ## Decide, commit, never park (owner, 2026-10-25)
 
 Binding for every session and every agent.
