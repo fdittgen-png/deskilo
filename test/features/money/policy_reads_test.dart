@@ -5,6 +5,7 @@
 // could not be read, no default stands in for it, the failure is said at
 // once (no automatic retries), and nothing is built on a guess. "Never saved"
 // is an answer — the business gets the defaults; "could not be read" is not.
+import 'package:deskilo/core/data/policy_read.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
@@ -17,7 +18,7 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/misc.dart' show Override;
+import 'package:flutter_riverpod/misc.dart' show Override, ProviderBase;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
@@ -73,8 +74,20 @@ void main() {
       isFalse,
       reason: 'no default stands in for an unread policy',
     );
-    await Future<void>.delayed(const Duration(milliseconds: 600));
-    expect(down.reads, 1, reason: 'said at once: no automatic retries');
+    expect(down.reads, 1);
+  });
+
+  test('the four policy reads never retry on their own: the failure is said '
+      'at once, with Try again', () {
+    expect(noPolicyRetry(0, StateError('x')), isNull);
+    for (final provider in <ProviderBase<Object?>>[
+      dunningRulesProvider,
+      invoicePdfTemplateProvider,
+      billingRulesProvider,
+      repartitionRuleProvider,
+    ]) {
+      expect(provider.retry, same(noPolicyRetry), reason: '$provider');
+    }
   });
 
   testWidgets('an unread template is never printed as an empty one', (
