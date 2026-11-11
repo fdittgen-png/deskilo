@@ -46,6 +46,30 @@ void main() {
   setUp(() => _tmp = Directory.systemTemp.createTempSync('toolchain_cache'));
   tearDown(() => _tmp.deleteSync(recursive: true));
 
+  test('the workflow scanner refuses an unverified download before extraction', () async {
+    final dest = '${_tmp.path}/scanner';
+    final r = await _bash('bash scripts/install_zizmor.sh "$dest"', env: {
+      ...Platform.environment,
+      'PATH': '${_fakeCurl()}:${Platform.environment['PATH']}',
+    });
+    expect(r.exitCode, 1);
+    expect('${r.stderr}', contains('checksum mismatch'));
+    expect(Directory(dest).existsSync(), isFalse);
+  });
+
+  test('a failed workflow scanner cannot leave a stale successful report', () async {
+    final scanner = File('${_tmp.path}/scanner')..writeAsStringSync(
+      '#!/usr/bin/env bash\n'
+      'if [[ "\$1" == --version ]]; then echo fixture; exit 0; fi\nexit 23\n',
+    );
+    Process.runSync('chmod', ['+x', scanner.path]);
+    final report = '${_tmp.path}/report';
+    File('$report/summary.md')..createSync(recursive: true)..writeAsStringSync('old success');
+    final r = await _bash('bash scripts/workflow_audit.sh "${scanner.path}" "$report"');
+    expect(r.exitCode, 23);
+    expect(File('$report/summary.md').existsSync(), isFalse);
+  });
+
   group('install_gitleaks.sh obtain_archive', () {
     Future<ProcessResult> run(String cached, String expected) => _bash(
       'source scripts/install_gitleaks.sh; '

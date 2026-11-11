@@ -8,12 +8,18 @@
 // a draft another configurer changed meanwhile shows "Reload" and "Keep
 // mine", and keep mine writes against their version. Every case reads the
 // fake server's stored draft.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/ui/app_durations.dart';
+import 'package:deskilo/features/workspace/application/save_workspace_basics.dart';
 import 'package:deskilo/features/workspace/domain/setup_step_draft.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
@@ -24,15 +30,19 @@ Future<void> _open(
   WidgetTester tester,
   FakeLocalSetupRepository server, {
   FakeWorkspaceRepository? workspace,
+  List<Override> extra = const [],
 }) async {
   await pumpApp(
     tester,
     const SetupStepScreen(stepId: 'basics'),
     size: _phone,
-    overrides: standardTestOverrides(
-      workspace: workspace ?? FakeWorkspaceRepository.withWorkspace(),
-      localSetup: server,
-    ),
+    overrides: [
+      ...standardTestOverrides(
+        workspace: workspace ?? FakeWorkspaceRepository.withWorkspace(),
+        localSetup: server,
+      ),
+      ...extra,
+    ],
   );
   await tester.pumpAndSettle();
 }
@@ -179,4 +189,97 @@ void main() {
     expect(stored?.payload['language'], 'de');
     expect(stored?.version, 2);
   });
+
+  // #3282 — the stored draft arrives late: what the owner typed meanwhile is
+  // kept (never filled over), and their save is made against the version the
+  // server holds, without a false conflict.
+  testWidgets('what the owner types before the draft arrives is kept', (
+    tester,
+  ) async {
+    final server = FakeLocalSetupRepository();
+    await _seed(server, 'fr');
+    final held = server.holdDraftReads = Completer<void>();
+    await _open(tester, server);
+    await _pickLanguage(tester, 'Italiano');
+    await tester.pump(AppDurations.draftAutosave);
+    await tester.pump();
+    held.complete();
+    server.holdDraftReads = null;
+    await tester.pumpAndSettle();
+    expect(_shown('Italiano'), findsOneWidget, reason: 'not filled over');
+    await tester.pump(AppDurations.draftAutosave);
+    await tester.pumpAndSettle();
+    expect((await _stored(server))?.payload['language'], 'it');
+    expect(find.text('Draft saved'), findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-draft-conflict')), findsNothing);
+  });
+
+  testWidgets('a draft that could not be read says so; Try again restores it', (
+    tester,
+  ) async {
+    final server = FakeLocalSetupRepository();
+    await _seed(server, 'fr');
+    server.failDraftReads = 1;
+    await _open(tester, server);
+    expect(
+      find.byKey(const ValueKey('setup-draft-read-failed')),
+      findsOneWidget,
+    );
+    expect(_shown('Français'), findsNothing);
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('setup-draft-read-failed')), findsNothing);
+    expect(_shown('Français'), findsOneWidget);
+  });
+
+  // #3282 — a delegate whose right is withdrawn while they edit: the server
+  // refuses the save, the page says so, nothing is applied, and what they
+  // typed stays as their draft.
+  testWidgets('a right withdrawn while editing: the save is refused, the '
+      'answers stay a draft', (tester) async {
+    final server = FakeLocalSetupRepository();
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    final before = workspace.workspaces.first.defaultLocale;
+    await _open(
+      tester,
+      server,
+      workspace: workspace,
+      extra: [
+        saveWorkspaceBasicsProvider.overrideWithValue(const _Withdrawn()),
+      ],
+    );
+    await _pickLanguage(tester, 'Italiano');
+    await tester.tap(find.byKey(const ValueKey('setup-basics-save')));
+    await tester.pumpAndSettle();
+    final confirm = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(FilledButton),
+    );
+    if (confirm.evaluate().isNotEmpty) {
+      await tester.tap(confirm.first);
+      await tester.pumpAndSettle();
+    }
+    expect(
+      find.byType(SnackBar),
+      findsOneWidget,
+      reason: 'the refusal is said',
+    );
+    expect(find.text('Workspace saved.'), findsNothing);
+    expect(workspace.workspaces.first.defaultLocale, before);
+    expect(_shown('Italiano'), findsOneWidget, reason: 'still editable');
+    await tester.pump(AppDurations.draftAutosave);
+    await tester.pumpAndSettle();
+    expect((await _stored(server))?.payload['language'], 'it');
+  });
+}
+
+/// The server's answer once the delegate's right was withdrawn.
+class _Withdrawn implements SaveWorkspaceBasics {
+  const _Withdrawn();
+  @override
+  Future<void> save(Workspace stored, WorkspaceBasics basics) async =>
+      throw const PostgrestException(
+        message: 'permission denied',
+        code: '42501',
+      );
 }

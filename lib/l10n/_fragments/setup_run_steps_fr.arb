@@ -31,5 +31,8 @@
   "setupApprovalsFlowOutcome": "Elle s'applique",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Dès qu'une approbation est donnée.} other{Dès que {required} approbations sont données.}} Un refus la clôt, et personne n'approuve sa propre demande.",
   "setupApprovalsPreviewRequest": "Votre demande",
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{En attente d'une approbation} other{En attente de {required} approbations}}"
+  "setupApprovalsPreviewWaiting": "{required, plural, =1{En attente d'une approbation} other{En attente de {required} approbations}}",
+  "setupPricingLevelsBasis": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert {days, plural, =1{1 jour} other{{days} jours}} :",
+  "setupPricingLevelIncludes": "{level} : {count, plural, =1{1 demi-journée incluse} other{{count} demi-journées incluses}}",
+  "setupPricingLevelsBasisUnknown": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes. Vos jours d'ouverture n'ont pas pu être lus, aucun exemple n'est donc affiché."
 }

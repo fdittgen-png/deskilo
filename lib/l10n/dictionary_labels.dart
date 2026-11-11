@@ -332,6 +332,55 @@ extension DictionaryLabels on AppLocalizations {
     _ => key,
   };
 
+  /// #3283 — what level [key] (`<process>_<id>`) lets the business do: one
+  /// truthful sentence per level, beside its name, for the review before
+  /// Apply (and the v3 proposal).
+  String setupLevelOutcome(String key) => switch (key) {
+    'bookings_none' => setupLevelOutcomeBookingsNone,
+    'bookings_simple' => setupLevelOutcomeBookingsSimple,
+    'bookings_resources' => setupLevelOutcomeBookingsResources,
+    'bookings_measured' => setupLevelOutcomeBookingsMeasured,
+    'community_basic' => setupLevelOutcomeCommunityBasic,
+    'community_organised' => setupLevelOutcomeCommunityOrganised,
+    'money_none' => setupLevelOutcomeMoneyNone,
+    'money_statements' => setupLevelOutcomeMoneyStatements,
+    'money_invoices' => setupLevelOutcomeMoneyInvoices,
+    'payments_off' => setupLevelOutcomePaymentsOff,
+    'payments_online' => setupLevelOutcomePaymentsOnline,
+    'tax_none' => setupLevelOutcomeTaxNone,
+    'tax_vat' => setupLevelOutcomeTaxVat,
+    'tax_books' => setupLevelOutcomeTaxBooks,
+    'purchases_none' => setupLevelOutcomePurchasesNone,
+    'purchases_expenses' => setupLevelOutcomePurchasesExpenses,
+    'purchases_full' => setupLevelOutcomePurchasesFull,
+    'presentation_basic' => setupLevelOutcomePresentationBasic,
+    'presentation_branded' => setupLevelOutcomePresentationBranded,
+    'presentation_public' => setupLevelOutcomePresentationPublic,
+    'operations_basic' => setupLevelOutcomeOperationsBasic,
+    'operations_insight' => setupLevelOutcomeOperationsInsight,
+    'operations_advanced' => setupLevelOutcomeOperationsAdvanced,
+    'assistant_off' => setupLevelOutcomeAssistantOff,
+    'assistant_on' => setupLevelOutcomeAssistantOn,
+    _ => key,
+  };
+
+  /// #3283 — a business example under setup question [key].
+  String businessExample(String key) => switch (key) {
+    'approve_bookings' => businessExampleApproveBookings,
+    'several_rooms_or_sites' => businessExampleSeveralRoomsOrSites,
+    'public_page' => businessExamplePublicPage,
+    'members_owe_money' => businessExampleMembersOweMoney,
+    'issue_invoices' => businessExampleIssueInvoices,
+    'pay_online' => businessExamplePayOnline,
+    'vat_registered' => businessExampleVatRegistered,
+    'association' => businessExampleAssociation,
+    'keep_books' => businessExampleKeepBooks,
+    'tracks_purchases' => businessExampleTracksPurchases,
+    'door_tablet' => businessExampleDoorTablet,
+    'organised' => businessExampleOrganised,
+    _ => '',
+  };
+
   /// The `setupMilestoneName` label for [key].
   String setupMilestoneName(String key) => switch (key) {
     'bookable' => setupMilestoneNameBookable,

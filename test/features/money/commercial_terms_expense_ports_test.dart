@@ -70,17 +70,12 @@ class _Terms implements CommercialTermsRepository {
     required int priceCents,
     String? vatRateId,
     SupplyClass supplyClass = SupplyClass.property,
+    ServiceDetails details = const ServiceDetails(),
   }) => throw UnimplementedError();
 
   @override
-  Future<ServiceItem> updateService(
-    String serviceId, {
-    String? name,
-    int? priceCents,
-    bool? active,
-    String? vatRateId,
-    SupplyClass? supplyClass,
-  }) => throw UnimplementedError();
+  Future<ServiceItem> updateService(String serviceId, ServiceChange change) =>
+      throw UnimplementedError();
 
   @override
   Future<Package> createPackage(

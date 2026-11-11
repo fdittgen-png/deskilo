@@ -14,6 +14,7 @@ import 'package:deskilo/features/workspace/presentation/widgets/setup_resume_ban
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -196,6 +197,34 @@ void main() {
       findsOneWidget,
     );
     await tester.tap(find.byKey(const ValueKey('setup-guide-next-places')));
+    await tester.pump();
+    await tester.pump();
+    expect(pushed, ['/editor']);
+  });
+
+  // #3282 — the keyboard alone reaches the next task and opens it.
+  testWidgets('Tab reaches the next task and Enter opens it', (tester) async {
+    final pushed = await _pump(tester, _status());
+    final next = find.byKey(const ValueKey('setup-guide-next-places'));
+    bool focused() =>
+        FocusManager.instance.primaryFocus?.context != null &&
+        find
+            .ancestor(
+              of: find.byElementPredicate(
+                (e) => e == FocusManager.instance.primaryFocus!.context,
+              ),
+              matching: next,
+            )
+            .evaluate()
+            .isNotEmpty;
+    var presses = 0;
+    while (!focused() && presses < 40) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+      await tester.pump();
+      presses++;
+    }
+    expect(focused(), isTrue, reason: 'Tab never reached the next task');
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
     await tester.pump();
     await tester.pump();
     expect(pushed, ['/editor']);

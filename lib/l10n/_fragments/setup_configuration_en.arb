@@ -110,5 +110,93 @@
   },
   "@setupChoicesSaving": {
     "description": "Visible while applying setup choices and saving the journey."
+  },
+  "configureWorkspaceTitle": "Configure workspace",
+  "@configureWorkspaceTitle": {
+    "description": "#3282 the one drawer entry for the workspace's whole configuration (guide, settings, features, plan)."
+  },
+  "setupAdvancedSettings": "Advanced settings",
+  "@setupAdvancedSettings": {
+    "description": "#3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor."
+  },
+  "setupStateVerified": "Configured and checked",
+  "@setupStateVerified": {
+    "description": "#3282 a setup step the server checked and found configured."
+  },
+  "setupStateMarkedDone": "Configured, marked done by you",
+  "@setupStateMarkedDone": {
+    "description": "#3282 a setup step the server cannot verify, which the owner marked done."
+  },
+  "setupStateEnabled": "Switched on, still to configure",
+  "@setupStateEnabled": {
+    "description": "#3282 a setup step whose feature is on but not configured yet."
+  },
+  "setupStateNeedsDecision": "Needs your decision",
+  "@setupStateNeedsDecision": {
+    "description": "#3282 a setup step the server cannot verify, still open: the owner decides."
+  },
+  "setupTaskBreadcrumb": "{workspace} › Configure workspace › {task}",
+  "@setupTaskBreadcrumb": {
+    "description": "#3282 the breadcrumb on a setup task: the workspace, the configuration home, the task.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "task": {
+        "type": "String"
+      }
+    }
+  },
+  "businessExampleApproveBookings": "For example: a member asks for Thursday's meeting room and the manager confirms it.",
+  "@businessExampleApproveBookings": {
+    "description": "#3283 a business example under the setup question approve_bookings."
+  },
+  "businessExampleSeveralRoomsOrSites": "For example: an open space, two meeting rooms and a second address across town.",
+  "@businessExampleSeveralRoomsOrSites": {
+    "description": "#3283 a business example under the setup question several_rooms_or_sites."
+  },
+  "businessExamplePublicPage": "For example: someone looking for a desk nearby finds your page and writes to you.",
+  "@businessExamplePublicPage": {
+    "description": "#3283 a business example under the setup question public_page."
+  },
+  "businessExampleMembersOweMoney": "For example: a monthly membership, a day pass or coffee and printing on the bill.",
+  "@businessExampleMembersOweMoney": {
+    "description": "#3283 a business example under the setup question members_owe_money."
+  },
+  "businessExampleIssueInvoices": "For example: a company member needs a numbered invoice for its accounts each month.",
+  "@businessExampleIssueInvoices": {
+    "description": "#3283 a business example under the setup question issue_invoices."
+  },
+  "businessExamplePayOnline": "For example: a member pays this month's statement by card from their phone.",
+  "@businessExamplePayOnline": {
+    "description": "#3283 a business example under the setup question pay_online."
+  },
+  "businessExampleVatRegistered": "For example: your invoices show VAT and you file VAT returns.",
+  "@businessExampleVatRegistered": {
+    "description": "#3283 a business example under the setup question vat_registered."
+  },
+  "businessExampleAssociation": "For example: the members elect a board and hold a general meeting each year.",
+  "@businessExampleAssociation": {
+    "description": "#3283 a business example under the setup question association."
+  },
+  "businessExampleKeepBooks": "For example: your accountant asks for the year's books and the bank statements.",
+  "@businessExampleKeepBooks": {
+    "description": "#3283 a business example under the setup question keep_books."
+  },
+  "businessExampleTracksPurchases": "For example: the rent, the cleaning and the coffee machine you buy for the space.",
+  "@businessExampleTracksPurchases": {
+    "description": "#3283 a business example under the setup question tracks_purchases."
+  },
+  "businessExampleDoorTablet": "For example: members tap their badge on a tablet by the entrance as they arrive.",
+  "@businessExampleDoorTablet": {
+    "description": "#3283 a business example under the setup question door_tablet."
+  },
+  "businessExampleOrganised": "For example: an expense over a set amount needs the approval of two board members.",
+  "@businessExampleOrganised": {
+    "description": "#3283 a business example under the setup question organised."
+  },
+  "setupLevelsApplyFailed": "The choices could not be saved. Try again.",
+  "@setupLevelsApplyFailed": {
+    "description": "#3283 the setup choices could not be saved."
   }
 }

@@ -82,14 +82,16 @@ Future<void> _reveal(WidgetTester tester, String key) async {
 }
 
 void main() {
+  // #3282 — the one Configure workspace door leads a manageSites holder,
+  // who may configure nothing else, straight to the plan.
   testWidgets('a manageSites role holder opens the editor from the drawer', (
     tester,
   ) async {
     await _pump(tester, web: true, roles: _facilities());
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
-    await _reveal(tester, 'drawer-editor');
-    await tester.tap(find.byKey(const ValueKey('drawer-editor')));
+    await _reveal(tester, 'drawer-setup-guide');
+    await tester.tap(find.byKey(const ValueKey('drawer-setup-guide')));
     await tester.pumpAndSettle();
     expect(
       find.byType(EditorScreen),
@@ -120,6 +122,6 @@ void main() {
     await _pump(tester, web: true, roles: FakeWorkspaceRoles());
     await tester.tap(find.byTooltip('Open navigation menu'));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('drawer-editor')), findsNothing);
+    expect(find.byKey(const ValueKey('drawer-setup-guide')), findsNothing);
   });
 }

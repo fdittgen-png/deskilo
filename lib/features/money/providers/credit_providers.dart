@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_credit_repository.dart';
 import '../domain/credit_product.dart';
+import '../domain/member_price_list.dart' show openDaysIn;
 import '../domain/purchase.dart' show purchaseDecidePermission;
 
 part 'credit_providers.g.dart';
@@ -89,3 +91,15 @@ final invoicingBusinessProvider = Provider.autoDispose<InvoicingBusiness>((
         (DateTime d) => DateTime(d.year, d.month, d.day),
   );
 });
+
+/// #3283 — the days this month the workspace is open (its open weekdays
+/// less its closures), the basis a percentage level is explained on.
+@riverpod
+Future<int> monthOpenDays(Ref ref) async {
+  final now = ref.watch(clockProvider).now();
+  return openDaysIn(
+    DateTime(now.year, now.month),
+    await ref.watch(openWeekdaysProvider.future),
+    [for (final c in await ref.watch(closureDaysProvider.future)) c.day],
+  );
+}

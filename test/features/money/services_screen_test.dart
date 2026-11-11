@@ -64,7 +64,7 @@ void main() {
 
     await tester.enterText(find.widgetWithText(TextField, 'Name'), 'Day pass');
     await tester.enterText(find.widgetWithText(TextField, 'Price'), '2.50');
-    await tester.tap(find.text('Save'));
+    await _tapVisible(tester, find.text('Save'));
     await tester.pumpAndSettle();
 
     final created = money.services.singleWhere((s) => s.name == 'Day pass');
@@ -81,8 +81,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.enterText(find.widgetWithText(TextField, 'Price'), '3');
-    await tester.tap(find.text('Active'));
-    await tester.tap(find.text('Save'));
+    await _tapVisible(tester, find.byKey(const ValueKey('services-active')));
+    await _tapVisible(tester, find.text('Save'));
     await tester.pumpAndSettle();
 
     final updated = money.services.singleWhere((s) => s.name == 'Coffee');
@@ -98,8 +98,8 @@ void main() {
     await tester.tap(find.text('Locker'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Active'));
-    await tester.tap(find.text('Save'));
+    await _tapVisible(tester, find.byKey(const ValueKey('services-active')));
+    await _tapVisible(tester, find.text('Save'));
     await tester.pumpAndSettle();
 
     final updated = money.services.singleWhere((s) => s.name == 'Locker');
@@ -217,4 +217,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('supply-class-field')), findsNothing);
   });
+}
+
+/// #3552 — the sheet is taller: a control is brought into view first.
+Future<void> _tapVisible(WidgetTester tester, Finder finder) async {
+  await Scrollable.ensureVisible(tester.element(finder), alignment: 0.5);
+  for (var i = 0; i < 3; i++) {
+    await tester.pump(const Duration(milliseconds: 400));
+  }
+  await tester.tap(finder);
 }

@@ -4,8 +4,11 @@
 // each space's fixture holds: Pézenas has every step that applies to it,
 // Leipzig takes bookings and has not yet set its prices. The levels and
 // the acknowledgements are each space's own.
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
+import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/workspace/domain/local_setup.dart';
 import 'package:deskilo/features/workspace/domain/setup_level_change.dart';
@@ -29,15 +32,12 @@ SetupStepState _state(SetupStatus s, String step) =>
 void main() {
   test('Pézenas holds every step that applies to it', () async {
     final s = await _guideOver(DemoFixture.build()).setupStatus('ws-1');
-    expect(
-      {
-        for (final x in s.steps)
-          if (x.state != SetupStepState.notApplicable &&
-              x.state != SetupStepState.ready)
-            x.step: x.state,
-      },
-      isEmpty,
-    );
+    expect({
+      for (final x in s.steps)
+        if (x.state != SetupStepState.notApplicable &&
+            x.state != SetupStepState.ready)
+          x.step: x.state,
+    }, isEmpty);
     expect(s.nextMilestone, isNull);
     expect(s.milestones.where((m) => m.applies), hasLength(4));
     expect(
@@ -77,41 +77,53 @@ void main() {
     );
   });
 
-  test('a level changed in Leipzig is Leipzig\'s, and its guide follows', () async {
-    final fixture = DemoFixture.build();
-    final guide = _guideOver(fixture);
-    Set<WorkspaceFeature> on(String id) => resolveEnabledFeatures(
-      fixture.workspaces.workspaces.singleWhere((w) => w.id == id).featureFlags,
-    );
-    final pezenas = currentSetupLevels(on('ws-1'));
-    expect(_state(await guide.setupStatus(demoSecondSpaceId), 'kiosk'),
-        SetupStepState.notApplicable);
+  test(
+    'a level changed in Leipzig is Leipzig\'s, and its guide follows',
+    () async {
+      final fixture = DemoFixture.build();
+      final guide = _guideOver(fixture);
+      Set<WorkspaceFeature> on(String id) => resolveEnabledFeatures(
+        fixture.workspaces.workspaces
+            .singleWhere((w) => w.id == id)
+            .featureFlags,
+      );
+      final pezenas = currentSetupLevels(on('ws-1'));
+      expect(
+        _state(await guide.setupStatus(demoSecondSpaceId), 'kiosk'),
+        SetupStepState.notApplicable,
+      );
 
-    // The kiosk belongs to the measured bookings level.
-    final change = planSetupLevels(
-      stored: on(demoSecondSpaceId),
-      current: currentSetupLevels(on(demoSecondSpaceId)),
-      chosen: {
-        ...currentSetupLevels(on(demoSecondSpaceId)),
-        SetupProcess.bookings: 'measured',
-      },
-    );
-    await fixture.secondSpace.workspaces.setFeatureFlags(
-      demoSecondSpaceId,
-      change.flags,
-      expected: change.expected,
-    );
+      // The kiosk belongs to the measured bookings level.
+      final change = planSetupLevels(
+        stored: on(demoSecondSpaceId),
+        current: currentSetupLevels(on(demoSecondSpaceId)),
+        chosen: {
+          ...currentSetupLevels(on(demoSecondSpaceId)),
+          SetupProcess.bookings: 'measured',
+        },
+      );
+      await fixture.secondSpace.workspaces.setFeatureFlags(
+        demoSecondSpaceId,
+        change.flags,
+        expected: change.expected,
+      );
 
-    expect(currentSetupLevels(on(demoSecondSpaceId))[SetupProcess.bookings],
-        'measured');
-    expect(currentSetupLevels(on('ws-1')), pezenas,
-        reason: 'Pézenas keeps its own levels');
-    expect(
-      _state(await guide.setupStatus(demoSecondSpaceId), 'kiosk'),
-      SetupStepState.needsConfiguration,
-      reason: 'the kiosk now applies, and Leipzig has no tablet yet',
-    );
-  });
+      expect(
+        currentSetupLevels(on(demoSecondSpaceId))[SetupProcess.bookings],
+        'measured',
+      );
+      expect(
+        currentSetupLevels(on('ws-1')),
+        pezenas,
+        reason: 'Pézenas keeps its own levels',
+      );
+      expect(
+        _state(await guide.setupStatus(demoSecondSpaceId), 'kiosk'),
+        SetupStepState.needsConfiguration,
+        reason: 'the kiosk now applies, and Leipzig has no tablet yet',
+      );
+    },
+  );
 
   test('Later and Mark as done are each space\'s own, and refused where the '
       'server refuses them', () async {
@@ -148,6 +160,80 @@ void main() {
     expect(
       _state(await fresh.setupStatus(demoSecondSpaceId), 'recovery'),
       SetupStepState.needsConfiguration,
+    );
+  });
+
+  // #3282 — the guide's "places" and Reserve's plan read the same: ready
+  // only while every site Reserve can open has a seat on its plan.
+  Future<bool> everySiteSeated(
+    String id,
+    FakeWorkspaceRepository ws,
+    FakeFloorPlanRepository plan,
+  ) async {
+    final sites = await ws.fetchSites(id);
+    final levels = await plan.fetchLevels(id);
+    if (sites.isEmpty) {
+      for (final l in levels) {
+        if ((await plan.fetchPlan(l.id)).seats.isNotEmpty) return true;
+      }
+      return false;
+    }
+    for (final site in sites) {
+      var seats = 0;
+      for (final l in levels) {
+        final at = l.siteId ?? sites.firstWhere((x) => x.isDefault).id;
+        if (at == site.id) seats += (await plan.fetchPlan(l.id)).seats.length;
+      }
+      if (seats == 0) return false;
+    }
+    return true;
+  }
+
+  test(
+    'each space\'s places step agrees with the plans Reserve reads',
+    () async {
+      final f = DemoFixture.build();
+      final guide = _guideOver(f);
+      for (final (id, ws, plan) in [
+        ('ws-1', f.workspaces, f.floorPlan),
+        (demoSecondSpaceId, f.secondSpace.workspaces, f.secondSpace.floorPlan),
+        (demoLondonSpaceId, f.london.workspaces, f.london.floorPlan),
+      ]) {
+        final ready =
+            _state(await guide.setupStatus(id), 'places') ==
+            SetupStepState.ready;
+        expect(ready, await everySiteSeated(id, ws, plan), reason: id);
+      }
+    },
+  );
+
+  test('a site with an empty plan keeps the places step open', () async {
+    final f = DemoFixture.build();
+    final plan = f.london.floorPlan;
+    final sites = await f.london.workspaces.fetchSites(demoLondonSpaceId);
+    final empty = sites.firstWhere((s) => !s.isDefault);
+    final levels = {
+      for (final l in await plan.fetchLevels(demoLondonSpaceId))
+        if (l.siteId == empty.id) l.id,
+    };
+    final offices = {
+      for (final o in plan.offices)
+        if (levels.contains(o.levelId)) o.id,
+    };
+    final desks = {
+      for (final d in plan.desks)
+        if (offices.contains(d.officeId)) d.id,
+    };
+    plan.seats.removeWhere((x) => desks.contains(x.deskId));
+    expect(
+      await everySiteSeated(demoLondonSpaceId, f.london.workspaces, plan),
+      isFalse,
+    );
+    final s = await _guideOver(f).setupStatus(demoLondonSpaceId);
+    expect(
+      _state(s, 'places'),
+      isNot(SetupStepState.ready),
+      reason: '${empty.name} has no seat: its plan would contradict "ready"',
     );
   });
 }

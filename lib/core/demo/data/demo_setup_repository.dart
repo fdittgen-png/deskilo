@@ -180,7 +180,7 @@ Map<String, bool> _fixtureEvidence(String id, DemoSetupSources s) {
   ];
   final money = s.money;
   return {
-    'places': s.plan.seats.any((x) => x.workspaceId == id),
+    'places': _placesReady(id, s),
     'invite': members.length > 1,
     'pricing': money.feeBands.any((b) => b.workspaceId == id),
     'services': money.services.any((x) => x.workspaceId == id && x.active),
@@ -234,4 +234,32 @@ Future<Map<String, bool>> _booksEvidence(String id, DemoSetupBooks? b) async {
     'accounting': (await b.books.fetchBookProfiles(id)).isNotEmpty,
     'public_page': b.directory.pages.containsKey(id),
   };
+}
+
+/// #3282 — a space's places are ready when every site Reserve can open has a
+/// seat on its plan, not when a seat stands at one site somewhere: an empty
+/// site's plan would contradict a "ready" setup.
+bool _placesReady(String id, DemoSetupSources s) {
+  final plan = s.plan;
+  final siteOf = {
+    for (final l in plan.levels)
+      if (l.workspaceId == id) l.id: l.siteId,
+  };
+  final levelOfOffice = {for (final o in plan.offices) o.id: o.levelId};
+  final levelOfDesk = {
+    for (final d in plan.desks) d.id: levelOfOffice[d.officeId],
+  };
+  // The sites with a seat; null stands for the default site.
+  final seated = <String?>{
+    for (final seat in plan.seats)
+      if (seat.workspaceId == id)
+        if (levelOfDesk[seat.deskId] case final level?
+            when siteOf.containsKey(level))
+          siteOf[level],
+  };
+  final sites = [for (final x in s.space.sites) if (x.workspaceId == id) x];
+  if (sites.isEmpty) return seated.isNotEmpty;
+  return sites.every(
+    (site) => seated.contains(site.id) || (site.isDefault && seated.contains(null)),
+  );
 }

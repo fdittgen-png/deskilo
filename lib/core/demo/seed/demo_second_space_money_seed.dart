@@ -36,13 +36,65 @@ void seedLeipzigMoney(FakeMoneyRepository money, DateTime now) {
   money
     ..invoices.clear()
     ..services.clear()
+    // #3552 — the practice's services as a stranger reads them: two
+    // categories, the sessions with how long they take.
     ..services.addAll(const [
+      ServiceItem(
+        id: 'de-service-intro',
+        workspaceId: demoSecondSpaceId,
+        name: 'Erstgespräch',
+        priceCents: 4500,
+        active: true,
+        category: 'Behandlungen',
+        durationMinutes: 30,
+        description: 'Wir klären Ihr Anliegen und planen die Sitzungen.',
+        isPublic: true,
+        sortOrder: 1,
+      ),
+      ServiceItem(
+        id: 'de-service-session',
+        workspaceId: demoSecondSpaceId,
+        name: 'Einzelsitzung',
+        priceCents: 8000,
+        active: true,
+        category: 'Behandlungen',
+        durationMinutes: 50,
+        description: 'Eine Sitzung unter vier Augen.',
+        isPublic: true,
+        sortOrder: 2,
+      ),
+      ServiceItem(
+        id: 'de-service-double',
+        workspaceId: demoSecondSpaceId,
+        name: 'Doppelsitzung',
+        priceCents: 15000,
+        active: true,
+        category: 'Behandlungen',
+        durationMinutes: 90,
+        description: 'Zwei Sitzungen ohne Pause, für längere Arbeit.',
+        isPublic: true,
+        sortOrder: 3,
+      ),
+      ServiceItem(
+        id: 'de-service-group',
+        workspaceId: demoSecondSpaceId,
+        name: 'Gruppenkurs',
+        priceCents: 2500,
+        active: true,
+        category: 'Behandlungen',
+        durationMinutes: 60,
+        description: 'Kleine Gruppe, höchstens acht Personen.',
+        isPublic: true,
+        sortOrder: 4,
+      ),
       ServiceItem(
         id: 'de-service-coffee',
         workspaceId: demoSecondSpaceId,
         name: 'Kaffee',
         priceCents: 120,
         active: true,
+        category: 'Vor Ort',
+        sortOrder: 1,
       ),
       ServiceItem(
         id: 'de-service-locker',
@@ -50,6 +102,8 @@ void seedLeipzigMoney(FakeMoneyRepository money, DateTime now) {
         name: 'Schließfach (Monat)',
         priceCents: 1500,
         active: true,
+        category: 'Vor Ort',
+        sortOrder: 2,
       ),
     ]);
   var seq = 0;

@@ -5335,6 +5335,54 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get businessExampleApproveBookings =>
+      'Por ejemplo: un miembro pide la sala de reuniones para el jueves y la responsable la confirma.';
+
+  @override
+  String get businessExampleAssociation =>
+      'Por ejemplo: los miembros eligen una junta y celebran una asamblea general cada año.';
+
+  @override
+  String get businessExampleDoorTablet =>
+      'Por ejemplo: los miembros pasan su tarjeta por una tableta en la entrada al llegar.';
+
+  @override
+  String get businessExampleIssueInvoices =>
+      'Por ejemplo: una empresa miembro necesita cada mes una factura numerada para su contabilidad.';
+
+  @override
+  String get businessExampleKeepBooks =>
+      'Por ejemplo: su gestor le pide los libros del año y los extractos bancarios.';
+
+  @override
+  String get businessExampleMembersOweMoney =>
+      'Por ejemplo: una membresía mensual, un pase de día o café e impresiones en la cuenta.';
+
+  @override
+  String get businessExampleOrganised =>
+      'Por ejemplo: un gasto por encima de un importe fijado necesita la aprobación de dos miembros de la junta.';
+
+  @override
+  String get businessExamplePayOnline =>
+      'Por ejemplo: un miembro paga el extracto del mes con tarjeta desde su teléfono.';
+
+  @override
+  String get businessExamplePublicPage =>
+      'Por ejemplo: alguien que busca un puesto cerca encuentra su página y le escribe.';
+
+  @override
+  String get businessExampleSeveralRoomsOrSites =>
+      'Por ejemplo: un espacio abierto, dos salas de reuniones y una segunda dirección en la ciudad.';
+
+  @override
+  String get businessExampleTracksPurchases =>
+      'Por ejemplo: el alquiler, la limpieza y la cafetera que compra para el espacio.';
+
+  @override
+  String get businessExampleVatRegistered =>
+      'Por ejemplo: sus facturas muestran el IVA y usted presenta declaraciones de IVA.';
+
+  @override
   String businessKindAndMore(String list, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -6206,6 +6254,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get composerMention => 'Mencionar a alguien';
+
+  @override
+  String get configureWorkspaceTitle => 'Configurar el espacio';
 
   @override
   String get connectionCancelled =>
@@ -26586,6 +26637,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesActive => 'Activo';
 
   @override
+  String get servicesCategory => 'Categoría';
+
+  @override
+  String get servicesDescription => 'Descripción';
+
+  @override
+  String get servicesDuration => 'Duración (minutos)';
+
+  @override
+  String get servicesDurationHint => 'Déjelo vacío si no se mide en tiempo.';
+
+  @override
+  String servicesDurationRange(String min, String max) {
+    return 'Entre $min y $max minutos.';
+  }
+
+  @override
+  String servicesDurationShort(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '1 min',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get servicesEdit => 'Editar servicio';
 
   @override
@@ -26601,7 +26680,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get servicesNew => 'Nuevo servicio';
 
   @override
+  String get servicesOtherCategory => 'Otros servicios';
+
+  @override
   String get servicesPrice => 'Precio';
+
+  @override
+  String get servicesPublic => 'Mostrar en nuestra página pública';
+
+  @override
+  String get servicesSaveFailed =>
+      'No se pudo guardar el servicio. Inténtelo de nuevo.';
 
   @override
   String get servicesTitle => 'Servicios';
@@ -27518,6 +27607,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.';
 
   @override
+  String get setupAdvancedSettings => 'Ajustes avanzados';
+
+  @override
   String get setupAnswerUnknown => 'Aún no lo sé';
 
   @override
@@ -28346,10 +28438,114 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupLevelNameTaxVat => 'IVA';
 
   @override
+  String get setupLevelOutcomeAssistantOff =>
+      'Podrá gestionar el espacio sin que ningún asistente acceda a sus datos.';
+
+  @override
+  String get setupLevelOutcomeAssistantOn =>
+      'Podrá dejar que un asistente de su elección actúe en el espacio por usted, y grabar tareas que guíen a otros.';
+
+  @override
+  String get setupLevelOutcomeBookingsMeasured =>
+      'Podrá registrar llegadas con tarjeta, código QR o una tableta de recepción y ver la ocupación del espacio.';
+
+  @override
+  String get setupLevelOutcomeBookingsNone =>
+      'Podrá gestionar su negocio sin plazas reservables.';
+
+  @override
+  String get setupLevelOutcomeBookingsResources =>
+      'Podrá ofrecer salas de reuniones, aparcamiento y plantas enteras, gestionar varias sedes, recibir invitados y cerrar los días festivos.';
+
+  @override
+  String get setupLevelOutcomeBookingsSimple =>
+      'Podrá dejar que los miembros reserven puestos y salas en su plano, dentro de su horario y sus reglas de reserva, también en serie o para otra persona.';
+
+  @override
+  String get setupLevelOutcomeCommunityBasic =>
+      'Podrá llevar un directorio de miembros con sus funciones, compartir un calendario y enviar mensajes y notificaciones.';
+
+  @override
+  String get setupLevelOutcomeCommunityOrganised =>
+      'Podrá compartir la titularidad, definir sus propias funciones y campos, gestionar perfiles de otras personas y aprobar solicitudes por etapas.';
+
+  @override
+  String get setupLevelOutcomeMoneyInvoices =>
+      'Podrá emitir facturas numeradas por membresías y uso, enviar recordatorios de pago y diseñar sus documentos.';
+
+  @override
+  String get setupLevelOutcomeMoneyNone =>
+      'Podrá gestionar el espacio sin dinero en la aplicación.';
+
+  @override
+  String get setupLevelOutcomeMoneyStatements =>
+      'Podrá poner precio a sus membresías y servicios y dar a cada miembro un extracto mensual de lo que debe.';
+
+  @override
+  String get setupLevelOutcomeOperationsAdvanced =>
+      'Podrá probar cambios en una copia de desarrollo, desplegarlos y trasladar la configuración entre espacios.';
+
+  @override
+  String get setupLevelOutcomeOperationsBasic =>
+      'Podrá seguir la guía de puesta en marcha, exportar documentos y datos, y probar en la demo.';
+
+  @override
+  String get setupLevelOutcomeOperationsInsight =>
+      'Podrá ver un resumen del espacio y diseñar sus propios informes.';
+
+  @override
+  String get setupLevelOutcomePaymentsOff =>
+      'Podrá cobrar fuera de la aplicación, por transferencia o en efectivo, y registrar lo que llega.';
+
+  @override
+  String get setupLevelOutcomePaymentsOnline =>
+      'Podrá dejar que los miembros paguen en línea a través de su proveedor de pagos.';
+
+  @override
+  String get setupLevelOutcomePresentationBasic =>
+      'Podrá distinguir a los miembros por sus propias iniciales.';
+
+  @override
+  String get setupLevelOutcomePresentationBranded =>
+      'Podrá dar al espacio sus propios colores y sus propias palabras.';
+
+  @override
+  String get setupLevelOutcomePresentationPublic =>
+      'Podrá publicar una página pública y recibir consultas de personas que aún no son miembros.';
+
+  @override
+  String get setupLevelOutcomePurchasesExpenses =>
+      'Podrá registrar sus gastos, repetirlos cada mes y repartirlos entre los miembros.';
+
+  @override
+  String get setupLevelOutcomePurchasesFull =>
+      'Podrá pedir a proveedores, registrar facturas y arrendamientos, llevar un registro de activos y analizar lo que compra.';
+
+  @override
+  String get setupLevelOutcomePurchasesNone =>
+      'Podrá gestionar el espacio sin registrar sus propias compras.';
+
+  @override
+  String get setupLevelOutcomeTaxBooks =>
+      'Podrá llevar la contabilidad, cerrar periodos, importar extractos bancarios y entregar todo a su gestor.';
+
+  @override
+  String get setupLevelOutcomeTaxNone =>
+      'Podrá facturar sin gestionar el IVA en la aplicación.';
+
+  @override
+  String get setupLevelOutcomeTaxVat =>
+      'Podrá aplicar tipos de IVA a facturas y compras y preparar sus declaraciones de IVA.';
+
+  @override
   String get setupLevelsApplied => 'Su espacio hace ahora lo que eligió.';
 
   @override
   String get setupLevelsApply => 'Aplicar';
+
+  @override
+  String get setupLevelsApplyFailed =>
+      'No se pudieron guardar las opciones. Inténtelo de nuevo.';
 
   @override
   String get setupLevelsChoice => 'Lo que necesita';
@@ -28373,6 +28569,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupLevelsNoChange => 'Nada cambia: el espacio ya lo hace.';
+
+  @override
+  String get setupLevelsOutcomeTitle => 'Con este cambio:';
 
   @override
   String get setupLevelsPresets => 'Inicio rápido';
@@ -28778,6 +28977,32 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count medias jornadas incluidas',
+      one: '1 media jornada incluida',
+    );
+    return '$level: $_temp0';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days días',
+      one: '1 día',
+    );
+    return 'Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas, y una media jornada más allá de la parte de un miembro se cobra a la tarifa adicional de su tramo. Este mes su espacio abre $_temp0:';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas. No se pudieron leer sus días de apertura, así que no se muestra ningún ejemplo.';
+
+  @override
   String get setupPricingLevelsBody =>
       'Los niveles que pueden elegir los miembros. Cada uno tiene el precio de la franja en la que cae.';
 
@@ -29021,6 +29246,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se ha podido añadir el servicio. Inténtelo de nuevo.';
 
   @override
+  String get setupStateEnabled => 'Activado, aún por configurar';
+
+  @override
+  String get setupStateMarkedDone =>
+      'Configurado, marcado como hecho por usted';
+
+  @override
   String get setupStateNameBlocked => 'Espera otro paso';
 
   @override
@@ -29037,6 +29269,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupStateNameReady => 'Hecho';
+
+  @override
+  String get setupStateNeedsDecision => 'Necesita su decisión';
+
+  @override
+  String get setupStateVerified => 'Configurado y comprobado';
 
   @override
   String get setupStepDone => 'Hecho';
@@ -29250,6 +29488,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupStepTitleVat => 'IVA';
+
+  @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Configurar el espacio › $task';
+  }
 
   @override
   String get setupTaskSaved =>

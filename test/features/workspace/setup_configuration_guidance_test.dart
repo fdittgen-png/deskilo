@@ -82,7 +82,15 @@ void main() {
         textScale: 2,
       );
       await tester.pumpAndSettle();
-      expect(find.text('Le Studio'), findsOneWidget);
+      // #3282 — the breadcrumb: workspace › configuration › task.
+      final crumb = tester
+          .widget<Text>(find.byKey(const ValueKey('setup-task-breadcrumb')))
+          .data!;
+      expect(crumb, startsWith('Le Studio › Configure workspace › '));
+      expect(
+        crumb.length,
+        greaterThan('Le Studio › Configure workspace › '.length),
+      );
       expect(
         find.textContaining('Ready for money · 1 of 2 done'),
         findsOneWidget,

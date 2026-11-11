@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_status.dart';
+import '../setup_step_words.dart';
 
 class SetupConfigurationOverview extends StatelessWidget {
   const SetupConfigurationOverview({
@@ -118,7 +119,18 @@ class SetupTaskContext extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(workspaceName, style: Theme.of(context).textTheme.titleSmall),
+            // #3282 — where the owner is: workspace, configuration, task.
+            Semantics(
+              header: true,
+              child: Text(
+                l10n.setupTaskBreadcrumb(
+                  workspaceName,
+                  l10n.setupStepTitle(stepId),
+                ),
+                key: const ValueKey('setup-task-breadcrumb'),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
             if (goal != null)
               Text(
                 '${l10n.setupMilestoneName(goal.milestone)} · '
@@ -127,7 +139,7 @@ class SetupTaskContext extends StatelessWidget {
             Text(
               step == null
                   ? l10n.setupOverviewUnchecked
-                  : l10n.setupStateName(step.state.name),
+                  : setupStepWord(l10n, step),
             ),
             if (step != null && step.blockedBy.isNotEmpty)
               Text(

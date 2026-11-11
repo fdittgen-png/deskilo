@@ -22,10 +22,12 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../application/offer_subscription_levels.dart';
 import '../../domain/credit_product.dart';
 import '../../domain/fee_band.dart';
+import '../../domain/member_price_list.dart' show includedHalfDays;
 import '../../domain/package.dart';
 import '../../domain/subscription_levels.dart';
 import '../../providers/credit_providers.dart';
@@ -70,7 +72,11 @@ class SetupPricingStep extends ConsumerWidget {
       );
     }
     if (all.any((v) => !v.hasValue)) return const LoadingView();
+    // #3283 — what a level buys, on this workspace's own month.
+    final days = ref.watch(monthOpenDaysProvider);
+    final basis = (openDays: days.value, failed: days.hasError && !days.hasValue); // empty-ok: an unread month shows no example, a failed one says so
     return _PricingPage(
+      basis: basis,
       draft: draft,
       workspaceId: workspaceId,
       currencyCode: currencyCode,
@@ -92,6 +98,7 @@ class SetupPricingStep extends ConsumerWidget {
 
 class _PricingPage extends ConsumerStatefulWidget {
   const _PricingPage({
+    required this.basis,
     required this.draft,
     required this.workspaceId,
     required this.currencyCode,
@@ -105,6 +112,9 @@ class _PricingPage extends ConsumerStatefulWidget {
   final String currencyCode;
   final SubscriptionLevels stored;
   final List<FeeBand> bands;
+
+  /// #3283 — this month's open days, null while unread; failed when unread.
+  final ({int? openDays, bool failed}) basis;
   final List<Package> packages;
 
   /// Null while carnets are off.
@@ -180,6 +190,7 @@ class _PricingPageState extends ConsumerState<_PricingPage> {
             ListenableBuilder(
               listenable: Listenable.merge([_presets, _busy]),
               builder: (context, _) => _LevelsPreset(
+                basis: widget.basis,
                 presets: _presets.value,
                 busy: _busy.value,
                 onToggle: _toggle,
@@ -210,16 +221,46 @@ class _PricingPageState extends ConsumerState<_PricingPage> {
 
 class _LevelsPreset extends StatelessWidget {
   const _LevelsPreset({
+    required this.basis,
     required this.presets,
     required this.busy,
     required this.onToggle,
     required this.onOffer,
   });
 
+  final ({int? openDays, bool failed}) basis;
   final Set<int> presets;
   final bool busy;
   final void Function(int preset, {required bool on}) onToggle;
   final VoidCallback onOffer;
+
+  /// #3283 — a level explained with this month's own open days, never a
+  /// universal rule; unread days say so instead of inventing an example.
+  List<Widget> _basis(AppLocalizations l10n) => switch (basis) {
+    (openDays: final days?, failed: _) => [
+      Text(
+        l10n.setupPricingLevelsBasis(days),
+        key: const ValueKey('setup-pricing-basis'),
+      ),
+      for (final pct in SubscriptionLevels.presets)
+        Text(
+          l10n.setupPricingLevelIncludes(
+            l10n.percentValue(pct),
+            includedHalfDays(days, pct),
+          ),
+          key: ValueKey('setup-pricing-includes-$pct'),
+        ),
+      const SizedBox(height: AppSpacing.sm),
+    ],
+    (openDays: null, failed: true) => [
+      Text(
+        l10n.setupPricingLevelsBasisUnknown,
+        key: const ValueKey('setup-pricing-basis-unknown'),
+      ),
+      const SizedBox(height: AppSpacing.sm),
+    ],
+    _ => const [],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -234,6 +275,7 @@ class _LevelsPreset extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         Text(l10n.setupPricingLevelsBody),
         const SizedBox(height: AppSpacing.sm),
+        ..._basis(l10n),
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.xs,

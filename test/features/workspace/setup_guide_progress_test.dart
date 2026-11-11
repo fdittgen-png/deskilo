@@ -134,9 +134,13 @@ void main() {
 
     // Every step's state is a word, whatever its icon.
     await _unfold(tester, 'done');
-    expect(_read(tester, 'setup-step-basics'), contains('Done'));
+    // #3282 — checked by the server, said so.
+    expect(_read(tester, 'setup-step-basics'), contains('Configured and checked'));
     await _unfold(tester, 'optional');
-    expect(_read(tester, 'setup-step-services'), contains('To do'));
+    expect(
+      _read(tester, 'setup-step-services'),
+      contains('Switched on, still to configure'),
+    );
     await _unfold(tester, 'add-more');
     expect(_read(tester, 'setup-step-kiosk'), contains('Not in your setup'));
     semantics.dispose();

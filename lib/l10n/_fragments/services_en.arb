@@ -31,5 +31,54 @@
   "servicesActive": "Active",
   "@servicesActive": {
     "description": "Label of the activate/deactivate switch in the edit sheet"
+  },
+  "servicesDescription": "Description",
+  "@servicesDescription": {
+    "description": "#3552 the service editor: what a stranger reads about the service"
+  },
+  "servicesDuration": "Duration (minutes)",
+  "@servicesDuration": {
+    "description": "#3552 the service editor: how long the service takes, in minutes"
+  },
+  "servicesDurationHint": "Leave blank if it is not time-based.",
+  "@servicesDurationHint": {
+    "description": "#3552 the duration field's hint: blank means not time-based"
+  },
+  "servicesDurationRange": "Between {min} and {max} minutes.",
+  "@servicesDurationRange": {
+    "description": "#3552 the duration field's error: the allowed range",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "servicesCategory": "Category",
+  "@servicesCategory": {
+    "description": "#3552 the service editor: the group the service is listed under"
+  },
+  "servicesPublic": "Show on our public page",
+  "@servicesPublic": {
+    "description": "#3552 the service editor: whether the service is shown on the public page"
+  },
+  "servicesOtherCategory": "Other services",
+  "@servicesOtherCategory": {
+    "description": "#3552 the services list: the heading of services without a category"
+  },
+  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "@servicesDurationShort": {
+    "description": "#3552 the services list: a duration in minutes, short",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "servicesSaveFailed": "The service could not be saved. Try again.",
+  "@servicesSaveFailed": {
+    "description": "#3552 the service editor: saving a service failed."
   }
 }

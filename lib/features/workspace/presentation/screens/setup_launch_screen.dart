@@ -23,6 +23,7 @@ import '../../domain/workspace.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../launch_report.dart';
+import '../setup_step_words.dart';
 
 class SetupLaunchScreen extends ConsumerWidget {
   const SetupLaunchScreen({super.key});
@@ -334,7 +335,7 @@ class _AnswerTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(l10n.setupStepTitle(step.step)),
-      subtitle: Text(l10n.setupStateName(step.state.name)),
+      subtitle: Text(setupStepWord(l10n, step)),
       trailing: TextButton(
         key: ValueKey('$keyPrefix-${step.step}'),
         onPressed: () => open(step.route),

@@ -5342,6 +5342,54 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get businessExampleApproveBookings =>
+      'Zum Beispiel: Ein Mitglied fragt den Besprechungsraum für Donnerstag an, und die Leitung bestätigt.';
+
+  @override
+  String get businessExampleAssociation =>
+      'Zum Beispiel: Die Mitglieder wählen einen Vorstand und halten jedes Jahr eine Mitgliederversammlung ab.';
+
+  @override
+  String get businessExampleDoorTablet =>
+      'Zum Beispiel: Mitglieder halten beim Ankommen ihren Ausweis an ein Tablet am Eingang.';
+
+  @override
+  String get businessExampleIssueInvoices =>
+      'Zum Beispiel: Ein Firmenmitglied braucht jeden Monat eine nummerierte Rechnung für seine Buchhaltung.';
+
+  @override
+  String get businessExampleKeepBooks =>
+      'Zum Beispiel: Ihre Steuerberatung verlangt die Bücher des Jahres und die Kontoauszüge.';
+
+  @override
+  String get businessExampleMembersOweMoney =>
+      'Zum Beispiel: eine Monatsmitgliedschaft, ein Tagespass oder Kaffee und Drucke auf der Rechnung.';
+
+  @override
+  String get businessExampleOrganised =>
+      'Zum Beispiel: Eine Ausgabe über einem festgelegten Betrag braucht die Zustimmung zweier Vorstandsmitglieder.';
+
+  @override
+  String get businessExamplePayOnline =>
+      'Zum Beispiel: Ein Mitglied bezahlt die Monatsabrechnung per Karte vom Telefon aus.';
+
+  @override
+  String get businessExamplePublicPage =>
+      'Zum Beispiel: Jemand sucht einen Schreibtisch in der Nähe, findet Ihre Seite und schreibt Ihnen.';
+
+  @override
+  String get businessExampleSeveralRoomsOrSites =>
+      'Zum Beispiel: ein offener Bereich, zwei Besprechungsräume und eine zweite Adresse in der Stadt.';
+
+  @override
+  String get businessExampleTracksPurchases =>
+      'Zum Beispiel: die Miete, die Reinigung und die Kaffeemaschine, die Sie für den Bereich kaufen.';
+
+  @override
+  String get businessExampleVatRegistered =>
+      'Zum Beispiel: Ihre Rechnungen weisen Umsatzsteuer aus, und Sie geben Umsatzsteuererklärungen ab.';
+
+  @override
   String businessKindAndMore(String list, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -6217,6 +6265,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get composerMention => 'Jemanden erwähnen';
+
+  @override
+  String get configureWorkspaceTitle => 'Bereich konfigurieren';
 
   @override
   String get connectionCancelled =>
@@ -26647,6 +26698,35 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesActive => 'Aktiv';
 
   @override
+  String get servicesCategory => 'Kategorie';
+
+  @override
+  String get servicesDescription => 'Beschreibung';
+
+  @override
+  String get servicesDuration => 'Dauer (Minuten)';
+
+  @override
+  String get servicesDurationHint =>
+      'Leer lassen, wenn sie nicht zeitbasiert ist.';
+
+  @override
+  String servicesDurationRange(String min, String max) {
+    return 'Zwischen $min und $max Minuten.';
+  }
+
+  @override
+  String servicesDurationShort(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes Min.',
+      one: '1 Min.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get servicesEdit => 'Leistung bearbeiten';
 
   @override
@@ -26662,7 +26742,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get servicesNew => 'Neue Leistung';
 
   @override
+  String get servicesOtherCategory => 'Weitere Leistungen';
+
+  @override
   String get servicesPrice => 'Preis';
+
+  @override
+  String get servicesPublic => 'Auf unserer öffentlichen Seite zeigen';
+
+  @override
+  String get servicesSaveFailed =>
+      'Die Leistung konnte nicht gespeichert werden. Versuchen Sie es erneut.';
 
   @override
   String get servicesTitle => 'Leistungen';
@@ -27568,6 +27658,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.';
 
   @override
+  String get setupAdvancedSettings => 'Erweiterte Einstellungen';
+
+  @override
   String get setupAnswerUnknown => 'Weiß ich noch nicht';
 
   @override
@@ -28400,10 +28493,114 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupLevelNameTaxVat => 'USt.';
 
   @override
+  String get setupLevelOutcomeAssistantOff =>
+      'Sie können den Bereich führen, ohne dass ein Assistent auf seine Daten zugreift.';
+
+  @override
+  String get setupLevelOutcomeAssistantOn =>
+      'Sie können einen Assistenten Ihrer Wahl im Bereich für Sie handeln lassen und Abläufe aufzeichnen, die andere anleiten.';
+
+  @override
+  String get setupLevelOutcomeBookingsMeasured =>
+      'Sie können Anwesenheit per Ausweis, QR-Code oder Empfangstablet erfassen und sehen, wie voll der Bereich ist.';
+
+  @override
+  String get setupLevelOutcomeBookingsNone =>
+      'Sie können Ihr Geschäft ohne buchbare Plätze führen.';
+
+  @override
+  String get setupLevelOutcomeBookingsResources =>
+      'Sie können Besprechungsräume, Parkplätze und ganze Etagen anbieten, mehrere Standorte führen, Gäste empfangen und an Feiertagen schließen.';
+
+  @override
+  String get setupLevelOutcomeBookingsSimple =>
+      'Sie können Mitglieder Schreibtische und Räume auf Ihrem Plan buchen lassen, innerhalb Ihrer Öffnungszeiten und Buchungsregeln, auch als Serie oder für andere.';
+
+  @override
+  String get setupLevelOutcomeCommunityBasic =>
+      'Sie können ein Mitgliederverzeichnis mit Rollen führen, einen Kalender teilen und Nachrichten und Benachrichtigungen senden.';
+
+  @override
+  String get setupLevelOutcomeCommunityOrganised =>
+      'Sie können die Inhaberschaft teilen, eigene Rollen und Felder festlegen, Profile für andere verwalten und Anträge stufenweise genehmigen lassen.';
+
+  @override
+  String get setupLevelOutcomeMoneyInvoices =>
+      'Sie können nummerierte Rechnungen für Mitgliedschaften und Nutzung ausstellen, Zahlungserinnerungen senden und Ihre Dokumente gestalten.';
+
+  @override
+  String get setupLevelOutcomeMoneyNone =>
+      'Sie können den Bereich ganz ohne Geld in der App führen.';
+
+  @override
+  String get setupLevelOutcomeMoneyStatements =>
+      'Sie können Mitgliedschaften und Leistungen bepreisen und jedem Mitglied eine monatliche Abrechnung über seine Schulden geben.';
+
+  @override
+  String get setupLevelOutcomeOperationsAdvanced =>
+      'Sie können Änderungen in einer Entwicklungskopie erproben, sie übernehmen und Konfiguration zwischen Bereichen übertragen.';
+
+  @override
+  String get setupLevelOutcomeOperationsBasic =>
+      'Sie können der Einrichtungsanleitung folgen, Dokumente und Daten exportieren und Dinge in der Demo ausprobieren.';
+
+  @override
+  String get setupLevelOutcomeOperationsInsight =>
+      'Sie können eine Übersicht des Bereichs sehen und eigene Berichte gestalten.';
+
+  @override
+  String get setupLevelOutcomePaymentsOff =>
+      'Sie können Zahlungen außerhalb der App annehmen, per Überweisung oder bar, und erfassen, was eingeht.';
+
+  @override
+  String get setupLevelOutcomePaymentsOnline =>
+      'Sie können Mitglieder online über Ihren Zahlungsanbieter zahlen lassen.';
+
+  @override
+  String get setupLevelOutcomePresentationBasic =>
+      'Sie können Mitglieder an ihren eigenen Initialen unterscheiden.';
+
+  @override
+  String get setupLevelOutcomePresentationBranded =>
+      'Sie können dem Bereich Ihre eigenen Farben und Ihre eigenen Begriffe geben.';
+
+  @override
+  String get setupLevelOutcomePresentationPublic =>
+      'Sie können eine öffentliche Seite veröffentlichen und Anfragen von Menschen erhalten, die noch keine Mitglieder sind.';
+
+  @override
+  String get setupLevelOutcomePurchasesExpenses =>
+      'Sie können Ihre Ausgaben erfassen, monatlich wiederholen und unter den Mitgliedern aufteilen.';
+
+  @override
+  String get setupLevelOutcomePurchasesFull =>
+      'Sie können bei Lieferanten bestellen, Rechnungen und Mietverträge erfassen, ein Anlagenverzeichnis führen und Ihre Einkäufe auswerten.';
+
+  @override
+  String get setupLevelOutcomePurchasesNone =>
+      'Sie können den Bereich führen, ohne Ihre eigenen Einkäufe zu erfassen.';
+
+  @override
+  String get setupLevelOutcomeTaxBooks =>
+      'Sie können die Bücher führen, Perioden abschließen, Kontoauszüge einlesen und alles an Ihre Steuerberatung übergeben.';
+
+  @override
+  String get setupLevelOutcomeTaxNone =>
+      'Sie können ohne Umsatzsteuerverwaltung in der App abrechnen.';
+
+  @override
+  String get setupLevelOutcomeTaxVat =>
+      'Sie können Umsatzsteuersätze auf Rechnungen und Einkäufe anwenden und Ihre Umsatzsteuererklärungen vorbereiten.';
+
+  @override
   String get setupLevelsApplied => 'Ihr Raum tut jetzt, was Sie gewählt haben.';
 
   @override
   String get setupLevelsApply => 'Anwenden';
+
+  @override
+  String get setupLevelsApplyFailed =>
+      'Die Auswahl konnte nicht gespeichert werden. Versuchen Sie es erneut.';
 
   @override
   String get setupLevelsChoice => 'Was er braucht';
@@ -28428,6 +28625,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupLevelsNoChange =>
       'Nichts ändert sich: Der Raum tut das bereits.';
+
+  @override
+  String get setupLevelsOutcomeTitle => 'Mit dieser Änderung:';
 
   @override
   String get setupLevelsPresets => 'Schnellstart';
@@ -28834,6 +29034,32 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String setupPricingLevelIncludes(String level, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Halbtage',
+      one: '1 Halbtag',
+    );
+    return '$level: $_temp0 inklusive';
+  }
+
+  @override
+  String setupPricingLevelsBasis(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tage',
+      one: '1 Tag',
+    );
+    return 'Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle, und ein Halbtag über den Anteil eines Mitglieds hinaus wird zum Zusatzpreis seiner Preisstufe berechnet. Diesen Monat ist Ihr Bereich $_temp0 geöffnet:';
+  }
+
+  @override
+  String get setupPricingLevelsBasisUnknown =>
+      'Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle. Ihre Öffnungstage konnten nicht gelesen werden, daher wird kein Beispiel gezeigt.';
+
+  @override
   String get setupPricingLevelsBody =>
       'Die Stufen, die Mitglieder wählen können. Jede kostet, was ihr Preisband vorgibt.';
 
@@ -29077,6 +29303,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Service konnte nicht hinzugefügt werden. Versuchen Sie es erneut.';
 
   @override
+  String get setupStateEnabled => 'Eingeschaltet, noch einzurichten';
+
+  @override
+  String get setupStateMarkedDone =>
+      'Eingerichtet, von Ihnen als erledigt markiert';
+
+  @override
   String get setupStateNameBlocked => 'Wartet auf einen anderen Schritt';
 
   @override
@@ -29093,6 +29326,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupStateNameReady => 'Erledigt';
+
+  @override
+  String get setupStateNeedsDecision => 'Braucht Ihre Entscheidung';
+
+  @override
+  String get setupStateVerified => 'Eingerichtet und geprüft';
 
   @override
   String get setupStepDone => 'Fertig';
@@ -29310,6 +29549,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupStepTitleVat => 'Umsatzsteuer';
+
+  @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Bereich konfigurieren › $task';
+  }
 
   @override
   String get setupTaskSaved =>

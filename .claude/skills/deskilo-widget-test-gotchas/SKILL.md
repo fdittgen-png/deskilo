@@ -6,8 +6,8 @@ description: A symptom → cause → fix table for DesKilo Flutter tests (widget
 
 Look the symptom up; the canonical rules (formatting, strings, budgets, suite
 runs) live in `deskilo-ship-feature`. Before calling a test "green", prove it red
-against master (the "also passes on master" row). Generic Flutter test advice is the user-level
-`flutter-dart-best-practices` skill.
+against master (the "also passes on master" row). For responsive diagnosis,
+use `deskilo-forms` §4 and the repository's existing test helpers.
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -22,7 +22,7 @@ against master (the "also passes on master" row). Generic Flutter test advice is
 | `file_length` lint | a file outgrew its budget | extract and lower the baseline, or bump with `// YYYY-MM-DD #issue reason` |
 | `help_host_inventory_test` fails after adding a help card | a new file mounts a `HelpHint` / Get started card, or a count rose (#2091) | the inventory only shrinks until the shared arbiter lands (#1853): never a new host file; a lowered count lowers the pin, a file at zero leaves the list; only the Reserve help host mounts Get started |
 | an app test hits `Supabase.instance` | a new repository provider has no fake in `standardTestOverrides` | register its fake there (e.g. `deployment:` → `FakeDeploymentRepository`) |
-| hundreds of changed lines in a file you barely touched | `dart format` on an unformatted legacy file | `git checkout -- file` and re-apply the edit |
+| hundreds of changed lines in a file you barely touched | `dart format` on an unformatted legacy file | revert only the formatting hunks, preserving pre-existing and intended edits; never format existing files |
 | a suite result contradicts the code | a `flutter test` ran in the background across a branch switch | never switch branches while a suite runs; re-run |
 | `Crash when compiling … FFI` in a test run | flaky toolchain crash in build hooks | re-run; not the code |
 | fixture documents render in German | the test workspace resolves reader language to DE | assert the German title (`Verbrauchsbericht`) or the preview key `report-quick-preview` |
@@ -36,13 +36,16 @@ against master (the "also passes on master" row). Generic Flutter test advice is
 | the settings list grew and a tile tap misses | Advanced/Administration gained rows | viewport 3100 → 3300, or `scrollUntilVisible` on the settings list |
 | `expect(find.text('Sign out'))` finds nothing | same growth | same fix |
 | a narrow-width test still sees the wide layout | the pump helper pins the view — `pumpInvoices` sets 800×1400 and `addTearDown(reset)` | set the size AFTER the helper, then `pumpAndSettle()`; it is also the honest sequence (a window dragged narrow must fold too) |
+| a viewport test has the wrong logical width | physical pixels were treated as dp | prefer `pumpApp(size: ..., pixelRatio: ...)`; logical size is physicalSize / devicePixelRatio |
+| a later test inherits large text or insets | a dispatcher/view override leaked | register the matching reset/clear method with `addTearDown`; `pumpApp` only restores size and pixel ratio it changed |
+| a phone form passes until translated or the keyboard opens | the test covered only its default locale/insets | use the existing screen helper, guardWidths/guardScales, five locales and the relevant keyboard/error state; assert reachable actions without enlarging the viewport |
 | `find.text('Report editor')` passes on a title that reads "Rep…" | an ellipsised `Text` still holds the full string in the tree | assert the STRUCTURE that makes room — the overflow menu present, the icon buttons absent — never the string |
 | a new width surfaces an overflow in an unrelated widget | it was always too wide; nothing had rendered it that narrow before | fix it in the same PR — shipping the bar while the body clips is half a fix (#1056: the app bar, then a 194 px Row in the designer's own toolbar) |
 | a `Row` of chips/buttons overflows on a phone | `Flex` answers "too wide" by clipping | `Wrap` with `WrapAlignment.spaceBetween`; on a wide screen it lays out exactly as the Row did, and there is no breakpoint to guess at |
 | a rect read after `scrollUntilVisible` puts a widget off-screen | its final `ensureVisible` jump is not pumped: `getRect` reads the OLD layout | `await tester.pumpAndSettle()` before any geometry assertion; and measure master before "fixing" a layout (#1660: a stale rect faked a 40 px results viewport) |
 | a provider-error test never shows the error state | Riverpod 3 RETRIES a failed provider automatically | `ProviderScope(retry: (_, _) => null, …)` / `ProviderContainer(retry: …)` in failure tests |
 | `tester.hasRunningAnimations` is true with reduced motion on | the tap's ink ripple is an animation too | assert position instead: the first frame's `getRect` equals the settled one; reduced motion via `platformDispatcher.accessibilityFeaturesTestValue = FakeAccessibilityFeatures(disableAnimations: true)` |
-| a "green" test also passes on master | it asserts a default or a stale reading | red-first against master (`git show origin/master:<file> > <file>`), then restore; if it stays green, the test proves nothing |
+| a "green" test also passes on master | it asserts a default or a stale reading | prove the regression red against master in an isolated checkout, preserving current work; if it stays green, revise the assertion |
 | an HTTP-fixture MFA test sees aal1 after a successful verify, or an unexpected `/auth/v1/token` call | gotrue's `mfa.listFactors()` calls `refreshSession()` first, and `getAuthenticatorAssuranceLevel()` reads the `aal` claim of the (refreshed) JWT | answer `grant_type=refresh_token` with a session at the level the refresh token was issued for (encode it in the token, as `mcp_target_second_factor_test` does); a parameterless `rpc()` posts the body `null`, not `{}` |
 | a full-app test opens on `/me` instead of `/reserve` | #1823: a space is ENTERED, never assumed — with no space of this person's to return to the app opens on Me | `FakeWorkspaceRepository.withWorkspace()` seeds `serverDefaultWorkspaceId = 'ws-1'`; a hand-built fixture sets `serverDefaultWorkspaceId` itself (or seeds `InMemoryActiveWorkspaceStore` AND clears the server default when the test is about the device's memory) |
 | a My-account tile (photo, language, theme, WhatsApp, linked accounts, hints) is not found under `/settings` | #1823 moved them into Me › Me; Settings keeps `settings-open-me` and the per-space exception | `openMyAccount(tester)` / `openMyPrivacy(tester)` from `test/helpers/open_my_account.dart` |

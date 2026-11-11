@@ -31,5 +31,8 @@
   "setupApprovalsFlowOutcome": "Si applica",
   "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Non appena c'è un'approvazione.} other{Non appena ci sono {required} approvazioni.}} Un rifiuto la chiude, e nessuno approva la propria richiesta.",
   "setupApprovalsPreviewRequest": "La Sua richiesta",
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{In attesa di 1 approvazione} other{In attesa di {required} approvazioni}}"
+  "setupApprovalsPreviewWaiting": "{required, plural, =1{In attesa di 1 approvazione} other{In attesa di {required} approvazioni}}",
+  "setupPricingLevelsBasis": "Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte, e una mezza giornata oltre la quota di un membro è addebitata alla tariffa aggiuntiva della sua fascia. Questo mese il suo spazio è aperto {days, plural, =1{1 giorno} other{{days} giorni}}:",
+  "setupPricingLevelIncludes": "{level}: {count, plural, =1{1 mezza giornata inclusa} other{{count} mezze giornate incluse}}",
+  "setupPricingLevelsBasisUnknown": "Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte. Non è stato possibile leggere i suoi giorni di apertura, quindi non viene mostrato alcun esempio."
 }

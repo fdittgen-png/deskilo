@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The setup step "services": the catalogue as stored, and a service added
-// by name and price through the catalogue's own write ([AddService]). The
-// rest of a service (its VAT rate, place of supply, stock, archiving)
-// stays on the services screen, one tap away. The preview is the list a
+// or edited in the same sheet as the services screen (#3552: one editor,
+// one write, [SaveService]). Stock and archiving stay on the services
+// screen, one tap away. The preview is the list a
 // member picks from when they add a consumption to their bill: the active
 // services, each with what it costs them.
 import 'package:flutter/material.dart';
@@ -14,16 +14,13 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
-import '../../application/add_service.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
+import 'service_sheet.dart';
 
 class SetupServicesStep extends ConsumerStatefulWidget {
   const SetupServicesStep({
@@ -40,49 +37,15 @@ class SetupServicesStep extends ConsumerStatefulWidget {
 }
 
 class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
-  final _name = TextEditingController();
-  final _price = TextEditingController();
-  final _busy = ValueNotifier<bool>(false);
-
-  @override
-  void dispose() {
-    _name.dispose();
-    _price.dispose();
-    _busy.dispose();
-    super.dispose();
-  }
-
-  Future<void> _add() async {
-    final l10n = context.l10n;
-    final name = _name.text.trim();
-    // A blank price is no price, not a free service: a free one is a typed 0.
-    final price = _price.text.trim().isEmpty
-        ? null
-        : appFormatOf(context).parseMinor(_price.text);
-    if (name.isEmpty || price == null) {
-      AppSnack.error(context, l10n.setupServicesInvalid);
-      return;
-    }
-    _busy.value = true;
-    final ok = await runGuarded(
-      context,
-      domain: 'money',
-      message: 'setup service add failed',
-      errorText: l10n.setupServicesSaveFailed,
-      action: () => ref
-          .read(addServiceProvider)
-          .add(widget.workspaceId, name: name, priceCents: price),
-    );
-    ref
-      ..invalidate(allServicesProvider)
-      ..invalidate(servicesProvider);
-    if (!mounted) return;
-    _busy.value = false;
-    if (!ok) return;
-    _name.clear();
-    _price.clear();
-    AppSnack.success(context, l10n.setupServicesAdded(name));
-  }
+  /// #3552 — the same editor as the services screen: one sheet, one write.
+  Future<void> _edit(List<ServiceItem> stored, [ServiceItem? service]) =>
+      ServiceEditor.open(
+        context,
+        ref,
+        workspaceId: widget.workspaceId,
+        service: service,
+        categories: [for (final s in stored) s.category],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -118,67 +81,46 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
   ) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    return ValueListenableBuilder<bool>(
-      valueListenable: _busy,
-      builder: (context, busy, _) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(l10n.setupStepHint('services')),
-          const SizedBox(height: AppSpacing.lg),
-          Text(l10n.servicesTitle, style: theme.textTheme.titleSmall),
-          if (stored.isEmpty)
-            Text(
-              l10n.servicesEmpty,
-              key: const ValueKey('setup-services-none'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l10n.setupStepHint('services')),
+        const SizedBox(height: AppSpacing.lg),
+        Text(l10n.servicesTitle, style: theme.textTheme.titleSmall),
+        if (stored.isEmpty)
+          Text(l10n.servicesEmpty, key: const ValueKey('setup-services-none')),
+        for (final s in stored)
+          ListTile(
+            key: ValueKey('setup-services-stored-${s.id}'),
+            contentPadding: EdgeInsets.zero,
+            dense: true,
+            onTap: () => _edit(stored, s),
+            title: Text(s.name),
+            subtitle: Text(
+              [
+                money.formatMinor(s.priceCents),
+                if (!s.active) l10n.servicesInactive,
+              ].join(' · '),
             ),
-          for (final s in stored)
-            ListTile(
-              key: ValueKey('setup-services-stored-${s.id}'),
-              contentPadding: EdgeInsets.zero,
-              dense: true,
-              title: Text(s.name),
-              subtitle: Text(
-                [
-                  money.formatMinor(s.priceCents),
-                  if (!s.active) l10n.servicesInactive,
-                ].join(' · '),
-              ),
+          ),
+        const SizedBox(height: AppSpacing.md),
+        Wrap(
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.sm,
+          children: [
+            FilledButton(
+              key: const ValueKey('setup-services-add'),
+              onPressed: () => _edit(stored),
+              child: Text(l10n.setupServicesAdd),
             ),
-          const SizedBox(height: AppSpacing.md),
-          AppTextField(
-            key: const ValueKey('setup-services-name'),
-            controller: _name,
-            label: l10n.servicesName,
-            maxLength: 80,
-            enabled: !busy,
-          ),
-          AppTextField(
-            key: const ValueKey('setup-services-price'),
-            controller: _price,
-            label: l10n.servicesPrice,
-            helper: l10n.priceGrossHint,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            enabled: !busy,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: [
-              FilledButton(
-                key: const ValueKey('setup-services-add'),
-                onPressed: busy ? null : _add,
-                child: Text(l10n.setupServicesAdd),
-              ),
-              TextButton(
-                key: const ValueKey('setup-services-open'),
-                onPressed: () => context.push('/services'),
-                child: Text(l10n.setupServicesMore),
-              ),
-            ],
-          ),
-        ],
-      ),
+            TextButton(
+              key: const ValueKey('setup-services-open'),
+              onPressed: () => context.push('/services'),
+              child: Text(l10n.setupServicesMore),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
