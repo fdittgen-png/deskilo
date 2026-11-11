@@ -216,9 +216,8 @@ List<Widget> accountSettingsTiles(
     // tools only when the person turns this on, here, on this device.
     if (account && kIsWeb && features.contains(WorkspaceFeature.webMcp))
       const WebMcpDeviceSwitchTile(),
-    // #711 / #3697 — the person's own Region & formats, with no business open
-    // and whatever a business's features say; a business's own formats screen
-    // stays behind its feature (the scoped list below).
+    // #3697 — the person's own Region & formats, whatever a business's
+    // features say; a business's own screen stays behind its feature below.
     if (account) const RegionalFormatsSection(route: '/me/formats'),
     // #886 — the structured identity: name, postal block, contacts. The
     // legacy free-text address dialog stays while the flag is off.

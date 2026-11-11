@@ -94,13 +94,16 @@ void main() {
     await tester.scrollUntilVisible(tile, 200,
         scrollable: find.byType(Scrollable).first);
     await tester.ensureVisible(tile);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
     await tester.tap(tile);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
     expect(find.widgetWithText(AppBar, 'Region & formats'), findsOneWidget);
     await tester.ensureVisible(find.text('12h'));
     await tester.tap(find.text('12h'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
     expect(r.profile.formatPrefs.clock, ClockPref.h12);
   });
 
