@@ -319,11 +319,13 @@ class _CandidateButton extends StatelessWidget {
     return exact
         ? FilledButton.tonal(
             style: FilledButton.styleFrom(minimumSize: size),
+            // recorder-key-exempt: keyed by its caller (the widget's own key).
             onPressed: onPressed,
             child: child,
           )
         : OutlinedButton(
             style: OutlinedButton.styleFrom(minimumSize: size),
+            // recorder-key-exempt: keyed by its caller (the widget's own key).
             onPressed: onPressed,
             child: child,
           );
