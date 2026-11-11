@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/conversation_thread.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,6 +30,39 @@ Future<void> switchToPlanTab(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+/// #3603 — a destination by icon: on the bottom bar where there is one, in
+/// the desk's navigation (sidebar or rail) from the expanded window class,
+/// where the bar is gone.
+Finder navDestination(IconData icon) {
+  final bar = find.descendant(
+    of: find.byType(ShellBottomBar),
+    matching: find.byIcon(icon),
+  );
+  if (bar.evaluate().isNotEmpty) return bar;
+  final desk = find.descendant(
+    of: find.byKey(const ValueKey('desk-navigation')),
+    matching: find.byIcon(icon),
+  );
+  return desk.evaluate().isEmpty ? desk : desk.first;
+}
+
+/// Opens the Reserve hub: the bar's raised button, or the desk's entry
+/// (#3603 — the desk has no raised button).
+Future<void> openReserveHub(WidgetTester tester) async {
+  final center = find.byType(ShellCenterButton);
+  if (center.evaluate().isNotEmpty) {
+    await tester.tap(center);
+  } else {
+    final rail = find.byKey(const ValueKey('rail-drawer-reserve'));
+    await tester.tap(
+      rail.evaluate().isNotEmpty
+          ? rail
+          : find.byKey(const ValueKey('drawer-reserve')),
+    );
+  }
+  await tester.pumpAndSettle();
+}
+
 /// Taps a bottom-bar destination BY ICON, scoped to the bar. Icons repeat
 /// across surfaces (calendar_month is a nav destination AND a date-picker
 /// button) and an unscoped `.first` taps the occluded copy — after which
@@ -36,12 +70,7 @@ Future<void> switchToPlanTab(WidgetTester tester) async {
 /// visited. Icon-based (not label-based) so locale-varying tests can use
 /// it: the labels are translated, the icons are not.
 Future<void> tapNavIcon(WidgetTester tester, IconData icon) async {
-  await tester.tap(
-    find.descendant(
-      of: find.byType(ShellBottomBar),
-      matching: find.byIcon(icon),
-    ),
-  );
+  await tester.tap(navDestination(icon));
   await tester.pumpAndSettle();
 }
 
@@ -78,10 +107,7 @@ Future<void> openAlertsTab(WidgetTester tester) async {
   // is gone with the calendar hub on); a workspace without the hub still has
   // the inbox destination.
   if (find.byKey(const ValueKey('inbox-messenger-door')).evaluate().isEmpty) {
-    final inbox = find.descendant(
-      of: find.byType(ShellBottomBar),
-      matching: find.byIcon(Icons.forum_outlined),
-    );
+    final inbox = navDestination(Icons.forum_outlined);
     if (inbox.evaluate().isNotEmpty) {
       await tester.tap(inbox);
     } else {

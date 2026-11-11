@@ -4,7 +4,6 @@
 // importing that test file (#2601). Moved verbatim.
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/plan/presentation/widgets/plan_canvas.dart';
@@ -17,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../fake_floor_plan_repository.dart';
 import '../fake_reservation_repository.dart';
 import '../mock_providers.dart';
+import '../navigation.dart' show openReserveHub;
 import 'day_timeline.dart' show addSecondLevel;
 
 /// Pumps the app and enters the Reserve hub through the bar's raised
@@ -72,8 +72,7 @@ Future<FakeReservationRepository> pumpHub(
   await tester.pumpAndSettle();
   // #1246 — by TYPE, not by the English tooltip: this helper is
   // reused by the locale sweep, where 'Reserve' is 'Reservieren'.
-  await tester.tap(find.byType(ShellCenterButton));
-  await tester.pumpAndSettle();
+  await openReserveHub(tester);
   return reservations;
 }
 

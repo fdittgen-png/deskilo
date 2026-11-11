@@ -4,7 +4,6 @@
 // importing that test file (#2601). Moved verbatim.
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../demo_journey.dart';
+
+import '../navigation.dart' show openReserveHub;
 
 /// Enters the app on the demonstration fixture and opens the Reserve hub,
 /// which is where a visitor lands.
@@ -41,8 +42,7 @@ Future<DemoJourney> pumpDemo(
   );
   await tester.pumpAndSettle();
   if (openHub) {
-    await tester.tap(find.byType(ShellCenterButton));
-    await tester.pumpAndSettle();
+    await openReserveHub(tester);
   }
   return journey;
 }
