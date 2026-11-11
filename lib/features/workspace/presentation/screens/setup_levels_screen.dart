@@ -58,7 +58,10 @@ String _gapWords(AppLocalizations l10n, String gap) {
   String words(String pair) {
     final [process, level] = pair.split('.');
     final p = SetupProcess.values.byName(process);
-    return '${l10n.setupProcessName(process)}: ${l10n.setupLevelName('${p.name}_$level')}';
+    return l10n.labelWithValue(
+      l10n.setupProcessName(process),
+      l10n.setupLevelName('${p.name}_$level'),
+    );
   }
 
   return l10n.setupLevelsGap(words(from), words(to));

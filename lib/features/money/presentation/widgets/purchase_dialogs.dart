@@ -296,8 +296,10 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
                   child: Text(
                     _invoiceDate == null
                         ? l10n.purchasesInvoiceDate
-                        : '${l10n.purchasesInvoiceDate}: '
-                              '${material.formatMediumDate(_invoiceDate!)}',
+                        : l10n.labelWithValue(
+                            l10n.purchasesInvoiceDate,
+                            material.formatMediumDate(_invoiceDate!),
+                          ),
                   ),
                 ),
                 OutlinedButton(
@@ -309,8 +311,10 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
                   child: Text(
                     _dueDate == null
                         ? l10n.purchasesDueDate
-                        : '${l10n.purchasesDueDate}: '
-                              '${material.formatMediumDate(_dueDate!)}',
+                        : l10n.labelWithValue(
+                            l10n.purchasesDueDate,
+                            material.formatMediumDate(_dueDate!),
+                          ),
                   ),
                 ),
               ],

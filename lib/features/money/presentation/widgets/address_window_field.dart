@@ -60,8 +60,10 @@ class AddressWindowField extends StatelessWidget {
             DropdownMenuItem(
               value: '',
               child: Text(
-                '${l10n.addressWindowCountry}'
-                ' — ${labelOf(resolved)}',
+                l10n.titleDashDetail(
+                  l10n.addressWindowCountry,
+                  labelOf(resolved),
+                ),
               ),
             ),
             for (final window in AddressWindow.values)

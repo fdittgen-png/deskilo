@@ -15,6 +15,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/print_or_retry.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show workspaceTaxReference;
@@ -60,6 +61,8 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
   }
 
   Future<void> _print(WorkspaceStatus status) async {
+    await readDocumentPolicies(ref); // #3742 — the template and rules, read
+    if (!mounted) return;
     final l10n = context.l10n;
     if (workspaceTaxReference(ref) == null) {
       AppSnack.error(context, l10n.workspaceTaxContextNotReady);
@@ -104,7 +107,8 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
               key: const ValueKey('status-print'),
               tooltip: l10n.statusPrint,
               icon: const Icon(Icons.print_outlined),
-              onPressed: () => _print(s),
+              onPressed: () =>
+                  printOrRetry(context, 'status report', () => _print(s)),
             ),
         ],
       ),

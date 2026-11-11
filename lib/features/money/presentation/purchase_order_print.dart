@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../domain/invoice_report.dart';
 import '../domain/purchase_order.dart';
 import '../domain/purchase_order_report.dart';
@@ -38,6 +39,7 @@ class PurchaseOrderPrint {
     ({String name, String address}) letterhead,
   ) async {
     final l10n = context.l10n;
+    await readDocumentPolicies(ref); // #3742 — the template and rules, read
     final suppliers = await ref.read(suppliersProvider(workspaceId).future);
     if (!context.mounted) return null;
     final locale = Localizations.localeOf(context).toString();
@@ -95,7 +97,7 @@ class PurchaseOrderPrint {
     required String workspaceId,
     required PurchaseOrder order,
     required ({String name, String address}) letterhead,
-  }) async {
+  }) => printOrRetry(context, 'purchase order', () async {
     final doc = await _document(workspaceId, order, letterhead);
     if (doc == null || !context.mounted) return;
     await runReportActions(
@@ -106,7 +108,7 @@ class PurchaseOrderPrint {
       render: () => doc.rendered,
       buildPdf: () => _pdf(order, doc),
     );
-  }
+  });
 
   /// #3307 — what the e-mail carries: the same document, its subject and
   /// a short text in the reader's language; null once the screen is gone.

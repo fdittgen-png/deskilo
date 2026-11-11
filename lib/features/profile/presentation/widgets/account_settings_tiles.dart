@@ -365,11 +365,14 @@ List<Widget> spaceAccountTiles(BuildContext context, WidgetRef ref) {
     if (overrides[PersonalPreference.uiLocale] case final code?)
       l10n.labelWithValue(l10n.languageTitle, _endonyms[code] ?? code),
     if (overrides[PersonalPreference.theme] case final mode?)
-      '${l10n.themeTitle}: ${switch (mode) {
-        'light' => l10n.themeLight,
-        'dark' => l10n.themeDark,
-        _ => l10n.themeSystem,
-      }}',
+      l10n.labelWithValue(
+        l10n.themeTitle,
+        switch (mode) {
+          'light' => l10n.themeLight,
+          'dark' => l10n.themeDark,
+          _ => l10n.themeSystem,
+        },
+      ),
     if (overrides.keys.any(const {
       PersonalPreference.formatLocale,
       PersonalPreference.clock,

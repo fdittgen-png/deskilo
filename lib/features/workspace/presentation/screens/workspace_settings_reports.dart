@@ -90,6 +90,7 @@ class WorkspaceSettingsReports {
     final context = this.context;
     final l10n = context.l10n;
     await host.runTool('workspace report export failed', () async {
+        await readDocumentPolicies(ref); // #3742 — the template and rules, read
         await warmLetterDocProviders(ref, 'workspace');
         if (!context.mounted) return;
         // #496 — the workspace report prints in the workspace's own
@@ -168,6 +169,7 @@ class WorkspaceSettingsReports {
     final l10n = context.l10n;
     final locale = Localizations.maybeLocaleOf(context)?.toString();
     await host.runTool('workspace config PDF export failed', () async {
+          await readDocumentPolicies(ref); // #3742 — the template and rules, read
           // #2898 — each level's plan drawn as the data report draws it.
           final printed = await levelReportPlans(ref,
               colors: DeskiloTheme.light().colorScheme);
