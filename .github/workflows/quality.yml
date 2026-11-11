@@ -50,6 +50,7 @@ jobs:
   # names the run that proved the tree.
   tested:
     name: tree already tested
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
