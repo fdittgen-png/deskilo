@@ -16,10 +16,11 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/save_service.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import 'vat_rate_field.dart';
@@ -41,62 +42,27 @@ abstract final class ServiceEditor {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
     final l10n = context.l10n;
-    // AWAIT the rates: a cached `.value` is null the first time the sheet
-    // opens, which would hide the VAT field exactly when it is needed.
-    List<VatRate> rates;
-    try {
-      rates = await ref.read(vatRatesProvider.future);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-        'money',
-        'vat rates fetch failed',
-        error: e,
-        stackTrace: st,
-      );
-      rates = const [];
-    }
-    if (!context.mounted) return;
-    final result = await showAppSheet<_ServiceDraft>(
+    final draft = await showAppSheet<ServiceDraft>(
       context: context,
       isScrollControlled: true,
       builder: (context) => _ServiceSheet(
         service: service,
-        rates: rates,
         categories: {
           for (final c in categories)
             if (c.trim().isNotEmpty) c.trim(),
         }.toList()..sort(),
       ),
     );
-    if (result == null || !context.mounted) return;
+    if (draft == null || !context.mounted) return;
+    // #3552 — one write, from here and from the setup guide's step alike.
     if (!await runGuarded(
       context,
       domain: 'money',
       message: 'service save failed',
       errorText: l10n.workspaceGenericError,
-      action: () async {
-        final repo = ref.read(commercialTermsProvider);
-        if (service == null) {
-          await repo.createService(
-            workspace.id,
-            name: result.name,
-            priceCents: result.priceCents,
-            vatRateId: result.vatRateId,
-            supplyClass: result.supplyClass,
-            details: result.details,
-          );
-        } else {
-          await repo.updateService(
-            service.id,
-            name: result.name,
-            priceCents: result.priceCents,
-            active: result.active,
-            vatRateId: result.vatRateId,
-            supplyClass: result.supplyClass,
-            details: result.details,
-          );
-        }
-      },
+      action: () => ref
+          .read(saveServiceProvider)
+          .save(workspace.id, draft, serviceId: service?.id),
     )) {
       return;
     }
@@ -107,7 +73,7 @@ abstract final class ServiceEditor {
 }
 
 /// The duration typed into the field: null when blank, else the minutes;
-/// the error to show when it is not a whole number in range.
+/// [valid] is false when it is not whole minutes in range.
 ({int? minutes, bool valid}) parseServiceDuration(String text) {
   final t = text.trim();
   if (t.isEmpty) return (minutes: null, valid: true);
@@ -116,46 +82,17 @@ abstract final class ServiceEditor {
   return (minutes: ok ? n : null, valid: ok);
 }
 
-class _ServiceDraft {
-  const _ServiceDraft({
-    required this.name,
-    required this.priceCents,
-    required this.active,
-    required this.vatRateId,
-    required this.supplyClass,
-    required this.details,
-  });
-
-  final String name;
-  final int priceCents;
-  final bool active;
-
-  /// '' = the workspace's default rate.
-  final String vatRateId;
-
-  /// #2354 — where the service is supplied for VAT.
-  final SupplyClass supplyClass;
-
-  /// #3552 — what the service says about itself.
-  final ServiceDetails details;
-}
-
-class _ServiceSheet extends StatefulWidget {
-  const _ServiceSheet({
-    this.service,
-    this.rates = const [],
-    this.categories = const [],
-  });
+class _ServiceSheet extends ConsumerStatefulWidget {
+  const _ServiceSheet({this.service, this.categories = const []});
 
   final ServiceItem? service;
-  final List<VatRate> rates;
   final List<String> categories;
 
   @override
-  State<_ServiceSheet> createState() => _ServiceSheetState();
+  ConsumerState<_ServiceSheet> createState() => _ServiceSheetState();
 }
 
-class _ServiceSheetState extends State<_ServiceSheet> {
+class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
   late final TextEditingController _name;
   late final TextEditingController _price;
   late final TextEditingController _description;
@@ -165,7 +102,8 @@ class _ServiceSheetState extends State<_ServiceSheet> {
   late bool _public;
   late String _vatRateId;
   late SupplyClass _supplyClass;
-  String? _durationError;
+  /// #3552 — each problem under its own field.
+  Set<ServiceProblem> _problems = const {};
 
   @override
   void initState() {
@@ -197,38 +135,51 @@ class _ServiceSheetState extends State<_ServiceSheet> {
   }
 
   void _submit() {
-    final name = _name.text.trim();
-    final price = appFormatOf(context).parseMinor(_price.text);
     final duration = parseServiceDuration(_duration.text);
-    setState(
-      () => _durationError = duration.valid
+    final draft = ServiceDraft(
+      name: _name.text,
+      priceCents: _price.text.trim().isEmpty
           ? null
-          : context.l10n.servicesDurationRange(
-              serviceMinMinutes,
-              serviceMaxMinutes,
-            ),
-    );
-    if (name.isEmpty || price == null || !duration.valid) return;
-    Navigator.of(context).pop(
-      _ServiceDraft(
-        name: name,
-        priceCents: price,
-        active: _active,
-        vatRateId: _vatRateId,
-        supplyClass: _supplyClass,
-        details: ServiceDetails(
-          description: _description.text,
-          durationMinutes: duration.minutes,
-          category: _category.text,
-          isPublic: _public,
-        ),
+          : appFormatOf(context).parseMinor(_price.text),
+      active: _active,
+      vatRateId: _vatRateId,
+      supplyClass: _supplyClass,
+      durationValid: duration.valid,
+      details: ServiceDetails(
+        description: _description.text,
+        durationMinutes: duration.minutes,
+        category: _category.text,
+        isPublic: _public,
       ),
     );
+    final problems = serviceProblems(draft);
+    setState(() => _problems = problems);
+    if (problems.isEmpty) Navigator.of(context).pop(draft);
   }
+
+  /// The VAT rate, as read: a failed read is said, with Try again, and
+  /// nothing can be saved without it; never a missing field.
+  Widget _vat(AsyncValue<List<VatRate>> rates) => switch (rates) {
+    AsyncData(:final value) => VatRateField(
+      key: const ValueKey('services-vat-rate-field'),
+      rates: value,
+      value: _vatRateId,
+      onChanged: (id) => setState(() => _vatRateId = id),
+    ),
+    AsyncError() => InlineBanner(
+      key: const ValueKey('services-vat-rates-failed'),
+      icon: Icons.cloud_off_outlined,
+      text: context.l10n.readStateFailed,
+      actionLabel: context.l10n.commonRetry,
+      onAction: () => ref.invalidate(vatRatesProvider),
+    ),
+    _ => const LinearProgressIndicator(),
+  };
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final rates = ref.watch(vatRatesProvider);
     return Padding(
       padding: EdgeInsets.only(
         left: AppSpacing.xl,
@@ -249,10 +200,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
                       : (l10n.servicesEdit),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                HelpDot(
-                  l10n.helpHintMoneyPaymentsTipSupplyTopic,
-                  anchor: HelpAnchor.serviceOverview,
-                ),
+                HelpDot(l10n.servicesTitle, anchor: HelpAnchor.serviceOverview),
               ],
             ),
             const FormGap(),
@@ -260,6 +208,9 @@ class _ServiceSheetState extends State<_ServiceSheet> {
               key: const ValueKey('services-name'),
               controller: _name,
               label: l10n.servicesName,
+              error: _problems.contains(ServiceProblem.name)
+                  ? l10n.fieldProblemRequired
+                  : null,
               autofocus: widget.service == null,
               maxLength: 80,
             ),
@@ -267,6 +218,9 @@ class _ServiceSheetState extends State<_ServiceSheet> {
               key: const ValueKey('services-price'),
               controller: _price,
               label: l10n.servicesPrice,
+              error: _problems.contains(ServiceProblem.price)
+                  ? l10n.fieldProblemNotANumber
+                  : null,
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
@@ -286,7 +240,12 @@ class _ServiceSheetState extends State<_ServiceSheet> {
               controller: _duration,
               label: l10n.servicesDuration,
               helper: l10n.servicesDurationHint,
-              error: _durationError,
+              error: _problems.contains(ServiceProblem.duration)
+                  ? l10n.servicesDurationRange(
+                      serviceMinMinutes,
+                      serviceMaxMinutes,
+                    )
+                  : null,
               keyboardType: TextInputType.number,
             ),
             const FormGap(),
@@ -303,12 +262,7 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             ),
             // The price stays what the member pays; the rate only decides
             // how much of it is tax.
-            VatRateField(
-              key: const ValueKey('services-vat-rate-field'),
-              rates: widget.rates,
-              value: _vatRateId,
-              onChanged: (id) => setState(() => _vatRateId = id),
-            ),
+            _vat(rates),
             // #2354 — the place of supply: a desk is taxed where it stands.
             SupplyClassField(
               key: const ValueKey('services-supply-class-field'),
@@ -326,7 +280,8 @@ class _ServiceSheetState extends State<_ServiceSheet> {
             const FormGap(),
             FilledButton(
               key: const ValueKey('services-save'),
-              onPressed: _submit,
+              // Saved only with the VAT rates read.
+              onPressed: rates.hasValue ? _submit : null,
               child: Text(l10n.commonSave),
             ),
           ],
@@ -381,7 +336,9 @@ class _CategoryFieldState extends State<_CategoryField> {
       child: Material(
         elevation: 4,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 240, maxWidth: 360),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height / 3,
+          ),
           child: ListView(
             shrinkWrap: true,
             children: [
