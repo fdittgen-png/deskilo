@@ -24,16 +24,14 @@ import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
-import '../../features/workspace/presentation/widgets/setup_resume_banner.dart'
-    show setupGuideOpenFor;
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
-import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'desk_rail.dart';
 import 'purchase_approval_badge.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_drawer_tiles.dart';
+import 'shell_menu.dart';
 import 'shell_nav_groups.dart';
 
 part 'shell_drawer.g.dart';
@@ -71,20 +69,6 @@ AsyncValue<PurchaseApprovalPage>? _waitingApprovals(
   return ref.watch(
     purchaseApprovalPageProvider((workspaceId: workspaceId, after: null)),
   );
-}
-
-void _goFromDrawer(
-  BuildContext context,
-  String route, {
-  required bool permanent,
-  required bool push,
-}) {
-  if (!permanent) Navigator.of(context).pop();
-  if (push) {
-    unawaited(context.push(route));
-  } else {
-    context.go(route);
-  }
 }
 
 void _openToPay(
@@ -153,60 +137,27 @@ class ShellDrawer extends ConsumerWidget {
     final attention = ref.watch(workspaceAttentionProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final perms = ref.watch(myPermissionsProvider);
-    // #1598 — the effective permission set, watched, decides the account
-    // entry's name in the drawer exactly as it does in the app bar.
-    final accountMenu = showsMemberAccountMenu(
-      features: features,
-      permissions: ref.watch(myPermissionsProvider),
-    );
-
-    void go(String route, {bool push = true}) =>
-        _goFromDrawer(context, route, permanent: permanent, push: push);
-
-    final entries = DrawerEntries(
-      context: context,
-      features: features,
-      permissions: perms,
-      accountMenu: accountMenu,
+    final menu = ShellMenu.of(
+      context,
+      ref,
       permanent: permanent,
+      tabTitles: tabTitles,
       visibleBranches: visibleBranches,
       navs: navs,
-      path: path,
-      tabTitles: tabTitles,
       currentIndex: currentIndex,
       onBranch: onBranch,
-      go: go,
-      setupOpen: setupGuideOpenFor(ref, workspace?.id),
       openToPay: workspace == null
           ? null
           : () => _openToPay(context, workspace.id, perms, permanent: permanent),
     );
-    final navigation = entries.navigation();
-    final administration = [
-      ...entries.setupGuide(),
-      ...entries.administration(),
-    ];
-    final member = ref.watch(myMemberProvider).value;
-    final sections = reportingSections(
-      features: features,
-      permissions: perms,
-      isAdmin: member?.isAdmin ?? false,
-      actsAsOwner: member?.actsAsOwner ?? false,
-    );
-    final section = GoRouterState.of(context).uri.queryParameters['section'];
-    bool onSection(String id) =>
-        path == '/reports' &&
-        (section ?? sections.where((s) => s != 'analytics').firstOrNull) == id;
-    final reporting = entries.reporting(
-      sections: sections,
-      onSection: onSection,
-    );
-    final account = entries.account();
-    final groups = navGroupsOf(
-      entries,
-      administration: administration,
-      reporting: reporting,
-    );
+    final navigation = menu.navigation;
+    final administration = menu.administration;
+    final account = menu.account;
+    final groups = menu.groups;
+    void backToMe() {
+      if (!permanent) Navigator.of(context).pop();
+      context.go('/me');
+    }
 
     // Every badge opens the content it counts (#1306 S3): the events
     // entry while the bell is on, the Calendar entry when the calendar
@@ -235,7 +186,7 @@ class ShellDrawer extends ConsumerWidget {
         account: account,
         path: path,
         badgeOf: badgeOf,
-        onBackToMe: () => go('/me', push: false),
+        onBackToMe: backToMe,
       );
     }
     Widget group(NavGroup g) => DrawerGroup(
@@ -260,7 +211,7 @@ class ShellDrawer extends ConsumerWidget {
               leading: const PersonalAvatar(),
               title: Text(l10n.spaceBackToMe),
               subtitle: Text(l10n.meMySpaces),
-              onTap: () => go('/me', push: false),
+              onTap: backToMe,
             ),
             const Divider(),
             for (final e in navigation) tile(e),

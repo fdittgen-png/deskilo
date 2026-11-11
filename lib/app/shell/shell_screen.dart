@@ -107,6 +107,7 @@ class ShellScreen extends ConsumerWidget {
           key: const ValueKey('desk-title'),
           child: SpaceChip(tabTitle: tabTitle),
         ),
+        place: tabTitle,
         actions: actions,
         body: page,
       );

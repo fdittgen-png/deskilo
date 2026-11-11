@@ -14,6 +14,7 @@ import '../../features/task_recorder/presentation/route_classification.dart'
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../l10n/app_localizations.dart';
+import '../route_classes.dart' show placeOf;
 import 'shell_destinations.dart';
 
 /// One destination of the drawer.
@@ -33,6 +34,26 @@ class DrawerEntry {
   final bool selected;
   final String? route;
 }
+
+/// Whether [e] is where [path] is. #3603 — a route that declares its place
+/// (route_classes.dart) selects that entry alone, so a page opened from a
+/// destination keeps it selected; otherwise an entry is current on its own
+/// route and below it.
+bool entryIsCurrent(DrawerEntry e, String path) {
+  if (e.selected) return true;
+  final place = placeOf(path);
+  if (place != null) return e.key == place;
+  final route = e.route;
+  return route != null && (path == route || path.startsWith('$route/'));
+}
+
+/// Whether the group [id] holding [entries] (and [sub]) is where [path] is:
+/// one of its entries is current, or the route names the group itself.
+bool groupIsCurrent(
+  String id,
+  Iterable<DrawerEntry> entries,
+  String path,
+) => placeOf(path) == id || entries.any((e) => entryIsCurrent(e, path));
 
 /// The drawer's entries for one person in one workspace.
 class DrawerEntries {
@@ -130,7 +151,9 @@ class DrawerEntries {
                 : shellBranchIcon(nav.branch),
             nav.id == 'overview' ? l10n.overviewTitle : tabTitles[nav.branch],
             () => go(nav.location!, push: false),
-            selected: nav.selectedAt(branch: currentIndex, path: path),
+            // #3603 — a page placed in the tab selects it here too.
+            selected: nav.selectedAt(branch: currentIndex, path: path) ||
+                placeOf(path) == 'drawer-tab-${nav.branch}',
           ),
       // Events live in the calendar when it holds the alerts: no entry then.
       if (features.contains(WorkspaceFeature.eventsTab) &&

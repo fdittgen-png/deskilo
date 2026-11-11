@@ -1,0 +1,147 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3603 — the business's navigation for one person, assembled once: the
+// drawer and the desk's sidebar and rail render it, and the desk's top bar
+// and window title name the place a route declares from the same entries.
+// It was the first half of ShellDrawer.build; the entries are unchanged.
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../features/workspace/domain/workspace_permission.dart'
+    show showsMemberAccountMenu;
+import '../../features/workspace/presentation/widgets/setup_resume_banner.dart'
+    show setupGuideOpenFor;
+import '../../features/workspace/presentation/widgets/workspace_reports.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart' show placeOf;
+import 'shell_destinations.dart';
+import 'shell_drawer_entries.dart';
+import 'shell_nav_groups.dart';
+
+/// The entries of the navigation, in the groups the drawer shows them in.
+class ShellMenu {
+  ShellMenu._({
+    required this.navigation,
+    required this.administration,
+    required this.reporting,
+    required this.account,
+    required this.groups,
+  });
+
+  /// Reads what decides the entries and assembles them. [permanent]: shown
+  /// beside the page (a tap does not close a drawer first).
+  factory ShellMenu.of(
+    BuildContext context,
+    WidgetRef ref, {
+    required bool permanent,
+    required List<String> tabTitles,
+    required List<int> visibleBranches,
+    List<ShellNav>? navs,
+    required int currentIndex,
+    required ValueChanged<int> onBranch,
+    VoidCallback? openToPay,
+  }) {
+    final state = GoRouterState.of(context);
+    final path = state.uri.path;
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final workspace = ref.watch(currentWorkspaceProvider).value;
+    final perms = ref.watch(myPermissionsProvider);
+    void go(String route, {bool push = true}) {
+      if (!permanent) Navigator.of(context).pop();
+      if (push) {
+        unawaited(context.push(route));
+      } else {
+        context.go(route);
+      }
+    }
+
+    final entries = DrawerEntries(
+      context: context,
+      features: features,
+      permissions: perms,
+      // #1598 — the effective permission set, watched, decides the account
+      // entry's name in the drawer exactly as it does in the app bar.
+      accountMenu: showsMemberAccountMenu(
+        features: features,
+        permissions: perms,
+      ),
+      permanent: permanent,
+      visibleBranches: visibleBranches,
+      navs: navs,
+      path: path,
+      tabTitles: tabTitles,
+      currentIndex: currentIndex,
+      onBranch: onBranch,
+      go: go,
+      setupOpen: setupGuideOpenFor(ref, workspace?.id),
+      openToPay: openToPay,
+    );
+    final administration = [
+      ...entries.setupGuide(),
+      ...entries.administration(),
+    ];
+    final member = ref.watch(myMemberProvider).value;
+    final sections = reportingSections(
+      features: features,
+      permissions: perms,
+      isAdmin: member?.isAdmin ?? false,
+      actsAsOwner: member?.actsAsOwner ?? false,
+    );
+    final section = state.uri.queryParameters['section'];
+    bool onSection(String id) =>
+        path == '/reports' &&
+        (section ?? sections.where((s) => s != 'analytics').firstOrNull) == id;
+    final reporting = entries.reporting(
+      sections: sections,
+      onSection: onSection,
+    );
+    return ShellMenu._(
+      navigation: entries.navigation(),
+      administration: administration,
+      reporting: reporting,
+      account: entries.account(),
+      groups: navGroupsOf(
+        entries,
+        administration: administration,
+        reporting: reporting,
+      ),
+    );
+  }
+
+  final List<DrawerEntry> navigation;
+  final List<DrawerEntry> administration;
+  final List<DrawerEntry> reporting;
+  final List<DrawerEntry> account;
+  final List<NavGroup> groups;
+
+  /// #3603 — where [path] sits, as the sidebar shows it: the innermost group
+  /// and the current entry ("Purchases › Suppliers"), the entry alone for a
+  /// destination outside any group, the group alone for a route placed on a
+  /// group with no entry current. Empty when the place is not offered to
+  /// this person (its feature is off): nothing is named, nothing selected.
+  List<String> crumbsOf(String path) {
+    for (final e in [...navigation, ...account]) {
+      if (entryIsCurrent(e, path)) return [e.label];
+    }
+    final place = placeOf(path);
+    List<String>? inGroup(NavGroup g) {
+      for (final s in g.sub) {
+        final found = inGroup(s);
+        if (found != null) return found;
+      }
+      for (final e in g.entries) {
+        if (entryIsCurrent(e, path)) return [g.title, e.label];
+      }
+      return g.id == place && !g.isEmpty ? [g.title] : null;
+    }
+
+    for (final g in groups) {
+      final found = inGroup(g);
+      if (found != null) return found;
+    }
+    return const [];
+  }
+}

@@ -18,6 +18,7 @@ import 'entry_resumption.dart';
 import 'format_surface_sync.dart';
 import 'page_routes.dart';
 import 'resume_places.dart';
+import 'route_classes.dart';
 import 'route_env.dart';
 import 'route_redirect.dart';
 import 'routes/auth_routes.dart';
@@ -35,6 +36,7 @@ import 'routes/profile_routes.dart';
 import 'routes/reservations_routes.dart';
 import 'routes/task_recorder_routes.dart';
 import 'routes/workspace_routes.dart';
+import 'shell/desk_route_shell.dart';
 import 'shell/shell_routes.dart';
 
 export 'shell/shell_destinations.dart' show ShellBranch;
@@ -101,22 +103,31 @@ GoRouter router(Ref ref) {
     redirect: (context, state) => appRedirect(env, state),
     routes: [
       ...authRoutes(env),
-      for (final page in openedPages) page.route(), // #2388
+      // #2388 — pages opened over another screen; before Me's routes,
+      // whose `/me/messages/:ref` would take the messenger's named pages.
+      for (final page in openedPages)
+        if (chromeOf(page.path) != RouteChrome.desk) page.route(),
       ...meRoutes(env),
       ...kioskRoutes(env),
-      ...workspaceRoutes(env),
       shellRoute(env),
-      ...profileRoutes(env),
-      ...helpRoutes(env),
-      ...eventsRoutes(env),
-      ...reservationsRoutes(env),
-      ...planRoutes(env),
-      ...directoryRoutes(env),
-      ...membersRoutes(env),
-      ...editorRoutes(env),
-      ...mcpRoutes(env),
-      ...taskRecorderRoutes(env),
-      ...moneyRoutes(env),
+      // #3603 — every other page, inside the desk where its route is shown
+      // on it (desk_route_shell.dart). No path here overlaps one above.
+      deskRoute([
+        for (final page in openedPages)
+          if (chromeOf(page.path) == RouteChrome.desk) page.route(),
+        ...workspaceRoutes(env),
+        ...profileRoutes(env),
+        ...helpRoutes(env),
+        ...eventsRoutes(env),
+        ...reservationsRoutes(env),
+        ...planRoutes(env),
+        ...directoryRoutes(env),
+        ...membersRoutes(env),
+        ...editorRoutes(env),
+        ...mcpRoutes(env),
+        ...taskRecorderRoutes(env),
+        ...moneyRoutes(env),
+      ]),
     ],
   );
   ref.onDispose(router.dispose);

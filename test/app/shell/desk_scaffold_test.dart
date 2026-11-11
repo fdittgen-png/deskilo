@@ -59,7 +59,15 @@ void main() {
       expect(chromeOf(kiosk), RouteChrome.kiosk);
     }
     for (final rule in routeRules) {
+      // The account's settings render a business's sections: on the desk.
+      if (workspaceChromeAccountRoutes.contains(rule.pattern)) {
+        expect(rule.chrome, RouteChrome.desk, reason: rule.pattern);
+        continue;
+      }
       final expected = switch (rule.kind) {
+        // A membership still pending reaches no destination: no desk.
+        RouteClass.workspace when rule.pattern == '/pending' =>
+          RouteChrome.account,
         RouteClass.workspace =>
           rule.pattern.startsWith('/kiosk')
               ? RouteChrome.kiosk
