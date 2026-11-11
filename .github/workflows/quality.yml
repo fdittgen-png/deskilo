@@ -861,45 +861,68 @@ jobs:
           restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
 
-      # #2639 — exactly this attempt's six shards (#3166), each into the
-      # directory the reader expects. A shard from an earlier attempt has
-      # another name and is never found; the plan step then refuses.
+      # #2639 — this attempt's six shards (#3166), each into the directory
+      # the reader expects; a shard this attempt did not produce is looked
+      # up in an earlier attempt below (#3735).
       - uses: actions/download-artifact@v4
+        id: dl_gate
         if: always()
         continue-on-error: true
         with:
           name: testshard-gate-attempt-${{ github.run_attempt }}
           path: shards/testshard-gate
       - uses: actions/download-artifact@v4
+        id: dl_money
         if: always()
         continue-on-error: true
         with:
           name: testshard-money-attempt-${{ github.run_attempt }}
           path: shards/testshard-money
       - uses: actions/download-artifact@v4
+        id: dl_workspace
         if: always()
         continue-on-error: true
         with:
           name: testshard-workspace-attempt-${{ github.run_attempt }}
           path: shards/testshard-workspace
       - uses: actions/download-artifact@v4
+        id: dl_rest
         if: always()
         continue-on-error: true
         with:
           name: testshard-rest-attempt-${{ github.run_attempt }}
           path: shards/testshard-rest
       - uses: actions/download-artifact@v4
+        id: dl_money2
         if: always()
         continue-on-error: true
         with:
           name: testshard-money2-attempt-${{ github.run_attempt }}
           path: shards/testshard-money2
       - uses: actions/download-artifact@v4
+        id: dl_core
         if: always()
         continue-on-error: true
         with:
           name: testshard-core-attempt-${{ github.run_attempt }}
           path: shards/testshard-core
+
+      # #3735 -- a re-run of only the failed shard does not run the shards
+      # that passed again: their streams exist only under an earlier
+      # attempt's number. Each shard this attempt did not produce is taken
+      # from the newest earlier attempt of THIS run (same commit); the rows
+      # tool accepts an earlier attempt of the same run, never a later one.
+      - name: Shards an earlier attempt produced
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ "${{ steps.dl_gate.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-gate dl_gate:testshard-gate
+          [ "${{ steps.dl_money.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-money dl_money:testshard-money
+          [ "${{ steps.dl_workspace.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-workspace dl_workspace:testshard-workspace
+          [ "${{ steps.dl_rest.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-rest dl_rest:testshard-rest
+          [ "${{ steps.dl_money2.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-money2 dl_money2:testshard-money2
+          [ "${{ steps.dl_core.outcome }}" = "success" ] || bash scripts/fallback_attempt_rows.sh shards/testshard-core dl_core:testshard-core
 
       # What the shards were promised, re-derived from this tree: every
       # test file exactly once, none unclassified, none shared.
