@@ -14278,6 +14278,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get invoicePageApprovalRecorded =>
+      'Su aprobación está registrada; espera a los demás.';
+
+  @override
   String get invoicePageApprovals => 'Aprobaciones del pago';
 
   @override
@@ -14305,6 +14309,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoicePageConfirmedMatched =>
       'Pago confirmado y conciliado con esta factura.';
+
+  @override
+  String get invoicePageDecisionRefused =>
+      'Su decisión sobre este pago no se registró.';
 
   @override
   String get invoicePageInvoiced => 'Facturado';
@@ -14471,6 +14479,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoicePageToday => 'Hoy';
+
+  @override
+  String get invoicePageUnreadable => 'Esta factura ya no se puede leer.';
 
   @override
   String get invoicePageView => 'Ver';

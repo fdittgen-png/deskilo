@@ -1,0 +1,8 @@
+{
+  "invoicePageApprovalRecorded": "Su aprobación está registrada; espera a los demás.",
+  "@invoicePageApprovalRecorded": {"description": "#3587 message after Confirm when the declared payment still waits for other approvers"},
+  "invoicePageDecisionRefused": "Su decisión sobre este pago no se registró.",
+  "@invoicePageDecisionRefused": {"description": "#3587 when a decision on a declared payment is refused and no known refusal applies"},
+  "invoicePageUnreadable": "Esta factura ya no se puede leer.",
+  "@invoicePageUnreadable": {"description": "#3587 the invoice page of an invoice that can no longer be read"}
+}

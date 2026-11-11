@@ -18708,6 +18708,10 @@
       }
     }
   },
+  "invoicePageApprovalRecorded": "Your approval is recorded; it waits for the others.",
+  "@invoicePageApprovalRecorded": {
+    "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
+  },
   "invoicePageApprovals": "Approvals of the payment",
   "@invoicePageApprovals": {
     "description": "#3587 R1-d the collapsed validation trail under the story"
@@ -18744,6 +18748,10 @@
   "invoicePageConfirmedMatched": "Payment confirmed and matched to this invoice.",
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
+  },
+  "invoicePageDecisionRefused": "Your decision on this payment was not recorded.",
+  "@invoicePageDecisionRefused": {
+    "description": "#3587 when a decision on a declared payment is refused and no known refusal applies"
   },
   "invoicePageInvoiced": "Invoiced",
   "@invoicePageInvoiced": {
@@ -18977,6 +18985,10 @@
   "invoicePageToday": "Today",
   "@invoicePageToday": {
     "description": "#3587 R1-d the story's last line's day"
+  },
+  "invoicePageUnreadable": "This invoice can no longer be read.",
+  "@invoicePageUnreadable": {
+    "description": "#3587 the invoice page of an invoice that can no longer be read"
   },
   "invoicePageView": "View",
   "@invoicePageView": {

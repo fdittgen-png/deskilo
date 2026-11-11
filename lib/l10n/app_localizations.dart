@@ -23464,6 +23464,12 @@ abstract class AppLocalizations {
   /// **'{days} days'**
   String invoiceOpenAge(int days);
 
+  /// #3587 message after Confirm when the declared payment still waits for other approvers
+  ///
+  /// In en, this message translates to:
+  /// **'Your approval is recorded; it waits for the others.'**
+  String get invoicePageApprovalRecorded;
+
   /// #3587 R1-d the collapsed validation trail under the story
   ///
   /// In en, this message translates to:
@@ -23511,6 +23517,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment confirmed and matched to this invoice.'**
   String get invoicePageConfirmedMatched;
+
+  /// #3587 when a decision on a declared payment is refused and no known refusal applies
+  ///
+  /// In en, this message translates to:
+  /// **'Your decision on this payment was not recorded.'**
+  String get invoicePageDecisionRefused;
 
   /// #3587 R1-d the lines card's label
   ///
@@ -23781,6 +23793,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today'**
   String get invoicePageToday;
+
+  /// #3587 the invoice page of an invoice that can no longer be read
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice can no longer be read.'**
+  String get invoicePageUnreadable;
 
   /// #3587 R1-d opens the PDF
   ///

@@ -385,20 +385,46 @@ final invoiceEventFactsProvider =
       },
     );
 
+/// #3587 — what a decision on a customer's declared payment left it as,
+/// read back once the decision landed.
+enum DeclaredPaymentDecided {
+  /// Approved: the payment is confirmed and may be matched.
+  approved,
+
+  /// This person's vote is recorded; the payment waits for other approvers.
+  waitsForOthers,
+
+  /// Declined, or no longer readable.
+  ended,
+}
+
 /// #3587 — the decision on a customer's declared payment (Confirm / Not
 /// received), handed to the invoicing screens through the journey that
-/// already reads the event feed. It answers null on success, else the
-/// server's words after reading the feed again.
+/// already reads the event feed. It answers what the decision left the
+/// payment as; a refusal throws the server's own error, after reading the
+/// feed again so the page shows the true state, not a stale Confirm.
 final declaredPaymentDecisionProvider =
     Provider<
-      Future<String?> Function(WidgetRef ref, String eventId, {required bool accept})
+      Future<DeclaredPaymentDecided> Function(
+        WidgetRef ref,
+        String eventId, {
+        required bool accept,
+      })
     >(
       (_) =>
           (ref, eventId, {required accept}) async {
-            final refused = await decideEvent(ref, eventId, accept: accept);
-            // Refused (decided by someone else, or gone): read the feed
-            // again, so the page shows the true state, not a stale Confirm.
-            if (refused != null) ref.invalidate(eventsProvider);
-            return refused;
+            try {
+              final read = await decideEventAndRead(
+                ref,
+                eventId,
+                accept: accept,
+              );
+              if (read.approved) return DeclaredPaymentDecided.approved;
+              if (read.pending) return DeclaredPaymentDecided.waitsForOthers;
+              return DeclaredPaymentDecided.ended;
+            } on Object {
+              ref.invalidate(eventsProvider);
+              rethrow;
+            }
           },
     );

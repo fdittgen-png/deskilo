@@ -8934,6 +8934,10 @@
       }
     }
   },
+  "invoicePageApprovalRecorded": "Votre approbation est enregistrée ; elle attend les autres.",
+  "@invoicePageApprovalRecorded": {
+    "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
+  },
   "invoicePageApprovals": "Validations du paiement",
   "@invoicePageApprovals": {
     "description": "#3587 R1-d the collapsed validation trail under the story"
@@ -8970,6 +8974,10 @@
   "invoicePageConfirmedMatched": "Paiement confirmé et rapproché de cette facture.",
   "@invoicePageConfirmedMatched": {
     "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
+  },
+  "invoicePageDecisionRefused": "Votre décision sur ce paiement n’a pas été enregistrée.",
+  "@invoicePageDecisionRefused": {
+    "description": "#3587 when a decision on a declared payment is refused and no known refusal applies"
   },
   "invoicePageInvoiced": "Facturé",
   "@invoicePageInvoiced": {
@@ -9203,6 +9211,10 @@
   "invoicePageToday": "Aujourd’hui",
   "@invoicePageToday": {
     "description": "#3587 R1-d the story's last line's day"
+  },
+  "invoicePageUnreadable": "Cette facture ne peut plus être lue.",
+  "@invoicePageUnreadable": {
+    "description": "#3587 the invoice page of an invoice that can no longer be read"
   },
   "invoicePageView": "Voir",
   "@invoicePageView": {
