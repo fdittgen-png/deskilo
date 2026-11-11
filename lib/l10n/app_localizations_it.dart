@@ -924,6 +924,148 @@ class AppLocalizationsIt extends AppLocalizations {
       'La documentazione delle procedure di questo archivio svizzero indica che ogni download è registrato nel registro delle esportazioni, e questo spazio non ne tiene: attivi prima i periodi contabili o i sistemi contabili.';
 
   @override
+  String get assignPaymentAction => 'Assegna alle fatture';
+
+  @override
+  String assignPaymentActionFor(String amount) {
+    return 'Assegna $amount alle fatture';
+  }
+
+  @override
+  String assignPaymentAmountLabel(String number) {
+    return 'Importo per la fattura $number';
+  }
+
+  @override
+  String assignPaymentFull(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fatture pagate per intero',
+      one: '1 fattura pagata per intero',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentNoOpen =>
+      'Nessuna fattura aperta per questo cliente: il pagamento resta come credito.';
+
+  @override
+  String get assignPaymentNoteDefault =>
+      'Il pagamento ha coperto solo una parte di questa fattura.';
+
+  @override
+  String get assignPaymentNoteLabel => 'Nota per le fatture pagate in parte';
+
+  @override
+  String get assignPaymentOver => 'Più di quanto resta del pagamento';
+
+  @override
+  String assignPaymentPart(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fatture pagate in parte',
+      one: '1 fattura pagata in parte',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get assignPaymentPending => 'In attesa di approvazione';
+
+  @override
+  String get assignPaymentReadFailedInvoices =>
+      'Non è stato possibile leggere le fatture.';
+
+  @override
+  String get assignPaymentReadFailedPayment =>
+      'Non è stato possibile leggere il pagamento.';
+
+  @override
+  String assignPaymentReceived(String amount) {
+    return 'Ricevuto: $amount';
+  }
+
+  @override
+  String assignPaymentRowCaption(String date, String amount) {
+    return 'Scade $date · da pagare $amount';
+  }
+
+  @override
+  String assignPaymentRowCaptionNoDate(String amount) {
+    return 'Da pagare: $amount';
+  }
+
+  @override
+  String get assignPaymentRowOver =>
+      'Più di quanto resta da pagare su questa fattura';
+
+  @override
+  String assignPaymentRowWaiting(String number) {
+    return '$number: un pagamento di questa fattura attende l\'approvazione; ora non accetta alcuna parte.';
+  }
+
+  @override
+  String assignPaymentStays(String amount) {
+    return '$amount restano come credito';
+  }
+
+  @override
+  String get assignPaymentStaysNone => 'Non resta nessun credito';
+
+  @override
+  String assignPaymentTickLabel(String number) {
+    return 'Paga la fattura $number';
+  }
+
+  @override
+  String assignPaymentUsedHead(String received, String assigned, String left) {
+    return 'Ricevuto $received · già assegnato $assigned · resta $left';
+  }
+
+  @override
+  String get assignRefuseBusiness =>
+      'Questo pagamento non è stato trovato in questa attività. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefuseCurrency =>
+      'Una fattura non è nella valuta dell\'attività. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefuseDuplicate =>
+      'Una fattura compare due volte. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefuseGeneric =>
+      'Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova.';
+
+  @override
+  String get assignRefuseNotAllowed =>
+      'Non può assegnare pagamenti in questa attività. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefuseNote =>
+      'Una parte inferiore al dovuto richiede una nota.';
+
+  @override
+  String get assignRefusePartOver =>
+      'Una parte supera quanto resta da pagare sulla sua fattura. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefusePayer =>
+      'Una fattura non è di questo cliente. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefuseSumOver =>
+      'Le parti superano quanto resta del pagamento. Non è stato registrato nulla.';
+
+  @override
+  String get assignRefuseUsed =>
+      'Il pagamento è stato usato nel frattempo. Viene riletto: controlla gli importi.';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Chi: chi gestisce la configurazione di questo spazio di lavoro';
 
@@ -20822,6 +20964,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get paymentMatchIntro =>
       'È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.';
+
+  @override
+  String get paymentMatchInvoiceGone =>
+      'Questa fattura non è più aperta: l\'elenco viene riletto.';
 
   @override
   String get paymentMatchRefused =>
