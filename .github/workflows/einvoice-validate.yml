@@ -87,9 +87,18 @@ jobs:
           key: toolchain-einvoice-${{ hashFiles('tool/einvoice/validate.sh') }}
       - name: Run the official validators
         run: |
+          # #3663 -- exit 3: a validator's download did not answer (after its
+          # retries). Nothing was validated this time; that is a notice, not a
+          # failure of the change. Any other non-zero exit is a real failure.
+          code=0
           EINVOICE_DL_CACHE="$HOME/.cache/deskilo-toolchain/einvoice" bash tool/einvoice/validate.sh \
             "${{ runner.temp }}/einvoice-samples" \
-            "${{ runner.temp }}/einvoice-validators"
+            "${{ runner.temp }}/einvoice-validators" || code=$?
+          if [ "$code" = 3 ]; then
+            echo "::notice::the validator did not answer: nothing was validated this time (re-run later)"
+            exit 0
+          fi
+          exit "$code"
       - name: Summary
         if: always()
         run: |
