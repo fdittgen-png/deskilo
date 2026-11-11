@@ -24838,6 +24838,12 @@ abstract class AppLocalizations {
   /// **'A customer or a number'**
   String get invoicingSearchHint;
 
+  /// #3587 a source name: what customers paid that no invoice has taken
+  ///
+  /// In en, this message translates to:
+  /// **'Customer credits'**
+  String get invoicingSourceCredits;
+
   /// #3587 one line when a source failed; no figure it fed is shown
   ///
   /// In en, this message translates to:

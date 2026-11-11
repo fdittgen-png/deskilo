@@ -5697,6 +5697,7 @@ Map<String, _Getter> _part16() => {
   'invoicePdfAnnex': (l) => l.invoicePdfAnnex,
   'invoiceSendStatusInProgress': (l) => l.invoiceSendStatusInProgress,
   'invoiceWriteoffButton': (l) => l.invoiceWriteoffButton,
+  'invoicingSourceCredits': (l) => l.invoicingSourceCredits,
   'invoicingTryAgain': (l) => l.invoicingTryAgain,
   'journeyHowClosedWorkspace': (l) => l.journeyHowClosedWorkspace,
   'journeyStepIssued': (l) => l.journeyStepIssued,

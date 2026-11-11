@@ -70,6 +70,7 @@ class InvoicingFailedSource extends StatelessWidget {
       InvoicingSource.matches => l.invoicingSourceMatches,
       InvoicingSource.holds => l.invoicingSourceHolds,
       InvoicingSource.transmissions => l.invoicingSourceTransmissions,
+      InvoicingSource.credits => l.invoicingSourceCredits,
       InvoicingSource.payments => l.invoicingSourcePayments,
       InvoicingSource.reminders => l.invoicingSourceReminders,
       InvoicingSource.toInvoice => l.invoicingSourceToInvoice,

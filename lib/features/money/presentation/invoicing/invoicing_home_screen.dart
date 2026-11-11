@@ -26,17 +26,20 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import '../../application/reminder_queue.dart';
 import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../invoice_actions.dart';
-import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/invoice_form_sheet.dart';
+import 'customer_page.dart';
 import 'invoice_month_flow.dart';
 import 'invoice_page.dart';
 import 'invoicing_home.dart';
 import 'invoicing_list.dart';
 import 'invoicing_reads.dart';
+import 'payments_to_match_screen.dart';
+import 'reminder_queue_screen.dart';
 
 /// The width of the invoice panel beside the list on a desk window.
 const double _panelWidth = 440;
@@ -46,6 +49,10 @@ typedef _Read = ({
   List<Receivable> receivables,
   Map<String, Invoice> byId,
   Map<String, InvoiceMatch> matches,
+  Map<String, Map<String, int>> credit,
+  Set<String> holdsUnassigned,
+  ReminderMode mode,
+  DateTime today,
 });
 
 /// One entry of the More menu: its key, icon, words and action.
@@ -222,6 +229,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final received = ref.watch(receivedPaymentsProvider(window));
     final reader = ref.watch(invoicingReaderProvider);
     final receivables = reader.read(invoices);
+    final credit =
+        ref.watch(unassignedCreditProvider).value ??
+        const <String, Map<String, int>>{};
+    final holdsUnassigned = holdsUnassignedOf(receivables, credit);
     final period = overview.value?.period;
     final currency = workspace?.currencyCode ?? '';
     final data = InvoicingHomeData(
@@ -251,8 +262,18 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         if (received.hasError) InvoicingSource.payments,
         if (overview.hasError) InvoicingSource.toInvoice,
       },
+      holdsUnassigned: holdsUnassigned,
     );
     final byId = {for (final i in invoices) i.id: i};
+    final _Read read = (
+      receivables: receivables,
+      byId: byId,
+      matches: matches,
+      credit: credit,
+      holdsUnassigned: holdsUnassigned,
+      mode: data.mode,
+      today: today,
+    );
     return InvoicingHome(
       data: data,
       searchOpen: _searchOpen,
@@ -261,18 +282,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       wide: _wide,
       actions: InvoicingHomeActions(
         onOpenInvoice: (id) => _open(byId[id], matches),
-        onOpenCustomer: (customerId) => _open(
-          byId[_oldestOf(receivables, customerId, (r) => r.isOutstanding)],
-          matches,
-        ),
-        onCustomerAction: (customerId, action) => _customerAction(
-          (receivables: receivables, byId: byId, matches: matches),
-          customerId,
-          action,
-          data.mode,
-        ),
-        onTodo: (kind) => _todo(kind, period),
-        onRules: () => showDunningRulesDialog(context, ref),
+        onOpenCustomer: (customerId) => _openCustomer(read, customerId),
+        onCustomerAction: (customerId, action) =>
+            _customerAction(read, customerId, action),
+        onTodo: (kind) => _todo(kind, period, read),
         onRetry: (source) => switch (source) {
           InvoicingSource.payments => ref.invalidate(
             receivedPaymentsProvider(window),
@@ -319,9 +332,15 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     _Read read,
     String customerId,
     InvoiceAction action,
-    ReminderMode mode,
   ) async {
-    final (:receivables, :byId, :matches) = read;
+    final (:receivables, :byId, :matches, :mode, :holdsUnassigned, credit: _, today: _) =
+        read;
+    // Money held unassigned is matched from the payments, never by
+    // reminding the customer.
+    if (action == InvoiceAction.match && holdsUnassigned.contains(customerId)) {
+      await _openPaymentsToMatch(read, customerId);
+      return;
+    }
     final bool Function(Receivable) holds = switch (action) {
       InvoiceAction.shareReminder => (r) => reminderToShare(r, mode),
       InvoiceAction.confirmPayment => (r) => r.paymentDeclared,
@@ -342,9 +361,62 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   }
 
   /// The home opens every other "To do" entry as its own list; the month's
-  /// entry opens its flow.
-  Future<void> _todo(TodoKind kind, String? period) async {
+  /// entry opens its flow, the reminders by hand their queue.
+  Future<void> _todo(TodoKind kind, String? period, _Read read) async {
     if (kind == TodoKind.invoiceTheMonth) await _invoiceTheMonth(period);
+    if (kind == TodoKind.shareReminders) await _openQueue(read);
+  }
+
+  /// Full screen, with its own messenger, so what it says is said there.
+  Future<void> _fullScreen(Widget child) => showDialog<void>(
+    context: context,
+    builder: (_) => Dialog.fullscreen(child: ScaffoldMessenger(child: child)),
+  );
+
+  /// The customer's page: what they owe per currency, their credit, their
+  /// invoices and their one action.
+  Future<void> _openCustomer(_Read read, String customerId) => _fullScreen(
+    CustomerPage(
+      customerId: customerId,
+      receivables: read.receivables,
+      today: read.today,
+      mode: read.mode,
+      credit: read.credit[customerId],
+      onOpenInvoice: (id) => openInvoicePage(context, id),
+      onAction: (action) => _customerAction(read, customerId, action),
+    ),
+  );
+
+  /// The reminders shared by hand, the customers holding money we have not
+  /// assigned listed first to match.
+  Future<void> _openQueue(_Read read) => _fullScreen(
+    ReminderQueueScreen(
+      queue: reminderQueueOf(
+        read.receivables,
+        read.today,
+        read.mode,
+        holdsUnassigned: read.holdsUnassigned,
+      ),
+      today: read.today,
+      onMatch: (customerId) => _openPaymentsToMatch(read, customerId),
+    ),
+  );
+
+  /// The payments [customerId] made that no invoice has taken, each with the
+  /// open invoices it could settle.
+  Future<void> _openPaymentsToMatch(_Read read, String customerId) async {
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (workspace == null) return;
+    await _fullScreen(
+      PaymentsToMatchScreen(
+        receivables: [
+          for (final r in read.receivables)
+            if (r.customerId == customerId) r,
+        ],
+        currency: workspace.currencyCode,
+        workspaceId: workspace.id,
+      ),
+    );
   }
 
   /// The month to invoice, full screen with the list the app has today,

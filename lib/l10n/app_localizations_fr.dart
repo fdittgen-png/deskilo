@@ -15152,6 +15152,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingSearchHint => 'Un client ou un numéro';
 
   @override
+  String get invoicingSourceCredits => 'Avoirs des clients';
+
+  @override
   String invoicingSourceFailed(String source) {
     return '$source n’a pas pu être lu.';
   }

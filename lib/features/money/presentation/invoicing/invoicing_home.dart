@@ -25,6 +25,7 @@ import '../../application/receivables_answers.dart';
 import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
 import 'invoicing_words.dart';
+import 'reminder_mode_line.dart';
 
 /// A source the home reads that can fail on its own; what it fed is not
 /// shown while it is missing.
@@ -34,6 +35,7 @@ enum InvoicingSource {
   reminders,
   holds,
   transmissions,
+  credits,
   payments,
   toInvoice;
 
@@ -46,6 +48,7 @@ enum InvoicingSource {
     reminders,
     holds,
     transmissions,
+    credits,
   };
 }
 
@@ -64,6 +67,7 @@ class InvoicingHomeData {
     this.toInvoiceMonth = '',
     this.received = const [],
     this.failed = const {},
+    this.holdsUnassigned = const {},
   });
 
   final List<Receivable> receivables;
@@ -79,6 +83,10 @@ class InvoicingHomeData {
   final List<ToInvoice> toInvoice;
   final List<ReceivedPayment> received;
   final Set<InvoicingSource> failed;
+
+  /// The customers who hold money received and not assigned
+  /// (`holdsUnassignedMoney`): matched first, never reminded.
+  final Set<String> holdsUnassigned;
 }
 
 /// What the home's controls do; the screen wires the existing flows.
@@ -89,7 +97,6 @@ class InvoicingHomeActions {
     required this.onOpenCustomer,
     required this.onCustomerAction,
     required this.onTodo,
-    required this.onRules,
     required this.onRetry,
     required this.onNewInvoice,
   });
@@ -98,7 +105,6 @@ class InvoicingHomeActions {
   final ValueChanged<String> onOpenCustomer;
   final void Function(String customerId, InvoiceAction action) onCustomerAction;
   final ValueChanged<TodoKind> onTodo;
-  final VoidCallback onRules;
   final ValueChanged<InvoicingSource> onRetry;
   final VoidCallback onNewInvoice;
 }
@@ -175,7 +181,9 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   /// A "To do" entry opens the list of exactly what it counts; the month's
   /// entry opens its own flow.
   void _openTodo(TodoKind kind) {
-    if (kind == TodoKind.invoiceTheMonth) {
+    // The month's entry opens its flow and the reminders by hand open their
+    // queue, which lists exactly the reminders the entry counts.
+    if (kind == TodoKind.invoiceTheMonth || kind == TodoKind.shareReminders) {
       widget.actions.onTodo(kind);
       return;
     }
@@ -255,6 +263,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                 receivables: data.receivables,
                 today: data.today,
                 mode: data.mode,
+                holdsUnassigned: data.holdsUnassigned,
                 filter: filter,
                 view: _view,
                 query: _query,
@@ -368,6 +377,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
           ? const []
           : data.toInvoice,
       mode: data.mode,
+      holdsUnassigned: data.holdsUnassigned,
     );
     String caption(Todo t) => t.kind == TodoKind.invoiceTheMonth
         ? '${l.invoicingCustomerCount(t.tally.count)} · ${amountsOf(format, t.tally)}'
@@ -381,23 +391,8 @@ class _InvoicingHomeState extends State<InvoicingHome> {
           _todoRow(l, t, caption(t), primary: i == 0),
       ],
       quiet: QuietLine(l.invoicingCaughtUp),
-      footer: Row(
-        children: [
-          Expanded(
-            child: QuietLine(
-              data.mode == ReminderMode.automatic
-                  ? l.invoicingRemindersAutomatic
-                  : l.invoicingRemindersByHand,
-              icon: Icons.notifications_outlined,
-            ),
-          ),
-          TextButton(
-            key: const ValueKey('invoicing-rules'),
-            onPressed: widget.actions.onRules,
-            child: Text(l.invoicingRules),
-          ),
-        ],
-      ),
+      // How reminders go out, with Rules: the line the reminders share.
+      footer: const ReminderModeLine(),
     );
   }
 
@@ -423,7 +418,11 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   /// The title of the "To do" entry [kind], as its row says it now.
   String _todoTitle(AppLocalizations l, TodoKind kind) {
     final data = widget.data;
-    final todo = todoOf(data.receivables, mode: data.mode).firstWhere(
+    final todo = todoOf(
+      data.receivables,
+      mode: data.mode,
+      holdsUnassigned: data.holdsUnassigned,
+    ).firstWhere(
       (t) => t.kind == kind,
       orElse: () => (kind: kind, tally: Tally.empty),
     );

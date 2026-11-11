@@ -122,7 +122,6 @@ const _noActions = InvoicingHomeActions(
   onOpenCustomer: _ignore,
   onCustomerAction: _ignore2,
   onTodo: _ignore,
-  onRules: _ignore0,
   onRetry: _ignore,
   onNewInvoice: _ignore0,
 );

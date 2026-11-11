@@ -74,7 +74,6 @@ InvoicingHomeActions _actions({ValueChanged<InvoicingSource>? onRetry}) =>
       onOpenCustomer: (_) {},
       onCustomerAction: (_, _) {},
       onTodo: (_) {},
-      onRules: () {},
       onRetry: onRetry ?? (_) {},
       onNewInvoice: () {},
     );
