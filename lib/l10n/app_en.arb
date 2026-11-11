@@ -30934,6 +30934,101 @@
   "@reminderPdfTitleFriendly": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
+  "reminderQueueCheckFirst": "Check first: money received and not assigned",
+  "@reminderQueueCheckFirst": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
+  },
+  "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
+  "@reminderQueueDetail": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueDone": "Done",
+  "@reminderQueueDone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDone)"
+  },
+  "reminderQueueDoneEmpty": "Nothing to share",
+  "@reminderQueueDoneEmpty": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
+  },
+  "reminderQueueFailed": "Could not be shared. Try again.",
+  "@reminderQueueFailed": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
+  },
+  "reminderQueueIntro": "You share each reminder yourself. It is recorded only when it was really shared.",
+  "@reminderQueueIntro": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueIntro)"
+  },
+  "reminderQueueLevel": "Reminder {level}",
+  "@reminderQueueLevel": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel)",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueMatch": "Match",
+  "@reminderQueueMatch": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueMatch)"
+  },
+  "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
+  "@reminderQueueNotRecorded": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)"
+  },
+  "reminderQueueNotShared": "Not shared",
+  "@reminderQueueNotShared": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotShared)"
+  },
+  "reminderQueueResultNone": "No reminder shared",
+  "@reminderQueueResultNone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
+  },
+  "reminderQueueResultSubtitle": "Each one is recorded on its invoice.",
+  "@reminderQueueResultSubtitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)"
+  },
+  "reminderQueueResultTitle": "{count, plural, =1{1 reminder shared} other{{count} reminders shared}}",
+  "@reminderQueueResultTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueShare": "Share",
+  "@reminderQueueShare": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShare)"
+  },
+  "reminderQueueShareNext": "Share the next one · {customer}",
+  "@reminderQueueShareNext": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShareNext)",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueShared": "Shared",
+  "@reminderQueueShared": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShared)"
+  },
+  "reminderQueueStays": "They stay in To do.",
+  "@reminderQueueStays": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueStays)"
+  },
+  "reminderQueueTitle": "Reminders to share",
+  "@reminderQueueTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueTitle)"
+  },
   "reminderStatusAccepted": "Accepted by the push service — not proof it was read",
   "@reminderStatusAccepted": {
     "description": "#1922 reminder evidence: reminderStatusAccepted"

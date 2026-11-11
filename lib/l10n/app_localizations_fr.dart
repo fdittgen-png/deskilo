@@ -23532,6 +23532,85 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Rappel de paiement';
 
   @override
+  String get reminderQueueCheckFirst =>
+      'À vérifier d\'abord : argent reçu et non affecté';
+
+  @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days jours de retard',
+      one: '$number · 1 jour de retard',
+      zero: '$number · échue aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Terminé';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Rien à partager';
+
+  @override
+  String get reminderQueueFailed => 'N\'a pas pu être partagée. Réessayez.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Vous partagez chaque relance vous-même. Elle n\'est enregistrée que si elle a vraiment été partagée.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Relance $level';
+  }
+
+  @override
+  String get reminderQueueMatch => 'Rapprocher';
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Rien n\'a été enregistré : le partage a été fermé.';
+
+  @override
+  String get reminderQueueNotShared => 'Non partagées';
+
+  @override
+  String get reminderQueueResultNone => 'Aucune relance partagée';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Chacune est enregistrée sur sa facture.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relances partagées',
+      one: '1 relance partagée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Partager';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Partager la suivante · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Partagée';
+
+  @override
+  String get reminderQueueStays => 'Elles restent dans « À faire ».';
+
+  @override
+  String get reminderQueueTitle => 'Relances à partager';
+
+  @override
   String get reminderStatusAccepted =>
       'Acceptée par le service de notifications — ce n\'est pas une preuve de lecture';
 

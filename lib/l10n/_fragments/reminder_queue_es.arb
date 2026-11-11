@@ -1,0 +1,20 @@
+{
+  "reminderQueueTitle": "Recordatorios por compartir",
+  "reminderQueueIntro": "Usted comparte cada recordatorio. Solo se registra si de verdad se compartió.",
+  "reminderQueueLevel": "Recordatorio {level}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · vence hoy} =1{{number} · 1 día de retraso} other{{number} · {days} días de retraso}}",
+  "reminderQueueShare": "Compartir",
+  "reminderQueueShareNext": "Compartir la siguiente · {customer}",
+  "reminderQueueShared": "Compartido",
+  "reminderQueueNotRecorded": "No se registró nada: se cerró el menú de compartir.",
+  "reminderQueueFailed": "No se pudo compartir. Inténtelo de nuevo.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 recordatorio compartido} other{{count} recordatorios compartidos}}",
+  "reminderQueueResultNone": "Ningún recordatorio compartido",
+  "reminderQueueResultSubtitle": "Cada uno queda registrado en su factura.",
+  "reminderQueueNotShared": "No compartidos",
+  "reminderQueueStays": "Se quedan en «Por hacer».",
+  "reminderQueueDone": "Hecho",
+  "reminderQueueDoneEmpty": "Nada que compartir",
+  "reminderQueueCheckFirst": "Compruebe primero: dinero recibido y no asignado",
+  "reminderQueueMatch": "Conciliar"
+}

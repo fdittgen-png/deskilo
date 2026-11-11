@@ -23470,6 +23470,85 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Recordatorio de pago';
 
   @override
+  String get reminderQueueCheckFirst =>
+      'Compruebe primero: dinero recibido y no asignado';
+
+  @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days días de retraso',
+      one: '$number · 1 día de retraso',
+      zero: '$number · vence hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Hecho';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Nada que compartir';
+
+  @override
+  String get reminderQueueFailed => 'No se pudo compartir. Inténtelo de nuevo.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Usted comparte cada recordatorio. Solo se registra si de verdad se compartió.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Recordatorio $level';
+  }
+
+  @override
+  String get reminderQueueMatch => 'Conciliar';
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'No se registró nada: se cerró el menú de compartir.';
+
+  @override
+  String get reminderQueueNotShared => 'No compartidos';
+
+  @override
+  String get reminderQueueResultNone => 'Ningún recordatorio compartido';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Cada uno queda registrado en su factura.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count recordatorios compartidos',
+      one: '1 recordatorio compartido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Compartir';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Compartir la siguiente · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Compartido';
+
+  @override
+  String get reminderQueueStays => 'Se quedan en «Por hacer».';
+
+  @override
+  String get reminderQueueTitle => 'Recordatorios por compartir';
+
+  @override
   String get reminderStatusAccepted =>
       'Aceptado por el servicio de notificaciones — no prueba que se haya leído';
 

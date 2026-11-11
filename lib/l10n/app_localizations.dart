@@ -38685,6 +38685,114 @@ abstract class AppLocalizations {
   /// **'Payment reminder'**
   String get reminderPdfTitleFriendly;
 
+  /// #3587 R1-f: reminder queue (reminderQueueCheckFirst)
+  ///
+  /// In en, this message translates to:
+  /// **'Check first: money received and not assigned'**
+  String get reminderQueueCheckFirst;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueDetail)
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}'**
+  String reminderQueueDetail(int days, String number);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueDone)
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get reminderQueueDone;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to share'**
+  String get reminderQueueDoneEmpty;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueFailed)
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be shared. Try again.'**
+  String get reminderQueueFailed;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'You share each reminder yourself. It is recorded only when it was really shared.'**
+  String get reminderQueueIntro;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level}'**
+  String reminderQueueLevel(int level);
+
+  /// #3587 R1-f: reminder queue (reminderQueueMatch)
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get reminderQueueMatch;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was recorded: the share was closed.'**
+  String get reminderQueueNotRecorded;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotShared)
+  ///
+  /// In en, this message translates to:
+  /// **'Not shared'**
+  String get reminderQueueNotShared;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder shared'**
+  String get reminderQueueResultNone;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Each one is recorded on its invoice.'**
+  String get reminderQueueResultSubtitle;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 reminder shared} other{{count} reminders shared}}'**
+  String reminderQueueResultTitle(int count);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueShare)
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get reminderQueueShare;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueShareNext)
+  ///
+  /// In en, this message translates to:
+  /// **'Share the next one · {customer}'**
+  String reminderQueueShareNext(String customer);
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueShared)
+  ///
+  /// In en, this message translates to:
+  /// **'Shared'**
+  String get reminderQueueShared;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueStays)
+  ///
+  /// In en, this message translates to:
+  /// **'They stay in To do.'**
+  String get reminderQueueStays;
+
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders to share'**
+  String get reminderQueueTitle;
+
   /// #1922 reminder evidence: reminderStatusAccepted
   ///
   /// In en, this message translates to:
