@@ -111,10 +111,6 @@ String eventLine(
           event.payload['number'] as String? ?? '',
           amount,
         ),
-    (EventType.invoiceIssued, _) => l10n.eventInvoiceIssuedLine(
-          event.payload['number'] as String? ?? '',
-          amount,
-        ),
     (EventType.invoiceReminder, _) => l10n.eventInvoiceReminderLine(
           event.payload['number'] as String? ?? '',
           (event.payload['level'] as num?)?.toInt() ?? 1,
@@ -297,6 +293,9 @@ String _noticeOrFallbackLine(
   EventType.privacyIncident => l10n.eventPrivacyIncident(
     '${event.payload['kind'] ?? ''}',
     '${event.payload['note'] ?? ''}',
+  ),
+  EventType.invoiceIssued => l10n.eventInvoiceIssuedLine(
+    '${event.payload['number'] ?? ''}',
   ),
   EventType.settlementReview => l10n.eventSettlementReview(
     '${event.payload['settlement_id'] ?? ''}',

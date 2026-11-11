@@ -7485,7 +7485,6 @@ const Set<String> uiLabelKeys = {
   'eventTypeExpenseRepartition',
   'eventTypeExpenseSchedule',
   'eventTypeInvoiceIssue',
-  'eventTypeInvoiceIssued',
   'eventTypeInvoicePayment',
   'eventTypeInvoicePaymentReversed',
   'eventTypeInvoiceReminder',

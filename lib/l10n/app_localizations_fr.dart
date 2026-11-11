@@ -8851,8 +8851,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String eventInvoiceIssuedLine(String number, String amount) {
-    return 'Nouvelle facture $number — $amount';
+  String eventInvoiceIssuedLine(String number) {
+    return 'Nouvelle facture $number';
   }
 
   @override
@@ -9058,9 +9058,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceIssue => 'Émission de facture';
-
-  @override
-  String get eventTypeInvoiceIssued => 'Nouvelle facture';
 
   @override
   String get eventTypeInvoicePayment => 'Paiement de facture';

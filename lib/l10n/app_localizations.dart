@@ -14197,8 +14197,8 @@ abstract class AppLocalizations {
   /// #3672 a new invoice told to its customer
   ///
   /// In en, this message translates to:
-  /// **'New invoice {number} — {amount}'**
-  String eventInvoiceIssuedLine(String number, String amount);
+  /// **'New invoice {number}'**
+  String eventInvoiceIssuedLine(String number);
 
   /// Events feed line for a matched invoice payment
   ///
@@ -14450,12 +14450,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoice issue'**
   String get eventTypeInvoiceIssue;
-
-  /// #3672 a new invoice told to its customer
-  ///
-  /// In en, this message translates to:
-  /// **'New invoice'**
-  String get eventTypeInvoiceIssued;
 
   /// Event type label + validation settings card (0067)
   ///

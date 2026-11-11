@@ -5812,7 +5812,7 @@
   "eventExpenseScheduleLine": "{actor} programa «{title}» — {amount} recurrente",
   "eventExpenseSubmitted": "{actor} envió un gasto de {amount}",
   "eventForSubject": "para {name}",
-  "eventInvoiceIssuedLine": "Nueva factura {number} — {amount}",
+  "eventInvoiceIssuedLine": "Nueva factura {number}",
   "eventInvoicePaid": "Factura {number} pagada — {amount}",
   "@eventInvoicePaid": {
     "placeholders": {
@@ -5981,7 +5981,6 @@
   "@eventTypeInvoiceIssue": {
     "description": "#982 validation domains: eventTypeInvoiceIssue"
   },
-  "eventTypeInvoiceIssued": "Nueva factura",
   "eventTypeInvoicePayment": "Pago de factura",
   "eventTypeInvoicePaymentReversed": "Conciliación de pago deshecha",
   "@eventTypeInvoicePaymentReversed": {

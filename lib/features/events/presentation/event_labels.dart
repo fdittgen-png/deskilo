@@ -37,7 +37,7 @@ String eventTypeLabel(AppLocalizations l10n, EventType type) {
     EventType.matrixChange: l10n.eventTypeMatrixChange,
     EventType.invoiceWriteoff: l10n.eventTypeInvoiceWriteoff,
     EventType.invoiceReminder: l10n.eventTypeInvoiceReminder,
-    EventType.invoiceIssued: l10n.eventTypeInvoiceIssued,
+    EventType.invoiceIssued: l10n.invoiceCreate,
     EventType.priceNegotiation: l10n.eventTypePriceNegotiation,
     EventType.expenseSchedule: l10n.eventTypeExpenseSchedule,
     EventType.expenseRepartition: l10n.eventTypeExpenseRepartition,

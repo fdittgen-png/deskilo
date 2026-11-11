@@ -6721,7 +6721,6 @@ Map<String, _Getter> _part19() => {
   'einvoiceEnvTestHint': (l) => l.einvoiceEnvTestHint,
   'emblemTitle': (l) => l.emblemTitle,
   'equipmentFieldExternalId': (l) => l.equipmentFieldExternalId,
-  'eventTypeInvoiceIssued': (l) => l.eventTypeInvoiceIssued,
   'eventTypePayment': (l) => l.eventTypePayment,
   'expenseSupplyUnitPrice': (l) => l.expenseSupplyUnitPrice,
   'exportAboutSheet': (l) => l.exportAboutSheet,

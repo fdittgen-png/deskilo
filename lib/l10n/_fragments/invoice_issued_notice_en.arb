@@ -1,16 +1,9 @@
 {
-  "eventTypeInvoiceIssued": "New invoice",
-  "@eventTypeInvoiceIssued": {
-    "description": "#3672 a new invoice told to its customer"
-  },
-  "eventInvoiceIssuedLine": "New invoice {number} — {amount}",
+  "eventInvoiceIssuedLine": "New invoice {number}",
   "@eventInvoiceIssuedLine": {
     "description": "#3672 a new invoice told to its customer",
     "placeholders": {
       "number": {
-        "type": "String"
-      },
-      "amount": {
         "type": "String"
       }
     }
