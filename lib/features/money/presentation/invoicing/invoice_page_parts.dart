@@ -225,7 +225,7 @@ bool invoiceWriteOffOffered(Receivable? r) =>
 
 /// The proforma asks for the whole total: only while nothing is paid and no
 /// payment is on its way.
-bool invoiceProformaOffered(Receivable? r) =>
+bool _proformaOffered(Receivable? r) =>
     r != null && r.stage == ReceivableStage.open && !r.paymentPending;
 
 /// One line of the More menu: its key, its words, and what it does (a header
@@ -291,7 +291,7 @@ class InvoiceMoreMenu extends ConsumerWidget {
         ),
       // An issued invoice re-sent as a payment request; the document does
       // not change.
-      if (invoiceProformaOffered(r))
+      if (_proformaOffered(r))
         (
           'invoice-more-proforma',
           l.invoiceProformaAction,
