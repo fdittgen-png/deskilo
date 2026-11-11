@@ -20600,6 +20600,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'A payment was received and is not assigned yet. Choose the invoice it pays.';
 
   @override
+  String get paymentMatchInvoiceGone =>
+      'This invoice is no longer open: the list is read again.';
+
+  @override
   String get paymentMatchRefused =>
       'The payment could not be matched. Try again.';
 

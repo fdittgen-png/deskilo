@@ -20809,6 +20809,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Un paiement a été reçu et n\'est pas encore affecté. Choisissez la facture qu\'il règle.';
 
   @override
+  String get paymentMatchInvoiceGone =>
+      'Cette facture n\'est plus ouverte : la liste est relue.';
+
+  @override
   String get paymentMatchRefused =>
       'Le paiement n\'a pas pu être rapproché. Réessayez.';
 

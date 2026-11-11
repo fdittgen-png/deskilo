@@ -7,5 +7,6 @@
   "paymentMatchDecide": "Altro importo: sceglie come saldare la differenza",
   "paymentMatchEmpty": "Nessun pagamento attende una fattura.",
   "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
-  "paymentMatchRefused": "Non è stato possibile abbinare il pagamento. Riprovi."
+  "paymentMatchRefused": "Non è stato possibile abbinare il pagamento. Riprovi.",
+  "paymentMatchInvoiceGone": "Questa fattura non è più aperta: l'elenco viene riletto."
 }

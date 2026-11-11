@@ -16,6 +16,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/presentation/invoicing/payments_to_match_screen.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show Invoice;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +34,7 @@ class _Repo extends FakeMoneyRepository {
   final List<String> matched = [];
   Exception? failWith;
   Exception? ledgerFails;
+  Exception? invoicesFail;
   Completer<void>? matching;
 
   /// The open invoices the reader turns the archive into.
@@ -59,6 +61,13 @@ class _Repo extends FakeMoneyRepository {
       for (final r in open)
         if (r.invoiceId != invoiceId) r,
     ];
+  }
+
+  @override
+  Future<List<Invoice>> fetchInvoices(String workspaceId) async {
+    final failure = invoicesFail;
+    if (failure != null) throw failure;
+    return super.fetchInvoices(workspaceId);
   }
 
   @override
@@ -244,6 +253,60 @@ void main() {
       _key('invoicing-dashboard-radio-group'),
     );
     expect(group.groupValue, 'p1', reason: 'not the newest, the tapped one');
+  });
+
+  testWidgets('#3285: the invoices fail to read before the difference '
+      'dialog: said with Try again, nothing matched, the lock released; Try '
+      'again opens the dialog on the same payment', (tester) async {
+    final id = await repo.createInvoice(
+      workspaceId: 'ws-1',
+      memberId: 'anna',
+      period: kTestPeriod,
+    );
+    repo
+      ..open = [_inv(id, 9000, DateTime(2026, 5))]
+      ..ledger.addAll([_payment('p1', 12000), _payment('p2', 7777)]);
+    await pump(tester);
+    // The invoices go stale in the very frame the card is tapped (a change
+    // elsewhere invalidates them), and reading them again fails.
+    repo.invoicesFail = Exception('offline');
+    ProviderScope.containerOf(
+      tester.element(find.byType(PaymentsToMatchScreen)),
+    ).invalidate(invoicesProvider);
+    await tester.tap(_key('payment-match-p1-$id'));
+    // The read is retried first (the provider's own retries, about half a
+    // minute); only when they all fail is the failure said.
+    for (var i = 0; i < 6; i++) {
+      await tester.pump(const Duration(seconds: 10));
+    }
+    expect(find.text('The invoices could not be read.'), findsOneWidget);
+    expect(_key('invoicing-dashboard-radio-group'), findsNothing);
+    expect(repo.matched, isEmpty);
+    expect(tester.takeException(), isNull, reason: 'no uncaught error');
+    repo.invoicesFail = null;
+    await tester.tap(_key('payment-match-read-retry'));
+    await tester.pumpAndSettle();
+    final group = tester.widget<RadioGroup<String>>(
+      _key('invoicing-dashboard-radio-group'),
+    );
+    expect(group.groupValue, 'p1', reason: 'the retry keeps the payment');
+  });
+
+  testWidgets('#3285: an invoice gone meanwhile is said, not passed over in '
+      'silence', (tester) async {
+    repo
+      ..open = [_inv('gone', 9000, DateTime(2026, 5))]
+      ..ledger.add(_payment('p1', 12000));
+    await pump(tester);
+    await tester.tap(_key('payment-match-p1-gone'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(
+      find.text('This invoice is no longer open: the list is read again.'),
+      findsOneWidget,
+    );
+    expect(_key('invoicing-dashboard-radio-group'), findsNothing);
+    expect(repo.matched, isEmpty);
   });
 
   testWidgets('the payment is in the business\'s currency; an invoice in '

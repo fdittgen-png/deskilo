@@ -9,6 +9,7 @@
 // server stays the authority (a validation quorum may keep it waiting).
 import 'dart:async';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show Invoice;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -73,11 +74,44 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     final l10n = context.l10n;
     if (c.fit == MatchFit.needsDecision) {
       // The dialog that asks how to settle a difference, opened on the
-      // payment of the card that was tapped.
-      final invoice = (await ref.read(invoicesProvider.future))
-          .where((i) => i.id == c.invoice.invoiceId)
-          .firstOrNull;
-      if (invoice == null || !mounted) return;
+      // payment of the card that was tapped. #3285: the invoices are read
+      // under the same guard as the match; a failed read is said with Try
+      // again, which keeps this payment and this invoice.
+      final Invoice? invoice;
+      try {
+        invoice = (await ref.read(invoicesProvider.future))
+            .where((i) => i.id == c.invoice.invoiceId)
+            .firstOrNull;
+      } on Object catch (e, st) {
+        TraceLogger.instance.error(
+          'money',
+          'invoices read failed before a match',
+          error: e,
+          stackTrace: st,
+        );
+        if (!mounted) return;
+        AppSnack.error(
+          context,
+          l10n.assignPaymentReadFailedInvoices,
+          action: SnackBarAction(
+            key: const ValueKey('payment-match-read-retry'),
+            label: l10n.commonRetry,
+            onPressed: () {
+              ref.invalidate(invoicesProvider);
+              unawaited(_match(row, c));
+            },
+          ),
+        );
+        return;
+      }
+      if (!mounted) return;
+      if (invoice == null) {
+        ref
+          ..invalidate(invoiceMatchesProvider)
+          ..invalidate(invoicesProvider);
+        AppSnack.error(context, l10n.paymentMatchInvoiceGone);
+        return;
+      }
       await matchInvoiceToPayment(
         context,
         ref,

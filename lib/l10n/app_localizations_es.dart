@@ -20746,6 +20746,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Se recibió un pago que aún no está asignado. Elija la factura que paga.';
 
   @override
+  String get paymentMatchInvoiceGone =>
+      'Esta factura ya no está abierta: la lista se vuelve a leer.';
+
+  @override
   String get paymentMatchRefused =>
       'No se pudo conciliar el pago. Inténtelo de nuevo.';
 

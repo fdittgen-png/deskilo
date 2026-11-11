@@ -33802,6 +33802,12 @@ abstract class AppLocalizations {
   /// **'A payment was received and is not assigned yet. Choose the invoice it pays.'**
   String get paymentMatchIntro;
 
+  /// #3285: the invoice of a payment's candidate was settled or removed meanwhile
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice is no longer open: the list is read again.'**
+  String get paymentMatchInvoiceGone;
+
   /// #3587 R1-f: said when matching a payment to an invoice was refused
   ///
   /// In en, this message translates to:

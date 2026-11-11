@@ -12718,6 +12718,7 @@
   "paymentMatchFailed": "Les paiements n'ont pas pu être lus.",
   "paymentMatchHeader": "{amount} reçus le {date}",
   "paymentMatchIntro": "Un paiement a été reçu et n'est pas encore affecté. Choisissez la facture qu'il règle.",
+  "paymentMatchInvoiceGone": "Cette facture n'est plus ouverte : la liste est relue.",
   "paymentMatchRefused": "Le paiement n'a pas pu être rapproché. Réessayez.",
   "paymentMatchSame": "Même montant",
   "paymentMatchTitle": "Paiements à rapprocher",

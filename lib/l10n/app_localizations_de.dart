@@ -20796,6 +20796,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.';
 
   @override
+  String get paymentMatchInvoiceGone =>
+      'Diese Rechnung ist nicht mehr offen: Die Liste wird neu gelesen.';
+
+  @override
   String get paymentMatchRefused =>
       'Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.';
 

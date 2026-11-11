@@ -7,5 +7,6 @@
   "paymentMatchDecide": "Autre montant : vous choisissez comment régler l'écart",
   "paymentMatchEmpty": "Aucun paiement n'attend de facture.",
   "paymentMatchFailed": "Les paiements n'ont pas pu être lus.",
-  "paymentMatchRefused": "Le paiement n'a pas pu être rapproché. Réessayez."
+  "paymentMatchRefused": "Le paiement n'a pas pu être rapproché. Réessayez.",
+  "paymentMatchInvoiceGone": "Cette facture n'est plus ouverte : la liste est relue."
 }

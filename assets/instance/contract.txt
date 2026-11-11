@@ -2180,6 +2180,7 @@ routine public.apply_expense_repartition_decision() -> trigger | function | defi
 routine public.apply_expense_schedule_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:e1995e4252a0
 routine public.apply_negotiation_on_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:e061866829af
 routine public.apply_payment_terms_decision() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:8de191499b5a
+routine public.apply_payment_to_invoices(p_workspace_id uuid, p_payment_ledger_id uuid, p_allocations jsonb, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b453ba22b852
 routine public.apply_role_permission_delta(p_workspace_id uuid, p_role text, p_permission text, p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:269e43fa895e
 routine public.apply_stock_on_confirm() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:26785b5b7376
 routine public.apply_supplier_credit_note_v1(p_workspace_id uuid, p_credit_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f281f26dce4d
@@ -2421,7 +2422,7 @@ routine public.give_lease_notice_v1(p_workspace_id uuid, p_lease_id uuid, p_revi
 routine public.grant_database_admin_internal(p_target uuid, p_can_provision boolean, p_granted_by text) -> jsonb | function | definer | volatile | exec:service_role | body:f424674c09a4
 routine public.grant_workspace_template(p_template_id uuid, p_email text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:234a872cde5d
 routine public.guard_oauth_client_purpose() -> trigger | function | invoker | volatile | exec: | body:a18b6684527b
-routine public.guard_payment_allocation_sum() -> trigger | function | definer | volatile | exec:service_role | body:9ebd0ca2d377
+routine public.guard_payment_allocation_sum() -> trigger | function | definer | volatile | exec:service_role | body:d7d2d4ca1a97
 routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p_current jsonb) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e2c13fd7d108
 routine public.guest_participation_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:f9dca924a932
 routine public.guest_participation_self_view(p guest_participations) -> jsonb | function | invoker | stable | exec:service_role | body:bfd6829ac539
@@ -2490,6 +2491,7 @@ routine public.invoice_maturity_freeze() -> trigger | function | definer | volat
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
+routine public.invoice_still_due_cents(p_invoice_id uuid) -> bigint | function | definer | stable | exec:service_role | body:47d12f7b1ff8
 routine public.invoice_transmissions_sync_phase() -> trigger | function | invoker | volatile | exec:service_role | body:3f7ae01ba028
 routine public.invoices_immutable() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:a675f0d72a42
 routine public.invoices_reimbursement_guard() -> trigger | function | definer | volatile | exec:service_role | body:6e42a593d2a1
@@ -2570,7 +2572,7 @@ routine public.mark_purchase_order_sent_v1(p_workspace_id uuid, p_order_id uuid,
 routine public.mark_vat_declaration_submitted(p_declaration_id uuid, p_channel text, p_receipt text) -> void | function | definer | volatile | exec:authenticated,service_role | body:97151b4a926c
 routine public.match_bank_line_v1(p_line_id uuid, p_invoice_id uuid, p_resolution text, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc175d03524e
 routine public.match_einvoice(p_inbox_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dbae7df91e2e
-routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text, p_amount_cents integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:3debef1ec335
+routine public.match_invoice(p_invoice_id uuid, p_payment_ledger_id uuid, p_resolution text, p_note text, p_amount_cents integer) -> void | function | definer | volatile | exec:authenticated,service_role | body:49880788e1eb
 routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ed8832a5c76f
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cf38d20d7ed6
@@ -2965,6 +2967,7 @@ routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) ->
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.realtime_deletion_signal() -> trigger | function | definer | volatile | exec:service_role | body:14324dc6ed47
 routine public.rebalance_member_credits(p_member_id uuid, p_at timestamp with time zone, p_reservation_id uuid) -> void | function | definer | volatile | exec:service_role | body:5ddacb1438c6
+routine public.recheck_invoice_payment_part() -> trigger | function | definer | volatile | exec:service_role | body:75ce811c3c9a
 routine public.reconcile_bank_line_out_v1(p_line_id uuid, p_outgoing_payment_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e5450258fe42
 routine public.reconcile_reminder_attempts() -> integer | function | definer | volatile | exec:service_role | body:6061a31874f8
 routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, subject uuid, detail text) | function | definer | volatile | exec:authenticated,service_role | body:5cccc13f093d

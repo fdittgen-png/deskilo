@@ -20771,6 +20771,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.';
 
   @override
+  String get paymentMatchInvoiceGone =>
+      'Questa fattura non è più aperta: l\'elenco viene riletto.';
+
+  @override
   String get paymentMatchRefused =>
       'Non è stato possibile abbinare il pagamento. Riprovi.';
 

@@ -12718,6 +12718,7 @@
   "paymentMatchFailed": "No se pudieron leer los pagos.",
   "paymentMatchHeader": "{amount} recibidos el {date}",
   "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
+  "paymentMatchInvoiceGone": "Esta factura ya no está abierta: la lista se vuelve a leer.",
   "paymentMatchRefused": "No se pudo conciliar el pago. Inténtelo de nuevo.",
   "paymentMatchSame": "Mismo importe",
   "paymentMatchTitle": "Pagos por conciliar",

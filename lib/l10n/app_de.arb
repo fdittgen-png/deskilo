@@ -12718,6 +12718,7 @@
   "paymentMatchFailed": "Die Zahlungen konnten nicht gelesen werden.",
   "paymentMatchHeader": "{amount} eingegangen am {date}",
   "paymentMatchIntro": "Eine Zahlung ist eingegangen und noch nicht zugeordnet. Wählen Sie die Rechnung, die sie begleicht.",
+  "paymentMatchInvoiceGone": "Diese Rechnung ist nicht mehr offen: Die Liste wird neu gelesen.",
   "paymentMatchRefused": "Die Zahlung konnte nicht zugeordnet werden. Bitte erneut versuchen.",
   "paymentMatchSame": "Gleicher Betrag",
   "paymentMatchTitle": "Zahlungen zuordnen",

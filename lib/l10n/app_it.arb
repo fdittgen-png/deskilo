@@ -12718,6 +12718,7 @@
   "paymentMatchFailed": "Non è stato possibile leggere i pagamenti.",
   "paymentMatchHeader": "{amount} ricevuti il {date}",
   "paymentMatchIntro": "È stato ricevuto un pagamento non ancora assegnato. Scelga la fattura che paga.",
+  "paymentMatchInvoiceGone": "Questa fattura non è più aperta: l'elenco viene riletto.",
   "paymentMatchRefused": "Non è stato possibile abbinare il pagamento. Riprovi.",
   "paymentMatchSame": "Stesso importo",
   "paymentMatchTitle": "Pagamenti da abbinare",

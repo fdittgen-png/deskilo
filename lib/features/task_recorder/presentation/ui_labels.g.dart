@@ -3747,6 +3747,7 @@ Map<String, _Getter> _part10() => {
   'overviewMembershipsDefinition': (l) => l.overviewMembershipsDefinition,
   'payFieldReturnUrl': (l) => l.payFieldReturnUrl,
   'payFieldSecretKey': (l) => l.payFieldSecretKey,
+  'paymentMatchInvoiceGone': (l) => l.paymentMatchInvoiceGone,
   'paymentProviderMollie': (l) => l.paymentProviderMollie,
   'paymentTermsInherited': (l) => l.paymentTermsInherited,
   'permMakeReservations': (l) => l.permMakeReservations,

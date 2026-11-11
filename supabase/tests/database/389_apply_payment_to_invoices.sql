@@ -4,9 +4,11 @@
 -- match with its own event; what is left stays the payer's credit; a part
 -- below what is due needs the note; all or nothing; refused: an invoice of
 -- another payer, in another currency, twice, a part beyond its invoice or
--- beyond what is left, an empty list.
+-- beyond what is left, an empty list. Two payments against one
+-- remainder are never both accepted: not while the first awaits approval,
+-- not after it; an approval checks its part again.
 begin;
-select plan(14);
+select plan(20);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -103,25 +105,6 @@ create or replace function pg_temp.match(p_inv text, p_pay text, p_amount int) r
 $f$;
 
 
--- As the owner: match, read the account, reconcile.
-create or replace function pg_temp.as_owner(p_sql text) returns text language plpgsql as $f$
-declare v text;
-begin
-  perform set_config('request.jwt.claims',
-    json_build_object('sub', current_setting('sp.owner'), 'role', 'authenticated')::text, true);
-  set local role authenticated;
-  execute p_sql into v;
-  reset role;
-  return v;
-exception when others then
-  reset role;
-  return 'ERROR: ' || sqlerrm;
-end
-$f$;
-create or replace function pg_temp.credit() returns int language sql as $f$
-  select (pg_temp.as_owner(format('select public.member_account(%L)::text', current_setting('sp.m_p')))::jsonb
-          ->> 'credit_cents')::int;
-$f$;
 create or replace function pg_temp.apply(p_parts text, p_note text default '') returns text language plpgsql as $f$
 declare v text; v_parts jsonb;
 begin
@@ -169,6 +152,54 @@ select is((select count(*)::int from public.events
           'one event per part');
 select is(pg_temp.credit(), 5000 + 10000, 'what is left stays on account, beside the unused payment');
 select is(pg_temp.apply('c:5000', 'the rest of the payment'), '{"invoices": 1, "left_cents": 0}', 'a later call takes what is left');
+
+-- ── two payments against one remainder (an approval policy now) ──
+-- B owes 50.00 after its partial. P2 pays it exactly and waits for
+-- approval; P3 then finds nothing due, before and after the approval.
+create or replace function pg_temp.match_r(p_inv text, p_pay text, p_res text, p_amount int, p_note text)
+returns text language sql as $f$
+  select case when r like 'ERROR%' then r else 'ok' end from (select pg_temp.as_owner(format(
+    'select public.match_invoice(%L, %L, %L, %L, %s)::text',
+    current_setting('sp.' || p_inv), current_setting('sp.' || p_pay), p_res, p_note, p_amount)) r) x;
+$f$;
+create or replace function pg_temp.decide(p_pay text, p_inv text, p_accept boolean) returns text language sql as $f$
+  select case when r like 'ERROR%' then r else 'ok' end from (select pg_temp.as_owner(format(
+    'select public.respond_to_event(%L, %L)::text',
+    (select e.id from public.events e
+      where e.type = 'invoice_payment' and e.status = 'pending'
+        and e.payload ->> 'payment_ledger_id' = current_setting('sp.' || p_pay)
+        and e.payload ->> 'invoice_id' = current_setting('sp.' || p_inv)), p_accept)) r) x;
+$f$;
+create or replace function pg_temp.more_payments() returns void language plpgsql as $f$
+begin
+  insert into public.validation_policies (workspace_id, event_type, required_count, owner_may_self_validate)
+  values (current_setting('sp.ws')::uuid, 'invoice_payment', 1, true);
+  insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
+  select current_setting('sp.ws')::uuid, current_setting('sp.m_p')::uuid, 'credit', 'payment', a, d, '2026-09'
+    from (values (5000, 'P3'), (2000, 'P4'), (3000, 'P5')) v(a, d);
+  perform set_config('sp.p3', (select id from public.ledger_entries
+    where workspace_id = current_setting('sp.ws')::uuid and description = 'P3')::text, false);
+  perform set_config('sp.p4', (select id from public.ledger_entries
+    where workspace_id = current_setting('sp.ws')::uuid and description = 'P4')::text, false);
+  perform set_config('sp.p5', (select id from public.ledger_entries
+    where workspace_id = current_setting('sp.ws')::uuid and description = 'P5')::text, false);
+end
+$f$;
+select pg_temp.more_payments();
+
+select is(pg_temp.match_r('b', 'p2', 'exact', 5000, ''), 'ok', 'P2 settles what B still owes, awaiting approval');
+select isnt(pg_temp.match_r('b', 'p3', 'exact', 5000, ''), 'ok',
+            'P3 cannot take the same remainder while P2 awaits approval');
+select is(pg_temp.decide('p2', 'b', true), 'ok', 'P2 is approved');
+select isnt(pg_temp.match_r('b', 'p3', 'exact', 5000, ''), 'ok', 'nor after it: B is paid');
+-- C owes 50.00: P4 20.00 as a partial and P5 30.00 as the exact rest wait
+-- together. P4 is refused, so P5 no longer settles C: its approval refuses.
+select pg_temp.match_r('c', 'p4', 'under_accepted', 2000, 'a part');
+select is(pg_temp.match_r('c', 'p5', 'exact', 3000, ''), 'ok', 'P5 settles the rest beside the pending P4');
+select pg_temp.decide('p4', 'c', false);
+select is(pg_temp.decide('p5', 'c', true),
+          'ERROR: the invoice changed while this part waited for approval',
+          'an approval checks its part again: with P4 refused, P5 is not the rest');
 
 select * from finish();
 rollback;

@@ -27303,6 +27303,10 @@
   "@paymentMatchIntro": {
     "description": "#3587 R1-f: payments to match (paymentMatchIntro)"
   },
+  "paymentMatchInvoiceGone": "This invoice is no longer open: the list is read again.",
+  "@paymentMatchInvoiceGone": {
+    "description": "#3285: the invoice of a payment's candidate was settled or removed meanwhile"
+  },
   "paymentMatchRefused": "The payment could not be matched. Try again.",
   "@paymentMatchRefused": {
     "description": "#3587 R1-f: said when matching a payment to an invoice was refused"
