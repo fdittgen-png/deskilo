@@ -108,6 +108,7 @@ begin
      where cardinality(s.purposes) > 0), '[]'::jsonb);
 end;
 $fn$;
+revoke execute on function public.member_profiles(uuid, uuid[]) from public, anon;
 
 create or replace function public.preview_my_member_profile(p_as text)
 returns jsonb
@@ -128,6 +129,7 @@ begin
     else array['community', 'operational', 'birthday'] end, null);
 end;
 $fn$;
+revoke execute on function public.preview_my_member_profile(text) from public, anon;
 
 notify pgrst, 'reload schema';
 
