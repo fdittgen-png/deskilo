@@ -7,6 +7,7 @@
 // none of it is kept.
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../bank_unmatch_in.dart' show demoRecordMatchPayment;
 import '../money_repository.dart';
@@ -59,9 +60,7 @@ Future<PaymentApplied> applyPaymentInDemo(
     if (currency.isNotEmpty && invoice.currency != currency) {
       throw StateError("an invoice is not in the business's currency");
     }
-    final due =
-        invoice.totalCents -
-        (m.invoiceMatchesStore[invoice.id]?.paidCents ?? 0);
+    final due = _demoStillDue(m, invoice);
     if (a.amountCents > due) {
       throw StateError('a part is more than what is due on its invoice');
     }
@@ -110,4 +109,60 @@ Future<PaymentApplied> applyPaymentInDemo(
     rethrow;
   }
   return PaymentApplied(invoices: parts.length, leftCents: left - total);
+}
+
+/// What is still due on [invoice] in the demo, as `invoice_still_due_cents`
+/// (0718): the total, less what its match paid, less the further parts that
+/// await approval (a pending match's first part is already its paid amount).
+int _demoStillDue(FakeMoneyRepository m, Invoice invoice) {
+  final match = m.invoiceMatchesStore[invoice.id];
+  final held = match?.pending ?? false;
+  final waiting = held
+      ? 0
+      : (m.invoiceMatchPaymentsStore[invoice.id] ?? const <InvoiceMatch>[])
+            .where((p) => p.pending)
+            .fold(0, (sum, p) => sum + p.paidCents);
+  return invoice.totalCents - (match?.paidCents ?? 0) - waiting;
+}
+
+/// The open invoices of [paymentLedgerId]'s payer and what each can take of
+/// it now, as `payment_invoice_capacity_v1` (0718), oldest issued first.
+List<InvoiceCapacity> paymentCapacityInDemo(
+  FakeMoneyRepository m,
+  String paymentLedgerId,
+) {
+  final payment = m.ledger.where((e) => e.id == paymentLedgerId).firstOrNull;
+  if (payment == null) throw StateError('unknown payment');
+  final currency = m.invoices
+      .map((i) => i.currency)
+      .firstWhere((c) => c.isNotEmpty, orElse: () => '');
+  final out = <(DateTime, InvoiceCapacity)>[];
+  for (final i in m.invoices) {
+    if (i.memberId != payment.memberId ||
+        (currency.isNotEmpty && i.currency != currency) ||
+        i.isVoided ||
+        i.settledByInvoiceId != null) {
+      continue;
+    }
+    final match = m.invoiceMatchesStore[i.id];
+    final held = match?.pending ?? false;
+    if (match != null &&
+        !held &&
+        (match.resolution != 'under_accepted' || match.writeoffAt != null)) {
+      continue;
+    }
+    final waiting =
+        held ||
+        (m.invoiceMatchPaymentsStore[i.id] ?? const <InvoiceMatch>[]).any(
+          (p) => p.pending,
+        );
+    final due = _demoStillDue(m, i);
+    if (due <= 0 && !waiting) continue;
+    out.add((
+      i.issuedAt,
+      InvoiceCapacity(invoiceId: i.id, stillDueCents: due, canTake: due > 0 && !held),
+    ));
+  }
+  out.sort((a, b) => a.$1.compareTo(b.$1));
+  return [for (final (_, c) in out) c];
 }

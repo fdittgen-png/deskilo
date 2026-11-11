@@ -184,9 +184,18 @@ void main() {
   });
 
   group('the parts of a payment', () {
-    test('the invoices to pay: this customer, the business currency, open, '
+    test('the invoices to pay: this customer, the business currency, what '
+        'the server says can take a part, at what it says is still due, '
         'oldest due first, no due date last', () {
+      const capacity = {
+        'late': InvoiceCapacity(invoiceId: 'late', stillDueCents: 100, canTake: true),
+        'none': InvoiceCapacity(invoiceId: 'none', stillDueCents: 60, canTake: true),
+        'early': InvoiceCapacity(invoiceId: 'early', stillDueCents: 100, canTake: true),
+        'usd': InvoiceCapacity(invoiceId: 'usd', stillDueCents: 100, canTake: true),
+        'held': InvoiceCapacity(invoiceId: 'held', stillDueCents: 0, canTake: false),
+      };
       final rows = invoicesToPay(
+        capacity: capacity,
         receivables: [
           _inv('late', 100, due: DateTime(2026, 6)),
           _inv('none', 100),
@@ -208,6 +217,21 @@ void main() {
         currency: 'EUR',
       );
       expect(rows.map((r) => r.invoiceId), ['early', 'late', 'none']);
+      expect(
+        rows.last.openMinor,
+        60,
+        reason: 'what is still due is the server\'s, parts awaiting '
+            'approval left out',
+      );
+      expect(
+        invoicesWaiting(
+          receivables: [_inv('held', 100), _inv('late', 100)],
+          customerId: 'anna',
+          capacity: capacity,
+        ).map((r) => r.invoiceId),
+        ['held'],
+        reason: 'an invoice whose payment awaits approval is shown, not offered',
+      );
     });
 
     test(

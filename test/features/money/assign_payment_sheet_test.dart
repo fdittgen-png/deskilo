@@ -59,6 +59,28 @@ class _Repo extends FakeMoneyRepository {
   /// The open invoices the reader turns the archive into.
   List<Receivable> open = [];
 
+  /// The invoices whose payment awaits approval: the server lists them as
+  /// unable to take a part.
+  Set<String> held = {};
+  Exception? capacityFails;
+
+  @override
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
+  }) async {
+    final failure = capacityFails;
+    if (failure != null) throw failure;
+    return [
+      for (final r in open)
+        InvoiceCapacity(
+          invoiceId: r.invoiceId,
+          stillDueCents: held.contains(r.invoiceId) ? 0 : r.openMinor,
+          canTake: !held.contains(r.invoiceId),
+        ),
+    ];
+  }
+
   @override
   Future<PaymentApplied> applyPaymentToInvoices({
     required String workspaceId,
@@ -201,6 +223,34 @@ void main() {
     await tester.tap(_key('open'));
     await tester.pumpAndSettle();
   }
+
+  testWidgets('an invoice whose payment awaits approval is shown with why, '
+      'not offered; the prefill goes to the next one', (tester) async {
+    repo.held = {'older'};
+    await open(tester);
+    expect(
+      find.text('INV-older: a payment of it awaits approval; it takes no '
+          'part now.'),
+      findsOneWidget,
+    );
+    expect(_key('assign-payment-tick-older'), findsNothing);
+    expect(_key('assign-payment-tick-newer'), findsOneWidget);
+    await tester.tap(_key('assign-payment-confirm'));
+    await tester.pumpAndSettle();
+    expect(repo.applied.single.parts, [(invoiceId: 'newer', amountCents: 9000)]);
+  });
+
+  testWidgets('a failed read of what the invoices can take is said at once, '
+      'with Try again', (tester) async {
+    repo.capacityFails = Exception('offline');
+    await open(tester);
+    expect(_key('assign-payment-failed-capacity'), findsOneWidget);
+    expect(_key('assign-payment-confirm'), findsNothing);
+    repo.capacityFails = null;
+    await tester.tap(_key('assign-payment-retry-capacity'));
+    await tester.pumpAndSettle();
+    expect(_key('assign-payment-confirm'), findsOneWidget);
+  });
 
   testWidgets('the head says whose money it is; the amounts are prefilled '
       'oldest first, the last one a part, with the note ready', (tester) async {

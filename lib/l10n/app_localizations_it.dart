@@ -1003,6 +1003,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Più di quanto resta da pagare su questa fattura';
 
   @override
+  String assignPaymentRowWaiting(String number) {
+    return '$number: un pagamento di questa fattura attende l\'approvazione; ora non accetta alcuna parte.';
+  }
+
+  @override
   String assignPaymentStays(String amount) {
     return '$amount restano come credito';
   }
@@ -1035,6 +1040,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova.';
+
+  @override
+  String get assignRefuseNotAllowed =>
+      'Non può assegnare pagamenti in questa attività. Non è stato registrato nulla.';
 
   @override
   String get assignRefuseNote =>

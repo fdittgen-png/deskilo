@@ -997,6 +997,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assignPaymentRowOver => 'More than what is due on this invoice';
 
   @override
+  String assignPaymentRowWaiting(String number) {
+    return '$number: a payment of it awaits approval; it takes no part now.';
+  }
+
+  @override
   String assignPaymentStays(String amount) {
     return '$amount stays as credit';
   }
@@ -1029,6 +1034,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'The payment could not be assigned. Nothing was recorded. Try again.';
+
+  @override
+  String get assignRefuseNotAllowed =>
+      'You may not assign payments in this business. Nothing was recorded.';
 
   @override
   String get assignRefuseNote => 'A part below what is due needs a note.';

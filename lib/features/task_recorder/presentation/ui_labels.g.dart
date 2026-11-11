@@ -7985,6 +7985,7 @@ Map<String, _Getter> _part23() => {
   'addressWindowRight': (l) => l.addressWindowRight,
   'addressWindowSubtitle': (l) => l.addressWindowSubtitle,
   'amenityDock': (l) => l.amenityDock,
+  'assignRefuseNotAllowed': (l) => l.assignRefuseNotAllowed,
   'assistantSetupStepEligibility': (l) => l.assistantSetupStepEligibility,
   'authShowPassword': (l) => l.authShowPassword,
   'authSignUpTitle': (l) => l.authSignUpTitle,

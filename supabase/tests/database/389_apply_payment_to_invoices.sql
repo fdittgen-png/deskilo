@@ -8,7 +8,7 @@
 -- remainder are never both accepted: not while the first awaits approval,
 -- not after it; an approval checks its part again.
 begin;
-select plan(20);
+select plan(25);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -190,12 +190,35 @@ select pg_temp.more_payments();
 select is(pg_temp.match_r('b', 'p2', 'exact', 5000, ''), 'ok', 'P2 settles what B still owes, awaiting approval');
 select isnt(pg_temp.match_r('b', 'p3', 'exact', 5000, ''), 'ok',
             'P3 cannot take the same remainder while P2 awaits approval');
+select is(pg_temp.match_r('b', 'p3', 'over_forced', 5000, 'too much'), 'ERROR: nothing is due on this invoice',
+          'not even an intended overpayment goes to an invoice a waiting part covers');
+create or replace function pg_temp.capacity(p_pay text) returns jsonb language sql as $f$
+  select pg_temp.as_owner(format('select public.payment_invoice_capacity_v1(%L, %L)::text',
+    current_setting('sp.ws'), current_setting('sp.' || p_pay)))::jsonb;
+$f$;
+create or replace function pg_temp.cap_of(p_pay text, p_inv text) returns jsonb language sql as $f$
+  select x from jsonb_array_elements(pg_temp.capacity(p_pay)) x
+   where x ->> 'invoice_id' = current_setting('sp.' || p_inv);
+$f$;
+select is(pg_temp.cap_of('p3', 'b'),
+          jsonb_build_object('invoice_id', current_setting('sp.b'), 'still_due_cents', 0,
+                             'can_take', false, 'reason', 'awaiting_approval'),
+          'the capacity read lists B as waiting for approval, nothing to take');
+select is(pg_temp.cap_of('p3', 'd'),
+          jsonb_build_object('invoice_id', current_setting('sp.d'), 'still_due_cents', 10000,
+                             'can_take', true, 'reason', null),
+          'and D, untouched, with all of it due');
+select is((select count(*)::int from jsonb_array_elements(pg_temp.capacity('p3')) x
+            where x ->> 'invoice_id' in (current_setting('sp.usd'), current_setting('sp.other'), current_setting('sp.a'))),
+          0, 'not another payer''s, not another currency''s, not one paid in full');
 select is(pg_temp.decide('p2', 'b', true), 'ok', 'P2 is approved');
 select isnt(pg_temp.match_r('b', 'p3', 'exact', 5000, ''), 'ok', 'nor after it: B is paid');
 -- C owes 50.00: P4 20.00 as a partial and P5 30.00 as the exact rest wait
 -- together. P4 is refused, so P5 no longer settles C: its approval refuses.
 select pg_temp.match_r('c', 'p4', 'under_accepted', 2000, 'a part');
 select is(pg_temp.match_r('c', 'p5', 'exact', 3000, ''), 'ok', 'P5 settles the rest beside the pending P4');
+select is(pg_temp.cap_of('p3', 'c') ->> 'still_due_cents', '0',
+          'C: what is still due leaves out both waiting parts');
 select pg_temp.decide('p4', 'c', false);
 select is(pg_temp.decide('p5', 'c', true),
           'ERROR: the invoice changed while this part waited for approval',

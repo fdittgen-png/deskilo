@@ -1676,6 +1676,12 @@ abstract class AppLocalizations {
   /// **'More than what is due on this invoice'**
   String get assignPaymentRowOver;
 
+  /// #3671: assign a payment to invoices (assignPaymentRowWaiting)
+  ///
+  /// In en, this message translates to:
+  /// **'{number}: a payment of it awaits approval; it takes no part now.'**
+  String assignPaymentRowWaiting(String number);
+
   /// #3671: assign a payment to invoices (assignPaymentStays)
   ///
   /// In en, this message translates to:
@@ -1723,6 +1729,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The payment could not be assigned. Nothing was recorded. Try again.'**
   String get assignRefuseGeneric;
+
+  /// #3671: assign a payment to invoices (assignRefuseNotAllowed)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not assign payments in this business. Nothing was recorded.'**
+  String get assignRefuseNotAllowed;
 
   /// #3671: assign a payment to invoices (assignRefuseNote)
   ///

@@ -27,5 +27,7 @@
   "assignRefuseSumOver": "Les parts dépassent ce qui reste du paiement. Rien n'a été enregistré.",
   "assignRefuseUsed": "Le paiement a été utilisé entre-temps. Il est relu : vérifiez les montants.",
   "assignRefuseNote": "Une part inférieure au montant dû demande une note.",
-  "assignRefuseGeneric": "Le paiement n'a pas pu être affecté. Rien n'a été enregistré. Réessayez."
+  "assignRefuseGeneric": "Le paiement n'a pas pu être affecté. Rien n'a été enregistré. Réessayez.",
+  "assignPaymentRowWaiting": "{number} : un paiement de cette facture attend une validation ; elle ne prend rien pour l'instant.",
+  "assignRefuseNotAllowed": "Vous ne pouvez pas affecter de paiements dans cette entreprise. Rien n'a été enregistré."
 }

@@ -1335,6 +1335,15 @@
   "@assignPaymentRowOver": {
     "description": "#3671: assign a payment to invoices (assignPaymentRowOver)"
   },
+  "assignPaymentRowWaiting": "{number}: a payment of it awaits approval; it takes no part now.",
+  "@assignPaymentRowWaiting": {
+    "description": "#3671: assign a payment to invoices (assignPaymentRowWaiting)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "assignPaymentStays": "{amount} stays as credit",
   "@assignPaymentStays": {
     "description": "#3671: assign a payment to invoices (assignPaymentStays)",
@@ -1387,6 +1396,10 @@
   "assignRefuseGeneric": "The payment could not be assigned. Nothing was recorded. Try again.",
   "@assignRefuseGeneric": {
     "description": "#3671: assign a payment to invoices (assignRefuseGeneric)"
+  },
+  "assignRefuseNotAllowed": "You may not assign payments in this business. Nothing was recorded.",
+  "@assignRefuseNotAllowed": {
+    "description": "#3671: assign a payment to invoices (assignRefuseNotAllowed)"
   },
   "assignRefuseNote": "A part below what is due needs a note.",
   "@assignRefuseNote": {

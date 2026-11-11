@@ -87,6 +87,12 @@ class _Commands implements InvoiceCommands {
     calls.add('apply:$paymentLedgerId:${allocations.length}');
     return const PaymentApplied(invoices: 1, leftCents: 0);
   }
+
+  @override
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
+  }) async => const [];
 }
 
 class _Tax implements TaxReportingRepository {

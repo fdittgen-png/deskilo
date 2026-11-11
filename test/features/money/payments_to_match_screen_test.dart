@@ -12,6 +12,7 @@ import 'dart:async';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/presentation/invoicing/payments_to_match_screen.dart';
@@ -62,6 +63,20 @@ class _Repo extends FakeMoneyRepository {
         if (r.invoiceId != invoiceId) r,
     ];
   }
+
+  /// What the server lists for a payment: each open invoice, all of it due.
+  @override
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
+  }) async => [
+    for (final r in open)
+      InvoiceCapacity(
+        invoiceId: r.invoiceId,
+        stillDueCents: r.openMinor,
+        canTake: true,
+      ),
+  ];
 
   @override
   Future<List<Invoice>> fetchInvoices(String workspaceId) async {
@@ -267,18 +282,12 @@ void main() {
       ..open = [_inv(id, 9000, DateTime(2026, 5))]
       ..ledger.addAll([_payment('p1', 12000), _payment('p2', 7777)]);
     await pump(tester);
-    // The invoices go stale in the very frame the card is tapped (a change
-    // elsewhere invalidates them), and reading them again fails.
+    // Reading the invoices fails when the card is tapped: said at once, no
+    // half minute of retries first.
     repo.invoicesFail = Exception('offline');
-    ProviderScope.containerOf(
-      tester.element(find.byType(PaymentsToMatchScreen)),
-    ).invalidate(invoicesProvider);
     await tester.tap(_key('payment-match-p1-$id'));
-    // The read is retried first (the provider's own retries, about half a
-    // minute); only when they all fail is the failure said.
-    for (var i = 0; i < 6; i++) {
-      await tester.pump(const Duration(seconds: 10));
-    }
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 750));
     expect(find.text('The invoices could not be read.'), findsOneWidget);
     expect(_key('invoicing-dashboard-radio-group'), findsNothing);
     expect(repo.matched, isEmpty);

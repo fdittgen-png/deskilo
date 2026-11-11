@@ -105,6 +105,11 @@ begin
   else
     v_due := v_invoice.total_cents;
   end if;
+  -- #3671: an invoice a waiting part already covers takes nothing more,
+  -- not even an intended overpayment.
+  if v_due <= 0 then
+    raise exception 'nothing is due on this invoice';
+  end if;
   -- #816 — the matrix alone decides who matches.
   v_actor := public.issuing_member(v_invoice.workspace_id);
   -- #513 — the CENTRAL permission decides: owner always passes,
@@ -315,6 +320,55 @@ end;
 $fn$;
 revoke execute on function public.apply_payment_to_invoices(uuid, uuid, jsonb, text) from public, anon;
 grant execute on function public.apply_payment_to_invoices(uuid, uuid, jsonb, text) to authenticated;
+
+-- What each open invoice of a payment's payer can take of it now, in the
+-- rules of match_invoice: the one list the sheet offers. An invoice whose
+-- match awaits approval is listed and cannot take a part (reason
+-- awaiting_approval); one a waiting part already covers likewise.
+create or replace function public.payment_invoice_capacity_v1(
+  p_workspace_id uuid, p_payment_ledger_id uuid)
+returns jsonb language plpgsql security definer set search_path = public as $fn$
+declare
+  v_payment public.ledger_entries;
+  v_currency text;
+begin
+  perform public.mcp_require_native();
+  if auth.uid() is null then raise exception 'not authenticated'; end if;
+  if not public.has_permission(p_workspace_id, 'issueInvoices') then
+    raise exception 'admins may not issue invoices here';
+  end if;
+  select * into v_payment from public.ledger_entries
+   where id = p_payment_ledger_id and workspace_id = p_workspace_id
+     and kind = 'credit' and category in ('payment', 'adjustment');
+  if v_payment.id is null then raise exception 'unknown payment'; end if;
+  select currency_code into v_currency from public.workspaces where id = p_workspace_id;
+  return coalesce((
+    select jsonb_agg(jsonb_build_object(
+             'invoice_id', i.id,
+             'still_due_cents', d.due,
+             'can_take', d.due > 0 and not d.held,
+             'reason', case when (d.due <= 0 or d.held) then 'awaiting_approval' end)
+           order by i.issued_at, i.id)
+      from public.invoices i
+      left join public.invoice_matches m on m.invoice_id = i.id
+      cross join lateral (
+        select public.invoice_still_due_cents(i.id) as due,
+               coalesce(m.status = 'pending', false) as held,
+               exists (select 1 from public.invoice_match_payments p
+                         join public.events e on e.id = p.event_id
+                        where p.invoice_id = i.id and e.status = 'pending') as waiting) d
+     where i.workspace_id = p_workspace_id
+       and i.member_id = v_payment.member_id
+       and i.currency = v_currency
+       and i.voided_at is null
+       and i.settled_by_invoice_id is null
+       and (m.invoice_id is null or m.status = 'pending'
+            or (m.resolution = 'under_accepted' and m.writeoff_at is null))
+       and (d.due > 0 or d.held or d.waiting)), '[]'::jsonb);
+end;
+$fn$;
+revoke execute on function public.payment_invoice_capacity_v1(uuid, uuid) from public, anon;
+grant execute on function public.payment_invoice_capacity_v1(uuid, uuid) to authenticated;
 
 -- The approval of a further part checks it again under the invoice's lock
 -- (the one lock order: the invoice, then its aggregate): a part accepted as

@@ -12,22 +12,37 @@ import '../../../core/data/server_error.dart';
 import '../domain/invoice_commands.dart';
 import 'receivables.dart';
 
-/// The invoices [customerId] still owes in [currency], oldest due first (an
-/// invoice with no due date after the others, then the oldest issued): the
-/// ones a payment of theirs may pay, in full or in part.
+/// The invoices of [customerId] in [currency] that [capacity] (the server's
+/// `payment_invoice_capacity_v1`) says can take a part now, each with what
+/// is still due on it, oldest due first (an invoice with no due date after
+/// the others, then the oldest issued).
 List<Receivable> invoicesToPay({
   required Iterable<Receivable> receivables,
   required String customerId,
   required String currency,
-}) =>
-    [
-      for (final r in receivables)
-        if (r.customerId == customerId &&
-            r.currency == currency &&
-            r.isOutstanding &&
-            r.openMinor > 0)
-          r,
-    ]..sort((a, b) {
+  required Map<String, InvoiceCapacity> capacity,
+}) => _oldestDueFirst([
+  for (final r in receivables)
+    if (r.customerId == customerId && r.currency == currency)
+      if (capacity[r.invoiceId] case final c? when c.canTake)
+        r.withOpenMinor(c.stillDueCents),
+]);
+
+/// The invoices [capacity] lists that cannot take a part now: a payment of
+/// them awaits approval. Shown, not offered.
+List<Receivable> invoicesWaiting({
+  required Iterable<Receivable> receivables,
+  required String customerId,
+  required Map<String, InvoiceCapacity> capacity,
+}) => _oldestDueFirst([
+  for (final r in receivables)
+    if (r.customerId == customerId)
+      if (capacity[r.invoiceId] case final c? when !c.canTake)
+        r.withOpenMinor(c.stillDueCents),
+]);
+
+List<Receivable> _oldestDueFirst(List<Receivable> rows) => rows
+    ..sort((a, b) {
       final ad = a.dueOn, bd = b.dueOn;
       final byDue = switch ((ad, bd)) {
         (null, null) => 0,
@@ -118,6 +133,7 @@ enum PaymentRefusal {
   sumBeyondLeft,
   usedMeanwhile,
   noteRequired,
+  notAllowed,
   generic;
 
   /// The reason behind [error]: a server error's message, or the message of
@@ -139,10 +155,14 @@ enum PaymentRefusal {
     if (has('more than what is left')) return sumBeyondLeft;
     if (has('add up to more than the payment') ||
         has('payment already matched') ||
-        has('invoice already matched')) {
+        has('invoice already matched') ||
+        has('nothing is due on this invoice')) {
       return usedMeanwhile;
     }
     if (has('note is required')) return noteRequired;
+    if (has('not authenticated') || has('may not issue invoices')) {
+      return notAllowed;
+    }
     return generic;
   }
 }

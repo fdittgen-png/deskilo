@@ -75,11 +75,14 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     if (c.fit == MatchFit.needsDecision) {
       // The dialog that asks how to settle a difference, opened on the
       // payment of the card that was tapped. #3285: the invoices are read
-      // under the same guard as the match; a failed read is said with Try
-      // again, which keeps this payment and this invoice.
+      // under the same guard as the match, ONCE (no provider retries): a
+      // failed read is said at once with Try again, which keeps this payment
+      // and this invoice.
       final Invoice? invoice;
       try {
-        invoice = (await ref.read(invoicesProvider.future))
+        invoice = (await ref
+                .read(invoiceQueriesProvider)
+                .fetchInvoices(ref.read(invoicingBusinessProvider).id))
             .where((i) => i.id == c.invoice.invoiceId)
             .firstOrNull;
       } on Object catch (e, st) {
@@ -96,10 +99,7 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
           action: SnackBarAction(
             key: const ValueKey('payment-match-read-retry'),
             label: l10n.commonRetry,
-            onPressed: () {
-              ref.invalidate(invoicesProvider);
-              unawaited(_match(row, c));
-            },
+            onPressed: () => unawaited(_match(row, c)),
           ),
         );
         return;

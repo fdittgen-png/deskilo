@@ -24,10 +24,10 @@ import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/task_surface.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../application/assign_payment_plan.dart';
 import '../../application/receivables.dart';
 import '../../providers/money_providers.dart';
+import 'assign_payment_lines.dart';
 import 'invoicing_home.dart' show InvoicingSource;
 import 'invoicing_reads.dart';
 
@@ -192,6 +192,7 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
   }
 
   void _readAgain() => ref
+    ..invalidate(paymentCapacityProvider(widget.paymentId))
     ..invalidate(invoiceMatchesProvider)
     ..invalidate(invoicesProvider)
     ..invalidate(unassignedMoneyProvider);
@@ -227,11 +228,36 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
         ?.where((p) => p.id == widget.paymentId)
         .firstOrNull;
     if (payment == null) return [_close(context)];
+    // What each invoice can take now is the server's answer, never worked
+    // out here: an invoice whose payment awaits approval is shown, not
+    // offered.
+    final capacityRead = ref.watch(paymentCapacityProvider(widget.paymentId));
+    final capacity = capacityRead.value;
+    if (capacity == null) {
+      if (capacityRead.hasError) {
+        return [
+          AssignPaymentCapacityFailed(
+            onRetry: () =>
+                ref.invalidate(paymentCapacityProvider(widget.paymentId)),
+          ),
+        ];
+      }
+      return const [LoadingView()];
+    }
     final rows = invoicesToPay(
       receivables: receivables,
       customerId: widget.customerId,
       currency: widget.currency,
+      capacity: capacity,
     );
+    final waiting = [
+      for (final r in invoicesWaiting(
+        receivables: receivables,
+        customerId: widget.customerId,
+        capacity: capacity,
+      ))
+        AssignPaymentWaitingLine(r),
+    ];
     final format = appFormatOf(context);
     final moneyIn = format.moneyIn(widget.currency);
     final head = <Widget>[
@@ -256,6 +282,7 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
     if (rows.isEmpty) {
       return [
         ...head,
+        ...waiting,
         Text(
           l10n.assignPaymentNoOpen,
           key: const ValueKey('assign-payment-no-open'),
@@ -271,6 +298,7 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
     return [
       ...head,
       for (final r in rows) _row(context, r, rows, plan, moneyIn),
+      ...waiting,
       const FormGap.small(),
       _running(context, plan, moneyIn),
       if (plan.hasPartial) ...[
@@ -427,7 +455,7 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
       child: Semantics(
         liveRegion: true,
         child: Text(
-          _refusalText(l10n, why),
+          assignRefusalText(l10n, why),
           key: const ValueKey('assign-payment-refusal'),
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.error,
@@ -436,19 +464,6 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
       ),
     );
   }
-
-  static String _refusalText(AppLocalizations l10n, PaymentRefusal why) =>
-      switch (why) {
-        PaymentRefusal.payer => l10n.assignRefusePayer,
-        PaymentRefusal.business => l10n.assignRefuseBusiness,
-        PaymentRefusal.currency => l10n.assignRefuseCurrency,
-        PaymentRefusal.duplicate => l10n.assignRefuseDuplicate,
-        PaymentRefusal.partBeyondInvoice => l10n.assignRefusePartOver,
-        PaymentRefusal.sumBeyondLeft => l10n.assignRefuseSumOver,
-        PaymentRefusal.usedMeanwhile => l10n.assignRefuseUsed,
-        PaymentRefusal.noteRequired => l10n.assignRefuseNote,
-        PaymentRefusal.generic => l10n.assignRefuseGeneric,
-      };
 
   /// A read that failed: the source is named, there is no button, only Try
   /// again.

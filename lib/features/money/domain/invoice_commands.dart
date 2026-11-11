@@ -27,6 +27,36 @@ class PaymentApplied {
   final int leftCents;
 }
 
+/// What one open invoice of a payment's payer can take of it now (#3671,
+/// `payment_invoice_capacity_v1`): the server's list, so the sheet never
+/// offers a part the server refuses.
+class InvoiceCapacity {
+  const InvoiceCapacity({
+    required this.invoiceId,
+    required this.stillDueCents,
+    required this.canTake,
+  });
+
+  factory InvoiceCapacity.fromJson(Object? json) {
+    final r = JsonReader.of(json, context: 'payment_invoice_capacity_v1');
+    return InvoiceCapacity(
+      invoiceId: r.string('invoice_id'),
+      stillDueCents: r.integer('still_due_cents'),
+      canTake: r.isTrue('can_take'),
+    );
+  }
+
+  final String invoiceId;
+
+  /// The total, less what confirmed matches paid, less the parts that await
+  /// approval.
+  final int stillDueCents;
+
+  /// False while a payment of this invoice awaits approval: it is shown,
+  /// not offered.
+  final bool canTake;
+}
+
 /// #2591 C3 — what a person does to an invoice: issue or correct, void,
 /// remind, regroup, settle a credit note, match a payment. Each call is
 /// the server's own decision (a policy may hold it pending); nothing here
@@ -118,5 +148,12 @@ abstract interface class InvoiceCommands {
     required String paymentLedgerId,
     required List<PaymentAllocation> allocations,
     String note = '',
+  });
+
+  /// The open invoices of [paymentLedgerId]'s payer and what each can take
+  /// of it now (RPC `payment_invoice_capacity_v1`, #3671).
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
   });
 }

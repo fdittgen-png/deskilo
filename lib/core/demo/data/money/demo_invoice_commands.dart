@@ -449,4 +449,12 @@ class DemoInvoiceCommands implements InvoiceCommands {
     allocations: allocations,
     note: note,
   );
+
+  /// #3671 — what each open invoice of the payer can take now
+  /// (`demo_payment_apply.dart`).
+  @override
+  Future<List<InvoiceCapacity>> paymentInvoiceCapacity({
+    required String workspaceId,
+    required String paymentLedgerId,
+  }) async => paymentCapacityInDemo(_m, paymentLedgerId);
 }

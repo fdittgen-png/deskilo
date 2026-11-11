@@ -1005,6 +1005,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get assignPaymentRowOver => 'Mehr, als auf dieser Rechnung offen ist';
 
   @override
+  String assignPaymentRowWaiting(String number) {
+    return '$number: Eine Zahlung dazu wartet auf Freigabe; sie nimmt jetzt keinen Teil.';
+  }
+
+  @override
   String assignPaymentStays(String amount) {
     return '$amount bleiben als Guthaben';
   }
@@ -1037,6 +1042,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get assignRefuseGeneric =>
       'Die Zahlung konnte nicht zugeordnet werden. Nichts wurde erfasst. Versuchen Sie es erneut.';
+
+  @override
+  String get assignRefuseNotAllowed =>
+      'Sie dürfen in diesem Unternehmen keine Zahlungen zuordnen. Nichts wurde erfasst.';
 
   @override
   String get assignRefuseNote =>

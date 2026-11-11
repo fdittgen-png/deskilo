@@ -173,5 +173,18 @@
   "assignRefuseGeneric": "The payment could not be assigned. Nothing was recorded. Try again.",
   "@assignRefuseGeneric": {
     "description": "#3671: assign a payment to invoices (assignRefuseGeneric)"
+  },
+  "assignPaymentRowWaiting": "{number}: a payment of it awaits approval; it takes no part now.",
+  "@assignPaymentRowWaiting": {
+    "description": "#3671: assign a payment to invoices (assignPaymentRowWaiting)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "assignRefuseNotAllowed": "You may not assign payments in this business. Nothing was recorded.",
+  "@assignRefuseNotAllowed": {
+    "description": "#3671: assign a payment to invoices (assignRefuseNotAllowed)"
   }
 }

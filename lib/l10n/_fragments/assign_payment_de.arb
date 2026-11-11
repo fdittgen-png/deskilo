@@ -27,5 +27,7 @@
   "assignRefuseSumOver": "Die Teilbeträge sind höher als der Rest der Zahlung. Nichts wurde erfasst.",
   "assignRefuseUsed": "Die Zahlung wurde inzwischen verwendet. Sie wird neu gelesen: Prüfen Sie die Beträge.",
   "assignRefuseNote": "Ein Teilbetrag unter dem offenen Betrag braucht eine Notiz.",
-  "assignRefuseGeneric": "Die Zahlung konnte nicht zugeordnet werden. Nichts wurde erfasst. Versuchen Sie es erneut."
+  "assignRefuseGeneric": "Die Zahlung konnte nicht zugeordnet werden. Nichts wurde erfasst. Versuchen Sie es erneut.",
+  "assignPaymentRowWaiting": "{number}: Eine Zahlung dazu wartet auf Freigabe; sie nimmt jetzt keinen Teil.",
+  "assignRefuseNotAllowed": "Sie dürfen in diesem Unternehmen keine Zahlungen zuordnen. Nichts wurde erfasst."
 }

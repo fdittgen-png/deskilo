@@ -27,5 +27,7 @@
   "assignRefuseSumOver": "Le parti superano quanto resta del pagamento. Non è stato registrato nulla.",
   "assignRefuseUsed": "Il pagamento è stato usato nel frattempo. Viene riletto: controlla gli importi.",
   "assignRefuseNote": "Una parte inferiore al dovuto richiede una nota.",
-  "assignRefuseGeneric": "Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova."
+  "assignRefuseGeneric": "Non è stato possibile assegnare il pagamento. Non è stato registrato nulla. Riprova.",
+  "assignPaymentRowWaiting": "{number}: un pagamento di questa fattura attende l'approvazione; ora non accetta alcuna parte.",
+  "assignRefuseNotAllowed": "Non può assegnare pagamenti in questa attività. Non è stato registrato nulla."
 }
