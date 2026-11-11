@@ -23596,6 +23596,18 @@ abstract class AppLocalizations {
   /// **'Issue the replacement'**
   String get invoicePageMoreIssueReplacement;
 
+  /// #3587 train 2 part C: the invoice page (invoicePageMoreMatch)
+  ///
+  /// In en, this message translates to:
+  /// **'Match a payment'**
+  String get invoicePageMoreMatch;
+
+  /// #3587 train 2 part C: the invoice page (invoicePageMorePayment)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get invoicePageMorePayment;
+
   /// #3587 R1-d More: document
   ///
   /// In en, this message translates to:
@@ -23607,6 +23619,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Release the hold'**
   String get invoicePageMoreRelease;
+
+  /// #3587 train 2 part C: the invoice page (invoicePageMoreRemind)
+  ///
+  /// In en, this message translates to:
+  /// **'Share a reminder'**
+  String get invoicePageMoreRemind;
 
   /// #3587 R1-d More: section
   ///

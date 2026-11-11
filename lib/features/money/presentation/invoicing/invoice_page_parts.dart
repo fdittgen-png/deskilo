@@ -20,6 +20,7 @@ import '../../domain/invoice_line_text.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../invoice_proforma.dart';
+import '../invoice_status.dart';
 import '../report_strings_l10n.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
 import 'invoicing_words.dart';
@@ -215,6 +216,22 @@ class InvoicePdfCard extends ConsumerWidget {
   }
 }
 
+/// A write-off is offered on a part-paid invoice while none already waits for
+/// its approval (one at a time).
+bool invoiceWriteOffOffered(Receivable? r) =>
+    r != null &&
+    r.stage == ReceivableStage.partlyPaid &&
+    !r.awaitingSecondApproval;
+
+/// The proforma asks for the whole total: only while nothing is paid and no
+/// payment is on its way.
+bool invoiceProformaOffered(Receivable? r) =>
+    r != null && r.stage == ReceivableStage.open && !r.paymentPending;
+
+/// One line of the More menu: its key, its words, and what it does (a header
+/// has no action).
+typedef _Entry = (String, String?, VoidCallback?);
+
 /// Every other action of the invoice, in worded sections: the document,
 /// the reminders, the corrections (section 4 of the final design).
 class InvoiceMoreMenu extends ConsumerWidget {
@@ -232,146 +249,166 @@ class InvoiceMoreMenu extends ConsumerWidget {
   /// can still be issued.
   final bool awaitsReplacement;
 
-  /// The entries in their worded sections; a header has no action.
-  List<(String, String?, VoidCallback?)> _entries(
+  VoidCallback _run(
     BuildContext context,
     WidgetRef ref,
-  ) {
+    sheet.InvoiceAction action,
+  ) =>
+      () => InvoicePageActions.run(context, ref, action, invoice);
+
+  /// The document: see it, download it, share it, its e-invoice, a proforma.
+  List<_Entry> _document(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final r = receivable;
-    final outstanding = r?.isOutstanding ?? false;
-    // Corrections a document still accepts: replace or cancel an open one
-    // nothing has been matched to; write off what a part payment left.
-    final open =
-        r != null && r.stage == ReceivableStage.open && !r.paymentPending;
-    final partly = r?.stage == ReceivableStage.partlyPaid;
     // 2014/55/EU: the e-invoice is for EU businesses, answered from the
     // live context alone (no answer while it is not ready).
     final eu = watchWorkspaceIsEu(
       ref,
       ref.watch(invoicingBusinessProvider).country,
     );
-    final entries = <(String, String?, VoidCallback?)>[
+    return [
       ('invoice-more-document', l.invoicePageMoreDocument, null),
       (
         'invoice-more-view',
         l.invoicePageMoreQuickView,
-        () => InvoicePageActions.run(
-          context,
-          ref,
-          sheet.InvoiceAction.quickView,
-          invoice,
-        ),
+        _run(context, ref, sheet.InvoiceAction.quickView),
       ),
       (
         'invoice-more-download',
         l.invoicePageMoreDownload,
-        () => InvoicePageActions.run(
-          context,
-          ref,
-          sheet.InvoiceAction.downloadPdf,
-          invoice,
-        ),
+        _run(context, ref, sheet.InvoiceAction.downloadPdf),
       ),
       (
         'invoice-more-share',
         l.invoicePageMoreShare,
-        () => InvoicePageActions.run(
-          context,
-          ref,
-          sheet.InvoiceAction.sharePdf,
-          invoice,
-        ),
+        _run(context, ref, sheet.InvoiceAction.sharePdf),
       ),
       if (eu)
         (
           'invoice-more-einvoice',
           l.invoicePageMoreEInvoice,
-          () => InvoicePageActions.run(
-            context,
-            ref,
-            sheet.InvoiceAction.eInvoice,
-            invoice,
-          ),
+          _run(context, ref, sheet.InvoiceAction.eInvoice),
         ),
       // An issued invoice re-sent as a payment request; the document does
       // not change.
-      if (outstanding)
+      if (invoiceProformaOffered(r))
         (
           'invoice-more-proforma',
           l.invoiceProformaAction,
           () => shareProforma(context, ref, invoice),
         ),
-      if (outstanding) ...[
-        ('invoice-more-reminders', l.invoicePageMoreReminders, null),
+    ];
+  }
+
+  /// The reminders: share one (whatever the reminder mode) and hold them.
+  List<_Entry> _reminders(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final r = receivable;
+    if (!(r?.isOutstanding ?? false)) return const [];
+    return [
+      ('invoice-more-reminders', l.invoicePageMoreReminders, null),
+      if (invoice.totalCents > 0)
         (
-          'invoice-more-hold',
-          r!.onHold ? l.invoicePageMoreRelease : l.invoicePageMoreHold,
-          () => InvoicePageActions.run(
-            context,
-            ref,
-            sheet.InvoiceAction.dunningHold,
-            invoice,
-          ),
+          'invoice-more-remind',
+          l.invoicePageMoreRemind,
+          _run(context, ref, sheet.InvoiceAction.remind),
+        ),
+      (
+        'invoice-more-hold',
+        r!.onHold ? l.invoicePageMoreRelease : l.invoicePageMoreHold,
+        _run(context, ref, sheet.InvoiceAction.dunningHold),
+      ),
+    ];
+  }
+
+  /// The payment: match one to this invoice (a credit note is never matched).
+  List<_Entry> _payment(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    if (!(receivable?.isOutstanding ?? false) || invoice.totalCents <= 0) {
+      return const [];
+    }
+    return [
+      ('invoice-more-payment', l.invoicePageMorePayment, null),
+      (
+        'invoice-more-match',
+        l.invoicePageMoreMatch,
+        _run(context, ref, sheet.InvoiceAction.markPaid),
+      ),
+    ];
+  }
+
+  /// The corrections THIS invoice still accepts: its own match decides, not
+  /// the customer's other payments. Replace or cancel an open one nothing is
+  /// matched to; write off what a part payment left, once.
+  List<_Entry> _corrections(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final r = receivable;
+    final match = ref.watch(invoiceMatchesProvider).value?[invoice.id];
+    final open =
+        r != null &&
+        r.stage == ReceivableStage.open &&
+        match == null &&
+        invoiceLifecycleOf(invoice, match) == InvoiceLifecycle.open;
+    final partly = r?.stage == ReceivableStage.partlyPaid;
+    if (!(open || partly || awaitsReplacement)) return const [];
+    return [
+      ('invoice-more-corrections', l.invoicePageMoreCorrections, null),
+      if (awaitsReplacement)
+        (
+          'invoice-more-issue-replacement',
+          l.invoicePageMoreIssueReplacement,
+          _run(context, ref, sheet.InvoiceAction.replace),
+        ),
+      if (open) ...[
+        (
+          'invoice-more-replace',
+          l.invoicePageMoreReplace,
+          _run(context, ref, sheet.InvoiceAction.replace),
+        ),
+        (
+          'invoice-more-cancel',
+          l.invoicePageMoreCancel,
+          _run(context, ref, sheet.InvoiceAction.markErroneous),
         ),
       ],
-      if (open || partly || awaitsReplacement) ...[
-        ('invoice-more-corrections', l.invoicePageMoreCorrections, null),
-        if (awaitsReplacement)
-          (
-            'invoice-more-issue-replacement',
-            l.invoicePageMoreIssueReplacement,
-            () => InvoicePageActions.run(
-              context,
-              ref,
-              sheet.InvoiceAction.replace,
-              invoice,
-            ),
-          ),
-        if (open) ...[
-          (
-            'invoice-more-replace',
-            l.invoicePageMoreReplace,
-            () => InvoicePageActions.run(
-              context,
-              ref,
-              sheet.InvoiceAction.replace,
-              invoice,
-            ),
-          ),
-          (
-            'invoice-more-cancel',
-            l.invoicePageMoreCancel,
-            () => InvoicePageActions.run(
-              context,
-              ref,
-              sheet.InvoiceAction.markErroneous,
-              invoice,
-            ),
-          ),
-        ],
-        if (partly)
-          (
-            'invoice-more-writeoff',
-            l.invoicePageMoreWriteOff,
-            () => requestInvoiceWriteoffDialog(context, ref, invoice),
-          ),
-      ],
+      if (invoiceWriteOffOffered(r))
+        (
+          'invoice-more-writeoff',
+          l.invoicePageMoreWriteOff,
+          () => requestInvoiceWriteoffDialog(context, ref, invoice),
+        ),
     ];
-    return entries;
   }
+
+  /// The entries in their worded sections; a header has no action.
+  List<_Entry> _entries(BuildContext context, WidgetRef ref) => [
+    ..._document(context, ref),
+    ..._reminders(context, ref),
+    ..._payment(context, ref),
+    ..._corrections(context, ref),
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final entries = _entries(context, ref);
-    return PopupMenuButton<int>(
+    return PopupMenuButton<String>(
       key: const ValueKey('invoice-page-more'),
       tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
-      onSelected: (i) => entries[i].$3?.call(),
+      // By the entry's key, read from the entries as they are NOW: the list
+      // depends on live reads, so a refresh while the menu is open must never
+      // run the neighbour's action. An entry that is gone does nothing.
+      onSelected: (key) {
+        for (final e in _entries(context, ref)) {
+          if (e.$1 == key) {
+            e.$3?.call();
+            return;
+          }
+        }
+      },
       itemBuilder: (_) => [
-        for (final (i, e) in entries.indexed)
+        for (final e in entries)
           if (e.$3 == null)
-            PopupMenuItem<int>(
+            PopupMenuItem<String>(
               key: ValueKey(e.$1),
               enabled: false,
               height: 32,
@@ -381,9 +418,9 @@ class InvoiceMoreMenu extends ConsumerWidget {
               ),
             )
           else
-            PopupMenuItem<int>(
+            PopupMenuItem<String>(
               key: ValueKey(e.$1),
-              value: i,
+              value: e.$1,
               child: Text(e.$2!),
             ),
       ],

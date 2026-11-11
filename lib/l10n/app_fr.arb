@@ -9024,6 +9024,8 @@
   "@invoicePageMoreIssueReplacement": {
     "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
   },
+  "invoicePageMoreMatch": "Rapprocher un paiement",
+  "invoicePageMorePayment": "Paiement",
   "invoicePageMoreQuickView": "Voir le PDF",
   "@invoicePageMoreQuickView": {
     "description": "#3587 R1-d More: document"
@@ -9032,6 +9034,7 @@
   "@invoicePageMoreRelease": {
     "description": "#3587 R1-d More: reminders"
   },
+  "invoicePageMoreRemind": "Partager une relance",
   "invoicePageMoreReminders": "Relances",
   "@invoicePageMoreReminders": {
     "description": "#3587 R1-d More: section"

@@ -14248,10 +14248,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePageMoreIssueReplacement => 'Issue the replacement';
 
   @override
+  String get invoicePageMoreMatch => 'Match a payment';
+
+  @override
+  String get invoicePageMorePayment => 'Payment';
+
+  @override
   String get invoicePageMoreQuickView => 'View the PDF';
 
   @override
   String get invoicePageMoreRelease => 'Release the hold';
+
+  @override
+  String get invoicePageMoreRemind => 'Share a reminder';
 
   @override
   String get invoicePageMoreReminders => 'Reminders';

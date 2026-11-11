@@ -18801,6 +18801,14 @@
   "@invoicePageMoreIssueReplacement": {
     "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
   },
+  "invoicePageMoreMatch": "Match a payment",
+  "@invoicePageMoreMatch": {
+    "description": "#3587 train 2 part C: the invoice page (invoicePageMoreMatch)"
+  },
+  "invoicePageMorePayment": "Payment",
+  "@invoicePageMorePayment": {
+    "description": "#3587 train 2 part C: the invoice page (invoicePageMorePayment)"
+  },
   "invoicePageMoreQuickView": "View the PDF",
   "@invoicePageMoreQuickView": {
     "description": "#3587 R1-d More: document"
@@ -18808,6 +18816,10 @@
   "invoicePageMoreRelease": "Release the hold",
   "@invoicePageMoreRelease": {
     "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreRemind": "Share a reminder",
+  "@invoicePageMoreRemind": {
+    "description": "#3587 train 2 part C: the invoice page (invoicePageMoreRemind)"
   },
   "invoicePageMoreReminders": "Reminders",
   "@invoicePageMoreReminders": {

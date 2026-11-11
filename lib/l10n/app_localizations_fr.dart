@@ -14389,10 +14389,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Émettre la facture de remplacement';
 
   @override
+  String get invoicePageMoreMatch => 'Rapprocher un paiement';
+
+  @override
+  String get invoicePageMorePayment => 'Paiement';
+
+  @override
   String get invoicePageMoreQuickView => 'Voir le PDF';
 
   @override
   String get invoicePageMoreRelease => 'Lever la suspension';
+
+  @override
+  String get invoicePageMoreRemind => 'Partager une relance';
 
   @override
   String get invoicePageMoreReminders => 'Relances';

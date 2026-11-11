@@ -16,7 +16,12 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
-const Map<String, String> _allowed = {};
+const Map<String, String> _allowed = {
+  'lib/features/money/presentation/invoicing/invoice_page_parts.dart::invoiceProformaOffered':
+      '#3587 train 2 — the page reads it with its parts merged',
+  'lib/features/money/presentation/invoicing/invoice_page_parts.dart::invoiceWriteOffOffered':
+      '#3587 train 2 — the page\'s now-line reads it with its parts merged',
+};
 
 void main() {
   final findings = scanPublicSurface(Directory.current.path);

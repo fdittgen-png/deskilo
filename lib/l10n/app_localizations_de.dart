@@ -14383,10 +14383,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicePageMoreIssueReplacement => 'Ersatzrechnung ausstellen';
 
   @override
+  String get invoicePageMoreMatch => 'Eine Zahlung zuordnen';
+
+  @override
+  String get invoicePageMorePayment => 'Zahlung';
+
+  @override
   String get invoicePageMoreQuickView => 'PDF ansehen';
 
   @override
   String get invoicePageMoreRelease => 'Anhalten aufheben';
+
+  @override
+  String get invoicePageMoreRemind => 'Mahnung teilen';
 
   @override
   String get invoicePageMoreReminders => 'Mahnungen';

@@ -14353,10 +14353,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicePageMoreIssueReplacement => 'Emitir la factura sustitutiva';
 
   @override
+  String get invoicePageMoreMatch => 'Conciliar un pago';
+
+  @override
+  String get invoicePageMorePayment => 'Pago';
+
+  @override
   String get invoicePageMoreQuickView => 'Ver el PDF';
 
   @override
   String get invoicePageMoreRelease => 'Levantar la pausa';
+
+  @override
+  String get invoicePageMoreRemind => 'Compartir un recordatorio';
 
   @override
   String get invoicePageMoreReminders => 'Recordatorios';
