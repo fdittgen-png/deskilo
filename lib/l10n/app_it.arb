@@ -4685,14 +4685,19 @@
   "directoryLocate": "Localizza sulla mappa",
   "directoryLocating": "Ricerca dell’indirizzo pubblico…",
   "directoryLocationMissing": "Posizione non disponibile. Il proprietario può pubblicare coordinate precise.",
+  "directoryMapOpenFailed": "Non è stato possibile aprire la mappa.",
   "directoryNoUpcoming": "Nessuna prenotazione in arrivo",
+  "directoryNothingToPin": "Non è stato possibile collocare nessuno di questi luoghi sulla mappa.",
   "directoryOnline": "Online",
   "directoryOpenGroup": "Apri il gruppo WhatsApp",
+  "directoryPinsLookupFailed": "{count, plural, =1{La ricerca di 1 indirizzo non è riuscita.} other{La ricerca di {count} indirizzi non è riuscita.}}",
   "directoryPinsMissing": "{count, plural, =1{1 spazio non è stato possibile collocarlo sulla mappa; la sua scheda è sotto.} other{{count} spazi non è stato possibile collocarli sulla mappa; le loro schede sono sotto.}}",
+  "directoryPinsNoAddress": "{count, plural, =1{1 non ha un indirizzo pubblicato.} other{{count} non hanno un indirizzo pubblicato.}}",
   "directoryReservationsHeading": "Prenotazioni",
   "directoryReservedNow": "Prenotato ora",
   "directoryReservedNowSeat": "Prenotato ora · {seat}",
   "directoryReservedToday": "Prenotato oggi",
+  "directoryTilesFailed": "Non è stato possibile caricare lo sfondo della mappa.",
   "directoryTitle": "Membri",
   "directoryWhatsapp": "Chatta su WhatsApp",
   "discoveryBookmark": "Salva",
@@ -7316,6 +7321,10 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesBeingValidated": "In convalida",
+  "@financesBeingValidated": {
+    "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
+  },
   "financesColumnAmount": "Importo",
   "financesColumnDocument": "Documento e periodo",
   "financesColumnState": "Documento e pagamento",
@@ -7341,6 +7350,10 @@
     "description": "Me › Finances"
   },
   "financesHideAmount": "Nascondi l'importo",
+  "financesHostsUnavailable": "Non è stato possibile elencare le Sue installazioni collegate in questo momento; quanto mostrato proviene solo da questa installazione.",
+  "@financesHostsUnavailable": {
+    "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
+  },
   "financesLinkAction": "Apri per {space}",
   "@financesLinkAction": {
     "placeholders": {
@@ -7362,6 +7375,10 @@
   "financesNothingPaid": "Nessuna fattura ancora saldata.",
   "@financesNothingPaid": {
     "description": "Me › Finances"
+  },
+  "financesNothingSoFar": "Niente tra quanto letto finora.",
+  "@financesNothingSoFar": {
+    "description": "Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed"
   },
   "financesOpenDocument": "Apri",
   "financesOutstanding": "Da pagare",
@@ -10322,6 +10339,7 @@
   "kioskRevertTitle": "Dispositivo chiosco",
   "kioskScanQr": "Scansiona il badge QR",
   "kioskTapHint": "Tocchi un posto per fare check-in",
+  "kitActionBusy": "In corso…",
   "languageNameCS": "Ceco",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -11478,6 +11496,22 @@
   "meAccountInMe": "Il mio account è in Io",
   "meAccountInMeBody": "Foto, lingua, tema e accessi sono suoi in ogni spazio.",
   "meAddressSaveFailed": "Impossibile salvare il suo indirizzo. Riprovi.",
+  "meBusinessSeesAdmins": "I suoi amministratori che le fatturano o tengono il registro dei soci: il suo nome, la società, l’indirizzo, il telefono, l’e-mail, la partita IVA, l’identificativo legale e la lingua preferita, necessari per fatturarle, e il suo compleanno se lo ha indicato, per chi tiene il registro dei soci.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "Quando chiede di unirsi: il suo nome e la sua foto.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Una volta socio, tutti nello spazio: il suo nome e la sua foto. Il suo numero WhatsApp, il suo stato e quando è stato presente l’ultima volta solo come sceglie in Chi mi vede.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "Cosa vede un’attività a cui si unisce",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Personale",
   "meCreateSpace": "Crea uno spazio",
   "meDataPersonalExport": "Esporta i dati personali",
@@ -13193,6 +13227,7 @@
   "portalReachableHeading": "Persone a cui può scrivere",
   "portalRecipientHint": "Digiti un nome: i suggerimenti compaiono dalla prima lettera",
   "portalRegisterDirectory": "Collega un server alla directory globale",
+  "portalRequestPending": "Richiesta in attesa",
   "portalRequestProfile": "Chiedi di unirti",
   "portalRequestSent": "Richiesta inviata. Lo spazio esaminerà il suo profilo.",
   "portalResetAll": "Ripristina tutti i dati pubblici dalle informazioni dello spazio",
@@ -18047,7 +18082,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.",
+  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.",
   "spaceQrSizeLabel": "Dimensione del codice QR",
   "spaceRatingClear": "Nessuna valutazione",
   "spaceRunByAssociation": "Gestito da un'associazione",

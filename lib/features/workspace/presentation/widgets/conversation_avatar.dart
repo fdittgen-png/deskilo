@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_radius.dart';
-
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -91,7 +91,7 @@ class MemberAvatarByMember extends ConsumerWidget {
       // renders as anyway, so nothing flickers when the roster arrives.
       return CircleAvatar(
         radius: radius,
-        child: Text(name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase()),
+        child: Text(initialOf(name)),
       );
     }
     final profiles = ref.watch(memberProfilesProvider).value ?? const {};

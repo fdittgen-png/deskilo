@@ -7,6 +7,8 @@
 // #2554 SPACE-04: the client half; the database refuses an owner's leave
 // without a handover and lets a member leave, keeping the history
 // (pgTAP 9999_owner_leave).
+import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,6 +18,12 @@ import 'me_app.dart';
 Future<void> _openMenu(WidgetTester tester, String id) async {
   await tester.tap(find.byKey(ValueKey('space-menu-space:$id')));
   await tester.pumpAndSettle();
+}
+
+/// Lets the page's reads finish (a bounded pump, not a settle).
+Future<void> _settle(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 1));
 }
 
 /// The way out of [id], in the options menu of its row.
@@ -71,5 +79,32 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Could not leave the space. Please try again.'), findsOneWidget);
     expect(find.byKey(const ValueKey('me-space-ws-2')), findsOneWidget);
+  });
+
+  testWidgets('leaving also refreshes the references My spaces and Home read '
+      '(#3683)', (tester) async {
+    var reads = 0;
+    final me = FakeMeRepository();
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      me: me,
+      extraOverrides: [
+        personalWorkspaceRefsProvider.overrideWith((ref) async {
+          reads++;
+          return PersonalWorkspaceRefs.none;
+        }),
+      ],
+    );
+    await goTo(tester, router, '/me');
+    final before = reads;
+    expect(before, greaterThan(0), reason: 'the page reads them');
+    await _openMenu(tester, 'ws-2');
+    await tester.tap(_leave('ws-2'));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('me-leave-confirm')));
+    await _settle(tester);
+    expect(me.left, ['ws-2']);
+    expect(reads, greaterThan(before), reason: 'read again after leaving');
   });
 }

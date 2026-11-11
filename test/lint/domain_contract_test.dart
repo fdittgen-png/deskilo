@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Docs-parity lint: a domain contract keeps the shape that lets an issue
-// cite it and a reviewer check it (ADR 0048, #3335).
+// cite it and a reviewer check it (ADR 0048, #3335, #3571).
 //
-// A contract page names a source revision, declares its table's states,
-// and uses existing files for the supported path references below.
-// Whether a rule is RIGHT stays with the review and with the tests the
-// page's Evidence section names. These checks validate structure, not
-// whether the implementation enforces the documented rules.
+// A contract page states the rule that holds on master. It carries the
+// seven sections the README's table lists, declares its transition
+// table's states, uses existing files for the supported path references
+// below, and holds no proposal text: a proposal, its open decisions and
+// its stop condition live in the issue. Whether a rule is RIGHT stays
+// with the review and with the tests the page's Evidence section names.
+// These checks validate structure, not whether the implementation
+// enforces the documented rules.
 
 import 'dart:io';
 
@@ -24,9 +27,18 @@ const _requiredSections = [
   '## Invariants',
   '## Processing',
   '## Evidence',
-  '## Open decisions',
-  '## Stop condition',
 ];
+
+/// Pages that still carry proposal text from before the convention. They
+/// are exempt from [_proposalError] ONLY: every other check still runs on
+/// them. Each reconciliation removes its own name; the set only shrinks, a
+/// new page is never listed, and there is no wildcard.
+const _unreconciled = <String>{};
+
+/// A refs line must be a real list item, not prose that contains one.
+final _refsLine = RegExp(r'^- Refs: .*#\d+', multiLine: true);
+
+final _proposedWord = RegExp(r'\bproposed\b', caseSensitive: false);
 
 /// A backticked repository path or a peer Markdown filename (also `./peer.md`).
 final _pathRef = RegExp(
@@ -68,6 +80,69 @@ String? _transitionError(String row, Set<String> declared) {
     if (!declared.contains(state)) return 'undeclared state "$state"';
   }
   return null;
+}
+
+/// The reason a page is not a statement of shipped rules, or null.
+String? _proposalError(List<String> lines) {
+  for (final raw in lines) {
+    final line = raw.trimRight();
+    if (line == '## Open decisions') {
+      return 'an "Open decisions" section belongs in the issue';
+    }
+    if (line == '## Stop condition') {
+      return 'a "Stop condition" section belongs in the issue';
+    }
+    if (line.startsWith('- Source commit:')) {
+      return 'a page pins no source commit';
+    }
+    if (_proposedWord.hasMatch(line)) {
+      return 'the word "proposed" marks a plan, not a rule that holds: '
+          '"$line"';
+    }
+  }
+  return null;
+}
+
+/// The required headings a page lacks.
+List<String> _missingSections(List<String> lines) =>
+    [for (final s in _requiredSections) if (!lines.contains(s)) s];
+
+/// The first-column labels of the first table under the README's section
+/// heading, in order, without its header and separator rows.
+List<String> _sectionTableLabels(List<String> lines) {
+  final start = lines.indexOf('## What a page holds, and why in that order');
+  if (start < 0) return const [];
+  final labels = <String>[];
+  for (final raw in lines.skip(start + 1)) {
+    final line = raw.trim();
+    if (line.startsWith('## ')) break;
+    if (!line.startsWith('|')) {
+      if (labels.isNotEmpty) break;
+      continue;
+    }
+    labels.add(line.substring(1).split('|').first.trim());
+  }
+  return labels.length < 2 ? const [] : labels.sublist(2);
+}
+
+/// The lines of the States and transitions section, or an error naming the
+/// page and the missing heading (never a RangeError from `sublist(-1)`).
+({List<String>? section, String? error}) _transitionSection(
+  List<String> lines,
+  String name,
+) {
+  final start = lines.indexOf('## States and transitions');
+  if (start < 0) {
+    return (
+      section: null,
+      error: '$name: missing section "## States and transitions"',
+    );
+  }
+  final end = lines.indexWhere((l) => l.startsWith('## '), start + 1);
+  return (
+    section: lines.sublist(start, end < 0 ? lines.length : end),
+    error: null,
+  );
 }
 
 Iterable<String> _missingPaths(String text, File page) sync* {
@@ -120,6 +195,101 @@ void main() {
     ]);
   });
 
+  test('a valid seven-section page passes every structural check', () {
+    final lines = [
+      '<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->',
+      '# Fixture',
+      for (final s in _requiredSections) s,
+      '- Refs: #3335',
+      'Declared states: `a`, `b`',
+      '| `a` | go | always | `b` | none |',
+      'The fixture file `docs/domain/contracts/README.md` exists.',
+    ];
+    final text = lines.join('\n');
+    expect(_missingSections(lines), isEmpty);
+    expect(_refsLine.hasMatch(text), isTrue);
+    expect(_proposalError(lines), isNull);
+    expect(_transitionError(lines[lines.length - 2], {'a', 'b'}), isNull);
+    expect(_missingPaths(text, File('$_root/fixture.md')), isEmpty);
+  });
+
+  test('a proposal marker is refused; current-rule text passes', () {
+    expect(_proposalError(['A claim is accepted once the row is `sent`.']),
+        isNull);
+    expect(_proposalError(['An unproposed word is not the marker.']), isNull);
+    for (final line in [
+      'This rule is proposed for a later change.',
+      'This rule is PROPOSED.',
+      '**proposed:** a key',
+      '## Open decisions',
+      '## Open decisions   ',
+      '## Stop condition',
+      '- Source commit: 0e61749f2f0920a4117735bb416b98ce3919dc7e',
+    ]) {
+      expect(_proposalError(['fine', line, 'fine']), isNotNull, reason: line);
+    }
+  });
+
+  test('an exemption skips the proposal check only', () {
+    // The exemption is a filter on _proposalError alone: a missing heading,
+    // an undeclared state and a missing file stay failures for any page.
+    final lines = ['<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->'];
+    expect(_missingSections(lines), _requiredSections);
+    expect(_transitionError('| `x` | e | g | `y` | none |', {'a'}), isNotNull);
+    expect(_missingPaths('`docs/__no_such_file__.md`', File('$_root/p.md')),
+        ['docs/__no_such_file__.md']);
+  });
+
+  test('every exemption names an existing contract page', () {
+    for (final name in _unreconciled) {
+      expect(name, isNot('README.md'), reason: 'the README is never a page');
+      expect(File('$_root/$name').existsSync(), isTrue,
+          reason: '$name is in _unreconciled but is not a page under $_root: '
+              'remove the stale entry.');
+    }
+  });
+
+  test('the README section table equals the required sections, in order', () {
+    final required = [for (final s in _requiredSections) s.substring(3)];
+    final readme = File('$_root/README.md').readAsLinesSync();
+    expect(_sectionTableLabels(readme), required);
+
+    List<String> table(List<String> rows) => [
+          '## What a page holds, and why in that order',
+          '',
+          '| Section | Meaning |',
+          '|---|---|',
+          for (final r in rows) '| $r | text |',
+          '',
+          '| Other | table |',
+          '|---|---|',
+          '| Extra | row |',
+        ];
+    expect(_sectionTableLabels(table(required)), required);
+    expect(_sectionTableLabels(table(required.sublist(1))), isNot(required));
+    expect(_sectionTableLabels(table([...required, 'Extra'])),
+        isNot(required));
+    expect(_sectionTableLabels(table([...required]..[0] = 'Renamed')),
+        isNot(required));
+    expect(_sectionTableLabels(table(required.reversed.toList())),
+        isNot(required));
+    expect(
+        _sectionTableLabels(['| Other | table |', '|---|---|', '| a | b |']),
+        isNot(required));
+  });
+
+  test('a refs line must be a list item; a missing heading is named', () {
+    expect(_refsLine.hasMatch('Baseline\n- Refs: #3335 (text)'), isTrue);
+    expect(_refsLine.hasMatch('This prose contains - Refs: #3335'), isFalse);
+    final missing = _transitionSection(['## Baseline'], 'x.md');
+    expect(missing.section, isNull);
+    expect(missing.error, contains('x.md'));
+    expect(missing.error, contains('## States and transitions'));
+    final found = _transitionSection(
+        ['## States and transitions', '| a |', '## Invariants'], 'x.md');
+    expect(found.section, ['## States and transitions', '| a |']);
+  });
+
   final pages = markdownFiles(_root, recursive: false)
       .where((f) => _name(f) != 'README.md')
       .toList();
@@ -141,23 +311,20 @@ void main() {
       expect(
         lines.first,
         '<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->',
-        reason: '$name: first line must be the SPDX comment, like every '
-            'other page under docs/.',
+        reason: '$name: first line must be the SPDX comment.',
       );
-      expect(text, matches(RegExp(r'- Refs: .*#\d+')),
-          reason: '$name: the Baseline needs a "- Refs:" line naming the '
-              'issue(s) the page serves.');
-      expect(
-        text,
-        matches(RegExp(r'- Source commit: [0-9a-f]{40}\b')),
-        reason: '$name: the Baseline needs "- Source commit: <40-hex>" — a '
-            'short hash or a branch name is not a checked revision.',
-      );
-      for (final section in _requiredSections) {
-        expect(lines, contains(section),
-            reason: '$name: missing section "$section" '
-                '(see $_root/README.md).');
-      }
+      expect(_refsLine.hasMatch(text), isTrue,
+          reason: '$name: the Baseline needs a list item "- Refs: #n" '
+              'naming the issue(s) the page serves.');
+      expect(_missingSections(lines), isEmpty,
+          reason: '$name: missing required sections (see $_root/README.md).');
+    });
+
+    test('$name: states what holds, with no proposal text', () {
+      if (_unreconciled.contains(name)) return;
+      expect(_proposalError(lines), isNull,
+          reason: '$name: a page states the rule that holds on master; a '
+              'proposal lives in its issue ($_root/README.md).');
     });
 
     test('$name: every transition has five cells and declared states', () {
@@ -174,10 +341,9 @@ void main() {
           .toSet();
       expect(declared, isNotEmpty, reason: '$name: no state is declared.');
 
-      final start = lines.indexOf('## States and transitions');
-      final end = lines.indexWhere((l) => l.startsWith('## '), start + 1);
-      final section = lines.sublist(start, end < 0 ? lines.length : end);
-      final rows = _transitionRows(section).toList();
+      final found = _transitionSection(lines, name);
+      expect(found.error, isNull, reason: found.error);
+      final rows = _transitionRows(found.section!).toList();
       expect(rows, isNotEmpty,
           reason: '$name: no "| from | event | guard | to | effects |" '
               'rows.');

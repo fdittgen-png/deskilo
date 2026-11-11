@@ -2090,6 +2090,25 @@ Vuole decidere, voce per voce, chi vede il suo nome, la sua biografia, i suoi re
 
 **Vedi anche:** [Profilo pubblico](help:user.privacy.public-profile) · [Chi può vedere i miei dati](help:user.privacy.visibility)
 
+### Cosa vede un'attività a cui si unisce
+
+**Destinatari:** Tutti
+
+Vuole sapere cosa apprende di lei un'attività quando chiede di unirsi e una volta socio.
+
+**Passaggi**
+
+1. Apra [Io](app:/me?tab=me) e scorra fino a **Privacy**.
+2. Tocchi **Cosa vede un'attività a cui si unisce**.
+
+**Da sapere**
+
+- Quando chiede di unirsi, l'attività vede il suo nome e la sua foto. Il suo indirizzo e-mail non accompagna la richiesta.
+- Una volta socio, tutti nello spazio vedono il suo nome e la sua foto. Il suo numero WhatsApp, il suo stato e quando è stato presente l'ultima volta seguono le sue scelte in **Chi mi vede**.
+- Gli amministratori che le fatturano o tengono il registro dei soci vedono ciò che serve per fatturarle: nome, società, indirizzo, telefono, e-mail, partita IVA, identificativo legale e lingua preferita. Il suo compleanno, se lo ha indicato, lo vede solo chi tiene il registro dei soci.
+
+**Vedi anche:** [Scegliere chi mi vede](help:user.privacy.audiences)
+
 ### Pubblicare un profilo pubblico
 
 **Destinatari:** Tutti

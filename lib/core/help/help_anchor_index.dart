@@ -6,6 +6,7 @@ import 'help_anchors.dart';
 /// `help_anchor_test` checks that each one exists in all five guides of its
 /// family and that no declared anchor is missing here.
 const helpAnchorIndex = <String>{
+  HelpAnchor.privacyBusinessSees,
   HelpAnchor.workspaceBusinessKind,
   HelpAnchor.moneySales,
   HelpAnchor.moneyPurchases,

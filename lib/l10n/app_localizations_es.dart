@@ -7041,13 +7041,31 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ubicación no disponible. El propietario puede publicar coordenadas precisas.';
 
   @override
+  String get directoryMapOpenFailed => 'No se pudo abrir el mapa.';
+
+  @override
   String get directoryNoUpcoming => 'Sin reservas próximas';
+
+  @override
+  String get directoryNothingToPin =>
+      'Ninguno de estos lugares se pudo situar en el mapa.';
 
   @override
   String get directoryOnline => 'En línea';
 
   @override
   String get directoryOpenGroup => 'Abrir el grupo de WhatsApp';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count no se pudieron buscar.',
+      one: '1 no se pudo buscar.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7057,6 +7075,17 @@ class AppLocalizationsEs extends AppLocalizations {
       other:
           '$count espacios no se pudieron situar en el mapa; sus fichas están debajo.',
       one: '1 espacio no se pudo situar en el mapa; su ficha está debajo.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count no tienen dirección publicada.',
+      one: '1 no tiene dirección publicada.',
     );
     return '$_temp0';
   }
@@ -7074,6 +7103,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Reservado hoy';
+
+  @override
+  String get directoryTilesFailed => 'No se pudo cargar el fondo del mapa.';
 
   @override
   String get directoryTitle => 'Miembros';
@@ -10999,6 +11031,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesAwaitingValidation => 'Pago en validación';
 
   @override
+  String get financesBeingValidated => 'En validación';
+
+  @override
   String get financesColumnAmount => 'Importe';
 
   @override
@@ -11057,6 +11092,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesHideAmount => 'Ocultar el importe';
 
   @override
+  String get financesHostsUnavailable =>
+      'No se han podido listar sus instalaciones conectadas en este momento; lo que se muestra procede solo de esta instalación.';
+
+  @override
   String financesLinkAction(String space) {
     return 'Abrir para $space';
   }
@@ -11076,6 +11115,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesNothingPaid => 'Aún no hay facturas saldadas.';
+
+  @override
+  String get financesNothingSoFar => 'Nada entre lo leído hasta ahora.';
 
   @override
   String get financesOpenDocument => 'Abrir';
@@ -15902,6 +15944,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kioskTapHint => 'Toque un asiento para registrarse';
 
   @override
+  String get kitActionBusy => 'En curso…';
+
+  @override
   String get languageNameCS => 'Checo';
 
   @override
@@ -17905,6 +17950,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'No se pudo guardar su dirección. Inténtelo de nuevo.';
+
+  @override
+  String get meBusinessSeesAdmins =>
+      'Sus administradores que le facturan o llevan el registro de miembros: su nombre, empresa, dirección, teléfono, correo, número de IVA, identificador legal e idioma preferido, que necesitan para facturarle, y su cumpleaños si lo indicó, para quienes llevan el registro de miembros.';
+
+  @override
+  String get meBusinessSeesAsk => 'Cuando pide unirse: su nombre y su foto.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Una vez miembro, todos en el espacio: su nombre y su foto. Su número de WhatsApp, su estado y cuándo estuvo por última vez solo según lo que elija en Quién me ve.';
+
+  @override
+  String get meBusinessSeesTitle => 'Lo que ve un negocio al que se une';
 
   @override
   String get meContextPersonal => 'Personal';
@@ -21189,6 +21248,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get portalRegisterDirectory =>
       'Vincular un servidor al directorio global';
+
+  @override
+  String get portalRequestPending => 'Solicitud pendiente';
 
   @override
   String get portalRequestProfile => 'Pedir unirme';
@@ -28494,7 +28556,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Cuando lo solicite, este negocio verá su dirección de correo. Una vez miembro, sus administradores verán su nombre y los datos de contacto y facturación que necesitan para facturarle.';
+      'Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.';
 
   @override
   String get spaceQrSizeLabel => 'Tamaño del código QR';

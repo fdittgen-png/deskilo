@@ -16,6 +16,7 @@ import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/me/application/personal_overview.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
+import 'package:deskilo/features/money/domain/finance_hosts.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
@@ -45,6 +46,12 @@ const _b = MyReservationsSource(
   installationId: 'inst-b',
   workspaceIds: ['ws-b'],
   labels: ['Leipzig'],
+);
+
+const _lyonDocs = FinanceHost(
+  installationId: 'inst-lyon',
+  workspaceIds: ['ws-Lyon'],
+  labels: ['Lyon'],
 );
 
 DateTime _day(int offset, int hour) =>
@@ -630,6 +637,65 @@ void main() {
       );
       expect(_key('me-overview-spaces-unavailable'), findsNothing);
       expect(_key('me-home-all-spaces'), findsOneWidget);
+    });
+
+    // #3682 — a connected installation's documents not read yet, or not at
+    // all, never let the section say that nothing needs me.
+    testWidgets('a connected host whose documents failed: partial, never '
+        '"nothing needs you"', (tester) async {
+      final documents = FakeAccountActivityRepository()
+        ..financeOverview = const FinanceOverview(
+          hosts: [FinanceHostRead(_lyonDocs, FinanceHostStatus.failed)],
+        );
+      await _pump(tester, documents: documents);
+      expect(_key('me-overview-documents-partial'), findsOneWidget);
+      expect(_key('me-overview-attention-none'), findsNothing);
+    });
+
+    testWidgets('a connected host whose documents are still read: reading, '
+        'never "nothing needs you"', (tester) async {
+      final documents = FakeAccountActivityRepository()
+        ..financeOverview = const FinanceOverview(
+          hosts: [FinanceHostRead(_lyonDocs, FinanceHostStatus.reading)],
+        );
+      final router = await pumpMeApp(
+        tester,
+        workspace: twoSpaces(),
+        accountActivity: documents,
+        size: const Size(420, 2600),
+        extraOverrides: <Override>[
+          personalShellEnabledProvider.overrideWithValue(true),
+          myReservationsRepositoryProvider.overrideWithValue(_Hosts()),
+          myReservationActionsProvider.overrideWithValue(_Hosts()),
+          myReservationsSourcesProvider.overrideWith((ref) async => const [_a]),
+        ],
+      );
+      router.go('/me');
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      expect(_key('me-overview-attention-loading'), findsOneWidget);
+      expect(_key('me-overview-attention-none'), findsNothing);
+    });
+
+    testWidgets('an invoice whose payment is being validated is not to pay '
+        'and never overdue', (tester) async {
+      final documents = FakeAccountActivityRepository()
+        ..financeOverview = FinanceOverview(
+          invoices: [
+            invoice(
+              'paid',
+              ws: 'One',
+              state: FinanceState.awaitingValidation,
+              due: DateTime(2000),
+            ),
+          ],
+        );
+      await _pump(tester, documents: documents);
+      expect(_key('me-overview-document|ws-One|paid'), findsNothing);
+      expect(find.text('Overdue'), findsNothing);
+      expect(find.text('To pay'), findsNothing);
+      expect(_key('me-overview-attention-none'), findsOneWidget);
     });
 
     testWidgets('with the shell off, the Overview is the legacy home', (

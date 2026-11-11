@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/text/collation.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -185,10 +186,10 @@ class _SupplierLookupDialogState extends ConsumerState<_SupplierLookupDialog> {
       for (final p in lookup.providers) ...p.countries,
       for (final c in CountryCatalog.countries) c.code,
     }.toList()..sort(
-      (a, b) => localizedCountryName(
-        l10n,
-        a,
-      ).compareTo(localizedCountryName(l10n, b)),
+      (a, b) => compareNames(
+        localizedCountryName(l10n, a),
+        localizedCountryName(l10n, b),
+      ),
     );
   }
 

@@ -73,13 +73,16 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
     final hosts = await _away(hostsAnswer);
     // A selected workspace on a host read below is answered there, once.
     final covered = split != null &&
-        hosts.any((h) => h.workspaceIds.contains(split.workspaceId));
+        (hosts ?? const <FinanceHost>[]).any((h) => h.workspaceIds.contains(split.workspaceId));
     // #2557 C4 — each host that answers is recorded, so the coverage above
     // the results names what was read as well as what was not.
     var mine = (await home.overview()).answeredBy(null);
     if (split != null && !covered) {
       mine = await _selected(mine, selected, split.source);
     }
+    // #3682 — an unread list of hosts is a source that did not answer, with
+    // its Try again; never "no connected installations".
+    if (hosts == null) return mine.withUnavailable(connectedHostsSource);
     if (hosts.isEmpty) return mine;
     final FinanceReadLimits limits;
     try {
@@ -114,8 +117,9 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   Future<void> settled() => Future.wait([..._inFlight]);
 
   /// The connected hosts to read: those my account names that are not the
-  /// personal home's own installation (its read already answers for them).
-  Future<List<FinanceHost>> _away(Future<List<FinanceHost>> answer) async {
+  /// personal home's own installation (its read already answers for them);
+  /// null when the list itself could not be read.
+  Future<List<FinanceHost>?> _away(Future<List<FinanceHost>> answer) async {
     try {
       return [for (final h in await answer) if (!h.hostedHere) h];
     } on Object catch (e, st) {
@@ -125,7 +129,7 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
         error: e,
         stackTrace: st,
       );
-      return const [];
+      return null;
     }
   }
 
@@ -166,6 +170,11 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   Future<void> retrySource(String source) async {
     final overview = state.value;
     if (overview == null || !overview.unavailableSources.contains(source)) {
+      return;
+    }
+    // The list of my hosts read again rebuilds this view (#3682).
+    if (source == connectedHostsSource) {
+      ref.invalidate(financeHostsProvider);
       return;
     }
     final selected = _selectedRepo;

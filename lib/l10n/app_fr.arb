@@ -4685,14 +4685,19 @@
   "directoryLocate": "Localiser sur la carte",
   "directoryLocating": "Localisation de l’adresse publique…",
   "directoryLocationMissing": "Position indisponible. Le propriétaire peut publier des coordonnées précises.",
+  "directoryMapOpenFailed": "La carte n'a pas pu être ouverte.",
   "directoryNoUpcoming": "Aucune réservation à venir",
+  "directoryNothingToPin": "Aucun de ces lieux n'a pu être placé sur la carte.",
   "directoryOnline": "En ligne",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
+  "directoryPinsLookupFailed": "{count, plural, =1{1 n'a pas pu être recherché.} other{{count} n'ont pas pu être recherchés.}}",
   "directoryPinsMissing": "{count, plural, =1{1 espace n'a pas pu être placé sur la carte ; sa fiche est en dessous.} other{{count} espaces n'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.}}",
+  "directoryPinsNoAddress": "{count, plural, =1{1 n'a pas d'adresse publiée.} other{{count} n'ont pas d'adresse publiée.}}",
   "directoryReservationsHeading": "Réservations",
   "directoryReservedNow": "Réservé maintenant",
   "directoryReservedNowSeat": "Réservé maintenant · {seat}",
   "directoryReservedToday": "Réservé aujourd'hui",
+  "directoryTilesFailed": "Le fond de carte n'a pas pu être chargé.",
   "directoryTitle": "Membres",
   "directoryWhatsapp": "Discuter sur WhatsApp",
   "discoveryBookmark": "Enregistrer",
@@ -7316,6 +7321,10 @@
   "@financesAwaitingValidation": {
     "description": "Me › Finances"
   },
+  "financesBeingValidated": "En cours de validation",
+  "@financesBeingValidated": {
+    "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
+  },
   "financesColumnAmount": "Montant",
   "financesColumnDocument": "Document et période",
   "financesColumnState": "Document et paiement",
@@ -7341,6 +7350,10 @@
     "description": "Me › Finances"
   },
   "financesHideAmount": "Masquer le montant",
+  "financesHostsUnavailable": "Vos installations connectées n’ont pas pu être listées pour le moment ; ce qui s’affiche provient de cette installation uniquement.",
+  "@financesHostsUnavailable": {
+    "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
+  },
   "financesLinkAction": "Ouvrir pour {space}",
   "@financesLinkAction": {
     "placeholders": {
@@ -7362,6 +7375,10 @@
   "financesNothingPaid": "Aucune facture réglée pour l’instant.",
   "@financesNothingPaid": {
     "description": "Me › Finances"
+  },
+  "financesNothingSoFar": "Rien parmi ce qui a été lu jusqu’ici.",
+  "@financesNothingSoFar": {
+    "description": "Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed"
   },
   "financesOpenDocument": "Ouvrir",
   "financesOutstanding": "À payer",
@@ -10322,6 +10339,7 @@
   "kioskRevertTitle": "Appareil borne",
   "kioskScanQr": "Scanner le badge QR",
   "kioskTapHint": "Touchez une place pour pointer",
+  "kitActionBusy": "En cours…",
   "languageNameCS": "Tchèque",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -11478,6 +11496,22 @@
   "meAccountInMe": "Mon compte est dans Moi",
   "meAccountInMeBody": "Photo, langue, thème et connexions sont à vous, dans chaque espace.",
   "meAddressSaveFailed": "Impossible d'enregistrer votre adresse. Veuillez réessayer.",
+  "meBusinessSeesAdmins": "Ses administrateurs qui vous facturent ou tiennent le registre des membres : votre nom, votre société, votre adresse, votre téléphone, votre e-mail, votre numéro de TVA, votre identifiant légal et votre langue préférée, dont ils ont besoin pour vous facturer, et votre date d’anniversaire si vous l’avez indiquée, pour ceux qui tiennent le registre des membres.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "Quand vous demandez à la rejoindre : votre nom et votre photo.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Une fois membre, tout le monde dans l’espace : votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence seulement selon vos choix dans Qui me voit.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "Ce que voit une entreprise que vous rejoignez",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Personnel",
   "meCreateSpace": "Créer un espace",
   "meDataPersonalExport": "Exporter les données personnelles",
@@ -13193,6 +13227,7 @@
   "portalReachableHeading": "Personnes à qui vous pouvez écrire",
   "portalRecipientHint": "Tapez un nom : des suggestions apparaissent dès la première lettre",
   "portalRegisterDirectory": "Relier un serveur à l’annuaire global",
+  "portalRequestPending": "Demande en attente",
   "portalRequestProfile": "Demander à rejoindre",
   "portalRequestSent": "Demande envoyée. L’espace examinera votre profil.",
   "portalResetAll": "Rétablir toutes les données publiques depuis les informations de l’espace",
@@ -18047,7 +18082,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Quand vous demandez, cette entreprise voit votre adresse e-mail. Une fois membre, ses administrateurs voient votre nom et les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.",
+  "spacePreviewPrivacy": "Quand vous demandez, cette entreprise voit votre nom et votre photo. Une fois membre, ses administrateurs voient les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.",
   "spaceQrSizeLabel": "Taille du code QR",
   "spaceRatingClear": "Aucune note",
   "spaceRunByAssociation": "Géré par une association",

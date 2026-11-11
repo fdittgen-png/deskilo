@@ -4,10 +4,13 @@
 import 'dart:convert';
 
 import 'package:deskilo/features/directory/data/photon_directory_geocoder.dart';
+import 'package:deskilo/features/directory/data/prefs_directory_location_memory.dart';
 import 'package:deskilo/features/directory/domain/directory_location.dart';
+import 'package:deskilo/features/directory/domain/directory_location_memory.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   test('point validation rejects non-finite and out-of-range coordinates', () {
@@ -73,4 +76,35 @@ void main() {
       expect(requests, 2);
     },
   );
+  test('#3684: the native apps name the app in the User-Agent; the web '
+      'leaves it to the browser', () async {
+    final agents = <String?>[];
+    http.Client client() => MockClient((request) async {
+      agents.add(request.headers['User-Agent']);
+      return http.Response('{"features":[]}', 200);
+    });
+    await PhotonDirectoryGeocoder(client(), identified: true).locate('A');
+    await PhotonDirectoryGeocoder(client(), identified: false).locate('A');
+    expect(agents, ['DesKilo (org.deskilo.app)', null]);
+  });
+  test('#3684: found places are kept on the device by their normalised '
+      'address, and an unreadable entry reads as none', () async {
+    SharedPreferences.setMockInitialValues({});
+    const memory = PrefsDirectoryLocationMemory();
+    expect(await memory.read(), isEmpty);
+    await memory.write({
+      directoryAddressKey('  Avenue,   Pézenas '): const DirectoryLocation(
+        43.46,
+        3.42,
+        label: 'Avenue, Pézenas',
+      ),
+    });
+    final back = await memory.read();
+    expect(back.keys, ['avenue, pézenas']);
+    expect(back.values.single.latitude, 43.46);
+    expect(back.values.single.label, 'Avenue, Pézenas');
+
+    SharedPreferences.setMockInitialValues({'directory_locations': '[1]'});
+    expect(await memory.read(), isEmpty);
+  });
 }

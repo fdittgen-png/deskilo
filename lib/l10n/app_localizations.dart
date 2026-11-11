@@ -11544,11 +11544,23 @@ abstract class AppLocalizations {
   /// **'Location unavailable. The owner can publish precise map coordinates.'**
   String get directoryLocationMissing;
 
+  /// Shown as an error snackbar in directory screen (directory) when the map could not be opened.
+  ///
+  /// In en, this message translates to:
+  /// **'The map could not be opened.'**
+  String get directoryMapOpenFailed;
+
   /// Shown under the Reservations heading in the member detail sheet when the member has no active booking ahead
   ///
   /// In en, this message translates to:
   /// **'No upcoming reservations'**
   String get directoryNoUpcoming;
+
+  /// Shown as a text in directory map (directory), in place of the map when no loaded place has a pin.
+  ///
+  /// In en, this message translates to:
+  /// **'None of these places could be placed on the map.'**
+  String get directoryNothingToPin;
 
   /// Directory status chip: heartbeat younger than the presence window (#223)
   ///
@@ -11562,11 +11574,23 @@ abstract class AppLocalizations {
   /// **'Open WhatsApp group'**
   String get directoryOpenGroup;
 
+  /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}'**
+  String directoryPinsLookupFailed(int count);
+
   /// Shown as a text in directory map (directory). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
   String directoryPinsMissing(int count);
+
+  /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 has no published address.} other{{count} have no published address.}}'**
+  String directoryPinsNoAddress(int count);
 
   /// Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail
   ///
@@ -11591,6 +11615,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reserved today'**
   String get directoryReservedToday;
+
+  /// Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows.
+  ///
+  /// In en, this message translates to:
+  /// **'The map background could not be loaded.'**
+  String get directoryTilesFailed;
 
   /// Member directory title: bottom-tab label and app-bar title of the Members tab (#230) plus its settings entry (#224), visible to every member. Keep it short — it must fit a bottom-bar tab.
   ///
@@ -18316,6 +18346,12 @@ abstract class AppLocalizations {
   /// **'Payment being validated'**
   String get financesAwaitingValidation;
 
+  /// Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay
+  ///
+  /// In en, this message translates to:
+  /// **'Being validated'**
+  String get financesBeingValidated;
+
   /// #2557 C4 Me › Finances: the rows header, the amount in its own currency.
   ///
   /// In en, this message translates to:
@@ -18400,6 +18436,12 @@ abstract class AppLocalizations {
   /// **'Hide amount'**
   String get financesHideAmount;
 
+  /// Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none
+  ///
+  /// In en, this message translates to:
+  /// **'Your connected installations could not be listed right now; what is shown comes from this installation only.'**
+  String get financesHostsUnavailable;
+
   /// Shown as a text in my finances link card (money). Placeholders: {space} (String).
   ///
   /// In en, this message translates to:
@@ -18435,6 +18477,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No settled invoice yet.'**
   String get financesNothingPaid;
+
+  /// Me › Finances, an empty list while a source has not answered yet (#3682): says only what was read so far, never that nothing is owed
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing among what was read so far.'**
+  String get financesNothingSoFar;
 
   /// #2557 C4 Me › Finances: a row's Open action, in the issuing workspace.
   ///
@@ -26038,6 +26086,12 @@ abstract class AppLocalizations {
   /// **'Tap a seat to check in'**
   String get kioskTapHint;
 
+  /// Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes.
+  ///
+  /// In en, this message translates to:
+  /// **'Working…'**
+  String get kitActionBusy;
+
   /// #713 - language name in the format picker
   ///
   /// In en, this message translates to:
@@ -29390,6 +29444,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not save your address. Please try again.'**
   String get meAddressSaveFailed;
+
+  /// #3594 what the administrators who invoice or keep the member records see
+  ///
+  /// In en, this message translates to:
+  /// **'Its administrators who invoice you or keep its member records: your name, company, address, phone, e-mail, VAT number, legal id and preferred language, which they need to invoice you, and your birthday if you gave it, for those who keep the member records.'**
+  String get meBusinessSeesAdmins;
+
+  /// #3594 what a business sees when the person asks to join
+  ///
+  /// In en, this message translates to:
+  /// **'When you ask to join: your name and photo.'**
+  String get meBusinessSeesAsk;
+
+  /// #3594 what the members of a space see
+  ///
+  /// In en, this message translates to:
+  /// **'Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.'**
+  String get meBusinessSeesSpace;
+
+  /// #3594 Me › Privacy: the card that says what a business a person joins can see
+  ///
+  /// In en, this message translates to:
+  /// **'What a business you join can see'**
+  String get meBusinessSeesTitle;
 
   /// #2552 the scope badge in the personal shell's header: this is the person's own layer, never a space.
   ///
@@ -34894,6 +34972,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Link a server to the global directory'**
   String get portalRegisterDirectory;
+
+  /// Shown on the disabled button of a space offer once the request to join was sent and waits for the space's answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Request pending'**
+  String get portalRequestPending;
 
   /// Shown as the text in space offers (directory).
   ///
@@ -46829,7 +46913,7 @@ abstract class AppLocalizations {
   /// #3545 F: the line under the actions of a space's public page: what asking to join shares
   ///
   /// In en, this message translates to:
-  /// **'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.'**
+  /// **'When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.'**
   String get spacePreviewPrivacy;
 
   /// Shown as the text in space codes options dialog (workspace).

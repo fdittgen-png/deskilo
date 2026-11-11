@@ -7044,13 +7044,31 @@ class AppLocalizationsIt extends AppLocalizations {
       'Posizione non disponibile. Il proprietario può pubblicare coordinate precise.';
 
   @override
+  String get directoryMapOpenFailed => 'Non è stato possibile aprire la mappa.';
+
+  @override
   String get directoryNoUpcoming => 'Nessuna prenotazione in arrivo';
+
+  @override
+  String get directoryNothingToPin =>
+      'Non è stato possibile collocare nessuno di questi luoghi sulla mappa.';
 
   @override
   String get directoryOnline => 'Online';
 
   @override
   String get directoryOpenGroup => 'Apri il gruppo WhatsApp';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'La ricerca di $count indirizzi non è riuscita.',
+      one: 'La ricerca di 1 indirizzo non è riuscita.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7060,6 +7078,17 @@ class AppLocalizationsIt extends AppLocalizations {
       other:
           '$count spazi non è stato possibile collocarli sulla mappa; le loro schede sono sotto.',
       one: '1 spazio non è stato possibile collocarlo sulla mappa; la sua scheda è sotto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count non hanno un indirizzo pubblicato.',
+      one: '1 non ha un indirizzo pubblicato.',
     );
     return '$_temp0';
   }
@@ -7077,6 +7106,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Prenotato oggi';
+
+  @override
+  String get directoryTilesFailed =>
+      'Non è stato possibile caricare lo sfondo della mappa.';
 
   @override
   String get directoryTitle => 'Membri';
@@ -11002,6 +11035,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesAwaitingValidation => 'Pagamento in convalida';
 
   @override
+  String get financesBeingValidated => 'In convalida';
+
+  @override
   String get financesColumnAmount => 'Importo';
 
   @override
@@ -11059,6 +11095,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get financesHideAmount => 'Nascondi l\'importo';
 
   @override
+  String get financesHostsUnavailable =>
+      'Non è stato possibile elencare le Sue installazioni collegate in questo momento; quanto mostrato proviene solo da questa installazione.';
+
+  @override
   String financesLinkAction(String space) {
     return 'Apri per $space';
   }
@@ -11078,6 +11118,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesNothingPaid => 'Nessuna fattura ancora saldata.';
+
+  @override
+  String get financesNothingSoFar => 'Niente tra quanto letto finora.';
 
   @override
   String get financesOpenDocument => 'Apri';
@@ -15908,6 +15951,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskTapHint => 'Tocchi un posto per fare check-in';
 
   @override
+  String get kitActionBusy => 'In corso…';
+
+  @override
   String get languageNameCS => 'Ceco';
 
   @override
@@ -17920,6 +17966,21 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Impossibile salvare il suo indirizzo. Riprovi.';
+
+  @override
+  String get meBusinessSeesAdmins =>
+      'I suoi amministratori che le fatturano o tengono il registro dei soci: il suo nome, la società, l’indirizzo, il telefono, l’e-mail, la partita IVA, l’identificativo legale e la lingua preferita, necessari per fatturarle, e il suo compleanno se lo ha indicato, per chi tiene il registro dei soci.';
+
+  @override
+  String get meBusinessSeesAsk =>
+      'Quando chiede di unirsi: il suo nome e la sua foto.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Una volta socio, tutti nello spazio: il suo nome e la sua foto. Il suo numero WhatsApp, il suo stato e quando è stato presente l’ultima volta solo come sceglie in Chi mi vede.';
+
+  @override
+  String get meBusinessSeesTitle => 'Cosa vede un’attività a cui si unisce';
 
   @override
   String get meContextPersonal => 'Personale';
@@ -21212,6 +21273,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get portalRegisterDirectory =>
       'Collega un server alla directory globale';
+
+  @override
+  String get portalRequestPending => 'Richiesta in attesa';
 
   @override
   String get portalRequestProfile => 'Chiedi di unirti';
@@ -28514,7 +28578,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.';
+      'Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.';
 
   @override
   String get spaceQrSizeLabel => 'Dimensione del codice QR';

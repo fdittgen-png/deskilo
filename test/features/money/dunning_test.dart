@@ -6,6 +6,7 @@
 import 'dart:typed_data';
 
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/core/ui/kit/kit_action_button.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -139,7 +140,7 @@ void main() {
     await openInvoice(tester, invoice.id);
     expect(
       tester.widget(find.byKey(const ValueKey('invoice-page-remind'))),
-      isA<FilledButton>(),
+      isA<KitActionButton>(),
       reason: 'the due reminder is the expected move',
     );
     expect(find.text('Share reminder 1'), findsOneWidget);

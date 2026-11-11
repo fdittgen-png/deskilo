@@ -41,6 +41,35 @@ env:
   FLUTTER_VERSION: "3.47.5"
 
 jobs:
+  # #3670 — a push to master whose tree a pull request already tested green
+  # does not run the suite again: the squash of an up-to-date branch IS the
+  # tree that run proved. Only a push asks; the nightly schedule, a manual
+  # dispatch and every pull request run in full, and so does a lookup that
+  # finds nothing or fails (the output stays empty, never `true`). The jobs
+  # below are skipped, and a skipped context counts as passing; the summary
+  # names the run that proved the tree.
+  tested:
+    name: tree already tested
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      skip: ${{ steps.look.outputs.skip }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: look
+        if: github.event_name == 'push'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tree=$(git rev-parse 'HEAD^{tree}')
+          if run=$(scripts/tree_candidates.sh | scripts/tree_tested.sh "$tree"); then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "### Tree already tested in run $run" >> "$GITHUB_STEP_SUMMARY"
+            echo "The tree \`$tree\` was proved green by that pull-request run; the suite is not repeated." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
   # #1446 C2 — which work this change REQUIRES, decided by the checked-in
   # classifier from the complete diff (full git data, NUL-delimited names,
   # renames counted twice) through .github/actions/classify-change — the
@@ -54,6 +83,8 @@ jobs:
   classify:
     name: classify the change
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     timeout-minutes: 5
     outputs:
       database: ${{ steps.verdict.outputs.database }}
@@ -80,6 +111,8 @@ jobs:
   static:
     name: quality · static gates
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -100,6 +133,16 @@ jobs:
         run: |
           bash scripts/secret_scan_check.sh
           bash scripts/secret_scan.sh "$SCAN_BASE" "$SCAN_HEAD"
+      # #3677 -- no tool or AI mention in the range's commit messages, nor in
+      # the pull request's title and text; a master push reads the pushed
+      # commits, so a merge that carried one is seen at once.
+      - name: No tool line in commit messages or pull-request text
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: bash scripts/tool_lines_check.sh
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -268,6 +311,8 @@ jobs:
   gate:
     name: quality · test · gates
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -346,6 +391,8 @@ jobs:
   money:
     name: quality · test · money a-m and reservations
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -428,6 +475,8 @@ jobs:
   workspace:
     name: quality · test · workspace
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -511,6 +560,8 @@ jobs:
   rest:
     name: quality · test · other features
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -597,6 +648,8 @@ jobs:
   money2:
     name: quality · test · money n-z, me and auth
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -679,6 +732,8 @@ jobs:
   core:
     name: quality · test · core, app, profile and a11y
     runs-on: ubuntu-latest
+    needs: [tested]
+    if: always() && needs.tested.outputs.skip != 'true'
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -776,8 +831,8 @@ jobs:
     name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [gate, static, money, money2, workspace, rest, core]
-    if: always()
+    needs: [tested, gate, static, money, money2, workspace, rest, core]
+    if: always() && needs.tested.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
@@ -988,11 +1043,11 @@ jobs:
     permissions:
       contents: read
       packages: read
-    needs: [classify]
+    needs: [tested, classify]
     # #3318 — still run if classification fails, but let cancellation stop
     # this long job and release the PR's concurrency slot for its new head.
     # `always()` also survives cancellation and strands the replacement.
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     env:
       # #1446 C2 — only an explicit `not_applicable` stands the job down;
       # `required`, an empty output from a classify job that died, or a
@@ -1462,8 +1517,8 @@ jobs:
   report:
     name: quality · report
     runs-on: ubuntu-latest
-    needs: [classify, gate, static, money, money2, workspace, rest, core, code, database]
-    if: always()
+    needs: [tested, classify, gate, static, money, money2, workspace, rest, core, code, database]
+    if: always() && needs.tested.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v4
       # #2639 — this attempt's three row inputs by exact name, into the
@@ -1492,6 +1547,22 @@ jobs:
           name: quality-database-attempt-${{ github.run_attempt }}
           path: report
 
+      # #3663 -- a re-run of only the failed jobs does not run the jobs that
+      # passed again: their rows exist only under the earlier attempt's number.
+      # For each input this attempt did not produce, take the newest earlier
+      # attempt of THIS run that did, and say so in the report.
+      - name: Rows an earlier attempt produced
+        id: earlier
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          missing=()
+          [ "${{ steps.dl_classification.outcome }}" = "success" ] || missing+=("dl_classification:quality-classification")
+          [ "${{ steps.dl_code.outcome }}" = "success" ] || missing+=("dl_code:quality-code")
+          [ "${{ steps.dl_database.outcome }}" = "success" ] || missing+=("dl_database:quality-database")
+          bash scripts/fallback_attempt_rows.sh report "${missing[@]}"
+
       - name: DESKILO QUALITY REPORT
         if: always()
         run: bash scripts/quality_report.sh report .github/quality-manifest.psv
@@ -1516,6 +1587,6 @@ jobs:
             "quality · test · core, app, profile and a11y=${{ needs.core.result }}" \
             "analyze · l10n gate · test · coverage=${{ needs.code.result }}" \
             "quality · database=${{ needs.database.result }}" \
-            "Classification input=${{ steps.dl_classification.outcome }}" \
-            "Code rows input=${{ steps.dl_code.outcome }}" \
-            "Database rows input=${{ steps.dl_database.outcome }}"
+            "Classification input=${{ steps.dl_classification.outcome == 'success' && 'success' || (steps.earlier.outputs.dl_classification == 'recovered' && 'success' || steps.dl_classification.outcome) }}" \
+            "Code rows input=${{ steps.dl_code.outcome == 'success' && 'success' || (steps.earlier.outputs.dl_code == 'recovered' && 'success' || steps.dl_code.outcome) }}" \
+            "Database rows input=${{ steps.dl_database.outcome == 'success' && 'success' || (steps.earlier.outputs.dl_database == 'recovered' && 'success' || steps.dl_database.outcome) }}"
