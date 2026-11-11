@@ -37653,6 +37653,18 @@
   "@setupStepTitleVat": {
     "description": "#3485 setupStepTitle: the label for case 'vat'."
   },
+  "setupTaskBreadcrumb": "{workspace} › Configure workspace › {task}",
+  "@setupTaskBreadcrumb": {
+    "description": "#3282 the breadcrumb on a setup task: the workspace, the configuration home, the task.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "task": {
+        "type": "String"
+      }
+    }
+  },
   "setupTaskSaved": "Status is based on saved settings. Opening a task does not complete it.",
   "@setupTaskSaved": {
     "description": "Workspace configuration guidance and status."

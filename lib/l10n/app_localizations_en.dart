@@ -28744,6 +28744,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupStepTitleVat => 'VAT';
 
   @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Configure workspace › $task';
+  }
+
+  @override
   String get setupTaskSaved =>
       'Status is based on saved settings. Opening a task does not complete it.';
 

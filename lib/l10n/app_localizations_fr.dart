@@ -29076,6 +29076,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupStepTitleVat => 'TVA';
 
   @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Configurer l\'espace › $task';
+  }
+
+  @override
   String get setupTaskSaved =>
       'L’état repose sur les réglages enregistrés. Ouvrir une tâche ne la termine pas.';
 

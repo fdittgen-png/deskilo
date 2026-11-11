@@ -18023,6 +18023,7 @@
   "setupStepTitleReminders": "Solleciti di pagamento",
   "setupStepTitleServices": "Servizi",
   "setupStepTitleVat": "IVA",
+  "setupTaskBreadcrumb": "{workspace} › Configurare lo spazio › {task}",
   "setupTaskSaved": "Lo stato riflette le impostazioni salvate. Aprire un’attività non la completa.",
   "shellBarHiddenAnnounce": "Barra di navigazione nascosta",
   "shellBarHideHint": "Tenga premuto per la vista a schermo intero",

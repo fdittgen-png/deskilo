@@ -119,7 +119,18 @@ class SetupTaskContext extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(workspaceName, style: Theme.of(context).textTheme.titleSmall),
+            // #3282 — where the owner is: workspace, configuration, task.
+            Semantics(
+              header: true,
+              child: Text(
+                l10n.setupTaskBreadcrumb(
+                  workspaceName,
+                  l10n.setupStepTitle(stepId),
+                ),
+                key: const ValueKey('setup-task-breadcrumb'),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
             if (goal != null)
               Text(
                 '${l10n.setupMilestoneName(goal.milestone)} · '

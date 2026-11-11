@@ -27,5 +27,6 @@
   "setupStateVerified": "Eingerichtet und geprüft",
   "setupStateMarkedDone": "Eingerichtet, von Ihnen als erledigt markiert",
   "setupStateEnabled": "Eingeschaltet, noch einzurichten",
-  "setupStateNeedsDecision": "Braucht Ihre Entscheidung"
+  "setupStateNeedsDecision": "Braucht Ihre Entscheidung",
+  "setupTaskBreadcrumb": "{workspace} › Bereich konfigurieren › {task}"
 }

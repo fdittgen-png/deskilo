@@ -29014,6 +29014,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupStepTitleVat => 'IVA';
 
   @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Configurare lo spazio › $task';
+  }
+
+  @override
   String get setupTaskSaved =>
       'Lo stato riflette le impostazioni salvate. Aprire un’attività non la completa.';
 

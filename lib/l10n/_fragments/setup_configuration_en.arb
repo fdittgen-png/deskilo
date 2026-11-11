@@ -134,5 +134,17 @@
   "setupStateNeedsDecision": "Needs your decision",
   "@setupStateNeedsDecision": {
     "description": "#3282 a setup step the server cannot verify, still open: the owner decides."
+  },
+  "setupTaskBreadcrumb": "{workspace} › Configure workspace › {task}",
+  "@setupTaskBreadcrumb": {
+    "description": "#3282 the breadcrumb on a setup task: the workspace, the configuration home, the task.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "task": {
+        "type": "String"
+      }
+    }
   }
 }

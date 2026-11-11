@@ -27,5 +27,6 @@
   "setupStateVerified": "Configurado y comprobado",
   "setupStateMarkedDone": "Configurado, marcado como hecho por usted",
   "setupStateEnabled": "Activado, aún por configurar",
-  "setupStateNeedsDecision": "Necesita su decisión"
+  "setupStateNeedsDecision": "Necesita su decisión",
+  "setupTaskBreadcrumb": "{workspace} › Configurar el espacio › {task}"
 }

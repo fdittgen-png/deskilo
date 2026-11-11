@@ -18023,6 +18023,7 @@
   "setupStepTitleReminders": "Zahlungserinnerungen",
   "setupStepTitleServices": "Leistungen",
   "setupStepTitleVat": "Umsatzsteuer",
+  "setupTaskBreadcrumb": "{workspace} › Bereich konfigurieren › {task}",
   "setupTaskSaved": "Der Status basiert auf gespeicherten Einstellungen. Das Öffnen einer Aufgabe schließt sie nicht ab.",
   "shellBarHiddenAnnounce": "Navigationsleiste ausgeblendet",
   "shellBarHideHint": "Lange drücken für die Vollbildansicht",

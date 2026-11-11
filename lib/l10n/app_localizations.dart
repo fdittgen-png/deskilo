@@ -47251,6 +47251,12 @@ abstract class AppLocalizations {
   /// **'VAT'**
   String get setupStepTitleVat;
 
+  /// #3282 the breadcrumb on a setup task: the workspace, the configuration home, the task.
+  ///
+  /// In en, this message translates to:
+  /// **'{workspace} › Configure workspace › {task}'**
+  String setupTaskBreadcrumb(String workspace, String task);
+
   /// Workspace configuration guidance and status.
   ///
   /// In en, this message translates to:

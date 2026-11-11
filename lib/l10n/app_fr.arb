@@ -18023,6 +18023,7 @@
   "setupStepTitleReminders": "Relances",
   "setupStepTitleServices": "Services",
   "setupStepTitleVat": "TVA",
+  "setupTaskBreadcrumb": "{workspace} › Configurer l'espace › {task}",
   "setupTaskSaved": "L’état repose sur les réglages enregistrés. Ouvrir une tâche ne la termine pas.",
   "shellBarHiddenAnnounce": "Barre de navigation masquée",
   "shellBarHideHint": "Appui long pour l’affichage plein écran",

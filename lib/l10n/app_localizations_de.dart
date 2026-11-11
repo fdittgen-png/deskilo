@@ -29049,6 +29049,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupStepTitleVat => 'Umsatzsteuer';
 
   @override
+  String setupTaskBreadcrumb(String workspace, String task) {
+    return '$workspace › Bereich konfigurieren › $task';
+  }
+
+  @override
   String get setupTaskSaved =>
       'Der Status basiert auf gespeicherten Einstellungen. Das Öffnen einer Aufgabe schließt sie nicht ab.';
 

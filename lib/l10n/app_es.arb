@@ -18023,6 +18023,7 @@
   "setupStepTitleReminders": "Recordatorios de pago",
   "setupStepTitleServices": "Servicios",
   "setupStepTitleVat": "IVA",
+  "setupTaskBreadcrumb": "{workspace} › Configurar el espacio › {task}",
   "setupTaskSaved": "El estado refleja los ajustes guardados. Abrir una tarea no la completa.",
   "shellBarHiddenAnnounce": "Barra de navegación oculta",
   "shellBarHideHint": "Mantenga pulsado para la vista de pantalla completa",
