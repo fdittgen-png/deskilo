@@ -75,58 +75,6 @@ abstract class _$FormatSurfaceOfRoute extends $Notifier<FormatSurface> {
   }
 }
 
-/// The language the app is shown in (`MaterialApp`'s own resolution of the
-/// account's language over the device's languages): the LANGUAGE of every
-/// derived format locale.
-
-@ProviderFor(shownLanguageCode)
-final shownLanguageCodeProvider = ShownLanguageCodeProvider._();
-
-/// The language the app is shown in (`MaterialApp`'s own resolution of the
-/// account's language over the device's languages): the LANGUAGE of every
-/// derived format locale.
-
-final class ShownLanguageCodeProvider
-    extends $FunctionalProvider<String, String, String>
-    with $Provider<String> {
-  /// The language the app is shown in (`MaterialApp`'s own resolution of the
-  /// account's language over the device's languages): the LANGUAGE of every
-  /// derived format locale.
-  ShownLanguageCodeProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'shownLanguageCodeProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$shownLanguageCodeHash();
-
-  @$internal
-  @override
-  $ProviderElement<String> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  String create(Ref ref) {
-    return shownLanguageCode(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(String value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<String>(value),
-    );
-  }
-}
-
-String _$shownLanguageCodeHash() => r'4f9c6a8fcaea6c5e97e1abb41f17befc1072431f';
-
 /// THE [AppFormat] a screen reads: the person's on a personal surface, the
 /// business's on a business screen, as [FormatSurfaceOfRoute] says.
 
@@ -241,7 +189,7 @@ final class PersonalFormatProvider
   }
 }
 
-String _$personalFormatHash() => r'64de719409f556dc4f4bf969c07da394d38e261a';
+String _$personalFormatHash() => r'b9145362454cc5b8b06e7f0d8b4729d57170eb62';
 
 /// The open business's format for the signed-in member (#711): their
 /// format locale (or the shown language with the business's country), the
@@ -308,4 +256,4 @@ final class BusinessFormatProvider
   }
 }
 
-String _$businessFormatHash() => r'e1d48a3a0c1223f9a0825152a743d5751ea60db0';
+String _$businessFormatHash() => r'8a2d5d9451c1f78cdbd62ed30dca25d57343fcd2';

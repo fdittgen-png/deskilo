@@ -1,14 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:ui' show PlatformDispatcher;
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/profile/domain/personal_preferences.dart';
 import '../../features/profile/providers/personal_appearance_providers.dart';
-import '../../features/profile/providers/personal_preferences_providers.dart';
-import '../../features/profile/providers/profile_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../locale/device_locale.dart';
@@ -38,18 +33,6 @@ class FormatSurfaceOfRoute extends _$FormatSurfaceOfRoute {
   }
 }
 
-/// The language the app is shown in (`MaterialApp`'s own resolution of the
-/// account's language over the device's languages): the LANGUAGE of every
-/// derived format locale.
-@riverpod
-String shownLanguageCode(Ref ref) => shownLanguage(
-      chosen: ref.watch(personalLocaleProvider),
-      device: [
-        ref.watch(deviceLocaleProvider),
-        ...PlatformDispatcher.instance.locales.skip(1),
-      ],
-    );
-
 /// THE [AppFormat] a screen reads: the person's on a personal surface, the
 /// business's on a business screen, as [FormatSurfaceOfRoute] says.
 @riverpod
@@ -69,12 +52,7 @@ AppFormat appFormat(Ref ref) =>
 /// the platform's default, never the open business's.
 @riverpod
 AppFormat personalFormat(Ref ref) {
-  final profile =
-      ref.watch(myProfileProvider).value?.formatPrefs ?? FormatPrefs.defaults;
-  final stored = ref.watch(personalSettingsProvider).value;
-  final prefs = stored == null
-      ? profile
-      : PersonalPreferences(defaults: stored.defaults).formats(profile);
+  final prefs = ref.watch(personalFormatPrefsProvider(accountOnly: true));
   final region = _regionDefaults(ref);
   return AppFormat(
     locale: _chosenLocale(prefs) ??
@@ -102,11 +80,7 @@ AppFormat businessFormat(Ref ref) {
   final workspace = ref.watch(currentWorkspaceProvider).value;
   final features = ref.watch(enabledFeaturesSyncProvider);
   final prefs = features.contains(WorkspaceFeature.regionalFormats)
-      ? ref.watch(personalSettingsProvider).value?.formats(
-              ref.watch(myProfileProvider).value?.formatPrefs ??
-                  FormatPrefs.defaults) ??
-          ref.watch(myProfileProvider).value?.formatPrefs ??
-          FormatPrefs.defaults
+      ? ref.watch(personalFormatPrefsProvider(accountOnly: false))
       : FormatPrefs.defaults;
   final region = _regionDefaults(ref);
   final language = ref.watch(shownLanguageCodeProvider);

@@ -23,7 +23,7 @@ class DocumentLanguageTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final chosen = chosenDocumentLanguage(
+    final chosen = _chosenDocumentLanguage(
       ref.watch(personalSettingsProvider).value,
     );
     return ListTile(
@@ -46,7 +46,7 @@ class DocumentLanguageTile extends ConsumerWidget {
 
 /// The language the person chose for letters and notifications, or null
 /// while it follows the app's language.
-String? chosenDocumentLanguage(PersonalPreferences? stored) {
+String? _chosenDocumentLanguage(PersonalPreferences? stored) {
   final defaults = stored?.defaults ?? const <String, String>{};
   final mode = DocumentLocaleMode.fromWire(
     defaults[PersonalPreference.documentLocaleMode],
@@ -73,6 +73,7 @@ class _DocumentLanguageDialog extends ConsumerWidget {
           child: Text(l10n.documentLanguageHint),
         ),
         RadioGroup<String>(
+          key: const ValueKey('document-language-choices'),
           groupValue: current ?? _follows,
           onChanged: (value) async {
             final saved = await runGuarded(
