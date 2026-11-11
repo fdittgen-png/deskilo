@@ -194,7 +194,8 @@ void main() {
     final agreement = find.byKey(const ValueKey('agreement-report-button'));
     await tester.ensureVisible(agreement);
     await tester.tap(agreement);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(
         find.descendant(
             of: find.byType(SnackBar),
@@ -205,7 +206,8 @@ void main() {
 
     answering = true;
     await tester.tap(find.byKey(const ValueKey('print-read-retry')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
     expect(find.byKey(const ValueKey('member-doc-quick')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

@@ -151,28 +151,16 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
   await quiet(() => ref.read(memberNamesProvider.future));
 }
 
-/// #3680 — what Retry re-reads after a letter's source did not answer: the
-/// same sources [warmLetterDocProviders] reads, so the next attempt asks
-/// them again instead of meeting the remembered failure.
-void refreshLetterDocSources(WidgetRef ref, String docId) {
-  final sources = <ProviderOrFamily>[
-    invoicePdfTemplateProvider,
-    memberNamesProvider,
-    if (docId == 'agreement' || docId == 'workspace') ...[
-      feeBandsProvider,
-      servicesProvider,
-      levelsProvider,
-      floorPlanProvider,
-    ],
-    if (docId == 'agreement') ...[packagesProvider, accessoriesProvider],
-    if (docId == 'workspace') ...[workspaceMembersProvider, openWeekdaysProvider],
-    if (docId == 'payments') ...[myLedgerProvider, eventsProvider],
-    if (docId == 'usage') ...[memberStatementProvider, usageReadProvider],
-  ];
-  for (final source in sources) {
-    ref.invalidate(source);
-  }
-}
+/// #3680 — what Retry asks again: the sources [warmLetterDocProviders] reads.
+void refreshLetterDocSources(WidgetRef ref, String docId) => <ProviderOrFamily>[
+      invoicePdfTemplateProvider, memberNamesProvider,
+      if (docId == 'agreement' || docId == 'workspace') ...[
+        feeBandsProvider, servicesProvider, levelsProvider, floorPlanProvider],
+      if (docId == 'agreement') ...[packagesProvider, accessoriesProvider],
+      if (docId == 'workspace') ...[workspaceMembersProvider, openWeekdaysProvider],
+      if (docId == 'payments') ...[myLedgerProvider, eventsProvider],
+      if (docId == 'usage') ...[memberStatementProvider, usageReadProvider],
+    ].forEach(ref.invalidate);
 
 /// Renders letter document [docId] through the workspace's template
 /// bands (or the shipped default — a broken template never blocks, the
@@ -501,17 +489,4 @@ String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
     ref.read(invoicesProvider).requireValue,
   );
   return l10n.invoicePdfSettledIn(number);
-}
-
-/// #837 — the invoices [invoice] regrouped, resolved from the archive in
-/// the order its own snapshot lists them. Empty when it regroups
-/// nothing, or when the archive has not loaded them.
-List<Invoice> regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
-  if (invoice.settles.isEmpty) return const [];
-  // #3680 — never an empty list for an archive that did not answer.
-  final all = ref.read(invoicesProvider).requireValue;
-  return [
-    for (final source in invoice.settles)
-      ...all.where((i) => i.id == source.invoiceId),
-  ];
 }

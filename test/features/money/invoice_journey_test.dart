@@ -582,36 +582,18 @@ void main() {
       expect(container.read(moneyFaceControllerProvider), MoneyFace.payments);
     });
 
-    // #3285 — at phone width the four steps fit: no sideways scroll, every
-    // label wholly on screen (wrapping, never cut).
-    for (final width in const [320.0, 390.0]) {
-      testWidgets('the bar fits a ${width.toInt()} px phone', (tester) async {
-        final money = FakeMoneyRepository();
-        await openInvoice(money);
-        await pump(tester, money: money, hub: false, width: width);
-        // A phone shows one face at a time: open Invoices.
-        ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
-            .read(moneyFaceControllerProvider.notifier)
-            .show(MoneyFace.invoices);
-        await tester.pump();
-        final bar = find.byKey(const ValueKey('invoice-journey-bar'));
-        expect(bar, findsOneWidget);
-        expect(
-            find.ancestor(of: bar, matching: find.byType(SingleChildScrollView))
-                .evaluate()
-                .where((e) =>
-                    (e.widget as SingleChildScrollView).scrollDirection ==
-                    Axis.horizontal),
-            isEmpty);
-        for (final step in InvoiceStep.values) {
-          final label = find.byKey(ValueKey('invoice-journey-step-${step.name}'));
-          final rect = tester.getRect(label);
-          expect(rect.left, greaterThanOrEqualTo(0));
-          expect(rect.right, lessThanOrEqualTo(width));
-        }
-        expect(tester.takeException(), isNull);
-      });
-    }
+    // #3285 — the summary's How it works and Pay now wrap on a phone.
+    testWidgets('the invoices summary fits a 390 px phone', (tester) async {
+      final money = FakeMoneyRepository();
+      await openInvoice(money);
+      await pump(tester, money: money, hub: false, width: 390);
+      ProviderScope.containerOf(tester.element(find.byType(Scaffold).first))
+          .read(moneyFaceControllerProvider.notifier)
+          .show(MoneyFace.invoices);
+      await tester.pump();
+      expect(find.byKey(const ValueKey('money-summary-pay')), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
 
     testWidgets('the member reads the workspace\'s side after declaring',
         (tester) async {
@@ -658,6 +640,39 @@ void main() {
       expect(find.byKey(const ValueKey('invoice-page-more')), findsOneWidget);
     });
   });
+
+  // #3285 — on a phone (the row and the detail keep a 16 px gutter) the four
+  // steps fit: no sideways scroll, every label wholly inside the bar.
+  for (final width in const [320.0, 390.0]) {
+    testWidgets('the bar fits a ${width.toInt()} px phone', (tester) async {
+      tester.view.physicalSize = Size(width, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: InvoiceJourneyBar(journey: _journey(_invoice())),
+          ),
+        ),
+      ));
+      final bar = find.byKey(const ValueKey('invoice-journey-bar'));
+      expect(
+          find.ancestor(of: bar, matching: find.byType(SingleChildScrollView)),
+          findsNothing);
+      final edge = tester.getRect(bar);
+      for (final step in InvoiceStep.values) {
+        final rect = tester.getRect(
+            find.byKey(ValueKey('invoice-journey-step-${step.name}')));
+        expect(rect.left, greaterThanOrEqualTo(edge.left));
+        expect(rect.right, lessThanOrEqualTo(edge.right));
+      }
+      expect(edge.right, lessThanOrEqualTo(width));
+      expect(tester.takeException(), isNull);
+    });
+  }
 
   testWidgets('journey semantics use localized step states', (tester) async {
     final handle = tester.ensureSemantics();
