@@ -2972,6 +2972,7 @@ const Set<String> uiKeys = {
   'settle-save',
   'settle-to',
   'settlement-member',
+  'settlement-review-handle-cancel',
   'settlement-review-handle-confirm',
   'settlement-review-note',
   'settlement-reviews',
