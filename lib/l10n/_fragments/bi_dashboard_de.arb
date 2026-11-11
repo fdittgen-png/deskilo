@@ -85,7 +85,7 @@
   "@biProjectionTitle": {
     "description": "Business analytics dashboard: biProjectionTitle"
   },
-  "biProjectionBasis": "Eine Gerade durch die letzten {count} vollständigen Perioden, fortgeführt. Der schattierte Bereich ist die wahrscheinliche Spanne. Eine Schätzung, kein Versprechen.",
+  "biProjectionBasis": "Eine Gerade durch {count, plural, =1{die letzte vollständige Periode} other{die letzten {count} vollständigen Perioden}}, fortgeführt. Der schattierte Bereich ist die wahrscheinliche Spanne. Eine Schätzung, kein Versprechen.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -94,7 +94,7 @@
       }
     }
   },
-  "biProjectionNotEnough": "Noch nicht genug Verlauf für eine Prognose: bisher {have} vollständige Perioden, {need} nötig.",
+  "biProjectionNotEnough": "Noch nicht genug Verlauf für eine Prognose: bisher {have, plural, =1{1 vollständige Periode} other{{have} vollständige Perioden}}, {need, plural, =1{1 nötig} other{{need} nötig}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {

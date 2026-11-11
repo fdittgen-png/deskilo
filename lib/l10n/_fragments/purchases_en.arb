@@ -260,7 +260,7 @@
   },
   "purchaseReceiptLine": "Line {number}",
   "@purchaseReceiptLine": {
-    "description": "#2573 purchase lines: place and several-line receipts",
+    "description": "#2573 purchase lines: place and several-line receipts. The number is not a count: it is a line number.",
     "placeholders": {
       "number": {
         "type": "int"

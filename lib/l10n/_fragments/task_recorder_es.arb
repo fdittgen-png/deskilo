@@ -12,7 +12,7 @@
   "taskRecorderRecordThisTask": "Grabar esta tarea",
   "taskRecorderDisclosureTitle": "Antes de grabar",
   "taskRecorderDisclosureBody": "El grabador anota los pasos que da en las pantallas de este espacio — qué pantalla, qué acción, qué respondió la aplicación — solo en este dispositivo. Nunca guarda lo que escribe, ni nombres, importes, mensajes, códigos o contraseñas. El inicio de sesión, el pago, los mensajes y otras pantallas protegidas solo dejan una marca. No se envía nada: usted decide qué exportar.",
-  "taskRecorderLimits": "Hasta {steps} pasos o {minutes} minutos por grabación. Las grabaciones se borran de este dispositivo después de {days} días; un archivo exportado es suyo y se queda donde lo guardó.",
+  "taskRecorderLimits": "Hasta {steps, plural, =1{1 paso} other{{steps} pasos}} o {minutes, plural, =1{1 minuto} other{{minutes} minutos}} por grabación. Las grabaciones se borran de este dispositivo después de {days, plural, =1{1 día} other{{days} días}}; un archivo exportado es suyo y se queda donde lo guardó.",
   "taskRecorderStart": "Empezar a grabar",
   "taskRecorderUnavailable": "La grabación no está activada en este espacio.",
   "taskRecorderSignedOut": "Inicie sesión para grabar una tarea.",

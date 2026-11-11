@@ -102,7 +102,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n} of your own colours, in order.",
+  "coloursRoomsOwn": "{n, plural, =1{1 colour of your own, in order.} other{{n} colours of your own, in order.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -111,7 +111,7 @@
       }
     }
   },
-  "coloursRoomsSaved": "{n} room colours saved.",
+  "coloursRoomsSaved": "{n, plural, =1{1 room colour saved.} other{{n} room colours saved.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -120,7 +120,7 @@
       }
     }
   },
-  "coloursTooMany": "The plan paints at most {most} room colours.",
+  "coloursTooMany": "The plan paints at most {most, plural, =1{1 room colour} other{{most} room colours}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {

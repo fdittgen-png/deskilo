@@ -638,7 +638,7 @@ abstract class AppLocalizations {
   /// **'The books of this period cannot be posted yet: {subjects}.'**
   String acctDeliverBooksBlocked(String subjects);
 
-  /// #2370 Snack: what a delivery run became.
+  /// #2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Delivered: {delivered} · already there: {unchanged} · to check: {attention}'**
@@ -650,7 +650,7 @@ abstract class AppLocalizations {
   /// **'The delivery did not go through. Nothing more was sent; try again later.'**
   String get acctDeliverFailed;
 
-  /// #2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them.
+  /// #2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Still being delivered by another run: {count}. Try again in a few minutes.'**
@@ -686,7 +686,7 @@ abstract class AppLocalizations {
   /// **'The accounting system refused this company: {detail}.'**
   String acctDeliverRefused(String detail);
 
-  /// #2370 Snack: a run of several months stopped at one; what the months before it delivered stays.
+  /// #2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Stopped at {month}. Delivered before it: {count}.'**
@@ -2300,7 +2300,7 @@ abstract class AppLocalizations {
   /// **'Hours billed as a half day'**
   String get availabilityHalfDayHours;
 
-  /// Dropdown option: a whole-hour count (#446)
+  /// Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h.
   ///
   /// In en, this message translates to:
   /// **'{count} h'**
@@ -2773,7 +2773,7 @@ abstract class AppLocalizations {
   /// **'The server is newer than this app — update the app when you can'**
   String get backendVersionAhead;
 
-  /// #1309 Server screen
+  /// #1309 Server screen. The number is not a count: it is a schema version.
   ///
   /// In en, this message translates to:
   /// **'Needs an update: this app needs schema {version}'**
@@ -2785,7 +2785,7 @@ abstract class AppLocalizations {
   /// **'Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.'**
   String get backendVersionBehindHow;
 
-  /// #1309 Server screen
+  /// #1309 Server screen. The number is not a count: it is a schema version.
   ///
   /// In en, this message translates to:
   /// **'Up to date (schema {version})'**
@@ -3145,7 +3145,7 @@ abstract class AppLocalizations {
   /// **'Amount column (or money in)'**
   String get bankCsvAmount;
 
-  /// #2380 CSV sheet: a column of a file without a header row, by number and first cell.
+  /// #2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number.
   ///
   /// In en, this message translates to:
   /// **'Column {n} ({first})'**
@@ -3346,7 +3346,7 @@ abstract class AppLocalizations {
   /// #2380 Snack: what an import did.
   ///
   /// In en, this message translates to:
-  /// **'Imported: {created} new, {known} already known, {review} to review.'**
+  /// **'Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.'**
   String bankImported(int created, int known, int review);
 
   /// #2380 Movement status: a duplicate, settles nothing.
@@ -3589,7 +3589,7 @@ abstract class AppLocalizations {
   /// **'Stored value date (may default to booking date)'**
   String get bankReconValueDate;
 
-  /// #2380 Refusal: the reason and the line it was found at.
+  /// #2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'{reason} (line {line})'**
@@ -6049,7 +6049,7 @@ abstract class AppLocalizations {
   /// Business analytics dashboard: biProjectionBasis
   ///
   /// In en, this message translates to:
-  /// **'A straight line through the last {count} complete periods, carried forward. The shaded band is the likely range. An estimate, not a promise.'**
+  /// **'A straight line through {count, plural, =1{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.'**
   String biProjectionBasis(int count);
 
   /// Business analytics dashboard: biProjectionLabel
@@ -6073,7 +6073,7 @@ abstract class AppLocalizations {
   /// Business analytics dashboard: biProjectionNotEnough
   ///
   /// In en, this message translates to:
-  /// **'Not enough history to project yet: {have} complete periods so far, {need} needed.'**
+  /// **'Not enough history to project yet: {have, plural, =1{1 complete period} other{{have} complete periods}} so far, {need, plural, =1{1 needed} other{{need} needed}}.'**
   String biProjectionNotEnough(int have, int need);
 
   /// Business analytics dashboard: biProjectionTitle
@@ -7029,7 +7029,7 @@ abstract class AppLocalizations {
   /// Entitlement line under the subscription header
   ///
   /// In en, this message translates to:
-  /// **'{used} of {included} half-days billed ({openDays} days open)'**
+  /// **'{used} of {included, plural, =1{1 half-day} other{{included} half-days}} billed ({openDays, plural, =1{1 day} other{{openDays} days}} open)'**
   String billEntitlement(int used, int included, int openDays);
 
   /// Bill card title for the invoice covering the browsed month (#510)
@@ -7080,13 +7080,13 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
-  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.
+  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'Participation {pct}%'**
   String billParticipation(int pct);
 
-  /// #1000 the recurring position names its month: billParticipationMonth
+  /// #1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'{month} {pct}%'**
@@ -7145,13 +7145,13 @@ abstract class AppLocalizations {
   /// **'Settled'**
   String get billSettled;
 
-  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount
+  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'Subscription {pct}%'**
   String billSubscription(int pct);
 
-  /// #1000 the recurring position names its month: billSubscriptionMonth
+  /// #1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'Subscription {month} {pct}%'**
@@ -7193,7 +7193,7 @@ abstract class AppLocalizations {
   /// **'Monthly fee'**
   String get billingBandFee;
 
-  /// Derived lower boundary of a band row (exclusive)
+  /// Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'from {from}%'**
@@ -9308,7 +9308,7 @@ abstract class AppLocalizations {
   /// #1289 colours screen: how many own fills, order matters
   ///
   /// In en, this message translates to:
-  /// **'{n} of your own colours, in order.'**
+  /// **'{n, plural, =1{1 colour of your own, in order.} other{{n} colours of your own, in order.}}'**
   String coloursRoomsOwn(int n);
 
   /// #1289 colours screen: no own fills yet
@@ -9320,7 +9320,7 @@ abstract class AppLocalizations {
   /// #1289 colours screen: the fills were stored
   ///
   /// In en, this message translates to:
-  /// **'{n} room colours saved.'**
+  /// **'{n, plural, =1{1 room colour saved.} other{{n} room colours saved.}}'**
   String coloursRoomsSaved(int n);
 
   /// #1289 colours screen: the write failed and nothing changed
@@ -9338,7 +9338,7 @@ abstract class AppLocalizations {
   /// #1289 colours screen: more fills than the plan can use
   ///
   /// In en, this message translates to:
-  /// **'The plan paints at most {most} room colours.'**
+  /// **'The plan paints at most {most, plural, =1{1 room colour} other{{most} room colours}}.'**
   String coloursTooMany(int most);
 
   /// Placeholder body shown on tabs whose feature is not yet implemented
@@ -11573,7 +11573,7 @@ abstract class AppLocalizations {
   /// **'{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}'**
   String directoryLastSeenHours(int hours);
 
-  /// Directory offline chip: compact relative last-seen, under an hour
+  /// Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
   ///
   /// In en, this message translates to:
   /// **'Seen {minutes} min ago'**
@@ -11765,7 +11765,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
   String discoveryDirectoriesDidNotAnswer(int count);
 
-  /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int).
+  /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}'**
@@ -12035,7 +12035,7 @@ abstract class AppLocalizations {
   /// **'Days between reminders'**
   String get dunningBetweenDays;
 
-  /// Mahnwesen / reminder letters (#472)
+  /// Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} due'**
@@ -13613,7 +13613,7 @@ abstract class AppLocalizations {
   /// **'Available for use on'**
   String get equipmentFieldUseDate;
 
-  /// #2576 equipment register
+  /// #2576 equipment register. The number is not a count: it is an item number.
   ///
   /// In en, this message translates to:
   /// **'#{number} {name}'**
@@ -13868,7 +13868,7 @@ abstract class AppLocalizations {
   /// Shown as a text in event lines (events). Placeholders: {failures} (int), {minutes} (int).
   ///
   /// In en, this message translates to:
-  /// **'Badge sign-in paused after {failures} failed attempts in {minutes} minutes. Review the badges and ask members to use email while the lock clears.'**
+  /// **'Badge sign-in paused after {failures, plural, =1{1 failed attempt} other{{failures} failed attempts}} in {minutes, plural, =1{1 minute} other{{minutes} minutes}}. Review the badges and ask members to use email while the lock clears.'**
   String eventBadgeSecurityAlert(int failures, int minutes);
 
   /// Events feed (#2575): what the validators decide on
@@ -13924,7 +13924,7 @@ abstract class AppLocalizations {
   /// **'Invoice {number} paid — {amount}'**
   String eventInvoicePaid(String number, String amount);
 
-  /// Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String).
+  /// Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}: invoice {number} — {amount} still due'**
@@ -14022,7 +14022,7 @@ abstract class AppLocalizations {
   /// Feed line of a quota-extension request event
   ///
   /// In en, this message translates to:
-  /// **'{actor} requests {halfDays} extra half-days for {period}'**
+  /// **'{actor} requests {halfDays, plural, =1{1 extra half-day} other{{halfDays} extra half-days}} for {period}'**
   String eventQuotaRequested(String actor, int halfDays, String period);
 
   /// Reject button on a pending event; voids what it would apply
@@ -14037,7 +14037,7 @@ abstract class AppLocalizations {
   /// **'Declined by {name} · {when}'**
   String eventRejectedBy(String name, String when);
 
-  /// #3067 how many identical events a collapsed row stands for
+  /// #3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.
   ///
   /// In en, this message translates to:
   /// **'×{count}'**
@@ -14103,7 +14103,7 @@ abstract class AppLocalizations {
   /// **'{actor} takes back the role {role} from {member}'**
   String eventRoleTakenBack(String actor, String role, String member);
 
-  /// Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency
+  /// Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural.
   ///
   /// In en, this message translates to:
   /// **'{name} ×{quantity} — {amount}'**
@@ -14331,7 +14331,7 @@ abstract class AppLocalizations {
   /// **'Validated by {name} · {when}'**
   String eventValidatedBy(String name, String when);
 
-  /// #848 - which step of a chained rule is open
+  /// #848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps.
   ///
   /// In en, this message translates to:
   /// **'Validation {stage} of {required} requested'**
@@ -14340,7 +14340,7 @@ abstract class AppLocalizations {
   /// Quorum progress on a pending event (#130): accepts so far / accepts required
   ///
   /// In en, this message translates to:
-  /// **'{current}/{required} validations'**
+  /// **'{current}/{required, plural, =1{1 validation} other{{required} validations}}'**
   String eventValidations(int current, int required);
 
   /// Empty state of the Events tab
@@ -18636,7 +18636,7 @@ abstract class AppLocalizations {
   /// Me › Finances
   ///
   /// In en, this message translates to:
-  /// **'{count} overdue'**
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
   String financesOverdueCount(int count);
 
   /// Me › Finances
@@ -18675,13 +18675,13 @@ abstract class AppLocalizations {
   /// **'All periods'**
   String get financesPeriodAll;
 
-  /// Me › Finances
+  /// Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural.
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
   String financesRemindedTimes(int count);
 
-  /// Me › Finances
+  /// Me › Finances. The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -19509,7 +19509,7 @@ abstract class AppLocalizations {
   /// **'That was refused. Follow these steps, then try again.'**
   String get guideHostRecovery;
 
-  /// Task wizard: guideHostRestore
+  /// Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps.
   ///
   /// In en, this message translates to:
   /// **'Show the guide (step {current} of {total})'**
@@ -19563,7 +19563,7 @@ abstract class AppLocalizations {
   /// **'Waiting'**
   String get guideHostStatusWaiting;
 
-  /// #1867 live guide host
+  /// #1867 live guide host. The number is not a count: it is a position in a sequence of steps.
   ///
   /// In en, this message translates to:
   /// **'Step {current} of {total}'**
@@ -20829,7 +20829,7 @@ abstract class AppLocalizations {
   /// **'Nothing unread — you are up to date.'**
   String get inboxNoUnread;
 
-  /// #2556 inbox header: The labelled count of message requests waiting; tapping it shows them.
+  /// #2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Requests: {count}'**
@@ -20925,7 +20925,7 @@ abstract class AppLocalizations {
   /// **'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.'**
   String get instanceAttentionOtherTooling;
 
-  /// #1308 instance readiness
+  /// #1308 instance readiness. The number is not a count: it is a schema version.
   ///
   /// In en, this message translates to:
   /// **'It runs Postgres {found}; DesKilo is built for Postgres {supported}.'**
@@ -21147,7 +21147,7 @@ abstract class AppLocalizations {
   /// **'Delegation withdrawn.'**
   String get instanceDelegationWithdrawn;
 
-  /// #977 instance wizard: instanceDeployFunctions
+  /// #977 instance wizard: instanceDeployFunctions. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Deploy the functions: payments, e-invoices, push, badges ({count}).'**
@@ -21279,7 +21279,7 @@ abstract class AppLocalizations {
   /// **'Auth configuration'**
   String get instanceDoctorProbeAuth;
 
-  /// #3489 Detail of a failed probe.
+  /// #3489 Detail of a failed probe. The number is not a count: it is an HTTP status code.
   ///
   /// In en, this message translates to:
   /// **'Supabase answered {status}: {message}\n        The other checks ran without it.'**
@@ -21372,7 +21372,7 @@ abstract class AppLocalizations {
   /// #3489 Detail: tables exist but no schema version.
   ///
   /// In en, this message translates to:
-  /// **'{tables} tables exist, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>'**
+  /// **'{tables, plural, =1{1 table exists} other{{tables} tables exist}}, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>'**
   String instanceDoctorSchemaNoVersionDetail(int tables, int required);
 
   /// #3489 The schema records no version.
@@ -21384,7 +21384,7 @@ abstract class AppLocalizations {
   /// #3489 Detail: sign-ups but no confirmation.
   ///
   /// In en, this message translates to:
-  /// **'{created} signed up, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.'**
+  /// **'{created, plural, =1{1 signed up} other{{created} signed up}}, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.'**
   String instanceDoctorSignupsNobodyDetail(int created);
 
   /// #3489 Nobody confirmed a sign-up in seven days.
@@ -21561,7 +21561,7 @@ abstract class AppLocalizations {
   /// **'Approve assistant access for {name}'**
   String instanceGrantTitle(String name);
 
-  /// #977 instance wizard: instanceInstallSchema
+  /// #977 instance wizard: instanceInstallSchema. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Install the schema: every migration of the app, in order ({count}).'**
@@ -21807,7 +21807,7 @@ abstract class AppLocalizations {
   /// **'The server could not be reached. Try again in a moment.'**
   String get instanceProbeUnavailable;
 
-  /// #977 instance wizard: instanceProgress
+  /// #977 instance wizard: instanceProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
   ///
   /// In en, this message translates to:
   /// **'{done} / {total} · {current}'**
@@ -21837,7 +21837,7 @@ abstract class AppLocalizations {
   /// **'This project needs attention — nothing was installed.'**
   String get instanceReadyAttention;
 
-  /// #1308 instance readiness
+  /// #1308 instance readiness. The number is not a count: it is a schema version.
   ///
   /// In en, this message translates to:
   /// **'DesKilo version {version} is installed and current: the schema needs nothing.'**
@@ -21858,7 +21858,7 @@ abstract class AppLocalizations {
   /// #1308 instance readiness
   ///
   /// In en, this message translates to:
-  /// **'DesKilo version {version} is installed: only the {pending} missing migrations will run.'**
+  /// **'DesKilo version {version} is installed: {pending, plural, =1{only the 1 missing migration will run} other{only the {pending} missing migrations will run}}.'**
   String instanceReadyUpgrade(int version, int pending);
 
   /// #977 instance wizard: instanceRegion
@@ -22422,7 +22422,7 @@ abstract class AppLocalizations {
   /// Detail sheet: what the snapshotted annex carries (0064)
   ///
   /// In en, this message translates to:
-  /// **'Annex: {movements} movements, {checkIns} check-ins'**
+  /// **'Annex: {movements, plural, =1{1 movement} other{{movements} movements}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-ins}}'**
   String invoiceAnnexSummary(int movements, int checkIns);
 
   /// Invoice bottom line (0063): consumptions minus payments — the solde
@@ -23058,7 +23058,7 @@ abstract class AppLocalizations {
   /// Sweep result when some members could not be invoiced
   ///
   /// In en, this message translates to:
-  /// **'{issued} issued, {failed} failed.'**
+  /// **'{issued, plural, =1{1 issued} other{{issued} issued}}, {failed, plural, =1{1 failed} other{{failed} failed}}.'**
   String invoiceIssuedPartial(int issued, int failed);
 
   /// Shown as a text in invoice issue block text (money).
@@ -23913,7 +23913,7 @@ abstract class AppLocalizations {
   /// **'The e-invoice was rejected: fix it and send it again'**
   String get invoicePageNowRejected;
 
-  /// #3587 R1-d story's now line
+  /// #3587 R1-d story's now line. The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} is due'**
@@ -23979,7 +23979,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Reminders (1)} other{Reminders ({count})}}'**
   String invoicePageReminders(int count);
 
-  /// #3587 R1-d bottom bar
+  /// #3587 R1-d bottom bar. The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Share reminder {level}'**
@@ -24009,7 +24009,7 @@ abstract class AppLocalizations {
   /// **'Paid'**
   String get invoicePageStoryPaid;
 
-  /// #3587 R1-d story line
+  /// #3587 R1-d story line. The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} sent'**
@@ -24345,7 +24345,7 @@ abstract class AppLocalizations {
   /// **'Reminder recorded.'**
   String get invoiceReminded;
 
-  /// Archive row badge: reminder count
+  /// Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural.
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
@@ -24522,16 +24522,16 @@ abstract class AppLocalizations {
   /// Summary strip: open count + outstanding amount
   ///
   /// In en, this message translates to:
-  /// **'{count} open · {amount} outstanding'**
+  /// **'{count, plural, =1{1 open} other{{count} open}} · {amount} outstanding'**
   String invoiceSummaryOpen(int count, String amount);
 
-  /// Summary strip: pending count
+  /// Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
   ///
   /// In en, this message translates to:
   /// **'{count} to invoice'**
   String invoiceSummaryToInvoice(int count);
 
-  /// Summary strip: open credit notes the workspace still owes (#508/#510)
+  /// Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
   ///
   /// In en, this message translates to:
   /// **'{count} to refund · {amount}'**
@@ -24561,7 +24561,7 @@ abstract class AppLocalizations {
   /// **'Body band (the invoice lines)'**
   String get invoiceTemplateBodyLabel;
 
-  /// Mahnwesen / reminder letters (#472)
+  /// Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -25506,7 +25506,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice stage strip (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count} overdue'**
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
   String journeyOverdueCount(int count);
 
   /// Shown as a text in open invoice act view (money).
@@ -25515,7 +25515,7 @@ abstract class AppLocalizations {
   /// **'Open Events'**
   String get journeyPrimaryConfirmInEvents;
 
-  /// Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int).
+  /// Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Send reminder {level}'**
@@ -27305,7 +27305,7 @@ abstract class AppLocalizations {
   /// Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).
   ///
   /// In en, this message translates to:
-  /// **'{levels} levels · {desks} desks · {seats} seats'**
+  /// **'{levels, plural, =1{1 level} other{{levels} levels}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}'**
   String libraryCounts(int levels, int desks, int seats);
 
   /// Template apply preview: this workspace changed the group since it last applied the same template (#1280)
@@ -29690,7 +29690,7 @@ abstract class AppLocalizations {
   /// **'What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace\'s bookings and invoices stay with that workspace and are not part of this file.'**
   String get meDataPersonalScope;
 
-  /// #2557 My data: counts the personal home answered.
+  /// #2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}'**
@@ -30587,7 +30587,7 @@ abstract class AppLocalizations {
   /// #704 - the money section of a member profile
   ///
   /// In en, this message translates to:
-  /// **'+{count} more'**
+  /// **'{count, plural, =1{+1 more} other{+{count} more}}'**
   String memberMoreInvoices(int count);
 
   /// Empty member-sheet explainer when the viewer has no actions for this row (e.g. an admin viewing a kiosk)
@@ -30830,7 +30830,7 @@ abstract class AppLocalizations {
   /// **'Member since {date}'**
   String memberPageSince(String date);
 
-  /// Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int).
+  /// Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Workspace default ({count})'**
@@ -30866,7 +30866,7 @@ abstract class AppLocalizations {
   /// **'Reject membership'**
   String get memberRejectJoin;
 
-  /// Subtitle chip on a member row whose reservation cap is set
+  /// Subtitle chip on a member row whose reservation cap is set. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).
   ///
   /// In en, this message translates to:
   /// **'max {n}'**
@@ -30950,7 +30950,7 @@ abstract class AppLocalizations {
   /// **'Send the financial agreement'**
   String get memberSendAgreement;
 
-  /// #628 - subtitle chip on a member row with an explicit simultaneous allowance
+  /// #628 - subtitle chip on a member row with an explicit simultaneous allowance. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).
   ///
   /// In en, this message translates to:
   /// **'{n} at once'**
@@ -31595,7 +31595,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice overview (money). Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
-  /// **'{count} open · {amount} due'**
+  /// **'{count, plural, =1{1 open} other{{count} open}} · {amount} due'**
   String moneyOpenInvoicesSummary(int count, String amount);
 
   /// Shown as a text in invoice overview (money).
@@ -31613,7 +31613,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice overview (money), and 1 other place. Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
-  /// **'{count} overdue — {amount} to settle'**
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}} — {amount} to settle'**
   String moneyOverdueBanner(int count, String amount);
 
   /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
@@ -31652,7 +31652,7 @@ abstract class AppLocalizations {
   /// **'Record a payment'**
   String get moneyRecordPayment;
 
-  /// Shown as a text in my invoices list (money). Placeholders: {count} (int).
+  /// Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural.
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
@@ -31712,7 +31712,7 @@ abstract class AppLocalizations {
   /// **'Submit for confirmation'**
   String get moneySubmitPayment;
 
-  /// Statement line for the band fee of the member's percentage
+  /// Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'Subscription {pct}%'**
@@ -31721,7 +31721,7 @@ abstract class AppLocalizations {
   /// Statement usage line for quota plans
   ///
   /// In en, this message translates to:
-  /// **'{used} of {included} half-days used'**
+  /// **'{used} of {included, plural, =1{1 half-day} other{{included} half-days}} used'**
   String moneyUsage(int used, int included);
 
   /// Statement usage line for unlimited plans
@@ -31730,7 +31730,7 @@ abstract class AppLocalizations {
   /// **'{used, plural, one{{used} half-day used} other{{used} half-days used}}'**
   String moneyUsageUnlimited(int used);
 
-  /// Free-desks-of-total label in a month calendar cell (#7)
+  /// Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position).
   ///
   /// In en, this message translates to:
   /// **'{free}/{total}'**
@@ -32162,7 +32162,7 @@ abstract class AppLocalizations {
   /// **'My review'**
   String get mySpacesReview;
 
-  /// #2554 My spaces: my own star rating of a space
+  /// #2554 My spaces: my own star rating of a space. The number is not a count: it is a rating of five stars, an index on a scale.
   ///
   /// In en, this message translates to:
   /// **'My review: {stars} of 5'**
@@ -32318,7 +32318,7 @@ abstract class AppLocalizations {
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
 
-  /// Shown as a text in negotiation card (money). Placeholders: {value} (int).
+  /// Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'{value} %'**
@@ -32456,7 +32456,7 @@ abstract class AppLocalizations {
   /// **'A larger subscription'**
   String get newMemberSubscriptionMore;
 
-  /// #1294 a subscription percentage
+  /// #1294 a subscription percentage. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'{percent}%'**
@@ -32522,7 +32522,7 @@ abstract class AppLocalizations {
   /// **'Alert'**
   String get noteRefAlert;
 
-  /// #842 - how many candidates the filter is showing
+  /// #842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
   ///
   /// In en, this message translates to:
   /// **'{shown} of {total}'**
@@ -33898,7 +33898,7 @@ abstract class AppLocalizations {
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
 
-  /// A plain percentage value (level chips, member rows)
+  /// A plain percentage value (level chips, member rows). The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'{value}%'**
@@ -34639,7 +34639,7 @@ abstract class AppLocalizations {
   /// Booking error when the server rejects a misaligned window under a minute granularity (0032)
   ///
   /// In en, this message translates to:
-  /// **'Bookings must start and end on the {minutes}-minute grid.'**
+  /// **'Bookings must start and end on the {minutes, plural, =1{1-minute grid} other{{minutes}-minute grid}}.'**
   String planSlotError(int minutes);
 
   /// Walk-up check-in: the start time is the current time
@@ -34996,7 +34996,7 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get portalDescription;
 
-  /// A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472)
+  /// A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'{name} ({count})'**
@@ -35929,7 +35929,7 @@ abstract class AppLocalizations {
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
-  /// **'{enabled} of {total} features on'**
+  /// **'{enabled} of {total, plural, =1{1 feature on} other{{total} features on}}'**
   String processFeatureCount(int enabled, int total);
 
   /// #1327 the process-first overview of the Features screen
@@ -36151,7 +36151,7 @@ abstract class AppLocalizations {
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
-  /// **'{active} of {total} subprocesses active'**
+  /// **'{active} of {total, plural, =1{1 subprocess active} other{{total} subprocesses active}}'**
   String processSubprocessCount(int active, int total);
 
   /// #1327 the process-first overview of the Features screen
@@ -37052,7 +37052,7 @@ abstract class AppLocalizations {
   /// **'For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.'**
   String get purchaseReceiptIntro;
 
-  /// #2573 purchase lines: place and several-line receipts
+  /// #2573 purchase lines: place and several-line receipts. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {number}'**
@@ -39002,7 +39002,7 @@ abstract class AppLocalizations {
   /// **'{target} starts at {time}'**
   String reminderBody(String target, String time);
 
-  /// #1922 reminder evidence: reminderHistoryLine
+  /// #1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} · {origin} · {date}'**
@@ -39152,7 +39152,7 @@ abstract class AppLocalizations {
   /// **'You share each reminder yourself. It is recorded only when it was really shared.'**
   String get reminderQueueIntro;
 
-  /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel)
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -41333,7 +41333,7 @@ abstract class AppLocalizations {
   /// #2631 resource_reserve: reserveSlotMinutes
   ///
   /// In en, this message translates to:
-  /// **'Booked in {minutes}-minute slots'**
+  /// **'Booked in {minutes, plural, =1{1-minute slots} other{{minutes}-minute slots}}'**
   String reserveSlotMinutes(int minutes);
 
   /// Reserve hub banner while availability comes from the offline cache; time is when it was saved (#1305)
@@ -42353,7 +42353,7 @@ abstract class AppLocalizations {
   /// #2872 setup guide: what the open sample data batch holds
   ///
   /// In en, this message translates to:
-  /// **'This space holds sample data: {members} members, {bookings} bookings, {payments} payments.'**
+  /// **'This space holds sample data: {members, plural, =1{1 member} other{{members} members}}, {bookings, plural, =1{1 booking} other{{bookings} bookings}}, {payments, plural, =1{1 payment} other{{payments} payments}}.'**
   String sampleDataCounts(int members, int bookings, int payments);
 
   /// #2872 setup guide: what filling the test space with sample data creates
@@ -42632,7 +42632,7 @@ abstract class AppLocalizations {
   /// **'No scheduled expense yet.'**
   String get scheduledExpensesEmpty;
 
-  /// Header of the collapsed section holding schedules that can never fire again — ended or rejected.
+  /// Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Ended and rejected ({count})'**
@@ -42650,7 +42650,7 @@ abstract class AppLocalizations {
   /// **'Scheduled expenses'**
   String get scheduledExpensesTitle;
 
-  /// #1312 Explanation on the schema-update screen
+  /// #1312 Explanation on the schema-update screen. The number is not a count: it is a schema version.
   ///
   /// In en, this message translates to:
   /// **'This app needs version {version} of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.'**
@@ -42860,7 +42860,7 @@ abstract class AppLocalizations {
   /// **'Out of stock'**
   String get serviceOutOfStock;
 
-  /// Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int).
+  /// Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
   ///
   /// In en, this message translates to:
   /// **'{count} in stock'**
@@ -44423,7 +44423,7 @@ abstract class AppLocalizations {
   /// #2871 setup run steps: setupApprovalsFlowValidators
   ///
   /// In en, this message translates to:
-  /// **'{required} of {people} approve'**
+  /// **'{required, plural, =1{1 of {people} approves} other{{required} of {people} approve}}'**
   String setupApprovalsFlowValidators(int required, int people);
 
   /// #2871 setup run steps: setupApprovalsFlowWho
@@ -44594,7 +44594,7 @@ abstract class AppLocalizations {
   /// **'Saving…'**
   String get setupChoicesSaving;
 
-  /// Workspace configuration guidance and status.
+  /// Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Settings that will change: {count}'**
@@ -45068,7 +45068,7 @@ abstract class AppLocalizations {
   /// **'Your space has everything you chose.'**
   String get setupGuideAllDone;
 
-  /// #2869 setup guide: setupGuideBanner
+  /// #2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
   ///
   /// In en, this message translates to:
   /// **'{milestone}: {ready} of {required} done · Next: {step}'**
@@ -45091,7 +45091,7 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get setupGuideDone;
 
-  /// #2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise
+  /// #2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
   ///
   /// In en, this message translates to:
   /// **'about {low}–{high} min'**
@@ -45139,7 +45139,7 @@ abstract class AppLocalizations {
   /// **'More for your space'**
   String get setupGuideOptional;
 
-  /// #2869 setup guide: setupGuideProgress
+  /// #2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
   ///
   /// In en, this message translates to:
   /// **'{ready} of {required} done'**
@@ -45181,7 +45181,7 @@ abstract class AppLocalizations {
   /// **'The setup status could not be read. Try again in a moment.'**
   String get setupGuideUnavailable;
 
-  /// #2869 — the time the next milestone still needs, as a range summed from its open steps' estimates.
+  /// #2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
   ///
   /// In en, this message translates to:
   /// **'About {low}–{high} min until: {milestone}'**
@@ -45805,7 +45805,7 @@ abstract class AppLocalizations {
   /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
   String get setupNewMembersPreviewNoQuestions;
 
-  /// #2871 setup run steps: setupNewMembersPreviewStart
+  /// #2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'A new member starts on a {pct} % subscription ({policy}).'**
@@ -46099,7 +46099,7 @@ abstract class AppLocalizations {
   /// **'Your chosen goal is configured. You can review or change it here at any time.'**
   String get setupOverviewReady;
 
-  /// Workspace configuration guidance and status.
+  /// Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Required tasks remaining: {count}'**
@@ -46207,13 +46207,13 @@ abstract class AppLocalizations {
   /// **'Standard'**
   String get setupPresetNameStandard;
 
-  /// #2871 setup run steps: setupPricingBand
+  /// #2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'{from}–{to} %: {fee} a month, {extra} per extra half-day'**
   String setupPricingBand(int from, int to, String fee, String extra);
 
-  /// #2871 setup run steps: setupPricingLevel
+  /// #2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'Membership at {pct} %'**
@@ -48424,7 +48424,7 @@ abstract class AppLocalizations {
   /// Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).
   ///
   /// In en, this message translates to:
-  /// **'Preview: {bytes} bytes'**
+  /// **'Preview: {bytes, plural, =1{1 byte} other{{bytes} bytes}}'**
   String supportSize(int bytes);
 
   /// Shown as the title in support bundle screen (help), and 1 other place.
@@ -48601,7 +48601,7 @@ abstract class AppLocalizations {
   /// **'Task procedure'**
   String get taskExportDocFallbackTitle;
 
-  /// #1866 task export (Word document): Duration
+  /// #1866 task export (Word document): Duration. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
   ///
   /// In en, this message translates to:
   /// **'Duration: {minutes} min {seconds} s'**
@@ -49264,7 +49264,7 @@ abstract class AppLocalizations {
   /// Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).
   ///
   /// In en, this message translates to:
-  /// **'not kept ({length} characters)'**
+  /// **'not kept ({length, plural, =1{1 character} other{{length} characters}})'**
   String taskExportValueRedacted(int length);
 
   /// #1866 task export (Word document): ValueRoom
@@ -49309,7 +49309,7 @@ abstract class AppLocalizations {
   /// **'yes'**
   String get taskExportValueYes;
 
-  /// #1866 task export (Word document): Version
+  /// #1866 task export (Word document): Version. The number is not a count: it is a schema version.
   ///
   /// In en, this message translates to:
   /// **'Recording format {schema}, action contract {contract}'**
@@ -49882,7 +49882,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderLimits
   ///
   /// In en, this message translates to:
-  /// **'Up to {steps} steps or {minutes} minutes per recording. Recordings are deleted from this device after {days} days; a file you exported is yours and stays where you saved it.'**
+  /// **'Up to {steps, plural, =1{1 step} other{{steps} steps}} or {minutes, plural, =1{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, =1{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.'**
   String taskRecorderLimits(int steps, int minutes, int days);
 
   /// #1865 task recorder: taskRecorderMyRecordings
@@ -50701,7 +50701,7 @@ abstract class AppLocalizations {
   /// **'The task recorder is turned off in this workspace: guides can be read and edited here, but not followed.'**
   String get taskWizardUnavailable;
 
-  /// #1872 task workbench: taskWorkbenchAccepted
+  /// #1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).
   ///
   /// In en, this message translates to:
   /// **'Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.'**
@@ -52501,7 +52501,7 @@ abstract class AppLocalizations {
   /// **'It was not recorded. Try again, or ask someone who manages the workspace.'**
   String get usagePrepareRefused;
 
-  /// #2590 usage preparation
+  /// #2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Recorded: {count}'**
@@ -52600,7 +52600,7 @@ abstract class AppLocalizations {
   /// Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).
   ///
   /// In en, this message translates to:
-  /// **'{updates} new updates · {pending} awaiting your decision'**
+  /// **'{updates, plural, =1{1 new update} other{{updates} new updates}} · {pending, plural, =1{1 awaiting your decision} other{{pending} awaiting your decision}}'**
   String uxAttentionSummary(int updates, int pending);
 
   /// Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.
@@ -53080,7 +53080,7 @@ abstract class AppLocalizations {
   /// #1221 the middle step: who decides and how many are needed
   ///
   /// In en, this message translates to:
-  /// **'{who} — any {count}'**
+  /// **'{who} — {count, plural, =1{any 1} other{any {count}}}'**
   String validationStepQuorum(int count, String who);
 
   /// #1221 the validation screen, grouped by the process a rule interrupts
@@ -53089,7 +53089,7 @@ abstract class AppLocalizations {
   /// **'Someone asks'**
   String get validationStepRaised;
 
-  /// #1221 the middle step when the accepts are asked one after another
+  /// #1221 the middle step when the accepts are asked one after another. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
   ///
   /// In en, this message translates to:
   /// **'{who} — {count} in turn'**
@@ -53119,7 +53119,7 @@ abstract class AppLocalizations {
   /// **'No decision yet.'**
   String get validationTrailNone;
 
-  /// #841 - leader of one entry when the rule asks one validation at a time
+  /// #841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps.
   ///
   /// In en, this message translates to:
   /// **'Step {order}'**
@@ -53281,37 +53281,37 @@ abstract class AppLocalizations {
   /// **'Choose a file without problems and say who sent it.'**
   String get valuationInvalid;
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the asset number is not a whole number from 1.'**
   String valuationIssueAsset(int line);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the basis is book or tax.'**
   String valuationIssueBasis(int line);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the number of columns is wrong.'**
   String valuationIssueColumns(int line);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the currency is not a three-letter code.'**
   String valuationIssueCurrency(int line);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: a date is not a real day written YYYY-MM-DD.'**
   String valuationIssueDate(int line);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: this asset already appears in the file.'**
@@ -53329,19 +53329,19 @@ abstract class AppLocalizations {
   /// **'The first line is not the documented header.'**
   String get valuationIssueHeader;
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: {column} is not a whole number of minor units.'**
   String valuationIssueMinor(int line, String column);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: a batch has one basis, one period and one currency.'**
   String valuationIssueMixed(int line);
 
-  /// #2576 accountant valuations
+  /// #2576 accountant valuations. The number is not a count: it is a line number.
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the period ends before it starts.'**
@@ -55231,7 +55231,7 @@ abstract class AppLocalizations {
   /// **'Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.'**
   String get wizardRemindHint;
 
-  /// Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int).
+  /// Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
   /// **'reminder {level}'**
@@ -55327,7 +55327,7 @@ abstract class AppLocalizations {
   /// **'Share the PDF'**
   String get wizardSendShare;
 
-  /// Shown as a text in wizard steps payments (money). Placeholders: {count} (int).
+  /// Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
   ///
   /// In en, this message translates to:
   /// **'Regroup {count}'**
@@ -55873,7 +55873,7 @@ abstract class AppLocalizations {
   /// **'Danger zone'**
   String get workspaceDangerZone;
 
-  /// Live value label of the desk-opacity slider.
+  /// Live value label of the desk-opacity slider. The number is not a count: it is a percentage.
   ///
   /// In en, this message translates to:
   /// **'Opacity: {percent}%'**
@@ -56215,7 +56215,7 @@ abstract class AppLocalizations {
   /// **'Part of the import was applied before it stopped — check the settings and the floor plan below.'**
   String get workspaceXmlImportPartial;
 
-  /// Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file
+  /// Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Accessories: {count}'**
@@ -56224,7 +56224,7 @@ abstract class AppLocalizations {
   /// #916 configuration transfer: workspaceXmlImportPreviewConfiguration
   ///
   /// In en, this message translates to:
-  /// **'Configuration: {settings} settings, {rows} rows in {tables} tables'**
+  /// **'Configuration: {settings, plural, =1{1 setting} other{{settings} settings}}, {rows, plural, =1{1 row} other{{rows} rows}} in {tables, plural, =1{1 table} other{{tables} tables}}'**
   String workspaceXmlImportPreviewConfiguration(
     int settings,
     int tables,
@@ -56237,7 +56237,7 @@ abstract class AppLocalizations {
   /// **'Configuration: not applied.'**
   String get workspaceXmlImportPreviewConfigurationSkipped;
 
-  /// Summary line in the import preview dialog counting what the picked file contains (#165)
+  /// Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
   /// **'Levels: {levels} · Offices: {offices} · Desks: {desks} · Seats: {seats}'**

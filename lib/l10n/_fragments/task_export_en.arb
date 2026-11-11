@@ -75,7 +75,7 @@
   },
   "taskExportDuration": "Duration: {minutes} min {seconds} s",
   "@taskExportDuration": {
-    "description": "#1866 task export (Word document): Duration",
+    "description": "#1866 task export (Word document): Duration. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -96,7 +96,7 @@
   },
   "taskExportVersion": "Recording format {schema}, action contract {contract}",
   "@taskExportVersion": {
-    "description": "#1866 task export (Word document): Version",
+    "description": "#1866 task export (Word document): Version. The number is not a count: it is a schema version.",
     "placeholders": {
       "schema": {
         "type": "int"
@@ -626,7 +626,7 @@
   "@taskExportWordButton": {
     "description": "#1866 task export (Word document): the review screen button"
   },
-  "taskExportValueRedacted": "not kept ({length} characters)",
+  "taskExportValueRedacted": "not kept ({length, plural, =1{1 character} other{{length} characters}})",
   "@taskExportValueRedacted": {
     "description": "Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).",
     "placeholders": {

@@ -100,7 +100,7 @@ void main() {
     expect(format.groupValue, BankFileFormat.camt054);
     await tester.tap(find.byKey(const ValueKey('bank-format-read')));
     await tester.pumpAndSettle();
-    expect(find.text('Imported: 3 new, 0 already known, 0 to review.'), findsOneWidget);
+    expect(find.text('Imported: 3 new entries, 0 already known, 0 to review.'), findsOneWidget);
     expect(find.textContaining('CH9300762011623852957'), findsOneWidget);
 
     // The first notice goes, so the second one shows.

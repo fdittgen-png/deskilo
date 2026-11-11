@@ -24,7 +24,7 @@
   "@taskRecorderDisclosureBody": {
     "description": "#1865 task recorder: taskRecorderDisclosureBody"
   },
-  "taskRecorderLimits": "Up to {steps} steps or {minutes} minutes per recording. Recordings are deleted from this device after {days} days; a file you exported is yours and stays where you saved it.",
+  "taskRecorderLimits": "Up to {steps, plural, =1{1 step} other{{steps} steps}} or {minutes, plural, =1{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, =1{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.",
   "@taskRecorderLimits": {
     "description": "#1865 task recorder: taskRecorderLimits",
     "placeholders": {
@@ -478,7 +478,7 @@
   },
   "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
   "@taskWorkbenchAccepted": {
-    "description": "#1872 task workbench: taskWorkbenchAccepted",
+    "description": "#1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
     "placeholders": {
       "megabytes": {
         "type": "int"
