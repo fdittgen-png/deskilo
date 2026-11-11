@@ -6,11 +6,13 @@ import 'package:intl/intl.dart';
 import '../../../core/files/file_names.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/state/policy_read.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/archive_bundle.dart' show textBytes;
 import '../domain/bank/bank_records.dart' show bankStatementReaders;
 import '../domain/bank/reconciliation_report.dart';
 import '../providers/bank_statement_providers.dart';
+import '../providers/money_providers.dart';
 import 'bank_reconciliation_pdf.dart';
 import 'bank_reconciliation_words.dart';
 import 'invoice_documents.dart';
@@ -56,6 +58,12 @@ class BankReconciliationArchive {
       workspaceId: workspaceId,
       year: year,
       sourceLimits: limits,
+    );
+    // #3742 — the letter is printed with the owner's template, read.
+    await readPolicy(
+      ref,
+      invoicePdfTemplateProvider,
+      invoicePdfTemplateProvider.future,
     );
     if (!context.mounted) {
       throw StateError('report context no longer available');

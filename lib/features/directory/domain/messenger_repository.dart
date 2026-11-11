@@ -51,8 +51,21 @@ abstract interface class MessengerRepository {
 
   // ── inquiries ─────────────────────────────────────────────────────
   Future<List<HostRosterEntry>> hostRoster(String workspace);
-  Future<String> startInquiry(String workspace, String body);
-  Future<String> sendInquiryMessage(String inquiry, String body);
+  /// Starts or continues my inquiry of [workspace]. [requestId] (#3745) is
+  /// kept by the app until the outcome is known: a repeat with it answers
+  /// the first outcome and writes nothing.
+  Future<String> startInquiry(
+    String workspace,
+    String body, {
+    String? requestId,
+  });
+
+  /// Replies in [inquiry]; [requestId] as for [startInquiry].
+  Future<String> sendInquiryMessage(
+    String inquiry,
+    String body, {
+    String? requestId,
+  });
   Future<List<InquirySummary>> myInquiries();
   Future<List<InquirySummary>> workspaceInquiries(String workspace);
   Future<List<ContextMessage>> inquiryMessages(

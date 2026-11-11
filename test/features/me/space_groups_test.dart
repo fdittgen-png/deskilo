@@ -76,7 +76,11 @@ void main() {
   testWidgets('groups: always two, mine can be made, filled, folded and '
       'removed', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    final router = await pumpMeApp(tester, workspace: twoSpaces());
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      spacePrefs: const PrefsSpacePrefsStore(),
+    );
     await goTo(tester, router, '/me');
     expect(find.byKey(const ValueKey('me-group-favorites')), findsOneWidget);
     expect(find.byKey(const ValueKey('me-group-other')), findsOneWidget);
@@ -123,7 +127,11 @@ void main() {
 
   testWidgets('a heart puts a space in Favorites', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    final router = await pumpMeApp(tester, workspace: twoSpaces());
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      spacePrefs: const PrefsSpacePrefsStore(),
+    );
     await goTo(tester, router, '/me');
     // #3281: an empty Favorites keeps its header and no explainer block.
     expect(find.byKey(const ValueKey('me-group-favorites')), findsOneWidget);
@@ -138,7 +146,11 @@ void main() {
 
   testWidgets('search narrows the list, sort reorders it', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    final router = await pumpMeApp(tester, workspace: twoSpaces());
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      spacePrefs: const PrefsSpacePrefsStore(),
+    );
     await goTo(tester, router, '/me');
     await tester.enterText(find.byKey(const ValueKey('me-spaces-search')), 'second');
     await tester.pumpAndSettle();
@@ -163,7 +175,11 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({});
-    final router = await pumpMeApp(tester, workspace: twoSpaces());
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      spacePrefs: const PrefsSpacePrefsStore(),
+    );
     await goTo(tester, router, '/me');
     final first = find.byKey(const ValueKey('me-hold-move-0'));
     expect(first, findsOneWidget);

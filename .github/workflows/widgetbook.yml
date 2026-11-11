@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: CI · Component catalogue
+permissions:
+  contents: read
+concurrency:
+  group: widgetbook-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/widgetbook.yml'
+      - 'tool/widgetbook/**'
+      - 'lib/core/**'
+      - 'lib/app/theme.dart'
+      - 'lib/l10n/**'
+      - 'packages/**'
+      - 'assets/fonts/**'
+      - '.flutter-version'
+      - 'pubspec.*'
+      - 'analysis_options.yaml'
+  workflow_dispatch:
+jobs:
+  catalogue:
+    name: component catalogue
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - id: flutter_pin
+        run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          flutter-version: ${{ steps.flutter_pin.outputs.version }}
+      - run: bash tool/widgetbook/verify.sh

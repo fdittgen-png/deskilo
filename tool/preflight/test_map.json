@@ -94,6 +94,16 @@
       "tests": [
         "test/tool/"
       ]
+    },
+    {
+      "patterns": [
+        "test/helpers/**"
+      ],
+      "tests": [
+        "test/features/me/",
+        "test/core/demo/"
+      ],
+      "note": "#3765 -- a shared test helper (the standard overrides, pumpApp) changes every test that imports it; these folders hold the ones a store or override change reached. CI runs the rest."
     }
   ],
   "no_importer_search": [
