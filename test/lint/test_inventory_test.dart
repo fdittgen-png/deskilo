@@ -143,6 +143,7 @@ void main() {
         'working-directory: packages/deskilo_accounting_interchange\n'
         'for p in packages/deskilo_jurisdiction_*/; do\n');
     write('.github/workflows/edge-functions.yml', 'deno test -A\n');
+    write('.github/workflows/widgetbook.yml', 'bash tool/widgetbook/verify.sh');
     // perf-bench.yml is missing: its family is a dead entry.
     write('scripts/run_fixture.sh', 'export DESKILO_OWNED_FIXTURE=1\n');
     write('test/a_test.dart',
@@ -198,6 +199,8 @@ void main() {
         "$header// J.\nvoid main() {}\n");
     write('supabase/functions/f/index_test.ts', "// F.\nDeno.test('a', () {});\n");
     write('tool/bench/b_test.dart', "$header// Bench.\nvoid main() {}\n");
+    write('tool/widgetbook/test/c_test.dart',
+        "$header// Catalogue.\nvoid main() {}\n");
     write('integration_test/i_test.dart', "$header// I.\nvoid main() {}\n");
     write('tool/store_assets/s_test.dart', "$header// S.\nvoid main() {}\n");
     write('elsewhere/stray_test.dart', '// nobody runs me\n');
