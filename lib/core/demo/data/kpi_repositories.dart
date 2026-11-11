@@ -40,6 +40,29 @@ class DemoCapacityKpiRepository implements KpiRepository {
 
   static const _openHours = 9;
 
+  /// The days of [from, to) and how many of them offer seats: a weekday that
+  /// is not one of the space's closure days (#3601).
+  ({int days, int openDays}) _countDays(
+    DateTime from,
+    DateTime to,
+    String workspaceId,
+  ) {
+    final closed = {
+      for (final c in closureDays)
+        if (c.workspaceId == workspaceId)
+          DateTime(c.day.year, c.day.month, c.day.day),
+    };
+    var days = 0, openDays = 0;
+    for (var d = from; d.isBefore(to); d = d.add(const Duration(days: 1))) {
+      days++;
+      if (d.weekday <= DateTime.friday &&
+          !closed.contains(DateTime(d.year, d.month, d.day))) {
+        openDays++;
+      }
+    }
+    return (days: days, openDays: openDays);
+  }
+
   @override
   Future<SeatCapacityKpi> seatCapacity(
     String workspaceId, {
@@ -62,19 +85,7 @@ class DemoCapacityKpiRepository implements KpiRepository {
             desks.contains(s.deskId))
           s.id,
     };
-    final closed = {
-      for (final c in closureDays)
-        if (c.workspaceId == workspaceId)
-          DateTime(c.day.year, c.day.month, c.day.day),
-    };
-    var days = 0, openDays = 0;
-    for (var d = from; d.isBefore(to); d = d.add(const Duration(days: 1))) {
-      days++;
-      if (d.weekday <= DateTime.friday &&
-          !closed.contains(DateTime(d.year, d.month, d.day))) {
-        openDays++;
-      }
-    }
+    final (:days, :openDays) = _countDays(from, to, workspaceId);
     var reserved = 0.0;
     for (final r in reservations.reservations) {
       if (r.workspaceId != workspaceId ||

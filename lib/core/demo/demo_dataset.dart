@@ -30,6 +30,7 @@ import 'data/profile_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
 import 'demo_clock.dart';
+import 'demo_invoice_names.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_rights_seed.dart';
@@ -484,12 +485,7 @@ List<String> validateDemoFixture({
     if (!memberIds.contains(invoice.memberId)) {
       problems.add('invoice ${invoice.number}: no member ${invoice.memberId}');
     }
-    // #3601 — the customer named on an invoice is the member it belongs to.
-    final named = workspaces.memberNames[invoice.memberId];
-    if (named != null && invoice.memberName != named) {
-      problems.add('invoice ${invoice.number}: names "${invoice.memberName}" '
-          'but member ${invoice.memberId} is "$named"');
-    }
+    problems.addAll(invoiceNameProblems(invoice, workspaces.memberNames));
     // A credit note is negative by nature, and names what it corrects.
     final creditNote =
         invoice.totalCents < 0 && invoice.replacesInvoiceId != null;

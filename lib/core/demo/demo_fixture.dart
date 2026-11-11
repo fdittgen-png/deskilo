@@ -180,6 +180,7 @@ class DemoFixture {
             actor: () => actor.memberId, credits: credits);
     seedDemoHistoryMoney(money, today);
     seedDemoMoneyStory(money, today, reservations.reservations);
+    alignDemoBandsWithPlans(money, today);
     seedDemoYearOfResources(reservations, workspaces, today);
     seedDemoYearOfMoney(money, today);
     applyDemoVat(money);
