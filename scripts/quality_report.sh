@@ -60,6 +60,15 @@ job_of() { grep -vE '^[[:space:]]*(#|$)' "$MANIFEST" | awk -F'|' -v n="$1" '$1 =
     esac
     printf '| %s | %s | %s |\n' "$name" "$mark" "$detail"
   done <<<"$rows"
+  # #3663 -- a job a re-run did not run again has its rows only under an
+  # earlier attempt: the table says which attempt each input came from.
+  if [ -s "$DIR/attempts.txt" ]; then
+    echo
+    echo 'Rows read from an earlier attempt of this run (that job was not re-run):'
+    while IFS='|' read -r input artifact; do
+      printf -- '- %s: `%s`\n' "$input" "$artifact"
+    done < "$DIR/attempts.txt"
+  fi
   echo
   echo '> Performance is not a row here, and the guards that exist prove'
   echo '> different things: a draw-call budget is algorithmic, a query'

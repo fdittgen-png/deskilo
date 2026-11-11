@@ -23,7 +23,7 @@ Idioms, pgTAP probe mechanics and incidents: [reference.md](reference.md).
 ## 1. The number
 - Dev project `zwzbynivewivvjmripeb` (never the tankstellen project). Files are
   `supabase/migrations/NNNN_name.sql`; pgTAP files `supabase/tests/database/NN_name.sql`.
-- Claim the number you intend in `AGENT_HANDOFF.md` / `.agent-work/<issue>.json`
+- Claim the number you intend in `.agent-work/<issue>.json`
   before writing the file — a courtesy, never a reason to leave a gap. pgTAP
   files take the next free number the same way.
 - At PUSH time take master's latest + 1. A gap fails the upgrade check ("pending N,

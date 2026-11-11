@@ -54,7 +54,14 @@ fetch() {
     fi
   fi
   if [ ! -f "$out" ]; then
-    curl -fsSL --retry 5 --retry-delay 5 --retry-all-errors --max-time 120 -o "$out" "$url"
+    # #3663 -- after its retries a download that never answers is NOT a failed
+    # validation: exit 3 says "the validator did not answer", which the
+    # workflow reports as a notice (nothing was validated this time), never as
+    # a red check against the change.
+    curl -fsSL --retry 5 --retry-delay 5 --retry-all-errors --max-time 120 -o "$out" "$url" || {
+      echo "::notice::$url did not answer after its retries: nothing was validated against it this time" >&2
+      exit 3
+    }
   fi
   local got
   got=$(sha "$out")
