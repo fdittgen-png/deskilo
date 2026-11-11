@@ -9652,7 +9652,6 @@ const Set<String> uiLabelKeys = {
   'meGreetingNoName',
   'meGroupAdd',
   'meGroupDelete',
-  'meGroupEmptyFavorites',
   'meGroupEmptyOwn',
   'meGroupFavorites',
   'meGroupInstallations',

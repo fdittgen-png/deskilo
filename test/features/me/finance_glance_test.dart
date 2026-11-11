@@ -72,6 +72,38 @@ void main() {
     handle.dispose();
   });
 
+  // #3281: one amount per currency, never one figure over two currencies.
+  testWidgets('two currencies are two amounts, never a total', (tester) async {
+    final repo = FakeAccountActivityRepository()
+      ..financeOverview = FinanceOverview(
+        invoices: [
+          invoice('a', total: 12000, due: DateTime(2999)),
+          invoice(
+            'b',
+            ws: 'Office B',
+            total: 8000,
+            currency: 'CHF',
+            due: DateTime(2999),
+          ),
+        ],
+      );
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      accountActivity: repo,
+    );
+    await goTo(tester, router, '/me');
+    for (final c in ['EUR', 'CHF']) {
+      await tester.tap(
+        find.byKey(ValueKey('me-home-finance-glance-amount-$c')),
+      );
+      await tester.pumpAndSettle();
+    }
+    expect(find.textContaining('120'), findsOneWidget);
+    expect(find.textContaining('80'), findsOneWidget);
+    expect(find.textContaining('200'), findsNothing, reason: 'no sum');
+  });
+
   testWidgets('nothing to pay, no card', (tester) async {
     final repo = FakeAccountActivityRepository()
       ..financeOverview = FinanceOverview(

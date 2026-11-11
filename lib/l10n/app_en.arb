@@ -23962,10 +23962,6 @@
   "@meGroupDelete": {
     "description": "Shown as a text in me spaces chrome (me)."
   },
-  "meGroupEmptyFavorites": "Give a space a heart and it waits for you here.",
-  "@meGroupEmptyFavorites": {
-    "description": "Shown as a text in me spaces list (me)."
-  },
   "meGroupEmptyOwn": "Move spaces here from their menu.",
   "@meGroupEmptyOwn": {
     "description": "Shown as a text in me spaces list (me)."

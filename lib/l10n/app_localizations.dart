@@ -29778,12 +29778,6 @@ abstract class AppLocalizations {
   /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
-  /// **'Give a space a heart and it waits for you here.'**
-  String get meGroupEmptyFavorites;
-
-  /// Shown as a text in me spaces list (me).
-  ///
-  /// In en, this message translates to:
   /// **'Move spaces here from their menu.'**
   String get meGroupEmptyOwn;
 

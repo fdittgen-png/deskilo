@@ -18144,10 +18144,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get meGroupDelete => 'Delete group';
 
   @override
-  String get meGroupEmptyFavorites =>
-      'Give a space a heart and it waits for you here.';
-
-  @override
   String get meGroupEmptyOwn => 'Move spaces here from their menu.';
 
   @override
