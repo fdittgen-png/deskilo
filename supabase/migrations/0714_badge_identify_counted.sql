@@ -8,8 +8,10 @@
 --
 --  * the scan step names nobody: it answers the same for every well-formed
 --    tag, and the name appears once the PIN is right;
---  * the scan step is counted here, per tag and per source, within the
---    badge lockout window; past either ceiling it answers "wait";
+--  * the scan step is counted here, per tag and per source (a keyed hash,
+--    never the address), within the badge lockout window; a scan followed by
+--    the right PIN stops counting; past either ceiling it answers "wait",
+--    and a place past its ceiling tells the owners once;
 --  * the business-wide pause counts the DISTINCT badges that failed in the
 --    window, so one badge cannot pause badge sign-in for everyone.
 
@@ -21,6 +23,29 @@ alter table public.badge_auth_attempts
 create index if not exists badge_auth_attempts_identify_source
   on public.badge_auth_attempts (source_hash, attempted_at desc)
   where step = 'identify';
+create index if not exists badge_auth_attempts_identify_age
+  on public.badge_auth_attempts (attempted_at)
+  where step = 'identify';
+
+-- The key of a source: keyed with this installation's own random salt, kept
+-- in the vault, so a stored value cannot be turned back into an address by
+-- trying them all. Only the service role reaches it, through the function.
+do $salt$
+begin
+  if not exists (select 1 from vault.secrets where name = 'deskilo_badge_source_salt') then
+    perform vault.create_secret(encode(extensions.gen_random_bytes(32), 'hex'),
+      'deskilo_badge_source_salt', 'DesKilo badge sign-in: the key of a scan source');
+  end if;
+end;
+$salt$;
+
+create or replace function public.badge_source_key(p_source text)
+returns text language sql stable security definer set search_path = '' as $fn$
+  select case when p_source is null or p_source = '' then null
+    else encode(extensions.hmac(p_source, s.decrypted_secret, 'sha256'), 'hex') end
+    from vault.decrypted_secrets s where s.name = 'deskilo_badge_source_salt';
+$fn$;
+revoke execute on function public.badge_source_key(text) from public, anon, authenticated;
 
 -- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
 insert into public.setting_definitions
@@ -75,8 +100,7 @@ create or replace function public.badge_auth_verify(
 returns jsonb language plpgsql security definer set search_path = '' as $fn$
 declare
   v_hash text := public.badge_token_hash(p_uid);
-  v_source text := case when p_source is null then null
-                        else public.badge_token_hash(p_source) end;
+  v_source text := public.badge_source_key(p_source);
   v_badge public.member_badges;
   v_member public.members;
   v_pin_hash text;
@@ -94,17 +118,41 @@ declare
   v_profile public.profiles;
 begin
   -- SCAN: the same answer for every well-formed tag, counted per tag and
-  -- per source. Nothing about the badge or its owner is read here.
+  -- per source. A scan followed by the right PIN stops counting, so a busy
+  -- kiosk is not mistaken for a script. The answer never depends on the
+  -- badge or its owner.
   if p_pin is null then
     v_per_tag := (public.setting_value(null, 'security.badge_identify_per_tag_limit') #>> '{}')::int;
     v_per_source := (public.setting_value(null, 'security.badge_identify_per_source_limit') #>> '{}')::int;
     perform pg_advisory_xact_lock(hashtextextended('badge-identify:' || v_hash, 0));
+    if v_source is not null then
+      perform pg_advisory_xact_lock(hashtextextended('badge-identify-source:' || v_source, 0));
+    end if;
+    -- Scans older than the window count for nothing: they go.
+    delete from public.badge_auth_attempts
+     where step = 'identify' and attempted_at <= now() - make_interval(mins => v_window);
+    if v_source is not null and (select count(*) from public.badge_auth_attempts
+         where source_hash = v_source and step = 'identify') >= v_per_source then
+      -- One place scanning past its ceiling: the business of a known badge
+      -- is told once per window.
+      select * into v_badge from public.member_badges
+       where token_hash = v_hash and revoked_at is null
+       order by created_at, id limit 1;
+      if v_badge.workspace_id is not null and not exists (
+        select 1 from public.events where workspace_id = v_badge.workspace_id
+          and type = 'badge_security_alert'
+          and created_at > now() - make_interval(mins => v_window)) then
+        insert into public.events
+          (workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
+        select v_badge.workspace_id, 'badge_security_alert', 'created', m.id, m.id,
+          jsonb_build_object('failures', v_per_source, 'window_minutes', v_window), 'applied'
+          from public.members m where m.workspace_id = v_badge.workspace_id
+            and m.status = 'active' and (m.is_owner or m.co_owner = 'active');
+      end if;
+      return jsonb_build_object('ok', false, 'reason', 'locked');
+    end if;
     if (select count(*) from public.badge_auth_attempts
-         where token_hash = v_hash and step = 'identify'
-           and attempted_at > now() - make_interval(mins => v_window)) >= v_per_tag
-       or (v_source is not null and (select count(*) from public.badge_auth_attempts
-         where source_hash = v_source and step = 'identify'
-           and attempted_at > now() - make_interval(mins => v_window)) >= v_per_source) then
+         where token_hash = v_hash and step = 'identify') >= v_per_tag then
       return jsonb_build_object('ok', false, 'reason', 'locked');
     end if;
     insert into public.badge_auth_attempts (token_hash, succeeded, step, source_hash)
@@ -159,6 +207,9 @@ begin
   end if;
   insert into public.badge_auth_attempts (token_hash,succeeded,workspace_id,step)
   values (v_hash,true,v_badge.workspace_id,'pin');
+  -- The right PIN: this badge's scans stop counting.
+  delete from public.badge_auth_attempts
+   where step = 'identify' and token_hash = v_hash;
   select * into v_profile from public.profiles where id = v_member.user_id;
   -- The name is said once the PIN is right.
   return jsonb_build_object('ok',true,'user_id',v_member.user_id,

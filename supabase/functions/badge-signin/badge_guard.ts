@@ -14,7 +14,12 @@ export function identifyAnswer() {
   return { ok: true, step: "identify", display_name: "", has_avatar: false };
 }
 
-/** The caller's address as the edge saw it. */
-export const callerOf = (req: Request): string =>
-  (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() ||
-  req.headers.get("cf-connecting-ip") || "unknown";
+/** The caller's address as the platform's proxy appended it: the LAST
+ * x-forwarded-for hop. Earlier hops are whatever the client claimed. */
+export const callerOf = (req: Request): string => {
+  const hops = (req.headers.get("x-forwarded-for") ?? "").split(",")
+    .map((h) => h.trim()).filter(Boolean);
+  return hops.length > 0
+    ? hops[hops.length - 1]
+    : req.headers.get("cf-connecting-ip") || "";
+};

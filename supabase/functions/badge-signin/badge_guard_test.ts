@@ -5,7 +5,7 @@
 // one tag or one source may scan is counted in the database (pgTAP 384).
 
 import { assert, assertEquals, assertFalse } from "jsr:@std/assert@1";
-import { identifyAnswer, UID_PATTERN } from "./badge_guard.ts";
+import { callerOf, identifyAnswer, UID_PATTERN } from "./badge_guard.ts";
 
 Deno.test("the scan names nobody and answers the same for every tag", () => {
   const answer = identifyAnswer();
@@ -26,4 +26,15 @@ Deno.test("a UID under eight hex characters is refused", () => {
   assertFalse(UID_PATTERN.test("A1B2C3D4"));
   assert(UID_PATTERN.test("a1b2c3d4"));
   assert(UID_PATTERN.test("04a1b2c3d4e5f6"));
+});
+
+Deno.test("the caller is the hop the platform appended, not a claimed one", () => {
+  const req = (h: Record<string, string>) =>
+    new Request("https://x.test", { headers: h });
+  assertEquals(
+    callerOf(req({ "x-forwarded-for": "203.0.113.9, 198.51.100.7" })),
+    "198.51.100.7",
+  );
+  assertEquals(callerOf(req({ "x-forwarded-for": "198.51.100.7" })), "198.51.100.7");
+  assertEquals(callerOf(req({})), "");
 });

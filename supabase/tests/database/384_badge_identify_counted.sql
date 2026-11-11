@@ -5,7 +5,7 @@
 -- the PIN is right; one badge failing again and again cannot pause badge
 -- sign-in for the whole business, while several different badges do.
 begin;
-select plan(12);
+select plan(15);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003840' || lpad(n::text,4,'0'))::uuid;
@@ -32,11 +32,14 @@ select public.store_setting(pg_temp.u(101),'security.badge_workspace_failure_lim
 select is(public.badge_auth_verify('3840000000000001',null,'198.51.100.1'),'{"ok": true}'::jsonb,'a real tag: the scan names nobody');
 select is(public.badge_auth_verify('3840999999999999',null,'198.51.100.1'),public.badge_auth_verify('3840000000000001',null,'198.51.100.1'),'an unknown tag answers the same');
 select is(public.badge_auth_verify('3840000000000003',null,'198.51.100.1'),public.badge_auth_verify('3840000000000001',null,'198.51.100.1'),'a revoked tag answers the same');
-select is((select count(*)::int from public.badge_auth_attempts where step='identify' and source_hash=public.badge_token_hash('198.51.100.1')),5,'every scan is counted, by its source too');
-select is((select count(*)::int from public.badge_auth_attempts where source_hash is not null and source_hash = '198.51.100.1'),0,'the source is kept only as a hash');
+select is((select count(*)::int from public.badge_auth_attempts where step='identify' and source_hash=public.badge_source_key('198.51.100.1')),5,'every scan is counted, by its source too');
+select ok((select bool_and(source_hash ~ '^[0-9a-f]{64}$') from public.badge_auth_attempts where step='identify'),'the source is kept as a 64-hex key');
+select ok(not exists (select 1 from public.badge_auth_attempts where step='identify' and source_hash = encode(extensions.digest('198.51.100.1','sha256'),'hex')),'keyed with the installation''s salt, not a plain hash of the address');
 
 -- ── the PIN names the person ───────────────────────────────────────
+select ok(not (public.badge_auth_verify('3840000000000001','000000') ? 'display_name'),'a wrong PIN names nobody');
 select is(public.badge_auth_verify('3840000000000001','482615')->>'display_name','Badge Holder','the right PIN names the person');
+select is((select count(*)::int from public.badge_auth_attempts where step='identify' and token_hash=public.badge_token_hash('3840000000000001')),0,'after the right PIN, that badge''s scans no longer count');
 
 -- ── per tag and per source ─────────────────────────────────────────
 -- The platform defaults: 10 scans of one tag, 30 from one source.
