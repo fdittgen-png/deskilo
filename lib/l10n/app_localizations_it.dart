@@ -32421,6 +32421,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mezze giornate rimaste nel suo pacchetto questo mese',
+      one: '1 mezza giornata rimasta nel suo pacchetto questo mese',
+      zero: 'Nessuna mezza giornata rimasta nel suo pacchetto questo mese',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'L’importo e l’uso della quota dipendono dal piano del socio e vengono saldati nell’estratto conto.';
 

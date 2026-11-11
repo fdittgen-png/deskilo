@@ -13,6 +13,7 @@ import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import '../fake_event_repository.dart';
 import '../fake_money_repository.dart';
@@ -60,6 +61,8 @@ Future<FakeMoneyRepository> pumpInvoices(
   Size size = const Size(800, 1400),
   // #3349 — a test of the credit move brings its own.
   CreditMoveRepository? creditMoves,
+  // #3680 — a test of a failed source brings its override.
+  List<Override> overrides = const [],
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
@@ -80,6 +83,7 @@ Future<FakeMoneyRepository> pumpInvoices(
           typedFileSaverProvider.overrideWithValue(typedSaverOf(saver)),
         ],
         if (picker != null) filePickerProvider.overrideWithValue(picker),
+        ...overrides,
       ],
       child: const DeskiloApp(),
     ),

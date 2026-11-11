@@ -281,7 +281,9 @@ void main() {
         pages++;
       } while (after != null && pages < 5);
 
-      expect(seen, ['pay-3', 'pay-2', 'pay-1']);
+      // #3671: one item per part a payment settled (invoice and payment),
+      // so a payment split over two invoices is two items, never one id twice.
+      expect(seen, ['inv-1:pay-3', 'inv-1:pay-2', 'inv-1:pay-1']);
       expect(pages, 2);
       final june = await repo.page(
         ws,

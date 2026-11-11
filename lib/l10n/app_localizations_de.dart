@@ -32466,6 +32466,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String uxBookingAllowanceLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count halbe Tage übrig in Ihrem Kontingent diesen Monat',
+      one: '1 halber Tag übrig in Ihrem Kontingent diesen Monat',
+      zero: 'Kein halber Tag mehr in Ihrem Kontingent diesen Monat',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get uxBookingChargePending =>
       'Gebühr und Kontingentverbrauch hängen vom Tarif des Mitglieds ab und werden auf der Abrechnung ausgewiesen.';
 

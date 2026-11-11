@@ -64,7 +64,7 @@ void main() {
           ),
           _pay('ben', member: 'ben'),
         ],
-        consumed: const {},
+        use: PaymentUse.none,
         invoices: const [],
       );
       expect(r.map((e) => e.id), ['new', 'adjust', 'old']);
@@ -74,10 +74,24 @@ void main() {
       final r = unmatchedPaymentsOf(
         memberId: 'anna',
         ledger: [_pay('a'), _pay('b')],
-        consumed: const {'a'},
+        use: const PaymentUse(usedCents: {'a': 12000}),
         invoices: const [],
       );
       expect(r.map((e) => e.id), ['b']);
+    });
+
+    test('a partly used payment is offered with what is left of it', () {
+      final r = unmatchedPaymentsOf(
+        memberId: 'anna',
+        ledger: [_pay('a'), _pay('b')],
+        use: const PaymentUse(usedCents: {'a': 5000}),
+        invoices: const [],
+      );
+      expect(r.map((e) => (e.id, e.amountCents)), [
+        ('a', _pay('a').amountCents - 5000),
+        ('b', _pay('b').amountCents),
+      ]);
+      expect(creditMinorOf(r), _pay('a').amountCents - 5000 + _pay('b').amountCents);
     });
   });
 
