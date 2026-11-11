@@ -14947,6 +14947,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicingCaughtUp => 'È tutto in ordine.';
 
   @override
+  String get invoicingCheckingPayments => 'Verifica dei pagamenti ricevuti…';
+
+  @override
   String get invoicingColCustomer => 'Cliente';
 
   @override
@@ -15102,16 +15105,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String invoicingReceivedIn(String month) {
     return 'Incassato a $month';
   }
-
-  @override
-  String get invoicingRemindersAutomatic =>
-      'I solleciti partono da soli, nell’app.';
-
-  @override
-  String get invoicingRemindersByHand => 'I solleciti si condividono a mano.';
-
-  @override
-  String get invoicingRules => 'Regole';
 
   @override
   String get invoicingSearch => 'Cerca';
@@ -23629,7 +23622,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato registrato nulla: la condivisione è stata chiusa.';
 
   @override
-  String get reminderQueueNotShared => 'Non condivisi';
+  String get reminderQueueNotRecordedHeading => 'Condivisi, non registrati';
+
+  @override
+  String get reminderQueueRecord => 'Registra';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Finché non viene registrato, la fattura mostra ancora questo sollecito come dovuto.';
 
   @override
   String get reminderQueueResultNone => 'Nessun sollecito condiviso';
@@ -23661,7 +23661,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderQueueShared => 'Condiviso';
 
   @override
-  String get reminderQueueStays => 'Restano in «Da fare».';
+  String get reminderQueueSharedNotRecorded =>
+      'Condiviso, ma non registrato sulla fattura. Lo registri: non verrà condiviso di nuovo.';
 
   @override
   String get reminderQueueTitle => 'Solleciti da condividere';

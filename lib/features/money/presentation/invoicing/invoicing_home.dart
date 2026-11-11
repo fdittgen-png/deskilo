@@ -68,6 +68,7 @@ class InvoicingHomeData {
     this.received = const [],
     this.failed = const {},
     this.holdsUnassigned = const {},
+    this.creditsKnown = true,
   });
 
   final List<Receivable> receivables;
@@ -87,6 +88,11 @@ class InvoicingHomeData {
   /// The customers who hold money received and not assigned
   /// (`holdsUnassignedMoney`): matched first, never reminded.
   final Set<String> holdsUnassigned;
+
+  /// Whether the customers' credits were read. Until then nobody is known
+  /// to hold money, so no reminder is offered and "Share reminders by
+  /// hand" says it is checking the received payments.
+  final bool creditsKnown;
 }
 
 /// What the home's controls do; the screen wires the existing flows.
@@ -264,6 +270,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                 today: data.today,
                 mode: data.mode,
                 holdsUnassigned: data.holdsUnassigned,
+                remindersKnown: data.creditsKnown,
                 filter: filter,
                 view: _view,
                 query: _query,
@@ -388,7 +395,16 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       count: todo.length,
       rows: [
         for (final (i, t) in todo.take(_todoShown).indexed)
-          _todoRow(l, t, caption(t), primary: i == 0),
+          _todoRow(
+            l,
+            t,
+            // The reminders wait for the received payments: who holds money
+            // is matched first, and that is not known yet.
+            t.kind == TodoKind.shareReminders && !data.creditsKnown
+                ? l.invoicingCheckingPayments
+                : caption(t),
+            primary: i == 0,
+          ),
       ],
       quiet: QuietLine(l.invoicingCaughtUp),
       // How reminders go out, with Rules: the line the reminders share.
@@ -411,7 +427,9 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       buttonKey: ValueKey('invoicing-todo-${t.kind.name}'),
       primary: primary,
       alert: words.alert,
-      onPressed: () => _openTodo(t.kind),
+      onPressed: t.kind == TodoKind.shareReminders && !widget.data.creditsKnown
+          ? null
+          : () => _openTodo(t.kind),
     );
   }
 

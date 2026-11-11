@@ -14832,6 +14832,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingCaughtUp => 'You are all caught up.';
 
   @override
+  String get invoicingCheckingPayments => 'Checking received payments…';
+
+  @override
   String get invoicingColCustomer => 'Customer';
 
   @override
@@ -14987,16 +14990,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String invoicingReceivedIn(String month) {
     return 'Received in $month';
   }
-
-  @override
-  String get invoicingRemindersAutomatic =>
-      'Reminders go out by themselves, in the app.';
-
-  @override
-  String get invoicingRemindersByHand => 'Reminders are shared by hand.';
-
-  @override
-  String get invoicingRules => 'Rules';
 
   @override
   String get invoicingSearch => 'Search';
@@ -23438,7 +23431,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing was recorded: the share was closed.';
 
   @override
-  String get reminderQueueNotShared => 'Not shared';
+  String get reminderQueueNotRecordedHeading => 'Shared, not recorded';
+
+  @override
+  String get reminderQueueRecord => 'Record';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Until it is recorded, the invoice still shows this reminder as due.';
 
   @override
   String get reminderQueueResultNone => 'No reminder shared';
@@ -23470,7 +23470,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderQueueShared => 'Shared';
 
   @override
-  String get reminderQueueStays => 'They stay in To do.';
+  String get reminderQueueSharedNotRecorded =>
+      'Shared, but not recorded on the invoice. Record it: it will not be shared again.';
 
   @override
   String get reminderQueueTitle => 'Reminders to share';

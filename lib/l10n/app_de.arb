@@ -9525,6 +9525,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Eingegangene Zahlungen werden geprüft…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Kunde",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9724,18 +9728,6 @@
         "type": "String"
       }
     }
-  },
-  "invoicingRemindersAutomatic": "Mahnungen gehen von selbst hinaus, in der App.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Mahnungen werden von Hand geteilt.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Regeln",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
   },
   "invoicingSearch": "Suchen",
   "@invoicingSearch": {
@@ -14769,14 +14761,16 @@
   "reminderQueueLevel": "Mahnung {level}",
   "reminderQueueMatch": "Zuordnen",
   "reminderQueueNotRecorded": "Nichts wurde vermerkt: das Teilen wurde geschlossen.",
-  "reminderQueueNotShared": "Nicht geteilt",
+  "reminderQueueNotRecordedHeading": "Geteilt, nicht vermerkt",
+  "reminderQueueRecord": "Vermerken",
+  "reminderQueueRecordStays": "Bis sie vermerkt ist, zeigt die Rechnung diese Mahnung weiterhin als fällig.",
   "reminderQueueResultNone": "Keine Mahnung geteilt",
   "reminderQueueResultSubtitle": "Jede wird auf ihrer Rechnung vermerkt.",
   "reminderQueueResultTitle": "{count, plural, =1{1 Mahnung geteilt} other{{count} Mahnungen geteilt}}",
   "reminderQueueShare": "Teilen",
   "reminderQueueShareNext": "Nächste teilen · {customer}",
   "reminderQueueShared": "Geteilt",
-  "reminderQueueStays": "Sie bleiben unter „Zu erledigen“.",
+  "reminderQueueSharedNotRecorded": "Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.",
   "reminderQueueTitle": "Zu teilende Mahnungen",
   "reminderStatusAccepted": "Vom Benachrichtigungsdienst angenommen — kein Nachweis, dass sie gelesen wurde",
   "@reminderStatusAccepted": {

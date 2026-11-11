@@ -138,10 +138,23 @@ void main() {
     tester,
   ) async {
     InvoiceAction? ran;
-    await _pump(tester, invoices, onAction: (a) => ran = a);
+    // Read, and nothing held: the reminder is the next action.
+    await _pump(
+      tester,
+      invoices,
+      credit: const {'EUR': 0},
+      onAction: (a) => ran = a,
+    );
     expect(find.text('Remind'), findsOneWidget);
     await tester.tap(_key('customer-page-action'));
     expect(ran, InvoiceAction.shareReminder);
+  });
+
+  testWidgets('while the credit is not read, no Remind is offered', (
+    tester,
+  ) async {
+    await _pump(tester, invoices);
+    expect(find.text('Remind'), findsNothing);
   });
 
   testWidgets('money held unassigned in a currency with an open invoice: the '

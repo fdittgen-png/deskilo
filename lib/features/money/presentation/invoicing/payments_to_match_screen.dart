@@ -20,40 +20,27 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/credit_move_commands.dart';
 import '../../application/payment_candidates.dart';
-import '../../application/receivables.dart';
-import '../../domain/ledger_entry.dart';
-import '../../providers/credit_move_providers.dart';
+import '../../application/unassigned_money.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_followup_actions.dart' show matchInvoiceToPayment;
-
-/// One payment waiting for an invoice, with what it could settle.
-typedef PaymentToMatch = ({
-  Receivable customer,
-  LedgerEntry payment,
-  List<MatchCandidate> candidates,
-});
+import 'invoicing_reads.dart';
 
 class PaymentsToMatchScreen extends ConsumerStatefulWidget {
   const PaymentsToMatchScreen({
     super.key,
-    required this.receivables,
     required this.currency,
-    required this.workspaceId,
-    this.loader,
+    this.customerId,
   });
 
-  /// Every invoice the home reads: the customers with a payment to match and
-  /// the open invoices a payment could settle.
-  final List<Receivable> receivables;
-
-  /// The business's currency: a payment settles an invoice of this currency.
+  /// The business's currency: the ledger's, so the payment's, and the only
+  /// one of the invoices a payment is offered to settle.
   final String currency;
-  final String workspaceId;
 
-  /// Reads the payments; a test hands in plain ones.
-  final Future<List<PaymentToMatch>> Function()? loader;
+  /// Only this customer's payments; null: every customer's.
+  final String? customerId;
 
   @override
   ConsumerState<PaymentsToMatchScreen> createState() =>
@@ -61,74 +48,41 @@ class PaymentsToMatchScreen extends ConsumerStatefulWidget {
 }
 
 class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
-  late Future<List<PaymentToMatch>> _rows = _read();
+  /// A match is running: every candidate waits, so a double tap or a second
+  /// card never matches twice.
+  final ValueNotifier<bool> _working = ValueNotifier(false);
 
-  Future<List<PaymentToMatch>> _read() async {
-    final custom = widget.loader;
-    if (custom != null) return custom();
-    final customers = {
-      for (final r in widget.receivables)
-        if (r.paymentToMatch) r.customerId: r,
-    };
-    if (customers.isEmpty) return const [];
-    final queries = ref.read(invoiceQueriesProvider);
-    final matches = ref.read(invoiceMatchesProvider).value ?? const {};
-    // The junction knows EVERY consumed payment (#506); a credit moved to
-    // another member is no longer this member's money (#3349).
-    final consumed = {
-      for (final m in matches.values) ?m.paymentLedgerId,
-      ...await queries.fetchConsumedPaymentIds(widget.workspaceId),
-      ...await ref
-          .read(creditMoveCommandsProvider)
-          .movedCreditIds(widget.workspaceId),
-    };
-    final invoices = await ref.read(invoicesProvider.future);
-    final rows = <PaymentToMatch>[];
-    for (final customer in customers.values) {
-      final ledger = await ref
-          .read(memberAccountQueriesProvider)
-          .fetchLedger(customer.customerId);
-      final theirs = widget.receivables
-          .where((r) => r.customerId == customer.customerId)
-          .toList();
-      for (final payment in unmatchedPaymentsOf(
-        memberId: customer.customerId,
-        ledger: ledger,
-        consumed: consumed,
-        invoices: invoices,
-      )) {
-        final candidates = candidatesFor(
-          paymentMinor: payment.amountCents,
-          currency: widget.currency,
-          customerInvoices: theirs,
-        );
-        // Money with no open invoice to pay is the customer's credit (shown
-        // on their page), not something to do here.
-        if (candidates.isEmpty) continue;
-        rows.add((
-          customer: customer,
-          payment: payment,
-          candidates: candidates,
-        ));
-      }
-    }
-    return rows;
+  @override
+  void dispose() {
+    _working.dispose();
+    super.dispose();
   }
 
-  void _reload() => setState(() {
-    _rows = _read();
-  });
-
   Future<void> _match(PaymentToMatch row, MatchCandidate c) async {
+    if (_working.value) return;
+    _working.value = true;
+    try {
+      await _matchOnce(row, c);
+    } finally {
+      if (mounted) _working.value = false;
+    }
+  }
+
+  Future<void> _matchOnce(PaymentToMatch row, MatchCandidate c) async {
     final l10n = context.l10n;
     if (c.fit == MatchFit.needsDecision) {
-      // The dialog that asks how to settle a difference, as ever.
+      // The dialog that asks how to settle a difference, opened on the
+      // payment of the card that was tapped.
       final invoice = (await ref.read(invoicesProvider.future))
           .where((i) => i.id == c.invoice.invoiceId)
           .firstOrNull;
       if (invoice == null || !mounted) return;
-      await matchInvoiceToPayment(context, ref, invoice);
-      if (mounted) _reload();
+      await matchInvoiceToPayment(
+        context,
+        ref,
+        invoice,
+        paymentId: row.payment.id,
+      );
       return;
     }
     try {
@@ -155,55 +109,54 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
       );
       return;
     }
+    // The invoices and the money are read again: the next payment is offered
+    // only what is still open.
     ref
       ..invalidate(invoiceMatchesProvider)
       ..invalidate(invoicesProvider);
     if (!mounted) return;
     AppSnack.success(context, l10n.invoiceMatched);
-    _reload();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    // The current invoices and the one answer of who holds what: after a
+    // match both are read again, never a list frozen before it.
+    final money = ref.watch(unassignedMoneyProvider);
+    final known = unassignedMoneyKnown(money);
+    final receivables = ref.watch(invoicingReceivablesProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.paymentMatchTitle)),
-      body: FutureBuilder<List<PaymentToMatch>>(
-        future: _rows,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Padding(
-              padding: AppSpacing.mdAll,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.paymentMatchFailed,
-                    key: const ValueKey('payment-match-failed'),
-                  ),
-                  TextButton(
-                    key: const ValueKey('payment-match-retry'),
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(48, 48),
-                    ),
-                    onPressed: _reload,
-                    child: Text(l10n.commonRetry),
-                  ),
-                ],
-              ),
-            );
-          }
-          if (!snapshot.hasData) {
-            return const LoadingView();
-          }
-          return _list(context, [
-            for (final r in snapshot.data!)
-              if (r.candidates.isNotEmpty) r,
-          ]);
-        },
-      ),
+      body: money.hasError && !money.isLoading
+          ? _failed(l10n)
+          : known == null || receivables == null
+          ? const LoadingView()
+          : _list(
+              context,
+              known.toMatch(receivables, customerId: widget.customerId),
+            ),
     );
   }
+
+  Widget _failed(AppLocalizations l10n) => Padding(
+    padding: AppSpacing.mdAll,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.paymentMatchFailed,
+          key: const ValueKey('payment-match-failed'),
+        ),
+        TextButton(
+          key: const ValueKey('payment-match-retry'),
+          style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+          onPressed: () => ref.invalidate(unassignedMoneyProvider),
+          child: Text(l10n.commonRetry),
+        ),
+      ],
+    ),
+  );
 
   Widget _list(BuildContext context, List<PaymentToMatch> rows) {
     final l10n = context.l10n;
@@ -222,7 +175,14 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
         QuietLine(l10n.paymentMatchIntro, icon: Icons.info_outline),
         for (final row in rows) ...[
           const SizedBox(height: AppSpacing.md),
-          _PaymentCard(row: row, onMatch: (c) => _match(row, c)),
+          ValueListenableBuilder(
+            valueListenable: _working,
+            builder: (context, working, _) => _PaymentCard(
+              row: row,
+              currency: widget.currency,
+              onMatch: working ? null : (c) => _match(row, c),
+            ),
+          ),
         ],
       ],
     );
@@ -230,24 +190,33 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
 }
 
 class _PaymentCard extends ConsumerWidget {
-  const _PaymentCard({required this.row, required this.onMatch});
+  const _PaymentCard({
+    required this.row,
+    required this.currency,
+    required this.onMatch,
+  });
 
   final PaymentToMatch row;
-  final void Function(MatchCandidate candidate) onMatch;
+
+  /// The business's currency, the payment's and its candidates'.
+  final String currency;
+
+  /// Null while a match runs: every candidate waits.
+  final void Function(MatchCandidate candidate)? onMatch;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final format = ref.watch(appFormatProvider);
-    final money = format.moneyIn(row.customer.currency);
+    final money = format.moneyIn(currency);
     final payment = row.payment;
     return KitCard(
       key: ValueKey('payment-match-${payment.id}'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(row.customer.customerName, style: theme.textTheme.titleSmall),
+          Text(row.customerName, style: theme.textTheme.titleSmall),
           Text(
             l10n.paymentMatchHeader(
               money.formatMinor(payment.amountCents),
@@ -266,7 +235,10 @@ class _PaymentCard extends ConsumerWidget {
                 key: ValueKey(
                   'payment-match-${payment.id}-${c.invoice.invoiceId}',
                 ),
-                onPressed: () => onMatch(c),
+                onPressed: switch (onMatch) {
+                  final match? => () => match(c),
+                  null => null,
+                },
                 child: Row(
                   children: [
                     Expanded(
@@ -310,7 +282,7 @@ class _CandidateButton extends StatelessWidget {
   });
 
   final bool exact;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Widget child;
 
   @override

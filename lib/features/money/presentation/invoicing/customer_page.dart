@@ -73,7 +73,12 @@ class CustomerPage extends StatelessWidget {
     final holds =
         credit != null &&
         holdsUnassignedMoney(credit: credit!, customerInvoices: mine);
-    final action = holds ? InvoiceAction.match : row?.action;
+    final action = holds
+        ? InvoiceAction.match
+        // Not read yet: who holds money is unknown, so nobody is reminded.
+        : credit == null && row?.action == InvoiceAction.shareReminder
+        ? null
+        : row?.action;
     return Scaffold(
       appBar: AppBar(title: Text(name)),
       body: Column(
@@ -253,7 +258,7 @@ class CustomerPage extends StatelessWidget {
             r.stage == ReceivableStage.paid ? r.totalMinor : r.openMinor,
           ),
       trailing: StatusChip(
-        label: statusWordsOf(l, format, r, status, today: today),
+        label: statusWordsOf(l, format, r, status, today),
         tone: statusToneOf(status.kind),
       ),
       onTap: () => onOpenInvoice(r.invoiceId),
@@ -306,7 +311,7 @@ class CustomerPage extends StatelessWidget {
         format,
         row.invoices.first,
         invoiceStatusOf(row.invoices.first, today),
-        today: today,
+        today,
       );
     }
     return KitCard(

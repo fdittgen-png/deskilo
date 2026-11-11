@@ -102,5 +102,7 @@ bool holdsUnassignedMoney({
 }) => credit.entries.any(
   (c) =>
       c.value > 0 &&
-      customerInvoices.any((r) => r.isOutstanding && r.currency == c.key),
+      customerInvoices.any(
+        (r) => r.isOutstanding && r.currency == c.key && r.openMinor > 0,
+      ),
 );

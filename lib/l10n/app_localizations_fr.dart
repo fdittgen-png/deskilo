@@ -14979,6 +14979,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingCaughtUp => 'Tout est à jour.';
 
   @override
+  String get invoicingCheckingPayments => 'Vérification des paiements reçus…';
+
+  @override
   String get invoicingColCustomer => 'Client';
 
   @override
@@ -15134,16 +15137,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String invoicingReceivedIn(String month) {
     return 'Encaissé en $month';
   }
-
-  @override
-  String get invoicingRemindersAutomatic =>
-      'Les relances partent d’elles-mêmes, dans l’application.';
-
-  @override
-  String get invoicingRemindersByHand => 'Les relances se partagent à la main.';
-
-  @override
-  String get invoicingRules => 'Règles';
 
   @override
   String get invoicingSearch => 'Rechercher';
@@ -23675,7 +23668,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Rien n\'a été enregistré : le partage a été fermé.';
 
   @override
-  String get reminderQueueNotShared => 'Non partagées';
+  String get reminderQueueNotRecordedHeading => 'Partagées, non enregistrées';
+
+  @override
+  String get reminderQueueRecord => 'Enregistrer';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due.';
 
   @override
   String get reminderQueueResultNone => 'Aucune relance partagée';
@@ -23707,7 +23707,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderQueueShared => 'Partagée';
 
   @override
-  String get reminderQueueStays => 'Elles restent dans « À faire ».';
+  String get reminderQueueSharedNotRecorded =>
+      'Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.';
 
   @override
   String get reminderQueueTitle => 'Relances à partager';

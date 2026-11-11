@@ -24580,6 +24580,12 @@ abstract class AppLocalizations {
   /// **'You are all caught up.'**
   String get invoicingCaughtUp;
 
+  /// #3587 To do: the reminders entry while the received payments are still being read
+  ///
+  /// In en, this message translates to:
+  /// **'Checking received payments…'**
+  String get invoicingCheckingPayments;
+
   /// #3587 table column
   ///
   /// In en, this message translates to:
@@ -24807,24 +24813,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Received in {month}'**
   String invoicingReceivedIn(String month);
-
-  /// #3587 the To do card's last line, automatic reminders
-  ///
-  /// In en, this message translates to:
-  /// **'Reminders go out by themselves, in the app.'**
-  String get invoicingRemindersAutomatic;
-
-  /// #3587 the To do card's last line, reminders by hand
-  ///
-  /// In en, this message translates to:
-  /// **'Reminders are shared by hand.'**
-  String get invoicingRemindersByHand;
-
-  /// #3587 opens the reminder rules
-  ///
-  /// In en, this message translates to:
-  /// **'Rules'**
-  String get invoicingRules;
 
   /// #3587 top bar: open the search field
   ///
@@ -38889,11 +38877,23 @@ abstract class AppLocalizations {
   /// **'Nothing was recorded: the share was closed.'**
   String get reminderQueueNotRecorded;
 
-  /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotShared)
+  /// #3587 R1-f: result page heading of the reminders shared but not recorded
   ///
   /// In en, this message translates to:
-  /// **'Not shared'**
-  String get reminderQueueNotShared;
+  /// **'Shared, not recorded'**
+  String get reminderQueueNotRecordedHeading;
+
+  /// #3587 R1-f: records a reminder that was already shared, without sharing it again
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get reminderQueueRecord;
+
+  /// #3587 R1-f: result page note under the reminders shared but not recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Until it is recorded, the invoice still shows this reminder as due.'**
+  String get reminderQueueRecordStays;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)
   ///
@@ -38931,11 +38931,11 @@ abstract class AppLocalizations {
   /// **'Shared'**
   String get reminderQueueShared;
 
-  /// #3587 R1-f: the by-hand reminder queue (reminderQueueStays)
+  /// #3587 R1-f: a reminder left the device but recording its level failed; its action records only
   ///
   /// In en, this message translates to:
-  /// **'They stay in To do.'**
-  String get reminderQueueStays;
+  /// **'Shared, but not recorded on the invoice. Record it: it will not be shared again.'**
+  String get reminderQueueSharedNotRecorded;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueTitle)
   ///

@@ -21,9 +21,10 @@ import '../../events/providers/event_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/credit_move_commands.dart';
 import '../application/invoice_action.dart';
+import '../application/payment_candidates.dart';
 import '../application/send_reminder.dart';
+import '../application/unassigned_money.dart';
 import '../domain/dunning.dart';
-import '../domain/ledger_entry.dart';
 import '../providers/credit_move_providers.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
@@ -228,12 +229,14 @@ Future<void> remindInvoice(
 /// Matches an open invoice to its payment (0067) — the only way an invoice
 /// closes and archives. Over/under payments resolve in the dialog; the
 /// server re-validates and files the invoice_payment event (pending when a
-/// validation rule exists).
+/// validation rule exists). [paymentId] opens the dialog on that payment
+/// (Payments to match passes the one of the card that was tapped).
 Future<void> matchInvoiceToPayment(
   BuildContext context,
   WidgetRef ref,
-  Invoice invoice,
-) async {
+  Invoice invoice, {
+  String? paymentId,
+}) async {
   final l10n = context.l10n;
   final currency = appFormatOf(context).moneyIn(invoice.currency);
   // 0068 — the candidates: the member's registered payments (incl. settled
@@ -245,15 +248,19 @@ Future<void> matchInvoiceToPayment(
   final matches = ref.read(invoiceMatchesProvider).value ?? const {};
   // #506 — the junction knows EVERY consumed payment (an aggregate
   // match only remembers its last one).
+  // #3349 — a credit moved to another member is no longer this member's
+  // money: neither the original nor its reversal is offered. The one
+  // definition of consumed (`consumedPaymentIdsOf`).
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final consumed = {
-    for (final match in matches.values) ?match.paymentLedgerId,
-    if (workspace != null) ...await invoiceQueries.fetchConsumedPaymentIds(workspace.id),
-    // #3349 — a credit moved to another member is no longer this member's
-    // money: neither the original nor its reversal is offered.
-    if (workspace != null)
-      ...await ref.read(creditMoveCommandsProvider).movedCreditIds(workspace.id),
-  };
+  final matched = [for (final match in matches.values) match.paymentLedgerId];
+  final consumed = workspace == null
+      ? consumedPaymentIdsOf(matched: matched, junction: {}, moved: {})
+      : await readConsumedPaymentIds(
+          invoices: invoiceQueries,
+          moves: ref.read(creditMoveCommandsProvider),
+          workspaceId: workspace.id,
+          matched: matched,
+        );
   // A standing PARTIAL match shifts the target: further payments are
   // measured against what is STILL DUE.
   final existing = matches[invoice.id];
@@ -264,29 +271,16 @@ Future<void> matchInvoiceToPayment(
           existing.writeoffAt == null
       ? invoice.totalCents - existing.paidCents
       : invoice.totalCents;
-  // #512 — a credit BAKED into an issued invoice (negative line at
-  // derivation) was spent there; the server refuses it too.
+  // #512 — a credit BAKED into an issued invoice was spent there, and
+  // account credits (avoir excess) settle too; newest payment first by the
+  // day the money moved (0070): `unmatchedPaymentsOf`, as Payments to match.
   final memberInvoices = ref.read(invoicesProvider).value ?? const <Invoice>[];
-  bool baked(LedgerEntry entry) => memberInvoices.any(
-    (i) =>
-        i.memberId == invoice.memberId &&
-        !i.isVoided &&
-        i.period == entry.period &&
-        i.issuedAt.isAfter(entry.createdAt),
+  final payments = unmatchedPaymentsOf(
+    memberId: invoice.memberId,
+    ledger: ledger,
+    consumed: consumed,
+    invoices: memberInvoices,
   );
-  final payments = [
-    for (final entry in ledger)
-      if (entry.kind == LedgerKind.credit &&
-          // #512 — account credits (avoir excess) settle too: the
-          // imputation of a credit note on any outstanding invoice.
-          (entry.category == LedgerCategory.payment ||
-              entry.category == LedgerCategory.adjustment) &&
-          !consumed.contains(entry.id) &&
-          !baked(entry))
-        entry,
-    // Newest PAYMENT first — by the day the money moved (0070), not by
-    // the day it happened to be typed in.
-  ]..sort((a, b) => b.on.compareTo(a.on));
   if (!context.mounted) return;
   final choice = await showDialog<MatchChoice>(
     context: context,
@@ -294,6 +288,7 @@ Future<void> matchInvoiceToPayment(
       dueCents: dueCents,
       currency: currency,
       payments: payments,
+      selected: paymentId,
     ),
   );
   if (choice == null || !context.mounted) return;

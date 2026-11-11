@@ -11,10 +11,12 @@
   "reminderQueueResultTitle": "{count, plural, =1{1 relance partagée} other{{count} relances partagées}}",
   "reminderQueueResultNone": "Aucune relance partagée",
   "reminderQueueResultSubtitle": "Chacune est enregistrée sur sa facture.",
-  "reminderQueueNotShared": "Non partagées",
-  "reminderQueueStays": "Elles restent dans « À faire ».",
   "reminderQueueDone": "Terminé",
   "reminderQueueDoneEmpty": "Rien à partager",
   "reminderQueueCheckFirst": "À vérifier d'abord : argent reçu et non affecté",
-  "reminderQueueMatch": "Rapprocher"
+  "reminderQueueMatch": "Rapprocher",
+  "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
+  "reminderQueueRecord": "Enregistrer",
+  "reminderQueueNotRecordedHeading": "Partagées, non enregistrées",
+  "reminderQueueRecordStays": "Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due."
 }

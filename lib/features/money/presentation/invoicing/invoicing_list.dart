@@ -83,6 +83,7 @@ class InvoicingList extends StatelessWidget {
     this.todo,
     this.onClearTodo,
     this.holdsUnassigned = const {},
+    this.remindersKnown = true,
   });
 
   final List<Receivable> receivables;
@@ -106,6 +107,9 @@ class InvoicingList extends StatelessWidget {
 
   /// The customers matched first and never reminded (`holdsUnassignedMoney`).
   final Set<String> holdsUnassigned;
+
+  /// False while who holds money is not known: no Remind is offered.
+  final bool remindersKnown;
 
   bool _selects(Receivable r) => switch (todo) {
     (:final kind, title: _) =>
@@ -328,7 +332,7 @@ class InvoicingList extends StatelessWidget {
     } else {
       final first = row.invoices.first;
       final status = invoiceStatusOf(first, today);
-      words = statusWordsOf(l, format, first, status, today: today);
+      words = statusWordsOf(l, format, first, status, today);
       final kind = statusToneOf(status.kind);
       colour = kind == StatusTone.neutral ? null : tone(kind);
     }
@@ -348,6 +352,7 @@ class InvoicingList extends StatelessWidget {
   Widget? _actionOf(AppLocalizations l, CustomerLine row) {
     final action = row.action;
     if (action == null) return null;
+    if (action == InvoiceAction.shareReminder && !remindersKnown) return null;
     final label = switch (action) {
       InvoiceAction.shareReminder => l.invoicingActionRemind,
       InvoiceAction.confirmPayment => l.invoicingActionConfirm,
@@ -363,7 +368,7 @@ class InvoicingList extends StatelessWidget {
   Widget _chipOf(AppLocalizations l, AppFormat format, Receivable r) {
     final status = invoiceStatusOf(r, today);
     return StatusChip(
-      label: statusWordsOf(l, format, r, status, today: today),
+      label: statusWordsOf(l, format, r, status, today),
       tone: statusToneOf(status.kind),
     );
   }

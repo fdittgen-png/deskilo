@@ -14940,6 +14940,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoicingCaughtUp => 'Todo está al día.';
 
   @override
+  String get invoicingCheckingPayments => 'Comprobando los pagos recibidos…';
+
+  @override
   String get invoicingColCustomer => 'Cliente';
 
   @override
@@ -15095,17 +15098,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String invoicingReceivedIn(String month) {
     return 'Cobrado en $month';
   }
-
-  @override
-  String get invoicingRemindersAutomatic =>
-      'Los recordatorios salen solos, en la aplicación.';
-
-  @override
-  String get invoicingRemindersByHand =>
-      'Los recordatorios se comparten a mano.';
-
-  @override
-  String get invoicingRules => 'Reglas';
 
   @override
   String get invoicingSearch => 'Buscar';
@@ -23613,7 +23605,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se registró nada: se cerró el menú de compartir.';
 
   @override
-  String get reminderQueueNotShared => 'No compartidos';
+  String get reminderQueueNotRecordedHeading => 'Compartidos, sin registrar';
+
+  @override
+  String get reminderQueueRecord => 'Registrar';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Hasta que se registre, la factura sigue mostrando este recordatorio como pendiente.';
 
   @override
   String get reminderQueueResultNone => 'Ningún recordatorio compartido';
@@ -23645,7 +23644,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reminderQueueShared => 'Compartido';
 
   @override
-  String get reminderQueueStays => 'Se quedan en «Por hacer».';
+  String get reminderQueueSharedNotRecorded =>
+      'Compartido, pero no registrado en la factura. Regístrelo: no se compartirá de nuevo.';
 
   @override
   String get reminderQueueTitle => 'Recordatorios por compartir';

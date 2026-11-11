@@ -11,10 +11,12 @@
   "reminderQueueResultTitle": "{count, plural, =1{1 recordatorio compartido} other{{count} recordatorios compartidos}}",
   "reminderQueueResultNone": "Ningún recordatorio compartido",
   "reminderQueueResultSubtitle": "Cada uno queda registrado en su factura.",
-  "reminderQueueNotShared": "No compartidos",
-  "reminderQueueStays": "Se quedan en «Por hacer».",
   "reminderQueueDone": "Hecho",
   "reminderQueueDoneEmpty": "Nada que compartir",
   "reminderQueueCheckFirst": "Compruebe primero: dinero recibido y no asignado",
-  "reminderQueueMatch": "Conciliar"
+  "reminderQueueMatch": "Conciliar",
+  "reminderQueueSharedNotRecorded": "Compartido, pero no registrado en la factura. Regístrelo: no se compartirá de nuevo.",
+  "reminderQueueRecord": "Registrar",
+  "reminderQueueNotRecordedHeading": "Compartidos, sin registrar",
+  "reminderQueueRecordStays": "Hasta que se registre, la factura sigue mostrando este recordatorio como pendiente."
 }

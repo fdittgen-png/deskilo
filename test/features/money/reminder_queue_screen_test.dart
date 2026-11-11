@@ -25,8 +25,21 @@ import '../../ux/experience_guards.dart';
 
 Finder _key(String k) => find.byKey(ValueKey(k));
 
+/// The money fake whose record of a reminder can fail.
+class _Repo extends FakeMoneyRepository {
+  Exception? failRecord;
+
+  @override
+  Future<void> remindInvoice(String invoiceId) async {
+    final failure = failRecord;
+    if (failure != null) throw failure;
+    return super.remindInvoice(invoiceId);
+  }
+}
+
 void main() {
-  late FakeMoneyRepository repo;
+  late _Repo repo;
+  var shares = 0;
   late List<String> ids;
   var outcome = FileShareOutcome.sent;
   final matched = <String>[];
@@ -34,7 +47,8 @@ void main() {
   final today = kTestNow;
 
   setUp(() async {
-    repo = FakeMoneyRepository();
+    repo = _Repo();
+    shares = 0;
     outcome = FileShareOutcome.sent;
     matched.clear();
     holdingMoney = {};
@@ -114,7 +128,10 @@ void main() {
           required fileName,
           required mimeType,
           text,
-        }) async => outcome,
+        }) async {
+          shares++;
+          return outcome;
+        },
       ),
     );
     // The ledger the screen reads: the archive must have answered.
@@ -179,6 +196,50 @@ void main() {
     expect(find.text('Shared'), findsNWidgets(2));
     expect(repo.invoiceReminders[ids.first]?.length ?? 0, 1);
     expect(repo.invoiceReminders[ids.last]?.length ?? 0, 1);
+  });
+
+  testWidgets('shared, but the record failed: the line says so truly and '
+      'offers Record, which records without sharing again', (tester) async {
+    repo.failRecord = Exception('offline');
+    await pump(tester);
+    await tapReal(tester, _key('reminder-queue-next'));
+    expect(shares, 1);
+    expect(
+      find.text(
+        'Shared, but not recorded on the invoice. Record it: it will not be '
+        'shared again.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Could not be shared. Try again.'), findsNothing);
+    expect(_key('reminder-queue-share-${ids.last}'), findsNothing);
+    expect(
+      find.text('Share the next one · Anna Alder'),
+      findsOneWidget,
+      reason: 'the bar never shares the letter that already left',
+    );
+
+    repo.failRecord = null;
+    await tapReal(tester, _key('reminder-queue-record-${ids.last}'));
+    expect(shares, 1, reason: 'recorded, not shared a second time');
+    expect(repo.invoiceReminders[ids.last]?.length ?? 0, 1);
+    expect(_key('reminder-queue-share-${ids.last}'), findsNothing);
+  });
+
+  testWidgets('the result page names what was shared and not recorded, with '
+      'Record', (tester) async {
+    await pump(tester);
+    await tapReal(tester, _key('reminder-queue-next'));
+    repo.failRecord = Exception('offline');
+    await tapReal(tester, _key('reminder-queue-next'));
+    expect(_key('reminder-queue-result'), findsOneWidget);
+    expect(find.text('Shared, not recorded'), findsOneWidget);
+    expect(shares, 2);
+    repo.failRecord = null;
+    await tapReal(tester, _key('reminder-queue-record-${ids.first}'));
+    expect(shares, 2);
+    expect(find.text('2 reminders shared'), findsOneWidget);
+    expect(find.text('Shared, not recorded'), findsNothing);
   });
 
   testWidgets('Preview shows the letter on screen and Share is in its bar', (

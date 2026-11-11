@@ -9525,6 +9525,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Comprobando los pagos recibidos…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Cliente",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9724,18 +9728,6 @@
         "type": "String"
       }
     }
-  },
-  "invoicingRemindersAutomatic": "Los recordatorios salen solos, en la aplicación.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Los recordatorios se comparten a mano.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Reglas",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
   },
   "invoicingSearch": "Buscar",
   "@invoicingSearch": {
@@ -14769,14 +14761,16 @@
   "reminderQueueLevel": "Recordatorio {level}",
   "reminderQueueMatch": "Conciliar",
   "reminderQueueNotRecorded": "No se registró nada: se cerró el menú de compartir.",
-  "reminderQueueNotShared": "No compartidos",
+  "reminderQueueNotRecordedHeading": "Compartidos, sin registrar",
+  "reminderQueueRecord": "Registrar",
+  "reminderQueueRecordStays": "Hasta que se registre, la factura sigue mostrando este recordatorio como pendiente.",
   "reminderQueueResultNone": "Ningún recordatorio compartido",
   "reminderQueueResultSubtitle": "Cada uno queda registrado en su factura.",
   "reminderQueueResultTitle": "{count, plural, =1{1 recordatorio compartido} other{{count} recordatorios compartidos}}",
   "reminderQueueShare": "Compartir",
   "reminderQueueShareNext": "Compartir la siguiente · {customer}",
   "reminderQueueShared": "Compartido",
-  "reminderQueueStays": "Se quedan en «Por hacer».",
+  "reminderQueueSharedNotRecorded": "Compartido, pero no registrado en la factura. Regístrelo: no se compartirá de nuevo.",
   "reminderQueueTitle": "Recordatorios por compartir",
   "reminderStatusAccepted": "Aceptado por el servicio de notificaciones — no prueba que se haya leído",
   "@reminderStatusAccepted": {

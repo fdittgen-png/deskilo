@@ -9525,6 +9525,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Vérification des paiements reçus…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Client",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9724,18 +9728,6 @@
         "type": "String"
       }
     }
-  },
-  "invoicingRemindersAutomatic": "Les relances partent d’elles-mêmes, dans l’application.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Les relances se partagent à la main.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Règles",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
   },
   "invoicingSearch": "Rechercher",
   "@invoicingSearch": {
@@ -14769,14 +14761,16 @@
   "reminderQueueLevel": "Relance {level}",
   "reminderQueueMatch": "Rapprocher",
   "reminderQueueNotRecorded": "Rien n'a été enregistré : le partage a été fermé.",
-  "reminderQueueNotShared": "Non partagées",
+  "reminderQueueNotRecordedHeading": "Partagées, non enregistrées",
+  "reminderQueueRecord": "Enregistrer",
+  "reminderQueueRecordStays": "Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due.",
   "reminderQueueResultNone": "Aucune relance partagée",
   "reminderQueueResultSubtitle": "Chacune est enregistrée sur sa facture.",
   "reminderQueueResultTitle": "{count, plural, =1{1 relance partagée} other{{count} relances partagées}}",
   "reminderQueueShare": "Partager",
   "reminderQueueShareNext": "Partager la suivante · {customer}",
   "reminderQueueShared": "Partagée",
-  "reminderQueueStays": "Elles restent dans « À faire ».",
+  "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
   "reminderQueueTitle": "Relances à partager",
   "reminderStatusAccepted": "Acceptée par le service de notifications — ce n'est pas une preuve de lecture",
   "@reminderStatusAccepted": {

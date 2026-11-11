@@ -14973,6 +14973,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingCaughtUp => 'Alles ist erledigt.';
 
   @override
+  String get invoicingCheckingPayments =>
+      'Eingegangene Zahlungen werden geprüft…';
+
+  @override
   String get invoicingColCustomer => 'Kunde';
 
   @override
@@ -15128,16 +15132,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String invoicingReceivedIn(String month) {
     return 'Eingegangen im $month';
   }
-
-  @override
-  String get invoicingRemindersAutomatic =>
-      'Mahnungen gehen von selbst hinaus, in der App.';
-
-  @override
-  String get invoicingRemindersByHand => 'Mahnungen werden von Hand geteilt.';
-
-  @override
-  String get invoicingRules => 'Regeln';
 
   @override
   String get invoicingSearch => 'Suchen';
@@ -23667,7 +23661,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nichts wurde vermerkt: das Teilen wurde geschlossen.';
 
   @override
-  String get reminderQueueNotShared => 'Nicht geteilt';
+  String get reminderQueueNotRecordedHeading => 'Geteilt, nicht vermerkt';
+
+  @override
+  String get reminderQueueRecord => 'Vermerken';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Bis sie vermerkt ist, zeigt die Rechnung diese Mahnung weiterhin als fällig.';
 
   @override
   String get reminderQueueResultNone => 'Keine Mahnung geteilt';
@@ -23699,7 +23700,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderQueueShared => 'Geteilt';
 
   @override
-  String get reminderQueueStays => 'Sie bleiben unter „Zu erledigen“.';
+  String get reminderQueueSharedNotRecorded =>
+      'Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.';
 
   @override
   String get reminderQueueTitle => 'Zu teilende Mahnungen';

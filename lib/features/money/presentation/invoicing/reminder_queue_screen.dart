@@ -21,6 +21,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/result_page.dart';
+import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/reminder_queue.dart';
@@ -42,8 +43,11 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
     @visibleForTesting this.previewOf,
   });
 
-  /// The lines waiting, as [reminderQueueOf] drew them.
-  final ReminderQueue queue;
+  /// The lines waiting, as [reminderQueueOf] draws them from the current
+  /// reads; null while who holds money received and not assigned is not
+  /// known: nothing can be shared until it is. A new queue (the reads
+  /// changed) replaces the lines, keeping what already left the device.
+  final ReminderQueue? queue;
 
   /// The business's calendar day (how late each line is).
   final DateTime today;
@@ -70,7 +74,21 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
 }
 
 class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
-  late final ValueNotifier<ReminderQueue> _queue = ValueNotifier(widget.queue);
+  late final ValueNotifier<ReminderQueue> _queue = ValueNotifier(
+    widget.queue ?? const ReminderQueue([]),
+  );
+
+  @override
+  void didUpdateWidget(ReminderQueueScreen old) {
+    super.didUpdateWidget(old);
+    final fresh = widget.queue;
+    if (fresh != null && !identical(fresh, old.queue)) {
+      _queue.value = _queue.value.refreshedBy(fresh);
+    }
+  }
+
+  /// Who holds money is not known yet: nothing is shared.
+  bool get _checking => widget.queue == null;
 
   /// The invoice being shared (its buttons wait), or null.
   final ValueNotifier<String?> _working = ValueNotifier(null);
@@ -114,34 +132,45 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     );
   }
 
+  void _settle(QueuedReminder line, ReminderHandled result) =>
+      _queue.value = _queue.value.withResult(line.invoiceId, result);
+
   Future<void> _share(QueuedReminder line) async {
-    if (_working.value != null) return;
+    if (_working.value != null || _checking) return;
     _working.value = line.invoiceId;
     try {
       final invoice = await _invoiceOf(line.invoiceId);
-      if (invoice == null) {
-        _queue.value = _queue.value.withResult(
-          line.invoiceId,
-          ReminderHandled.failed,
-        );
-        return;
-      }
+      if (invoice == null) return _settle(line, ReminderHandled.failed);
       final ReminderLetter letter;
       try {
         letter = await (widget.letterOf ?? _letterOf)(line, invoice);
       } on Object {
-        _queue.value = _queue.value.withResult(
-          line.invoiceId,
-          ReminderHandled.failed,
-        );
-        return;
+        return _settle(line, ReminderHandled.failed);
       }
-      _queue.value = await shareQueuedReminder(
-        queue: _queue.value,
+      final result = await shareQueuedReminder(
         line: line,
         repository: ref.read(invoiceCommandsProvider),
         share: ref.read(fileSharerProvider),
         letter: letter,
+      );
+      _settle(line, result);
+      ref.invalidate(invoiceRemindersProvider);
+    } finally {
+      if (mounted) _working.value = null;
+    }
+  }
+
+  /// Records a reminder that already left: the record only, no share.
+  Future<void> _record(QueuedReminder line) async {
+    if (_working.value != null) return;
+    _working.value = line.invoiceId;
+    try {
+      _settle(
+        line,
+        await recordQueuedReminder(
+          line: line,
+          repository: ref.read(invoiceCommandsProvider),
+        ),
       );
       ref.invalidate(invoiceRemindersProvider);
     } finally {
@@ -209,6 +238,13 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
             padding: AppSpacing.mdAll,
             children: [
               QuietLine(l10n.reminderQueueIntro, icon: Icons.info_outline),
+              if (_checking) ...[
+                const SizedBox(height: AppSpacing.sm),
+                QuietLine(
+                  l10n.invoicingCheckingPayments,
+                  key: const ValueKey('reminder-queue-checking'),
+                ),
+              ],
               // Their money is held unassigned: not chased, checked FIRST.
               if (q.checkFirst.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
@@ -262,7 +298,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
           actions: [
             FilledButton(
               key: const ValueKey('reminder-queue-next'),
-              onPressed: next == null || _working.value != null
+              onPressed: next == null || _working.value != null || _checking
                   ? null
                   : () => _share(next),
               child: Text(
@@ -282,7 +318,8 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     final money = ref.watch(appFormatProvider).moneyIn(r.currency);
     final days = -(r.daysToDue(widget.today) ?? 0);
     final handled = q.handled[line.invoiceId];
-    final busy = _working.value != null;
+    final busy = _working.value != null || _checking;
+    final left = handled == ReminderHandled.sharedNotRecorded;
     return Padding(
       key: ValueKey('reminder-queue-line-${line.invoiceId}'),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -313,6 +350,12 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
               key: ValueKey('reminder-queue-status-${line.invoiceId}'),
               style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
             ),
+          if (left)
+            Text(
+              l10n.reminderQueueSharedNotRecorded,
+              key: ValueKey('reminder-queue-status-${line.invoiceId}'),
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
           if (handled == ReminderHandled.failed)
             Text(
               l10n.reminderQueueFailed,
@@ -328,12 +371,24 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
                 onPressed: busy ? null : () => _preview(line),
                 child: Text(l10n.invoiceTemplatePreview),
               ),
-              FilledButton.tonal(
-                key: ValueKey('reminder-queue-share-${line.invoiceId}'),
-                style: FilledButton.styleFrom(minimumSize: const Size(48, 48)),
-                onPressed: busy ? null : () => _share(line),
-                child: Text(l10n.reminderQueueShare),
-              ),
+              // It already left: Record, never a second share.
+              if (left)
+                _recordButton(l10n, line, busy: busy)
+              else if (handled == ReminderHandled.shared)
+                StatusChip(
+                  key: ValueKey('reminder-queue-shared-${line.invoiceId}'),
+                  label: l10n.reminderQueueShared,
+                  tone: StatusTone.ok,
+                )
+              else
+                FilledButton.tonal(
+                  key: ValueKey('reminder-queue-share-${line.invoiceId}'),
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(48, 48),
+                  ),
+                  onPressed: busy ? null : () => _share(line),
+                  child: Text(l10n.reminderQueueShare),
+                ),
             ],
           ),
         ],
@@ -341,12 +396,23 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     );
   }
 
+  Widget _recordButton(
+    AppLocalizations l10n,
+    QueuedReminder line, {
+    required bool busy,
+  }) => FilledButton.tonal(
+    key: ValueKey('reminder-queue-record-${line.invoiceId}'),
+    style: FilledButton.styleFrom(minimumSize: const Size(48, 48)),
+    onPressed: busy ? null : () => _record(line),
+    child: Text(l10n.reminderQueueRecord),
+  );
+
   Widget _result(AppLocalizations l10n, ReminderQueue q) {
     ResultLine line(QueuedReminder l, String detail, String outcome) =>
         (title: l.receivable.customerName, detail: detail, outcome: outcome);
     return ResultPage(
       key: const ValueKey('reminder-queue-result'),
-      tone: ResultTone.ok,
+      tone: q.unrecorded.isEmpty ? ResultTone.ok : ResultTone.partial,
       title: q.shared.isEmpty
           ? l10n.reminderQueueResultNone
           : l10n.reminderQueueResultTitle(q.shared.length),
@@ -355,9 +421,17 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
         for (final l in q.shared)
           line(l, l.receivable.number, l10n.reminderQueueShared),
       ],
-      notDone: const [],
-      notDoneHeading: l10n.reminderQueueNotShared,
-      staysNote: l10n.reminderQueueStays,
+      // Shared, but the level is not on the invoice: Record, never Share.
+      notDone: [
+        for (final l in q.unrecorded)
+          line(l, l.receivable.number, l10n.reminderQueueSharedNotRecorded),
+      ],
+      notDoneActions: [
+        for (final l in q.unrecorded)
+          _recordButton(l10n, l, busy: _working.value != null),
+      ],
+      notDoneHeading: l10n.reminderQueueNotRecordedHeading,
+      staysNote: l10n.reminderQueueRecordStays,
       doneLabel: l10n.reminderQueueDone,
       onDone: () => Navigator.of(context).maybePop(),
     );

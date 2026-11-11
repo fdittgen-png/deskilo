@@ -9525,6 +9525,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Verifica dei pagamenti ricevuti…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Cliente",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9724,18 +9728,6 @@
         "type": "String"
       }
     }
-  },
-  "invoicingRemindersAutomatic": "I solleciti partono da soli, nell’app.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "I solleciti si condividono a mano.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Regole",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
   },
   "invoicingSearch": "Cerca",
   "@invoicingSearch": {
@@ -14769,14 +14761,16 @@
   "reminderQueueLevel": "Sollecito {level}",
   "reminderQueueMatch": "Abbina",
   "reminderQueueNotRecorded": "Non è stato registrato nulla: la condivisione è stata chiusa.",
-  "reminderQueueNotShared": "Non condivisi",
+  "reminderQueueNotRecordedHeading": "Condivisi, non registrati",
+  "reminderQueueRecord": "Registra",
+  "reminderQueueRecordStays": "Finché non viene registrato, la fattura mostra ancora questo sollecito come dovuto.",
   "reminderQueueResultNone": "Nessun sollecito condiviso",
   "reminderQueueResultSubtitle": "Ognuno è registrato sulla sua fattura.",
   "reminderQueueResultTitle": "{count, plural, =1{1 sollecito condiviso} other{{count} solleciti condivisi}}",
   "reminderQueueShare": "Condividi",
   "reminderQueueShareNext": "Condividi la prossima · {customer}",
   "reminderQueueShared": "Condiviso",
-  "reminderQueueStays": "Restano in «Da fare».",
+  "reminderQueueSharedNotRecorded": "Condiviso, ma non registrato sulla fattura. Lo registri: non verrà condiviso di nuovo.",
   "reminderQueueTitle": "Solleciti da condividere",
   "reminderStatusAccepted": "Accettato dal servizio di notifiche — non prova che sia stato letto",
   "@reminderStatusAccepted": {

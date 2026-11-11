@@ -16,8 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays public, naming the issue that resolves it.
-const Map<String, String> _allowed = {
-};
+const Map<String, String> _allowed = {};
 
 void main() {
   final findings = scanPublicSurface(Directory.current.path);

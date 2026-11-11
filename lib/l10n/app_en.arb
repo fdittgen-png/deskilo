@@ -19628,6 +19628,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Checking received payments…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Customer",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -19827,18 +19831,6 @@
         "type": "String"
       }
     }
-  },
-  "invoicingRemindersAutomatic": "Reminders go out by themselves, in the app.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Reminders are shared by hand.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Rules",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
   },
   "invoicingSearch": "Search",
   "@invoicingSearch": {
@@ -31132,9 +31124,17 @@
   "@reminderQueueNotRecorded": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)"
   },
-  "reminderQueueNotShared": "Not shared",
-  "@reminderQueueNotShared": {
-    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotShared)"
+  "reminderQueueNotRecordedHeading": "Shared, not recorded",
+  "@reminderQueueNotRecordedHeading": {
+    "description": "#3587 R1-f: result page heading of the reminders shared but not recorded"
+  },
+  "reminderQueueRecord": "Record",
+  "@reminderQueueRecord": {
+    "description": "#3587 R1-f: records a reminder that was already shared, without sharing it again"
+  },
+  "reminderQueueRecordStays": "Until it is recorded, the invoice still shows this reminder as due.",
+  "@reminderQueueRecordStays": {
+    "description": "#3587 R1-f: result page note under the reminders shared but not recorded"
   },
   "reminderQueueResultNone": "No reminder shared",
   "@reminderQueueResultNone": {
@@ -31170,9 +31170,9 @@
   "@reminderQueueShared": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShared)"
   },
-  "reminderQueueStays": "They stay in To do.",
-  "@reminderQueueStays": {
-    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueStays)"
+  "reminderQueueSharedNotRecorded": "Shared, but not recorded on the invoice. Record it: it will not be shared again.",
+  "@reminderQueueSharedNotRecorded": {
+    "description": "#3587 R1-f: a reminder left the device but recording its level failed; its action records only"
   },
   "reminderQueueTitle": "Reminders to share",
   "@reminderQueueTitle": {

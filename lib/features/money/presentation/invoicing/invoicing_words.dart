@@ -36,20 +36,16 @@ StatusTone statusToneOf(InvoiceStatusKind kind) => switch (kind) {
   InvoiceStatusKind.regrouped => StatusTone.neutral,
 };
 
-/// [r]'s status [s] in words, with [format] for its dates and amounts.
+/// [r]'s status [s] in words on [today], with [format] for its dates and
+/// amounts: a date of another year than [today]'s says its year.
 String statusWordsOf(
   AppLocalizations l,
   AppFormat format,
   Receivable r,
-  InvoiceStatus s, {
-  DateTime? today,
-}) {
-  // With [today], a date of another year says its year.
-  String day(DateTime? d) => d == null
-      ? ''
-      : today == null
-      ? format.dates(DateShape.monthDay).format(d)
-      : invoicingDay(format, d, today);
+  InvoiceStatus s,
+  DateTime today,
+) {
+  String day(DateTime? d) => d == null ? '' : invoicingDay(format, d, today);
   return switch (s.kind) {
     InvoiceStatusKind.draft => l.invoicingStatusDraft,
     InvoiceStatusKind.dueIn => l.invoicingDueIn(s.number),

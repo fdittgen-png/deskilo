@@ -7,6 +7,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/application/reminder_queue.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,6 +21,7 @@ Receivable _r(
   int open = 10000,
   bool onHold = false,
   bool pending = false,
+  bool rejected = false,
 }) => Receivable(
   invoiceId: id,
   customerId: 'c-$id',
@@ -34,6 +36,7 @@ Receivable _r(
   reminderDueLevel: level,
   onHold: onHold,
   paymentDeclared: pending,
+  eInvoiceRejected: rejected,
 );
 
 class _Commands implements InvoiceCommands {
@@ -57,9 +60,11 @@ final ReminderLetter _letter = (
   message: 'Please pay',
 );
 
-FileSharer _sharing(FileShareOutcome outcome) =>
-    ({required bytes, required fileName, required mimeType, text}) async =>
-        outcome;
+FileSharer _sharing(FileShareOutcome outcome, {List<String>? log}) =>
+    ({required bytes, required fileName, required mimeType, text}) async {
+      log?.add(fileName);
+      return outcome;
+    };
 
 void main() {
   group('the queue', () {
@@ -110,14 +115,20 @@ void main() {
       );
     });
 
-    Future<ReminderQueue> share(FileShareOutcome outcome) =>
-        shareQueuedReminder(
-          queue: queue,
-          line: queue.next!,
+    final shares = <String>[];
+
+    Future<ReminderQueue> share(FileShareOutcome outcome) async {
+      final line = queue.next!;
+      return queue.withResult(
+        line.invoiceId,
+        await shareQueuedReminder(
+          line: line,
           repository: commands,
-          share: _sharing(outcome),
+          share: _sharing(outcome, log: shares),
           letter: _letter,
-        );
+        ),
+      );
+    }
 
     test('a share that left records the level once and moves on', () async {
       final after = await share(FileShareOutcome.sent);
@@ -130,31 +141,103 @@ void main() {
     test('a dismissed sheet records nothing and the line stays', () async {
       final after = await share(FileShareOutcome.dismissed);
       expect(commands.reminded, isEmpty);
-      expect(after.notRecorded.map((l) => l.invoiceId), ['a']);
+      expect(after.handled['a'], ReminderHandled.notRecorded);
       expect(after.shared, isEmpty);
       expect(after.next?.invoiceId, 'b', reason: 'the untried line goes first');
       expect(after.remaining, hasLength(2), reason: 'a is still to share');
     });
 
-    test('a failed record is "failed", never "shared"', () async {
+    test('a letter that could not be built is "failed": nothing left', () async {
+      shares.clear();
+      final r = await shareQueuedReminder(
+        line: queue.next!,
+        repository: commands,
+        share: ({required bytes, required fileName, required mimeType, text}) =>
+            throw StateError('no share sheet'),
+        letter: _letter,
+      );
+      expect(r, ReminderHandled.failed);
+      expect(commands.reminded, isEmpty);
+    });
+
+    test('shared, then the record failed: "shared, not recorded"; Record '
+        'records it without sharing it again', () async {
+      shares.clear();
       commands.failWith = Exception('offline');
-      final after = await share(FileShareOutcome.sent);
-      expect(after.failed.map((l) => l.invoiceId), ['a']);
+      var after = await share(FileShareOutcome.sent);
+      expect(after.handled['a'], ReminderHandled.sharedNotRecorded);
       expect(after.shared, isEmpty);
+      expect(after.unrecorded.map((l) => l.invoiceId), ['a']);
+      expect(
+        after.remaining.map((l) => l.invoiceId),
+        ['b'],
+        reason: 'it left: it is never offered to share again',
+      );
+      expect(after.next?.invoiceId, 'b');
+      expect(shares, hasLength(1));
+
+      commands.failWith = null;
+      final line = after.lines.first;
+      after = after.withResult(
+        line.invoiceId,
+        await recordQueuedReminder(line: line, repository: commands),
+      );
+      expect(commands.reminded, ['a']);
+      expect(shares, hasLength(1), reason: 'recorded, not shared twice');
+      expect(after.shared.map((l) => l.invoiceId), ['a']);
     });
 
     test('the queue is done when every line is shared', () async {
       var q = await share(FileShareOutcome.sent);
-      q = await shareQueuedReminder(
-        queue: q,
-        line: q.next!,
-        repository: commands,
-        share: _sharing(FileShareOutcome.sent),
-        letter: _letter,
+      final line = q.next!;
+      q = q.withResult(
+        line.invoiceId,
+        await shareQueuedReminder(
+          line: line,
+          repository: commands,
+          share: _sharing(FileShareOutcome.sent),
+          letter: _letter,
+        ),
       );
       expect(q.isDone, isTrue);
       expect(q.next, isNull);
       expect(commands.reminded, ['a', 'b']);
+    });
+  });
+
+  group('the queue lists exactly what the To-do entry counts', () {
+    test('a rejected e-invoice is fixed first, never shared; count = queue '
+        'length', () {
+      final invoices = [_r('a'), _r('rejected', rejected: true), _r('b')];
+      final queue = reminderQueueOf(invoices, _today, ReminderMode.byHand);
+      expect(queue.lines.map((l) => l.invoiceId), isNot(contains('rejected')));
+      final count = todoOf(invoices, mode: ReminderMode.byHand)
+          .firstWhere((t) => t.kind == TodoKind.shareReminders)
+          .tally
+          .count;
+      expect(queue.lines, hasLength(count));
+    });
+
+    test('drawn again, a customer now known to hold money leaves the lines '
+        'for "check first"; what already left stays', () {
+      final invoices = [_r('a'), _r('b'), _r('c')];
+      final before = reminderQueueOf(
+        invoices,
+        _today,
+        ReminderMode.byHand,
+      ).withResult('c', ReminderHandled.shared);
+      final after = before.refreshedBy(
+        reminderQueueOf(
+          invoices,
+          _today,
+          ReminderMode.byHand,
+          holdsUnassigned: {'c-a', 'c-c'},
+        ),
+      );
+      expect(after.lines.map((l) => l.invoiceId), unorderedEquals(['b', 'c']));
+      expect(after.checkFirst.map((c) => c.customerId), ['c-a', 'c-c']);
+      expect(after.shared.map((l) => l.invoiceId), ['c']);
+      expect(after.next?.invoiceId, 'b');
     });
   });
 

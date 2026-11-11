@@ -11,10 +11,12 @@
   "reminderQueueResultTitle": "{count, plural, =1{1 Mahnung geteilt} other{{count} Mahnungen geteilt}}",
   "reminderQueueResultNone": "Keine Mahnung geteilt",
   "reminderQueueResultSubtitle": "Jede wird auf ihrer Rechnung vermerkt.",
-  "reminderQueueNotShared": "Nicht geteilt",
-  "reminderQueueStays": "Sie bleiben unter „Zu erledigen“.",
   "reminderQueueDone": "Fertig",
   "reminderQueueDoneEmpty": "Nichts zu teilen",
   "reminderQueueCheckFirst": "Zuerst prüfen: Geld eingegangen und nicht zugeordnet",
-  "reminderQueueMatch": "Zuordnen"
+  "reminderQueueMatch": "Zuordnen",
+  "reminderQueueSharedNotRecorded": "Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.",
+  "reminderQueueRecord": "Vermerken",
+  "reminderQueueNotRecordedHeading": "Geteilt, nicht vermerkt",
+  "reminderQueueRecordStays": "Bis sie vermerkt ist, zeigt die Rechnung diese Mahnung weiterhin als fällig."
 }

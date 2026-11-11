@@ -4,13 +4,18 @@
 // invoice has taken, the invoices it could settle (the same amount first), one
 // tap to match an exact one, "None of these" to leave a payment as it is, and
 // the honest empty and failed states; no rule of the experience breaks at 320
-// and 390 px.
+// and 390 px. The list is read from the CURRENT invoices and the one answer
+// of money not assigned: after a match, the next payment is offered only what
+// is still open; it is in the business's currency; a match runs once.
+import 'dart:async';
+
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
-import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/presentation/invoicing/payments_to_match_screen.dart';
+import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,10 +27,16 @@ import '../../ux/experience_guards.dart';
 
 Finder _key(String k) => find.byKey(ValueKey(k));
 
-/// The money fake that remembers the matches it was asked for.
+/// The money fake that settles what it is asked to match, and whose ledger
+/// read can fail or wait.
 class _Repo extends FakeMoneyRepository {
   final List<String> matched = [];
   Exception? failWith;
+  Exception? ledgerFails;
+  Completer<void>? matching;
+
+  /// The open invoices the reader turns the archive into.
+  List<Receivable> open = [];
 
   @override
   Future<void> matchInvoice({
@@ -36,23 +47,41 @@ class _Repo extends FakeMoneyRepository {
   }) async {
     final failure = failWith;
     if (failure != null) throw failure;
+    await matching?.future;
     matched.add('$invoiceId<-$paymentLedgerId:$resolution');
+    consumedPaymentIds.add(paymentLedgerId);
+    open = [
+      for (final r in open)
+        if (r.invoiceId != invoiceId) r,
+    ];
+  }
+
+  @override
+  Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) async {
+    final failure = ledgerFails;
+    if (failure != null) throw failure;
+    return super.fetchWorkspaceLedger(workspaceId);
   }
 }
 
-Receivable _inv(String id, int open, DateTime issued) => Receivable(
+Receivable _inv(
+  String id,
+  int open,
+  DateTime issued, {
+  String currency = 'EUR',
+}) => Receivable(
   invoiceId: id,
   customerId: 'anna',
   customerName: 'Anna Alder',
   number: 'INV-$id',
-  currency: 'EUR',
+  currency: currency,
   totalMinor: open,
   openMinor: open,
   issuedOn: issued,
   stage: ReceivableStage.open,
-  paymentToMatch: true,
 );
 
+/// A payment of an earlier month: not spent inside a later invoice.
 LedgerEntry _payment(String id, int cents) => LedgerEntry(
   id: id,
   memberId: 'anna',
@@ -60,31 +89,18 @@ LedgerEntry _payment(String id, int cents) => LedgerEntry(
   category: LedgerCategory.payment,
   amountCents: cents,
   description: 'Transfer',
-  period: '2026-09',
-  createdAt: DateTime(2026, 9, 20),
-  occurredOn: DateTime(2026, 9, 18),
+  period: '2026-03',
+  createdAt: DateTime(2026, 3, 20),
+  occurredOn: DateTime(2026, 3, 18),
 );
 
 void main() {
   late _Repo repo;
 
-  PaymentToMatch row(String paymentId, int cents, List<Receivable> invoices) {
-    return (
-      customer: invoices.first,
-      payment: _payment(paymentId, cents),
-      candidates: candidatesFor(
-        paymentMinor: cents,
-        currency: 'EUR',
-        customerInvoices: invoices,
-      ),
-    );
-  }
-
   setUp(() => repo = _Repo());
 
   Future<void> pump(
-    WidgetTester tester,
-    Future<List<PaymentToMatch>> Function() loader, {
+    WidgetTester tester, {
     Size size = const Size(390, 844),
   }) async {
     await pumpApp(
@@ -93,32 +109,35 @@ void main() {
         key: UniqueKey(),
         builder: (context, ref, _) {
           ref.watch(authStateProvider);
-          return PaymentsToMatchScreen(
-            receivables: const [],
-            currency: 'EUR',
-            workspaceId: 'ws-1',
-            loader: loader,
-          );
+          return const PaymentsToMatchScreen(currency: 'EUR');
         },
       ),
       size: size,
-      overrides: standardTestOverrides(
-        money: repo,
-        auth: FakeAuthRepository.signedIn(),
-        workspace: FakeWorkspaceRepository.withWorkspace(),
-      ),
+      overrides: [
+        ...standardTestOverrides(
+          money: repo,
+          auth: FakeAuthRepository.signedIn(),
+          workspace: FakeWorkspaceRepository.withWorkspace(),
+        ),
+        // The reader of the invoices, as the archive answers now.
+        invoicingReceivablesProvider.overrideWith((ref) {
+          ref.watch(invoicesProvider);
+          return List.of(repo.open);
+        }),
+      ],
     );
     await tester.pumpAndSettle();
   }
 
-  final invoices = [
-    _inv('older', 5000, DateTime(2026, 8)),
-    _inv('exact', 12000, DateTime(2026, 9, 5)),
-  ];
+  final older = _inv('older', 5000, DateTime(2026, 4));
+  final exact = _inv('exact', 12000, DateTime(2026, 5, 5));
 
   testWidgets('a payment lists the invoices it could settle, the same amount '
       'first', (tester) async {
-    await pump(tester, () async => [row('p1', 12000, invoices)]);
+    repo
+      ..open = [older, exact]
+      ..ledger.add(_payment('p1', 12000));
+    await pump(tester);
     expect(find.text('Anna Alder'), findsOneWidget);
     expect(find.textContaining('120.00 received'), findsOneWidget);
     expect(find.text('Same amount'), findsOneWidget);
@@ -129,18 +148,80 @@ void main() {
     expect(repo.matched, isEmpty, reason: 'nothing happens until a tap');
   });
 
-  testWidgets('one tap on the exact invoice matches it, exactly', (
-    tester,
-  ) async {
-    await pump(tester, () async => [row('p1', 12000, invoices)]);
+  testWidgets('one tap on the exact invoice matches it, exactly; the next '
+      'payment no longer offers the invoice it settled', (tester) async {
+    repo
+      ..open = [older, exact]
+      ..ledger.addAll([_payment('p1', 12000), _payment('p2', 12000)]);
+    await pump(tester);
+    expect(_key('payment-match-p2-exact'), findsOneWidget);
     await tester.tap(_key('payment-match-p1-exact'));
+    await tester.pumpAndSettle();
+    expect(repo.matched, ['exact<-p1:exact']);
+    expect(_key('payment-match-p1'), findsNothing, reason: 'p1 is taken');
+    expect(_key('payment-match-p2'), findsOneWidget);
+    expect(
+      _key('payment-match-p2-exact'),
+      findsNothing,
+      reason: 'the invoice p1 settled is not offered again',
+    );
+    expect(_key('payment-match-p2-older'), findsOneWidget);
+  });
+
+  testWidgets('a double tap matches once, and no other card can match while '
+      'it runs', (tester) async {
+    repo
+      ..open = [older, exact]
+      ..ledger.addAll([_payment('p1', 12000), _payment('p2', 5000)])
+      ..matching = Completer<void>();
+    await pump(tester);
+    await tester.tap(_key('payment-match-p1-exact'));
+    await tester.tap(_key('payment-match-p1-exact'), warnIfMissed: false);
+    await tester.pump();
+    await tester.tap(_key('payment-match-p2-older'), warnIfMissed: false);
+    await tester.pump();
+    repo.matching!.complete();
     await tester.pumpAndSettle();
     expect(repo.matched, ['exact<-p1:exact']);
   });
 
+  testWidgets('another amount opens the match dialog on the tapped payment', (
+    tester,
+  ) async {
+    final id = await repo.createInvoice(
+      workspaceId: 'ws-1',
+      memberId: 'anna',
+      period: kTestPeriod,
+    );
+    repo
+      ..open = [_inv(id, 9000, DateTime(2026, 5))]
+      ..ledger.addAll([_payment('p1', 12000), _payment('p2', 7777)]);
+    await pump(tester);
+    await tester.tap(_key('payment-match-p1-$id'));
+    await tester.pumpAndSettle();
+    final group = tester.widget<RadioGroup<String>>(
+      _key('invoicing-dashboard-radio-group'),
+    );
+    expect(group.groupValue, 'p1', reason: 'not the newest, the tapped one');
+  });
+
+  testWidgets('the payment is in the business\'s currency; an invoice in '
+      'another currency is not offered', (tester) async {
+    repo
+      ..open = [exact, _inv('usd', 12000, DateTime(2026, 5, 9), currency: 'USD')]
+      ..ledger.add(_payment('p1', 12000));
+    await pump(tester);
+    expect(_key('payment-match-p1-exact'), findsOneWidget);
+    expect(_key('payment-match-p1-usd'), findsNothing);
+    expect(find.textContaining('\$'), findsNothing);
+  });
+
   testWidgets('a refusal is said and nothing is matched', (tester) async {
-    repo.failWith = Exception('refused');
-    await pump(tester, () async => [row('p1', 12000, invoices)]);
+    repo
+      ..failWith = Exception('refused')
+      ..open = [older, exact]
+      ..ledger.add(_payment('p1', 12000));
+    await pump(tester);
     await tester.tap(_key('payment-match-p1-exact'));
     await tester.pumpAndSettle();
     expect(repo.matched, isEmpty);
@@ -153,45 +234,35 @@ void main() {
 
   testWidgets('a payment with no open invoice to pay is the customer\'s '
       'credit, not a to-do: it is not listed', (tester) async {
-    await pump(
-      tester,
-      () async => [
-        (
-          customer: invoices.first,
-          payment: _payment('p9', 9900),
-          candidates: const <MatchCandidate>[],
-        ),
-      ],
-    );
+    repo.ledger.add(_payment('p9', 9900));
+    await pump(tester);
     expect(find.text('No payment is waiting for an invoice.'), findsOneWidget);
     expect(find.text('Anna Alder'), findsNothing);
   });
 
-  testWidgets('nothing waiting is said, and a failed read has a retry', (
-    tester,
-  ) async {
-    await pump(tester, () async => const []);
-    expect(find.text('No payment is waiting for an invoice.'), findsOneWidget);
-    var calls = 0;
-    await pump(tester, () async {
-      calls++;
-      if (calls == 1) throw StateError('offline');
-      return [row('p1', 12000, invoices)];
-    });
+  testWidgets('a failed read has a retry', (tester) async {
+    repo
+      ..open = [older, exact]
+      ..ledger.add(_payment('p1', 12000))
+      ..ledgerFails = Exception('offline');
+    await pump(tester);
     expect(_key('payment-match-failed'), findsOneWidget);
+    repo.ledgerFails = null;
     await tester.tap(_key('payment-match-retry'));
     await tester.pumpAndSettle();
     expect(_key('payment-match-failed'), findsNothing);
     expect(find.text('Anna Alder'), findsOneWidget);
   });
 
+  void twoPayments() => repo
+    ..open = [older, exact]
+    ..ledger.addAll([_payment('p1', 12000), _payment('p2', 7777)]);
+
   // The picture a pull request attaches (SHEET=1), at a phone's own height.
   testWidgets('sheet: two payments', (tester) async {
     await loadSheetFonts();
-    await pump(
-      tester,
-      () async => [row('p1', 12000, invoices), row('p2', 7777, invoices)],
-    );
+    twoPayments();
+    await pump(tester);
     await writeSheet(tester, sheet: 'payments-to-match', name: 'list');
   });
 
@@ -200,11 +271,8 @@ void main() {
       tester,
     ) async {
       final semantics = tester.ensureSemantics();
-      await pump(
-        tester,
-        () async => [row('p1', 12000, invoices), row('p2', 7777, invoices)],
-        size: Size(width, 3000),
-      );
+      twoPayments();
+      await pump(tester, size: Size(width, 3000));
       expect(guardProblems(tester, width: width), isEmpty);
       semantics.dispose();
     });
