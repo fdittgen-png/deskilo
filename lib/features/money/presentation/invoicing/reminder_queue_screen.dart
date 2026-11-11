@@ -136,7 +136,9 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
       _queue.value = _queue.value.withResult(line.invoiceId, result);
 
   Future<void> _share(QueuedReminder line) async {
+    // A letter that left is never shared again: Record only.
     if (_working.value != null || _checking) return;
+    if (_queue.value.hasLeft(line)) return;
     _working.value = line.invoiceId;
     try {
       final invoice = await _invoiceOf(line.invoiceId);
@@ -209,6 +211,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
           title: letter.title,
           report: letter.report,
           images: images,
+          canShare: !_queue.value.hasLeft(line),
         ),
       ),
     );
@@ -274,7 +277,9 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
                               style: FilledButton.styleFrom(
                                 minimumSize: const Size(48, 48),
                               ),
-                              onPressed: () => widget.onMatch(c.customerId),
+                              onPressed: _checking
+                                  ? null
+                                  : () => widget.onMatch(c.customerId),
                               child: Text(l10n.reminderQueueMatch),
                             ),
                           ],
@@ -302,9 +307,11 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
                   ? null
                   : () => _share(next),
               child: Text(
-                next == null
-                    ? l10n.reminderQueueDoneEmpty
-                    : l10n.reminderQueueShareNext(next.receivable.customerName),
+                next != null
+                    ? l10n.reminderQueueShareNext(next.receivable.customerName)
+                    : _checking
+                    ? l10n.reminderQueueShare
+                    : l10n.reminderQueueDoneEmpty,
               ),
             ),
           ],
@@ -444,11 +451,15 @@ class _LetterPreviewPage extends StatelessWidget {
     required this.title,
     required this.report,
     required this.images,
+    required this.canShare,
   });
 
   final String title;
   final InvoiceReport report;
   final Map<String, Uint8List> images;
+
+  /// False once the letter left: the preview is for reading only.
+  final bool canShare;
 
   @override
   Widget build(BuildContext context) {
@@ -471,15 +482,16 @@ class _LetterPreviewPage extends StatelessWidget {
               ),
             ),
           ),
-          BottomActionBar(
-            actions: [
-              FilledButton(
-                key: const ValueKey('reminder-queue-preview-share'),
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Text(l10n.reminderQueueShare),
-              ),
-            ],
-          ),
+          if (canShare)
+            BottomActionBar(
+              actions: [
+                FilledButton(
+                  key: const ValueKey('reminder-queue-preview-share'),
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(l10n.reminderQueueShare),
+                ),
+              ],
+            ),
         ],
       ),
     );

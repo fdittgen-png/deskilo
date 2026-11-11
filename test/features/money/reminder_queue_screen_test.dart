@@ -92,6 +92,7 @@ void main() {
   Future<void> pump(
     WidgetTester tester, {
     Size size = const Size(390, 844),
+    bool checking = false,
   }) async {
     await pumpApp(
       tester,
@@ -99,7 +100,7 @@ void main() {
         builder: (context, ref, _) {
           ref.watch(authStateProvider);
           return ReminderQueueScreen(
-            queue: queue(),
+            queue: checking ? null : queue(),
             today: today,
             onMatch: matched.add,
             previewOf: (line, invoice) async => (
@@ -224,6 +225,28 @@ void main() {
     expect(shares, 1, reason: 'recorded, not shared a second time');
     expect(repo.invoiceReminders[ids.last]?.length ?? 0, 1);
     expect(_key('reminder-queue-share-${ids.last}'), findsNothing);
+  });
+
+  testWidgets('a letter that left but was not recorded cannot be shared '
+      'again through Preview', (tester) async {
+    repo.failRecord = Exception('offline');
+    await pump(tester);
+    await tapReal(tester, _key('reminder-queue-next'));
+    expect(shares, 1);
+    await tapReal(tester, _key('reminder-queue-preview-${ids.last}'));
+    expect(find.text('Please pay invoice'), findsOneWidget);
+    expect(_key('reminder-queue-preview-share'), findsNothing);
+    expect(shares, 1);
+  });
+
+  testWidgets('while the received payments are checked, the bar never says '
+      'there is nothing to share, and shares nothing', (tester) async {
+    await pump(tester, checking: true);
+    expect(find.text('Nothing to share'), findsNothing);
+    expect(
+      tester.widget<FilledButton>(_key('reminder-queue-next')).onPressed,
+      isNull,
+    );
   });
 
   testWidgets('the result page names what was shared and not recorded, with '
