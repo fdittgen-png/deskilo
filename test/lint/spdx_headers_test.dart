@@ -76,6 +76,8 @@ void main() {
       final files = dir
           .listSync(recursive: true)
           .whereType<File>()
+          // Installed dependencies retain their upstream licences.
+          .where((f) => !f.uri.pathSegments.contains('node_modules'))
           .where((f) => _extensions.any(f.path.endsWith))
           .where((f) => !_generated(f.path))
           .where((f) => !_exempt.containsKey(f.path));

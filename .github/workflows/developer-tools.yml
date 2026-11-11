@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: CI · Developer tools
+
+on:
+  pull_request:
+    paths:
+      - '.claude/skills/**'
+      - 'tool/devtools/**'
+      - '.github/workflows/developer-tools.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: developer-tools-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: developer tools
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: tool/devtools/.node-version
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
+        with:
+          sdk: '3.13.4'
+      - run: npm ci --prefix tool/devtools
+      - run: dart pub get --enforce-lockfile
+        working-directory: tool/devtools/skills
+      - run: npm run skills && npm test && npm run context -- delivery
+        working-directory: tool/devtools

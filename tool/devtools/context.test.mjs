@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import assert from 'node:assert/strict';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
+import { capture, inputs } from './context.mjs';
+
+test('context exports tracked scope with provenance and keeps ignored/untracked data out', (t) => {
+  const root = mkdtempSync(join(tmpdir(), 'deskilo-context-'));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const git = (...args) => execFileSync('git', args, { cwd: root, stdio: 'pipe' });
+  git('init');
+  writeFileSync(join(root, '.gitignore'), '.dart_tool/\n');
+  mkdirSync(join(root, 'lib/core/ui/kit'), { recursive: true });
+  writeFileSync(join(root, 'lib/core/ui/kit/button.dart'), 'class Button {}\n');
+  writeFileSync(join(root, 'CLAUDE.md'), 'Fixture instructions\n');
+  git('add', '.');
+  git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-m', 'fixture');
+  writeFileSync(join(root, 'lib/core/ui/kit/private.txt'), 'UNTRACKED_PERSONAL_DATA');
+  writeFileSync(join(root, 'outside.txt'), 'OUTSIDE_SCOPE');
+  const output = capture('forms', root);
+  const xml = readFileSync(join(output, 'context.xml'), 'utf8');
+  const proof = JSON.parse(readFileSync(join(output, 'provenance.json')));
+  assert.match(xml, /class Button/);
+  assert.doesNotMatch(xml, /UNTRACKED_PERSONAL_DATA|OUTSIDE_SCOPE/);
+  assert.deepEqual(Object.keys(proof.selectedInputs), ['CLAUDE.md', 'lib/core/ui/kit/button.dart']);
+  assert.match(proof.revision, /^[a-f0-9]{40}$/);
+  assert.match(proof.outputSha256, /^[a-f0-9]{64}$/);
+  assert.throws(() => inputs('../../', root), /Choose a scope/);
+  symlinkSync(join(root, 'outside.txt'), join(root, 'lib/core/ui/kit/link'));
+  git('add', 'lib/core/ui/kit/link');
+  assert.throws(() => inputs('forms', root), /Unsafe context path/);
+  git('rm', '-f', 'lib/core/ui/kit/link');
+  const kit = join(root, 'lib/core/ui/kit');
+  const privatePath = join(root, 'private-data');
+  renameSync(kit, privatePath);
+  writeFileSync(join(privatePath, 'button.dart'), 'UNTRACKED_PRIVATE_RECORD');
+  symlinkSync(privatePath, kit, 'dir');
+  assert.throws(() => capture('forms', root), /Unsafe context path/);
+  const alias = join(root, 'context-entry.mjs');
+  symlinkSync(fileURLToPath(new URL('./context.mjs', import.meta.url)), alias);
+  const cli = spawnSync(process.execPath, [alias, 'unknown'], { encoding: 'utf8' });
+  assert.notEqual(cli.status, 0);
+  assert.match(cli.stderr, /Choose a scope/);
+});
