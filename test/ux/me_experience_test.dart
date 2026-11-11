@@ -31,10 +31,6 @@ const List<double> _scales = [1.0, 1.3];
 /// What today's screens still do wrong: `<screen>|<state>` -> rule -> cells.
 /// Only falls (#3545).
 const Map<String, Map<String, int>> _known = {
-  // A "Privacy & data" row is 12.8 dp high at 320 px x1.3 (found after the
-  // merge of master on 11 Nov; not caused by step G): to fix with its owner.
-  'account|populated': {'target under 48 dp': 2},
-  'data|populated': {'overflow or exception': 2},
 };
 
 bool _isFilled(WidgetTester tester, Element element) {
@@ -128,7 +124,7 @@ void main() {
                 // Tall enough that no row is cut by the viewport: a clipped row's
                 // semantics rect is shorter than the row and would read as a
                 // target under 48 dp.
-                size: Size(width, 5000),
+                size: Size(width, 9000),
                 extraOverrides: scenario.overrides,
               );
               await goTo(tester, router, screen.route);

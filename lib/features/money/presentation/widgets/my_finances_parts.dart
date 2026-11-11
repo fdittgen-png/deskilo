@@ -255,11 +255,18 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
     final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      child: Wrap(
+      child: LayoutBuilder(builder: (context, box) {
+        // A dropdown never outgrows the line (#3545): at a narrow width and a large
+        // text scale its label shrinks with an ellipsis instead of overflowing.
+        final width = box.maxWidth < _dropdownMaxWidth ? box.maxWidth : _dropdownMaxWidth;
+        Widget fit(Widget dropdown) =>
+            ConstrainedBox(constraints: BoxConstraints(maxWidth: width), child: dropdown);
+        return Wrap(
         spacing: AppSpacing.lg,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          DropdownButton<int?>(
+          fit(DropdownButton<int?>(
+            isExpanded: true,
             key: const ValueKey('finances-period'),
             value: filter.year,
             hint: Text(l10n.financesPeriodAll),
@@ -267,7 +274,7 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
             items: [
               DropdownMenuItem<int?>(
                 key: const ValueKey('finances-period-all'),
-                child: Text(l10n.financesPeriodAll),
+                child: Text(l10n.financesPeriodAll, overflow: TextOverflow.ellipsis),
               ),
               for (final year in years)
                 DropdownMenuItem<int?>(
@@ -276,8 +283,9 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
                   child: Text('$year'),
                 ),
             ],
-          ),
-          DropdownButton<FinanceDocType>(
+          )),
+          fit(DropdownButton<FinanceDocType>(
+            isExpanded: true,
             key: const ValueKey('finances-type'),
             value: filter.type,
             onChanged: (type) => onChanged(filter.copyWith(type: type)),
@@ -290,15 +298,19 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
                     FinanceDocType.all => l10n.financesTypeAll,
                     FinanceDocType.invoice => l10n.invoicePdfTitle,
                     FinanceDocType.creditNote => l10n.financesTypeCreditNote,
-                  }),
+                  }, overflow: TextOverflow.ellipsis),
                 ),
             ],
-          ),
+          )),
         ],
-      ),
+      );
+      }),
     );
   }
 }
+
+/// The widest a period or type dropdown grows on a wide line.
+const double _dropdownMaxWidth = 240;
 
 /// The window width from which the documents read as rows.
 const double _rowsWindowWidth = 840;
