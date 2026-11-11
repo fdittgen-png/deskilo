@@ -14,5 +14,7 @@
   "reminderQueueNotShared": "No compartidos",
   "reminderQueueStays": "Se quedan en «Por hacer».",
   "reminderQueueDone": "Hecho",
-  "reminderQueueDoneEmpty": "Nada que compartir"
+  "reminderQueueDoneEmpty": "Nada que compartir",
+  "reminderQueueCheckFirst": "Compruebe primero: dinero recibido y no asignado",
+  "reminderQueueMatch": "Conciliar"
 }

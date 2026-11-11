@@ -14,5 +14,7 @@
   "reminderQueueNotShared": "Nicht geteilt",
   "reminderQueueStays": "Sie bleiben unter „Zu erledigen“.",
   "reminderQueueDone": "Fertig",
-  "reminderQueueDoneEmpty": "Nichts zu teilen"
+  "reminderQueueDoneEmpty": "Nichts zu teilen",
+  "reminderQueueCheckFirst": "Zuerst prüfen: Geld eingegangen und nicht zugeordnet",
+  "reminderQueueMatch": "Zuordnen"
 }

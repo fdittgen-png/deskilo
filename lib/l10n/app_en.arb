@@ -30184,6 +30184,10 @@
   "@reminderPdfTitleFriendly": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
+  "reminderQueueCheckFirst": "Check first: money received and not assigned",
+  "@reminderQueueCheckFirst": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
+  },
   "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
   "@reminderQueueDetail": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
@@ -30220,6 +30224,10 @@
         "type": "int"
       }
     }
+  },
+  "reminderQueueMatch": "Match",
+  "@reminderQueueMatch": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueMatch)"
   },
   "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
   "@reminderQueueNotRecorded": {

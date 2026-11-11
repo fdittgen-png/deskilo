@@ -14,5 +14,7 @@
   "reminderQueueNotShared": "Non condivisi",
   "reminderQueueStays": "Restano in «Da fare».",
   "reminderQueueDone": "Fatto",
-  "reminderQueueDoneEmpty": "Niente da condividere"
+  "reminderQueueDoneEmpty": "Niente da condividere",
+  "reminderQueueCheckFirst": "Da verificare prima: denaro ricevuto e non assegnato",
+  "reminderQueueMatch": "Abbina"
 }

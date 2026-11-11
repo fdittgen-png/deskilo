@@ -37,6 +37,7 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
     super.key,
     required this.queue,
     required this.today,
+    required this.onMatch,
     @visibleForTesting this.letterOf,
     @visibleForTesting this.previewOf,
   });
@@ -46,6 +47,9 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
 
   /// The business's calendar day (how late each line is).
   final DateTime today;
+
+  /// Opens Payments to match for a customer listed under "Check first".
+  final ValueChanged<String> onMatch;
 
   /// Builds a line's letter; the real one renders the owner's reminder
   /// letter. A test hands in a plain one: the rendering has its own tests.
@@ -205,6 +209,44 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
             padding: AppSpacing.mdAll,
             children: [
               QuietLine(l10n.reminderQueueIntro, icon: Icons.info_outline),
+              // Their money is held unassigned: not chased, checked FIRST.
+              if (q.checkFirst.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.md),
+                KitLabel(l10n.reminderQueueCheckFirst),
+                const SizedBox(height: AppSpacing.sm),
+                RowList(
+                  rows: [
+                    for (final c in q.checkFirst)
+                      Padding(
+                        key: ValueKey('reminder-queue-check-${c.customerId}'),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                c.customerName,
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ),
+                            FilledButton.tonal(
+                              key: ValueKey(
+                                'reminder-queue-match-${c.customerId}',
+                              ),
+                              style: FilledButton.styleFrom(
+                                minimumSize: const Size(48, 48),
+                              ),
+                              onPressed: () => widget.onMatch(c.customerId),
+                              child: Text(l10n.reminderQueueMatch),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ],
               for (final level in q.levels) ...[
                 const SizedBox(height: AppSpacing.md),
                 KitLabel(l10n.reminderQueueLevel(level)),

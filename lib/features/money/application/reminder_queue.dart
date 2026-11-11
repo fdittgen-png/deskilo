@@ -42,13 +42,25 @@ enum ReminderHandled {
   failed,
 }
 
+/// A customer to check before anyone chases them: money of theirs is held
+/// unassigned (the predicate of Payments to match).
+typedef CheckFirstCustomer = ({String customerId, String customerName});
+
 /// The queue and what has been done in it. Immutable: each result gives a
 /// new queue.
 @immutable
 class ReminderQueue {
-  const ReminderQueue(this.lines, [this.handled = const {}]);
+  const ReminderQueue(
+    this.lines, [
+    this.handled = const {},
+    this.checkFirst = const [],
+  ]);
 
   final List<QueuedReminder> lines;
+
+  /// Customers whose reminder is due but who hold money received and not
+  /// assigned: not chased, listed FIRST to be checked (their payment matched).
+  final List<CheckFirstCustomer> checkFirst;
 
   /// invoice id -> what became of it in this sitting.
   final Map<String, ReminderHandled> handled;
@@ -98,21 +110,36 @@ class ReminderQueue {
   bool get isDone => lines.isNotEmpty && remaining.isEmpty;
 
   ReminderQueue withResult(String invoiceId, ReminderHandled result) =>
-      ReminderQueue(lines, {...handled, invoiceId: result});
+      ReminderQueue(lines, {...handled, invoiceId: result}, checkFirst);
 }
 
 /// The queue of [invoices] on [today]: only in [ReminderMode.byHand], the
 /// ones [reminderToShare] says are due, grouped by their level (lowest
 /// first), the most late first inside a level, then the biggest amount.
+///
+/// [holdsUnassigned] are the customers who hold money received and not
+/// assigned (`holdsUnassignedMoney`, the one predicate Payments to match also
+/// uses): they are not chased, and are listed first as [CheckFirstCustomer]s.
 ReminderQueue reminderQueueOf(
   Iterable<Receivable> invoices,
   DateTime today,
-  ReminderMode mode,
-) {
+  ReminderMode mode, {
+  Set<String> holdsUnassigned = const {},
+}) {
+  final due = [
+    for (final r in invoices)
+      if (reminderToShare(r, mode)) r,
+  ];
+  final checkFirst = <String, CheckFirstCustomer>{
+    for (final r in due)
+      if (holdsUnassigned.contains(r.customerId))
+        r.customerId: (customerId: r.customerId, customerName: r.customerName),
+  }.values.toList()..sort((a, b) => a.customerName.compareTo(b.customerName));
   final lines =
       [
-        for (final r in invoices)
-          if (reminderToShare(r, mode)) QueuedReminder(r, r.reminderDueLevel!),
+        for (final r in due)
+          if (!holdsUnassigned.contains(r.customerId))
+            QueuedReminder(r, r.reminderDueLevel!),
       ]..sort((a, b) {
         final level = a.level.compareTo(b.level);
         if (level != 0) return level;
@@ -122,7 +149,7 @@ ReminderQueue reminderQueueOf(
         if (late != 0) return late;
         return b.receivable.openMinor.compareTo(a.receivable.openMinor);
       });
-  return ReminderQueue(lines);
+  return ReminderQueue(lines, const {}, checkFirst);
 }
 
 /// The letter of one reminder: built by the screen from the existing

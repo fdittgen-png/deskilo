@@ -37791,6 +37791,12 @@ abstract class AppLocalizations {
   /// **'Payment reminder'**
   String get reminderPdfTitleFriendly;
 
+  /// #3587 R1-f: reminder queue (reminderQueueCheckFirst)
+  ///
+  /// In en, this message translates to:
+  /// **'Check first: money received and not assigned'**
+  String get reminderQueueCheckFirst;
+
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueDetail)
   ///
   /// In en, this message translates to:
@@ -37826,6 +37832,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminder {level}'**
   String reminderQueueLevel(int level);
+
+  /// #3587 R1-f: reminder queue (reminderQueueMatch)
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get reminderQueueMatch;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)
   ///

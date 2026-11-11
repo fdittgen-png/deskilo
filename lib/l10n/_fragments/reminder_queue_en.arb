@@ -85,5 +85,13 @@
   "reminderQueueDoneEmpty": "Nothing to share",
   "@reminderQueueDoneEmpty": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
+  },
+  "reminderQueueCheckFirst": "Check first: money received and not assigned",
+  "@reminderQueueCheckFirst": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
+  },
+  "reminderQueueMatch": "Match",
+  "@reminderQueueMatch": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueMatch)"
   }
 }

@@ -157,4 +157,41 @@ void main() {
       expect(commands.reminded, ['a', 'b']);
     });
   });
+
+  group('customers holding unassigned money', () {
+    test('are left out of the groups and listed first, once each', () {
+      final queue = reminderQueueOf(
+        [_r('a'), _r('b', dueInDays: -9), _r('c')],
+        _today,
+        ReminderMode.byHand,
+        holdsUnassigned: {'c-a', 'c-b'},
+      );
+      expect(queue.lines.map((l) => l.invoiceId), ['c']);
+      expect(queue.checkFirst.map((c) => c.customerId), ['c-a', 'c-b']);
+      expect(queue.next?.invoiceId, 'c');
+    });
+
+    test('a customer with nothing due is not in the check-first list', () {
+      final queue = reminderQueueOf(
+        [_r('a', level: null)],
+        _today,
+        ReminderMode.byHand,
+        holdsUnassigned: {'c-a'},
+      );
+      expect(queue.checkFirst, isEmpty);
+    });
+
+    test('a share result keeps the check-first list', () {
+      final queue = reminderQueueOf(
+        [_r('a'), _r('b')],
+        _today,
+        ReminderMode.byHand,
+        holdsUnassigned: {'c-a'},
+      );
+      expect(
+        queue.withResult('b', ReminderHandled.shared).checkFirst,
+        hasLength(1),
+      );
+    });
+  });
 }

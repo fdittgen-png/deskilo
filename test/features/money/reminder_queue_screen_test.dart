@@ -29,11 +29,15 @@ void main() {
   late FakeMoneyRepository repo;
   late List<String> ids;
   var outcome = FileShareOutcome.sent;
+  final matched = <String>[];
+  var holdingMoney = <String>{};
   final today = kTestNow;
 
   setUp(() async {
     repo = FakeMoneyRepository();
     outcome = FileShareOutcome.sent;
+    matched.clear();
+    holdingMoney = {};
     ids = [];
     for (final member in ['member-1', 'member-2']) {
       final id = await repo.createInvoice(
@@ -68,6 +72,7 @@ void main() {
     ],
     today,
     ReminderMode.byHand,
+    holdsUnassigned: holdingMoney,
   );
 
   Future<void> pump(
@@ -82,6 +87,7 @@ void main() {
           return ReminderQueueScreen(
             queue: queue(),
             today: today,
+            onMatch: matched.add,
             previewOf: (line, invoice) async => (
               title: 'Reminder ${invoice.number}',
               report: const InvoiceReport(
@@ -190,6 +196,28 @@ void main() {
     await tapReal(tester, _key('reminder-queue-preview-share'));
     expect(repo.invoiceReminders[ids.last]?.length ?? 0, 1);
     expect(find.text('Share the next one · Anna Alder'), findsOneWidget);
+  });
+
+  testWidgets('a customer who holds money received and not assigned is not '
+      'chased: listed FIRST to be checked, with Match', (tester) async {
+    holdingMoney = {'member-1'};
+    await pump(tester);
+    expect(
+      find.text('CHECK FIRST: MONEY RECEIVED AND NOT ASSIGNED'),
+      findsOneWidget,
+    );
+    expect(_key('reminder-queue-check-member-1'), findsOneWidget);
+    // Anna (member-1) is not in the share groups; Ben (member-2) is.
+    expect(find.text('Share the next one · Ben Birk'), findsOneWidget);
+    expect(_key('reminder-queue-share-${ids.first}'), findsNothing);
+    expect(
+      tester.getTopLeft(_key('reminder-queue-check-member-1')).dy,
+      lessThan(tester.getTopLeft(_key('reminder-queue-share-${ids.last}')).dy),
+      reason: 'the check-first group comes before the share groups',
+    );
+    await tester.tap(_key('reminder-queue-match-member-1'));
+    expect(matched, ['member-1']);
+    expect(repo.invoiceReminders[ids.first]?.length ?? 0, 0);
   });
 
   for (final (width, scale) in [(320.0, 1.3), (390.0, 1.0), (1280.0, 1.0)]) {

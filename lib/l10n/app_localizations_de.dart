@@ -22951,6 +22951,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Zahlungserinnerung';
 
   @override
+  String get reminderQueueCheckFirst =>
+      'Zuerst prüfen: Geld eingegangen und nicht zugeordnet';
+
+  @override
   String reminderQueueDetail(int days, String number) {
     String _temp0 = intl.Intl.pluralLogic(
       days,
@@ -22980,6 +22984,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String reminderQueueLevel(int level) {
     return 'Mahnung $level';
   }
+
+  @override
+  String get reminderQueueMatch => 'Zuordnen';
 
   @override
   String get reminderQueueNotRecorded =>

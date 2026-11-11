@@ -22914,6 +22914,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderPdfTitleFriendly => 'Promemoria di pagamento';
 
   @override
+  String get reminderQueueCheckFirst =>
+      'Da verificare prima: denaro ricevuto e non assegnato';
+
+  @override
   String reminderQueueDetail(int days, String number) {
     String _temp0 = intl.Intl.pluralLogic(
       days,
@@ -22943,6 +22947,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String reminderQueueLevel(int level) {
     return 'Sollecito $level';
   }
+
+  @override
+  String get reminderQueueMatch => 'Abbina';
 
   @override
   String get reminderQueueNotRecorded =>
