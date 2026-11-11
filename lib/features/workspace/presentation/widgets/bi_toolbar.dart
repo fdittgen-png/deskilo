@@ -66,7 +66,7 @@ class BiToolbar extends StatelessWidget {
         value: value,
         enabled: supported,
         child: Text(
-          supported ? label : '$label — ${context.l10n.biNotOffered}',
+          supported ? label : context.l10n.titleDashDetail(label, context.l10n.biNotOffered),
         ),
       );
 

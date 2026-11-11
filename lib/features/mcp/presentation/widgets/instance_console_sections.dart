@@ -179,7 +179,7 @@ class InstanceAccessSection extends StatelessWidget {
       for (final p in [...o.administrators, ...o.candidates]) p.userId: p,
     }.values.where((p) => !granted.contains(p.userId)).toList();
     String who(String name, {required bool me}) =>
-        me ? '$name (${l10n.instanceYou})' : name;
+        me ? l10n.valueInParens(name, l10n.instanceYou) : name;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

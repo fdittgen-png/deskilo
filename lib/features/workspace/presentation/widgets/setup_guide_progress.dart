@@ -102,7 +102,7 @@ class SetupGuideAddMore extends StatelessWidget {
     return ExpansionTile(
       key: const ValueKey('setup-guide-add-more'),
       tilePadding: EdgeInsets.zero,
-      title: Text('${l10n.setupGuideAddMore} (${steps.length})'),
+      title: Text(l10n.valueInParens(l10n.setupGuideAddMore, '${steps.length}')),
       children: [
         for (final s in steps)
           ListTile(

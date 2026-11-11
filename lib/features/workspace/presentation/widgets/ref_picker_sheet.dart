@@ -484,7 +484,7 @@ class _ActiveChips extends StatelessWidget {
         InputChip(
           key: Key('$keyPrefix-active-amount'),
           avatar: const Icon(Icons.payments_outlined, size: 18),
-          label: Text('${l10n.refFilterAmount} $lo – $hi'),
+          label: Text(l10n.refFilterAmountRange(lo, hi)),
           onDeleted: () => onChanged(filter.copyWith(clearAmount: true)),
         ),
       );

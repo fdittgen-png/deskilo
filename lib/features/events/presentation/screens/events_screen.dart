@@ -250,7 +250,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                         leading: Icon(_icon(event)),
                         title: Text(
                           count > 1
-                              ? '${_line(l10n, event, facts.names, facts.targets, facts.currency)} ${l10n.eventRepeatedMarker(count)}'
+                              ? l10n.sentencePair(_line(l10n, event, facts.names, facts.targets, facts.currency), l10n.eventRepeatedMarker(count))
                               : _line(l10n, event, facts.names, facts.targets, facts.currency),
                           style: unread
                               ? const TextStyle(

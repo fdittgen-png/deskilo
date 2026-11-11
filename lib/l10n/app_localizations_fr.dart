@@ -3746,6 +3746,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get biProjectionLabel => 'Estimation';
 
   @override
+  String biProjectionNext(
+    String period,
+    String value,
+    String low,
+    String high,
+    String label,
+  ) {
+    return '$period : $value ($low – $high) · $label';
+  }
+
+  @override
   String biProjectionNotEnough(int have, int need) {
     return 'Pas encore assez d\'historique pour projeter : $have périodes complètes pour l\'instant, $need nécessaires.';
   }
@@ -4451,6 +4462,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get billPaymentsCredits => 'Paiements et crédits';
+
+  @override
+  String billPdfContinuation(
+    String workspace,
+    String title,
+    String member,
+    String period,
+  ) {
+    return '$workspace — $title — $member — $period';
+  }
 
   @override
   String get billPdfExport => 'Exporter la facture en PDF';
@@ -5844,6 +5865,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get comingSoon => 'Bientôt disponible';
+
+  @override
+  String commaPair(String first, String second) {
+    return '$first, $second';
+  }
 
   @override
   String get commonCancel => 'Annuler';
@@ -8037,6 +8063,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editorSeatNameLabel => 'Nom de la place';
+
+  @override
+  String editorSeatNameNumbered(String number) {
+    return 'Place $number';
+  }
 
   @override
   String get editorSeatNfcDuplicate =>
@@ -14799,7 +14830,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicePdfIssuedBy => 'Émise par';
 
   @override
+  String invoicePdfIssuedByName(String name) {
+    return 'Émise par $name';
+  }
+
+  @override
   String get invoicePdfIssuedOn => 'Émise le';
+
+  @override
+  String invoicePdfIssuedOnDate(String date) {
+    return 'Émise le $date';
+  }
 
   @override
   String get invoicePdfPage => 'Page';
@@ -16172,6 +16213,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get kitActionBusy => 'En cours…';
+
+  @override
+  String labelWithValue(String label, String value) {
+    return '$label : $value';
+  }
 
   @override
   String languageAvailableHint(String fallback) {
@@ -23620,6 +23666,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get refFilterAmount => 'Montant';
 
   @override
+  String refFilterAmountRange(String low, String high) {
+    return 'Montant $low – $high';
+  }
+
+  @override
   String get refFilterClear => 'Effacer les filtres';
 
   @override
@@ -26046,6 +26097,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String seatDayTitle(String seat) {
     return 'Place $seat aujourd\'hui';
+  }
+
+  @override
+  String sentencePair(String first, String second) {
+    return '$first $second';
   }
 
   @override
@@ -31948,6 +32004,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Pour nommer les choses à votre façon — places, niveaux, réservations : changez les termes.';
 
   @override
+  String titleAndBody(String title, String body) {
+    return '$title. $body';
+  }
+
+  @override
+  String titleDashDetail(String first, String second) {
+    return '$first — $second';
+  }
+
+  @override
   String get ukFacilitiesPackage =>
       'Nous vendons un forfait de services de bureau équipé';
 
@@ -32698,6 +32764,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get valuationTitle => 'Valorisations de l\'expert-comptable';
 
   @override
+  String valueInParens(String value, String note) {
+    return '$value ($note)';
+  }
+
+  @override
   String get vatAccountField => 'Compte de TVA';
 
   @override
@@ -33045,6 +33116,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get vatPdfVat => 'TVA';
+
+  @override
+  String vatPdfVatRate(String rate) {
+    return 'TVA $rate';
+  }
 
   @override
   String get vatRateDefaultTooltip =>

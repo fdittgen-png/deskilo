@@ -75,7 +75,7 @@ String _reasonOf(AppLocalizations l10n, DeliveryRun reason) => switch (reason) {
   ),
   null => null,
   final DeliveryRun reason => (
-    text: '${_reasonOf(l10n, reason)} ${l10n.acctDeliverNothingSent}',
+    text: l10n.sentencePair(_reasonOf(l10n, reason), l10n.acctDeliverNothingSent),
     fine: false,
   ),
 };

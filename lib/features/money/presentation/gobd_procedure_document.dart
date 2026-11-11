@@ -128,12 +128,12 @@ String _sequence(AppLocalizations l10n, NumberSequence s) {
     NumberReset.monthly => l10n.numberSequenceResetMonthly,
   };
   return [
-    '$journal — ${l10n.numberSequencePrefix}: «${s.prefix}»',
-    '${l10n.numberSequenceSuffix}: «${s.suffix}»',
-    '${l10n.numberSequenceDatePart}: $datePart',
-    '${l10n.numberSequenceDigits}: ${s.digits}',
-    '${l10n.numberSequenceReset}: $reset',
-    '${l10n.numberSequenceNext}: ${s.nextValue}',
+    l10n.titleDashDetail(journal, l10n.labelWithValue(l10n.numberSequencePrefix, '«${s.prefix}»')),
+    l10n.labelWithValue(l10n.numberSequenceSuffix, '«${s.suffix}»'),
+    l10n.labelWithValue(l10n.numberSequenceDatePart, datePart),
+    l10n.labelWithValue(l10n.numberSequenceDigits, '${s.digits}'),
+    l10n.labelWithValue(l10n.numberSequenceReset, reset),
+    l10n.labelWithValue(l10n.numberSequenceNext, '${s.nextValue}'),
   ].join(' · ');
 }
 

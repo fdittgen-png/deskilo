@@ -45,6 +45,7 @@ ReportStrings reportStringsOf(
     subscription: l10n.billSubscription,
     participationMonth: l10n.billParticipationMonth,
     subscriptionMonth: l10n.billSubscriptionMonth,
+    nameDashLabel: l10n.titleDashDetail('{name}', '{label}'),
   );
 }
 

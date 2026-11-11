@@ -47,6 +47,7 @@
   "editorSeatProperties": "Place",
   "editorSeatNameLabel": "Nom de la place",
   "editorSeatNameDefault": "Place",
+  "editorSeatNameNumbered": "Place {number}",
   "editorOrientationLabel": "Sens d'assise",
   "editorChairLabel": "Type de chaise",
   "editorAmenitiesLabel": "Équipements",

@@ -4869,6 +4869,27 @@
   "@biProjectionLabel": {
     "description": "Business analytics dashboard: biProjectionLabel"
   },
+  "biProjectionNext": "{period}: {value} ({low} – {high}) · {label}",
+  "@biProjectionNext": {
+    "description": "#3652 The next projected period: its value, the range around it and the projection label.",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "biProjectionNotEnough": "Not enough history to project yet: {have} complete periods so far, {need} needed.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
@@ -5857,6 +5878,24 @@
   "billPaymentsCredits": "Payments & credits",
   "@billPaymentsCredits": {
     "description": "Bill section header for confirmed credits of the period"
+  },
+  "billPdfContinuation": "{workspace} — {title} — {member} — {period}",
+  "@billPdfContinuation": {
+    "description": "#3652 The strip on pages 2 and later of a bill: workspace, title, member and period.",
+    "placeholders": {
+      "workspace": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
   },
   "billPdfExport": "Export bill as PDF",
   "@billPdfExport": {
@@ -7708,6 +7747,18 @@
   "comingSoon": "Coming soon",
   "@comingSoon": {
     "description": "Placeholder body shown on tabs whose feature is not yet implemented"
+  },
+  "commaPair": "{first}, {second}",
+  "@commaPair": {
+    "description": "#3652 Two short phrases separated by a comma, e.g. a label and its state.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
   },
   "commonCancel": "Cancel",
   "@commonCancel": {
@@ -10547,6 +10598,15 @@
   "editorSeatNameLabel": "Seat name",
   "@editorSeatNameLabel": {
     "description": "Label of the seat-name input"
+  },
+  "editorSeatNameNumbered": "Seat {number}",
+  "@editorSeatNameNumbered": {
+    "description": "#3652 The default name of a new seat with its position in the desk, e.g. \"Seat 2\". The number is a position, not a count.",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "editorSeatNfcDuplicate": "This tag is already linked to another chair.",
   "@editorSeatNfcDuplicate": {
@@ -19224,9 +19284,27 @@
   "@invoicePdfIssuedBy": {
     "description": "PDF: label before the issuer name"
   },
+  "invoicePdfIssuedByName": "Issued by {name}",
+  "@invoicePdfIssuedByName": {
+    "description": "#3652 The issuer line of an invoice, e.g. \"Issued by Acme\".",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePdfIssuedOn": "Issued on",
   "@invoicePdfIssuedOn": {
     "description": "PDF: label before the issue date"
+  },
+  "invoicePdfIssuedOnDate": "Issued on {date}",
+  "@invoicePdfIssuedOnDate": {
+    "description": "#3652 The issue date line of an invoice, e.g. \"Issued on 3 March 2026\".",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "invoicePdfPage": "Page",
   "@invoicePdfPage": {
@@ -21187,6 +21265,18 @@
   "kitActionBusy": "Working…",
   "@kitActionBusy": {
     "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
+  },
+  "labelWithValue": "{label}: {value}",
+  "@labelWithValue": {
+    "description": "#3652 A label with its value on one line, e.g. \"Total: 12.00\". One message so the language places the colon (French has a space before it).",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "languageAvailableHint": "DesKilo is available in the languages below. A device set to any other language shows it in {fallback}.",
   "@languageAvailableHint": {
@@ -30914,6 +31004,18 @@
   "@refFilterAmount": {
     "description": "Shown as the label in ref picker sheet (workspace), and 1 other place."
   },
+  "refFilterAmountRange": "Amount {low} – {high}",
+  "@refFilterAmountRange": {
+    "description": "#3652 The caption of an amount filter with its range, e.g. \"Amount 10 – 50\".",
+    "placeholders": {
+      "low": {
+        "type": "String"
+      },
+      "high": {
+        "type": "String"
+      }
+    }
+  },
   "refFilterClear": "Clear filters",
   "@refFilterClear": {
     "description": "Shown as the text in ref picker sheet (workspace)."
@@ -33947,6 +34049,18 @@
     "description": "#903 seat day timeline: seatDayTitle",
     "placeholders": {
       "seat": {
+        "type": "String"
+      }
+    }
+  },
+  "sentencePair": "{first} {second}",
+  "@sentencePair": {
+    "description": "#3652 Two sentences read as one text, separated by a space.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
         "type": "String"
       }
     }
@@ -41222,6 +41336,30 @@
   "@tipWorkspaceSettingsWording": {
     "description": "Tip (#2313) on the workspaceSettings surface: a scenario \"To …: …\". Links to /settings/wording."
   },
+  "titleAndBody": "{title}. {body}",
+  "@titleAndBody": {
+    "description": "#3652 A title and its body read as two sentences, e.g. for a screen reader.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "body": {
+        "type": "String"
+      }
+    }
+  },
+  "titleDashDetail": "{first} — {second}",
+  "@titleDashDetail": {
+    "description": "#3652 Two parts of one title joined by a dash, e.g. \"Desk 4 — Desk reservations\".",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
   "ukFacilitiesPackage": "We sell a serviced package of facilities",
   "@ukFacilitiesPackage": {
     "description": "#2359: ukFacilitiesPackage"
@@ -42206,6 +42344,18 @@
   "@valuationTitle": {
     "description": "#2576 accountant valuations"
   },
+  "valueInParens": "{value} ({note})",
+  "@valueInParens": {
+    "description": "#3652 A value followed by a short note in parentheses, e.g. \"Anna (you)\".",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
   "vatAccountField": "VAT account",
   "@vatAccountField": {
     "description": "FEC account for collected VAT"
@@ -42632,6 +42782,15 @@
   "vatPdfVat": "VAT",
   "@vatPdfVat": {
     "description": "Invoice PDF: the VAT caption, followed by the rate"
+  },
+  "vatPdfVatRate": "VAT {rate}",
+  "@vatPdfVatRate": {
+    "description": "#3652 The caption of a VAT subtotal with its rate, e.g. \"VAT 20 %\".",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
   },
   "vatRateDefaultTooltip": "Default rate — used by subscriptions and by anything without its own rate",
   "@vatRateDefaultTooltip": {

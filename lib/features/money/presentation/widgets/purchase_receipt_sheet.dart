@@ -202,7 +202,7 @@ class _PurchaseReceiptSheetState extends ConsumerState<_PurchaseReceiptSheet> {
           ),
         ),
         Text(
-          '${l10n.purchasesTotal}: ${vat.currency.formatMinor(_total())}',
+          l10n.labelWithValue(l10n.purchasesTotal, vat.currency.formatMinor(_total())),
           key: const ValueKey('receipt-total'),
         ),
       ],

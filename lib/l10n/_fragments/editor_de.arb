@@ -47,6 +47,7 @@
   "editorSeatProperties": "Platz",
   "editorSeatNameLabel": "Name des Platzes",
   "editorSeatNameDefault": "Platz",
+  "editorSeatNameNumbered": "Platz {number}",
   "editorOrientationLabel": "Sitzrichtung",
   "editorChairLabel": "Stuhltyp",
   "editorAmenitiesLabel": "Ausstattung",

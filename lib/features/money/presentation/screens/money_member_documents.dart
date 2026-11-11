@@ -241,6 +241,7 @@ class MoneyMemberDocuments {
         balance: l10n.bookReportBalance,
         settled: l10n.billSettled,
         outstanding: l10n.billOutstanding,
+        continuationLine: l10n.billPdfContinuation('{workspace}', '{title}', '{member}', '{period}'),
       );
 
   /// #514 — the shared triad, for the bill too: the statement report (owner

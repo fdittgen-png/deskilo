@@ -19,8 +19,15 @@ final RegExp _literal = RegExp(
       .trim(),
 );
 
-/// The separator that joins independent facts and stays allowed.
-const String independentFactJoin = ' · ';
+/// What may stand between two interpolations without the string being a
+/// sentence built from pieces: the join of independent facts (` · `), the
+/// cells of a table row (` | `), independent lines (a newline), and the
+/// control tags of a report template (`{% ... %}`), which CHOOSE one message.
+bool isIndependentJoin(String between) =>
+    between == ' · ' ||
+    between == ' | ' ||
+    between == '\n' ||
+    between.contains('{%');
 
 /// The lines of [source] holding a joined sentence, as `line: text`.
 List<String> sentenceJoins(String source) {
@@ -39,7 +46,7 @@ List<String> sentenceJoins(String source) {
       for (var k = 1; k < parts.length; k++) {
         between.add(text.substring(parts[k - 1].end, parts[k].start));
       }
-      if (between.every((b) => b == independentFactJoin)) continue;
+      if (between.every(isIndependentJoin)) continue;
       out.add('${i + 1}: ${text.length > 90 ? text.substring(0, 90) : text}');
     }
   }
