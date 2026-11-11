@@ -9,7 +9,7 @@
 -- evidence, and cannot be repeated. The legacy `status` column stays a
 -- three-value projection an older client can read.
 begin;
-select plan(35);
+select plan(48);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -173,6 +173,67 @@ select is(has_function_privilege('authenticated',
   false, 'client roles reach neither the RPCs nor the artifacts');
 select ok(has_function_privilege('service_role',
   'public.claim_einvoice_dispatch_v1(uuid,uuid,integer)', 'execute'), 'the service role can claim');
+
+-- #3576: recovering an uncertain transmission that kept its provider id.
+-- Database-only identities (government/dev, customer/dev): no provider call.
+select set_config('ei.r8', (pg_temp.prep('government', 'dev', 'h1', '')->>'id'), false);
+select set_config('ei.r9', (pg_temp.prep('customer', 'dev', 'h1', '')->>'id'), false);
+select public.claim_einvoice_dispatch_v1(current_setting('ei.r8')::uuid, current_setting('ei.uo')::uuid, 150);
+select public.claim_einvoice_dispatch_v1(current_setting('ei.r9')::uuid, current_setting('ei.uo')::uuid, 150);
+select public.record_einvoice_outcome_v1(current_setting('ei.r8')::uuid, 1,
+  current_setting('ei.uo')::uuid, 'uncertain', 'G-R8', '', '{"partial":"before lookup"}');
+select public.record_einvoice_outcome_v1(current_setting('ei.r9')::uuid, 1,
+  current_setting('ei.uo')::uuid, 'uncertain', 'G-R9', '', '{"partial":"before lookup"}');
+select set_config('ei.r8key', (select business_key from public.invoice_transmissions
+  where id = current_setting('ei.r8')::uuid), false);
+select set_config('ei.rows', (select count(*) from public.invoice_transmissions)::text, false);
+select set_config('ei.arts', (select count(*) from public.invoice_transmission_artifacts)::text, false);
+
+-- R8: a correlated lookup settles the uncertain row on the same record
+select is((public.record_einvoice_lookup_v1(current_setting('ei.r8')::uuid, 'accepted', 'G-R8',
+  '{"guid":"G-R8","evidence":{"ok":1}}'::jsonb, '{"status":"accepted"}'::jsonb, '')->>'recorded'),
+  'true', 'R8 retained-ID recovery: a lookup on an uncertain row is recorded');
+select is((select phase || '|' || status from public.invoice_transmissions
+            where id = current_setting('ei.r8')::uuid), 'accepted|accepted',
+  'R8 retained-ID recovery: the row is accepted and projects accepted');
+select is((select receipt from public.invoice_transmissions where id = current_setting('ei.r8')::uuid),
+  '{"guid":"G-R8","evidence":{"ok":1}}'::jsonb,
+  'R8 retained-ID recovery: the correlated receipt replaces the partial prior receipt');
+select is((select verdict->>'status' from public.invoice_transmissions
+            where id = current_setting('ei.r8')::uuid), 'accepted',
+  'R8 retained-ID recovery: the verdict is set on that row');
+select is((select business_key || '|' || external_id || '|' || generation from public.invoice_transmissions
+            where id = current_setting('ei.r8')::uuid),
+  current_setting('ei.r8key') || '|G-R8|1',
+  'R8 retained-ID recovery: business key, external id and generation are unchanged');
+select is((select count(*) from public.invoice_transmissions)::text || '|'
+          || (select count(*) from public.invoice_transmission_artifacts)::text,
+  current_setting('ei.rows') || '|' || current_setting('ei.arts'),
+  'R8 retained-ID recovery: no extra row and no extra artifact');
+
+-- R9: a failed lookup (null phase) leaves the uncertain row as it was
+select is((public.record_einvoice_lookup_v1(current_setting('ei.r9')::uuid, null, null, null, null,
+  'timeout')->>'recorded'), 'true', 'R9 retained-ID recovery: a failed lookup is recorded');
+select is((select phase from public.invoice_transmissions where id = current_setting('ei.r9')::uuid),
+  'uncertain', 'R9 retained-ID recovery: the row is still uncertain');
+select is((select receipt::text || '|' || external_id from public.invoice_transmissions
+            where id = current_setting('ei.r9')::uuid),
+  '{"partial": "before lookup"}|G-R9', 'R9 retained-ID recovery: receipt and external id are unchanged');
+select is((select query_error from public.invoice_transmissions where id = current_setting('ei.r9')::uuid),
+  'timeout', 'R9 retained-ID recovery: the query error records the failure');
+select is((public.claim_einvoice_dispatch_v1(current_setting('ei.r9')::uuid,
+  current_setting('ei.um')::uuid, 150)->>'claimed'), 'false',
+  'R9 retained-ID recovery: the failed lookup does not make it claimable');
+
+-- R10: once settled, a second nonnull-phase resolution changes nothing
+select is((public.record_einvoice_lookup_v1(current_setting('ei.r8')::uuid, 'rejected', 'G-OTHER',
+  '{"guid":"G-OTHER"}'::jsonb, '{"status":"rejected"}'::jsonb, 'late')->>'recorded'),
+  'false', 'R10 retained-ID recovery: a second resolution of a settled row is not recorded');
+select is((select phase || '|' || external_id || '|' || receipt::text || '|' || (verdict->>'status')
+            || '|' || query_error from public.invoice_transmissions
+            where id = current_setting('ei.r8')::uuid),
+  'accepted|G-R8|{"guid": "G-R8", "evidence": {"ok": 1}}|accepted|',
+  'R10 retained-ID recovery: phase, id, receipt, verdict and query error are unchanged');
 
 select * from finish();
 rollback;
