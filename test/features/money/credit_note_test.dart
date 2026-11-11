@@ -7,9 +7,10 @@
 
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show closeInvoicePage, invoicingRow, openInvoice, pumpInvoices, seededMoney;
 
 void main() {
   testWidgets(
@@ -21,18 +22,24 @@ void main() {
     money.invoices[0] = invoice.copyWith(totalCents: -80000);
     await pumpInvoices(tester, money: money);
 
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
+    // #3587 — the home's To do names the refund to pay out; the credit
+    // note's sheet offers no reminder and no member-payment match.
+    final refund = find.byKey(const ValueKey('invoicing-todo-payOutRefunds'));
+    expect(refund, findsOneWidget);
+    await openInvoice(tester, invoice.id);
+    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-match-action')), findsNothing);
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
-    expect(find.textContaining('To refund'), findsOneWidget);
-    expect(find.byKey(ValueKey('invoice-refund-${invoice.id}')),
-        findsOneWidget);
-    expect(find.byKey(ValueKey('invoice-remind-${invoice.id}')),
-        findsNothing);
-    expect(find.byKey(ValueKey('invoice-match-${invoice.id}')),
-        findsNothing);
 
-    await tester
-        .tap(find.byKey(ValueKey('invoice-refund-${invoice.id}')));
+    // The To do opens the list of the refunds to pay out; the credit
+    // note's page records the refund from its bar.
+    await tester.ensureVisible(refund);
+    await tester.tap(refund);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('invoicing-todo-selected')), findsOne);
+    await openInvoice(tester, invoice.id);
+    await tester.tap(find.byKey(const ValueKey('invoice-page-refund')));
     await tester.pumpAndSettle();
     expect(find.textContaining('WORKSPACE owes the member'),
         findsOneWidget);
@@ -53,10 +60,12 @@ void main() {
     final match = money.invoiceMatchesStore[invoice.id]!;
     expect(match.resolution, 'refunded');
 
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-archive')));
-    await tester.pumpAndSettle();
-    expect(find.text(invoice.number), findsOneWidget);
-    expect(find.text('Refunded'), findsOneWidget);
+    // #3587 — the refunded credit note is on the Paid and closed list.
+    await closeInvoicePage(tester);
+    final row = await invoicingRow(tester, invoice.id);
+    expect(row, findsOneWidget);
+    expect(find.descendant(of: row, matching: find.text('Refunded')),
+        findsOneWidget);
   });
 
 }

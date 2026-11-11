@@ -18,6 +18,8 @@ const double kReadingColumnMaxWidth = 960;
 const List<String> _kWideRoutePrefixes = [
   '/discover', '/kiosk', '/report-editor', '/editor',
   '/settings/sites', '/me', '/invoicing/wizard',
+  // #3587 — the invoicing home keeps an invoice open beside its tables.
+  '/invoices',
 ];
 
 /// A prefix names a path or its children — never a longer word that merely

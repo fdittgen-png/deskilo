@@ -7,8 +7,11 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../fake_event_repository.dart';
@@ -106,21 +109,119 @@ Future<FakeMoneyRepository> pumpInvoices(
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
-  // Issuers land on the hub — these tests exercise the ARCHIVE tab;
-  // hub tabs have their own tests below. Members have no tabs.
-  final archiveTab = find.byKey(const ValueKey('invoice-tab-archive'));
-  if (archiveTab.evaluate().isNotEmpty) {
-    await tester.tap(archiveTab);
-    await tester.pumpAndSettle();
-  }
+  // #3587 — issuers land on the invoicing home (its own tests drive it);
+  // members land on their archive. Nothing to tap here.
   return money;
 }
 
-/// Opens an archive row's DETAIL sheet — since the invoicing UX pass,
-/// reading an invoice and acting on it both live there instead of in a row
-/// of icon buttons and an overflow menu.
+/// #3587 — the invoicing home's list, one line per invoice (the home
+/// opens by customer). A no-op once already by invoice.
+Future<void> showInvoicesByInvoice(WidgetTester tester) async {
+  final toggle = find.byKey(const ValueKey('invoicing-view'));
+  if (toggle.evaluate().isEmpty) return;
+  await tester.tap(
+    find.descendant(of: toggle, matching: find.text('Invoices')),
+  );
+  await tester.pumpAndSettle();
+}
+
+/// #3587 — the invoicing home's paid and closed invoices (the archive the
+/// old hub had as a tab): the Paid filter chip.
+Future<void> showPaidInvoices(WidgetTester tester) async {
+  final chip = find.byKey(const ValueKey('invoicing-filter-paid'));
+  // A search for a line may have scrolled the chips out of view.
+  await tester.ensureVisible(chip);
+  await tester.pumpAndSettle();
+  await tester.tap(chip);
+  await tester.pumpAndSettle();
+}
+
+/// The home's line of [invoiceId] brought into view, from whichever list
+/// holds it: the open invoices by invoice, else the paid and closed ones.
+Future<Finder> invoicingRow(WidgetTester tester, String invoiceId) async {
+  final row = find.byKey(ValueKey('invoicing-row-$invoiceId'));
+  final home = find.byKey(const ValueKey('invoicing-home'));
+  Future<bool> reach() async {
+    if (row.evaluate().isNotEmpty) return true;
+    try {
+      await tester.scrollUntilVisible(
+        row,
+        200,
+        scrollable: find
+            .descendant(of: home, matching: find.byType(Scrollable))
+            .first,
+        maxScrolls: 30,
+      );
+      return true;
+    } on StateError {
+      return false;
+    }
+  }
+
+  await showInvoicesByInvoice(tester);
+  if (!await reach()) {
+    await showPaidInvoices(tester);
+    await reach();
+  }
+  await tester.ensureVisible(row);
+  await tester.pumpAndSettle();
+  return row;
+}
+
+/// Opens an invoice. An issuer reaches its PAGE from the invoicing home's
+/// line (#3587 R1-d: full screen under 1200 px, a panel beside the list
+/// above); a member opens its DETAIL sheet from their archive's row.
 Future<void> openInvoice(WidgetTester tester, String invoiceId) async {
-  await tester.tap(find.byKey(ValueKey('invoice-$invoiceId')));
+  if (find.byKey(const ValueKey('invoicing-home')).evaluate().isNotEmpty) {
+    await closeInvoicePage(tester);
+    await tester.tap(await invoicingRow(tester, invoiceId));
+  } else {
+    await tester.tap(find.byKey(ValueKey('invoice-$invoiceId')));
+  }
+  await tester.pumpAndSettle();
+}
+
+/// #3587 R1-d — the events of a payment of [amountCents] registered
+/// (confirmed) for [memberId] after the invoice was issued: what makes the
+/// invoice page offer "Match the payment" (`invoice-page-match`).
+FakeEventRepository registeredPayment(String memberId, int amountCents) =>
+    FakeEventRepository()
+      ..events.add(
+        WorkspaceEvent(
+          id: 'payment-$memberId-$amountCents',
+          workspaceId: 'ws-1',
+          type: EventType.payment,
+          action: EventAction.created,
+          actorMemberId: 'owner-1',
+          subjectMemberId: memberId,
+          payload: {'amount_cents': amountCents},
+          status: EventStatus.confirmed,
+          createdAt: kTestNow.add(const Duration(hours: 1)),
+        ),
+      );
+
+/// #3587 R1-d — closes an invoice page opened full screen; a no-op when
+/// none is open.
+Future<void> closeInvoicePage(WidgetTester tester) async {
+  final page = find.ancestor(
+      of: find.byType(InvoicePage), matching: find.byType(Dialog));
+  if (page.evaluate().isEmpty) return;
+  await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+  await tester.pumpAndSettle();
+}
+
+/// #3587 R1-d — opens the invoice page's More menu (the document, the
+/// reminders, the corrections).
+Future<void> openInvoicePageMore(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('invoice-page-more')));
+  await tester.pumpAndSettle();
+}
+
+/// #3587 R1-d — runs the invoice page's More entry [key]
+/// (`invoice-more-download`, `invoice-more-hold`, …).
+Future<void> invoicePageMore(WidgetTester tester, String key) async {
+  await openInvoicePageMore(tester);
+  await tester.tap(find.byKey(ValueKey(key)));
   await tester.pumpAndSettle();
 }
 

@@ -17,14 +17,15 @@ import '../invoice_status.dart';
 /// the customer's own declaration ([journeyFactsOf], [declarationOf]).
 typedef InvoiceEventFacts = ({
   InvoiceJourneyFacts journey,
-  ({String eventId, DateTime paidOn})? declaration,
+  ({String eventId, DateTime paidOn, int amountCents})? declaration,
 });
 
 /// Reads invoices as receivables with what the screen has loaded: their
 /// [matches], the [reminders] sent, the dunning [rules], the instant [now],
 /// the business's calendar day of an instant ([dayOf]), the facts the
 /// payment events give for an invoice ([eventFactsOf]), the e-invoice
-/// [transmissions] and the invoices [held] from reminders.
+/// [transmissions], the invoices [held] from reminders and whether a
+/// settled source [fold]s under its settlement (#831, `settlementFold`).
 class ReceivablesReader {
   const ReceivablesReader({
     required this.matches,
@@ -35,6 +36,7 @@ class ReceivablesReader {
     this.eventFactsOf,
     this.transmissions = const {},
     this.held = const {},
+    this.fold = true,
   });
 
   final Map<String, InvoiceMatch> matches;
@@ -48,6 +50,10 @@ class ReceivablesReader {
 
   /// The invoices whose reminders are on hold (`dunningHoldsProvider`).
   final Set<String> held;
+
+  /// Whether a source regrouped into a settlement reads as regrouped; with
+  /// the flag off it stays a receivable of its own.
+  final bool fold;
 
   /// The receivables of [invoices] (every issued document of the workspace).
   List<Receivable> read(Iterable<Invoice> invoices) {
@@ -69,7 +75,8 @@ class ReceivablesReader {
       now: now,
       facts: facts?.journey ?? noJourneyFacts,
     );
-    final stage = invoice.isFolded
+    final folded = fold && invoice.isFolded;
+    final stage = folded
         ? ReceivableStage.regrouped
         : _stageOf(journey.lifecycle, credit: invoice.totalCents < 0);
     final owed = stage == ReceivableStage.paid ? 0 : journey.remainingCents;
@@ -107,7 +114,7 @@ class ReceivablesReader {
       paidOn: stage == ReceivableStage.paid && match != null
           ? dayOf(match.matchedAt)
           : null,
-      regroupedInto: numbers[invoice.settledByInvoiceId] ?? '',
+      regroupedInto: folded ? numbers[invoice.settledByInvoiceId] ?? '' : '',
     );
   }
 }

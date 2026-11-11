@@ -14164,6 +14164,148 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)';
 
   @override
+  String get invoiceMonthAll => 'Alle';
+
+  @override
+  String invoiceMonthBusinessFix(String missing) {
+    return 'Die Angaben Ihres Betriebs sind unvollständig: $missing';
+  }
+
+  @override
+  String get invoiceMonthCheckAgain => 'Erneut prüfen';
+
+  @override
+  String get invoiceMonthDone => 'Fertig';
+
+  @override
+  String get invoiceMonthFix => 'Ergänzen';
+
+  @override
+  String get invoiceMonthHeld => 'Wartet auf eine Freigabe';
+
+  @override
+  String invoiceMonthIssue(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen ausstellen · $amount',
+      one: '1 Rechnung ausstellen · $amount',
+      zero: 'Rechnungen ausstellen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthIssued => 'Ausgestellt';
+
+  @override
+  String get invoiceMonthIssuing => 'Wird ausgestellt…';
+
+  @override
+  String get invoiceMonthLeaveBlocked =>
+      'Die Rechnungen werden gerade ausgestellt. Bitte warten Sie, bis es fertig ist.';
+
+  @override
+  String get invoiceMonthNeedsFix => 'Muss ergänzt werden';
+
+  @override
+  String invoiceMonthNeedsFixCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count müssen ergänzt werden',
+      one: '1 muss ergänzt werden',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthNeedsFixLine(String missing) {
+    return 'Muss ergänzt werden: $missing';
+  }
+
+  @override
+  String get invoiceMonthNotDone => 'Nicht erledigt';
+
+  @override
+  String get invoiceMonthNotIssued =>
+      'Konnte nicht ausgestellt werden. Bitte erneut versuchen.';
+
+  @override
+  String get invoiceMonthNote =>
+      'Eine ausgestellte Rechnung kann nicht mehr geändert werden; ein Fehler wird mit einer Ersatzrechnung korrigiert.';
+
+  @override
+  String get invoiceMonthProforma => 'Proforma ansehen';
+
+  @override
+  String get invoiceMonthResultNone => 'Keine Rechnung ausgestellt';
+
+  @override
+  String get invoiceMonthResultNoneSubtitle =>
+      'Für das Folgende existiert noch keine Rechnung.';
+
+  @override
+  String invoiceMonthResultPartial(int issued, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      issued,
+      locale: localeName,
+      other: '$issued von $total Rechnungen ausgestellt',
+      one: '$issued von $total Rechnungen ausgestellt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthResultSubtitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Jeder Kunde sieht sie jetzt in seinem Konto.',
+      one: 'Der Kunde sieht sie jetzt in seinem Konto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceMonthResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen ausgestellt',
+      one: '1 Rechnung ausgestellt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthRetry => 'Für diese wiederholen';
+
+  @override
+  String invoiceMonthSelected(int count, int total, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count von $total ausgewählt · $amount',
+      one: '1 von $total ausgewählt · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceMonthStays =>
+      'Was nicht erledigt wurde, bleibt unter „Zu erledigen“.';
+
+  @override
+  String invoiceMonthTitle(String month) {
+    return '$month abrechnen';
+  }
+
+  @override
+  String get invoiceMonthUnknown =>
+      'Nicht bestätigt: Sie könnte existieren. Erneut prüfen.';
+
+  @override
   String get invoiceNoOpen => 'Keine offenen Rechnungen.';
 
   @override
@@ -14174,6 +14316,239 @@ class AppLocalizationsDe extends AppLocalizations {
   String invoiceOpenAge(int days) {
     return '$days Tage';
   }
+
+  @override
+  String get invoicePageApprovalRecorded =>
+      'Ihre Zustimmung ist erfasst; sie wartet auf die anderen.';
+
+  @override
+  String get invoicePageApprovals => 'Freigaben der Zahlung';
+
+  @override
+  String get invoicePageCancelledNotReplaced =>
+      'Als irrtümlich ausgestellt storniert · noch nicht ersetzt';
+
+  @override
+  String invoicePageCancelledReplaced(String number) {
+    return 'Storniert · ersetzt durch $number';
+  }
+
+  @override
+  String get invoicePageClose => 'Schließen';
+
+  @override
+  String get invoicePageConfirm => 'Zahlung bestätigen';
+
+  @override
+  String get invoicePageConfirmed => 'Zahlung bestätigt.';
+
+  @override
+  String get invoicePageConfirmedAwaitsApproval =>
+      'Zahlung bestätigt. Die Zuordnung wartet auf eine zweite Freigabe.';
+
+  @override
+  String get invoicePageConfirmedMatched =>
+      'Zahlung bestätigt und dieser Rechnung zugeordnet.';
+
+  @override
+  String get invoicePageDecisionRecorded =>
+      'Ihre Antwort ist erfasst; sie wartet auf die anderen.';
+
+  @override
+  String get invoicePageDecisionRefused =>
+      'Ihre Entscheidung zu dieser Zahlung wurde nicht erfasst.';
+
+  @override
+  String get invoicePageInvoiced => 'Berechnet';
+
+  @override
+  String get invoicePageMarkedNotReceived => 'Als nicht erhalten markiert.';
+
+  @override
+  String get invoicePageMatch => 'Zahlung zuordnen';
+
+  @override
+  String get invoicePageMatchRefused =>
+      'Die Zahlung konnte dieser Rechnung nicht zugeordnet werden.';
+
+  @override
+  String get invoicePageMoreCancel =>
+      'Diese Rechnung stornieren, irrtümlich ausgestellt';
+
+  @override
+  String get invoicePageMoreCorrections => 'Korrekturen';
+
+  @override
+  String get invoicePageMoreDocument => 'Dokument';
+
+  @override
+  String get invoicePageMoreDownload => 'PDF herunterladen';
+
+  @override
+  String get invoicePageMoreEInvoice => 'E-Rechnung';
+
+  @override
+  String get invoicePageMoreHold => 'Mahnungen anhalten';
+
+  @override
+  String get invoicePageMoreIssueReplacement => 'Ersatzrechnung ausstellen';
+
+  @override
+  String get invoicePageMoreMatch => 'Eine Zahlung zuordnen';
+
+  @override
+  String get invoicePageMorePayment => 'Zahlung';
+
+  @override
+  String get invoicePageMoreQuickView => 'PDF ansehen';
+
+  @override
+  String get invoicePageMoreRelease => 'Anhalten aufheben';
+
+  @override
+  String get invoicePageMoreRemind => 'Mahnung teilen';
+
+  @override
+  String get invoicePageMoreReminders => 'Mahnungen';
+
+  @override
+  String get invoicePageMoreReplace => 'Mit einer Ersatzrechnung korrigieren';
+
+  @override
+  String get invoicePageMoreShare => 'PDF teilen';
+
+  @override
+  String get invoicePageMoreWriteOff => 'Den Rest abschreiben';
+
+  @override
+  String get invoicePageNotReceived => 'Nicht erhalten';
+
+  @override
+  String get invoicePageNowApproval => 'Wartet auf eine zweite Freigabe';
+
+  @override
+  String get invoicePageNowCustomer => 'Wartet auf die Bestätigung des Kunden';
+
+  @override
+  String get invoicePageNowDeclared =>
+      'Prüfen Sie Ihre Bank, dann bestätigen Sie';
+
+  @override
+  String invoicePageNowDue(String date) {
+    return 'Fällig am $date';
+  }
+
+  @override
+  String get invoicePageNowEveryReminder =>
+      'Jede Mahnung ist gesendet. Anrufen, anhalten oder abschreiben.';
+
+  @override
+  String get invoicePageNowEveryReminderNoWriteOff =>
+      'Jede Mahnung ist gesendet. Anrufen oder anhalten.';
+
+  @override
+  String get invoicePageNowHold =>
+      'Angehalten: keine Mahnung geht hinaus, bis Sie sie freigeben';
+
+  @override
+  String get invoicePageNowRefund => 'Der Betrieb schuldet diese Erstattung';
+
+  @override
+  String get invoicePageNowRejected =>
+      'Die E-Rechnung wurde abgelehnt: beheben und erneut senden';
+
+  @override
+  String invoicePageNowReminder(int level) {
+    return 'Mahnung $level ist fällig';
+  }
+
+  @override
+  String get invoicePageNowToMatch =>
+      'Eine Zahlung ist auf dem Konto: ordnen Sie sie zu';
+
+  @override
+  String get invoicePageNowWaiting => 'Wartet auf Zahlung';
+
+  @override
+  String invoicePageOpenOf(String total, String date) {
+    return 'offen von $total · fällig $date';
+  }
+
+  @override
+  String invoicePageOpenOfUndated(String total) {
+    return 'offen von $total';
+  }
+
+  @override
+  String get invoicePagePaidInFull => 'Vollständig bezahlt';
+
+  @override
+  String get invoicePagePdf => 'Rechnungs-PDF';
+
+  @override
+  String get invoicePagePdfHint => 'so, wie der Kunde es erhielt';
+
+  @override
+  String get invoicePageRefund => 'Erstattung erfassen';
+
+  @override
+  String invoicePageRemainderWrittenOff(String amount) {
+    return 'Abgeschlossen · Rest von $amount abgeschrieben';
+  }
+
+  @override
+  String invoicePageReminders(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Mahnungen ($count)',
+      one: 'Mahnungen (1)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicePageShareReminder(int level) {
+    return 'Mahnung $level teilen';
+  }
+
+  @override
+  String invoicePageStoryDeclared(String customer) {
+    return '$customer meldet sie als bezahlt';
+  }
+
+  @override
+  String get invoicePageStoryDue => 'Fälligkeit';
+
+  @override
+  String get invoicePageStoryIssued =>
+      'Ausgestellt · der Kunde sieht sie in seinem Konto';
+
+  @override
+  String get invoicePageStoryPaid => 'Bezahlt';
+
+  @override
+  String invoicePageStoryReminder(int level) {
+    return 'Mahnung $level gesendet';
+  }
+
+  @override
+  String invoicePageTitle(String number) {
+    return 'Rechnung $number';
+  }
+
+  @override
+  String get invoicePageToday => 'Heute';
+
+  @override
+  String get invoicePageUnreadable =>
+      'Diese Rechnung kann nicht mehr gelesen werden.';
+
+  @override
+  String get invoicePageView => 'Ansehen';
+
+  @override
+  String get invoicePageWhatHappened => 'Was geschah';
 
   @override
   String get invoicePdfActivity => 'Buchungen & Zahlungen';
@@ -14542,11 +14917,343 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicesEmpty => 'Noch keine Rechnungen.';
 
   @override
-  String get invoicingBanner =>
-      'Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Meine Finanzen.';
+  String get invoicingActionConfirm => 'Bestätigen';
+
+  @override
+  String get invoicingActionMatch => 'Zuordnen';
+
+  @override
+  String get invoicingActionRemind => 'Mahnen';
+
+  @override
+  String get invoicingCaughtUp => 'Alles ist erledigt.';
+
+  @override
+  String get invoicingColCustomer => 'Kunde';
+
+  @override
+  String get invoicingColDue => 'Fällig';
+
+  @override
+  String get invoicingColInvoice => 'Rechnung';
+
+  @override
+  String get invoicingColOldest => 'Älteste';
+
+  @override
+  String get invoicingColOpen => 'Offen';
+
+  @override
+  String get invoicingColOwes => 'Schuldet';
+
+  @override
+  String get invoicingColStatus => 'Status';
+
+  @override
+  String invoicingCountLine(String customers, String invoices) {
+    return '$customers · $invoices';
+  }
+
+  @override
+  String invoicingCustomerCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Kunden',
+      one: '1 Kunde',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDaysLate(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tage überfällig',
+      one: '1 Tag überfällig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDueIn(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Fällig in $days Tagen',
+      one: 'Fällig in 1 Tag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingDueOn(String date) {
+    return 'fällig $date';
+  }
+
+  @override
+  String get invoicingEmptyBody =>
+      'Stellen Sie Ihre erste Rechnung aus, oder rechnen Sie den Monat ab, sobald es Nutzung zu berechnen gibt.';
+
+  @override
+  String get invoicingEmptyNew => 'Neue Rechnung';
+
+  @override
+  String get invoicingEmptyTitle => 'Noch keine Rechnungen';
+
+  @override
+  String get invoicingEveryReminderSent => 'jede Mahnung gesendet';
+
+  @override
+  String get invoicingFilterOpen => 'Offen';
+
+  @override
+  String get invoicingFilterOverdue => 'Überfällig';
+
+  @override
+  String get invoicingFilterPaid => 'Bezahlt';
+
+  @override
+  String invoicingInvoiceCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Rechnungen',
+      one: '1 Rechnung',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoicingInvoicedIn(String month) {
+    return 'Berechnet im $month';
+  }
+
+  @override
+  String get invoicingLegalNotes => 'Rechtliche Hinweise';
+
+  @override
+  String get invoicingMoreHow => 'So funktioniert die Abrechnung';
+
+  @override
+  String get invoicingMoreMine => 'Meine eigenen Rechnungen';
+
+  @override
+  String get invoicingMorePaid => 'Bezahlte und abgeschlossene Rechnungen';
+
+  @override
+  String get invoicingMoreRegister => 'Rechnungsregister';
+
+  @override
+  String get invoicingMoreRegroup => 'Rechnungen zu einer zusammenfassen';
+
+  @override
+  String get invoicingMoreSettings => 'Rechnungseinstellungen';
+
+  @override
+  String get invoicingMoreTemplate => 'PDF-Vorlage der Rechnung';
+
+  @override
+  String get invoicingNew => 'Neu';
+
+  @override
+  String get invoicingNothingHere => 'Hier ist nichts.';
+
+  @override
+  String invoicingNothingMatches(String query) {
+    return 'Nichts passt zu „$query“.';
+  }
+
+  @override
+  String get invoicingNothingOverdue => 'Nichts ist überfällig.';
+
+  @override
+  String get invoicingNothingToConfirm => 'Keine Zahlung wartet auf Sie.';
+
+  @override
+  String get invoicingOwed => 'Offen an Sie';
+
+  @override
+  String get invoicingOwedNotYetDue => 'Noch nicht fällig';
+
+  @override
+  String get invoicingOwedOverdue => 'Überfällig';
+
+  @override
+  String invoicingReceivedIn(String month) {
+    return 'Eingegangen im $month';
+  }
+
+  @override
+  String get invoicingRemindersAutomatic =>
+      'Mahnungen gehen von selbst hinaus, in der App.';
+
+  @override
+  String get invoicingRemindersByHand => 'Mahnungen werden von Hand geteilt.';
+
+  @override
+  String get invoicingRules => 'Regeln';
+
+  @override
+  String get invoicingSearch => 'Suchen';
+
+  @override
+  String get invoicingSearchHint => 'Ein Kunde oder eine Nummer';
+
+  @override
+  String invoicingSourceFailed(String source) {
+    return '$source konnte nicht gelesen werden.';
+  }
+
+  @override
+  String get invoicingSourceHolds => 'Angehaltene Mahnungen';
+
+  @override
+  String get invoicingSourceMatches => 'Zahlungszuordnungen';
+
+  @override
+  String get invoicingSourcePayments => 'Der Zahlungsverlauf';
+
+  @override
+  String get invoicingSourceReminders => 'Der Mahnverlauf';
+
+  @override
+  String get invoicingSourceToInvoice => 'Der abzurechnende Monat';
+
+  @override
+  String get invoicingSourceTransmissions => 'E-Rechnungs-Übermittlungen';
+
+  @override
+  String get invoicingStatusAwaitingCustomer =>
+      'Wartet auf die Bestätigung des Kunden';
+
+  @override
+  String get invoicingStatusCancelled => 'Storniert';
+
+  @override
+  String get invoicingStatusCredited => 'Gutgeschrieben';
+
+  @override
+  String get invoicingStatusDraft => 'Entwurf';
+
+  @override
+  String get invoicingStatusDueToday => 'Heute fällig';
+
+  @override
+  String invoicingStatusEveryReminderSent(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tage überfällig',
+      one: '1 Tag überfällig',
+    );
+    return '$_temp0 · jede Mahnung gesendet';
+  }
+
+  @override
+  String get invoicingStatusOnHold => 'Angehalten';
+
+  @override
+  String invoicingStatusPaid(String date) {
+    return 'Bezahlt am $date';
+  }
+
+  @override
+  String get invoicingStatusPaidUndated => 'Bezahlt';
+
+  @override
+  String invoicingStatusPartlyPaid(String amount) {
+    return 'Teilweise bezahlt · $amount offen';
+  }
+
+  @override
+  String get invoicingStatusRefundOwed => 'Erstattung offen';
+
+  @override
+  String get invoicingStatusRefunded => 'Erstattet';
+
+  @override
+  String invoicingStatusRegrouped(String number) {
+    return 'Zusammengefasst in $number';
+  }
+
+  @override
+  String get invoicingStatusRejected => 'E-Rechnung abgelehnt';
+
+  @override
+  String invoicingStatusReminderSent(int days, int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days Tage überfällig',
+      one: '1 Tag überfällig',
+    );
+    return '$_temp0 · Mahnung $level gesendet';
+  }
+
+  @override
+  String invoicingStatusSaysPaid(String date) {
+    return 'Meldet bezahlt am $date';
+  }
+
+  @override
+  String get invoicingStatusSaysPaidUndated => 'Meldet bezahlt';
+
+  @override
+  String get invoicingStatusSecondApproval => 'Wartet auf eine zweite Freigabe';
+
+  @override
+  String get invoicingStatusToMatch => 'Zahlung eingegangen · zuzuordnen';
+
+  @override
+  String get invoicingTodo => 'Zu tun';
+
+  @override
+  String get invoicingTodoConfirm => 'Zahlungen bestätigen';
+
+  @override
+  String get invoicingTodoDrafts => 'Entwürfe ausstellen';
+
+  @override
+  String get invoicingTodoFix => 'Beheben';
+
+  @override
+  String get invoicingTodoMatch => 'Zahlungen zuordnen';
+
+  @override
+  String invoicingTodoMonth(String month) {
+    return '$month abrechnen';
+  }
+
+  @override
+  String get invoicingTodoRefunds => 'Erstattungen auszahlen';
+
+  @override
+  String invoicingTodoRejected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count E-Rechnungen wurden abgelehnt',
+      one: '1 E-Rechnung wurde abgelehnt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoicingTodoReminders => 'Mahnungen von Hand teilen';
+
+  @override
+  String get invoicingTodoReview => 'Ansehen';
 
   @override
   String get invoicingTools => 'Werkzeuge der Rechnungsstellung';
+
+  @override
+  String get invoicingTryAgain => 'Erneut versuchen';
+
+  @override
+  String get invoicingViewCustomers => 'Kunden';
 
   @override
   String journalBlocked(String roles) {
@@ -22780,7 +23487,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String reminderHistoryLine(int level, String origin, String date) {
-    return 'Stufe $level · $origin · $date';
+    return 'Mahnung $level · $origin · $date';
   }
 
   @override

@@ -8909,6 +8909,33 @@
   "invoiceMissingVatTreatment": "Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.",
   "invoiceMissingVatZeroLine": "Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund",
   "invoiceMissingVies": "Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)",
+  "invoiceMonthAll": "Alle",
+  "invoiceMonthBusinessFix": "Die Angaben Ihres Betriebs sind unvollständig: {missing}",
+  "invoiceMonthCheckAgain": "Erneut prüfen",
+  "invoiceMonthDone": "Fertig",
+  "invoiceMonthFix": "Ergänzen",
+  "invoiceMonthHeld": "Wartet auf eine Freigabe",
+  "invoiceMonthIssue": "{count, plural, =0{Rechnungen ausstellen} =1{1 Rechnung ausstellen · {amount}} other{{count} Rechnungen ausstellen · {amount}}}",
+  "invoiceMonthIssued": "Ausgestellt",
+  "invoiceMonthIssuing": "Wird ausgestellt…",
+  "invoiceMonthLeaveBlocked": "Die Rechnungen werden gerade ausgestellt. Bitte warten Sie, bis es fertig ist.",
+  "invoiceMonthNeedsFix": "Muss ergänzt werden",
+  "invoiceMonthNeedsFixCount": "{count, plural, =1{1 muss ergänzt werden} other{{count} müssen ergänzt werden}}",
+  "invoiceMonthNeedsFixLine": "Muss ergänzt werden: {missing}",
+  "invoiceMonthNotDone": "Nicht erledigt",
+  "invoiceMonthNotIssued": "Konnte nicht ausgestellt werden. Bitte erneut versuchen.",
+  "invoiceMonthNote": "Eine ausgestellte Rechnung kann nicht mehr geändert werden; ein Fehler wird mit einer Ersatzrechnung korrigiert.",
+  "invoiceMonthProforma": "Proforma ansehen",
+  "invoiceMonthResultNone": "Keine Rechnung ausgestellt",
+  "invoiceMonthResultNoneSubtitle": "Für das Folgende existiert noch keine Rechnung.",
+  "invoiceMonthResultPartial": "{issued, plural, one{{issued} von {total} Rechnungen ausgestellt} other{{issued} von {total} Rechnungen ausgestellt}}",
+  "invoiceMonthResultSubtitle": "{count, plural, =1{Der Kunde sieht sie jetzt in seinem Konto.} other{Jeder Kunde sieht sie jetzt in seinem Konto.}}",
+  "invoiceMonthResultTitle": "{count, plural, =1{1 Rechnung ausgestellt} other{{count} Rechnungen ausgestellt}}",
+  "invoiceMonthRetry": "Für diese wiederholen",
+  "invoiceMonthSelected": "{count, plural, =1{1 von {total} ausgewählt · {amount}} other{{count} von {total} ausgewählt · {amount}}}",
+  "invoiceMonthStays": "Was nicht erledigt wurde, bleibt unter „Zu erledigen“.",
+  "invoiceMonthTitle": "{month} abrechnen",
+  "invoiceMonthUnknown": "Nicht bestätigt: Sie könnte existieren. Erneut prüfen.",
   "invoiceNoOpen": "Keine offenen Rechnungen.",
   "invoiceNothingToInvoice": "Für diesen Monat wurde nichts erfasst — nichts zu berechnen.",
   "invoiceOpenAge": "{days} Tage",
@@ -8918,6 +8945,301 @@
         "type": "int"
       }
     }
+  },
+  "invoicePageApprovalRecorded": "Ihre Zustimmung ist erfasst; sie wartet auf die anderen.",
+  "@invoicePageApprovalRecorded": {
+    "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
+  },
+  "invoicePageApprovals": "Freigaben der Zahlung",
+  "@invoicePageApprovals": {
+    "description": "#3587 R1-d the collapsed validation trail under the story"
+  },
+  "invoicePageCancelledNotReplaced": "Als irrtümlich ausgestellt storniert · noch nicht ersetzt",
+  "@invoicePageCancelledNotReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake, no replacement yet"
+  },
+  "invoicePageCancelledReplaced": "Storniert · ersetzt durch {number}",
+  "@invoicePageCancelledReplaced": {
+    "description": "#3587 R1-d summary of an invoice issued by mistake and replaced",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageClose": "Schließen",
+  "@invoicePageClose": {
+    "description": "#3587 R1-d closes the side panel"
+  },
+  "invoicePageConfirm": "Zahlung bestätigen",
+  "@invoicePageConfirm": {
+    "description": "#3587 R1-d bottom bar"
+  },
+  "invoicePageConfirmed": "Zahlung bestätigt.",
+  "@invoicePageConfirmed": {
+    "description": "#3587 R1-d message after Confirm"
+  },
+  "invoicePageConfirmedAwaitsApproval": "Zahlung bestätigt. Die Zuordnung wartet auf eine zweite Freigabe.",
+  "@invoicePageConfirmedAwaitsApproval": {
+    "description": "#3587 R1-d message after Confirm when the match needs a second approval"
+  },
+  "invoicePageConfirmedMatched": "Zahlung bestätigt und dieser Rechnung zugeordnet.",
+  "@invoicePageConfirmedMatched": {
+    "description": "#3587 R1-d message after Confirm when the payment settled the invoice"
+  },
+  "invoicePageDecisionRecorded": "Ihre Antwort ist erfasst; sie wartet auf die anderen.",
+  "invoicePageDecisionRefused": "Ihre Entscheidung zu dieser Zahlung wurde nicht erfasst.",
+  "@invoicePageDecisionRefused": {
+    "description": "#3587 when a decision on a declared payment is refused and no known refusal applies"
+  },
+  "invoicePageInvoiced": "Berechnet",
+  "@invoicePageInvoiced": {
+    "description": "#3587 R1-d the lines card's label"
+  },
+  "invoicePageMarkedNotReceived": "Als nicht erhalten markiert.",
+  "@invoicePageMarkedNotReceived": {
+    "description": "#3587 R1-d message after Not received"
+  },
+  "invoicePageMatch": "Zahlung zuordnen",
+  "@invoicePageMatch": {
+    "description": "#3587 R1-d bottom bar"
+  },
+  "invoicePageMatchRefused": "Die Zahlung konnte dieser Rechnung nicht zugeordnet werden.",
+  "@invoicePageMatchRefused": {
+    "description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"
+  },
+  "invoicePageMoreCancel": "Diese Rechnung stornieren, irrtümlich ausgestellt",
+  "@invoicePageMoreCancel": {
+    "description": "#3587 R1-d More: corrections"
+  },
+  "invoicePageMoreCorrections": "Korrekturen",
+  "@invoicePageMoreCorrections": {
+    "description": "#3587 R1-d More: section"
+  },
+  "invoicePageMoreDocument": "Dokument",
+  "@invoicePageMoreDocument": {
+    "description": "#3587 R1-d More: section"
+  },
+  "invoicePageMoreDownload": "PDF herunterladen",
+  "@invoicePageMoreDownload": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreEInvoice": "E-Rechnung",
+  "@invoicePageMoreEInvoice": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreHold": "Mahnungen anhalten",
+  "@invoicePageMoreHold": {
+    "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreIssueReplacement": "Ersatzrechnung ausstellen",
+  "@invoicePageMoreIssueReplacement": {
+    "description": "#3587 R1-d More: corrections, an invoice cancelled as issued by mistake"
+  },
+  "invoicePageMoreMatch": "Eine Zahlung zuordnen",
+  "invoicePageMorePayment": "Zahlung",
+  "invoicePageMoreQuickView": "PDF ansehen",
+  "@invoicePageMoreQuickView": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreRelease": "Anhalten aufheben",
+  "@invoicePageMoreRelease": {
+    "description": "#3587 R1-d More: reminders"
+  },
+  "invoicePageMoreRemind": "Mahnung teilen",
+  "invoicePageMoreReminders": "Mahnungen",
+  "@invoicePageMoreReminders": {
+    "description": "#3587 R1-d More: section"
+  },
+  "invoicePageMoreReplace": "Mit einer Ersatzrechnung korrigieren",
+  "@invoicePageMoreReplace": {
+    "description": "#3587 R1-d More: corrections"
+  },
+  "invoicePageMoreShare": "PDF teilen",
+  "@invoicePageMoreShare": {
+    "description": "#3587 R1-d More: document"
+  },
+  "invoicePageMoreWriteOff": "Den Rest abschreiben",
+  "@invoicePageMoreWriteOff": {
+    "description": "#3587 R1-d More: corrections"
+  },
+  "invoicePageNotReceived": "Nicht erhalten",
+  "@invoicePageNotReceived": {
+    "description": "#3587 R1-d bottom bar"
+  },
+  "invoicePageNowApproval": "Wartet auf eine zweite Freigabe",
+  "@invoicePageNowApproval": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowCustomer": "Wartet auf die Bestätigung des Kunden",
+  "@invoicePageNowCustomer": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowDeclared": "Prüfen Sie Ihre Bank, dann bestätigen Sie",
+  "@invoicePageNowDeclared": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowDue": "Fällig am {date}",
+  "@invoicePageNowDue": {
+    "description": "#3587 R1-d story's now line",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageNowEveryReminder": "Jede Mahnung ist gesendet. Anrufen, anhalten oder abschreiben.",
+  "@invoicePageNowEveryReminder": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowEveryReminderNoWriteOff": "Jede Mahnung ist gesendet. Anrufen oder anhalten.",
+  "invoicePageNowHold": "Angehalten: keine Mahnung geht hinaus, bis Sie sie freigeben",
+  "@invoicePageNowHold": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowRefund": "Der Betrieb schuldet diese Erstattung",
+  "@invoicePageNowRefund": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowRejected": "Die E-Rechnung wurde abgelehnt: beheben und erneut senden",
+  "@invoicePageNowRejected": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowReminder": "Mahnung {level} ist fällig",
+  "@invoicePageNowReminder": {
+    "description": "#3587 R1-d story's now line",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageNowToMatch": "Eine Zahlung ist auf dem Konto: ordnen Sie sie zu",
+  "@invoicePageNowToMatch": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageNowWaiting": "Wartet auf Zahlung",
+  "@invoicePageNowWaiting": {
+    "description": "#3587 R1-d story's now line"
+  },
+  "invoicePageOpenOf": "offen von {total} · fällig {date}",
+  "@invoicePageOpenOf": {
+    "description": "#3587 R1-d under the amount",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageOpenOfUndated": "offen von {total}",
+  "@invoicePageOpenOfUndated": {
+    "description": "#3587 R1-d under the amount, no due date",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePagePaidInFull": "Vollständig bezahlt",
+  "@invoicePagePaidInFull": {
+    "description": "#3587 R1-d under the amount of a paid invoice"
+  },
+  "invoicePagePdf": "Rechnungs-PDF",
+  "@invoicePagePdf": {
+    "description": "#3587 R1-d the document card"
+  },
+  "invoicePagePdfHint": "so, wie der Kunde es erhielt",
+  "@invoicePagePdfHint": {
+    "description": "#3587 R1-d the document card's line"
+  },
+  "invoicePageRefund": "Erstattung erfassen",
+  "@invoicePageRefund": {
+    "description": "#3587 R1-d bottom bar on a credit note"
+  },
+  "invoicePageRemainderWrittenOff": "Abgeschlossen · Rest von {amount} abgeschrieben",
+  "@invoicePageRemainderWrittenOff": {
+    "description": "#3587 R1-d summary of an invoice whose remainder was written off",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageReminders": "{count, plural, =1{Mahnungen (1)} other{Mahnungen ({count})}}",
+  "@invoicePageReminders": {
+    "description": "#3587 R1-d the collapsed reminder history under the story",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageShareReminder": "Mahnung {level} teilen",
+  "@invoicePageShareReminder": {
+    "description": "#3587 R1-d bottom bar",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageStoryDeclared": "{customer} meldet sie als bezahlt",
+  "@invoicePageStoryDeclared": {
+    "description": "#3587 R1-d story line",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageStoryDue": "Fälligkeit",
+  "@invoicePageStoryDue": {
+    "description": "#3587 R1-d story line"
+  },
+  "invoicePageStoryIssued": "Ausgestellt · der Kunde sieht sie in seinem Konto",
+  "@invoicePageStoryIssued": {
+    "description": "#3587 R1-d story line; no e-mail is sent in release 1"
+  },
+  "invoicePageStoryPaid": "Bezahlt",
+  "@invoicePageStoryPaid": {
+    "description": "#3587 R1-d story line"
+  },
+  "invoicePageStoryReminder": "Mahnung {level} gesendet",
+  "@invoicePageStoryReminder": {
+    "description": "#3587 R1-d story line",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicePageTitle": "Rechnung {number}",
+  "@invoicePageTitle": {
+    "description": "#3587 R1-d the invoice page's title",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicePageToday": "Heute",
+  "@invoicePageToday": {
+    "description": "#3587 R1-d the story's last line's day"
+  },
+  "invoicePageUnreadable": "Diese Rechnung kann nicht mehr gelesen werden.",
+  "@invoicePageUnreadable": {
+    "description": "#3587 the invoice page of an invoice that can no longer be read"
+  },
+  "invoicePageView": "Ansehen",
+  "@invoicePageView": {
+    "description": "#3587 R1-d opens the PDF"
+  },
+  "invoicePageWhatHappened": "Was geschah",
+  "@invoicePageWhatHappened": {
+    "description": "#3587 R1-d the story card's label"
   },
   "invoicePdfActivity": "Buchungen & Zahlungen",
   "invoicePdfAnnex": "Anhang — Details",
@@ -9187,13 +9509,445 @@
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
   "invoicesEmpty": "Noch keine Rechnungen.",
-  "invoicingBanner": "Sie stellen Rechnungen für den gesamten Arbeitsbereich aus und mahnen sie an. Ihre eigenen Rechnungen und Zahlungen finden Sie unter Ich › Meine Finanzen.",
-  "@invoicingBanner": {
-    "description": "invoicing hub vs my finances"
+  "invoicingActionConfirm": "Bestätigen",
+  "@invoicingActionConfirm": {
+    "description": "#3587 a customer line's action: confirm a declared payment"
+  },
+  "invoicingActionMatch": "Zuordnen",
+  "@invoicingActionMatch": {
+    "description": "#3587 a customer line's action: match a received payment"
+  },
+  "invoicingActionRemind": "Mahnen",
+  "@invoicingActionRemind": {
+    "description": "#3587 a customer line's action: share a reminder"
+  },
+  "invoicingCaughtUp": "Alles ist erledigt.",
+  "@invoicingCaughtUp": {
+    "description": "#3587 To do without entries"
+  },
+  "invoicingColCustomer": "Kunde",
+  "@invoicingColCustomer": {
+    "description": "#3587 table column"
+  },
+  "invoicingColDue": "Fällig",
+  "@invoicingColDue": {
+    "description": "#3587 table column"
+  },
+  "invoicingColInvoice": "Rechnung",
+  "@invoicingColInvoice": {
+    "description": "#3587 table column"
+  },
+  "invoicingColOldest": "Älteste",
+  "@invoicingColOldest": {
+    "description": "#3587 table column: the oldest invoice's state"
+  },
+  "invoicingColOpen": "Offen",
+  "@invoicingColOpen": {
+    "description": "#3587 table column: what is still owed"
+  },
+  "invoicingColOwes": "Schuldet",
+  "@invoicingColOwes": {
+    "description": "#3587 table column"
+  },
+  "invoicingColStatus": "Status",
+  "@invoicingColStatus": {
+    "description": "#3587 table column"
+  },
+  "invoicingCountLine": "{customers} · {invoices}",
+  "@invoicingCountLine": {
+    "description": "#3587 above the list: customers and invoices it holds",
+    "placeholders": {
+      "customers": {
+        "type": "String"
+      },
+      "invoices": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingCustomerCount": "{count, plural, =1{1 Kunde} other{{count} Kunden}}",
+  "@invoicingCustomerCount": {
+    "description": "#3587 how many customers",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingDaysLate": "{days, plural, =1{1 Tag überfällig} other{{days} Tage überfällig}}",
+  "@invoicingDaysLate": {
+    "description": "#3587 lateness",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingDueIn": "{days, plural, =1{Fällig in 1 Tag} other{Fällig in {days} Tagen}}",
+  "@invoicingDueIn": {
+    "description": "#3587 status",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingDueOn": "fällig {date}",
+  "@invoicingDueOn": {
+    "description": "#3587 an invoice line's due date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingEmptyBody": "Stellen Sie Ihre erste Rechnung aus, oder rechnen Sie den Monat ab, sobald es Nutzung zu berechnen gibt.",
+  "@invoicingEmptyBody": {
+    "description": "#3587 the empty state's line"
+  },
+  "invoicingEmptyNew": "Neue Rechnung",
+  "@invoicingEmptyNew": {
+    "description": "#3587 the empty state's button"
+  },
+  "invoicingEmptyTitle": "Noch keine Rechnungen",
+  "@invoicingEmptyTitle": {
+    "description": "#3587 a business with no invoice at all"
+  },
+  "invoicingEveryReminderSent": "jede Mahnung gesendet",
+  "@invoicingEveryReminderSent": {
+    "description": "#3587 after the lateness on a customer line"
+  },
+  "invoicingFilterOpen": "Offen",
+  "@invoicingFilterOpen": {
+    "description": "#3587 list filter"
+  },
+  "invoicingFilterOverdue": "Überfällig",
+  "@invoicingFilterOverdue": {
+    "description": "#3587 list filter"
+  },
+  "invoicingFilterPaid": "Bezahlt",
+  "@invoicingFilterPaid": {
+    "description": "#3587 list filter: paid and closed"
+  },
+  "invoicingInvoiceCount": "{count, plural, =1{1 Rechnung} other{{count} Rechnungen}}",
+  "@invoicingInvoiceCount": {
+    "description": "#3587 how many invoices",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingInvoicedIn": "Berechnet im {month}",
+  "@invoicingInvoicedIn": {
+    "description": "#3587 the month's figure",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingLegalNotes": "Rechtliche Hinweise",
+  "@invoicingLegalNotes": {
+    "description": "#3587 the collapsed line holding the legal notices"
+  },
+  "invoicingMoreHow": "So funktioniert die Abrechnung",
+  "@invoicingMoreHow": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreMine": "Meine eigenen Rechnungen",
+  "@invoicingMoreMine": {
+    "description": "#3587 More menu: the person's own invoices as a member"
+  },
+  "invoicingMorePaid": "Bezahlte und abgeschlossene Rechnungen",
+  "@invoicingMorePaid": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreRegister": "Rechnungsregister",
+  "@invoicingMoreRegister": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreRegroup": "Rechnungen zu einer zusammenfassen",
+  "@invoicingMoreRegroup": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreSettings": "Rechnungseinstellungen",
+  "@invoicingMoreSettings": {
+    "description": "#3587 More menu"
+  },
+  "invoicingMoreTemplate": "PDF-Vorlage der Rechnung",
+  "@invoicingMoreTemplate": {
+    "description": "#3587 More menu"
+  },
+  "invoicingNew": "Neu",
+  "@invoicingNew": {
+    "description": "#3587 top bar: start a new invoice"
+  },
+  "invoicingNothingHere": "Hier ist nichts.",
+  "@invoicingNothingHere": {
+    "description": "#3587 empty filter"
+  },
+  "invoicingNothingMatches": "Nichts passt zu „{query}“.",
+  "@invoicingNothingMatches": {
+    "description": "#3587 empty search",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingNothingOverdue": "Nichts ist überfällig.",
+  "@invoicingNothingOverdue": {
+    "description": "#3587 empty filter"
+  },
+  "invoicingNothingToConfirm": "Keine Zahlung wartet auf Sie.",
+  "@invoicingNothingToConfirm": {
+    "description": "#3587 empty filter"
+  },
+  "invoicingOwed": "Offen an Sie",
+  "@invoicingOwed": {
+    "description": "#3587 the owed card's label"
+  },
+  "invoicingOwedNotYetDue": "Noch nicht fällig",
+  "@invoicingOwedNotYetDue": {
+    "description": "#3587 owed bucket"
+  },
+  "invoicingOwedOverdue": "Überfällig",
+  "@invoicingOwedOverdue": {
+    "description": "#3587 owed bucket"
+  },
+  "invoicingReceivedIn": "Eingegangen im {month}",
+  "@invoicingReceivedIn": {
+    "description": "#3587 the month's figure: money received",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingRemindersAutomatic": "Mahnungen gehen von selbst hinaus, in der App.",
+  "@invoicingRemindersAutomatic": {
+    "description": "#3587 the To do card's last line, automatic reminders"
+  },
+  "invoicingRemindersByHand": "Mahnungen werden von Hand geteilt.",
+  "@invoicingRemindersByHand": {
+    "description": "#3587 the To do card's last line, reminders by hand"
+  },
+  "invoicingRules": "Regeln",
+  "@invoicingRules": {
+    "description": "#3587 opens the reminder rules"
+  },
+  "invoicingSearch": "Suchen",
+  "@invoicingSearch": {
+    "description": "#3587 top bar: open the search field"
+  },
+  "invoicingSearchHint": "Ein Kunde oder eine Nummer",
+  "@invoicingSearchHint": {
+    "description": "#3587 search field hint"
+  },
+  "invoicingSourceFailed": "{source} konnte nicht gelesen werden.",
+  "@invoicingSourceFailed": {
+    "description": "#3587 one line when a source failed; no figure it fed is shown",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingSourceHolds": "Angehaltene Mahnungen",
+  "@invoicingSourceHolds": {
+    "description": "#3587 a source name: invoices whose reminders are on hold"
+  },
+  "invoicingSourceMatches": "Zahlungszuordnungen",
+  "@invoicingSourceMatches": {
+    "description": "#3587 a source name: the payments matched to invoices"
+  },
+  "invoicingSourcePayments": "Der Zahlungsverlauf",
+  "@invoicingSourcePayments": {
+    "description": "#3587 a source name"
+  },
+  "invoicingSourceReminders": "Der Mahnverlauf",
+  "@invoicingSourceReminders": {
+    "description": "#3587 a source name"
+  },
+  "invoicingSourceToInvoice": "Der abzurechnende Monat",
+  "@invoicingSourceToInvoice": {
+    "description": "#3587 a source name"
+  },
+  "invoicingSourceTransmissions": "E-Rechnungs-Übermittlungen",
+  "@invoicingSourceTransmissions": {
+    "description": "#3587 a source name: the e-invoice transmission statuses"
+  },
+  "invoicingStatusAwaitingCustomer": "Wartet auf die Bestätigung des Kunden",
+  "@invoicingStatusAwaitingCustomer": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusCancelled": "Storniert",
+  "@invoicingStatusCancelled": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusCredited": "Gutgeschrieben",
+  "@invoicingStatusCredited": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusDraft": "Entwurf",
+  "@invoicingStatusDraft": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusDueToday": "Heute fällig",
+  "@invoicingStatusDueToday": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusEveryReminderSent": "{days, plural, =1{1 Tag überfällig} other{{days} Tage überfällig}} · jede Mahnung gesendet",
+  "@invoicingStatusEveryReminderSent": {
+    "description": "#3587 status",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingStatusOnHold": "Angehalten",
+  "@invoicingStatusOnHold": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusPaid": "Bezahlt am {date}",
+  "@invoicingStatusPaid": {
+    "description": "#3587 status",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusPaidUndated": "Bezahlt",
+  "@invoicingStatusPaidUndated": {
+    "description": "#3587 status without a day"
+  },
+  "invoicingStatusPartlyPaid": "Teilweise bezahlt · {amount} offen",
+  "@invoicingStatusPartlyPaid": {
+    "description": "#3587 status",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusRefundOwed": "Erstattung offen",
+  "@invoicingStatusRefundOwed": {
+    "description": "#3587 status: a credit note to pay out"
+  },
+  "invoicingStatusRefunded": "Erstattet",
+  "@invoicingStatusRefunded": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusRegrouped": "Zusammengefasst in {number}",
+  "@invoicingStatusRegrouped": {
+    "description": "#3587 status",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusRejected": "E-Rechnung abgelehnt",
+  "@invoicingStatusRejected": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusReminderSent": "{days, plural, =1{1 Tag überfällig} other{{days} Tage überfällig}} · Mahnung {level} gesendet",
+  "@invoicingStatusReminderSent": {
+    "description": "#3587 status",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingStatusSaysPaid": "Meldet bezahlt am {date}",
+  "@invoicingStatusSaysPaid": {
+    "description": "#3587 status: the customer declared a payment",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingStatusSaysPaidUndated": "Meldet bezahlt",
+  "@invoicingStatusSaysPaidUndated": {
+    "description": "#3587 status: a declared payment without a day"
+  },
+  "invoicingStatusSecondApproval": "Wartet auf eine zweite Freigabe",
+  "@invoicingStatusSecondApproval": {
+    "description": "#3587 status"
+  },
+  "invoicingStatusToMatch": "Zahlung eingegangen · zuzuordnen",
+  "@invoicingStatusToMatch": {
+    "description": "#3587 status"
+  },
+  "invoicingTodo": "Zu tun",
+  "@invoicingTodo": {
+    "description": "#3587 the To do card's heading"
+  },
+  "invoicingTodoConfirm": "Zahlungen bestätigen",
+  "@invoicingTodoConfirm": {
+    "description": "#3587 To do: declared payments"
+  },
+  "invoicingTodoDrafts": "Entwürfe ausstellen",
+  "@invoicingTodoDrafts": {
+    "description": "#3587 To do: drafts"
+  },
+  "invoicingTodoFix": "Beheben",
+  "@invoicingTodoFix": {
+    "description": "#3587 a To do entry's button for a failure"
+  },
+  "invoicingTodoMatch": "Zahlungen zuordnen",
+  "@invoicingTodoMatch": {
+    "description": "#3587 To do: received payments to match"
+  },
+  "invoicingTodoMonth": "{month} abrechnen",
+  "@invoicingTodoMonth": {
+    "description": "#3587 To do: invoice the month",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingTodoRefunds": "Erstattungen auszahlen",
+  "@invoicingTodoRefunds": {
+    "description": "#3587 To do: credit notes owed"
+  },
+  "invoicingTodoRejected": "{count, plural, =1{1 E-Rechnung wurde abgelehnt} other{{count} E-Rechnungen wurden abgelehnt}}",
+  "@invoicingTodoRejected": {
+    "description": "#3587 To do: rejected e-invoices",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoicingTodoReminders": "Mahnungen von Hand teilen",
+  "@invoicingTodoReminders": {
+    "description": "#3587 To do: the reminder queue (by hand only)"
+  },
+  "invoicingTodoReview": "Ansehen",
+  "@invoicingTodoReview": {
+    "description": "#3587 a To do entry's button"
   },
   "invoicingTools": "Werkzeuge der Rechnungsstellung",
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
+  },
+  "invoicingTryAgain": "Erneut versuchen",
+  "@invoicingTryAgain": {
+    "description": "#3587 retry a failed source"
+  },
+  "invoicingViewCustomers": "Kunden",
+  "@invoicingViewCustomers": {
+    "description": "#3587 list view: one line per customer"
   },
   "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}",
   "journalFecMissingRate": "Diese Belege lauten auf eine andere Währung als die Buchführung, und für sie ist kein Wechselkurs erfasst; der FEC wurde nicht erstellt: {documents}",
@@ -13947,7 +14701,7 @@
   "registerPaymentSubmit": "Erfassen",
   "registerPaymentTitle": "Zahlung erfassen",
   "reminderBody": "{target} beginnt um {time}",
-  "reminderHistoryLine": "Stufe {level} · {origin} · {date}",
+  "reminderHistoryLine": "Mahnung {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {

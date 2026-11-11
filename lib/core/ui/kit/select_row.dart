@@ -14,6 +14,7 @@ class SelectRow extends StatelessWidget {
     required this.title,
     required this.caption,
     required this.amount,
+    this.enabled = true,
   });
 
   final bool selected;
@@ -22,14 +23,19 @@ class SelectRow extends StatelessWidget {
   final Widget caption;
   final String amount;
 
+  /// A line that cannot be ticked (it needs a fix): dimmed, and its
+  /// semantics say disabled.
+  final bool enabled;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     // The whole line is the one control; the box only shows its state.
     return Semantics(
       checked: selected,
+      enabled: enabled,
       child: InkWell(
-        onTap: () => onChanged(!selected),
+        onTap: enabled ? () => onChanged(!selected) : null,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 60),
           child: Padding(
@@ -39,7 +45,10 @@ class SelectRow extends StatelessWidget {
                 ExcludeSemantics(
                   child: IgnorePointer(
                     // recorder-key-exempt: a picture of the line's state
-                    child: Checkbox(value: selected, onChanged: (_) {}),
+                    child: Checkbox(
+                      value: selected,
+                      onChanged: enabled ? (_) {} : null,
+                    ),
                   ),
                 ),
                 const SizedBox(width: KitMetrics.gap / 2),
@@ -47,7 +56,14 @@ class SelectRow extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: theme.textTheme.titleSmall),
+                      Text(
+                        title,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: enabled
+                              ? null
+                              : theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                       DefaultTextStyle.merge(
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
