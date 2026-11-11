@@ -14,6 +14,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -29,10 +30,9 @@ import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../invoice_actions.dart';
-import '../invoice_proforma.dart';
 import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/invoice_form_sheet.dart';
-import '../widgets/invoicing_dashboard.dart';
+import 'invoice_month_flow.dart';
 import 'invoice_page.dart';
 import 'invoicing_home.dart';
 import 'invoicing_list.dart';
@@ -376,46 +376,32 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
 
   /// The month to invoice, full screen with the list the app has today,
   /// until the month flow replaces it (R1-e).
+  /// The month's flow (R1-e): every customer of the month with what is
+  /// invoiced, the ones that need a fix said apart with their Fix, one
+  /// Issue for the selection, and the result. A Fix opens the customer's
+  /// page or the business's legal identity; the flow reads them again when
+  /// the person comes back.
   Future<void> _invoiceTheMonth(String? period) async {
-    final l = context.l10n;
-    final format = appFormatOf(context);
-    final currencyCode = ref.read(currentWorkspaceProvider).value?.currencyCode;
-    final currency = format.moneyIn(currencyCode ?? '');
+    final overview = ref.read(invoicingOverviewProvider).value;
+    final workspace = ref.read(currentWorkspaceProvider).value;
+    if (overview == null || workspace == null) return;
     await showDialog<void>(
       context: context,
       builder: (_) => Dialog.fullscreen(
         // Its own messenger: what the month says is said once, here, not
         // also on the home under it.
         child: ScaffoldMessenger(
-          child: Builder(
-            builder: (page) => Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  l.invoicingTodoMonth(
-                    period == null
-                        ? ''
-                        : format.dates(DateShape.month).format(_monthOf(period)),
-                  ),
-                ),
-              ),
-              body: ToInvoiceTab(
-                currency: currency,
-                onIssue: (memberId, p) =>
-                    showInvoiceIssueSheet(page, ref, memberId: memberId, period: p),
-                onIssueAll: (entries, p) =>
-                    issueInvoicesForAll(page, ref, entries, p, currency),
-                onProforma: (memberId, p) async {
-                  final invoice = await proformaForMonth(
-                    ref,
-                    memberId: memberId,
-                    period: p,
-                  );
-                  if (invoice != null && page.mounted) {
-                    await shareProforma(page, ref, invoice);
-                  }
-                },
-              ),
-            ),
+          child: InvoiceMonthFlow(
+            period: period ?? overview.period,
+            entries: overview.toInvoice,
+            currency: workspace.currencyCode,
+            workspaceId: workspace.id,
+            onFixCustomer: (memberId) async {
+              await context.push('/member/$memberId');
+            },
+            onFixBusiness: () async {
+              await context.push('/legal-identity');
+            },
           ),
         ),
       ),

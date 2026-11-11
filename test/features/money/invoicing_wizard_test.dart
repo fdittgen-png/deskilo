@@ -122,11 +122,9 @@ Future<void> _goTo(WidgetTester tester, WizardStep step) async {
   await tester.pumpAndSettle();
 }
 
-/// #3587 — the home's To do "Invoice {month}": the month's list.
-Future<void> _openTheMonth(WidgetTester tester) async {
-  final entry = find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth'));
-  await tester.ensureVisible(entry);
-  await tester.tap(entry);
+/// #3587 — the month-close wizard's door is in the home's More menu.
+Future<void> _openTheMore(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
   await tester.pumpAndSettle();
 }
 
@@ -285,8 +283,8 @@ void main() {
       'flag is on, '
       'and the wizard opens on its rail', (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
-    // #3587 — the card sits on the month's list, the To do's first entry.
-    await _openTheMonth(tester);
+    // #3587 — the wizard is a worded entry of the home's More menu.
+    await _openTheMore(tester);
     expect(find.byKey(const ValueKey('invoice-wizard-card')), findsOneWidget);
     // #902 — the toolbar's magic wand was the same wizard; the card is
     // the one door now.
@@ -308,7 +306,7 @@ void main() {
       workspace: FakeWorkspaceRepository.withWorkspace(
           featureFlags: const {'invoicingWizard': false}),
     );
-    await _openTheMonth(tester);
+    await _openTheMore(tester);
     expect(find.byKey(const ValueKey('invoice-wizard-card')), findsNothing);
     expect(find.byKey(const ValueKey('invoice-wizard-button')), findsNothing);
   });

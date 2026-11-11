@@ -52,7 +52,7 @@ FakeWorkspaceRepository _reader() {
   return workspace;
 }
 
-/// #3587 — the To do's "Invoice {month}" entry: the month's list.
+/// #3587 — the To do's "Invoice {month}" entry: the month's flow.
 Future<void> openTheMonth(WidgetTester tester) async {
   final entry = find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth'));
   await tester.ensureVisible(entry);
@@ -796,9 +796,9 @@ void main() {
     );
   });
   testWidgets(
-      'INVOICING HUB: the To-invoice tab lists last month\'s uninvoiced '
-      'members with the derived total; Issue prefills member + month; '
-      'the member then leaves the list', (tester) async {
+      'THE MONTH: the To do opens the month\'s flow, which lists last '
+      'month\'s uninvoiced members; Issue invoices the month and the member '
+      'leaves the list', (tester) async {
     final money = FakeMoneyRepository();
     await pumpInvoices(tester, money: money);
     final prev = DateTime(kTestNow.year, kTestNow.month - 1);
@@ -806,29 +806,24 @@ void main() {
         '${prev.year}-${prev.month.toString().padLeft(2, '0')}';
 
     // #3587 — the home's To do names the month to invoice; its entry
-    // opens the month's list.
+    // opens the month's flow (R1-e).
     await openTheMonth(tester);
 
-    // Flo's previous month derives 150.00 + 16.00 → listed.
-    expect(find.byKey(const ValueKey('invoice-todo-member-1')),
+    // Flo's previous month derives a total → listed, ticked.
+    expect(find.byKey(const ValueKey('invoice-month-line-member-1')),
         findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('invoice-issue-member-1')));
-    await tester.pumpAndSettle();
-    // The issue sheet opens PREFILLED on the member and the month.
-    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    await tester.tap(find.byKey(const ValueKey('invoice-month-issue')));
     await tester.pumpAndSettle();
 
     expect(money.invoices.single.period, prevPeriod);
     expect(money.invoices.single.memberId, 'member-1');
-    expect(find.byKey(const ValueKey('invoice-todo-member-1')),
-        findsNothing,
-        reason: 'an invoiced member leaves the to-invoice list');
+    await tester.tap(find.byKey(const ValueKey('result-done')));
+    await tester.pumpAndSettle();
     expect(
-      find.byKey(const ValueKey('invoice-issue-all')),
+      find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth')),
       findsNothing,
-      reason: 'nothing left — the sweep disappears with the list',
+      reason: 'an invoiced month leaves the To do',
     );
   });
 
@@ -847,26 +842,22 @@ void main() {
     await pumpInvoices(tester, money: money, workspace: workspace);
 
     await openTheMonth(tester);
-    expect(find.byKey(const ValueKey('invoice-todo-member-2')),
+    expect(find.byKey(const ValueKey('invoice-month-line-member-2')),
         findsOneWidget);
 
-    // The sweep is N immutable documents in one tap — it confirms first.
-    await tester.tap(find.byKey(const ValueKey('invoice-issue-all')));
-    await tester.pumpAndSettle();
-    expect(money.invoices, isEmpty, reason: 'nothing issued before confirm');
-    await tester
-        .tap(find.byKey(const ValueKey('invoice-issue-all-confirm')));
+    // Every listed member is ticked; one Issue invoices them all.
+    expect(money.invoices, isEmpty, reason: 'nothing issued before Issue');
+    await tester.tap(find.byKey(const ValueKey('invoice-month-issue')));
     await tester.pumpAndSettle();
 
     expect(money.invoices, hasLength(2));
     expect(money.invoices.map((i) => i.memberId).toSet(),
         {'member-1', 'member-2'});
-    expect(find.text('2 invoices issued.'), findsOneWidget);
-    expect(find.textContaining('nothing to invoice'), findsOneWidget);
+    expect(find.text('2 invoices issued'), findsOneWidget);
   });
 
   testWidgets(
-      'PROFORMA (0072): the To-invoice row shares the month as a proforma '
+      'PROFORMA (0072): the month\'s line shares the month as a proforma '
       'and issues NOTHING', (tester) async {
     final shared = <({String name, String mime})>[];
     final money = await pumpInvoices(
@@ -880,7 +871,7 @@ void main() {
 
     await openTheMonth(tester);
     await tester
-        .tap(find.byKey(const ValueKey('invoice-proforma-member-1')));
+        .tap(find.byKey(const ValueKey('invoice-month-proforma-member-1')));
     await tester.pumpAndSettle();
     await tester.runAsync(() async {
       // #514 — the triad sheet; Share hands the proforma out.

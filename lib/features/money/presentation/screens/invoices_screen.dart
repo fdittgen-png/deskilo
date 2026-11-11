@@ -20,6 +20,7 @@ import '../widgets/invoice_template_sheet.dart';
 import '../widgets/recapitulative_notice.dart';
 import '../widgets/settlement_sheet.dart';
 import '../widgets/small_business_notice.dart';
+import '../widgets/wizard_context.dart';
 
 /// Invoices are immutable — there is no edit or delete anywhere, by design.
 /// Someone who issues lands on the invoicing home (#3587); a member reads
@@ -125,6 +126,8 @@ List<MoreEntry> _moreEntries(
   // #804 — regrouping a customer's open invoices into one they pay.
   final settlementOn =
       canIssue && features.contains(WorkspaceFeature.invoiceSettlement);
+  final wizardOn =
+      canIssue && features.contains(WorkspaceFeature.invoicingWizard);
   // The setup guide when it is on, the workspace settings otherwise.
   final setupOn =
       canIssue &&
@@ -180,6 +183,15 @@ List<MoreEntry> _moreEntries(
         Icons.call_split,
         l10n.repartitionAction,
         () => showExpenseRepartitionSheet(context, ref),
+      ),
+    // #827 — the month-close wizard: its card sat on the old month list,
+    // so it keeps a door here.
+    if (wizardOn)
+      (
+        'invoice-wizard-card',
+        Icons.auto_fix_high_outlined,
+        l10n.invoiceWizardAction,
+        () => openInvoicingWizard(context),
       ),
     if (processOn)
       (
