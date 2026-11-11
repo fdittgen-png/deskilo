@@ -96,9 +96,11 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     final stored = resolveEnabledFeatures(workspace.featureFlags);
     final country = workspace.countryCode;
     final current = currentSetupLevels(stored, country: country);
-    final saved = _restoreOnce(journey, current, workspace.id);
+    // #3702 — the stored flag, not the reached level (one off feature is not "no places").
+    final books = stored.contains(WorkspaceFeature.placeBooking);
+    final saved =
+        _restoreOnce(journey, current, workspace.id, booksPlaces: books);
     // #3702 — places-aware; one answer recomputes only what it names.
-    final books = current[SetupProcess.bookings] != 'none';
     final recommended = recommendSetupLevels(_answers, booksPlaces: books);
     final checked = setupCandidate(
       current: current,
@@ -285,21 +287,17 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   /// The saved journey; its answers are taken over once loaded, and again
   /// once a conflict reloaded it. Without one, the questions open from what
   /// the space already does (#3076).
-  SetupJourney? _restoreOnce(
-    AsyncValue<SetupJourney?> journey,
-    SetupLevelVector current,
-    String workspaceId,
-  ) {
+  SetupJourney? _restoreOnce(AsyncValue<SetupJourney?> journey,
+      SetupLevelVector current, String workspaceId,
+      {required bool booksPlaces}) {
     final saved = journey.value;
     if (!_restored && journey.hasValue && !journey.isLoading) {
       _restored = true;
       _unknown.clear();
       _answers = saved?.answers ?? setupAnswersFromLevels(current);
       if (saved != null) {
-        final suggested = recommendSetupLevels(
-          saved.answers,
-          booksPlaces: current[SetupProcess.bookings] != 'none',
-        );
+        final suggested =
+            recommendSetupLevels(saved.answers, booksPlaces: booksPlaces);
         for (final p in SetupProcess.values) {
           final level = saved.levels[p];
           if (level != null &&

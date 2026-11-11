@@ -17,15 +17,15 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  for (final noPlaces in [false, true]) {
+  for (final mode in ['places', 'no-places', 'partial-places']) {
     test('the page recommends and ticks what setup_levels.dart does, for '
         'every combination of answers, '
-        '${noPlaces ? 'a business that books no places' : 'one that books places'}',
-        () => _parity(noPlaces: noPlaces));
+        '$mode',
+        () => _parity(mode: mode));
   }
 }
 
-void _parity({required bool noPlaces}) {
+void _parity({required String mode}) {
   {
     if (Process.runSync('node', ['--version']).exitCode != 0) {
       markTestSkipped('node is not on PATH');
@@ -34,14 +34,14 @@ void _parity({required bool noPlaces}) {
     final r = Process.runSync('node', [
       'tool/setup/step_harness.mjs',
       '--recommend-all',
-      if (noPlaces) '--no-places',
+      if (mode != 'places') '--$mode',
     ]);
     expect(r.exitCode, 0, reason: '${r.stderr}');
     final out = jsonDecode('${r.stdout}') as Map<String, dynamic>;
     final initial = (out['initial'] as List).cast<String>().toSet();
     final country = out['country'] as String?;
     final initialLevels = (out['initialLevels'] as Map).cast<String, String>();
-    final booksPlaces = initialLevels['bookings'] != 'none';
+    final booksPlaces = out['booksPlaces'] as bool;
     // #3702 — answering recomputes only the processes whose rules name a
     // question; the others keep the level the business had.
     final recomputed = setupProcessesNaming(setupQuestions);

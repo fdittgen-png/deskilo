@@ -93,4 +93,13 @@ void main() {
     }, {SetupProcess.money});
     expect(fine.held, isEmpty);
   });
+
+  test('a business that books places with one first-level feature off is not '
+      'told it books none (#3702)', () {
+    // placeBooking on, placeFeedback off: the `simple` level is not reached,
+    // but the business books places: the fallback is `simple`.
+    final r = recommendSetupLevels(const SetupAnswers());
+    expect(r[SetupProcess.bookings]!.level, 'simple');
+    expect(r[SetupProcess.bookings]!.reason, 'shared_places');
+  });
 }

@@ -23,7 +23,7 @@ const levelRank=(p,id)=>levelIds(p).indexOf(id);
 // always does — recommendSetupLevels, read from the same rules.
 // A rule may hold only for a business that books places (places:true) or books
 // none (places:false) — recommendSetupLevels(booksPlaces:) (#3702).
-function recommendLevels(answers,booksPlaces=levelsNow().bookings!=='none'){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>(x.places===undefined||x.places===booksPlaces)&&(!x.any.length||x.any.some(q=>answers[q]===true)));out[p]={level:r.level,reason:r.reason}}return out}
+function recommendLevels(answers,booksPlaces=!!S.features.placeBooking){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>(x.places===undefined||x.places===booksPlaces)&&(!x.any.length||x.any.some(q=>answers[q]===true)));out[p]={level:r.level,reason:r.reason}}return out}
 // The processes whose rules name a question: one answer recomputes only these.
 const processesNaming=q=>new Set(Object.entries(LEVELS.rules).filter(([,rules])=>rules.some(r=>r.any.includes(q))).map(([p])=>p));
 // Each process's level as the switches say: the highest whose switches and

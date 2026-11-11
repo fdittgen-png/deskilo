@@ -210,14 +210,17 @@ if (process.argv.includes('--recommend-all')) {
   // #3702 — `--no-places` starts from a business that books no places (its
   // bookings level is none), without choosing that level by hand.
   if (process.argv.includes('--no-places')) globalThis.__applyLevels([['bookings', 'none']]);
-  const out = { country: P.S.country, initial: ticked(), initialLevels: globalThis.__levelsNow(), combos: [] };
+  // `--partial-places`: place booking is on and one feature of the first
+  // bookings level is off, so the level is not "reached" but the business books.
+  if (process.argv.includes('--partial-places')) P.S.features.placeFeedback = false;
+  const out = { country: P.S.country, initial: ticked(), initialLevels: globalThis.__levelsNow(), booksPlaces: !!P.S.features.placeBooking, combos: [] };
   // Answering touches only the switches and the journey: putting those two
   // back is a fresh page, without drawing it 4096 times.
   const fresh = JSON.stringify({ features: P.S.features, journey: P.S.journey });
   for (let bits = 0; bits < 1 << questions.length; bits++) {
     Object.assign(P.S, JSON.parse(fresh));
     questions.forEach((q, i) => globalThis.__answer(q, (bits & (1 << i)) !== 0));
-    const rec = globalThis.__recommend(P.S.journey.answers, out.initialLevels.bookings !== 'none');
+    const rec = globalThis.__recommend(P.S.journey.answers, out.booksPlaces);
     out.combos.push({ bits, recommended: Object.fromEntries(Object.entries(rec).map(([p, r]) => [p, `${r.level}/${r.reason}`])),
       levels: globalThis.__levelsNow(), on: ticked() });
   }
