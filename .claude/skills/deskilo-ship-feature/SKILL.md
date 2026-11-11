@@ -26,7 +26,7 @@ Lessons by topic, with their incidents: [reference.md](reference.md).
   first: issue bodies go stale and checkpoints may already be merged.
 - **Other agents (Codex, other sessions) push as the same GitHub user**, so
   `gh pr list --author @me` is not "mine". Read `.agent-work/*.json`, the tail of
-  `AGENT_HANDOFF.md`, open PRs and the issue's last comments; write your own claim
+  `.agent-work` claims, open PRs and the issue's last comments; write your own claim
   (`.agent-work/<issue>.json`).
 - **Own worktree**: `git worktree add /private/tmp/deskilo-<issue> -b <branch> origin/master`,
   then `python3 scripts/worktree_prepare.py --resolve` in it. This resolves

@@ -8,7 +8,7 @@
   "@reminderHistoryRefresh": {
     "description": "#1922 reminder evidence: reminderHistoryRefresh"
   },
-  "reminderHistoryLine": "Niveau {level} · {origin} · {date}",
+  "reminderHistoryLine": "Relance {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
     "placeholders": {

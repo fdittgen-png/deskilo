@@ -8,7 +8,6 @@ import 'dart:io';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo/features/money/presentation/screens/recorded_payments_screen.dart';
-import 'package:deskilo/features/money/providers/recorded_payments_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -56,8 +55,8 @@ Future<_Calls> _pump(WidgetTester tester, {String? from, String? to}) async {
     overrides: [
       ...standardTestOverrides(
         workspace: FakeWorkspaceRepository.withWorkspace(),
+        recordedPayments: calls,
       ),
-      recordedPaymentsRepositoryProvider.overrideWithValue(calls),
     ],
   );
   await tester.pump();

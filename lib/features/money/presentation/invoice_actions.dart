@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/i18n/format_controller.dart';
-import '../../../core/i18n/money_format.dart';
 import '../../../core/ids/request_id.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -16,14 +15,11 @@ import '../../events/providers/event_providers.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/invoice_action.dart';
-import '../application/issue_invoice.dart';
 import '../providers/money_providers.dart';
 import 'dunning_hold_actions.dart';
 import 'invoice_einvoice_actions.dart';
 import 'invoice_followup_actions.dart';
 import 'invoice_pdf_actions.dart';
-import 'period_label.dart';
-import 'widgets/command_unknown_dialog.dart';
 import 'widgets/invoice_detail_sheet.dart';
 import 'widgets/invoice_form_sheet.dart';
 import 'widgets/invoice_receipt_action_runner.dart';
@@ -188,107 +184,4 @@ Future<void> runInvoiceAction(
       replaces: invoice,
     ),
   };
-}
-
-/// One tap invoices every listed member for [period] — behind a confirm
-/// naming what is about to become N immutable documents. Per-member
-/// guarded, so one failing statement neither stops the sweep nor hides
-/// itself: the snack reports what did NOT go through.
-Future<void> issueInvoicesForAll(
-  BuildContext context,
-  WidgetRef ref,
-  List<ToInvoiceEntry> entries,
-  String period,
-  MoneyFormat currency,
-) async {
-  final l10n = context.l10n;
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  if (workspace == null || entries.isEmpty) return;
-  final total = entries.fold(0, (sum, e) => sum + e.totalCents);
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(l10n.invoiceIssueAll),
-      content: Text(
-        l10n.invoiceIssueAllConfirm(
-              entries.length,
-              monthLabel(context, period),
-              currency.formatMinor(total),
-            ),
-      ),
-      actions: [
-        TextButton(
-          key: ValueKey('invoice-actions-cancel-4-$period'),
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n.commonCancel),
-        ),
-        FilledButton(
-          key: const ValueKey('invoice-issue-all-confirm'),
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(l10n.invoiceIssueAll),
-        ),
-      ],
-    ),
-  );
-  if (confirmed != true || !context.mounted) return;
-
-  // #2585 C2 — each entry is sent ONCE under its own request id. An entry
-  // whose answer was lost is looked up by that id afterwards, never sent
-  // again, so it can neither double nor be reported as a plain failure.
-  final issuance = InvoiceIssuance(
-    ref.read(invoiceCommandsProvider),
-    ref.read(invoiceQueriesProvider),
-    ref.read(invoiceActionCommandsProvider),
-  );
-  var issued = 0;
-  final lost = <InvoiceIssueUnknown>[];
-  for (final entry in entries) {
-    final outcome = await issuance.issue(
-      InvoiceIssueAttempt(
-        workspaceId: workspace.id,
-        memberId: entry.memberId,
-        period: period,
-        requestId: newRequestId(),
-        direct: true,
-      ),
-    );
-    switch (outcome) {
-      case InvoiceIssued():
-        issued++;
-      case InvoiceIssueUnknown():
-        lost.add(outcome);
-      case InvoiceIssueHeld() || InvoiceIssueRefused():
-        break;
-    }
-  }
-  for (var unknown in lost) {
-    if (!context.mounted) break;
-    final resolved = await showCommandUnknownDialog<InvoiceIssueOutcome>(
-      context,
-      body: l10n.invoiceIssueUnknownBody,
-      check: () async {
-        final looked = await issuance.look(unknown);
-        if (looked is InvoiceIssueUnknown) {
-          unknown = looked;
-          return null;
-        }
-        return looked;
-      },
-    );
-    if (resolved is InvoiceIssued) issued++;
-  }
-  ref.invalidate(invoicesProvider);
-  if (!context.mounted) return;
-  final failed = entries.length - issued;
-  if (failed > 0) {
-    AppSnack.error(
-      context,
-      l10n.invoiceIssuedPartial(issued, failed),
-    );
-    return;
-  }
-  AppSnack.success(
-    context,
-    l10n.invoiceIssuedCount(issued),
-  );
 }

@@ -19,6 +19,7 @@ import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_journey.dart';
 import '../invoice_status.dart';
+import '../invoicing/receivables_adapter.dart';
 
 /// #812 — whether the process view is on for this workspace.
 bool invoiceJourneyOn(WidgetRef ref) => ref
@@ -368,3 +369,62 @@ class InvoiceMoveLine extends StatelessWidget {
     );
   }
 }
+
+/// #3587 — what the payment events say about each invoice, read once for a
+/// whole list (the invoicing home): the journey's facts and the customer's
+/// own declaration. It lives beside the journey, which already reads the
+/// event feed.
+final invoiceEventFactsProvider =
+    Provider.autoDispose<InvoiceEventFacts Function(Invoice, InvoiceMatch?)>(
+      (ref) {
+        final events = ref.watch(eventsProvider).value ?? const [];
+        return (invoice, match) => (
+          journey: journeyFactsOf(invoice, match, events),
+          declaration: declarationOf(invoice, events),
+        );
+      },
+    );
+
+/// #3587 — what a decision on a customer's declared payment left it as,
+/// read back once the decision landed.
+enum DeclaredPaymentDecided {
+  /// Approved: the payment is confirmed and may be matched.
+  approved,
+
+  /// This person's vote is recorded; the payment waits for other approvers.
+  waitsForOthers,
+
+  /// Declined, or no longer readable.
+  ended,
+}
+
+/// #3587 — the decision on a customer's declared payment (Confirm / Not
+/// received), handed to the invoicing screens through the journey that
+/// already reads the event feed. It answers what the decision left the
+/// payment as; a refusal throws the server's own error, after reading the
+/// feed again so the page shows the true state, not a stale Confirm.
+final declaredPaymentDecisionProvider =
+    Provider<
+      Future<DeclaredPaymentDecided> Function(
+        WidgetRef ref,
+        String eventId, {
+        required bool accept,
+      })
+    >(
+      (_) =>
+          (ref, eventId, {required accept}) async {
+            try {
+              final read = await decideEventAndRead(
+                ref,
+                eventId,
+                accept: accept,
+              );
+              if (read.approved) return DeclaredPaymentDecided.approved;
+              if (read.pending) return DeclaredPaymentDecided.waitsForOthers;
+              return DeclaredPaymentDecided.ended;
+            } on Object {
+              ref.invalidate(eventsProvider);
+              rethrow;
+            }
+          },
+    );

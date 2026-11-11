@@ -34,7 +34,7 @@ Future<FakeMoneyRepository> _openForm(
     countryCode: country,
   );
   await pumpInvoices(tester, money: money, workspace: workspace);
-  await tester.tap(find.byKey(const ValueKey('invoice-create-button')));
+  await tester.tap(find.byKey(const ValueKey('invoicing-new')));
   await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
   await tester.pumpAndSettle();
