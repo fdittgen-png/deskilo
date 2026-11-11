@@ -11,7 +11,7 @@
 //
 // A file is RESTORED by the branch when its blob at the head equals the blob
 // before a recent master commit C (or it is absent at both), and the blob at
-// the merge base differs from that. One master commit with at least
+// the merge base differs from that. A file the commit added never counts. One master commit with at least
 // [minRestored] restored files fails the guard. A title starting with
 // `revert` is not checked. The exit code is set through `exitCode`.
 import 'dart:io';
@@ -62,6 +62,9 @@ List<Restored> staleBaseFindings({required String head, required String base}) {
     final restored = <String>[];
     for (final f in changed) {
       final atBefore = _blob(before, f);
+      // A file the commit ADDED is not "put back" by deleting or moving it:
+      // a refactor that moves recently added files is an ordinary change.
+      if (atBefore == null) continue;
       if (_blob(head, f) == atBefore && _blob(mergeBase, f) != atBefore) {
         restored.add(f);
       }

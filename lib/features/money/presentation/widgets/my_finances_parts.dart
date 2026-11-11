@@ -12,6 +12,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/finance_filter.dart';
 import '../../domain/finance_hosts.dart';
 import '../../domain/finance_overview.dart';
@@ -258,7 +259,7 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
       child: LayoutBuilder(builder: (context, box) {
         // A dropdown never outgrows the line (#3545): at a narrow width and a large
         // text scale its label shrinks with an ellipsis instead of overflowing.
-        final width = box.maxWidth < _dropdownMaxWidth ? box.maxWidth : _dropdownMaxWidth;
+        final width = box.maxWidth < KitMetrics.dropdownMaxWidth ? box.maxWidth : KitMetrics.dropdownMaxWidth;
         Widget fit(Widget dropdown) =>
             ConstrainedBox(constraints: BoxConstraints(maxWidth: width), child: dropdown);
         return Wrap(
@@ -308,9 +309,6 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
     );
   }
 }
-
-/// The widest a period or type dropdown grows on a wide line.
-const double _dropdownMaxWidth = 240;
 
 /// The window width from which the documents read as rows.
 const double _rowsWindowWidth = 840;

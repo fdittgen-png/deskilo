@@ -134,6 +134,23 @@ void main() {
     expect('${r.stdout}', contains('d.txt'));
   });
 
+  test('files master ADDED and the branch moves away do not count', () {
+    git(['checkout', '-q', 'master']);
+    for (final n in ['x', 'y', 'z']) {
+      write('$n.txt', 'added $n');
+    }
+    commit('master: add three files');
+    git(['checkout', '-q', 'feature']);
+    git(['merge', '-q', 'master', '-m', 'merge master']);
+    Directory('${repo.path}/moved').createSync();
+    for (final n in ['x', 'y', 'z']) {
+      File('${repo.path}/$n.txt').renameSync('${repo.path}/moved/$n.txt');
+    }
+    commit('feature: move the new files in a refactor');
+    final r = guard();
+    expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
+  });
+
   test('the head helper reads a commit', () {
     expect(head(), isNotEmpty);
   });
