@@ -23897,6 +23897,10 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "To pay: open my finances",
+  "@meFinanceGlanceSemantics": {
+    "description": "#3281 meFinanceGlanceSemantics"
+  },
   "meFindPlaceBrowse": "Browse places",
   "@meFindPlaceBrowse": {
     "description": "#3545 First visit: the button that opens Discover's start state."
@@ -27393,6 +27397,10 @@
   "personalInfoCompany": "Company (optional)",
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
+  },
+  "personalInfoCompanyScope": "Applies to your whole account, not to one workspace.",
+  "@personalInfoCompanyScope": {
+    "description": "#3281 personalInfoCompanyScope"
   },
   "personalInfoEmail": "E-mail for documents",
   "@personalInfoEmail": {
@@ -42903,6 +42911,10 @@
   "@visibilityElsewhereTitle": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
   },
+  "visibilityHomeDetails": "Home details",
+  "@visibilityHomeDetails": {
+    "description": "#3281 visibilityHomeDetails"
+  },
   "visibilityHomeHeader": "Personal home: {name}",
   "@visibilityHomeHeader": {
     "description": "#2558 privacy card: names the personal home whose settings these are; name is its server address",
@@ -42912,6 +42924,10 @@
         "example": "coworkonti.example"
       }
     }
+  },
+  "visibilityHomePlain": "Your personal home",
+  "@visibilityHomePlain": {
+    "description": "#3281 visibilityHomePlain"
   },
   "visibilityIdentity": "Name and photo",
   "@visibilityIdentity": {

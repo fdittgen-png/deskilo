@@ -18129,6 +18129,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get meFinanceGlanceOwed => 'A pagar:';
 
   @override
+  String get meFinanceGlanceSemantics => 'Por pagar: abrir mis finanzas';
+
+  @override
   String get meFindPlaceBrowse => 'Ver lugares';
 
   @override
@@ -20722,6 +20725,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get personalInfoCompany => 'Empresa (opcional)';
+
+  @override
+  String get personalInfoCompanyScope =>
+      'Se aplica a toda tu cuenta, no a un solo espacio.';
 
   @override
   String get personalInfoEmail => 'E-mail para documentos';
@@ -33020,9 +33027,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get visibilityElsewhereTitle => 'En mis otros servidores';
 
   @override
+  String get visibilityHomeDetails => 'Detalles del espacio personal';
+
+  @override
   String visibilityHomeHeader(String name) {
     return 'Hogar personal: $name';
   }
+
+  @override
+  String get visibilityHomePlain => 'Tu espacio personal';
 
   @override
   String get visibilityIdentity => 'Nombre y foto';

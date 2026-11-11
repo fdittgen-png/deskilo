@@ -67,5 +67,6 @@
   "personalInfoPreview": "Auf Ihren Dokumenten",
   "@personalInfoPreview": {
     "description": "#886 personal-information form / feature: personalInfoPreview"
-  }
+  },
+  "personalInfoCompanyScope": "Gilt für Ihr ganzes Konto, nicht für einen einzelnen Arbeitsbereich."
 }

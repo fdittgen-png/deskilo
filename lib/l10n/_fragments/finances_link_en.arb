@@ -23,5 +23,9 @@
   "meFinanceGlanceOwed": "To pay:",
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
+  },
+  "meFinanceGlanceSemantics": "To pay: open my finances",
+  "@meFinanceGlanceSemantics": {
+    "description": "#3281 meFinanceGlanceSemantics"
   }
 }

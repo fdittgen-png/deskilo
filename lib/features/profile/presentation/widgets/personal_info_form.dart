@@ -144,6 +144,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     TextCapitalization capitalization = TextCapitalization.words,
     bool autocorrect = true,
     List<String>? autofill,
+    String? helper,
   }) => Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.md),
     child: TextField(
@@ -156,6 +157,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       autocorrect: autocorrect,
       decoration: InputDecoration(
         labelText: label,
+        helperText: helper,
+        helperMaxLines: 3,
         border: const OutlineInputBorder(),
       ),
     ),
@@ -228,6 +231,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           _company,
           'company',
           l10n.personalInfoCompany,
+          helper: widget.managed ? null : l10n.personalInfoCompanyScope,
           autofill: const [AutofillHints.organizationName],
         ),
         _field(

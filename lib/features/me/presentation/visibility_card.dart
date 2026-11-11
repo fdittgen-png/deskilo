@@ -13,6 +13,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
 import '../../../core/ui/loading_view.dart';
+import '../../../core/ui/server_label.dart';
 import '../domain/audience_space.dart';
 import '../domain/visibility.dart';
 import '../domain/visibility_write.dart';
@@ -78,7 +79,7 @@ class VisibilityCard extends ConsumerWidget {
     // and nothing is edited from a value that could not be read.
     final read = ref.watch(myVisibilityProvider);
     // The home's own address names it: the account, not a selected space.
-    final home = ref.watch(activeBackendProvider).value?.host;
+    final home = ref.watch(activeBackendProvider).value?.url;
     // The spaces' names, for the widening question; kept while the card is.
     final listed = read.hasValue && !read.hasError
         ? ref.watch(audienceSpacesProvider).value ?? const <AudienceSpace>[]
@@ -128,10 +129,20 @@ class VisibilityCard extends ConsumerWidget {
             subtitle: Text(l10n.visibilityIntro),
           ),
           if (home != null && home.isNotEmpty)
-            ListTile(
+            // #3281: said in words; the server address is a detail.
+            ExpansionTile(
               key: const ValueKey('visibility-home'),
               leading: const Icon(Icons.home_outlined),
-              title: Text(l10n.visibilityHomeHeader(home)),
+              title: Text(l10n.visibilityHomePlain),
+              subtitle: Text(l10n.visibilityHomeDetails),
+              children: [
+                ListTile(
+                  key: const ValueKey('visibility-home-detail'),
+                  title: Text(
+                    l10n.visibilityHomeHeader(serverLabel(l10n, home)),
+                  ),
+                ),
+              ],
             ),
           if (read.hasError)
             InlineBanner(

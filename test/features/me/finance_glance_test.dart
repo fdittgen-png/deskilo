@@ -46,6 +46,32 @@ void main() {
     expect(router.state.uri.path, '/account-activity');
   });
 
+  // #3281/#3286: the card is a named button, not an anonymous group.
+  testWidgets('the To pay card is a named button', (tester) async {
+    final handle = tester.ensureSemantics();
+    final repo = FakeAccountActivityRepository()
+      ..financeOverview = FinanceOverview(
+        invoices: [invoice('b', ws: 'Office B', total: 3000, due: DateTime(2999))],
+      );
+    final router = await pumpMeApp(
+      tester,
+      workspace: twoSpaces(),
+      accountActivity: repo,
+    );
+    await goTo(tester, router, '/me');
+    final node = tester.getSemantics(
+      find.byKey(const ValueKey('me-home-tab-finance-glance-owed')),
+    );
+    expect(node.label, contains('To pay: open my finances'));
+    expect(node.flagsCollection.isButton, isTrue);
+    expect(
+      find.byKey(const ValueKey('me-home-finance-glance-amount-EUR')),
+      findsOneWidget,
+      reason: 'the amount keeps its own reveal target',
+    );
+    handle.dispose();
+  });
+
   testWidgets('nothing to pay, no card', (tester) async {
     final repo = FakeAccountActivityRepository()
       ..financeOverview = FinanceOverview(

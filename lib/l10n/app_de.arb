@@ -11552,6 +11552,7 @@
   "@meFinanceGlanceOwed": {
     "description": "The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)"
   },
+  "meFinanceGlanceSemantics": "Zu zahlen: meine Finanzen öffnen",
   "meFindPlaceBrowse": "Orte ansehen",
   "meFindPlaceHint": "Yoga, ein Arbeitsplatz, eine Massage …",
   "meFindPlaceTitle": "Einen Ort in der Nähe finden",
@@ -12941,6 +12942,7 @@
   "@personalInfoCompany": {
     "description": "#886 personal-information form / feature: personalInfoCompany"
   },
+  "personalInfoCompanyScope": "Gilt für Ihr ganzes Konto, nicht für einen einzelnen Arbeitsbereich.",
   "personalInfoEmail": "E-Mail für Dokumente",
   "@personalInfoEmail": {
     "description": "#886 personal-information form / feature: personalInfoEmail"
@@ -20960,7 +20962,9 @@
   "visibilityContact": "WhatsApp und E-Mail",
   "visibilityElsewhereIntro": "Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Raum mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Räume.",
   "visibilityElsewhereTitle": "Auf meinen anderen Servern",
+  "visibilityHomeDetails": "Details zum Zuhause",
   "visibilityHomeHeader": "Persönliches Zuhause: {name}",
+  "visibilityHomePlain": "Ihr persönliches Zuhause",
   "visibilityIdentity": "Name und Foto",
   "visibilityIntro": "Jeder Teil Ihres Kontos wählt sein eigenes Publikum. Nichts ist öffentlich, solange Sie es nicht wählen.",
   "visibilityLegacyDirtyBody": "Ihre Änderung an „{field}“ auf {server} ist noch nicht gespeichert. Sie gehört zu diesem Konto und wandert nicht zu einem anderen.",
