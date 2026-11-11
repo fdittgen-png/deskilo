@@ -27,6 +27,10 @@ const Map<String, String> _allowed = {
       '#3587 R1-c — the owed card filters the list by it',
   'lib/features/money/presentation/invoicing/invoice_month_flow.dart::InvoiceMonthFlow':
       '#3587 release 1 train — the invoicing home opens the flow',
+  'lib/features/money/presentation/invoicing/payments_to_match_screen.dart::PaymentToMatch':
+      '#3587 release 1 train — the invoicing home opens it',
+  'lib/features/money/presentation/invoicing/payments_to_match_screen.dart::PaymentsToMatchScreen':
+      '#3587 release 1 train — the invoicing home opens it',
   'lib/features/money/presentation/invoicing/reminder_queue_screen.dart::ReminderQueueScreen':
       '#3587 release 1 train — the invoicing home opens the queue',
 };

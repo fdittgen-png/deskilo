@@ -32435,6 +32435,72 @@ abstract class AppLocalizations {
   /// **'Wisetag or Wise payment link'**
   String get paymentInstructionsWiseLabel;
 
+  /// #3587 R1-f: payments to match (paymentMatchCandidate)
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · {amount} open'**
+  String paymentMatchCandidate(String number, String amount);
+
+  /// #3587 R1-f: payments to match (paymentMatchDecide)
+  ///
+  /// In en, this message translates to:
+  /// **'Another amount: choose how to settle the difference'**
+  String get paymentMatchDecide;
+
+  /// #3587 R1-f: payments to match (paymentMatchEmpty)
+  ///
+  /// In en, this message translates to:
+  /// **'No payment is waiting for an invoice.'**
+  String get paymentMatchEmpty;
+
+  /// #3587 R1-f: payments to match (paymentMatchFailed)
+  ///
+  /// In en, this message translates to:
+  /// **'The payments could not be read.'**
+  String get paymentMatchFailed;
+
+  /// #3587 R1-f: payments to match (paymentMatchHeader)
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} received {date}'**
+  String paymentMatchHeader(String amount, String date);
+
+  /// #3587 R1-f: payments to match (paymentMatchIntro)
+  ///
+  /// In en, this message translates to:
+  /// **'A payment reached the customer\'s account. Choose the invoice it settles.'**
+  String get paymentMatchIntro;
+
+  /// #3587 R1-f: payments to match (paymentMatchNoInvoice)
+  ///
+  /// In en, this message translates to:
+  /// **'No open invoice of this customer fits.'**
+  String get paymentMatchNoInvoice;
+
+  /// #3587 R1-f: payments to match (paymentMatchNone)
+  ///
+  /// In en, this message translates to:
+  /// **'None of these'**
+  String get paymentMatchNone;
+
+  /// #3587 R1-f: said when matching a payment to an invoice was refused
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be matched. Try again.'**
+  String get paymentMatchRefused;
+
+  /// #3587 R1-f: payments to match (paymentMatchSame)
+  ///
+  /// In en, this message translates to:
+  /// **'Same amount'**
+  String get paymentMatchSame;
+
+  /// #3587 R1-f: payments to match (paymentMatchTitle)
+  ///
+  /// In en, this message translates to:
+  /// **'Payments to match'**
+  String get paymentMatchTitle;
+
   /// Payment-method chip/label: SEPA/bank transfer (#154).
   ///
   /// In en, this message translates to:
@@ -37724,6 +37790,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminder history'**
   String get reminderHistoryTitle;
+
+  /// #3587 R1-f: how reminders go out and the entry to their rules (reminderModeAutomatic)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders go out by themselves, in the app.'**
+  String get reminderModeAutomatic;
+
+  /// #3587 R1-f: how reminders go out and the entry to their rules (reminderModeByHand)
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are shared by hand.'**
+  String get reminderModeByHand;
+
+  /// #3587 R1-f: how reminders go out and the entry to their rules (reminderModeRules)
+  ///
+  /// In en, this message translates to:
+  /// **'Rules'**
+  String get reminderModeRules;
 
   /// #1922 reminder evidence: reminderOriginAutomatic
   ///

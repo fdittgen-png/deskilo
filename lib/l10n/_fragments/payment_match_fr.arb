@@ -1,0 +1,13 @@
+{
+  "paymentMatchTitle": "Paiements à rapprocher",
+  "paymentMatchIntro": "Un paiement est arrivé sur le compte du client. Choisissez la facture qu'il règle.",
+  "paymentMatchHeader": "{amount} reçus le {date}",
+  "paymentMatchCandidate": "{number} · {amount} dus",
+  "paymentMatchSame": "Même montant",
+  "paymentMatchDecide": "Autre montant : vous choisissez comment régler l'écart",
+  "paymentMatchNone": "Aucune de celles-ci",
+  "paymentMatchNoInvoice": "Aucune facture ouverte de ce client ne convient.",
+  "paymentMatchEmpty": "Aucun paiement n'attend de facture.",
+  "paymentMatchFailed": "Les paiements n'ont pas pu être lus.",
+  "paymentMatchRefused": "Le paiement n'a pas pu être rapproché. Réessayez."
+}

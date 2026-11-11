@@ -19713,6 +19713,47 @@ class AppLocalizationsIt extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag o link di pagamento Wise';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount aperti';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Altro importo: sceglie come saldare la differenza';
+
+  @override
+  String get paymentMatchEmpty => 'Nessun pagamento attende una fattura.';
+
+  @override
+  String get paymentMatchFailed => 'Non è stato possibile leggere i pagamenti.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount ricevuti il $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Un pagamento è arrivato sul conto del cliente. Scelga la fattura che salda.';
+
+  @override
+  String get paymentMatchNoInvoice =>
+      'Nessuna fattura aperta di questo cliente corrisponde.';
+
+  @override
+  String get paymentMatchNone => 'Nessuna di queste';
+
+  @override
+  String get paymentMatchRefused =>
+      'Non è stato possibile abbinare il pagamento. Riprovi.';
+
+  @override
+  String get paymentMatchSame => 'Stesso importo';
+
+  @override
+  String get paymentMatchTitle => 'Pagamenti da abbinare';
+
+  @override
   String get paymentMethodBankTransfer => 'Bonifico';
 
   @override
@@ -22877,6 +22918,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderHistoryTitle => 'Cronologia dei solleciti';
+
+  @override
+  String get reminderModeAutomatic => 'I solleciti partono da soli, nell\'app.';
+
+  @override
+  String get reminderModeByHand => 'I solleciti si condividono a mano.';
+
+  @override
+  String get reminderModeRules => 'Regole';
 
   @override
   String get reminderOriginAutomatic => 'automatico';

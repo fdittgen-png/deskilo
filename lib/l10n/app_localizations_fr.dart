@@ -19749,6 +19749,47 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paymentInstructionsWiseLabel => 'Wisetag ou lien de paiement Wise';
 
   @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount dus';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Autre montant : vous choisissez comment régler l\'écart';
+
+  @override
+  String get paymentMatchEmpty => 'Aucun paiement n\'attend de facture.';
+
+  @override
+  String get paymentMatchFailed => 'Les paiements n\'ont pas pu être lus.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount reçus le $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Un paiement est arrivé sur le compte du client. Choisissez la facture qu\'il règle.';
+
+  @override
+  String get paymentMatchNoInvoice =>
+      'Aucune facture ouverte de ce client ne convient.';
+
+  @override
+  String get paymentMatchNone => 'Aucune de celles-ci';
+
+  @override
+  String get paymentMatchRefused =>
+      'Le paiement n\'a pas pu être rapproché. Réessayez.';
+
+  @override
+  String get paymentMatchSame => 'Même montant';
+
+  @override
+  String get paymentMatchTitle => 'Paiements à rapprocher';
+
+  @override
   String get paymentMethodBankTransfer => 'Virement';
 
   @override
@@ -22922,6 +22963,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderHistoryTitle => 'Historique des relances';
+
+  @override
+  String get reminderModeAutomatic =>
+      'Les relances partent d\'elles-mêmes, dans l\'application.';
+
+  @override
+  String get reminderModeByHand => 'Les relances se partagent à la main.';
+
+  @override
+  String get reminderModeRules => 'Règles';
 
   @override
   String get reminderOriginAutomatic => 'automatique';

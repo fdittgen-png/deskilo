@@ -26032,6 +26032,66 @@
   "@paymentInstructionsWiseLabel": {
     "description": "Label of the Wise field in the workspace settings (#192). Wise and Wisetag are brand names."
   },
+  "paymentMatchCandidate": "{number} · {amount} open",
+  "@paymentMatchCandidate": {
+    "description": "#3587 R1-f: payments to match (paymentMatchCandidate)",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMatchDecide": "Another amount: choose how to settle the difference",
+  "@paymentMatchDecide": {
+    "description": "#3587 R1-f: payments to match (paymentMatchDecide)"
+  },
+  "paymentMatchEmpty": "No payment is waiting for an invoice.",
+  "@paymentMatchEmpty": {
+    "description": "#3587 R1-f: payments to match (paymentMatchEmpty)"
+  },
+  "paymentMatchFailed": "The payments could not be read.",
+  "@paymentMatchFailed": {
+    "description": "#3587 R1-f: payments to match (paymentMatchFailed)"
+  },
+  "paymentMatchHeader": "{amount} received {date}",
+  "@paymentMatchHeader": {
+    "description": "#3587 R1-f: payments to match (paymentMatchHeader)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentMatchIntro": "A payment reached the customer's account. Choose the invoice it settles.",
+  "@paymentMatchIntro": {
+    "description": "#3587 R1-f: payments to match (paymentMatchIntro)"
+  },
+  "paymentMatchNoInvoice": "No open invoice of this customer fits.",
+  "@paymentMatchNoInvoice": {
+    "description": "#3587 R1-f: payments to match (paymentMatchNoInvoice)"
+  },
+  "paymentMatchNone": "None of these",
+  "@paymentMatchNone": {
+    "description": "#3587 R1-f: payments to match (paymentMatchNone)"
+  },
+  "paymentMatchRefused": "The payment could not be matched. Try again.",
+  "@paymentMatchRefused": {
+    "description": "#3587 R1-f: said when matching a payment to an invoice was refused"
+  },
+  "paymentMatchSame": "Same amount",
+  "@paymentMatchSame": {
+    "description": "#3587 R1-f: payments to match (paymentMatchSame)"
+  },
+  "paymentMatchTitle": "Payments to match",
+  "@paymentMatchTitle": {
+    "description": "#3587 R1-f: payments to match (paymentMatchTitle)"
+  },
   "paymentMethodBankTransfer": "Bank transfer",
   "@paymentMethodBankTransfer": {
     "description": "Payment-method chip/label: SEPA/bank transfer (#154)."
@@ -30139,6 +30199,18 @@
   "reminderHistoryTitle": "Reminder history",
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
+  },
+  "reminderModeAutomatic": "Reminders go out by themselves, in the app.",
+  "@reminderModeAutomatic": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeAutomatic)"
+  },
+  "reminderModeByHand": "Reminders are shared by hand.",
+  "@reminderModeByHand": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeByHand)"
+  },
+  "reminderModeRules": "Rules",
+  "@reminderModeRules": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeRules)"
   },
   "reminderOriginAutomatic": "automatic",
   "@reminderOriginAutomatic": {
