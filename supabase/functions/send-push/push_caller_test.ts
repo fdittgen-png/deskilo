@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Configured installations accept only their trigger secret or exact service
-// credential, while unconfigured installations retain legacy delivery.
+// credential; an installation without the secret accepts only the service
+// credential (GHSA-jww4-4f4q-xg4p).
 import { assert, assertFalse } from "jsr:@std/assert@1";
 import { mayTriggerPush, PUSH_SECRET_HEADER, sameSecret } from "./push_caller.ts";
 const req = (headers: Record<string, string>) =>
@@ -20,9 +21,12 @@ Deno.test("the trigger secret and exact service credential are accepted", () => 
   assert(allowed({ authorization: "Bearer exact-service-key" }));
   assert(allowed({ authorization: "Bearer exact-service-key" }, undefined));
 });
-Deno.test("unconfigured installations retain delivery until secrets are paired", () => {
-  assert(mayTriggerPush(req({}), undefined, undefined));
-  assert(mayTriggerPush(req({ authorization: "Bearer publishable-key" }), "", undefined));
+Deno.test("without the secret, only the exact service credential is accepted", () => {
+  assertFalse(mayTriggerPush(req({}), undefined, undefined));
+  assertFalse(mayTriggerPush(req({}), undefined, "exact-service-key"));
+  assertFalse(mayTriggerPush(req({ authorization: "Bearer publishable-key" }), "", "exact-service-key"));
+  assertFalse(mayTriggerPush(req({ [PUSH_SECRET_HEADER]: "anything" }), "", "exact-service-key"));
+  assert(mayTriggerPush(req({ authorization: "Bearer exact-service-key" }), "", "exact-service-key"));
 });
 Deno.test("secret comparison includes every byte and its length", () => {
   assert(sameSecret("abc", "abc"));

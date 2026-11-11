@@ -18,20 +18,20 @@ export function sameSecret(a: string, b: string): boolean {
 
 let warned = false;
 
-/** Configured installations accept only the trigger or exact service credential.
- * Unconfigured installations retain delivery during the operator rollout and
- * warn once per worker. A decoded JWT role never proves its signature. */
+/** The trigger's secret or the exact service credential, nothing else. An
+ * installation without the secret accepts only the service credential and
+ * says once per worker that the secret is missing (GHSA-jww4-4f4q-xg4p).
+ * A decoded JWT role never proves its signature. */
 export function mayTriggerPush(
   req: Request,
   secret: string | undefined,
   serviceKey: string | undefined,
 ): boolean {
-  if (!secret) {
-    if (!warned) {
-      warned = true;
-      console.warn("send-push: PUSH_SHARED_SECRET is not set; legacy caller access remains enabled");
-    }
-    return true;
+  if (!secret && !warned) {
+    warned = true;
+    console.error(
+      "send-push: PUSH_SHARED_SECRET is not set; only the service credential is accepted",
+    );
   }
   const sent = req.headers.get(PUSH_SECRET_HEADER);
   if (secret && sent && sameSecret(sent, secret)) return true;
