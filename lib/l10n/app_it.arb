@@ -17288,7 +17288,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.",
+  "spacePreviewPrivacy": "Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.",
   "spaceQrSizeLabel": "Dimensione del codice QR",
   "spaceRatingClear": "Nessuna valutazione",
   "spaceRunByAssociation": "Gestito da un'associazione",

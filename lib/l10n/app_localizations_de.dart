@@ -27821,7 +27821,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Wenn Sie anfragen, sieht dieser Betrieb Ihre E-Mail-Adresse. Als Mitglied sehen seine Administratoren Ihren Namen sowie die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.';
+      'Wenn Sie anfragen, sieht dieser Betrieb Ihren Namen und Ihr Foto. Als Mitglied sehen seine Administratoren die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.';
 
   @override
   String get spaceQrSizeLabel => 'Größe des QR-Codes';

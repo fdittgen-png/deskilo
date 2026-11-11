@@ -27533,7 +27533,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'When you ask, this business sees your e-mail address. Once you are a member, its administrators see your name and the contact and billing details they need to invoice you.';
+      'When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.';
 
   @override
   String get spaceQrSizeLabel => 'QR code size';

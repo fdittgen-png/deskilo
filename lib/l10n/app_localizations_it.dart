@@ -27787,7 +27787,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Quando lo richiede, questa attività vede il suo indirizzo e-mail. Una volta socio, i suoi amministratori vedono il suo nome e i dati di contatto e di fatturazione necessari per fatturarle.';
+      'Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.';
 
   @override
   String get spaceQrSizeLabel => 'Dimensione del codice QR';

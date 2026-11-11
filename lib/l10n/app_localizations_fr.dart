@@ -27850,7 +27850,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Quand vous demandez, cette entreprise voit votre adresse e-mail. Une fois membre, ses administrateurs voient votre nom et les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
+      'Quand vous demandez, cette entreprise voit votre nom et votre photo. Une fois membre, ses administrateurs voient les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
 
   @override
   String get spaceQrSizeLabel => 'Taille du code QR';

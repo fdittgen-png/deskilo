@@ -27772,7 +27772,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Cuando lo solicite, este negocio verá su dirección de correo. Una vez miembro, sus administradores verán su nombre y los datos de contacto y facturación que necesitan para facturarle.';
+      'Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.';
 
   @override
   String get spaceQrSizeLabel => 'Tamaño del código QR';
