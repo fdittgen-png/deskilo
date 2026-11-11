@@ -2879,6 +2879,7 @@ Map<String, _Getter> _part8() => {
   'kioskNfcUnsupported': (l) => l.kioskNfcUnsupported,
   'kioskReserveAndCheckIn': (l) => l.kioskReserveAndCheckIn,
   'kioskTapHint': (l) => l.kioskTapHint,
+  'kitActionBusy': (l) => l.kitActionBusy,
   'languageNameNB': (l) => l.languageNameNB,
   'leaseMatchReversed': (l) => l.leaseMatchReversed,
   'leaseNoticeSave': (l) => l.leaseNoticeSave,

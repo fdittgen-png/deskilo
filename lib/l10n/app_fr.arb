@@ -9567,6 +9567,7 @@
   "kioskRevertTitle": "Appareil borne",
   "kioskScanQr": "Scanner le badge QR",
   "kioskTapHint": "Touchez une place pour pointer",
+  "kitActionBusy": "En cours…",
   "languageNameCS": "Tchèque",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"

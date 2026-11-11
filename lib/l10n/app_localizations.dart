@@ -24988,6 +24988,12 @@ abstract class AppLocalizations {
   /// **'Tap a seat to check in'**
   String get kioskTapHint;
 
+  /// Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes.
+  ///
+  /// In en, this message translates to:
+  /// **'Working…'**
+  String get kitActionBusy;
+
   /// #713 - language name in the format picker
   ///
   /// In en, this message translates to:

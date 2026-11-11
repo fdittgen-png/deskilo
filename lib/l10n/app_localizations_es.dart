@@ -15196,6 +15196,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kioskTapHint => 'Toque un asiento para registrarse';
 
   @override
+  String get kitActionBusy => 'En curso…';
+
+  @override
   String get languageNameCS => 'Checo';
 
   @override

@@ -15221,6 +15221,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kioskTapHint => 'Tippen Sie auf einen Platz zum Einchecken';
 
   @override
+  String get kitActionBusy => 'Läuft …';
+
+  @override
   String get languageNameCS => 'Tschechisch';
 
   @override

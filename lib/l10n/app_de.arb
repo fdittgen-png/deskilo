@@ -9567,6 +9567,7 @@
   "kioskRevertTitle": "Kiosk-Gerät",
   "kioskScanQr": "QR-Badge scannen",
   "kioskTapHint": "Tippen Sie auf einen Platz zum Einchecken",
+  "kitActionBusy": "Läuft …",
   "languageNameCS": "Tschechisch",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"

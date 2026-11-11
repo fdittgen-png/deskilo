@@ -15231,6 +15231,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get kioskTapHint => 'Touchez une place pour pointer';
 
   @override
+  String get kitActionBusy => 'En cours…';
+
+  @override
   String get languageNameCS => 'Tchèque';
 
   @override

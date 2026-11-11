@@ -9567,6 +9567,7 @@
   "kioskRevertTitle": "Dispositivo quiosco",
   "kioskScanQr": "Escanear la tarjeta QR",
   "kioskTapHint": "Toque un asiento para registrarse",
+  "kitActionBusy": "En curso…",
   "languageNameCS": "Checo",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
