@@ -138,7 +138,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Demo'), findsOneWidget);
+    expect(find.textContaining('Demo · '), findsOneWidget);
     expect(
       find.bySemanticsLabel(RegExp('demonstration space')),
       findsOneWidget,
