@@ -11917,7 +11917,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helpContents => 'Sommaire';
 
   @override
-  String get helpDotTooltip => 'Ouvrir le guide';
+  String helpDotTooltipFor(String topic) {
+    return 'Ouvrir le guide : $topic';
+  }
 
   @override
   String get helpGuidedTasks => 'Tâches guidées';

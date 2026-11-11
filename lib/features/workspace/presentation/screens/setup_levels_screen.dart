@@ -376,7 +376,12 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
         alignment: AlignmentDirectional.centerStart,
         child: FilterChip(
           key: ValueKey('setup-question-$key-unknown'),
-          label: Text(l10n.setupAnswerUnknown),
+          // #3286: twelve chips read the same; the name says which question.
+          label: Semantics(
+            label: l10n.setupChoicesQuestionUnknown(l10n.setupQuestion(key)),
+            excludeSemantics: true,
+            child: Text(l10n.setupAnswerUnknown),
+          ),
           selected: _unknown.contains(key),
           tooltip: l10n.setupChoicesQuestionUnknown(l10n.setupQuestion(key)),
           onSelected: _busy

@@ -15753,9 +15753,15 @@
   "@helpContents": {
     "description": "Shown as a tooltip in help screen (help)."
   },
-  "helpDotTooltip": "Open the guide",
-  "@helpDotTooltip": {
-    "description": "Shown as a tooltip in help dot (core)."
+  "helpDotTooltipFor": "Open the guide: {topic}",
+  "@helpDotTooltipFor": {
+    "description": "#3286 help dot tooltip and accessible name: names the topic it documents",
+    "placeholders": {
+      "topic": {
+        "type": "String",
+        "example": "Legal identity"
+      }
+    }
   },
   "helpGuidedTasks": "Guided tasks",
   "@helpGuidedTasks": {

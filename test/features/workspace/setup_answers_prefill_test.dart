@@ -55,6 +55,23 @@ bool _on(WidgetTester tester, String question) => tester
     .value;
 
 void main() {
+  // #3286 — the same chip repeated per question has a name per question.
+  testWidgets('each Not sure yet chip is named after its question', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await _pump(tester, _flagsFor({SetupProcess.payments: 'online'}));
+    String label(String q) => tester
+        .getSemantics(find.byKey(ValueKey('setup-question-$q-unknown')))
+        .label;
+    final a = label('pay_online');
+    final b = label('door_tablet');
+    expect(a, startsWith('Not sure yet: '));
+    expect(b, startsWith('Not sure yet: '));
+    expect(a, isNot(b));
+    handle.dispose();
+  });
+
   testWidgets('uncertainty never downgrades an existing yes to no', (
     tester,
   ) async {

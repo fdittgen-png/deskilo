@@ -7717,7 +7717,7 @@
   "handoffUnsupportedCurrency": "{number}: su moneda no tiene un número de decimales verificado",
   "handoffVoided": "Anuladas",
   "helpContents": "Índice",
-  "helpDotTooltip": "Abrir la guía",
+  "helpDotTooltipFor": "Abrir la guía: {topic}",
   "helpGuidedTasks": "Tareas guiadas",
   "helpHintAvailability": "Defina los días de apertura y el horario, y añada días de cierre que nadie puede reservar.",
   "helpHintBadges": "Emita una credencial QR imprimible o registre una tarjeta NFC; revoque credenciales perdidas en cualquier momento.",

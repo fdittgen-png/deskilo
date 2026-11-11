@@ -4309,7 +4309,6 @@ Map<String, _Getter> _part12() => {
   'groupAnnounceOnlyHint': (l) => l.groupAnnounceOnlyHint,
   'guideHostFillField': (l) => l.guideHostFillField,
   'handoffIssued': (l) => l.handoffIssued,
-  'helpDotTooltip': (l) => l.helpDotTooltip,
   'helpHintCalendarTopic': (l) => l.helpHintCalendarTopic,
   'helpHintMessagesTip4': (l) => l.helpHintMessagesTip4,
   'helpHintMoneyDocumentsTopic': (l) => l.helpHintMoneyDocumentsTopic,

@@ -167,9 +167,15 @@
   "@helpHintMembersTipNegotiationTopic": {
     "description": "Shown as the topic of a help symbol in members screen (workspace)."
   },
-  "helpDotTooltip": "Open the guide",
-  "@helpDotTooltip": {
-    "description": "Shown as a tooltip in help dot (core)."
+  "helpDotTooltipFor": "Open the guide: {topic}",
+  "@helpDotTooltipFor": {
+    "description": "#3286 help dot tooltip and accessible name: names the topic it documents",
+    "placeholders": {
+      "topic": {
+        "type": "String",
+        "example": "Legal identity"
+      }
+    }
   },
   "helpTopicLegalIdentity": "Legal identity",
   "@helpTopicLegalIdentity": {

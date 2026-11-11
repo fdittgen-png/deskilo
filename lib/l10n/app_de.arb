@@ -7717,7 +7717,7 @@
   "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
   "handoffVoided": "Storniert",
   "helpContents": "Inhalt",
-  "helpDotTooltip": "Handbuch öffnen",
+  "helpDotTooltipFor": "Handbuch öffnen: {topic}",
   "helpGuidedTasks": "Geführte Aufgaben",
   "helpHintAvailability": "Öffnungstage und Arbeitszeiten festlegen und Schließtage eintragen, die niemand buchen kann.",
   "helpHintBadges": "Druckbares QR-Badge ausstellen oder NFC-Karte registrieren; verlorene Badges jederzeit sperren.",

@@ -8225,7 +8225,6 @@ const Set<String> uiLabelKeys = {
   'handoffTitle',
   'handoffVoided',
   'helpContents',
-  'helpDotTooltip',
   'helpGuidedTasks',
   'helpHintAvailability',
   'helpHintBadges',

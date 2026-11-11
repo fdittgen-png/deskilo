@@ -19690,11 +19690,11 @@ abstract class AppLocalizations {
   /// **'Contents'**
   String get helpContents;
 
-  /// Shown as a tooltip in help dot (core).
+  /// #3286 help dot tooltip and accessible name: names the topic it documents
   ///
   /// In en, this message translates to:
-  /// **'Open the guide'**
-  String get helpDotTooltip;
+  /// **'Open the guide: {topic}'**
+  String helpDotTooltipFor(String topic);
 
   /// #1867 live guide host
   ///

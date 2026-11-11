@@ -7717,7 +7717,7 @@
   "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
   "handoffVoided": "Annullate",
   "helpContents": "Indice",
-  "helpDotTooltip": "Apri la guida",
+  "helpDotTooltipFor": "Apri la guida: {topic}",
   "helpGuidedTasks": "Attività guidate",
   "helpHintAvailability": "Imposti i giorni di apertura e gli orari, e aggiunga giorni di chiusura che nessuno può prenotare.",
   "helpHintBadges": "Emetta un badge QR stampabile o registri una tessera NFC; revochi i badge persi in qualsiasi momento.",

@@ -11886,7 +11886,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpContents => 'Indice';
 
   @override
-  String get helpDotTooltip => 'Apri la guida';
+  String helpDotTooltipFor(String topic) {
+    return 'Apri la guida: $topic';
+  }
 
   @override
   String get helpGuidedTasks => 'Attività guidate';
