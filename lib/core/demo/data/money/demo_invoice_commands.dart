@@ -277,6 +277,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     required String paymentLedgerId,
     required String resolution,
     String note = '',
+    int? amountCents,
   }) async {
     final invoice = _m.invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
@@ -315,12 +316,21 @@ class DemoInvoiceCommands implements InvoiceCommands {
     )) {
       throw StateError('credit already deducted on an issued invoice');
     }
-    if (_m.invoiceMatchesStore.values.any(
-      (m) => m.paymentLedgerId == paymentLedgerId,
-    )) {
+    // #3671 — one payment may settle several invoices: it is taken again
+    // while something is left of it, never by the invoice that holds a part.
+    final left = _m.remainingOf(payment);
+    final holdsPart =
+        existing?.paymentLedgerId == paymentLedgerId ||
+        (_m.invoiceMatchPaymentsStore[invoiceId] ?? const []).any(
+          (r) => r.paymentLedgerId == paymentLedgerId,
+        );
+    if (left <= 0 || holdsPart) {
       throw StateError('payment already matched');
     }
-    final paidCents = payment.amountCents;
+    if (amountCents != null && (amountCents <= 0 || amountCents > left)) {
+      throw StateError('the amount is more than what is left of the payment');
+    }
+    final paidCents = amountCents ?? left;
     // #506 — every amount rule compares against what is STILL DUE.
     final dueCents = invoice.totalCents - (additional ? existing.paidCents : 0);
     final trimmed = note.trim();
@@ -354,7 +364,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
         ),
       );
     }
-    _m.consumedPaymentIds.add(paymentLedgerId);
+    _m.usePayment(paymentLedgerId, paidCents);
     if (additional) {
       // #506 — the aggregate grows; full settlement flips the state.
       _m.invoiceMatchesStore[invoiceId] = InvoiceMatch(

@@ -135,12 +135,11 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
         final ledger = await ref
             .read(memberAccountQueriesProvider)
             .fetchLedger(invoice.memberId);
-        // One definition of a consumed payment, the moved credits included.
-        final consumed = await readConsumedPaymentIds(
+        // One definition of what is left of a payment, moved credits included.
+        final use = await readPaymentUse(
           invoices: ref.read(invoiceQueriesProvider),
           moves: ref.read(creditMoveCommandsProvider),
           workspaceId: business.id,
-          matched: [for (final m in matches.values) m.paymentLedgerId],
         );
         final payment = confirmedPaymentFor(
           ledger,
@@ -148,7 +147,7 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
           amountCents: amount,
           invoiceCurrency: invoice.currency,
           accountCurrency: business.currency,
-          consumed: consumed,
+          use: use,
         );
         if (payment == null) return;
         await ref

@@ -22,9 +22,10 @@ abstract interface class InvoiceQueries {
     required String requestId,
   });
 
-  /// Every payment already consumed by a match (#506, 0101) — the
-  /// candidates list must not offer them again.
-  Future<Set<String>> fetchConsumedPaymentIds(String workspaceId);
+  /// Every part a match settled, as `(payment ledger id, cents)` pairs, one
+  /// per junction row (#506, #3671): the candidates list offers only what is
+  /// left of a payment.
+  Future<List<(String, int)>> fetchConsumedPaymentIds(String workspaceId);
 
   /// What [createInvoice] would issue for [period], without issuing
   /// (RPC `preview_invoice`, 0062).

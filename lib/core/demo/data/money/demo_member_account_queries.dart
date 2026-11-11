@@ -58,9 +58,6 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
   Future<MemberAccount> fetchMemberAccount(String memberId) async {
     if (_m.accountFailure != null) throw _m.accountFailure!;
     // Mirrors the member_account RPC over the fake stores.
-    bool consumed(LedgerEntry e) =>
-        _m.consumedPaymentIds.contains(e.id) ||
-        _m.invoiceMatchesStore.values.any((m) => m.paymentLedgerId == e.id);
     bool baked(LedgerEntry e) => _m.invoices.any(
       (i) =>
           i.memberId == memberId &&
@@ -82,10 +79,10 @@ class DemoMemberAccountQueries implements MemberAccountQueries {
               (e.category == LedgerCategory.adjustment ||
                   (e.category == LedgerCategory.payment &&
                       e.period.compareTo(nowPeriod) < 0)) &&
-              !consumed(e) &&
               !baked(e),
         )
-        .fold(0, (sum, e) => sum + e.amountCents);
+        // #3671 — what is left of a credit, not its whole amount.
+        .fold(0, (sum, e) => sum + _m.remainingOf(e));
     final replaced = {for (final i in _m.invoices) ?i.replacesInvoiceId};
     final open = <OpenInvoicePosition>[];
     for (final invoice in _m.invoices) {

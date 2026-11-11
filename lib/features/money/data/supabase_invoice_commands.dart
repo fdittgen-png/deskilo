@@ -136,6 +136,7 @@ class SupabaseInvoiceCommands implements InvoiceCommands {
     required String paymentLedgerId,
     required String resolution,
     String note = '',
+    int? amountCents,
   }) async {
     await _client.rpc<void>(
       'match_invoice',
@@ -144,6 +145,7 @@ class SupabaseInvoiceCommands implements InvoiceCommands {
         'p_payment_ledger_id': paymentLedgerId,
         'p_resolution': resolution,
         'p_note': note,
+        'p_amount_cents': amountCents,
       },
     );
   }

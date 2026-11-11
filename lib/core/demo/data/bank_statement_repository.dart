@@ -323,9 +323,16 @@ class FakeBankStatementRepository implements BankStatementRepository {
     );
     demoRecordMatchPayment(money, invoiceId, before);
     final pending = money.invoiceMatchesStore[invoiceId]?.pending ?? false;
+    // As `bank_line_status`: pending while a part waits, matched once the
+    // parts add up to the line, recorded while part of it is still free.
+    final used = money.usedPaymentCents[payment] ?? 0;
     return _set(
       lineId,
-      pending ? BankLineStatus.pending : BankLineStatus.matched,
+      pending
+          ? BankLineStatus.pending
+          : used >= line.amountCents
+          ? BankLineStatus.matched
+          : BankLineStatus.recorded,
       invoiceId: invoiceId,
       invoiceNumber: invoice.number,
     );

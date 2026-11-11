@@ -147,12 +147,8 @@ Statement demoMemberStatement(
   // Credit-covered half-days are not billed as overage (0237).
   final covered = source.creditHalfDays(memberId, period);
   final extra = used - included - covered > 0 ? used - included - covered : 0;
-  // A credit an invoice match consumed settled that invoice: it does not
-  // improve the month a second time. Charges always count.
-  final consumed = {
-    ...m.consumedPaymentIds,
-    for (final x in m.invoiceMatchesStore.values) ?x.paymentLedgerId,
-  };
+  // What an invoice match used of a credit settled that invoice: it does
+  // not improve the month a second time (#3671: only what is left counts). Charges always count.
   final credits = m.ledger
       .where((e) =>
           e.memberId == memberId &&
@@ -161,9 +157,9 @@ Statement demoMemberStatement(
           // Its ledger line is what the invoicing wizard bills, not a second
           // charge of the same month.
           e.category != LedgerCategory.subscription &&
-          (e.kind != LedgerKind.credit || !consumed.contains(e.id)))
+          (e.kind != LedgerKind.credit || m.remainingOf(e) > 0))
       .fold(0, (int n, e) =>
-          n + (e.kind == LedgerKind.credit ? e.amountCents : -e.amountCents));
+          n + (e.kind == LedgerKind.credit ? m.remainingOf(e) : -e.amountCents));
   return Statement(
     period: period,
     subscriptionPct: pct,

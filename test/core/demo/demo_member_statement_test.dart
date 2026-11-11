@@ -72,10 +72,6 @@ List<_Space> _spaces(DemoFixture f) => [
 
 /// The period's ledger of [member]: unconsumed credits less charges.
 int _ledgerOf(FakeMoneyRepository m, String member, String period) {
-  final consumed = {
-    ...m.consumedPaymentIds,
-    for (final x in m.invoiceMatchesStore.values) ?x.paymentLedgerId,
-  };
   var n = 0;
   for (final e in m.ledger) {
     if (e.memberId != member || e.period != period) continue;
@@ -84,8 +80,8 @@ int _ledgerOf(FakeMoneyRepository m, String member, String period) {
     if (e.category == LedgerCategory.subscription) continue;
     if (e.kind == LedgerKind.charge) {
       n -= e.amountCents;
-    } else if (!consumed.contains(e.id)) {
-      n += e.amountCents;
+    } else {
+      n += m.remainingOf(e);
     }
   }
   return n;

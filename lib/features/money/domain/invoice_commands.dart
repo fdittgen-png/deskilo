@@ -74,11 +74,13 @@ abstract interface class InvoiceCommands {
   /// `match_invoice`, 0068): the amount comes from the selected ledger
   /// payment — never typed. [resolution] ∈ exact | over_forced |
   /// over_credit_note | under_accepted; the forced paths REQUIRE
-  /// [note].
+  /// [note]. [amountCents] is the part of the payment this invoice takes
+  /// (#3671, `p_amount_cents`); absent, it takes what is left of it.
   Future<void> matchInvoice({
     required String invoiceId,
     required String paymentLedgerId,
     required String resolution,
     String note = '',
+    int? amountCents,
   });
 }
