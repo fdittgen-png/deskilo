@@ -333,6 +333,14 @@ const runnerFamilies = <RunnerFamily>[
     layer: 'edge',
   ),
   RunnerFamily(
+    name: 'component catalogue',
+    root: 'tool/widgetbook/test',
+    suffix: '_test.dart',
+    owner: 'widgetbook.yml: bash tool/widgetbook/verify.sh',
+    workflow: 'widgetbook.yml',
+    command: 'bash tool/widgetbook/verify.sh',
+  ),
+  RunnerFamily(
     name: 'benchmarks',
     root: 'tool/bench',
     suffix: '_test.dart',

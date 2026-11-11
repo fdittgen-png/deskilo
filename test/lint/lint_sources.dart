@@ -16,6 +16,7 @@ import 'dart:io';
 
 /// True for files produced by codegen — never hand-edited, never linted.
 bool isGenerated(String path) =>
+    path.replaceAll('\\', '/').contains('/.dart_tool/') ||
     path.endsWith('.g.dart') ||
     path.endsWith('.freezed.dart') ||
     path.contains('lib/l10n/');
