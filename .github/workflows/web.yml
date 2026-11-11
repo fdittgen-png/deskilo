@@ -187,7 +187,16 @@ jobs:
         if: env.WEB_REQUIRED == 'true'
         run: |
           npm ci --prefix tool/web --ignore-scripts
-          npx --prefix tool/web playwright install chromium --with-deps --only-shell
+          # #3739 -- the runner's own Chrome needs no download and no package
+          # mirror (the probe takes BROWSER_EXECUTABLE); a browser is
+          # installed only where the image has none.
+          browser="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          if [ -n "$browser" ]; then
+            echo "probe browser: $browser"
+            export BROWSER_EXECUTABLE="$browser"
+          else
+            npx --prefix tool/web playwright install chromium --with-deps --only-shell
+          fi
           node tool/web/task_offline_probe.mjs
 
       - uses: actions/upload-artifact@v4
