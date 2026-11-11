@@ -36,7 +36,14 @@ class ShellCenterButton extends ConsumerWidget {
     required this.onPressed,
     required this.selected,
     this.collapseProgress = 0,
+    this.icon = Icons.event_seat_outlined,
+    this.selectedIcon = Icons.event_seat,
   });
+
+  /// #3551 — the action's icon: the booking's seat, or a new invoice for a
+  /// business without places.
+  final IconData icon;
+  final IconData selectedIcon;
 
   /// Localized tooltip / semantic label.
   final String label;
@@ -153,7 +160,7 @@ class ShellCenterButton extends ConsumerWidget {
               height: ShellBarMetrics.buttonDiameter,
               child: Center(
                 child: Icon(
-                  selected ? Icons.event_seat : Icons.event_seat_outlined,
+                  selected ? selectedIcon : icon,
                   size: ShellBarMetrics.buttonIconSize,
                   color: theme.colorScheme.onPrimary,
                 ),

@@ -147,7 +147,8 @@ void main() {
       // Calendar and Money off would have lost the app's core action.
       final shell =
           File('lib/app/shell/shell_screen.dart').readAsStringSync();
-      expect(shell, contains('visibleBranches.isEmpty'));
+      // #3551 — the destination table; the bar survives while any exists.
+      expect(shell, contains('navs.isEmpty'));
       expect(shell, isNot(contains('visibleBranches.length < 2')));
     });
   });

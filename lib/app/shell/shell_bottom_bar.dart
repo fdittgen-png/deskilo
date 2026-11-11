@@ -140,7 +140,13 @@ class ShellBottomBar extends ConsumerWidget {
     required this.reserveLabel,
     this.reserveSelected = false,
     this.showReserve = true,
+    this.centerIcon = Icons.event_seat_outlined,
+    this.centerSelectedIcon = Icons.event_seat,
   });
+
+  /// #3551 — the centre action's icons (the booking's seat by default).
+  final IconData centerIcon;
+  final IconData centerSelectedIcon;
 
   /// The bar holds no state of its own any more.
   ///
@@ -345,6 +351,8 @@ class ShellBottomBar extends ConsumerWidget {
                 selected: reserveSelected,
                 onPressed: onReservePressed,
                 collapseProgress: t,
+                icon: centerIcon,
+                selectedIcon: centerSelectedIcon,
               ),
             ),
           ),
