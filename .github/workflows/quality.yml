@@ -32,10 +32,14 @@ on:
 
 concurrency:
   group: quality-${{ github.ref }}-${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.event_name || 'change' }}
-  # A newer push to the same ref supersedes the run in flight: a pull request's
-  # new head, and on master the next merge — several merges in a row cost one
-  # run, not one each. The nightly and a dispatched run are never cancelled.
-  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+  # A pull request's new head supersedes its run in flight. On master a run in
+  # flight FINISHES (#3750): cancelled by the next merge, its summary jobs
+  # reported a failure and the commit was marked as failed although nothing
+  # had failed — 12 of 30 commits on 11 Nov 2026. The next merge waits its
+  # turn, and of several waiting merges only the newest runs, so merges in a
+  # row still cost one run, not one each. The nightly and a dispatched run
+  # keep their own group and are never cancelled.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   FLUTTER_VERSION: "3.47.5"
@@ -80,11 +84,15 @@ jobs:
   # push to master, the nightly run, a manual dispatch, a diff it could
   # not read completely, and a classifier that died — a missing verdict
   # is `required`, never `not_applicable`.
+  # #3753 -- this job, the static gates and the test shards stop when the run
+  # is cancelled (`!cancelled()`, as the database job since #3318): with
+  # `always()` the jobs of a superseded head ran to their end and the new head
+  # waited behind them. The two required aggregates keep `always()`.
   classify:
     name: classify the change
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     timeout-minutes: 5
     outputs:
       database: ${{ steps.verdict.outputs.database }}
@@ -112,7 +120,7 @@ jobs:
     name: quality · static gates
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -323,7 +331,7 @@ jobs:
     name: quality · test · gates
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -403,7 +411,7 @@ jobs:
     name: quality · test · money a-m and reservations
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -487,7 +495,7 @@ jobs:
     name: quality · test · workspace
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -572,7 +580,7 @@ jobs:
     name: quality · test · other features
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -660,7 +668,7 @@ jobs:
     name: quality · test · money n-z, me and auth
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.
@@ -744,7 +752,7 @@ jobs:
     name: quality · test · core, app, profile and a11y
     runs-on: ubuntu-latest
     needs: [tested]
-    if: always() && needs.tested.outputs.skip != 'true'
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
     # #3166 — before the four-way split: 22.8 min (money and workspace)
     # and 22.7 min (other); after it 809-1157 s per job over three green
     # runs (largest 19.3 min). 30 minutes leaves 55 % headroom.

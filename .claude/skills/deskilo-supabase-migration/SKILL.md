@@ -15,7 +15,7 @@ per-case subtransactions, results in the aborting RAISE) is the user-level
 2. Prove on the dev project first (rolled-back harness or pgTAP probe, red first), then
    `apply_migration` with the exact file text — all BEFORE the first push.
 3. `dart run tool/record_applied_migrations.dart` → commit `supabase/APPLIED.sha256`; an applied file never changes again.
-4. Predict `assets/instance/contract.txt` with `tool/contract_predict.dart`; only exit 2 waits for CI's artifact.
+4. Predict `assets/instance/contract.txt` with `tool/contract_predict.dart`; on exit 2, and for every new pgTAP file, run the database preview on the pushed branch BEFORE the pull request opens (§4).
 5. `dart run tool/build_instance.dart`; check `bundle.json` names every migration.
 
 Idioms, pgTAP probe mechanics and incidents: [reference.md](reference.md).
@@ -84,9 +84,16 @@ Idioms, pgTAP probe mechanics and incidents: [reference.md](reference.md).
   constraints and triggers of a table created there).
 - **Exit 2** names what it cannot predict — an anchored patch (dev's long-patched
   bodies drift from the replay) or a constraint/trigger change on an existing
-  table. Only then copy CI's artifact ONCE: `gh run download <run> -n quality-database`,
-  take its `contract.txt` (and `policies.txt` if it changed) — the + side of the
-  replay, never the hosted project's text.
+  table. Then the replay answers, BEFORE the pull request opens (#3751): push the
+  branch, `gh workflow run db-preview.yml --ref <branch>` (the replay from empty, the
+  policies, the contract and `supabase test db`: one job, about 8 minutes), and when
+  its verdict names a file, `gh run download <run> -n database-preview` and commit its
+  `contract.txt` / `policies.txt` — the replay's text, never the hosted project's.
+  A full Quality run is not the way to learn a contract line: it costs 25 minutes
+  and a second run.
+- The preview is also the only place before the pull request where `pg_prove` reads
+  a pgTAP file: it counts the plan, and a top-level `select` that prints `ok` (a
+  setup call returning text) is read as a test. Run setup calls in a `do` block.
 - `docs/database/dictionary.json` drift only WARNS on a PR (#2089);
   `CI · Dictionary refresh` regenerates it after the merge. Do not chase it.
 - After merging master into a migration branch, run `dart run tool/build_instance.dart`

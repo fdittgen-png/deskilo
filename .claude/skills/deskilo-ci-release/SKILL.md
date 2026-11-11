@@ -31,6 +31,10 @@ gh pr view <n> --json state,mergeable,mergeStateStatus,headRefOid
 ## Failures that are not the code
 - **`cancelled` by a newer push** (the concurrency group superseded the run): leave
   it cancelled; the newer head SHA owns the evidence. Do not rerun a superseded run.
+  This happens to a pull request only: a run on `master` is never cancelled by the
+  next merge (#3750) — it finishes, the next merge waits, and of several waiting
+  merges only the newest runs. A failed mark on a `master` commit is therefore a
+  failure to read, never a superseded run.
 - **Infrastructure failure of the CURRENT candidate** ("port … is still held by an
   earlier pass", a Supabase CLI download rate limit, a runner lost): at most ONE
   coherent retry, then stop and record the diagnostics. Anything else is real; a

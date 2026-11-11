@@ -119,6 +119,31 @@ void main() {
     }
   });
 
+  test('#3753 a cancelled run stops its long jobs; only the two required '
+      'aggregates report after a cancellation', () {
+    // `always()` survives a cancellation: the shards of a superseded head ran
+    // to their end and the new head waited behind them (27 of 31 superseded
+    // runs on 11 Nov 2026, 230 minutes). `!cancelled()` still runs a job
+    // after a skipped or failed dependency.
+    const stops = r"${{ !cancelled() && needs.tested.outputs.skip != 'true' }}";
+    const reports = "always() && needs.tested.outputs.skip != 'true'";
+    final jobs = _jobs();
+    for (final id in [..._shardJobs.values, 'static', 'classify', 'database']) {
+      expect((jobs[id] as YamlMap)['if'], stops, reason: id);
+    }
+    for (final id in const ['code', 'report']) {
+      expect((jobs[id] as YamlMap)['if'], reports, reason: id);
+    }
+    final web = loadYaml(
+      File('.github/workflows/web.yml').readAsStringSync(),
+    ) as YamlMap;
+    expect(
+      ((web['jobs'] as YamlMap)['build'] as YamlMap)['if'],
+      r'${{ !cancelled() }}',
+      reason: 'the browser build of a superseded head stops too',
+    );
+  });
+
   test('the required context aggregates every shard, is always evaluated '
       'and gates on each result', () {
     final jobs = _jobs();
