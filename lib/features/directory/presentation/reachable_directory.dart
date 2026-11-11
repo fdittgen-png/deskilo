@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/text/initials.dart';
 import '../../../core/ui/loading_view.dart';
 import '../domain/messenger.dart';
 import '../domain/personal_message_directory.dart';

@@ -3,8 +3,11 @@ import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/trace/trace_logger.dart';
+import '../data/directory_lookups.dart';
 import '../data/photon_directory_geocoder.dart';
+import '../data/prefs_directory_location_memory.dart';
 import '../domain/directory_location.dart';
+import '../domain/directory_location_memory.dart';
 import 'discovery_view_providers.dart';
 part 'directory_location_providers.g.dart';
 
@@ -21,6 +24,20 @@ DirectoryGeocoder directoryGeocoder(Ref ref) {
   );
 }
 
+/// #3684 -- the places found on this device, so a second visit asks the
+/// geocoder nothing again.
+@Riverpod(keepAlive: true)
+DirectoryLocationMemory directoryLocationMemory(Ref ref) =>
+    const PrefsDirectoryLocationMemory();
+
+/// #3684 -- the one queue every address lookup waits in: one request at a
+/// time, paused between them, remembered answers first.
+@Riverpod(keepAlive: true)
+DirectoryLookups directoryLookups(Ref ref) => DirectoryLookups(
+  ref.watch(directoryGeocoderProvider),
+  ref.watch(directoryLocationMemoryProvider),
+);
+
 Duration? _noRetry(int count, Object error) => null;
 
 @Riverpod(retry: _noRetry)
@@ -29,7 +46,9 @@ Future<DirectoryLocation?> directoryAddressLocation(
   String address,
 ) async {
   try {
-    return await ref.watch(directoryGeocoderProvider).locate(address);
+    return await ref
+        .watch(directoryLookupsProvider)
+        .locate(address, wanted: () => ref.mounted);
   } catch (e, st) {
     TraceLogger.instance.error(
       'directory',

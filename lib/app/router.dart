@@ -15,6 +15,7 @@ import '../features/task_recorder/presentation/ui_capture.dart'
 import '../features/workspace/providers/workspace_providers.dart';
 import 'entry_intents.dart';
 import 'entry_resumption.dart';
+import 'format_surface_sync.dart';
 import 'page_routes.dart';
 import 'resume_places.dart';
 import 'route_env.dart';
@@ -125,6 +126,7 @@ GoRouter router(Ref ref) {
   void arrived() {
     spendOnArrival(router, ref);
     keeper.arrive(router.state.uri);
+    followFormatSurface(router, ref);
   }
   router.routerDelegate.addListener(arrived);
   ref.onDispose(() => router.routerDelegate.removeListener(arrived));

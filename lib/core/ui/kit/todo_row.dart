@@ -25,7 +25,8 @@ class TodoRow extends StatelessWidget {
   final String title;
   final String caption;
   final String buttonLabel;
-  final VoidCallback onPressed;
+  /// Null while the entry waits for a read: its button is shown, disabled.
+  final VoidCallback? onPressed;
   final Key buttonKey;
 
   /// The first entry: its button is the screen's filled one.

@@ -97,7 +97,7 @@ class InvoiceSummaryCard extends StatelessWidget {
                 ),
               ),
               StatusChip(
-                label: statusWordsOf(l, format, r, status),
+                label: statusWordsOf(l, format, r, status, today),
                 tone: statusToneOf(status.kind),
               ),
             ],

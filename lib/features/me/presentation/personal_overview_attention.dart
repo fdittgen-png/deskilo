@@ -225,7 +225,7 @@ class _AttentionRow extends ConsumerWidget {
         d.dueOn == null
             ? null
             : l10n.meOverviewAttentionDue(
-                ref.watch(appFormatProvider).date(d.dueOn!),
+                ref.watch(personalFormatProvider).date(d.dueOn!),
               ),
         MeStatusChip(
           kind: d.overdue ? MeChipKind.overdue : MeChipKind.toPay,
@@ -299,7 +299,7 @@ class _Amount extends ConsumerWidget {
         hideLabel: l10n.financesHideAmount,
         child: Text(
           ref
-              .watch(appFormatProvider)
+              .watch(personalFormatProvider)
               .moneyNamed(d.currency)
               .formatMinor(d.remainingCents),
         ),
@@ -375,7 +375,7 @@ class FinanceGlance extends ConsumerWidget {
                               showLabel: l10n.financesShowAmount,
                               hideLabel: l10n.financesHideAmount,
                               child: Text(
-                                appFormatOf(context)
+                                personalFormatOf(context)
                                     .moneyNamed(e.key)
                                     .formatMinor(e.value),
                                 style: strong,

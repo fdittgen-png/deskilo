@@ -5,6 +5,8 @@
 // One test per finding, each against the real Demo composition or the
 // fixture it is built from.
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/device_prefs.dart';
+import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
@@ -14,6 +16,7 @@ import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -406,5 +409,116 @@ void main() {
       expect(d.actorName, 'Ada Lindqvist');
     }
     expect(find.textContaining('Ada Lindqvist'), findsWidgets);
+  });
+
+  // ---- #3601: the Demo tells one story ----------------------------------
+
+  test('a subscription is priced once: the live band is the invoiced plan '
+      'price, and the statement charges it once', () async {
+    final f = DemoFixture.build();
+    final lastMonth = DateTime(f.seededAt.year, f.seededAt.month - 1);
+    final bandFees = {for (final b in f.money.feeBands) b.feeCents};
+    final subscriptions = f.money.invoices.where(
+      (i) =>
+          i.number.startsWith('F-') &&
+          i.issuedAt.year == lastMonth.year &&
+          i.issuedAt.month == lastMonth.month,
+    );
+    expect(subscriptions, isNotEmpty);
+    for (final invoice in subscriptions) {
+      expect(bandFees, contains(invoice.totalCents),
+          reason: '${invoice.number}: a plan invoiced at a price no band '
+              'charges');
+    }
+    final period = '${f.seededAt.year}-'
+        '${f.seededAt.month.toString().padLeft(2, '0')}';
+    final statement = await f.money.fetchStatement('member-1', period);
+    final others = f.money.ledger
+        .where((e) =>
+            e.memberId == 'member-1' &&
+            e.period == period &&
+            e.category != LedgerCategory.subscription)
+        .fold(0, (n, e) => n + (e.kind == LedgerKind.credit ? e.amountCents : -e.amountCents));
+    expect(statement.balanceCents,
+        others - statement.feeCents - statement.overageCents,
+        reason: 'the subscription is in the balance once, as the fee');
+  });
+
+  test('every invoice names the member it belongs to', () {
+    final f = DemoFixture.build();
+    for (final invoice in f.money.invoices) {
+      expect(invoice.memberName, f.workspaces.memberNames[invoice.memberId],
+          reason: '${invoice.number} (${invoice.memberId})');
+    }
+  });
+
+  test('capacity offers no seat-hour on a closure day', () async {
+    final f = DemoFixture.build();
+    final from = DateTime(f.seededAt.year, f.seededAt.month);
+    final to = DateTime(f.seededAt.year, f.seededAt.month + 1);
+    final repo = DemoCapacityKpiRepository(
+      plan: f.floorPlan,
+      reservations: f.reservations,
+      now: f.seededAt,
+      closureDays: f.workspaces.closureDays,
+    );
+    final kpi = await repo.seatCapacity('ws-1', from: from, to: to);
+    final closed = {
+      for (final c in f.workspaces.closureDays)
+        if (c.workspaceId == 'ws-1') DateTime(c.day.year, c.day.month, c.day.day),
+    };
+    var open = 0;
+    for (var d = from; d.isBefore(to); d = d.add(const Duration(days: 1))) {
+      if (d.weekday <= DateTime.friday &&
+          !closed.contains(DateTime(d.year, d.month, d.day))) {
+        open++;
+      }
+    }
+    expect(kpi.offeredSeatHours, kpi.seats * open * 9.0);
+    final withoutClosures = await DemoCapacityKpiRepository(
+      plan: f.floorPlan,
+      reservations: f.reservations,
+      now: f.seededAt,
+    ).seatCapacity('ws-1', from: from, to: to);
+    expect(kpi.offeredSeatHours, lessThan(withoutClosures.offeredSeatHours),
+        reason: 'the fixture seeds closure days inside the month');
+  });
+
+  testWidgets('the Demo bar names the date the demo is fixed at', (tester) async {
+    await pumpDemo(tester);
+    expect(find.byKey(const ValueKey('demo-bar-date')), findsOneWidget);
+    expect(find.textContaining('2026'), findsWidgets);
+    final text = tester.widget<Text>(find.byKey(const ValueKey('demo-bar-date')));
+    expect(text.data, startsWith('Demo · '));
+    expect(text.data, contains('May'));
+  });
+
+  test("the register's newest rows and its first open invoice are not the "
+      "owner's own", () {
+    final f = DemoFixture.build();
+    final register = [...f.money.invoices.where((i) => !i.isVoided)]
+      ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+    // The newest month has four invoices of other members; they lead it.
+    expect(
+      register.take(4).map((i) => i.memberId),
+      everyElement(isNot('member-1')),
+      reason: 'the owner is a paying member, not the first thing a visitor '
+          'reads in the register',
+    );
+    final firstOpen = register.firstWhere(
+      (i) => i.totalCents > 0 && !f.money.invoiceMatchesStore.containsKey(i.id),
+    );
+    expect(firstOpen.memberId, isNot('member-1'));
+    final owner = register.where((i) => i.memberId == 'member-1');
+    expect(owner, isNotEmpty, reason: 'her own invoices stay');
+  });
+
+  test('the Demo opens in the language the app is shown in', () {
+    final store = InMemoryLocaleStore()..adopt('fr');
+    expect(store.languageCode, 'fr');
+    store.adopt('de');
+    expect(store.languageCode, 'fr', reason: 'a choice in the Demo is kept');
+    final none = InMemoryLocaleStore()..adopt(null);
+    expect(none.languageCode, isNull, reason: 'the device decides then');
   });
 }

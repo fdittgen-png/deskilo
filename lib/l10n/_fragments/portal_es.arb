@@ -60,7 +60,7 @@
   "portalDirectoryCount": "{name} ({count})",
   "portalWriteTo": "Escribir a {name}",
   "spaceMessageSpace": "Enviar un mensaje",
-  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su dirección de correo. Una vez miembro, sus administradores verán su nombre y los datos de contacto y facturación que necesitan para facturarle.",
+  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.",
   "spaceRunByCompany": "Gestionado por una empresa",
   "spaceRunByAssociation": "Gestionado por una asociación",
   "spaceRunByPerson": "Gestionado por una persona"

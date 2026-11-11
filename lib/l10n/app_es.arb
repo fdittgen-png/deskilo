@@ -816,6 +816,7 @@
   "@badgeSignInUseEmail": {
     "description": "#662 - badge sign-in"
   },
+  "badgeSignInYourPin": "¿Su PIN?",
   "badgeTapCardHint": "Acerca la tarjeta RFID/NFC a la parte trasera del dispositivo.",
   "badgeTapCardTitle": "Registrar una tarjeta",
   "badgeTokenOnce": "Guarde este QR ahora — solo se muestra una vez.",
@@ -4162,6 +4163,18 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageCredit": "Saldo a favor: {amount}",
+  "customerPageCreditHint": "Pagos que ninguna factura ha tomado todavía.",
+  "customerPageInvoices": "Facturas",
+  "customerPageMatch": "Conciliar el pago",
+  "customerPageNothingOwed": "Nada pendiente",
+  "customerPageOwes": "Debe",
+  "customerPageStory": "Historial",
+  "customerStoryDeclared": "Dice haber pagado la factura {number}",
+  "customerStoryIssued": "Factura {number} emitida",
+  "customerStoryNow": "Ahora: {words}",
+  "customerStoryPaid": "Factura {number} pagada",
+  "customerStoryReminders": "{count, plural, =1{Recordatorio compartido para {number}} other{{count} recordatorios compartidos para {number}}}",
   "dataReportArchived": "Archivado",
   "dataReportColumnAttended": "Asistencias",
   "dataReportColumnCancelled": "Canceladas",
@@ -4328,6 +4341,7 @@
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
   },
+  "demoSessionBadgeDate": "Demo · {date}",
   "demoSessionBadgeHint": "Está explorando un espacio de demostración. Nada de esto sale de este dispositivo.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
@@ -4684,14 +4698,19 @@
   "directoryLocate": "Localizar en el mapa",
   "directoryLocating": "Localizando la dirección pública…",
   "directoryLocationMissing": "Ubicación no disponible. El propietario puede publicar coordenadas precisas.",
+  "directoryMapOpenFailed": "No se pudo abrir el mapa.",
   "directoryNoUpcoming": "Sin reservas próximas",
+  "directoryNothingToPin": "Ninguno de estos lugares se pudo situar en el mapa.",
   "directoryOnline": "En línea",
   "directoryOpenGroup": "Abrir el grupo de WhatsApp",
+  "directoryPinsLookupFailed": "{count, plural, =1{1 no se pudo buscar.} other{{count} no se pudieron buscar.}}",
   "directoryPinsMissing": "{count, plural, =1{1 espacio no se pudo situar en el mapa; su ficha está debajo.} other{{count} espacios no se pudieron situar en el mapa; sus fichas están debajo.}}",
+  "directoryPinsNoAddress": "{count, plural, =1{1 no tiene dirección publicada.} other{{count} no tienen dirección publicada.}}",
   "directoryReservationsHeading": "Reservas",
   "directoryReservedNow": "Reservado ahora",
   "directoryReservedNowSeat": "Reservado ahora · {seat}",
   "directoryReservedToday": "Reservado hoy",
+  "directoryTilesFailed": "No se pudo cargar el fondo del mapa.",
   "directoryTitle": "Miembros",
   "directoryWhatsapp": "Chatear por WhatsApp",
   "discoveryBookmark": "Guardar",
@@ -4719,6 +4738,9 @@
   "discoveryStartBody": "Escriba una ciudad, un servicio o un nombre.",
   "discoveryStartTitle": "¿Qué busca?",
   "discoveryView": "Ver",
+  "documentLanguageFollows": "Sigue el idioma de la aplicación",
+  "documentLanguageHint": "Los recordatorios, los documentos y los mensajes push se redactan en este idioma. Una vez que elija uno, cambiar el idioma de la aplicación ya no lo modifica.",
+  "documentLanguageTitle": "Idioma de cartas y notificaciones",
   "documentsAdd": "Añadir un documento",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -9525,6 +9547,10 @@
   "@invoicingCaughtUp": {
     "description": "#3587 To do without entries"
   },
+  "invoicingCheckingPayments": "Comprobando los pagos recibidos…",
+  "@invoicingCheckingPayments": {
+    "description": "#3587 To do: the reminders entry while the received payments are still being read"
+  },
   "invoicingColCustomer": "Cliente",
   "@invoicingColCustomer": {
     "description": "#3587 table column"
@@ -9725,18 +9751,6 @@
       }
     }
   },
-  "invoicingRemindersAutomatic": "Los recordatorios salen solos, en la aplicación.",
-  "@invoicingRemindersAutomatic": {
-    "description": "#3587 the To do card's last line, automatic reminders"
-  },
-  "invoicingRemindersByHand": "Los recordatorios se comparten a mano.",
-  "@invoicingRemindersByHand": {
-    "description": "#3587 the To do card's last line, reminders by hand"
-  },
-  "invoicingRules": "Reglas",
-  "@invoicingRules": {
-    "description": "#3587 opens the reminder rules"
-  },
   "invoicingSearch": "Buscar",
   "@invoicingSearch": {
     "description": "#3587 top bar: open the search field"
@@ -9744,6 +9758,10 @@
   "invoicingSearchHint": "Un cliente o un número",
   "@invoicingSearchHint": {
     "description": "#3587 search field hint"
+  },
+  "invoicingSourceCredits": "Saldos a favor de los clientes",
+  "@invoicingSourceCredits": {
+    "description": "#3587 a source name: what customers paid that no invoice has taken"
   },
   "invoicingSourceFailed": "{source} no se pudo leer.",
   "@invoicingSourceFailed": {
@@ -10333,6 +10351,8 @@
   "kioskRevertTitle": "Dispositivo quiosco",
   "kioskScanQr": "Escanear la tarjeta QR",
   "kioskTapHint": "Toque un asiento para registrarse",
+  "kitActionBusy": "En curso…",
+  "languageAvailableHint": "DesKilo está disponible en los idiomas siguientes. En un dispositivo configurado en otro idioma, se muestra en {fallback}.",
   "languageNameCS": "Checo",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"
@@ -11489,6 +11509,22 @@
   "meAccountInMe": "Mi cuenta está en Yo",
   "meAccountInMeBody": "Foto, idioma, tema e inicios de sesión son suyos en todos los espacios.",
   "meAddressSaveFailed": "No se pudo guardar su dirección. Inténtelo de nuevo.",
+  "meBusinessSeesAdmins": "Sus administradores que le facturan o llevan el registro de miembros: su nombre, empresa, dirección, teléfono, correo, número de IVA, identificador legal e idioma preferido, que necesitan para facturarle, y su cumpleaños si lo indicó, para quienes llevan el registro de miembros.",
+  "@meBusinessSeesAdmins": {
+    "description": "#3594 what the administrators who invoice or keep the member records see"
+  },
+  "meBusinessSeesAsk": "Cuando pide unirse: su nombre y su foto.",
+  "@meBusinessSeesAsk": {
+    "description": "#3594 what a business sees when the person asks to join"
+  },
+  "meBusinessSeesSpace": "Una vez miembro, todos en el espacio: su nombre y su foto. Su número de WhatsApp, su estado y cuándo estuvo por última vez solo según lo que elija en Quién me ve.",
+  "@meBusinessSeesSpace": {
+    "description": "#3594 what the members of a space see"
+  },
+  "meBusinessSeesTitle": "Lo que ve un negocio al que se une",
+  "@meBusinessSeesTitle": {
+    "description": "#3594 Me › Privacy: the card that says what a business a person joins can see"
+  },
   "meContextPersonal": "Personal",
   "meCreateSpace": "Crear un espacio",
   "meDataPersonalExport": "Exportar datos personales",
@@ -12635,6 +12671,15 @@
   "paymentInstructionsValueCopied": "Copiado al portapapeles.",
   "paymentInstructionsWeroLabel": "Número de teléfono de Wero",
   "paymentInstructionsWiseLabel": "Wisetag o enlace de pago de Wise",
+  "paymentMatchCandidate": "{number} · {amount} pendientes",
+  "paymentMatchDecide": "Otro importe: usted elige cómo saldar la diferencia",
+  "paymentMatchEmpty": "Ningún pago espera una factura.",
+  "paymentMatchFailed": "No se pudieron leer los pagos.",
+  "paymentMatchHeader": "{amount} recibidos el {date}",
+  "paymentMatchIntro": "Se recibió un pago que aún no está asignado. Elija la factura que paga.",
+  "paymentMatchRefused": "No se pudo conciliar el pago. Inténtelo de nuevo.",
+  "paymentMatchSame": "Mismo importe",
+  "paymentMatchTitle": "Pagos por conciliar",
   "paymentMethodBankTransfer": "Transferencia",
   "paymentMethodCard": "Tarjeta",
   "paymentMethodCash": "Efectivo",
@@ -14725,6 +14770,9 @@
   "@reminderHistoryTitle": {
     "description": "#1922 reminder evidence: reminderHistoryTitle"
   },
+  "reminderModeAutomatic": "Los recordatorios salen solos, en la aplicación.",
+  "reminderModeByHand": "Los recordatorios se comparten a mano.",
+  "reminderModeRules": "Reglas",
   "reminderOriginAutomatic": "automático",
   "@reminderOriginAutomatic": {
     "description": "#1922 reminder evidence: reminderOriginAutomatic"
@@ -14745,6 +14793,25 @@
   "reminderPdfOpeningFriendly": "este es un recordatorio amistoso: la factura de abajo sigue abierta. Seguramente un simple despiste — sin problema.",
   "reminderPdfTitleFirm": "Recordatorio",
   "reminderPdfTitleFriendly": "Recordatorio de pago",
+  "reminderQueueCheckFirst": "Compruebe primero: dinero recibido y no asignado",
+  "reminderQueueDetail": "{days, plural, =0{{number} · vence hoy} =1{{number} · 1 día de retraso} other{{number} · {days} días de retraso}}",
+  "reminderQueueDone": "Hecho",
+  "reminderQueueDoneEmpty": "Nada que compartir",
+  "reminderQueueFailed": "No se pudo compartir. Inténtelo de nuevo.",
+  "reminderQueueIntro": "Usted comparte cada recordatorio. Solo se registra si de verdad se compartió.",
+  "reminderQueueLevel": "Recordatorio {level}",
+  "reminderQueueNotRecorded": "No se registró nada: se cerró el menú de compartir.",
+  "reminderQueueNotRecordedHeading": "Compartidos, sin registrar",
+  "reminderQueueRecord": "Registrar",
+  "reminderQueueRecordStays": "Hasta que se registre, la factura sigue mostrando este recordatorio como pendiente.",
+  "reminderQueueResultNone": "Ningún recordatorio compartido",
+  "reminderQueueResultSubtitle": "Cada uno queda registrado en su factura.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 recordatorio compartido} other{{count} recordatorios compartidos}}",
+  "reminderQueueShare": "Compartir",
+  "reminderQueueShareNext": "Compartir la siguiente · {customer}",
+  "reminderQueueShared": "Compartido",
+  "reminderQueueSharedNotRecorded": "Compartido, pero no registrado en la factura. Regístrelo: no se compartirá de nuevo.",
+  "reminderQueueTitle": "Recordatorios por compartir",
   "reminderStatusAccepted": "Aceptado por el servicio de notificaciones — no prueba que se haya leído",
   "@reminderStatusAccepted": {
     "description": "#1922 reminder evidence: reminderStatusAccepted"
@@ -16883,6 +16950,8 @@
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Cuántas lecturas pueden venir de un mismo lugar durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Cuántas veces puede leerse una credencial durante el período de bloqueo antes de que la lectura pida esperar. Solo se puede reducir.",
   "settingHintSecurityBadgeLockoutFailures": "Cuántos intentos de PIN erróneos se permiten en una credencial durante el tiempo de bloqueo. Solo se puede reducir.",
   "@settingHintSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting hint."
@@ -16892,7 +16961,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Intentos de PIN fallidos en este espacio durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Solo se puede reducir.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.",
   "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
@@ -17069,6 +17138,8 @@
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"
   },
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Lecturas desde un lugar",
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Lecturas de una credencial",
   "settingLabelSecurityBadgeLockoutFailures": "Intentos de PIN de la credencial antes del bloqueo",
   "@settingLabelSecurityBadgeLockoutFailures": {
     "description": "#2485 settings: Setting label."
@@ -18055,7 +18126,7 @@
       }
     }
   },
-  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su dirección de correo. Una vez miembro, sus administradores verán su nombre y los datos de contacto y facturación que necesitan para facturarle.",
+  "spacePreviewPrivacy": "Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.",
   "spaceQrSizeLabel": "Tamaño del código QR",
   "spaceRatingClear": "Sin valoración",
   "spaceRunByAssociation": "Gestionado por una asociación",

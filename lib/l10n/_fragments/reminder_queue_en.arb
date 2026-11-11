@@ -1,0 +1,101 @@
+{
+  "reminderQueueTitle": "Reminders to share",
+  "@reminderQueueTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueTitle)"
+  },
+  "reminderQueueIntro": "You share each reminder yourself. It is recorded only when it was really shared.",
+  "@reminderQueueIntro": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueIntro)"
+  },
+  "reminderQueueLevel": "Reminder {level}",
+  "@reminderQueueLevel": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel)",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
+  "@reminderQueueDetail": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueShare": "Share",
+  "@reminderQueueShare": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShare)"
+  },
+  "reminderQueueShareNext": "Share the next one · {customer}",
+  "@reminderQueueShareNext": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShareNext)",
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueShared": "Shared",
+  "@reminderQueueShared": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueShared)"
+  },
+  "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
+  "@reminderQueueNotRecorded": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)"
+  },
+  "reminderQueueFailed": "Could not be shared. Try again.",
+  "@reminderQueueFailed": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
+  },
+  "reminderQueueResultTitle": "{count, plural, =1{1 reminder shared} other{{count} reminders shared}}",
+  "@reminderQueueResultTitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueResultNone": "No reminder shared",
+  "@reminderQueueResultNone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
+  },
+  "reminderQueueResultSubtitle": "Each one is recorded on its invoice.",
+  "@reminderQueueResultSubtitle": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)"
+  },
+  "reminderQueueDone": "Done",
+  "@reminderQueueDone": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDone)"
+  },
+  "reminderQueueDoneEmpty": "Nothing to share",
+  "@reminderQueueDoneEmpty": {
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
+  },
+  "reminderQueueCheckFirst": "Check first: money received and not assigned",
+  "@reminderQueueCheckFirst": {
+    "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
+  },
+  "reminderQueueSharedNotRecorded": "Shared, but not recorded on the invoice. Record it: it will not be shared again.",
+  "@reminderQueueSharedNotRecorded": {
+    "description": "#3587 R1-f: a reminder left the device but recording its level failed; its action records only"
+  },
+  "reminderQueueRecord": "Record",
+  "@reminderQueueRecord": {
+    "description": "#3587 R1-f: records a reminder that was already shared, without sharing it again"
+  },
+  "reminderQueueNotRecordedHeading": "Shared, not recorded",
+  "@reminderQueueNotRecordedHeading": {
+    "description": "#3587 R1-f: result page heading of the reminders shared but not recorded"
+  },
+  "reminderQueueRecordStays": "Until it is recorded, the invoice still shows this reminder as due.",
+  "@reminderQueueRecordStays": {
+    "description": "#3587 R1-f: result page note under the reminders shared but not recorded"
+  }
+}

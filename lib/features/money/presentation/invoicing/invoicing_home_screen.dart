@@ -30,13 +30,14 @@ import '../../domain/dunning.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../invoice_actions.dart';
-import '../widgets/dunning_rules_dialog.dart';
 import '../widgets/invoice_form_sheet.dart';
 import 'invoice_month_flow.dart';
 import 'invoice_page.dart';
 import 'invoicing_home.dart';
 import 'invoicing_list.dart';
+import 'invoicing_live_pages.dart';
 import 'invoicing_reads.dart';
+import 'payments_to_match_screen.dart';
 
 /// The width of the invoice panel beside the list on a desk window.
 const double _panelWidth = 440;
@@ -46,6 +47,9 @@ typedef _Read = ({
   List<Receivable> receivables,
   Map<String, Invoice> byId,
   Map<String, InvoiceMatch> matches,
+  Set<String> holdsUnassigned,
+  bool creditsKnown,
+  ReminderMode mode,
 });
 
 /// One entry of the More menu: its key, icon, words and action.
@@ -77,6 +81,16 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
 
   /// The invoice open in the panel beside the list (a desk window).
   String? _selected;
+
+  /// What the home read at its last build: the actions act on it.
+  _Read _read = (
+    receivables: const [],
+    byId: const {},
+    matches: const {},
+    holdsUnassigned: const {},
+    creditsKnown: false,
+    mode: ReminderMode.byHand,
+  );
 
   /// The screen's width is a desk's: an invoice opens beside the list. Read
   /// from the constraints the app's frame gives, never from the window.
@@ -222,6 +236,11 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final received = ref.watch(receivedPaymentsProvider(window));
     final reader = ref.watch(invoicingReaderProvider);
     final receivables = reader.read(invoices);
+    // Unknown is not none: while the money not assigned is not read, nobody
+    // is known to hold any, and nobody is reminded.
+    final money = unassignedMoneyKnown(ref.watch(unassignedMoneyProvider));
+    final creditsKnown = money != null;
+    final holdsUnassigned = money?.holdersAmong(receivables) ?? const {};
     final period = overview.value?.period;
     final currency = workspace?.currencyCode ?? '';
     final data = InvoicingHomeData(
@@ -251,8 +270,21 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         if (received.hasError) InvoicingSource.payments,
         if (overview.hasError) InvoicingSource.toInvoice,
       },
+      holdsUnassigned: holdsUnassigned,
+      creditsKnown: creditsKnown,
     );
     final byId = {for (final i in invoices) i.id: i};
+    final _Read read = (
+      receivables: receivables,
+      byId: byId,
+      matches: matches,
+      holdsUnassigned: holdsUnassigned,
+      creditsKnown: creditsKnown,
+      mode: data.mode,
+    );
+    // The actions of the pages opened over the home act on what is read
+    // now, not on what was read when they opened.
+    _read = read;
     return InvoicingHome(
       data: data,
       searchOpen: _searchOpen,
@@ -261,18 +293,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       wide: _wide,
       actions: InvoicingHomeActions(
         onOpenInvoice: (id) => _open(byId[id], matches),
-        onOpenCustomer: (customerId) => _open(
-          byId[_oldestOf(receivables, customerId, (r) => r.isOutstanding)],
-          matches,
-        ),
-        onCustomerAction: (customerId, action) => _customerAction(
-          (receivables: receivables, byId: byId, matches: matches),
-          customerId,
-          action,
-          data.mode,
-        ),
+        onOpenCustomer: _openCustomer,
+        onCustomerAction: _customerAction,
         onTodo: (kind) => _todo(kind, period),
-        onRules: () => showDunningRulesDialog(context, ref),
         onRetry: (source) => switch (source) {
           InvoicingSource.payments => ref.invalidate(
             receivedPaymentsProvider(window),
@@ -316,12 +339,25 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   }
 
   Future<void> _customerAction(
-    _Read read,
     String customerId,
     InvoiceAction action,
-    ReminderMode mode,
   ) async {
-    final (:receivables, :byId, :matches) = read;
+    final (
+      :receivables,
+      :byId,
+      :matches,
+      :mode,
+      :holdsUnassigned,
+      :creditsKnown,
+    ) = _read;
+    // Nobody is reminded while who holds money is not known.
+    if (action == InvoiceAction.shareReminder && !creditsKnown) return;
+    // Money held unassigned is matched from the payments, never by
+    // reminding the customer.
+    if (action == InvoiceAction.match && holdsUnassigned.contains(customerId)) {
+      await _openPaymentsToMatch(customerId);
+      return;
+    }
     final bool Function(Receivable) holds = switch (action) {
       InvoiceAction.shareReminder => (r) => reminderToShare(r, mode),
       InvoiceAction.confirmPayment => (r) => r.paymentDeclared,
@@ -342,10 +378,43 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   }
 
   /// The home opens every other "To do" entry as its own list; the month's
-  /// entry opens its flow.
+  /// entry opens its flow, the reminders by hand their queue.
   Future<void> _todo(TodoKind kind, String? period) async {
     if (kind == TodoKind.invoiceTheMonth) await _invoiceTheMonth(period);
+    if (kind == TodoKind.shareReminders && _read.creditsKnown) {
+      await _openQueue();
+    }
   }
+
+  /// Full screen, with its own messenger, so what it says is said there.
+  Future<void> _fullScreen(Widget child) => showDialog<void>(
+    context: context,
+    builder: (_) => Dialog.fullscreen(child: ScaffoldMessenger(child: child)),
+  );
+
+  /// The customer's page: what they owe per currency, their credit, their
+  /// invoices and their one action, on the current reads.
+  Future<void> _openCustomer(String customerId) => _fullScreen(
+    LiveCustomerPage(
+      customerId: customerId,
+      onOpenInvoice: (id) => openInvoicePage(context, id),
+      onAction: (action) => _customerAction(customerId, action),
+    ),
+  );
+
+  /// The reminders shared by hand, the customers holding money we have not
+  /// assigned listed first to match; drawn again as the reads change.
+  Future<void> _openQueue() =>
+      _fullScreen(LiveReminderQueue(onMatch: _openPaymentsToMatch));
+
+  /// The payments [customerId] made that no invoice has taken, each with the
+  /// open invoices of the business's currency it could settle.
+  Future<void> _openPaymentsToMatch(String customerId) => _fullScreen(
+    PaymentsToMatchScreen(
+      currency: ref.read(invoicingBusinessProvider).currency,
+      customerId: customerId,
+    ),
+  );
 
   /// The month to invoice, full screen with the list the app has today,
   /// until the month flow replaces it (R1-e).

@@ -301,3 +301,15 @@ void seedDemoMoneyStory(
     );
   }
 }
+
+/// #3601 — ONE price rule: the fee bands the live statement charges are the
+/// plan prices the history invoices (a 50 % plan 90 €, a full plan 180 €,
+/// each with the yearly rise), so a member's last invoice and their current
+/// month agree for the same plan.
+void alignDemoBandsWithPlans(FakeMoneyRepository money, DateTime now) {
+  for (final (index, base) in [(1, 9000), (2, 18000)]) {
+    money.feeBands[index] = money.feeBands[index].copyWith(
+      feeCents: demoMonthlyCents(base, now.year, now),
+    );
+  }
+}

@@ -6,7 +6,7 @@ description: After a DesKilo push — the three required checks ("analyze · l10
 
 **Essentials**
 1. Required on master: `analyze · l10n gate · test · coverage`, `quality · database`, `quality · report`.
-2. Verify successful required checks for the exact candidate before invoking `gh pr merge <n> --auto --squash --match-head-commit <sha>`, then verify `MERGED` on origin/master. Never `--admin`.
+2. Verify successful required checks for the exact candidate before invoking `gh pr merge <n> --auto --squash --match-head-commit <sha>`, then verify `MERGED` on origin/master. Give every squash an explicit `--subject` and a `--body-file` of your own text, never the default body (#3677 fails a tool line). Never `--admin`.
 3. One bounded watcher per PR in the background; read JSON states, never grep the plain output.
 4. A run superseded by a newer push stays cancelled; a current-candidate infrastructure failure gets at most ONE coherent retry (below); anything else is real.
 5. Deploy with ONE train after the last merge: `gh workflow run release-train.yml -f track=alpha`.

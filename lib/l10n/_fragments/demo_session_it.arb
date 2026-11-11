@@ -4,6 +4,7 @@
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
   },
+  "demoSessionBadgeDate": "Demo · {date}",
   "demoSessionReset": "Reimposta la demo",
   "@demoSessionReset": {
     "description": "#1375 demo session: demoSessionReset"

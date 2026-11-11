@@ -149,6 +149,9 @@ abstract final class HelpAnchor {
   /// What is collected, why, and on what basis.
   static const privacyConsent = 'user.privacy.consent';
 
+  /// What a business a person joins can see of them (#3594).
+  static const privacyBusinessSees = 'user.privacy.business-sees';
+
   /// Bands, or a positioned layout that wins over them.
   static const reportsEditor = 'user.money.reports.editor';
 

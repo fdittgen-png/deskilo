@@ -1,0 +1,14 @@
+{
+  "customerPageOwes": "Schuldet",
+  "customerPageNothingOwed": "Nichts offen",
+  "customerPageCredit": "Guthaben: {amount}",
+  "customerPageCreditHint": "Zahlungen, die noch keine Rechnung beglichen haben.",
+  "customerPageInvoices": "Rechnungen",
+  "customerPageStory": "Verlauf",
+  "customerStoryIssued": "Rechnung {number} ausgestellt",
+  "customerStoryPaid": "Rechnung {number} bezahlt",
+  "customerStoryDeclared": "Sagt, Rechnung {number} bezahlt zu haben",
+  "customerStoryReminders": "{count, plural, =1{Mahnung für {number} geteilt} other{{count} Mahnungen für {number} geteilt}}",
+  "customerStoryNow": "Jetzt: {words}",
+  "customerPageMatch": "Zahlung zuordnen"
+}

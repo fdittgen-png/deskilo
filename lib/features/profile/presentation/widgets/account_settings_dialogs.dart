@@ -34,9 +34,17 @@ class _LanguageDialog extends ConsumerWidget {
     final current =
         ref.watch(personalLocaleProvider)?.languageCode ??
         _systemDefault;
+    // The language a device in an unlisted language is shown in: the
+    // first the app supports, as MaterialApp resolves it.
+    final fallback = AppLocalizations.supportedLocales.first.languageCode;
     return SimpleDialog(
       title: Text(l10n.languageTitle),
       children: [
+        Padding(
+          key: const ValueKey('language-available-hint'),
+          padding: AppSpacing.xlH,
+          child: Text(l10n.languageAvailableHint(_endonyms[fallback] ?? fallback)),
+        ),
         RadioGroup<String>(
           key: const ValueKey('account-settings-dialogs-preferences-save-failed'),
           groupValue: current,

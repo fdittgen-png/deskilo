@@ -10,6 +10,7 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class _Storage implements DemoReloadMarkerStorage {
   String? value;
@@ -41,6 +42,10 @@ class _Storage implements DemoReloadMarkerStorage {
 }
 
 void main() {
+  // The bar names the demo's date; the app's localization delegates load the
+  // date data in production, this test mounts the bar without them.
+  setUpAll(() => initializeDateFormatting('en'));
+
   test('a marker contains only a visit hint and is cleared on leave', () {
     final storage = _Storage();
     final marker = DemoReloadMarker(storage);

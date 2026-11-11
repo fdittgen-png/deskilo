@@ -39,8 +39,6 @@
 
       "lib/features/money/presentation/accounting_export_run.dart": 571,
 
-      "lib/features/money/presentation/invoice_documents.dart": 575,
-
       "lib/features/money/presentation/report_defaults.dart": 637,
 
       "lib/features/money/presentation/screens/billing_screen.dart": 576,
@@ -690,7 +688,7 @@
     {"id":"lib/core/demo/data/reservation_repository.dart#FakeReservationRepository.createSeries({required String workspaceId,String? seatId,String? deskId,String? officeId,String? levelId,required DateTime firstStart,required DateTime firstEnd,required SeriesPattern pattern,required DateTime until})","cog":12,"cyc":11,"len":60,"params":9},
     {"id":"lib/core/demo/demo_city_commerce_overrides.dart#demoCityCommerceOverrides(DemoFixture fixture,DemoPurchasing purchasing,FakeBookProfileRepository mainBooks,FakePremisesLeaseRepository mainLease,FakeWorkspaceAssetRepository mainAssets)","cog":2,"cyc":6,"len":155,"params":5},
     {"id":"lib/core/demo/demo_dataset.dart#_demoInvoice({required String id,required String memberId,required String memberName,required String number,required DateTime issuedAt,required String period,required int totalCents})","cog":0,"cyc":1,"len":32,"params":7},
-    {"id":"lib/core/demo/demo_fixture.dart#DemoFixture.new.build({DateTime? now})","cog":1,"cyc":5,"len":161,"params":1},
+    {"id":"lib/core/demo/demo_fixture.dart#DemoFixture.new.build({DateTime? now})","cog":1,"cyc":5,"len":160,"params":1},
     {"id":"lib/core/demo/demo_purchasing_overrides.dart#demoPurchasingOverrides(DemoPurchasing purchasing,{DemoPurchasing? london,DemoPurchasing? newYork,DemoPurchasing? twin})","cog":8,"cyc":30,"len":64,"params":4},
     {"id":"lib/core/demo/demo_scope.dart#demoOverrides(DemoFixture fixture)","cog":3,"cyc":3,"len":170,"params":1},
     {"id":"lib/core/demo/demo_space_routing.dart#demoSpaceOverrides(DemoFixture fixture)","cog":6,"cyc":9,"len":159,"params":1},
@@ -778,7 +776,6 @@
     {"id":"lib/features/money/domain/vat_report.dart#buildVatReport(Iterable<Invoice> invoices,{required DateTime start,required DateTime end,required String zeroCategory,required TaxReferenceSet reference,required DateTime Function(DateTime instant) dayOf,Map<String, InvoiceMatch> matches,Map<String, List<TaxPointPayment>> instalments,VatTaxPointBasis basis})","cog":15,"cyc":11,"len":89,"params":9},
     {"id":"lib/features/money/presentation/invoice_documents.dart#facturXmlOf(BuildContext context,WidgetRef ref,Invoice invoice,{required InvoiceParty seller,required InvoiceParty buyer,required String iban,required TaxReferenceSet reference})","cog":0,"cyc":3,"len":31,"params":7},
     {"id":"lib/features/money/presentation/invoice_einvoice_actions.dart#sendEInvoice(BuildContext context,WidgetRef ref,Invoice invoice,{required InvoiceParty seller,required InvoiceParty buyer,required String iban,required String workspaceId,String environment,String destination,String provider})","cog":8,"cyc":8,"len":96,"params":10},
-    {"id":"lib/features/money/presentation/invoice_followup_actions.dart#matchInvoiceToPayment(BuildContext context,WidgetRef ref,Invoice invoice)","cog":24,"cyc":28,"len":114,"params":3},
     {"id":"lib/features/money/presentation/invoice_journey.dart#InvoiceJourney.of({required Invoice invoice,required InvoiceMatch? match,required ({int count, DateTime last})? reminder,required DunningRules rules,required DateTime now,InvoiceJourneyFacts facts,String replacedByNumber})","cog":9,"cyc":16,"len":63,"params":7},
     {"id":"lib/features/money/presentation/report_design_actions.dart#exportReportDesign(BuildContext context,WidgetRef ref,{required ReportKind kind,required String language,required String workspaceName,required ReportBands bands,required DateTime exportedAt})","cog":3,"cyc":3,"len":37,"params":7},
     {"id":"lib/features/money/presentation/report_layout_actions.dart#tryLayoutPdf({required String layoutXml,required Map<String, Object?> data,required String what,required String documentTitle,required String pageLabel,required Future<pw.Font> Function(String asset) font,Future<Uint8List?> Function(String name)? image,String watermark,String signatureLabel,String signature,List<pw.Widget> additionalBody,pw.Page? lastPage})","cog":8,"cyc":8,"len":63,"params":12},
@@ -797,7 +794,7 @@
     {"id":"lib/features/money/presentation/widgets/expense_sheet.dart#showExpenseSheet(BuildContext context,WidgetRef ref,MoneyFormat currency)","cog":35,"cyc":32,"len":241,"params":3},
     {"id":"lib/features/money/presentation/widgets/expense_vat_fields.dart#expenseVatFields({required AppLocalizations l10n,required MoneyFormat currency,required List<double> percents,required ExpenseVatChoice choice,required String amount,required VoidCallback refresh,required String keyPrefix})","cog":2,"cyc":3,"len":32,"params":7},
     {"id":"lib/features/money/presentation/widgets/guest_pass_sale_section.dart#GuestPassSaleSection._with({GuestPassOffer? offer,String? seatId,DateTime? day,int? startMinutes,int? endMinutes,int? days,bool? paid,String? method})","cog":1,"cyc":10,"len":22,"params":8},
-    {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body(BuildContext context,AppLocalizations l10n,List<Invoice> invoices)","cog":40,"cyc":38,"len":139,"params":3},
+    {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._body(BuildContext context,AppLocalizations l10n,List<Invoice> invoices)","cog":40,"cyc":38,"len":134,"params":3},
     {"id":"lib/features/money/presentation/widgets/invoice_archive_tab.dart#_InvoiceArchiveTabState._row(BuildContext context,AppLocalizations l10n,Invoice invoice,{required InvoiceMatch? match,required ({int count, DateTime last})? reminder,required String replacedByNumber,required DateFormat dateFormat})","cog":5,"cyc":6,"len":62,"params":7},
     {"id":"lib/features/money/presentation/widgets/invoice_sheet_actions.dart#InvoiceSheetActions._button(BuildContext context,{required String key,required IconData icon,required String label,required InvoiceAction action,bool primary,bool danger})","cog":5,"cyc":6,"len":46,"params":7},
     {"id":"lib/features/money/presentation/widgets/my_invoices_list.dart#MyInvoicesList._row(BuildContext context,WidgetRef ref,AppLocalizations l10n,ThemeData theme,Invoice invoice,InvoiceMatch? match,({int count, DateTime last})? reminder,DateFormat dateFormat,DateTime now)","cog":14,"cyc":14,"len":112,"params":9},

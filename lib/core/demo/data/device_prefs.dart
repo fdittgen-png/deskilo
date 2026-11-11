@@ -34,6 +34,7 @@ import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
+import 'package:deskilo/features/directory/domain/directory_location_memory.dart';
 import 'package:deskilo/features/directory/domain/discovery_view.dart';
 import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/reservations/providers/default_period_controller.dart';
@@ -54,6 +55,13 @@ class InMemoryLocaleStore implements LocaleStore {
 
   @override
   Future<void> write(String? code) async => languageCode = code;
+
+  /// #3601 — the Demo opens in the language the app is shown in: [shown] is
+  /// taken only while the session has no language of its own, so a choice made
+  /// inside the Demo is kept.
+  void adopt(String? shown) {
+    if (shown != null && languageCode == null) languageCode = shown;
+  }
 }
 
 /// In-memory [ThemeStore] (#160).
@@ -160,6 +168,10 @@ class DemoDevicePrefs {
 
   /// So is the list-or-map choice and the map provider accepted.
   final InMemoryDiscoveryViewStore discoveryView = InMemoryDiscoveryViewStore();
+
+  /// #3684 -- and the places the map found for the visitor.
+  final InMemoryDirectoryLocationMemory directoryLocations =
+      InMemoryDirectoryLocationMemory();
 
   /// #780 — which Supabase instance the device talks to. The one a
   /// visitor could change from Settings → Server, and the one the real

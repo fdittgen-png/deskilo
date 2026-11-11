@@ -1,0 +1,21 @@
+{
+  "reminderQueueTitle": "Relances à partager",
+  "reminderQueueIntro": "Vous partagez chaque relance vous-même. Elle n'est enregistrée que si elle a vraiment été partagée.",
+  "reminderQueueLevel": "Relance {level}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · échue aujourd'hui} =1{{number} · 1 jour de retard} other{{number} · {days} jours de retard}}",
+  "reminderQueueShare": "Partager",
+  "reminderQueueShareNext": "Partager la suivante · {customer}",
+  "reminderQueueShared": "Partagée",
+  "reminderQueueNotRecorded": "Rien n'a été enregistré : le partage a été fermé.",
+  "reminderQueueFailed": "N'a pas pu être partagée. Réessayez.",
+  "reminderQueueResultTitle": "{count, plural, =1{1 relance partagée} other{{count} relances partagées}}",
+  "reminderQueueResultNone": "Aucune relance partagée",
+  "reminderQueueResultSubtitle": "Chacune est enregistrée sur sa facture.",
+  "reminderQueueDone": "Terminé",
+  "reminderQueueDoneEmpty": "Rien à partager",
+  "reminderQueueCheckFirst": "À vérifier d'abord : argent reçu et non affecté",
+  "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
+  "reminderQueueRecord": "Enregistrer",
+  "reminderQueueNotRecordedHeading": "Partagées, non enregistrées",
+  "reminderQueueRecordStays": "Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due."
+}

@@ -23,5 +23,35 @@
         "type": "int"
       }
     }
+  },
+  "directoryPinsNoAddress": "{count, plural, =1{1 has no published address.} other{{count} have no published address.}}",
+  "@directoryPinsNoAddress": {
+    "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryPinsLookupFailed": "{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}",
+  "@directoryPinsLookupFailed": {
+    "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "directoryNothingToPin": "None of these places could be placed on the map.",
+  "@directoryNothingToPin": {
+    "description": "Shown as a text in directory map (directory), in place of the map when no loaded place has a pin."
+  },
+  "directoryTilesFailed": "The map background could not be loaded.",
+  "@directoryTilesFailed": {
+    "description": "Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows."
+  },
+  "directoryMapOpenFailed": "The map could not be opened.",
+  "@directoryMapOpenFailed": {
+    "description": "Shown as an error snackbar in directory screen (directory) when the map could not be opened."
   }
 }

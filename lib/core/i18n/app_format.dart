@@ -256,15 +256,36 @@ const List<String> kFormatLocales = [
   'cs_CZ', 'hu_HU', 'ro_RO', 'el_GR', 'ja_JP',
 ];
 
-/// The default format locale for a member who set none: their UI
-/// language, regionalised by the workspace's country when that pairing
-/// exists (`en` + CH → `en_CH`? no such data → `en_GB`; `fr` + CA →
-/// `fr_CA`), else the language's home region.
-String defaultFormatLocale(String uiLanguage, String workspaceCountry) {
-  final candidate = '${uiLanguage}_${workspaceCountry.toUpperCase()}';
+/// Where `intl` has no pairing of a language with a region, the pairing that
+/// reads closest to that region: Spanish in the United States or any
+/// Latin-American country keeps the Americas' number and date conventions
+/// (`es_MX`), not Spain's. Every other missing pairing falls to the
+/// language's home region (its first [kFormatLocales] entry).
+const Map<String, String> _closestPairing = {'es': 'es_MX'};
+
+/// The regions (ISO 3166 codes) that take [_closestPairing]'s Spanish: the
+/// Americas, where numbers and dates follow Mexico's usage.
+const Set<String> _americasRegions = {
+  'US', 'CA', 'MX', 'AR', 'CL', 'CO', 'PE', 'VE', 'EC', 'UY', 'PY', 'BO',
+  'CR', 'PA', 'DO', 'GT', 'HN', 'NI', 'SV', 'PR', 'CU',
+};
+
+/// The one decision of a format locale nobody chose: its LANGUAGE is the
+/// language the app is shown in, its REGION is the device's on a personal
+/// surface or the business's on a business screen. The pairing is the exact
+/// one when [kFormatLocales] has it (`fr` + CA → `fr_CA`, `en` + US →
+/// `en_US`), else the closest listed for that region, else the language's
+/// home region; a language the list does not know reads `en_GB`. English in
+/// a country `intl` has no English pairing for (Switzerland, Poland, Spain …)
+/// reads `en_GB`: English month names, a day-first order.
+String defaultFormatLocale(String language, String region) {
+  final upper = region.toUpperCase();
+  final candidate = '${language}_$upper';
   if (kFormatLocales.contains(candidate)) return candidate;
+  final closest = _closestPairing[language];
+  if (closest != null && _americasRegions.contains(upper)) return closest;
   return kFormatLocales.firstWhere(
-    (l) => l.startsWith('${uiLanguage}_'),
+    (l) => l.startsWith('${language}_'),
     orElse: () => 'en_GB',
   );
 }

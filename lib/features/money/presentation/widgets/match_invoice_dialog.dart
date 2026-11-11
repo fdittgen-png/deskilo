@@ -27,6 +27,7 @@ class MatchInvoiceDialog extends StatefulWidget {
     required this.dueCents,
     required this.currency,
     required this.payments,
+    this.selected,
   });
 
   final int dueCents;
@@ -35,13 +36,19 @@ class MatchInvoiceDialog extends StatefulWidget {
   /// The member's not-yet-consumed registered payments.
   final List<LedgerEntry> payments;
 
+  /// The payment the dialog opens on, when it is one of [payments].
+  final String? selected;
+
   @override
   State<MatchInvoiceDialog> createState() => _MatchInvoiceDialogState();
 }
 
 class _MatchInvoiceDialogState extends State<MatchInvoiceDialog> {
   final _note = TextEditingController();
-  String? _paymentId;
+  late String? _paymentId = widget.payments
+      .where((entry) => entry.id == widget.selected)
+      .firstOrNull
+      ?.id;
   String _overResolution = 'over_credit_note';
   String? _error;
 

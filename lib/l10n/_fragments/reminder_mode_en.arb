@@ -1,0 +1,14 @@
+{
+  "reminderModeAutomatic": "Reminders go out by themselves, in the app.",
+  "@reminderModeAutomatic": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeAutomatic)"
+  },
+  "reminderModeByHand": "Reminders are shared by hand.",
+  "@reminderModeByHand": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeByHand)"
+  },
+  "reminderModeRules": "Rules",
+  "@reminderModeRules": {
+    "description": "#3587 R1-f: how reminders go out and the entry to their rules (reminderModeRules)"
+  }
+}

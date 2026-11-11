@@ -4,7 +4,7 @@
   "badgePinReviewNotice": "La longueur de ce code ancien est inconnue ou inférieure au minimum actuel. Demandez au membre de le modifier dans ses propres réglages. Son code actuel reste utilisable.",
   "badgePinReviewUnavailable": "La vérification du code est indisponible. Réessayez avant de considérer que ce code respecte le minimum actuel.",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Plafond des échecs de badge de l’espace",
-  "settingHintSecurityBadgeWorkspaceFailureLimit": "Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.",
+  "settingHintSecurityBadgeWorkspaceFailureLimit": "Badges différents de cet espace avec un PIN erroné pendant la période de verrouillage avant suspension et alerte des propriétaires. Un seul badge ne peut pas l’atteindre. Ce plafond peut seulement être réduit.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -14,5 +14,9 @@
         "type": "int"
       }
     }
-  }
+  },
+  "settingLabelSecurityBadgeIdentifyPerTagLimit": "Lectures d’un même badge",
+  "settingHintSecurityBadgeIdentifyPerTagLimit": "Combien de fois un badge peut être lu pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.",
+  "settingLabelSecurityBadgeIdentifyPerSourceLimit": "Lectures depuis un même endroit",
+  "settingHintSecurityBadgeIdentifyPerSourceLimit": "Combien de lectures peuvent venir d’un même endroit pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit."
 }

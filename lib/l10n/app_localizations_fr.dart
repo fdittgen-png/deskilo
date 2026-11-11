@@ -1828,6 +1828,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get badgeSignInUseEmail => 'Utiliser mon e-mail à la place';
 
   @override
+  String get badgeSignInYourPin => 'Votre code PIN ?';
+
+  @override
   String get badgeTapCardHint =>
       'Approchez la carte RFID/NFC de l\'arrière de l\'appareil.';
 
@@ -6423,6 +6426,61 @@ class AppLocalizationsFr extends AppLocalizations {
       'La qualité du client n\'a pas été enregistrée.';
 
   @override
+  String customerPageCredit(String amount) {
+    return 'Avoir : $amount';
+  }
+
+  @override
+  String get customerPageCreditHint =>
+      'Paiements qu\'aucune facture n\'a encore pris.';
+
+  @override
+  String get customerPageInvoices => 'Factures';
+
+  @override
+  String get customerPageMatch => 'Rapprocher le paiement';
+
+  @override
+  String get customerPageNothingOwed => 'Rien à payer';
+
+  @override
+  String get customerPageOwes => 'Doit';
+
+  @override
+  String get customerPageStory => 'Historique';
+
+  @override
+  String customerStoryDeclared(String number) {
+    return 'Dit avoir payé la facture $number';
+  }
+
+  @override
+  String customerStoryIssued(String number) {
+    return 'Facture $number émise';
+  }
+
+  @override
+  String customerStoryNow(String words) {
+    return 'Maintenant : $words';
+  }
+
+  @override
+  String customerStoryPaid(String number) {
+    return 'Facture $number payée';
+  }
+
+  @override
+  String customerStoryReminders(int count, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relances partagées pour $number',
+      one: 'Relance partagée pour $number',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get dataReportArchived => 'Archivé';
 
   @override
@@ -6678,6 +6736,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get demoSessionBadge => 'Démo';
+
+  @override
+  String demoSessionBadgeDate(String date) {
+    return 'Démo · $date';
+  }
 
   @override
   String get demoSessionBadgeHint =>
@@ -7054,13 +7117,31 @@ class AppLocalizationsFr extends AppLocalizations {
       'Position indisponible. Le propriétaire peut publier des coordonnées précises.';
 
   @override
+  String get directoryMapOpenFailed => 'La carte n\'a pas pu être ouverte.';
+
+  @override
   String get directoryNoUpcoming => 'Aucune réservation à venir';
+
+  @override
+  String get directoryNothingToPin =>
+      'Aucun de ces lieux n\'a pu être placé sur la carte.';
 
   @override
   String get directoryOnline => 'En ligne';
 
   @override
   String get directoryOpenGroup => 'Ouvrir le groupe WhatsApp';
+
+  @override
+  String directoryPinsLookupFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count n\'ont pas pu être recherchés.',
+      one: '1 n\'a pas pu être recherché.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String directoryPinsMissing(int count) {
@@ -7070,6 +7151,17 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           '$count espaces n\'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.',
       one: '1 espace n\'a pas pu être placé sur la carte ; sa fiche est en dessous.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String directoryPinsNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count n\'ont pas d\'adresse publiée.',
+      one: '1 n\'a pas d\'adresse publiée.',
     );
     return '$_temp0';
   }
@@ -7087,6 +7179,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get directoryReservedToday => 'Réservé aujourd\'hui';
+
+  @override
+  String get directoryTilesFailed =>
+      'Le fond de carte n\'a pas pu être chargé.';
 
   @override
   String get directoryTitle => 'Membres';
@@ -7199,6 +7295,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get discoveryView => 'Voir';
+
+  @override
+  String get documentLanguageFollows => 'Suit la langue de l\'application';
+
+  @override
+  String get documentLanguageHint =>
+      'Les relances, les documents et les notifications push sont rédigés dans cette langue. Une fois que vous en avez choisi une, changer la langue de l\'application ne la modifie plus.';
+
+  @override
+  String get documentLanguageTitle =>
+      'Langue des courriers et des notifications';
 
   @override
   String get documentsAdd => 'Ajouter un document';
@@ -14934,6 +15041,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingCaughtUp => 'Tout est à jour.';
 
   @override
+  String get invoicingCheckingPayments => 'Vérification des paiements reçus…';
+
+  @override
   String get invoicingColCustomer => 'Client';
 
   @override
@@ -15091,20 +15201,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get invoicingRemindersAutomatic =>
-      'Les relances partent d’elles-mêmes, dans l’application.';
-
-  @override
-  String get invoicingRemindersByHand => 'Les relances se partagent à la main.';
-
-  @override
-  String get invoicingRules => 'Règles';
-
-  @override
   String get invoicingSearch => 'Rechercher';
 
   @override
   String get invoicingSearchHint => 'Un client ou un numéro';
+
+  @override
+  String get invoicingSourceCredits => 'Avoirs des clients';
 
   @override
   String invoicingSourceFailed(String source) {
@@ -15946,6 +16049,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get kioskTapHint => 'Touchez une place pour pointer';
+
+  @override
+  String get kitActionBusy => 'En cours…';
+
+  @override
+  String languageAvailableHint(String fallback) {
+    return 'DesKilo existe dans les langues ci-dessous. Sur un appareil réglé dans une autre langue, il s\'affiche en $fallback.';
+  }
 
   @override
   String get languageNameCS => 'Tchèque';
@@ -17963,6 +18074,22 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get meAddressSaveFailed =>
       'Impossible d\'enregistrer votre adresse. Veuillez réessayer.';
+
+  @override
+  String get meBusinessSeesAdmins =>
+      'Ses administrateurs qui vous facturent ou tiennent le registre des membres : votre nom, votre société, votre adresse, votre téléphone, votre e-mail, votre numéro de TVA, votre identifiant légal et votre langue préférée, dont ils ont besoin pour vous facturer, et votre date d’anniversaire si vous l’avez indiquée, pour ceux qui tiennent le registre des membres.';
+
+  @override
+  String get meBusinessSeesAsk =>
+      'Quand vous demandez à la rejoindre : votre nom et votre photo.';
+
+  @override
+  String get meBusinessSeesSpace =>
+      'Une fois membre, tout le monde dans l’espace : votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence seulement selon vos choix dans Qui me voit.';
+
+  @override
+  String get meBusinessSeesTitle =>
+      'Ce que voit une entreprise que vous rejoignez';
 
   @override
   String get meContextPersonal => 'Personnel';
@@ -20329,6 +20456,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paymentInstructionsWiseLabel => 'Wisetag ou lien de paiement Wise';
+
+  @override
+  String paymentMatchCandidate(String number, String amount) {
+    return '$number · $amount dus';
+  }
+
+  @override
+  String get paymentMatchDecide =>
+      'Autre montant : vous choisissez comment régler l\'écart';
+
+  @override
+  String get paymentMatchEmpty => 'Aucun paiement n\'attend de facture.';
+
+  @override
+  String get paymentMatchFailed => 'Les paiements n\'ont pas pu être lus.';
+
+  @override
+  String paymentMatchHeader(String amount, String date) {
+    return '$amount reçus le $date';
+  }
+
+  @override
+  String get paymentMatchIntro =>
+      'Un paiement a été reçu et n\'est pas encore affecté. Choisissez la facture qu\'il règle.';
+
+  @override
+  String get paymentMatchRefused =>
+      'Le paiement n\'a pas pu être rapproché. Réessayez.';
+
+  @override
+  String get paymentMatchSame => 'Même montant';
+
+  @override
+  String get paymentMatchTitle => 'Paiements à rapprocher';
 
   @override
   String get paymentMethodBankTransfer => 'Virement';
@@ -23509,6 +23670,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderHistoryTitle => 'Historique des relances';
 
   @override
+  String get reminderModeAutomatic =>
+      'Les relances partent d\'elles-mêmes, dans l\'application.';
+
+  @override
+  String get reminderModeByHand => 'Les relances se partagent à la main.';
+
+  @override
+  String get reminderModeRules => 'Règles';
+
+  @override
   String get reminderOriginAutomatic => 'automatique';
 
   @override
@@ -23543,6 +23714,90 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderPdfTitleFriendly => 'Rappel de paiement';
+
+  @override
+  String get reminderQueueCheckFirst =>
+      'À vérifier d\'abord : argent reçu et non affecté';
+
+  @override
+  String reminderQueueDetail(int days, String number) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$number · $days jours de retard',
+      one: '$number · 1 jour de retard',
+      zero: '$number · échue aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueDone => 'Terminé';
+
+  @override
+  String get reminderQueueDoneEmpty => 'Rien à partager';
+
+  @override
+  String get reminderQueueFailed => 'N\'a pas pu être partagée. Réessayez.';
+
+  @override
+  String get reminderQueueIntro =>
+      'Vous partagez chaque relance vous-même. Elle n\'est enregistrée que si elle a vraiment été partagée.';
+
+  @override
+  String reminderQueueLevel(int level) {
+    return 'Relance $level';
+  }
+
+  @override
+  String get reminderQueueNotRecorded =>
+      'Rien n\'a été enregistré : le partage a été fermé.';
+
+  @override
+  String get reminderQueueNotRecordedHeading => 'Partagées, non enregistrées';
+
+  @override
+  String get reminderQueueRecord => 'Enregistrer';
+
+  @override
+  String get reminderQueueRecordStays =>
+      'Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due.';
+
+  @override
+  String get reminderQueueResultNone => 'Aucune relance partagée';
+
+  @override
+  String get reminderQueueResultSubtitle =>
+      'Chacune est enregistrée sur sa facture.';
+
+  @override
+  String reminderQueueResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relances partagées',
+      one: '1 relance partagée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueShare => 'Partager';
+
+  @override
+  String reminderQueueShareNext(String customer) {
+    return 'Partager la suivante · $customer';
+  }
+
+  @override
+  String get reminderQueueShared => 'Partagée';
+
+  @override
+  String get reminderQueueSharedNotRecorded =>
+      'Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.';
+
+  @override
+  String get reminderQueueTitle => 'Relances à partager';
 
   @override
   String get reminderStatusAccepted =>
@@ -26066,6 +26321,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s\'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
 
   @override
+  String get settingHintSecurityBadgeIdentifyPerSourceLimit =>
+      'Combien de lectures peuvent venir d’un même endroit pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.';
+
+  @override
+  String get settingHintSecurityBadgeIdentifyPerTagLimit =>
+      'Combien de fois un badge peut être lu pendant la période de verrouillage avant que la lecture ne demande d’attendre. Ce plafond peut seulement être réduit.';
+
+  @override
   String get settingHintSecurityBadgeLockoutFailures =>
       'Nombre d\'essais de code PIN erronés autorisés sur un badge pendant la durée de verrouillage. Peut seulement être diminué.';
 
@@ -26079,7 +26342,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
-      'Échecs de code dans cet espace pendant la période de verrouillage avant suspension et alerte des propriétaires. Ce plafond peut seulement être réduit.';
+      'Badges différents de cet espace avec un PIN erroné pendant la période de verrouillage avant suspension et alerte des propriétaires. Un seul badge ne peut pas l’atteindre. Ce plafond peut seulement être réduit.';
 
   @override
   String get settingHintSecurityInvitationExpiryDays =>
@@ -26344,6 +26607,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelRetentionUsYears =>
       'Conservation aux États-Unis, État (années)';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerSourceLimit =>
+      'Lectures depuis un même endroit';
+
+  @override
+  String get settingLabelSecurityBadgeIdentifyPerTagLimit =>
+      'Lectures d’un même badge';
 
   @override
   String get settingLabelSecurityBadgeLockoutFailures =>
@@ -28570,7 +28841,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get spacePreviewPrivacy =>
-      'Quand vous demandez, cette entreprise voit votre adresse e-mail. Une fois membre, ses administrateurs voient votre nom et les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
+      'Quand vous demandez, cette entreprise voit votre nom et votre photo. Une fois membre, ses administrateurs voient les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
 
   @override
   String get spaceQrSizeLabel => 'Taille du code QR';

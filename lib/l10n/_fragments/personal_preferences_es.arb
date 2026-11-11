@@ -2,5 +2,8 @@
   "preferencesWorkspaceOnly": "Solo para este espacio",
   "preferencesScopeHint": "Idioma, apariencia y formatos regionales. Desactivado: editar mis valores predeterminados.",
   "preferencesUseDefaults": "Usar mis valores predeterminados",
-  "preferencesSaveFailed": "No se han podido guardar sus preferencias. Inténtelo de nuevo."
+  "preferencesSaveFailed": "No se han podido guardar sus preferencias. Inténtelo de nuevo.",
+  "documentLanguageTitle": "Idioma de cartas y notificaciones",
+  "documentLanguageFollows": "Sigue el idioma de la aplicación",
+  "documentLanguageHint": "Los recordatorios, los documentos y los mensajes push se redactan en este idioma. Una vez que elija uno, cambiar el idioma de la aplicación ya no lo modifica."
 }

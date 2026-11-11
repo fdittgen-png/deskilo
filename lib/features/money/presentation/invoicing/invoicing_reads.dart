@@ -7,9 +7,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
+import '../../application/receivables.dart';
+import '../../application/unassigned_money.dart';
 import '../../domain/dunning.dart';
 import '../../providers/bank_statement_providers.dart'
     show WorkspaceFeature, enabledFeaturesSyncProvider;
+import '../../providers/credit_move_providers.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_journey_view.dart';
 import 'invoicing_home.dart' show InvoicingSource;
@@ -33,6 +36,16 @@ final invoicingReaderProvider = Provider.autoDispose<ReceivablesReader>(
   ),
 );
 
+/// The invoices as receivables now, through [invoicingReaderProvider]; null
+/// while the invoices are not read. The pages opened from the home read this,
+/// never a copy taken when they opened.
+final invoicingReceivablesProvider = Provider.autoDispose<List<Receivable>?>(
+  (ref) => switch (ref.watch(invoicesProvider).value) {
+    final invoices? => ref.watch(invoicingReaderProvider).read(invoices),
+    null => null,
+  },
+);
+
 /// The sources of the invoices' statuses that could not be read. While one
 /// is here, nothing read from it is shown as read: the home names it with
 /// Try again, and an invoice page offers no action.
@@ -46,6 +59,8 @@ final invoicingFailedSourcesProvider =
         if (ref.watch(dunningHoldsProvider).hasError) InvoicingSource.holds,
         if (ref.watch(invoiceTransmissionsProvider).hasError)
           InvoicingSource.transmissions,
+        if (ref.watch(unassignedMoneyProvider).hasError)
+          InvoicingSource.credits,
       },
     );
 
@@ -59,5 +74,47 @@ void retryInvoicingSource(WidgetRef ref, InvoicingSource source) =>
       InvoicingSource.transmissions => ref.invalidate(
         invoiceTransmissionsProvider,
       ),
+      InvoicingSource.credits => ref.invalidate(unassignedMoneyProvider),
       InvoicingSource.payments || InvoicingSource.toInvoice => null,
     };
+
+/// Money received and not assigned, in ONE read: the workspace's ledger
+/// (one `fetchWorkspaceLedger`), the payments matches consumed (one read of
+/// the junction, one of the moved credits) and the invoices; grouped per
+/// customer. It depends on the invoices, the matches and the business only:
+/// a reminder, a hold or a rule changes nothing here and reads nothing again.
+/// The ledger rows are read through the same rule as the invoices
+/// (`may_view_member_finances`, 0131): whoever sees a customer's invoice sees
+/// their account. A failed read fails this one source, named on the home.
+final unassignedMoneyProvider = FutureProvider.autoDispose<UnassignedMoney>((
+  ref,
+) async {
+  final (id, currency) = ref.watch(
+    invoicingBusinessProvider.select((b) => (b.id, b.currency)),
+  );
+  final invoiceQueries = ref.watch(invoiceQueriesProvider);
+  final moves = ref.watch(creditMoveCommandsProvider);
+  final accounts = ref.watch(memberAccountQueriesProvider);
+  final invoices = await ref.watch(invoicesProvider.future);
+  final matches = await ref.watch(invoiceMatchesProvider.future);
+  final consumed = await readConsumedPaymentIds(
+    invoices: invoiceQueries,
+    moves: moves,
+    workspaceId: id,
+    matched: [for (final m in matches.values) m.paymentLedgerId],
+  );
+  final ledger = await accounts.fetchWorkspaceLedger(id);
+  return UnassignedMoney(
+    currency: currency,
+    paymentsOf: unassignedPaymentsByCustomer(
+      ledger: ledger,
+      consumed: consumed,
+      invoices: invoices,
+    ),
+  );
+});
+
+/// The unassigned money once it is read, or null while it is not (loading,
+/// reloading or failed): unknown is not none.
+UnassignedMoney? unassignedMoneyKnown(AsyncValue<UnassignedMoney> read) =>
+    read.isLoading || read.hasError ? null : read.value;

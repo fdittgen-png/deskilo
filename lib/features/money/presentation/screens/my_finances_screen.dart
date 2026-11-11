@@ -170,7 +170,7 @@ Future<void> _openMyPayment(
   if (!context.mounted) return;
   if (ref.read(sessionStateProvider).value != principal) return;
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
-  final local = appFormatOf(context).wall(at);
+  final local = personalFormatOf(context).wall(at);
   ref
       .read(moneyFocusControllerProvider.notifier)
       .setPeriod(yearMonth(local.year, local.month));
@@ -274,7 +274,7 @@ class _Reminders extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final format = appFormatOf(context).dates(DateShape.date);
+    final format = personalFormatOf(context).dates(DateShape.date);
     final workspaceOf = {
       for (final i in [...data.invoices, ...dev.invoices]) i.id: i.workspaceId,
     };
@@ -305,7 +305,7 @@ class _Reminders extends ConsumerWidget {
               Text(
                 [
                   if (!isDev) r.workspaceName,
-                  format.format(appFormatOf(context).wall(r.sentAt)),
+                  format.format(personalFormatOf(context).wall(r.sentAt)),
                   if (r.automatic) l10n.financesAutomatic,
                 ].join(' · '),
                 style: theme.textTheme.bodySmall,
@@ -364,7 +364,7 @@ class _Payments extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final home = ref.watch(accountActivityProvider(AccountActivityKind.payments));
-    final format = appFormatOf(context).dates(DateShape.date);
+    final format = personalFormatOf(context).dates(DateShape.date);
     Widget list(List<AccountActivity> all) => Column(
               children: [
                 for (final e in all.where(_kept))
@@ -392,11 +392,11 @@ class _Payments extends ConsumerWidget {
                       ),
                       subtitle: Text([
                         if (e.description.isNotEmpty) e.description,
-                        format.format(appFormatOf(context).wall(e.occurredAt)),
+                        format.format(personalFormatOf(context).wall(e.occurredAt)),
                       ].join(' · ')),
                       trailing: e.amountCents == null
                           ? null
-                          : Text(appFormatOf(context).moneyNamed(e.currency).formatMinor(e.amountCents!)),
+                          : Text(personalFormatOf(context).moneyNamed(e.currency).formatMinor(e.amountCents!)),
                     ),
                   ),
                   ),

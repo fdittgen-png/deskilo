@@ -4,6 +4,13 @@
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
   },
+  "demoSessionBadgeDate": "Demo · {date}",
+  "@demoSessionBadgeDate": {
+    "description": "The demo bar names the date the demonstration is fixed at: the demo shows one invented day, whatever the date really is.",
+    "placeholders": {
+      "date": {"type": "String", "example": "May 13, 2026"}
+    }
+  },
   "demoSessionReset": "Reset the demo",
   "@demoSessionReset": {
     "description": "#1375 demo session: demoSessionReset"

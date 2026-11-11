@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/text/collation.dart';
 import '../../events/domain/workspace_event.dart';
 import 'billing_rules.dart';
 import 'dunning.dart';
@@ -133,7 +134,7 @@ List<WizardIssueItem> issuePlan({
       issued: issued,
     ));
   }
-  return items..sort((a, b) => a.memberName.compareTo(b.memberName));
+  return items..sort((a, b) => compareNames(a.memberName, b.memberName));
 }
 
 /// The invoices a run issued or should have — the send step's list.
@@ -144,7 +145,7 @@ List<Invoice> issuedForRun(List<Invoice> invoices, String period, InvoiceKind ki
             !i.isVoided &&
             (i.kind == kind || i.kind == InvoiceKind.full))
           i,
-    ]..sort((a, b) => a.memberName.compareTo(b.memberName));
+    ]..sort((a, b) => compareNames(a.memberName, b.memberName));
 
 /// Open = issued, positive, not voided, not folded into a settlement,
 /// not itself paid (a confirmed match closes it).
@@ -261,7 +262,7 @@ class WizardCloseGroup {
   final groups = byMember.values
       .where((g) => g.canSettle || g.partial.isNotEmpty)
       .toList()
-    ..sort((a, b) => a.memberName.compareTo(b.memberName));
+    ..sort((a, b) => compareNames(a.memberName, b.memberName));
   return (groups: groups, refunds: refunds);
 }
 

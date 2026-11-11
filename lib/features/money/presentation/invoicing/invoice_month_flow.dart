@@ -27,6 +27,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
+import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/select_row.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
@@ -287,16 +288,13 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
         ),
         BottomActionBar(
           actions: [
-            FilledButton(
+            KitActionButton(
               key: const ValueKey('invoice-month-issue'),
-              onPressed: _state.busy || chosen.isEmpty || business.isNotEmpty
-                  ? null
-                  : _issue,
-              child: Text(
-                _state.busy
-                    ? l10n.invoiceMonthIssuing
-                    : l10n.invoiceMonthIssue(chosen.length, amount),
-              ),
+              busy: _state.busy,
+              onPressed: chosen.isEmpty || business.isNotEmpty ? null : _issue,
+              label: _state.busy
+                  ? l10n.invoiceMonthIssuing
+                  : l10n.invoiceMonthIssue(chosen.length, amount),
             ),
           ],
         ),

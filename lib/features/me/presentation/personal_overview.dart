@@ -157,7 +157,7 @@ class _Header extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final tokens = PersonalTheme.of(context);
-    final format = ref.watch(appFormatProvider);
+    final format = ref.watch(personalFormatProvider);
     final now = ref.watch(clockProvider).now();
     final profile = ref.watch(myProfileProvider).value;
     final name = firstNameOf(

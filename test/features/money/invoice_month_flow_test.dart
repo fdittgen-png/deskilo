@@ -214,14 +214,14 @@ void main() {
     expect(_key('invoice-month-business-fix'), findsOneWidget);
     expect(_key('invoice-month-fix-anna'), findsNothing);
     expect(_key('invoice-month-fix-ben'), findsNothing);
-    final bar = tester.widget<FilledButton>(_key('invoice-month-issue'));
+    final bar = tester.widget<FilledButton>(find.descendant(of: _key('invoice-month-issue'), matching: find.byType(FilledButton)));
     expect(bar.onPressed, isNull, reason: 'nothing can be issued yet');
     repo.missing.clear();
     await tester.tap(_key('invoice-month-business-fix'));
     await _settle(tester);
     expect(fixedBusiness, 1);
     expect(_key('invoice-month-business-notice'), findsNothing);
-    final again = tester.widget<FilledButton>(_key('invoice-month-issue'));
+    final again = tester.widget<FilledButton>(find.descendant(of: _key('invoice-month-issue'), matching: find.byType(FilledButton)));
     expect(again.onPressed, isNotNull);
   });
 

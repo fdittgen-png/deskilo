@@ -14,6 +14,7 @@ import '../../auth/providers/sign_out.dart';
 import '../../profile/presentation/screens/settings_screen.dart';
 import '../../profile/presentation/widgets/settings_section_header.dart';
 import 'blocked_people_card.dart';
+import 'business_sees_card.dart';
 import 'linked_visibility_card.dart';
 import 'task_wizard_entry.dart';
 import 'visibility_card.dart';
@@ -103,6 +104,7 @@ class _MeAccountTabState extends ConsumerState<MeAccountTab> {
       _Section(1, l10n.uxPrivacySection, [
         const VisibilityCard(),
         const LinkedVisibilityCard(),
+        const BusinessSeesCard(),
         const BlockedPeopleCard(),
         _Door('me-privacy', Icons.shield_outlined,
             l10n.privacyTitle, '/privacy'),

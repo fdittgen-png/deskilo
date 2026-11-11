@@ -12,8 +12,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
+import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../application/confirmed_payment.dart';
 import '../../application/receivables.dart';
+import '../../application/unassigned_money.dart';
+import '../../providers/credit_move_providers.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
@@ -131,12 +134,13 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
         final ledger = await ref
             .read(memberAccountQueriesProvider)
             .fetchLedger(invoice.memberId);
-        final consumed = {
-          for (final m in matches.values) ?m.paymentLedgerId,
-          ...await ref
-              .read(invoiceQueriesProvider)
-              .fetchConsumedPaymentIds(business.id),
-        };
+        // One definition of a consumed payment, the moved credits included.
+        final consumed = await readConsumedPaymentIds(
+          invoices: ref.read(invoiceQueriesProvider),
+          moves: ref.read(creditMoveCommandsProvider),
+          workspaceId: business.id,
+          matched: [for (final m in matches.values) m.paymentLedgerId],
+        );
         final payment = confirmedPaymentFor(
           ledger,
           customerId: invoice.memberId,
@@ -176,11 +180,14 @@ class _InvoicePageBarState extends ConsumerState<InvoicePageBar> {
     // While an action runs, every action of the bar is off.
     VoidCallback? guard(Future<void> Function() action) =>
         _busy ? null : () => _run(action);
+    // The kit button holds itself busy while its action runs (#3679); the
+    // bar's own flag keeps the OTHER actions off meanwhile.
     Widget filled(String key, String label, Future<void> Function() action) =>
-        FilledButton(
+        KitActionButton(
           key: ValueKey(key),
-          onPressed: guard(action),
-          child: Text(label, textAlign: TextAlign.center),
+          label: label,
+          showProgress: false,
+          onPressed: _busy ? null : () => _run(action),
         );
     if (r.paymentDeclared && r.declaredEventId != null) {
       return BottomActionBar(

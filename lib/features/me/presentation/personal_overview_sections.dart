@@ -163,7 +163,7 @@ class _NextBody extends ConsumerWidget {
           : const SectionLoading(key: ValueKey('me-overview-next-loading'));
     }
     final next = nextCommitmentOf(composition, ref.watch(clockProvider).now());
-    final format = ref.watch(appFormatProvider);
+    final format = ref.watch(personalFormatProvider);
     final composer = ref.read(myReservationsComposerProvider(query).notifier);
     final commitment = next.commitment;
     return Column(
@@ -218,11 +218,11 @@ class _Commitment extends StatelessWidget {
     final known = zone != null && TimeZones.isKnown(zone);
     DateTime wall(DateTime instant) => known
         ? tz.TZDateTime.from(instant, tz.getLocation(zone))
-        : appFormatOf(context).wall(instant);
+        : personalFormatOf(context).wall(instant);
     final start = wall(c.startsAt);
     final end = wall(c.endsAt);
     final showZone =
-        known && start.timeZoneOffset != appFormatOf(context).wall(c.startsAt).timeZoneOffset;
+        known && start.timeZoneOffset != personalFormatOf(context).wall(c.startsAt).timeZoneOffset;
     final place = c.label.isEmpty ? l10n.myReservationsUnnamedPlace : c.label;
     final day = format.dates(DateShape.weekdayMonthDay).format(start);
     final secondary = theme.textTheme.bodySmall?.copyWith(

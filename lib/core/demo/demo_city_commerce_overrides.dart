@@ -63,7 +63,10 @@ DemoCapacityKpiRepository demoCapacityKpi(Ref ref, DemoFixture fixture) {
     _ => throw StateError('unknown demo space: $id'),
   };
   return DemoCapacityKpiRepository(
-    plan: plan, reservations: reservations, now: fixture.seededAt,
+    plan: plan,
+    reservations: reservations,
+    now: fixture.seededAt,
+    closureDays: fixture.workspaces.closureDays,
   );
 }
 

@@ -2,5 +2,8 @@
   "preferencesWorkspaceOnly": "Uniquement pour cet espace",
   "preferencesScopeHint": "Langue, apparence et formats régionaux. Désactivé : modifier mes valeurs par défaut.",
   "preferencesUseDefaults": "Utiliser mes valeurs par défaut",
-  "preferencesSaveFailed": "Impossible d’enregistrer vos préférences. Réessayez."
+  "preferencesSaveFailed": "Impossible d’enregistrer vos préférences. Réessayez.",
+  "documentLanguageTitle": "Langue des courriers et des notifications",
+  "documentLanguageFollows": "Suit la langue de l'application",
+  "documentLanguageHint": "Les relances, les documents et les notifications push sont rédigés dans cette langue. Une fois que vous en avez choisi une, changer la langue de l'application ne la modifie plus."
 }
