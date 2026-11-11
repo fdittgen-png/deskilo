@@ -40,6 +40,7 @@ bool calendarHoldsAlerts(Set<WorkspaceFeature> effective) =>
     // destination stays, as the door to the messenger.
     effective.contains(WorkspaceFeature.eventsTab);
 
+@visibleForTesting
 List<int> visibleShellBranches(
   Set<WorkspaceFeature> features,
   Set<WorkspacePermission> permissions,
