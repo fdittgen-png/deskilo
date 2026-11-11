@@ -8,13 +8,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/real_async.dart';
@@ -292,10 +296,11 @@ void main() {
     // Font assets and PDF assembly need real async to complete.
     // #874 — the letter-standard layout fetches its images and fonts
     // through providers, so the whole exit runs under real async.
+    // #3587 R1-d — the invoice page's More → Download the PDF.
     await openInvoice(tester, invoice.id);
+    await openInvoicePageMore(tester);
     await tester.runAsync(() async {
-      await tester
-          .tap(find.byKey(ValueKey('invoice-download-${invoice.id}')));
+      await tester.tap(find.byKey(const ValueKey('invoice-more-download')));
       await tester.pump();
       await tester.pumpAndSettle();
     });
@@ -319,9 +324,11 @@ void main() {
     );
 
     final invoice = money.invoices.single;
+    // #3587 R1-d — the invoice page's More → Share the PDF.
     await openInvoice(tester, invoice.id);
+    await openInvoicePageMore(tester);
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(ValueKey('invoice-share-${invoice.id}')));
+      await tester.tap(find.byKey(const ValueKey('invoice-more-share')));
       await tester.pump();
     });
     await tester.pumpAndSettle();
@@ -339,16 +346,17 @@ void main() {
         await pumpInvoices(tester, money: await seededMoney(matched: false));
     final invoice = money.invoices.single;
 
-    // 0068 — an invoice EN COURS is corrected; #3587 — from its sheet.
+    // 0068 — an invoice EN COURS is corrected; #3587 R1-d — from its
+    // page's More → Corrections.
     await openInvoice(tester, invoice.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-void-action')));
-    await tester.pumpAndSettle();
+    await invoicePageMore(tester, 'invoice-more-cancel');
     expect(money.invoices.single.isVoided, isFalse);
     await tester.tap(find.byKey(const ValueKey('invoice-void-confirm')));
     await tester.pumpAndSettle();
 
     expect(money.invoices.single.isVoided, isTrue);
     expect(find.text('Invoice marked as erroneous.'), findsOneWidget);
+    await closeInvoicePage(tester);
     final row = find.byKey(ValueKey('invoicing-row-${invoice.id}'));
     expect(row, findsNothing,
         reason: 'the voided invoice leaves the open invoices');
@@ -368,18 +376,15 @@ void main() {
       (tester) async {
     final money = await seededMoney(matched: false);
     final wrong = money.invoices.single;
-    // 0068 — correction path: void first, then replace from the
-    // voided archive row.
-    await money.voidInvoice(wrong.id);
     // The underlying data was corrected since the wrong invoice: the
     // member's subscription fee changed.
     money.statement = money.statement.copyWith(feeCents: 20000);
     await pumpInvoices(tester, money: money);
 
-    // #3587 — the voided invoice is on the Paid and closed list.
+    // #3587 R1-d — the open invoice's page, More → Corrections → Correct
+    // with a replacement (the replaced one is voided with it, 0061).
     await openInvoice(tester, wrong.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-replace-action')));
-    await tester.pumpAndSettle();
+    await invoicePageMore(tester, 'invoice-more-replace');
 
     // Prefilled member + month; banner names the replaced number; the
     // preview shows the RE-DERIVED positions.
@@ -387,7 +392,17 @@ void main() {
       find.byKey(const ValueKey('invoice-replaces-banner')),
       findsOneWidget,
     );
-    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget);
+    // The issue sheet's preview (the page under it lists the old lines).
+    expect(
+      find.descendant(
+        of: find.ancestor(
+          of: find.byKey(const ValueKey('invoice-submit')),
+          matching: find.byType(BottomSheet),
+        ),
+        matching: find.textContaining(RegExp(r'^Subscription \w+ 50%$')),
+      ),
+      findsOneWidget,
+    );
     await tester.tap(find.byKey(const ValueKey('invoice-submit')));
     await tester.pumpAndSettle();
 
@@ -401,8 +416,10 @@ void main() {
         reason: 'the replacement carries the corrected derivation');
     expect(replacement.period, wrong.period);
     expect(voided.isVoided, isTrue);
-    // The voided one stays on the closed list; the fresh replacement is
+    // The voided one goes to the closed list; the fresh replacement is
     // OPEN (unmatched, 0067) and shows on the open invoices.
+    await closeInvoicePage(tester);
+    await showPaidInvoices(tester);
     expect(find.byKey(ValueKey('invoicing-row-${wrong.id}')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('invoicing-filter-open')));
     await tester.pumpAndSettle();
@@ -412,8 +429,8 @@ void main() {
   });
 
   testWidgets(
-      'a voided-and-replaced invoice offers NO issuer actions — its detail '
-      'sheet keeps only the file exports (0066)', (tester) async {
+      'a voided-and-replaced invoice offers NO issuer actions — its page '
+      'keeps only the file exports (0066)', (tester) async {
     final money = await seededMoney();
     final replacementId = await money.createInvoice(
       workspaceId: 'ws-1',
@@ -432,27 +449,38 @@ void main() {
     );
     await pumpInvoices(tester, money: money);
 
+    // #3587 R1-d — the page: no main action, More keeps the document.
+    Future<void> onlyTheDocument() async {
+      expect(find.byKey(const ValueKey('invoice-page-remind')), findsNothing,
+          reason: 'a closed invoice is not reminded');
+      await openInvoicePageMore(tester);
+      expect(find.byKey(const ValueKey('invoice-more-cancel')), findsNothing);
+      expect(find.byKey(const ValueKey('invoice-more-replace')), findsNothing,
+          reason: 'corrections form a chain, never a fork (0061)');
+      expect(find.byKey(const ValueKey('invoice-more-hold')), findsNothing);
+      expect(find.byKey(const ValueKey('invoice-more-download')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-more-einvoice')),
+          findsOneWidget);
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+    }
+
     await openInvoice(tester, 'inv-1');
-    expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
-    expect(find.byKey(const ValueKey('invoice-replace-action')), findsNothing,
-        reason: 'corrections form a chain, never a fork (0061)');
-    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing,
-        reason: 'a voided invoice is not reminded');
-    expect(find.text('Replaced by INV-2026-0002'), findsOneWidget,
-        reason: 'the sheet says where the correction went');
-    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
-        findsOneWidget);
-    // Close the sheet; the MATCHED replacement is definitive (0068): its
-    // sheet also keeps only the file exports.
-    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
-    await tester.pumpAndSettle();
-    await openInvoice(tester, 'inv-2');
-    expect(find.byKey(const ValueKey('invoice-void-action')), findsNothing);
+    // #3587 gap: the page says the invoice is cancelled, not which
+    // invoice replaced it (the detail sheet said "Replaced by …").
     expect(
-        find.byKey(const ValueKey('invoice-replace-action')), findsNothing);
-    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
-    expect(find.byKey(const ValueKey('invoice-einvoice-action')),
-        findsOneWidget);
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-page-summary')),
+        matching: find.text('Cancelled'),
+      ),
+      findsOneWidget,
+    );
+    await onlyTheDocument();
+    // The MATCHED replacement is definitive (0068): its page also keeps
+    // only the file exports.
+    await openInvoice(tester, 'inv-2');
+    await onlyTheDocument();
   });
 
   testWidgets(
@@ -627,9 +655,13 @@ void main() {
       'the share sheet with the message, and the row shows the badge',
       (tester) async {
     final shared = <({String name, String mime, String? text})>[];
+    final seeded = await seededMoney(matched: false);
+    // #3587 R1-d — past its term, so the page leads with the reminder.
+    seeded.invoices[0] = seeded.invoices[0]
+        .copyWith(issuedAt: kTestNow.subtract(const Duration(days: 20)));
     final money = await pumpInvoices(
       tester,
-      money: await seededMoney(matched: false),
+      money: seeded,
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         shared.add((name: fileName, mime: mimeType, text: text));
@@ -638,10 +670,11 @@ void main() {
     );
     final invoice = money.invoices.single;
 
-    // 0068 — an invoice EN COURS is reminded; #3587 — from its sheet.
+    // 0068 — an invoice EN COURS is reminded; #3587 R1-d — from its
+    // page's bottom bar.
     await openInvoice(tester, invoice.id);
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
+      await tester.tap(find.byKey(const ValueKey('invoice-page-remind')));
       await tester.pump();
     });
     await tester.pumpAndSettle();
@@ -652,8 +685,14 @@ void main() {
         reason: 'the share text names the invoice');
     expect(find.text('Reminder recorded.'), findsOneWidget);
     await openInvoice(tester, invoice.id);
-    expect(find.textContaining('Reminded ×1'), findsOneWidget,
-        reason: 'the sheet reflects the recorded reminder');
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-page-story')),
+        matching: find.text('Reminder 1 sent'),
+      ),
+      findsOneWidget,
+      reason: 'the page\'s story tells the recorded reminder',
+    );
   });
 
   testWidgets(
@@ -661,12 +700,18 @@ void main() {
       'the payment must be recorded first and confirm stays inert',
       (tester) async {
     final money = await seededMoney(matched: false);
-    await pumpInvoices(tester, money: money);
     final invoice = money.invoices.single;
+    // #3587 R1-d — a payment event says money came, but nothing is on the
+    // member's ledger to map it to.
+    await pumpInvoices(
+      tester,
+      money: money,
+      events: registeredPayment('member-1', invoice.totalCents),
+    );
 
-    // #3587 — matched from the invoice's sheet, opened from the home.
+    // Matched from the invoice page's bottom bar, opened from the home.
     await openInvoice(tester, invoice.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
+    await tester.tap(find.byKey(const ValueKey('invoice-page-match')));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('invoice-match-no-payments')),
@@ -908,10 +953,15 @@ void main() {
       'LIFECYCLE (0067): an issued invoice stays OPEN until matched; an '
       'exact match archives it with the Paid badge', (tester) async {
     final money = await seededMoney(matched: false);
+    // #3587 R1-d — past its term, so the page leads with the reminder.
+    money.invoices[0] = money.invoices[0]
+        .copyWith(issuedAt: kTestNow.subtract(const Duration(days: 20)));
+    final events = FakeEventRepository();
     final sharedTexts = <String?>[];
     await pumpInvoices(
       tester,
       money: money,
+      events: events,
       sharer: ({required bytes, required fileName, required mimeType, text})
           async {
         sharedTexts.add(text);
@@ -927,10 +977,10 @@ void main() {
     expect(row, findsOneWidget);
     expect(find.byKey(const ValueKey('invoicing-filter-open')), findsOneWidget);
 
-    // Reminders still work from here.
+    // Reminders still work from here: the page's bottom bar.
     await openInvoice(tester, invoice.id);
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
+      await tester.tap(find.byKey(const ValueKey('invoice-page-remind')));
       await tester.pump();
     });
     await tester.pumpAndSettle();
@@ -941,8 +991,14 @@ void main() {
     // payment, never a typed amount.
     final payId =
         money.seedPayment('member-1', invoice.totalCents, description: 'IBAN');
+    events.events.addAll(
+        registeredPayment('member-1', invoice.totalCents).events);
+    ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)))
+        .invalidate(eventsProvider);
+    await tester.pumpAndSettle();
+    // The page now leads with "Match the payment".
     await openInvoice(tester, invoice.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
+    await tester.tap(find.byKey(const ValueKey('invoice-page-match')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoice-match-amount')), findsNothing,
         reason: 'no typed amount — the payment picker is the only input');
@@ -957,6 +1013,7 @@ void main() {
     expect(money.invoiceMatchesStore[invoice.id]!.resolution, 'exact');
     expect(money.invoiceMatchesStore[invoice.id]!.paymentLedgerId, payId,
         reason: 'the match records WHICH payment settled the invoice');
+    await closeInvoicePage(tester);
     expect(row, findsNothing,
         reason: 'a matched invoice leaves the open invoices');
     await showPaidInvoices(tester);
@@ -969,13 +1026,18 @@ void main() {
       'OVERPAYMENT (0067): the dialog offers forced-OK or a credit note '
       '— the credit note lands the excess on the ledger', (tester) async {
     final money = await seededMoney(matched: false);
-    await pumpInvoices(tester, money: money);
+    await pumpInvoices(
+      tester,
+      money: money,
+      events: registeredPayment('member-1', 20000),
+    );
     final invoice = money.invoices.single;
 
     final payId = money.seedPayment('member-1', 20000);
-    // #3587 — matched from the invoice's sheet, opened from the home.
+    // #3587 R1-d — matched from the invoice page's bottom bar, opened from
+    // the home.
     await openInvoice(tester, invoice.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
+    await tester.tap(find.byKey(const ValueKey('invoice-page-match')));
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
@@ -1002,13 +1064,18 @@ void main() {
       'UNDERPAYMENT (0067): accepting less REQUIRES a note — the inline '
       'error blocks an empty one', (tester) async {
     final money = await seededMoney(matched: false);
-    await pumpInvoices(tester, money: money);
+    await pumpInvoices(
+      tester,
+      money: money,
+      events: registeredPayment('member-1', 10000),
+    );
     final invoice = money.invoices.single;
 
     final payId = money.seedPayment('member-1', 10000);
-    // #3587 — matched from the invoice's sheet, opened from the home.
+    // #3587 R1-d — matched from the invoice page's bottom bar, opened from
+    // the home.
     await openInvoice(tester, invoice.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
+    await tester.tap(find.byKey(const ValueKey('invoice-page-match')));
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
@@ -1035,13 +1102,18 @@ void main() {
       (tester) async {
     final money = await seededMoney(matched: false)
       ..matchPolicyConfigured = true;
-    await pumpInvoices(tester, money: money);
     final invoice = money.invoices.single;
+    await pumpInvoices(
+      tester,
+      money: money,
+      events: registeredPayment('member-1', invoice.totalCents),
+    );
 
     final payId = money.seedPayment('member-1', invoice.totalCents);
-    // #3587 — matched from the invoice's sheet, opened from the home.
+    // #3587 R1-d — matched from the invoice page's bottom bar, opened from
+    // the home.
     await openInvoice(tester, invoice.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-match-action')));
+    await tester.tap(find.byKey(const ValueKey('invoice-page-match')));
     await tester.pumpAndSettle();
     await tester
         .tap(find.byKey(ValueKey('invoice-match-payment-$payId')));
@@ -1051,7 +1123,7 @@ void main() {
 
     expect(money.invoiceMatchesStore[invoice.id]!.pending, isTrue);
     // #3587 — the pending match stays open, counted To confirm, and its
-    // sheet offers no further match or reminder.
+    // page offers no further match or reminder.
     expect(
       find.byWidgetPredicate((w) =>
           w.key is ValueKey<String> &&
@@ -1061,8 +1133,9 @@ void main() {
       reason: 'the pending match awaits validation',
     );
     await openInvoice(tester, invoice.id);
-    expect(find.byKey(const ValueKey('invoice-match-action')), findsNothing);
-    expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
+    expect(find.text('Waits for a second approval'), findsWidgets);
+    expect(find.byKey(const ValueKey('invoice-page-match')), findsNothing);
+    expect(find.byKey(const ValueKey('invoice-page-remind')), findsNothing);
   });
 
   testWidgets(
@@ -1091,25 +1164,42 @@ void main() {
   });
 
   testWidgets(
-      'DETAIL SHEET: a row opens the invoice IN THE APP — its positions, '
-      'its balance, its status and the payment that closed it',
+      'INVOICE PAGE: a row opens the invoice IN THE APP — its positions, '
+      'its total, its status and the payment that closed it',
       (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
     final invoice = money.invoices.single;
 
+    // #3587 R1-d — the invoice page.
     await openInvoice(tester, invoice.id);
 
-    expect(find.byKey(const ValueKey('invoice-detail-number')),
+    expect(find.text('Invoice ${invoice.number}'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-page-lines')),
+        matching: find.textContaining(RegExp(r'^Subscription \w+ 50%$')),
+      ),
+      findsOneWidget,
+      reason: 'reading an invoice no longer requires downloading a PDF',
+    );
+    final summary = find.byKey(const ValueKey('invoice-page-summary'));
+    expect(find.descendant(of: summary, matching: find.text('€166.00')),
         findsOneWidget);
-    expect(find.textContaining(RegExp(r'^Subscription \w+ 50%$')), findsOneWidget,
-        reason: 'reading an invoice no longer requires downloading a PDF');
-    expect(find.text('Balance due'), findsOneWidget);
-    expect(find.byKey(const ValueKey('invoice-detail-total')),
+    expect(find.descendant(of: summary, matching: find.text('Paid in full')),
         findsOneWidget);
-    expect(find.text('Paid'), findsNWidgets(2),
-        reason: 'the same lifecycle chip on the row and in the sheet');
-    expect(find.textContaining('Paid €166.00 on'), findsOneWidget,
-        reason: 'the match that closed it (0067), in words');
+    expect(
+      find.descendant(of: summary, matching: find.textContaining(RegExp(r'^Paid \w+ \d+$'))),
+      findsOneWidget,
+      reason: 'the status chip says it is paid, and when',
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('invoice-page-story')),
+        matching: find.text('Paid'),
+      ),
+      findsOneWidget,
+      reason: 'the match that closed it (0067), in the story',
+    );
     // Immutability holds: nothing here edits or deletes.
     expect(find.byType(TextField), findsNothing);
   });
@@ -1238,9 +1328,9 @@ void main() {
       'the fix', (tester) async {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
+    // #3587 R1-d — the invoice page's More → E-invoice.
     await openInvoice(tester, money.invoices.single.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-einvoice-action')));
-    await tester.pumpAndSettle();
+    await invoicePageMore(tester, 'invoice-more-einvoice');
 
     expect(find.byKey(const ValueKey('invoice-einvoice-blocked')),
         findsOneWidget);
@@ -1267,9 +1357,9 @@ void main() {
       workspace: workspace,
     );
 
+    // #3587 R1-d — the invoice page's More → E-invoice.
     await openInvoice(tester, money.invoices.single.id);
-    await tester.tap(find.byKey(const ValueKey('invoice-einvoice-action')));
-    await tester.pumpAndSettle();
+    await invoicePageMore(tester, 'invoice-more-einvoice');
 
     expect(find.textContaining('SdI'), findsWidgets);
     expect(find.byKey(const ValueKey('invoice-einvoice-format-warning')),

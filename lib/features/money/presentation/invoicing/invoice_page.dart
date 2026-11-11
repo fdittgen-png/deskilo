@@ -39,8 +39,11 @@ import 'invoicing_reads.dart';
 Future<void> openInvoicePage(BuildContext context, String invoiceId) =>
     showDialog<void>(
       context: context,
-      builder: (_) =>
-          Dialog.fullscreen(child: InvoicePage(invoiceId: invoiceId)),
+      // Its own messenger: what an action says is said once, on the page,
+      // not also on the home under it.
+      builder: (_) => Dialog.fullscreen(
+        child: ScaffoldMessenger(child: InvoicePage(invoiceId: invoiceId)),
+      ),
     );
 
 class InvoicePage extends ConsumerWidget {

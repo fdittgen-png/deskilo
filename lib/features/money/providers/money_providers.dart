@@ -46,6 +46,7 @@ import 'money_queries_providers.dart';
 export '../domain/bill_sections.dart' show currentPeriod;
 export 'money_queries_providers.dart';
 
+part 'invoicing_business.dart';
 part 'money_providers.g.dart';
 
 @Riverpod(keepAlive: true)
@@ -597,28 +598,3 @@ Future<RepartitionRule> repartitionRule(Ref ref) async {
 @riverpod
 Map<String, String> memberLabels(Ref ref) =>
     ref.watch(memberNamesProvider).value ?? const {};
-
-/// #3587 — the open business as the invoicing screens need it: its id, its
-/// currency, its country, and its calendar day of an instant (the
-/// workspace's own context; the plain calendar day while it is not ready).
-typedef InvoicingBusiness = ({
-  String id,
-  String currency,
-  String country,
-  DateTime Function(DateTime instant) dayOf,
-});
-
-/// #3587 — the [InvoicingBusiness] in scope.
-final invoicingBusinessProvider = Provider.autoDispose<InvoicingBusiness>((
-  ref,
-) {
-  final workspace = ref.watch(currentWorkspaceProvider).value;
-  return (
-    id: workspace?.id ?? '',
-    currency: workspace?.currencyCode ?? '',
-    country: workspace?.countryCode ?? '',
-    dayOf:
-        ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf ??
-        (DateTime d) => DateTime(d.year, d.month, d.day),
-  );
-});

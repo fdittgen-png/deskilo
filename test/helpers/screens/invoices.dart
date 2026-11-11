@@ -7,8 +7,11 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../fake_event_repository.dart';
@@ -165,15 +168,60 @@ Future<Finder> invoicingRow(WidgetTester tester, String invoiceId) async {
   return row;
 }
 
-/// Opens an invoice's DETAIL sheet — reading an invoice and acting on it
-/// both live there. An issuer reaches it from the invoicing home's line
-/// (#3587), a member from their archive's row.
+/// Opens an invoice. An issuer reaches its PAGE from the invoicing home's
+/// line (#3587 R1-d: full screen under 1200 px, a panel beside the list
+/// above); a member opens its DETAIL sheet from their archive's row.
 Future<void> openInvoice(WidgetTester tester, String invoiceId) async {
   if (find.byKey(const ValueKey('invoicing-home')).evaluate().isNotEmpty) {
+    await closeInvoicePage(tester);
     await tester.tap(await invoicingRow(tester, invoiceId));
   } else {
     await tester.tap(find.byKey(ValueKey('invoice-$invoiceId')));
   }
+  await tester.pumpAndSettle();
+}
+
+/// #3587 R1-d — the events of a payment of [amountCents] registered
+/// (confirmed) for [memberId] after the invoice was issued: what makes the
+/// invoice page offer "Match the payment" (`invoice-page-match`).
+FakeEventRepository registeredPayment(String memberId, int amountCents) =>
+    FakeEventRepository()
+      ..events.add(
+        WorkspaceEvent(
+          id: 'payment-$memberId-$amountCents',
+          workspaceId: 'ws-1',
+          type: EventType.payment,
+          action: EventAction.created,
+          actorMemberId: 'owner-1',
+          subjectMemberId: memberId,
+          payload: {'amount_cents': amountCents},
+          status: EventStatus.confirmed,
+          createdAt: kTestNow.add(const Duration(hours: 1)),
+        ),
+      );
+
+/// #3587 R1-d — closes an invoice page opened full screen; a no-op when
+/// none is open.
+Future<void> closeInvoicePage(WidgetTester tester) async {
+  final page = find.ancestor(
+      of: find.byType(InvoicePage), matching: find.byType(Dialog));
+  if (page.evaluate().isEmpty) return;
+  await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+  await tester.pumpAndSettle();
+}
+
+/// #3587 R1-d — opens the invoice page's More menu (the document, the
+/// reminders, the corrections).
+Future<void> openInvoicePageMore(WidgetTester tester) async {
+  await tester.tap(find.byKey(const ValueKey('invoice-page-more')));
+  await tester.pumpAndSettle();
+}
+
+/// #3587 R1-d — runs the invoice page's More entry [key]
+/// (`invoice-more-download`, `invoice-more-hold`, …).
+Future<void> invoicePageMore(WidgetTester tester, String key) async {
+  await openInvoicePageMore(tester);
+  await tester.tap(find.byKey(ValueKey(key)));
   await tester.pumpAndSettle();
 }
 

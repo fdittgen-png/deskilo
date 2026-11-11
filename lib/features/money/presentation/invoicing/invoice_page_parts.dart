@@ -214,6 +214,12 @@ class InvoiceMoreMenu extends ConsumerWidget {
     final open =
         r != null && r.stage == ReceivableStage.open && !r.paymentPending;
     final partly = r?.stage == ReceivableStage.partlyPaid;
+    // 2014/55/EU: the e-invoice is for EU businesses, answered from the
+    // live context alone (no answer while it is not ready).
+    final eu = watchWorkspaceIsEu(
+      ref,
+      ref.watch(invoicingBusinessProvider).country,
+    );
     final entries = <(String, String?, VoidCallback?)>[
       ('invoice-more-document', l.invoicePageMoreDocument, null),
       (
@@ -246,16 +252,17 @@ class InvoiceMoreMenu extends ConsumerWidget {
           invoice,
         ),
       ),
-      (
-        'invoice-more-einvoice',
-        l.invoicePageMoreEInvoice,
-        () => InvoicePageActions.run(
-          context,
-          ref,
-          sheet.InvoiceAction.eInvoice,
-          invoice,
+      if (eu)
+        (
+          'invoice-more-einvoice',
+          l.invoicePageMoreEInvoice,
+          () => InvoicePageActions.run(
+            context,
+            ref,
+            sheet.InvoiceAction.eInvoice,
+            invoice,
+          ),
         ),
-      ),
       if (outstanding) ...[
         ('invoice-more-reminders', l.invoicePageMoreReminders, null),
         (

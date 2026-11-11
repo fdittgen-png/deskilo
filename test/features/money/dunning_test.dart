@@ -127,8 +127,8 @@ void main() {
     );
     final invoice = money.invoices.single;
 
-    // #3587 — the home counts the invoice overdue and its sheet leads
-    // with the due reminder.
+    // #3587 — the home counts the invoice overdue and its page's bottom
+    // bar leads with the due reminder (R1-d).
     expect(
       find.byWidgetPredicate((w) =>
           w.key is ValueKey<String> &&
@@ -138,13 +138,14 @@ void main() {
     );
     await openInvoice(tester, invoice.id);
     expect(
-      tester.widget(find.byKey(const ValueKey('invoice-remind-action'))),
+      tester.widget(find.byKey(const ValueKey('invoice-page-remind'))),
       isA<FilledButton>(),
       reason: 'the due reminder is the expected move',
     );
+    expect(find.text('Share reminder 1'), findsOneWidget);
 
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(const ValueKey('invoice-remind-action')));
+      await tester.tap(find.byKey(const ValueKey('invoice-page-remind')));
       await tester.pump();
     });
     await tester.pumpAndSettle();

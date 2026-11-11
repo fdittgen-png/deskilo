@@ -6993,6 +6993,7 @@ Map<String, _Getter> _part20() => {
   'invoiceMatchCreditNote': (l) => l.invoiceMatchCreditNote,
   'invoicePageConfirmedAwaitsApproval': (l) => l.invoicePageConfirmedAwaitsApproval,
   'invoicePageMatch': (l) => l.invoicePageMatch,
+  'invoicePageMatchRefused': (l) => l.invoicePageMatchRefused,
   'invoicePageWhatHappened': (l) => l.invoicePageWhatHappened,
   'invoicePdfExemptCertificate': (l) => l.invoicePdfExemptCertificate,
   'invoiceTemplateBodyLabel': (l) => l.invoiceTemplateBodyLabel,

@@ -388,7 +388,7 @@ void main() {
     }
 
     /// #3587 — the home's line of [id] (one line per invoice), tapped:
-    /// the detail sheet, where the journey and the actions live now.
+    /// the invoice page (R1-d), where the story and the actions live now.
     Future<void> openFromHome(WidgetTester tester, String id) async {
       await tester.tap(await invoicingRow(tester, id));
       await tester.pumpAndSettle();
@@ -403,8 +403,8 @@ void main() {
         });
 
     testWidgets(
-        'the home: an open invoice is owed, not yet due; its sheet carries '
-        'the journey bar and the move, and no labelled button while the '
+        'the home: an open invoice is owed, not yet due; its page tells '
+        'the story and what is awaited, and has no main action while the '
         'issuer has nothing to do', (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money);
@@ -416,25 +416,22 @@ void main() {
       expect(owedBucket('toConfirm'), findsNothing);
 
       await openFromHome(tester, id);
-      expect(find.byKey(const ValueKey('invoice-journey-bar')), findsWidgets);
-      expect(find.byKey(const ValueKey('invoice-move-line')), findsWidgets);
-      expect(find.textContaining('Waiting for'), findsWidgets);
-      // Nothing is expected from the issuer yet: the verbs are offered,
-      // none of them as the filled (expected) button.
-      expect(find.byKey(const ValueKey('invoice-match-action')),
-          findsOneWidget);
-      expect(find.byKey(const ValueKey('invoice-remind-action')),
-          findsOneWidget);
+      // #3587 R1-d — the page's story, its last line what is awaited now.
+      expect(find.byKey(const ValueKey('invoice-page-story')), findsOneWidget);
       expect(
-        find.ancestor(
-          of: find.text('Send a reminder'),
-          matching: find.byType(FilledButton),
+        find.descendant(
+          of: find.byKey(const ValueKey('invoice-page-story')),
+          matching: find.textContaining(RegExp('^(Waiting for payment|Due )')),
         ),
-        findsNothing,
+        findsOneWidget,
       );
+      // Nothing is expected from the issuer yet: no main action under the
+      // thumb, neither a reminder nor a match.
+      expect(find.byKey(const ValueKey('invoice-page-remind')), findsNothing);
+      expect(find.byKey(const ValueKey('invoice-page-match')), findsNothing);
       expect(
-        find.ancestor(
-          of: find.text('Mark as paid'),
+        find.descendant(
+          of: find.byKey(ValueKey('invoice-page-$id')),
           matching: find.byType(FilledButton),
         ),
         findsNothing,
@@ -469,7 +466,7 @@ void main() {
 
     testWidgets(
         'a payment the member declared: the home counts it To confirm and '
-        'its sheet says another admin confirms it', (tester) async {
+        'its page offers Confirm and Not received', (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money);
       final events = FakeEventRepository()
@@ -479,11 +476,18 @@ void main() {
       expect(owedBucket('toConfirm'), findsOneWidget);
 
       await openFromHome(tester, id);
-      expect(find.textContaining('another admin confirms'), findsWidgets);
+      // #3587 R1-d — the story names the declaration; the bottom bar
+      // decides it.
+      expect(find.textContaining('says it is paid'), findsOneWidget);
+      expect(find.text('Check your bank, then confirm'), findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-page-confirm')),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-page-not-received')),
+          findsOneWidget);
     });
 
     testWidgets(
-        'a registered payment: Mark as paid becomes the labelled move',
+        'a registered payment: Match the payment becomes the main action',
         (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money);
@@ -491,11 +495,12 @@ void main() {
         ..events.add(_payment(id: 'e1', status: EventStatus.confirmed));
       await pump(tester, money: money, events: events);
       await openFromHome(tester, id);
-      expect(find.textContaining('match it to this invoice'), findsWidgets);
+      expect(find.text('A payment is on the account: match it'),
+          findsOneWidget);
       expect(
-        tester.widget(find.byKey(const ValueKey('invoice-match-action'))),
+        tester.widget(find.byKey(const ValueKey('invoice-page-match'))),
         isA<FilledButton>(),
-        reason: 'the expected move is the filled button',
+        reason: 'the expected move is the bottom bar\'s filled button',
       );
     });
 
@@ -516,24 +521,24 @@ void main() {
     });
 
     testWidgets(
-        'the detail sheet opens on the journey: the bar, the move, and the '
-        'expected action first', (tester) async {
+        'the invoice page opens on its number, the story with what is due '
+        'now, and the expected action in the bottom bar', (tester) async {
       final money = FakeMoneyRepository();
       final id = await openInvoice(money, ageDays: 20);
       await pump(tester, money: money);
       await openFromHome(tester, id);
 
-      expect(find.byKey(const ValueKey('invoice-detail-number')), findsOneWidget);
-      expect(find.byKey(const ValueKey('invoice-journey-bar')), findsWidgets);
-      expect(find.byKey(const ValueKey('invoice-move-line')), findsWidgets);
-      // The reminder is due, so it leads the actions: above the PDF.
-      final remind = tester.getTopLeft(
-        find.byKey(const ValueKey('invoice-remind-action')),
+      expect(find.text('Invoice ${money.invoices.single.number}'),
+          findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-page-story')), findsOneWidget);
+      expect(find.text('Reminder 1 is due'), findsOneWidget);
+      // The reminder is due, so it is the page's one main action; the PDF
+      // stays in More.
+      expect(
+        tester.widget(find.byKey(const ValueKey('invoice-page-remind'))),
+        isA<FilledButton>(),
       );
-      final download = tester.getTopLeft(
-        find.byKey(ValueKey('invoice-download-$id')),
-      );
-      expect(remind.dy, lessThan(download.dy));
+      expect(find.byKey(const ValueKey('invoice-page-more')), findsOneWidget);
     });
 
     testWidgets(
@@ -591,10 +596,12 @@ void main() {
       await tester.sendKeyEvent(LogicalKeyboardKey.escape);
       await tester.pumpAndSettle();
       await openFromHome(tester, id);
+      // #3587 R1-d — the invoice still opens on its page, with its actions
+      // in More; no journey bar, no move line.
+      expect(find.byKey(ValueKey('invoice-page-$id')), findsOneWidget);
       expect(find.byKey(const ValueKey('invoice-move-line')), findsNothing);
       expect(find.byKey(const ValueKey('invoice-journey-bar')), findsNothing);
-      expect(find.byKey(const ValueKey('invoice-match-action')),
-          findsOneWidget);
+      expect(find.byKey(const ValueKey('invoice-page-more')), findsOneWidget);
     });
   });
 

@@ -13,6 +13,7 @@ import 'package:deskilo/features/money/presentation/invoice_actions.dart' show e
 import 'package:deskilo/features/workspace/providers/operation_context_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../../helpers/real_async.dart';
-import '../../helpers/screens/invoices.dart' show openInvoice, showPaidInvoices;
+import '../../helpers/screens/invoices.dart' show invoicePageMore, openInvoice, openInvoicePageMore, showPaidInvoices;
 import '../../helpers/test_workspace_context.dart';
 
 /// A workspace with a complete legal identity — otherwise the export
@@ -108,10 +109,10 @@ Future<FakeMoneyRepository> _seeded() async {
   return money;
 }
 
+/// #3587 R1-d — the invoice page's More → E-invoice.
 Future<void> _openEInvoiceSheet(WidgetTester tester, String id) async {
   await openInvoice(tester, id);
-  await tester.tap(find.byKey(const ValueKey('invoice-einvoice-action')));
-  await tester.pumpAndSettle();
+  await invoicePageMore(tester, 'invoice-more-einvoice');
 }
 
 void main() {
@@ -129,12 +130,18 @@ void main() {
       find.byKey(ValueKey('invoicing-row-${money.invoices.single.id}')),
     );
     await tester.pump(const Duration(seconds: 1));
-    expect(find.byKey(const ValueKey('invoice-einvoice-action')), findsNothing);
+    // #3587 R1-d — the page's More.
+    await openInvoicePageMore(tester);
+    expect(find.byKey(const ValueKey('invoice-more-einvoice')), findsNothing);
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+    await tester.pump(const Duration(seconds: 1));
 
     _context(tester).set(ready: true);
     await tester.pump(const Duration(seconds: 1));
+    await openInvoicePageMore(tester);
     expect(
-      find.byKey(const ValueKey('invoice-einvoice-action')),
+      find.byKey(const ValueKey('invoice-more-einvoice')),
       findsOneWidget,
     );
   });
