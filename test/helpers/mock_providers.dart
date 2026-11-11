@@ -72,6 +72,7 @@ import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
+import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/oauth_consent.dart';
@@ -269,6 +270,7 @@ List<Override> standardTestOverrides({
   BackendSettingsStore? backendSettings,
   EntryIntentStore? entryIntent,
   ResumePlaceStore? resumePlaces,
+  SpacePrefsStore? spacePrefs,
   CreationDraftStore? creationDraft,
   PendingInvitationStore? pendingInvitation,
   FakeActionConfirmationRepository? actionConfirmations,
@@ -597,6 +599,10 @@ List<Override> standardTestOverrides({
     // Where an account was last: in memory, so no test resumes another's.
     resumePlaceStoreProvider
         .overrideWithValue(resumePlaces ?? InMemoryResumePlaceStore()),
+    // #3749 — my layout of Me › Home is read, never assumed: in memory, so
+    // every test has a store that answers.
+    spacePrefsStoreProvider
+        .overrideWithValue(spacePrefs ?? InMemorySpacePrefsStore()),
     // #1636 — the pending creation draft: in memory, per test.
     creationDraftStoreProvider
         .overrideWithValue(creationDraft ?? InMemoryCreationDraftStore()),

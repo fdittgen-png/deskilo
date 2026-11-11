@@ -36,9 +36,9 @@ Future<void> _open(
   final router = await pumpMeApp(
     tester,
     workspace: twoSpaces(),
+    spacePrefs: store,
     extraOverrides: [
       personalShellEnabledProvider.overrideWithValue(shell),
-      spacePrefsStoreProvider.overrideWithValue(store),
     ],
   );
   await goTo(tester, router, path);

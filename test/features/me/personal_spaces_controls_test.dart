@@ -93,9 +93,9 @@ Future<(GoRouter, InMemorySpacePrefsStore)> _pump(
     workspace: workspace ?? _spaces(),
     me: FakeMeRepository()..workspaceRefs = refs,
     guestVisits: FakeGuestParticipationRepository(visits: [...visits]),
+    spacePrefs: store,
     extraOverrides: [
       personalShellEnabledProvider.overrideWithValue(true),
-      spacePrefsStoreProvider.overrideWithValue(store),
     ],
   );
   await goTo(tester, router, to);

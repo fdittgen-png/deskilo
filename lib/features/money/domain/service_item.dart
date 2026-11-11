@@ -41,6 +41,21 @@ sealed class ServiceItem with _$ServiceItem implements SystemStamped {
   }) = _ServiceItem;
 }
 
+/// The bounds public.services checks (0711): a duration of 5 to 1440 minutes,
+/// a description of at most 2000 characters, a category of at most 40. The
+/// name's 80 is the editor's own length for one line of a catalogue.
+abstract final class ServiceLimits {
+  static const int minMinutes = 5;
+  static const int maxMinutes = 1440;
+  static const int nameMaxLength = 80;
+  static const int descriptionMaxLength = 2000;
+  static const int categoryMaxLength = 40;
+
+  /// Whether [minutes] is a duration the server accepts (null = none).
+  static bool durationAccepted(int? minutes) =>
+      minutes == null || (minutes >= minMinutes && minutes <= maxMinutes);
+}
+
 /// #3552 — what a service says about itself, written together: its
 /// description ('' = none), its duration in minutes (null = not time-based),
 /// its category ('' = none) and whether it is shown on the public page.
