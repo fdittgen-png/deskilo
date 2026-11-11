@@ -64,6 +64,9 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
   /// Until the owner answers, every process stays at what the space does.
   var _answered = false;
 
+  /// The questions answered since the last apply or reset (#3702).
+  final _touched = <String>{};
+
   /// The saved answers were taken over once; a later save does not
   /// overwrite what the owner is answering.
   var _restored = false;
@@ -94,11 +97,29 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     final country = workspace.countryCode;
     final current = currentSetupLevels(stored, country: country);
     final saved = _restoreOnce(journey, current, workspace.id);
-    final recommended = recommendSetupLevels(_answers);
-    final vector = {
+    // #3702 — a business that books no places is not given them by an
+    // unrelated answer, and one answer recomputes only the processes whose
+    // rules name that question.
+    final recommended = recommendSetupLevels(
+      _answers,
+      booksPlaces: current[SetupProcess.bookings] != 'none',
+    );
+    final recompute = setupProcessesNaming(_touched);
+    final candidate = {
       for (final p in SetupProcess.values)
-        p: _chosen[p] ?? (_answered ? recommended[p]!.level : current[p]!),
+        p:
+            _chosen[p] ??
+            (_answered && recompute.contains(p)
+                ? recommended[p]!.level
+                : current[p]!),
     };
+    // A recomputed level is never set below what a level that stays needs.
+    final checked = holdRecomputedAtNeeds(candidate, {
+      for (final p in recompute)
+        if (_chosen[p] == null && _answered) p,
+    });
+    final vector = checked.vector;
+    final held = checked.held;
     final change = planSetupLevels(
       stored: stored,
       current: current,
@@ -165,6 +186,17 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
                   InlineBanner(
                     icon: Icons.link_off,
                     text: _gapWords(l10n, gap),
+                  ),
+                // #3702 — a level kept up because another level needs it.
+                for (final MapEntry(key: process, value: hold) in held.entries)
+                  InlineBanner(
+                    key: ValueKey('setup-held-${process.name}'),
+                    icon: Icons.lock_outline,
+                    text: _gapWords(
+                      l10n,
+                      '${hold.by.name}.${hold.level} → '
+                      '${process.name}.${vector[process]}',
+                    ),
                   ),
                 Container(
                   key: _reviewKey,
@@ -268,7 +300,10 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     _chosen
       ..clear()
       ..addAll(levels ?? {});
-    if (levels == null) _answered = true;
+    if (levels == null) {
+      _answered = true;
+      _touched.addAll(setupQuestions);
+    }
   });
 
   /// The saved journey; its answers are taken over once loaded, and again
@@ -285,7 +320,10 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       _unknown.clear();
       _answers = saved?.answers ?? setupAnswersFromLevels(current);
       if (saved != null) {
-        final suggested = recommendSetupLevels(saved.answers);
+        final suggested = recommendSetupLevels(
+          saved.answers,
+          booksPlaces: current[SetupProcess.bookings] != 'none',
+        );
         for (final p in SetupProcess.values) {
           final level = saved.levels[p];
           if (level != null &&
@@ -300,6 +338,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       if (held != null) {
         _answers = held.answers;
         _answered = held.answered;
+        if (held.answered) _touched.addAll(setupQuestions);
         _chosen
           ..clear()
           ..addAll(held.chosen);
@@ -396,6 +435,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
       setState(() {
         if (!unknown) _answers = _answers.withAnswer(key, yes: yes);
         _answered = true;
+        _touched.add(key);
         unknown ? _unknown.add(key) : _unknown.remove(key);
       });
 
@@ -436,6 +476,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           );
           // The space now does what was chosen: the levels read from it.
           _answered = false;
+          _touched.clear();
           _chosen.clear();
         } on SetupJourneyConflict {
           // The features are applied; the answers someone else saved are
@@ -445,6 +486,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
           );
           _restored = false;
           _answered = false;
+          _touched.clear();
           _chosen.clear();
         } on FeatureFlagsConflict {
           // Nothing was written: the owner looks again at what is there.

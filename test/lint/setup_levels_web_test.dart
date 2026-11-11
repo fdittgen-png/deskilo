@@ -17,8 +17,16 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('the page recommends and ticks what setup_levels.dart does, for '
-      'every combination of answers', () {
+  for (final noPlaces in [false, true]) {
+    test('the page recommends and ticks what setup_levels.dart does, for '
+        'every combination of answers, '
+        '${noPlaces ? 'a business that books no places' : 'one that books places'}',
+        () => _parity(noPlaces: noPlaces));
+  }
+}
+
+void _parity({required bool noPlaces}) {
+  {
     if (Process.runSync('node', ['--version']).exitCode != 0) {
       markTestSkipped('node is not on PATH');
       return;
@@ -26,11 +34,17 @@ void main() {
     final r = Process.runSync('node', [
       'tool/setup/step_harness.mjs',
       '--recommend-all',
+      if (noPlaces) '--no-places',
     ]);
     expect(r.exitCode, 0, reason: '${r.stderr}');
     final out = jsonDecode('${r.stdout}') as Map<String, dynamic>;
     final initial = (out['initial'] as List).cast<String>().toSet();
     final country = out['country'] as String?;
+    final initialLevels = (out['initialLevels'] as Map).cast<String, String>();
+    final booksPlaces = initialLevels['bookings'] != 'none';
+    // #3702 — answering recomputes only the processes whose rules name a
+    // question; the others keep the level the business had.
+    final recomputed = setupProcessesNaming(setupQuestions);
     final combos = out['combos'] as List;
     expect(combos, hasLength(1 << setupQuestions.length));
     final wrong = <String>[];
@@ -40,14 +54,21 @@ void main() {
         SetupAnswers.fromJson({
           for (final (i, q) in setupQuestions.indexed) q: bits & (1 << i) != 0,
         }),
+        booksPlaces: booksPlaces,
       );
       final vector = {
         for (final MapEntry(:key, :value) in recommended.entries)
-          key: value.level,
+          key: recomputed.contains(key)
+              ? value.level
+              : initialLevels[key.name]!,
       };
       // #3300 — a level leaves a feature the page's country does not offer
       // as it is (setup_level_change.dart's `_offered`).
-      final delta = setupFeatureDelta(vector);
+      // A process whose rules name no question is left as it is.
+      final delta = setupFeatureDelta({
+        for (final MapEntry(:key, :value) in vector.entries)
+          if (recomputed.contains(key)) key: value,
+      });
       bool offered(WorkspaceFeature f) =>
           featureAvailableIn(featureManifest[f]?.availableIn, country);
       final on = {...initial}
@@ -69,5 +90,5 @@ void main() {
       if (!same) wrong.add('answers $bits: ${jsonEncode(combo)}');
     }
     expect(wrong, isEmpty, reason: wrong.take(3).join('\n'));
-  });
+  }
 }

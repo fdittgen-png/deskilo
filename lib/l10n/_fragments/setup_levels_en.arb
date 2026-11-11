@@ -223,6 +223,10 @@
   "@setupReasonSharedPlaces": {
     "description": "#3485 setupReason: the label for case 'shared_places'."
   },
+  "setupReasonBooksNoPlaces": "Because this business books no places",
+  "@setupReasonBooksNoPlaces": {
+    "description": "#3702 setupReason: the label for case 'books_no_places' — the business (its kind, or a choice already made) books no places, so an unrelated answer does not switch place booking on."
+  },
   "setupReasonSmallCommunity": "Because the community is small",
   "@setupReasonSmallCommunity": {
     "description": "#3485 setupReason: the label for case 'small_community'."

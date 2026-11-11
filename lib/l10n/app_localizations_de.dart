@@ -28250,6 +28250,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Weil ein Verein mit seinem Vorstand gemeinsam entscheidet';
 
   @override
+  String get setupReasonBooksNoPlaces =>
+      'Weil dieses Unternehmen keine Plätze vergibt';
+
+  @override
   String get setupReasonDoorTablet =>
       'Weil ein Tablet am Eingang die Ankunft erfasst';
 

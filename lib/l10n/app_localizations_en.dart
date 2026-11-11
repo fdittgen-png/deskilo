@@ -27958,6 +27958,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Because an association decides together, with its board';
 
   @override
+  String get setupReasonBooksNoPlaces =>
+      'Because this business books no places';
+
+  @override
   String get setupReasonDoorTablet =>
       'Because a tablet at the door checks people in';
 

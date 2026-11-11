@@ -36827,6 +36827,10 @@
   "@setupReasonAssociation": {
     "description": "#3485 setupReason: the label for case 'association'."
   },
+  "setupReasonBooksNoPlaces": "Because this business books no places",
+  "@setupReasonBooksNoPlaces": {
+    "description": "#3702 setupReason: the label for case 'books_no_places' — the business (its kind, or a choice already made) books no places, so an unrelated answer does not switch place booking on."
+  },
   "setupReasonDoorTablet": "Because a tablet at the door checks people in",
   "@setupReasonDoorTablet": {
     "description": "#3485 setupReason: the label for case 'door_tablet'."

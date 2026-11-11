@@ -28269,6 +28269,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Parce qu’une association décide ensemble, avec son bureau';
 
   @override
+  String get setupReasonBooksNoPlaces =>
+      'Parce que cette activité ne réserve pas de places';
+
+  @override
   String get setupReasonDoorTablet =>
       'Parce qu’une tablette à l’entrée enregistre les arrivées';
 

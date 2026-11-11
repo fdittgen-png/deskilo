@@ -21,7 +21,11 @@ const levelIds=p=>(LEVELS.processes.find(x=>x.key===p)?.levels||[]).map(l=>l.id)
 const levelRank=(p,id)=>levelIds(p).indexOf(id);
 // The first rule of each process that holds: a rule without questions
 // always does — recommendSetupLevels, read from the same rules.
-function recommendLevels(answers){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>!x.any.length||x.any.some(q=>answers[q]===true));out[p]={level:r.level,reason:r.reason}}return out}
+// A rule may hold only for a business that books places (places:true) or books
+// none (places:false) — recommendSetupLevels(booksPlaces:) (#3702).
+function recommendLevels(answers,booksPlaces=levelsNow().bookings!=='none'){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>(x.places===undefined||x.places===booksPlaces)&&(!x.any.length||x.any.some(q=>answers[q]===true)));out[p]={level:r.level,reason:r.reason}}return out}
+// The processes whose rules name a question: one answer recomputes only these.
+const processesNaming=q=>new Set(Object.entries(LEVELS.rules).filter(([,rules])=>rules.some(r=>r.any.includes(q))).map(([p])=>p));
 // Each process's level as the switches say: the highest whose switches and
 // every lower level's are all ticked — currentSetupLevels.
 function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]||!availableHere(k)))break;reached=l.id}out[pr.key]=reached}return out}
@@ -63,8 +67,13 @@ function advancedLevels(now,rec,preset){const d=h('details',{class:'adv',...(lev
  ...(chosenLevels.size?[h('p',{class:'hint'},JT('setupChoicesManual')),h('button',{class:'btn ghost',type:'button',onclick:()=>{chosenLevels.clear();applyLevels(Object.entries(recommendLevels(shownAnswers())).map(([p,r])=>[p,r.level]));render()}},JT('setupChoicesReset'))]:[]),
  ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)));
  d.ontoggle=()=>{levelsAdvancedOpen=d.open};return d}
+// A recomputed level is never set below what a level that stays needs
+// (holdRecomputedAtNeeds): money is not lowered under invoices while tax stays at vat.
+function holdAtNeeds(pairs,named){const vec={...levelsNow()};pairs.forEach(([p,l])=>{vec[p]=l});
+ for(const pr of LEVELS.processes){if(named.has(pr.key))continue;pr.levels.slice(0,levelRank(pr.key,vec[pr.key])+1).forEach(l=>{for(const[np,min]of Object.entries(l.needs||{}))if(named.has(np)&&levelRank(np,vec[np])<levelRank(np,min))vec[np]=min})}
+ return pairs.map(([p])=>[p,vec[p]])}
 function answerQuestion(q,v){unknownQs.delete(q);const a={...shownAnswers(),[q]:v},rec=recommendLevels(a);
- applyLevels(Object.entries(rec).map(([p,r])=>[p,chosenLevels.get(p)??r.level]),[['journey.answers',Object.fromEntries(Object.entries(a).filter(([,x])=>x))]])}
+ const named=processesNaming(q);applyLevels(holdAtNeeds(Object.entries(rec).filter(([p])=>named.has(p)).map(([p,r])=>[p,chosenLevels.get(p)??r.level]),named),[['journey.answers',Object.fromEntries(Object.entries(a).filter(([,x])=>x))]])}
 function applyPreset(name){chosenLevels.clear();for(const[p,l]of Object.entries(LEVELS.presets[name]||{}))chosenLevels.set(p,l);applyLevels([...chosenLevels])}
 const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
 // What a vector lacks: each chosen level (and those below it) whose needs

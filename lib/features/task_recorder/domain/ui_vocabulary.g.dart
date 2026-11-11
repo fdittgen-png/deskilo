@@ -12061,6 +12061,7 @@ const Set<String> uiLabelKeys = {
   'setupQuestionVatRegistered',
   'setupReasonApproveBookings',
   'setupReasonAssociation',
+  'setupReasonBooksNoPlaces',
   'setupReasonDoorTablet',
   'setupReasonIssuesInvoices',
   'setupReasonKeepsBooks',

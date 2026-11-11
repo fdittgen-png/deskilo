@@ -28192,6 +28192,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Porque una asociación decide en conjunto, con su junta';
 
   @override
+  String get setupReasonBooksNoPlaces =>
+      'Porque este negocio no reserva puestos';
+
+  @override
   String get setupReasonDoorTablet =>
       'Porque una tableta en la entrada registra las llegadas';
 
