@@ -684,8 +684,8 @@ void main() {
       expect(r.stderr, contains('[rest]'));
     });
 
-    test('a partial retry fails closed: gate and rest from attempt 1 beside '
-        'money from attempt 2 under an attempt-2 plan (#2639)', () {
+    test('a re-run of one shard: gate and rest from attempt 1 beside money '
+        'from attempt 2 under an attempt-2 plan are accepted (#3735)', () {
       final first = _plan();
       final second = ShardPlan(
         candidate: first.candidate,
@@ -697,15 +697,27 @@ void main() {
         write(s.id == 'money' ? second : first, s);
       }
       final r = rows(second);
-      expect(r.exitCode, 1, reason: '${r.stdout}${r.stderr}');
+      expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
       expect(
         File('${dir.path}/tests.psv').readAsStringSync(),
-        startsWith('Tests|failure|'),
+        startsWith('Tests|success|'),
       );
-      expect(r.stderr, contains('[gate]'));
-      expect(r.stderr, contains('[rest]'));
-      expect(r.stderr, isNot(contains('[money]')));
-      expect(r.stderr, contains('without --failed'));
+    });
+
+    test('a shard from a LATER attempt than the plan is refused (#3735)', () {
+      final first = _plan();
+      final second = ShardPlan(
+        candidate: first.candidate,
+        runId: first.runId,
+        runAttempt: '2',
+        shards: first.shards,
+      );
+      for (final s in first.shards) {
+        write(s.id == 'money' ? second : first, s);
+      }
+      final r = rows(first);
+      expect(r.exitCode, 1, reason: '${r.stdout}${r.stderr}');
+      expect(r.stderr, contains('[money]'));
     });
 
     test('a coherent retry: every shard from attempt 2 is accepted (#2639)', () {

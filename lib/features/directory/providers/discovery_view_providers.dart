@@ -46,14 +46,12 @@ class DiscoveryView extends _$DiscoveryView {
     return true;
   }
 
-  /// The person read who the map provider is and chose the map.
-  Future<void> acceptMap() async {
+  /// The person read who the map provider is and chose the map. #3689 —
+  /// the public-page editor accepts without switching Discover's view.
+  Future<void> acceptMap({bool show = true}) async {
     final current = await future;
-    await _keep(
-      current
-          .accepting(ref.read(mapServicesProvider).identity)
-          .showing(map: true),
-    );
+    final accepted = current.accepting(ref.read(mapServicesProvider).identity);
+    await _keep(show ? accepted.showing(map: true) : accepted);
   }
 
   Future<void> _keep(DiscoveryViewPreference next) async {

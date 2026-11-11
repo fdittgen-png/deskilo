@@ -21685,6 +21685,44 @@ class AppLocalizationsIt extends AppLocalizations {
   String get portalPhone => 'Telefono pubblico';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Segnaposto a $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed =>
+      'Il servizio di mappe non ha risposto. Riprovi.';
+
+  @override
+  String get portalPlaceFind => 'Trovare l\'indirizzo sulla mappa';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Trovato: $place. Lo usi, oppure tocchi la mappa per spostare il segnaposto.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'Nessun luogo salvato: la mappa di un visitatore cerca l\'indirizzo.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'Nessun luogo trovato per questo indirizzo. Controlli l\'indirizzo e riprovi.';
+
+  @override
+  String get portalPlaceRemove => 'Rimuovere il luogo';
+
+  @override
+  String get portalPlaceTapToMove =>
+      'Tocchi la mappa per spostare il segnaposto.';
+
+  @override
+  String get portalPlaceTitle => 'Dove si trova sulla mappa';
+
+  @override
+  String get portalPlaceUse => 'Usare questo luogo';
+
+  @override
   String get portalPlans => 'Piani e prezzi';
 
   @override
@@ -28848,7 +28886,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'Cosa possono vedere le persone esterne allo spazio.';
+      'Cosa possono vedere le persone esterne allo spazio, compreso dove si trova sulla mappa.';
 
   @override
   String get setupStepHintPurchases => 'Cosa acquista lo spazio e da chi.';

@@ -29,6 +29,8 @@ FakeDirectoryRepository _directory() => FakeDirectoryRepository()
       'description': 'Desks by the sea',
       'email': 'hello@example.org',
       'plans': 'Day pass, month',
+      'latitude': '43.4',
+      'longitude': '3.4',
     },
   };
 
@@ -108,6 +110,9 @@ void main() {
     expect(doc['plans'], 'Day pass, month');
     expect(doc['host_type'], 'company');
     expect(doc.containsKey('address'), isFalse, reason: 'still following');
+    // #3689 — the stored place goes back as it was read.
+    expect(doc['latitude'], '43.4');
+    expect(doc['longitude'], '3.4');
   });
 
   testWidgets('one column on a phone', (tester) async {

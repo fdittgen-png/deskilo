@@ -21659,6 +21659,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String get portalPhone => 'Teléfono público';
 
   @override
+  String portalPlaceAt(String latitude, String longitude) {
+    return 'Marcador en $latitude, $longitude';
+  }
+
+  @override
+  String get portalPlaceFailed =>
+      'El servicio de mapas no respondió. Inténtelo de nuevo.';
+
+  @override
+  String get portalPlaceFind => 'Buscar la dirección en el mapa';
+
+  @override
+  String portalPlaceFound(String place) {
+    return 'Encontrado: $place. Úselo, o toque el mapa para mover el marcador.';
+  }
+
+  @override
+  String get portalPlaceNone =>
+      'No hay ningún lugar guardado: el mapa de un visitante busca la dirección.';
+
+  @override
+  String get portalPlaceNotFound =>
+      'No se encontró ningún lugar para esta dirección. Compruebe la dirección e inténtelo de nuevo.';
+
+  @override
+  String get portalPlaceRemove => 'Quitar el lugar';
+
+  @override
+  String get portalPlaceTapToMove => 'Toque el mapa para mover el marcador.';
+
+  @override
+  String get portalPlaceTitle => 'Dónde está usted en el mapa';
+
+  @override
+  String get portalPlaceUse => 'Usar este lugar';
+
+  @override
   String get portalPlans => 'Planes y precios';
 
   @override
@@ -28825,7 +28862,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get setupStepHintPublicPage =>
-      'Lo que pueden ver las personas ajenas al espacio.';
+      'Lo que pueden ver las personas ajenas al espacio, incluido dónde está usted en el mapa.';
 
   @override
   String get setupStepHintPurchases => 'Lo que compra el espacio y a quién.';

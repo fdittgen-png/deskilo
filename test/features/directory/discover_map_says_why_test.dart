@@ -348,6 +348,25 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
+    // #3689 — a desktop window: the notice, then the map beside the list.
+    testWidgets('at 1280 px Map opens the notice, then the map', (
+      tester,
+    ) async {
+      await showScreen(tester, size: const Size(1280, 800));
+      await tester.tap(side('Map'));
+      await _frames(tester);
+      expect(
+        find.byKey(const ValueKey('directory-map-disclosure')),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const ValueKey('directory-map-continue')));
+      await _frames(tester);
+      expect(find.byType(DirectoryMap), findsOneWidget);
+      expect(tester.getRect(find.byType(DirectoryMap)).right,
+          lessThanOrEqualTo(1280));
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('a map that cannot be opened says so', (tester) async {
       await showScreen(
         tester,
@@ -387,7 +406,8 @@ void main() {
 /// The view's store fails while the map is accepted.
 class _FailingView extends DiscoveryView {
   @override
-  Future<void> acceptMap() async => throw StateError('store unavailable');
+  Future<void> acceptMap({bool show = true}) async =>
+      throw StateError('store unavailable');
 }
 
 /// The view will not show the map.

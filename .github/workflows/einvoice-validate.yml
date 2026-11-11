@@ -67,25 +67,29 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      # #3739 -- the package mirror being unreachable is not a finding about
+      # the change: on a pull request the steps below are then skipped with a
+      # notice; on master the job fails as before.
       - name: xmllint
-        run: |
-          command -v xmllint || {
-            sudo apt-get update -q
-            sudo apt-get install -y --no-install-recommends libxml2-utils
-          }
-      - run: flutter pub get
+        id: xmllint
+        run: bash scripts/install_or_skip.sh xmllint libxml2-utils
+      - if: steps.xmllint.outputs.available == 'true'
+        run: flutter pub get
       - name: Build one sample per format
+        if: steps.xmllint.outputs.available == 'true'
         env:
           EINVOICE_SAMPLES_DIR: ${{ runner.temp }}/einvoice-samples
         run: flutter test test/features/money/einvoice_samples_test.dart
       # #3473 -- the validators and schemas are checksum-pinned downloads;
       # kept under their digest, a warm cache asks no server.
       - name: Restore the pinned validator downloads
+        if: steps.xmllint.outputs.available == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/deskilo-toolchain/einvoice
           key: toolchain-einvoice-${{ hashFiles('tool/einvoice/validate.sh') }}
       - name: Run the official validators
+        if: steps.xmllint.outputs.available == 'true'
         run: |
           # #3663 -- exit 3: a validator's download did not answer (after its
           # retries). Nothing was validated this time; that is a notice, not a

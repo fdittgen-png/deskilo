@@ -35338,6 +35338,66 @@ abstract class AppLocalizations {
   /// **'Public phone'**
   String get portalPhone;
 
+  /// #3689 public-page editor: the stored pin's coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin at {latitude}, {longitude}'**
+  String portalPlaceAt(String latitude, String longitude);
+
+  /// #3689 public-page editor: the lookup failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The map service did not answer. Try again.'**
+  String get portalPlaceFailed;
+
+  /// #3689 public-page editor: button that looks the address up (after the map notice).
+  ///
+  /// In en, this message translates to:
+  /// **'Find the address on the map'**
+  String get portalPlaceFind;
+
+  /// #3689 public-page editor: the place the lookup proposes, by name.
+  ///
+  /// In en, this message translates to:
+  /// **'Found: {place}. Use it, or tap the map to move the pin.'**
+  String portalPlaceFound(String place);
+
+  /// #3689 public-page editor: no coordinates are stored.
+  ///
+  /// In en, this message translates to:
+  /// **'No place is stored: a visitor\'s map looks up the address.'**
+  String get portalPlaceNone;
+
+  /// #3689 public-page editor: the lookup found nothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No place was found for this address. Check the address and try again.'**
+  String get portalPlaceNotFound;
+
+  /// #3689 public-page editor: removes the stored place.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove the place'**
+  String get portalPlaceRemove;
+
+  /// #3689 public-page editor: how to correct the pin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the map to move the pin.'**
+  String get portalPlaceTapToMove;
+
+  /// #3689 public-page editor: the heading of the section that stores where the business is on the map.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you are on the map'**
+  String get portalPlaceTitle;
+
+  /// #3689 public-page editor: confirms the proposed place.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this place'**
+  String get portalPlaceUse;
+
   /// Shown as the text in public page editor (directory).
   ///
   /// In en, this message translates to:
@@ -46936,7 +46996,7 @@ abstract class AppLocalizations {
   /// #3485 setupStepHint: the label for case 'public_page'.
   ///
   /// In en, this message translates to:
-  /// **'What people outside the space can see.'**
+  /// **'What people outside the space can see, including where you are on the map.'**
   String get setupStepHintPublicPage;
 
   /// #3485 setupStepHint: the label for case 'purchases'.
