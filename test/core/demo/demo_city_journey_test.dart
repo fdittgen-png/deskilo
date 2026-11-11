@@ -176,9 +176,12 @@ void main() {
       // of this person's finances, without silently filtering to this space.
       final router = GoRouter.of(tester.element(find.byType(Scaffold).first))
         ..go('/invoices');
-      await _waitFor(tester, find.byKey(const ValueKey('invoice-stage-issue')));
+      // #3587 — the invoicing home; the personal action is in More.
+      await _waitFor(tester, find.byKey(const ValueKey('invoicing-home')));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('invoice-stage-issue')), findsOneWidget);
+      expect(find.byKey(const ValueKey('invoicing-owed')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
+      await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('invoicing-personal-action')), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('invoicing-personal-action')));
       await _waitFor(tester, find.byKey(const ValueKey('finances-tabs')));

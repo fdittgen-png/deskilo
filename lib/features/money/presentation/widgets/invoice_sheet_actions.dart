@@ -124,6 +124,14 @@ List<(InvoiceAction, Widget)> build(
               action: InvoiceAction.dunningHold,
             ),
           ),
+      ],
+      // #506 — a partly paid invoice stays matchable against what is
+      // still owed; voiding it stays off. #508 — a credit note is paid
+      // out by the workspace, never matched to a member's payment.
+      if (canIssue &&
+          invoice.totalCents > 0 &&
+          (status == InvoiceLifecycle.open ||
+              status == InvoiceLifecycle.partiallyPaid))
         (
           InvoiceAction.markPaid,
           _button(
@@ -135,6 +143,7 @@ List<(InvoiceAction, Widget)> build(
             primary: expected == InvoiceAction.markPaid,
           ),
         ),
+      if (canIssue && status == InvoiceLifecycle.open)
         (
           InvoiceAction.markErroneous,
           _button(
@@ -146,7 +155,6 @@ List<(InvoiceAction, Widget)> build(
             danger: true,
           ),
         ),
-      ],
       // A correction chain, never a fork (0061): only an erroneous
       // invoice that nothing replaces yet can be re-issued.
       if (canIssue &&

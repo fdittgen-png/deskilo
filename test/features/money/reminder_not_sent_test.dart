@@ -28,6 +28,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/screens/invoices.dart' show openInvoice;
 
 void main() {
   /// How many reminders the invoice carries after one tap of Send
@@ -77,12 +78,13 @@ void main() {
     await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
     await tester.tap(find.byKey(const ValueKey('invoices-button')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-tab-open')));
-    await tester.pumpAndSettle();
+    // #3587 R1-d — the reminder is shared from the invoice page's bottom
+    // bar (the invoice is overdue, so it is the page's main action).
+    await openInvoice(tester, id);
 
     // The PDF build does real async work, like the journey test.
     await tester.runAsync(() async {
-      await tester.tap(find.byKey(ValueKey('invoice-remind-$id')));
+      await tester.tap(find.byKey(const ValueKey('invoice-page-remind')));
       await tester.pumpAndSettle();
     });
     await tester.pumpAndSettle();

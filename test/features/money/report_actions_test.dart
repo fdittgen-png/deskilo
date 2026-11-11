@@ -19,9 +19,10 @@ void main() {
     final invoice = money.invoices.single;
     await openInvoice(tester, invoice.id);
 
-    final quick = find.byKey(ValueKey('invoice-quick-${invoice.id}'));
-    await tester.scrollUntilVisible(quick, 150,
-        scrollable: find.byType(Scrollable).last);
+    // #3587 R1-d — the invoice page's PDF card: View.
+    final quick = find.byKey(const ValueKey('invoice-page-view'));
+    await tester.ensureVisible(quick);
+    await tester.pump();
     await tester.tap(quick);
     await tester.pumpAndSettle();
 
@@ -66,9 +67,10 @@ void main() {
     final invoice = money.invoices.single;
     await openInvoice(tester, invoice.id);
 
-    final quick = find.byKey(ValueKey('invoice-quick-${invoice.id}'));
-    await tester.scrollUntilVisible(quick, 150,
-        scrollable: find.byType(Scrollable).last);
+    // #3587 R1-d — the invoice page's PDF card: View.
+    final quick = find.byKey(const ValueKey('invoice-page-view'));
+    await tester.ensureVisible(quick);
+    await tester.pump();
     await tester.tap(quick);
     await tester.pumpAndSettle();
 
@@ -107,9 +109,10 @@ void main() {
     final invoice = money.invoices.single;
     await openInvoice(tester, invoice.id);
 
-    final quick = find.byKey(ValueKey('invoice-quick-${invoice.id}'));
-    await tester.scrollUntilVisible(quick, 150,
-        scrollable: find.byType(Scrollable).last);
+    // #3587 R1-d — the invoice page's PDF card: View.
+    final quick = find.byKey(const ValueKey('invoice-page-view'));
+    await tester.ensureVisible(quick);
+    await tester.pump();
     await tester.tap(quick);
     await tester.pumpAndSettle();
 

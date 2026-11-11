@@ -107,18 +107,17 @@ enum TodoKind {
   matchPayments,
   payOutRefunds,
   rejectedEInvoices,
-
-  /// Open invoices without a due date: no automatic reminder reaches them.
-  setDueDate,
   issueDrafts,
 }
 
 /// One entry of "To do": what to do, for how many, and the money at stake.
 typedef Todo = ({TodoKind kind, Tally tally});
 
-/// The "To do" entry [r] belongs to, or null. A hold stops the reminders
-/// only: a payment declared on a held invoice is still confirmed.
-TodoKind? _todoOf(Receivable r, ReminderMode mode) {
+/// The "To do" entry [r] counts in, in [mode], or null: the one predicate
+/// that both counts an entry and selects the list it opens. A hold stops
+/// the reminders only: a payment declared on a held invoice is still
+/// confirmed.
+TodoKind? todoKindOf(Receivable r, ReminderMode mode) {
   switch (r.stage) {
     case ReceivableStage.draft:
       return TodoKind.issueDrafts;
@@ -133,13 +132,12 @@ TodoKind? _todoOf(Receivable r, ReminderMode mode) {
   if (r.paymentDeclared) return TodoKind.confirmPayments;
   if (r.paymentToMatch) return TodoKind.matchPayments;
   if (reminderToShare(r, mode)) return TodoKind.shareReminders;
-  if (!r.dueDateSet) return TodoKind.setDueDate;
   return null;
 }
 
 /// "To do" of [invoices] and [toInvoice] in [mode]: invoice the month, share
 /// reminders by hand, confirm payments, match payments, pay out refunds,
-/// rejected e-invoices, set a due date, drafts — each present only when it
+/// rejected e-invoices, drafts — each present only when it
 /// has something to do. No age threshold decides an entry; a customer whose
 /// every reminder was sent is not one (their line says it).
 List<Todo> todoOf(
@@ -155,7 +153,7 @@ List<Todo> todoOf(
     );
   }
   for (final r in invoices) {
-    final kind = _todoOf(r, mode);
+    final kind = todoKindOf(r, mode);
     if (kind != null) {
       tallies[kind] = tallies[kind]!.plus(r.currency, r.openMinor);
     }
@@ -168,8 +166,8 @@ List<Todo> todoOf(
 
 /// One customer's line of the list (the list is by customer).
 @immutable
-class CustomerRow {
-  const CustomerRow({
+class CustomerLine {
+  const CustomerLine({
     required this.customerId,
     required this.customerName,
     required this.invoices,
@@ -219,7 +217,7 @@ class CustomerRow {
 /// [today] in [mode]: late customers first — among them those whose every
 /// reminder was sent — the most late first, then the larger amount when both
 /// owe in one same currency, then by name.
-List<CustomerRow> customerRowsOf(
+List<CustomerLine> customerRowsOf(
   Iterable<Receivable> invoices, {
   required DateTime today,
   required ReminderMode mode,
@@ -235,7 +233,7 @@ List<CustomerRow> customerRowsOf(
   return rows..sort(_byUrgency);
 }
 
-int _byUrgency(CustomerRow a, CustomerRow b) {
+int _byUrgency(CustomerLine a, CustomerLine b) {
   final aLate = a.daysLate != null;
   final bLate = b.daysLate != null;
   if (aLate != bLate) return aLate ? -1 : 1;
@@ -253,7 +251,7 @@ int _byUrgency(CustomerRow a, CustomerRow b) {
   return compareNames(a.customerName, b.customerName);
 }
 
-CustomerRow _rowOf(
+CustomerLine _rowOf(
   String id,
   List<Receivable> rs,
   DateTime today,
@@ -270,8 +268,8 @@ CustomerRow _rowOf(
       if (daysLate == null || days > daysLate) daysLate = days;
     }
   }
-  int count(TodoKind kind) => rs.where((r) => _todoOf(r, mode) == kind).length;
-  return CustomerRow(
+  int count(TodoKind kind) => rs.where((r) => todoKindOf(r, mode) == kind).length;
+  return CustomerLine(
     customerId: id,
     customerName: rs.first.customerName,
     invoices: List.unmodifiable(rs),
