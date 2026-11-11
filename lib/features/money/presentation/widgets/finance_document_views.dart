@@ -181,7 +181,7 @@ class _FinanceDocument extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final format = appFormatOf(context).dates(DateShape.date);
+    final format = personalFormatOf(context).dates(DateShape.date);
     final overdue = invoice.overdueAt(now);
     final due = invoice.dueOn;
     final devTone = AppEnvironmentColors.developmentOf(theme.brightness);
@@ -197,7 +197,7 @@ class _FinanceDocument extends ConsumerWidget {
               color: overdue ? scheme.error : scheme.onSurfaceVariant,
             ),
           )
-        : Text(format.format(appFormatOf(context).wall(invoice.issuedAt)), style: muted);
+        : Text(format.format(personalFormatOf(context).wall(invoice.issuedAt)), style: muted);
     final workspace = isDev
         ? DevLabel(name: invoice.workspaceName, small: true)
         : Text(
@@ -221,7 +221,7 @@ class _FinanceDocument extends ConsumerWidget {
       ],
     );
     final amount = Text(
-      appFormatOf(context)
+      personalFormatOf(context)
           .moneyNamed(invoice.currency)
           .formatMinor(_shownAmount(invoice)),
       textAlign: TextAlign.end,

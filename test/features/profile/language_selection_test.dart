@@ -144,4 +144,17 @@ void main() {
     expect(find.widgetWithText(AppBar, 'Profil und Konto'), findsNothing);
     expect(store.code, isNull);
   });
+
+  testWidgets('#3647 — the picker says which languages exist and what a '
+      'device in another language shows', (tester) async {
+    await pumpSettings(tester, store: InMemoryLocaleStore());
+    await revealTile(tester, 'Language');
+    await tester.tap(find.text('Language'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('DesKilo is available in the languages below. A device set '
+          'to any other language shows it in English.'),
+      findsOneWidget,
+    );
+  });
 }

@@ -11862,6 +11862,24 @@ abstract class AppLocalizations {
   /// **'View'**
   String get discoveryView;
 
+  /// Option and value of the letters-and-notifications language: it follows the interface language
+  ///
+  /// In en, this message translates to:
+  /// **'Follows the app\'s language'**
+  String get documentLanguageFollows;
+
+  /// Explanation in the dialog choosing the language of letters and notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders, documents and push messages are written in this language. Once you choose one, changing the app\'s language no longer changes it.'**
+  String get documentLanguageHint;
+
+  /// Title of the setting (Region & formats) for the language reminders, documents and push messages are written in
+  ///
+  /// In en, this message translates to:
+  /// **'Language of letters and notifications'**
+  String get documentLanguageTitle;
+
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:
@@ -26163,6 +26181,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Working…'**
   String get kitActionBusy;
+
+  /// Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees
+  ///
+  /// In en, this message translates to:
+  /// **'DesKilo is available in the languages below. A device set to any other language shows it in {fallback}.'**
+  String languageAvailableHint(String fallback);
 
   /// #713 - language name in the format picker
   ///

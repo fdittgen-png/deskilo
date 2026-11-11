@@ -7243,6 +7243,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryView => 'View';
 
   @override
+  String get documentLanguageFollows => 'Follows the app\'s language';
+
+  @override
+  String get documentLanguageHint =>
+      'Reminders, documents and push messages are written in this language. Once you choose one, changing the app\'s language no longer changes it.';
+
+  @override
+  String get documentLanguageTitle => 'Language of letters and notifications';
+
+  @override
   String get documentsAdd => 'Add a document';
 
   @override
@@ -15885,6 +15895,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kitActionBusy => 'Working…';
+
+  @override
+  String languageAvailableHint(String fallback) {
+    return 'DesKilo is available in the languages below. A device set to any other language shows it in $fallback.';
+  }
 
   @override
   String get languageNameCS => 'Czech';

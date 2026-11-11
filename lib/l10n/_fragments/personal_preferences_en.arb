@@ -14,5 +14,17 @@
   "preferencesSaveFailed": "Could not save your preferences. Please try again.",
   "@preferencesSaveFailed": {
     "description": "Shown as the error text of a field in preference scope controls (profile), and 4 other places."
+  },
+  "documentLanguageTitle": "Language of letters and notifications",
+  "@documentLanguageTitle": {
+    "description": "Title of the setting (Region & formats) for the language reminders, documents and push messages are written in"
+  },
+  "documentLanguageFollows": "Follows the app's language",
+  "@documentLanguageFollows": {
+    "description": "Option and value of the letters-and-notifications language: it follows the interface language"
+  },
+  "documentLanguageHint": "Reminders, documents and push messages are written in this language. Once you choose one, changing the app's language no longer changes it.",
+  "@documentLanguageHint": {
+    "description": "Explanation in the dialog choosing the language of letters and notifications"
   }
 }

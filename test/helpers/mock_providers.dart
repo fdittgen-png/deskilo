@@ -214,6 +214,21 @@ TypedFileSaver typedSaverOf(FileSaver saver) =>
       return path == null ? const SaveFailed() : SavedFile(path);
     };
 
+/// #3647 — the formats a fixture's dates and times are written in, for a
+/// test that builds its own providers: the default format now follows the
+/// device, so a test that pins nothing reads the runner's region.
+List<Override> formatPinOverrides({String locale = 'en_GB'}) {
+  final format = AppFormat(
+    locale: locale,
+    currencyCode: 'EUR',
+    clock: ClockPref.h24,
+  );
+  return [
+    appFormatProvider.overrideWithValue(format),
+    personalFormatProvider.overrideWithValue(format),
+  ];
+}
+
 List<Override> standardTestOverrides({
   // #3587 — a test of the payments read brings its own; else the Demo's
   // reader over the money fake.
@@ -330,10 +345,15 @@ List<Override> standardTestOverrides({
     // "8:00 AM" under en_US, which is right for that member and wrong for
     // a fixture that pins "08:00". The app honours the preference; the
     // tests pin one.
-    if (pinFormats)
+    if (pinFormats) ...[
       appFormatProvider.overrideWithValue(
         AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
       ),
+      // #3647 — a personal surface reads the person's format directly.
+      personalFormatProvider.overrideWithValue(
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+      ),
+    ],
     // #1303 — a fixed device locale: onboarding seeds its country from it,
     // and a test must not depend on the machine running it.
     deviceLocaleProvider.overrideWithValue(deviceLocale ?? const Locale('de', 'DE')),

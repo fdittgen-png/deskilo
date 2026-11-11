@@ -53,5 +53,5 @@ class PersonalSettings extends _$PersonalSettings {
   }
 
   Future<void> resetWorkspace() => save(
-    {for (final key in PersonalPreference.keys) key: null}, workspaceOnly: true);
+    {for (final key in PersonalPreference.workspaceKeys) key: null}, workspaceOnly: true);
 }

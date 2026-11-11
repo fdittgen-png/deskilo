@@ -148,7 +148,7 @@ final class PersonalSettingsProvider
   PersonalSettings create() => PersonalSettings();
 }
 
-String _$personalSettingsHash() => r'33239c53ef08f1cca97f7d309e10e9396a4ecf65';
+String _$personalSettingsHash() => r'77a001c971511e8c05f56ec28ba81398f1bb1cd8';
 
 abstract class _$PersonalSettings extends $AsyncNotifier<PersonalPreferences> {
   FutureOr<PersonalPreferences> build();

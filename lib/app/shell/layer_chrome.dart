@@ -19,14 +19,6 @@ import '../route_classes.dart';
 import '../theme.dart';
 import 'development_banner.dart';
 
-/// Whether [path] is the person's own layer rather than a space's: every
-/// registered route that needs no membership.
-bool _isMeLayer(String path) => switch (classifyRoute(path)) {
-      RouteClass.nativeAccount => !workspaceChromeAccountRoutes.contains(path),
-      RouteClass.publicEntry || RouteClass.operator => true,
-      RouteClass.workspace || RouteClass.unknown => false,
-    };
-
 class LayerChrome extends StatefulWidget {
   const LayerChrome({
     super.key,
@@ -49,7 +41,7 @@ class _LayerChromeState extends State<LayerChrome> {
   bool _isMe() {
     final delegate = widget.router.routerDelegate;
     return delegate.currentConfiguration.isNotEmpty &&
-        _isMeLayer(widget.router.state.uri.path);
+        isPersonalLayer(widget.router.state.uri.path);
   }
 
   /// The delegate announces a route while the Router itself is building,

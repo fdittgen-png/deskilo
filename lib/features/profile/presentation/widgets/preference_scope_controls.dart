@@ -7,6 +7,7 @@ import '../../../../core/locale/locale_controller.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../domain/personal_preferences.dart';
+import '../../providers/personal_appearance_providers.dart';
 import '../../providers/personal_preferences_providers.dart';
 import '../../providers/profile_providers.dart';
 
@@ -52,13 +53,32 @@ Future<void> savePersonalLanguage(WidgetRef ref, Locale? locale, {bool? workspac
   final account = ref.read(personalPreferenceContextProvider).account;
   final controller = ref.read(localeControllerProvider.notifier);
   if (account != null) {
+    // The language of letters and notifications follows the interface
+    // language until the person chose it on its own; then it is never
+    // written from here again.
+    final stored = await ref.read(personalSettingsProvider.future);
+    final follows = DocumentLocaleMode.fromWire(
+            stored.defaults[PersonalPreference.documentLocaleMode]) ==
+        DocumentLocaleMode.follows;
     await ref.read(personalSettingsProvider.notifier).save({
       PersonalPreference.uiLocale: locale?.languageCode ?? '',
-      PersonalPreference.documentLocale: locale?.languageCode ?? '',
+      if (follows) PersonalPreference.documentLocale: locale?.languageCode ?? '',
     }, workspaceOnly: scoped);
   }
   if (!scoped && ref.context.mounted && ref.read(personalPreferenceContextProvider).account == account) await controller.set(locale);
 }
+
+/// The language of letters and notifications, on the account: [language]
+/// (one the app ships) is chosen and stays whatever the interface language
+/// becomes; null follows the interface language again, from its current
+/// value.
+Future<void> saveDocumentLanguage(WidgetRef ref, String? language) =>
+    ref.read(personalSettingsProvider.notifier).save({
+      PersonalPreference.documentLocaleMode:
+          (language == null ? DocumentLocaleMode.follows : DocumentLocaleMode.chosen).wire,
+      PersonalPreference.documentLocale:
+          language ?? ref.read(personalLocaleProvider)?.languageCode ?? '',
+    }, workspaceOnly: false);
 
 Future<void> savePersonalTheme(WidgetRef ref, ThemeMode? mode, {bool? workspaceOnly}) async {
   final bool scoped = workspaceOnly ?? ref.read(workspacePreferenceEditingProvider);

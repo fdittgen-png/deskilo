@@ -4738,6 +4738,9 @@
   "discoveryStartBody": "Geben Sie eine Stadt, eine Leistung oder einen Namen ein.",
   "discoveryStartTitle": "Wonach suchen Sie?",
   "discoveryView": "Ansehen",
+  "documentLanguageFollows": "Folgt der Sprache der App",
+  "documentLanguageHint": "Erinnerungen, Dokumente und Push-Nachrichten werden in dieser Sprache verfasst. Sobald Sie eine wählen, ändert ein Wechsel der App-Sprache sie nicht mehr.",
+  "documentLanguageTitle": "Sprache von Schreiben und Benachrichtigungen",
   "documentsAdd": "Dokument hinzufügen",
   "@documentsAdd": {
     "description": "Workspace document library (#500)"
@@ -10349,6 +10352,7 @@
   "kioskScanQr": "QR-Badge scannen",
   "kioskTapHint": "Tippen Sie auf einen Platz zum Einchecken",
   "kitActionBusy": "Läuft …",
+  "languageAvailableHint": "DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf {fallback}.",
   "languageNameCS": "Tschechisch",
   "@languageNameCS": {
     "description": "#713 - language name in the format picker"

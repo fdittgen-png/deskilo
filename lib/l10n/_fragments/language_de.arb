@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
   "languageTitle": "Sprache",
-  "languageSystemDefault": "Systemstandard"
+  "languageSystemDefault": "Systemstandard",
+  "languageAvailableHint": "DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf {fallback}."
 }

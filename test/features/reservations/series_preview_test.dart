@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/mock_providers.dart' show formatPinOverrides;
 import '../../helpers/pump_app.dart';
 
 final _monday = DateTime(2027, 1, 4, 8);
@@ -54,7 +55,10 @@ Future<bool?> _ask0(WidgetTester tester, SeriesPreviewer previewer) async {
         child: const Text('go'),
       ),
     ),
-    overrides: [seriesPreviewerProvider.overrideWithValue(previewer)],
+    overrides: [
+      ...formatPinOverrides(),
+      seriesPreviewerProvider.overrideWithValue(previewer),
+    ],
   );
   await tester.tap(find.text('go'));
   await tester.pumpAndSettle();
@@ -114,6 +118,7 @@ void main() {
         ),
       ),
       overrides: [
+        ...formatPinOverrides(),
         seriesPreviewerProvider.overrideWithValue(
           _Previewer(2, [_monday.add(const Duration(days: 1))]),
         ),

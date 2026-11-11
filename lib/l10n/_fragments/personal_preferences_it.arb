@@ -2,5 +2,8 @@
   "preferencesWorkspaceOnly": "Solo per questo spazio",
   "preferencesScopeHint": "Lingua, aspetto e formati regionali. Disattivato: modifica i miei valori predefiniti.",
   "preferencesUseDefaults": "Usa i miei valori predefiniti",
-  "preferencesSaveFailed": "Impossibile salvare le preferenze. Riprovi."
+  "preferencesSaveFailed": "Impossibile salvare le preferenze. Riprovi.",
+  "documentLanguageTitle": "Lingua di lettere e notifiche",
+  "documentLanguageFollows": "Segue la lingua dell'app",
+  "documentLanguageHint": "Promemoria, documenti e messaggi push sono redatti in questa lingua. Una volta che ne sceglie una, cambiare la lingua dell'app non la modifica più."
 }

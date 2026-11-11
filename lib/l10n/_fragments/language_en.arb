@@ -7,5 +7,15 @@
   "languageSystemDefault": "System default",
   "@languageSystemDefault": {
     "description": "Language option that follows the device locale instead of an override"
+  },
+  "languageAvailableHint": "DesKilo is available in the languages below. A device set to any other language shows it in {fallback}.",
+  "@languageAvailableHint": {
+    "description": "Text in the app-language dialog saying which languages exist; fallback is the name of the language a device in another language sees",
+    "placeholders": {
+      "fallback": {
+        "type": "String",
+        "example": "English"
+      }
+    }
   }
 }
