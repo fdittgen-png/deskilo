@@ -6,7 +6,6 @@
 import 'dart:async';
 
 import 'package:deskilo/app/shell/snack_scope.dart';
-import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/core/ui/app_snack.dart';
@@ -94,14 +93,12 @@ void main() {
     expect(find.text('Booked'), findsNothing);
   });
 
-  testWidgets('changing persona clears the snack', (tester) async {
+  testWidgets('the shell never creates the Demo session', (tester) async {
+    // The Demo's bar clears on a persona switch or a reset
+    // (demo_bar_mount_test); the shell must not read the Demo's session,
+    // which would build the whole Demo dataset in a live session.
     await pumpHost(tester);
-    container
-        .read(demoSessionControllerProvider.notifier)
-        .viewAs(DemoPersona.admin);
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 500));
-    expect(find.text('Booked'), findsNothing);
+    expect(container.exists(demoSessionControllerProvider), isFalse);
   });
 
   testWidgets('the same context again keeps the snack', (tester) async {
