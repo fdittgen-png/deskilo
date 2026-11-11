@@ -1273,7 +1273,7 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       editable: true,
       choices: null,
       source: 'badge workspace sign-in failure ceiling',
-      note: 'Distinct badges of one workspace with a failed PIN within the badge lockout window. Reaching this ceiling pauses badge sign-in and alerts the owners; one badge alone cannot reach it. May be tightened, never loosened.',
+      note: 'Failed PIN attempts across all badges of one workspace within the badge lockout window. Reaching this ceiling pauses badge sign-in and alerts the owners. May be tightened, never loosened.',
     ),
   ),
   (
