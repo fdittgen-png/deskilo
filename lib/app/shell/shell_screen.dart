@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
+import '../../core/ui/adaptive/window_class.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/money/presentation/widgets/invoice_form_sheet.dart';

@@ -5,5 +5,11 @@
   "payConfigSettlementCostsChanged": "{settlement}: el proveedor cambió sus costes después de registrarse. No se contabilizó nada del nuevo informe.",
   "payConfigSettlementAmountChanged": "{settlement}: el proveedor cambió su importe después de registrarse. No se contabilizó nada del nuevo informe.",
   "payConfigSettlementCurrencyMismatch": "{settlement}: un coste está en otra moneda que la liquidación. No se contabilizó nada.",
-  "payConfigSettlementsReviewUnreadable": "No se pudieron leer las liquidaciones por revisar."
+  "payConfigSettlementsReviewUnreadable": "No se pudieron leer las liquidaciones por revisar.",
+  "eventTypeSettlementReview": "Liquidación por revisar",
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{el proveedor cambió sus costes después de registrarse} amount_changed{el proveedor cambió su importe después de registrarse} currency_mismatch{un coste está en otra moneda que la liquidación} other{el informe difiere de lo registrado}}. No se contabilizó nada; espera revisión.",
+  "payConfigSettlementHandle": "Marcar como tratado",
+  "payConfigSettlementHandleNote": "Qué se hizo",
+  "payConfigSettlementHandledTitle": "Tratados",
+  "payConfigSettlementHandledLine": "{sentence} Tratado: {note}"
 }

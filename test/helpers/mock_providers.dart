@@ -34,6 +34,7 @@ import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
+import 'package:deskilo/core/demo/data/money/demo_settlement_reviews.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
@@ -112,6 +113,7 @@ import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/recorded_payments_providers.dart'
     show recordedPaymentsRepositoryProvider;
+import 'package:deskilo/features/money/providers/settlement_review_providers.dart';
 import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/plan/domain/accessory_repository.dart';
@@ -237,6 +239,8 @@ List<Override> standardTestOverrides({
   RecordedPaymentsRepository? recordedPayments,
   // #3349 — a test of the credit move brings its own; else the Demo's.
   CreditMoveRepository? creditMoves,
+  // #3510 — no settlement report waits for review unless a test brings one.
+  SettlementReviews? settlementReviews,
   FakeMeRepository? me,
   FakeLinkedMeRepository? linkedMe,
   // #2590 — a test of the usage month's preparation brings its own.
@@ -502,6 +506,9 @@ List<Override> standardTestOverrides({
     calendarRepositoryProvider
         .overrideWithValue(calendar ?? FakeCalendarRepository()),
     ..._moneyOverrides(moneyRepo, creditMoves),
+    settlementReviewsRepositoryProvider.overrideWithValue(
+      settlementReviews ?? DemoSettlementReviews.empty(),
+    ),
     // #3587 — the payments the invoicing home's "Received in" reads: the
     // Demo's reader over the same money fake (no server here otherwise).
     if (recordedPayments != null)

@@ -107,6 +107,11 @@ enum EventType {
   /// the personal data admin or an owner; each holder of managePrivacy is told.
   privacyIncident('privacy_incident'),
 
+  /// #3510 — a payment provider's settlement report was refused and kept for
+  /// review (changed after it was recorded, or a cost in another currency);
+  /// each member who may see the finances is told once.
+  settlementReview('settlement_review'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

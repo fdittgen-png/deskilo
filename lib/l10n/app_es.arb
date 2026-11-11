@@ -5966,6 +5966,7 @@
     }
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
+  "eventSettlementReview": "{settlement}: {reason, select, costs_changed{el proveedor cambió sus costes después de registrarse} amount_changed{el proveedor cambió su importe después de registrarse} currency_mismatch{un coste está en otra moneda que la liquidación} other{el informe difiere de lo registrado}}. No se contabilizó nada; espera revisión.",
   "eventSourceNotFound": "No se archivó ningún documento de compra para esta solicitud, o no puede verlo.",
   "eventSystemDecider": "Sistema",
   "eventTypeAdjustment": "Ajuste",
@@ -6025,6 +6026,7 @@
   },
   "eventTypeRoleChange": "Cambio de rol",
   "eventTypeServiceCharge": "Servicio",
+  "eventTypeSettlementReview": "Liquidación por revisar",
   "eventTypeSpaceReservation": "Reservas de espacios enteros",
   "eventTypeSubscriptionChange": "Cambio de suscripción",
   "@eventTypeSubscriptionChange": {
@@ -12684,6 +12686,10 @@
   "payConfigSettlementAmountChanged": "{settlement}: el proveedor cambió su importe después de registrarse. No se contabilizó nada del nuevo informe.",
   "payConfigSettlementCostsChanged": "{settlement}: el proveedor cambió sus costes después de registrarse. No se contabilizó nada del nuevo informe.",
   "payConfigSettlementCurrencyMismatch": "{settlement}: un coste está en otra moneda que la liquidación. No se contabilizó nada.",
+  "payConfigSettlementHandle": "Marcar como tratado",
+  "payConfigSettlementHandleNote": "Qué se hizo",
+  "payConfigSettlementHandledLine": "{sentence} Tratado: {note}",
+  "payConfigSettlementHandledTitle": "Tratados",
   "payConfigSettlementsFetch": "Obtener los pagos",
   "payConfigSettlementsFetched": "{count} pagos registrados",
   "payConfigSettlementsReviewTitle": "Liquidaciones por revisar",

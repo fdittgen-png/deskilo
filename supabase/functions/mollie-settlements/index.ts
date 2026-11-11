@@ -195,12 +195,13 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     }
     url = (((list._links as Row | undefined)?.next as Row | undefined)?.href as string | undefined) ?? null;
   }
-  // Every report of this workspace's Mollie settlements that waits for a
-  // person: this run's refusals and the earlier ones. A failed read is said
+  // Every report of this workspace's Mollie settlements that still waits for
+  // a person (not handled, #3510): this run's refusals and the earlier ones. A failed read is said
   // (null), never an empty list.
   const waiting = await service.from("provider_settlement_reviews")
     .select("settlement_id, reason")
     .eq("workspace_id", workspaceId).eq("provider", "mollie")
+    .is("handled_at", null)
     .order("last_reported_at", { ascending: false })
     .limit(REVIEWS_SHOWN);
   if (waiting.error) console.error("mollie settlement reviews read failed", String(waiting.error));
