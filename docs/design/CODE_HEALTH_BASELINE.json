@@ -262,13 +262,13 @@
 
       "members -> workspace": 51,
 
-      "money -> events": 36,
+      "money -> events": 32,
 
       "money -> plan": 14,
 
       "money -> profile": 9,
 
-      "money -> workspace": 146,
+      "money -> workspace": 143,
 
       "plan -> money": 3,
 
@@ -566,19 +566,9 @@
 
       "lib/features/money/presentation/widgets/invoice_overview.dart": 1,
 
-      "lib/features/money/presentation/widgets/invoice_stage_strip.dart": 2,
-
-      "lib/features/money/presentation/widgets/invoicing_summary_bar.dart": 1,
-
       "lib/features/money/presentation/widgets/money_faces_view.dart": 1,
 
       "lib/features/money/presentation/widgets/my_invoices_list.dart": 1,
-
-      "lib/features/money/presentation/widgets/open_invoice_card.dart": 1,
-
-      "lib/features/money/presentation/widgets/open_invoice_subtitle.dart": 1,
-
-      "lib/features/money/presentation/widgets/open_invoices_tab.dart": 1,
 
       "lib/features/money/presentation/widgets/report_layout_preview.dart": 1,
 

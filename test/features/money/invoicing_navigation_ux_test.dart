@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Invoicing navigation separates personal finances from workspace setup and
-// keeps each process stage reachable on a narrow, large-text screen.
+// keeps the invoicing home's figures, filters and lines reachable on a
+// narrow, large-text screen.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/presentation/invoice_journey.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -19,6 +20,7 @@ Future<void> _pump(
   required FakeMoneyRepository money,
   Map<String, dynamic> flags = const {},
   Set<WorkspacePermission>? permissions,
+  bool openMore = true,
 }) async {
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
@@ -43,6 +45,10 @@ Future<void> _pump(
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
+  // #3587 — the tools are entries of the worded More menu.
+  if (!openMore) return;
+  await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -55,30 +61,45 @@ void main() {
       memberId: 'member-1',
       period: kTestPeriod,
     );
-    await _pump(tester, money: money);
+    await _pump(tester, money: money, openMore: false);
     tester.view.physicalSize = const Size(360, 850);
     tester.platformDispatcher.textScaleFactorTestValue = 2.0;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-    await tester.pump();
-    expect(tester.takeException(), isNull);
-    expect(find.byKey(const ValueKey('invoice-stages-scroll')), findsOneWidget);
-    final tile = tester.getSize(
-      find.byKey(const ValueKey('invoice-stage-issue')),
-    );
-    expect(tile.width, greaterThanOrEqualTo(150));
-    await tester.drag(
-      find.byKey(const ValueKey('invoice-stages-scroll')),
-      const Offset(-500, 0),
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-stage-closed')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
-    expect(find.byKey(const ValueKey('invoice-count')), findsOneWidget);
-    expect(
-      find.byKey(const ValueKey('invoice-archive-filters-scroll')),
-      findsOneWidget,
+    // #3587 — the home in place of the stage strip: what is owed, the
+    // list's filters and the switch to one line per invoice, each
+    // reachable at 2x text on a phone without anything overflowing.
+    final home = find.byKey(const ValueKey('invoicing-home'));
+    expect(home, findsOneWidget);
+    expect(find.byKey(const ValueKey('invoicing-owed')), findsOneWidget);
+    final scrollable =
+        find.descendant(of: home, matching: find.byType(Scrollable)).first;
+    Future<void> reach(Finder target) async {
+      await tester.scrollUntilVisible(target, 200, scrollable: scrollable);
+      await tester.ensureVisible(target);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    }
+
+    await reach(find.byKey(const ValueKey('invoicing-filter-paid')));
+    await tester.tap(find.byKey(const ValueKey('invoicing-filter-paid')));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    await tester.tap(find.byKey(const ValueKey('invoicing-filter-open')));
+    await tester.pumpAndSettle();
+    final byInvoice = find.descendant(
+      of: find.byKey(const ValueKey('invoicing-view')),
+      matching: find.text('Invoices'),
     );
+    await reach(byInvoice);
+    await tester.tap(byInvoice);
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    final row =
+        find.byKey(ValueKey('invoicing-row-${money.invoices.single.id}'));
+    await reach(row);
+    expect(row, findsOneWidget);
   });
 
   testWidgets(

@@ -12,6 +12,10 @@ import 'kit_metrics.dart';
 import 'status_chip.dart';
 import 'two_line_row.dart';
 
+/// How the flow ended, as the icon and its colour say it: everything went
+/// through ([ok]), some did ([partial]) or none did ([failed]).
+enum ResultTone { ok, partial, failed }
+
 /// One line of a result: what, the detail, and (when done) the word for
 /// what happened to it.
 typedef ResultLine = ({String title, String detail, String outcome});
@@ -27,6 +31,9 @@ class ResultPage extends StatelessWidget {
     required this.staysNote,
     required this.doneLabel,
     required this.onDone,
+    this.tone,
+    this.secondaryAction,
+    this.notDoneActions = const [],
   });
 
   final String title;
@@ -42,12 +49,29 @@ class ResultPage extends StatelessWidget {
   final String doneLabel;
   final VoidCallback onDone;
 
+  /// What the icon says. By default something done is a check in the ok tone
+  /// (the list says what failed) and nothing done is the alert; a flow that
+  /// wants the middle says [ResultTone.partial] (a warning).
+  final ResultTone? tone;
+
+  /// An action per [notDone] line, by position ("Fix"); null or missing: none.
+  final List<Widget?> notDoneActions;
+
+  /// A second action beside Done ("Retry for these"), tonal, never filled.
+  final Widget? secondaryAction;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final tokens = PersonalTheme.of(context);
-    Widget line(ResultLine l, {required bool ok}) => Padding(
+    final shown = tone ?? (done.isNotEmpty ? ResultTone.ok : ResultTone.failed);
+    final (icon, color) = switch (shown) {
+      ResultTone.ok => (Icons.check_circle, tokens.success),
+      ResultTone.partial => (Icons.warning_amber_rounded, tokens.warning),
+      ResultTone.failed => (Icons.error_outline, tokens.danger),
+    };
+    Widget line(ResultLine l, {required bool ok, Widget? action}) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         children: [
@@ -70,6 +94,7 @@ class ResultPage extends StatelessWidget {
             ),
           ),
           if (ok) StatusChip(label: l.outcome, tone: StatusTone.ok),
+          ?action,
         ],
       ),
     );
@@ -79,13 +104,7 @@ class ResultPage extends StatelessWidget {
           child: ListView(
             padding: AppSpacing.mdAll,
             children: [
-              // Something was done: a check in the ok tone, even when part
-              // failed (the list says what); nothing was done: the alert.
-              Icon(
-                done.isNotEmpty ? Icons.check_circle : Icons.error_outline,
-                size: 56,
-                color: done.isNotEmpty ? tokens.success : tokens.danger,
-              ),
+              Icon(icon, size: 56, color: color),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 title,
@@ -104,7 +123,18 @@ class ResultPage extends StatelessWidget {
                 const SizedBox(height: AppSpacing.md),
                 Text(notDoneHeading, style: theme.textTheme.titleSmall),
                 const SizedBox(height: AppSpacing.sm),
-                RowList(rows: [for (final l in notDone) line(l, ok: false)]),
+                RowList(
+                  rows: [
+                    for (var i = 0; i < notDone.length; i++)
+                      line(
+                        notDone[i],
+                        ok: false,
+                        action: i < notDoneActions.length
+                            ? notDoneActions[i]
+                            : null,
+                      ),
+                  ],
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   staysNote,
@@ -116,6 +146,7 @@ class ResultPage extends StatelessWidget {
         ),
         BottomActionBar(
           actions: [
+            ?secondaryAction,
             FilledButton(
               key: const ValueKey('result-done'),
               onPressed: onDone,

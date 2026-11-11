@@ -23284,6 +23284,168 @@ abstract class AppLocalizations {
   /// **'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
   String get invoiceMissingVies;
 
+  /// #3587 R1-e: the select-all row of the month list
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get invoiceMonthAll;
+
+  /// #3587 R1-e: one notice: the business's own essentials missing for everyone
+  ///
+  /// In en, this message translates to:
+  /// **'Your business details are incomplete: {missing}'**
+  String invoiceMonthBusinessFix(String missing);
+
+  /// #3587 R1-e: look again for the customers whose answer was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get invoiceMonthCheckAgain;
+
+  /// #3587 R1-e: leave the result page
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get invoiceMonthDone;
+
+  /// #3587 R1-e: opens the place where a missing detail is completed
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get invoiceMonthFix;
+
+  /// #3587 R1-e: chip on an invoice a validation policy holds
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for a validation'**
+  String get invoiceMonthHeld;
+
+  /// #3587 R1-e: the one filled action of the month flow, with the amount it issues
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}'**
+  String invoiceMonthIssue(int count, String amount);
+
+  /// #3587 R1-e: chip on an issued invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get invoiceMonthIssued;
+
+  /// #3587 R1-e: the issue button while it works
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing…'**
+  String get invoiceMonthIssuing;
+
+  /// #3587 R1-e: said when the person tries to leave while invoices are being issued
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing is running. Wait for it to finish.'**
+  String get invoiceMonthLeaveBlocked;
+
+  /// #3587 R1-e: status of a customer whose details block the invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a fix'**
+  String get invoiceMonthNeedsFix;
+
+  /// #3587 R1-e: how many listed customers cannot be invoiced until fixed
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 needs a fix} other{{count} need a fix}}'**
+  String invoiceMonthNeedsFixCount(int count);
+
+  /// #3587 R1-e: caption of a customer whose details block the invoice: the status and what is missing, as one message
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a fix: {missing}'**
+  String invoiceMonthNeedsFixLine(String missing);
+
+  /// #3587 R1-e: heading of what the server did not issue
+  ///
+  /// In en, this message translates to:
+  /// **'Not done'**
+  String get invoiceMonthNotDone;
+
+  /// #3587 R1-e: reason line when the server refused without a usable reason
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be issued. Try again.'**
+  String get invoiceMonthNotIssued;
+
+  /// #3587 R1-e: the line that says an issued invoice is immutable
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice can no longer be edited; a mistake is corrected with a replacement.'**
+  String get invoiceMonthNote;
+
+  /// #3587 R1-e: tooltip: preview a customer's proforma before issuing
+  ///
+  /// In en, this message translates to:
+  /// **'Preview the proforma'**
+  String get invoiceMonthProforma;
+
+  /// #3587 R1-e: result title when nothing was issued
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice issued'**
+  String get invoiceMonthResultNone;
+
+  /// #3587 R1-e: result page subtitle when nothing was issued
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice exists yet for what is listed below.'**
+  String get invoiceMonthResultNoneSubtitle;
+
+  /// #3587 R1-e: result title when only some invoices were issued
+  ///
+  /// In en, this message translates to:
+  /// **'{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}'**
+  String invoiceMonthResultPartial(int issued, int total);
+
+  /// #3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}'**
+  String invoiceMonthResultSubtitle(int count);
+
+  /// #3587 R1-e: result page title when something was issued
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 invoice issued} other{{count} invoices issued}}'**
+  String invoiceMonthResultTitle(int count);
+
+  /// #3587 R1-e: retry only the customers the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Retry for these'**
+  String get invoiceMonthRetry;
+
+  /// #3587 R1-e: how many customers are selected of those listed, and their total
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}'**
+  String invoiceMonthSelected(int count, int total, String amount);
+
+  /// #3587 R1-e: where what was not issued stays
+  ///
+  /// In en, this message translates to:
+  /// **'What was not done stays in To do.'**
+  String get invoiceMonthStays;
+
+  /// #3587 R1-e: title of the Invoice-the-month flow
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {month}'**
+  String invoiceMonthTitle(String month);
+
+  /// #3587 R1-e: reason line when the answer was lost
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be confirmed: it may exist. Check again.'**
+  String get invoiceMonthUnknown;
+
   /// Open tab empty state
   ///
   /// In en, this message translates to:
@@ -23301,6 +23463,384 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{days} days'**
   String invoiceOpenAge(int days);
+
+  /// #3587 message after Confirm when the declared payment still waits for other approvers
+  ///
+  /// In en, this message translates to:
+  /// **'Your approval is recorded; it waits for the others.'**
+  String get invoicePageApprovalRecorded;
+
+  /// #3587 R1-d the collapsed validation trail under the story
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals of the payment'**
+  String get invoicePageApprovals;
+
+  /// #3587 R1-d summary of an invoice issued by mistake, no replacement yet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled as issued by mistake · not replaced yet'**
+  String get invoicePageCancelledNotReplaced;
+
+  /// #3587 R1-d summary of an invoice issued by mistake and replaced
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled · replaced by {number}'**
+  String invoicePageCancelledReplaced(String number);
+
+  /// #3587 R1-d closes the side panel
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get invoicePageClose;
+
+  /// #3587 R1-d bottom bar
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm payment'**
+  String get invoicePageConfirm;
+
+  /// #3587 R1-d message after Confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmed.'**
+  String get invoicePageConfirmed;
+
+  /// #3587 R1-d message after Confirm when the match needs a second approval
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmed. The match waits for a second approval.'**
+  String get invoicePageConfirmedAwaitsApproval;
+
+  /// #3587 R1-d message after Confirm when the payment settled the invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmed and matched to this invoice.'**
+  String get invoicePageConfirmedMatched;
+
+  /// #3587 after Not received when the decision still waits for other approvers
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer is recorded; it waits for the others.'**
+  String get invoicePageDecisionRecorded;
+
+  /// #3587 when a decision on a declared payment is refused and no known refusal applies
+  ///
+  /// In en, this message translates to:
+  /// **'Your decision on this payment was not recorded.'**
+  String get invoicePageDecisionRefused;
+
+  /// #3587 R1-d the lines card's label
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get invoicePageInvoiced;
+
+  /// #3587 R1-d message after Not received
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as not received.'**
+  String get invoicePageMarkedNotReceived;
+
+  /// #3587 R1-d bottom bar
+  ///
+  /// In en, this message translates to:
+  /// **'Match the payment'**
+  String get invoicePageMatch;
+
+  /// #3587 R1-d when the match after a confirmation is refused and the server gave no words
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be matched to this invoice.'**
+  String get invoicePageMatchRefused;
+
+  /// #3587 R1-d More: corrections
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this invoice, issued by mistake'**
+  String get invoicePageMoreCancel;
+
+  /// #3587 R1-d More: section
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections'**
+  String get invoicePageMoreCorrections;
+
+  /// #3587 R1-d More: section
+  ///
+  /// In en, this message translates to:
+  /// **'Document'**
+  String get invoicePageMoreDocument;
+
+  /// #3587 R1-d More: document
+  ///
+  /// In en, this message translates to:
+  /// **'Download the PDF'**
+  String get invoicePageMoreDownload;
+
+  /// #3587 R1-d More: document
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice'**
+  String get invoicePageMoreEInvoice;
+
+  /// #3587 R1-d More: reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Hold reminders'**
+  String get invoicePageMoreHold;
+
+  /// #3587 R1-d More: corrections, an invoice cancelled as issued by mistake
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the replacement'**
+  String get invoicePageMoreIssueReplacement;
+
+  /// #3587 train 2 part C: the invoice page (invoicePageMoreMatch)
+  ///
+  /// In en, this message translates to:
+  /// **'Match a payment'**
+  String get invoicePageMoreMatch;
+
+  /// #3587 train 2 part C: the invoice page (invoicePageMorePayment)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get invoicePageMorePayment;
+
+  /// #3587 R1-d More: document
+  ///
+  /// In en, this message translates to:
+  /// **'View the PDF'**
+  String get invoicePageMoreQuickView;
+
+  /// #3587 R1-d More: reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Release the hold'**
+  String get invoicePageMoreRelease;
+
+  /// #3587 train 2 part C: the invoice page (invoicePageMoreRemind)
+  ///
+  /// In en, this message translates to:
+  /// **'Share a reminder'**
+  String get invoicePageMoreRemind;
+
+  /// #3587 R1-d More: section
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get invoicePageMoreReminders;
+
+  /// #3587 R1-d More: corrections
+  ///
+  /// In en, this message translates to:
+  /// **'Correct with a replacement'**
+  String get invoicePageMoreReplace;
+
+  /// #3587 R1-d More: document
+  ///
+  /// In en, this message translates to:
+  /// **'Share the PDF'**
+  String get invoicePageMoreShare;
+
+  /// #3587 R1-d More: corrections
+  ///
+  /// In en, this message translates to:
+  /// **'Write off the rest'**
+  String get invoicePageMoreWriteOff;
+
+  /// #3587 R1-d bottom bar
+  ///
+  /// In en, this message translates to:
+  /// **'Not received'**
+  String get invoicePageNotReceived;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for a second approval'**
+  String get invoicePageNowApproval;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the customer to confirm'**
+  String get invoicePageNowCustomer;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Check your bank, then confirm'**
+  String get invoicePageNowDeclared;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String invoicePageNowDue(String date);
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Every reminder is sent. Call, hold or write off.'**
+  String get invoicePageNowEveryReminder;
+
+  /// #3587 now-line on a late invoice whose every reminder is sent, when no write-off is offered
+  ///
+  /// In en, this message translates to:
+  /// **'Every reminder is sent. Call or hold.'**
+  String get invoicePageNowEveryReminderNoWriteOff;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'On hold: no reminder goes out until you release it'**
+  String get invoicePageNowHold;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'The business owes this refund'**
+  String get invoicePageNowRefund;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'The e-invoice was rejected: fix it and send it again'**
+  String get invoicePageNowRejected;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level} is due'**
+  String invoicePageNowReminder(int level);
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'A payment is on the account: match it'**
+  String get invoicePageNowToMatch;
+
+  /// #3587 R1-d story's now line
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for payment'**
+  String get invoicePageNowWaiting;
+
+  /// #3587 R1-d under the amount
+  ///
+  /// In en, this message translates to:
+  /// **'open of {total} · due {date}'**
+  String invoicePageOpenOf(String total, String date);
+
+  /// #3587 R1-d under the amount, no due date
+  ///
+  /// In en, this message translates to:
+  /// **'open of {total}'**
+  String invoicePageOpenOfUndated(String total);
+
+  /// #3587 R1-d under the amount of a paid invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Paid in full'**
+  String get invoicePagePaidInFull;
+
+  /// #3587 R1-d the document card
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice PDF'**
+  String get invoicePagePdf;
+
+  /// #3587 R1-d the document card's line
+  ///
+  /// In en, this message translates to:
+  /// **'as the customer received it'**
+  String get invoicePagePdfHint;
+
+  /// #3587 R1-d bottom bar on a credit note
+  ///
+  /// In en, this message translates to:
+  /// **'Record the refund'**
+  String get invoicePageRefund;
+
+  /// #3587 R1-d summary of an invoice whose remainder was written off
+  ///
+  /// In en, this message translates to:
+  /// **'Closed · remainder of {amount} written off'**
+  String invoicePageRemainderWrittenOff(String amount);
+
+  /// #3587 R1-d the collapsed reminder history under the story
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Reminders (1)} other{Reminders ({count})}}'**
+  String invoicePageReminders(int count);
+
+  /// #3587 R1-d bottom bar
+  ///
+  /// In en, this message translates to:
+  /// **'Share reminder {level}'**
+  String invoicePageShareReminder(int level);
+
+  /// #3587 R1-d story line
+  ///
+  /// In en, this message translates to:
+  /// **'{customer} says it is paid'**
+  String invoicePageStoryDeclared(String customer);
+
+  /// #3587 R1-d story line
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get invoicePageStoryDue;
+
+  /// #3587 R1-d story line; no e-mail is sent in release 1
+  ///
+  /// In en, this message translates to:
+  /// **'Issued · the customer sees it in their account'**
+  String get invoicePageStoryIssued;
+
+  /// #3587 R1-d story line
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get invoicePageStoryPaid;
+
+  /// #3587 R1-d story line
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder {level} sent'**
+  String invoicePageStoryReminder(int level);
+
+  /// #3587 R1-d the invoice page's title
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number}'**
+  String invoicePageTitle(String number);
+
+  /// #3587 R1-d the story's last line's day
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get invoicePageToday;
+
+  /// #3587 the invoice page of an invoice that can no longer be read
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice can no longer be read.'**
+  String get invoicePageUnreadable;
+
+  /// #3587 R1-d opens the PDF
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get invoicePageView;
+
+  /// #3587 R1-d the story card's label
+  ///
+  /// In en, this message translates to:
+  /// **'What happened'**
+  String get invoicePageWhatHappened;
 
   /// PDF annex: ledger movements table title
   ///
@@ -23944,17 +24484,521 @@ abstract class AppLocalizations {
   /// **'No invoices yet.'**
   String get invoicesEmpty;
 
-  /// invoicing hub vs my finances
+  /// #3587 a customer line's action: confirm a declared payment
   ///
   /// In en, this message translates to:
-  /// **'You are issuing and chasing invoices for the whole workspace. Your own invoices and payments are in Me › My finances.'**
-  String get invoicingBanner;
+  /// **'Confirm'**
+  String get invoicingActionConfirm;
+
+  /// #3587 a customer line's action: match a received payment
+  ///
+  /// In en, this message translates to:
+  /// **'Match'**
+  String get invoicingActionMatch;
+
+  /// #3587 a customer line's action: share a reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Remind'**
+  String get invoicingActionRemind;
+
+  /// #3587 To do without entries
+  ///
+  /// In en, this message translates to:
+  /// **'You are all caught up.'**
+  String get invoicingCaughtUp;
+
+  /// #3587 table column
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get invoicingColCustomer;
+
+  /// #3587 table column
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get invoicingColDue;
+
+  /// #3587 table column
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get invoicingColInvoice;
+
+  /// #3587 table column: the oldest invoice's state
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest'**
+  String get invoicingColOldest;
+
+  /// #3587 table column: what is still owed
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get invoicingColOpen;
+
+  /// #3587 table column
+  ///
+  /// In en, this message translates to:
+  /// **'Owes'**
+  String get invoicingColOwes;
+
+  /// #3587 table column
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get invoicingColStatus;
+
+  /// #3587 above the list: customers and invoices it holds
+  ///
+  /// In en, this message translates to:
+  /// **'{customers} · {invoices}'**
+  String invoicingCountLine(String customers, String invoices);
+
+  /// #3587 how many customers
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 customer} other{{count} customers}}'**
+  String invoicingCustomerCount(int count);
+
+  /// #3587 lateness
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day late} other{{days} days late}}'**
+  String invoicingDaysLate(int days);
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{Due in 1 day} other{Due in {days} days}}'**
+  String invoicingDueIn(int days);
+
+  /// #3587 an invoice line's due date
+  ///
+  /// In en, this message translates to:
+  /// **'due {date}'**
+  String invoicingDueOn(String date);
+
+  /// #3587 the empty state's line
+  ///
+  /// In en, this message translates to:
+  /// **'Issue your first invoice, or invoice the month when there is usage to bill.'**
+  String get invoicingEmptyBody;
+
+  /// #3587 the empty state's button
+  ///
+  /// In en, this message translates to:
+  /// **'New invoice'**
+  String get invoicingEmptyNew;
+
+  /// #3587 a business with no invoice at all
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices yet'**
+  String get invoicingEmptyTitle;
+
+  /// #3587 after the lateness on a customer line
+  ///
+  /// In en, this message translates to:
+  /// **'every reminder sent'**
+  String get invoicingEveryReminderSent;
+
+  /// #3587 list filter
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get invoicingFilterOpen;
+
+  /// #3587 list filter
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get invoicingFilterOverdue;
+
+  /// #3587 list filter: paid and closed
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get invoicingFilterPaid;
+
+  /// #3587 how many invoices
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 invoice} other{{count} invoices}}'**
+  String invoicingInvoiceCount(int count);
+
+  /// #3587 the month's figure
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced in {month}'**
+  String invoicingInvoicedIn(String month);
+
+  /// #3587 the collapsed line holding the legal notices
+  ///
+  /// In en, this message translates to:
+  /// **'Legal notes'**
+  String get invoicingLegalNotes;
+
+  /// #3587 More menu
+  ///
+  /// In en, this message translates to:
+  /// **'How invoicing works'**
+  String get invoicingMoreHow;
+
+  /// #3587 More menu: the person's own invoices as a member
+  ///
+  /// In en, this message translates to:
+  /// **'My own invoices'**
+  String get invoicingMoreMine;
+
+  /// #3587 More menu
+  ///
+  /// In en, this message translates to:
+  /// **'Paid and closed invoices'**
+  String get invoicingMorePaid;
+
+  /// #3587 More menu
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice register'**
+  String get invoicingMoreRegister;
+
+  /// #3587 More menu
+  ///
+  /// In en, this message translates to:
+  /// **'Regroup invoices into one'**
+  String get invoicingMoreRegroup;
+
+  /// #3587 More menu
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice settings'**
+  String get invoicingMoreSettings;
+
+  /// #3587 More menu
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice PDF template'**
+  String get invoicingMoreTemplate;
+
+  /// #3587 top bar: start a new invoice
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get invoicingNew;
+
+  /// #3587 empty filter
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here.'**
+  String get invoicingNothingHere;
+
+  /// #3587 empty search
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches “{query}”.'**
+  String invoicingNothingMatches(String query);
+
+  /// #3587 empty filter
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is overdue.'**
+  String get invoicingNothingOverdue;
+
+  /// #3587 empty filter
+  ///
+  /// In en, this message translates to:
+  /// **'No payment waits for you.'**
+  String get invoicingNothingToConfirm;
+
+  /// #3587 the owed card's label
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to you'**
+  String get invoicingOwed;
+
+  /// #3587 owed bucket
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet due'**
+  String get invoicingOwedNotYetDue;
+
+  /// #3587 owed bucket
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get invoicingOwedOverdue;
+
+  /// #3587 the month's figure: money received
+  ///
+  /// In en, this message translates to:
+  /// **'Received in {month}'**
+  String invoicingReceivedIn(String month);
+
+  /// #3587 the To do card's last line, automatic reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders go out by themselves, in the app.'**
+  String get invoicingRemindersAutomatic;
+
+  /// #3587 the To do card's last line, reminders by hand
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are shared by hand.'**
+  String get invoicingRemindersByHand;
+
+  /// #3587 opens the reminder rules
+  ///
+  /// In en, this message translates to:
+  /// **'Rules'**
+  String get invoicingRules;
+
+  /// #3587 top bar: open the search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get invoicingSearch;
+
+  /// #3587 search field hint
+  ///
+  /// In en, this message translates to:
+  /// **'A customer or a number'**
+  String get invoicingSearchHint;
+
+  /// #3587 one line when a source failed; no figure it fed is shown
+  ///
+  /// In en, this message translates to:
+  /// **'{source} could not be read.'**
+  String invoicingSourceFailed(String source);
+
+  /// #3587 a source name: invoices whose reminders are on hold
+  ///
+  /// In en, this message translates to:
+  /// **'Held reminders'**
+  String get invoicingSourceHolds;
+
+  /// #3587 a source name: the payments matched to invoices
+  ///
+  /// In en, this message translates to:
+  /// **'Payment matches'**
+  String get invoicingSourceMatches;
+
+  /// #3587 a source name
+  ///
+  /// In en, this message translates to:
+  /// **'Payment history'**
+  String get invoicingSourcePayments;
+
+  /// #3587 a source name
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder history'**
+  String get invoicingSourceReminders;
+
+  /// #3587 a source name
+  ///
+  /// In en, this message translates to:
+  /// **'The month to invoice'**
+  String get invoicingSourceToInvoice;
+
+  /// #3587 a source name: the e-invoice transmission statuses
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice transmissions'**
+  String get invoicingSourceTransmissions;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the customer to confirm'**
+  String get invoicingStatusAwaitingCustomer;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get invoicingStatusCancelled;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Credited'**
+  String get invoicingStatusCredited;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get invoicingStatusDraft;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get invoicingStatusDueToday;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day late} other{{days} days late}} · every reminder sent'**
+  String invoicingStatusEveryReminderSent(int days);
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get invoicingStatusOnHold;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date}'**
+  String invoicingStatusPaid(String date);
+
+  /// #3587 status without a day
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get invoicingStatusPaidUndated;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid · {amount} open'**
+  String invoicingStatusPartlyPaid(String amount);
+
+  /// #3587 status: a credit note to pay out
+  ///
+  /// In en, this message translates to:
+  /// **'Refund owed'**
+  String get invoicingStatusRefundOwed;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get invoicingStatusRefunded;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Regrouped in {number}'**
+  String invoicingStatusRegrouped(String number);
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'E-invoice rejected'**
+  String get invoicingStatusRejected;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =1{1 day late} other{{days} days late}} · reminder {level} sent'**
+  String invoicingStatusReminderSent(int days, int level);
+
+  /// #3587 status: the customer declared a payment
+  ///
+  /// In en, this message translates to:
+  /// **'Says paid {date}'**
+  String invoicingStatusSaysPaid(String date);
+
+  /// #3587 status: a declared payment without a day
+  ///
+  /// In en, this message translates to:
+  /// **'Says it is paid'**
+  String get invoicingStatusSaysPaidUndated;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Waits for a second approval'**
+  String get invoicingStatusSecondApproval;
+
+  /// #3587 status
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received · to match'**
+  String get invoicingStatusToMatch;
+
+  /// #3587 the To do card's heading
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get invoicingTodo;
+
+  /// #3587 To do: declared payments
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm payments'**
+  String get invoicingTodoConfirm;
+
+  /// #3587 To do: drafts
+  ///
+  /// In en, this message translates to:
+  /// **'Issue drafts'**
+  String get invoicingTodoDrafts;
+
+  /// #3587 a To do entry's button for a failure
+  ///
+  /// In en, this message translates to:
+  /// **'Fix'**
+  String get invoicingTodoFix;
+
+  /// #3587 To do: received payments to match
+  ///
+  /// In en, this message translates to:
+  /// **'Match payments'**
+  String get invoicingTodoMatch;
+
+  /// #3587 To do: invoice the month
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {month}'**
+  String invoicingTodoMonth(String month);
+
+  /// #3587 To do: credit notes owed
+  ///
+  /// In en, this message translates to:
+  /// **'Pay out refunds'**
+  String get invoicingTodoRefunds;
+
+  /// #3587 To do: rejected e-invoices
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 e-invoice was rejected} other{{count} e-invoices were rejected}}'**
+  String invoicingTodoRejected(int count);
+
+  /// #3587 To do: the reminder queue (by hand only)
+  ///
+  /// In en, this message translates to:
+  /// **'Share reminders by hand'**
+  String get invoicingTodoReminders;
+
+  /// #3587 a To do entry's button
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get invoicingTodoReview;
 
   /// invoicing hub vs my finances
   ///
   /// In en, this message translates to:
   /// **'Invoicing tools'**
   String get invoicingTools;
+
+  /// #3587 retry a failed source
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get invoicingTryAgain;
+
+  /// #3587 list view: one line per customer
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get invoicingViewCustomers;
 
   /// Journal export (#2370): roles the posting engine could not resolve
   ///
@@ -37566,7 +38610,7 @@ abstract class AppLocalizations {
   /// #1922 reminder evidence: reminderHistoryLine
   ///
   /// In en, this message translates to:
-  /// **'Level {level} · {origin} · {date}'**
+  /// **'Reminder {level} · {origin} · {date}'**
   String reminderHistoryLine(int level, String origin, String date);
 
   /// #1922 reminder evidence: reminderHistoryRefresh
