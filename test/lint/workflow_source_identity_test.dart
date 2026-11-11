@@ -208,10 +208,10 @@ void main() {
               'a cancelled push marks its commit as failed, and a bare '
               '`true` cancels a dispatch or a release someone started on '
               'purpose');
-      if (_on(w).containsKey('push') && _on(w).containsKey('schedule')) {
+      if (stem == 'quality') {
         expect('${block['group']}', contains(_manualApart),
             reason: '$stem: the nightly and a dispatched run keep a group '
-                'of their own, so a waiting push never replaces them');
+                'of their own, so a waiting push never takes their place');
       }
     }
     final train = _workflow('release-train.yml')['concurrency'] as YamlMap;
