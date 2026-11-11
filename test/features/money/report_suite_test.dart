@@ -8,6 +8,7 @@ import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
+import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
 import 'package:deskilo/features/money/presentation/report_facts_of.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
@@ -172,6 +173,41 @@ void main() {
     expect(agreement!.header, contains('Financial agreement'));
     // The invoice's own bands stayed untouched.
     expect(money.pdfTemplate.invoiceBands.hasBands, isFalse);
+  });
+
+  // #3680 — the agreement awaits its sources: one that did not answer ends
+  // in the read-failed message with Retry, never an uncaught error and never
+  // a document; Retry prints it once the source answers.
+  testWidgets('a failed source ends in the message with Retry, not in a '
+      'document', (tester) async {
+    var answering = false;
+    await pumpInvoices(tester, money: await seededMoney(), overrides: [
+      servicesProvider.overrideWith((ref) async {
+        if (!answering) throw StateError('offline');
+        return const <ServiceItem>[];
+      }),
+    ]);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('money-face-documents')));
+    await tester.pumpAndSettle();
+    final agreement = find.byKey(const ValueKey('agreement-report-button'));
+    await tester.ensureVisible(agreement);
+    await tester.tap(agreement);
+    await tester.pumpAndSettle();
+    expect(
+        find.descendant(
+            of: find.byType(SnackBar),
+            matching: find.text('This could not be loaded. Try again.')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('member-doc-quick')), findsNothing);
+    expect(tester.takeException(), isNull);
+
+    answering = true;
+    await tester.tap(find.byKey(const ValueKey('print-read-retry')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('member-doc-quick')), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('the Money tab offers the self-service documents with '

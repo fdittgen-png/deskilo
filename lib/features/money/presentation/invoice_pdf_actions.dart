@@ -17,10 +17,12 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/print_or_retry.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
+import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_documents.dart';
 import 'report_defaults.dart';
@@ -102,6 +104,14 @@ Future<void> downloadInvoicePdf(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
+) =>
+    printOrRetry(context, 'downloadInvoicePdf', () => _downloadInvoicePdf(context, ref, invoice),
+        refresh: () => ref.invalidate(invoicesProvider));
+
+Future<void> _downloadInvoicePdf(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
 ) async {
   final l10n = context.l10n;
   final annexes = await _askRegroupedAnnexes(context, ref, invoice);
@@ -143,6 +153,15 @@ Future<void> downloadInvoicePdf(
 /// Renders through the workspace template; an uncustomized template
 /// falls back to the default bands so the quick view always works.
 Future<void> quickViewInvoice(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  bool proforma = false,
+}) =>
+    printOrRetry(context, 'quickViewInvoice', () => _quickViewInvoice(context, ref, invoice, proforma: proforma),
+        refresh: () => ref.invalidate(invoicesProvider));
+
+Future<void> _quickViewInvoice(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
@@ -219,6 +238,14 @@ Future<void> quickViewInvoice(
 
 
 Future<void> shareInvoicePdf(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
+) =>
+    printOrRetry(context, 'shareInvoicePdf', () => _shareInvoicePdf(context, ref, invoice),
+        refresh: () => ref.invalidate(invoicesProvider));
+
+Future<void> _shareInvoicePdf(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,

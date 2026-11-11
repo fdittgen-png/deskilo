@@ -4,6 +4,8 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/ui/print_or_retry.dart';
+import '../../workspace/providers/member_display_providers.dart';
 import 'accounting_export_run.dart';
 
 /// THE ACCOUNTING EXPORT (0074, extended by #669).
@@ -27,4 +29,6 @@ Future<void> exportAccountingFile(
   WidgetRef ref,
   List<Invoice> invoices, {
   required String label,
-}) => AccountingExportRun(context, ref, invoices, label: label).start();
+}) => printOrRetry(context, 'accounting export',
+    () => AccountingExportRun(context, ref, invoices, label: label).start(),
+    refresh: () => ref.invalidate(memberNamesProvider));

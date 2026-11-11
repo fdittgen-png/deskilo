@@ -13,6 +13,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderOrFamily;
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -39,6 +40,7 @@ import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
+import '../providers/usage_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
@@ -147,6 +149,29 @@ Future<void> warmLetterDocProviders(WidgetRef ref, String docId) async {
     });
   }
   await quiet(() => ref.read(memberNamesProvider.future));
+}
+
+/// #3680 — what Retry re-reads after a letter's source did not answer: the
+/// same sources [warmLetterDocProviders] reads, so the next attempt asks
+/// them again instead of meeting the remembered failure.
+void refreshLetterDocSources(WidgetRef ref, String docId) {
+  final sources = <ProviderOrFamily>[
+    invoicePdfTemplateProvider,
+    memberNamesProvider,
+    if (docId == 'agreement' || docId == 'workspace') ...[
+      feeBandsProvider,
+      servicesProvider,
+      levelsProvider,
+      floorPlanProvider,
+    ],
+    if (docId == 'agreement') ...[packagesProvider, accessoriesProvider],
+    if (docId == 'workspace') ...[workspaceMembersProvider, openWeekdaysProvider],
+    if (docId == 'payments') ...[myLedgerProvider, eventsProvider],
+    if (docId == 'usage') ...[memberStatementProvider, usageReadProvider],
+  ];
+  for (final source in sources) {
+    ref.invalidate(source);
+  }
 }
 
 /// Renders letter document [docId] through the workspace's template
