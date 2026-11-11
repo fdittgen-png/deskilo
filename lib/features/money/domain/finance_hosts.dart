@@ -63,6 +63,10 @@ bool _same(List<String> a, List<String> b) {
 /// Where one connected host's read stands.
 enum FinanceHostStatus { reading, answered, failed }
 
+/// #3682 — the source recorded as not answering when the list of my
+/// connected hosts itself could not be read: never "I have none".
+const connectedHostsSource = 'connected-installations';
+
 /// One connected host and its own state; [workspaceIds] are the workspaces
 /// it returned documents of once it answered.
 @immutable
