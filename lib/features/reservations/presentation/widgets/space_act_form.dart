@@ -341,8 +341,10 @@ class SpaceActFormState extends State<SpaceActForm> {
                     icon: const Icon(Icons.schedule),
                     onPressed: () => _pickTime(isStart: false),
                     label: Text(
-                      '${l10n.planToLabel} '
-                      '${timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_end))}',
+                      l10n.sentencePair(
+                      l10n.planToLabel,
+                      timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_end)),
+                    ),
                     ),
                   ),
                 ),

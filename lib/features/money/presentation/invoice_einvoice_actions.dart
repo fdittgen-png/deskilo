@@ -169,8 +169,7 @@ void _announce(
     context,
     submission.detail.isEmpty
         ? (l10n.invoiceSendRejected)
-        : '${l10n.invoiceSendRejected} '
-              '${submission.detail}',
+        : l10n.sentencePair(l10n.invoiceSendRejected, submission.detail),
   );
 }
 

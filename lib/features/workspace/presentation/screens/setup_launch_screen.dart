@@ -307,8 +307,10 @@ class _MilestoneTile extends StatelessWidget {
         milestone.evidence
             .map(
               (s) =>
-                  '${l10n.setupStepTitle(s.step)}: '
-                  '${l10n.setupStateName(s.state.name)}',
+                  l10n.labelWithValue(
+                    l10n.setupStepTitle(s.step),
+                    l10n.setupStateName(s.state.name),
+                  ),
             )
             .join('\n'),
       ),
