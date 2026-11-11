@@ -113,7 +113,7 @@
       }
     }
   },
-  "invoiceOpenAge": "{days} jours",
+  "invoiceOpenAge": "{days, plural, one{{days} jour} other{{days} jours}}",
   "@invoiceOpenAge": {
     "placeholders": {
       "days": {
@@ -783,7 +783,7 @@
       }
     }
   },
-  "journeyIssuerMemberPaysOverdue": "{name} doit {amount} — en retard de {days} jours",
+  "journeyIssuerMemberPaysOverdue": "{days, plural, one{{name} doit {amount} — en retard de {days} jour} other{{name} doit {amount} — en retard de {days} jours}}",
   "@journeyIssuerMemberPaysOverdue": {
     "placeholders": {
       "name": {
@@ -863,7 +863,7 @@
       }
     }
   },
-  "journeyMemberPaysOverdue": "À vous : payez {amount} — en retard de {days} jours",
+  "journeyMemberPaysOverdue": "{days, plural, one{À vous : payez {amount} — en retard de {days} jour} other{À vous : payez {amount} — en retard de {days} jours}}",
   "@journeyMemberPaysOverdue": {
     "placeholders": {
       "amount": {
@@ -1329,7 +1329,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
-  "retentionFromYearEnd": "{years} ans à partir de la fin de l'exercice",
+  "retentionFromYearEnd": "{years, plural, one{{years} an à partir de la fin de l'exercice} other{{years} ans à partir de la fin de l'exercice}}",
   "@retentionFromYearEnd": {
     "description": "#2571 retention clocks",
     "placeholders": {
@@ -1338,7 +1338,7 @@
       }
     }
   },
-  "retentionFromDocument": "{years} ans à partir de la date du document",
+  "retentionFromDocument": "{years, plural, one{{years} an à partir de la date du document} other{{years} ans à partir de la date du document}}",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
     "placeholders": {

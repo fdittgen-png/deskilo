@@ -9,7 +9,7 @@
   "retentionHoldEveryIssuer": "Tutti gli emittenti",
   "retentionHoldReason": "Motivo",
   "retentionHoldReasonHelper": "Perché i documenti devono restare, per esempio una verifica fiscale o una controversia.",
-  "retentionHoldReasonMissing": "Indichi il motivo, in {max} caratteri al massimo.",
+  "retentionHoldReasonMissing": "{max, plural, one{Indichi il motivo, in {max} carattere al massimo.} other{Indichi il motivo, in {max} caratteri al massimo.}}",
   "retentionHoldSince": "{what} · {issuer} · dal {date}",
   "retentionHoldRelease": "Revochi",
   "retentionHoldReleaseTitle": "Revocare questo blocco?",
@@ -22,7 +22,7 @@
   "retentionKeptReviewEnded": "Conservato finché una persona non verifica la regola di conservazione; il periodo è terminato il {date}",
   "retentionPeriodEnded": "Il periodo di conservazione è terminato: lo spazio può esaminare la cancellazione",
   "retentionResetRefused": "Non è stato cancellato nulla: la contabilità deve ancora essere conservata. {why}",
-  "retentionExtendedBySetting": "{years} anni dalla data del documento (impostazione propria di questo spazio)",
+  "retentionExtendedBySetting": "{years, plural, one{{years} anno dalla data del documento (impostazione propria di questo spazio)} other{{years} anni dalla data del documento (impostazione propria di questo spazio)}}",
   "retentionHoldSaveFailed": "Non è stato possibile salvare il blocco. Non è cambiato nulla.",
   "retentionHoldsLoadFailed": "Non è stato possibile leggere i blocchi."
 }

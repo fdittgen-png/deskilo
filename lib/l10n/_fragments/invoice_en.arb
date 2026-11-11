@@ -312,7 +312,7 @@
       }
     }
   },
-  "invoiceOpenAge": "{days} days",
+  "invoiceOpenAge": "{days, plural, one{{days} day} other{{days} days}}",
   "@invoiceOpenAge": {
     "description": "Open row: days since the invoice was issued",
     "placeholders": {
@@ -1542,7 +1542,7 @@
       }
     }
   },
-  "journeyIssuerMemberPaysOverdue": "{name} owes {amount} — overdue by {days} days",
+  "journeyIssuerMemberPaysOverdue": "{days, plural, one{{name} owes {amount} — overdue by {days} day} other{{name} owes {amount} — overdue by {days} days}}",
   "@journeyIssuerMemberPaysOverdue": {
     "description": "Shown as a text in invoice journey view (money). Placeholders: {name} (String), {amount} (String), {days} (int).",
     "placeholders": {
@@ -1638,7 +1638,7 @@
       }
     }
   },
-  "journeyMemberPaysOverdue": "Your move: pay {amount} — overdue by {days} days",
+  "journeyMemberPaysOverdue": "{days, plural, one{Your move: pay {amount} — overdue by {days} day} other{Your move: pay {amount} — overdue by {days} days}}",
   "@journeyMemberPaysOverdue": {
     "description": "Shown as a text in invoice journey view (money). Placeholders: {amount} (String), {days} (int).",
     "placeholders": {
@@ -2578,7 +2578,7 @@
   "@retentionClassVoucher": {
     "description": "#2571 retention clocks"
   },
-  "retentionFromYearEnd": "{years} years from the end of the fiscal year",
+  "retentionFromYearEnd": "{years, plural, one{{years} year from the end of the fiscal year} other{{years} years from the end of the fiscal year}}",
   "@retentionFromYearEnd": {
     "description": "#2571 retention clocks",
     "placeholders": {
@@ -2587,7 +2587,7 @@
       }
     }
   },
-  "retentionFromDocument": "{years} years from the document date",
+  "retentionFromDocument": "{years, plural, one{{years} year from the document date} other{{years} years from the document date}}",
   "@retentionFromDocument": {
     "description": "#2571 retention clocks",
     "placeholders": {

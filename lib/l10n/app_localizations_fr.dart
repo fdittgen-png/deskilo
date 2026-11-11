@@ -218,7 +218,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String accountUsageMinutes(int minutes) {
-    return '$minutes minutes';
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes minutes',
+      one: '$minutes minute',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1770,7 +1776,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String badgePinTooShort(int min) {
-    return 'Utilisez au moins $min chiffres.';
+    String _temp0 = intl.Intl.pluralLogic(
+      min,
+      locale: localeName,
+      other: 'Utilisez au moins $min chiffres.',
+      one: 'Utilisez au moins $min chiffre.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1926,7 +1938,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String bankCsvNeedsAccount(int max) {
-    return 'Indiquez le compte, en $max caractères au plus.';
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: 'Indiquez le compte, en $max caractères au plus.',
+      one: 'Indiquez le compte, en $max caractère au plus.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -2188,7 +2206,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String bankRefusedTooManyLines(int max) {
-    return 'Le fichier contient plus de $max mouvements. Scindez-le par période à la banque. Rien n\'a été importé.';
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other:
+          'Le fichier contient plus de $max mouvements. Scindez-le par période à la banque. Rien n\'a été importé.',
+      one:
+          'Le fichier contient plus de $max mouvement. Scindez-le par période à la banque. Rien n\'a été importé.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -4401,7 +4427,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String billOverage(int extra) {
-    return '$extra demi-journées supplémentaires';
+    String _temp0 = intl.Intl.pluralLogic(
+      extra,
+      locale: localeName,
+      other: '$extra demi-journées supplémentaires',
+      one: '$extra demi-journée supplémentaire',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -4501,7 +4533,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String billingPackageSummary(int days, String price) {
-    return '$days jours · $price';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours · $price',
+      one: '$days jour · $price',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -4892,7 +4930,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String bookingHorizonError(int days) {
-    return 'Trop loin — les réservations sont ouvertes $days jours à l\'avance.';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other:
+          'Trop loin — les réservations sont ouvertes $days jours à l\'avance.',
+      one: 'Trop loin — les réservations sont ouvertes $days jour à l\'avance.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5039,12 +5084,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String bookingTooLongError(int minutes) {
-    return 'Trop long — une réservation dure au plus $minutes minutes.';
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Trop long — une réservation dure au plus $minutes minutes.',
+      one: 'Trop long — une réservation dure au plus $minutes minute.',
+    );
+    return '$_temp0';
   }
 
   @override
   String bookingTooShortError(int minutes) {
-    return 'Trop court — une réservation dure au moins $minutes minutes.';
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Trop court — une réservation dure au moins $minutes minutes.',
+      one: 'Trop court — une réservation dure au moins $minutes minute.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5167,7 +5224,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String buyPackageDays(int days) {
-    return '$days jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '$days jour',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5203,12 +5266,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String calendarAgendaEmpty(int days) {
-    return 'Rien de prévu dans les $days prochains jours.';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Rien de prévu dans les $days prochains jours.',
+      one: 'Rien de prévu dans le prochain jour.',
+    );
+    return '$_temp0';
   }
 
   @override
   String calendarAgendaRange(int days) {
-    return '$days prochains jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days prochains jours',
+      one: 'Prochain jour',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -5600,7 +5675,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String carnetSummary(int halfDays, String price) {
-    return '$halfDays demi-journées · $price';
+    String _temp0 = intl.Intl.pluralLogic(
+      halfDays,
+      locale: localeName,
+      other: '$halfDays demi-journées · $price',
+      one: '$halfDays demi-journée · $price',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -13262,7 +13343,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String instanceReadyResume(int pending) {
-    return 'Une installation DesKilo s\'est arrêtée en cours de route : il reste $pending migrations, et seules celles-ci seront exécutées.';
+    String _temp0 = intl.Intl.pluralLogic(
+      pending,
+      locale: localeName,
+      other:
+          'Une installation DesKilo s\'est arrêtée en cours de route : il reste $pending migrations, et seules celles-ci seront exécutées.',
+      one:
+          'Une installation DesKilo s\'est arrêtée en cours de route : il reste $pending migration, et seules celles-ci seront exécutées.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -14431,7 +14520,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String invoiceOpenAge(int days) {
-    return '$days jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days jours',
+      one: '$days jour',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -15517,7 +15612,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String journeyIssuerMemberPaysOverdue(String name, String amount, int days) {
-    return '$name doit $amount — en retard de $days jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$name doit $amount — en retard de $days jours',
+      one: '$name doit $amount — en retard de $days jour',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -15551,7 +15652,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String journeyMemberPaysOverdue(String amount, int days) {
-    return 'À vous : payez $amount — en retard de $days jours';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'À vous : payez $amount — en retard de $days jours',
+      one: 'À vous : payez $amount — en retard de $days jour',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -19383,7 +19490,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String moneyUsageUnlimited(int used) {
-    return '$used demi-journées utilisées';
+    String _temp0 = intl.Intl.pluralLogic(
+      used,
+      locale: localeName,
+      other: '$used demi-journées utilisées',
+      one: '$used demi-journée utilisée',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -19514,7 +19627,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String myReservationsPeriodLimit(int days) {
-    return 'Au plus $days jours à la fois.';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Au plus $days jours à la fois.',
+      one: 'Au plus $days jour à la fois.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -25033,17 +25152,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String retentionExtendedBySetting(int years) {
-    return '$years ans à partir de la date du document (réglage propre à cet espace)';
+    String _temp0 = intl.Intl.pluralLogic(
+      years,
+      locale: localeName,
+      other:
+          '$years ans à partir de la date du document (réglage propre à cet espace)',
+      one:
+          '$years an à partir de la date du document (réglage propre à cet espace)',
+    );
+    return '$_temp0';
   }
 
   @override
   String retentionFromDocument(int years) {
-    return '$years ans à partir de la date du document';
+    String _temp0 = intl.Intl.pluralLogic(
+      years,
+      locale: localeName,
+      other: '$years ans à partir de la date du document',
+      one: '$years an à partir de la date du document',
+    );
+    return '$_temp0';
   }
 
   @override
   String retentionFromYearEnd(int years) {
-    return '$years ans à partir de la fin de l\'exercice';
+    String _temp0 = intl.Intl.pluralLogic(
+      years,
+      locale: localeName,
+      other: '$years ans à partir de la fin de l\'exercice',
+      one: '$years an à partir de la fin de l\'exercice',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -25078,7 +25217,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String retentionHoldReasonMissing(int max) {
-    return 'Indiquez le motif, en $max caractères au plus.';
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: 'Indiquez le motif, en $max caractères au plus.',
+      one: 'Indiquez le motif, en $max caractère au plus.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -28297,6 +28442,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get setupReasonAssociation =>
       'Parce qu’une association décide ensemble, avec son bureau';
+
+  @override
+  String get setupReasonBooksNoPlaces =>
+      'Parce que cette activité ne réserve pas de places';
 
   @override
   String get setupReasonDoorTablet =>

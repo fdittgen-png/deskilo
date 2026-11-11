@@ -98,7 +98,7 @@ Before every push run, and see green:
 dart analyze --fatal-infos            # exactly what CI runs (flutter analyze misses the riverpod_lint plugin)
 flutter test test/lint                # every lint and registry pin
 flutter test test/<the folders your change touches>
-dart run tool/preflight.dart --list   # which generators this change implicates
+dart run tool/preflight.dart --list   # which generators AND which tests (beyond the lint folder) this change implicates
 ```
 
 Programme selection (the next outcomes, slots and bounded exceptions) lives only in
@@ -110,7 +110,7 @@ The PR's Tests section carries one receipt line:
 `candidate/tree | implicated generators + actual exits | analyze/lint/affected tests + exits | generated diff reviewed | NOT RUN/BLOCKED evidence + precise reason`.
 A source change after it invalidates its affected evidence.
 
-then run ONLY the generators `--list` names (never the whole preflight:
+The local gate is analyze, the lint folder once, and the tests `--list` prints (the table `tool/preflight/test_map.json` plus the importers of each changed file, #3715); the gate follows what CONSUMES a change, not the files edited. Then run ONLY the generators `--list` names (never the whole preflight:
 its build_runner step can hang in a worktree). Every generated file has a
 drift gate in CI, so a generator forgotten locally costs a full round
 trip to learn something the working tree already knew.
@@ -297,6 +297,7 @@ Binding for every session and every agent.
 
 - Branch off `master`; conventional commits; PRs < 400 lines (excluding generated); squash-merge; `Refs #NN` for a partial PR, `Closes #NN` only when the whole acceptance is met (see [Ready, Done and closure](#ready-done-and-closure)).
 - Forbidden: direct commits to `master`, force-push to `master`, `--no-verify`, amending pushed commits.
+- A branch is brought up to date by merging `master` into it, never by resetting it onto `master`: the reset keeps the old tree and silently puts every file master changed back (`tool/stale_base_guard.dart` fails such a pull request, #3688).
 
 ## The setup questionnaire (`web/setup.html`) — no exceptions
 

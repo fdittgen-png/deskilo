@@ -4119,6 +4119,7 @@ Map<String, _Getter> _part11() => {
   'setupLevelNamePaymentsOnline': (l) => l.setupLevelNamePaymentsOnline,
   'setupPricingOpenBilling': (l) => l.setupPricingOpenBilling,
   'setupQuestionPayOnline': (l) => l.setupQuestionPayOnline,
+  'setupReasonBooksNoPlaces': (l) => l.setupReasonBooksNoPlaces,
   'setupServicesPreviewEmpty': (l) => l.setupServicesPreviewEmpty,
   'setupStepTitleEinvoicing': (l) => l.setupStepTitleEinvoicing,
   'setupStepTitleFirstBooking': (l) => l.setupStepTitleFirstBooking,

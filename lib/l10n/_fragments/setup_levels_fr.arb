@@ -55,6 +55,7 @@
   "setupReasonPublicPage": "Parce que l’espace a une page publique",
   "setupReasonSeveralRooms": "Parce qu’il y a plusieurs salles ou sites",
   "setupReasonSharedPlaces": "Parce que les membres partagent les places",
+  "setupReasonBooksNoPlaces": "Parce que cette activité ne réserve pas de places",
   "setupReasonSmallCommunity": "Parce que la communauté est petite",
   "setupReasonStartSimple": "Parce que vous voulez commencer simplement",
   "setupReasonTracksPurchases": "Parce que vous suivez les achats de l’espace",

@@ -194,7 +194,7 @@
   "calendarGroupBookings": "Buchungen & Anwesenheit",
   "calendarGroupActivity": "Hinweise & Nachrichten",
   "calendarGroupMoney": "Finanzen",
-  "calendarAgendaEmpty": "Nichts geplant in den nächsten {days} Tagen.",
+  "calendarAgendaEmpty": "{days, plural, one{Nichts geplant am nächsten Tag.} other{Nichts geplant in den nächsten {days} Tagen.}}",
   "@calendarAgendaEmpty": {
     "placeholders": {
       "days": {
@@ -202,7 +202,7 @@
       }
     }
   },
-  "calendarAgendaRange": "Nächste {days} Tage",
+  "calendarAgendaRange": "{days, plural, one{Nächster Tag} other{Nächste {days} Tage}}",
   "@calendarAgendaRange": {
     "placeholders": {
       "days": {

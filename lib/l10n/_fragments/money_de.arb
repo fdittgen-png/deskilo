@@ -2,7 +2,7 @@
   "@@locale": "de",
   "moneyBaseFee": "Basis-Abo",
   "moneyUsage": "{used} von {included} halben Tagen genutzt",
-  "moneyUsageUnlimited": "{used} halbe Tage genutzt",
+  "moneyUsageUnlimited": "{used, plural, one{{used} halber Tag genutzt} other{{used} halbe Tage genutzt}}",
   "moneyOverage": "{count, plural, =1{Mehrnutzung (1 zusätzlicher halber Tag)} other{Mehrnutzung ({count} zusätzliche halbe Tage)}}",
   "moneyCredits": "Zahlungen & Gutschriften",
   "moneyStatementSettled": "Beglichen",

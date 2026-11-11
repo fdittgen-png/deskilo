@@ -8,7 +8,7 @@
   "@myReservationsChangePeriod": {
     "description": "#2553 My reservations: opens the period picker."
   },
-  "myReservationsPeriodLimit": "At most {days} days at a time.",
+  "myReservationsPeriodLimit": "{days, plural, one{At most {days} day at a time.} other{At most {days} days at a time.}}",
   "@myReservationsPeriodLimit": {
     "description": "#2553 My reservations: the ceiling of one read, under the period.",
     "placeholders": {

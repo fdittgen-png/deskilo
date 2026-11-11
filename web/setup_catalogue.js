@@ -1880,7 +1880,14 @@ window.SETUP_LEVELS={
    {
     "level": "simple",
     "reason": "shared_places",
-    "any": []
+    "any": [],
+    "places": true
+   },
+   {
+    "level": "none",
+    "reason": "books_no_places",
+    "any": [],
+    "places": false
    }
   ],
   "community": [

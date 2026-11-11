@@ -55,6 +55,7 @@
   "setupReasonPublicPage": "Weil der Raum eine öffentliche Seite hat",
   "setupReasonSeveralRooms": "Weil es mehrere Räume oder Standorte gibt",
   "setupReasonSharedPlaces": "Weil Mitglieder die Plätze teilen",
+  "setupReasonBooksNoPlaces": "Weil dieses Unternehmen keine Plätze vergibt",
   "setupReasonSmallCommunity": "Weil die Gemeinschaft klein ist",
   "setupReasonStartSimple": "Weil Sie einfach beginnen möchten",
   "setupReasonTracksPurchases": "Weil Sie verfolgen, was der Raum einkauft",

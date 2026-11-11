@@ -179,7 +179,7 @@
   "@instanceReadyInstall": {
     "description": "#1308 instance readiness"
   },
-  "instanceReadyResume": "A DesKilo install stopped part-way: {pending} migrations remain and only those will run.",
+  "instanceReadyResume": "{pending, plural, one{A DesKilo install stopped part-way: {pending} migration remain and only those will run.} other{A DesKilo install stopped part-way: {pending} migrations remain and only those will run.}}",
   "@instanceReadyResume": {
     "description": "#1308 instance readiness",
     "placeholders": {

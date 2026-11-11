@@ -12,6 +12,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/finance_filter.dart';
 import '../../domain/finance_hosts.dart';
 import '../../domain/finance_overview.dart';
@@ -255,11 +256,18 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
     final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      child: Wrap(
+      child: LayoutBuilder(builder: (context, box) {
+        // A dropdown never outgrows the line (#3545): at a narrow width and a large
+        // text scale its label shrinks with an ellipsis instead of overflowing.
+        final width = box.maxWidth < KitMetrics.dropdownMaxWidth ? box.maxWidth : KitMetrics.dropdownMaxWidth;
+        Widget fit(Widget dropdown) =>
+            ConstrainedBox(constraints: BoxConstraints(maxWidth: width), child: dropdown);
+        return Wrap(
         spacing: AppSpacing.lg,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          DropdownButton<int?>(
+          fit(DropdownButton<int?>(
+            isExpanded: true,
             key: const ValueKey('finances-period'),
             value: filter.year,
             hint: Text(l10n.financesPeriodAll),
@@ -267,7 +275,7 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
             items: [
               DropdownMenuItem<int?>(
                 key: const ValueKey('finances-period-all'),
-                child: Text(l10n.financesPeriodAll),
+                child: Text(l10n.financesPeriodAll, overflow: TextOverflow.ellipsis),
               ),
               for (final year in years)
                 DropdownMenuItem<int?>(
@@ -276,8 +284,9 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
                   child: Text('$year'),
                 ),
             ],
-          ),
-          DropdownButton<FinanceDocType>(
+          )),
+          fit(DropdownButton<FinanceDocType>(
+            isExpanded: true,
             key: const ValueKey('finances-type'),
             value: filter.type,
             onChanged: (type) => onChanged(filter.copyWith(type: type)),
@@ -290,12 +299,13 @@ class FinancesPeriodTypeFilter extends StatelessWidget {
                     FinanceDocType.all => l10n.financesTypeAll,
                     FinanceDocType.invoice => l10n.invoicePdfTitle,
                     FinanceDocType.creditNote => l10n.financesTypeCreditNote,
-                  }),
+                  }, overflow: TextOverflow.ellipsis),
                 ),
             ],
-          ),
+          )),
         ],
-      ),
+      );
+      }),
     );
   }
 }

@@ -409,6 +409,7 @@ extension DictionaryLabels on AppLocalizations {
   /// The `setupReason` label for [key].
   String setupReason(String key) => switch (key) {
     'door_tablet' => setupReasonDoorTablet,
+    'books_no_places' => setupReasonBooksNoPlaces,
     'keeps_books' => setupReasonKeepsBooks,
     'later' => setupReasonLater,
     'members_only' => setupReasonMembersOnly,
