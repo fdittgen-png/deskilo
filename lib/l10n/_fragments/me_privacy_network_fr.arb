@@ -6,11 +6,11 @@
   "visibilityAskPublic": "Mon profil public est-il publié ?",
   "visibilityMoreSharing": "Plus de réglages de partage",
   "visibilitySpaceUnverified": "Vérification indisponible",
-  "visibilitySpaceAmbiguous": "Même nom qu’un autre espace · {source}",
+  "visibilitySpaceAmbiguous": "Même nom qu’un autre lieu · {source}",
   "visibilitySpaceHere": "sur ce domicile personnel",
   "visibilitySpaceOnServer": "sur le serveur {installation}",
   "visibilityWidenAdded": "Ajoutés : {spaces}",
   "visibilityWidenRemoved": "Retirés : {spaces}",
-  "visibilityHomePlain": "Votre espace personnel",
-  "visibilityHomeDetails": "Détails de l'espace personnel"
+  "visibilityHomePlain": "Votre domicile personnel",
+  "visibilityHomeDetails": "Détails du domicile personnel"
 }

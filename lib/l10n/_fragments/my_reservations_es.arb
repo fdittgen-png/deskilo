@@ -38,6 +38,7 @@
   "myReservationsHostUnavailable": "No se puede acceder a este servidor desde este dispositivo: no está conectado aquí, o no es el que dice ser.",
   "myReservationsTimedOut": "Este servidor no ha respondido a tiempo.",
   "myReservationsSourceUnnamed": "Un servidor de espacio",
+  "meSourceUnnamed": "El servidor de un lugar",
   "myReservationsSourceReading": "Leyendo {source}…",
   "myReservationsSourceProblem": "{source}: {problem}",
   "myReservationsTabUpcoming": "Próximas",

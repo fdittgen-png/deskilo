@@ -105,7 +105,7 @@ class _PersonalSpacesState extends ConsumerState<PersonalSpacesView> {
         InlineBanner(
           key: const ValueKey('my-spaces-local-unavailable'),
           icon: Icons.cloud_off_outlined,
-          text: l10n.profilesUnavailable,
+          text: l10n.mePlacesLoadFailed,
           actionLabel: l10n.commonRetry,
           onAction: () => unawaited(ref.refresh(myWorkspacesProvider.future)),
         ),

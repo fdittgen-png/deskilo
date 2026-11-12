@@ -8759,7 +8759,7 @@
   "@courtesyNone": {
     "description": "#912 courtesy title: courtesyNone"
   },
-  "createHostAvailable": "Accepts new spaces",
+  "createHostAvailable": "Accepts new businesses",
   "@createHostAvailable": {
     "description": "#2562 C2c Create: an enrolled server that accepts new spaces"
   },
@@ -8779,11 +8779,11 @@
   "@createHostLost": {
     "description": "#2562 C2c Create: the onboarding was reached without a chosen server held"
   },
-  "createHostNone": "No server accepts new spaces for your personal home yet. Nothing was created.",
+  "createHostNone": "No server accepts new businesses for your personal home yet. Nothing was created.",
   "@createHostNone": {
     "description": "#2554 Create: a personal home that hosts no space and has no enrolled server offers nothing to create on"
   },
-  "createHostNotAccepting": "Not accepting new spaces",
+  "createHostNotAccepting": "Not accepting new businesses",
   "@createHostNotAccepting": {
     "description": "#2562 C2c Create: an enrolled server closed to new spaces (state and refusal)"
   },
@@ -8791,7 +8791,7 @@
   "@createHostRevoked": {
     "description": "#2562 C2c Create: refusal, the chosen server's enrolment was revoked"
   },
-  "createHostTitle": "Where should the space live?",
+  "createHostTitle": "Where should the business live?",
   "@createHostTitle": {
     "description": "#2562 C2c Create: title of the sheet choosing the server a new space is created on"
   },
@@ -9913,11 +9913,11 @@
   "@directoryLinkConnect": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
-  "directoryLinkDone": "Linked. The spaces it publishes are now listed in Discover.",
+  "directoryLinkDone": "Linked. The places it publishes are now listed in Discover.",
   "@directoryLinkDone": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
-  "directoryLinkIntro": "The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.",
+  "directoryLinkIntro": "The global directory lives on the reference server. Once a server is linked, every place it publishes is listed in Discover, for everyone.",
   "@directoryLinkIntro": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
@@ -9925,19 +9925,19 @@
   "@directoryLinkNeedsAccount": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
-  "directoryLinkStateDirectory": "This is the reference server: the spaces it publishes are always listed.",
+  "directoryLinkStateDirectory": "This is the reference server: the places it publishes are always listed.",
   "@directoryLinkStateDirectory": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
-  "directoryLinkStateLinkable": "Can be linked: it answers, and publishes spaces this app can read.",
+  "directoryLinkStateLinkable": "Can be linked: it answers, and publishes places this app can read.",
   "@directoryLinkStateLinkable": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
-  "directoryLinkStateLinked": "Linked: the spaces it publishes are listed in Discover.",
+  "directoryLinkStateLinked": "Linked: the places it publishes are listed in Discover.",
   "@directoryLinkStateLinked": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
-  "directoryLinkStateUnreachable": "Cannot be linked yet: it does not answer, or its version cannot publish spaces.",
+  "directoryLinkStateUnreachable": "Cannot be linked yet: it does not answer, or its version cannot publish places.",
   "@directoryLinkStateUnreachable": {
     "description": "Shown as a text in directory link dialog (directory)."
   },
@@ -9982,7 +9982,7 @@
       }
     }
   },
-  "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
+  "directoryPinsMissing": "{count, plural, =1{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",
     "placeholders": {
@@ -11301,7 +11301,7 @@
   "@environmentDev": {
     "description": "#917 workspace environment: environmentDev"
   },
-  "environmentHint": "A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.",
+  "environmentHint": "A development business says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.",
   "@environmentHint": {
     "description": "#917 workspace environment: environmentHint"
   },
@@ -13330,7 +13330,7 @@
   "@exportValueNameWorkspace": {
     "description": "#3485 exportValueName: the label for case 'workspace'."
   },
-  "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this space.",
+  "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this place.",
   "@favoriteKeptOnDeviceRefused": {
     "description": "Shown as a text in personal space card (me)."
   },
@@ -16960,7 +16960,7 @@
       }
     }
   },
-  "identityConnectConfirmApplyBody": "You are connected now. The space reviews your request; nothing else is shared.",
+  "identityConnectConfirmApplyBody": "You are connected now. The business reviews your request; nothing else is shared.",
   "@identityConnectConfirmApplyBody": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: Body of the confirmation before sending the membership request."
   },
@@ -16993,7 +16993,7 @@
   "@identityConnectExpired": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: The pending sign-in expired."
   },
-  "identityConnectExplain": "{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.",
+  "identityConnectExplain": "{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the business still decides any request.",
   "@identityConnectExplain": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: What connecting shares and what it never grants. Deskilo is the brand; do not translate it.",
     "placeholders": {
@@ -17168,7 +17168,7 @@
       }
     }
   },
-  "inboxSourceWorkspaces": "Your workspaces' messages",
+  "inboxSourceWorkspaces": "Your places' messages",
   "@inboxSourceWorkspaces": {
     "description": "#2556 inbox sources: Names this server's workspace part of the inbox (workspace conversations and inquiries) in a status line."
   },
@@ -24782,7 +24782,7 @@
   "@meBusinessSeesAsk": {
     "description": "#3594 what a business sees when the person asks to join"
   },
-  "meBusinessSeesSpace": "Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.",
+  "meBusinessSeesSpace": "Once you are a member, everyone there: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.",
   "@meBusinessSeesSpace": {
     "description": "#3594 what the members of a space see"
   },
@@ -24794,7 +24794,7 @@
   "@meContextPersonal": {
     "description": "#2552 the scope badge in the personal shell's header: this is the person's own layer, never a space."
   },
-  "meCreateSpace": "Create a space",
+  "meCreateSpace": "Create a business",
   "@meCreateSpace": {
     "description": "Button on the Me home: create a new space."
   },
@@ -24814,11 +24814,11 @@
   "@meDataPersonalMalformed": {
     "description": "#2557 My data: the personal export answer could not be read."
   },
-  "meDataPersonalScope": "What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace's bookings and invoices stay with that workspace and are not part of this file.",
+  "meDataPersonalScope": "What your personal home holds about you: your profile, preferences, conversations and the places you name. The bookings and invoices of each business stay with that business and are not part of this file.",
   "@meDataPersonalScope": {
     "description": "#2557 My data: what the personal export covers and what it leaves to each workspace."
   },
-  "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}",
+  "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Places named: {workspaces}",
   "@meDataPersonalSummary": {
     "description": "#2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
     "placeholders": {
@@ -24845,7 +24845,7 @@
   "@meDataViewReservations": {
     "description": "#2552 My data view: the person's own reservations and visits."
   },
-  "meDataWorkspaceDisabled": "This workspace does not offer the data export.",
+  "meDataWorkspaceDisabled": "This business does not offer the data export.",
   "@meDataWorkspaceDisabled": {
     "description": "#2557 C3 the workspace has the export switched off."
   },
@@ -24853,19 +24853,19 @@
   "@meDataWorkspaceExport": {
     "description": "#2557 C3 export one workspace's own records."
   },
-  "meDataWorkspaceFailed": "This workspace did not answer. Nothing was exported.",
+  "meDataWorkspaceFailed": "This business did not answer. Nothing was exported.",
   "@meDataWorkspaceFailed": {
     "description": "#2557 C3 the workspace did not answer."
   },
-  "meDataWorkspaceForbidden": "This workspace refused: you are not an active member there. Nothing was exported.",
+  "meDataWorkspaceForbidden": "This business refused: you are not an active member there. Nothing was exported.",
   "@meDataWorkspaceForbidden": {
     "description": "#2557 C3 the workspace refused."
   },
-  "meDataWorkspaceHostUnavailable": "This workspace's server is not reachable from here. Nothing was exported.",
+  "meDataWorkspaceHostUnavailable": "This business's server is not reachable from here. Nothing was exported.",
   "@meDataWorkspaceHostUnavailable": {
     "description": "#2557 C3 the workspace's server is not reachable."
   },
-  "meDataWorkspaceMalformed": "This workspace answered in a form this app cannot read. Nothing was exported.",
+  "meDataWorkspaceMalformed": "This business answered in a form this app cannot read. Nothing was exported.",
   "@meDataWorkspaceMalformed": {
     "description": "#2557 C3 the workspace's answer cannot be read."
   },
@@ -24873,7 +24873,7 @@
   "@meDataWorkspaceSuperseded": {
     "description": "#2557 C3 the account changed while the export was read."
   },
-  "meDataWorkspaceUnnamed": "Workspace {id}",
+  "meDataWorkspaceUnnamed": "Business {id}",
   "@meDataWorkspaceUnnamed": {
     "description": "#2557 C3 a workspace whose name may not be read.",
     "placeholders": {
@@ -24882,21 +24882,25 @@
       }
     }
   },
-  "meDataWorkspacesEmpty": "Your account names no workspace yet.",
+  "meDataWorkspacesEmpty": "Your account names no business yet.",
   "@meDataWorkspacesEmpty": {
     "description": "#2557 C3 no workspace to export from."
   },
-  "meDataWorkspacesFailed": "The workspaces your account names could not be read. Nothing was exported.",
+  "meDataWorkspacesFailed": "The businesses your account names could not be read. Nothing was exported.",
   "@meDataWorkspacesFailed": {
     "description": "#2557 C3 the workspace list could not be read."
   },
-  "meDataWorkspacesScope": "Each workspace exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per workspace. Your personal account's part is the card above.",
+  "meDataWorkspacesScope": "Each business exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per business. Your personal account's part is the card above.",
   "@meDataWorkspacesScope": {
     "description": "#2557 C3 what each workspace's export covers."
   },
-  "meDataWorkspacesTitle": "Your records in each workspace",
+  "meDataWorkspacesTitle": "Your records in each business",
   "@meDataWorkspacesTitle": {
     "description": "#2557 C3 the per-workspace export card title."
+  },
+  "meDemoSessionBadgeHint": "You are exploring a demonstration business. Nothing here leaves this device.",
+  "@meDemoSessionBadgeHint": {
+    "description": "Me, a business card: hint of the badge on a demonstration business (#3555: Me says business; the workspace screens keep demoSessionBadgeHint)"
   },
   "meFinanceGlanceOwed": "To pay:",
   "@meFinanceGlanceOwed": {
@@ -24961,7 +24965,7 @@
   "@meGroupDelete": {
     "description": "Shown as a text in me spaces chrome (me)."
   },
-  "meGroupEmptyOwn": "Move spaces here from their menu.",
+  "meGroupEmptyOwn": "Move places here from their menu.",
   "@meGroupEmptyOwn": {
     "description": "Shown as a text in me spaces list (me)."
   },
@@ -24989,7 +24993,7 @@
   "@meGroupRename": {
     "description": "Shown as a text in me spaces chrome (me)."
   },
-  "meGroupWorkspaces": "My workspaces",
+  "meGroupWorkspaces": "My places",
   "@meGroupWorkspaces": {
     "description": "#1846 Me groups: meGroupWorkspaces"
   },
@@ -25013,11 +25017,11 @@
   "@meJoinSpace": {
     "description": "Button on the Me home: join a space with an invitation code."
   },
-  "meLeaveAction": "Leave this space",
+  "meLeaveAction": "Leave this place",
   "@meLeaveAction": {
     "description": "Menu item and confirm button: leave this space."
   },
-  "meLeaveBody": "You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.",
+  "meLeaveBody": "You stop being a member. Your bookings, invoices and messages stay with the business. To also erase your data, use Privacy.",
   "@meLeaveBody": {
     "description": "Body of the confirmation before leaving a space."
   },
@@ -25030,11 +25034,11 @@
       }
     }
   },
-  "meLeaveFailed": "Could not leave the space. Please try again.",
+  "meLeaveFailed": "Could not leave the place. Please try again.",
   "@meLeaveFailed": {
     "description": "Error when leaving a space failed."
   },
-  "meLeaveOwner": "Owners hand the space over before leaving",
+  "meLeaveOwner": "Owners hand the business over before leaving",
   "@meLeaveOwner": {
     "description": "Disabled menu item for an owner, who must hand the space over first."
   },
@@ -25065,7 +25069,7 @@
       }
     }
   },
-  "meLinkedOpenBody": "This space lives on {host}. It opens here, on that server's own connection; nothing is switched and your own server is not used for it.",
+  "meLinkedOpenBody": "This place lives on {host}. It opens here, on that server's own connection; nothing is switched and your own server is not used for it.",
   "@meLinkedOpenBody": {
     "description": "Explains that a space on another server opens by switching this app to that server.",
     "placeholders": {
@@ -25092,7 +25096,7 @@
       }
     }
   },
-  "meManageSpaces": "Manage my spaces",
+  "meManageSpaces": "Manage my places",
   "@meManageSpaces": {
     "description": "Button on the Me home: the detailed list of spaces (default at start, site)."
   },
@@ -25112,7 +25116,7 @@
   "@meNoSpaceBody": {
     "description": "Empty state body on the Me home when the person has no space."
   },
-  "meNoSpaceTitle": "You are not in a space yet",
+  "meNoSpaceTitle": "You have no places yet",
   "@meNoSpaceTitle": {
     "description": "Empty state title on the Me home when the person has no space."
   },
@@ -25271,6 +25275,18 @@
   "@mePlaceRequestSent": {
     "description": "#3545 E: a compact Home row of a space the person asked to join and nobody has answered"
   },
+  "mePlacesLoadFailed": "Your places could not be loaded.",
+  "@mePlacesLoadFailed": {
+    "description": "Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)"
+  },
+  "mePrivacySelfServiceOff": "This business handles data requests itself. File a rights request and the personal data admin will answer it.",
+  "@mePrivacySelfServiceOff": {
+    "description": "Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)"
+  },
+  "meRealBusiness": "Business",
+  "@meRealBusiness": {
+    "description": "Me, a business card: label of a real (not test) business (#3555: Me says business; the development banner keeps uxRealWorkspace)"
+  },
   "meRefDefault": "Default",
   "@meRefDefault": {
     "description": "#2563 Me home: badge on the default workspace"
@@ -25283,7 +25299,7 @@
   "@meRefStale": {
     "description": "#2563 Me home: a workspace on another installation whose last verified membership fact lapsed"
   },
-  "meRefUnnamed": "A workspace on another server",
+  "meRefUnnamed": "A place on another server",
   "@meRefUnnamed": {
     "description": "#2563 Me home: a referenced workspace whose name may not be read here"
   },
@@ -25291,11 +25307,11 @@
   "@meRefUnverified": {
     "description": "#2563 Me home: a workspace on another installation, relationship not yet verified"
   },
-  "meRefsTitle": "Workspaces elsewhere",
+  "meRefsTitle": "Places elsewhere",
   "@meRefsTitle": {
     "description": "#2563 Me home: section of workspaces named by reference that this server does not list"
   },
-  "meRefsUnavailable": "Your workspaces elsewhere could not be read.",
+  "meRefsUnavailable": "Your places elsewhere could not be read.",
   "@meRefsUnavailable": {
     "description": "#2563 Me home: the references could not be read"
   },
@@ -25331,6 +25347,10 @@
   "@meSortTooltip": {
     "description": "Shown as a tooltip in me spaces chrome (me)."
   },
+  "meSourceUnnamed": "A place's server",
+  "@meSourceUnnamed": {
+    "description": "Me, upcoming bookings: the name of a server whose place has no name (#3555: the reservations screen keeps myReservationsSourceUnnamed)"
+  },
   "meSpaceException": "In this space",
   "@meSpaceException": {
     "description": "Title of the row listing this space's own overrides of the person's preferences."
@@ -25352,11 +25372,11 @@
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."
   },
-  "meSpacesNoMatch": "No space matches.",
+  "meSpacesNoMatch": "No place matches.",
   "@meSpacesNoMatch": {
     "description": "Shown as a text in me spaces list (me)."
   },
-  "meSpacesSearch": "Search my spaces",
+  "meSpacesSearch": "Search my places",
   "@meSpacesSearch": {
     "description": "Shown as a button or chip label in personal spaces view (me), and 1 other place."
   },
@@ -25424,6 +25444,14 @@
   "@meTabSpacesShort": {
     "description": "#2552 the My spaces destination on a phone's bottom bar."
   },
+  "meTestBusiness": "Test business",
+  "@meTestBusiness": {
+    "description": "Me, a business card: label of a test business (#3555: the development banner keeps uxTestSpace)"
+  },
+  "meTestBusinessHint": "Test business: practice bookings and invoices",
+  "@meTestBusinessHint": {
+    "description": "Me, a business card: what a test business is for (#3555: the development banner keeps uxTestSpaceHint)"
+  },
   "meUtilityAccount": "Privacy and account",
   "@meUtilityAccount": {
     "description": "#2552 utility of the personal shell: who sees what of me, and my account."
@@ -25445,7 +25473,7 @@
       }
     }
   },
-  "meWhereSpacesLive": "Where my spaces live",
+  "meWhereSpacesLive": "Where my places live",
   "@meWhereSpacesLive": {
     "description": "Row in Me opening the connected servers."
   },
@@ -26191,11 +26219,11 @@
   "@messengerHistoryEmpty": {
     "description": "History sheet when nothing was recorded (#1824)"
   },
-  "messengerHostsIntro": "Your message is read by these hosts of the space:",
+  "messengerHostsIntro": "Your message is read by these hosts of the business:",
   "@messengerHostsIntro": {
     "description": "Inquiry sheet: who will read the message (#1824)"
   },
-  "messengerHostsNone": "This space has nobody answering messages right now.",
+  "messengerHostsNone": "This business has nobody answering messages right now.",
   "@messengerHostsNone": {
     "description": "Inquiry sheet when the space has no host who answers (#1824)"
   },
@@ -26296,7 +26324,7 @@
   "@messengerRefusedClosed": {
     "description": "Refusal: the inquiry was closed (#1824)"
   },
-  "messengerRefusedForwardingOff": "This space does not allow forwarding its messages.",
+  "messengerRefusedForwardingOff": "This business does not allow forwarding its messages.",
   "@messengerRefusedForwardingOff": {
     "description": "Refusal: the source space switched forwarding off (#1824)"
   },
@@ -26312,7 +26340,7 @@
   "@messengerRefusedTooLong": {
     "description": "Refusal: the message is longer than the target conversation allows (#1824)"
   },
-  "messengerRefusedUnavailable": "This space does not take inquiries right now.",
+  "messengerRefusedUnavailable": "This business does not take inquiries right now.",
   "@messengerRefusedUnavailable": {
     "description": "Refusal: the space takes no inquiries (not published, or switched off) (#1824)"
   },
@@ -26832,11 +26860,11 @@
   "@myReservationsView": {
     "description": "#2553 C3 My reservations: reads one booking again from its own server and shows it."
   },
-  "mySpacesAll": "All my spaces",
+  "mySpacesAll": "All my places",
   "@mySpacesAll": {
     "description": "#2554 Overview: link to the full My spaces list"
   },
-  "mySpacesCount": "{count, plural, =0{No space} =1{1 space} other{{count} spaces}}",
+  "mySpacesCount": "{count, plural, =0{No place} =1{1 place} other{{count} places}}",
   "@mySpacesCount": {
     "description": "#2554 My spaces: the number of loaded spaces",
     "placeholders": {
@@ -26845,7 +26873,7 @@
       }
     }
   },
-  "mySpacesDiscover": "Discover spaces",
+  "mySpacesDiscover": "Discover places",
   "@mySpacesDiscover": {
     "description": "#2554 My spaces: link to Discover"
   },
@@ -26881,11 +26909,11 @@
   "@mySpacesLayoutList": {
     "description": "#2554 My spaces: show the spaces as a single list"
   },
-  "mySpacesManage": "Manage spaces on this server",
+  "mySpacesManage": "Manage businesses on this server",
   "@mySpacesManage": {
     "description": "#2554 My spaces: link to the management of this server's spaces"
   },
-  "mySpacesNoMatch": "No space matches your search.",
+  "mySpacesNoMatch": "No place matches your search.",
   "@mySpacesNoMatch": {
     "description": "#2554 My spaces: the search matches nothing"
   },
@@ -26893,7 +26921,7 @@
   "@mySpacesOpen": {
     "description": "#2554 My spaces: main action, enter an active space"
   },
-  "mySpacesOpenTest": "Open test space",
+  "mySpacesOpenTest": "Open test business",
   "@mySpacesOpenTest": {
     "description": "#2554 My spaces: main action, enter a development (test) space"
   },
@@ -26914,11 +26942,11 @@
       }
     }
   },
-  "mySpacesTestSpace": "Test space",
+  "mySpacesTestSpace": "Test business",
   "@mySpacesTestSpace": {
     "description": "#2554 My spaces: metadata of a development space"
   },
-  "mySpacesUnavailable": "Your spaces could not be read.",
+  "mySpacesUnavailable": "Your places could not be read.",
   "@mySpacesUnavailable": {
     "description": "#2554 My spaces: the spaces could not be read"
   },
@@ -29153,11 +29181,11 @@
       }
     }
   },
-  "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
+  "portalDirectoryIncompatible": "Some places need a newer version of the app and are not shown.",
   "@portalDirectoryIncompatible": {
     "description": "Shown as the text in discovery list view (directory), and 1 other place."
   },
-  "portalDirectoryPartial": "Some of your workspaces cannot be verified right now; their people are not listed.",
+  "portalDirectoryPartial": "Some of your places cannot be verified right now; their people are not listed.",
   "@portalDirectoryPartial": {
     "description": "#2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts."
   },
@@ -29165,7 +29193,7 @@
   "@portalDirectoryShowMore": {
     "description": "#2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory."
   },
-  "portalDirectoryUnverified": "This workspace cannot be verified right now.",
+  "portalDirectoryUnverified": "This place cannot be verified right now.",
   "@portalDirectoryUnverified": {
     "description": "#2472 personal directory: Shown inside one workspace section whose membership fact lapsed."
   },
@@ -29173,7 +29201,7 @@
   "@portalDisconnect": {
     "description": "Shown as the tooltip in connections screen (directory)."
   },
-  "portalDiscover": "Find a workspace",
+  "portalDiscover": "Find a place",
   "@portalDiscover": {
     "description": "Shown as the label in auth form sections (auth), and 2 other places."
   },
@@ -29233,11 +29261,11 @@
   "@portalMoreDirectories": {
     "description": "Shown as the text in discovery list view (directory)."
   },
-  "portalNoLongerPublished": "This workspace is no longer published.",
+  "portalNoLongerPublished": "This place is no longer published.",
   "@portalNoLongerPublished": {
     "description": "Shown as the text in public workspace view (directory)."
   },
-  "portalOpenMe": "Me: my account and my spaces",
+  "portalOpenMe": "Me: my account and my places",
   "@portalOpenMe": {
     "description": "Menu item on the account menu (globe) that opens the Me layer."
   },
@@ -29354,7 +29382,7 @@
   "@portalRequestProfile": {
     "description": "Shown as the text in space offers (directory)."
   },
-  "portalRequestSent": "Request sent. The workspace will review your profile.",
+  "portalRequestSent": "Request sent. The business will review your profile.",
   "@portalRequestSent": {
     "description": "Shown as the text in public workspace view (directory)."
   },
@@ -29374,7 +29402,7 @@
   "@portalSavePreview": {
     "description": "Shown as the text in public page editor (directory)."
   },
-  "portalSearch": "Search workspaces",
+  "portalSearch": "Search places",
   "@portalSearch": {
     "description": "Shown as the label of a field in directory screen (directory), and 1 other place."
   },
@@ -30353,7 +30381,7 @@
   "@publicProfilePublishAction": {
     "description": "Shown as the text in public profile tile (me)."
   },
-  "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
+  "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and places stay private.",
   "@publicProfilePublishBody": {
     "description": "Shown as the text in public profile tile (me)."
   },
@@ -42455,7 +42483,7 @@
   "@themeTitle": {
     "description": "Settings entry and dialog title for the in-app theme selection"
   },
-  "threadNoRefs": "References are only shared with people of the same workspace.",
+  "threadNoRefs": "References are only shared with people of the same business.",
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
   },
@@ -43205,7 +43233,7 @@
   "@uxNavWorkspace": {
     "description": "Shown as the text in shell drawer (app)."
   },
-  "uxOpenWorkspace": "Open workspace",
+  "uxOpenWorkspace": "Open business",
   "@uxOpenWorkspace": {
     "description": "Shown as the text in linked spaces section (me), and 1 other place."
   },
@@ -44637,7 +44665,7 @@
   "@visibilityBio": {
     "description": "Field label: a short bio."
   },
-  "visibilityChosenCount": "{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}",
+  "visibilityChosenCount": "{count, plural, =1{Members of 1 chosen place} other{Members of {count} chosen places}}",
   "@visibilityChosenCount": {
     "description": "Audience summary for chosen spaces, with how many were chosen.",
     "placeholders": {
@@ -44646,7 +44674,7 @@
       }
     }
   },
-  "visibilityChosenSpaces": "Members of chosen spaces",
+  "visibilityChosenSpaces": "Members of chosen places",
   "@visibilityChosenSpaces": {
     "description": "Audience: members of chosen spaces."
   },
@@ -44690,7 +44718,7 @@
   "@visibilityContact": {
     "description": "Visibility field: contact channels."
   },
-  "visibilityElsewhereIntro": "On a connected server you have that server's own account. People there who share no space with you see what you allow every signed-in person; contact details and presence never leave your spaces.",
+  "visibilityElsewhereIntro": "On a connected server you have that server's own account. People there who share no place with you see what you allow every signed-in person; contact details and presence never leave your places.",
   "@visibilityElsewhereIntro": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereIntro"
   },
@@ -44772,11 +44800,11 @@
   "@visibilityMoreSharing": {
     "description": "#2558 privacy card: expands the remaining fields"
   },
-  "visibilityMySpaces": "Members of my spaces",
+  "visibilityMySpaces": "Members of my places",
   "@visibilityMySpaces": {
     "description": "Audience: members of the person's spaces."
   },
-  "visibilityNoSpaces": "You are in no space yet. Choose another audience.",
+  "visibilityNoSpaces": "You have no places yet. Choose another audience.",
   "@visibilityNoSpaces": {
     "description": "#2558 — the chosen-spaces picker of an account in no space."
   },
@@ -44802,7 +44830,7 @@
       }
     }
   },
-  "visibilityPresence": "In the space today",
+  "visibilityPresence": "At the place today",
   "@visibilityPresence": {
     "description": "Visibility field: presence in a space today."
   },
@@ -44818,7 +44846,7 @@
   "@visibilityPreviewFailed": {
     "description": "Preview failed to load."
   },
-  "visibilityPreviewMySpaces": "A member of my spaces",
+  "visibilityPreviewMySpaces": "A member of my places",
   "@visibilityPreviewMySpaces": {
     "description": "Preview audience chip: a member of my spaces."
   },
@@ -44862,7 +44890,7 @@
   "@visibilitySignedIn": {
     "description": "Audience: anyone with an account."
   },
-  "visibilitySpaceAmbiguous": "Same name as another space · {source}",
+  "visibilitySpaceAmbiguous": "Same name as another place · {source}",
   "@visibilitySpaceAmbiguous": {
     "description": "#2558 chosen-spaces picker: two spaces share a name; source says where this one is",
     "placeholders": {
@@ -44886,7 +44914,7 @@
       }
     }
   },
-  "visibilitySpaceUnlisted": "A space that is no longer listed",
+  "visibilitySpaceUnlisted": "A place that is no longer listed",
   "@visibilitySpaceUnlisted": {
     "description": "#2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it."
   },
@@ -44894,7 +44922,7 @@
   "@visibilitySpaceUnverified": {
     "description": "#2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet"
   },
-  "visibilitySpacesUnavailable": "Your spaces cannot be listed right now.",
+  "visibilitySpacesUnavailable": "Your places cannot be listed right now.",
   "@visibilitySpacesUnavailable": {
     "description": "#2558 — the chosen-spaces picker when the list of spaces cannot be read."
   },

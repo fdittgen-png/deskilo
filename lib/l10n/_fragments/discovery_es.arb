@@ -4,7 +4,7 @@
   "discoveryRemoveBookmark": "Quitar de guardados",
   "discoveryView": "Ver",
   "discoverySavedFilter": "Guardados",
-  "discoveryNoSaved": "Todavía no hay espacios guardados en este dispositivo.",
+  "discoveryNoSaved": "Todavía no hay lugares guardados en este dispositivo.",
   "discoveryLoadedCount": "Lugares cargados: {loaded} · mostrados: {shown} · directorios que respondieron: {answered} de {sources}",
   "discoveryShowMoreFrom": "Mostrar más de {source}",
   "discoverySourceFailed": "{source} no respondió. Los lugares ya mostrados se mantienen.",

@@ -7,7 +7,7 @@
   "@meBusinessSeesAsk": {
     "description": "#3594 what a business sees when the person asks to join"
   },
-  "meBusinessSeesSpace": "Une fois membre, tout le monde dans l’espace : votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence seulement selon vos choix dans Qui me voit.",
+  "meBusinessSeesSpace": "Une fois membre, tout le monde sur place : votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence seulement selon vos choix dans Qui me voit.",
   "@meBusinessSeesSpace": {
     "description": "#3594 what the members of a space see"
   },

@@ -1,9 +1,12 @@
 {
-  "uxOpenWorkspace": "Arbeitsbereich öffnen",
+  "uxOpenWorkspace": "Betrieb öffnen",
   "uxTestSpace": "Testbereich",
+  "meTestBusiness": "Testbetrieb",
   "uxRealWorkspace": "Arbeitsbereich",
+  "meRealBusiness": "Betrieb",
   "uxRealSpaceHint": "Echte Buchungen und Rechnungen",
   "uxTestSpaceHint": "Testbereich: Buchungen und Rechnungen zum Ausprobieren",
+  "meTestBusinessHint": "Testbetrieb: Buchungen und Rechnungen zum Ausprobieren",
   "uxProfileAccount": "Profil und Konto",
   "uxProfileSection": "Profil",
   "uxPrivacySection": "Datenschutz",

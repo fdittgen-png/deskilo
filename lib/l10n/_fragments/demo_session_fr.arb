@@ -14,6 +14,7 @@
     "description": "#1375 demo session: demoSessionResetDone"
   },
   "demoSessionBadgeHint": "Vous explorez un espace de démonstration. Rien ici ne quitte cet appareil.",
+  "meDemoSessionBadgeHint": "Vous explorez une entreprise de démonstration. Rien ici ne quitte cet appareil.",
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
   },
