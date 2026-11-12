@@ -26,5 +26,13 @@
   "deskNavExpand": "Widen the menu",
   "@deskNavExpand": {
     "description": "#3603 the desk rail's control that widens it to the sidebar with labels"
+  },
+  "deskWindowTitle": "{place} — {business}",
+  "@deskWindowTitle": {
+    "description": "#3773 the desk window's (or browser tab's) title: the place on screen, then the business; a language may order them",
+    "placeholders": {
+      "place": {"type": "String", "example": "Purchases"},
+      "business": {"type": "String", "example": "Atelier du Marché"}
+    }
   }
 }

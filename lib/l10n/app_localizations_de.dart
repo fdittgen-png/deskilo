@@ -7367,6 +7367,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deskSupplementLabel => 'Tisch-Reservierungen';
 
   @override
+  String deskWindowTitle(String place, String business) {
+    return '$place — $business';
+  }
+
+  @override
   String get developerClear => 'Protokoll leeren';
 
   @override

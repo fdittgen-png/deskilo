@@ -8,6 +8,7 @@
 import 'dart:io';
 
 import 'package:deskilo/app/route_classes.dart';
+import 'package:deskilo/app/shell/shell_branch.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The keys and group ids the navigation's sources declare.
@@ -17,13 +18,14 @@ Set<String> _knownPlaces() {
   final groups = File('lib/app/shell/shell_nav_groups.dart').readAsStringSync();
   final destinations = File('lib/app/shell/shell_destinations.dart')
       .readAsStringSync();
+  final branches = File('lib/app/shell/shell_branch.dart').readAsStringSync();
   return {
     for (final m in RegExp(r"'(drawer-[a-z-]+)'").allMatches(entries))
       m.group(1)!,
     // The tab entries: `drawer-tab-<branch>` for each ShellBranch constant.
     for (final m in RegExp(
       r'static const int \w+ = (\d+);',
-    ).allMatches(destinations))
+    ).allMatches(branches))
       'drawer-tab-${m.group(1)}',
     // The destinations opened by location: `drawer-nav-<id>`.
     for (final m in RegExp(
@@ -67,5 +69,25 @@ void main() {
         if (r.place != null && r.chrome != RouteChrome.desk) r.pattern,
     ];
     expect(stray, isEmpty);
+  });
+
+  test('a tab is named by its constant, and each tab is placed on itself', () {
+    final table = File('lib/app/route_classes.dart').readAsStringSync();
+    expect(
+      RegExp(r"'drawer-tab-\d").allMatches(table),
+      isEmpty,
+      reason:
+          'write drawer-tab-\${ShellBranch.x}: a digit would select '
+          'another tab silently if the tabs were renumbered',
+    );
+    for (final (path, branch) in [
+      ('/messages', ShellBranch.messages),
+      ('/calendar', ShellBranch.calendar),
+      ('/directory', ShellBranch.directory),
+      ('/money', ShellBranch.money),
+    ]) {
+      expect(placeOf(path), 'drawer-tab-$branch', reason: path);
+    }
+    expect(placeOf('/reserve'), 'drawer-reserve');
   });
 }

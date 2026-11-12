@@ -4698,6 +4698,7 @@
   "deskNavCollapse": "Menü schmaler",
   "deskNavExpand": "Menü breiter",
   "deskSupplementLabel": "Tisch-Reservierungen",
+  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Protokoll leeren",
   "developerEmpty": "Noch keine Protokolleinträge.",
   "developerExport": "Protokoll exportieren",

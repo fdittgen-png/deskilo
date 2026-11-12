@@ -4698,6 +4698,7 @@
   "deskNavCollapse": "Restringi il menu",
   "deskNavExpand": "Allarga il menu",
   "deskSupplementLabel": "Prenotazioni di tavolo",
+  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Svuota registro",
   "developerEmpty": "Ancora nessuna voce nel registro.",
   "developerExport": "Esporta registro",

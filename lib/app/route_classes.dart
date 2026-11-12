@@ -8,6 +8,7 @@
 // class without a route is a boundary kept alive for nothing.
 import 'package:meta/meta.dart';
 import 'schema_gate.dart';
+import 'shell/shell_branch.dart';
 
 /// What a route needs before it may open.
 enum RouteClass {
@@ -49,7 +50,7 @@ class RouteRule {
 
   /// #3603 — where this page sits in the business's navigation: the key of
   /// the entry it is reached from today (`drawer-…`; a tab is
-  /// `drawer-tab-<n>`, n its `ShellBranch`), or the id of a group whose
+  /// `drawer-tab-${ShellBranch.x}`, never a digit), or the id of a group whose
   /// entries select themselves (`reporting`). The desk selects that entry
   /// and names it in the breadcrumb and the window title; every desk route
   /// declares one (test/lint/desk_places_test.dart).
@@ -160,8 +161,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/task-recorder/guide', RouteClass.nativeAccount),
   RouteRule('/task-recorder/recording', RouteClass.nativeAccount),
   RouteRule('/task-workbench/storyboard', RouteClass.publicEntry),
-  RouteRule('/money/repartition', RouteClass.workspace, place: 'drawer-tab-3'),
-  RouteRule('/money/settlement', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/repartition', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
+  RouteRule('/money/settlement', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/account-activity/history', RouteClass.nativeAccount),
   RouteRule('/help/support-bundle', RouteClass.publicEntry),
   RouteRule('/server/new-instance/first-start', RouteClass.operator),
@@ -180,16 +181,16 @@ const List<RouteRule> routeRules = [
   RouteRule('/kiosk', RouteClass.workspace, chrome: RouteChrome.kiosk),
   // A membership still pending reaches no destination: no desk.
   RouteRule('/pending', RouteClass.workspace, chrome: RouteChrome.account),
-  RouteRule('/messages', RouteClass.workspace, place: 'drawer-tab-0'),
-  RouteRule('/calendar', RouteClass.workspace, place: 'drawer-tab-1'),
-  RouteRule('/directory', RouteClass.workspace, place: 'drawer-tab-2'),
-  RouteRule('/money', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/messages', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.messages}'),
+  RouteRule('/calendar', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.calendar}'),
+  RouteRule('/directory', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.directory}'),
+  RouteRule('/money', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/reserve', RouteClass.workspace, place: 'drawer-reserve'),
   RouteRule('/formats', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/events', RouteClass.workspace, place: 'drawer-events'),
   RouteRule('/plan', RouteClass.workspace, place: 'drawer-reserve'),
-  RouteRule('/conversation/:conversationId', RouteClass.workspace, place: 'drawer-tab-0'),
-  RouteRule('/res/:id', RouteClass.workspace, place: 'drawer-tab-1'),
+  RouteRule('/conversation/:conversationId', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.messages}'),
+  RouteRule('/res/:id', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.calendar}'),
   RouteRule('/space/:kind/:id', RouteClass.workspace, place: 'drawer-reserve'),
   RouteRule('/library', RouteClass.workspace, place: 'drawer-setup-guide'),
   RouteRule('/workspace-code', RouteClass.workspace, place: 'drawer-settings'),
@@ -207,18 +208,18 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/personal-info', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings'),
-  RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases'),
-  RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals'),
-  RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
   RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders'),
   RouteRule('/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
   RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-sales'),
   RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash'),
   RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting'),
-  RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/roles-of-this-space', RouteClass.workspace, place: 'drawer-settings'),

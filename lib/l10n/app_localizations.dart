@@ -11741,6 +11741,12 @@ abstract class AppLocalizations {
   /// **'Desk reservations'**
   String get deskSupplementLabel;
 
+  /// #3773 the desk window's (or browser tab's) title: the place on screen, then the business; a language may order them
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {business}'**
+  String deskWindowTitle(String place, String business);
+
   /// App-bar action emptying the trace buffer and file
   ///
   /// In en, this message translates to:

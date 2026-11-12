@@ -5,5 +5,6 @@
   "uxNavWorkspace": "Configurare lo spazio",
   "uxNavReporting": "Reportistica",
   "deskNavCollapse": "Restringi il menu",
-  "deskNavExpand": "Allarga il menu"
+  "deskNavExpand": "Allarga il menu",
+  "deskWindowTitle": "{place} — {business}"
 }

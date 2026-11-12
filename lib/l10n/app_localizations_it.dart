@@ -7354,6 +7354,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deskSupplementLabel => 'Prenotazioni di tavolo';
 
   @override
+  String deskWindowTitle(String place, String business) {
+    return '$place — $business';
+  }
+
+  @override
   String get developerClear => 'Svuota registro';
 
   @override

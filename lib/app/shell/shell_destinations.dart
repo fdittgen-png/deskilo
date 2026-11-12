@@ -3,27 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
+import 'shell_branch.dart';
 
-/// Branch indices of the stateful shell (order = bottom-bar order).
-///
-/// The integers never move: `StatefulShellRoute` keeps each branch's state
-/// by index, so renumbering would hand one destination another's history.
-/// #1306 — the names say what the branches ARE today; `plan` rendered the
-/// Messages destination since #687 moved the plan to the Reserve hub.
-abstract final class ShellBranch {
-  /// The messaging centre (#687). Core: never feature-gated.
-  static const int messages = 0;
-  static const int calendar = 1;
-
-  /// The member directory (#230).
-  static const int directory = 2;
-  static const int money = 3;
-
-  /// The raised centre button's branch — not a bar destination, but a
-  /// branch so the bar stays visible and functional on the hub. Core
-  /// like Messages: never feature-gated, active by default.
-  static const int reserve = 4;
-}
+export 'shell_branch.dart';
 
 /// #1306 — THE list of bar destinations for a workspace's features, in bar
 /// order. The bottom bar and the web drawer both render this one list, so

@@ -4698,6 +4698,7 @@
   "deskNavCollapse": "Estrechar el menú",
   "deskNavExpand": "Ensanchar el menú",
   "deskSupplementLabel": "Reservas de mesa",
+  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Vaciar registro",
   "developerEmpty": "Aún no hay entradas de registro.",
   "developerExport": "Exportar registro",

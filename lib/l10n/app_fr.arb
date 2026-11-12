@@ -4698,6 +4698,7 @@
   "deskNavCollapse": "Réduire le menu",
   "deskNavExpand": "Élargir le menu",
   "deskSupplementLabel": "Réservations de table",
+  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Vider le journal",
   "developerEmpty": "Aucune entrée de journal pour l'instant.",
   "developerExport": "Exporter le journal",
