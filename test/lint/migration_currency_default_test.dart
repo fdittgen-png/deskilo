@@ -6,9 +6,9 @@
 // whole is stated by pgTAP 401; this lint stops a new default before it is
 // applied. It looks for currency defaults, not for every three-letter code:
 // reference data (a table of currencies, a fixture) is not a default.
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// The first migration the rule holds for.
 const _from = 735;
@@ -64,11 +64,11 @@ void main() {
 
   test('no migration from 0735 on gives a currency a default', () {
     final found = <String>[];
-    for (final file in Directory('supabase/migrations').listSync()) {
+    for (final file in sqlFiles('supabase/migrations')) {
       final name = file.uri.pathSegments.last;
       final m = _fileName.firstMatch(name);
       if (m == null || int.parse(m.group(1)!) < _from) continue;
-      for (final hit in currencyDefaults(File(file.path).readAsStringSync())) {
+      for (final hit in currencyDefaults(file.readAsStringSync())) {
         found.add('$name:$hit');
       }
     }

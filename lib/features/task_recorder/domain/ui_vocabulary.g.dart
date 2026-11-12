@@ -10115,6 +10115,7 @@ const Set<String> uiLabelKeys = {
   'moneyAmountLabel',
   'moneyBaseFee',
   'moneyCredits',
+  'moneyCurrencyUnavailable',
   'moneyDescriptionLabel',
   'moneyExpenseCategoryLabel',
   'moneyExpensePending',

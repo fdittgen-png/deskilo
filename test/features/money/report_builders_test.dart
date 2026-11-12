@@ -74,7 +74,7 @@ void main() {
     });
     test('an unbanded percentage lists only the catalogue', () {
       final data = agreementReportData(const ReportStrings(),
-          AgreementFacts(now: _now, services: const [_service]),
+          AgreementFacts(now: _now, workspace: _workspace, services: const [_service]),
           memberName: 'Ana', subscriptionPct: 50, reference: ActiveTaxReference.current);
       expect((data['lines'] as List).length, 1);
       expect(data['total'], '');

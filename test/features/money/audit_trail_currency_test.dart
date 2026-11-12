@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #2488 -- the audit trail states its amounts in the workspace's currency
-// (its digits follow the currency: a yen has none, a dinar three), and only
-// reads as the registry's default currency when no workspace names one.
+// (its digits follow the currency: a yen has none, a dinar three). #3658: a
+// trail without a currency is refused, never read in a default one.
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,13 +31,14 @@ void main() {
     expect(amount(csv(currencyCode: 'KWD')), '123.456');
   });
 
-  test('without a currency the registry default (the euro) stands, as it always did', () {
-    expect(amount(csv()), '1234.56');
+  test('without a currency the trail is refused, not written in a default one', () {
+    expect(csv, throwsA(isA<CurrencyUnavailable>()));
+    expect(() => csv(currencyCode: ''), throwsA(isA<CurrencyUnavailable>()));
   });
 
-  test('an empty currency code formats as the registry default currency', () {
-    expect(moneyFormat('', locale: null).code, 'EUR');
-    expect(moneyFormat(null, locale: null).code, 'EUR');
+  test('a missing currency is no currency: no code, every amount unavailable', () {
+    expect(moneyFormat('', locale: null).unavailable, isTrue);
+    expect(moneyFormat(null, locale: null).unavailable, isTrue);
     expect(moneyFormat('CHF', locale: null).code, 'CHF');
   });
 }

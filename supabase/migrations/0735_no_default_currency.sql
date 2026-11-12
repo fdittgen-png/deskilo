@@ -34,6 +34,7 @@ begin
   return replace(p_def, p_old, p_new);
 end
 $f$;
+revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
 
 do $migration$
 declare

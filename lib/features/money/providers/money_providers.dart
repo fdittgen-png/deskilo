@@ -580,7 +580,6 @@ Future<List<NumberSequence>> numberSequences(Ref ref) async {
 Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) {
-    // #3658 — no business, no currency: the status is not made up in one.
     throw const CurrencyUnavailable('workspace status');
   }
   return ref
