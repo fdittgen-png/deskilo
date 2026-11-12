@@ -53,7 +53,12 @@ String subscriptionLabel(
   required bool association,
   String month = '',
 }) {
-  final rate = ratePercentText(pct, locale: strings.formatLocale);
+  // The document's format locale, else its own language: a French document
+  // that names no format locale still writes `100 %`, not an English `100%`.
+  final rate = ratePercentText(
+    pct,
+    locale: strings.formatLocale ?? strings.localeName,
+  );
   if (month.isNotEmpty) {
     return association
         ? strings.participationMonth(month, rate)
