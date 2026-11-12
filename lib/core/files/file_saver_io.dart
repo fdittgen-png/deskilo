@@ -175,13 +175,12 @@ Future<void> _discard(File file) async {
 }
 
 /// #3613 — the temporary file beside a target could not be created or
-/// opened: nothing was written anywhere.
-class _TemporaryFileRefused implements Exception {
-  const _TemporaryFileRefused(this.cause);
-  final FileSystemException cause;
-
-  @override
-  String toString() => '_TemporaryFileRefused: $cause';
+/// opened: nothing was written anywhere. It stays the file-system exception
+/// it wraps, so every caller of [writeFileAtomically] that catches an
+/// `IOException` or a `FileSystemException` sees what it saw before.
+class _TemporaryFileRefused extends FileSystemException {
+  _TemporaryFileRefused(FileSystemException cause)
+    : super(cause.message, cause.path, cause.osError);
 }
 
 /// #3613 — writes [bytes] to the place a desktop person chose. The first way
