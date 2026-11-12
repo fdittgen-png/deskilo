@@ -230,7 +230,7 @@ void main() {
   Rect pageRect(WidgetTester tester) => tester.getRect(
     find
         .descendant(
-          of: find.byWidgetPredicate((w) => w is AppFrame && w.inside),
+          of: _key('desk-page'),
           matching: find.byType(Scaffold),
         )
         .first,
@@ -270,7 +270,8 @@ void main() {
     tester,
   ) async {
     final router = await _pump(tester, size: const Size(1920, 900));
-    await _go(tester, router, '/invoices');
+    // A canvas route still on today's frame (#3604: /invoices has its own).
+    await _go(tester, router, '/editor');
     expect(pageRect(tester).width, kAppFrameMaxWidth);
   });
 
@@ -291,7 +292,7 @@ void main() {
     final context = tester.element(
       find
           .descendant(
-            of: find.byWidgetPredicate((w) => w is AppFrame && w.inside),
+            of: _key('desk-page'),
             matching: find.byType(Scaffold),
           )
           .first,

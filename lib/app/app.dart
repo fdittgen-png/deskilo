@@ -8,7 +8,6 @@ import '../core/demo/presentation/demo_workspace.dart';
 import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
-import '../core/ui/app_frame.dart';
 import '../core/ui/system_insets_guard.dart';
 import '../features/profile/providers/personal_appearance_providers.dart';
 import '../features/profile/providers/presence_providers.dart';
@@ -20,6 +19,7 @@ import '../l10n/app_localizations.dart';
 import 'active_tax_reference.dart';
 import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
+import 'page_frame.dart';
 import 'router.dart';
 import 'shell/desk_frame.dart';
 import 'shell/desk_scaffold.dart';
@@ -145,7 +145,8 @@ class DeskiloApp extends ConsumerWidget {
                     );
                     return desk
                         ? DeskFrame(router: router, path: path, child: page)
-                        : AppFrame(maxWidth: frameWidthFor(path), child: page);
+                        // #3604 — the measure its route declares.
+                        : framePage(path, page, inside: false);
                   },
                 ),
               ))),
