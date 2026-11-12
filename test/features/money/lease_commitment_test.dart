@@ -191,8 +191,9 @@ void main() {
           )
           .controller
           .text,
-      '1000',
-      reason: 'the month still expects 1 000.00: that is the default',
+      '1000.00',
+      reason: 'the month still expects 1 000.00: that is the default, '
+          'written at the currency\'s precision',
     );
     await tester.tap(find.byKey(const ValueKey('match-save')));
     await tester.pumpAndSettle();

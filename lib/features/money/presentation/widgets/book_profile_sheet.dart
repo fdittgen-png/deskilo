@@ -124,6 +124,9 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
   var _day = 1;
   var _basis = AccountingBasis.accrual;
   DateTime? _from;
+
+  /// The typed start date could not be read: nothing is saved.
+  var _fromUnread = false;
   var _saving = false;
   List<BookMapping> _mappings = const [];
 
@@ -152,7 +155,7 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
 
   BookProfile? _draft(String workspaceId, String currency, DateTime today) {
     final issuer = _issuer;
-    if (issuer == null) return null;
+    if (issuer == null || _fromUnread) return null;
     return BookProfile(
       id: widget.editing?.id ?? '',
       workspaceId: workspaceId,
@@ -232,8 +235,6 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
                 dates.format(year.start),
                 dates.format(year.end),
               ));
-    final fromText =
-        l10n.bookEffectiveFrom(dates.format(draft?.effectiveFrom ?? today));
     return Padding(
       padding: EdgeInsets.fromLTRB(
         AppSpacing.md,
@@ -351,22 +352,18 @@ class _BookProfileSheetState extends ConsumerState<_BookProfileSheet> {
               selected: {_basis},
               onSelectionChanged: (v) => setState(() => _basis = v.first),
             ),
-            ListTile(
+            AppDateField(
               key: const ValueKey('book-from'),
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.event),
-              title: Text(fromText),
-              onTap: widget.editing != null
-                  ? null
-                  : () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: _from ?? today,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                      );
-                      if (picked != null) setState(() => _from = picked);
-                    },
+              label: l10n.bookEffectiveFromLabel,
+              value: _from ?? today,
+              enabled: widget.editing == null,
+              first: DateTime(2000),
+              last: DateTime(2100),
+              isRequired: true,
+              onChanged: (read) => setState(() {
+                _fromUnread = read.date == null;
+                if (read.date case final date?) _from = date;
+              }),
             ),
             if (yearText != null)
               Text(yearText, key: const ValueKey('book-preview')),

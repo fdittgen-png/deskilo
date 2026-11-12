@@ -14,6 +14,10 @@
   "bookBasisAccrual": "Competenza",
   "bookBasisCash": "Cassa",
   "bookEffectiveFrom": "In vigore dal {date}",
+  "bookEffectiveFromLabel": "In vigore dal",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
   "bookProblemExternal": "Indichi il sistema esterno che tiene i libri ufficiali.",
   "bookProblemCurrency": "Questa valuta non ha un numero di decimali verificato.",

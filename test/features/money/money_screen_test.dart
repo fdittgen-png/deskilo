@@ -3,6 +3,8 @@
 // The member's bill: month, subscription, entitlement, packages and online
 // payment, each shown only when it applies (0041, 0042).
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/format/date_input.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
@@ -470,11 +472,13 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '80');
 
     // Defaults: today, and the month that is running.
+    final dateField = find.byKey(const ValueKey('payment-date-tile'));
     expect(
       find.descendant(
-        of: find.byKey(const ValueKey('payment-date-tile')),
-        matching: find.text(DateFormat.yMMMd('en').format(
+        of: dateField,
+        matching: find.text(formatDateInput(
           DateTime(today.year, today.month, today.day),
+          locale: appFormatOf(tester.element(dateField)).locale,
         )),
       ),
       findsOneWidget,

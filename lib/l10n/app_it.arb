@@ -372,6 +372,30 @@
   "amenityMonitor": "Monitor",
   "amenityStandingDesk": "Scrivania in piedi",
   "amenityWindow": "Vicino alla finestra",
+  "amountFieldNegative": "Qui non è consentito un importo inferiore a zero.",
+  "@amountFieldNegative": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNotANumber": "Non è un importo. Usi cifre e un solo separatore decimale.",
+  "@amountFieldNotANumber": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldRequired": "Inserisca un importo.",
+  "@amountFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} non ha decimali.} =1{{currency} ha un decimale.} other{{currency} ha {digits} decimali.}}",
+  "@amountFieldTooManyDecimals": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "digits": {
+        "type": "int"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "applicationAcceptedVote": "Ha approvato questa richiesta",
   "@applicationAcceptedVote": {
@@ -2907,6 +2931,10 @@
   "bookChartTitle": "Piano dei conti · {site}",
   "bookCurrency": "Valuta funzionale",
   "bookEffectiveFrom": "In vigore dal {date}",
+  "bookEffectiveFromLabel": "In vigore dal",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookExternalOther": "Altro…",
   "bookExternalSystem": "Sistema che fa fede",
   "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
@@ -4250,6 +4278,35 @@
   "dataReportPartPurchases": "Acquisti e fornitori",
   "dataReportSubtitle": "Membri, prenotazioni, fatture, pagamenti, acquisti e la pianta con i suoi prezzi, con i totali, da leggere o stampare.",
   "dataReportTitle": "Rapporto dati dello spazio",
+  "dateFieldImpossible": "Questa data non esiste.",
+  "@dateFieldImpossible": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldMalformed": "Non è una data. Inserisca giorno, mese e anno nel suo formato di data, con l'anno a quattro cifre, oppure come otto cifre.",
+  "@dateFieldMalformed": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldOutOfRange": "Questa data è fuori dalle date consentite qui.",
+  "@dateFieldOutOfRange": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldReadAs": "Letto come {date}",
+  "@dateFieldReadAs": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFieldRequired": "Inserisca una data.",
+  "@dateFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldTwoDigitYear": "Inserisca l'anno con quattro cifre.",
+  "@dateFieldTwoDigitYear": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
   "datevAccountLength": "Lunghezza dei conti (Sachkontenlänge)",
   "datevAccountsIntro": "I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
   "@datevAccountsIntro": {

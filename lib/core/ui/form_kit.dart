@@ -32,6 +32,9 @@ import 'app_sheet.dart';
 import 'form_error_summary.dart';
 import 'inline_banner.dart';
 
+export 'amount_field.dart';
+export 'date_field.dart';
+
 /// Per-field problems: the field's key → the localized sentence shown
 /// under it. What [AppFormSheet.validate] returns; empty = valid.
 typedef FieldErrors = Map<String, String>;

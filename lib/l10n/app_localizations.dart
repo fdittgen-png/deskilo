@@ -1496,6 +1496,30 @@ abstract class AppLocalizations {
   /// **'Window seat'**
   String get amenityWindow;
 
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'An amount below zero is not allowed here.'**
+  String get amountFieldNegative;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Not an amount. Use digits and one decimal separator.'**
+  String get amountFieldNotANumber;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount.'**
+  String get amountFieldRequired;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'{digits, plural, =0{{currency} has no decimals.} =1{{currency} has one decimal.} other{{currency} has {digits} decimals.}}'**
+  String amountFieldTooManyDecimals(int digits, String currency);
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
@@ -7679,6 +7703,12 @@ abstract class AppLocalizations {
   /// **'Takes effect from {date}'**
   String bookEffectiveFrom(String date);
 
+  /// #3612 the label of the typed or picked date a book takes effect from
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect from'**
+  String get bookEffectiveFromLabel;
+
   /// #2577 the book software picker: a software the catalogue does not list, typed by the person
   ///
   /// In en, this message translates to:
@@ -11002,6 +11032,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace data report'**
   String get dataReportTitle;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'This date does not exist.'**
+  String get dateFieldImpossible;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Not a date. Type day, month and year in your date format, with a four-digit year, or as eight digits.'**
+  String get dateFieldMalformed;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'This date is outside the dates allowed here.'**
+  String get dateFieldOutOfRange;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Read as {date}'**
+  String dateFieldReadAs(String date);
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a date.'**
+  String get dateFieldRequired;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Type the year with four digits.'**
+  String get dateFieldTwoDigitYear;
 
   /// DATEV export dialog (#2375): the Sachkontenlänge of the chart
   ///

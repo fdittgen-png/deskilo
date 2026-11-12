@@ -10,6 +10,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bill_sections.dart';
@@ -74,6 +75,25 @@ class RecordPaymentSheet extends StatefulWidget {
 
 class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   MoneyPaymentDraft get _draft => widget.draft;
+  late DateRead _paidOn = (date: _draft.paidOn, problem: null);
+  bool _invalid = false;
+
+  /// Submits only an amount above zero of the sheet's currency on a date
+  /// the field could read; otherwise each field says what is wrong.
+  void _submit() {
+    final amount = appFormatOf(context)
+        .readAmount(
+          _draft.amount.text,
+          currency: widget.currency.code,
+          allowNegative: false,
+        )
+        .minor;
+    if (amount == null || amount <= 0 || _paidOn.date == null) {
+      setState(() => _invalid = true);
+      return;
+    }
+    Navigator.of(context).pop(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +102,13 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
       title: l10n.moneyRecordPayment,
       children: [
         const SizedBox(height: 12),
-        TextField(
+        AppAmountField(
+          key: const ValueKey('payment-amount'),
           controller: _draft.amount,
-          decoration: InputDecoration(
-            labelText: l10n.moneyAmountLabel,
-            suffixText: widget.currency.currencyName,
-          ),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          label: l10n.moneyAmountLabel,
+          currency: widget.currency.code,
+          allowNegative: false,
+          showProblem: _invalid,
           autofocus: true,
         ),
         const SizedBox(height: 12),
@@ -106,7 +126,7 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
         const SizedBox(height: 16),
         FilledButton(
           key: const ValueKey('money-submit-payment'),
-          onPressed: () => Navigator.of(context).pop(true),
+          onPressed: _submit,
           child: Text(
             l10n.moneySubmitPayment,
           ),
@@ -138,22 +158,19 @@ class _RecordPaymentSheetState extends State<RecordPaymentSheet> {
   /// WHEN the money moved.
   Widget _dateTile(BuildContext context, AppLocalizations l10n) {
     final today = _draft.today;
-    return ListTile(
+    return AppDateField(
       key: const ValueKey('payment-date-tile'),
-      contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.event_outlined),
-      title: Text(l10n.moneyPaymentDateLabel),
-      subtitle: Text(appFormatOf(context).dates(DateShape.date).format(_draft.paidOn)),
-      onTap: () async {
-        final picked = await showDatePicker(
-          context: context,
-          initialDate: _draft.paidOn,
-          firstDate: DateTime(today.year - 2),
-          lastDate: DateTime(today.year, today.month, today.day),
-          helpText: l10n.moneyPaymentDateLabel,
-        );
-        if (picked != null) setState(() => _draft.paidOn = picked);
-      },
+      label: l10n.moneyPaymentDateLabel,
+      value: _paidOn.date,
+      first: DateTime(today.year - 2),
+      last: DateTime(today.year, today.month, today.day),
+      pickerHelpText: l10n.moneyPaymentDateLabel,
+      isRequired: true,
+      showProblem: _invalid,
+      onChanged: (read) => setState(() {
+        _paidOn = read;
+        if (read.date case final date?) _draft.paidOn = date;
+      }),
     );
   }
 
