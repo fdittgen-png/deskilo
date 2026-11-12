@@ -11,6 +11,8 @@ export type SendOrder = {
   pdfBase64: string;
   fileName: string;
   attemptId: string;
+  /** What is sent, in the idempotency key: a purchase order by default. */
+  kind?: "purchase-order" | "payment-reminder";
 };
 
 export type OrderMailResult =
@@ -47,7 +49,7 @@ export async function sendOrderViaResend(
       headers: {
         Authorization: `Bearer ${order.apiKey}`,
         "Content-Type": "application/json",
-        "Idempotency-Key": `purchase-order/${order.attemptId}`,
+        "Idempotency-Key": `${order.kind ?? "purchase-order"}/${order.attemptId}`,
       },
       body: JSON.stringify({
         from: order.senderName

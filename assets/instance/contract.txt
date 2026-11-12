@@ -1523,7 +1523,7 @@ constraint realtime_deletions.realtime_deletions_pkey PRIMARY KEY (id)
 constraint realtime_deletions.realtime_deletions_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint realtime_deletions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint realtime_deletions.system_company_present CHECK ((company_id IS NOT NULL))
-constraint reminder_attempts.reminder_attempts_channel_check CHECK ((channel = ANY (ARRAY['push'::text, 'share'::text])))
+constraint reminder_attempts.reminder_attempts_channel_check CHECK ((channel = ANY (ARRAY['push'::text, 'share'::text, 'email'::text])))
 constraint reminder_attempts.reminder_attempts_detail_check CHECK ((char_length(detail) <= 300))
 constraint reminder_attempts.reminder_attempts_intent_id_fkey FOREIGN KEY (intent_id) REFERENCES reminder_intents(id) ON DELETE CASCADE
 constraint reminder_attempts.reminder_attempts_outcome_check CHECK ((outcome = ANY (ARRAY['queued'::text, 'provider_accepted'::text, 'declared_delivered'::text, 'failed'::text, 'unknown'::text])))
@@ -1531,6 +1531,19 @@ constraint reminder_attempts.reminder_attempts_pkey PRIMARY KEY (id)
 constraint reminder_attempts.reminder_attempts_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint reminder_attempts.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint reminder_attempts.system_company_present CHECK ((company_id IS NOT NULL))
+constraint reminder_email_sends.reminder_email_sends_intent_id_fkey FOREIGN KEY (intent_id) REFERENCES reminder_intents(id) ON DELETE CASCADE
+constraint reminder_email_sends.reminder_email_sends_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
+constraint reminder_email_sends.reminder_email_sends_language_check CHECK ((language = ANY (ARRAY['en'::text, 'fr'::text, 'de'::text, 'es'::text, 'it'::text])))
+constraint reminder_email_sends.reminder_email_sends_level_check CHECK (((level >= 1) AND (level <= 9)))
+constraint reminder_email_sends.reminder_email_sends_pkey PRIMARY KEY (id)
+constraint reminder_email_sends.reminder_email_sends_provider_id_check CHECK ((char_length(provider_id) <= 200))
+constraint reminder_email_sends.reminder_email_sends_reason_check CHECK ((char_length(reason) <= 300))
+constraint reminder_email_sends.reminder_email_sends_recipient_check CHECK ((char_length(recipient) <= 254))
+constraint reminder_email_sends.reminder_email_sends_state_check CHECK ((state = ANY (ARRAY['pending'::text, 'accepted'::text, 'refused'::text, 'unconfirmed'::text, 'delivered'::text, 'not_delivered'::text])))
+constraint reminder_email_sends.reminder_email_sends_workspace_id_actor_member_id_fkey FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id)
+constraint reminder_email_sends.reminder_email_sends_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint reminder_email_sends.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint reminder_email_sends.system_company_present CHECK ((company_id IS NOT NULL))
 constraint reminder_intents.reminder_intents_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
 constraint reminder_intents.reminder_intents_level_check CHECK (((level >= 1) AND (level <= 9)))
 constraint reminder_intents.reminder_intents_origin_check CHECK ((origin = ANY (ARRAY['manual'::text, 'automatic'::text, 'legacy'::text])))
@@ -2234,6 +2247,7 @@ routine public.bank_statement_lines_v1(p_statement_id uuid) -> jsonb | function 
 routine public.bank_statement_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:40e3eb8e6cf6
 routine public.bank_statements_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:dbd4baa5a18a
 routine public.begin_purchase_order_send_v1(p_workspace_id uuid, p_order_id uuid, p_revision integer, p_attempt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:af3d901632e5
+routine public.begin_reminder_email_v1(p_workspace_id uuid, p_invoice_id uuid, p_level integer, p_language text, p_attempt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cfea5d1e717e
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
 routine public.bi_batch_time_budget_ms(p_workspace_id uuid) -> integer | function | definer | stable | exec:service_role | body:b13385b30322
 routine public.bi_cost_allocation_rules_guard() -> trigger | function | invoker | volatile | exec:service_role | body:1accf0f116ad
@@ -2435,6 +2449,7 @@ routine public.financial_command_outcome_v1(p_workspace_id uuid, p_request_id uu
 routine public.financial_receipt_replay_v1(p_workspace_id uuid, p_actor uuid, p_request_id uuid, p_kind text, p_digest text) -> uuid | function | definer | volatile | exec:service_role | body:74fb4962ec61
 routine public.financial_subject_command_v1(p_kind text, p_invoice_id uuid, p_request_id uuid, p_text text) -> jsonb | function | definer | volatile | exec:service_role | body:ded5edb77bf7
 routine public.finish_purchase_order_send(p_attempt_id uuid, p_outcome text, p_provider_id text, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:4e8ee24d9799
+routine public.finish_reminder_email(p_attempt_id uuid, p_outcome text, p_provider_id text, p_reason text) -> jsonb | function | definer | volatile | exec:service_role | body:637e873be025
 routine public.floor_plan_rows(p_tree jsonb) -> TABLE(key text, data jsonb) | function | invoker | immutable | exec:authenticated,service_role | body:a75fadf6de56
 routine public.forward_message(p_kind text, p_message_id uuid, p_target_kind text, p_target_id uuid, p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c8d07684e4eb
 routine public.gen_invite_code() -> text | function | invoker | volatile | exec:service_role | body:250cc8705573
@@ -2503,6 +2518,7 @@ routine public.instance_set_mcp_loopback_clients(p_enabled boolean) -> jsonb | f
 routine public.instance_set_mcp_runtime(p_enabled boolean, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:00484ee8582c
 routine public.invitation_preview(p_code text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0fc4c09e55ef
 routine public.invitation_state(p_code text) -> jsonb | function | definer | stable | exec:service_role | body:acc7d077ddfe
+routine public.invoice_customer_email(p_invoice_id uuid) -> text | function | definer | stable | exec:service_role | body:f9c3c1aafda2
 routine public.invoice_dunning_state(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8eea512e46f5
 routine public.invoice_dunning_state_core(p_invoice_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:service_role | body:4ee14bd0651f
 routine public.invoice_essentials_missing(p_workspace_id uuid, p_member_id uuid, p_parties jsonb, p_vat_totals jsonb) -> text[] | function | definer | stable | exec:service_role | body:b45c4aa29a0f
@@ -3046,6 +3062,9 @@ routine public.release_hmrc_submission(p_declaration_id uuid, p_holder text, p_s
 routine public.release_invoice_payment(p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:31f5acde6a81
 routine public.release_retention_hold(p_hold_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:453a81248395
 routine public.reminder_attempts_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:aef59fb23b5d
+routine public.reminder_email_record(p_send uuid, p_evidence text) -> void | function | definer | volatile | exec:service_role | body:c6d19c3cedfe
+routine public.reminder_email_send_json(p_send uuid) -> jsonb | function | definer | stable | exec:service_role | body:57a3bdcd7f8f
+routine public.reminder_email_target_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8afc9f76dd18
 routine public.reminder_queue_push(p_intent_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:1423564acaf2
 routine public.remove_account_group_member(p_group uuid, p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:54961220ca5d
 routine public.remove_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:695b1773b84f
@@ -3094,6 +3113,7 @@ routine public.reset_workspace(p_workspace_id uuid) -> void | function | definer
 routine public.reset_workspace_public_page(p_workspace uuid, p_fields text[]) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0ebe84a74fa9
 routine public.resolve_einvoice_manually_v1(p_id uuid, p_actor uuid, p_outcome text, p_reason text, p_evidence text, p_verdict jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:afba90b99e6f
 routine public.resolve_purchase_order_send_v1(p_workspace_id uuid, p_attempt_id uuid, p_delivered boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:07d7b126e546
+routine public.resolve_reminder_email_v1(p_workspace_id uuid, p_attempt_id uuid, p_delivered boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:185174d7ff24
 routine public.resolve_supplier_review(p_candidate_id uuid, p_supplier_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:1e281dbc16ab
 routine public.resolved_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b5eaa7447fca
 routine public.resource_kind_enabled(p_workspace_id uuid, p_kind text) -> boolean | function | definer | stable | exec:service_role | body:68f0a969d9ee
@@ -3746,6 +3766,7 @@ trigger readiness_acknowledgements.zz_system_columns_stamp CREATE TRIGGER zz_sys
 trigger realtime_deletions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.realtime_deletions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_attempts.reminder_attempts_append_only CREATE TRIGGER reminder_attempts_append_only BEFORE DELETE OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION reminder_attempts_append_only()
 trigger reminder_attempts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_attempts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger reminder_email_sends.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_email_sends FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reminder_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reminder_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_charges.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_charges FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger reservation_origins.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.reservation_origins FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

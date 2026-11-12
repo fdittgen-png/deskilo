@@ -25,6 +25,10 @@
       "class": "user_facing",
       "authority": "a buyer's native session, checked by begin_purchase_order_send_v1 (managePurchases, purchaseOrders); the key read by the service role only"
     },
+    "send-reminder-email": {
+      "class": "user_facing",
+      "authority": "an invoice issuer's native session, checked by begin_reminder_email_v1 (issueInvoices, reminderEmail); the key read by the service role only"
+    },
     "vies-check": {
       "class": "user_facing",
       "authority": "an invoice issuer's native session, checked by vies_check_subject"
