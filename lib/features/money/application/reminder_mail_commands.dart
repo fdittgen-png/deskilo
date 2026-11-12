@@ -69,6 +69,15 @@ class ReminderMailCommands {
     target: await _mail.target(workspaceId, invoiceId),
   );
 
+  /// The queue's invoices as the server sees them: reachable or why not,
+  /// and each one's latest e-mail as recorded (0728).
+  Future<Map<String, ReminderMailLine>> lines(
+    String workspaceId,
+    List<String> invoiceIds,
+  ) => invoiceIds.isEmpty
+      ? Future.value(const {})
+      : _mail.lines(workspaceId, invoiceIds);
+
   /// The letter as it leaves, in the [document]'s language ([l10n] is that
   /// language's bundle): the subject is the letter's title and the invoice
   /// number, the text what is still owed in the invoice's own [currency].

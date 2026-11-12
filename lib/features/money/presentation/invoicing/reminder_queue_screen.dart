@@ -18,20 +18,23 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/share/file_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/result_page.dart';
-import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/reminder_queue.dart';
 import '../../domain/invoice_report.dart';
+import '../../domain/reminder_mail.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show requireWorkspaceTaxReference;
 import '../invoice_documents.dart';
 import '../invoice_journey.dart' show invoiceRemainingCents;
-import '../widgets/report_page_style.dart';
-import '../widgets/report_preview.dart';
+import 'reminder_letter_preview_page.dart';
+import 'reminder_queue_line.dart';
+import 'reminder_queue_mail.dart';
 
 class ReminderQueueScreen extends ConsumerStatefulWidget {
   const ReminderQueueScreen({
@@ -41,6 +44,7 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
     required this.onMatch,
     @visibleForTesting this.letterOf,
     @visibleForTesting this.previewOf,
+    @visibleForTesting this.mailOf,
   });
 
   /// The lines waiting, as [reminderQueueOf] draws them from the current
@@ -68,6 +72,14 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
   )?
   previewOf;
 
+  /// Builds a line's e-mail (#3673); null when the customer's language is
+  /// not known. A test hands in a plain one.
+  final Future<ReminderMailLetter?> Function(
+    QueuedReminder line,
+    Invoice invoice,
+  )?
+  mailOf;
+
   @override
   ConsumerState<ReminderQueueScreen> createState() =>
       _ReminderQueueScreenState();
@@ -78,14 +90,31 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     widget.queue ?? const ReminderQueue([]),
   );
 
+  /// #3673 — the queue's e-mail, read from the server's rows.
+  late final ReminderQueueMail _mail = ReminderQueueMail(ref);
+
+  /// The queue with what the server recorded for each line's e-mail.
+  ReminderQueue get _q => _queue.value.withEmail(_mail.statesOf(_queue.value));
+
+  @override
+  void initState() {
+    super.initState();
+    _mail.follow(() => unawaited(_reload()));
+  }
+
   @override
   void didUpdateWidget(ReminderQueueScreen old) {
     super.didUpdateWidget(old);
     final fresh = widget.queue;
     if (fresh != null && !identical(fresh, old.queue)) {
       _queue.value = _queue.value.refreshedBy(fresh);
+      unawaited(_reload());
     }
   }
+
+  /// Reads the server's e-mail rows of the queue's invoices again.
+  Future<void> _reload() =>
+      _mail.refresh([for (final l in _queue.value.lines) l.invoiceId]);
 
   /// Who holds money is not known yet: nothing is shared.
   bool get _checking => widget.queue == null;
@@ -95,6 +124,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
 
   @override
   void dispose() {
+    _mail.dispose();
     _queue.dispose();
     _working.dispose();
     super.dispose();
@@ -137,7 +167,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
   Future<void> _share(QueuedReminder line) async {
     // A letter that left is never shared again: Record only.
     if (_working.value != null || _checking) return;
-    if (_queue.value.hasLeft(line)) return;
+    if (_q.hasLeft(line)) return;
     _working.value = line.invoiceId;
     try {
       final invoice = await _invoiceOf(line.invoiceId);
@@ -156,6 +186,59 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
       );
       _settle(line, result);
       ref.invalidate(invoiceRemindersProvider);
+    } finally {
+      if (mounted) _working.value = null;
+    }
+  }
+
+  /// E-mails [lines], each its own attempt, one after the other: a refused
+  /// or unconfirmed line does not stop the rest. What each shows afterwards
+  /// is the server's row, read again.
+  Future<void> _email(List<QueuedReminder> lines) async {
+    if (_working.value != null || _checking) return;
+    final letterOf =
+        widget.mailOf ?? (l, i) => _mail.letterOf(context, l, i);
+    try {
+      for (final line in lines) {
+        if (!mounted || _q.hasLeft(line)) continue;
+        _working.value = line.invoiceId;
+        final invoice = await _invoiceOf(line.invoiceId);
+        if (invoice == null || !mounted) continue;
+        try {
+          await _mail.send(line, await letterOf(line, invoice));
+        } on Object catch (e, st) {
+          TraceLogger.instance.error('money', 'reminder queue e-mail failed',
+              error: e, stackTrace: st);
+          _settle(line, ReminderHandled.failed);
+        }
+      }
+      await _reload();
+      ref.invalidate(invoiceRemindersProvider);
+    } finally {
+      if (mounted) _working.value = null;
+    }
+  }
+
+  /// "E-mail all reachable", after the person confirmed what will happen.
+  Future<void> _emailAll() async {
+    final lines = await _mail.confirmAll(context, _q);
+    if (lines.isNotEmpty && mounted) await _email(lines);
+  }
+
+  /// A person decides [line]'s e-mail nobody confirmed.
+  Future<void> _decide(QueuedReminder line, {required bool delivered}) async {
+    if (_working.value != null) return;
+    _working.value = line.invoiceId;
+    try {
+      await _mail.decide(line, delivered: delivered);
+      await _reload();
+      ref.invalidate(invoiceRemindersProvider);
+    } on Object catch (e, st) {
+      TraceLogger.instance.error('money', 'reminder queue decision failed',
+          error: e, stackTrace: st);
+      if (mounted) {
+        AppSnack.error(context, context.l10n.reminderEmailDecisionFailed);
+      }
     } finally {
       if (mounted) _working.value = null;
     }
@@ -206,11 +289,11 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     final share = await showDialog<bool>(
       context: context,
       builder: (_) => Dialog.fullscreen(
-        child: _LetterPreviewPage(
+        child: ReminderLetterPreviewPage(
           title: letter.title,
           report: letter.report,
           images: images,
-          canShare: !_queue.value.hasLeft(line),
+          canShare: !_q.hasLeft(line),
         ),
       ),
     );
@@ -223,10 +306,12 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.reminderQueueTitle)),
       body: ListenableBuilder(
-        listenable: Listenable.merge([_queue, _working]),
-        builder: (context, _) => _queue.value.isDone
-            ? _result(l10n, _queue.value)
-            : _list(context, l10n, _queue.value),
+        listenable: Listenable.merge(
+          [_queue, _working, _mail.lines, _mail.notes],
+        ),
+        builder: (context, _) => _q.isDone
+            ? _result(l10n, _q)
+            : _list(context, l10n, _q),
       ),
     );
   }
@@ -300,6 +385,16 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
         ),
         BottomActionBar(
           actions: [
+            if (_mail.reachable(q).isNotEmpty)
+              FilledButton.tonal(
+                key: const ValueKey('reminder-queue-email-all'),
+                onPressed: _working.value != null || _checking
+                    ? null
+                    : _emailAll,
+                child: Text(
+                  l10n.reminderQueueEmailAll(_mail.reachable(q).length),
+                ),
+              ),
             FilledButton(
               key: const ValueKey('reminder-queue-next'),
               onPressed: next == null || _working.value != null || _checking
@@ -319,88 +414,26 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
     );
   }
 
-  Widget _line(AppLocalizations l10n, ReminderQueue q, QueuedReminder line) {
-    final r = line.receivable;
-    final money = ref.watch(appFormatProvider).moneyIn(r.currency);
-    final days = -(r.daysToDue(widget.today) ?? 0);
-    final handled = q.handled[line.invoiceId];
-    final busy = _working.value != null || _checking;
-    final left = handled == ReminderHandled.sharedNotRecorded;
-    return Padding(
-      key: ValueKey('reminder-queue-line-${line.invoiceId}'),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  r.customerName,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-              Text(money.formatMinor(r.openMinor)),
-            ],
-          ),
-          Text(
-            l10n.reminderQueueDetail(days, r.number),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-          // A closed share is a notice, not an error: nothing went wrong.
-          if (handled == ReminderHandled.notRecorded)
-            Text(
-              l10n.reminderQueueNotRecorded,
-              key: ValueKey('reminder-queue-status-${line.invoiceId}'),
-              style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-            ),
-          if (left)
-            Text(
-              l10n.reminderQueueSharedNotRecorded,
-              key: ValueKey('reminder-queue-status-${line.invoiceId}'),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
-          if (handled == ReminderHandled.failed)
-            Text(
-              l10n.reminderQueueFailed,
-              key: ValueKey('reminder-queue-status-${line.invoiceId}'),
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
-            ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                key: ValueKey('reminder-queue-preview-${line.invoiceId}'),
-                style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-                onPressed: busy ? null : () => _preview(line),
-                child: Text(l10n.invoiceTemplatePreview),
-              ),
-              // It already left: Record, never a second share.
-              if (left)
-                _recordButton(l10n, line, busy: busy)
-              else if (handled == ReminderHandled.shared)
-                StatusChip(
-                  key: ValueKey('reminder-queue-shared-${line.invoiceId}'),
-                  label: l10n.reminderQueueShared,
-                  tone: StatusTone.ok,
-                )
-              else
-                FilledButton.tonal(
-                  key: ValueKey('reminder-queue-share-${line.invoiceId}'),
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(48, 48),
-                  ),
-                  onPressed: busy ? null : () => _share(line),
-                  child: Text(l10n.reminderQueueShare),
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  Widget _line(AppLocalizations l10n, ReminderQueue q, QueuedReminder line) =>
+      ReminderQueueLineView(
+        line: line,
+        queue: q,
+        today: widget.today,
+        busy: _working.value != null || _checking,
+        row: _mail.lines.value[line.invoiceId],
+        mailText: _mail.on
+            ? queueMailText(l10n, line, _mail.lines.value[line.invoiceId],
+                _mail.notes.value[line.invoiceId])
+            : null,
+        actions: (
+          onPreview: () => _preview(line),
+          onShare: () => _share(line),
+          onRecord: () => _record(line),
+          onEmail: () => _email([line]),
+          onDecide: ({required delivered}) =>
+              _decide(line, delivered: delivered),
+        ),
+      );
 
   Widget _recordButton(
     AppLocalizations l10n,
@@ -416,83 +449,49 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
   Widget _result(AppLocalizations l10n, ReminderQueue q) {
     ResultLine line(QueuedReminder l, String detail, String outcome) =>
         (title: l.receivable.customerName, detail: detail, outcome: outcome);
+    // #3673 — e-mailed and to decide are the server's rows, read again.
+    String mailText(QueuedReminder l) =>
+        queueMailText(l10n, l, _mail.lines.value[l.invoiceId], null) ?? '';
+    final sent = q.shared.length + q.emailed.length;
+    final busy = _working.value != null;
     return ResultPage(
       key: const ValueKey('reminder-queue-result'),
-      tone: q.unrecorded.isEmpty ? ResultTone.ok : ResultTone.partial,
-      title: q.shared.isEmpty
+      tone: q.unrecorded.isEmpty && q.toDecide.isEmpty
+          ? ResultTone.ok
+          : ResultTone.partial,
+      title: sent == 0
           ? l10n.reminderQueueResultNone
-          : l10n.reminderQueueResultTitle(q.shared.length),
+          : q.emailed.isEmpty
+          ? l10n.reminderQueueResultTitle(sent)
+          : l10n.reminderQueueResultSentTitle(sent),
       subtitle: l10n.reminderQueueResultSubtitle,
       done: [
         for (final l in q.shared)
           line(l, l.receivable.number, l10n.reminderQueueShared),
+        for (final l in q.emailed) line(l, l.receivable.number, mailText(l)),
       ],
       // Shared, but the level is not on the invoice: Record, never Share.
+      // An e-mail nobody confirmed: the person decides it.
       notDone: [
         for (final l in q.unrecorded)
           line(l, l.receivable.number, l10n.reminderQueueSharedNotRecorded),
+        for (final l in q.toDecide) line(l, l.receivable.number, mailText(l)),
       ],
       notDoneActions: [
-        for (final l in q.unrecorded)
-          _recordButton(l10n, l, busy: _working.value != null),
+        for (final l in q.unrecorded) _recordButton(l10n, l, busy: busy),
+        for (final l in q.toDecide)
+          FilledButton.tonal(
+            key: ValueKey('reminder-queue-result-arrived-${l.invoiceId}'),
+            onPressed: busy ? null : () => _decide(l, delivered: true),
+            child: Text(l10n.purchaseOrderSendArrived),
+          ),
       ],
-      notDoneHeading: l10n.reminderQueueNotRecordedHeading,
+      notDoneHeading: q.toDecide.isEmpty
+          ? l10n.reminderQueueNotRecordedHeading
+          : l10n.reminderQueueStillOpenHeading,
       staysNote: l10n.reminderQueueRecordStays,
       doneLabel: l10n.reminderQueueDone,
       onDone: () => Navigator.of(context).maybePop(),
-    );
-  }
-}
-
-/// The reminder letter, laid out as the PDF will be, with Share in the bar.
-class _LetterPreviewPage extends StatelessWidget {
-  const _LetterPreviewPage({
-    required this.title,
-    required this.report,
-    required this.images,
-    required this.canShare,
-  });
-
-  final String title;
-  final InvoiceReport report;
-  final Map<String, Uint8List> images;
-
-  /// False once the letter left: the preview is for reading only.
-  final bool canShare;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: AppSpacing.mdAll,
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Container(
-                  width: ReportPage.width,
-                  color: ReportPage.paper,
-                  padding: ReportPage.margins,
-                  child: ReportBlocksView(report: report, images: images),
-                ),
-              ),
-            ),
-          ),
-          if (canShare)
-            BottomActionBar(
-              actions: [
-                FilledButton(
-                  key: const ValueKey('reminder-queue-preview-share'),
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Text(l10n.reminderQueueShare),
-                ),
-              ],
-            ),
-        ],
-      ),
     );
   }
 }

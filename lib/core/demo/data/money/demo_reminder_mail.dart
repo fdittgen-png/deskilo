@@ -18,6 +18,20 @@ class DemoReminderMail implements ReminderMail {
   );
 
   @override
+  Future<Map<String, ReminderMailLine>> lines(
+    String workspaceId,
+    List<String> invoiceIds,
+  ) async => {
+    for (final id in invoiceIds)
+      id: const ReminderMailLine(
+        target: ReminderMailTarget(
+          available: false,
+          reason: ReminderMailUnavailable.featureOff,
+        ),
+      ),
+  };
+
+  @override
   Future<List<ReminderMailSend>> awaiting(
     String workspaceId,
     String invoiceId,

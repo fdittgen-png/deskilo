@@ -1,0 +1,73 @@
+{
+  "@@locale": "fr",
+  "reminderQueueEmailed": "Envoyé par e-mail à {recipient}",
+  "@reminderQueueEmailed": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailed",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueEmailAll": "{count, plural, =1{Envoyer l'unique joignable par e-mail} other{Envoyer les {count} joignables par e-mail}}",
+  "@reminderQueueEmailAll": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailAllTitle": "{count, plural, =1{Envoyer 1 relance par e-mail ?} other{Envoyer {count} relances par e-mail ?}}",
+  "@reminderQueueEmailAllTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailAllConfirm": "Envoyer les e-mails",
+  "@reminderQueueEmailAllConfirm": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
+  },
+  "reminderQueueStaysNoAddress": "{count, plural, =1{1 ligne reste à partager : pas d'adresse e-mail enregistrée.} other{{count} lignes restent à partager : pas d'adresse e-mail enregistrée.}}",
+  "@reminderQueueStaysNoAddress": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStaysToDecide": "{count, plural, =1{1 ligne attend : un e-mail précédent est d'abord à trancher.} other{{count} lignes attendent : un e-mail précédent est d'abord à trancher.}}",
+  "@reminderQueueStaysToDecide": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueLevelMoved": "Son niveau de relance a changé entre-temps. Rien n'a été envoyé ; elle reste pour le prochain passage.",
+  "@reminderQueueLevelMoved": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueLevelMoved"
+  },
+  "reminderQueueEmailUnreached": "L'e-mail n'a pas pu être transmis au serveur. Renvoyez-le : il ne partira pas deux fois.",
+  "@reminderQueueEmailUnreached": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
+  },
+  "reminderQueueResultSentTitle": "{count, plural, =1{1 relance envoyée} other{{count} relances envoyées}}",
+  "@reminderQueueResultSentTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStillOpenHeading": "Encore ouvert",
+  "@reminderQueueStillOpenHeading": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStillOpenHeading"
+  }
+}

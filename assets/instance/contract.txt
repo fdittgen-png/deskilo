@@ -3066,6 +3066,7 @@ routine public.reminder_attempts_append_only() -> trigger | function | invoker |
 routine public.reminder_email_record(p_send uuid, p_evidence text) -> void | function | definer | volatile | exec:service_role | body:b1b8e6b11e65
 routine public.reminder_email_send_json(p_send uuid) -> jsonb | function | definer | stable | exec:service_role | body:57a3bdcd7f8f
 routine public.reminder_email_target_v1(p_workspace_id uuid, p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8afc9f76dd18
+routine public.reminder_email_targets_v1(p_workspace_id uuid, p_invoice_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:8d24dc83294e
 routine public.reminder_queue_push(p_intent_id uuid, p_event_id uuid) -> void | function | definer | volatile | exec:service_role | body:1423564acaf2
 routine public.remove_account_group_member(p_group uuid, p_user uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:54961220ca5d
 routine public.remove_conversation_participant(p_conversation_id uuid, p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:695b1773b84f

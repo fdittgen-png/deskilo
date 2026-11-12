@@ -14979,20 +14979,90 @@
   "reminderQueueDetail": "{days, plural, =0{{number} · échue aujourd'hui} =1{{number} · 1 jour de retard} other{{number} · {days} jours de retard}}",
   "reminderQueueDone": "Terminé",
   "reminderQueueDoneEmpty": "Rien à partager",
+  "reminderQueueEmailAll": "{count, plural, =1{Envoyer l'unique joignable par e-mail} other{Envoyer les {count} joignables par e-mail}}",
+  "@reminderQueueEmailAll": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailAllConfirm": "Envoyer les e-mails",
+  "@reminderQueueEmailAllConfirm": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
+  },
+  "reminderQueueEmailAllTitle": "{count, plural, =1{Envoyer 1 relance par e-mail ?} other{Envoyer {count} relances par e-mail ?}}",
+  "@reminderQueueEmailAllTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailUnreached": "L'e-mail n'a pas pu être transmis au serveur. Renvoyez-le : il ne partira pas deux fois.",
+  "@reminderQueueEmailUnreached": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
+  },
+  "reminderQueueEmailed": "Envoyé par e-mail à {recipient}",
+  "@reminderQueueEmailed": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailed",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
   "reminderQueueFailed": "N'a pas pu être partagée. Réessayez.",
   "reminderQueueIntro": "Vous partagez chaque relance vous-même. Elle n'est enregistrée que si elle a vraiment été partagée.",
   "reminderQueueLevel": "Relance {level}",
+  "reminderQueueLevelMoved": "Son niveau de relance a changé entre-temps. Rien n'a été envoyé ; elle reste pour le prochain passage.",
+  "@reminderQueueLevelMoved": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueLevelMoved"
+  },
   "reminderQueueNotRecorded": "Rien n'a été enregistré : le partage a été fermé.",
   "reminderQueueNotRecordedHeading": "Partagées, non enregistrées",
   "reminderQueueRecord": "Enregistrer",
   "reminderQueueRecordStays": "Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due.",
   "reminderQueueResultNone": "Aucune relance partagée",
+  "reminderQueueResultSentTitle": "{count, plural, =1{1 relance envoyée} other{{count} relances envoyées}}",
+  "@reminderQueueResultSentTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "reminderQueueResultSubtitle": "Chacune est enregistrée sur sa facture.",
   "reminderQueueResultTitle": "{count, plural, =1{1 relance partagée} other{{count} relances partagées}}",
   "reminderQueueShare": "Partager",
   "reminderQueueShareNext": "Partager la suivante · {customer}",
   "reminderQueueShared": "Partagée",
   "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
+  "reminderQueueStaysNoAddress": "{count, plural, =1{1 ligne reste à partager : pas d'adresse e-mail enregistrée.} other{{count} lignes restent à partager : pas d'adresse e-mail enregistrée.}}",
+  "@reminderQueueStaysNoAddress": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStaysToDecide": "{count, plural, =1{1 ligne attend : un e-mail précédent est d'abord à trancher.} other{{count} lignes attendent : un e-mail précédent est d'abord à trancher.}}",
+  "@reminderQueueStaysToDecide": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStillOpenHeading": "Encore ouvert",
+  "@reminderQueueStillOpenHeading": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStillOpenHeading"
+  },
   "reminderQueueTitle": "Relances à partager",
   "reminderStatusAccepted": "Acceptée par le service de notifications — ce n'est pas une preuve de lecture",
   "@reminderStatusAccepted": {

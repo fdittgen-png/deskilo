@@ -24587,6 +24587,40 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reminderQueueDoneEmpty => 'Rien à partager';
 
   @override
+  String reminderQueueEmailAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Envoyer les $count joignables par e-mail',
+      one: 'Envoyer l\'unique joignable par e-mail',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailAllConfirm => 'Envoyer les e-mails';
+
+  @override
+  String reminderQueueEmailAllTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Envoyer $count relances par e-mail ?',
+      one: 'Envoyer 1 relance par e-mail ?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailUnreached =>
+      'L\'e-mail n\'a pas pu être transmis au serveur. Renvoyez-le : il ne partira pas deux fois.';
+
+  @override
+  String reminderQueueEmailed(String recipient) {
+    return 'Envoyé par e-mail à $recipient';
+  }
+
+  @override
   String get reminderQueueFailed => 'N\'a pas pu être partagée. Réessayez.';
 
   @override
@@ -24597,6 +24631,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String reminderQueueLevel(int level) {
     return 'Relance $level';
   }
+
+  @override
+  String get reminderQueueLevelMoved =>
+      'Son niveau de relance a changé entre-temps. Rien n\'a été envoyé ; elle reste pour le prochain passage.';
 
   @override
   String get reminderQueueNotRecorded =>
@@ -24614,6 +24652,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reminderQueueResultNone => 'Aucune relance partagée';
+
+  @override
+  String reminderQueueResultSentTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count relances envoyées',
+      one: '1 relance envoyée',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reminderQueueResultSubtitle =>
@@ -24644,6 +24693,33 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get reminderQueueSharedNotRecorded =>
       'Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.';
+
+  @override
+  String reminderQueueStaysNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count lignes restent à partager : pas d\'adresse e-mail enregistrée.',
+      one: '1 ligne reste à partager : pas d\'adresse e-mail enregistrée.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reminderQueueStaysToDecide(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count lignes attendent : un e-mail précédent est d\'abord à trancher.',
+      one: '1 ligne attend : un e-mail précédent est d\'abord à trancher.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueStillOpenHeading => 'Encore ouvert';
 
   @override
   String get reminderQueueTitle => 'Relances à partager';

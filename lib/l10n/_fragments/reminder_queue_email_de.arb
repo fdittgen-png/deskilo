@@ -1,0 +1,73 @@
+{
+  "@@locale": "de",
+  "reminderQueueEmailed": "Per E-Mail an {recipient} gesendet",
+  "@reminderQueueEmailed": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailed",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderQueueEmailAll": "{count, plural, =1{Den 1 erreichbaren per E-Mail senden} other{Die {count} erreichbaren per E-Mail senden}}",
+  "@reminderQueueEmailAll": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailAllTitle": "{count, plural, =1{1 Mahnung per E-Mail senden?} other{{count} Mahnungen per E-Mail senden?}}",
+  "@reminderQueueEmailAllTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailAllConfirm": "E-Mails senden",
+  "@reminderQueueEmailAllConfirm": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
+  },
+  "reminderQueueStaysNoAddress": "{count, plural, =1{1 Zeile bleibt zum Teilen: keine E-Mail-Adresse hinterlegt.} other{{count} Zeilen bleiben zum Teilen: keine E-Mail-Adresse hinterlegt.}}",
+  "@reminderQueueStaysNoAddress": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStaysToDecide": "{count, plural, =1{1 Zeile wartet: über eine frühere E-Mail ist zuerst zu entscheiden.} other{{count} Zeilen warten: über eine frühere E-Mail ist zuerst zu entscheiden.}}",
+  "@reminderQueueStaysToDecide": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueLevelMoved": "Ihre Mahnstufe hat sich inzwischen geändert. Nichts wurde gesendet; sie bleibt für den nächsten Durchgang.",
+  "@reminderQueueLevelMoved": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueLevelMoved"
+  },
+  "reminderQueueEmailUnreached": "Die E-Mail konnte nicht an den Server übergeben werden. Senden Sie sie erneut: Sie geht nicht zweimal hinaus.",
+  "@reminderQueueEmailUnreached": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
+  },
+  "reminderQueueResultSentTitle": "{count, plural, =1{1 Mahnung gesendet} other{{count} Mahnungen gesendet}}",
+  "@reminderQueueResultSentTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStillOpenHeading": "Noch offen",
+  "@reminderQueueStillOpenHeading": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStillOpenHeading"
+  }
+}

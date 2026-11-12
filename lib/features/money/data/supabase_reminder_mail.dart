@@ -25,6 +25,21 @@ class SupabaseReminderMail implements ReminderMail {
   );
 
   @override
+  Future<Map<String, ReminderMailLine>> lines(
+    String workspaceId,
+    List<String> invoiceIds,
+  ) async {
+    final rows = await _client.rpc<Object?>(
+      'reminder_email_targets_v1',
+      params: {'p_workspace_id': workspaceId, 'p_invoice_ids': invoiceIds},
+    );
+    return {
+      for (final row in rows is List ? rows : const <Object?>[])
+        if (row is Map) '${row['invoice_id']}': ReminderMailLine.fromJson(row),
+    };
+  }
+
+  @override
   Future<List<ReminderMailSend>> awaiting(
     String workspaceId,
     String invoiceId,
