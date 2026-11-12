@@ -12,6 +12,8 @@
 //
 // A `Semantics(onLongPress: …)` is an accessibility action, not a
 // gesture, and is not counted.
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
@@ -83,6 +85,20 @@ List<String> parityOffenders(String path, String src) {
 }
 
 void main() {
+  test('the exemptions only fall, and each still holds its gesture', () {
+    // One today (the centre button's long press); it goes with the visible
+    // control that the second part of #3611 gives it. Never raise this.
+    expect(_exempt.length, lessThanOrEqualTo(1));
+    for (final path in _exempt.keys) {
+      expect(
+        _gesture.hasMatch(File(path).readAsStringSync()),
+        isTrue,
+        reason: '$path no longer holds a swipe or a long press: '
+            'remove its exemption',
+      );
+    }
+  });
+
   test('every swipe and long press in lib/ has a visible twin', () {
     final offenders = <String>[];
     for (final file in handWrittenDartFiles('lib')) {

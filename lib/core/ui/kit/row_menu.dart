@@ -108,6 +108,11 @@ class RowMenuState extends State<RowMenu> {
   /// The row keeps its state when the button comes and goes.
   final GlobalKey _row = GlobalKey();
 
+  void _hover(bool hovered) {
+    if (widget.button != RowMenuButton.onHover || _hovered == hovered) return;
+    setState(() => _hovered = hovered);
+  }
+
   /// Opens the menu: under [at] (a global position) for a click or a
   /// press, over [anchor] for the button or a key.
   Future<void> open({Offset? at, BuildContext? anchor}) async {
@@ -239,8 +244,9 @@ class RowMenuState extends State<RowMenu> {
       onFocusChange: (focused) => setState(() => _focused = focused),
       onKeyEvent: _onKey,
       child: MouseRegion(
-        onEnter: (_) => setState(() => _hovered = true),
-        onExit: (_) => setState(() => _hovered = false),
+        // Only a button that follows the pointer needs the rebuild.
+        onEnter: (_) => _hover(true),
+        onExit: (_) => _hover(false),
         child: withButton,
       ),
     );
