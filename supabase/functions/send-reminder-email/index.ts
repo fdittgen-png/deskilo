@@ -17,7 +17,10 @@
 //      give now, the sender configured, the customer's address on file) and
 //      opens the attempt. One e-mail per invoice and level may leave; a
 //      pending or unconfirmed earlier attempt refuses a new one; the same
-//      attempt id replays it.
+//      attempt id replays it, and the answer says whether it may still be
+//      sent: by the call that opened it, or by a young replay. An older
+//      pending attempt is never sent again (the provider's idempotency
+//      window is not relied on): a person decides it.
 //   2. Resend is called with the attempt id as its idempotency key.
 //   3. `finish_reminder_email` (service role) records what came back:
 //      accepted (the reminder is counted, with its e-mail evidence), refused
@@ -113,14 +116,24 @@ const json = (body: unknown, status = 200) =>
     headers: { ...CORS, "Content-Type": "application/json" },
   });
 
-type Attempt = { id: string; state: string; recipient: string };
+type Attempt = {
+  id: string;
+  state: string;
+  recipient: string;
+  sendable: boolean;
+};
 
 function attemptOf(data: unknown): Attempt | null {
   if (typeof data !== "object" || data === null) return null;
   const d = data as Record<string, unknown>;
   return typeof d.id === "string" && typeof d.state === "string" &&
       typeof d.recipient === "string"
-    ? { id: d.id, state: d.state, recipient: d.recipient }
+    ? {
+      id: d.id,
+      state: d.state,
+      recipient: d.recipient,
+      sendable: d.sendable === true,
+    }
     : null;
 }
 
@@ -196,6 +209,15 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   // A replayed attempt that already has its outcome is answered as it is:
   // never sent a second time.
   if (attempt.state !== "pending") return json(begun.data);
+  // A pending attempt is sent by the call that opened it or a young replay
+  // only; an older one may have left: a person decides it.
+  if (!attempt.sendable) {
+    return json({
+      error:
+        "an earlier e-mail of this reminder has no confirmed outcome: decide it by hand",
+      code: "55000",
+    }, 409);
+  }
 
   const service = deps.service();
   const config = await service.rpc("business_mail_key_resolved", {

@@ -11,15 +11,23 @@
 --    send: a native session (never an assistant), issueInvoices, the
 --    `reminderEmail` feature, an invoice that still owes something and is
 --    not on hold, the level the business's rules give now, the sender
---    configured, and the customer's address on file. It opens the attempt
---    and the reminder's intent. The same attempt id replays it.
+--    configured, and the contact e-mail of the customer's profile. It
+--    opens the attempt and the reminder's intent. The same attempt id
+--    replays it, for the same issuer rights only, and its answer says
+--    whether the attempt may still be sent: by the call that opened it, or
+--    by a replay younger than the bound a person decides after. An older
+--    pending attempt is never sent again: the provider's idempotency
+--    window is not a promise to rely on.
 --  * ONCE: an invoice has at most one e-mail per reminder level that may
 --    have left (pending, unconfirmed, accepted, delivered) -- a unique
 --    index, not a client promise. A refused attempt left nothing, so the
 --    level can be e-mailed again once the cause is fixed.
 --  * `finish_reminder_email` (service role) records the provider's answer.
 --    Accepted: the reminder is recorded at the attempt's level, exactly as
---    a shared one (0334), with the e-mail as its evidence. Refused: the
+--    a shared one (0334), with the e-mail as its evidence -- unless a
+--    reminder at that level was recorded after the attempt opened (a share
+--    or the sweep while the e-mail had no outcome): one level served is
+--    one reminder, so the e-mail then adds its evidence and nothing else. Refused: the
 --    attempt failed, and no reminder is counted. Unconfirmed: nothing is
 --    counted and the level stays fenced until a person decides it with
 --    `resolve_reminder_email_v1`.
@@ -41,6 +49,9 @@ create table public.reminder_email_sends (
     check (state in ('pending', 'accepted', 'refused', 'unconfirmed', 'delivered', 'not_delivered')),
   recipient text not null check (char_length(recipient) <= 254),
   language text not null check (language in ('en', 'fr', 'de', 'es', 'it')),
+  -- How many reminders this level already counted when the attempt opened
+  -- (the last level repeats once the ladder is climbed).
+  served_before int not null default 0 check (served_before >= 0),
   provider_id text not null default '' check (char_length(provider_id) <= 200),
   reason text not null default '' check (char_length(reason) <= 300),
   actor_member_id uuid not null,
@@ -82,8 +93,9 @@ returns jsonb language sql stable security definer set search_path = public as $
 $fn$;
 revoke execute on function public.reminder_email_send_json(uuid) from public, anon, authenticated;
 
--- The customer's address on file: the account e-mail of the member the
--- invoice is addressed to. A member without an account has none.
+-- The customer's address on file: the contact e-mail of the profile of the
+-- member the invoice is addressed to (editable by its owner; not the
+-- account's sign-in address). A member without a profile has none.
 create or replace function public.invoice_customer_email(p_invoice_id uuid)
 returns text language sql stable security definer set search_path = public as $fn$
   select nullif(btrim(p.email), '')
@@ -142,23 +154,30 @@ declare
   v_level int;
   v_recipient text;
   v_intent_id uuid;
+  -- A technical bound, not a business value: far beyond any live attempt;
+  -- resolve_reminder_email_v1 decides by hand after the same bound.
+  c_stuck constant interval := interval '10 minutes';
 begin
   if auth.uid() is null or public.mcp_is_delegated() then
     raise exception 'not allowed' using errcode = '42501';
-  end if;
-  if p_attempt_id is null then raise exception 'an attempt id is required' using errcode = '22023'; end if;
-  select * into v_send from public.reminder_email_sends where id = p_attempt_id;
-  if v_send.id is not null then
-    if v_send.workspace_id <> p_workspace_id or v_send.invoice_id <> p_invoice_id then
-      raise exception 'this attempt id was already used for another invoice' using errcode = '22023';
-    end if;
-    return public.reminder_email_send_json(v_send.id);
   end if;
   begin
     v_actor := public.issuing_member(p_workspace_id);
   exception when others then
     raise exception 'not allowed' using errcode = '42501';
   end;
+  if p_attempt_id is null then raise exception 'an attempt id is required' using errcode = '22023'; end if;
+  select * into v_send from public.reminder_email_sends where id = p_attempt_id;
+  if v_send.id is not null then
+    if v_send.workspace_id <> p_workspace_id or v_send.invoice_id <> p_invoice_id then
+      raise exception 'this attempt id was already used for another invoice' using errcode = '22023';
+    end if;
+    -- A replay: sendable only while it is pending and younger than the
+    -- bound after which a person decides it.
+    return public.reminder_email_send_json(v_send.id) || jsonb_build_object(
+      'opened', false,
+      'sendable', v_send.state = 'pending' and v_send.created_datetime >= now() - c_stuck);
+  end if;
   if not public.feature_effective(p_workspace_id, 'reminderEmail') then
     raise exception 'reminders by e-mail are off in this space' using errcode = '42501';
   end if;
@@ -208,11 +227,14 @@ begin
           (v_state ->> 'collectible_cents')::int, v_invoice.currency)
   returning id into v_intent_id;
   insert into public.reminder_email_sends
-    (id, workspace_id, invoice_id, intent_id, level, recipient, language, actor_member_id)
-  values (p_attempt_id, p_workspace_id, p_invoice_id, v_intent_id, v_level, v_recipient,
-          p_language, v_actor.id)
+    (id, workspace_id, invoice_id, intent_id, level, recipient, language, served_before, actor_member_id)
+  values (p_attempt_id, p_workspace_id, p_invoice_id, v_intent_id, v_level, v_recipient, p_language,
+          (select count(*) from public.invoice_reminders r
+            where r.invoice_id = p_invoice_id and r.level = v_level),
+          v_actor.id)
   returning * into v_send;
-  return public.reminder_email_send_json(v_send.id);
+  return public.reminder_email_send_json(v_send.id)
+    || jsonb_build_object('opened', true, 'sendable', true);
 end;
 $fn$;
 revoke execute on function public.begin_reminder_email_v1(uuid, uuid, int, text, uuid) from public, anon;
@@ -235,6 +257,15 @@ begin
   select coalesce(p.display_name, '') into v_actor_name
     from public.members m join public.profiles p on p.id = m.user_id
    where m.id = v_send.actor_member_id;
+  -- One level served is one reminder: a share or the sweep that recorded
+  -- this level after the attempt opened already counted it. The e-mail's
+  -- own evidence row stays; no second reminder, event or push. (The
+  -- intent's reminder_id stays empty: a reminder has one intent.)
+  if (select count(*) from public.invoice_reminders r
+       where r.invoice_id = v_send.invoice_id and r.level = v_send.level) > v_send.served_before then
+    update public.reminder_intents set status = p_evidence where id = v_send.intent_id;
+    return;
+  end if;
   v_state := public.invoice_dunning_state_core(v_send.invoice_id, now());
   insert into public.invoice_reminders (workspace_id, invoice_id, by_name, automatic, level)
   values (v_send.workspace_id, v_send.invoice_id, coalesce(v_actor_name, ''), false, v_send.level)
@@ -283,6 +314,9 @@ begin
   end if;
   select * into v_send from public.reminder_email_sends where id = p_attempt_id for update;
   if v_send.id is null then raise exception 'unknown send attempt' using errcode = '22023'; end if;
+  -- The invoice row next, as the share and the sweep lock it: what this
+  -- level already counts is read under the same lock (#926).
+  perform 1 from public.invoices where id = v_send.invoice_id for update;
   -- An outcome is recorded once; a repeat of the same answer is a replay.
   if v_send.state <> 'pending' then
     if v_send.state = p_outcome then return public.reminder_email_send_json(v_send.id); end if;
@@ -335,6 +369,7 @@ begin
   select * into v_send from public.reminder_email_sends
    where id = p_attempt_id and workspace_id = p_workspace_id for update;
   if v_send.id is null then raise exception 'unknown send attempt' using errcode = '22023'; end if;
+  perform 1 from public.invoices where id = v_send.invoice_id for update;
   -- An attempt left pending past the bound (a crash leaves no finish) is
   -- decided the same way.
   if not (v_send.state = 'unconfirmed'

@@ -6,9 +6,12 @@
 -- replays it. Only the service role records the provider's answer:
 -- accepted counts the reminder with its e-mail evidence, refused counts
 -- nothing and frees the level, unconfirmed fences it until a person
--- decides. Rolled back.
+-- decides. A replay is the issuer's only, and an old pending one is never
+-- sent again. One level served is one reminder: a share or the sweep that
+-- served the level while the e-mail had no outcome is not counted twice.
+-- Rolled back.
 begin;
-select plan(22);
+select plan(27);
 
 do $seed$
 declare ws uuid := '00000000-0000-4000-8000-0000003673b1';
@@ -30,7 +33,7 @@ begin
     ('00000000-0000-4000-8000-0000003673c1', ws, '00000000-0000-4000-8000-0000003673a1', true, true, 'active'),
     ('00000000-0000-4000-8000-0000003673c2', ws, '00000000-0000-4000-8000-0000003673a2', false, false, 'active'),
     ('00000000-0000-4000-8000-0000003673c3', ws, '00000000-0000-4000-8000-0000003673a3', false, false, 'active');
-  -- f1, f2, f4 are addressed to a member with an address; f3 to one without.
+  -- f3 is addressed to a member without an address; every other one to a member with one.
   insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
                                currency, member_name, workspace_name, issuer_name, signature, issued_at)
   select ('00000000-0000-4000-8000-0000003673' || k)::uuid, ws,
@@ -38,7 +41,7 @@ begin
               else '00000000-0000-4000-8000-0000003673c2'::uuid end,
          '00000000-0000-4000-8000-0000003673c1', 'RM-' || k, 'T', '[]'::jsonb, 12000, 'EUR', 'A', 'Remind',
          'Owner', 'sig', now() - interval '40 days'
-    from unnest(array['f1', 'f2', 'f3', 'f4']) k;
+    from unnest(array['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7']) k;
 end;
 $seed$;
 
@@ -114,7 +117,12 @@ select is(pg_temp.begin_('a1', 'f1', 2, '1'), 'ERROR: the reminder level changed
 
 -- ── once: the attempt, its replay, the fence ─────────────────────────
 select is(pg_temp.j((pg_temp.begin_('a1', 'f1', 1, '1'))) ->> 'state', 'pending', 'the issuer opens the attempt');
-select is(pg_temp.j((pg_temp.begin_('a1', 'f1', 1, '1'))) ->> 'state', 'pending', 'the same attempt id replays it');
+select ok(pg_temp.j(pg_temp.begin_('a1', 'f1', 1, '1')) ->> 'state' = 'pending'
+          and pg_temp.j(pg_temp.begin_('a1', 'f1', 1, '1')) ->> 'opened' = 'false'
+          and pg_temp.j(pg_temp.begin_('a1', 'f1', 1, '1')) ->> 'sendable' = 'true',
+          'the same attempt id replays it, and says a young replay may still be sent');
+select is(pg_temp.begin_('a2', 'f1', 1, '1'), 'ERROR: not allowed',
+          'a member who issues no invoices learns nothing from a known attempt id');
 select is((select count(*)::int from public.reminder_email_sends
             where invoice_id = '00000000-0000-4000-8000-0000003673f1'), 1, 'without a second attempt');
 select is(pg_temp.begin_('a1', 'f1', 1, '2'),
@@ -155,6 +163,12 @@ select ok(current_setting('t.b3') = 'pending' and current_setting('t.f3') = 'ref
                 where s.id = '00000000-0000-4000-8000-0000003673e3'),
           'a refusal counts no reminder and is kept as a failed attempt with its reason');
 select is(pg_temp.j(pg_temp.begin_('a1', 'f2', 1, '4')) ->> 'level', '1', 'after a refusal the same level can be e-mailed again');
+alter table public.reminder_email_sends disable trigger zz_system_columns_stamp;
+update public.reminder_email_sends set created_datetime = now() - interval '20 minutes'
+ where id = '00000000-0000-4000-8000-0000003673e4';
+alter table public.reminder_email_sends enable trigger zz_system_columns_stamp;
+select is(pg_temp.j(pg_temp.begin_('a1', 'f2', 1, '4')) ->> 'sendable', 'false',
+          'an old pending attempt is never sent again: its replay says so');
 
 -- ── unconfirmed: fenced until a person decides ──────────────────────
 do $s$ begin
@@ -176,6 +190,35 @@ select ok(current_setting('t.r2') = 'ERROR: not allowed' and current_setting('t.
                        where s.id = '00000000-0000-4000-8000-0000003673e5' and a.channel = 'email'
                          and a.outcome = 'declared_delivered'),
           'only an issuer decides it; delivered counts the reminder as a person''s declaration');
+
+-- ── one level served is one reminder ────────────────────────────────
+do $s$ begin
+  perform pg_temp.begin_('a1', 'f5', 1, '7');
+  perform pg_temp.finish('7', 'unconfirmed', '', 'no confirmed answer');
+  perform pg_temp.as_user('a1', $q$select public.record_invoice_reminder('00000000-0000-4000-8000-0000003673f5')::text$q$);
+  perform pg_temp.as_user('a1', $q$select public.resolve_reminder_email_v1('00000000-0000-4000-8000-0000003673b1', '00000000-0000-4000-8000-0000003673e7', true)::text$q$);
+end $s$;
+select ok(pg_temp.sent('f5') = 1
+          and exists (select 1 from public.reminder_attempts a join public.reminder_email_sends s on s.intent_id = a.intent_id
+                       where s.id = '00000000-0000-4000-8000-0000003673e7' and a.outcome = 'declared_delivered'),
+          'a share of the level while the e-mail had no outcome: resolved delivered, still one reminder, the e-mail''s evidence kept');
+do $s$ begin
+  perform pg_temp.begin_('a1', 'f7', 1, '9');
+  perform pg_temp.as_user('a1', $q$select public.record_invoice_reminder('00000000-0000-4000-8000-0000003673f7')::text$q$);
+  perform pg_temp.finish('9', 'accepted', 'prov-9', '');
+end $s$;
+select is(pg_temp.sent('f7'), 1, 'a share between the attempt and its acceptance: still one reminder');
+do $s$ begin
+  perform pg_temp.begin_('a1', 'f6', 1, '8');
+  perform pg_temp.finish('8', 'unconfirmed', '', 'no confirmed answer');
+  update public.workspaces set dunning_rules = dunning_rules || '{"automatic": true}'
+   where id = '00000000-0000-4000-8000-0000003673b1';
+  perform pg_temp.as_user('a1', $q$select public.sweep_payment_reminders('00000000-0000-4000-8000-0000003673b1')::text$q$);
+  perform set_config('t.swept', pg_temp.sent('f6')::text, false);
+  perform pg_temp.as_user('a1', $q$select public.resolve_reminder_email_v1('00000000-0000-4000-8000-0000003673b1', '00000000-0000-4000-8000-0000003673e8', true)::text$q$);
+end $s$;
+select ok(current_setting('t.swept') = '1' and pg_temp.sent('f6') = 1,
+          'the sweep served the level while the e-mail had no outcome: resolved delivered, still one reminder');
 
 select * from finish();
 rollback;
