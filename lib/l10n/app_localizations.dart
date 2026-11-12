@@ -10658,7 +10658,7 @@ abstract class AppLocalizations {
   /// #2562 C2c Create: an enrolled server that accepts new spaces
   ///
   /// In en, this message translates to:
-  /// **'Accepts new spaces'**
+  /// **'Accepts new businesses'**
   String get createHostAvailable;
 
   /// #2562 C2c Create: action back to choosing a server
@@ -10688,13 +10688,13 @@ abstract class AppLocalizations {
   /// #2554 Create: a personal home that hosts no space and has no enrolled server offers nothing to create on
   ///
   /// In en, this message translates to:
-  /// **'No server accepts new spaces for your personal home yet. Nothing was created.'**
+  /// **'No server accepts new businesses for your personal home yet. Nothing was created.'**
   String get createHostNone;
 
   /// #2562 C2c Create: an enrolled server closed to new spaces (state and refusal)
   ///
   /// In en, this message translates to:
-  /// **'Not accepting new spaces'**
+  /// **'Not accepting new businesses'**
   String get createHostNotAccepting;
 
   /// #2562 C2c Create: refusal, the chosen server's enrolment was revoked
@@ -10706,7 +10706,7 @@ abstract class AppLocalizations {
   /// #2562 C2c Create: title of the sheet choosing the server a new space is created on
   ///
   /// In en, this message translates to:
-  /// **'Where should the space live?'**
+  /// **'Where should the business live?'**
   String get createHostTitle;
 
   /// #2562 C2c Create: the list of servers could not be read
@@ -12068,13 +12068,13 @@ abstract class AppLocalizations {
   /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
-  /// **'Linked. The spaces it publishes are now listed in Discover.'**
+  /// **'Linked. The places it publishes are now listed in Discover.'**
   String get directoryLinkDone;
 
   /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
-  /// **'The global directory lives on the reference server. Once a server is linked, every space it publishes is listed in Discover, for everyone.'**
+  /// **'The global directory lives on the reference server. Once a server is linked, every place it publishes is listed in Discover, for everyone.'**
   String get directoryLinkIntro;
 
   /// Shown as a text in directory link dialog (directory).
@@ -12086,25 +12086,25 @@ abstract class AppLocalizations {
   /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
-  /// **'This is the reference server: the spaces it publishes are always listed.'**
+  /// **'This is the reference server: the places it publishes are always listed.'**
   String get directoryLinkStateDirectory;
 
   /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
-  /// **'Can be linked: it answers, and publishes spaces this app can read.'**
+  /// **'Can be linked: it answers, and publishes places this app can read.'**
   String get directoryLinkStateLinkable;
 
   /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
-  /// **'Linked: the spaces it publishes are listed in Discover.'**
+  /// **'Linked: the places it publishes are listed in Discover.'**
   String get directoryLinkStateLinked;
 
   /// Shown as a text in directory link dialog (directory).
   ///
   /// In en, this message translates to:
-  /// **'Cannot be linked yet: it does not answer, or its version cannot publish spaces.'**
+  /// **'Cannot be linked yet: it does not answer, or its version cannot publish places.'**
   String get directoryLinkStateUnreachable;
 
   /// Shown as a tooltip in directory row (directory), and 1 other place.
@@ -12164,7 +12164,7 @@ abstract class AppLocalizations {
   /// Shown as a text in directory map (directory). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
+  /// **'{count, plural, =1{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}'**
   String directoryPinsMissing(int count);
 
   /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).
@@ -13928,7 +13928,7 @@ abstract class AppLocalizations {
   /// #917 workspace environment: environmentHint
   ///
   /// In en, this message translates to:
-  /// **'A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.'**
+  /// **'A development business says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.'**
   String get environmentHint;
 
   /// #917 workspace environment: environmentLabel
@@ -16410,7 +16410,7 @@ abstract class AppLocalizations {
   /// Shown as a text in personal space card (me).
   ///
   /// In en, this message translates to:
-  /// **'Kept on this device only: your account cannot save this space.'**
+  /// **'Kept on this device only: your account cannot save this place.'**
   String get favoriteKeptOnDeviceRefused;
 
   /// Shown as a text in personal space card (me).
@@ -19119,6 +19119,18 @@ abstract class AppLocalizations {
   /// **'Development spaces — test data, not counted above'**
   String get financesDevSection;
 
+  /// Me › Finances: the due line when the business's time zone is unknown, so lateness cannot be judged (#3659)
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date} · the business\'s calendar is unknown'**
+  String financesDueCalendarUnknown(String date);
+
+  /// Me › Finances: an invoice's due line followed by its business's time zone, shown when that zone differs from the device's (#3659)
+  ///
+  /// In en, this message translates to:
+  /// **'{text} · {zone}'**
+  String financesDueInZone(String text, String zone);
+
   /// Me › Finances
   ///
   /// In en, this message translates to:
@@ -21196,7 +21208,7 @@ abstract class AppLocalizations {
   /// #1834 Connecting another server with the person's Deskilo identity: Body of the confirmation before sending the membership request.
   ///
   /// In en, this message translates to:
-  /// **'You are connected now. The space reviews your request; nothing else is shared.'**
+  /// **'You are connected now. The business reviews your request; nothing else is shared.'**
   String get identityConnectConfirmApplyBody;
 
   /// #1834 Connecting another server with the person's Deskilo identity: Button that opens the other server's own sign-in in the browser. Deskilo is the brand.
@@ -21238,7 +21250,7 @@ abstract class AppLocalizations {
   /// #1834 Connecting another server with the person's Deskilo identity: What connecting shares and what it never grants. Deskilo is the brand; do not translate it.
   ///
   /// In en, this message translates to:
-  /// **'{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.'**
+  /// **'{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the business still decides any request.'**
   String identityConnectExplain(String host);
 
   /// #1834 Connecting another server with the person's Deskilo identity: Network or server unavailable during the connection.
@@ -21448,7 +21460,7 @@ abstract class AppLocalizations {
   /// #2556 inbox sources: Names this server's workspace part of the inbox (workspace conversations and inquiries) in a status line.
   ///
   /// In en, this message translates to:
-  /// **'Your workspaces\' messages'**
+  /// **'Your places\' messages'**
   String get inboxSourceWorkspaces;
 
   /// #2145 assistant onboarding: instanceAccessTitle
@@ -30603,7 +30615,7 @@ abstract class AppLocalizations {
   /// #3594 what the members of a space see
   ///
   /// In en, this message translates to:
-  /// **'Once you are a member, everyone in the space: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.'**
+  /// **'Once you are a member, everyone there: your name and photo. Your WhatsApp number, your status and when you were last seen only as you choose under Who sees me.'**
   String get meBusinessSeesSpace;
 
   /// #3594 Me › Privacy: the card that says what a business a person joins can see
@@ -30621,7 +30633,7 @@ abstract class AppLocalizations {
   /// Button on the Me home: create a new space.
   ///
   /// In en, this message translates to:
-  /// **'Create a space'**
+  /// **'Create a business'**
   String get meCreateSpace;
 
   /// #2557 My data: export the personal-data file.
@@ -30651,13 +30663,13 @@ abstract class AppLocalizations {
   /// #2557 My data: what the personal export covers and what it leaves to each workspace.
   ///
   /// In en, this message translates to:
-  /// **'What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace\'s bookings and invoices stay with that workspace and are not part of this file.'**
+  /// **'What your personal home holds about you: your profile, preferences, conversations and the places you name. The bookings and invoices of each business stay with that business and are not part of this file.'**
   String get meDataPersonalScope;
 
   /// #2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
   ///
   /// In en, this message translates to:
-  /// **'Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}'**
+  /// **'Conversations: {conversations} · Messages: {messages} · Places named: {workspaces}'**
   String meDataPersonalSummary(int conversations, int messages, int workspaces);
 
   /// #2557 My data › Personal information: the personal-account source card.
@@ -30681,7 +30693,7 @@ abstract class AppLocalizations {
   /// #2557 C3 the workspace has the export switched off.
   ///
   /// In en, this message translates to:
-  /// **'This workspace does not offer the data export.'**
+  /// **'This business does not offer the data export.'**
   String get meDataWorkspaceDisabled;
 
   /// #2557 C3 export one workspace's own records.
@@ -30693,25 +30705,25 @@ abstract class AppLocalizations {
   /// #2557 C3 the workspace did not answer.
   ///
   /// In en, this message translates to:
-  /// **'This workspace did not answer. Nothing was exported.'**
+  /// **'This business did not answer. Nothing was exported.'**
   String get meDataWorkspaceFailed;
 
   /// #2557 C3 the workspace refused.
   ///
   /// In en, this message translates to:
-  /// **'This workspace refused: you are not an active member there. Nothing was exported.'**
+  /// **'This business refused: you are not an active member there. Nothing was exported.'**
   String get meDataWorkspaceForbidden;
 
   /// #2557 C3 the workspace's server is not reachable.
   ///
   /// In en, this message translates to:
-  /// **'This workspace\'s server is not reachable from here. Nothing was exported.'**
+  /// **'This business\'s server is not reachable from here. Nothing was exported.'**
   String get meDataWorkspaceHostUnavailable;
 
   /// #2557 C3 the workspace's answer cannot be read.
   ///
   /// In en, this message translates to:
-  /// **'This workspace answered in a form this app cannot read. Nothing was exported.'**
+  /// **'This business answered in a form this app cannot read. Nothing was exported.'**
   String get meDataWorkspaceMalformed;
 
   /// #2557 C3 the account changed while the export was read.
@@ -30723,32 +30735,38 @@ abstract class AppLocalizations {
   /// #2557 C3 a workspace whose name may not be read.
   ///
   /// In en, this message translates to:
-  /// **'Workspace {id}'**
+  /// **'Business {id}'**
   String meDataWorkspaceUnnamed(String id);
 
   /// #2557 C3 no workspace to export from.
   ///
   /// In en, this message translates to:
-  /// **'Your account names no workspace yet.'**
+  /// **'Your account names no business yet.'**
   String get meDataWorkspacesEmpty;
 
   /// #2557 C3 the workspace list could not be read.
   ///
   /// In en, this message translates to:
-  /// **'The workspaces your account names could not be read. Nothing was exported.'**
+  /// **'The businesses your account names could not be read. Nothing was exported.'**
   String get meDataWorkspacesFailed;
 
   /// #2557 C3 what each workspace's export covers.
   ///
   /// In en, this message translates to:
-  /// **'Each workspace exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per workspace. Your personal account\'s part is the card above.'**
+  /// **'Each business exports what it holds about you — membership, reservations, ledger and invoices — from its own server, one file per business. Your personal account\'s part is the card above.'**
   String get meDataWorkspacesScope;
 
   /// #2557 C3 the per-workspace export card title.
   ///
   /// In en, this message translates to:
-  /// **'Your records in each workspace'**
+  /// **'Your records in each business'**
   String get meDataWorkspacesTitle;
+
+  /// Me, a business card: hint of the badge on a demonstration business (#3555: Me says business; the workspace screens keep demoSessionBadgeHint)
+  ///
+  /// In en, this message translates to:
+  /// **'You are exploring a demonstration business. Nothing here leaves this device.'**
+  String get meDemoSessionBadgeHint;
 
   /// The legacy home's line of what I owe, before the amounts (#2552: each amount is a private value shown after this text)
   ///
@@ -30825,7 +30843,7 @@ abstract class AppLocalizations {
   /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
-  /// **'Move spaces here from their menu.'**
+  /// **'Move places here from their menu.'**
   String get meGroupEmptyOwn;
 
   /// Shown as a text in me spaces list (me), and 1 other place.
@@ -30867,7 +30885,7 @@ abstract class AppLocalizations {
   /// #1846 Me groups: meGroupWorkspaces
   ///
   /// In en, this message translates to:
-  /// **'My workspaces'**
+  /// **'My places'**
   String get meGroupWorkspaces;
 
   /// Line under the person's name on the Me home: this layer belongs to them alone.
@@ -30903,13 +30921,13 @@ abstract class AppLocalizations {
   /// Menu item and confirm button: leave this space.
   ///
   /// In en, this message translates to:
-  /// **'Leave this space'**
+  /// **'Leave this place'**
   String get meLeaveAction;
 
   /// Body of the confirmation before leaving a space.
   ///
   /// In en, this message translates to:
-  /// **'You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.'**
+  /// **'You stop being a member. Your bookings, invoices and messages stay with the business. To also erase your data, use Privacy.'**
   String get meLeaveBody;
 
   /// Confirmation after leaving a space.
@@ -30921,13 +30939,13 @@ abstract class AppLocalizations {
   /// Error when leaving a space failed.
   ///
   /// In en, this message translates to:
-  /// **'Could not leave the space. Please try again.'**
+  /// **'Could not leave the place. Please try again.'**
   String get meLeaveFailed;
 
   /// Disabled menu item for an owner, who must hand the space over first.
   ///
   /// In en, this message translates to:
-  /// **'Owners hand the space over before leaving'**
+  /// **'Owners hand the business over before leaving'**
   String get meLeaveOwner;
 
   /// Shown as a text in me spaces list (me). Placeholders: {side} (String).
@@ -30951,7 +30969,7 @@ abstract class AppLocalizations {
   /// Explains that a space on another server opens by switching this app to that server.
   ///
   /// In en, this message translates to:
-  /// **'This space lives on {host}. It opens here, on that server\'s own connection; nothing is switched and your own server is not used for it.'**
+  /// **'This place lives on {host}. It opens here, on that server\'s own connection; nothing is switched and your own server is not used for it.'**
   String meLinkedOpenBody(String host);
 
   /// Subtitle of a pending space on another server.
@@ -30969,7 +30987,7 @@ abstract class AppLocalizations {
   /// Button on the Me home: the detailed list of spaces (default at start, site).
   ///
   /// In en, this message translates to:
-  /// **'Manage my spaces'**
+  /// **'Manage my places'**
   String get meManageSpaces;
 
   /// Heading above the list of spaces the person belongs to.
@@ -30999,7 +31017,7 @@ abstract class AppLocalizations {
   /// Empty state title on the Me home when the person has no space.
   ///
   /// In en, this message translates to:
-  /// **'You are not in a space yet'**
+  /// **'You have no places yet'**
   String get meNoSpaceTitle;
 
   /// #2554 Overview: my request to join a space is undecided
@@ -31158,6 +31176,24 @@ abstract class AppLocalizations {
   /// **'Request sent · waiting for an answer'**
   String get mePlaceRequestSent;
 
+  /// Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)
+  ///
+  /// In en, this message translates to:
+  /// **'Your places could not be loaded.'**
+  String get mePlacesLoadFailed;
+
+  /// Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)
+  ///
+  /// In en, this message translates to:
+  /// **'This business handles data requests itself. File a rights request and the personal data admin will answer it.'**
+  String get mePrivacySelfServiceOff;
+
+  /// Me, a business card: label of a real (not test) business (#3555: Me says business; the development banner keeps uxRealWorkspace)
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get meRealBusiness;
+
   /// #2563 Me home: badge on the default workspace
   ///
   /// In en, this message translates to:
@@ -31179,7 +31215,7 @@ abstract class AppLocalizations {
   /// #2563 Me home: a referenced workspace whose name may not be read here
   ///
   /// In en, this message translates to:
-  /// **'A workspace on another server'**
+  /// **'A place on another server'**
   String get meRefUnnamed;
 
   /// #2563 Me home: a workspace on another installation, relationship not yet verified
@@ -31191,13 +31227,13 @@ abstract class AppLocalizations {
   /// #2563 Me home: section of workspaces named by reference that this server does not list
   ///
   /// In en, this message translates to:
-  /// **'Workspaces elsewhere'**
+  /// **'Places elsewhere'**
   String get meRefsTitle;
 
   /// #2563 Me home: the references could not be read
   ///
   /// In en, this message translates to:
-  /// **'Your workspaces elsewhere could not be read.'**
+  /// **'Your places elsewhere could not be read.'**
   String get meRefsUnavailable;
 
   /// #3545 First visit: the question before the link that creates a business.
@@ -31248,6 +31284,12 @@ abstract class AppLocalizations {
   /// **'Sort'**
   String get meSortTooltip;
 
+  /// Me, upcoming bookings: the name of a server whose place has no name (#3555: the reservations screen keeps myReservationsSourceUnnamed)
+  ///
+  /// In en, this message translates to:
+  /// **'A place\'s server'**
+  String get meSourceUnnamed;
+
   /// Title of the row listing this space's own overrides of the person's preferences.
   ///
   /// In en, this message translates to:
@@ -31275,13 +31317,13 @@ abstract class AppLocalizations {
   /// Shown as a text in me spaces list (me).
   ///
   /// In en, this message translates to:
-  /// **'No space matches.'**
+  /// **'No place matches.'**
   String get meSpacesNoMatch;
 
   /// Shown as a button or chip label in personal spaces view (me), and 1 other place.
   ///
   /// In en, this message translates to:
-  /// **'Search my spaces'**
+  /// **'Search my places'**
   String get meSpacesSearch;
 
   /// #3545 Getting started: the first step, always done once you are here.
@@ -31368,6 +31410,18 @@ abstract class AppLocalizations {
   /// **'Places'**
   String get meTabSpacesShort;
 
+  /// Me, a business card: label of a test business (#3555: the development banner keeps uxTestSpace)
+  ///
+  /// In en, this message translates to:
+  /// **'Test business'**
+  String get meTestBusiness;
+
+  /// Me, a business card: what a test business is for (#3555: the development banner keeps uxTestSpaceHint)
+  ///
+  /// In en, this message translates to:
+  /// **'Test business: practice bookings and invoices'**
+  String get meTestBusinessHint;
+
   /// #2552 utility of the personal shell: who sees what of me, and my account.
   ///
   /// In en, this message translates to:
@@ -31395,7 +31449,7 @@ abstract class AppLocalizations {
   /// Row in Me opening the connected servers.
   ///
   /// In en, this message translates to:
-  /// **'Where my spaces live'**
+  /// **'Where my places live'**
   String get meWhereSpacesLive;
 
   /// #1598 member account menu: memberAccountTitle
@@ -32277,13 +32331,13 @@ abstract class AppLocalizations {
   /// Inquiry sheet: who will read the message (#1824)
   ///
   /// In en, this message translates to:
-  /// **'Your message is read by these hosts of the space:'**
+  /// **'Your message is read by these hosts of the business:'**
   String get messengerHostsIntro;
 
   /// Inquiry sheet when the space has no host who answers (#1824)
   ///
   /// In en, this message translates to:
-  /// **'This space has nobody answering messages right now.'**
+  /// **'This business has nobody answering messages right now.'**
   String get messengerHostsNone;
 
   /// Row in the unified inbox when some servers did not answer (#1824)
@@ -32385,7 +32439,7 @@ abstract class AppLocalizations {
   /// Refusal: the source space switched forwarding off (#1824)
   ///
   /// In en, this message translates to:
-  /// **'This space does not allow forwarding its messages.'**
+  /// **'This business does not allow forwarding its messages.'**
   String get messengerRefusedForwardingOff;
 
   /// Refusal: too many forwards or messages in a short time (#1824)
@@ -32409,7 +32463,7 @@ abstract class AppLocalizations {
   /// Refusal: the space takes no inquiries (not published, or switched off) (#1824)
   ///
   /// In en, this message translates to:
-  /// **'This space does not take inquiries right now.'**
+  /// **'This business does not take inquiries right now.'**
   String get messengerRefusedUnavailable;
 
   /// messenger: reactions, stars, edits
@@ -33039,19 +33093,19 @@ abstract class AppLocalizations {
   /// #2554 Overview: link to the full My spaces list
   ///
   /// In en, this message translates to:
-  /// **'All my spaces'**
+  /// **'All my places'**
   String get mySpacesAll;
 
   /// #2554 My spaces: the number of loaded spaces
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No space} =1{1 space} other{{count} spaces}}'**
+  /// **'{count, plural, =0{No place} =1{1 place} other{{count} places}}'**
   String mySpacesCount(int count);
 
   /// #2554 My spaces: link to Discover
   ///
   /// In en, this message translates to:
-  /// **'Discover spaces'**
+  /// **'Discover places'**
   String get mySpacesDiscover;
 
   /// #2554 My spaces: filter showing active memberships
@@ -33105,13 +33159,13 @@ abstract class AppLocalizations {
   /// #2554 My spaces: link to the management of this server's spaces
   ///
   /// In en, this message translates to:
-  /// **'Manage spaces on this server'**
+  /// **'Manage businesses on this server'**
   String get mySpacesManage;
 
   /// #2554 My spaces: the search matches nothing
   ///
   /// In en, this message translates to:
-  /// **'No space matches your search.'**
+  /// **'No place matches your search.'**
   String get mySpacesNoMatch;
 
   /// #2554 My spaces: main action, enter an active space
@@ -33123,7 +33177,7 @@ abstract class AppLocalizations {
   /// #2554 My spaces: main action, enter a development (test) space
   ///
   /// In en, this message translates to:
-  /// **'Open test space'**
+  /// **'Open test business'**
   String get mySpacesOpenTest;
 
   /// #2554 My spaces: main action of a pending request
@@ -33147,13 +33201,13 @@ abstract class AppLocalizations {
   /// #2554 My spaces: metadata of a development space
   ///
   /// In en, this message translates to:
-  /// **'Test space'**
+  /// **'Test business'**
   String get mySpacesTestSpace;
 
   /// #2554 My spaces: the spaces could not be read
   ///
   /// In en, this message translates to:
-  /// **'Your spaces could not be read.'**
+  /// **'Your places could not be read.'**
   String get mySpacesUnavailable;
 
   /// #2554 My spaces: the membership was read from the space's own server
@@ -36059,13 +36113,13 @@ abstract class AppLocalizations {
   /// Shown as the text in discovery list view (directory), and 1 other place.
   ///
   /// In en, this message translates to:
-  /// **'Some workspaces need a newer version of the app and are not shown.'**
+  /// **'Some places need a newer version of the app and are not shown.'**
   String get portalDirectoryIncompatible;
 
   /// #2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts.
   ///
   /// In en, this message translates to:
-  /// **'Some of your workspaces cannot be verified right now; their people are not listed.'**
+  /// **'Some of your places cannot be verified right now; their people are not listed.'**
   String get portalDirectoryPartial;
 
   /// #2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory.
@@ -36077,7 +36131,7 @@ abstract class AppLocalizations {
   /// #2472 personal directory: Shown inside one workspace section whose membership fact lapsed.
   ///
   /// In en, this message translates to:
-  /// **'This workspace cannot be verified right now.'**
+  /// **'This place cannot be verified right now.'**
   String get portalDirectoryUnverified;
 
   /// Shown as the tooltip in connections screen (directory).
@@ -36089,7 +36143,7 @@ abstract class AppLocalizations {
   /// Shown as the label in auth form sections (auth), and 2 other places.
   ///
   /// In en, this message translates to:
-  /// **'Find a workspace'**
+  /// **'Find a place'**
   String get portalDiscover;
 
   /// Shown as the text in public page editor (directory), and 1 other place.
@@ -36179,13 +36233,13 @@ abstract class AppLocalizations {
   /// Shown as the text in public workspace view (directory).
   ///
   /// In en, this message translates to:
-  /// **'This workspace is no longer published.'**
+  /// **'This place is no longer published.'**
   String get portalNoLongerPublished;
 
   /// Menu item on the account menu (globe) that opens the Me layer.
   ///
   /// In en, this message translates to:
-  /// **'Me: my account and my spaces'**
+  /// **'Me: my account and my places'**
   String get portalOpenMe;
 
   /// Shown as the text in public workspace view (directory), and 1 other place.
@@ -36341,7 +36395,7 @@ abstract class AppLocalizations {
   /// Shown as the text in public workspace view (directory).
   ///
   /// In en, this message translates to:
-  /// **'Request sent. The workspace will review your profile.'**
+  /// **'Request sent. The business will review your profile.'**
   String get portalRequestSent;
 
   /// Shown as the text in public page editor (directory), and 1 other place.
@@ -36371,7 +36425,7 @@ abstract class AppLocalizations {
   /// Shown as the label of a field in directory screen (directory), and 1 other place.
   ///
   /// In en, this message translates to:
-  /// **'Search workspaces'**
+  /// **'Search places'**
   String get portalSearch;
 
   /// Shown as the text in connection dialog (directory).
@@ -37559,7 +37613,7 @@ abstract class AppLocalizations {
   /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
-  /// **'Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.'**
+  /// **'Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and places stay private.'**
   String get publicProfilePublishBody;
 
   /// Shown as the text in public profile tile (me).
@@ -40109,6 +40163,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Region & formats'**
   String get regionalFormatsTitle;
+
+  /// #3648 - the Me > Region & formats row that chooses the first day of the week in every calendar, strip and date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Week starts on'**
+  String get regionalWeekStart;
+
+  /// #3648 - the week-start choice that follows the format region (the day names of the other choices come from the locale)
+  ///
+  /// In en, this message translates to:
+  /// **'As the region does'**
+  String get regionalWeekStartAuto;
 
   /// Shown as the label of a field in register payment sheet (money).
   ///
@@ -44622,6 +44688,12 @@ abstract class AppLocalizations {
   /// **'The format used before a member or workspace has chosen one. A member\'s own choice always wins.'**
   String get settingHintLocaleDefaultLocale;
 
+  /// #3648 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The day weeks start on in calendars where a member chose none: the format\'s own, or always Monday, Sunday or Saturday. A member\'s own choice always wins.'**
+  String get settingHintLocaleDefaultWeekStart;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -45089,6 +45161,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default number and date format'**
   String get settingLabelLocaleDefaultLocale;
+
+  /// #3648 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Default first day of the week'**
+  String get settingLabelLocaleDefaultWeekStart;
 
   /// #2485 settings: Setting label.
   ///
@@ -53330,7 +53408,7 @@ abstract class AppLocalizations {
   /// Me thread: why attaching references is unavailable
   ///
   /// In en, this message translates to:
-  /// **'References are only shared with people of the same workspace.'**
+  /// **'References are only shared with people of the same business.'**
   String get threadNoRefs;
 
   /// Me thread: which workspace the references speak about
@@ -54350,7 +54428,7 @@ abstract class AppLocalizations {
   /// Shown as the text in linked spaces section (me), and 1 other place.
   ///
   /// In en, this message translates to:
-  /// **'Open workspace'**
+  /// **'Open business'**
   String get uxOpenWorkspace;
 
   /// Shown as the text in me account tab (me).
@@ -56210,13 +56288,13 @@ abstract class AppLocalizations {
   /// Audience summary for chosen spaces, with how many were chosen.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}'**
+  /// **'{count, plural, =1{Members of 1 chosen place} other{Members of {count} chosen places}}'**
   String visibilityChosenCount(int count);
 
   /// Audience: members of chosen spaces.
   ///
   /// In en, this message translates to:
-  /// **'Members of chosen spaces'**
+  /// **'Members of chosen places'**
   String get visibilityChosenSpaces;
 
   /// #2558 C2 privacy conflict: close, keeping what is saved
@@ -56264,7 +56342,7 @@ abstract class AppLocalizations {
   /// #2211 who sees me on a connected server: visibilityElsewhereIntro
   ///
   /// In en, this message translates to:
-  /// **'On a connected server you have that server\'s own account. People there who share no space with you see what you allow every signed-in person; contact details and presence never leave your spaces.'**
+  /// **'On a connected server you have that server\'s own account. People there who share no place with you see what you allow every signed-in person; contact details and presence never leave your places.'**
   String get visibilityElsewhereIntro;
 
   /// #2211 who sees me on a connected server: visibilityElsewhereTitle
@@ -56354,13 +56432,13 @@ abstract class AppLocalizations {
   /// Audience: members of the person's spaces.
   ///
   /// In en, this message translates to:
-  /// **'Members of my spaces'**
+  /// **'Members of my places'**
   String get visibilityMySpaces;
 
   /// #2558 — the chosen-spaces picker of an account in no space.
   ///
   /// In en, this message translates to:
-  /// **'You are in no space yet. Choose another audience.'**
+  /// **'You have no places yet. Choose another audience.'**
   String get visibilityNoSpaces;
 
   /// Audience: nobody.
@@ -56384,7 +56462,7 @@ abstract class AppLocalizations {
   /// Visibility field: presence in a space today.
   ///
   /// In en, this message translates to:
-  /// **'In the space today'**
+  /// **'At the place today'**
   String get visibilityPresence;
 
   /// Preview line: this audience may start a conversation.
@@ -56408,7 +56486,7 @@ abstract class AppLocalizations {
   /// Preview audience chip: a member of my spaces.
   ///
   /// In en, this message translates to:
-  /// **'A member of my spaces'**
+  /// **'A member of my places'**
   String get visibilityPreviewMySpaces;
 
   /// Preview audience chip: only me — everything, as the person alone sees it.
@@ -56474,7 +56552,7 @@ abstract class AppLocalizations {
   /// #2558 chosen-spaces picker: two spaces share a name; source says where this one is
   ///
   /// In en, this message translates to:
-  /// **'Same name as another space · {source}'**
+  /// **'Same name as another place · {source}'**
   String visibilitySpaceAmbiguous(String source);
 
   /// #2558 source of a space: the personal home itself
@@ -56492,7 +56570,7 @@ abstract class AppLocalizations {
   /// #2558 — a saved chosen space the list no longer names; it stays chosen until the person unticks it.
   ///
   /// In en, this message translates to:
-  /// **'A space that is no longer listed'**
+  /// **'A place that is no longer listed'**
   String get visibilitySpaceUnlisted;
 
   /// #2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet
@@ -56504,7 +56582,7 @@ abstract class AppLocalizations {
   /// #2558 — the chosen-spaces picker when the list of spaces cannot be read.
   ///
   /// In en, this message translates to:
-  /// **'Your spaces cannot be listed right now.'**
+  /// **'Your places cannot be listed right now.'**
   String get visibilitySpacesUnavailable;
 
   /// Title of the card choosing who sees what of the account.

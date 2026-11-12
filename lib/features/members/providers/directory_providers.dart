@@ -21,7 +21,10 @@ Future<List<Reservation>> directoryReservations(Ref ref) async {
   final horizon = now.add(ref.watch(directoryWindowsProvider).upcomingWindow);
   // Set literal: both keys collapse to one when the window stays inside
   // a single month.
-  final monthKeys = {monthKeyOf(now), monthKeyOf(horizon)};
+  final monthKeys = {
+    monthKeyOf(ref.watch(businessDateOfProvider)(now)),
+    monthKeyOf(ref.watch(businessDateOfProvider)(horizon)),
+  };
   // #1218 — the watches are materialised BEFORE the await rather than
   // handed to `Future.wait` as a lazy map. They were already safe (the
   // iterable is walked eagerly), but "safe because of when Future.wait

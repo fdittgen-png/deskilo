@@ -306,7 +306,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             : () => notifier.move(groupKeys, key, 1),
       ),
       environmentHint: group.any((s) => s.isDevelopment)
-          ? l10n.uxTestSpaceHint
+          ? l10n.meTestBusinessHint
           : null,
       avatar: WorkspaceAvatar(workspace: group.first),
       // #2313 — production's identity when the pair has one.

@@ -285,7 +285,7 @@ final class ReservationsForDayProvider
 }
 
 String _$reservationsForDayHash() =>
-    r'dd2474ececfead1ef7a55f022045539f7e84b5c9';
+    r'850eb9529ee610305d9ecab4f21457ccf7ee03a3';
 
 /// Reservations of the active workspace intersecting the given LOCAL day
 /// (keyed 'yyyy-MM-dd'). Local, not UTC: the user thinks in wall-clock
@@ -432,7 +432,7 @@ final class ReservationsForMonthProvider
 }
 
 String _$reservationsForMonthHash() =>
-    r'b00f5c11b7eb515f11dee1943ca482036556746a';
+    r'51d3cec8754555a970b0c73f488bc49fd833197f';
 
 /// Reservations of the active workspace intersecting the given LOCAL
 /// month (keyed 'yyyy-MM'). See [reservationsForDay] for why local (#119):

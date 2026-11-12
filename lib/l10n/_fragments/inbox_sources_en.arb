@@ -3,7 +3,7 @@
   "@inboxSourcePersonal": {
     "description": "#2556 inbox sources: Names the personal home's part of the inbox (person-to-person conversations and groups) in a status line."
   },
-  "inboxSourceWorkspaces": "Your workspaces' messages",
+  "inboxSourceWorkspaces": "Your places' messages",
   "@inboxSourceWorkspaces": {
     "description": "#2556 inbox sources: Names this server's workspace part of the inbox (workspace conversations and inquiries) in a status line."
   },

@@ -29,6 +29,7 @@ class WizardContext {
     required this.period,
     required this.kind,
     required this.now,
+    required this.today,
     required this.workspaceId,
     required this.currency,
     required this.members,
@@ -49,6 +50,9 @@ class WizardContext {
   final String period;
   final InvoiceKind kind;
   final DateTime now;
+
+  /// #3659 — the business's calendar day at [now].
+  final DateTime today;
   final String workspaceId;
   final MoneyFormat currency;
   final List<Member> members;
@@ -101,6 +105,7 @@ class WizardContext {
         reminders: reminders,
         rules: dunning,
         now: now,
+        today: today,
       );
 
   List<WorkspaceEvent> get pending => pendingPayments(events);
@@ -132,6 +137,7 @@ class WizardContext {
               ? WorkspaceFeature.subscriptionInvoices : WorkspaceFeature.usageInvoices),
       settlementEnabled: features.contains(WorkspaceFeature.invoiceSettlement),
       now: now,
+      today: ref.watch(invoicingBusinessProvider).dayOf(now),
       workspaceId: workspace?.id ?? '',
       currency: ref.watch(appFormatProvider).moneyIn(workspace?.currencyCode),
       // The lists below are used only while `reads` answered.

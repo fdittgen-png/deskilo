@@ -72,7 +72,7 @@ class ReceivablesReader {
       match: match,
       reminder: reminders[invoice.id],
       rules: rules,
-      now: now,
+      at: (now: now, today: dayOf(now)),
       facts: facts?.journey ?? noJourneyFacts,
     );
     final folded = fold && invoice.isFolded;

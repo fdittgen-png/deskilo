@@ -60,7 +60,7 @@ void main() {
     await _openMenu(tester, 'ws-1');
     final item = tester.widget<PopupMenuItem<Object?>>(_leave('ws-1'));
     expect(item.enabled, isFalse);
-    expect(find.text('Owners hand the space over before leaving'), findsOneWidget);
+    expect(find.text('Owners hand the business over before leaving'), findsOneWidget);
     await tester.tap(_leave('ws-1'), warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('me-leave-confirm')), findsNothing);
@@ -77,7 +77,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('me-leave-confirm')));
     await tester.pumpAndSettle();
-    expect(find.text('Could not leave the space. Please try again.'), findsOneWidget);
+    expect(find.text('Could not leave the place. Please try again.'), findsOneWidget);
     expect(find.byKey(const ValueKey('me-space-ws-2')), findsOneWidget);
   });
 

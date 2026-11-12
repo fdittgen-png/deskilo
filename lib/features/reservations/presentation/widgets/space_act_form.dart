@@ -134,9 +134,9 @@ class SpaceActFormState extends State<SpaceActForm> {
     final ctx = labelled ? context : null;
     final l10n = labelled ? context.l10n : englishL10n;
     final now = widget.now;
-    final morning = HalfDayWindows.morning(now);
-    final afternoon = HalfDayWindows.afternoon(now);
-    final fullDay = HalfDayWindows.fullDay(now);
+    final morning = HalfDayWindows.morningAt(now);
+    final afternoon = HalfDayWindows.afternoonAt(now);
+    final fullDay = HalfDayWindows.fullDayAt(now);
     DateTime clamp(DateTime start) => start.isBefore(now) ? now : start;
     final options = <_DayOption>[
       if (widget.granularity != BookingGranularity.fullDay &&
@@ -233,9 +233,9 @@ class SpaceActFormState extends State<SpaceActForm> {
         '${time.formatTimeOfDay(TimeOfDay.fromDateTime(w.end))}';
     final now = widget.now;
     final hours = widget.granularity == BookingGranularity.halfDay
-        ? '${range(HalfDayWindows.morning(now))} / '
-              '${range(HalfDayWindows.afternoon(now))}'
-        : range(HalfDayWindows.fullDay(now));
+        ? '${range(HalfDayWindows.morningAt(now))} / '
+              '${range(HalfDayWindows.afternoonAt(now))}'
+        : range(HalfDayWindows.fullDayAt(now));
     return l10n.kioskBasis(granularityLabel, hours);
   }
 

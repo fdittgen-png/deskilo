@@ -147,8 +147,8 @@ void main() {
       await goTo(tester, router, '/me');
       expect(find.byKey(const ValueKey('me-home-empty')), findsNothing);
       expect(find.byKey(const ValueKey('me-refs')), findsOneWidget);
-      expect(find.text('Workspaces elsewhere'), findsOneWidget);
-      expect(find.text('A workspace on another server'), findsOneWidget);
+      expect(find.text('Places elsewhere'), findsOneWidget);
+      expect(find.text('A place on another server'), findsOneWidget);
       expect(
         find.text('Membership not verified yet · Default'),
         findsOneWidget,
@@ -203,7 +203,7 @@ void main() {
             .first,
       );
       expect(
-        find.text('Your workspaces elsewhere could not be read.'),
+        find.text('Your places elsewhere could not be read.'),
         findsOneWidget,
       );
     });

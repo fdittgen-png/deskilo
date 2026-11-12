@@ -101,7 +101,7 @@ void main() {
     expect(_selected(tester), isTrue);
     expect(
       find.text('Kept on this device only: your account cannot save this '
-          'space.'),
+          'place.'),
       findsOneWidget,
     );
   });

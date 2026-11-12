@@ -138,7 +138,7 @@ void main() {
     expect(find.byKey(_missing), findsOneWidget);
     expect(
       find.text(
-        '5 workspaces could not be placed on the map; their cards are below.',
+        '5 places could not be put on the map; their cards are below.',
       ),
       findsOneWidget,
       reason: 'no address 1, not found 1, failed 1, deferred 2',
@@ -165,7 +165,7 @@ void main() {
     await _frames(tester);
     expect(
       find.text(
-        '1 workspace could not be placed on the map; its card is below.',
+        '1 place could not be put on the map; its card is below.',
       ),
       findsOneWidget,
     );
@@ -204,7 +204,7 @@ void main() {
     expect(find.byType(DirectoryMap), findsOneWidget);
     expect(
       find.text(
-        '3 workspaces could not be placed on the map; their cards are below.',
+        '3 places could not be put on the map; their cards are below.',
       ),
       findsOneWidget,
     );

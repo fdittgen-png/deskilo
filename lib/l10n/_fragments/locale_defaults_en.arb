@@ -23,5 +23,13 @@
   "settingHintLocaleDefaultLocale": "The format used before a member or workspace has chosen one. A member's own choice always wins.",
   "@settingHintLocaleDefaultLocale": {
     "description": "#2488 settings: Setting hint."
+  },
+  "settingLabelLocaleDefaultWeekStart": "Default first day of the week",
+  "@settingLabelLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting label."
+  },
+  "settingHintLocaleDefaultWeekStart": "The day weeks start on in calendars where a member chose none: the format's own, or always Monday, Sunday or Saturday. A member's own choice always wins.",
+  "@settingHintLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting hint."
   }
 }

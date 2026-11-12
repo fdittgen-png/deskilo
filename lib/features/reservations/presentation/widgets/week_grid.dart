@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/time/workspace_time.dart';
@@ -27,7 +28,7 @@ import 'week_grid_cells.dart';
 /// Seat × day occupancy grid of one ISO week (#236): rows are seats
 /// grouped under `office · desk` headers (level chips with the same
 /// local-state "All levels" semantics as DayTimeline, #221/#187), columns
-/// are Monday–Sunday of the week containing [selectedDay]. Each cell
+/// are the seven days of the week containing [selectedDay]. Each cell
 /// splits into a morning and an afternoon half-slot around the
 /// configured half-day boundary (#446): a half is filled when ANY active
 /// reservation overlaps it (mine = the timeline's own tone, others = its
@@ -55,7 +56,7 @@ class WeekGrid extends ConsumerStatefulWidget {
   });
 
   /// The hub's selected local day (any instant within it) — the grid
-  /// derives its Monday–Sunday columns from this day's ISO week and
+  /// derives its seven columns from this day's week and
   /// highlights its column.
   final DateTime selectedDay;
 
@@ -92,12 +93,11 @@ class WeekGrid extends ConsumerStatefulWidget {
   static Key closedHeaderKey(DateTime day) =>
       ValueKey('week-closed-${_dayStamp(day)}');
 
-  /// WORKSPACE midnight of the Monday of [day]'s ISO week (#490 — the
-  /// week is the workspace's, not the device's).
-  static DateTime weekStartOf(DateTime day) {
-    final local = WorkspaceTime.dateOf(day);
-    return DateTime(local.year, local.month, local.day - (local.weekday - 1));
-  }
+  /// WORKSPACE midnight of the first day of [day]'s week, the week starting
+  /// on the ISO weekday [firstWeekday] (#3648; #490 — the week is the
+  /// workspace's, not the device's).
+  static DateTime firstDayOf(DateTime day, int firstWeekday) =>
+      startOfWeek(WorkspaceTime.dateOf(day), firstWeekday);
 
   /// Public day stamp for cell/free-slot keys.
   static String dayStampOf(DateTime day) => _dayStamp(day);
@@ -132,10 +132,11 @@ class _WeekGridState extends ConsumerState<WeekGrid> {
 
   /// The seven local days of [WeekGrid.selectedDay]'s ISO week.
   List<DateTime> get _days {
-    final monday = WeekGrid.weekStartOf(widget.selectedDay);
+    final first = WeekGrid.firstDayOf(
+        widget.selectedDay, weekStartOf(appFormatOf(context)));
     return [
       for (var i = 0; i < WeekGridMetrics.daysPerWeek; i++)
-        DateTime(monday.year, monday.month, monday.day + i),
+        DateTime(first.year, first.month, first.day + i),
     ];
   }
 

@@ -354,7 +354,13 @@ String feedItemActor(FeedItem item) => switch (item) {
 /// first occurrence, so the date sort keeps steering the screen; within
 /// a group the feed order survives untouched. `none` returns ONE group
 /// carrying the whole feed — the caller just skips the headers.
-List<FeedGroup> groupFeed(List<FeedItem> feed, FeedGrouping grouping) {
+/// [dayOf] gives an instant's calendar day: the business's (#3659), never
+/// the device's.
+List<FeedGroup> groupFeed(
+  List<FeedItem> feed,
+  FeedGrouping grouping, {
+  required DateTime Function(DateTime instant) dayOf,
+}) {
   if (grouping == FeedGrouping.none) {
     return [FeedGroup(id: 'all', key: 'all', items: feed)];
   }
@@ -363,8 +369,7 @@ List<FeedGroup> groupFeed(List<FeedItem> feed, FeedGrouping grouping) {
       case FeedGrouping.type:
         return (item.category.wire, item.category);
       case FeedGrouping.date:
-        final local = item.at.toLocal();
-        final day = DateTime(local.year, local.month, local.day);
+        final day = dayOf(item.at);
         return (day.toIso8601String().split('T').first, day);
       case FeedGrouping.user:
         final actor = feedItemActor(item);

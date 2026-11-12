@@ -377,6 +377,7 @@ void main() {
     tester,
   ) async {
     FinanceInvoice dated(String id, String ws, DateTime at) => FinanceInvoice(
+      timezone: 'Europe/Paris',
       id: id,
       workspaceId: 'ws-$ws',
       workspaceName: ws,

@@ -78,21 +78,21 @@ void main() {
   group('the selection arithmetic', () {
     final wed = DateTime(2026, 9, 2); // a Wednesday
     test('agenda: thirty days from the anchor, stepping by thirty', () {
-      final s = CalendarSelection(view: CalendarView.agenda, anchor: wed);
+      final s = CalendarSelection(view: CalendarView.agenda, anchor: wed, firstWeekday: DateTime.monday);
       expect(s.from, wed);
       expect(s.to, DateTime(2026, 10, 2));
       expect(s.shifted(1).anchor, DateTime(2026, 10, 2));
       expect(s.shifted(-1).anchor, DateTime(2026, 8, 3));
     });
     test('week: Monday to Sunday around the anchor', () {
-      final s = CalendarSelection(view: CalendarView.week, anchor: wed);
+      final s = CalendarSelection(view: CalendarView.week, anchor: wed, firstWeekday: DateTime.monday);
       expect(s.weekStart, DateTime(2026, 8, 31));
       expect(s.to, DateTime(2026, 9, 7));
       expect(s.shifted(1).weekStart, DateTime(2026, 9, 7));
     });
     test('month: one day for the feed, the whole month for the markers, '
         'and the day of month survives a step where it can', () {
-      final s = CalendarSelection(view: CalendarView.month, anchor: DateTime(2026, 8, 31));
+      final s = CalendarSelection(view: CalendarView.month, anchor: DateTime(2026, 8, 31), firstWeekday: DateTime.monday);
       expect(s.from, DateTime(2026, 8, 31));
       expect(s.to, DateTime(2026, 9));
       expect(s.monthStart, DateTime(2026, 8));

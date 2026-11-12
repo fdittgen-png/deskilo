@@ -12,7 +12,7 @@
   "@environmentLabel": {
     "description": "#917 workspace environment: environmentLabel"
   },
-  "environmentHint": "A development workspace says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.",
+  "environmentHint": "A development business says so on every screen and watermarks every document. Declare it production only when the invoices leaving it are genuinely owed.",
   "@environmentHint": {
     "description": "#917 workspace environment: environmentHint"
   },

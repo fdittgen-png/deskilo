@@ -306,7 +306,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   }) {
     final now = ref.read(clockProvider).now();
     final reservations =
-        ref.read(reservationsForDayProvider(dayKeyOf(now))).value ??
+        ref.read(reservationsForDayProvider(
+            dayKeyOf(ref.read(businessDateOfProvider)(now)))).value ??
             const <Reservation>[];
     final blocking = blockingReservation(
       reservations,
@@ -473,7 +474,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     return (
       now: now,
       reservations:
-          ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ??
+          ref.watch(reservationsForDayProvider(
+              dayKeyOf(ref.watch(businessDateOfProvider)(now)))).value ??
               const <Reservation>[],
       names: ref.watch(memberNamesProvider).value ?? const {},
       photosOn: ref

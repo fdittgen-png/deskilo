@@ -18,7 +18,6 @@ import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
-import '../../../core/time/clock.dart';
 import '../../../core/ui/personal_kit/me_kit_metrics.dart';
 import '../../../core/ui/private_value.dart';
 import '../../directory/domain/inbox_composition.dart';
@@ -61,9 +60,10 @@ class _CoverageNote extends StatelessWidget {
 /// decides "nothing here" from the same sources the section shows.
 List<AttentionItem>? attentionItemsOf(
   WidgetRef ref,
-  DateTime now,
   PersonalWorkspaceRefs? refs,
 ) {
+  // #3659 — each invoice is late on its own business's day.
+  final now = ref.watch(financeNowProvider);
   final documents = ref.watch(financeOverviewProvider);
   final inbox = ref.watch(messengerInboxProvider);
   // #3682 — a host still reading or that did not answer leaves the
@@ -115,7 +115,7 @@ class NeedsAttentionSection extends ConsumerWidget {
     final documents = ref.watch(financeOverviewProvider);
     final refs = ref.watch(personalWorkspaceRefsProvider);
     final inbox = ref.watch(messengerInboxProvider);
-    final now = ref.watch(clockProvider).now();
+    final now = ref.watch(financeNowProvider);
     // Me is production: a development space's test documents never count.
     final owed = documents.value
         ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
@@ -330,7 +330,7 @@ class FinanceGlance extends ConsumerWidget {
     if (data == null || owed.isEmpty) {
       return const SizedBox.shrink();
     }
-    final now = ref.watch(clockProvider).now();
+    final now = ref.watch(financeNowProvider);
     final overdue = data.payable.where((i) => i.overdueAt(now)).length;
     final scheme = Theme.of(context).colorScheme;
     final tone = overdue > 0 ? scheme.error : scheme.primary;

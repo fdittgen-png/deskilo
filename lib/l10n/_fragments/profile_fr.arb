@@ -162,6 +162,7 @@
   "backendTestSchemaMissing": "Contacté, mais les tables DesKilo manquent — exécutez d'abord les migrations de supabase/migrations sur ce projet.",
   "backendCopyLink": "Copier",
   "profilesUnavailable": "Vos espaces n'ont pas pu être chargés.",
+  "mePlacesLoadFailed": "Vos lieux n'ont pas pu être chargés.",
   "consentUnavailable": "Votre compte n'a pas pu être chargé ; il n'y a donc rien à accepter pour l'instant.",
   "backendModeDefault": "Utiliser le service DesKilo",
   "backendModeConnect": "Rejoindre une organisation existante",

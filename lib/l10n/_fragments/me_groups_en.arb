@@ -4,7 +4,7 @@
   "@meGroupProfile": {
     "description": "#1846 Me groups: meGroupProfile"
   },
-  "meGroupWorkspaces": "My workspaces",
+  "meGroupWorkspaces": "My places",
   "@meGroupWorkspaces": {
     "description": "#1846 Me groups: meGroupWorkspaces"
   },

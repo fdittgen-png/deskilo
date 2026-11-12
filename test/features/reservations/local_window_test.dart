@@ -2,6 +2,7 @@
 //
 // Month and day windows come from local date components, not UTC,
 // including across local midnight.
+import 'package:deskilo/core/time/business_day.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
@@ -85,24 +86,31 @@ void main() {
     test('a window inside one local day touches a single key', () {
       final start = DateTime(2026, 7, 20, 9);
       final end = DateTime(2026, 7, 20, 13);
-      expect(dayKeysForWindow(start, end), ['2026-07-20']);
+      expect(dayKeysForWindow(start, end, _localDate), ['2026-07-20']);
     });
 
-    test('a full workspace-day window straddling the local midnight touches '
-        'BOTH keys (the Reserve-hub miss)', () {
-      // A full day stored as Jul 20 00:00 Europe/Paris = Jul 19 22:00Z →
-      // Jul 20 22:00Z. In a UTC test env dayKeyOf(start) is the 19th, so a
-      // single-key read (dayKeyOf(start)) would miss the 20th's bookings.
+    test('a full workspace day is ONE key on the business\'s calendar '
+        '(#3659), wherever the device is', () {
+      // Jul 20 00:00 Europe/Paris = Jul 19 22:00Z → Jul 20 22:00Z. Read on
+      // the device's calendar in a UTC runner it straddled two keys (the
+      // Reserve-hub miss); on the business's it is the 20th alone.
       final start = DateTime.utc(2026, 7, 19, 22);
       final end = DateTime.utc(2026, 7, 20, 22);
-      expect(dayKeysForWindow(start, end), ['2026-07-19', '2026-07-20']);
+      expect(
+        dayKeysForWindow(
+            start, end, (t) => businessTodayAt(t, 'Europe/Paris').date!),
+        ['2026-07-20'],
+      );
     });
 
     test('the end boundary is exclusive — a window ending at midnight does '
         'not spill into the next day', () {
       final start = DateTime(2026, 7, 20);
       final end = DateTime(2026, 7, 21); // exactly next local midnight
-      expect(dayKeysForWindow(start, end), ['2026-07-20']);
+      expect(dayKeysForWindow(start, end, _localDate), ['2026-07-20']);
     });
   });
 }
+
+/// The calendar date of [t] on the runner's own calendar.
+DateTime _localDate(DateTime t) => DateTime(t.year, t.month, t.day);

@@ -97,8 +97,8 @@ void main() {
 
     expect(key('create-host-here'), findsOneWidget);
     expect(find.text('one.example'), findsOneWidget);
-    expect(find.text('Accepts new spaces'), findsOneWidget);
-    expect(find.text('Not accepting new spaces'), findsOneWidget);
+    expect(find.text('Accepts new businesses'), findsOneWidget);
+    expect(find.text('Not accepting new businesses'), findsOneWidget);
     expect(find.text('Your identity cannot be verified there'), findsOneWidget);
     expect(tester.widget<ListTile>(key('create-host-inst-one')).enabled, isTrue);
     expect(tester.widget<ListTile>(key('create-host-inst-two')).enabled, isFalse);
@@ -226,7 +226,7 @@ void main() {
       expect(router.state.uri.path, '/');
       expect(key('create-host-none'), findsOneWidget);
       expect(
-          find.text('No server accepts new spaces for your personal home yet. '
+          find.text('No server accepts new businesses for your personal home yet. '
               'Nothing was created.'),
           findsOneWidget);
       expect(key('create-host-here'), findsNothing);

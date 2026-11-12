@@ -18,7 +18,6 @@ import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -195,7 +194,7 @@ class _Outstanding extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final now = ref.watch(clockProvider).now();
+    final now = ref.watch(financeNowProvider);
     final list = newestFirst(data.outstanding);
     return FinancesColumn(
       onRefresh: () => refreshMyFinances(ref),
@@ -235,7 +234,7 @@ class _Paid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final now = ref.watch(clockProvider).now();
+    final now = ref.watch(financeNowProvider);
     final list = data.paid;
     return FinancesColumn(
       onRefresh: () => refreshMyFinances(ref),

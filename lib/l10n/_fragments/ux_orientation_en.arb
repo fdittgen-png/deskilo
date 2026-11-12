@@ -1,5 +1,5 @@
 {
-  "uxOpenWorkspace": "Open workspace",
+  "uxOpenWorkspace": "Open business",
   "@uxOpenWorkspace": {
     "description": "Shown as the text in linked spaces section (me), and 1 other place."
   },
@@ -7,9 +7,17 @@
   "@uxTestSpace": {
     "description": "Shown as the text in linked spaces section (me), and 2 other places."
   },
+  "meTestBusiness": "Test business",
+  "@meTestBusiness": {
+    "description": "Me, a business card: label of a test business (#3555: the development banner keeps uxTestSpace)"
+  },
   "uxRealWorkspace": "Workspace",
   "@uxRealWorkspace": {
     "description": "Shown as the text in development banner (app), and 1 other place."
+  },
+  "meRealBusiness": "Business",
+  "@meRealBusiness": {
+    "description": "Me, a business card: label of a real (not test) business (#3555: Me says business; the development banner keeps uxRealWorkspace)"
   },
   "uxRealSpaceHint": "Real bookings and invoices",
   "@uxRealSpaceHint": {
@@ -18,6 +26,10 @@
   "uxTestSpaceHint": "Test space: practice bookings and invoices",
   "@uxTestSpaceHint": {
     "description": "Shown as the text in development banner (app), and 3 other places."
+  },
+  "meTestBusinessHint": "Test business: practice bookings and invoices",
+  "@meTestBusinessHint": {
+    "description": "Me, a business card: what a test business is for (#3555: the development banner keeps uxTestSpaceHint)"
   },
   "uxProfileAccount": "Profile & account",
   "@uxProfileAccount": {

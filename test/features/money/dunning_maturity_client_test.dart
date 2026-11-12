@@ -71,7 +71,7 @@ void main() {
       reminderCount: 0,
       lastReminderAt: null,
       rules: rules,
-      now: now,
+      at: (now: now, today: _day(now)),
       dueOn: dueOn,
     );
 
@@ -131,3 +131,6 @@ void main() {
     });
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

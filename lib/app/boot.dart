@@ -85,7 +85,7 @@ Future<void> _warm(Ref ref) async {
   await Future.wait([
     levelsThenPlan(),
     tolerant(
-      ref.read(reservationsForDayProvider(dayKeyOf(DateTime.now())).future),
+      ref.read(reservationsForDayProvider(dayKeyOf(ref.read(businessDateOfProvider)(DateTime.now()))).future),
     ),
     tolerant(ref.read(myMemberProvider.future)),
     tolerant(ref.read(bookingGranularityProvider.future)),

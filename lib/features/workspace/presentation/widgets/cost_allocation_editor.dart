@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -347,7 +348,7 @@ class _RuleFormState extends ConsumerState<_RuleForm> {
                 subtitle: Text(appFormatOf(context).dates(DateShape.numeric).format(_from)),
                 trailing: const Icon(Icons.event),
                 onTap: () async {
-                  final day = await showDatePicker(
+                  final day = await showAppDatePicker(
                     context: context,
                     initialDate: _from,
                     firstDate: DateTime(2000),

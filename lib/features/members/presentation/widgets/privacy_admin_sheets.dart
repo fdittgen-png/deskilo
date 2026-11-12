@@ -13,6 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -113,7 +114,7 @@ Future<void> showRecordRequestSheet(
           title: Text(l10n.privacyAdminReceivedOn(isoDay(received))),
           trailing: const Icon(Icons.calendar_today_outlined),
           onTap: () async {
-            final picked = await showDatePicker(
+            final picked = await showAppDatePicker(
               context: ctx,
               initialDate: received,
               firstDate: DateTime(today.year - 1, today.month, today.day),

@@ -6,6 +6,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../core/backend/bounded_reads.dart';
 import '../../../core/backend/context_client_providers.dart';
 import '../../../core/session/session_source.dart';
+import '../../../core/time/business_day_providers.dart';
+import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/account_activity.dart';
@@ -14,6 +16,8 @@ import '../domain/finance_overview.dart';
 import '../domain/finance_sources.dart';
 import 'account_activity_providers.dart';
 import 'finance_host_providers.dart';
+
+export '../domain/finance_due.dart';
 
 part 'finance_overview_provider.g.dart';
 
@@ -375,4 +379,21 @@ class InvoiceFocus extends _$InvoiceFocus {
       state = (workspaceId: workspaceId, invoiceId: invoiceId);
 
   void clear() => state = null;
+}
+
+/// #3659 — now, for Me's money: each invoice is late on its own business's
+/// day (`FinanceInvoiceDue.overdueAt`); this instant is renewed at the
+/// midnight of every business with an invoice to pay, so an open page turns
+/// an invoice late with no data change and no timer of its own.
+@riverpod
+DateTime financeNow(Ref ref) {
+  final invoices = ref.watch(financeOverviewProvider).value?.invoices;
+  final zones = {
+    for (final i in invoices ?? const <FinanceInvoice>[])
+      if (i.state.toPay) i.timezone,
+  };
+  for (final zone in zones) {
+    ref.watch(businessTodayProvider(zone));
+  }
+  return ref.watch(clockProvider).now();
 }

@@ -5,6 +5,7 @@
   "settingLabelPrivacyMemberSelfService": "Mitglieder exportieren und löschen ihre Daten selbst",
   "settingHintPrivacyMemberSelfService": "true: Ein Mitglied kann seine Daten in der App selbst exportieren und löschen. false: Es stellt eine Betroffenenanfrage, die der oder die Verantwortliche für personenbezogene Daten bearbeitet. Inhaber:innen und diese Rolle werden nie blockiert, und eine Anfrage kann immer gestellt werden.",
   "privacySelfServiceOff": "Dieser Bereich bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.",
+  "mePrivacySelfServiceOff": "Dieser Betrieb bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.",
   "@eventPrivacyIncident": {
     "placeholders": {
       "kind": {
