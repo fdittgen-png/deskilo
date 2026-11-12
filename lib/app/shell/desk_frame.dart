@@ -71,24 +71,30 @@ class DeskModalObserver extends NavigatorObserver {
 @Riverpod(keepAlive: true)
 DeskModalObserver deskModalObserver(Ref ref) => DeskModalObserver();
 
-/// The tab a path is, or -1 for a page outside the tabs.
-int _branchOf(String path) => switch (path) {
-  '/messages' || '/workspace-overview' => ShellBranch.messages,
-  '/calendar' => ShellBranch.calendar,
-  '/directory' => ShellBranch.directory,
-  '/money' => ShellBranch.money,
-  '/reserve' => ShellBranch.reserve,
-  _ => -1,
-};
+/// The paths of each tab, read from the router's own stateful shell (the
+/// one place they are registered): index = the tab's [ShellBranch].
+List<List<String>> _tabPaths(GoRouter router) {
+  for (final route in router.configuration.routes) {
+    if (route is StatefulShellRoute) {
+      return [
+        for (final branch in route.branches)
+          [
+            for (final r in branch.routes)
+              if (r is GoRoute) r.path,
+          ],
+      ];
+    }
+  }
+  return const [];
+}
 
-/// Where each tab opens, for a tab chosen on the desk.
-String _branchLocation(int branch) => switch (branch) {
-  ShellBranch.messages => '/messages',
-  ShellBranch.calendar => '/calendar',
-  ShellBranch.directory => '/directory',
-  ShellBranch.money => '/money',
-  _ => '/reserve',
-};
+/// The tab [path] is, or -1 for a page outside the tabs.
+int _branchOf(List<List<String>> tabs, String path) =>
+    tabs.indexWhere((paths) => paths.contains(path));
+
+/// Where a tab opens: the first path its branch registers.
+String _branchLocation(List<List<String>> tabs, int branch) =>
+    tabs[branch].first;
 
 /// The desk around [child], the router's navigator, for the page at [path].
 class DeskFrame extends StatelessWidget {
@@ -129,8 +135,9 @@ class _Desk extends ConsumerWidget {
     );
     final visibleBranches = [for (final n in navs) n.branch];
     final pendingEvents = ref.watch(myPendingEventCountProvider).value ?? 0;
-    final branch = _branchOf(path);
-    void onBranch(int b) => router.go(_branchLocation(b));
+    final tabs = _tabPaths(router);
+    final branch = _branchOf(tabs, path);
+    void onBranch(int b) => router.go(_branchLocation(tabs, b));
     final crumbs = ShellMenu.of(
       context,
       ref,

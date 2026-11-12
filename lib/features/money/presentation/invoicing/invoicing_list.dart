@@ -294,7 +294,9 @@ class InvoicingList extends StatelessWidget {
           name: row.customerName,
           caption: _captionOf(context, l, format, row),
           invoices: '${row.invoices.length}',
-          oldest: _chipOf(l, format, row.invoices.first),
+          oldest: wide
+              ? _stateCellOf(l, format, row.invoices.first)
+              : _chipOf(l, format, row.invoices.first),
           owes: [
             for (final e in row.owes.byCurrency.entries)
               format.moneyIn(e.key).formatMinor(e.value),
@@ -373,6 +375,24 @@ class InvoicingList extends StatelessWidget {
     );
   }
 
+  /// #3773 — a state in a table cell is never cut: its parts (the
+  /// lateness, then the reminder) are pieces that wrap between each other,
+  /// on one line when both fit and on two when not.
+  Widget _stateCellOf(AppLocalizations l, AppFormat format, Receivable r) {
+    final status = invoiceStatusOf(r, today);
+    final tone = statusToneOf(status.kind);
+    return Wrap(
+      key: ValueKey('invoicing-state-${r.invoiceId}'),
+      alignment: WrapAlignment.end,
+      spacing: AppSpacing.xs,
+      runSpacing: AppSpacing.xs,
+      children: [
+        for (final part in statusPartsOf(l, format, r, status, today))
+          StatusChip(label: part, tone: tone, whole: true),
+      ],
+    );
+  }
+
   List<Widget> _invoiceRows(BuildContext context, List<Receivable> shown) {
     final l = context.l10n;
     final format = appFormatOf(context);
@@ -418,7 +438,7 @@ class InvoicingList extends StatelessWidget {
                   fontFeatures: [FontFeature.tabularFigures()],
                 ),
               ),
-              _chipOf(l, format, r),
+              _stateCellOf(l, format, r),
             ],
             onTap: () => onOpenInvoice(r.invoiceId),
           ),

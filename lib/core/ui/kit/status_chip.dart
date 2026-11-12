@@ -46,10 +46,18 @@ enum StatusTone {
 };
 
 class StatusChip extends StatelessWidget {
-  const StatusChip({super.key, required this.label, required this.tone});
+  const StatusChip({
+    super.key,
+    required this.label,
+    required this.tone,
+    this.whole = false,
+  });
 
   final String label;
   final StatusTone tone;
+
+  /// #3773 — never cut: the label wraps instead of ending in an ellipsis.
+  final bool whole;
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +76,8 @@ class StatusChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 2),
         child: Text(
           label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+          maxLines: whole ? null : 1,
+          overflow: whole ? null : TextOverflow.ellipsis,
           style: theme.textTheme.labelMedium?.copyWith(color: foreground),
         ),
       ),

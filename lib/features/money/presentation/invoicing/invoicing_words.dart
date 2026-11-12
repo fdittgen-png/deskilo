@@ -38,6 +38,27 @@ StatusTone statusToneOf(InvoiceStatusKind kind) => switch (kind) {
 
 /// [r]'s status [s] in words on [today], with [format] for its dates and
 /// amounts: a date of another year than [today]'s says its year.
+/// #3773 — the state in its parts, for a place that shows them as pieces
+/// that wrap between each other (the invoice table): the lateness, then the
+/// reminder. A state of one part is that part.
+List<String> statusPartsOf(
+  AppLocalizations l,
+  AppFormat format,
+  Receivable r,
+  InvoiceStatus s,
+  DateTime today,
+) => switch (s.kind) {
+  InvoiceStatusKind.lateReminderSent => [
+    l.invoicingDaysLate(s.number),
+    l.invoicingReminderLevelSent(s.level),
+  ],
+  InvoiceStatusKind.lateEveryReminderSent => [
+    l.invoicingDaysLate(s.number),
+    l.invoicingEveryReminderSent,
+  ],
+  _ => [statusWordsOf(l, format, r, s, today)],
+};
+
 String statusWordsOf(
   AppLocalizations l,
   AppFormat format,

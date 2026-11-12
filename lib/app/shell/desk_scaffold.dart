@@ -95,7 +95,7 @@ class DeskScaffold extends ConsumerWidget {
           ? context.l10n.appTitle
           : place == null
           ? business
-          : '$place — $business',
+          : context.l10n.deskWindowTitle(place!, business),
       color: Theme.of(context).colorScheme.primary,
       child: Scaffold(
         body: FocusTraversalGroup(
