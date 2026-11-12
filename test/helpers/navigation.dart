@@ -84,14 +84,20 @@ Future<void> tapNavIcon(WidgetTester tester, IconData icon) async {
 }
 
 /// Taps an app-bar action by icon — same scoping rationale as
-/// [tapNavIcon].
+/// [tapNavIcon]. An action the bar moved behind its overflow (#3788) is
+/// tapped there, under the same icon.
 Future<void> tapAppBarIcon(WidgetTester tester, IconData icon) async {
-  await tester.tap(
-    find.descendant(
-      of: find.byType(AppBar),
-      matching: find.byIcon(icon),
-    ),
+  final onBar = find.descendant(
+    of: find.byType(AppBar),
+    matching: find.byIcon(icon),
   );
+  if (onBar.evaluate().isEmpty) {
+    await tester.tap(find.byKey(const ValueKey('shell-overflow-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(icon).last);
+  } else {
+    await tester.tap(onBar);
+  }
   await tester.pumpAndSettle();
 }
 

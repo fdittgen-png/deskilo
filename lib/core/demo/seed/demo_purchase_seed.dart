@@ -40,11 +40,12 @@ DemoPurchasing seedDemoPurchasing(
   FakeMoneyRepository? money,
   (FakeWorkspaceRepository, FakeFloorPlanRepository)? plan,
   String Function()? actor,
+  String? workspaceId,
 }) {
   final suppliers = FakeSupplierRepository()..suppliers.addAll(_suppliers);
   final inbox = FakeEInvoiceInboxRepository();
   final today = DateTime(now.year, now.month, now.day);
-  final purchases = FakePurchaseRepository.demo(actor: actor, today: today);
+  final purchases = FakePurchaseRepository.demo(actor: actor, today: today, workspaceId: workspaceId);
   // #2573 — a line names the demo space's own sites, levels and offices.
   if (plan != null) {
     purchases.placesOf = (ws) => demoPurchasePlaces(plan.$1, plan.$2, ws);
@@ -170,8 +171,9 @@ void _seedInbox(FakeEInvoiceInboxRepository inbox, DateTime today) {
   ]);
 }
 
-/// One line of a document at a French rate (null: the document did not say).
-PurchaseLine _bought(int no, String what, int gross, double? rate) {
+/// One line of a document at a French rate (null: the document did not say),
+/// classified as [kind] (#3794; `unresolved` while nobody has read it).
+PurchaseLine _bought(int no, String what, int gross, double? rate, {String kind = 'operating'}) {
   final split = rate == null ? null : vatSplit(gross, rate);
   return PurchaseLine(
     lineNo: no,
@@ -181,6 +183,7 @@ PurchaseLine _bought(int no, String what, int gross, double? rate) {
     taxCents: split?.vatCents,
     taxRatePercent: rate,
     recoverableTaxCents: split?.vatCents,
+    recognitionKind: kind,
   );
 }
 
@@ -276,7 +279,7 @@ void _seedBills(FakePurchaseRepository purchases, DateTime today) {
         bill,
         draft,
         _meta('EAU-17', ago(1), dueOn: inDays(25)),
-        [_bought(1, 'Water, quarter', 8620, null)],
+        [_bought(1, 'Water, quarter', 8620, null, kind: 'unresolved')],
       ),
     )
     ..add(

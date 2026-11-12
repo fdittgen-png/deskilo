@@ -4,7 +4,9 @@
 // that breaks it and passes one that keeps it. A stretched text and a button
 // no key reaches fail; a 36 px row passes at the desk and fails for touch; a
 // table whose rows the arrows walk passes; a dirty form asks before Escape
-// discards it, a clean one closes.
+// discards it, a clean one closes. Text counts as stretched only when a
+// paragraph wraps; a title or a marked information line counts as cut when
+// it is ellipsized or clipped on one line (#3788).
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -221,6 +223,78 @@ void main() {
       ),
       contains('table under 60 %'),
     );
+  });
+
+  // #3788 — a one-line title or information line that ends in an ellipsis
+  // passed the wrap rule; it fails this one. A typed name stays outside.
+  Widget bar(Widget title) => SizedBox(
+    width: 200,
+    height: 120,
+    child: Scaffold(appBar: AppBar(title: title)),
+  );
+  const long = 'A page name far too long for the bar it is given';
+
+  testWidgets('an ellipsized app bar title fails', (tester) async {
+    await _pump(
+      tester,
+      bar(const Text(long, maxLines: 1, overflow: TextOverflow.ellipsis)),
+    );
+    expect(cutInformationProblems(), {'information cut'});
+    expect(_problems(tester), contains('information cut'));
+  });
+
+  testWidgets('a title clipped on one line that does not wrap fails', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      bar(const Text(long, softWrap: false, overflow: TextOverflow.clip)),
+    );
+    expect(cutInformationProblems(), {'information cut'});
+  });
+
+  testWidgets('a marked information line cut fails; wrapped it passes', (
+    tester,
+  ) async {
+    for (final (maxLines, cut) in [(1, true), (null, false)]) {
+      await _pump(
+        tester,
+        SizedBox(
+          width: 120,
+          child: Text(
+            long,
+            key: informationLineKeys.first,
+            maxLines: maxLines,
+            overflow: maxLines == null ? null : TextOverflow.ellipsis,
+          ),
+        ),
+      );
+      expect(cutInformationProblems(), cut ? {'information cut'} : isEmpty);
+    }
+  });
+
+  testWidgets('a typed name cut in the title and a cut line nobody marked '
+      'pass', (tester) async {
+    await _pump(
+      tester,
+      Column(
+        children: [
+          bar(
+            Text(
+              long,
+              key: typedTextKeys.first,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(
+            width: 120,
+            child: Text(long, maxLines: 1, overflow: TextOverflow.ellipsis),
+          ),
+        ],
+      ),
+    );
+    expect(cutInformationProblems(), isEmpty);
   });
 
   testWidgets('a button no key reaches inside a container Tab skips still '

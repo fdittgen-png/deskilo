@@ -43,6 +43,14 @@ void main() {
           .quality(workspace.id, fromMonth: from, toMonth: to);
       expect(k.currency, currency);
       expect(k.reasons, isNot(contains('currency_mix')));
+      if (id == 'ws-2') {
+        // #3797 — Leipzig reads its own purchases and orders: it has bought
+        // and ordered nothing yet, and never reads the main space's.
+        expect(k.costMinor, 0);
+        expect(k.vendors, isEmpty);
+        expect(k.deliveryOrders, 0);
+        return;
+      }
       expect(k.costMinor, greaterThan(0));
       expect(k.vendors, isNotEmpty);
       expect(k.vendors.map((v) => v.rank), [

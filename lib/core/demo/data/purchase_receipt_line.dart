@@ -5,7 +5,9 @@ import '../../../features/money/domain/purchase.dart';
 import 'floor_plan_repository.dart';
 import 'workspace_repository.dart';
 
-/// A claim's receipt as the server reads it: one line, its claim.
+/// A claim's receipt as the server reads it: one line, its claim, an
+/// operating cost of the space (#3794: what a member pays out of pocket for
+/// it is spent, not kept).
 PurchaseLine claimReceiptLine(PayableRow row, double? rate) {
   final gross = row.purchase.grossCents;
   if (rate == null) {
@@ -13,6 +15,7 @@ PurchaseLine claimReceiptLine(PayableRow row, double? rate) {
       lineNo: 1,
       description: row.purchase.category,
       grossCents: gross,
+      recognitionKind: 'operating',
     );
   }
   final split = vatSplit(gross, rate);
@@ -24,6 +27,7 @@ PurchaseLine claimReceiptLine(PayableRow row, double? rate) {
     taxCents: split.vatCents,
     taxRatePercent: rate,
     recoverableTaxCents: split.vatCents,
+    recognitionKind: 'operating',
   );
 }
 

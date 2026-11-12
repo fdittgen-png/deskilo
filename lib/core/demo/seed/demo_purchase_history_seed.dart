@@ -9,18 +9,32 @@
 // month (last month's already indexed), paid on its due day, and the three
 // equipment bills, approved and paid — so every reference resolves and the
 // books post what the lease and the register show.
+//
+// #3794 — each line is classified as the space would classify it: the
+// equipment the register holds is an asset, the rest an operating cost.
+// The lessor's bills carry the service charge advance as their second line
+// (matched to the lease's second term), the studio's lessor bills each month
+// of the rental, and this month's meeting-room screen is capitalised.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/purchase.dart';
 import '../data/purchase_repository.dart';
+import 'demo_lease_seed.dart';
+import 'demo_room_seed.dart';
 
 /// The month the Demo's equipment came into use: the last March not after
 /// [now] (#3292 — never a date ahead of the Demo).
 DateTime demoEquipmentInUseOn(DateTime now) =>
     DateTime(now.month >= 3 ? now.year : now.year - 1, 3);
 
-PurchaseLine _line(int no, String what, int gross, double rate) {
+PurchaseLine _line(
+  int no,
+  String what,
+  int gross,
+  double rate, {
+  String kind = 'operating',
+}) {
   final split = vatSplit(gross, rate);
   return PurchaseLine(
     lineNo: no,
@@ -30,6 +44,7 @@ PurchaseLine _line(int no, String what, int gross, double rate) {
     taxCents: split.vatCents,
     taxRatePercent: rate,
     recoverableTaxCents: split.vatCents,
+    recognitionKind: kind,
   );
 }
 
@@ -113,11 +128,13 @@ void seedDemoPurchaseHistory(FakePurchaseRepository purchases, DateTime now) {
       paidOn: due,
       lines: [
         _line(1, 'Rent of the premises', indexed ? 225000 : 222000, 20),
+        _line(2, 'Service charge advance', demoServiceChargeCents, 20),
       ],
       supplierId: 'demo-supplier-landlord',
       supplierName: 'SCI Les Remparts',
     );
   }
+  _seedStudioBills(purchases, now);
   final inUse = demoEquipmentInUseOn(now);
   final today = DateTime(now.year, now.month, now.day);
   // The register states the machine at 1,200.00 net, its VAT recovered.
@@ -127,7 +144,7 @@ void seedDemoPurchaseHistory(FakePurchaseRepository purchases, DateTime now) {
     reference: 'CM-2026-014',
     received: inUse.subtract(const Duration(days: 9)),
     paidOn: inUse.subtract(const Duration(days: 2)),
-    lines: [_line(1, 'Espresso machine, kitchen', 144000, 20)],
+    lines: [_line(1, 'Espresso machine, kitchen', 144000, 20, kind: 'asset')],
     supplierName: 'Café du Midi',
   );
   _paidBill(
@@ -136,7 +153,7 @@ void seedDemoPurchaseHistory(FakePurchaseRepository purchases, DateTime now) {
     reference: 'BP-8841',
     received: today.subtract(const Duration(days: 20)),
     paidOn: today.subtract(const Duration(days: 12)),
-    lines: [_line(1, 'Colour printer, reception', 57600, 20)],
+    lines: [_line(1, 'Colour printer, reception', 57600, 20, kind: 'asset')],
     supplierName: 'Bureau Plus',
   );
   _paidBill(
@@ -147,8 +164,41 @@ void seedDemoPurchaseHistory(FakePurchaseRepository purchases, DateTime now) {
     paidOn: today.subtract(const Duration(days: 3)),
     lines: [
       _line(1, 'Light bulbs', 2400, 20),
-      _line(2, 'Folding ladder', 18900, 20),
+      _line(2, 'Folding ladder', 18900, 20, kind: 'asset'),
     ],
     supplierName: 'Bricolage Pézenas',
   );
+  // The register states the screen at 900.00 net, capitalised and in use
+  // from the first of this month (demo_asset_seed.dart).
+  final first = demoScreenInUseOn(now);
+  _paidBill(
+    purchases,
+    id: 'demo-purchase-screen',
+    reference: 'BP-9107',
+    received: first,
+    paidOn: first,
+    lines: [_line(1, 'Screen, meeting room', 108000, 20, kind: 'asset')],
+    supplierName: 'Bureau Plus',
+  );
+}
+
+/// The day the meeting-room screen came into use: the first of this month.
+DateTime demoScreenInUseOn(DateTime now) => DateTime(now.year, now.month);
+
+/// The studio's lessor bills each month of the rental before this one, five
+/// days before it falls due, paid on its due day (demo_room_seed.dart).
+void _seedStudioBills(FakePurchaseRepository purchases, DateTime now) {
+  for (var month = 1; month < now.month; month++) {
+    final due = DateTime(now.year, month);
+    _paidBill(
+      purchases,
+      id: 'demo-bill-studio-$month',
+      reference: 'IM-${yearMonth(due.year, due.month)}',
+      received: due.subtract(const Duration(days: 5)),
+      paidOn: due,
+      lines: [_line(1, 'Studio rental, annex', demoStudioRentCents, 20)],
+      supplierId: 'demo-supplier-immo',
+      supplierName: 'Immobilière du Midi',
+    );
+  }
 }

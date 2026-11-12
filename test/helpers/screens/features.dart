@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../mock_providers.dart';
 import '../navigation.dart' show pageScrollable;
 import '../settings_sections.dart';
+import '../shell_bar.dart';
 
 Future<FakeWorkspaceRepository> pumpSettings(
   WidgetTester tester, {
@@ -24,7 +25,7 @@ Future<FakeWorkspaceRepository> pumpSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
+  await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
   return workspace;

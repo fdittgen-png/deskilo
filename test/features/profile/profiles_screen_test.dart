@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/shell_bar.dart';
 import '../me/me_app.dart' show tapIn;
 
 Future<(FakeWorkspaceRepository, InMemoryActiveWorkspaceStore)> pumpProfiles(
@@ -47,7 +48,7 @@ Future<(FakeWorkspaceRepository, InMemoryActiveWorkspaceStore)> pumpProfiles(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await tester.tap(find.text('Back to Me'));
   await tester.pumpAndSettle();

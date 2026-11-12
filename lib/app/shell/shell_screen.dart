@@ -13,16 +13,14 @@ import '../../features/money/presentation/widgets/invoice_form_sheet.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'desk_scaffold.dart';
-import 'shell_app_bar.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer.dart';
 import 'shell_effects.dart';
+import 'shell_phone_bar.dart';
 import 'shell_slot.dart';
 import 'shell_tabs.dart';
-import 'shell_title_bar.dart';
-import 'space_chip.dart';
 
 /// Bottom-navigation shell hosting the branch destinations (spec §13).
 /// Settings is not a tab — it is the top-right app-bar action, as in
@@ -95,8 +93,6 @@ class ShellScreen extends ConsumerWidget {
       changeKey: navigationShell.currentIndex,
       child: ShellSlot(child: navigationShell),
     );
-    final actions = shellBarActions(context, ref,
-        currentIndex: navigationShell.currentIndex);
     // #3603 — from the expanded window class, the desk, on every platform.
     // #3603 — from the expanded window class the desk is drawn around the
     // whole app (desk_frame.dart): the tab is only its page, on the
@@ -110,13 +106,11 @@ class ShellScreen extends ConsumerWidget {
       // #1322 — the title bar leaves with the bottom bar: one gesture,
       // one progress, a real full-screen view. The web shell has no bar
       // to follow, and neither does a shell without one.
-      appBar: ShellTitleBar(
+      // #1823 — the chip names the space; the tab sits under it.
+      appBar: ShellPhoneBar(
         collapsible: !webShell && navs.isNotEmpty,
-        appBar: AppBar(
-          // #1823 — the chip names the space; the tab sits under it.
-          title: SpaceChip(tabTitle: tabTitle),
-          actions: actions,
-        ),
+        tabTitle: tabTitle,
+        currentIndex: navigationShell.currentIndex,
       ),
       // #611 — the tab switch fades the incoming branch in. The
       // FadeIndexedStack pattern: the shell's IndexedStack (and with it

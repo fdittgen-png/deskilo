@@ -3,13 +3,15 @@
 // #3785 — the analyses the Demo used to answer "no server in this mode":
 // the cost figures, the cost allocation and the overview's own figures,
 // each computed from the space being looked at, with its own stores, in
-// its own currency.
+// its own currency. #3797 — each space's own purchases, register and lease
+// (Leipzig's are empty), and each space's month and day read on the Demo's
+// clock in the space's own time zone, as the server reads them.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show Invoice;
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/providers/asset_valuation_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
+import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/cost_allocation_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/overview_kpi_providers.dart';
@@ -18,56 +20,42 @@ import 'data/asset_valuation_repository.dart';
 import 'data/demo_cost_allocation_repository.dart';
 import 'data/demo_cost_kpi_repository.dart';
 import 'data/demo_overview_kpi_repository.dart';
+import 'data/event_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/lease_commitment_repository.dart';
+import 'data/money_repository.dart';
 import 'data/premises_lease_repository.dart';
-import 'data/purchase_repository.dart';
 import 'data/room_rental_repository.dart';
 import 'data/workspace_asset_repository.dart';
+import 'data/workspace_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_space_pick.dart';
 import 'seed/demo_city_books_seed.dart';
 import 'seed/demo_lease_seed.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_twin_seed.dart';
 import 'seed/demo_valuation_seed.dart';
 
-/// The cost sources of each of the Demo's five spaces.
-typedef _SpaceCosts = ({
-  DemoCostSources home,
-  DemoCostSources leipzig,
-  DemoCostSources london,
-  DemoCostSources newYork,
-  DemoCostSources twin,
-});
-
-/// The one of [home], [leipzig], [london], [newYork], [twin] that belongs
-/// to the space being looked at.
-T _pick<T>(Ref ref, T home, T leipzig, T london, T newYork, T twin) =>
-    switch (ref.watch(currentWorkspaceProvider).value?.id) {
-      demoSecondSpaceId => leipzig,
-      demoLondonSpaceId => london,
-      demoNewYorkSpaceId => newYork,
-      demoTwinSpaceId => twin,
-      _ => home,
+/// A field of the space's workspace record, by its id.
+String Function(String) _recordOf(
+  DemoFixture fixture,
+  String Function(Workspace workspace) field,
+) =>
+    (id) => switch (fixture.workspaces.workspaces
+        .where((w) => w.id == id)
+        .firstOrNull) {
+      final w? => field(w),
+      null => '',
     };
-
-/// The space's currency as its workspace record states it.
-String Function(String) _currencyOf(DemoFixture fixture) =>
-    (id) =>
-        fixture.workspaces.workspaces
-            .where((w) => w.id == id)
-            .firstOrNull
-            ?.currencyCode ??
-        '';
 
 /// The cost figures and the cost allocation of each space, from [costs],
 /// and the overview's own figures.
-List<Override> _analysisOverrides(DemoFixture fixture, _SpaceCosts costs) {
+List<Override> _analysisOverrides(
+  DemoFixture fixture,
+  DemoSpaces<DemoCostSources> costs,
+) {
   final now = fixture.seededAt;
-  final currencyOf = _currencyOf(fixture);
+  final currencyOf = _recordOf(fixture, (w) => w.currencyCode);
+  final timezoneOf = _recordOf(fixture, (w) => w.timezone);
   DemoCostAllocationRepository allocation(
     DemoCostSources s,
     FakeFloorPlanRepository plan,
@@ -75,85 +63,72 @@ List<Override> _analysisOverrides(DemoFixture fixture, _SpaceCosts costs) {
     purchases: s.purchases,
     plan: plan,
     currencyOf: currencyOf,
+    timezoneOf: timezoneOf,
     now: now,
   );
   // One store of rules per space, kept for the session.
-  final allocations = (
-    allocation(costs.home, fixture.floorPlan),
-    allocation(costs.leipzig, fixture.secondSpace.floorPlan),
-    allocation(costs.london, fixture.london.floorPlan),
-    allocation(costs.newYork, fixture.newYork.floorPlan),
-    allocation(costs.twin, fixture.twin.floorPlan),
+  final DemoSpaces<DemoCostAllocationRepository> allocations = (
+    home: allocation(costs.home, fixture.floorPlan),
+    leipzig: allocation(costs.leipzig, fixture.secondSpace.floorPlan),
+    london: allocation(costs.london, fixture.london.floorPlan),
+    newYork: allocation(costs.newYork, fixture.newYork.floorPlan),
+    twin: allocation(costs.twin, fixture.twin.floorPlan),
   );
   return [
-    costKpiRepositoryProvider.overrideWith((ref) {
-      final sources = _pick(
-        ref,
-        costs.home,
-        costs.leipzig,
-        costs.london,
-        costs.newYork,
-        costs.twin,
-      );
-      return DemoCostKpiRepository(
-        sources: sources,
+    costKpiRepositoryProvider.overrideWith(
+      (ref) => DemoCostKpiRepository(
+        sources: demoPickSpace(ref, costs),
         currencyOf: currencyOf,
+        timezoneOf: timezoneOf,
         features: () => ref.read(enabledFeaturesSyncProvider),
         now: now,
-      );
-    }),
-    costAllocationRepositoryProvider.overrideWith(
-      (ref) => _pick(
-        ref,
-        allocations.$1,
-        allocations.$2,
-        allocations.$3,
-        allocations.$4,
-        allocations.$5,
       ),
     ),
-    _overviewOverride(fixture),
+    costAllocationRepositoryProvider.overrideWith(
+      (ref) => demoPickSpace(ref, allocations),
+    ),
+    _overviewOverride(fixture, timezoneOf),
   ];
 }
 
 /// The overview's own figures of each space, from its members, requests
 /// and invoices.
-Override _overviewOverride(DemoFixture fixture) {
-  final now = fixture.seededAt;
-  final spaces = (
-    DemoOverviewKpiRepository(
-      workspaces: fixture.workspaces,
-      events: fixture.events,
-      money: fixture.money,
-      now: now,
+Override _overviewOverride(
+  DemoFixture fixture,
+  String Function(String) timezoneOf,
+) {
+  DemoOverviewKpiRepository space(
+    FakeWorkspaceRepository workspaces,
+    FakeEventRepository events,
+    FakeMoneyRepository money,
+  ) => DemoOverviewKpiRepository(
+    workspaces: workspaces,
+    events: events,
+    money: money,
+    now: fixture.seededAt,
+    timezoneOf: timezoneOf,
+  );
+  final DemoSpaces<DemoOverviewKpiRepository> spaces = (
+    home: space(fixture.workspaces, fixture.events, fixture.money),
+    leipzig: space(
+      fixture.secondSpace.workspaces,
+      fixture.secondSpace.events,
+      fixture.secondSpace.money,
     ),
-    DemoOverviewKpiRepository(
-      workspaces: fixture.secondSpace.workspaces,
-      events: fixture.secondSpace.events,
-      money: fixture.secondSpace.money,
-      now: now,
+    london: space(
+      fixture.london.workspaces,
+      fixture.london.events,
+      fixture.london.money,
     ),
-    DemoOverviewKpiRepository(
-      workspaces: fixture.london.workspaces,
-      events: fixture.london.events,
-      money: fixture.london.money,
-      now: now,
+    newYork: space(
+      fixture.newYork.workspaces,
+      fixture.newYork.events,
+      fixture.newYork.money,
     ),
-    DemoOverviewKpiRepository(
-      workspaces: fixture.newYork.workspaces,
-      events: fixture.newYork.events,
-      money: fixture.newYork.money,
-      now: now,
-    ),
-    DemoOverviewKpiRepository(
-      workspaces: fixture.twin.workspaces,
-      events: fixture.twin.events,
-      money: fixture.twin.money,
-      now: now,
-    ),
+    twin: space(fixture.twin.workspaces, fixture.twin.events, fixture.twin.money),
   );
   return overviewKpiRepositoryProvider.overrideWith(
-    (ref) => _pick(ref, spaces.$1, spaces.$2, spaces.$3, spaces.$4, spaces.$5),
+    (ref) => demoPickSpace(ref, spaces),
   );
 }
 
@@ -164,51 +139,48 @@ typedef DemoSpaceContracts = ({
   FakeRoomRentalRepository rooms,
 });
 
+/// One space's contracts with the accountant's valuations of its equipment
+/// and what its lease and rooms still expect.
+typedef DemoSpaceBooks = ({
+  DemoSpaceContracts contracts,
+  FakeAssetValuationRepository valuations,
+  FakeLeaseCommitmentRepository commitments,
+});
+
 /// #2576 the accountant's valuations of each space's equipment, #2575 what
 /// its lease still expects, and #3785 the analyses the Demo computes: the
 /// cost figures from them, the cost allocation, the overview's own figures.
+/// The main space's book values come with its monthly closing (#3794), its
+/// commitments with the service charge and the studio (#3794).
 List<Override> demoBookFigureOverrides(
   DemoFixture fixture,
-  ({DemoPurchasing home, DemoPurchasing london, DemoPurchasing newYork})
-  purchasing,
-  ({
-    DemoSpaceContracts home,
-    DemoSpaceContracts london,
-    DemoSpaceContracts newYork,
-  })
-  spaces,
-  ({
-    DemoSpaceContracts contracts,
-    FakeAssetValuationRepository valuations,
-    FakeLeaseCommitmentRepository commitments,
-  })
-  twin,
-) {
-  final valuations = (
-    home: seedDemoValuations(fixture.seededAt),
+  DemoSpaces<DemoPurchasing> purchasing,
+  DemoSpaces<DemoSpaceContracts> spaces, {
+  required DemoSpaceBooks leipzig,
+  required DemoSpaceBooks twin,
+}) {
+  final DemoSpaces<FakeAssetValuationRepository> valuations = (
+    home: seedDemoBookValues(fixture.seededAt),
+    leipzig: leipzig.valuations,
     london: FakeAssetValuationRepository(),
     newYork: FakeAssetValuationRepository(),
+    twin: twin.valuations,
   );
-  final commitments = (
+  final DemoSpaces<FakeLeaseCommitmentRepository> commitments = (
     home: seedDemoCommitments(fixture.seededAt),
+    leipzig: leipzig.commitments,
     london: FakeLeaseCommitmentRepository(),
     newYork: newYorkCommitments(fixture.seededAt),
+    twin: twin.commitments,
   );
-  T choose<T>(Ref ref, T home, T london, T ny, T devTwin) =>
-      switch (ref.watch(currentWorkspaceProvider).value?.id) {
-        demoLondonSpaceId => london,
-        demoNewYorkSpaceId => ny,
-        demoTwinSpaceId => devTwin,
-        _ => home,
-      };
   DemoCostSources sources(
-    FakePurchaseRepository p,
+    DemoPurchasing p,
     List<Invoice> Function() invoices,
     DemoSpaceContracts c,
     FakeAssetValuationRepository v,
     FakeLeaseCommitmentRepository l,
   ) => (
-    purchases: p,
+    purchases: p.purchases,
     invoices: invoices,
     assets: c.assets,
     valuations: v,
@@ -218,60 +190,46 @@ List<Override> demoBookFigureOverrides(
   );
   return [
     assetValuationRepositoryProvider.overrideWith(
-      (ref) => choose(
-        ref,
-        valuations.home,
-        valuations.london,
-        valuations.newYork,
-        twin.valuations,
-      ),
+      (ref) => demoPickSpace(ref, valuations),
     ),
     leaseCommitmentRepositoryProvider.overrideWith(
-      (ref) => choose(
-        ref,
-        commitments.home,
-        commitments.london,
-        commitments.newYork,
-        twin.commitments,
-      ),
+      (ref) => demoPickSpace(ref, commitments),
     ),
-    // Leipzig reads the purchases, the register, the lease and the rooms of
-    // Pézenas, as its pages do, and its own invoices.
     ..._analysisOverrides(fixture, (
       home: sources(
-        purchasing.home.purchases,
+        purchasing.home,
         () => fixture.money.invoices,
         spaces.home,
         valuations.home,
         commitments.home,
       ),
       leipzig: sources(
-        purchasing.home.purchases,
+        purchasing.leipzig,
         () => fixture.secondSpace.money.invoices,
-        spaces.home,
-        valuations.home,
-        commitments.home,
+        spaces.leipzig,
+        valuations.leipzig,
+        commitments.leipzig,
       ),
       london: sources(
-        purchasing.london.purchases,
+        purchasing.london,
         () => fixture.london.money.invoices,
         spaces.london,
         valuations.london,
         commitments.london,
       ),
       newYork: sources(
-        purchasing.newYork.purchases,
+        purchasing.newYork,
         () => fixture.newYork.money.invoices,
         spaces.newYork,
         valuations.newYork,
         commitments.newYork,
       ),
       twin: sources(
-        fixture.twin.purchasing.purchases,
+        purchasing.twin,
         () => fixture.twin.money.invoices,
-        twin.contracts,
-        twin.valuations,
-        twin.commitments,
+        spaces.twin,
+        valuations.twin,
+        commitments.twin,
       ),
     )),
   ];

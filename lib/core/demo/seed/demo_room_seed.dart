@@ -14,6 +14,10 @@ import '../data/reservation_repository.dart';
 import '../data/room_rental_repository.dart';
 import '../demo_clock.dart';
 
+/// The studio's rental, and what it costs a month.
+const demoStudioRentalId = 'demo-rental-studio';
+const demoStudioRentCents = 40000;
+
 FakeRoomRentalRepository seedDemoRooms(DateTime now) =>
     FakeRoomRentalRepository(
       supplierName: 'Immobilière du Midi',
@@ -45,7 +49,7 @@ FakeRoomRentalRepository seedDemoRooms(DateTime now) =>
       ],
       rentals: [
         RoomRental(
-          id: 'demo-rental-studio',
+          id: demoStudioRentalId,
           revision: 2,
           officeId: 'demo-room-studio',
           officeName: 'Studio',
@@ -54,7 +58,7 @@ FakeRoomRentalRepository seedDemoRooms(DateTime now) =>
           availableFrom: DateTime(now.year),
           availableUntil: DateTime(now.year, 12, 31),
           status: RoomRentalStatus.active,
-          costCents: 40000,
+          costCents: demoStudioRentCents,
           currency: 'EUR',
           audienceAll: true,
           fees: const [RoomFee(unit: RoomFeeUnit.halfDay, feeCents: 1500)],

@@ -14,9 +14,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/ui/adaptive/window_class.dart';
-import '../page_frame.dart';
 import '../route_classes.dart';
 import 'desk_navigation.dart';
+import 'desk_page_frame.dart';
 
 /// Whether [context]'s window shows the desk: the expanded class or wider,
 /// at a text size the sidebar still holds on one line.
@@ -130,13 +130,15 @@ class DeskScaffold extends ConsumerWidget {
                         // The page's semantics must not hide the navigation.
                         child: Semantics(
                           container: true,
-                          // #3603 — the window is the desk's; the reading
-                          // column (or a canvas's wider one) is the page's,
-                          // and the windows opened over it stay within it.
-                          // #3604 — in the measure its route declares.
+                          // #3603 — the window is the desk's. #3798 — the
+                          // navigator spans the page area, so what a page
+                          // opens over itself (a dialog, a sheet, a panel,
+                          // their scrim) stands in the page area; each page
+                          // is laid in the measure its route declares
+                          // (#3604) as it is built (desk_page_frame.dart).
                           child: KeyedSubtree(
                             key: const ValueKey('desk-page'),
-                            child: framePage(path, body, inside: true),
+                            child: DeskPageFrame(child: body),
                           ),
                         ),
                       ),

@@ -9,6 +9,7 @@ import '../../../features/money/domain/lease_commitment.dart';
 import '../../../features/money/domain/premises_lease.dart';
 import '../data/lease_commitment_repository.dart';
 import '../data/premises_lease_repository.dart';
+import 'demo_room_seed.dart';
 
 FakePremisesLeaseRepository seedDemoLease(DateTime now) {
   final starts = DateTime(now.year - 1, 7);
@@ -40,7 +41,7 @@ FakePremisesLeaseRepository seedDemoLease(DateTime now) {
         LeaseTerm(
           id: 'demo-term-charges',
           kind: LeaseTermKind.serviceChargeAdvance,
-          amountCents: 15000,
+          amountCents: demoServiceChargeCents,
           effectiveFrom: starts,
           occurrencesDone: months,
         ),
@@ -49,43 +50,110 @@ FakePremisesLeaseRepository seedDemoLease(DateTime now) {
   ]);
 }
 
-/// The rent the demo lease expects, one occurrence a month from its start to
-/// this month: the older months matched by the lessor's bills, this month
-/// still expected. Last month's bill already carries the July indexation
-/// the lease does not state yet: the occurrence is matched in full and the
-/// 30.00 left on the bill line is a difference waiting to be accepted.
+/// What the demo lease and the rented studio expect, one occurrence a month
+/// per term from its start to this month, each generated from its schedule:
+///
+///   * the rent: the older months matched by the lessor's bills, this month
+///     still expected. Last month's bill already carries the July indexation
+///     the lease does not state yet: the occurrence is matched in full and
+///     the 30.00 left on the bill line is a difference waiting to be
+///     accepted;
+///   * the service charge advance (#3794): the second line of the same
+///     bills, matched in full, this month still expected;
+///   * the studio rented from January (demo_room_seed.dart): matched by the
+///     bills of its lessor, this month still expected.
 FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
   final starts = DateTime(now.year - 1, 7);
   final months = (now.year - starts.year) * 12 + now.month - starts.month + 1;
-  final out = <CommitmentOccurrence>[];
+  final lease = <CommitmentOccurrence>[];
   for (var k = months - 1; k >= 0; k--) {
     final due = DateTime(starts.year, starts.month + k);
     final matched = k < months - 1;
     final indexed = k == months - 2;
-    out.add(
-      CommitmentOccurrence(
-        id: 'demo-occ-$k',
-        dueOn: due,
-        expectedCents: 222000,
-        matchedCents: matched ? 222000 : 0,
-        matches: [
+    final reference = 'LOY-${yearMonth(due.year, due.month)}';
+    lease
+      ..add(
+        _occurrence('demo-occ-$k', due, 222000, 'demo-term-rent', [
           if (matched)
             CommitmentMatch(
               id: 'demo-match-seed-$k',
               purchaseId: 'demo-bill-rent-$k',
               lineNo: 1,
               allocatedCents: 222000,
-              reference:
-                  'LOY-${yearMonth(due.year, due.month)}',
+              reference: reference,
               lineGrossCents: indexed ? 225000 : 222000,
               lineUnallocatedCents: indexed ? 3000 : 0,
             ),
-        ],
-      ),
-    );
+        ]),
+      )
+      ..add(
+        _occurrence(
+          'demo-occ-charges-$k',
+          due,
+          demoServiceChargeCents,
+          'demo-term-charges',
+          [
+            if (matched)
+              CommitmentMatch(
+                id: 'demo-match-charges-$k',
+                purchaseId: 'demo-bill-rent-$k',
+                lineNo: 2,
+                allocatedCents: demoServiceChargeCents,
+                reference: reference,
+                lineGrossCents: demoServiceChargeCents,
+              ),
+          ],
+        ),
+      );
   }
+  final studio = _studioOccurrences(now);
   return FakeLeaseCommitmentRepository(
-    {'demo-lease-premises': out},
-    {for (final o in out) o.id: 'demo-term-rent'},
+    {'demo-lease-premises': lease, demoStudioRentalId: studio},
+    {
+      for (final o in lease) o.id: o.termId!,
+      for (final o in studio) o.id: demoStudioRentalId,
+    },
   );
 }
+
+/// The service charge advance of the demo lease, a month.
+const demoServiceChargeCents = 15000;
+
+CommitmentOccurrence _occurrence(
+  String id,
+  DateTime due,
+  int cents,
+  String? term,
+  List<CommitmentMatch> matches,
+) => CommitmentOccurrence(
+  id: id,
+  dueOn: due,
+  expectedCents: cents,
+  matchedCents: matches.fold(0, (s, m) => s + m.allocatedCents),
+  termId: term,
+  matches: matches,
+);
+
+/// The studio's occurrences (#3794): one a month from January, the months
+/// before this one matched by the bill of the same month
+/// (demo_purchase_history_seed.dart), this month still expected.
+List<CommitmentOccurrence> _studioOccurrences(DateTime now) => [
+  for (var month = now.month; month >= 1; month--)
+    _occurrence(
+      'demo-occ-studio-$month',
+      DateTime(now.year, month),
+      demoStudioRentCents,
+      null,
+      [
+        if (month < now.month)
+          CommitmentMatch(
+            id: 'demo-match-studio-$month',
+            purchaseId: 'demo-bill-studio-$month',
+            lineNo: 1,
+            allocatedCents: demoStudioRentCents,
+            reference: 'IM-${yearMonth(now.year, month)}',
+            lineGrossCents: demoStudioRentCents,
+          ),
+      ],
+    ),
+];
