@@ -176,7 +176,7 @@ as $registry$
     "placeBooking": {"parent": null, "default": true, "core": true},
     "reminderEmail": {"parent": "dunning", "default": false, "core": false},
     "invoiceEmail": {"parent": "invoicing", "default": false, "core": false},
-    "kioskEnrolment": {"parent": "badgeSignIn", "default": false, "core": false}
+    "kioskEnrolment": {"parent": "kioskMode", "default": true, "core": false}
   }'::jsonb
 $registry$;
 
@@ -441,7 +441,7 @@ as $registry$
     {"id":"workspace.feature_flags.invoiceSettlement","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.invoicing","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.moneyTab"],"process":"billingPayments"},
     {"id":"workspace.feature_flags.invoicingWizard","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.invoicing"],"process":"billingPayments"},
-    {"id":"workspace.feature_flags.kioskEnrolment","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.badgeSignIn"],"process":"workspaceAccess"},
+    {"id":"workspace.feature_flags.kioskEnrolment","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.kioskMode"],"process":"workspaceAccess"},
     {"id":"workspace.feature_flags.kioskMemberPhotos","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.kioskMode"],"process":"workspaceAccess"},
     {"id":"workspace.feature_flags.kioskMode","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.placeBooking"],"process":"workspaceAccess"},
     {"id":"workspace.feature_flags.letterStandard","entity":"features","type":"boolean","portability":"literal","absent":"registry_default","depends_on":["workspace.feature_flags.reportLayouts"],"process":"documentsInformation"},

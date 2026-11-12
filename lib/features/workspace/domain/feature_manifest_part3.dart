@@ -470,12 +470,17 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     defaultOn: false,
   ),
   // #3675 — the devices a business enrolled as kiosks, and badge sign-in
-  // limited to them. Under badge sign-in, asked for.
+  // limited to them. On by default, so a new business that turns badge
+  // sign-in on has the setting's default (enrolled kiosks only) in force.
+  // Under kioskMode, not badgeSignIn: a default-on child of a default-off
+  // parent contradicts every builtin template. It matters only where badge
+  // sign-in is on, which badge_auth_verify asks itself. Turning it off is
+  // an owner's choice: badge sign-in then works from any device.
   WorkspaceFeature.kioskEnrolment: FeatureManifestEntry(
     feature: WorkspaceFeature.kioskEnrolment,
     surface: FeatureSurface.kiosk,
     tier: FeatureTier.platform,
-    requires: WorkspaceFeature.badgeSignIn,
-    defaultOn: false,
+    requires: WorkspaceFeature.kioskMode,
+    defaultOn: true,
   ),
 };

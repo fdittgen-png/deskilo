@@ -17232,7 +17232,7 @@ abstract class AppLocalizations {
   /// Shown as a text in features.
   ///
   /// In en, this message translates to:
-  /// **'Enrol the devices used as kiosks and decide whether badge sign-in works only on them. Each enrolled device can be revoked.'**
+  /// **'Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device.'**
   String get featureKioskEnrolmentDesc;
 
   /// Shown as a text in features.

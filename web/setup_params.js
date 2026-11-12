@@ -125,7 +125,7 @@ const PARAM_META=[
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],
- ['badgeSecurity.signinWhere','badgeSigninWhere','enum',()=>BADGE_WHERE.map(x=>x[0]),{needs:'kioskEnrolment'}],
+ ['badgeSecurity.signinWhere','badgeSigninWhere','enum',()=>BADGE_WHERE.map(x=>x[0]),{needs:'badgeSignIn'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
  ['retention.usYears','retUsYears','enum',()=>RET_US_YEARS.map(x=>x[0])],

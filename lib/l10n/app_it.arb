@@ -6800,7 +6800,7 @@
   "featureInvoicingDesc": "Fatture immutabili e firmate in un archivio — da scaricare o condividere in PDF.",
   "featureInvoicingWizardDesc": "Un processo guidato di chiusura mensile per chi cura le finanze: un giro di inizio mese per gli abbonamenti pagati in anticipo e uno di fine mese per consumi e costi aggiuntivi — revisione, emissione in blocco, invio, solleciti dovuti, registrazione e convalida dei pagamenti, abbinamento alle fatture, raggruppamento, stralcio o rimborso, e un riepilogo con ciò che resta aperto e a chi tocca. Disattivato: le schermate separate.",
   "featureInvoicingWizardTitle": "Assistente di fatturazione",
-  "featureKioskEnrolmentDesc": "Registri i dispositivi usati come chioschi e decida se l’accesso con badge funziona solo su di essi. Ogni dispositivo registrato può essere revocato.",
+  "featureKioskEnrolmentDesc": "Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo.",
   "featureKioskEnrolmentTitle": "Registrazione dei chioschi",
   "featureKioskMemberPhotosDesc": "La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato.",
   "featureKioskMemberPhotosTitle": "Foto dei membri al chiosco",

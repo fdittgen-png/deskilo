@@ -10623,7 +10623,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureKioskEnrolmentDesc =>
-      'Enregistrer les appareils qui servent de kiosque et décider si la connexion par badge ne fonctionne que sur eux. Chaque appareil enregistré peut être révoqué.';
+      'Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil.';
 
   @override
   String get featureKioskEnrolmentTitle => 'Enregistrement des kiosques';

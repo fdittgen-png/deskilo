@@ -1397,7 +1397,7 @@ window.SETUP_L10N={
    ],
    "kioskEnrolment": [
     "Kiosk enrolment",
-    "Enrol the devices used as kiosks and decide whether badge sign-in works only on them. Each enrolled device can be revoked."
+    "Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device."
    ]
   },
   "process": {
@@ -3187,7 +3187,7 @@ window.SETUP_L10N={
    ],
    "kioskEnrolment": [
     "Enregistrement des kiosques",
-    "Enregistrer les appareils qui servent de kiosque et décider si la connexion par badge ne fonctionne que sur eux. Chaque appareil enregistré peut être révoqué."
+    "Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil."
    ]
   },
   "process": {
@@ -4977,7 +4977,7 @@ window.SETUP_L10N={
    ],
    "kioskEnrolment": [
     "Kiosk-Registrierung",
-    "Registrieren Sie die Geräte, die als Kiosk dienen, und legen Sie fest, ob die Anmeldung per Ausweis nur auf ihnen funktioniert. Jedes registrierte Gerät lässt sich widerrufen."
+    "Registrieren Sie die Geräte, die als Kiosk dienen; die Anmeldung per Ausweis funktioniert dann nur auf ihnen, es sei denn, das Unternehmen erlaubt jedes Gerät. Ausgeschaltet funktioniert die Anmeldung per Ausweis auf jedem Gerät."
    ]
   },
   "process": {
@@ -6767,7 +6767,7 @@ window.SETUP_L10N={
    ],
    "kioskEnrolment": [
     "Registro de quioscos",
-    "Registre los dispositivos que sirven de quiosco y decida si el acceso con credencial funciona solo en ellos. Cada dispositivo registrado se puede revocar."
+    "Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo."
    ]
   },
   "process": {
@@ -8557,7 +8557,7 @@ window.SETUP_L10N={
    ],
    "kioskEnrolment": [
     "Registrazione dei chioschi",
-    "Registri i dispositivi usati come chioschi e decida se l’accesso con badge funziona solo su di essi. Ogni dispositivo registrato può essere revocato."
+    "Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo."
    ]
   },
   "process": {

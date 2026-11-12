@@ -10594,7 +10594,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureKioskEnrolmentDesc =>
-      'Registre los dispositivos que sirven de quiosco y decida si el acceso con credencial funciona solo en ellos. Cada dispositivo registrado se puede revocar.';
+      'Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo.';
 
   @override
   String get featureKioskEnrolmentTitle => 'Registro de quioscos';

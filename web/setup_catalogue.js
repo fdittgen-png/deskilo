@@ -738,7 +738,7 @@ window.SETUP_REGISTRY={
   "guestPasses": "invoicing",
   "reminderEmail": "dunning",
   "invoiceEmail": "invoicing",
-  "kioskEnrolment": "badgeSignIn"
+  "kioskEnrolment": "kioskMode"
  },
  "availableIn": {
   "recapitulativeStatement": [

@@ -6800,7 +6800,7 @@
   "featureInvoicingDesc": "Factures immuables et signées dans une archive — à télécharger ou partager en PDF.",
   "featureInvoicingWizardDesc": "Un processus guidé de clôture mensuelle pour le responsable financier : une passe de début de mois pour les abonnements payés d'avance et une passe de fin de mois pour la consommation et les frais supplémentaires — revue, émission en lot, envoi, relances dues, enregistrement et validation des paiements, rapprochement avec les factures, regroupement, abandon de créance ou remboursement, et un récapitulatif avec ce qui reste à faire et par qui. Désactivé : les écrans séparés.",
   "featureInvoicingWizardTitle": "Assistant de facturation",
-  "featureKioskEnrolmentDesc": "Enregistrer les appareils qui servent de kiosque et décider si la connexion par badge ne fonctionne que sur eux. Chaque appareil enregistré peut être révoqué.",
+  "featureKioskEnrolmentDesc": "Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil.",
   "featureKioskEnrolmentTitle": "Enregistrement des kiosques",
   "featureKioskMemberPhotosDesc": "Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge.",
   "featureKioskMemberPhotosTitle": "Photos des membres à la borne",

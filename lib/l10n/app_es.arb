@@ -6800,7 +6800,7 @@
   "featureInvoicingDesc": "Facturas inmutables y firmadas en un archivo — descarga o comparte en PDF.",
   "featureInvoicingWizardDesc": "Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.",
   "featureInvoicingWizardTitle": "Asistente de facturación",
-  "featureKioskEnrolmentDesc": "Registre los dispositivos que sirven de quiosco y decida si el acceso con credencial funciona solo en ellos. Cada dispositivo registrado se puede revocar.",
+  "featureKioskEnrolmentDesc": "Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo.",
   "featureKioskEnrolmentTitle": "Registro de quioscos",
   "featureKioskMemberPhotosDesc": "El recibo del quiosco muestra la foto de perfil del miembro: el control visual de credencial equivocada.",
   "featureKioskMemberPhotosTitle": "Fotos de los miembros en el quiosco",

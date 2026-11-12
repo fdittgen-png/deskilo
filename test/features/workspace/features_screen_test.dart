@@ -77,8 +77,7 @@ void main() {
     // #3307 — purchaseOrders: ordering from suppliers is asked for.
     // #3308 — guestPasses: selling passes at the desk is asked for.
     // #3673 — reminderEmail and invoiceEmail: both are asked for.
-    // #3675 — kioskEnrolment: asked for, under badge sign-in.
-    expect(onCount, featureManifest.length - 57);
+    expect(onCount, featureManifest.length - 56);
   });
 
   testWidgets(

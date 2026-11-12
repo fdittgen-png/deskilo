@@ -749,11 +749,12 @@ begin
   return coalesce((
     select jsonb_agg(jsonb_build_object(
              'id', d.id, 'name', d.name,
-             'enrolled_by', public.profile_full_name(m.user_id),
+             'enrolled_by', public.profile_full_name(p),
              'enrolled_at', d.enrolled_at, 'last_used_at', d.last_used_at,
              'revoked_at', d.revoked_at) order by d.enrolled_at desc, d.id)
       from public.kiosk_devices d
       left join public.members m on m.id = d.enrolled_by
+      left join public.profiles p on p.id = m.user_id
      where d.workspace_id = p_workspace_id), '[]'::jsonb);
 end;
 $fn$;

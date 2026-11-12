@@ -10616,7 +10616,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureKioskEnrolmentDesc =>
-      'Registrieren Sie die Geräte, die als Kiosk dienen, und legen Sie fest, ob die Anmeldung per Ausweis nur auf ihnen funktioniert. Jedes registrierte Gerät lässt sich widerrufen.';
+      'Registrieren Sie die Geräte, die als Kiosk dienen; die Anmeldung per Ausweis funktioniert dann nur auf ihnen, es sei denn, das Unternehmen erlaubt jedes Gerät. Ausgeschaltet funktioniert die Anmeldung per Ausweis auf jedem Gerät.';
 
   @override
   String get featureKioskEnrolmentTitle => 'Kiosk-Registrierung';

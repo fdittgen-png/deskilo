@@ -10599,7 +10599,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureKioskEnrolmentDesc =>
-      'Registri i dispositivi usati come chioschi e decida se l’accesso con badge funziona solo su di essi. Ogni dispositivo registrato può essere revocato.';
+      'Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo.';
 
   @override
   String get featureKioskEnrolmentTitle => 'Registrazione dei chioschi';
