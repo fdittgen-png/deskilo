@@ -15,8 +15,8 @@ abstract interface class PaneWidthStore {
 }
 
 /// The device's preferences, one key per list.
-class PrefsPaneWidthStore implements PaneWidthStore {
-  const PrefsPaneWidthStore();
+class _PrefsPaneWidthStore implements PaneWidthStore {
+  const _PrefsPaneWidthStore();
 
   PrefsStringStore _of(String list) =>
       PrefsStringStore('list_detail_pane_$list');
@@ -30,5 +30,5 @@ class PrefsPaneWidthStore implements PaneWidthStore {
 
 /// The store the app's lists keep their pane width in.
 final paneWidthStoreProvider = Provider<PaneWidthStore>(
-  (ref) => const PrefsPaneWidthStore(),
+  (ref) => const _PrefsPaneWidthStore(),
 );

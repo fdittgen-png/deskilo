@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 
 import '../../l10n/context_l10n.dart';
 import '../../storage/pane_width_store.dart';
+import '../../trace/trace_logger.dart';
 
 /// The pane's widths.
 abstract final class ListDetailMetrics {
@@ -106,9 +107,12 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
         ListDetailMetrics.paneMin,
         ListDetailMetrics.paneMax,
       );
-    } on Object catch (e) {
-      debugPrint(
-        'list detail: the pane width of ${widget.id} was not read ($e)',
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn(
+        'ui',
+        'the pane width of ${widget.id} was not read; the default stands',
+        error: e,
+        stackTrace: st,
       );
     }
   }
