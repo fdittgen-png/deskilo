@@ -1,0 +1,98 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3605 (desk F4) — the desk guards on their first pages, through the app's
+// builder at 1024, 1440 and 1920: /invoices, a records page, and the Me
+// overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
+// dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
+import 'package:deskilo/core/ui/kit/customer_row.dart';
+import 'package:deskilo/core/ui/kit/table_line.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../helpers/fake_money_repository.dart';
+import '../helpers/mock_providers.dart';
+import 'experience_guards.dart';
+
+Future<void> _open(WidgetTester tester, String path, Size size) async {
+  final features = WorkspaceFeature.values.toSet();
+  // A records page is guarded with records on it: one issued invoice.
+  final money = FakeMoneyRepository();
+  await money.createInvoice(
+    workspaceId: 'ws-1',
+    memberId: 'member-1',
+    period: kTestPeriod,
+  );
+  await pumpRoute(
+    tester,
+    path,
+    size: size,
+    overrides: [
+      ...standardTestOverrides(
+        money: money,
+        workspace: FakeWorkspaceRepository.withWorkspace(
+          featureFlags: {for (final f in features) f.name: true},
+        ),
+      ),
+      enabledFeaturesSyncProvider.overrideWithValue(features),
+    ],
+  );
+}
+
+/// The pages the guards run on: path, kind, module and screen for a sheet.
+const _pages = [
+  ('/invoices', PageKind.records, 'money', 'invoices'),
+  ('/me', PageKind.dashboard, 'me', 'overview'),
+];
+
+void main() {
+  setUpAll(loadSheetFonts);
+
+  for (final (path, kind, module, screen) in _pages) {
+    for (final size in deskGuardSizes) {
+      testWidgets('$path at ${size.width.toInt()}: the desk guards hold', (
+        tester,
+      ) async {
+        final semantics = tester.ensureSemantics();
+        await _open(tester, path, size);
+        final details = <String>[];
+        expect(
+          deskGuardProblems(
+            details: details,
+            tester,
+            kind: kind,
+            size: size,
+            rowTypes: const [KitTableLine, CustomerRow],
+            tableTypes: const [KitTableHeader, CustomerHeader],
+          ),
+          isEmpty,
+          reason: details.join('\n'),
+        );
+        expect(await keyboardProblems(tester), isEmpty);
+        semantics.dispose();
+      });
+    }
+    for (final width in [390.0, 1440.0]) {
+      for (final brightness in Brightness.values) {
+        testWidgets('$path sheet at ${width.toInt()}, ${brightness.name}', (
+          tester,
+        ) async {
+          tester.platformDispatcher.platformBrightnessTestValue = brightness;
+          addTearDown(
+            tester.platformDispatcher.clearPlatformBrightnessTestValue,
+          );
+          await _open(tester, path, Size(width, 900));
+          await writeDeskSheet(
+            tester,
+            module: module,
+            screen: screen,
+            width: width,
+            brightness: brightness,
+          );
+          expect(tester.takeException(), isNull);
+        });
+      }
+    }
+  }
+}

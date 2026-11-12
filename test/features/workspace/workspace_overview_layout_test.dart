@@ -8,6 +8,7 @@
 // "Not available"; without the report designer there is no Customize button.
 import 'dart:async';
 
+import 'package:deskilo/core/ui/kit/dashboard_grid.dart';
 import 'package:deskilo/features/workspace/domain/bi_overview_layout.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
@@ -174,11 +175,11 @@ Future<void> _tap(WidgetTester tester, String key) async {
 
 /// The pinned tiles on screen, in their order.
 List<String> _shown(WidgetTester tester) {
-  final wrap = tester.widget<Wrap>(
+  final grid = tester.widget<DashboardGrid>(
     find.byKey(const ValueKey('overview-pinned')),
   );
   return [
-    for (final c in wrap.children)
+    for (final c in grid.children)
       ((c.key ?? const ValueKey('')) as ValueKey<String>).value,
   ];
 }

@@ -18,7 +18,8 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/mock_providers.dart';
 
 /// Workspace routes still on today's frame when #3604 landed.
-const _framedWorkspaceRoutes = 79;
+// #3609 the analysis page and the workspace overview are work pages (79 -> 77).
+const _framedWorkspaceRoutes = 77;
 
 Future<Rect> _invoicesAt(WidgetTester tester, Size size) async {
   tester.view.physicalSize = size;

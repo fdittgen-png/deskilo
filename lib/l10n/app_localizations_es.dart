@@ -6873,6 +6873,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'Baja';
+
+  @override
+  String get dashboardTrendFlat => 'Sin cambios';
+
+  @override
+  String get dashboardTrendUp => 'Sube';
+
+  @override
   String get dataReportArchived => 'Archivado';
 
   @override
@@ -7397,11 +7406,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deskSupplementLabel => 'Reservas de mesa';
-
-  @override
-  String deskWindowTitle(String place, String business) {
-    return '$place — $business';
-  }
 
   @override
   String get developerClear => 'Vaciar registro';
@@ -34712,6 +34716,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String windowTitle(String place, String business, String app) {
+    return '$place — $business — $app';
+  }
+
+  @override
+  String windowTitleNoBusiness(String place, String app) {
+    return '$place — $app';
+  }
 
   @override
   String get wizardBack => 'Atrás';

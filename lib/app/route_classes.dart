@@ -244,7 +244,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/questions', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/attention', RouteClass.workspace, place: 'drawer-events'),
   RouteRule('/reservations/period', RouteClass.workspace, place: 'drawer-bi'),
-  RouteRule('/workspace-overview', RouteClass.workspace, place: 'drawer-nav-overview'),
+  RouteRule(
+    '/workspace-overview',
+    RouteClass.workspace,
+    place: 'drawer-nav-overview',
+    measure: PageMeasure.work,
+  ),
   RouteRule('/setup', RouteClass.workspace, place: 'drawer-setup-guide'),
   RouteRule('/setup/levels', RouteClass.workspace, place: 'drawer-setup-guide'),
   RouteRule('/setup/launch', RouteClass.workspace, place: 'drawer-setup-guide'),
@@ -264,7 +269,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/reports', RouteClass.workspace, place: 'reporting'),
   RouteRule('/validation', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/availability', RouteClass.workspace, place: 'drawer-availability'),
-  RouteRule('/bi', RouteClass.workspace, place: 'drawer-bi'), // #1923
+  RouteRule(
+    '/bi',
+    RouteClass.workspace,
+    place: 'drawer-bi',
+    measure: PageMeasure.work,
+  ), // #1923
   RouteRule('/bi/report/:id', RouteClass.workspace, place: 'drawer-bi'), // #2580
   RouteRule('/members', RouteClass.workspace, place: 'drawer-members'),
   RouteRule('/editor', RouteClass.workspace, place: 'drawer-setup-guide'),
