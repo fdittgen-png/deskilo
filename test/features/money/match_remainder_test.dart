@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/pump_app.dart';
+import '../../helpers/refusal_matchers.dart';
 import '../../helpers/screens/invoices.dart' show seededMoney;
 
 /// A payment of 120.00 of which 70.00 is used: 50.00 is left.
@@ -122,7 +123,7 @@ void main() {
           paymentLedgerId: paymentId,
           resolution: 'exact',
         ),
-        throwsA(isA<StateError>()),
+        throwsRefusal('DKI06'),
         reason: 'the invoice already holds a part of this payment',
       );
     });
