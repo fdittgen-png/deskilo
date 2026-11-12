@@ -84,5 +84,8 @@ FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
       ),
     );
   }
-  return FakeLeaseCommitmentRepository({'demo-lease-premises': out});
+  return FakeLeaseCommitmentRepository(
+    {'demo-lease-premises': out},
+    {for (final o in out) o.id: 'demo-term-rent'},
+  );
 }

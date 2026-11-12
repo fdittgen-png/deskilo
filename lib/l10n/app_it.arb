@@ -9648,9 +9648,16 @@
   },
   "invoiceRegisterAllYears": "Tutti gli anni",
   "invoiceRegisterAmount": "Importo",
+  "invoiceRegisterCurrency": "Valuta",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{Scarica 1 fattura} other{Scarica {count} fatture}}",
+  "invoiceRegisterIntegrity": "Impronta",
+  "invoiceRegisterMember": "Membro",
   "invoiceRegisterName": "Nome",
+  "invoiceRegisterNumber": "Numero",
   "invoiceRegisterPeriod": "Periodo: {from} – {to}",
   "invoiceRegisterPeriodClear": "Mostra tutti i periodi",
+  "invoiceRegisterPeriodColumn": "Periodo",
+  "invoiceRegisterStatus": "Stato",
   "invoiceRegisterTitle": "Registro fatture",
   "invoiceRegisterTotal": "Totale",
   "invoiceRemainingLabel": "Residuo",
@@ -14627,10 +14634,11 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTaxField": "Imposta inclusa (vuoto se la fattura non la indica)",
+  "purchasesTaxField": "Imposta inclusa",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
   },
+  "purchasesTaxFieldHelper": "Lasciare vuoto se la fattura non la indica",
   "purchasesTaxNotStated": "Imposta non indicata",
   "@purchasesTaxNotStated": {
     "description": "#2573 purchases"
@@ -14983,6 +14991,11 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsClearSelection": "Annulla la selezione",
+  "recordsColumns": "Colonne",
+  "recordsDropped": "{count, plural, =1{1 riga selezionata non c’è più ed è stata esclusa} other{{count} righe selezionate non ci sono più e sono state escluse}}",
+  "recordsFailed": "Non è stato possibile leggere l’elenco.",
+  "recordsFilter": "Filtra",
   "recordsLocationAoNotice": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE (§ 146 co. 2a AO). Nulla dichiara questa installazione lì.",
   "recordsLocationAoOutside": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE; altrove serve l'autorizzazione dell'ufficio delle imposte (§ 146 co. 2b AO). Questa installazione è dichiarata fuori dall'UE.",
   "recordsLocationCraNone": "Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.",
@@ -14992,6 +15005,16 @@
   "recordsLocationHosted": "Ospitato in {country}, come dichiara il gestore di questa installazione",
   "recordsLocationTitle": "Dove sono conservate le scritture",
   "recordsLocationUndeclared": "Non dichiarato dal gestore di questa installazione: l'app non indica alcun luogo",
+  "recordsMoreActions": "Altre azioni",
+  "recordsPartlyRead": "{loaded, plural, =1{1 caricato — non è ancora stato letto tutto} other{{loaded} caricati — non è ancora stato letto tutto}}",
+  "recordsSelectRow": "Seleziona questa riga",
+  "recordsSelectShown": "{count, plural, =1{Seleziona l'unico mostrato} other{Seleziona i {count} mostrati}}",
+  "recordsSelected": "{count, plural, =1{1 selezionato} other{{count} selezionati}}",
+  "recordsShown": "{count, plural, =1{1 mostrato} other{{count} mostrati}}",
+  "recordsSortBy": "Ordina per {column}",
+  "recordsTotalOfSelection": "Totale della selezione",
+  "recordsTotalOfShown": "Totale delle righe mostrate",
+  "recordsTryAgain": "Riprova",
   "refFacetPerson": "Persona",
   "refFacetStatus": "Stato",
   "refFacetType": "Tipo",

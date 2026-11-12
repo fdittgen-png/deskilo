@@ -13,6 +13,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
 
+/// As many lines as a helper sentence takes in the longest language.
+const int _helperLines = 6;
+
 class PurchaseBillOrderField extends ConsumerWidget {
   const PurchaseBillOrderField({
     required this.workspaceId,
@@ -58,6 +61,8 @@ class PurchaseBillOrderField extends ConsumerWidget {
       decoration: InputDecoration(
         labelText: l10n.purchaseBillOrder,
         helperText: l10n.purchaseBillOrderHint,
+        // #3782 — a helper line wraps; it is never cut.
+        helperMaxLines: _helperLines,
       ),
       items: [
         DropdownMenuItem<String?>(child: Text(l10n.purchaseBillNoOrder)),

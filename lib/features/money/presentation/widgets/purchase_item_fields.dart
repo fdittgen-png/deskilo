@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../providers/money_providers.dart';
@@ -60,6 +61,8 @@ class _PurchaseItemFieldsState extends ConsumerState<PurchaseItemFields> {
     if (standIn != null) return standIn;
     final items = itemsRead.requireValue;
     return Column(
+      // #3782 — the form kit's gap between every field.
+      spacing: AppSpacing.md,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DropdownButtonFormField<String?>(

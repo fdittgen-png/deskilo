@@ -15352,7 +15352,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceRegisterAmount => 'Amount';
 
   @override
+  String get invoiceRegisterCurrency => 'Currency';
+
+  @override
+  String invoiceRegisterDownloadSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Download $count invoices',
+      one: 'Download 1 invoice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceRegisterIntegrity => 'Fingerprint';
+
+  @override
+  String get invoiceRegisterMember => 'Member';
+
+  @override
   String get invoiceRegisterName => 'Name';
+
+  @override
+  String get invoiceRegisterNumber => 'Number';
 
   @override
   String invoiceRegisterPeriod(String from, String to) {
@@ -15361,6 +15384,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceRegisterPeriodClear => 'Show all periods';
+
+  @override
+  String get invoiceRegisterPeriodColumn => 'Period';
+
+  @override
+  String get invoiceRegisterStatus => 'Status';
 
   @override
   String get invoiceRegisterTitle => 'Invoice register';
@@ -23675,8 +23704,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesTabDocuments => 'Documents';
 
   @override
-  String get purchasesTaxField =>
-      'Tax included (empty if the bill does not state it)';
+  String get purchasesTaxField => 'Tax included';
+
+  @override
+  String get purchasesTaxFieldHelper =>
+      'Leave empty if the bill does not state it';
 
   @override
   String get purchasesTaxNotStated => 'Tax not stated';
@@ -24148,6 +24180,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.';
 
   @override
+  String get recordsClearSelection => 'Clear the selection';
+
+  @override
+  String get recordsColumns => 'Columns';
+
+  @override
+  String recordsDropped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count selected rows are no longer here and were left out',
+      one: '1 selected row is no longer here and was left out',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recordsFailed => 'The list could not be read.';
+
+  @override
+  String get recordsFilter => 'Filter';
+
+  @override
   String get recordsLocationAoNotice =>
       'A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.';
 
@@ -24183,6 +24238,70 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get recordsLocationUndeclared =>
       'Not declared by the operator of this installation: the app states no location';
+
+  @override
+  String get recordsMoreActions => 'More actions';
+
+  @override
+  String recordsPartlyRead(int loaded) {
+    String _temp0 = intl.Intl.pluralLogic(
+      loaded,
+      locale: localeName,
+      other: '$loaded loaded — not everything is read yet',
+      one: '1 loaded — not everything is read yet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recordsSelectRow => 'Select this row';
+
+  @override
+  String recordsSelectShown(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Select the $count shown',
+      one: 'Select the 1 shown',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count selected',
+      one: '1 selected',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsShown(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count shown',
+      one: '1 shown',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSortBy(String column) {
+    return 'Sort by $column';
+  }
+
+  @override
+  String get recordsTotalOfSelection => 'Total of the selection';
+
+  @override
+  String get recordsTotalOfShown => 'Total of the rows shown';
+
+  @override
+  String get recordsTryAgain => 'Try again';
 
   @override
   String get refFacetPerson => 'Person';

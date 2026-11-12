@@ -9648,9 +9648,16 @@
   },
   "invoiceRegisterAllYears": "Alle Jahre",
   "invoiceRegisterAmount": "Betrag",
+  "invoiceRegisterCurrency": "Währung",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{1 Rechnung herunterladen} other{{count} Rechnungen herunterladen}}",
+  "invoiceRegisterIntegrity": "Fingerabdruck",
+  "invoiceRegisterMember": "Mitglied",
   "invoiceRegisterName": "Name",
+  "invoiceRegisterNumber": "Nummer",
   "invoiceRegisterPeriod": "Zeitraum: {from} – {to}",
   "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen",
+  "invoiceRegisterPeriodColumn": "Zeitraum",
+  "invoiceRegisterStatus": "Status",
   "invoiceRegisterTitle": "Rechnungsregister",
   "invoiceRegisterTotal": "Gesamt",
   "invoiceRemainingLabel": "Restbetrag",
@@ -14627,10 +14634,11 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTaxField": "Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)",
+  "purchasesTaxField": "Darin enthaltene Steuer",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
   },
+  "purchasesTaxFieldHelper": "Leer lassen, wenn die Rechnung sie nicht ausweist",
   "purchasesTaxNotStated": "Steuer nicht ausgewiesen",
   "@purchasesTaxNotStated": {
     "description": "#2573 purchases"
@@ -14983,6 +14991,11 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsClearSelection": "Auswahl aufheben",
+  "recordsColumns": "Spalten",
+  "recordsDropped": "{count, plural, =1{1 ausgewählte Zeile ist nicht mehr da und wurde ausgelassen} other{{count} ausgewählte Zeilen sind nicht mehr da und wurden ausgelassen}}",
+  "recordsFailed": "Die Liste konnte nicht gelesen werden.",
+  "recordsFilter": "Filtern",
   "recordsLocationAoNotice": "Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat (§ 146 Abs. 2a AO). Nichts weist diese Installation dort aus.",
   "recordsLocationAoOutside": "Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat; anderswo nur mit Bewilligung des Finanzamts (§ 146 Abs. 2b AO). Diese Installation ist außerhalb der EU angegeben.",
   "recordsLocationCraNone": "Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.",
@@ -14992,6 +15005,16 @@
   "recordsLocationHosted": "Gehostet in {country}, wie der Betreiber dieser Installation es erklärt",
   "recordsLocationTitle": "Wo die Aufzeichnungen aufbewahrt werden",
   "recordsLocationUndeclared": "Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort",
+  "recordsMoreActions": "Weitere Aktionen",
+  "recordsPartlyRead": "{loaded, plural, =1{1 geladen — noch nicht alles gelesen} other{{loaded} geladen — noch nicht alles gelesen}}",
+  "recordsSelectRow": "Diese Zeile auswählen",
+  "recordsSelectShown": "{count, plural, =1{Den 1 angezeigten auswählen} other{Die {count} angezeigten auswählen}}",
+  "recordsSelected": "{count, plural, =1{1 ausgewählt} other{{count} ausgewählt}}",
+  "recordsShown": "{count, plural, =1{1 angezeigt} other{{count} angezeigt}}",
+  "recordsSortBy": "Nach {column} sortieren",
+  "recordsTotalOfSelection": "Summe der Auswahl",
+  "recordsTotalOfShown": "Summe der angezeigten Zeilen",
+  "recordsTryAgain": "Erneut versuchen",
   "refFacetPerson": "Person",
   "refFacetStatus": "Status",
   "refFacetType": "Art",

@@ -222,7 +222,13 @@ const List<RouteRule> routeRules = [
     place: 'drawer-invoices',
     measure: PageMeasure.work,
   ),
-  RouteRule('/invoice-register', RouteClass.workspace, place: 'drawer-accounting-export'),
+  RouteRule(
+    '/invoice-register',
+    RouteClass.workspace,
+    place: 'drawer-accounting-export',
+    // #3606 — a records table: the whole work area.
+    measure: PageMeasure.work,
+  ),
   RouteRule('/einvoice-config', RouteClass.workspace, place: 'drawer-legal-identity'),
   RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents'),
   RouteRule('/invoicing/wizard', RouteClass.workspace, place: 'drawer-invoices'),

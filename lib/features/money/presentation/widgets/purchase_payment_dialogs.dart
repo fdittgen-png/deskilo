@@ -145,6 +145,8 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
       title: Text(l10n.purchasesPayTitle),
       content: SingleChildScrollView(
         child: Column(
+          // #3782 — the form kit's gap between every field.
+          spacing: AppSpacing.md,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

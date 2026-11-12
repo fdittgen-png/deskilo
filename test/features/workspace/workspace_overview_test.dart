@@ -7,7 +7,6 @@
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
-import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_overview.dart';
 import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
@@ -26,6 +25,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/unavailable_kpi_repository.dart';
 
 class _Purchases implements PurchaseKpiRepository {
   @override

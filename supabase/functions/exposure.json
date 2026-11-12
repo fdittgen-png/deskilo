@@ -45,6 +45,10 @@
       "class": "system",
       "authority": "database triggers through the gateway"
     },
+    "settlement-poll": {
+      "class": "system",
+      "authority": "the hourly database job (settlement_poll_tick) with the Vault secret in x-deskilo-poll-secret, or the exact service credential"
+    },
     "stripe-webhook": {
       "class": "webhook",
       "authority": "Stripe-Signature HMAC"
