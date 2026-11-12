@@ -5972,6 +5972,8 @@
       }
     }
   },
+  "eventKioskDeviceEnrolled": "{actor} ha registrato il chiosco «{device}»",
+  "eventKioskDeviceRevoked": "{actor} ha revocato il chiosco «{device}»",
   "eventLeaseNoticeLine": "{actor} dà disdetta per {premises}; la locazione terminerebbe il {date}",
   "@eventLeaseNoticeLine": {
     "description": "#2569 lease change validation",
@@ -6127,6 +6129,7 @@
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
+  "eventTypeKioskDevice": "Dispositivi chiosco",
   "eventTypeLeaseChange": "Modifica del contratto di locazione",
   "@eventTypeLeaseChange": {
     "description": "#2569 lease change validation"
@@ -6797,6 +6800,8 @@
   "featureInvoicingDesc": "Fatture immutabili e firmate in un archivio — da scaricare o condividere in PDF.",
   "featureInvoicingWizardDesc": "Un processo guidato di chiusura mensile per chi cura le finanze: un giro di inizio mese per gli abbonamenti pagati in anticipo e uno di fine mese per consumi e costi aggiuntivi — revisione, emissione in blocco, invio, solleciti dovuti, registrazione e convalida dei pagamenti, abbinamento alle fatture, raggruppamento, stralcio o rimborso, e un riepilogo con ciò che resta aperto e a chi tocca. Disattivato: le schermate separate.",
   "featureInvoicingWizardTitle": "Assistente di fatturazione",
+  "featureKioskEnrolmentDesc": "Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo.",
+  "featureKioskEnrolmentTitle": "Registrazione dei chioschi",
   "featureKioskMemberPhotosDesc": "La ricevuta del chiosco mostra la foto del profilo del membro — il controllo visivo del badge sbagliato.",
   "featureKioskMemberPhotosTitle": "Foto dei membri al chiosco",
   "featureKioskMode": "Modalità chiosco",
@@ -17504,6 +17509,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Il minimo di cifre di un nuovo PIN del badge. I PIN già impostati continuano a funzionare finché non vengono cambiati.",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: solo sui dispositivi che l’azienda ha registrato come chioschi, che salutano ogni persona per nome. any_device: su qualsiasi dispositivo, dove nessuno viene nominato prima del PIN.",
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Badge diversi dello spazio con un PIN errato durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Un solo badge non lo raggiunge. Il limite può solo essere ridotto.",
   "settingHintSecurityInvitationExpiryDays": "Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.",
   "@settingHintSecurityInvitationExpiryDays": {
@@ -17692,6 +17698,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "PIN del badge: lunghezza minima",
+  "settingLabelSecurityBadgeSigninWhere": "L’accesso con badge funziona su",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Limite dei tentativi falliti con badge dello spazio",
   "settingLabelSecurityInvitationExpiryDays": "Validità di un invito",
   "@settingLabelSecurityInvitationExpiryDays": {

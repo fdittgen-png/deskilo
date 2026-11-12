@@ -155,3 +155,4 @@ guestPasses | everywhere | y y y y y y y y y y
 placeBooking | everywhere | y y y y y y y y y y
 reminderEmail | everywhere | y y y y y y y y y y
 invoiceEmail | everywhere | y y y y y y y y y y
+kioskEnrolment | everywhere | y y y y y y y y y y

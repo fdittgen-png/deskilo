@@ -62,6 +62,7 @@ Set<WorkspacePermission> eventTypeViewPermissions(String type) {
     'payment_instructions_change' => const ['manageIntegrations'],
     'privacy_incident' => const ['managePrivacy'],
     'settlement_review' => const ['viewFinances'],
+    'kiosk_device' => const ['workspaceSettings'],
     _ => const ['manageConfiguration'],
   };
   return {

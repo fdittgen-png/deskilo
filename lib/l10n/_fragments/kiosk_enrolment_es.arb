@@ -1,0 +1,9 @@
+{
+  "featureKioskEnrolmentTitle": "Registro de quioscos",
+  "featureKioskEnrolmentDesc": "Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo.",
+  "settingLabelSecurityBadgeSigninWhere": "El acceso con credencial funciona en",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: solo en los dispositivos que la empresa registró como quioscos, que saludan a cada persona por su nombre. any_device: en cualquier dispositivo, donde nadie se nombra antes del PIN.",
+  "eventTypeKioskDevice": "Dispositivos de quiosco",
+  "eventKioskDeviceEnrolled": "{actor} registró el quiosco «{device}»",
+  "eventKioskDeviceRevoked": "{actor} revocó el quiosco «{device}»"
+}

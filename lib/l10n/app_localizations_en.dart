@@ -8920,6 +8920,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String eventKioskDeviceEnrolled(String actor, String device) {
+    return '$actor enrolled the kiosk “$device”';
+  }
+
+  @override
+  String eventKioskDeviceRevoked(String actor, String device) {
+    return '$actor revoked the kiosk “$device”';
+  }
+
+  @override
   String eventLeaseNoticeLine(String actor, String premises, String date) {
     return '$actor gives notice on $premises; the lease would end on $date';
   }
@@ -9118,6 +9128,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Outstanding write-off';
+
+  @override
+  String get eventTypeKioskDevice => 'Kiosk devices';
 
   @override
   String get eventTypeLeaseChange => 'Lease change';
@@ -10509,6 +10522,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureInvoicingWizardTitle => 'Invoicing wizard';
+
+  @override
+  String get featureKioskEnrolmentDesc =>
+      'Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device.';
+
+  @override
+  String get featureKioskEnrolmentTitle => 'Kiosk enrolment';
 
   @override
   String get featureKioskMemberPhotosDesc =>
@@ -27390,6 +27410,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The fewest digits a new badge PIN may have. PINs set earlier keep working until they are changed.';
 
   @override
+  String get settingHintSecurityBadgeSigninWhere =>
+      'enrolled_kiosks: only on the devices this business enrolled as kiosks, which greet each person by name. any_device: on any device, where nobody is named before the PIN.';
+
+  @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
       'Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.';
 
@@ -27654,6 +27678,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelSecurityBadgePinMinLength => 'Shortest badge PIN';
+
+  @override
+  String get settingLabelSecurityBadgeSigninWhere => 'Badge sign-in works on';
 
   @override
   String get settingLabelSecurityBadgeWorkspaceFailureLimit =>

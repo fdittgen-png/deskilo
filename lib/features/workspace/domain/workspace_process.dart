@@ -59,6 +59,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.qrBadges,
       WorkspaceFeature.kioskMemberPhotos,
       WorkspaceFeature.badgeSignIn,
+      WorkspaceFeature.kioskEnrolment,
       WorkspaceFeature.spaceQrCodes,
     ]),
   ]),

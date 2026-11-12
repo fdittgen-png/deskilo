@@ -11739,6 +11739,30 @@
       }
     }
   },
+  "eventKioskDeviceEnrolled": "{actor} enrolled the kiosk “{device}”",
+  "@eventKioskDeviceEnrolled": {
+    "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {device} (String).",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "eventKioskDeviceRevoked": "{actor} revoked the kiosk “{device}”",
+  "@eventKioskDeviceRevoked": {
+    "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {device} (String).",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "device": {
+        "type": "String"
+      }
+    }
+  },
   "eventLeaseNoticeLine": "{actor} gives notice on {premises}; the lease would end on {date}",
   "@eventLeaseNoticeLine": {
     "description": "#2569 lease change validation",
@@ -12093,6 +12117,10 @@
   "eventTypeInvoiceWriteoff": "Outstanding write-off",
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
+  },
+  "eventTypeKioskDevice": "Kiosk devices",
+  "@eventTypeKioskDevice": {
+    "description": "Shown as a text in event labels (events)."
   },
   "eventTypeLeaseChange": "Lease change",
   "@eventTypeLeaseChange": {
@@ -13887,6 +13915,14 @@
   "featureInvoicingWizardTitle": "Invoicing wizard",
   "@featureInvoicingWizardTitle": {
     "description": "Shown as a text in feature names (workspace)."
+  },
+  "featureKioskEnrolmentDesc": "Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device.",
+  "@featureKioskEnrolmentDesc": {
+    "description": "Shown as a text in features."
+  },
+  "featureKioskEnrolmentTitle": "Kiosk enrolment",
+  "@featureKioskEnrolmentTitle": {
+    "description": "Shown as a text in features."
   },
   "featureKioskMemberPhotosDesc": "The kiosk receipt shows the member's profile photo — the visual wrong-badge check.",
   "@featureKioskMemberPhotosDesc": {
@@ -35705,6 +35741,10 @@
   "@settingHintSecurityBadgePinMinLength": {
     "description": "#3091 settings: Setting hint."
   },
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: only on the devices this business enrolled as kiosks, which greet each person by name. any_device: on any device, where nobody is named before the PIN.",
+  "@settingHintSecurityBadgeSigninWhere": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.",
   "@settingHintSecurityBadgeWorkspaceFailureLimit": {
     "description": "Shown as a text in settings labels (workspace)."
@@ -36012,6 +36052,10 @@
   "settingLabelSecurityBadgePinMinLength": "Shortest badge PIN",
   "@settingLabelSecurityBadgePinMinLength": {
     "description": "#3091 settings: Setting label."
+  },
+  "settingLabelSecurityBadgeSigninWhere": "Badge sign-in works on",
+  "@settingLabelSecurityBadgeSigninWhere": {
+    "description": "Shown as a text in settings labels (workspace)."
   },
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Workspace badge failure ceiling",
   "@settingLabelSecurityBadgeWorkspaceFailureLimit": {

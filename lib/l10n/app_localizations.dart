@@ -14410,6 +14410,18 @@ abstract class AppLocalizations {
   /// **'{actor} asks to cancel the remainder of {number} — {amount}'**
   String eventInvoiceWriteoffLine(String actor, String number, String amount);
 
+  /// Shown as a text in event lines (events). Placeholders: {actor} (String), {device} (String).
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} enrolled the kiosk “{device}”'**
+  String eventKioskDeviceEnrolled(String actor, String device);
+
+  /// Shown as a text in event lines (events). Placeholders: {actor} (String), {device} (String).
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} revoked the kiosk “{device}”'**
+  String eventKioskDeviceRevoked(String actor, String device);
+
   /// #2569 lease change validation
   ///
   /// In en, this message translates to:
@@ -14672,6 +14684,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Outstanding write-off'**
   String get eventTypeInvoiceWriteoff;
+
+  /// Shown as a text in event labels (events).
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk devices'**
+  String get eventTypeKioskDevice;
 
   /// #2569 lease change validation
   ///
@@ -17210,6 +17228,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invoicing wizard'**
   String get featureInvoicingWizardTitle;
+
+  /// Shown as a text in features.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device.'**
+  String get featureKioskEnrolmentDesc;
+
+  /// Shown as a text in features.
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk enrolment'**
+  String get featureKioskEnrolmentTitle;
 
   /// Shown as a text in feature copy (workspace).
   ///
@@ -44543,6 +44573,12 @@ abstract class AppLocalizations {
   /// Shown as a text in settings labels (workspace).
   ///
   /// In en, this message translates to:
+  /// **'enrolled_kiosks: only on the devices this business enrolled as kiosks, which greet each person by name. any_device: on any device, where nobody is named before the PIN.'**
+  String get settingHintSecurityBadgeSigninWhere;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
   /// **'Different badges of this workspace with a failed PIN within the badge lockout window before sign-in pauses and owners are alerted. One badge alone cannot reach it. Can only be tightened.'**
   String get settingHintSecurityBadgeWorkspaceFailureLimit;
 
@@ -45001,6 +45037,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shortest badge PIN'**
   String get settingLabelSecurityBadgePinMinLength;
+
+  /// Shown as a text in settings labels (workspace).
+  ///
+  /// In en, this message translates to:
+  /// **'Badge sign-in works on'**
+  String get settingLabelSecurityBadgeSigninWhere;
 
   /// Shown as a text in settings labels (workspace).
   ///

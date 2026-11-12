@@ -92,6 +92,7 @@ const Set<String> validationRuleKeys = {
   'badge_security_alert',
   'privacy_incident',
   'settlement_review',
+  'kiosk_device',
   'payment_instructions_change',
 };
 
