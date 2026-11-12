@@ -62,6 +62,11 @@ begin
 end
 $seed$;
 select pg_temp.seed();
+-- The statement's cut-off is the end of a day in the BUSINESS's time zone.
+-- The session takes that zone, so `current_date` below is the business's
+-- day at any hour (between 23:00 and 24:00 UTC the two days differ).
+select set_config('TimeZone', (select coalesce(nullif(timezone, ''), 'UTC')
+  from public.workspaces where id = current_setting('st.ws')::uuid), true);
 
 create or replace function pg_temp.id(p_kind text, p_name text) returns uuid language sql as $f$
   select case p_kind
