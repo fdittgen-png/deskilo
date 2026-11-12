@@ -174,7 +174,8 @@ class _Desk extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = GoRouter.of(context);
     final (:crumbs, :tabs) = deskPlaceOf(context, ref, router, path);
-    final shown = crumbs;
+    // #3789 — a sub-page's own name follows its place.
+    final shown = withPageName(crumbs, PageNameScope.nameOf(context));
     final tabTitles = tabs.tabTitles;
     final visibleBranches = tabs.visibleBranches;
     final navs = tabs.navs;

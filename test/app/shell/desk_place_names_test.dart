@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3789 — the desk names a place once and with one name. For every desk
-// route, through the app at 1440 in English and German:
-// - the breadcrumb's entry is the label of the entry the navigation
-//   selects, and its group the label of the group that holds that entry;
-// - no text in the page's own bar is the breadcrumb's entry (the name is on
-//   screen once: PageTitle is silent there);
-// - the page's own title, where it has one, is its place's name: the list of
-//   routes where they differ is empty.
-// On a phone and a medium window every page keeps its title as before.
+// #3789 — the desk names a place once and with one name, and the crumbs
+// follow the page. For every desk route, through the app at 1024 and 1440
+// in English and German:
+// - the entry crumb is the label of the entry the navigation selects;
+// - the last crumb is the page's own name where its bar has one (a
+//   sub-page: "Settings › Colours"), and the window's title is that crumb;
+// - nothing in the page's own bar repeats the last crumb (PageTitle is
+//   silent there);
+// - the routes whose page gives no name show the entry crumb only, counted:
+//   the count only falls.
+// A pushed sub-page names itself and its pop gives the name back. On a
+// phone and a medium window every page keeps its title as before.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/router.dart';
@@ -95,6 +98,13 @@ List<String> _barTexts(WidgetTester tester) => [
 ];
 
 /// The label of the entry the navigation selects.
+String _windowTitle(WidgetTester tester) =>
+    tester.widget<Title>(_k('window-title')).title;
+
+/// The desk routes whose page gives no name of its own when this landed: they
+/// show the entry crumb only. The count only falls.
+const _namelessBudget = 9;
+
 String? _selectedEntry(WidgetTester tester) {
   for (final tile in tester.widgetList<ListTile>(
     find.descendant(of: _k('desk-navigation'), matching: find.byType(ListTile)),
@@ -112,45 +122,80 @@ Future<void> _visit(WidgetTester tester, GoRouter router, String path) async {
   router.go(path);
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 600));
+  // The page tells its name after its first frame: one more for the crumbs.
+  await tester.pump();
   while (tester.takeException() != null) {}
 }
 
 void main() {
   for (final locale in const [Locale('en'), Locale('de')]) {
-    testWidgets('every desk route at 1440 (${locale.languageCode}): the '
-        'breadcrumb is the navigation\'s words and the page says its name '
-        'once', (tester) async {
-      final router = await _pump(
-        tester,
-        size: const Size(1440, 900),
-        locale: locale,
-      );
-      final wrongEntry = <String>[];
-      final twice = <String>[];
-      final differs = <String>[];
-      for (final path in _deskRoutes) {
-        await _visit(tester, router, path);
-        final crumbs = _crumbs(tester);
-        if (crumbs.isEmpty) continue;
-        final entry = crumbs.last;
-        final selected = _selectedEntry(tester);
-        if (selected != null && selected != entry) {
-          wrongEntry.add('$path: breadcrumb "$entry", navigation "$selected"');
-        }
-        if (_barTexts(tester).contains(entry)) {
-          twice.add('$path: "$entry"');
-        }
-        for (final title in _pageTitles(tester, within: _k('desk-page'))) {
-          if (title != entry) {
-            differs.add('$path: page "$title", place "$entry"');
+    for (final size in const [Size(1024, 768), Size(1440, 900)]) {
+      testWidgets('every desk route at ${size.width.toInt()} '
+          '(${locale.languageCode}): the crumbs are the navigation\'s words '
+          'followed by the page\'s name, said once', (tester) async {
+        final router = await _pump(tester, size: size, locale: locale);
+        final problems = <String>[];
+        final nameless = <String>[];
+        for (final path in _deskRoutes) {
+          await _visit(tester, router, path);
+          final crumbs = _crumbs(tester);
+          if (crumbs.isEmpty) continue;
+          final titles = _pageTitles(tester, within: _k('desk-page'));
+          final title = titles.isEmpty ? null : titles.last;
+          final selected = _selectedEntry(tester);
+          final entry =
+              title != null &&
+                  crumbs.length > 1 &&
+                  crumbs.last == title &&
+                  crumbs.last != selected
+              ? crumbs[crumbs.length - 2]
+              : crumbs.last;
+          if (selected != null && selected != entry) {
+            problems.add('$path: entry crumb "$entry", navigation "$selected"');
+          }
+          if (title == null) {
+            nameless.add(path);
+          } else if (crumbs.last != title) {
+            problems.add('$path: last crumb "${crumbs.last}", page "$title"');
+          }
+          if (_barTexts(tester).contains(crumbs.last)) {
+            problems.add('$path: "${crumbs.last}" shown twice');
+          }
+          if (_windowTitle(tester) != crumbs.last &&
+              !_windowTitle(tester).startsWith('${crumbs.last} ')) {
+            problems.add(
+              '$path: window "${_windowTitle(tester)}", '
+              'crumb "${crumbs.last}"',
+            );
           }
         }
-      }
-      expect(wrongEntry, isEmpty, reason: wrongEntry.join('\n'));
-      expect(twice, isEmpty, reason: twice.join('\n'));
-      expect(differs, isEmpty, reason: differs.join('\n'));
-    });
+        expect(problems, isEmpty, reason: problems.join('\n'));
+        expect(
+          nameless.length,
+          lessThanOrEqualTo(_namelessBudget),
+          reason: 'a new page without a PageTitle:\n${nameless.join('\n')}',
+        );
+      });
+    }
   }
+
+  testWidgets('a sub-page pushed over its entry names itself; its pop gives '
+      'the entry\'s name back', (tester) async {
+    final router = await _pump(tester, size: const Size(1440, 900));
+    await _visit(tester, router, '/settings');
+    final entry = _crumbs(tester).last;
+    router.push('/settings/colours');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(_crumbs(tester).last, isNot(entry));
+    expect(_crumbs(tester), contains(entry));
+    expect(_windowTitle(tester), startsWith(_crumbs(tester).last));
+    router.pop();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(_crumbs(tester).last, entry);
+    expect(_windowTitle(tester), startsWith(entry));
+  });
 
   for (final size in const [Size(390, 844), Size(800, 900)]) {
     testWidgets('at ${size.width.toInt()} every page shows its own title as '

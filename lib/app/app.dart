@@ -9,6 +9,7 @@ import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
 import '../core/ui/app_scroll_behavior.dart';
+import '../core/ui/kit/page_title.dart';
 import '../core/ui/system_insets_guard.dart';
 import '../features/profile/providers/personal_appearance_providers.dart';
 import '../features/profile/providers/presence_providers.dart';
@@ -147,13 +148,18 @@ class DeskiloApp extends ConsumerWidget {
                       child: child ?? const SizedBox.shrink(),
                     );
                     // #3605 — the window's title, on the desk and off it.
-                    return WindowTitle(
+                    // #3789 — the top page's own name, for the crumbs
+                    // and the window title.
+                    return PageNameScope(
+                      path: path,
+                      child: WindowTitle(
                       router: router,
                       path: path,
                       child: desk
                           ? DeskFrame(router: router, path: path, child: page)
                           // #3604 — the measure its route declares.
                           : framePage(path, page, inside: false),
+                    ),
                     );
                   },
                 ),

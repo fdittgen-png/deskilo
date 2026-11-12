@@ -35,6 +35,14 @@ typedef ShellTabs = ({
 /// One part of the desk's breadcrumb: a label, and the entry it opens.
 typedef DeskCrumb = ({String label, DrawerEntry? entry});
 
+/// #3789 — [crumbs] followed by the page's own [name] ("Settings ›
+/// Colours"): only when the page has one and it is not the place's own
+/// name already.
+List<DeskCrumb> withPageName(List<DeskCrumb> crumbs, String? name) =>
+    name == null || crumbs.isEmpty || crumbs.last.label == name
+    ? crumbs
+    : [...crumbs, (label: name, entry: null)];
+
 /// The entries of the navigation, in the groups the drawer shows them in.
 class ShellMenu {
   ShellMenu._({
