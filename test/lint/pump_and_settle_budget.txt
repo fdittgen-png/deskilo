@@ -19,6 +19,7 @@
 # review {"path":"test/core/navigation/list_detail_route_test.dart","before":0,"after":13,"invariant":"#3607 each history case is a person's step through the router settled before the address, the pane and the focus are read: open, Back, a direct link, Escape, the arrow keys, a phone page","cost":"6 tests in 2 s locally"}
 # review {"path":"test/core/ui/adaptive/task_surface_test.dart","before":14,"after":19,"invariant":"#3608 B1 text entered without key events marks the task (an amount field and a raw field), a kit choice marks it (the list field and the toggle row), and the drag on the compact sheet asks; each settles once for the discard question to open, and the list field once for its options","cost":"five settles of about 0.1 s each; 29 tests in 3 s locally"}
 # review {"path":"test/features/workspace/kiosk_devices_screen_test.dart","before":0,"after":14,"invariant":"#3675 the kiosk devices screen: enrol (name, tap), a refused enrolment, revoke with its confirmation, a failed read and Try again, and the setting's confirmation cancelled then accepted, each settled once before the store or the screen is read","cost":"five tests in about 4 s locally"}
+# review {"path":"test/features/money/invoicing_list_detail_test.dart","before":0,"after":16,"invariant":"#3789 each list-detail behaviour is a person's step through the app settled before the address, the pane and the list are read: open, resize, Back, search, Escape, a filter, a direct link","cost":"3 tests in 6 s locally"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -83,6 +84,7 @@
 21 test/features/money/invoice_register_test.dart
 11 test/features/money/invoice_template_test.dart
 80 test/features/money/invoices_test.dart
+16 test/features/money/invoicing_list_detail_test.dart
 13 test/features/money/invoicing_navigation_ux_test.dart
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart

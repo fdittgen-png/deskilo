@@ -68,10 +68,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // #895 — intra-EU B2B supplies are reverse-charged unless a workspace
   // that never invoices businesses abroad turns it off.
   bool _reverseCharge = true;
-  // #896/#2355 — when the tax falls due: the country's legal default, or
-  // an option its law allows (France's débits, a cash scheme elsewhere).
-  // Saving the screen records the choice, so a space that never chose
-  // stops being one.
+  // #896/#2355 — when the tax falls due: the country's legal default, or an
+  // option its law allows (France's débits, a cash scheme elsewhere). Saving
+  // the screen records the choice, so a space that never chose stops being one.
   VatTaxPointOption _taxPoint = VatTaxPointOption.standard;
   // Loaded before the workspace's tax context was ready: the country's
   // default is stated once it is, unless the owner chose meanwhile.
