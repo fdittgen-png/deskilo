@@ -6842,6 +6842,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String get customerPageStory => 'Historial';
 
   @override
+  String customerStatementAsOf(String date) {
+    return 'Partidas abiertas a $date';
+  }
+
+  @override
+  String get customerStatementAwaiting => 'pendiente de aprobación';
+
+  @override
+  String get customerStatementBalanceDue => 'Saldo a pagar';
+
+  @override
+  String get customerStatementBalanceNone => 'No se debe nada';
+
+  @override
+  String get customerStatementBalanceOwed => 'Saldo a su favor';
+
+  @override
+  String customerStatementDue(String date) {
+    return 'vence el $date';
+  }
+
+  @override
+  String get customerStatementNothingOpen =>
+      'No hay nada abierto para este cliente: ningún estado de cuenta que imprimir.';
+
+  @override
+  String get customerStatementOwedToYou => 'A su favor';
+
+  @override
+  String customerStatementPart(String date) {
+    return 'Pago del $date';
+  }
+
+  @override
+  String get customerStatementPickCurrency =>
+      '¿El estado de cuenta en qué moneda?';
+
+  @override
+  String get customerStatementStillDue => 'Pendiente';
+
+  @override
+  String get customerStatementTotalDue => 'Total pendiente';
+
+  @override
+  String get customerStatementTotalUnapplied => 'Aún no aplicado';
+
+  @override
+  String get customerStatementUnapplied => 'Pagos y créditos aún no aplicados';
+
+  @override
   String customerStoryDeclared(String number) {
     return 'Dice haber pagado la factura $number';
   }
@@ -25119,6 +25169,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportDocCoa => 'Plan de cuentas';
+
+  @override
+  String get reportDocCustomerStatement => 'Estado de cuenta';
 
   @override
   String get reportDocGeneralLedger => 'Libro mayor';

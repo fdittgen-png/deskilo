@@ -4250,6 +4250,77 @@
   "customerPageNothingOwed": "Nada pendiente",
   "customerPageOwes": "Debe",
   "customerPageStory": "Historial",
+  "customerStatementAsOf": "Partidas abiertas a {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "pendiente de aprobación",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementBalanceDue": "Saldo a pagar",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceNone": "No se debe nada",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementBalanceOwed": "Saldo a su favor",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementDue": "vence el {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementNothingOpen": "No hay nada abierto para este cliente: ningún estado de cuenta que imprimir.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  },
+  "customerStatementOwedToYou": "A su favor",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementPart": "Pago del {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPickCurrency": "¿El estado de cuenta en qué moneda?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementStillDue": "Pendiente",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementTotalDue": "Total pendiente",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Aún no aplicado",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementUnapplied": "Pagos y créditos aún no aplicados",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
   "customerStoryDeclared": "Dice haber pagado la factura {number}",
   "customerStoryIssued": "Factura {number} emitida",
   "customerStoryNow": "Ahora: {words}",
@@ -15483,6 +15554,10 @@
   },
   "reportDocBadges": "Tarjetas de socios",
   "reportDocCoa": "Plan de cuentas",
+  "reportDocCustomerStatement": "Estado de cuenta",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
   "reportDocGeneralLedger": "Libro mayor",
   "reportDocJournals": "Diarios",
   "reportDocPayments": "Informe de pagos",

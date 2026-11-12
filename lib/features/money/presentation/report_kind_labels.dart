@@ -18,6 +18,7 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     'agreement' => l10n.reportDocAgreement,
     'payments' => l10n.reportDocPayments,
     'purchase_order' => l10n.reportDocPurchaseOrder,
+    'customer_statement' => l10n.reportDocCustomerStatement,
     'usage' => l10n.reportDocUsage,
     'workspace' => l10n.reportDocWorkspace,
     'status' => l10n.reportDocStatus,

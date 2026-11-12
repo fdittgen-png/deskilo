@@ -6803,6 +6803,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customerPageStory => 'Story';
 
   @override
+  String customerStatementAsOf(String date) {
+    return 'Open items as of $date';
+  }
+
+  @override
+  String get customerStatementAwaiting => 'awaiting approval';
+
+  @override
+  String get customerStatementBalanceDue => 'Balance you owe';
+
+  @override
+  String get customerStatementBalanceNone => 'Nothing is owed';
+
+  @override
+  String get customerStatementBalanceOwed => 'Balance in your favour';
+
+  @override
+  String customerStatementDue(String date) {
+    return 'due $date';
+  }
+
+  @override
+  String get customerStatementNothingOpen =>
+      'Nothing is open for this customer: no statement to print.';
+
+  @override
+  String get customerStatementOwedToYou => 'Owed to you';
+
+  @override
+  String customerStatementPart(String date) {
+    return 'Payment of $date';
+  }
+
+  @override
+  String get customerStatementPickCurrency =>
+      'The statement in which currency?';
+
+  @override
+  String get customerStatementStillDue => 'Still due';
+
+  @override
+  String get customerStatementTotalDue => 'Total still due';
+
+  @override
+  String get customerStatementTotalUnapplied => 'Not yet applied';
+
+  @override
+  String get customerStatementUnapplied =>
+      'Payments and credits not yet applied';
+
+  @override
   String customerStoryDeclared(String number) {
     return 'Says they paid invoice $number';
   }
@@ -24932,6 +24983,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportDocCoa => 'Chart of accounts';
+
+  @override
+  String get reportDocCustomerStatement => 'Statement of account';
 
   @override
   String get reportDocGeneralLedger => 'General ledger';

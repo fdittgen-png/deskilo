@@ -10865,6 +10865,90 @@ abstract class AppLocalizations {
   /// **'Story'**
   String get customerPageStory;
 
+  /// #3673 customer statement: customerStatementAsOf
+  ///
+  /// In en, this message translates to:
+  /// **'Open items as of {date}'**
+  String customerStatementAsOf(String date);
+
+  /// #3673 customer statement: customerStatementAwaiting
+  ///
+  /// In en, this message translates to:
+  /// **'awaiting approval'**
+  String get customerStatementAwaiting;
+
+  /// #3673 customer statement: customerStatementBalanceDue
+  ///
+  /// In en, this message translates to:
+  /// **'Balance you owe'**
+  String get customerStatementBalanceDue;
+
+  /// #3673 customer statement: customerStatementBalanceNone
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is owed'**
+  String get customerStatementBalanceNone;
+
+  /// #3673 customer statement: customerStatementBalanceOwed
+  ///
+  /// In en, this message translates to:
+  /// **'Balance in your favour'**
+  String get customerStatementBalanceOwed;
+
+  /// #3673 customer statement: customerStatementDue
+  ///
+  /// In en, this message translates to:
+  /// **'due {date}'**
+  String customerStatementDue(String date);
+
+  /// #3673 customer statement: customerStatementNothingOpen
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is open for this customer: no statement to print.'**
+  String get customerStatementNothingOpen;
+
+  /// #3673 customer statement: customerStatementOwedToYou
+  ///
+  /// In en, this message translates to:
+  /// **'Owed to you'**
+  String get customerStatementOwedToYou;
+
+  /// #3673 customer statement: customerStatementPart
+  ///
+  /// In en, this message translates to:
+  /// **'Payment of {date}'**
+  String customerStatementPart(String date);
+
+  /// #3673 customer statement: customerStatementPickCurrency
+  ///
+  /// In en, this message translates to:
+  /// **'The statement in which currency?'**
+  String get customerStatementPickCurrency;
+
+  /// #3673 customer statement: customerStatementStillDue
+  ///
+  /// In en, this message translates to:
+  /// **'Still due'**
+  String get customerStatementStillDue;
+
+  /// #3673 customer statement: customerStatementTotalDue
+  ///
+  /// In en, this message translates to:
+  /// **'Total still due'**
+  String get customerStatementTotalDue;
+
+  /// #3673 customer statement: customerStatementTotalUnapplied
+  ///
+  /// In en, this message translates to:
+  /// **'Not yet applied'**
+  String get customerStatementTotalUnapplied;
+
+  /// #3673 customer statement: customerStatementUnapplied
+  ///
+  /// In en, this message translates to:
+  /// **'Payments and credits not yet applied'**
+  String get customerStatementUnapplied;
+
   /// #3587 R1-g: the customer page (customerStoryDeclared)
   ///
   /// In en, this message translates to:
@@ -40579,6 +40663,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chart of accounts'**
   String get reportDocCoa;
+
+  /// #3673 customer statement: reportDocCustomerStatement
+  ///
+  /// In en, this message translates to:
+  /// **'Statement of account'**
+  String get reportDocCustomerStatement;
 
   /// Report kind (#2376): the general ledger
   ///
