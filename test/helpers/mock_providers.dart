@@ -10,6 +10,7 @@ import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvi
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/kiosk_credential_store.dart';
 import 'package:deskilo/core/backend/operation_context.dart' as personal;
 import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/backend/secondary_federation.dart';
@@ -22,6 +23,7 @@ import 'package:deskilo/core/demo/data/action_confirmation_repository.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart'
     show DemoRecordedPaymentsRepository;
 import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
@@ -96,6 +98,8 @@ import 'package:deskilo/features/directory/providers/saved_places_providers.dart
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
+import 'package:deskilo/features/kiosk/domain/kiosk_device.dart';
+import 'package:deskilo/features/kiosk/providers/kiosk_device_providers.dart';
 import 'package:deskilo/features/mcp/providers/assistant_setup_providers.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -334,6 +338,8 @@ List<Override> standardTestOverrides({
   WorkspaceFieldsRepository? fields,
   WorkspaceRolesRepository? roles,
   Locale? deviceLocale,
+  KioskDeviceRepository? kioskDevices,
+  KioskCredentialStore? kioskCredentials,
 }) {
   // One home messenger per scope, so a rebuilt provider keeps its state.
   final homeMessenger = messenger ?? FakeMessengerRepository();
@@ -368,6 +374,14 @@ List<Override> standardTestOverrides({
     // #1310 — the workspace's stored files, in memory.
     workspaceFilesRepositoryProvider
         .overrideWithValue(workspaceFiles ?? FakeWorkspaceFiles()),
+    // #3675 — the business's kiosks, and this device's enrolment, in
+    // memory: no test writes the platform's secure storage.
+    kioskDeviceRepositoryProvider.overrideWithValue(
+      kioskDevices ?? DemoKioskDevices(workspaceId: 'ws', today: kTestNow),
+    ),
+    kioskCredentialStoreProvider.overrideWithValue(
+      kioskCredentials ?? InMemoryKioskCredentialStore(),
+    ),
     // #1288 — the workspace's own questions, in memory.
     workspaceFieldsRepositoryProvider
         .overrideWithValue(fields ?? FakeWorkspaceFields()),

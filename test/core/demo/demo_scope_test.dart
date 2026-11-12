@@ -376,6 +376,7 @@ const Set<String> demoOverriddenProviders = {
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
+  'kioskDeviceRepositoryProvider',
   'workspaceImportRepositoryProvider',
   'workspaceFieldsRepositoryProvider',
   'workspaceRolesRepositoryProvider',
