@@ -132,3 +132,11 @@ class PageTitle extends StatelessWidget {
         : Text(text, overflow: overflow);
   }
 }
+
+/// The page name a bar's [title] holds: PageTitle's text, drawn or silent,
+/// or a plain Text's (the task recorder names a screen by it).
+String? pageNameOf(Widget? title) => switch (title) {
+  PageTitle(:final text) => text,
+  Text(:final data) => data,
+  _ => null,
+};

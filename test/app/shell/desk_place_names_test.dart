@@ -107,6 +107,19 @@ String _windowTitle(WidgetTester tester) =>
 /// show the entry crumb only. The count only falls.
 const _namelessBudget = 9;
 
+/// The desk pages whose own bar is left empty when this landed (no title
+/// drawn, no leading, no actions): collapsing them is for the desk pages
+/// (#3614 on). The count only falls.
+const _emptyBarBudget = 39;
+
+/// Whether the page's own bar draws nothing on the desk.
+bool _barEmpty(AppBar bar, String lastCrumb) {
+  final title = bar.title;
+  final silent =
+      title == null || (title is PageTitle && title.text == lastCrumb);
+  return silent && bar.leading == null && (bar.actions?.isEmpty ?? true);
+}
+
 String? _selectedEntry(WidgetTester tester) {
   for (final tile in tester.widgetList<ListTile>(
     find.descendant(of: _k('desk-navigation'), matching: find.byType(ListTile)),
@@ -138,6 +151,7 @@ void main() {
         final router = await _pump(tester, size: size, locale: locale);
         final problems = <String>[];
         final nameless = <String>[];
+        final empty = <String>[];
         for (final path in _deskRoutes) {
           await _visit(tester, router, path);
           final crumbs = _crumbs(tester);
@@ -154,6 +168,11 @@ void main() {
               : crumbs.last;
           if (selected != null && selected != entry) {
             problems.add('$path: entry crumb "$entry", navigation "$selected"');
+          }
+          for (final bar in tester.widgetList<AppBar>(
+            find.descendant(of: _k('desk-page'), matching: find.byType(AppBar)),
+          )) {
+            if (_barEmpty(bar, crumbs.last)) empty.add(path);
           }
           if (title == null) {
             nameless.add(path);
@@ -176,6 +195,11 @@ void main() {
           nameless.length,
           lessThanOrEqualTo(_namelessBudget),
           reason: 'a new page without a PageTitle:\n${nameless.join('\n')}',
+        );
+        expect(
+          empty.length,
+          lessThanOrEqualTo(_emptyBarBudget),
+          reason: 'a new empty bar on the desk:\n${empty.join('\n')}',
         );
       });
     }

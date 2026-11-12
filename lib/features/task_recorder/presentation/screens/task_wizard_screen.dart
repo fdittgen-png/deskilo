@@ -46,6 +46,7 @@ import '../recorder_pages.dart';
 import '../route_classification.dart';
 import 'guide_draft_screen.dart';
 import 'recording_review_screen.dart';
+import 'task_wizard_section_header.dart';
 import 'task_workbench_screen.dart' show refusalText;
 
 class TaskWizardScreen extends ConsumerWidget {
@@ -66,7 +67,7 @@ class TaskWizardScreen extends ConsumerWidget {
             l10n.taskWizardIntro,
           ),
           const SizedBox(height: AppSpacing.lg),
-          _SectionHeader(
+          TaskWizardSectionHeader(
             key: const ValueKey('task-wizard-guides'),
             title: l10n.taskWizardGuides,
             action: FilledButton.tonalIcon(
@@ -106,7 +107,7 @@ class TaskWizardScreen extends ConsumerWidget {
               ),
             ),
           const SizedBox(height: AppSpacing.lg),
-          _SectionHeader(
+          TaskWizardSectionHeader(
             key: const ValueKey('task-wizard-recordings'),
             title: l10n.taskWizardRecordings,
             action: FilledButton.icon(
@@ -118,7 +119,7 @@ class TaskWizardScreen extends ConsumerWidget {
           ),
           const _Recordings(),
           const SizedBox(height: AppSpacing.lg),
-          _SectionHeader(title: l10n.taskWizardTools),
+          TaskWizardSectionHeader(title: l10n.taskWizardTools),
           ListTile(
             key: const ValueKey('task-wizard-open-file'),
             contentPadding: EdgeInsets.zero,
@@ -130,33 +131,6 @@ class TaskWizardScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push(taskWorkbenchRoute),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({super.key, required this.title, this.action});
-
-  final String title;
-  final Widget? action;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: Wrap(
-        alignment: WrapAlignment.spaceBetween,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        runSpacing: AppSpacing.xs,
-        spacing: AppSpacing.sm,
-        children: [
-          Semantics(
-            header: true,
-            child: Text(title, style: Theme.of(context).textTheme.titleMedium),
-          ),
-          ?action,
         ],
       ),
     );
