@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:file_selector/file_selector.dart' show XFile;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -277,7 +278,10 @@ class _WorkspaceSettingsScreenState
                   // #165 — restore from an exported file. Replaces the
                   // floor plan (guarded by preview + destructive confirm);
                   // the whole screen is owner-only already.
-                  ListTile(
+                  _restore.dropZone(
+                    enabled: !_busy,
+                    onFile: (file) => _importXml(workspace, file),
+                    child: ListTile(
                     key: const Key('workspaceSettingsImportXml'),
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.file_open_outlined),
@@ -291,7 +295,7 @@ class _WorkspaceSettingsScreenState
                     ),
                     enabled: !_busy,
                     onTap: () => _importXml(workspace),
-                  ),
+                  )),
                   const SizedBox(height: 24),
 
       ];
@@ -384,13 +388,13 @@ class _WorkspaceSettingsScreenState
 
   /// Owner-only XML import (#165); the steps are [WorkspaceSettingsRestore]'s,
   /// a failure is told here.
-  Future<void> _importXml(Workspace workspace) async {
+  Future<void> _importXml(Workspace workspace, [XFile? dropped]) async {
     // #1532 — how far the import got, so a stop partway is not reported
     // as if nothing had happened.
     final progress = XmlImportProgress();
     await whileBusy(() async {
       try {
-        await _restore.importXml(workspace, progress);
+        await _restore.importXml(workspace, progress, dropped: dropped);
       } on Object catch (e, st) {
         debugPrint('workspace XML import failed: $e\n$st');
         TraceLogger.instance.error('workspace', 'workspace XML import failed',

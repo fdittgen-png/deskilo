@@ -51,22 +51,39 @@ Future<void> _photoSheet(
   }
 }
 
+/// What the profile photo takes: the same group for the picker and the drop.
+XTypeGroup _photoTypes(AppLocalizations l10n) => XTypeGroup(
+  label: l10n.editorToolImage,
+  extensions: const ['jpg', 'jpeg', 'png', 'webp'],
+  mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
+);
+
 Future<void> _pickPhoto(
   BuildContext context,
   WidgetRef ref,
   String userId,
 ) async {
+  final XFile? file;
+  try {
+    file = await ref.read(filePickerProvider)(_photoTypes(context.l10n));
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn('profile', 'photo picker failed', stackTrace: st);
+    return;
+  }
+  if (file == null || !context.mounted) return; // cancelled
+  await _uploadPhoto(context, file, ref, userId);
+}
+
+/// #3818 — what a picked or a dropped photo comes to: stored, or refused
+/// in words.
+Future<void> _uploadPhoto(
+  BuildContext context,
+  XFile file,
+  WidgetRef ref,
+  String userId,
+) async {
   final l10n = context.l10n;
   try {
-    final pick = ref.read(filePickerProvider);
-    final file = await pick(
-      XTypeGroup(
-        label: l10n.editorToolImage,
-        extensions: const ['jpg', 'jpeg', 'png', 'webp'],
-        mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
-      ),
-    );
-    if (file == null) return; // cancelled
     final bytes = await file.readAsBytes();
     await ref.read(myProfileEditsProvider).setPhoto(bytes, contentType: file.mimeType);
     _invalidateAvatar(ref, userId);
@@ -200,7 +217,10 @@ List<Widget> accountSettingsTiles(
   return [
     // Profile photo (0038): shown on my directory row and detail sheet.
     if (profile && myProfile != null)
-      ListTile(
+      FileDropZone(
+        typeGroup: _photoTypes(l10n),
+        onFile: (file) => _uploadPhoto(context, file, ref, myProfile.id),
+        child: ListTile(
         key: const ValueKey('settings-photo'),
         leading: MemberAvatar(
           userId: myProfile.id,
@@ -214,7 +234,7 @@ List<Widget> accountSettingsTiles(
               : (l10n.profilePhotoNone),
         ),
         onTap: () => _photoSheet(context, ref, myProfile),
-      ),
+      )),
     // In-app language (#147), theme (#160) defaults; private values (#2552).
     if (account) _languageTile(context, ref, defaultsOnly: true),
     if (account) ...[_themeTile(context, ref, defaultsOnly: true), const PrivateValuesTile()],
