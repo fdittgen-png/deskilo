@@ -132,6 +132,13 @@ File? _materialIcons() {
 /// test font does not have.
 Future<void> loadSheetFonts({bool always = false}) async {
   if (!always && Platform.environment['SHEET'] != '1') return;
+  await loadRealFonts();
+}
+
+/// #3782 — loads Roboto and the icon font: a guard that measures text (a
+/// cut label) measures it in the app's font, not in the test font, whose
+/// every letter is a square.
+Future<void> loadRealFonts() async {
   final icons = _materialIcons();
   if (icons != null) {
     await (FontLoader(
@@ -447,3 +454,103 @@ Future<void> writeDeskSheet(
   sheet: module,
   name: '$screen--${width.toInt()}--${brightness.name}',
 );
+
+// ---------------------------------------------------------------------------
+// #3782 — the layout of a form: no field touches another, no helper is cut.
+// ---------------------------------------------------------------------------
+
+/// The rules the form on screen breaks, within [form]: a field's box (its
+/// label, its input and its helper or error line, as its decorator draws
+/// them) touches or overlaps another's, or a helper or error text is cut
+/// (its paragraph ran past its lines). [details] receives what was found.
+Set<String> formLayoutProblems(
+  WidgetTester tester, {
+  required Finder form,
+  List<String>? details,
+}) {
+  final problems = <String>{};
+  final fields = [
+    for (final e in find
+        .descendant(of: form, matching: find.byType(InputDecorator))
+        .evaluate())
+      if (e.renderObject case final RenderBox box
+          when box.hasSize && box.size.height > 0)
+        (rect: box.localToGlobal(Offset.zero) & box.size, label: _labelOf(e)),
+  ];
+  for (var i = 0; i < fields.length; i++) {
+    for (var j = i + 1; j < fields.length; j++) {
+      final a = fields[i].rect;
+      final b = fields[j].rect;
+      // Side by side on one row is a layout, not a crowding: only a field
+      // that stands over another counts, and it must leave a gap.
+      final overlapX = a.left < b.right && b.left < a.right;
+      if (!overlapX) continue;
+      final gap = a.top < b.top ? b.top - a.bottom : a.top - b.bottom;
+      if (gap <= 0.5) {
+        problems.add('fields without a gap');
+        details?.add('"${fields[i].label}" and "${fields[j].label}": $gap');
+      }
+    }
+  }
+  for (final e in find
+      .descendant(
+        of: find.descendant(of: form, matching: find.byType(InputDecorator)),
+        matching: find.byType(RichText),
+      )
+      .evaluate()) {
+    final box = e.renderObject;
+    if (box is RenderParagraph && box.hasSize && box.didExceedMaxLines) {
+      problems.add('helper cut');
+      details?.add('cut: "${box.text.toPlainText()}" in ${box.size.width}');
+    }
+  }
+  // A value wider than its field is cut: a date or an amount shows its
+  // whole self.
+  for (final e in find
+      .descendant(of: form, matching: find.byType(EditableText))
+      .evaluate()) {
+    final edit = e.findRenderObject();
+    RenderEditable? editable;
+    void seek(RenderObject o) {
+      if (editable != null) return;
+      if (o is RenderEditable) {
+        editable = o;
+        return;
+      }
+      o.visitChildren(seek);
+    }
+    if (edit != null) seek(edit);
+    final r = editable;
+    if (r == null || !r.hasSize || r.maxLines != 1) continue;
+    final painter = TextPainter(
+      text: r.text,
+      textDirection: r.textDirection,
+      textScaler: r.textScaler,
+      maxLines: 1,
+    )..layout();
+    final wide = painter.width;
+    painter.dispose();
+    if (wide > r.size.width + 0.5) {
+      problems.add('value cut');
+      details?.add('value "${r.text?.toPlainText()}" $wide in ${r.size.width}');
+    }
+  }
+  // The form stands inside the window: nothing of it is off the screen.
+  final window = Offset.zero &
+      (tester.view.physicalSize / tester.view.devicePixelRatio);
+  for (final e in form.evaluate()) {
+    if (e.renderObject case final RenderBox box when box.hasSize) {
+      final rect = box.localToGlobal(Offset.zero) & box.size;
+      if (rect.intersect(window) != rect) {
+        problems.add('form off the window');
+        details?.add('form $rect in $window');
+      }
+    }
+  }
+  return problems;
+}
+
+String _labelOf(Element decorator) {
+  final d = (decorator.widget as InputDecorator).decoration;
+  return d.labelText ?? d.hintText ?? '';
+}

@@ -149,6 +149,8 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
       title: Text(l10n.purchasesOffsetTitle),
       content: SingleChildScrollView(
         child: Column(
+          // #3782 — the form kit's gap between every field.
+          spacing: AppSpacing.md,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

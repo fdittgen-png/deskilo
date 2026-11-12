@@ -23943,8 +23943,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesTabDocuments => 'Documents';
 
   @override
-  String get purchasesTaxField =>
-      'Dont taxe (vide si la facture ne l\'indique pas)';
+  String get purchasesTaxField => 'Dont taxe';
+
+  @override
+  String get purchasesTaxFieldHelper =>
+      'Laisser vide si la facture ne l\'indique pas';
 
   @override
   String get purchasesTaxNotStated => 'Taxe non indiquée';

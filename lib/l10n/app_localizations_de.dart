@@ -23935,8 +23935,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesTabDocuments => 'Belege';
 
   @override
-  String get purchasesTaxField =>
-      'Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)';
+  String get purchasesTaxField => 'Darin enthaltene Steuer';
+
+  @override
+  String get purchasesTaxFieldHelper =>
+      'Leer lassen, wenn die Rechnung sie nicht ausweist';
 
   @override
   String get purchasesTaxNotStated => 'Steuer nicht ausgewiesen';

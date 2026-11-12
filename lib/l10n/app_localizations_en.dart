@@ -23701,8 +23701,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesTabDocuments => 'Documents';
 
   @override
-  String get purchasesTaxField =>
-      'Tax included (empty if the bill does not state it)';
+  String get purchasesTaxField => 'Tax included';
+
+  @override
+  String get purchasesTaxFieldHelper =>
+      'Leave empty if the bill does not state it';
 
   @override
   String get purchasesTaxNotStated => 'Tax not stated';
