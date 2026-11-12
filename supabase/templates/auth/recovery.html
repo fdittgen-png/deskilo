@@ -1,4 +1,28 @@
+{{/* #3812 — in the account's language: Data.locale is written by the server (0743), one of the five; without it, the installation's default (English). printf turns a missing key into text, so the comparisons never meet a nil. */}}
+{{ $l := printf "%v" .Data.locale }}
+{{ if eq $l "fr" }}
+<h2>Réinitialiser votre mot de passe</h2>
+<p>Saisissez ce code à usage unique dans l'application pour définir un nouveau mot de passe :</p>
+<p><strong>{{ .Token }}</strong></p>
+<p>Si vous n'avez rien demandé, ignorez ce message ; rien ne change.</p>
+{{ else if eq $l "de" }}
+<h2>Passwort zurücksetzen</h2>
+<p>Geben Sie diesen Einmalcode in der App ein, um ein neues Passwort festzulegen:</p>
+<p><strong>{{ .Token }}</strong></p>
+<p>Wenn Sie das nicht angefordert haben, ignorieren Sie diese Nachricht; es ändert sich nichts.</p>
+{{ else if eq $l "es" }}
+<h2>Restablecer su contraseña</h2>
+<p>Introduzca este código de un solo uso en la aplicación para definir una nueva contraseña:</p>
+<p><strong>{{ .Token }}</strong></p>
+<p>Si no lo ha solicitado, ignore este mensaje; no cambia nada.</p>
+{{ else if eq $l "it" }}
+<h2>Reimposti la Sua password</h2>
+<p>Inserisca questo codice monouso nell'app per impostare una nuova password:</p>
+<p><strong>{{ .Token }}</strong></p>
+<p>Se non l'ha richiesto, ignori questo messaggio; non cambia nulla.</p>
+{{ else }}
 <h2>Reset your password</h2>
 <p>Enter this one-time code in the app to set a new password:</p>
 <p><strong>{{ .Token }}</strong></p>
 <p>If you did not ask for this, ignore this message; nothing changes.</p>
+{{ end }}
