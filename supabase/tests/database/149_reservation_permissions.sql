@@ -152,12 +152,12 @@ select throws_ok(format($$ select public.set_member_simultaneous_limit(%L, 3) $$
   'P0001', 'not an admin of this workspace', 'nor a simultaneous allowance');
 select throws_ok(format($$ select public.set_member_level_permission(%L, false) $$, pg_temp.id('m_subject')),
   'P0001', 'not an admin of this workspace', 'nor a level permission');
-select throws_ok(pg_temp.book_level(6), 'P0001', 'not allowed to reserve a level',
+select throws_ok(pg_temp.book_level(6), 'DKK21', 'not allowed to reserve a level',  -- #3810: its code
   'and books no whole level without being allowed to');
 select throws_ok(format($$ select public.create_series(%L, null, %L, %L, 'weekly', %L, null, null, %L) $$,
     pg_temp.id('ws'), pg_temp.at(6), pg_temp.at(6) + interval '4 hours', pg_temp.at(13),
     pg_temp.id('upstairs')),
-  'P0001', 'not allowed to reserve a level', 'nor a series of one');
+  'DKK21', 'not allowed to reserve a level', 'nor a series of one');
 
 -- ── the owner still does ───────────────────────────────────────────────
 select pg_temp.act_as('owner');

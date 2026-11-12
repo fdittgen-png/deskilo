@@ -283,5 +283,58 @@ begin
 end;
 $migration$;
 
+-- What catches a booking refusal catches it by its code too: the assistant's
+-- reads and writes answer "refused" with its reason (as for P0001 before),
+-- sample data still skips a refused booking, and joining by invitation still
+-- answers its own refusals.
+do $handlers$
+declare
+  v_def text;
+begin
+  -- create_sample_data
+  select pg_get_functiondef('public.create_sample_data(uuid,uuid)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def, $r$when raise_exception or exclusion_violation or unique_violation then$r$,
+    $r$when raise_exception or exclusion_violation or unique_violation
+      -- #3810: a booking refusal carries its DKK code (0739).
+      or sqlstate 'DKK01' or sqlstate 'DKK02' or sqlstate 'DKK03' or sqlstate 'DKK04' or sqlstate 'DKK05' or sqlstate 'DKK06' or sqlstate 'DKK07' or sqlstate 'DKK08' or sqlstate 'DKK09' or sqlstate 'DKK10' or sqlstate 'DKK11' or sqlstate 'DKK12' or sqlstate 'DKK13' or sqlstate 'DKK15' or sqlstate 'DKK16' or sqlstate 'DKK17' or sqlstate 'DKK18' or sqlstate 'DKK19' or sqlstate 'DKK20' or sqlstate 'DKK21' or sqlstate 'DKK22' or sqlstate 'DKK23' or sqlstate 'DKK25' or sqlstate 'DKK26' or sqlstate 'DKK27' or sqlstate 'DKK28' or sqlstate 'DKK29' or sqlstate 'DKK30' or sqlstate 'DKK31' or sqlstate 'DKK32' or sqlstate 'DKK33' or sqlstate 'DKK34' or sqlstate 'DKK35' or sqlstate 'DKK36' then$r$);
+  if v_def is null then raise exception 'an anchor of #3810 was not found in create_sample_data'; end if;
+  execute v_def;
+
+  -- join_by_invitation
+  select pg_get_functiondef('public.join_by_invitation(text)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def, $r$when raise_exception then$r$,
+    $r$when raise_exception
+      -- #3810: a booking refusal carries its DKK code (0739).
+      or sqlstate 'DKK01' or sqlstate 'DKK02' or sqlstate 'DKK03' or sqlstate 'DKK04' or sqlstate 'DKK05' or sqlstate 'DKK06' or sqlstate 'DKK07' or sqlstate 'DKK08' or sqlstate 'DKK09' or sqlstate 'DKK10' or sqlstate 'DKK11' or sqlstate 'DKK12' or sqlstate 'DKK13' or sqlstate 'DKK15' or sqlstate 'DKK16' or sqlstate 'DKK17' or sqlstate 'DKK18' or sqlstate 'DKK19' or sqlstate 'DKK20' or sqlstate 'DKK21' or sqlstate 'DKK22' or sqlstate 'DKK23' or sqlstate 'DKK25' or sqlstate 'DKK26' or sqlstate 'DKK27' or sqlstate 'DKK28' or sqlstate 'DKK29' or sqlstate 'DKK30' or sqlstate 'DKK31' or sqlstate 'DKK32' or sqlstate 'DKK33' or sqlstate 'DKK34' or sqlstate 'DKK35' or sqlstate 'DKK36' then$r$);
+  if v_def is null then raise exception 'an anchor of #3810 was not found in join_by_invitation'; end if;
+  execute v_def;
+
+  -- mcp_execute_v1
+  select pg_get_functiondef('public.mcp_execute_v1(uuid,uuid,text,jsonb,uuid)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def, $r$when raise_exception or check_violation or exclusion_violation or unique_violation then$r$,
+    $r$when raise_exception or check_violation or exclusion_violation or unique_violation
+      -- #3810: a booking refusal carries its DKK code (0739).
+      or sqlstate 'DKK01' or sqlstate 'DKK02' or sqlstate 'DKK03' or sqlstate 'DKK04' or sqlstate 'DKK05' or sqlstate 'DKK06' or sqlstate 'DKK07' or sqlstate 'DKK08' or sqlstate 'DKK09' or sqlstate 'DKK10' or sqlstate 'DKK11' or sqlstate 'DKK12' or sqlstate 'DKK13' or sqlstate 'DKK15' or sqlstate 'DKK16' or sqlstate 'DKK17' or sqlstate 'DKK18' or sqlstate 'DKK19' or sqlstate 'DKK20' or sqlstate 'DKK21' or sqlstate 'DKK22' or sqlstate 'DKK23' or sqlstate 'DKK25' or sqlstate 'DKK26' or sqlstate 'DKK27' or sqlstate 'DKK28' or sqlstate 'DKK29' or sqlstate 'DKK30' or sqlstate 'DKK31' or sqlstate 'DKK32' or sqlstate 'DKK33' or sqlstate 'DKK34' or sqlstate 'DKK35' or sqlstate 'DKK36' then$r$);
+  if v_def is null then raise exception 'an anchor of #3810 was not found in mcp_execute_v1'; end if;
+  execute v_def;
+
+  -- mcp_outcome_of
+  select pg_get_functiondef('public.mcp_outcome_of(text,text)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def, $r$case when p_sqlstate = 'P0001' then$r$,
+    $r$case when p_sqlstate = 'P0001' or p_sqlstate like 'DKK%' then$r$);
+  if v_def is null then raise exception 'an anchor of #3810 was not found in mcp_outcome_of'; end if;
+  execute v_def;
+
+  -- mcp_read_v1
+  select pg_get_functiondef('public.mcp_read_v1(uuid,members,text,jsonb)'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def, $r$when raise_exception then$r$,
+    $r$when raise_exception
+      -- #3810: a booking refusal carries its DKK code (0739).
+      or sqlstate 'DKK01' or sqlstate 'DKK02' or sqlstate 'DKK03' or sqlstate 'DKK04' or sqlstate 'DKK05' or sqlstate 'DKK06' or sqlstate 'DKK07' or sqlstate 'DKK08' or sqlstate 'DKK09' or sqlstate 'DKK10' or sqlstate 'DKK11' or sqlstate 'DKK12' or sqlstate 'DKK13' or sqlstate 'DKK15' or sqlstate 'DKK16' or sqlstate 'DKK17' or sqlstate 'DKK18' or sqlstate 'DKK19' or sqlstate 'DKK20' or sqlstate 'DKK21' or sqlstate 'DKK22' or sqlstate 'DKK23' or sqlstate 'DKK25' or sqlstate 'DKK26' or sqlstate 'DKK27' or sqlstate 'DKK28' or sqlstate 'DKK29' or sqlstate 'DKK30' or sqlstate 'DKK31' or sqlstate 'DKK32' or sqlstate 'DKK33' or sqlstate 'DKK34' or sqlstate 'DKK35' or sqlstate 'DKK36' then$r$);
+  if v_def is null then raise exception 'an anchor of #3810 was not found in mcp_read_v1'; end if;
+  execute v_def;
+end;
+$handlers$;
+
 notify pgrst, 'reload schema';
 select public.set_deskilo_schema_version(739);
