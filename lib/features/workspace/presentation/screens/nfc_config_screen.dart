@@ -140,7 +140,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
                 title: Text(l10n.kioskDevicesTitle),
                 subtitle: Text(l10n.kioskDevicesEntryHint),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => unawaited(context.push('/kiosk-devices')),
+                onTap: () => unawaited(context.push('/badge-kiosks')),
               ),
             ),
           ],

@@ -26826,12 +26826,6 @@ abstract class AppLocalizations {
   /// #3675 — the kiosk devices screen.
   ///
   /// In en, this message translates to:
-  /// **'Revoke'**
-  String get kioskDeviceRevoke;
-
-  /// #3675 — the kiosk devices screen.
-  ///
-  /// In en, this message translates to:
   /// **'Revoke “{name}”? It stops being a kiosk of this business at once; to use it again, enrol it again.'**
   String kioskDeviceRevokeConfirm(String name);
 
@@ -26852,12 +26846,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Revoked on {date}'**
   String kioskDeviceRevokedOn(String date);
-
-  /// #3675 — the kiosk devices screen.
-  ///
-  /// In en, this message translates to:
-  /// **'This device'**
-  String get kioskDeviceThisOne;
 
   /// #3675 — the kiosk devices screen.
   ///
@@ -27122,12 +27110,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a seat to check in'**
   String get kioskTapHint;
-
-  /// #3675 — the kiosk devices screen.
-  ///
-  /// In en, this message translates to:
-  /// **'This device'**
-  String get kioskThisDeviceTitle;
 
   /// Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes.
   ///

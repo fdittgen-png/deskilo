@@ -9,7 +9,6 @@
   "kioskDevicesTitle": "Dispositivi chiosco",
   "kioskDevicesIntro": "I dispositivi che questa azienda usa come chioschi. L’accesso con badge vi saluta ogni persona per nome e può essere limitato a essi.",
   "kioskDevicesEntryHint": "Registri questo dispositivo, veda e revochi i chioschi dell’azienda",
-  "kioskThisDeviceTitle": "Questo dispositivo",
   "kioskEnrolNameLabel": "Nome di questo dispositivo",
   "kioskEnrolNameHint": "Per esempio: tablet della reception",
   "kioskEnrolAction": "Registrare questo dispositivo",
@@ -35,8 +34,6 @@
   "kioskDeviceLastUsed": "Ultimo uso il {date}",
   "kioskDeviceNeverUsed": "Non ancora usato",
   "kioskDeviceRevokedOn": "Revocato il {date}",
-  "kioskDeviceThisOne": "Questo dispositivo",
-  "kioskDeviceRevoke": "Revoca",
   "kioskDeviceRevokeConfirm": "Revocare «{name}»? Smette subito di essere un chiosco di questa azienda; per usarlo di nuovo, lo registri di nuovo.",
   "kioskDeviceRevokeDone": "«{name}» è revocato.",
   "kioskDeviceRevokeFailed": "Non è stato possibile revocare il dispositivo. Riprovi."

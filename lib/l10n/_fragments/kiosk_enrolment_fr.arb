@@ -9,7 +9,6 @@
   "kioskDevicesTitle": "Appareils kiosque",
   "kioskDevicesIntro": "Les appareils que cette entreprise utilise comme kiosques. La connexion par badge y accueille chacun par son nom, et peut leur être réservée.",
   "kioskDevicesEntryHint": "Enregistrer cet appareil, voir et révoquer les kiosques de l’entreprise",
-  "kioskThisDeviceTitle": "Cet appareil",
   "kioskEnrolNameLabel": "Nom de cet appareil",
   "kioskEnrolNameHint": "Par exemple : tablette de l’accueil",
   "kioskEnrolAction": "Enregistrer cet appareil",
@@ -35,8 +34,6 @@
   "kioskDeviceLastUsed": "Dernière utilisation le {date}",
   "kioskDeviceNeverUsed": "Pas encore utilisé",
   "kioskDeviceRevokedOn": "Révoqué le {date}",
-  "kioskDeviceThisOne": "Cet appareil",
-  "kioskDeviceRevoke": "Révoquer",
   "kioskDeviceRevokeConfirm": "Révoquer « {name} » ? Il cesse aussitôt d’être un kiosque de cette entreprise ; pour le réutiliser, enregistrez-le à nouveau.",
   "kioskDeviceRevokeDone": "« {name} » est révoqué.",
   "kioskDeviceRevokeFailed": "L’appareil n’a pas pu être révoqué. Réessayez."

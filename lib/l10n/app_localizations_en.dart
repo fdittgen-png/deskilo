@@ -16644,9 +16644,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kioskDeviceNeverUsed => 'Not used yet';
 
   @override
-  String get kioskDeviceRevoke => 'Revoke';
-
-  @override
   String kioskDeviceRevokeConfirm(String name) {
     return 'Revoke “$name”? It stops being a kiosk of this business at once; to use it again, enrol it again.';
   }
@@ -16664,9 +16661,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String kioskDeviceRevokedOn(String date) {
     return 'Revoked on $date';
   }
-
-  @override
-  String get kioskDeviceThisOne => 'This device';
 
   @override
   String get kioskDevicesEmpty => 'No device is enrolled yet.';
@@ -16818,9 +16812,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kioskTapHint => 'Tap a seat to check in';
-
-  @override
-  String get kioskThisDeviceTitle => 'This device';
 
   @override
   String get kitActionBusy => 'Working…';

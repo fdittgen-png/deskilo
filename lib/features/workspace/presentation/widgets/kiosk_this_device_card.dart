@@ -109,7 +109,7 @@ class _KioskThisDeviceCardState extends ConsumerState<KioskThisDeviceCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: AppSpacing.sm,
           children: [
-            Text(l10n.kioskThisDeviceTitle, style: text.titleMedium),
+            Text(l10n.nfcConfigDeviceStatus, style: text.titleMedium),
             if (mine) ...[
               Text(
                 l10n.kioskEnrolled(held.name),

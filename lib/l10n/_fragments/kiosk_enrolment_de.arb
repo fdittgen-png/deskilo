@@ -9,7 +9,6 @@
   "kioskDevicesTitle": "Kiosk-Geräte",
   "kioskDevicesIntro": "Die Geräte, die dieses Unternehmen als Kiosk nutzt. Die Anmeldung per Ausweis begrüßt dort jede Person mit Namen und lässt sich auf sie beschränken.",
   "kioskDevicesEntryHint": "Dieses Gerät registrieren, die Kioske des Unternehmens sehen und widerrufen",
-  "kioskThisDeviceTitle": "Dieses Gerät",
   "kioskEnrolNameLabel": "Name dieses Geräts",
   "kioskEnrolNameHint": "Zum Beispiel: Empfangstablet",
   "kioskEnrolAction": "Dieses Gerät registrieren",
@@ -35,8 +34,6 @@
   "kioskDeviceLastUsed": "Zuletzt genutzt am {date}",
   "kioskDeviceNeverUsed": "Noch nicht genutzt",
   "kioskDeviceRevokedOn": "Widerrufen am {date}",
-  "kioskDeviceThisOne": "Dieses Gerät",
-  "kioskDeviceRevoke": "Widerrufen",
   "kioskDeviceRevokeConfirm": "„{name}“ widerrufen? Es ist sofort kein Kiosk dieses Unternehmens mehr; um es wieder zu nutzen, registrieren Sie es erneut.",
   "kioskDeviceRevokeDone": "„{name}“ ist widerrufen.",
   "kioskDeviceRevokeFailed": "Das Gerät konnte nicht widerrufen werden. Versuchen Sie es erneut."

@@ -53,7 +53,7 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
     final sure = await showDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
-        title: Text(l10n.kioskDeviceRevoke),
+        title: Text(l10n.badgeRevoke),
         content: Text(l10n.kioskDeviceRevokeConfirm(device.name)),
         actions: [
           TextButton(
@@ -64,7 +64,7 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
           FilledButton(
             key: const ValueKey('kiosk-revoke-confirm'),
             onPressed: () => Navigator.of(dialog).pop(true),
-            child: Text(l10n.kioskDeviceRevoke),
+            child: Text(l10n.badgeRevoke),
           ),
         ],
       ),
@@ -212,7 +212,7 @@ class _DeviceTile extends ConsumerWidget {
         device.revoked ? Icons.tablet_outlined : Icons.tablet_android_outlined,
       ),
       title: Text(
-        thisOne ? '${device.name} · ${l10n.kioskDeviceThisOne}' : device.name,
+        thisOne ? '${device.name} · ${l10n.nfcConfigDeviceStatus}' : device.name,
       ),
       subtitle: Text('$enrolled · $used'),
       trailing: device.revoked
@@ -220,7 +220,7 @@ class _DeviceTile extends ConsumerWidget {
           : TextButton(
               key: ValueKey('kiosk-device-revoke-${device.id}'),
               onPressed: onRevoke,
-              child: Text(l10n.kioskDeviceRevoke),
+              child: Text(l10n.badgeRevoke),
             ),
     );
   }

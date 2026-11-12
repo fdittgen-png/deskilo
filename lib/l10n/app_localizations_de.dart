@@ -16801,9 +16801,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kioskDeviceNeverUsed => 'Noch nicht genutzt';
 
   @override
-  String get kioskDeviceRevoke => 'Widerrufen';
-
-  @override
   String kioskDeviceRevokeConfirm(String name) {
     return '„$name“ widerrufen? Es ist sofort kein Kiosk dieses Unternehmens mehr; um es wieder zu nutzen, registrieren Sie es erneut.';
   }
@@ -16821,9 +16818,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String kioskDeviceRevokedOn(String date) {
     return 'Widerrufen am $date';
   }
-
-  @override
-  String get kioskDeviceThisOne => 'Dieses Gerät';
 
   @override
   String get kioskDevicesEmpty => 'Noch ist kein Gerät registriert.';
@@ -16977,9 +16971,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get kioskTapHint => 'Tippen Sie auf einen Platz zum Einchecken';
-
-  @override
-  String get kioskThisDeviceTitle => 'Dieses Gerät';
 
   @override
   String get kitActionBusy => 'Läuft …';

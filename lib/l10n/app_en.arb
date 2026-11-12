@@ -21893,10 +21893,6 @@
   "@kioskDeviceNeverUsed": {
     "description": "#3675 — the kiosk devices screen."
   },
-  "kioskDeviceRevoke": "Revoke",
-  "@kioskDeviceRevoke": {
-    "description": "#3675 — the kiosk devices screen."
-  },
   "kioskDeviceRevokeConfirm": "Revoke “{name}”? It stops being a kiosk of this business at once; to use it again, enrol it again.",
   "@kioskDeviceRevokeConfirm": {
     "description": "#3675 — the kiosk devices screen.",
@@ -21927,10 +21923,6 @@
         "type": "String"
       }
     }
-  },
-  "kioskDeviceThisOne": "This device",
-  "@kioskDeviceThisOne": {
-    "description": "#3675 — the kiosk devices screen."
   },
   "kioskDevicesEmpty": "No device is enrolled yet.",
   "@kioskDevicesEmpty": {
@@ -22112,10 +22104,6 @@
   "kioskTapHint": "Tap a seat to check in",
   "@kioskTapHint": {
     "description": "Header hint on the kiosk plan view"
-  },
-  "kioskThisDeviceTitle": "This device",
-  "@kioskThisDeviceTitle": {
-    "description": "#3675 — the kiosk devices screen."
   },
   "kitActionBusy": "Working…",
   "@kitActionBusy": {

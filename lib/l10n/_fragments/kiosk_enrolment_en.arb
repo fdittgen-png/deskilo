@@ -55,10 +55,6 @@
   "@kioskDevicesEntryHint": {
     "description": "#3675 — the kiosk devices screen."
   },
-  "kioskThisDeviceTitle": "This device",
-  "@kioskThisDeviceTitle": {
-    "description": "#3675 — the kiosk devices screen."
-  },
   "kioskEnrolNameLabel": "Name of this device",
   "@kioskEnrolNameLabel": {
     "description": "#3675 — the kiosk devices screen."
@@ -186,14 +182,6 @@
         "type": "String"
       }
     }
-  },
-  "kioskDeviceThisOne": "This device",
-  "@kioskDeviceThisOne": {
-    "description": "#3675 — the kiosk devices screen."
-  },
-  "kioskDeviceRevoke": "Revoke",
-  "@kioskDeviceRevoke": {
-    "description": "#3675 — the kiosk devices screen."
   },
   "kioskDeviceRevokeConfirm": "Revoke “{name}”? It stops being a kiosk of this business at once; to use it again, enrol it again.",
   "@kioskDeviceRevokeConfirm": {

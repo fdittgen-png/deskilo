@@ -207,7 +207,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/library', RouteClass.workspace, place: 'drawer-setup-guide'),
   RouteRule('/workspace-code', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/nfc-config', RouteClass.workspace, place: 'drawer-nfc-config'),
-  RouteRule('/kiosk-devices', RouteClass.workspace, place: 'drawer-nfc-config'),
+  RouteRule('/badge-kiosks', RouteClass.workspace, place: 'drawer-nfc-config', measure: PageMeasure.form),
   RouteRule('/payment-config', RouteClass.workspace, place: 'drawer-payment-config'),
   RouteRule('/billing', RouteClass.workspace, place: 'drawer-billing'),
   RouteRule(

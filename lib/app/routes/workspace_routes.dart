@@ -249,7 +249,7 @@ List<RouteBase> _configurationRoutes(RouteEnv env) {
     // #3675 — the business's kiosks: this device's enrolment, where badge
     // sign-in works, and the devices with their revoke.
     GoRoute(
-      path: '/kiosk-devices',
+      path: '/badge-kiosks',
       redirect: env.guard(
         const RouteAccess(
           permission: WorkspacePermission.operateKiosk,
