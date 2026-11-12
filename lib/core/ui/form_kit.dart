@@ -26,12 +26,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
-import 'package:flutter/services.dart';
 
 import '../theme/app_spacing.dart';
 import 'adaptive/task_surface.dart';
-import 'composer_send_keys.dart';
 import 'form_error_summary.dart';
+import 'form_submit_keys.dart';
 import 'inline_banner.dart';
 
 export 'amount_field.dart';
@@ -363,51 +362,14 @@ class _AppFormSheetState extends State<AppFormSheet> {
     });
   }
 
-  /// The text field that has the focus, if one has.
-  static EditableText? _focusedText() => FocusManager
-      .instance
-      .primaryFocus
-      ?.context
-      ?.findAncestorWidgetOfExactType<EditableText>();
-
-  /// #3608: Ctrl/Cmd+Enter submits any form, plain Enter a short task's
-  /// form from a one-line field, both through [_submit] (which runs once
-  /// while busy). A word still being composed, a multi-line field's Return
-  /// and Enter on a button are left to the field and the button; the event
-  /// is consumed here, so no outer scope submits it again.
-  KeyEventResult _onKey(FocusNode node, KeyEvent event) {
-    final key = event.logicalKey;
-    if (key != LogicalKeyboardKey.enter &&
-        key != LogicalKeyboardKey.numpadEnter) {
-      return KeyEventResult.ignored;
-    }
-    final keyboard = HardwareKeyboard.instance;
-    final chord = keyboard.isControlPressed || keyboard.isMetaPressed;
-    final field = _focusedText();
-    if (field != null && isComposingText(field.controller.value)) {
-      return KeyEventResult.ignored;
-    }
-    final short = TaskSession.maybeOf(context)?.size == TaskSize.short;
-    if (!chord && (!short || field == null || field.maxLines != 1)) {
-      return KeyEventResult.ignored;
-    }
-    if (event is KeyUpEvent) return KeyEventResult.ignored;
-    if (event is KeyDownEvent) unawaited(_submit());
-    return KeyEventResult.handled;
-  }
-
   void _refresh() {
     TaskSession.maybeOf(context)?.markChanged();
     setState(() {});
   }
 
   @override
-  Widget build(BuildContext context) => Focus(
-    canRequestFocus: false,
-    skipTraversal: true,
-    onKeyEvent: _onKey,
-    child: _body(context),
-  );
+  Widget build(BuildContext context) =>
+      FormSubmitKeys(onSubmit: _submit, child: _body(context));
 
   Widget _body(BuildContext context) {
     final media = MediaQuery.of(context);

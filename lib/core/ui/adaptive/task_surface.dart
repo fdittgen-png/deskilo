@@ -38,9 +38,10 @@ enum TaskSize {
 }
 
 /// The container a task is shown in.
-enum TaskContainer { sheet, dialog, sidePanel }
+enum _TaskContainer { sheet, dialog, sidePanel }
 
 /// The measures of the task containers.
+@visibleForTesting
 abstract final class TaskSurfaceMetrics {
   /// The widest a task dialog grows, so a form keeps its line length.
   static const double dialogMaxWidth = KitMetrics.taskDialogMaxWidth;
@@ -64,13 +65,13 @@ abstract final class TaskSurfaceMetrics {
 }
 
 /// The container a task of [size] takes in a window of [windowClass].
-TaskContainer taskContainerFor(TaskSize size, WindowClass windowClass) =>
+_TaskContainer _containerFor(TaskSize size, WindowClass windowClass) =>
     switch (windowClass) {
-      WindowClass.compact => TaskContainer.sheet,
-      WindowClass.medium => TaskContainer.dialog,
+      WindowClass.compact => _TaskContainer.sheet,
+      WindowClass.medium => _TaskContainer.dialog,
       _ => switch (size) {
-        TaskSize.short => TaskContainer.dialog,
-        TaskSize.standard => TaskContainer.sidePanel,
+        TaskSize.short => _TaskContainer.dialog,
+        TaskSize.standard => _TaskContainer.sidePanel,
       },
     };
 
@@ -127,7 +128,7 @@ Future<T?> showTask<T>(
     builder: builder,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     themes: InheritedTheme.capture(from: context, to: navigator.context),
-    container: taskContainerFor(size, WindowClass.of(context)),
+    container: _containerFor(size, WindowClass.of(context)),
   );
   if (sessionKey != null) {
     _openTasks[sessionKey] = route;
@@ -157,7 +158,7 @@ class _TaskRoute<T> extends PopupRoute<T> {
   final TaskSession session;
 
   /// The container shown now; the scrim follows it.
-  TaskContainer container;
+  _TaskContainer container;
 
   @override
   final String barrierLabel;
@@ -166,7 +167,7 @@ class _TaskRoute<T> extends PopupRoute<T> {
   bool get barrierDismissible => true;
 
   @override
-  Color get barrierColor => container == TaskContainer.sidePanel
+  Color get barrierColor => container == _TaskContainer.sidePanel
       ? TaskSurfaceMetrics.sidePanelScrim
       : TaskSurfaceMetrics.modalScrim;
 
@@ -212,7 +213,7 @@ class _TaskPresenterState extends State<_TaskPresenter> {
 
   _TaskRoute<Object?> get _route => widget.route;
 
-  void _follow(TaskContainer container) {
+  void _follow(_TaskContainer container) {
     if (_route.container == container) return;
     _route.container = container;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -238,7 +239,7 @@ class _TaskPresenterState extends State<_TaskPresenter> {
 
   @override
   Widget build(BuildContext context) {
-    final container = taskContainerFor(_route.size, WindowClass.of(context));
+    final container = _containerFor(_route.size, WindowClass.of(context));
     _follow(container);
     final body = KeyedSubtree(
       key: _bodyKey,
@@ -254,9 +255,9 @@ class _TaskPresenterState extends State<_TaskPresenter> {
           child: child!,
         ),
         child: switch (container) {
-          TaskContainer.sheet => _sheet(body),
-          TaskContainer.dialog => _dialog(body),
-          TaskContainer.sidePanel => _sidePanel(body),
+          _TaskContainer.sheet => _sheet(body),
+          _TaskContainer.dialog => _dialog(body),
+          _TaskContainer.sidePanel => _sidePanel(body),
         },
       ),
     );
