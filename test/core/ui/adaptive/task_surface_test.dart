@@ -1,0 +1,556 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3608 (desk K3) — a task opens in the container of the window (a sheet on
+// a phone, a dialog on a tablet, a centred dialog or a side panel at the
+// desk), stays ONE route when the window crosses a class (what was typed and
+// the focus kept), and its form answers the keyboard: Enter submits a short
+// form from a one-line field, Ctrl+Enter any form, never a multi-line
+// field's Return or a word being composed; Escape asks before a changed task
+// is dropped and closes an unchanged one at once.
+import 'package:deskilo/core/ui/adaptive/task_surface.dart';
+import 'package:deskilo/core/ui/form_kit.dart';
+import 'package:deskilo/core/ui/help_row.dart';
+import 'package:deskilo/core/ui/master_data_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+const _phone = Size(390, 844);
+const _tablet = Size(720, 1000);
+const _desk = Size(1440, 900);
+
+final _sheet = find.byKey(const ValueKey('task-sheet'));
+final _dialog = find.byKey(const ValueKey('task-dialog'));
+final _panel = find.byKey(const ValueKey('task-side-panel'));
+final _name = find.byKey(const ValueKey('name'));
+
+/// A point on a sheet's drag handle, from the sheet's top left.
+const _handle = Offset(40, 12);
+final _note = find.byKey(const ValueKey('note'));
+
+void _window(WidgetTester tester, Size size) {
+  tester.view.physicalSize = size;
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+}
+
+class _Probe {
+  int submits = 0;
+  bool? result;
+  final routes = <Route<Object?>>[];
+}
+
+class _RouteCounter extends NavigatorObserver {
+  _RouteCounter(this.probe);
+  final _Probe probe;
+
+  @override
+  void didPush(Route<Object?> route, Route<Object?>? previousRoute) =>
+      probe.routes.add(route);
+
+  @override
+  void didPop(Route<Object?> route, Route<Object?>? previousRoute) =>
+      probe.routes.remove(route);
+
+  @override
+  void didRemove(Route<Object?> route, Route<Object?>? previousRoute) =>
+      probe.routes.remove(route);
+}
+
+Future<_Probe> _open(
+  WidgetTester tester,
+  TaskSize size, {
+  WidgetBuilder? body,
+}) async {
+  final probe = _Probe();
+  final name = TextEditingController();
+  final note = TextEditingController();
+  addTearDown(name.dispose);
+  addTearDown(note.dispose);
+  await tester.pumpWidget(
+    MaterialApp(
+      navigatorObservers: [_RouteCounter(probe)],
+      home: Builder(
+        builder: (context) => Scaffold(
+          body: TextButton(
+            onPressed: () async {
+              probe.result = await showTask<bool>(
+                context,
+                size: size,
+                builder:
+                    body ??
+                    (_) => AppFormSheet(
+                      title: 'New thing',
+                      submitLabel: 'Save',
+                      submitKey: const ValueKey('save'),
+                      onSubmit: () async {
+                        probe.submits++;
+                        return null;
+                      },
+                      builder: (context, refresh) => [
+                        AppTextField(
+                          key: const ValueKey('name'),
+                          controller: name,
+                          label: 'Name',
+                        ),
+                        AppTextField(
+                          key: const ValueKey('note'),
+                          controller: note,
+                          label: 'Note',
+                          maxLines: 4,
+                        ),
+                      ],
+                    ),
+              );
+            },
+            child: const Text('open'),
+          ),
+        ),
+      ),
+    ),
+  );
+  await tester.tap(find.text('open'));
+  await tester.pumpAndSettle();
+  return probe;
+}
+
+Future<void> _ctrlEnter(WidgetTester tester) async {
+  await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
+  await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+  await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
+  await tester.pumpAndSettle();
+}
+
+void main() {
+  group('the container follows the window class', () {
+    for (final (size, window, shown, bound) in [
+      (TaskSize.short, _phone, _sheet, _phone.width),
+      (TaskSize.short, _tablet, _dialog, TaskSurfaceMetrics.dialogMaxWidth),
+      (TaskSize.short, _desk, _dialog, TaskSurfaceMetrics.dialogMaxWidth),
+      (TaskSize.standard, _phone, _sheet, _phone.width),
+      (TaskSize.standard, _tablet, _dialog, TaskSurfaceMetrics.dialogMaxWidth),
+      (TaskSize.standard, _desk, _panel, TaskSurfaceMetrics.sidePanelWidth),
+    ]) {
+      testWidgets('${size.name} at ${window.width.toInt()}', (tester) async {
+        _window(tester, window);
+        await _open(tester, size);
+        for (final other in [_sheet, _dialog, _panel]) {
+          expect(
+            other,
+            identical(other, shown) ? findsOneWidget : findsNothing,
+          );
+        }
+        final width = tester.getSize(find.byType(AppFormSheet)).width;
+        expect(width, lessThanOrEqualTo(bound));
+        if (identical(shown, _panel)) {
+          expect(width, TaskSurfaceMetrics.sidePanelWidth);
+          // On the right, the page beside it.
+          expect(tester.getTopRight(_panel).dx, window.width);
+        }
+      });
+    }
+  });
+
+  testWidgets('a resize across classes keeps the text, the focus and the one '
+      'route', (tester) async {
+    _window(tester, _phone);
+    final probe = await _open(tester, TaskSize.standard);
+    expect(probe.routes, hasLength(2));
+    final task = probe.routes.last;
+    await tester.enterText(_name, 'Ada');
+    await tester.pump();
+    final focused = FocusManager.instance.primaryFocus;
+    for (final (window, shown) in [
+      (_desk, _panel),
+      (_tablet, _dialog),
+      (_phone, _sheet),
+      (_desk, _panel),
+    ]) {
+      _window(tester, window);
+      await tester.pumpAndSettle();
+      expect(shown, findsOneWidget);
+      expect(probe.routes, hasLength(2));
+      expect(identical(probe.routes.last, task), isTrue);
+      expect(find.text('Ada'), findsOneWidget);
+      expect(FocusManager.instance.primaryFocus, same(focused));
+      expect(
+        tester
+            .widget<EditableText>(
+              find.descendant(of: _name, matching: find.byType(EditableText)),
+            )
+            .focusNode
+            .hasFocus,
+        isTrue,
+      );
+    }
+  });
+
+  group('the keyboard', () {
+    testWidgets('Enter submits a short form from a one-line field', (
+      tester,
+    ) async {
+      _window(tester, _desk);
+      final probe = await _open(tester, TaskSize.short);
+      await tester.enterText(_name, 'Ada');
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      expect(probe.submits, 1);
+      expect(probe.result, isTrue);
+    });
+
+    testWidgets('Enter does not submit a standard form; Ctrl+Enter does', (
+      tester,
+    ) async {
+      _window(tester, _desk);
+      final probe = await _open(tester, TaskSize.standard);
+      await tester.enterText(_name, 'Ada');
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      expect(probe.submits, 0);
+      expect(_panel, findsOneWidget);
+      await _ctrlEnter(tester);
+      expect(probe.submits, 1);
+      expect(probe.result, isTrue);
+    });
+
+    testWidgets('Enter in a multi-line field is a new line, never a submit', (
+      tester,
+    ) async {
+      _window(tester, _desk);
+      final probe = await _open(tester, TaskSize.short);
+      await tester.enterText(_note, 'one');
+      final result = await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      // Not consumed: the field's own Return (a new line) gets it.
+      expect(result, isFalse);
+      expect(probe.submits, 0);
+      await _ctrlEnter(tester);
+      expect(probe.submits, 1);
+    });
+
+    testWidgets(
+      'Enter and Ctrl+Enter while a word is composed submit nothing',
+      (tester) async {
+        _window(tester, _desk);
+        final probe = await _open(tester, TaskSize.short);
+        await tester.showKeyboard(_name);
+        tester.testTextInput.updateEditingValue(
+          const TextEditingValue(
+            text: 'ka',
+            selection: TextSelection.collapsed(offset: 2),
+            composing: TextRange(start: 0, end: 2),
+          ),
+        );
+        await tester.pump();
+        await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+        await _ctrlEnter(tester);
+        expect(probe.submits, 0);
+        expect(_dialog, findsOneWidget);
+      },
+    );
+  });
+
+  group('leaving a task', () {
+    final question = find.byKey(const ValueKey('unsaved-changes-dialog'));
+
+    /// The five ways out, each as the person takes it.
+    final ways = <String, Future<void> Function(WidgetTester)>{
+      'Escape': (t) => t.sendKeyEvent(LogicalKeyboardKey.escape),
+      'the scrim': (t) => t.tapAt(const Offset(8, 8)),
+      'the back button': (t) => t.binding.handlePopRoute(),
+      'Cancel': (t) => t.tap(find.byKey(const ValueKey('form-sheet-cancel'))),
+      'a drag': (t) => t.flingFrom(
+        t.getTopLeft(_sheet) + _handle,
+        const Offset(0, 600),
+        3000,
+      ),
+    };
+
+    for (final MapEntry(key: way, value: take) in ways.entries) {
+      final window = way == 'a drag' ? _phone : _desk;
+
+      testWidgets('$way closes an unchanged task at once', (tester) async {
+        _window(tester, window);
+        final probe = await _open(tester, TaskSize.standard);
+        await take(tester);
+        await tester.pumpAndSettle();
+        expect(question, findsNothing);
+        expect(probe.routes, hasLength(1));
+      });
+
+      testWidgets('$way on a changed task asks; keep stays, discard leaves', (
+        tester,
+      ) async {
+        _window(tester, window);
+        final probe = await _open(tester, TaskSize.standard);
+        await tester.enterText(_name, 'Ada');
+        await tester.pump();
+        await take(tester);
+        await tester.pumpAndSettle();
+        expect(question, findsOneWidget);
+        await tester.tap(find.byKey(const ValueKey('unsaved-changes-keep')));
+        await tester.pumpAndSettle();
+        expect(find.text('Ada'), findsOneWidget);
+        expect(probe.routes, hasLength(2));
+        await take(tester);
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('unsaved-changes-discard')));
+        await tester.pumpAndSettle();
+        expect(probe.routes, hasLength(1));
+        expect(probe.submits, 0);
+      });
+    }
+
+    testWidgets('a Close after a completed submit does not ask', (
+      tester,
+    ) async {
+      _window(tester, _desk);
+      final field = TextEditingController();
+      addTearDown(field.dispose);
+      final probe = await _open(
+        tester,
+        TaskSize.standard,
+        body: (context) => Column(
+          children: [
+            AppTextField(
+              key: const ValueKey('name'),
+              controller: field,
+              label: 'Name',
+            ),
+            TextButton(
+              onPressed: () => TaskSession.maybeOf(context)!.completed(),
+              child: const Text('send'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).maybePop(),
+              child: const Text('close'),
+            ),
+          ],
+        ),
+      );
+      await tester.enterText(_name, 'Ada');
+      await tester.tap(find.text('send'));
+      await tester.pump();
+      await tester.tap(find.text('close'));
+      await tester.pumpAndSettle();
+      expect(question, findsNothing);
+      expect(probe.routes, hasLength(1));
+    });
+
+    /// Opens [body] as a standard task in [window], with a scaffold under
+    /// the fields so the kit's material controls draw.
+    Future<void> openBody(
+      WidgetTester tester,
+      Size window,
+      Widget Function(BuildContext) body,
+    ) async {
+      _window(tester, window);
+      await _open(
+        tester,
+        TaskSize.standard,
+        body: (context) => Material(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 48),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [body(context)],
+            ),
+          ),
+        ),
+      );
+    }
+
+    final amount = TextEditingController();
+    final code = TextEditingController();
+    tearDownAll(amount.dispose);
+    tearDownAll(code.dispose);
+
+    testWidgets('text put into an amount field, then Escape: the question', (
+      tester,
+    ) async {
+      amount.clear();
+      await openBody(
+        tester,
+        _desk,
+        (_) => AppAmountField(
+          key: const ValueKey('amount'),
+          controller: amount,
+          label: 'Amount',
+          currency: 'EUR',
+          allowNegative: false,
+        ),
+      );
+      await tester.enterText(find.byKey(const ValueKey('amount')), '12');
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(question, findsOneWidget);
+    });
+
+    testWidgets('a prefilled field, focused and left untouched, then Escape: '
+        'no question', (tester) async {
+      // The false alarm the text follower must never raise: the form opens
+      // with a value, the person clicks into the field and leaves.
+      amount.text = '12.50';
+      code.text = 'kept';
+      await openBody(
+        tester,
+        _desk,
+        (_) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppAmountField(
+              key: const ValueKey('amount'),
+              controller: amount,
+              label: 'Amount',
+              currency: 'EUR',
+              allowNegative: false,
+            ),
+            TextField(key: const ValueKey('raw'), controller: code),
+          ],
+        ),
+      );
+      EditableText editable(String key) => tester.widget<EditableText>(
+        find.descendant(
+          of: find.byKey(ValueKey(key)),
+          matching: find.byType(EditableText),
+        ),
+      );
+      await tester.showKeyboard(find.byKey(const ValueKey('amount')));
+      await tester.pump();
+      expect(editable('amount').focusNode.hasFocus, isTrue);
+      await tester.showKeyboard(find.byKey(const ValueKey('raw')));
+      await tester.pump();
+      expect(editable('raw').focusNode.hasFocus, isTrue);
+      // Moving the caret is not a change of the text either.
+      code.selection = const TextSelection.collapsed(offset: 2);
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(question, findsNothing);
+      expect(find.byKey(const ValueKey('raw')), findsNothing);
+      amount.clear();
+      code.clear();
+    });
+
+    for (final (window, way) in [(_desk, 'Escape'), (_phone, 'a drag')]) {
+      testWidgets('text put into a raw field, then $way: the question', (
+        tester,
+      ) async {
+        await openBody(
+          tester,
+          window,
+          (_) => const TextField(key: ValueKey('raw')),
+        );
+        await tester.enterText(find.byKey(const ValueKey('raw')), 'a');
+        await tester.pump();
+        await ways[way]!(tester);
+        await tester.pumpAndSettle();
+        expect(question, findsOneWidget);
+      });
+    }
+
+    testWidgets('a choice picked in the kit\'s list field, then Escape: the '
+        'question', (tester) async {
+      code.clear();
+      await openBody(
+        tester,
+        _desk,
+        (_) => MasterDataField(
+          controller: code,
+          label: 'Country',
+          textKey: const ValueKey('country'),
+          options: const [MasterDataOption(code: 'FR', name: 'France')],
+        ),
+      );
+      await tester.tap(find.byKey(const ValueKey('country')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('France · FR'));
+      await tester.pump();
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(question, findsOneWidget);
+    });
+
+    testWidgets('a kit toggle flipped, then Escape: the question', (
+      tester,
+    ) async {
+      await openBody(
+        tester,
+        _desk,
+        (_) => HelpRow.toggle(
+          key: const ValueKey('toggle'),
+          title: 'Active',
+          value: false,
+          onChanged: (_) {},
+        ),
+      );
+      await tester.tap(find.byKey(const ValueKey('toggle')));
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(question, findsOneWidget);
+    });
+
+    testWidgets('Enter in a short form\'s field with its own onSubmitted '
+        'submits once', (tester) async {
+      _window(tester, _desk);
+      var fieldSubmits = 0;
+      final field = TextEditingController();
+      addTearDown(field.dispose);
+      var submits = 0;
+      await _open(
+        tester,
+        TaskSize.short,
+        body: (_) => AppFormSheet(
+          title: 'Short',
+          submitLabel: 'Save',
+          onSubmit: () async {
+            submits++;
+            return null;
+          },
+          builder: (context, refresh) => [
+            AppTextField(
+              key: const ValueKey('one'),
+              controller: field,
+              label: 'One',
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => fieldSubmits++,
+            ),
+            AppTextField(controller: TextEditingController(), label: 'Two'),
+          ],
+        ),
+      );
+      await tester.enterText(find.byKey(const ValueKey('one')), 'x');
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      expect(submits, 1);
+      expect(fieldSubmits, 0);
+      expect(_dialog, findsNothing);
+    });
+
+    testWidgets('a task without a text field, marked changed, asks on '
+        'Escape', (tester) async {
+      _window(tester, _desk);
+      await _open(
+        tester,
+        TaskSize.standard,
+        body: (context) => Material(
+          child: Switch(
+            value: false,
+            onChanged: (_) => TaskSession.maybeOf(context)!.markChanged(),
+          ),
+        ),
+      );
+      await tester.tap(find.byType(Switch));
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(question, findsOneWidget);
+    });
+  });
+}

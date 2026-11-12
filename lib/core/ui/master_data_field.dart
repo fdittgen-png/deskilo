@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/context_l10n.dart';
 import '../text/collation.dart';
+import 'adaptive/task_surface.dart';
 import 'form_kit.dart';
 
 /// One valid value: its code and its name in the reader's language.
@@ -162,6 +163,7 @@ class _MasterDataFieldState extends State<MasterDataField> {
       displayStringForOption: (o) => o.label,
       optionsBuilder: (value) => optionsMatching(widget.options, value.text),
       onSelected: (o) {
+        TaskSession.maybeOf(context)?.markChanged();
         widget.controller.text = o.code;
         widget.onChanged?.call(o.code);
         setState(() {});

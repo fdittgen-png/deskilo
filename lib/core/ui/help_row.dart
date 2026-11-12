@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../help/help_dot.dart';
+import 'adaptive/task_surface.dart';
 
 /// #3215 — the help symbol of a settings row sits in a FIXED column.
 ///
@@ -94,7 +95,7 @@ class HelpRow extends StatelessWidget {
         title: Text(title),
         subtitle: subtitle,
         trailing: HelpColumn(topic: topic, anchor: anchor, child: trailing),
-        onTap: onTap,
+        onTap: _tap(context),
       );
 }
 
@@ -126,6 +127,18 @@ class HelpColumn extends StatelessWidget {
       );
 }
 
+extension on HelpRow {
+  /// The row's tap; flipping a toggle row is a change of the task it is in.
+  VoidCallback? _tap(BuildContext context) {
+    final tap = onTap;
+    if (tap == null || trailing is! _RowSwitch) return tap;
+    return () {
+      TaskSession.maybeOf(context)?.markChanged();
+      tap();
+    };
+  }
+}
+
 class _RowSwitch extends StatelessWidget {
   const _RowSwitch({
     required this.title,
@@ -141,6 +154,14 @@ class _RowSwitch extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
         label: title,
         container: true,
-        child: Switch(value: value, onChanged: onChanged),
+        child: Switch(
+          value: value,
+          onChanged: onChanged == null
+              ? null
+              : (next) {
+                  TaskSession.maybeOf(context)?.markChanged();
+                  onChanged!(next);
+                },
+        ),
       );
 }
