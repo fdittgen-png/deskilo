@@ -24,6 +24,7 @@ import 'router.dart';
 import 'shell/desk_frame.dart';
 import 'shell/desk_scaffold.dart';
 import 'shell/layer_chrome.dart';
+import 'shell/window_title.dart';
 import 'switcher_cover_host.dart';
 import 'theme.dart';
 
@@ -143,10 +144,15 @@ class DeskiloApp extends ConsumerWidget {
                       router: router,
                       child: child ?? const SizedBox.shrink(),
                     );
-                    return desk
-                        ? DeskFrame(router: router, path: path, child: page)
-                        // #3604 — the measure its route declares.
-                        : framePage(path, page, inside: false);
+                    // #3605 — the window's title, on the desk and off it.
+                    return WindowTitle(
+                      router: router,
+                      path: path,
+                      child: desk
+                          ? DeskFrame(router: router, path: path, child: page)
+                          // #3604 — the measure its route declares.
+                          : framePage(path, page, inside: false),
+                    );
                   },
                 ),
               ))),
