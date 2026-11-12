@@ -67,18 +67,13 @@ class BookingWindowSummary extends StatelessWidget {
       ),
       child: Align(
         alignment: AlignmentDirectional.centerStart,
-        child: Tooltip(
-          message: caption,
-          child: Text(
-            caption,
-            key: const ValueKey('booking-window-summary'),
-            style: Theme.of(context).textTheme.bodySmall,
-            // #3068 — one line: the first screen belongs to the plan; the
-            // whole caption stays in the tooltip and the semantics label.
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            semanticsLabel: caption,
-          ),
+        // The day, the hours and their zone are read, not hovered for: the
+        // line wraps onto a second one rather than cut them off.
+        child: Text(
+          caption,
+          key: const ValueKey('booking-window-summary'),
+          style: Theme.of(context).textTheme.bodySmall,
+          semanticsLabel: caption,
         ),
       ),
     );
