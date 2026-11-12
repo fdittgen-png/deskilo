@@ -11227,6 +11227,32 @@
   "localSlotPaymentProvider": "Ein Online-Zahlungsanbieter",
   "localSlotRecommended": "Empfohlen",
   "localSlotSite": "Mindestens ein Standort",
+  "mailRefusalInvalid": "eine Adresse oder der angehängte Brief war ungültig",
+  "@mailRefusalInvalid": {
+    "description": "#3774 e-mail refusals: mailRefusalInvalid"
+  },
+  "mailRefusalNoSender": "der E-Mail-Absender des Unternehmens war nicht eingerichtet",
+  "@mailRefusalNoSender": {
+    "description": "#3774 e-mail refusals: mailRefusalNoSender"
+  },
+  "mailRefusalOther": "„{reason}“",
+  "@mailRefusalOther": {
+    "description": "#3774 e-mail refusals: mailRefusalOther",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "mailRefusalProvider": "der E-Mail-Anbieter antwortete {status}",
+  "@mailRefusalProvider": {
+    "description": "#3774 e-mail refusals: mailRefusalProvider",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
   "managedAccessAdmins": "Admins",
   "@managedAccessAdmins": {
     "description": "#914 managed profile access: managedAccessAdmins"
@@ -13887,6 +13913,10 @@
   "purchaseOrderSave": "Entwurf speichern",
   "purchaseOrderSendArrived": "Sie ist angekommen",
   "purchaseOrderSendAwaits": "Eine E-Mail an {recipient} hat kein bestätigtes Ergebnis. Ist sie angekommen?",
+  "purchaseOrderSendDecideFirst": "Eine frühere E-Mail dieser Bestellung hat kein bestätigtes Ergebnis. Geben Sie unten an, ob sie angekommen ist, bevor Sie erneut senden.",
+  "@purchaseOrderSendDecideFirst": {
+    "description": "#3774 e-mail refusals: purchaseOrderSendDecideFirst"
+  },
   "purchaseOrderSendEmail": "Per E-Mail senden",
   "purchaseOrderSendLost": "Sie ist nicht angekommen",
   "purchaseOrderSendRefused": "Die E-Mail wurde abgelehnt: {reason}. Die Bestellung bleibt ein Entwurf.",

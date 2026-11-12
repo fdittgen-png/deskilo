@@ -47,6 +47,8 @@ function harness(opts: {
               id: ids.attempt_id,
               state: "pending",
               recipient: "orders@alpha.test",
+              opened: true,
+              sendable: true,
             },
             error: null,
           },
@@ -157,6 +159,43 @@ Deno.test("a replayed attempt with an outcome is answered, never sent again", as
   assertEquals(res.status, 200);
   assertEquals(h.sent.length, 0);
   assertEquals(h.calls.length, 1);
+});
+
+Deno.test("an old pending replay is never sent again: a person decides it", async () => {
+  const h = harness({
+    begin: {
+      data: {
+        id: ids.attempt_id,
+        state: "pending",
+        recipient: "orders@alpha.test",
+        opened: false,
+        sendable: false,
+      },
+      error: null,
+    },
+  });
+  const res = await handle(post(body), h.deps);
+  assertEquals(res.status, 409);
+  assertEquals(h.sent.length, 0);
+  assertEquals(h.calls.length, 1);
+});
+
+Deno.test("a young pending replay is sent under the same idempotency key", async () => {
+  const h = harness({
+    begin: {
+      data: {
+        id: ids.attempt_id,
+        state: "pending",
+        recipient: "orders@alpha.test",
+        opened: false,
+        sendable: true,
+      },
+      error: null,
+    },
+  });
+  await handle(post(body), h.deps);
+  assertEquals(h.sent.length, 1);
+  assertEquals(h.sent[0].attemptId, "00000000000040008000000000000003");
 });
 
 Deno.test("an unconfigured space records a refusal without calling the provider", async () => {

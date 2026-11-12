@@ -28172,6 +28172,30 @@ abstract class AppLocalizations {
   /// **'At least one site'**
   String get localSlotSite;
 
+  /// #3774 e-mail refusals: mailRefusalInvalid
+  ///
+  /// In en, this message translates to:
+  /// **'an address or the attached letter was not valid'**
+  String get mailRefusalInvalid;
+
+  /// #3774 e-mail refusals: mailRefusalNoSender
+  ///
+  /// In en, this message translates to:
+  /// **'the business\'s e-mail sender was not set up'**
+  String get mailRefusalNoSender;
+
+  /// #3774 e-mail refusals: mailRefusalOther
+  ///
+  /// In en, this message translates to:
+  /// **'“{reason}”'**
+  String mailRefusalOther(String reason);
+
+  /// #3774 e-mail refusals: mailRefusalProvider
+  ///
+  /// In en, this message translates to:
+  /// **'the e-mail provider answered {status}'**
+  String mailRefusalProvider(String status);
+
   /// #914 managed profile access: managedAccessAdmins
   ///
   /// In en, this message translates to:
@@ -37345,6 +37369,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An e-mail to {recipient} has no confirmed outcome. Did it arrive?'**
   String purchaseOrderSendAwaits(String recipient);
+
+  /// #3774 e-mail refusals: purchaseOrderSendDecideFirst
+  ///
+  /// In en, this message translates to:
+  /// **'An earlier e-mail of this order has no confirmed outcome. Say below whether it arrived before sending again.'**
+  String get purchaseOrderSendDecideFirst;
 
   /// #3307 purchase order e-mail
   ///

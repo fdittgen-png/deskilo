@@ -3,6 +3,7 @@
 // #3307 — the purchase orders over Supabase: read by RLS (managePurchases
 // or viewFinances), written only through the RPCs of 0681, 0683 and 0684.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/purchase_order.dart';
@@ -128,21 +129,32 @@ class SupabasePurchaseOrderRepository implements PurchaseOrderRepository {
     String attemptId,
     PurchaseOrderMail mail,
   ) async {
-    final response = await _client.functions.invoke(
-      'send-purchase-order',
-      body: {
-        'workspace_id': workspaceId,
-        'order_id': order.id,
-        'revision': order.revision,
-        'attempt_id': attemptId,
-        'subject': mail.subject,
-        'text': mail.text,
-        'pdf_base64': mail.pdfBase64,
-        'file_name': mail.fileName,
-      },
-    );
+    final FunctionResponse response;
+    try {
+      response = await _client.functions.invoke(
+        'send-purchase-order',
+        body: {
+          'workspace_id': workspaceId,
+          'order_id': order.id,
+          'revision': order.revision,
+          'attempt_id': attemptId,
+          'subject': mail.subject,
+          'text': mail.text,
+          'pdf_base64': mail.pdfBase64,
+          'file_name': mail.fileName,
+        },
+      );
+    } on FunctionException catch (e, st) {
+      Error.throwWithStackTrace(sendFailureOf(e), st);
+    }
     return PurchaseOrderSend.fromJson(response.data);
   }
+
+  /// #3774 — the function's 409: an earlier send has no confirmed outcome,
+  /// and nothing was sent; any other failure as it came.
+  @visibleForTesting
+  static Object sendFailureOf(FunctionException e) =>
+      e.status == 409 ? const PurchaseOrderSendUndecided() : e;
 
   @override
   Future<PurchaseOrderSend> resolveSend(

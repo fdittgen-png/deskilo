@@ -22934,6 +22934,32 @@
   "@localSlotSite": {
     "description": "#1656 local_setup"
   },
+  "mailRefusalInvalid": "an address or the attached letter was not valid",
+  "@mailRefusalInvalid": {
+    "description": "#3774 e-mail refusals: mailRefusalInvalid"
+  },
+  "mailRefusalNoSender": "the business's e-mail sender was not set up",
+  "@mailRefusalNoSender": {
+    "description": "#3774 e-mail refusals: mailRefusalNoSender"
+  },
+  "mailRefusalOther": "“{reason}”",
+  "@mailRefusalOther": {
+    "description": "#3774 e-mail refusals: mailRefusalOther",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "mailRefusalProvider": "the e-mail provider answered {status}",
+  "@mailRefusalProvider": {
+    "description": "#3774 e-mail refusals: mailRefusalProvider",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
   "managedAccessAdmins": "Admins",
   "@managedAccessAdmins": {
     "description": "#914 managed profile access: managedAccessAdmins"
@@ -30156,6 +30182,10 @@
         "type": "String"
       }
     }
+  },
+  "purchaseOrderSendDecideFirst": "An earlier e-mail of this order has no confirmed outcome. Say below whether it arrived before sending again.",
+  "@purchaseOrderSendDecideFirst": {
+    "description": "#3774 e-mail refusals: purchaseOrderSendDecideFirst"
   },
   "purchaseOrderSendEmail": "Send by e-mail",
   "@purchaseOrderSendEmail": {

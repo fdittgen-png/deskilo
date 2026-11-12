@@ -11227,6 +11227,32 @@
   "localSlotPaymentProvider": "Un fornitore di pagamenti online",
   "localSlotRecommended": "Consigliato",
   "localSlotSite": "Almeno una sede",
+  "mailRefusalInvalid": "un indirizzo o la lettera allegata non era valida",
+  "@mailRefusalInvalid": {
+    "description": "#3774 e-mail refusals: mailRefusalInvalid"
+  },
+  "mailRefusalNoSender": "il mittente e-mail dell'azienda non era configurato",
+  "@mailRefusalNoSender": {
+    "description": "#3774 e-mail refusals: mailRefusalNoSender"
+  },
+  "mailRefusalOther": "«{reason}»",
+  "@mailRefusalOther": {
+    "description": "#3774 e-mail refusals: mailRefusalOther",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "mailRefusalProvider": "il provider e-mail ha risposto {status}",
+  "@mailRefusalProvider": {
+    "description": "#3774 e-mail refusals: mailRefusalProvider",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
   "managedAccessAdmins": "Admin",
   "@managedAccessAdmins": {
     "description": "#914 managed profile access: managedAccessAdmins"
@@ -13887,6 +13913,10 @@
   "purchaseOrderSave": "Salva la bozza",
   "purchaseOrderSendArrived": "È arrivata",
   "purchaseOrderSendAwaits": "Un’e-mail a {recipient} non ha un esito confermato. È arrivata?",
+  "purchaseOrderSendDecideFirst": "Un'e-mail precedente di questo ordine non ha un esito confermato. Indica qui sotto se è arrivata prima di inviare di nuovo.",
+  "@purchaseOrderSendDecideFirst": {
+    "description": "#3774 e-mail refusals: purchaseOrderSendDecideFirst"
+  },
   "purchaseOrderSendEmail": "Invia per e-mail",
   "purchaseOrderSendLost": "Non è arrivata",
   "purchaseOrderSendRefused": "L’e-mail è stata rifiutata: {reason}. L’ordine resta una bozza.",

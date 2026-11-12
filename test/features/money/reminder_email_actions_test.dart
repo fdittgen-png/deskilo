@@ -337,7 +337,7 @@ void main() {
       ).email(_invoice, level: 2, owedCents: 4500, pdf: _pdf),
     );
     expect(
-      find.text(l10n.reminderEmailRefused('provider_422')),
+      find.text(l10n.reminderEmailRefused(l10n.mailRefusalProvider('422'))),
       findsOneWidget,
     );
   });
