@@ -79,5 +79,5 @@
   "a11ySeatMine": "Ihr Platz",
   "a11ySeatBlocked": "nicht verfügbar",
   "reservePlanLoading": "Plan wird geladen …",
-  "planFromTime": "Von {time}"
+  "planFromTermTime": "{term} {time}"
 }

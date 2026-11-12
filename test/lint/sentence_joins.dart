@@ -45,6 +45,11 @@ final Set<String> _spaceOnlyPatterns = () {
     final json = jsonDecode(f.readAsStringSync()) as Map<String, dynamic>;
     for (final MapEntry(:key, :value) in json.entries) {
       if (key.startsWith('@') || value is! String) continue;
+      final meta = json['@$key'];
+      final description = meta is Map ? '${meta['description']}' : '';
+      // A message whose first placeholder is the workspace's own word (a
+      // renamed term) is a value beside a value, not a sentence in pieces.
+      if (description.contains('[workspace term:')) continue;
       if (placeholder.allMatches(value).length >= 2 &&
           value.replaceAll(placeholder, '').trim().isEmpty) {
         out.add(key);

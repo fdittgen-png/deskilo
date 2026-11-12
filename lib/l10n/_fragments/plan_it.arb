@@ -79,5 +79,5 @@
   "a11ySeatMine": "il suo posto",
   "a11ySeatBlocked": "non disponibile",
   "reservePlanLoading": "Caricamento della pianta…",
-  "planFromTime": "Dalle {time}"
+  "planFromTermTime": "{term} {time}"
 }

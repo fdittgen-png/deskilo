@@ -79,5 +79,5 @@
   "a11ySeatMine": "votre place",
   "a11ySeatBlocked": "indisponible",
   "reservePlanLoading": "Chargement du plan…",
-  "planFromTime": "De {time}"
+  "planFromTermTime": "{term} {time}"
 }

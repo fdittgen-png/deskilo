@@ -354,10 +354,13 @@
   "@reservePlanLoading": {
     "description": "#3068 the label of the plan skeleton on Reserve"
   },
-  "planFromTime": "From {time}",
-  "@planFromTime": {
-    "description": "The start time of a booking period on its button, e.g. \"From 09:00\".",
+  "planFromTermTime": "{term} {time}",
+  "@planFromTermTime": {
+    "description": "The start time of a booking period on its button, e.g. \"From 09:00\". {term} is the workspace's own word for the start (already translated or renamed in the vocabulary editor), {time} the formatted time. [workspace term: term]",
     "placeholders": {
+      "term": {
+        "type": "String"
+      },
       "time": {
         "type": "String"
       }
