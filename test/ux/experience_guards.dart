@@ -204,6 +204,10 @@ Future<void> pumpRoute(
   await tester.pumpAndSettle();
 }
 
+/// What the modal barrier is called to a screen reader (the guards run in
+/// English).
+const String _scrimLabel = 'Scrim';
+
 /// The rects of the table rows on screen: where a [TargetPolicy.desk] target
 /// may be [deskRowMinHeight] high.
 List<Rect> _rowRects(WidgetTester tester, Iterable<Type> rowTypes) => [
@@ -313,6 +317,9 @@ Set<String> deskGuardProblems(
   );
   for (final node in tappableRects(tester)) {
     if (cut(node.rect)) continue;
+    // A modal's barrier takes a tap to dismiss; it is the page behind the
+    // sheet, not a control (#3620: a tall sheet leaves a strip of it).
+    if (node.label == _scrimLabel) continue;
     final row = policy == TargetPolicy.desk &&
         rows.any((r) => _within(node.rect, r));
     final minHeight = row ? deskRowMinHeight : 48;

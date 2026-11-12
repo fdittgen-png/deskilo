@@ -203,6 +203,13 @@ final List<MeScreen> meScreens = [
     sources: [],
     states: {'populated': _populated, 'empty': _empty},
   ),
+  // #3620 -- my reservations: a phone journey of the day, guarded with Me.
+  const MeScreen(
+    id: 'data · my reservations',
+    route: '/me/data?view=reservations',
+    sources: [],
+    states: {'populated': _populated, 'empty': _empty},
+  ),
   const MeScreen(
     id: 'account',
     route: '/me/account',
