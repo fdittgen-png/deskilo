@@ -7,6 +7,7 @@
 // and the drafts and says so here as abstract members.
 import 'dart:typed_data';
 
+import 'package:file_selector/file_selector.dart' show XFile;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -188,11 +189,12 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
         exportedAt: ref.read(clockProvider).now());
   }
 
-  Future<void> editorImportLayout() async {
+  /// [dropped]: a file dropped on the panel (#3818), same handler.
+  Future<void> editorImportLayout([XFile? dropped]) async {
     final kind = reportKindById(editorDoc, reminderLevels: editorReminderLevels);
     if (kind == null) return;
     final file = await importReportLayout(context, ref,
-        kind: kind, reminderLevels: editorReminderLevels);
+        kind: kind, reminderLevels: editorReminderLevels, dropped: dropped);
     if (file == null || !mounted) return;
     editorUpdate(() {
       editorLayoutDrafts[editorDoc] = file.layoutXml;
@@ -233,7 +235,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
   /// #864 — read one back into the document being edited. It lands in
   /// the editor, not in the workspace: nothing is stored until Save,
   /// which is what makes an import reviewable before it counts.
-  Future<void> editorImportDesign() async {
+  Future<void> editorImportDesign([XFile? dropped]) async {
     final l10n = context.l10n;
     final kind = reportKindById(editorDoc, reminderLevels: editorReminderLevels);
     if (kind == null) return;
@@ -243,6 +245,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
       ref,
       kind: kind,
       reminderLevels: editorReminderLevels,
+      dropped: dropped,
     );
     if (bands == null || !mounted) return;
     editorApply(bands);

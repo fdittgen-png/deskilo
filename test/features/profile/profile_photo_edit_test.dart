@@ -6,6 +6,7 @@
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/files/file_drop_backend.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:file_selector/file_selector.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_file_drop.dart';
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/open_my_account.dart';
@@ -29,13 +31,14 @@ final _png = Uint8List.fromList([
 
 Future<void> pumpSettings(
   WidgetTester tester,
-  FakeProfileRepository profile,
-) async {
+  FakeProfileRepository profile, [
+  FakeFileDrop? drop,
+]) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(profile: profile),
-        
+        ...?drop?.overrides(),
         filePickerProvider.overrideWithValue(
           (XTypeGroup group) async =>
               XFile.fromData(_png, name: 'me.png', mimeType: 'image/png'),
@@ -93,5 +96,35 @@ void main() {
     expect(profile.avatarBytes.containsKey('user-1'), isFalse);
     expect(profile.profiles.single.hasAvatar, isFalse);
     expect(find.text('Photo removed'), findsOneWidget);
+  });
+
+  // #3818 — a photo dropped on the row goes where the picked one goes.
+  testWidgets('a dropped image is uploaded like a picked one', (tester) async {
+    final profile = FakeProfileRepository();
+    final drop = FakeFileDrop();
+    await pumpSettings(tester, profile, drop);
+
+    drop.drop(
+      DroppedItems([FakeDroppedFile('me.png', bytes: _png, mimeType: 'image/png')]),
+    );
+    await tester.pumpAndSettle();
+
+    expect(profile.avatarBytes['user-1'], _png);
+    expect(profile.profiles.single.hasAvatar, isTrue);
+    expect(find.text('Photo updated'), findsOneWidget);
+  });
+
+  testWidgets('a dropped file of another kind is refused, nothing stored', (
+    tester,
+  ) async {
+    final profile = FakeProfileRepository();
+    final drop = FakeFileDrop();
+    await pumpSettings(tester, profile, drop);
+
+    drop.drop(DroppedItems([FakeDroppedFile('notes.pdf')]));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('takes .jpg, .jpeg, .png, .webp'), findsOneWidget);
+    expect(profile.avatarBytes, isEmpty);
   });
 }

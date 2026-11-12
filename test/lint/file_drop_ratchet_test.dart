@@ -9,22 +9,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'lint_sources.dart';
 
-/// The picker callers that still take no drop, each with why. Do not add
-/// to it: wrap the new place in a `FileDropZone` instead.
+/// The picker callers that take no drop BY DESIGN, each with why. Do not
+/// add to it: wrap the new place in a `FileDropZone` instead.
 const _withoutDrop = <String, String>{
-  'lib/features/workspace/presentation/screens/workspace_settings_restore.dart':
-      'a destructive restore driven from a host mixin: needs its confirm '
-      'flow lifted out of the picker first',
-  'lib/features/task_recorder/presentation/screens/task_wizard_screen.dart':
-      'a menu action, not a page: the file chooser sits in a popup',
   'lib/features/editor/presentation/level_canvas_flows.dart':
-      'the plan image lands at the tapped cell: a drop has no cell yet',
-  'lib/features/money/presentation/report_design_actions.dart':
-      'a function flow that returns the parsed design: no widget to wrap',
-  'lib/features/money/presentation/report_layout_design_actions.dart':
-      'a function flow that returns the parsed layout: no widget to wrap',
-  'lib/features/profile/presentation/widgets/account_settings_tiles.dart':
-      'the photo is chosen from a bottom sheet beside "remove"',
+      'the plan image lands at the tapped cell: a drop carries no cell, and '
+      'placing it at a guessed one would skip the step that decides where',
 };
 
 void main() {
