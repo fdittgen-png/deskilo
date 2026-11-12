@@ -1,0 +1,33 @@
+{
+  "@@locale": "es",
+  "mailRefusalNoSender": "el remitente de correo de la empresa no estaba configurado",
+  "@mailRefusalNoSender": {
+    "description": "#3774 e-mail refusals: mailRefusalNoSender"
+  },
+  "mailRefusalInvalid": "una dirección o la carta adjunta no era válida",
+  "@mailRefusalInvalid": {
+    "description": "#3774 e-mail refusals: mailRefusalInvalid"
+  },
+  "mailRefusalProvider": "el proveedor de correo respondió {status}",
+  "@mailRefusalProvider": {
+    "description": "#3774 e-mail refusals: mailRefusalProvider",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "mailRefusalOther": "«{reason}»",
+  "@mailRefusalOther": {
+    "description": "#3774 e-mail refusals: mailRefusalOther",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendDecideFirst": "Un correo anterior de este pedido no tiene un resultado confirmado. Indique abajo si llegó antes de volver a enviar.",
+  "@purchaseOrderSendDecideFirst": {
+    "description": "#3774 e-mail refusals: purchaseOrderSendDecideFirst"
+  }
+}

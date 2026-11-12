@@ -28,6 +28,7 @@ import '../providers/money_providers.dart';
 import '../providers/reminder_evidence_providers.dart';
 import '../providers/reminder_mail_providers.dart';
 import 'invoice_documents.dart' show l10nForLanguage;
+import 'mail_refusal_text.dart';
 
 /// How a reminder leaves.
 enum ReminderChannel { email, share }
@@ -195,7 +196,10 @@ class ReminderEmailFlow {
           case ReminderMailState.accepted:
             AppSnack.success(context, l10n.purchaseOrderSentTo(send.recipient));
           case ReminderMailState.refused:
-            AppSnack.error(context, l10n.reminderEmailRefused(send.reason));
+            AppSnack.error(
+              context,
+              l10n.reminderEmailRefused(mailRefusalText(l10n, send.reason)),
+            );
           case _:
             AppSnack.error(context, l10n.reminderEmailUnconfirmed);
         }

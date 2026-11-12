@@ -8,6 +8,7 @@
 // draft and asks a person about an unconfirmed attempt.
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
+import 'package:deskilo/features/money/data/supabase_purchase_order_repository.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/presentation/screens/purchase_orders_screen.dart';
@@ -24,7 +25,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show FunctionException, PostgrestException;
 
 const PurchaseOrderMail _mail = (
   subject: 'Purchase order 2026-0001',
@@ -61,6 +63,7 @@ _withOrder({String email = 'orders@alpha.test'}) async {
 }
 
 void main() {
+  _undecided();
   test(
     'an attempt and the settings read exactly; the key never travels back',
     () {
@@ -305,6 +308,86 @@ void main() {
       );
     },
   );
+
+  testWidgets(
+    'a pending attempt with no outcome is decided by a person too (#3774)',
+    (tester) async {
+      tester.view.physicalSize = const Size(1200, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final (repo, suppliers, order) = await _withOrder();
+      repo.mail = const PurchaseOrderMailSettings(
+        senderEmail: 'a@b.co',
+        hasApiKey: true,
+        revision: 1,
+      );
+      repo.sends.add(
+        PurchaseOrderSend(
+          id: 'lost',
+          orderId: order.id,
+          state: PurchaseOrderSendState.pending,
+          recipient: 'orders@alpha.test',
+        ),
+      );
+      await tester.pumpWidget(
+        _scope([
+          currentWorkspaceProvider.overrideWith(
+            (ref) async => const Workspace(
+              id: 'ws',
+              name: 'Space',
+              countryCode: 'FR',
+              currencyCode: 'EUR',
+              timezone: 'Europe/Paris',
+              inviteCode: 'x',
+            ),
+          ),
+          myMemberProvider.overrideWith((ref) async => null),
+          myPermissionsProvider.overrideWithValue({
+            WorkspacePermission.managePurchases,
+            WorkspacePermission.manageBilling,
+          }),
+          enabledFeaturesSyncProvider.overrideWithValue({
+            WorkspaceFeature.purchases,
+            WorkspaceFeature.purchaseOrders,
+          }),
+          supplierRepositoryProvider.overrideWithValue(suppliers),
+          purchaseOrderRepositoryProvider.overrideWithValue(repo),
+          servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
+        ]),
+      );
+      for (var i = 0; i < 4; i++) {
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+      expect(
+        find.byKey(const ValueKey('purchase-order-mail-settings')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('purchase-order-awaits-2026-0001')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('purchase-order-email-2026-0001')),
+        findsNothing,
+        reason: 'no new send while the earlier one awaits a decision',
+      );
+    },
+  );
+}
+
+// #3774 — the function's 409 is the decision a person owes; a pending
+// attempt in the list has no outcome either and is decided the same way.
+void _undecided() {
+  test('the send function\'s 409 is an earlier e-mail to decide first', () {
+    expect(
+      SupabasePurchaseOrderRepository.sendFailureOf(
+        const FunctionException(status: 409, details: {'code': '55000'}),
+      ),
+      isA<PurchaseOrderSendUndecided>(),
+    );
+    const other = FunctionException(status: 502);
+    expect(SupabasePurchaseOrderRepository.sendFailureOf(other), same(other));
+  });
 }
 
 Widget _scope(List<Override> overrides) => ProviderScope(
