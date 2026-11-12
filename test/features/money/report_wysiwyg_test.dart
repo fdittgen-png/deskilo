@@ -258,7 +258,7 @@ void main() {
     await tester
         .tap(find.byKey(const ValueKey('report-designer-zoom')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('100 %'));
+    await tester.tap(find.text('100%'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('visual-header-line-1')),
         findsOneWidget);

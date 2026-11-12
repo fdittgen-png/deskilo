@@ -317,7 +317,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('billing-tariff-vat')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Reduced (10 %)').last);
+    await tester.tap(find.text('Reduced (10%)').last);
     await tester.pumpAndSettle();
 
     // The pick is a draft until the page's one Save (#3072), and every band

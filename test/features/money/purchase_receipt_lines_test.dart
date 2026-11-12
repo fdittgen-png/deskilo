@@ -146,14 +146,14 @@ Future<void> _fillTwoLines(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('purchase-add-receipt')));
   await tester.pumpAndSettle();
   await _type(tester, 'receipt-gross-0', '120');
-  await _pick(tester, 'receipt-rate-0', '20 %');
+  await _pick(tester, 'receipt-rate-0', '20%');
   await _pick(tester, 'receipt-purpose-0', 'Day-to-day use');
   await _pick(tester, 'receipt-place-0', 'Blue room');
   await tester.ensureVisible(find.byKey(const ValueKey('receipt-add-line')));
   await tester.tap(find.byKey(const ValueKey('receipt-add-line')));
   await tester.pumpAndSettle();
   await _type(tester, 'receipt-gross-1', '10.55');
-  await _pick(tester, 'receipt-rate-1', '5.5 %');
+  await _pick(tester, 'receipt-rate-1', '5.5%');
   await _type(tester, 'receipt-share-1', '50');
   await _pick(tester, 'receipt-place-1', 'Quai Bas');
 }
