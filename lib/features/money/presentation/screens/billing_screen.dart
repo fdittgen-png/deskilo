@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/unsaved_changes_guard.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -36,7 +37,7 @@ class BillingScreen extends ConsumerWidget {
     final levelsAsync = ref.watch(subscriptionLevelsProvider);
     final packagesAsync = ref.watch(allPackagesProvider);
 
-    final appBar = AppBar(title: Text(l10n.billingTitle));
+    final appBar = AppBar(title: PageTitle(l10n.billingTitle));
     return switch ((bandsAsync, levelsAsync, packagesAsync)) {
       (
         AsyncData(value: final bands),

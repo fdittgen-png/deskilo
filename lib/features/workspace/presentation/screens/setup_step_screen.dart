@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../application/setup_step_timing_recorder.dart';
@@ -68,7 +69,7 @@ class SetupStepScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.setupStepTitle(stepId))),
+      appBar: AppBar(title: PageTitle(context.l10n.setupStepTitle(stepId))),
       body: workspace == null
           ? const LoadingView()
           : Column(

@@ -15,6 +15,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
@@ -138,7 +139,7 @@ class MembersScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.membersTitle),
+        title: PageTitle(l10n.membersTitle),
         actions: _appBarActions(context, ref, me, features),
       ),
       body: AsyncReadBody<List<Member>>(

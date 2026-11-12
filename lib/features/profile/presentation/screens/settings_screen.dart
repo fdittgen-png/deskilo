@@ -27,6 +27,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/help_row.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/widgets/badge_pin_tile.dart';
 import '../../../mcp/presentation/widgets/mcp_settings_tiles.dart';
@@ -155,7 +156,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       // administers nothing was always shown their account alone — this
       // stops calling that page Settings.
       appBar: AppBar(
-        title: Text(showsMemberAccountMenu(
+        title: PageTitle(showsMemberAccountMenu(
                 features: features, permissions: perms)
             ? (l10n.memberAccountTitle)
             : (l10n.settingsTitle)),

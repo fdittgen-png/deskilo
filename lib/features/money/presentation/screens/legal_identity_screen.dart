@@ -12,6 +12,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -67,10 +68,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
   // #895 — intra-EU B2B supplies are reverse-charged unless a workspace
   // that never invoices businesses abroad turns it off.
   bool _reverseCharge = true;
-  // #896/#2355 — when the tax falls due: the country's legal default, or
-  // an option its law allows (France's débits, a cash scheme elsewhere).
-  // Saving the screen records the choice, so a space that never chose
-  // stops being one.
+  // #896/#2355 — when the tax falls due: the country's legal default, or an
+  // option its law allows (France's débits, a cash scheme elsewhere). Saving
+  // the screen records the choice, so a space that never chose stops being one.
   VatTaxPointOption _taxPoint = VatTaxPointOption.standard;
   // Loaded before the workspace's tax context was ready: the country's
   // default is stated once it is, unless the owner chose meanwhile.
@@ -414,7 +414,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     if (workspace == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n.legalIdentityTitle),
+          title: PageTitle(l10n.legalIdentityTitle),
         ),
         body: const LoadingView(),
       );
@@ -429,7 +429,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: PageTitle(
           l10n.legalIdentityTitle,
         ),
       ),

@@ -14,6 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../reservations/domain/reservation_export.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -160,7 +161,7 @@ class _DeveloperScreenState extends ConsumerState<DeveloperScreen> {
     final logger = ref.watch(traceLoggerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.developerTitle),
+        title: PageTitle(l10n.developerTitle),
         actions: [
           IconButton(
             key: const ValueKey('developer-export'),

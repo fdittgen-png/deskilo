@@ -17,6 +17,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/instance_operator.dart';
@@ -187,7 +188,7 @@ class _InstanceAssistantsScreenState
     final o = _overview;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.instanceTitle),
+        title: PageTitle(l10n.instanceTitle),
       ),
       body: _loading
           ? const LoadingView()

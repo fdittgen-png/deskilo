@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/messenger.dart';
@@ -102,7 +103,7 @@ class _ThreadState extends ConsumerState<AccountThread> {
                   key: const ValueKey('account-thread-back'),
                   onPressed: widget.onBack,
                 ),
-          title: Text(widget.name),
+          title: PageTitle(widget.name),
         ),
         body: _loading
             ? const LoadingView()

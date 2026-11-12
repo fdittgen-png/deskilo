@@ -9,6 +9,7 @@ import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/oauth_consent.dart';
@@ -93,7 +94,7 @@ class _OAuthConsentScreenState extends ConsumerState<OAuthConsentScreen> {
     final l10n = context.l10n;
     final value = ref.watch(oauthConsentProvider(widget.authorizationId));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.identityConsentTitle)),
+      appBar: AppBar(title: PageTitle(l10n.identityConsentTitle)),
       body: value.when(
         loading: () => const LoadingView(),
         error: (e, st) => Padding(

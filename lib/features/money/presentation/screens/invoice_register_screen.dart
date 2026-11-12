@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -127,7 +128,7 @@ class _InvoiceRegisterScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.invoiceRegisterTitle),
+        title: PageTitle(l10n.invoiceRegisterTitle),
         actions: [
           // #1310 S0 — an accounting export (and the archive bundle
           // behind it) is a bulk export: exportData governs it, beside

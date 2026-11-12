@@ -7,6 +7,7 @@ import '../../../../core/scan/scan_camera_box.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/invite_uri.dart';
 
 /// Camera scanner for workspace QR codes (#88, rebuilt for #572). Runs on
@@ -70,7 +71,7 @@ class _ScanJoinScreenState extends ConsumerState<ScanJoinScreen> {
     final muted = Theme.of(context).colorScheme.onSurfaceVariant;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.scanJoinTitle),
+        title: PageTitle(l10n.scanJoinTitle),
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,

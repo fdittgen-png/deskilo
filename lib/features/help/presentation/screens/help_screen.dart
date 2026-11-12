@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../providers/help_providers.dart';
 import 'support_bundle_screen.dart';
 
@@ -100,7 +101,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
     final dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.helpTitle),
+        title: PageTitle(l10n.helpTitle),
         actions: [
           // The task wizard (recording, guides, task files) has its own
           // entry in the menus; Help keeps only what helps.

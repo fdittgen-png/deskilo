@@ -8,6 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
@@ -181,7 +182,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.validationTitle),
+        title: PageTitle(l10n.validationTitle),
       ),
       body: switch (policiesAsync) {
         AsyncData(value: final policies) => ListView(

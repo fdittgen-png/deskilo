@@ -17,6 +17,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../providers/workspace_host_providers.dart';
 
 class OnboardingHostGate extends ConsumerStatefulWidget {
@@ -71,7 +72,7 @@ class _HostLost extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.onboardingTitle)),
+      appBar: AppBar(title: PageTitle(l10n.onboardingTitle)),
       body: Center(
         child: Padding(
           padding: AppSpacing.xlAll,

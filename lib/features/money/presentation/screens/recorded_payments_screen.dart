@@ -14,6 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/recorded_payments.dart';
 import '../../domain/register_period.dart';
 import '../../providers/recorded_payments_providers.dart';
@@ -37,7 +38,7 @@ class RecordedPaymentsScreen extends ConsumerWidget {
     final last = period?.last ?? DateTime(today.year, today.month + 1, 0);
     final dateFormat = ref.watch(appFormatProvider).dates(DateShape.date);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.recordedPaymentsTitle)),
+      appBar: AppBar(title: PageTitle(l10n.recordedPaymentsTitle)),
       body: workspace == null
           ? const SizedBox.shrink()
           : Column(

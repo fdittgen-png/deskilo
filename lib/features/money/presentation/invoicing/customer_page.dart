@@ -15,6 +15,7 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_card.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/split_bar.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/kit/story.dart';
@@ -92,7 +93,7 @@ class CustomerPage extends StatelessWidget {
         : row?.action;
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: PageTitle(name),
         actions: [
           if (onStatement case final print?)
             IconButton(

@@ -32,6 +32,7 @@ import 'package:flutter/rendering.dart';
 
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/booking_observation.dart' show errorObservation;
 import '../application/recorder_controller.dart';
@@ -492,8 +493,7 @@ class UiCapture implements GuardedCommandWatcher {
       if (w is AppBar && w.title != null) {
         final route = ModalRoute.of(e);
         if (route == null || route.isCurrent) {
-          final title = w.title;
-          label ??= labelKeyOf(title is Text ? title.data : null);
+          label ??= labelKeyOf(pageNameOf(w.title));
         }
       }
       return label == null && ++seen < 20000;

@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/print_or_retry.dart';
 import '../../domain/workspace_status.dart';
@@ -100,7 +101,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
         monthLabel.format(DateTime(int.parse(ym.substring(0, 4)), int.parse(ym.substring(5, 7))));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.statusTitle),
+        title: PageTitle(l10n.statusTitle),
         actions: [
           if (status.value case final s?)
             IconButton(

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/invoice_report.dart';
 import '../widgets/report_page_style.dart';
 import '../widgets/report_preview.dart';
@@ -35,7 +36,7 @@ class ReminderLetterPreviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: PageTitle(title)),
       body: Column(
         children: [
           Expanded(

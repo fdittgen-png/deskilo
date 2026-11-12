@@ -8,6 +8,7 @@ import '../../../core/mcp/mcp_operations.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/dictionary_labels.dart';
@@ -72,7 +73,7 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.mcpConfirmTitle),
+        title: PageTitle(l10n.mcpConfirmTitle),
       ),
       body: confirmation.when(
         loading: () => const LoadingView(),

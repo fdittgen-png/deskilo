@@ -13,6 +13,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../widgets/add_purchase_button.dart';
 import 'money_action_set.dart';
 import 'money_view_data.dart';
@@ -29,7 +30,7 @@ class PurchasesHubScreen extends ConsumerWidget {
     final doors = MoneyActionSet.purchaseDoors(context, ref, data);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.hubPurchasesTitle),
+        title: PageTitle(l10n.hubPurchasesTitle),
         actions: [
           HelpDot(l10n.hubPurchasesTitle, anchor: HelpAnchor.moneyPurchases),
         ],
@@ -70,7 +71,7 @@ class SalesHubScreen extends ConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.l10n.bookReportJournalSales),
+        title: PageTitle(context.l10n.bookReportJournalSales),
         actions: [
           HelpDot(context.l10n.bookReportJournalSales, anchor: HelpAnchor.moneySales),
         ],
@@ -99,7 +100,7 @@ class CashHubScreen extends ConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.hubCashTitle),
+        title: PageTitle(l10n.hubCashTitle),
         actions: [HelpDot(l10n.hubCashTitle, anchor: HelpAnchor.moneyCash)],
       ),
       body: ListView(
@@ -134,7 +135,7 @@ class AccountingHubScreen extends ConsumerWidget {
       MoneyViewData.gates(ref),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.hubAccountingTitle)),
+      appBar: AppBar(title: PageTitle(context.l10n.hubAccountingTitle)),
       body: ListView(
         key: const ValueKey('accounting-hub'),
         padding: AppSpacing.mdAll,

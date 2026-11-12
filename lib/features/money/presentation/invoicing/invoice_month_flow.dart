@@ -29,6 +29,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../../../core/ui/kit/kit_card.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/select_row.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../application/issue_invoice.dart';
@@ -195,7 +196,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: PageTitle(
             l10n.invoiceMonthTitle(monthLabel(context, widget.period)),
           ),
         ),

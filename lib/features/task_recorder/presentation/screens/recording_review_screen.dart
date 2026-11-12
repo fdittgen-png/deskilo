@@ -20,6 +20,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/stored_recording.dart';
 import '../../domain/task_recording_codec.dart';
 import '../../export/docx_export.dart';
@@ -147,7 +148,7 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
         source?.title ?? (l10n.taskRecorderUntitled);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: PageTitle(title),
         actions: [
           IconButton(
             key: const ValueKey('task-recording-delete'),

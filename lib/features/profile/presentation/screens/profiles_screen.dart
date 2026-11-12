@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../workspace/domain/member.dart';
@@ -188,7 +189,7 @@ class ProfilesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.profilesTitle),
+        title: PageTitle(l10n.profilesTitle),
         actions: [
           const ApplicationRequestsEntry(), const AccountPortalEntry(),
           IconButton(key: const ValueKey('profiles-account-activity-title'), tooltip: l10n.accountActivityTitle,

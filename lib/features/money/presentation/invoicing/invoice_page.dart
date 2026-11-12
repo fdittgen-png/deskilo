@@ -19,6 +19,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/kit_card.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/story.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -135,7 +136,7 @@ class InvoicePage extends ConsumerWidget {
       key: ValueKey('invoice-page-$invoiceId'),
       appBar: AppBar(
         automaticallyImplyLeading: onClose == null,
-        title: Text(l.invoicePageTitle(invoice.number)),
+        title: PageTitle(l.invoicePageTitle(invoice.number)),
         actions: [
           InvoiceMoreMenu(
             invoice: invoice,

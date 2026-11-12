@@ -11,6 +11,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/purchase.dart';
 import '../widgets/purchases_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
@@ -43,7 +44,7 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
         (held.contains('viewFinances') || held.contains(purchaseManagePermission));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.bookRoleSuppliers),
+        title: PageTitle(l10n.bookRoleSuppliers),
         actions: [HelpDot(l10n.bookRoleSuppliers, anchor: HelpAnchor.moneySupplierBalance)],
       ),
       body: workspace == null

@@ -6,6 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../domain/workspace_application.dart';
@@ -36,7 +37,7 @@ class _ApplicationsState extends ConsumerState<WorkspaceApplicationsScreen> {
     final applications = ref.watch(provider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.applicationsTitle),
+        title: PageTitle(l10n.applicationsTitle),
         actions: [
           IconButton(
             key: const ValueKey('workspace-applications-pending-approval-refresh'),

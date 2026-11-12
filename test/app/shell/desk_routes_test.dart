@@ -120,20 +120,29 @@ void main() {
             find.descendant(of: _key(entry), matching: find.byType(Text)),
           )
           .data!;
-      expect(_crumbs(tester).last, label);
-      expect(_windowTitle(tester), '$label — Test Space — DesKilo');
+      // #3789 — the entry is named; a sub-page's own name follows it, and
+      // the window's title is the last crumb.
+      expect(_crumbs(tester), contains(label));
+      expect(
+        _windowTitle(tester),
+        '${_crumbs(tester).last} — Test Space — DesKilo',
+      );
       expect(tester.takeException(), isNull);
     });
   }
 
-  testWidgets('the breadcrumb names the group and the entry, two levels: a '
-      'detail page shows the place it is reached from', (tester) async {
+  testWidgets('the breadcrumb names the group and the entry; a detail page '
+      'shows the place it is reached from, then its own name (#3789)', (
+    tester,
+  ) async {
     final router = await _pump(tester);
     await _go(tester, router, '/money/suppliers');
     expect(_crumbs(tester), [_en.navPurchasesGroup, _en.bookRoleSuppliers]);
     await _go(tester, router, '/member/member-1');
-    expect(_crumbs(tester), [_en.uxNavPeople, _crumbs(tester).last]);
-    expect(_crumbs(tester), hasLength(2));
+    final crumbs = _crumbs(tester);
+    expect(crumbs, hasLength(3));
+    expect(crumbs.first, _en.uxNavPeople);
+    expect(crumbs[1], _en.membersTitle);
   });
 
   testWidgets('at 1024 a page outside the tabs has the rail', (tester) async {

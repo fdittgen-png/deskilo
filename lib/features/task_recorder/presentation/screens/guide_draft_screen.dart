@@ -22,6 +22,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/action_registry.dart' show uiRoutes;
 import '../../guide/guide_codec.dart';
 import '../../guide/guide_destination.dart';
@@ -189,7 +190,7 @@ class _GuideDraftScreenState extends ConsumerState<GuideDraftScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.taskGuideTitle)),
+      appBar: AppBar(title: PageTitle(l10n.taskGuideTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [

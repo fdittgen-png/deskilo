@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/canvas_controls.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/domain/floor_plan.dart';
 import '../../../plan/domain/floor_plan_editing.dart';
@@ -126,7 +127,7 @@ class _LevelCanvasScreenState extends ConsumerState<LevelCanvasScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(level?.name ?? ''),
+        title: PageTitle(level?.name ?? ''),
         actions: [
           LevelBackgroundMenu(
             hasBackground: level?.hasBackground ?? false,

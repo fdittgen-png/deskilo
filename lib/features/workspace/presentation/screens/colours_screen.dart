@@ -18,6 +18,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
 import '../../providers/workspace_providers.dart';
@@ -190,7 +191,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.coloursTitle)),
+      appBar: AppBar(title: PageTitle(l10n.coloursTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [

@@ -271,6 +271,57 @@ void main() {
     c.dispose();
   });
 
+  // #3789 — the desk does not draw a page's name under its breadcrumb; the
+  // recording names the screen by PageTitle's text all the same, so a guide
+  // recorded on the desk and one recorded on a phone name it alike.
+  testWidgets('a screen recorded at 390 and at 1440 carries the same title', (
+    tester,
+  ) async {
+    Future<String?> titleAt(Size size) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
+      final c = ProviderContainer(
+        overrides: [
+          ...standardTestOverrides(
+            workspace: FakeWorkspaceRepository.withWorkspace(),
+          ),
+          recorderStoreProvider.overrideWithValue(
+            RecorderStore(
+              backend: MemoryRecorderLogBackend(),
+              namespace: canaryNamespace,
+            ),
+          ),
+          recorderScopeProvider.overrideWithValue(canaryScope),
+        ],
+      );
+      c.read(recorderOpenedProvider.notifier).open();
+      final controller = c.read(recorderControllerProvider);
+      expect(await controller.start(scope: canaryScope), isTrue);
+      await tester.pumpWidget(
+        UncontrolledProviderScope(container: c, child: const DeskiloApp()),
+      );
+      await tester.pumpAndSettle();
+      unawaited(
+        GoRouter.of(tester.element(find.byType(Scaffold).first)).push('/roles'),
+      );
+      await tester.pumpAndSettle();
+      final r = await _stop(tester, c, controller);
+      return r.steps
+          .where(
+            (s) =>
+                s.action == RecorderActions.uiOpenScreen && s.target == '/roles',
+          )
+          .map((s) => s.payload.values['label'])
+          .firstOrNull;
+    }
+
+    addTearDown(tester.view.reset);
+    final phone = await titleAt(const Size(390, 2400));
+    final desk = await titleAt(const Size(1440, 2400));
+    expect(phone, isNotNull, reason: 'the phone names the screen');
+    expect(desk, phone);
+  });
+
   testWidgets('across the app: a screen by its pattern and title, and a '
       'command on the role matrix through its own seam (#1884)', (
     tester,

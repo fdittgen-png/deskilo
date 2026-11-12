@@ -25,6 +25,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../domain/bi_modules.dart';
@@ -129,7 +130,7 @@ class _WorkspaceOverviewScreenState
       // Inside the navigation shell the shell's own bar is the title.
       appBar: StatefulNavigationShell.maybeOf(context) != null
           ? null
-          : AppBar(title: Text(workspace?.name ?? l10n.overviewTitle)),
+          : AppBar(title: PageTitle(workspace?.name ?? l10n.overviewTitle)),
       body: ListView(
         key: const ValueKey('workspace-overview'),
         padding: AppSpacing.gutterAll,

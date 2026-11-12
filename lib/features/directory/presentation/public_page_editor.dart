@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -263,7 +264,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.portalPublication),
+        title: PageTitle(l.portalPublication),
       ),
       body: !owner
           ? const SizedBox.shrink()

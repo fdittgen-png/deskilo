@@ -17,6 +17,7 @@ import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../profile/application/privacy_admin.dart';
 import '../widgets/privacy_admin_sheets.dart';
@@ -29,7 +30,7 @@ class PrivacyAdminScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final space = ref.watch(privacyAdminSpaceProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.privacyAdminTitle)),
+      appBar: AppBar(title: PageTitle(l10n.privacyAdminTitle)),
       body: space == null ? const LoadingView() : _Body(space: space),
     );
   }

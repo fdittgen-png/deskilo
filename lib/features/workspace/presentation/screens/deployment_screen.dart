@@ -13,6 +13,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/deploy_configuration.dart';
@@ -265,7 +266,7 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final title = Text(l10n.deploymentTitle);
+    final title = PageTitle(l10n.deploymentTitle);
     if (workspace == null) {
       return Scaffold(appBar: AppBar(title: title), body: const LoadingView());
     }

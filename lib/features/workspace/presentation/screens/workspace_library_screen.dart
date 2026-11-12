@@ -17,6 +17,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/template_inspection.dart';
 import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
@@ -40,7 +41,7 @@ class WorkspaceLibraryScreen extends ConsumerWidget {
     final canPublish = me?.actsAsOwner ?? false;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.libraryTitle)),
+      appBar: AppBar(title: PageTitle(l10n.libraryTitle)),
       floatingActionButton: canPublish && workspace != null
           ? FloatingActionButton.extended(
               key: const ValueKey('library-save'),

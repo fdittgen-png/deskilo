@@ -8,6 +8,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
@@ -53,7 +54,7 @@ class ServicesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.servicesTitle),
+        title: PageTitle(l10n.servicesTitle),
       ),
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('services-new'),

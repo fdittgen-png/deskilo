@@ -7,6 +7,7 @@ import '../../../core/links/link_launcher.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../application/connect_assistant.dart';
 import '../domain/mcp_connection.dart';
@@ -137,7 +138,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     if (gate.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n.mcpConsentTitle),
+          title: PageTitle(l10n.mcpConsentTitle),
         ),
         body: const LoadingView(),
       );
@@ -153,7 +154,7 @@ class _McpConsentScreenState extends ConsumerState<McpConsentScreen> {
     final consent = ref.watch(mcpConsentProvider(widget.authorizationId));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.mcpConsentTitle),
+        title: PageTitle(l10n.mcpConsentTitle),
       ),
       body: consent.when(
         loading: () => const LoadingView(),

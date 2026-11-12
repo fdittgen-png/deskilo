@@ -16,6 +16,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -40,7 +41,7 @@ class SetupGuideScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.setupGuideTitle)),
+      appBar: AppBar(title: PageTitle(l10n.setupGuideTitle)),
       body: switch (workspace) {
         AsyncData(:final value) when value != null => _SetupGuideBody(
           workspaceId: value.id,

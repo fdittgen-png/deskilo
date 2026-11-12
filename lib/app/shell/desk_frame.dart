@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../core/l10n/context_l10n.dart';
+import '../../core/ui/kit/page_title.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'desk_scaffold.dart';
@@ -173,7 +174,8 @@ class _Desk extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = GoRouter.of(context);
     final (:crumbs, :tabs) = deskPlaceOf(context, ref, router, path);
-    final shown = crumbs;
+    // #3789 — a sub-page's own name follows its place.
+    final shown = withPageName(crumbs, PageNameScope.nameOf(context));
     final tabTitles = tabs.tabTitles;
     final visibleBranches = tabs.visibleBranches;
     final navs = tabs.navs;
@@ -197,7 +199,9 @@ class _Desk extends ConsumerWidget {
         actions: shellBarActions(context, ref, currentIndex: branch),
         path: path,
         scrim: scrim,
-        body: child,
+        // #3789 — the selected entry's name, so a page's own bar does not
+        // say it a second time (PageTitle).
+        body: DeskPlaceLabel(label: shown.lastOrNull?.label, child: child),
       ),
     );
   }

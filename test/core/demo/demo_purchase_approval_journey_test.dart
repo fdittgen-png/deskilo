@@ -18,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/demo_journey.dart';
+import '../../helpers/page_name.dart';
 
 void main() {
   testWidgets('Demo bill opens, is decided, and leaves the queue', (
@@ -108,11 +109,11 @@ void main() {
           .go('/money/purchases/approvals');
       await tester.pumpAndSettle();
       expect(find.byType(PurchaseApprovalsScreen), findsOneWidget);
-      // The screen's own title (#3603: the desk's top bar names it too).
+      // The screen's own name (#3789: on the desk the breadcrumb draws it).
       expect(
-        find.descendant(
-          of: find.byType(PurchaseApprovalsScreen),
-          matching: find.text('Supplier bills to approve'),
+        findPageName(
+          'Supplier bills to approve',
+          within: find.byType(PurchaseApprovalsScreen),
         ),
         findsOneWidget,
       );

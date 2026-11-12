@@ -10,6 +10,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
 import '../../domain/purchase_approval_reads.dart';
@@ -27,7 +28,7 @@ class PurchaseApprovalsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final workspace = MoneyViewData.gates(ref).workspace;
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.purchaseApprovalsTitle)),
+      appBar: AppBar(title: PageTitle(context.l10n.purchaseApprovalsTitle)),
       body: workspace == null
           ? const SizedBox.shrink()
           : PurchaseApprovalsView(workspaceId: workspace.id),

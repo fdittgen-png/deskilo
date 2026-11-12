@@ -10,6 +10,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
@@ -157,7 +158,7 @@ class RolesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.rolesTitle),
+        title: PageTitle(l10n.rolesTitle),
         actions: [
           HelpDot(
             l10n.helpHintMembersTip4Topic,

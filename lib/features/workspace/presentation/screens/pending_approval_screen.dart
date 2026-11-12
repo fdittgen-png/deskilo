@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../directory/presentation/account_portal_entry.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../providers/workspace_providers.dart';
@@ -79,7 +80,7 @@ class _PendingApprovalScreenState extends ConsumerState<PendingApprovalScreen> {
     final notUpdated = _notUpdated;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.pendingApprovalTitle),
+        title: PageTitle(l10n.pendingApprovalTitle),
         actions: const [ApplicationRequestsEntry(), AccountPortalEntry()],
       ),
       body: Center(
