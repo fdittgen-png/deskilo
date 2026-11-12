@@ -15,8 +15,8 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/seat_state_colors.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../domain/reservation.dart';
 import 'week_grid.dart';
+import 'week_grid_pocket.dart';
 
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
@@ -61,8 +61,11 @@ class WeekGridDayHeaders extends StatelessWidget {
     required this.selectedDay,
     required this.dayOpen,
     required this.onDaySelected,
+    this.height = WeekGridMetrics.headerHeight,
   });
 
+  /// #3817 — taller in a pocket (WeekGridShape).
+  final double height;
   final List<DateTime> days;
   final double dayWidth;
   final DateTime selectedDay;
@@ -78,7 +81,7 @@ class WeekGridDayHeaders extends StatelessWidget {
     final dayFormat = appFormatOf(context).dates(DateShape.day);
     final style = Theme.of(context).textTheme.labelMedium;
     return SizedBox(
-      height: WeekGridMetrics.headerHeight,
+      height: height,
       child: Row(
         children: [
           for (final day in days)
@@ -236,15 +239,22 @@ class WeekGridSeatCell extends StatelessWidget {
 
 /// One seat's row of day [cells], underlined like a timeline track.
 class WeekGridSeatRow extends StatelessWidget {
-  const WeekGridSeatRow({super.key, required this.cells});
+  const WeekGridSeatRow({
+    super.key,
+    required this.cells,
+    this.height = WeekGridMetrics.rowHeight,
+  });
 
   final List<Widget> cells;
+
+  /// #3817 — taller in a pocket (WeekGridShape).
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Container(
-      height: WeekGridMetrics.rowHeight,
+      height: height,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -270,8 +280,14 @@ class WeekGridHalfSlot extends StatelessWidget {
     required this.morning,
     required this.fill,
     required this.occupantInitial,
+    required this.seatName,
+    required this.state,
     this.onFreeTap,
   });
+
+  /// #3817 — its name for a screen reader: seat, day, half and state.
+  final String seatName;
+  final WeekHalfState state;
 
   final String seatId;
   final DateTime day;
@@ -291,7 +307,7 @@ class WeekGridHalfSlot extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final free = fill == null;
     final initial = occupantInitial;
-    return DecoratedBox(
+    final slot = DecoratedBox(
       key: WeekGrid.cellKey(seatId, day, morning: morning),
       decoration: BoxDecoration(
         color: fill,
@@ -319,6 +335,24 @@ class WeekGridHalfSlot extends StatelessWidget {
                     .copyWith(color: Colors.white),
               ),
             ),
+    );
+    return Semantics(
+      key: ValueKey(
+        'week-half-$seatId-${WeekGrid.dayStampOf(day)}-'
+        '${morning ? 'am' : 'pm'}',
+      ),
+      container: true,
+      label: weekHalfLabel(
+        context,
+        seat: seatName,
+        day: day,
+        morning: morning,
+        state: state,
+      ),
+      button: free && onFreeTap != null,
+      excludeSemantics: true,
+      onTap: free ? onFreeTap : null,
+      child: slot,
     );
   }
 }
@@ -388,67 +422,6 @@ class WeekGridEmptyHint extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Small occupants sheet of one seat/day cell: one line per reservation,
-/// my own rows popping the tapped reservation for the hub's detail sheet.
-class WeekGridCellSheet extends StatelessWidget {
-  const WeekGridCellSheet({
-    super.key,
-    required this.title,
-    required this.items,
-    required this.myMemberId,
-    required this.lineOf,
-  });
-
-  final String title;
-
-  /// Sorted by start.
-  final List<Reservation> items;
-  final String? myMemberId;
-
-  /// "09:00 – 11:00 · Flo" (names only in Everyone mode).
-  final String Function(Reservation reservation) lineOf;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.xl,
-                AppSpacing.lg,
-                AppSpacing.xl,
-                AppSpacing.xs,
-              ),
-              child: Text(title, style: Theme.of(context).textTheme.titleSmall),
-            ),
-            for (final r in items)
-              ListTile(
-                key: WeekGrid.sheetItemKey(r.id),
-                leading: Icon(
-                  r.memberId == myMemberId
-                      ? Icons.event_seat
-                      : Icons.person_outline,
-                ),
-                title: Text(lineOf(r)),
-                trailing: r.memberId == myMemberId
-                    ? const Icon(Icons.chevron_right)
-                    : null,
-                onTap: r.memberId == myMemberId
-                    ? () => Navigator.of(context).pop(r)
-                    : null,
-              ),
-            const SizedBox(height: AppSpacing.sm),
-          ],
-        ),
-      ),
     );
   }
 }

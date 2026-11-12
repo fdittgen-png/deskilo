@@ -21829,6 +21829,7 @@
   "webMcpActed": "Ein Assistent in diesem Browser: {action}",
   "webMcpDeviceSwitch": "Assistenten in diesem Browser die App nutzen lassen",
   "webMcpDeviceSwitchHint": "Standardmäßig aus. Eingeschaltet kann ein in diesen Browser eingebauter KI-Assistent Ihre Buchungen, Rechnungen und offenen Anfragen in diesem Bereich lesen, solange die Seite geöffnet ist. Die Wahl bleibt auf diesem Gerät.",
+  "weekHalfSlotLabel": "{seat}, {day}, {half, select, morning{Vormittag} other{Nachmittag}}, {state, select, free{frei} mine{Ihre Buchung} taken{belegt} blocked{gesperrt} other{geschlossen}}",
   "welcomeLinkAction": "Was ist DesKilo?",
   "@welcomeLinkAction": {
     "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"

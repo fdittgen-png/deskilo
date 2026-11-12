@@ -35211,6 +35211,22 @@ class AppLocalizationsEs extends AppLocalizations {
       'Desactivado por defecto. Activado, un asistente de IA integrado en este navegador puede leer sus reservas, facturas y solicitudes pendientes en este espacio mientras la página está abierta. La elección se guarda solo en este dispositivo.';
 
   @override
+  String weekHalfSlotLabel(String seat, String day, String half, String state) {
+    String _temp0 = intl.Intl.selectLogic(half, {
+      'morning': 'mañana',
+      'other': 'tarde',
+    });
+    String _temp1 = intl.Intl.selectLogic(state, {
+      'free': 'libre',
+      'mine': 'su reserva',
+      'taken': 'ocupado',
+      'blocked': 'bloqueado',
+      'other': 'cerrado',
+    });
+    return '$seat, $day, $_temp0, $_temp1';
+  }
+
+  @override
   String get welcomeLinkAction => '¿Qué es DesKilo?';
 
   @override

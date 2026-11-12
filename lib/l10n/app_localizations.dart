@@ -56845,6 +56845,12 @@ abstract class AppLocalizations {
   /// **'Off by default. On, an AI assistant built into this browser can read your bookings, invoices and pending requests in this space while the page is open. The choice stays on this device.'**
   String get webMcpDeviceSwitchHint;
 
+  /// #3817 what a screen reader says for one half of a Week grid day cell: the seat, the day, morning or afternoon, and its state
+  ///
+  /// In en, this message translates to:
+  /// **'{seat}, {day}, {half, select, morning{morning} other{afternoon}}, {state, select, free{free} mine{your booking} taken{taken} blocked{blocked} other{closed}}'**
+  String weekHalfSlotLabel(String seat, String day, String half, String state);
+
   /// #2459 sign-in form: opens the public welcome page, beside the demo link
   ///
   /// In en, this message translates to:
