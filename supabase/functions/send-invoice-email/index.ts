@@ -10,7 +10,7 @@
 // reaches a phone: it lives in Vault and only the service role reads it
 // (`business_mail_key_resolved`).
 //
-// Durable fencing, in this order (0729):
+// Durable fencing, in this order (0730):
 //   1. `begin_invoice_email_v1`, with the CALLER's token, decides who may
 //      send (a native session that issues invoices, the invoiceEmail
 //      feature, an invoice of the space that is not voided, the sender
@@ -30,7 +30,7 @@
 // after the call; a failure to record it leaves it pending, which blocks a
 // second send just the same.
 //
-// Order of deployment: 0729 before this function.
+// Order of deployment: 0729 and 0730 before this function.
 
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";

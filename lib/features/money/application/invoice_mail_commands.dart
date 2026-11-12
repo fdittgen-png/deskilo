@@ -73,8 +73,7 @@ class InvoiceMailCommands {
     required InvoiceMailAmounts amounts,
   }) {
     final language = document.language;
-    String money(int cents) =>
-        moneyFormat(amounts.currency, locale: language).formatMinor(cents);
+    final spelled = moneyFormat(amounts.currency, locale: language);
     final due = amounts.dueOn;
     final credit = amounts.totalCents < 0;
     return InvoiceMailLetter(
@@ -83,14 +82,23 @@ class InvoiceMailCommands {
           ? l10n.billCreditNoteCard(number)
           : l10n.billInvoiceCard(number),
       text: credit
-          ? l10n.invoiceEmailTextCredit(number, money(-amounts.totalCents))
+          ? l10n.invoiceEmailTextCredit(
+              number,
+              spelled.formatMinor(-amounts.totalCents),
+            )
           : amounts.owedCents <= 0
-          ? l10n.invoiceEmailTextPaid(number, money(amounts.totalCents))
+          ? l10n.invoiceEmailTextPaid(
+              number,
+              spelled.formatMinor(amounts.totalCents),
+            )
           : due == null
-          ? l10n.invoiceEmailTextOwed(number, money(amounts.owedCents))
+          ? l10n.invoiceEmailTextOwed(
+              number,
+              spelled.formatMinor(amounts.owedCents),
+            )
           : l10n.invoiceEmailTextOwedBy(
               number,
-              money(amounts.owedCents),
+              spelled.formatMinor(amounts.owedCents),
               DateFormat.yMMMd(language).format(due),
             ),
       pdfBase64: document.pdfBase64,

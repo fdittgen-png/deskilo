@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3673 — an invoice by e-mail, on its page. What the page says is the
-// server's rows (0729): "E-mailed to … on …" with "Send again", the
+// server's rows (0730): "E-mailed to … on …" with "Send again", the
 // decision on an e-mail nobody confirmed, a refusal in words, why the
 // customer cannot be e-mailed, or "Send by e-mail" to the address shown.
 // The invoice is the one share and download print — one builder, one set
@@ -335,11 +335,9 @@ class InvoiceEmailPanel extends ConsumerWidget {
     if (latest?.state == ReminderMailState.refused) {
       return l10n.invoiceEmailRefused(mailRefusalText(l10n, latest!.reason));
     }
-    if (left != null) {
-      return l10n.invoiceEmailSentOn(
-        left.recipient,
-        date((left.finishedAt ?? left.createdAt ?? DateTime(0)).toLocal()),
-      );
+    // The day it left, as the reminder history shows its days.
+    if (left?.finishedAt ?? left?.createdAt case final at?) {
+      return l10n.invoiceEmailSentOn(left!.recipient, date(at));
     }
     return switch (view.reason) {
       InvoiceMailUnavailable.none => l10n.reminderEmailTo(view.recipient),

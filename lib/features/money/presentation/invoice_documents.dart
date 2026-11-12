@@ -20,8 +20,6 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../core/files/file_names.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
-import '../../../core/jurisdiction/installed_invoice_rules.dart';
-import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -41,6 +39,7 @@ import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
+import 'invoice_facturx_xml.dart';
 import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
 import 'period_label.dart';
@@ -53,11 +52,12 @@ import 'swiss_qr_page.dart';
 
 // #3742 — the documents' policies, read before any of them is drawn.
 export 'document_policies.dart' show readDocumentPolicies;
-
+export 'invoice_facturx_xml.dart' show facturXmlOf;
 export 'invoice_reminder_letter.dart';
 export 'letter_doc_pdf.dart';
 export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
 export 'report_image_resolve.dart' show resolveReportImages;
+
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
 /// The active workspace's PDF template (#454) — empty when the
@@ -195,6 +195,7 @@ String developmentMark(BuildContext context, WidgetRef ref) =>
     (ref.read(currentWorkspaceProvider).value?.isDevelopment ?? false)
         ? (context.l10n.developmentWatermark)
         : '';
+
 
 /// What [buildInvoicePdfFile] renders besides the invoice itself.
 class InvoicePdfFileOptions {
@@ -422,38 +423,6 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     boldFont: await _asset('assets/fonts/Roboto-Bold.ttf'),
   ));
   return (bytes: bytes, fileName: '$stem.pdf');
-}
-
-/// FACTUR-X: one PDF that carries the EN 16931 invoice inside it (as CII,
-/// the syntax the format mandates). A human opens it and sees the invoice;
-/// a platform opens it and finds `factur-x.xml`. This is what French and
-/// German small businesses actually hand to their platform.
-/// The structured e-invoice (CII) of [invoice], the XML a Factur-X PDF
-/// embeds: the same positions, due date and terms the PDF prints.
-String facturXmlOf(
-  BuildContext context,
-  WidgetRef ref,
-  Invoice invoice, {
-  required InvoiceParty seller,
-  required InvoiceParty buyer,
-  required String iban,
-  required TaxReferenceSet reference,
-}) {
-  final association = ref.read(sellerIsAssociationProvider);
-  final words = reportStringsOf(context.l10n, formatLocale: appFormatOf(context).locale);
-  return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
-    seller: seller,
-    buyer: buyer,
-    iban: iban,
-    lineText: (line) => invoiceLineText(words, line,
-        association: association, period: invoice.period),
-    // #941 — the same due date and terms the PDF prints.
-    dueDate: invoiceDueAt(ref, invoice),
-    // #1916 — an issued invoice states the terms frozen with it.
-    paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
-        memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
-        '',
-    reference: reference));
 }
 
 Future<({List<int> bytes, String fileName})> buildFacturXFile(

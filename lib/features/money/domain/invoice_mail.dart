@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3673 — an issued invoice sent by e-mail from the business's own sender.
-// The server decides whether it may leave (0729: the first e-mail of an
+// The server decides whether it may leave (0730: the first e-mail of an
 // invoice once, "send again" as its own deliberate attempt, never a voided
 // invoice, the customer's address on file, the sender configured) and holds
 // the key; the app builds the invoice, its subject and its text in the
@@ -43,7 +43,7 @@ enum InvoiceMailUnavailable {
       values.firstWhere((r) => r.wire == wire, orElse: () => featureOff);
 }
 
-/// One e-mail attempt of an invoice (`invoice_email_sends`, 0729).
+/// One e-mail attempt of an invoice (`invoice_email_sends`, 0730).
 class InvoiceMailSend {
   const InvoiceMailSend({
     required this.id,

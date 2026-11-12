@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3673 (0729): an issued invoice leaves by e-mail once; "send again" is
+-- #3673 (0730): an issued invoice leaves by e-mail once; "send again" is
 -- its own deliberate attempt, only after the first left. Only a native
 -- session of someone who issues invoices opens an attempt or reads the
 -- invoice page's state, and a replay is checked against those rights

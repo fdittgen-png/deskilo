@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3673 — invoices by e-mail against the server: the state and the decision
-// are RPCs (0729), the send is the `send-invoice-email` function, which
+// are RPCs (0730), the send is the `send-invoice-email` function, which
 // holds the key. Its refusals read as a reminder's do (supabase_reminder_
 // mail.dart): 409 is the fence, any other 4xx a refusal.
 import 'package:supabase_flutter/supabase_flutter.dart';
