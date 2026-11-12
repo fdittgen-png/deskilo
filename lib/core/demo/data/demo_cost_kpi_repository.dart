@@ -34,6 +34,7 @@ import '../../../features/money/domain/workspace_asset.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_purchases.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
+import '../demo_clock.dart';
 import 'asset_valuation_repository.dart';
 import 'demo_contract_schedules.dart';
 import 'kpi_repositories.dart';
@@ -79,6 +80,7 @@ class DemoCostKpiRepository implements CostKpiRepository {
     required this.currencyOf,
     required this.features,
     required this.now,
+    this.timezoneOf,
   });
 
   final DemoCostSources sources;
@@ -88,7 +90,15 @@ class DemoCostKpiRepository implements CostKpiRepository {
 
   /// The features in force for the space being read.
   final Set<WorkspaceFeature> Function() features;
+
+  /// The Demo's clock, an instant.
   final DateTime now;
+
+  /// #3797 — the space's time zone, as its workspace record states it: the
+  /// month and the day are read on its wall clock, as the server reads
+  /// them. Null: [now] as it is (a test).
+  final String Function(String workspaceId)? timezoneOf;
+
 
   static String _month(DateTime d) => yearMonth(d.year, d.month);
 
@@ -119,6 +129,7 @@ class DemoCostKpiRepository implements CostKpiRepository {
       return m.compareTo(fromMonth) >= 0 && m.compareTo(toMonth) <= 0;
     }
 
+    final today = demoWallClockOr(now, timezoneOf?.call(workspaceId));
     final on = features();
     final assetsOn = on.contains(WorkspaceFeature.assetRegister);
     final contractsOn =
@@ -133,17 +144,17 @@ class DemoCostKpiRepository implements CostKpiRepository {
     final depreciation = assetsOn
         ? _depreciation(currency, fromMonth, toMonth)
         : null;
-    final unbilled = contractsOn ? _unbilled(fromMonth, toMonth) : null;
+    final unbilled = contractsOn ? _unbilled(fromMonth, toMonth, today) : null;
     final ap = contractsOn
         ? (await DemoPurchaseKpiRepository(
                 purchases: sources.purchases,
-                now: now,
+                now: today,
                 currency: currency,
               ).summary(workspaceId, fromMonth: fromMonth, toMonth: toMonth))
               .apOutstandingMinor
         : null;
     final mixed = lines.mixed || sales.mixed;
-    final partial = toMonth.compareTo(_month(now)) >= 0;
+    final partial = toMonth.compareTo(_month(today)) >= 0;
     final contribution = sales.net - lines.operating;
     return CostSummaryKpi(
       fromMonth: fromMonth,
@@ -317,7 +328,8 @@ class DemoCostKpiRepository implements CostKpiRepository {
   }
 
   /// What the contract schedules still expect in the months (0532).
-  DemoUnbilled _unbilled(String fromMonth, String toMonth) => demoUnbilled(
+  DemoUnbilled _unbilled(String fromMonth, String toMonth, DateTime today) =>
+      demoUnbilled(
     schedules: demoContractSchedules(
       leases: sources.leases.leases,
       rentals: sources.rooms.rentals,
@@ -326,7 +338,7 @@ class DemoCostKpiRepository implements CostKpiRepository {
     commitments: sources.commitments,
     start: _firstDay(fromMonth),
     cut: _lastDay(toMonth),
-    today: _day(now),
+    today: _day(today),
   );
 
   static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);

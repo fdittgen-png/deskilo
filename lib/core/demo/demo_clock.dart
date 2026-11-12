@@ -45,3 +45,35 @@ DateTime demoDateOf(DateTime instant) {
 /// on the demo space's clock rather than the device's.
 DateTime get demoSeedNow =>
     demoAt(kTestNow.year, kTestNow.month, kTestNow.day, kTestNow.hour);
+
+/// #3797 — [instant] on the wall clock of [timezone] (IANA), as a plain date
+/// and time: what the server reads as `now() at time zone` the workspace's
+/// own zone, so each space's "today" and month are its own. A zone the
+/// database does not know reads the instant in UTC.
+DateTime demoWallClock(DateTime instant, String timezone) {
+  final wall = tz.TZDateTime.from(instant, _zoneNamed(timezone));
+  return DateTime(
+    wall.year,
+    wall.month,
+    wall.day,
+    wall.hour,
+    wall.minute,
+    wall.second,
+  );
+}
+
+/// [instant] on the wall clock of [timezone], or [instant] as it is when no
+/// zone is named (a test that builds a figure without a space).
+DateTime demoWallClockOr(DateTime instant, String? timezone) =>
+    timezone == null ? instant : demoWallClock(instant, timezone);
+
+tz.Location _zoneNamed(String name) {
+  // Reading the demo space's zone loads the zone database once.
+  final paris = _demoZone;
+  if (name == paris.name) return paris;
+  try {
+    return tz.getLocation(name);
+  } on tz.LocationNotFoundException {
+    return tz.UTC;
+  }
+}

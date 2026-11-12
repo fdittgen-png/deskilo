@@ -30,6 +30,7 @@ DemoPurchaseOrderSpaces demoPurchaseOrderSpaces(
   DemoPurchasing home, {
   required DemoPurchasing london,
   required DemoPurchasing newYork,
+  required DemoPurchasing leipzig,
 }) {
   FakePurchaseOrderRepository space(
     DemoPurchasing purchasing,
@@ -52,7 +53,7 @@ DemoPurchaseOrderSpaces demoPurchaseOrderSpaces(
     london: space(london, () => fixture.london.money.services, 'GBP'),
     newYork: space(newYork, () => fixture.newYork.money.services, 'USD'),
     leipzig: space(
-      home,
+      leipzig,
       () => fixture.secondSpace.money.services,
       'EUR',
       seeded: false,

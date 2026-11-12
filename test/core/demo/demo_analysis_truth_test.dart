@@ -20,10 +20,15 @@ import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/application/receivables_answers.dart';
+import 'package:deskilo/features/money/domain/asset_valuation.dart';
+import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/premises_lease.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/room_rental.dart';
+import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
+import 'package:deskilo/features/money/providers/asset_providers.dart';
+import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
@@ -32,6 +37,8 @@ import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_result.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
+import 'package:deskilo/features/workspace/domain/kpi_overview.dart';
+import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -88,6 +95,91 @@ String _lastMonth(DateTime d) {
   final m = DateTime(d.year, d.month - 1);
   return yearMonth(m.year, m.month);
 }
+
+/// What the lease and rooms pages of space [id] still expect over [months]
+/// months from [from]: month by month, each term in force at what its
+/// listed occurrence of the month (found by its term, never by its amount)
+/// still expects, or at its amount while none is listed; each room rented
+/// at a fixed cost per month at what its listed occurrence of the month
+/// still expects, or at its cost while none is listed.
+Future<int> _stillExpected(
+  ProviderContainer container,
+  String id,
+  DateTime from,
+  int months,
+) async {
+  final commitments = container.read(leaseCommitmentRepositoryProvider);
+  final leases = [
+    for (final l in await container
+        .read(premisesLeaseRepositoryProvider)
+        .fetchLeases(id))
+      if (l.status != LeaseStatus.draft) l,
+  ];
+  final rentals = (await container
+          .read(roomRentalRepositoryProvider)
+          .fetchOverview(id))
+      .rentals;
+  final listed = {
+    for (final l in leases)
+      l.id: (await commitments.fetchCommitments(id, l.id)).occurrences,
+    for (final r in rentals)
+      r.id: (await commitments.fetchCommitments(id, r.id)).occurrences,
+  };
+  var expected = 0;
+  for (var m = 0; m < months; m++) {
+    final first = DateTime(from.year, from.month + m);
+    final last = DateTime(from.year, from.month + m + 1, 0);
+    bool covers(DateTime start, DateTime? end) =>
+        !start.isAfter(last) && (end == null || !end.isBefore(first));
+    int left(Iterable<CommitmentOccurrence> listed, int amount) {
+      final o = listed
+          .where((o) => !o.dueOn.isBefore(first) && !o.dueOn.isAfter(last))
+          .firstOrNull;
+      final rest = o?.remainingCents ?? amount;
+      return rest < 0 ? 0 : rest;
+    }
+
+    for (final lease in leases) {
+      for (final t in lease.terms) {
+        expect(t.everyMonths, 1, reason: 'the Demo terms are monthly');
+        if (!covers(t.effectiveFrom, t.effectiveTo ?? lease.effectiveEnd)) {
+          continue;
+        }
+        expected += left(
+          listed[lease.id]!.where((o) => o.termId == t.id),
+          t.amountCents,
+        );
+      }
+    }
+    for (final r in rentals) {
+      if (r.status != RoomRentalStatus.active ||
+          r.costKind != 'fixed_per_period' ||
+          r.costCents <= 0 ||
+          r.period != 'month' ||
+          !covers(r.availableFrom, r.availableUntil)) {
+        continue;
+      }
+      expected += left(listed[r.id]!, r.costCents);
+    }
+  }
+  return expected;
+}
+
+/// The ids of what space [id] lists on its purchases, lease and register
+/// pages.
+Future<Set<String>> _recordIds(ProviderContainer container, String id) async =>
+    {
+      for (final p in await container.read(purchasesProvider(id).future))
+        'purchase:${p.id}',
+      for (final l in await container
+          .read(premisesLeaseRepositoryProvider)
+          .fetchLeases(id))
+        'lease:${l.id}',
+      for (final a in await container
+          .read(workspaceAssetRepositoryProvider)
+          .fetchAssets(id))
+        'asset:${a.id}',
+    };
 
 void main() {
   final fixture = DemoFixture.build();
@@ -267,7 +359,7 @@ void main() {
         expect(byCurrency.keys.where((c) => c != k.currency), isEmpty);
         expect(k.quality, isNot(contains(KpiQuality.unavailable)));
         expect(k.operatingCostsMinor, byCurrency[k.currency] ?? 0);
-        if (id == 'ws-3' || id == 'ws-4') {
+        if (id == 'ws-1' || id == 'ws-3' || id == 'ws-4') {
           expect(
             k.operatingCostsMinor,
             greaterThan(0),
@@ -276,76 +368,49 @@ void main() {
         }
       });
 
-      test(
-        'leases still expected in $name: the lease and rooms pages',
-        () async {
-          final (container, _) = await _open(fixture, id);
-          final now = fixture.seededAt;
-          final first = DateTime(now.year, now.month);
-          final last = DateTime(now.year, now.month + 1, 0);
-          bool covers(DateTime from, DateTime? to) =>
-              !from.isAfter(last) && (to == null || !to.isBefore(first));
-          // The lease page: each term in force this month, at what its
-          // listed occurrence of the month still expects, or at its amount
-          // while none is listed.
-          var expected = 0;
-          final leases = await container
-              .read(premisesLeaseRepositoryProvider)
-              .fetchLeases(id);
-          for (final lease in leases.where(
-            (l) => l.status != LeaseStatus.draft,
-          )) {
-            final listed =
-                (await container
-                        .read(leaseCommitmentRepositoryProvider)
-                        .fetchCommitments(id, lease.id))
-                    .occurrences;
-            for (final t in lease.terms) {
-              expect(t.everyMonths, 1, reason: 'the Demo terms are monthly');
-              final end = t.effectiveTo ?? lease.effectiveEnd;
-              if (!covers(t.effectiveFrom, end)) continue;
-              final occurrence = listed
-                  .where(
-                    (o) =>
-                        !o.dueOn.isBefore(first) &&
-                        !o.dueOn.isAfter(last) &&
-                        o.expectedCents == t.amountCents,
-                  )
-                  .firstOrNull;
-              final left = occurrence?.remainingCents ?? t.amountCents;
-              expected += left < 0 ? 0 : left;
+      // #3794 — this month, and the three months before it, where every
+      // occurrence of the lease and the studio is matched by its bill.
+      for (final (window, back, months) in [
+        ('this month', 0, 1),
+        ('the three months before', 3, 3),
+      ]) {
+        test(
+          'leases still expected in $name over $window: the lease and '
+          'rooms pages',
+          () async {
+            final (container, _) = await _open(fixture, id);
+            final now = fixture.seededAt;
+            final from = DateTime(now.year, now.month - back);
+            final to = DateTime(now.year, now.month - back + months - 1);
+            final features = container.read(enabledFeaturesSyncProvider);
+            final k = await container
+                .read(costKpiRepositoryProvider)
+                .summary(
+                  id,
+                  fromMonth: yearMonth(from.year, from.month),
+                  toMonth: yearMonth(to.year, to.month),
+                );
+            if (!features.contains(WorkspaceFeature.premisesLease) &&
+                !features.contains(WorkspaceFeature.externalRooms)) {
+              // No lease or room in use here: the rule answers unknown.
+              expect(k.unbilledMinor, isNull);
+              return;
             }
-          }
-          // The rooms page: each room rented at a fixed cost per month.
-          final rooms = await container
-              .read(roomRentalRepositoryProvider)
-              .fetchOverview(id);
-          for (final r in rooms.rentals) {
-            if (r.status != RoomRentalStatus.active ||
-                r.costKind != 'fixed_per_period' ||
-                r.period != 'month' ||
-                !covers(r.availableFrom, r.availableUntil)) {
-              continue;
+            final expected = await _stillExpected(container, id, from, months);
+            expect(k.unbilledMinor, expected);
+            if (back == 0 && (id == 'ws-1' || id == 'ws-4')) {
+              expect(expected, greaterThan(0), reason: '$name holds a lease');
             }
-            expected += r.costCents;
-          }
-          final month = yearMonth(now.year, now.month);
-          final k = await container
-              .read(costKpiRepositoryProvider)
-              .summary(id, fromMonth: month, toMonth: month);
-          final features = container.read(enabledFeaturesSyncProvider);
-          if (!features.contains(WorkspaceFeature.premisesLease) &&
-              !features.contains(WorkspaceFeature.externalRooms)) {
-            // No lease or room in use here: the rule answers unknown.
-            expect(k.unbilledMinor, isNull);
-            return;
-          }
-          expect(k.unbilledMinor, expected);
-          if (id == 'ws-1' || id == 'ws-4') {
-            expect(expected, greaterThan(0), reason: '$name holds a lease');
-          }
-        },
-      );
+            if (back > 0 && id == 'ws-1') {
+              expect(
+                expected,
+                0,
+                reason: 'every past occurrence is matched by its bill',
+              );
+            }
+          },
+        );
+      }
 
       test(
         'pending actions in $name: the requests and the members lists',
@@ -377,5 +442,193 @@ void main() {
         },
       );
     }
+  });
+
+  group('the first business classifies what it buys (#3794)', () {
+    /// The page's approved documents of [month] with their lines, as the
+    /// purchases page lists and opens them.
+    Future<List<PurchaseDetail>> approvedIn(
+      ProviderContainer container,
+      String month,
+    ) async => [
+      for (final s in await container.read(purchasesProvider('ws-1').future))
+        if (s.state == PurchaseState.approved &&
+            switch (s.originalDate ?? s.receivedOn) {
+              final d? => yearMonth(d.year, d.month) == month,
+              null => false,
+            })
+          await container
+              .read(purchaseRepositoryProvider)
+              .fetchDetail('ws-1', s.id),
+    ];
+
+    int cost(PurchaseLine l) => switch (l.netCents) {
+      null => l.grossCents,
+      final net => net + (l.taxCents ?? 0) - (l.recoverableTaxCents ?? 0),
+    };
+
+    String monthsBack(int back) {
+      final m = DateTime(fixture.seededAt.year, fixture.seededAt.month - back);
+      return yearMonth(m.year, m.month);
+    }
+
+    test('this month: operating costs, acquisitions and contribution are '
+        'figures, each what its page lists', () async {
+      final (container, _) = await _open(fixture, 'ws-1');
+      final month = monthsBack(0);
+      final docs = await approvedIn(container, month);
+      final capitalised = {
+        for (final a in await container
+            .read(workspaceAssetRepositoryProvider)
+            .fetchAssets('ws-1'))
+          if (a.decision == AssetDecision.capitalise)
+            '${a.purchaseId}#${a.lineNo}',
+      };
+      var operating = 0, acquisitions = 0;
+      for (final d in docs) {
+        expect(d.summary.currency, 'EUR', reason: 'Pézenas buys in euros');
+        final sign = d.summary.kind == PurchaseKind.creditNote ? -1 : 1;
+        for (final l in d.lines) {
+          if (l.recognitionKind == 'operating') operating += sign * cost(l);
+          if (l.recognitionKind == 'asset' &&
+              capitalised.contains('${d.summary.id}#${l.lineNo}')) {
+            acquisitions += sign * cost(l);
+          }
+        }
+      }
+      final k = await container
+          .read(costKpiRepositoryProvider)
+          .summary('ws-1', fromMonth: month, toMonth: month);
+      expect(k.operatingCostsMinor, operating);
+      expect(k.operatingCostsMinor, greaterThan(0));
+      expect(k.acquisitionsMinor, acquisitions);
+      expect(k.acquisitionsMinor, greaterThan(0));
+      expect(k.contributionMinor, k.netSalesMinor! - k.operatingCostsMinor!);
+      expect(k.contributionMinor, isNot(0));
+      // The month under way is not closed: no confirmed book values cover
+      // it, and the analysis says so.
+      expect(k.bookDepreciationMinor, isNull);
+      expect(k.reasons, contains('book_coverage_incomplete'));
+    });
+
+    test('last month: the depreciation is the confirmed book values of the '
+        'month', () async {
+      final (container, _) = await _open(fixture, 'ws-1');
+      final month = monthsBack(1);
+      final books = container.read(assetValuationRepositoryProvider);
+      var depreciation = 0;
+      for (final b in await books.fetchBatches('ws-1')) {
+        if (b.status != ValuationStatus.confirmed ||
+            yearMonth(b.periodFrom.year, b.periodFrom.month) != month) {
+          continue;
+        }
+        for (final r in await books.fetchRows('ws-1', b.id)) {
+          depreciation += r.depreciationMinor!;
+        }
+      }
+      final k = await container
+          .read(costKpiRepositoryProvider)
+          .summary('ws-1', fromMonth: month, toMonth: month);
+      expect(depreciation, greaterThan(0));
+      expect(k.bookDepreciationMinor, depreciation);
+      expect(k.afterDepreciationMinor, k.contributionMinor! - depreciation);
+    });
+
+    test('no cost figure is zero while the purchases page lists approved '
+        'bills of the month', () async {
+      final (container, _) = await _open(fixture, 'ws-1');
+      for (var back = 0; back < 12; back++) {
+        final month = monthsBack(back);
+        final docs = await approvedIn(container, month);
+        final k = await container
+            .read(costKpiRepositoryProvider)
+            .summary('ws-1', fromMonth: month, toMonth: month);
+        if (docs.any((d) => d.lines.any((l) => l.recognitionKind == 'operating'))) {
+          expect(k.operatingCostsMinor, isNot(0), reason: month);
+        }
+        expect(
+          docs.expand((d) => d.lines).where(
+            (l) => l.recognitionKind == 'unresolved',
+          ),
+          isEmpty,
+          reason: 'every approved line of $month is classified',
+        );
+      }
+    });
+  });
+
+  group('each business reads its own records (#3797)', () {
+    test('no two businesses list the same purchase, lease or asset, and a '
+        'read for another business finds none of them', () async {
+      final ids = <String, Set<String>>{};
+      for (final (_, id) in _spaces) {
+        final (container, _) = await _open(fixture, id);
+        ids[id] = await _recordIds(container, id);
+        final purchases = container.read(purchaseRepositoryProvider);
+        for (final (_, other) in _spaces) {
+          if (other == id) continue;
+          expect(
+            await purchases.fetchPurchases(other),
+            isEmpty,
+            reason: 'a read of $id\'s purchases for $other',
+          );
+        }
+      }
+      for (final (a, x) in _spaces) {
+        for (final (b, y) in _spaces) {
+          if (x.compareTo(y) >= 0) continue;
+          expect(
+            ids[x]!.intersection(ids[y]!),
+            isEmpty,
+            reason: '$a and $b share records',
+          );
+        }
+      }
+      expect(ids['ws-1'], isNotEmpty);
+      expect(ids['ws-2'], isEmpty, reason: 'Leipzig has bought nothing yet');
+    });
+
+    test('Leipzig\'s cost analyses read its own purchases: none', () async {
+      final (container, _) = await _open(fixture, 'ws-2');
+      final month = yearMonth(fixture.seededAt.year, fixture.seededAt.month);
+      final k = await container
+          .read(costKpiRepositoryProvider)
+          .summary('ws-2', fromMonth: month, toMonth: month);
+      expect(k.operatingCostsMinor, 0);
+      expect(k.unresolvedLines, 0);
+      expect(await container.read(purchasesProvider('ws-2').future), isEmpty);
+    });
+  });
+
+  test('the month is each business\'s own: at the first hour of a month in '
+      'UTC, New York still answers for the month before (#3797)', () async {
+    final clock = DemoFixture.build(now: DateTime.utc(2026, 6, 1, 0, 30));
+    const may = '2026-05';
+    Future<(CostSummaryKpi, OverviewFigure)> read(String id) async {
+      final (container, _) = await _open(clock, id);
+      return (
+        await container
+            .read(costKpiRepositoryProvider)
+            .summary(id, fromMonth: may, toMonth: may),
+        await container
+            .read(overviewKpiRepositoryProvider)
+            .figure(
+              id,
+              'people.active_memberships_current',
+              fromMonth: may,
+              toMonth: may,
+            ),
+      );
+    }
+
+    // 20:30 on 31 May in New York: May is not over, and it is the month the
+    // current figures belong to.
+    final (nyCosts, nyPeople) = await read('ws-4');
+    expect(nyCosts.reasons, contains('period_not_over'));
+    expect(nyPeople.quality, isNot(contains(KpiQuality.notRecorded)));
+    // 02:30 on 1 June in Pézenas: May is over.
+    final (homeCosts, homePeople) = await read('ws-1');
+    expect(homeCosts.reasons, isNot(contains('period_not_over')));
+    expect(homePeople.quality, contains(KpiQuality.notRecorded));
   });
 }
