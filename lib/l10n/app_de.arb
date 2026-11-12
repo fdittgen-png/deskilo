@@ -7466,6 +7466,12 @@
       }
     }
   },
+  "fileDropBusy": "Die vorige Datei wird noch verarbeitet. Legen Sie die nächste ab, wenn sie fertig ist.",
+  "fileDropFolder": "Ein Ordner kann hier nicht abgelegt werden. Legen Sie eine Datei ab.",
+  "fileDropOverlay": "Datei hier ablegen. Hier werden {kinds} angenommen.",
+  "fileDropReadFailed": "Die abgelegte Datei konnte nicht gelesen werden.",
+  "fileDropSeveral": "Bitte nur eine Datei auf einmal ablegen.",
+  "fileDropWrongKind": "Hier werden nur Dateien vom Typ {kinds} angenommen. Legen Sie eine andere Datei ab oder nutzen Sie die Schaltfläche.",
   "fileExportKeep": "In Deskilo behalten",
   "@fileExportKeep": {
     "description": "iPhone Export… row: keep a private copy inside the app"

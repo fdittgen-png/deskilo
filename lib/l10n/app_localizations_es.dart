@@ -11629,6 +11629,30 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'El archivo anterior aún se está procesando. Suelte el siguiente cuando termine.';
+
+  @override
+  String get fileDropFolder =>
+      'Aquí no se puede soltar una carpeta. Suelte un archivo.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Suelte el archivo aquí. Aquí se aceptan $kinds.';
+  }
+
+  @override
+  String get fileDropReadFailed => 'No se pudo leer el archivo soltado.';
+
+  @override
+  String get fileDropSeveral => 'Suelte un solo archivo a la vez.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'Aquí solo se aceptan archivos $kinds. Suelte otro archivo o use el botón.';
+  }
+
+  @override
   String get fileExportKeep => 'Guardar en Deskilo';
 
   @override

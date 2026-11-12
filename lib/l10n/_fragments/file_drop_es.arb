@@ -1,0 +1,9 @@
+{
+  "@@locale": "es",
+  "fileDropOverlay": "Suelte el archivo aquí. Aquí se aceptan {kinds}.",
+  "fileDropWrongKind": "Aquí solo se aceptan archivos {kinds}. Suelte otro archivo o use el botón.",
+  "fileDropSeveral": "Suelte un solo archivo a la vez.",
+  "fileDropFolder": "Aquí no se puede soltar una carpeta. Suelte un archivo.",
+  "fileDropBusy": "El archivo anterior aún se está procesando. Suelte el siguiente cuando termine.",
+  "fileDropReadFailed": "No se pudo leer el archivo soltado."
+}

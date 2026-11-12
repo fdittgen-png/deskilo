@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "fileDropOverlay": "Trascini qui il file. Qui sono accettati {kinds}.",
+  "fileDropWrongKind": "Qui sono accettati solo file {kinds}. Trascini un altro file o usi il pulsante.",
+  "fileDropSeveral": "Trascini un solo file alla volta.",
+  "fileDropFolder": "Qui non si può trascinare una cartella. Trascini un file.",
+  "fileDropBusy": "Il file precedente è ancora in elaborazione. Trascini il successivo quando ha finito.",
+  "fileDropReadFailed": "Non è stato possibile leggere il file trascinato."
+}

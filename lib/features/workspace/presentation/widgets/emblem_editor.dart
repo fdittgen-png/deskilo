@@ -6,10 +6,11 @@
 // it, redraws it at most 512 px across and re-encodes it as PNG, which
 // bounds the bytes and strips every metadata block — including, for a
 // photograph, where it was taken.
-import 'package:file_selector/file_selector.dart' show XTypeGroup;
+import 'package:file_selector/file_selector.dart' show XFile, XTypeGroup;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -31,15 +32,21 @@ class EmblemEditor extends ConsumerStatefulWidget {
 class _EmblemEditorState extends ConsumerState<EmblemEditor> {
   bool _busy = false;
 
+  static const _types = XTypeGroup(
+    label: 'image',
+    extensions: ['png', 'jpg', 'jpeg', 'webp'],
+  );
+
   Future<void> _pick() async {
-    final l10n = context.l10n;
-    final picker = ref.read(filePickerProvider);
-    final emblems = ref.read(emblemsProvider);
-    final file = await picker(const XTypeGroup(
-      label: 'image',
-      extensions: ['png', 'jpg', 'jpeg', 'webp'],
-    ));
+    final file = await ref.read(filePickerProvider)(_types);
     if (file == null || !mounted) return;
+    await _take(file);
+  }
+
+  /// Stores [file] as the emblem — picked or dropped alike (#3623).
+  Future<void> _take(XFile file) async {
+    final l10n = context.l10n;
+    final emblems = ref.read(emblemsProvider);
     final bytes = await file.readAsBytes();
     if (!mounted) return;
     setState(() => _busy = true);
@@ -105,7 +112,7 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
     final theme = Theme.of(context);
     final stored = ref.watch(workspaceEmblemOfProvider(widget.workspaceId));
     final has = stored.value?.isNotEmpty ?? false;
-    return Column(
+    final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(l10n.emblemTitle, style: theme.textTheme.titleSmall),
@@ -137,6 +144,14 @@ class _EmblemEditorState extends ConsumerState<EmblemEditor> {
           ],
         ),
       ],
+    );
+    // #3623 — an image dropped onto the emblem is chosen as a picked one.
+    return FileDropZone(
+      typeGroup: _types,
+      enabled: !_busy,
+      wrongKindMessage: l10n.emblemNotAnImage,
+      onFile: _take,
+      child: column,
     );
   }
 }
