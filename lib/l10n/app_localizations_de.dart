@@ -17741,6 +17741,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get listDetailClose => 'Eintrag schließen';
+
+  @override
+  String get listDetailResize => 'Bereich des Eintrags in der Breite ändern';
+
+  @override
   String get listWholeReservable => 'Als Ganzes reservierbar';
 
   @override

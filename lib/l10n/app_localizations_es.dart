@@ -17700,6 +17700,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get listDetailClose => 'Cerrar el registro';
+
+  @override
+  String get listDetailResize => 'Cambiar el ancho del panel del registro';
+
+  @override
   String get listWholeReservable => 'Reservable entero';
 
   @override
