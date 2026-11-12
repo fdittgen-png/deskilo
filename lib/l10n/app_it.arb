@@ -15375,7 +15375,7 @@
   "reminderPdfClosing": "Se ha già pagato, ignori questa lettera.",
   "reminderPdfDays": "giorni",
   "reminderPdfDaysOpen": "Aperta da",
-  "reminderPdfDaysOpenLine": "Aperta da {days} giorni",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Aperta da {days} giorno} other{Aperta da {days} giorni}}",
   "reminderPdfLevelLabel": "Livello di sollecito",
   "reminderPdfOpeningFirm": "nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. La preghiamo di saldare l'importo senza indugio.",
   "reminderPdfOpeningFriendly": "questo è un promemoria amichevole: la fattura qui sotto è ancora aperta. Probabilmente una semplice svista — nessun problema.",
@@ -15769,6 +15769,7 @@
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportExpectedDelivery": "Consegna prevista",
+  "reportExpectedDeliveryDate": "Consegna prevista il {date}",
   "reportFieldGroupBank": "Coordinate bancarie",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -16398,6 +16399,7 @@
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
   "reportSubject": "Oggetto",
+  "reportSubjectLine": "Oggetto: {subject}",
   "reportTemplateClearOverlay": "Usa il predefinito per questa lingua",
   "reportTemplateLangDefault": "Predefinito (tutte le lingue)",
   "@reportTemplateLangDefault": {
@@ -20590,6 +20592,7 @@
   "@usageReportOverage": {
     "description": "#873 consumption report: usageReportOverage"
   },
+  "usageReportOverageLine": "Eccedenza riportata sulla prossima fattura: {amount}",
   "usageReportPaid": "Pagato in anticipo (partecipazione)",
   "@usageReportPaid": {
     "description": "#873 consumption report: usageReportPaid"

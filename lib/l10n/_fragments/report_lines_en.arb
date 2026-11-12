@@ -1,0 +1,29 @@
+{
+  "reportSubjectLine": "Subject: {subject}",
+  "@reportSubjectLine": {
+    "description": "#3768 The subject line of a formal letter: the label and the subject as one message, so the language places the separator. {subject} is the title the report fills in.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "usageReportOverageLine": "Overage carried to the next invoice: {amount}",
+  "@usageReportOverageLine": {
+    "description": "#3768 Consumption report line: the overage and its amount, one message so the language places the separator. {amount} is filled in when the report is printed.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "reportExpectedDeliveryDate": "Expected delivery {date}",
+  "@reportExpectedDeliveryDate": {
+    "description": "#3768 Purchase order header: the expected delivery date, e.g. \"Expected delivery 3 March 2026\". {date} is filled in when the order is printed.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

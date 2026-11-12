@@ -367,6 +367,7 @@ Map<String, Object?> reminderReportData(
   final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   final now = facts.now;
   final workspace = facts.workspace;
+  final daysOpen = now.difference(invoice.issuedAt).inDays;
   return <String, Object?>{
     'workspace': invoice.workspaceName,
     'workspace_address': invoice.workspaceAddress,
@@ -381,7 +382,9 @@ Map<String, Object?> reminderReportData(
     'total': currency.formatMinor(invoice.totalCents),
     'reminder_level': level,
     'reminder_date': dateFormat.format(now),
-    'days_open': now.difference(invoice.issuedAt).inDays,
+    'days_open': daysOpen,
+    // #3768 — the same count as a whole line with its plural.
+    'days_open_text': strings.daysOpen(daysOpen),
     // #480 — a reminder cites the same statutory payment clauses.
     ...legalMentionData(
       strings,

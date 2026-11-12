@@ -15375,7 +15375,7 @@
   "reminderPdfClosing": "Sollten Sie bereits gezahlt haben, betrachten Sie dieses Schreiben bitte als gegenstandslos.",
   "reminderPdfDays": "Tagen",
   "reminderPdfDaysOpen": "Offen seit",
-  "reminderPdfDaysOpenLine": "Offen seit {days} Tagen",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Offen seit {days} Tag} other{Offen seit {days} Tagen}}",
   "reminderPdfLevelLabel": "Mahnstufe",
   "reminderPdfOpeningFirm": "trotz unserer vorherigen Mahnung ist die untenstehende Rechnung weiterhin unbezahlt. Bitte begleichen Sie den Betrag umgehend.",
   "reminderPdfOpeningFriendly": "dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.",
@@ -15769,6 +15769,7 @@
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportExpectedDelivery": "Erwartete Lieferung",
+  "reportExpectedDeliveryDate": "Erwartete Lieferung am {date}",
   "reportFieldGroupBank": "Bankverbindung",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -16398,6 +16399,7 @@
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
   "reportSubject": "Betreff",
+  "reportSubjectLine": "Betreff: {subject}",
   "reportTemplateClearOverlay": "Für diese Sprache den Standard verwenden",
   "reportTemplateLangDefault": "Standard (alle Sprachen)",
   "@reportTemplateLangDefault": {
@@ -20590,6 +20592,7 @@
   "@usageReportOverage": {
     "description": "#873 consumption report: usageReportOverage"
   },
+  "usageReportOverageLine": "Überziehung, auf die nächste Rechnung übertragen: {amount}",
   "usageReportPaid": "Vorausbezahlt (Teilnahme)",
   "@usageReportPaid": {
     "description": "#873 consumption report: usageReportPaid"
