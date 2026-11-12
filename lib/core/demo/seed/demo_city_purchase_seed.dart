@@ -178,11 +178,13 @@ void _siteBills(
               // #3294 step 4 — the restocks name the catalogue item they buy.
               serviceId: _restock(prefix, kind)?.item,
               quantity: _restock(prefix, kind)?.quantity ?? 1,
+              // #3785 — the server's classes (0461): an operating cost is
+              // `operating`, never a word the server refuses.
               recognitionKind: kind == 'equipment'
                   ? 'asset'
                   : kind == 'stock'
                   ? 'stock'
-                  : 'expense',
+                  : 'operating',
             ),
           ],
         ), now);

@@ -11,7 +11,6 @@ import '../../features/money/providers/book_profile_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
-import '../../features/workspace/domain/kpi_purchases.dart';
 import '../../features/workspace/domain/kpi_vendors.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -26,7 +25,6 @@ import 'data/asset_valuation_repository.dart';
 import 'data/book_period_repository.dart';
 import 'data/book_profile_repository.dart';
 import 'data/customer_kpi_repository.dart';
-import 'data/demo_cost_kpi_repository.dart';
 import 'data/item_kpi_repository.dart';
 import 'data/kpi_repositories.dart';
 import 'data/lease_commitment_repository.dart';
@@ -37,6 +35,7 @@ import 'data/room_rental_repository.dart';
 import 'data/sales_kpi_repository.dart';
 import 'data/vendor_kpi_repository.dart';
 import 'data/workspace_asset_repository.dart';
+import 'demo_analysis_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_purchase_order_overrides.dart';
 import 'demo_purchasing_overrides.dart';
@@ -223,11 +222,49 @@ List<Override> demoCityCommerceOverrides(
       (ref) => choose(ref, homeCommitments, londonCommitments, nyCommitments, twin.commitments),
     ),
     ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing, orderSpaces),
+    // #3785 — the cost figures and the cost allocation of every space.
+    ...demoCostAnalysisOverrides(fixture, (
+      home: (
+        purchases: purchasing.purchases,
+        invoices: () => fixture.money.invoices,
+        assets: mainAssets,
+        valuations: homeValuations,
+        commitments: homeCommitments,
+      ),
+      leipzig: (
+        purchases: purchasing.purchases,
+        invoices: () => fixture.secondSpace.money.invoices,
+        assets: mainAssets,
+        valuations: homeValuations,
+        commitments: homeCommitments,
+      ),
+      london: (
+        purchases: londonPurchasing.purchases,
+        invoices: () => fixture.london.money.invoices,
+        assets: londonAssets,
+        valuations: londonValuations,
+        commitments: londonCommitments,
+      ),
+      newYork: (
+        purchases: nyPurchasing.purchases,
+        invoices: () => fixture.newYork.money.invoices,
+        assets: nyAssets,
+        valuations: nyValuations,
+        commitments: nyCommitments,
+      ),
+      twin: (
+        purchases: fixture.twin.purchasing.purchases,
+        invoices: () => fixture.twin.money.invoices,
+        assets: twin.assets,
+        valuations: twin.valuations,
+        commitments: twin.commitments,
+      ),
+    )),
   ];
 }
 
-/// #2582 — the purchase and cost figures over each space's own documents, in
-/// its own currency; the older spaces' cost figures need a server.
+/// #2582 — the purchase figures over each space's own documents, in its own
+/// currency.
 List<Override> _kpiOverrides(
   DemoFixture fixture,
   DemoPurchasing home,
@@ -241,20 +278,6 @@ List<Override> _kpiOverrides(
     DemoPurchaseKpiRepository(purchases: london.purchases, now: now, currency: 'GBP'),
     DemoPurchaseKpiRepository(purchases: newYork.purchases, now: now, currency: 'USD'),
     DemoPurchaseKpiRepository(purchases: fixture.twin.purchasing.purchases, now: now),
-  );
-  final cost = (
-    DemoCostKpiRepository(
-      purchases: london.purchases,
-      invoices: () => fixture.london.money.invoices,
-      now: now,
-      currency: 'GBP',
-    ),
-    DemoCostKpiRepository(
-      purchases: newYork.purchases,
-      invoices: () => fixture.newYork.money.invoices,
-      now: now,
-      currency: 'USD',
-    ),
   );
   // #3294 — the customer figures of each of the four spaces, from its own
   // money, under the reader's rights as the server would decide them.
@@ -357,15 +380,6 @@ List<Override> _kpiOverrides(
           purchases: fixture.twin.purchasing.purchases,
           now: now,
         ),
-      ),
-    ),
-    costKpiRepositoryProvider.overrideWith(
-      (ref) => choose<CostKpiRepository>(
-        ref,
-        const UnavailableCostKpiRepository(),
-        cost.$1,
-        cost.$2,
-        const UnavailableCostKpiRepository(),
       ),
     ),
   ];

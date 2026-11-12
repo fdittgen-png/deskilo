@@ -10,6 +10,12 @@ class FakeLeaseCommitmentRepository implements LeaseCommitmentRepository {
   ]) : _byLease = {for (final e in byLease.entries) e.key: [...e.value]};
 
   final Map<String, List<CommitmentOccurrence>> _byLease;
+
+  /// #3785 — every lease's occurrences as they stand, for the space's cost
+  /// figures.
+  Map<String, List<CommitmentOccurrence>> get occurrencesByLease => {
+    for (final e in _byLease.entries) e.key: List.unmodifiable(e.value),
+  };
   final Set<String> _requests = {};
   var _next = 1;
 
