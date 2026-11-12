@@ -18,6 +18,8 @@
 // matched to it, never below 0; the occurrences not generated yet
 // projected from the schedule exactly as the sweep will generate them,
 // within its end and its count.
+import 'package:meta/meta.dart';
+
 import '../../../features/money/domain/lease_commitment.dart';
 import '../../../features/money/domain/premises_lease.dart';
 import '../../../features/money/domain/room_rental.dart';
@@ -41,6 +43,7 @@ typedef DemoUnbilled = ({int total, int overdue});
 
 /// [d] plus [every] [unit]s, as Postgres adds an interval to a date: a day
 /// the target month does not have becomes its last day.
+@visibleForTesting
 DateTime addScheduleInterval(DateTime d, String unit, int every) {
   final month = d.month + (unit == 'year' ? 12 * every : every);
   final last = DateTime(d.year, month + 1, 0).day;
