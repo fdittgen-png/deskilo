@@ -11458,6 +11458,7 @@
   "linkedAccountsUnlink": "Desvincular",
   "listCoversSeats": "{count, plural, =1{1 puesto} other{{count} puestos}}",
   "listCoversTables": "{count, plural, =1{1 mesa} other{{count} mesas}}",
+  "listDetailResize": "Cambiar el ancho del panel del registro",
   "listWholeReservable": "Reservable entero",
   "localGapsTitle": "Para terminar de configurar este espacio",
   "localNeedsTitle": "Los añadirá usted; una plantilla nunca los transporta:",

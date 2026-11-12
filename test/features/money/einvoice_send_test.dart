@@ -130,6 +130,8 @@ void main() {
       find.byKey(ValueKey('invoicing-row-${money.invoices.single.id}')),
     );
     await tester.pump(const Duration(seconds: 1));
+    // #3607 — the invoice opens at its address: a frame for the route.
+    await tester.pump(const Duration(seconds: 1));
     // #3587 R1-d — the page's More.
     await openInvoicePageMore(tester);
     expect(find.byKey(const ValueKey('invoice-more-einvoice')), findsNothing);
