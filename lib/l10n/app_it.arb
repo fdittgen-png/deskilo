@@ -4271,7 +4271,7 @@
   "@customerStatementBalanceNone": {
     "description": "#3673 customer statement: customerStatementBalanceNone"
   },
-  "customerStatementBalanceOwed": "Saldo a vostro favore",
+  "customerStatementBalanceOwed": "Saldo a Suo favore",
   "@customerStatementBalanceOwed": {
     "description": "#3673 customer statement: customerStatementBalanceOwed"
   },
@@ -4288,7 +4288,7 @@
   "@customerStatementNothingOpen": {
     "description": "#3673 customer statement: customerStatementNothingOpen"
   },
-  "customerStatementOwedToYou": "A vostro favore",
+  "customerStatementOwedToYou": "A Suo favore",
   "@customerStatementOwedToYou": {
     "description": "#3673 customer statement: customerStatementOwedToYou"
   },

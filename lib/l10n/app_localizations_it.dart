@@ -6859,7 +6859,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get customerStatementBalanceNone => 'Non è dovuto nulla';
 
   @override
-  String get customerStatementBalanceOwed => 'Saldo a vostro favore';
+  String get customerStatementBalanceOwed => 'Saldo a Suo favore';
 
   @override
   String customerStatementDue(String date) {
@@ -6871,7 +6871,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non c\'è nulla di aperto per questo cliente: nessun estratto conto da stampare.';
 
   @override
-  String get customerStatementOwedToYou => 'A vostro favore';
+  String get customerStatementOwedToYou => 'A Suo favore';
 
   @override
   String customerStatementPart(String date) {
