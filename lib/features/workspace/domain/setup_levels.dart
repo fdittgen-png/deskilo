@@ -290,6 +290,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.setupGuide,
         WorkspaceFeature.memberGettingStarted,
         WorkspaceFeature.uiAnimations,
+        // #3610 — search and keys, beside the motion: how the app is used.
+        WorkspaceFeature.quickSearch,
         WorkspaceFeature.regionalFormats,
         WorkspaceFeature.navigationStyle,
         WorkspaceFeature.memberAccountMenu,

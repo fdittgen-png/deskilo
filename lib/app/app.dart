@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,7 @@ import '../core/demo/presentation/demo_workspace.dart';
 import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
+import '../core/shortcuts/shortcut_scope.dart';
 import '../core/ui/app_scroll_behavior.dart';
 import '../core/ui/kit/page_title.dart';
 import '../core/ui/system_insets_guard.dart';
@@ -22,7 +25,9 @@ import 'active_tax_reference.dart';
 import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
 import 'page_frame.dart';
+import 'route_classes.dart';
 import 'router.dart';
+import 'search_wiring.dart';
 import 'shell/desk_frame.dart';
 import 'shell/desk_scaffold.dart';
 import 'shell/layer_chrome.dart';
@@ -147,10 +152,35 @@ class DeskiloApp extends ConsumerWidget {
                       router: router,
                       child: child ?? const SizedBox.shrink(),
                     );
+                    // #3610 — the app's keys and search, in a business
+                    // page while search and keys are on.
+                    final keys =
+                        ref.watch(currentWorkspaceProvider).value != null &&
+                        chromeOf(path) == RouteChrome.desk &&
+                        ref
+                            .watch(enabledFeaturesSyncProvider)
+                            .contains(WorkspaceFeature.quickSearch);
+                    BuildContext? navigator() =>
+                        router.routerDelegate.navigatorKey.currentContext;
                     // #3605 — the window's title, on the desk and off it.
                     // #3789 — the top page's own name, for the crumbs
                     // and the window title.
-                    return PageNameScope(
+                    return ShortcutHost(
+                      enabled: keys,
+                      dialogContext: navigator,
+                      onSearch: () {
+                        final at = navigator();
+                        if (at == null) return;
+                        unawaited(
+                          openSearch(
+                            at,
+                            router,
+                            later: navigator,
+                            appRef: ref,
+                          ),
+                        );
+                      },
+                      child: PageNameScope(
                       path: path,
                       child: WindowTitle(
                       router: router,
@@ -159,6 +189,7 @@ class DeskiloApp extends ConsumerWidget {
                           ? DeskFrame(router: router, path: path, child: page)
                           // #3604 — the measure its route declares.
                           : framePage(path, page, inside: false),
+                    ),
                     ),
                     );
                   },

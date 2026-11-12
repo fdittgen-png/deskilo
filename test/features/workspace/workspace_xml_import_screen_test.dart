@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/files/file_drop_backend.dart';
 import 'package:deskilo/core/files/file_picker.dart';
 import 'package:deskilo/features/plan/domain/accessory.dart';
 import 'package:deskilo/features/plan/domain/desk.dart';
@@ -23,9 +24,11 @@ import 'package:deskilo/features/workspace/providers/workspace_import_providers.
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../helpers/fake_file_drop.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/settings_sections.dart';
@@ -199,6 +202,7 @@ Future<void> pumpWorkspaceSettings(
   required FakeWorkspaceRepository workspaceRepository,
   required CountingFloorPlanRepository floorPlan,
   FakeLocalSetupRepository? localSetup,
+  List<Override> extraOverrides = const [],
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
   // the import tile sits below the export tile, keep the form built.
@@ -219,6 +223,7 @@ Future<void> pumpWorkspaceSettings(
           localSetup: localSetup,
         ),
         filePickerProvider.overrideWithValue(picker),
+        ...extraOverrides,
         workspaceImportRepositoryProvider.overrideWithValue(importRepository),
       ],
       child: const DeskiloApp(),
@@ -603,5 +608,66 @@ void main() {
     await confirmImport(tester);
     expect(importRepository.configurations, isEmpty);
     expect(importRepository.calls, hasLength(1));
+  });
+
+  // #3818 — a dropped file takes the picked file's path: the same preview
+  // and destructive confirmation come first, nothing is restored before it.
+  group('a dropped file', () {
+    late RecordingImportRepository importRepository;
+    late FakeFileDrop drop;
+
+    setUp(() {
+      importRepository = RecordingImportRepository();
+      drop = FakeFileDrop();
+    });
+
+    Future<void> pumpDrop(WidgetTester tester) => pumpWorkspaceSettings(
+      tester,
+      // The picker is never asked: a drop brings its own file.
+      picker: (group) async => fail('the picker must not open for a drop'),
+      importRepository: importRepository,
+      workspaceRepository: FakeWorkspaceRepository.withWorkspace(),
+      floorPlan: CountingFloorPlanRepository()..seedSmallPlan(),
+      extraOverrides: drop.overrides(),
+    );
+
+    testWidgets('opens the confirmation and restores nothing until it is '
+        'accepted', (tester) async {
+      await pumpDrop(tester);
+      drop.drop(
+        DroppedItems([
+          FakeDroppedFile('space.xml', bytes: utf8.encode(importableXml())),
+        ]),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Replace floor plan?'), findsOneWidget);
+      expect(importRepository.calls, isEmpty);
+      await confirmImport(tester);
+      expect(importRepository.calls, hasLength(1));
+    });
+
+    testWidgets('and a cancelled confirmation restores nothing', (
+      tester,
+    ) async {
+      await pumpDrop(tester);
+      drop.drop(
+        DroppedItems([
+          FakeDroppedFile('space.xml', bytes: utf8.encode(importableXml())),
+        ]),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('workspaceXmlImportCancel')));
+      await tester.pumpAndSettle();
+      expect(importRepository.calls, isEmpty);
+    });
+
+    testWidgets('of another kind is refused, no confirmation', (tester) async {
+      await pumpDrop(tester);
+      drop.drop(DroppedItems([FakeDroppedFile('space.png')]));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('takes .xml'), findsOneWidget);
+      expect(find.text('Replace floor plan?'), findsNothing);
+      expect(importRepository.calls, isEmpty);
+    });
   });
 }

@@ -20,7 +20,9 @@
 # review {"path":"test/core/ui/adaptive/task_surface_test.dart","before":14,"after":19,"invariant":"#3608 B1 text entered without key events marks the task (an amount field and a raw field), a kit choice marks it (the list field and the toggle row), and the drag on the compact sheet asks; each settles once for the discard question to open, and the list field once for its options","cost":"five settles of about 0.1 s each; 29 tests in 3 s locally"}
 # review {"path":"test/features/workspace/kiosk_devices_screen_test.dart","before":0,"after":14,"invariant":"#3675 the kiosk devices screen: enrol (name, tap), a refused enrolment, revoke with its confirmation, a failed read and Try again, and the setting's confirmation cancelled then accepted, each settled once before the store or the screen is read","cost":"five tests in about 4 s locally"}
 # review {"path":"test/features/money/invoicing_list_detail_test.dart","before":0,"after":16,"invariant":"#3789 each list-detail behaviour is a person's step through the app settled before the address, the pane and the list are read: open, resize, Back, search, Escape, a filter, a direct link","cost":"3 tests in 6 s locally"}
+# review {"path":"test/features/search/search_palette_test.dart","before":0,"after":17,"invariant":"#3610 each search is a person's step through the app settled before the window, the address and the results are read: Ctrl+K, typing after the debounce, a result opened, a drawer, a permission or a workspace changed","cost":"8 tests in 7 s locally"}
 # review {"path":"test/features/task_recorder/ui_capture_test.dart","before":14,"after":16,"invariant":"#3789 the same screen recorded at 390 and at 1440: the app settles, the screen is pushed and settles, before the recording is read","cost":"one test, about 2 s locally"}
+# review {"path":"test/features/workspace/workspace_xml_import_screen_test.dart","before":10,"after":14,"invariant":"#3818 a file dropped on the restore tool opens the same preview and destructive confirmation as a picked one: the settings page settles, the drop is delivered and settles, the confirmation is read, then accepted, cancelled or refused, each settled once before the repository is read","cost":"three tests in about 5 s locally"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -122,6 +124,7 @@
 55 test/features/reservations/reserve_hub_test.dart
 11 test/features/reservations/seat_list_booking_actions_test.dart
 30 test/features/reservations/space_scan_test.dart
+17 test/features/search/search_palette_test.dart
 10 test/features/task_recorder/admin_journey_test.dart
 10 test/features/task_recorder/booking_journey_test.dart
 18 test/features/task_recorder/calendar_journey_test.dart
@@ -159,6 +162,6 @@
 12 test/features/workspace/workspace_readiness_test.dart
 48 test/features/workspace/workspace_settings_screen_test.dart
 10 test/features/workspace/workspace_xml_export_test.dart
-10 test/features/workspace/workspace_xml_import_screen_test.dart
+14 test/features/workspace/workspace_xml_import_screen_test.dart
 14 test/ux/first_booking_journey_test.dart
 11 test/ux/journey_contracts_test.dart

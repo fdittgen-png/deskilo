@@ -24,6 +24,8 @@ const _withoutStepBaseline = 0;
 /// (#2871). Every other level feature is a step's own or taken in by a
 /// step's page (`setupStepTakesIn`).
 const _switches = <WorkspaceFeature>{
+  // #3610 — search and keys: how the app is driven, nothing to set up.
+  WorkspaceFeature.quickSearch,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

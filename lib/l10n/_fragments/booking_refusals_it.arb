@@ -1,0 +1,40 @@
+{
+  "@@locale": "it",
+  "bookingNotYours": "Questa prenotazione non Le appartiene.",
+  "@bookingNotYours": {
+    "description": "#3810 booking refusal DKK29: the booking belongs to someone else"
+  },
+  "bookingNotCancellable": "Questa prenotazione non può più essere annullata.",
+  "@bookingNotCancellable": {
+    "description": "#3810 booking refusal DKK30: the booking can no longer be cancelled"
+  },
+  "bookingRunningKeepsStart": "Una prenotazione in corso mantiene l'ora di inizio.",
+  "@bookingRunningKeepsStart": {
+    "description": "#3810 booking refusal DKK31: a running booking cannot move its start"
+  },
+  "bookingEndMustLieAhead": "La nuova fine deve essere successiva a ora.",
+  "@bookingEndMustLieAhead": {
+    "description": "#3810 booking refusal DKK32: a new end in the past"
+  },
+  "bookingOnlyUpcoming": "Solo le prenotazioni future possono essere modificate.",
+  "@bookingOnlyUpcoming": {
+    "description": "#3810 booking refusal DKK33: only upcoming bookings can be edited"
+  },
+  "bookingSeriesTooLong": "{days, plural, one{Una serie può coprire al massimo 1 giorno.} other{Una serie può coprire al massimo {days} giorni.}}",
+  "@bookingSeriesTooLong": {
+    "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "bookingAdminNoLevel": "Un amministratore non può assegnare un piano intero qui.",
+  "@bookingAdminNoLevel": {
+    "description": "#3810 booking refusal DKK35: an admin may not assign a whole level here"
+  },
+  "bookingNoLongerReserved": "Questa prenotazione non è più riservata; il check-in non è possibile.",
+  "@bookingNoLongerReserved": {
+    "description": "#3810 booking refusal DKK36: check-in on a booking no longer reserved"
+  }
+}

@@ -3083,6 +3083,10 @@
   "bookTypeExpense": "Aufwand",
   "bookTypeIncome": "Ertrag",
   "bookTypeLiability": "Passiva",
+  "bookingAdminNoLevel": "Ein Admin kann hier keine ganze Etage zuweisen.",
+  "@bookingAdminNoLevel": {
+    "description": "#3810 booking refusal DKK35: an admin may not assign a whole level here"
+  },
   "bookingCheckedInAtUntil": "Auf {space} eingecheckt bis {until}.",
   "@bookingCheckedInAtUntil": {
     "description": "#663 - check-in confirmation naming the space",
@@ -3105,6 +3109,10 @@
       }
     }
   },
+  "bookingEndMustLieAhead": "Das neue Ende muss in der Zukunft liegen.",
+  "@bookingEndMustLieAhead": {
+    "description": "#3810 booking refusal DKK32: a new end in the past"
+  },
   "bookingGateBlocked": "So nicht buchbar",
   "bookingHorizonError": "{days, plural, one{Zu weit voraus — Buchungen sind {days} Tag im Voraus möglich.} other{Zu weit voraus — Buchungen sind {days} Tage im Voraus möglich.}}",
   "@bookingHorizonError": {
@@ -3118,12 +3126,28 @@
   "bookingModeCheckInNow": "Jetzt einchecken",
   "bookingMoreOptions": "Weitere Optionen",
   "bookingNoLongerCheckedIn": "Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.",
+  "bookingNoLongerReserved": "Diese Buchung ist nicht mehr reserviert; ein Check-in ist nicht möglich.",
+  "@bookingNoLongerReserved": {
+    "description": "#3810 booking refusal DKK36: check-in on a booking no longer reserved"
+  },
   "bookingNotAMember": "Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung.",
   "bookingNotAllowedError": "Sie dürfen in diesem Bereich keine Buchungen vornehmen. Bitten Sie eine Inhaberin oder einen Inhaber, Mitgliedern das Buchen zu erlauben.",
   "@bookingNotAllowedError": {
     "description": "Refusal when the member does not hold makeReservations (#3269)"
   },
+  "bookingNotCancellable": "Diese Buchung kann nicht mehr storniert werden.",
+  "@bookingNotCancellable": {
+    "description": "#3810 booking refusal DKK30: the booking can no longer be cancelled"
+  },
+  "bookingNotYours": "Diese Buchung gehört nicht Ihnen.",
+  "@bookingNotYours": {
+    "description": "#3810 booking refusal DKK29: the booking belongs to someone else"
+  },
   "bookingOnePlace": "Sie haben in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.",
+  "bookingOnlyUpcoming": "Nur bevorstehende Buchungen können geändert werden.",
+  "@bookingOnlyUpcoming": {
+    "description": "#3810 booking refusal DKK33: only upcoming bookings can be edited"
+  },
   "bookingOpenDetails": "Details",
   "bookingOutsideHoursError": "Buchungen müssen innerhalb der Arbeitszeiten liegen.",
   "bookingOutsideOffError": "Buchungen außerhalb der Öffnungszeiten sind nicht erlaubt.",
@@ -3250,7 +3274,20 @@
       }
     }
   },
+  "bookingRunningKeepsStart": "Eine laufende Buchung behält ihre Startzeit.",
+  "@bookingRunningKeepsStart": {
+    "description": "#3810 booking refusal DKK31: a running booking cannot move its start"
+  },
   "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.",
+  "bookingSeriesTooLong": "{days, plural, one{Eine Serie darf höchstens 1 Tag umfassen.} other{Eine Serie darf höchstens {days} Tage umfassen.}}",
+  "@bookingSeriesTooLong": {
+    "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingSpaceChainTaken": "Dieser Platz oder ein Bereich, zu dem er gehört, ist in diesem Zeitraum bereits reserviert.",
   "bookingTooLongError": "{minutes, plural, one{Zu lang — eine Buchung dauert höchstens {minutes} Minute.} other{Zu lang — eine Buchung dauert höchstens {minutes} Minuten.}}",
   "@bookingTooLongError": {
@@ -7059,6 +7096,8 @@
   "featurePushNotificationsDesc": "Ausstehende Bestätigungen auf die Geräte der Mitglieder zustellen.",
   "featureQrBadgesDesc": "Druckbare QR-Badge-Karten für den Kiosk, neben den NFC/RFID-Karten.",
   "featureQrBadgesTitle": "QR-Badges",
+  "featureQuickSearchDesc": "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben.",
+  "featureQuickSearchTitle": "Suche und Tasten",
   "featureRecapitulativeStatementDesc": "Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.",
   "featureRecapitulativeStatementTitle": "Zusammenfassende Meldung",
   "featureRecordingPrivacyDesc": "Zum Filmen oder Fotografieren dieses Arbeitsraums. Jeder Name, jede E-Mail-Adresse, Telefonnummer, Anschrift und jedes Foto wird durch eine erfundene Person ersetzt, bevor es auf den Bildschirm gelangt; der Plan, die Buchungen und die Beträge bleiben die echten. Ein Banner weist auf jedem Bildschirm darauf hin, und die Identitätsformulare verweigern das Speichern, solange er aktiv ist.",
@@ -13523,7 +13562,7 @@
   },
   "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
   "planFromLabel": "Von",
-  "planFromTime": "Von {time}",
+  "planFromTermTime": "{term} {time}",
   "planFullDayChip": "Ganzer Tag",
   "planFullDayError": "Buchungen umfassen hier den ganzen Tag.",
   "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag.",
@@ -17274,6 +17313,15 @@
   "schemaUpdateOperator": "Wenn Sie diesen Server betreiben: Spielen Sie die fehlenden Migrationen mit `dart run tool/instance.dart install --ref <projekt>` ein. Es läuft nur, was fehlt.",
   "schemaUpdateServer": "Server-Einstellungen",
   "schemaUpdateTitle": "Dieser Server muss aktualisiert werden",
+  "searchActionInvite": "Mitglied einladen",
+  "searchActionNewPurchase": "Neuer Einkauf",
+  "searchHint": "Eine Seite, eine Aktion, ein Mitglied, eine Rechnung…",
+  "searchKindAction": "Aktion",
+  "searchKindMember": "Mitglied",
+  "searchKindPage": "Seite",
+  "searchNothing": "Nichts gefunden für „{query}“.",
+  "searchRecent": "Zuletzt geöffnet",
+  "searchRecordUnreadable": "Dieser Eintrag lässt sich nicht öffnen: Es gibt ihn nicht, oder Sie dürfen ihn nicht lesen.",
   "seatDayAhead": "Später",
   "@seatDayAhead": {
     "description": "#903 seat day timeline: seatDayAhead"
@@ -18658,6 +18706,18 @@
   "shellPendingDecisions": "{count, plural, one{1 Entscheidung wartet auf Sie} other{{count} Entscheidungen warten auf Sie}}",
   "shellReserveButton": "Reservieren",
   "shellSwipeCoachMark": "Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.",
+  "shortcutClose": "Schließen",
+  "shortcutFilter": "Diese Liste filtern",
+  "shortcutKeys": "Die Tasten dieser Seite",
+  "shortcutKeysTitle": "Tastaturtasten",
+  "shortcutNew": "Neu",
+  "shortcutOpenCalendar": "Kalender eines Datumsfelds öffnen",
+  "shortcutPrint": "Das Dokument dieser Seite",
+  "shortcutRedo": "Wiederholen",
+  "shortcutSave": "Speichern",
+  "shortcutSearch": "Seite, Aktion oder Eintrag finden",
+  "shortcutSubmit": "Speichern oder senden",
+  "shortcutUndo": "Rückgängig",
   "siteCity": "Ort",
   "@siteCity": {
     "description": "#945 sites: siteCity"

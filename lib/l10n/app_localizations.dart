@@ -8141,6 +8141,12 @@ abstract class AppLocalizations {
   /// **'Liability'**
   String get bookTypeLiability;
 
+  /// #3810 booking refusal DKK35: an admin may not assign a whole level here
+  ///
+  /// In en, this message translates to:
+  /// **'An admin cannot assign a whole level here.'**
+  String get bookingAdminNoLevel;
+
   /// #663 - check-in confirmation naming the space
   ///
   /// In en, this message translates to:
@@ -8158,6 +8164,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Checked in until {until}.'**
   String bookingCheckedInUntil(String until);
+
+  /// #3810 booking refusal DKK32: a new end in the past
+  ///
+  /// In en, this message translates to:
+  /// **'The new end must be later than now.'**
+  String get bookingEndMustLieAhead;
 
   /// Shown as the text in booking sheet (reservations), and 2 other places.
   ///
@@ -8195,6 +8207,12 @@ abstract class AppLocalizations {
   /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
   String get bookingNoLongerCheckedIn;
 
+  /// #3810 booking refusal DKK36: check-in on a booking no longer reserved
+  ///
+  /// In en, this message translates to:
+  /// **'This booking is no longer reserved, so it cannot be checked in.'**
+  String get bookingNoLongerReserved;
+
   /// Refusal when an RPC answers 'not a member of this workspace' (#1030)
   ///
   /// In en, this message translates to:
@@ -8207,11 +8225,29 @@ abstract class AppLocalizations {
   /// **'You may not make reservations in this space. Ask an owner to let members book.'**
   String get bookingNotAllowedError;
 
+  /// #3810 booking refusal DKK30: the booking can no longer be cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'This booking can no longer be cancelled.'**
+  String get bookingNotCancellable;
+
+  /// #3810 booking refusal DKK29: the booking belongs to someone else
+  ///
+  /// In en, this message translates to:
+  /// **'This booking is not yours.'**
+  String get bookingNotYours;
+
   /// Refusal when the member already holds an overlapping active reservation (#412)
   ///
   /// In en, this message translates to:
   /// **'You already have a booking in that period — one place at a time.'**
   String get bookingOnePlace;
+
+  /// #3810 booking refusal DKK33: only upcoming bookings can be edited
+  ///
+  /// In en, this message translates to:
+  /// **'Only upcoming bookings can be changed.'**
+  String get bookingOnlyUpcoming;
 
   /// Action on the booking success message opening the new reservation's sheet (#1301)
   ///
@@ -8381,11 +8417,23 @@ abstract class AppLocalizations {
   /// **'Reserved: {when}.'**
   String bookingReservedWhen(String when);
 
+  /// #3810 booking refusal DKK31: a running booking cannot move its start
+  ///
+  /// In en, this message translates to:
+  /// **'A booking that has started keeps its start time.'**
+  String get bookingRunningKeepsStart;
+
   /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'A booking ends on the day it starts — book the next day separately.'**
   String get bookingSameDayError;
+
+  /// #3810 booking refusal DKK34: a series longer than the allowed days
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}'**
+  String bookingSeriesTooLong(int days);
 
   /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period
   ///
@@ -17954,6 +18002,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'QR badges'**
   String get featureQrBadgesTitle;
+
+  /// #3610 the search-and-keys feature
+  ///
+  /// In en, this message translates to:
+  /// **'Ctrl+K (⌘K on a Mac) or the bar\'s search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page\'s own keys stay.'**
+  String get featureQuickSearchDesc;
+
+  /// #3610 the search-and-keys feature
+  ///
+  /// In en, this message translates to:
+  /// **'Search and keys'**
+  String get featureQuickSearchTitle;
 
   /// #2354 recapitulative statement: featureRecapitulativeStatementDesc
   ///
@@ -35612,11 +35672,11 @@ abstract class AppLocalizations {
   /// **'From'**
   String get planFromLabel;
 
-  /// The start time of a booking period on its button, e.g. "From 09:00".
+  /// The start time of a booking period on its button, e.g. "From 09:00". {term} is the workspace's own word for the start (already translated or renamed in the vocabulary editor), {time} the formatted time. [workspace term: term]
   ///
   /// In en, this message translates to:
-  /// **'From {time}'**
-  String planFromTime(String time);
+  /// **'{term} {time}'**
+  String planFromTermTime(String term, String time);
 
   /// Header chip browsing the full 00:00–24:00 window under half-day granularity (#201)
   ///
@@ -44106,6 +44166,60 @@ abstract class AppLocalizations {
   /// **'This server needs an update'**
   String get schemaUpdateTitle;
 
+  /// #3610 search (Ctrl/Cmd+K): searchActionInvite
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a member'**
+  String get searchActionInvite;
+
+  /// #3610 search (Ctrl/Cmd+K): searchActionNewPurchase
+  ///
+  /// In en, this message translates to:
+  /// **'New purchase'**
+  String get searchActionNewPurchase;
+
+  /// #3610 search (Ctrl/Cmd+K): searchHint
+  ///
+  /// In en, this message translates to:
+  /// **'A page, an action, a member, an invoice…'**
+  String get searchHint;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindAction
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get searchKindAction;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindMember
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get searchKindMember;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindPage
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get searchKindPage;
+
+  /// #3610 search (Ctrl/Cmd+K): searchNothing
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found for “{query}”.'**
+  String searchNothing(String query);
+
+  /// #3610 search (Ctrl/Cmd+K): searchRecent
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get searchRecent;
+
+  /// #3610 search (Ctrl/Cmd+K): searchRecordUnreadable
+  ///
+  /// In en, this message translates to:
+  /// **'This record cannot be opened: it does not exist or you may not read it.'**
+  String get searchRecordUnreadable;
+
   /// #903 seat day timeline: seatDayAhead
   ///
   /// In en, this message translates to:
@@ -48808,6 +48922,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
   String get shellSwipeCoachMark;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get shortcutClose;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Filter this list'**
+  String get shortcutFilter;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'The keys of this page'**
+  String get shortcutKeys;
+
+  /// #3610 the title of the overlay listing the keys of the page
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard keys'**
+  String get shortcutKeysTitle;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get shortcutNew;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Open a date field\'s calendar'**
+  String get shortcutOpenCalendar;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'This page\'s document'**
+  String get shortcutPrint;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get shortcutRedo;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get shortcutSave;
+
+  /// #3610 the shortcut list: Ctrl/Cmd+K opens search
+  ///
+  /// In en, this message translates to:
+  /// **'Find a page, an action or a record'**
+  String get shortcutSearch;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Save or send'**
+  String get shortcutSubmit;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get shortcutUndo;
 
   /// #945 sites: siteCity
   ///

@@ -5129,6 +5129,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookTypeLiability => 'Liability';
 
   @override
+  String get bookingAdminNoLevel =>
+      'An admin cannot assign a whole level here.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Checked in at $space until $until.';
   }
@@ -5141,6 +5145,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Checked in until $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead => 'The new end must be later than now.';
 
   @override
   String get bookingGateBlocked => 'Not bookable as chosen';
@@ -5171,6 +5178,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This reservation is no longer checked in — it was checked out or closed in the meantime.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'This booking is no longer reserved, so it cannot be checked in.';
+
+  @override
   String get bookingNotAMember =>
       'You are no longer a member of this space — ask an administrator for an invitation.';
 
@@ -5179,8 +5190,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'You may not make reservations in this space. Ask an owner to let members book.';
 
   @override
+  String get bookingNotCancellable =>
+      'This booking can no longer be cancelled.';
+
+  @override
+  String get bookingNotYours => 'This booking is not yours.';
+
+  @override
   String get bookingOnePlace =>
       'You already have a booking in that period — one place at a time.';
+
+  @override
+  String get bookingOnlyUpcoming => 'Only upcoming bookings can be changed.';
 
   @override
   String get bookingOpenDetails => 'Details';
@@ -5290,8 +5311,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'A booking that has started keeps its start time.';
+
+  @override
   String get bookingSameDayError =>
       'A booking ends on the day it starts — book the next day separately.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'A series can cover at most $days days.',
+      one: 'A series can cover at most 1 day.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>
@@ -10972,6 +11008,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureQrBadgesTitle => 'QR badges';
+
+  @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K on a Mac) or the bar\'s search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page\'s own keys stay.';
+
+  @override
+  String get featureQuickSearchTitle => 'Search and keys';
 
   @override
   String get featureRecapitulativeStatementDesc =>
@@ -21958,8 +22001,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planFromLabel => 'From';
 
   @override
-  String planFromTime(String time) {
-    return 'From $time';
+  String planFromTermTime(String term, String time) {
+    return '$term $time';
   }
 
   @override
@@ -27144,6 +27187,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get schemaUpdateTitle => 'This server needs an update';
 
   @override
+  String get searchActionInvite => 'Invite a member';
+
+  @override
+  String get searchActionNewPurchase => 'New purchase';
+
+  @override
+  String get searchHint => 'A page, an action, a member, an invoice…';
+
+  @override
+  String get searchKindAction => 'Action';
+
+  @override
+  String get searchKindMember => 'Member';
+
+  @override
+  String get searchKindPage => 'Page';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nothing found for “$query”.';
+  }
+
+  @override
+  String get searchRecent => 'Recent';
+
+  @override
+  String get searchRecordUnreadable =>
+      'This record cannot be opened: it does not exist or you may not read it.';
+
+  @override
   String get seatDayAhead => 'Ahead';
 
   @override
@@ -30136,6 +30209,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.';
+
+  @override
+  String get shortcutClose => 'Close';
+
+  @override
+  String get shortcutFilter => 'Filter this list';
+
+  @override
+  String get shortcutKeys => 'The keys of this page';
+
+  @override
+  String get shortcutKeysTitle => 'Keyboard keys';
+
+  @override
+  String get shortcutNew => 'New';
+
+  @override
+  String get shortcutOpenCalendar => 'Open a date field\'s calendar';
+
+  @override
+  String get shortcutPrint => 'This page\'s document';
+
+  @override
+  String get shortcutRedo => 'Redo';
+
+  @override
+  String get shortcutSave => 'Save';
+
+  @override
+  String get shortcutSearch => 'Find a page, an action or a record';
+
+  @override
+  String get shortcutSubmit => 'Save or send';
+
+  @override
+  String get shortcutUndo => 'Undo';
 
   @override
   String get siteCity => 'City';

@@ -116,13 +116,3 @@ enum BookingGranularity {
 abstract final class BookingRulesKeys {
   static const String granularity = 'granularity';
 }
-
-/// Server-side error texts raised by `enforce_booking_rules` when a
-/// booking violates the granularity — half-day windows (0025/0026), the
-/// minute grid or the full-day window (0032). The booking error mapping
-/// matches these substrings; pinned by test against the migration files.
-abstract final class BookingGranularityError {
-  static const String serverSubstring = 'half-day';
-  static const String slotServerSubstring = 'minute grid';
-  static const String fullDayServerSubstring = 'cover the full day';
-}
