@@ -4693,6 +4693,8 @@
     "description": "#988/#990 deployments: deploymentToProd"
   },
   "deskDetail": "Table entière",
+  "deskNavCollapse": "Réduire le menu",
+  "deskNavExpand": "Élargir le menu",
   "deskSupplementLabel": "Réservations de table",
   "developerClear": "Vider le journal",
   "developerEmpty": "Aucune entrée de journal pour l'instant.",

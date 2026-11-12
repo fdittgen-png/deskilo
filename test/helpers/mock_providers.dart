@@ -4,6 +4,7 @@ import 'dart:ui' show Locale;
 
 import 'package:deskilo/app/feature_sheets_wiring.dart';
 import 'package:deskilo/app/realtime_invalidations.dart';
+import 'package:deskilo/app/shell/desk_navigation.dart';
 import 'package:deskilo/app/shell/shell_bar_visibility.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart' show navigationDefaultProvider;
 import 'package:deskilo/core/backend/backend_settings.dart';
@@ -325,6 +326,7 @@ List<Override> standardTestOverrides({
   DiscoveryViewStore? discoveryView,
   ShellFlagStore? shellBarHidden,
   ShellFlagStore? shellSwipeCoach,
+  ShellFlagStore? deskRailCollapsed,
   NavigationStyleStore? navigationStyle,
   DeploymentRepository? deployment,
   SchemaVersionSource? schemaVersion,
@@ -592,6 +594,9 @@ List<Override> standardTestOverrides({
         .overrideWithValue(shellBarHidden ?? InMemoryShellFlagStore()),
     shellSwipeCoachStoreProvider
         .overrideWithValue(shellSwipeCoach ?? InMemoryShellFlagStore(value: true)),
+    // #3603 — the desk's sidebar or rail, per device: in memory per test.
+    deskRailCollapsedStoreProvider
+        .overrideWithValue(deskRailCollapsed ?? InMemoryShellFlagStore()),
     ..._profileOverrides(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
     frontCameraStoreProvider

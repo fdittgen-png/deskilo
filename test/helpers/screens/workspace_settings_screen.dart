@@ -54,7 +54,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
   await tester.ensureVisible(find.text('Workspace'));

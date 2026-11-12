@@ -11711,6 +11711,18 @@ abstract class AppLocalizations {
   /// **'Whole desk'**
   String get deskDetail;
 
+  /// #3603 the desk sidebar's control that narrows it to the rail of icons
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow the menu'**
+  String get deskNavCollapse;
+
+  /// #3603 the desk rail's control that widens it to the sidebar with labels
+  ///
+  /// In en, this message translates to:
+  /// **'Widen the menu'**
+  String get deskNavExpand;
+
   /// Bill line: sum of whole-desk reservation prices this period (0059)
   ///
   /// In en, this message translates to:

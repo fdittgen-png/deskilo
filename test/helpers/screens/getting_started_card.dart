@@ -4,7 +4,6 @@
 // importing that test file (#2601). Moved verbatim.
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
@@ -23,6 +22,8 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../fake_reservation_repository.dart';
 import '../mock_providers.dart';
+
+import '../navigation.dart' show openReserveHub;
 
 /// An ordinary member of ws-1: no role, no admin power.
 const kOrdinaryMember = Member(
@@ -112,7 +113,6 @@ Future<Hub> pumpCard(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byType(ShellCenterButton));
-  await tester.pumpAndSettle();
+  await openReserveHub(tester);
   return (reservations: repo, workspace: ws, hints: store);
 }

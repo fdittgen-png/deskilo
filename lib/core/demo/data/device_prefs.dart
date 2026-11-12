@@ -144,6 +144,9 @@ class DemoDevicePrefs {
   final InMemoryShellFlagStore shellBarHidden = InMemoryShellFlagStore();
   final InMemoryShellFlagStore shellSwipeCoach = InMemoryShellFlagStore(value: true);
 
+  /// #3603 — the desk's sidebar starts with its labels.
+  final InMemoryShellFlagStore deskRailCollapsed = InMemoryShellFlagStore();
+
   /// #1914 — push opt-out, kept in the demonstration's own memory.
   final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();
 

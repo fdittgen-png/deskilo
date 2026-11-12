@@ -3,5 +3,7 @@
   "uxNavSales": "Vendite e incassi",
   "uxNavFinance": "Cassa e contabilità",
   "uxNavWorkspace": "Configurare lo spazio",
-  "uxNavReporting": "Reportistica"
+  "uxNavReporting": "Reportistica",
+  "deskNavCollapse": "Restringi il menu",
+  "deskNavExpand": "Allarga il menu"
 }

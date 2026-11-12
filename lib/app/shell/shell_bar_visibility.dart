@@ -40,8 +40,8 @@ abstract class ShellFlagStore {
   Future<void> write({required bool value});
 }
 
-class _PrefsShellFlagStore implements ShellFlagStore {
-  const _PrefsShellFlagStore(this.key);
+class PrefsShellFlagStore implements ShellFlagStore {
+  const PrefsShellFlagStore(this.key);
 
   final String key;
 
@@ -56,11 +56,11 @@ class _PrefsShellFlagStore implements ShellFlagStore {
 
 @Riverpod(keepAlive: true)
 ShellFlagStore shellBarHiddenStore(Ref ref) =>
-    const _PrefsShellFlagStore('shell_bar_hidden');
+    const PrefsShellFlagStore('shell_bar_hidden');
 
 @Riverpod(keepAlive: true)
 ShellFlagStore shellSwipeCoachStore(Ref ref) =>
-    const _PrefsShellFlagStore('shell_swipe_coach_seen');
+    const PrefsShellFlagStore('shell_swipe_coach_seen');
 
 /// The swiped-away state. Loading reads as SHOWN: the safe state, since
 /// it is the one that carries its own way out.

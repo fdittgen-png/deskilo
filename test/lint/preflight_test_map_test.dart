@@ -97,11 +97,12 @@ void main() {
             'test/features/other_test.dart': "import 'package:deskilo/x.dart';",
           },
         ),
-        ['test/features/me/space_offers_test.dart'],
+        // #3765 — a providers file also lists the Demo's container tests.
+        ['test/core/demo/', 'test/features/me/space_offers_test.dart'],
       );
     });
 
-    test('an ARB-only change lists test/i18n and nothing else', () {
+    test('an ARB-only change lists test/i18n and the Demo, nothing else', () {
       final skip = readNoImporterSearch(File('tool/preflight/test_map.json'));
       final consumers = <String, String>{
         'test/features/x_test.dart':
@@ -120,7 +121,8 @@ void main() {
           consumers,
           skipImporters: skip,
         ),
-        ['test/i18n/'],
+        // #3765 — every change to the app lists the Demo's container tests.
+        ['test/core/demo/', 'test/i18n/'],
       );
     });
 

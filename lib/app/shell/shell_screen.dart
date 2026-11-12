@@ -7,12 +7,13 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../core/motion/motion.dart';
-import '../../core/ui/adaptive/window_class.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/money/presentation/widgets/invoice_form_sheet.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
+import 'desk_scaffold.dart';
 import 'shell_app_bar.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_bottom_bar.dart';
@@ -78,18 +79,41 @@ class ShellScreen extends ConsumerWidget {
     // The web navigates through a drawer (every destination one tap
     // away, the full height for content); native keeps the bar.
     final webShell = ref.watch(webShellProvider);
-    final wideNavigation = webShell && WindowClass.of(context).atLeast(WindowClass.expanded) &&
-        MediaQuery.textScalerOf(context).scale(100) <= 150;
-    Widget navigation({bool permanent = false}) => ShellDrawer(
-      permanent: permanent,
+    Widget navigation({bool permanent = false, bool rail = false}) => ShellDrawer(
+      permanent: permanent, rail: rail,
       tabTitles: tabTitles, visibleBranches: visibleBranches, navs: navs,
       currentIndex: navigationShell.currentIndex, pendingEvents: pendingEvents,
       onBranch: (branch) => navigationShell.goBranch(branch,
           initialLocation: branch == navigationShell.currentIndex),
     );
+    // #3060 F7 — the overview sits in the first branch but is not its alerts:
+    // the bar names what is on screen.
+    final tabTitle = path == '/workspace-overview'
+        ? l10n.overviewTitle
+        : tabTitles[navigationShell.currentIndex];
+    // #1818 — one navigation shell at a time: see ShellSlot.
+    final page = FadeInOnChange(
+      changeKey: navigationShell.currentIndex,
+      child: ShellSlot(child: navigationShell),
+    );
+    final actions = shellBarActions(context, ref,
+        currentIndex: navigationShell.currentIndex);
+    // #3603 — from the expanded window class, the desk, on every platform.
+    if (chromeOf(path) == RouteChrome.desk && showsDesk(context)) {
+      return DeskScaffold(
+        navigation: ({required rail}) =>
+            navigation(permanent: true, rail: rail),
+        title: KeyedSubtree(
+          key: const ValueKey('desk-title'),
+          child: SpaceChip(tabTitle: tabTitle),
+        ),
+        actions: actions,
+        body: page,
+      );
+    }
     final barHidden = ref.watch(shellBarHiddenProvider).value ?? false;
     return Scaffold(
-      drawer: webShell && !wideNavigation ? navigation() : null,
+      drawer: webShell ? navigation() : null,
       // #1322 — the title bar leaves with the bottom bar: one gesture,
       // one progress, a real full-screen view. The web shell has no bar
       // to follow, and neither does a shell without one.
@@ -97,34 +121,15 @@ class ShellScreen extends ConsumerWidget {
         collapsible: !webShell && navs.isNotEmpty,
         appBar: AppBar(
           // #1823 — the chip names the space; the tab sits under it.
-          title: SpaceChip(
-            // #3060 F7 — the overview sits in the first branch but is not
-            // its alerts: the bar names what is on screen.
-            tabTitle: GoRouterState.of(context).uri.path == '/workspace-overview'
-                ? l10n.overviewTitle
-                : tabTitles[navigationShell.currentIndex],
-          ),
-          actions: shellBarActions(context, ref,
-              currentIndex: navigationShell.currentIndex),
+          title: SpaceChip(tabTitle: tabTitle),
+          actions: actions,
         ),
       ),
       // #611 — the tab switch fades the incoming branch in. The
       // FadeIndexedStack pattern: the shell's IndexedStack (and with it
       // the #111 per-tab keep-alive state) stays untouched; only an
       // opacity layer above it animates, keyed by the active branch.
-      body: Row(children: [
-        if (wideNavigation) ...[
-          // #2313 — wide enough for a menu label on one line.
-          SizedBox(width: 272, child: FocusTraversalGroup(child: navigation(permanent: true))),
-          const VerticalDivider(width: 1),
-        ],
-        // A branch route's semantics must not hide the sibling navigation.
-        Expanded(child: Semantics(container: true, child: FadeInOnChange(
-        changeKey: navigationShell.currentIndex,
-        // #1818 — one navigation shell at a time: see ShellSlot.
-        child: ShellSlot(child: navigationShell),
-      ))),
-      ]),
+      body: page,
       // ONE destination is enough (#702).
       //
       // The old guard hid the whole bar below two, on the reasoning that

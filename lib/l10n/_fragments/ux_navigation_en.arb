@@ -18,5 +18,13 @@
   "uxNavReporting": "Reporting",
   "@uxNavReporting": {
     "description": "#2313 the menu group that holds every report and the business analytics"
+  },
+  "deskNavCollapse": "Narrow the menu",
+  "@deskNavCollapse": {
+    "description": "#3603 the desk sidebar's control that narrows it to the rail of icons"
+  },
+  "deskNavExpand": "Widen the menu",
+  "@deskNavExpand": {
+    "description": "#3603 the desk rail's control that widens it to the sidebar with labels"
   }
 }
