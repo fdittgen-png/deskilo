@@ -3706,6 +3706,7 @@ const Set<String> uiKeys = {
   'welcome-link',
   'whatsapp-dialog-cancel',
   'whatsapp-dialog-save',
+  'window-title',
   'wizard-amount',
   'wizard-back',
   'wizard-book',

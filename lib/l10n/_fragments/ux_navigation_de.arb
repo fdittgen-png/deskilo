@@ -6,5 +6,6 @@
   "uxNavReporting": "Reporting",
   "deskNavCollapse": "Menü schmaler",
   "deskNavExpand": "Menü breiter",
-  "deskWindowTitle": "{place} — {business}"
+  "windowTitle": "{place} — {business} — {app}",
+  "windowTitleNoBusiness": "{place} — {app}"
 }
