@@ -6,6 +6,7 @@
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
+import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -13,14 +14,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
 import 'experience_guards.dart';
 
 Future<void> _open(WidgetTester tester, String path, Size size) async {
   final features = WorkspaceFeature.values.toSet();
+  // A records page is guarded with records on it: one issued invoice.
+  final money = FakeMoneyRepository();
+  await money.createInvoice(
+    workspaceId: 'ws-1',
+    memberId: 'member-1',
+    period: kTestPeriod,
+  );
   final app = ProviderScope(
     overrides: [
       ...standardTestOverrides(
+        money: money,
         workspace: FakeWorkspaceRepository.withWorkspace(
           featureFlags: {for (final f in features) f.name: true},
         ),
@@ -57,15 +67,18 @@ void main() {
       ) async {
         final semantics = tester.ensureSemantics();
         await _open(tester, path, size);
+        final details = <String>[];
         expect(
           deskGuardProblems(
+            details: details,
             tester,
             kind: kind,
             size: size,
-            rowTypes: const [KitTableLine],
-            tableTypes: const [KitTableHeader],
+            rowTypes: const [KitTableLine, CustomerRow],
+            tableTypes: const [KitTableHeader, CustomerHeader],
           ),
           isEmpty,
+          reason: details.join('\n'),
         );
         expect(await keyboardProblems(tester), isEmpty);
         semantics.dispose();

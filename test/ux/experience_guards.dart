@@ -209,36 +209,70 @@ Set<String> deskGuardProblems(
   TargetPolicy policy = TargetPolicy.desk,
   Iterable<Type> rowTypes = const [],
   Iterable<Type> tableTypes = const [],
+  List<String>? details,
 }) {
   final problems = <String>{};
+  void note(String what) => details?.add(what);
   var thrown = false;
   while (tester.takeException() != null) {
     thrown = true;
   }
   if (thrown) problems.add('overflow or exception');
   final rows = _rowRects(tester, rowTypes);
-  // Text: a body block runs at most [bodyTextMaxWidth] outside a table row.
+  // Text: a block of body text, one that wraps, runs at most
+  // [bodyTextMaxWidth] outside a table row. A one-line label in a wide box
+  // is not a reading measure.
   for (final e in find.byType(RichText).evaluate()) {
-    final box = e.renderObject as RenderBox?;
-    if (box == null || !box.hasSize) continue;
+    final box = e.renderObject;
+    if (box is! RenderParagraph || !box.hasSize) continue;
+    // The paragraph's own lines, laid out as it is.
+    final painter = TextPainter(
+      text: box.text,
+      textDirection: box.textDirection,
+      textScaler: box.textScaler,
+      maxLines: box.maxLines,
+    )..layout(maxWidth: box.size.width);
+    final lines = painter.computeLineMetrics();
+    painter.dispose();
+    if (lines.length < 2) continue;
+    var widest = 0.0;
+    for (final line in lines) {
+      if (line.width > widest) widest = line.width;
+    }
+    if (widest <= bodyTextMaxWidth) continue;
     final rect = box.localToGlobal(Offset.zero) & box.size;
-    if (rect.width <= bodyTextMaxWidth) continue;
     if (rows.any((r) => _within(rect, r))) continue;
     problems.add('text wider than ${bodyTextMaxWidth.toInt()} px');
+    final text = (e.widget as RichText).text.toPlainText();
+    note('text ${widest.toInt()} px: "${text.length > 60 ? text.substring(0, 60) : text}"');
   }
   // A records page's table takes its share of a 1440 window.
   if (kind == PageKind.records && size.width >= 1440) {
     final widest = [
       for (final type in tableTypes)
-        for (final e in find.byType(type).hitTestable().evaluate())
+        for (final e in find.byType(type).evaluate())
           (e.renderObject! as RenderBox).size.width,
     ].fold<double>(0, (a, b) => a > b ? a : b);
     if (widest < recordsTableMinShare * size.width) {
       problems.add('table under ${(recordsTableMinShare * 100).toInt()} %');
+      note('table ${widest.toInt()} of ${size.width.toInt()}');
     }
   }
   // Targets: hit regions, by the policy.
+  // A control a list has scrolled half out of view is cut at the list's
+  // edge: it is measured where it is whole, not here.
+  final viewports = [
+    for (final e in find.byType(Scrollable).evaluate())
+      if (e.renderObject case final RenderBox box when box.hasSize)
+        box.localToGlobal(Offset.zero) & box.size,
+  ];
+  bool cut(Rect r) => viewports.any(
+    (v) =>
+        _within(r, v) &&
+        ((r.top - v.top).abs() < 0.5 || (r.bottom - v.bottom).abs() < 0.5),
+  );
   for (final node in tappableRects(tester)) {
+    if (cut(node.rect)) continue;
     final row = policy == TargetPolicy.desk &&
         rows.any((r) => _within(node.rect, r));
     final minHeight = row ? deskRowMinHeight : 48;
@@ -246,6 +280,7 @@ Set<String> deskGuardProblems(
     if (node.rect.width < minWidth - 0.5 ||
         node.rect.height < minHeight - 0.5) {
       problems.add(row ? 'row under 36 px' : 'target under 48 dp');
+      note('target ${node.rect.size} at ${node.rect.topLeft}: ${node.label}');
     }
     if (!node.named) problems.add('unnamed control');
   }
@@ -253,10 +288,10 @@ Set<String> deskGuardProblems(
 }
 
 /// Every tappable semantics node with its rect on screen and its name.
-List<({Rect rect, bool named})> tappableRects(WidgetTester tester) {
+List<({Rect rect, bool named, String label})> tappableRects(WidgetTester tester) {
   // ignore: deprecated_member_use
   final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
-  final out = <({Rect rect, bool named})>[];
+  final out = <({Rect rect, bool named, String label})>[];
   void walk(SemanticsNode node, Matrix4 parent) {
     final transform = node.transform == null
         ? parent
@@ -271,6 +306,7 @@ List<({Rect rect, bool named})> tappableRects(WidgetTester tester) {
             data.label.trim().isNotEmpty ||
             data.value.trim().isNotEmpty ||
             data.tooltip.trim().isNotEmpty,
+        label: data.label.isNotEmpty ? data.label : data.tooltip,
       ));
     }
     node.visitChildren((child) {
@@ -293,6 +329,8 @@ List<FocusNode> _focusables({required bool tabStops}) => [
         n.context != null &&
         n.context!.mounted &&
         n is! FocusScopeNode &&
+        // A container whose controls are inside it is not one itself.
+        !n.descendants.any((d) => d.canRequestFocus) &&
         _onScreen(n))
       n,
 ];

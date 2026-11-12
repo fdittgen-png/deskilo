@@ -115,7 +115,12 @@ class MeGroupHeader extends StatelessWidget {
               key: ValueKey('me-group-$id'),
               borderRadius: AppRadius.mdAll,
               onTap: onToggle,
-              child: Padding(
+              // #3605 — the header is a control: 48 high at least.
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: kMinInteractiveDimension,
+                ),
+                child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: AppSpacing.sm,
                   horizontal: AppSpacing.xs,
@@ -154,6 +159,7 @@ class MeGroupHeader extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
               ),
             ),
           ),
