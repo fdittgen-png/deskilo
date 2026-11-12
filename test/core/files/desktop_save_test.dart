@@ -51,7 +51,7 @@ void main() {
     folders: folders,
     bytes: _bytes,
     fileName: 'invoice.pdf',
-    write: write ?? writeFileAtomically,
+    write: write ?? writeToChosenPlace,
     withoutDialog:
         withoutDialog ??
         ({required bytes, required fileName}) async =>
@@ -183,6 +183,107 @@ void main() {
         );
       },
     );
+  });
+
+  group('only the chosen file is granted (a sandboxed macOS build)', () {
+    /// The first way, with the temporary file beside the target refused at
+    /// creation, as the sandbox refuses it.
+    Future<String> siblingRefused(File target, List<int> bytes) =>
+        writeFileAtomically(
+          target,
+          bytes,
+          openPart: (part) async =>
+              throw FileSystemException('Operation not permitted', part.path),
+        );
+
+    test(
+      'the file is written whole at the chosen path, and delivered',
+      () async {
+        final target = '${root.path}/invoice.pdf';
+        final outcome = await save(
+          _Dialog(target),
+          write: (file, bytes) =>
+              writeToChosenPlace(file, bytes, atomic: siblingRefused),
+        );
+        expect(
+          outcome,
+          isA<SavedFile>()
+              .having((o) => o.path, 'path', target)
+              .having((o) => o.atChosenPlace, 'atChosenPlace', isTrue),
+        );
+        expect(File(target).readAsBytesSync(), _bytes);
+        expect(root.listSync(), hasLength(1), reason: 'no .part file');
+        expect(folders.folder, root.path);
+      },
+    );
+
+    test('a direct write that fails half-way leaves nothing at the chosen '
+        'path, and the outcome is failed', () async {
+      final target = '${root.path}/invoice.pdf';
+      final outcome = await save(
+        _Dialog(target),
+        write: (file, bytes) => writeToChosenPlace(
+          file,
+          bytes,
+          atomic: siblingRefused,
+          direct: (file, bytes) async {
+            file.writeAsBytesSync(bytes.sublist(0, 2));
+            throw FileSystemException('disk full', file.path);
+          },
+        ),
+      );
+      expect(
+        outcome,
+        isA<SaveFailed>().having(
+          (o) => o.reason,
+          'reason',
+          SaveFailure.chosenFolderRefused,
+        ),
+      );
+      expect(root.listSync(), isEmpty, reason: 'nothing at the chosen path');
+      expect(folders.writes, 0);
+    });
+
+    test('where the folder allows it, the first way is used and the direct '
+        'write is not', () async {
+      final target = '${root.path}/invoice.pdf';
+      var direct = 0;
+      final outcome = await save(
+        _Dialog(target),
+        write: (file, bytes) => writeToChosenPlace(
+          file,
+          bytes,
+          direct: (file, bytes) async => direct++,
+        ),
+      );
+      expect(outcome, isA<SavedFile>());
+      expect(direct, 0);
+      expect(File(target).readAsBytesSync(), _bytes);
+      expect(root.listSync(), hasLength(1));
+    });
+
+    test('a failure after the temporary file was made is not a refusal: no '
+        'direct write, nothing left', () async {
+      final target = '${root.path}/invoice.pdf';
+      var direct = 0;
+      final outcome = await save(
+        _Dialog(target),
+        write: (file, bytes) => writeToChosenPlace(
+          file,
+          bytes,
+          atomic: (file, bytes) => writeFileAtomically(
+            file,
+            bytes,
+            beforeRename: (_) async =>
+                throw const FileSystemException('rename refused'),
+          ),
+          direct: (file, bytes) async => direct++,
+        ),
+      );
+      expect(outcome, isA<SaveFailed>());
+      expect(direct, 0);
+      expect(root.listSync(), isEmpty);
+    });
   });
 
   group('phones and the web keep their saver', () {

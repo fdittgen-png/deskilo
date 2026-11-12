@@ -118,15 +118,34 @@ Future<String?> saveToDownloads({
 ///
 /// [beforeRename] runs between the write and the rename; a test injects a
 /// failure there to prove a write that stops half-way leaves nothing.
+/// [openPart] opens the temporary file; a test injects a refusal there. A
+/// refusal to create or open it is thrown as `_TemporaryFileRefused`, so
+/// [writeToChosenPlace] can tell "no file may be made beside the target"
+/// from a failed write.
 @visibleForTesting
 Future<String> writeFileAtomically(
   File target,
   List<int> bytes, {
   Future<void> Function(File part)? beforeRename,
+  Future<RandomAccessFile> Function(File part) openPart = _openForWrite,
 }) async {
   final part = File('${target.path}.part');
+  final RandomAccessFile handle;
   try {
-    await part.writeAsBytes(bytes, flush: true);
+    handle = await openPart(part);
+  } on FileSystemException catch (e, st) {
+    TraceLogger.instance
+        .warn('files', 'temporary file refused', error: e, stackTrace: st);
+    await _discard(part);
+    throw _TemporaryFileRefused(e);
+  }
+  try {
+    try {
+      await handle.writeFrom(bytes);
+      await handle.flush();
+    } finally {
+      await handle.close();
+    }
     if (await part.length() != bytes.length) {
       throw FileSystemException('short write', part.path);
     }
@@ -136,15 +155,69 @@ Future<String> writeFileAtomically(
   } on Object catch (e, st) {
     TraceLogger.instance
         .error('files', 'atomic write failed', error: e, stackTrace: st);
-    try {
-      if (part.existsSync()) await part.delete();
-    } on Object catch (e2, st2) {
-      TraceLogger.instance.warn('files', 'temporary file not removed',
-          error: e2, stackTrace: st2);
-    }
+    await _discard(part);
     rethrow;
   }
 }
+
+Future<RandomAccessFile> _openForWrite(File part) =>
+    part.open(mode: FileMode.write);
+
+/// Removes [file] when it exists; a removal that fails is traced, never
+/// thrown over the failure being reported.
+Future<void> _discard(File file) async {
+  try {
+    if (file.existsSync()) await file.delete();
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .warn('files', 'file not removed', error: e, stackTrace: st);
+  }
+}
+
+/// #3613 — the temporary file beside a target could not be created or
+/// opened: nothing was written anywhere.
+class _TemporaryFileRefused implements Exception {
+  const _TemporaryFileRefused(this.cause);
+  final FileSystemException cause;
+
+  @override
+  String toString() => '_TemporaryFileRefused: $cause';
+}
+
+/// #3613 — writes [bytes] to the place a desktop person chose. The first way
+/// is [writeFileAtomically]: a temporary file beside it, then a rename.
+///
+/// The second way exists for a sandboxed macOS build, where the save dialog
+/// grants the chosen file and not its folder, so no temporary file may be
+/// made beside it: the complete bytes are written to the chosen path itself
+/// in one write with flush ([direct]). That way is NOT atomic; a write that
+/// fails part-way deletes what it wrote (the chosen path is granted) and
+/// rethrows. Neither way leaves a temporary file behind.
+@visibleForTesting
+Future<String> writeToChosenPlace(
+  File target,
+  List<int> bytes, {
+  Future<String> Function(File target, List<int> bytes) atomic =
+      writeFileAtomically,
+  Future<void> Function(File target, List<int> bytes) direct = _writeDirect,
+}) async {
+  try {
+    return await atomic(target, bytes);
+  } on _TemporaryFileRefused {
+    try {
+      await direct(target, bytes);
+      return target.path;
+    } on Object catch (e, st) {
+      TraceLogger.instance
+          .error('files', 'direct write failed', error: e, stackTrace: st);
+      await _discard(target);
+      rethrow;
+    }
+  }
+}
+
+Future<void> _writeDirect(File target, List<int> bytes) =>
+    target.writeAsBytes(bytes, flush: true);
 
 /// #1872 — the same save, answering with what it achieved: a file the
 /// person can find (MediaStore Downloads, a desktop Downloads folder),
@@ -201,7 +274,7 @@ Future<SaveOutcome> saveAtChosenPlace({
   required Uint8List bytes,
   required String fileName,
   Future<String> Function(File target, List<int> bytes) write =
-      writeFileAtomically,
+      writeToChosenPlace,
   TypedFileSaver withoutDialog = saveToDownloadsTyped,
 }) async {
   final String? chosen;
