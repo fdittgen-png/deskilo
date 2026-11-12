@@ -1,0 +1,14 @@
+{
+  "shortcutSearch": "Trouver une page, une action ou une fiche",
+  "shortcutFilter": "Filtrer cette liste",
+  "shortcutNew": "Nouveau",
+  "shortcutClose": "Fermer",
+  "shortcutSave": "Enregistrer",
+  "shortcutSubmit": "Enregistrer ou envoyer",
+  "shortcutPrint": "Le document de cette page",
+  "shortcutKeys": "Les touches de cette page",
+  "shortcutOpenCalendar": "Ouvrir le calendrier d'un champ de date",
+  "shortcutUndo": "Annuler",
+  "shortcutRedo": "Rétablir",
+  "shortcutKeysTitle": "Touches du clavier"
+}

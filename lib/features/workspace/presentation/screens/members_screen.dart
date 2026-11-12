@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -257,7 +258,7 @@ class MembersScreen extends ConsumerWidget {
                       // subscription line.
                       if (!member.isKiosk)
                         Text(
-                          subscriptionText(l10n, member.subscriptionPct),
+                          subscriptionText(l10n, appFormatOf(context), member.subscriptionPct),
                         ),
                       if (member.isKiosk)
                         Text(l10n.memberKioskLabel),

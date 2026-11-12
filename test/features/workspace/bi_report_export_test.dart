@@ -13,6 +13,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_export.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_pdf.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_print.dart';
@@ -166,7 +168,7 @@ void main() {
     tester,
   ) async {
     final s = fixtureSnapshot();
-    final words = biPrintStringsOf(AppLocalizationsEn(), 'en', wall: (at) => at);
+    final words = biPrintStringsOf(AppLocalizationsEn(), 'en', wall: (at) => at, format: const AppFormat(locale: 'en', currencyCode: 'EUR', clock: ClockPref.h24));
     final doc = biPrintDocument(s, words);
     pw.Font font(String n) => pw.Font.ttf(
       ByteData.sublistView(

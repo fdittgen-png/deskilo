@@ -28,7 +28,7 @@
   "has_vat": false,
   "lines": [
     {
-      "label": "Abonnement 100 %",
+      "label": "Abonnement 100%",
       "kind": "subscription",
       "pct": "100",
       "month": "",

@@ -4679,13 +4679,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billPackages => 'Tagespakete';
 
   @override
-  String billParticipation(int pct) {
-    return 'Beitrag $pct %';
+  String billParticipation(String pct) {
+    return 'Beitrag $pct';
   }
 
   @override
-  String billParticipationMonth(String month, int pct) {
-    return '$month $pct %';
+  String billParticipationMonth(String month, String pct) {
+    return '$month $pct';
   }
 
   @override
@@ -4720,13 +4720,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billSettled => 'Beglichen';
 
   @override
-  String billSubscription(int pct) {
-    return 'Abo $pct %';
+  String billSubscription(String pct) {
+    return 'Abo $pct';
   }
 
   @override
-  String billSubscriptionMonth(String month, int pct) {
-    return 'Abonnement $month $pct %';
+  String billSubscriptionMonth(String month, String pct) {
+    return 'Abonnement $month $pct';
   }
 
   @override
@@ -4748,8 +4748,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get billingBandFee => 'Monatsgebühr';
 
   @override
-  String billingBandFrom(int from) {
-    return 'ab $from %';
+  String billingBandFrom(String from) {
+    return 'ab $from';
   }
 
   @override
@@ -5165,6 +5165,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookTypeLiability => 'Passiva';
 
   @override
+  String get bookingAdminNoLevel =>
+      'Ein Admin kann hier keine ganze Etage zuweisen.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Auf $space eingecheckt bis $until.';
   }
@@ -5177,6 +5181,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Eingecheckt bis $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead =>
+      'Das neue Ende muss in der Zukunft liegen.';
 
   @override
   String get bookingGateBlocked => 'So nicht buchbar';
@@ -5207,6 +5215,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Reservierung ist nicht mehr eingecheckt — sie wurde inzwischen ausgecheckt oder abgeschlossen.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'Diese Buchung ist nicht mehr reserviert; ein Check-in ist nicht möglich.';
+
+  @override
   String get bookingNotAMember =>
       'Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung.';
 
@@ -5215,8 +5227,19 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sie dürfen in diesem Bereich keine Buchungen vornehmen. Bitten Sie eine Inhaberin oder einen Inhaber, Mitgliedern das Buchen zu erlauben.';
 
   @override
+  String get bookingNotCancellable =>
+      'Diese Buchung kann nicht mehr storniert werden.';
+
+  @override
+  String get bookingNotYours => 'Diese Buchung gehört nicht Ihnen.';
+
+  @override
   String get bookingOnePlace =>
       'Sie haben in diesem Zeitraum bereits eine Buchung — ein Platz zur Zeit.';
+
+  @override
+  String get bookingOnlyUpcoming =>
+      'Nur bevorstehende Buchungen können geändert werden.';
 
   @override
   String get bookingOpenDetails => 'Details';
@@ -5327,8 +5350,23 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'Eine laufende Buchung behält ihre Startzeit.';
+
+  @override
   String get bookingSameDayError =>
       'Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Eine Serie darf höchstens $days Tage umfassen.',
+      one: 'Eine Serie darf höchstens 1 Tag umfassen.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>
@@ -11052,6 +11090,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureQrBadgesTitle => 'QR-Badges';
+
+  @override
+  String get featureQuickSearchDesc =>
+      'Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben.';
+
+  @override
+  String get featureQuickSearchTitle => 'Suche und Tasten';
 
   @override
   String get featureRecapitulativeStatementDesc =>
@@ -20442,8 +20487,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moneySubmitPayment => 'Zur Bestätigung einreichen';
 
   @override
-  String moneySubscriptionPct(int pct) {
-    return 'Abo $pct %';
+  String moneySubscriptionPct(String pct) {
+    return 'Abo $pct';
   }
 
   @override
@@ -20815,11 +20860,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get negotiationPendingBadge => 'wartet auf Prüfung';
 
   @override
-  String negotiationPercent(int value) {
-    return '$value %';
-  }
-
-  @override
   String get negotiationProposeHint =>
       'Ein leeres Feld behält den Tarif. Die Konditionen durchlaufen die Prüfung, bevor sie gelten.';
 
@@ -20892,8 +20932,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newMemberSubscriptionMore => 'Größeres Abonnement';
 
   @override
-  String newMemberSubscriptionValue(int percent) {
-    return '$percent %';
+  String newMemberSubscriptionValue(String percent) {
+    return '$percent';
   }
 
   @override
@@ -21778,11 +21818,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get pendingStillWaiting => 'Wartet weiter auf Freigabe.';
-
-  @override
-  String percentValue(int value) {
-    return '$value %';
-  }
 
   @override
   String get periodReservationsEmpty => 'Keine Buchung in diesen Monaten.';
@@ -24915,6 +24950,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.';
 
   @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'Diese Installation ist ein persönliches Zuhause und beherbergt keinen Arbeitsbereich. Legen Sie den Arbeitsbereich auf einer Installation an, die Arbeitsbereiche beherbergt.';
+
+  @override
   String get refusalSession =>
       'Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.';
 
@@ -27373,6 +27412,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get schemaUpdateTitle => 'Dieser Server muss aktualisiert werden';
 
   @override
+  String get searchActionInvite => 'Mitglied einladen';
+
+  @override
+  String get searchActionNewPurchase => 'Neuer Einkauf';
+
+  @override
+  String get searchHint =>
+      'Eine Seite, eine Aktion, ein Mitglied, eine Rechnung…';
+
+  @override
+  String get searchKindAction => 'Aktion';
+
+  @override
+  String get searchKindMember => 'Mitglied';
+
+  @override
+  String get searchKindPage => 'Seite';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nichts gefunden für „$query“.';
+  }
+
+  @override
+  String get searchRecent => 'Zuletzt geöffnet';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Dieser Eintrag lässt sich nicht öffnen: Es gibt ihn nicht, oder Sie dürfen ihn nicht lesen.';
+
+  @override
   String get seatDayAhead => 'Später';
 
   @override
@@ -29564,8 +29634,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wer beitreten möchte, gibt Name und E-Mail-Adresse an, sonst nichts.';
 
   @override
-  String setupNewMembersPreviewStart(int pct, String policy) {
-    return 'Ein neues Mitglied beginnt mit einem Abonnement zu $pct % ($policy).';
+  String setupNewMembersPreviewStart(String pct, String policy) {
+    return 'Ein neues Mitglied beginnt mit einem Abonnement zu $pct ($policy).';
   }
 
   @override
@@ -29851,13 +29921,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupPresetNameStandard => 'Standard';
 
   @override
-  String setupPricingBand(int from, int to, String fee, String extra) {
-    return '$from–$to %: $fee im Monat, $extra je zusätzlichem Halbtag';
+  String setupPricingBand(String from, String to, String fee, String extra) {
+    return '$from–$to: $fee im Monat, $extra je zusätzlichem Halbtag';
   }
 
   @override
-  String setupPricingLevel(int pct) {
-    return 'Mitgliedschaft zu $pct %';
+  String setupPricingLevel(String pct) {
+    return 'Mitgliedschaft zu $pct';
   }
 
   @override
@@ -30416,6 +30486,42 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.';
+
+  @override
+  String get shortcutClose => 'Schließen';
+
+  @override
+  String get shortcutFilter => 'Diese Liste filtern';
+
+  @override
+  String get shortcutKeys => 'Die Tasten dieser Seite';
+
+  @override
+  String get shortcutKeysTitle => 'Tastaturtasten';
+
+  @override
+  String get shortcutNew => 'Neu';
+
+  @override
+  String get shortcutOpenCalendar => 'Kalender eines Datumsfelds öffnen';
+
+  @override
+  String get shortcutPrint => 'Das Dokument dieser Seite';
+
+  @override
+  String get shortcutRedo => 'Wiederholen';
+
+  @override
+  String get shortcutSave => 'Speichern';
+
+  @override
+  String get shortcutSearch => 'Seite, Aktion oder Eintrag finden';
+
+  @override
+  String get shortcutSubmit => 'Speichern oder senden';
+
+  @override
+  String get shortcutUndo => 'Rückgängig';
 
   @override
   String get siteCity => 'Ort';
@@ -35713,8 +35819,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get workspaceDangerZone => 'Gefahrenzone';
 
   @override
-  String workspaceDeskOpacityValue(int percent) {
-    return 'Deckkraft: $percent %';
+  String workspaceDeskOpacityValue(String percent) {
+    return 'Deckkraft: $percent';
   }
 
   @override

@@ -157,7 +157,7 @@ select is(pg_temp.step('first_booking'), 'needs_configuration|/reserve|[]',
 reset role;
 select pg_temp.act_as('00000000-0000-4000-8000-0000003062a2');
 select set_config('deskilo.fb.short', (select (current_setting('deskilo.fb.from')::timestamptz + interval '5 minutes')::text), true);
-select throws_ok($$ select pg_temp.book('deskilo.fb.from', 'deskilo.fb.short') $$, 'P0001',
+select throws_ok($$ select pg_temp.book('deskilo.fb.from', 'deskilo.fb.short') $$, 'DKK09',  -- #3810: its code
                  'below the minimum duration of 30 minutes',
                  'a booking shorter than the space allows is refused and names the rule and the minimum');
 select set_config('deskilo.fb.booking', pg_temp.book('deskilo.fb.from', 'deskilo.fb.to')::text, true);

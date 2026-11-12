@@ -178,8 +178,7 @@ enum WorkspaceFeature {
   ///
   /// It used to mean the blur of #970, which anonymised a LIVE workspace
   /// for a recording. That was retired in #1380: the recording problem
-  /// is #1514's and has nothing to do with a space full of invented
-  /// people.
+  /// is #1514's and has nothing to do with a space full of invented people.
   demoMode,
 
   /// #977 — the wizard that creates and configures a new instance.
@@ -416,7 +415,8 @@ enum WorkspaceFeature {
   placeBooking,
   reminderEmail,
   invoiceEmail,
-  kioskEnrolment;
+  kioskEnrolment,
+  quickSearch;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

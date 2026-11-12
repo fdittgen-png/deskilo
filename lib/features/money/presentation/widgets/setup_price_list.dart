@@ -5,6 +5,7 @@
 // and a whole day beyond the level's entitlement cost.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../domain/fee_band.dart';
@@ -49,7 +50,7 @@ class SetupPriceList extends StatelessWidget {
             dense: true,
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.sell_outlined),
-            title: Text(l10n.setupPricingLevel(price.pct)),
+            title: Text(l10n.setupPricingLevel(appFormatOf(context).ratePercent(price.pct))),
             subtitle: Text(_terms(context, price)),
           ),
       ],

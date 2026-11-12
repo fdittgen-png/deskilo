@@ -76,7 +76,8 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
       ),
-      builder: (context, state) => const InvoicesScreen(),
+      builder: (context, state) =>
+          InvoicesScreen(customer: state.uri.queryParameters['customer']),
       // #3607 — an open invoice's address: beside the list on a large
       // window, a page of its own otherwise.
       routes: [
@@ -223,7 +224,8 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
           to: '/money',
         ),
       ),
-      builder: (context, state) => const SuppliersScreen(),
+      builder: (context, state) =>
+          SuppliersScreen(supplier: state.uri.queryParameters['supplier']),
     ),
     // #3307 — the space's orders to its suppliers.
     GoRoute(

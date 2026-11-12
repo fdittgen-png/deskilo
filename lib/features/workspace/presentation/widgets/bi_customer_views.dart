@@ -58,7 +58,7 @@ final customerModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biCustomerPaymentDefinition,
         if (k.medianDays != null)
@@ -66,7 +66,7 @@ final customerModuleViews = <String, BiModuleView>{
             '${k.medianDays}',
             '${k.p90Days}',
             switch (k.weightedDays) {
-              final w? => NumberFormat.decimalPattern(locale).format(w),
+              final w? => NumberFormat.decimalPattern(format.locale).format(w),
               null => '—',
             },
           ),
@@ -75,7 +75,7 @@ final customerModuleViews = <String, BiModuleView>{
             l10n.biCustomerCohortLine(
               _cohortName(c, l10n),
               f.count,
-              biMoneyCell(f.minor, locale, k.currency),
+              biMoneyCell(f.minor, format.locale, k.currency),
             ),
       ],
       null => const [],
@@ -99,7 +99,7 @@ final customerModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biCustomerDunningDefinition,
         if (k.dunning case final d? when d.remindedInvoices > 0)
@@ -126,7 +126,7 @@ final customerModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => [l10n.biCustomerCreditDefinition],
+    details: (m, l10n, format) => [l10n.biCustomerCreditDefinition],
     rowLabel: (row, l10n, locale) => switch (DateTime.tryParse(
       '${row.key}-01',
     )) {
@@ -151,20 +151,20 @@ final customerModuleViews = <String, BiModuleView>{
       if (_kpi(m) case final k? when !k.namesVisible)
         l10n.biCustomerNamesHidden,
     ],
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biCustomerConcentrationDefinition,
         if (!m.unknown) ...[
           l10n.biCustomerConcentrationOpen(
             '${k.topCount}',
             '${k.debtorCount}',
-            biMoneyCell(k.topOpenMinor, locale, k.currency),
-            biMoneyCell(k.openMinor, locale, k.currency),
+            biMoneyCell(k.topOpenMinor, format.locale, k.currency),
+            biMoneyCell(k.openMinor, format.locale, k.currency),
           ),
           for (final d in k.debtors)
             l10n.biCustomerDebtorLine(
               d.name ?? l10n.biCustomerRank('${d.rank}'),
-              biMoneyCell(d.minor, locale, k.currency),
+              biMoneyCell(d.minor, format.locale, k.currency),
             ),
         ],
       ],

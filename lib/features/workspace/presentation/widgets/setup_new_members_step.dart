@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -219,7 +220,7 @@ class _Preview extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Text(
             l10n.setupNewMembersPreviewStart(
-              defaults.subscriptionPct,
+              appFormatOf(context).ratePercent(defaults.subscriptionPct),
               newMemberOverageLabel(l10n, defaults.overagePolicy),
             ),
             key: const ValueKey('setup-new-members-preview-start'),

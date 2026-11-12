@@ -75,6 +75,10 @@ enum KnownRefusal {
   /// #3278 (0666) — the workspace handles data requests itself: the member's
   /// own export and erasure are off and a rights request is filed instead.
   privacySelfServiceOff,
+
+  /// #3811 — DKR01: this installation is a personal home and hosts no
+  /// workspace.
+  personalHomeHostsNoWorkspace,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -108,20 +112,7 @@ const List<String> privacySelfServiceOffSubstrings = [
   'privacy_self_service_off',
 ];
 
-/// Substrings that mean somebody else already acted.
-@visibleForTesting
-const List<String> alreadyDecidedSubstrings = [
-  'already decided',
-];
 
-/// Substrings that mean the record moved under the reader's feet.
-@visibleForTesting
-const List<String> changedMeanwhileSubstrings = [
-  'invoice is voided',
-  'invoice is matched',
-  'invoice already replaced',
-  'invoice already matched',
-];
 
 /// #2380 — the bank statement codes of 0603 and 0650.
 const Map<String, KnownRefusal> _bankRefusals = {
@@ -133,6 +124,22 @@ const Map<String, KnownRefusal> _bankRefusals = {
   'DKB06': KnownRefusal.bankMatchClosedPeriod,
   'DKB07': KnownRefusal.bankMatchUndoLaterFirst,
 };
+
+/// #3811 — the invoicing codes of 0740 and the installation's DKR01 (0559):
+/// read by their code, never their sentence.
+const Map<String, KnownRefusal> _codedRefusals = {
+  'DKI03': KnownRefusal.changedMeanwhile,
+  'DKI04': KnownRefusal.changedMeanwhile,
+  'DKI05': KnownRefusal.changedMeanwhile,
+  'DKI06': KnownRefusal.changedMeanwhile,
+  'DKD01': KnownRefusal.alreadyDecided,
+  'DKR01': KnownRefusal.personalHomeHostsNoWorkspace,
+};
+
+/// #3811 — the server's refusal code and its DETAIL, for a screen that reads
+/// a code of its own (presentation never imports `data/`).
+({String? code, String? details}) refusalCodeOf(Object error) =>
+    (code: serverErrorCode(error), details: serverErrorDetails(error));
 
 /// Which family [error] belongs to, or null when it is none of them.
 KnownRefusal? knownRefusalOf(Object error) {
@@ -156,6 +163,8 @@ KnownRefusal? knownRefusalOf(Object error) {
   if (serverErrorCode(error) == 'DKE01') return KnownRefusal.retentionKept;
   final bank = _bankRefusals[serverErrorCode(error)];
   if (bank != null) return bank;
+  final coded = _codedRefusals[serverErrorCode(error)];
+  if (coded != null) return coded;
   final message = serverErrorMessage(error)?.toLowerCase();
   if (message == null) return null;
   if (isAuthError(error) &&
@@ -165,8 +174,6 @@ KnownRefusal? knownRefusalOf(Object error) {
   bool any(List<String> needles) => needles.any(message.contains);
   if (any(sessionRefusalSubstrings)) return KnownRefusal.session;
   if (any(permissionRefusalSubstrings)) return KnownRefusal.permission;
-  if (any(alreadyDecidedSubstrings)) return KnownRefusal.alreadyDecided;
-  if (any(changedMeanwhileSubstrings)) return KnownRefusal.changedMeanwhile;
   return null;
 }
 
@@ -195,5 +202,7 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.retentionKept =>
         l10n.retentionResetRefused(l10n.retentionKeptReview),
       KnownRefusal.privacySelfServiceOff => l10n.privacySelfServiceOff,
+      KnownRefusal.personalHomeHostsNoWorkspace =>
+        l10n.refusalPersonalHomeHostsNoWorkspace,
       null => null,
     };

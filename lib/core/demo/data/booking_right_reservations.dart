@@ -119,7 +119,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
     final own = reservations
         .any((r) => r.id == reservationId && r.memberId == myMemberId);
     if (!own && !mayActForOthers()) {
-      throw const PostgrestException(message: 'not your reservation');
+      throw const PostgrestException(message: 'not your reservation', code: 'DKK29');
     }
     return super.cancel(reservationId);
   }

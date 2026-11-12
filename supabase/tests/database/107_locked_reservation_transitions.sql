@@ -46,7 +46,7 @@ insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at
 select pg_temp.act_as('00000000-0000-4000-8000-0000001908a1');
 select lives_ok($$select public.cancel_reservation('00000000-0000-4000-8000-0000001908c1')$$, 'the owner cancels');
 select throws_ok($$select public.check_in_reservation('00000000-0000-4000-8000-0000001908c1')$$,
-  'P0001', null, 'a cancelled reservation is never checked in');
+  'DKK36', null, 'a cancelled reservation is never checked in');  -- #3810: its code
 
 select * from finish();
 rollback;

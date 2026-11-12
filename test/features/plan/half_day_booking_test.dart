@@ -278,6 +278,7 @@ void main() {
         const PostgrestException(
           message: 'bookings must cover a half-day '
               '(00:00-13:00, 13:00-24:00) or the full day',
+          code: 'DKK04', // #3810: the code 0739 raises
         ),
       ),
     );

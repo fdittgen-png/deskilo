@@ -4,20 +4,15 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../workspace/domain/booking_granularity.dart';
 import '../../workspace/domain/booking_policies.dart';
-import '../../workspace/domain/workspace_availability.dart';
 import 'booking_gate.dart';
-import 'membership_errors.dart';
-import 'quota_rules.dart';
+import 'booking_refusal_codes.dart';
 
 /// THE booking-failure → user-message mapper (maintainability audit:
 /// this switch was pasted, and drifting, across four screens). Maps the
-/// server's pinned error substrings to their localized explanations;
-/// anything unmapped falls back to [fallback].
-///
-/// Order matters once: quota before granularity, because 'half-day
-/// quota' also contains the granularity substring 'half-day'.
+/// server's refusal codes to their localized explanations (#3810), and the
+/// few refusals without a code of their own by their words; anything
+/// unmapped falls back to [fallback].
 String bookingErrorText(
   AppLocalizations l10n,
   Object error,
@@ -30,135 +25,26 @@ String bookingErrorText(
     return l10n.errorOffline;
   }
   if (error is! PostgrestException) return fallback;
+  // #3810 — a booking refusal is read by its code (0739), never its words.
+  final coded = bookingCodeText(l10n, error.code, error.details,
+      stepMinutes: stepMinutes);
+  if (coded != null) return coded;
   final message = error.message;
-  if (message.contains(WorkspaceClosedError.serverSubstring)) {
-    return l10n.planClosedDayError;
-  }
-  if (message.contains(QuotaExceededError.serverSubstring)) {
-    return l10n.quotaExceededError;
-  }
-  if (message.contains(ReservationLimitError.serverSubstring)) {
-    return l10n.reservationLimitError;
-  }
-  if (message.contains(BookingGranularityError.serverSubstring)) {
-    return l10n.planHalfDayError;
-  }
-  if (message.contains(BookingGranularityError.fullDayServerSubstring)) {
-    return l10n.planFullDayError;
-  }
-  if (message.contains(BookingGranularityError.slotServerSubstring)) {
-    final step = stepMinutes ?? 15;
-    return l10n.planSlotError(step);
-  }
-  // #814 — the kiosk's seat-block refusal (kiosk_act) rendered generic.
-  if (message.contains('seat is blocked')) {
-    return l10n.planSeatBlocked;
-  }
-  // #649 — the three limits enforce_booking_rules coalesces (#814: they
-  // rendered as "the seat may have just been taken").
-  if (message.contains('beyond the advance-booking horizon')) {
-    return l10n.bookingHorizonError(_leadingInt(message) ?? 0);
-  }
-  if (message.contains('below the minimum duration')) {
-    return l10n.bookingTooShortError(_leadingInt(message) ?? 0);
-  }
-  if (message.contains('above the maximum duration')) {
-    return l10n.bookingTooLongError(_leadingInt(message) ?? 0);
-  }
-  // #644 — a booking ends on the day it starts.
-  if (message.contains('must end on the day it starts')) {
-    return l10n.bookingSameDayError;
-  }
-  // #600 booking-policy refusals (migration 0116).
-  if (message.contains('lies entirely in the past')) {
-    return l10n.bookingPastError;
-  }
-  if (message.contains('must start today')) {
-    return l10n.bookingWalkUpTodayError;
-  }
-  if (message.contains('stay within the working hours')) {
-    return l10n.bookingOutsideHoursError;
-  }
-  // #634 outside-hours mode 'walkup_only' (migration 0120): the same
-  // pinned substring plus 'spontaneous check-in' — checked FIRST, so
-  // the member learns the door is only closed for booking AHEAD.
-  if (message.contains('spontaneous check-in') &&
-      message.contains('outside the opening hours')) {
-    return l10n.bookingOutsideWalkUpError;
-  }
-  // #624 outside-hours mode 'off' (migration 0118, pinned substring).
-  if (message.contains('outside the opening hours')) {
-    return l10n.bookingOutsideOffError;
-  }
-  // Presence rule (#408, migration 0077): check-in only inside
-  // [starts − 15 min, end).
-  if (message.contains('check-in window not open yet')) {
-    return l10n.planCheckInNotYetError;
-  }
-  if (message.contains('check-in window closed')) {
-    return l10n.planCheckInOverError;
-  }
-  // One place at a time (#412, 0079 trigger + check-in guards).
-  if (message.contains('you already have a reservation in that period')) {
-    return l10n.bookingOnePlace;
-  }
-  if (message.contains('already checked in elsewhere')) {
-    return l10n.bookingCheckedInElsewhere;
-  }
-  // Whole-space paths (0050/0057): grant refusals and occupancy
-  // conflicts share these pinned substrings across office and level.
-  if (message.contains('not allowed to reserve a level')) {
-    return l10n.levelNotAllowed;
-  }
-  // #412: these two rendered as "Something went wrong" — the owner had
-  // no way to learn WHICH toggle was missing.
-  if (message.contains('not bookable as a whole')) {
-    return l10n.spaceNotWholeBookable;
-  }
-  if (message.contains('level booking is not enabled')) {
-    return l10n.levelFeatureOff;
-  }
-  // #1908 — the hierarchy guard (0325/0326): a seat and its whole desk,
-  // office or level overlap. Before the level wording, which it contains.
+  // What still has no code of its own: the hierarchy guard keeps Postgres's
+  // exclusion code (23P01), a taken seat is the exclusion constraint itself,
+  // and the permission refusal is 42501 for every write.
   if (message.contains('that space is already reserved in that period')) {
     return l10n.bookingSpaceChainTaken;
   }
-  // #1908 — a checkout that lost the race to another checkout or to the
-  // day-end sweep: the reservation is already closed.
-  if (message.contains('not checked in')) {
-    return l10n.bookingNoLongerCheckedIn;
-  }
-  if (message.contains('reservations in that period') ||
-      message.contains('already reserved') ||
-      message.contains('reserved as a whole')) {
+  if (message.contains('already reserved')) {
     return l10n.levelConflict;
-  }
-  return _membershipText(l10n, message) ?? fallback;
-}
-
-/// #1030 — membership refusals. create_reservation raises 'not an
-/// active member' for a paused member and 'not a member of this
-/// workspace' for one who was removed; both used to render as "the
-/// seat may have just been taken", which blames a race the member
-/// cannot win and hides the one thing an administrator can fix.
-/// #3269 (0661) — and 'not allowed to make reservations' for a member who
-/// does not hold the right to book at all.
-String? _membershipText(AppLocalizations l10n, String message) {
-  if (message.contains(MembershipPausedError.serverSubstring)) {
-    return l10n.bookingMembershipPaused;
-  }
-  if (message.contains(NotAMemberError.serverSubstring)) {
-    return l10n.bookingNotAMember;
   }
   if (message.contains('not allowed to make reservations')) {
     return l10n.bookingNotAllowedError;
   }
-  return null;
+  return fallback;
 }
 
-/// The number the server put in its message ('... of 90 days').
-int? _leadingInt(String message) =>
-    int.tryParse(RegExp(r'of (\d+) ').firstMatch(message)?.group(1) ?? '');
 
 /// #814 — the SAME sentences, for a refusal the client foresaw. A
 /// surface that asks the gate before acting prints exactly what the
@@ -197,8 +83,9 @@ String bookingRefusalText(
 /// contacting the reserver.
 bool isBlockedByOtherError(Object error) {
   if (error is! PostgrestException) return false;
-  final message = error.message;
-  return message.contains('reservations in that period') ||
-      message.contains('already reserved') ||
-      message.contains('reserved as a whole');
+  // #3810 — by its code (0739's DKK26, the hierarchy guard's 23P01); a taken
+  // seat has no code of its own yet and is read by its words.
+  return error.code == 'DKK26' ||
+      error.code == '23P01' ||
+      error.message.contains('already reserved');
 }

@@ -97,15 +97,6 @@ void main() {
       expect(BookingRulesKeys.granularity, 'granularity');
     });
 
-    test('pins the server rejection substrings', () {
-      expect(BookingGranularityError.serverSubstring, 'half-day');
-      expect(BookingGranularityError.slotServerSubstring, 'minute grid');
-      expect(
-        BookingGranularityError.fullDayServerSubstring,
-        'cover the full day',
-      );
-    });
-
     test('migration 0032 enforces the new wire values and messages', () {
       final sql = File(
         'supabase/migrations/0032_slot_granularities.sql',
@@ -119,16 +110,9 @@ void main() {
       ]) {
         expect(sql, contains("'${granularity.wireName}'"));
       }
-      // The raise messages carry the substrings the client error mapping
-      // matches.
-      expect(
-        sql,
-        contains(BookingGranularityError.slotServerSubstring),
-      );
-      expect(
-        sql,
-        contains(BookingGranularityError.fullDayServerSubstring),
-      );
+      // The raise messages 0739 gives their codes (DKK06, DKK05, #3810).
+      expect(sql, contains('minute grid'));
+      expect(sql, contains('cover the full day'));
     });
 
     test('migration 0025 enforces the same key, wire value and message', () {
@@ -140,12 +124,10 @@ void main() {
         contains("rules->>'${BookingRulesKeys.granularity}' = "
             "'${BookingGranularity.halfDay.wireName}'"),
       );
-      // The raise message carries the substring the client error mapping
-      // matches (#201).
+      // The raise message 0739 gives its code (DKK04, #3810).
       expect(
         sql,
-        contains("raise exception 'bookings must cover a "
-            "${BookingGranularityError.serverSubstring} "
+        contains("raise exception 'bookings must cover a half-day "
             "(00:00-13:00, 13:00-24:00) or the full day'"),
       );
     });

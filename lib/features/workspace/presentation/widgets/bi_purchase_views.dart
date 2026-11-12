@@ -42,11 +42,11 @@ BiModuleView _purchaseView(
       l10n.biPurchasesCurrentQueue,
     if (always != null) always(l10n),
   ],
-  details: (m, l10n, locale) => [
+  details: (m, l10n, format) => [
     definition(l10n),
     if (_purchase(m) case final k?)
       l10n.biFinanceComputed(
-        DateFormat.yMd(locale).format(WorkspaceTime.wall(k.computedAt)),
+        DateFormat.yMd(format.locale).format(WorkspaceTime.wall(k.computedAt)),
       ),
   ],
 );
@@ -84,11 +84,11 @@ BiModuleView _costView(
       l10n.biCommitmentsNoContracts,
     if (always != null) always(l10n),
   ],
-  details: (m, l10n, locale) => [
+  details: (m, l10n, format) => [
     definition(l10n),
     if (_cost(m) case final k?)
       l10n.biFinanceComputed(
-        DateFormat.yMd(locale).format(WorkspaceTime.wall(k.computedAt)),
+        DateFormat.yMd(format.locale).format(WorkspaceTime.wall(k.computedAt)),
       ),
   ],
 );
@@ -122,7 +122,7 @@ final _allocationView = BiModuleView(
       l10n.biAllocationConflicts(k.conflictingLines),
     l10n.biAllocationNotBilled,
   ],
-  details: (m, l10n, locale) => [
+  details: (m, l10n, format) => [
     l10n.biAllocationDefinition,
     if (_allocation(m) case final k? when k.rulesUsed.isNotEmpty)
       l10n.biAllocationRevisions(
@@ -133,7 +133,7 @@ final _allocationView = BiModuleView(
       ),
     if (_allocation(m) case final k?)
       l10n.biFinanceComputed(
-        DateFormat.yMd(locale).format(WorkspaceTime.wall(k.computedAt)),
+        DateFormat.yMd(format.locale).format(WorkspaceTime.wall(k.computedAt)),
       ),
   ],
   action: (context) => const CostAllocationRulesButton(),

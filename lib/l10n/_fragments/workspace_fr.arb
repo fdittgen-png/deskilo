@@ -98,7 +98,7 @@
   "workspaceResetDone": "Espace réinitialisé.",
   "workspaceDeskTransparencyTitle": "Transparence des tables",
   "workspaceDeskTransparencyHelper": "Réduisez l'opacité des tables pour laisser transparaître la photo de fond de l'étage.",
-  "workspaceDeskOpacityValue": "Opacité : {percent} %",
+  "workspaceDeskOpacityValue": "Opacité : {percent}",
   "workspaceExcelExport": "Exporter les données (Excel)",
   "workspaceExcelExportSubtitle": "Un ZIP : toutes les données dans un classeur (réservations, paiements, factures, membres, plan — un onglet chacun), un manifeste qui en compte les lignes, et les fichiers de l'espace.",
   "workspaceLanguageLabel": "Langue de l'espace",

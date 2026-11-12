@@ -2799,24 +2799,24 @@
   "billOutstanding": "Aperto",
   "billOverage": "{extra, plural, one{{extra} mezza giornata extra} other{{extra} mezze giornate extra}}",
   "billPackages": "Pacchetti di giorni",
-  "billParticipation": "Partecipazione {pct} %",
+  "billParticipation": "Partecipazione {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2828,16 +2828,16 @@
   "billServices": "Servizi consumati",
   "billServicesTotal": "Totale servizi",
   "billSettled": "Saldato",
-  "billSubscription": "Abbonamento {pct} %",
-  "billSubscriptionMonth": "Abbonamento {month} {pct} %",
+  "billSubscription": "Abbonamento {pct}",
+  "billSubscriptionMonth": "Abbonamento {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2847,7 +2847,7 @@
   "billingAdvanceDays": "Giorni prima dell’inizio del mese",
   "billingAllowCustom": "Consenti un valore personalizzato concordato",
   "billingBandFee": "Canone mensile",
-  "billingBandFrom": "da {from}%",
+  "billingBandFrom": "da {from}",
   "billingBandOverage": "Eccedenza",
   "billingBandTo": "Fino a %",
   "billingBandsInvalid": "Le fasce devono crescere e terminare al 100%.",
@@ -3089,6 +3089,10 @@
   "bookTypeExpense": "Costo",
   "bookTypeIncome": "Ricavo",
   "bookTypeLiability": "Passività",
+  "bookingAdminNoLevel": "Un amministratore non può assegnare un piano intero qui.",
+  "@bookingAdminNoLevel": {
+    "description": "#3810 booking refusal DKK35: an admin may not assign a whole level here"
+  },
   "bookingCheckedInAtUntil": "Check-in su {space} fino alle {until}.",
   "@bookingCheckedInAtUntil": {
     "description": "#663 - check-in confirmation naming the space",
@@ -3111,6 +3115,10 @@
       }
     }
   },
+  "bookingEndMustLieAhead": "La nuova fine deve essere successiva a ora.",
+  "@bookingEndMustLieAhead": {
+    "description": "#3810 booking refusal DKK32: a new end in the past"
+  },
   "bookingGateBlocked": "Non prenotabile così",
   "bookingHorizonError": "{days, plural, one{Troppo lontano — le prenotazioni sono aperte con {days} giorno di anticipo.} other{Troppo lontano — le prenotazioni sono aperte con {days} giorni di anticipo.}}",
   "@bookingHorizonError": {
@@ -3124,12 +3132,28 @@
   "bookingModeCheckInNow": "Check-in adesso",
   "bookingMoreOptions": "Altre opzioni",
   "bookingNoLongerCheckedIn": "Questa prenotazione non è più in corso — è stata chiusa nel frattempo.",
+  "bookingNoLongerReserved": "Questa prenotazione non è più riservata; il check-in non è possibile.",
+  "@bookingNoLongerReserved": {
+    "description": "#3810 booking refusal DKK36: check-in on a booking no longer reserved"
+  },
   "bookingNotAMember": "Non è più membro di questo spazio — chieda un invito a un amministratore.",
   "bookingNotAllowedError": "Non può effettuare prenotazioni in questo spazio. Chieda a un proprietario di consentire ai membri di prenotare.",
   "@bookingNotAllowedError": {
     "description": "Refusal when the member does not hold makeReservations (#3269)"
   },
+  "bookingNotCancellable": "Questa prenotazione non può più essere annullata.",
+  "@bookingNotCancellable": {
+    "description": "#3810 booking refusal DKK30: the booking can no longer be cancelled"
+  },
+  "bookingNotYours": "Questa prenotazione non Le appartiene.",
+  "@bookingNotYours": {
+    "description": "#3810 booking refusal DKK29: the booking belongs to someone else"
+  },
   "bookingOnePlace": "Ha già una prenotazione in quel periodo — un posto alla volta.",
+  "bookingOnlyUpcoming": "Solo le prenotazioni future possono essere modificate.",
+  "@bookingOnlyUpcoming": {
+    "description": "#3810 booking refusal DKK33: only upcoming bookings can be edited"
+  },
   "bookingOpenDetails": "Dettagli",
   "bookingOutsideHoursError": "Le prenotazioni devono restare negli orari di lavoro.",
   "bookingOutsideOffError": "Le prenotazioni fuori dagli orari di apertura non sono consentite.",
@@ -3256,7 +3280,20 @@
       }
     }
   },
+  "bookingRunningKeepsStart": "Una prenotazione in corso mantiene l'ora di inizio.",
+  "@bookingRunningKeepsStart": {
+    "description": "#3810 booking refusal DKK31: a running booking cannot move its start"
+  },
   "bookingSameDayError": "Una prenotazione termina il giorno in cui inizia — prenoti il giorno dopo separatamente.",
+  "bookingSeriesTooLong": "{days, plural, one{Una serie può coprire al massimo 1 giorno.} other{Una serie può coprire al massimo {days} giorni.}}",
+  "@bookingSeriesTooLong": {
+    "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingSpaceChainTaken": "Questo spazio, o uno spazio che lo contiene, è già prenotato in quel periodo.",
   "bookingTooLongError": "{minutes, plural, one{Troppo lunga — una prenotazione dura al massimo {minutes} minuto.} other{Troppo lunga — una prenotazione dura al massimo {minutes} minuti.}}",
   "@bookingTooLongError": {
@@ -7063,6 +7100,8 @@
   "featurePushNotificationsDesc": "Consegna le conferme in sospeso sui dispositivi dei membri.",
   "featureQrBadgesDesc": "Schede badge QR stampabili per il chiosco, accanto alle carte NFC/RFID.",
   "featureQrBadgesTitle": "Badge QR",
+  "featureQuickSearchDesc": "Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell'app; restano i tasti propri di una pagina.",
+  "featureQuickSearchTitle": "Ricerca e tasti",
   "featureRecapitulativeStatementDesc": "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.",
   "featureRecapitulativeStatementTitle": "Elenchi riepilogativi (Intrastat servizi)",
   "featureRecordingPrivacyDesc": "Per filmare o fotografare questo spazio. Ogni nome, indirizzo e-mail, numero di telefono, indirizzo postale e fotografia viene sostituito da una persona inventata prima di arrivare sullo schermo, mentre la piantina, le prenotazioni e gli importi restano quelli veri. Un avviso lo segnala su ogni schermata, e i moduli di identità rifiutano di salvare finché è attiva.",
@@ -12528,7 +12567,7 @@
   "moneyStatementSettled": "Saldato",
   "moneySubmitExpense": "Invia una spesa",
   "moneySubmitPayment": "Invia per conferma",
-  "moneySubscriptionPct": "Abbonamento {pct} %",
+  "moneySubscriptionPct": "Abbonamento {pct}",
   "moneyUsage": "{used} su {included, plural, one{1 mezza giornata usata} other{{included} mezze giornate usate}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} mezza giornata usata} other{{used} mezze giornate usate}}",
   "monthFreeCount": "{free}/{total}",
@@ -12653,7 +12692,6 @@
   "negotiationOverage": "Eccedenza per mezza giornata",
   "negotiationPending": "Delle condizioni attendono convalida.",
   "negotiationPendingBadge": "in attesa di convalida",
-  "negotiationPercent": "{value} %",
   "negotiationProposeHint": "Lasci un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.",
   "negotiationProposeTitle": "Negoziazione di prezzo",
   "negotiationProposed": "Condizioni proposte — in attesa di convalida.",
@@ -12724,12 +12762,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -13235,7 +13273,6 @@
   "pendingLastChecked": "Ultimo controllo {time}",
   "pendingNotUpdated": "Stato non aggiornato — server non raggiungibile. La sua richiesta resta invariata.",
   "pendingStillWaiting": "Ancora in attesa di approvazione.",
-  "percentValue": "{value}%",
   "periodReservationsEmpty": "Nessuna prenotazione in questi mesi.",
   "periodReservationsFailed": "Non è stato possibile leggere le prenotazioni.",
   "periodReservationsLevel": "Solo su {level}",
@@ -15171,6 +15208,10 @@
     "description": "#2332: refusalMoneyLocaleLocked"
   },
   "refusalPermission": "Non ha il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
+  "refusalPersonalHomeHostsNoWorkspace": "Questa installazione è uno spazio personale: non ospita alcuno spazio di lavoro. Crei lo spazio di lavoro su un'installazione che ne ospita.",
+  "@refusalPersonalHomeHostsNoWorkspace": {
+    "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
+  },
   "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
   "refusalVatRateVersioned": "Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.",
   "@refusalVatRateVersioned": {
@@ -17273,6 +17314,15 @@
   "schemaUpdateOperator": "Se gestisce questo server: applichi le migrazioni mancanti con `dart run tool/instance.dart install --ref <progetto>`. Viene eseguito solo ciò che manca.",
   "schemaUpdateServer": "Impostazioni del server",
   "schemaUpdateTitle": "Questo server deve essere aggiornato",
+  "searchActionInvite": "Invita un membro",
+  "searchActionNewPurchase": "Nuovo acquisto",
+  "searchHint": "Una pagina, un'azione, un membro, una fattura…",
+  "searchKindAction": "Azione",
+  "searchKindMember": "Membro",
+  "searchKindPage": "Pagina",
+  "searchNothing": "Nessun risultato per «{query}».",
+  "searchRecent": "Recenti",
+  "searchRecordUnreadable": "Questa scheda non si può aprire: non esiste o non può leggerla.",
   "seatDayAhead": "Più tardi",
   "@seatDayAhead": {
     "description": "#903 seat day timeline: seatDayAhead"
@@ -18429,7 +18479,7 @@
   "setupNewMembersNoQuestions": "Nessuna domanda: si aderisce con nome e indirizzo e-mail.",
   "setupNewMembersPreviewJoin": "Quando chiede di aderire, la persona risponde a:",
   "setupNewMembersPreviewNoQuestions": "Chi chiede di aderire indica nome e indirizzo e-mail, nient’altro.",
-  "setupNewMembersPreviewStart": "Un nuovo membro inizia con un abbonamento al {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Un nuovo membro inizia con un abbonamento al {pct} ({policy}).",
   "setupNewMembersQuestions": "Domande poste all’adesione",
   "setupNewMembersSaveFailed": "Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.",
   "setupNextIndependent": "Può svolgere questa attività mentre la tappa precedente è in attesa.",
@@ -18497,8 +18547,8 @@
   "setupPresetNameComplet": "Completo",
   "setupPresetNameEssentiel": "Essenziale",
   "setupPresetNameStandard": "Standard",
-  "setupPricingBand": "{from}–{to} %: {fee} al mese, {extra} per mezza giornata in più",
-  "setupPricingLevel": "Abbonamento al {pct} %",
+  "setupPricingBand": "{from}–{to}: {fee} al mese, {extra} per mezza giornata in più",
+  "setupPricingLevel": "Abbonamento al {pct}",
   "setupPricingLevelIncludes": "{level}: {count, plural, one{1 mezza giornata inclusa} other{{count} mezze giornate incluse}}",
   "setupPricingLevelsBasis": "Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte, e una mezza giornata oltre la quota di un membro è addebitata alla tariffa aggiuntiva della sua fascia. Questo mese il suo spazio è aperto {days, plural, one{1 giorno} other{{days} giorni}}:",
   "setupPricingLevelsBasisUnknown": "Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte. Non è stato possibile leggere i suoi giorni di apertura, quindi non viene mostrato alcun esempio.",
@@ -18658,6 +18708,18 @@
   "shellPendingDecisions": "{count, plural, one{1 decisione la aspetta} other{{count} decisioni la aspettano}}",
   "shellReserveButton": "Prenota",
   "shellSwipeCoachMark": "Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.",
+  "shortcutClose": "Chiudi",
+  "shortcutFilter": "Filtra questo elenco",
+  "shortcutKeys": "I tasti di questa pagina",
+  "shortcutKeysTitle": "Tasti della tastiera",
+  "shortcutNew": "Nuovo",
+  "shortcutOpenCalendar": "Apri il calendario di un campo data",
+  "shortcutPrint": "Il documento di questa pagina",
+  "shortcutRedo": "Ripeti",
+  "shortcutSave": "Salva",
+  "shortcutSearch": "Trova una pagina, un'azione o una scheda",
+  "shortcutSubmit": "Salva o invia",
+  "shortcutUndo": "Annulla",
   "siteCity": "Città",
   "@siteCity": {
     "description": "#945 sites: siteCity"
@@ -22060,7 +22122,7 @@
   "workspaceCountryLabel": "Paese",
   "workspaceCurrencyLabel": "Valuta",
   "workspaceDangerZone": "Zona pericolosa",
-  "workspaceDeskOpacityValue": "Opacità: {percent}%",
+  "workspaceDeskOpacityValue": "Opacità: {percent}",
   "workspaceDeskTransparencyHelper": "Riduca l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
   "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
   "workspaceExcelExport": "Esporta i dati (Excel)",

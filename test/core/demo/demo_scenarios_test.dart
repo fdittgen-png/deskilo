@@ -1034,6 +1034,14 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) => w.f.money.invoices.isNotEmpty,
   ),
   WorkspaceFeature.uiAnimations: _toggle('motion'),
+  // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a
+  // member by name.
+  WorkspaceFeature.quickSearch: _action(
+    _owner,
+    'Ada presses Ctrl+K and finds an invoice by its number',
+    (w) =>
+        w.f.money.invoices.isNotEmpty && w.f.workspaces.workspaces.isNotEmpty,
+  ),
   WorkspaceFeature.regionalFormats: _toggle(
     "dates and amounts in France's "
     'formats',

@@ -7302,17 +7302,17 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
-  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage. [not a count: pct]
+  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Participation {pct}%'**
-  String billParticipation(int pct);
+  /// **'Participation {pct}'**
+  String billParticipation(String pct);
 
-  /// #1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]
+  /// #1000 the recurring position names its month: billParticipationMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{month} {pct}%'**
-  String billParticipationMonth(String month, int pct);
+  /// **'{month} {pct}'**
+  String billParticipationMonth(String month, String pct);
 
   /// Bill section header for confirmed credits of the period
   ///
@@ -7367,17 +7367,17 @@ abstract class AppLocalizations {
   /// **'Settled'**
   String get billSettled;
 
-  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]
+  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {pct}%'**
-  String billSubscription(int pct);
+  /// **'Subscription {pct}'**
+  String billSubscription(String pct);
 
-  /// #1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]
+  /// #1000 the recurring position names its month: billSubscriptionMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {month} {pct}%'**
-  String billSubscriptionMonth(String month, int pct);
+  /// **'Subscription {month} {pct}'**
+  String billSubscriptionMonth(String month, String pct);
 
   /// Button splitting the last band into two
   ///
@@ -7415,11 +7415,11 @@ abstract class AppLocalizations {
   /// **'Monthly fee'**
   String get billingBandFee;
 
-  /// Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]
+  /// Derived lower boundary of a band row (exclusive). The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'from {from}%'**
-  String billingBandFrom(int from);
+  /// **'from {from}'**
+  String billingBandFrom(String from);
 
   /// Label of a band's price-per-extra-half-day field
   ///
@@ -8141,6 +8141,12 @@ abstract class AppLocalizations {
   /// **'Liability'**
   String get bookTypeLiability;
 
+  /// #3810 booking refusal DKK35: an admin may not assign a whole level here
+  ///
+  /// In en, this message translates to:
+  /// **'An admin cannot assign a whole level here.'**
+  String get bookingAdminNoLevel;
+
   /// #663 - check-in confirmation naming the space
   ///
   /// In en, this message translates to:
@@ -8158,6 +8164,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Checked in until {until}.'**
   String bookingCheckedInUntil(String until);
+
+  /// #3810 booking refusal DKK32: a new end in the past
+  ///
+  /// In en, this message translates to:
+  /// **'The new end must be later than now.'**
+  String get bookingEndMustLieAhead;
 
   /// Shown as the text in booking sheet (reservations), and 2 other places.
   ///
@@ -8195,6 +8207,12 @@ abstract class AppLocalizations {
   /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
   String get bookingNoLongerCheckedIn;
 
+  /// #3810 booking refusal DKK36: check-in on a booking no longer reserved
+  ///
+  /// In en, this message translates to:
+  /// **'This booking is no longer reserved, so it cannot be checked in.'**
+  String get bookingNoLongerReserved;
+
   /// Refusal when an RPC answers 'not a member of this workspace' (#1030)
   ///
   /// In en, this message translates to:
@@ -8207,11 +8225,29 @@ abstract class AppLocalizations {
   /// **'You may not make reservations in this space. Ask an owner to let members book.'**
   String get bookingNotAllowedError;
 
+  /// #3810 booking refusal DKK30: the booking can no longer be cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'This booking can no longer be cancelled.'**
+  String get bookingNotCancellable;
+
+  /// #3810 booking refusal DKK29: the booking belongs to someone else
+  ///
+  /// In en, this message translates to:
+  /// **'This booking is not yours.'**
+  String get bookingNotYours;
+
   /// Refusal when the member already holds an overlapping active reservation (#412)
   ///
   /// In en, this message translates to:
   /// **'You already have a booking in that period — one place at a time.'**
   String get bookingOnePlace;
+
+  /// #3810 booking refusal DKK33: only upcoming bookings can be edited
+  ///
+  /// In en, this message translates to:
+  /// **'Only upcoming bookings can be changed.'**
+  String get bookingOnlyUpcoming;
 
   /// Action on the booking success message opening the new reservation's sheet (#1301)
   ///
@@ -8381,11 +8417,23 @@ abstract class AppLocalizations {
   /// **'Reserved: {when}.'**
   String bookingReservedWhen(String when);
 
+  /// #3810 booking refusal DKK31: a running booking cannot move its start
+  ///
+  /// In en, this message translates to:
+  /// **'A booking that has started keeps its start time.'**
+  String get bookingRunningKeepsStart;
+
   /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'A booking ends on the day it starts — book the next day separately.'**
   String get bookingSameDayError;
+
+  /// #3810 booking refusal DKK34: a series longer than the allowed days
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}'**
+  String bookingSeriesTooLong(int days);
 
   /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period
   ///
@@ -17942,6 +17990,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'QR badges'**
   String get featureQrBadgesTitle;
+
+  /// #3610 the search-and-keys feature
+  ///
+  /// In en, this message translates to:
+  /// **'Ctrl+K (⌘K on a Mac) or the bar\'s search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page\'s own keys stay.'**
+  String get featureQuickSearchDesc;
+
+  /// #3610 the search-and-keys feature
+  ///
+  /// In en, this message translates to:
+  /// **'Search and keys'**
+  String get featureQuickSearchTitle;
 
   /// #2354 recapitulative statement: featureRecapitulativeStatementDesc
   ///
@@ -32738,11 +32798,11 @@ abstract class AppLocalizations {
   /// **'Submit for confirmation'**
   String get moneySubmitPayment;
 
-  /// Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]
+  /// Statement line for the band fee of the member's percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {pct}%'**
-  String moneySubscriptionPct(int pct);
+  /// **'Subscription {pct}'**
+  String moneySubscriptionPct(String pct);
 
   /// Statement usage line for quota plans The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]
   ///
@@ -33344,12 +33404,6 @@ abstract class AppLocalizations {
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
 
-  /// Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]
-  ///
-  /// In en, this message translates to:
-  /// **'{value} %'**
-  String negotiationPercent(int value);
-
   /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
@@ -33482,11 +33536,11 @@ abstract class AppLocalizations {
   /// **'A larger subscription'**
   String get newMemberSubscriptionMore;
 
-  /// #1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]
+  /// #1294 a subscription percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{percent}%'**
-  String newMemberSubscriptionValue(int percent);
+  /// **'{percent}'**
+  String newMemberSubscriptionValue(String percent);
 
   /// While the device NFC status is being read
   ///
@@ -34989,12 +35043,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
-
-  /// A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]
-  ///
-  /// In en, this message translates to:
-  /// **'{value}%'**
-  String percentValue(int value);
 
   /// #2578 the bookings behind the capacity figure
   ///
@@ -40088,6 +40136,12 @@ abstract class AppLocalizations {
   /// **'You do not have the permission for this. An owner of the space can grant it in Role management.'**
   String get refusalPermission;
 
+  /// #3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home
+  ///
+  /// In en, this message translates to:
+  /// **'This installation is a personal home: it hosts no workspace. Create the workspace on an installation that hosts workspaces.'**
+  String get refusalPersonalHomeHostsNoWorkspace;
+
   /// #1305 Shown when the session expired during an action
   ///
   /// In en, this message translates to:
@@ -44054,6 +44108,60 @@ abstract class AppLocalizations {
   /// **'This server needs an update'**
   String get schemaUpdateTitle;
 
+  /// #3610 search (Ctrl/Cmd+K): searchActionInvite
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a member'**
+  String get searchActionInvite;
+
+  /// #3610 search (Ctrl/Cmd+K): searchActionNewPurchase
+  ///
+  /// In en, this message translates to:
+  /// **'New purchase'**
+  String get searchActionNewPurchase;
+
+  /// #3610 search (Ctrl/Cmd+K): searchHint
+  ///
+  /// In en, this message translates to:
+  /// **'A page, an action, a member, an invoice…'**
+  String get searchHint;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindAction
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get searchKindAction;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindMember
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get searchKindMember;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindPage
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get searchKindPage;
+
+  /// #3610 search (Ctrl/Cmd+K): searchNothing
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found for “{query}”.'**
+  String searchNothing(String query);
+
+  /// #3610 search (Ctrl/Cmd+K): searchRecent
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get searchRecent;
+
+  /// #3610 search (Ctrl/Cmd+K): searchRecordUnreadable
+  ///
+  /// In en, this message translates to:
+  /// **'This record cannot be opened: it does not exist or you may not read it.'**
+  String get searchRecordUnreadable;
+
   /// #903 seat day timeline: seatDayAhead
   ///
   /// In en, this message translates to:
@@ -47425,11 +47533,11 @@ abstract class AppLocalizations {
   /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
   String get setupNewMembersPreviewNoQuestions;
 
-  /// #2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]
+  /// #2871 setup run steps: setupNewMembersPreviewStart. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'A new member starts on a {pct} % subscription ({policy}).'**
-  String setupNewMembersPreviewStart(int pct, String policy);
+  /// **'A new member starts on a {pct} subscription ({policy}).'**
+  String setupNewMembersPreviewStart(String pct, String policy);
 
   /// #2871 setup run steps: setupNewMembersQuestions
   ///
@@ -47833,17 +47941,17 @@ abstract class AppLocalizations {
   /// **'Standard'**
   String get setupPresetNameStandard;
 
-  /// #2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]
+  /// #2871 setup run steps: setupPricingBand. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{from}–{to} %: {fee} a month, {extra} per extra half-day'**
-  String setupPricingBand(int from, int to, String fee, String extra);
+  /// **'{from}–{to}: {fee} a month, {extra} per extra half-day'**
+  String setupPricingBand(String from, String to, String fee, String extra);
 
-  /// #2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]
+  /// #2871 setup run steps: setupPricingLevel. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Membership at {pct} %'**
-  String setupPricingLevel(int pct);
+  /// **'Membership at {pct}'**
+  String setupPricingLevel(String pct);
 
   /// #3283 setup pricing: the half-days a level includes this month.
   ///
@@ -48762,6 +48870,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
   String get shellSwipeCoachMark;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get shortcutClose;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Filter this list'**
+  String get shortcutFilter;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'The keys of this page'**
+  String get shortcutKeys;
+
+  /// #3610 the title of the overlay listing the keys of the page
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard keys'**
+  String get shortcutKeysTitle;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get shortcutNew;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Open a date field\'s calendar'**
+  String get shortcutOpenCalendar;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'This page\'s document'**
+  String get shortcutPrint;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get shortcutRedo;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get shortcutSave;
+
+  /// #3610 the shortcut list: Ctrl/Cmd+K opens search
+  ///
+  /// In en, this message translates to:
+  /// **'Find a page, an action or a record'**
+  String get shortcutSearch;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Save or send'**
+  String get shortcutSubmit;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get shortcutUndo;
 
   /// #945 sites: siteCity
   ///
@@ -57559,11 +57739,11 @@ abstract class AppLocalizations {
   /// **'Danger zone'**
   String get workspaceDangerZone;
 
-  /// Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]
+  /// Live value label of the desk-opacity slider. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Opacity: {percent}%'**
-  String workspaceDeskOpacityValue(int percent);
+  /// **'Opacity: {percent}'**
+  String workspaceDeskOpacityValue(String percent);
 
   /// Helper under the desk-transparency slider explaining its effect.
   ///
