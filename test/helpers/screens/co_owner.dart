@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../mock_providers.dart';
 import '../settings_sections.dart';
+import '../shell_bar.dart';
 
 /// Seeds Ana BEFORE the pump (the member providers cache their first
 /// fetch), then walks Settings → Members & plans.
@@ -46,7 +47,7 @@ Future<FakeWorkspaceRepository> pumpMembersWithAna(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
+  await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
   await tester.tap(find.text('Members & plans'));
