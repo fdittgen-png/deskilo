@@ -31,7 +31,7 @@ import '../widgets/bi_views_bar.dart';
 
 /// The narrowest an analysis is drawn on the page's grid.
 @visibleForTesting
-// content-fit: an analysis holds its figure, its compared rows and its charts in a phone's 340 dp card
+// content-fit: an analysis card already works at 336 dp, its width on a 360 dp phone
 const double biAnalysisMinWidth = 340;
 
 String _biAreaName(AppLocalizations l10n, BiArea area) => switch (area) {

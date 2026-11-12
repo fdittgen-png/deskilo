@@ -172,6 +172,33 @@ double _gridWidth(double window, double padding) {
   return page - 2 * padding;
 }
 
+/// The analyses the Demo cannot compute: their repositories are the
+/// server-only ones of the Demo (`UnavailableOverviewKpiRepository`,
+/// `UnavailableCostKpiRepository`, `UnavailableCostAllocationRepository`
+/// throw `KpiUnavailable('no server in this mode')`). Master's Demo fails the
+/// same ones at the same date; the defect is tracked apart from this page.
+const _serverOnly = {
+  'assets.acquisitions',
+  'assets.book_depreciation',
+  'finance.contribution_after_depreciation',
+  'finance.cost_allocation',
+  'finance.recorded_contribution',
+  'operations.pending_actions_current',
+  'people.active_memberships_current',
+  'purchases.forecast_outflows',
+  'purchases.operating_costs',
+  'purchases.unbilled_commitments',
+  'sales.overdue_receivables',
+};
+
+/// On the overview, beside those, the figures the Demo answers as unknown
+/// (said "Not available", never 0).
+const _overviewUnknown = {
+  'customers.concentration',
+  'vendors.billing_lag',
+  'vendors.delivery',
+};
+
 final _overviewFigures = <double, Map<String, String>>{};
 final _analysisFiguresByWidth = <double, Map<String, String>>{};
 
@@ -208,6 +235,17 @@ void main() {
       // Each figure is what the Demo answers for the month, in the
       // module's own words.
       final shown = _figures(tester, 'overview-value-');
+      expect(
+        {
+          for (final MapEntry(:key, :value) in shown.entries)
+            if (value == AppLocalizationsEn().overviewUnavailable) key,
+        },
+        {
+          for (final id in shown.keys)
+            if (_serverOnly.contains(id) || _overviewUnknown.contains(id)) id,
+        },
+        reason: 'only the server-only and unknown figures are unavailable',
+      );
       expect(shown, isNotEmpty);
       final workspaceId = container.read(currentWorkspaceProvider).value!.id;
       final tile = find.byKey(ValueKey('overview-tile-${shown.keys.first}'));
@@ -284,6 +322,34 @@ void main() {
       }
 
       final shown = _analysisFigures(tester);
+      final cards = {
+        for (final c in tester.widgetList<Card>(
+          find.byWidgetPredicate(
+            (w) =>
+                w is Card &&
+                w.key is ValueKey<String> &&
+                _keyOf(w).startsWith('bi-module-'),
+          ),
+        ))
+          _keyOf(c).substring('bi-module-'.length): find
+              .descendant(
+                of: find.byKey(c.key!),
+                matching: find.byKey(const ValueKey('bi-unavailable')),
+              )
+              .evaluate()
+              .isNotEmpty,
+      };
+      expect(
+        {
+          for (final MapEntry(:key, :value) in cards.entries)
+            if (value) key,
+        },
+        {
+          for (final id in cards.keys)
+            if (_serverOnly.contains(id)) id,
+        },
+        reason: 'only the server-only analyses fail in the Demo',
+      );
       expect(shown, isNotEmpty);
       // A narrow page builds fewer analyses in the window: every one built
       // at two widths reads the same.
