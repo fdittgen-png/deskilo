@@ -51,6 +51,29 @@ Future<void> _photoSheet(
   }
 }
 
+/// The profile photo's row (0038): tap to choose or remove, or drop an image
+/// onto it (#3818).
+Widget _photoTile(BuildContext context, WidgetRef ref, Profile profile) {
+  final l10n = context.l10n;
+  return FileDropZone(
+    typeGroup: _photoTypes(l10n),
+    onFile: (file) => _uploadPhoto(context, file, ref, profile.id),
+    child: ListTile(
+      key: const ValueKey('settings-photo'),
+      leading: MemberAvatar(
+        userId: profile.id,
+        name: profile.displayName,
+        hasAvatar: profile.hasAvatar,
+      ),
+      title: Text(l10n.profilePhotoTitle),
+      subtitle: Text(
+        profile.hasAvatar ? l10n.profilePhotoSet : l10n.profilePhotoNone,
+      ),
+      onTap: () => _photoSheet(context, ref, profile),
+    ),
+  );
+}
+
 /// What the profile photo takes: the same group for the picker and the drop.
 XTypeGroup _photoTypes(AppLocalizations l10n) => XTypeGroup(
   label: l10n.editorToolImage,
@@ -217,24 +240,7 @@ List<Widget> accountSettingsTiles(
   return [
     // Profile photo (0038): shown on my directory row and detail sheet.
     if (profile && myProfile != null)
-      FileDropZone(
-        typeGroup: _photoTypes(l10n),
-        onFile: (file) => _uploadPhoto(context, file, ref, myProfile.id),
-        child: ListTile(
-        key: const ValueKey('settings-photo'),
-        leading: MemberAvatar(
-          userId: myProfile.id,
-          name: myProfile.displayName,
-          hasAvatar: myProfile.hasAvatar,
-        ),
-        title: Text(l10n.profilePhotoTitle),
-        subtitle: Text(
-          myProfile.hasAvatar
-              ? (l10n.profilePhotoSet)
-              : (l10n.profilePhotoNone),
-        ),
-        onTap: () => _photoSheet(context, ref, myProfile),
-      )),
+      _photoTile(context, ref, myProfile),
     // In-app language (#147), theme (#160) defaults; private values (#2552).
     if (account) _languageTile(context, ref, defaultsOnly: true),
     if (account) ...[_themeTile(context, ref, defaultsOnly: true), const PrivateValuesTile()],
