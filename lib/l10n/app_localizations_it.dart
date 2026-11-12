@@ -23898,8 +23898,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesTabDocuments => 'Documenti';
 
   @override
-  String get purchasesTaxField =>
-      'Imposta inclusa (vuoto se la fattura non la indica)';
+  String get purchasesTaxField => 'Imposta inclusa';
+
+  @override
+  String get purchasesTaxFieldHelper =>
+      'Lasciare vuoto se la fattura non la indica';
 
   @override
   String get purchasesTaxNotStated => 'Imposta non indicata';

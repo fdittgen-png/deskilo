@@ -92,10 +92,11 @@
   "@purchasesGross": {
     "description": "#2573 purchases"
   },
-  "purchasesTaxField": "Dont taxe (vide si la facture ne l'indique pas)",
+  "purchasesTaxField": "Dont taxe",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
   },
+  "purchasesTaxFieldHelper": "Laisser vide si la facture ne l'indique pas",
   "purchasesTaxNotStated": "Taxe non indiquée",
   "@purchasesTaxNotStated": {
     "description": "#2573 purchases"

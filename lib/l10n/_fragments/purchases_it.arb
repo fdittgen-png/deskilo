@@ -92,10 +92,11 @@
   "@purchasesGross": {
     "description": "#2573 purchases"
   },
-  "purchasesTaxField": "Imposta inclusa (vuoto se la fattura non la indica)",
+  "purchasesTaxField": "Imposta inclusa",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
   },
+  "purchasesTaxFieldHelper": "Lasciare vuoto se la fattura non la indica",
   "purchasesTaxNotStated": "Imposta non indicata",
   "@purchasesTaxNotStated": {
     "description": "#2573 purchases"

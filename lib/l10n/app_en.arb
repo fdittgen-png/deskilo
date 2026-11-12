@@ -31149,9 +31149,13 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTaxField": "Tax included (empty if the bill does not state it)",
+  "purchasesTaxField": "Tax included",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
+  },
+  "purchasesTaxFieldHelper": "Leave empty if the bill does not state it",
+  "@purchasesTaxFieldHelper": {
+    "description": "#3782 the tax field's helper: the label alone stays short"
   },
   "purchasesTaxNotStated": "Tax not stated",
   "@purchasesTaxNotStated": {

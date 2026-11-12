@@ -212,6 +212,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       title: Text(l10n.purchasesAddBill),
       content: SingleChildScrollView(
         child: Column(
+          // #3782 — the form kit's gap between every field.
+          spacing: AppSpacing.md,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -278,12 +280,12 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               key: const ValueKey('purchase-tax'),
               controller: _tax,
               label: l10n.purchasesTaxField,
+              helper: l10n.purchasesTaxFieldHelper,
               currency: _currency,
               allowNegative: false,
               showProblem: _invalid,
               textInputAction: TextInputAction.next,
             ),
-            const FormGap.small(),
             AppDateField(
               key: const ValueKey('purchase-invoice-date'),
               label: l10n.purchasesInvoiceDate,
@@ -293,8 +295,6 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               textInputAction: TextInputAction.next,
               onChanged: (d) => _invoiceDate = d,
             ),
-            // Room for the date the field read, under it.
-            const FormGap.small(),
             AppDateField(
               key: const ValueKey('purchase-due-date'),
               label: l10n.purchasesDueDate,
