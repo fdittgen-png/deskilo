@@ -118,7 +118,7 @@ class ExpenseSchedule implements SystemStamped {
             : DateTime.parse(row['next_due'] as String),
         supplierId: row['supplier_id'] as String?,
         textFacts: switch (row['text_facts']) {
-          final Map<String, dynamic> facts => facts,
+          final Map<String, Object?> facts => facts,
           _ => null,
         },
       );
