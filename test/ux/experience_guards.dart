@@ -535,6 +535,15 @@ Future<void> writeDeskSheet(
 /// label, its input and its helper or error line, as its decorator draws
 /// them) touches or overlaps another's, or a helper or error text is cut
 /// (its paragraph ran past its lines). [details] receives what was found.
+///
+/// Known limits, so a false alarm or a false pass finds its reason here:
+/// * "value cut" flags any one-line value wider than its field. A free text
+///   that scrolls inside its field by design is not a cut: if a fixture
+///   with a long free text trips it, narrow the check to number and date
+///   fields (`keyboardType`) rather than shortening the fixture.
+/// * "form off the window" is for a dialog or a sheet, which must fit the
+///   window. A full-screen form that scrolls is taller than the window by
+///   design: measure its scroll viewport instead, not the form.
 Set<String> formLayoutProblems(
   WidgetTester tester, {
   required Finder form,
