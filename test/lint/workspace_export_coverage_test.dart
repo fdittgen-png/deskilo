@@ -133,8 +133,8 @@ const Map<String, String> _notExported = {
           'record of this server; the invoices and their feed events are exported themselves',
   'reminder_email_sends':
       '#3673 -- the e-mail sends of payment reminders, each with its provider '
-          'answer: delivery evidence of this server beside the reminder evidence, '
-          'not data an operator re-imports',
+          'answer: delivery evidence of this server, kept beside the reminder '
+          'evidence and like it outside the export; the invoices are exported themselves',
   'reminder_attempts':
       'the append-only delivery evidence of each reminder (#1922); as above',
   'workspace_field_value_options':

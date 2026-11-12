@@ -24379,6 +24379,55 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get reminderChannelShare => 'Condividi la lettera';
+
+  @override
+  String get reminderEmailDecisionFailed =>
+      'Non è stato possibile salvare la risposta. Riprova.';
+
+  @override
+  String get reminderEmailFailed =>
+      'Non è stato possibile inviare il sollecito via e-mail. Non è stato inviato né registrato nulla.';
+
+  @override
+  String get reminderEmailLevelChanged =>
+      'Il livello del sollecito è cambiato nel frattempo. Non è stato inviato nulla; riapri il sollecito.';
+
+  @override
+  String get reminderEmailNoAddress =>
+      'Questo cliente non ha un indirizzo e-mail registrato';
+
+  @override
+  String get reminderEmailNoLanguage =>
+      'La lingua dei documenti del cliente non è nota, quindi il sollecito non è stato inviato via e-mail. Scegli la sua lingua o condividi la lettera.';
+
+  @override
+  String get reminderEmailNoSender =>
+      'Il mittente e-mail dell\'azienda non è ancora configurato';
+
+  @override
+  String get reminderEmailOff =>
+      'I solleciti via e-mail sono disattivati in questo spazio';
+
+  @override
+  String reminderEmailRefused(String reason) {
+    return 'L\'e-mail è stata rifiutata: $reason. Nessun sollecito è stato registrato.';
+  }
+
+  @override
+  String get reminderEmailRetry =>
+      'Non è stato possibile consegnare l\'e-mail al server. Riprovare? Non verrà inviata due volte.';
+
+  @override
+  String reminderEmailTo(String recipient) {
+    return 'A $recipient, l\'e-mail di contatto del profilo del cliente';
+  }
+
+  @override
+  String get reminderEmailUnconfirmed =>
+      'Nessuna risposta confermata. Non è stato registrato nulla; verifica con il cliente prima di decidere se è arrivata.';
+
+  @override
   String reminderHistoryLine(int level, String origin, String date) {
     return 'Sollecito $level · $origin · $date';
   }
@@ -24535,6 +24584,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get reminderStatusDeclared =>
       'Condiviso dal mittente — una sua dichiarazione, non una ricevuta';
+
+  @override
+  String get reminderStatusEmailAccepted =>
+      'Accettata dal provider e-mail — non prova che sia stata letta';
+
+  @override
+  String get reminderStatusEmailDeclared =>
+      'Arrivo confermato da una persona — la sua dichiarazione, non una ricevuta';
+
+  @override
+  String get reminderStatusEmailUnknown =>
+      'Nessuna risposta confermata dal provider e-mail';
 
   @override
   String get reminderStatusFailed => 'Non consegnato';

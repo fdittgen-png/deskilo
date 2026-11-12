@@ -7,7 +7,7 @@
 // and a malformed body are refused before any call.
 import { assertEquals } from "jsr:@std/assert@1";
 import { type Db, handle, parseSendRequest } from "./index.ts";
-import type { OrderMailResult, SendOrder } from "./resend.ts";
+import type { OrderMailResult, SendOrder } from "../_shared/resend.ts";
 
 const ids = {
   workspace_id: "00000000-0000-4000-8000-000000000001",

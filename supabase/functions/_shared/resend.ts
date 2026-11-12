@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-// Resend transport only. Authorization and durable send fencing belong to the caller.
+// Resend transport only (#3307; shared with the reminder e-mail, #3673).
+// Authorization and durable send fencing belong to the caller.
 export type SendOrder = {
   apiKey: string;
   sender: string;
@@ -49,7 +50,9 @@ export async function sendOrderViaResend(
       headers: {
         Authorization: `Bearer ${order.apiKey}`,
         "Content-Type": "application/json",
-        "Idempotency-Key": `${order.kind ?? "purchase-order"}/${order.attemptId}`,
+        "Idempotency-Key": `${
+          order.kind ?? "purchase-order"
+        }/${order.attemptId}`,
       },
       body: JSON.stringify({
         from: order.senderName

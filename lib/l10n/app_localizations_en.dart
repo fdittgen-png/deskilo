@@ -24175,6 +24175,54 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reminderChannelShare => 'Share the letter';
+
+  @override
+  String get reminderEmailDecisionFailed =>
+      'Your answer could not be saved. Try again.';
+
+  @override
+  String get reminderEmailFailed =>
+      'The reminder could not be e-mailed. Nothing was sent or recorded.';
+
+  @override
+  String get reminderEmailLevelChanged =>
+      'The reminder level changed in the meantime. Nothing was sent; open the reminder again.';
+
+  @override
+  String get reminderEmailNoAddress =>
+      'This customer has no e-mail address on file';
+
+  @override
+  String get reminderEmailNoLanguage =>
+      'The customer\'s document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.';
+
+  @override
+  String get reminderEmailNoSender =>
+      'The business\'s e-mail sender is not set up yet';
+
+  @override
+  String get reminderEmailOff => 'Reminders by e-mail are off in this space';
+
+  @override
+  String reminderEmailRefused(String reason) {
+    return 'The e-mail was refused: $reason. No reminder was recorded.';
+  }
+
+  @override
+  String get reminderEmailRetry =>
+      'The e-mail could not be handed to the server. Try again? It will not be sent twice.';
+
+  @override
+  String reminderEmailTo(String recipient) {
+    return 'To $recipient, the contact e-mail of the customer\'s profile';
+  }
+
+  @override
+  String get reminderEmailUnconfirmed =>
+      'No confirmed answer came back. Nothing was recorded; check with the customer before deciding whether it arrived.';
+
+  @override
   String reminderHistoryLine(int level, String origin, String date) {
     return 'Reminder $level · $origin · $date';
   }
@@ -24332,6 +24380,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reminderStatusDeclared =>
       'Shared by the sender — their statement, not a receipt';
+
+  @override
+  String get reminderStatusEmailAccepted =>
+      'Accepted by the e-mail provider — not proof it was read';
+
+  @override
+  String get reminderStatusEmailDeclared =>
+      'Arrival confirmed by a person — their statement, not a receipt';
+
+  @override
+  String get reminderStatusEmailUnknown =>
+      'No confirmed answer from the e-mail provider';
 
   @override
   String get reminderStatusFailed => 'Not delivered';

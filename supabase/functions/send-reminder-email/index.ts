@@ -35,10 +35,7 @@
 import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
-import {
-  type OrderMailResult,
-  sendOrderViaResend,
-} from "../send-purchase-order/resend.ts";
+import { type OrderMailResult, sendOrderViaResend } from "../_shared/resend.ts";
 
 /** The most a request body may weigh: the ids and the base64 PDF Resend
  * accepts (resend.ts bounds the PDF at 8 MB of base64). */

@@ -24418,6 +24418,55 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get reminderChannelShare => 'Brief teilen';
+
+  @override
+  String get reminderEmailDecisionFailed =>
+      'Ihre Antwort konnte nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get reminderEmailFailed =>
+      'Die Mahnung konnte nicht per E-Mail gesendet werden. Nichts wurde gesendet oder erfasst.';
+
+  @override
+  String get reminderEmailLevelChanged =>
+      'Die Mahnstufe hat sich inzwischen geändert. Nichts wurde gesendet; öffnen Sie die Mahnung erneut.';
+
+  @override
+  String get reminderEmailNoAddress =>
+      'Für diesen Kunden ist keine E-Mail-Adresse hinterlegt';
+
+  @override
+  String get reminderEmailNoLanguage =>
+      'Die Dokumentsprache des Kunden ist unbekannt, daher wurde die Mahnung nicht per E-Mail gesendet. Wählen Sie seine Sprache oder teilen Sie den Brief.';
+
+  @override
+  String get reminderEmailNoSender =>
+      'Der E-Mail-Absender des Unternehmens ist noch nicht eingerichtet';
+
+  @override
+  String get reminderEmailOff =>
+      'Mahnungen per E-Mail sind in diesem Bereich ausgeschaltet';
+
+  @override
+  String reminderEmailRefused(String reason) {
+    return 'Die E-Mail wurde abgelehnt: $reason. Es wurde keine Mahnung erfasst.';
+  }
+
+  @override
+  String get reminderEmailRetry =>
+      'Die E-Mail konnte nicht an den Server übergeben werden. Erneut versuchen? Sie wird nicht zweimal gesendet.';
+
+  @override
+  String reminderEmailTo(String recipient) {
+    return 'An $recipient, die Kontakt-E-Mail aus dem Profil des Kunden';
+  }
+
+  @override
+  String get reminderEmailUnconfirmed =>
+      'Keine bestätigte Antwort. Nichts wurde erfasst; klären Sie mit dem Kunden, ob sie angekommen ist, bevor Sie entscheiden.';
+
+  @override
   String reminderHistoryLine(int level, String origin, String date) {
     return 'Mahnung $level · $origin · $date';
   }
@@ -24576,6 +24625,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get reminderStatusDeclared =>
       'Vom Absender geteilt — seine Angabe, keine Empfangsbestätigung';
+
+  @override
+  String get reminderStatusEmailAccepted =>
+      'Vom E-Mail-Anbieter angenommen — kein Beweis, dass sie gelesen wurde';
+
+  @override
+  String get reminderStatusEmailDeclared =>
+      'Ankunft von einer Person bestätigt — ihre Aussage, keine Empfangsbestätigung';
+
+  @override
+  String get reminderStatusEmailUnknown =>
+      'Keine bestätigte Antwort des E-Mail-Anbieters';
 
   @override
   String get reminderStatusFailed => 'Nicht zugestellt';

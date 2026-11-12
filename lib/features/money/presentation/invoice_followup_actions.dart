@@ -32,6 +32,7 @@ import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_documents.dart';
 import 'invoice_journey.dart' show invoiceRemainingCents;
+import 'reminder_email_actions.dart';
 import 'widgets/invoice_receipt_action_runner.dart';
 import 'widgets/invoicing_dashboard.dart';
 
@@ -196,6 +197,24 @@ Future<void> remindInvoice(
   final sent =
       ref.read(invoiceRemindersProvider).value?[invoice.id]?.count ?? 0;
   final level = (sent + 1).clamp(1, rules.levels);
+  // #3673 — by e-mail or shared: asked only while reminders by e-mail are on.
+  final flow = ReminderEmailFlow(context, ref);
+  final channel = await flow.choose(invoice);
+  if (channel == null || !context.mounted) return;
+  if (channel == ReminderChannel.email) {
+    return flow.build(
+      invoice,
+      level: level,
+      owedCents: owed,
+      letter: () => buildReminderPdfFile(
+        context,
+        ref,
+        invoice,
+        level: level,
+        reference: requireWorkspaceTaxReference(ref),
+      ),
+    );
+  }
   SendReminderOutcome? outcome;
   if (!await runGuarded(
     context,

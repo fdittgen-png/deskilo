@@ -14839,6 +14839,64 @@
   "registerPaymentSubmit": "Registra",
   "registerPaymentTitle": "Registra un pagamento",
   "reminderBody": "{target} inizia alle {time}",
+  "reminderChannelShare": "Condividi la lettera",
+  "@reminderChannelShare": {
+    "description": "#3673 reminders by e-mail: reminderChannelShare"
+  },
+  "reminderEmailDecisionFailed": "Non è stato possibile salvare la risposta. Riprova.",
+  "@reminderEmailDecisionFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailDecisionFailed"
+  },
+  "reminderEmailFailed": "Non è stato possibile inviare il sollecito via e-mail. Non è stato inviato né registrato nulla.",
+  "@reminderEmailFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailFailed"
+  },
+  "reminderEmailLevelChanged": "Il livello del sollecito è cambiato nel frattempo. Non è stato inviato nulla; riapri il sollecito.",
+  "@reminderEmailLevelChanged": {
+    "description": "#3673 reminders by e-mail: reminderEmailLevelChanged"
+  },
+  "reminderEmailNoAddress": "Questo cliente non ha un indirizzo e-mail registrato",
+  "@reminderEmailNoAddress": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
+  },
+  "reminderEmailNoLanguage": "La lingua dei documenti del cliente non è nota, quindi il sollecito non è stato inviato via e-mail. Scegli la sua lingua o condividi la lettera.",
+  "@reminderEmailNoLanguage": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
+  },
+  "reminderEmailNoSender": "Il mittente e-mail dell'azienda non è ancora configurato",
+  "@reminderEmailNoSender": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoSender"
+  },
+  "reminderEmailOff": "I solleciti via e-mail sono disattivati in questo spazio",
+  "@reminderEmailOff": {
+    "description": "#3673 reminders by e-mail: reminderEmailOff"
+  },
+  "reminderEmailRefused": "L'e-mail è stata rifiutata: {reason}. Nessun sollecito è stato registrato.",
+  "@reminderEmailRefused": {
+    "description": "#3673 reminders by e-mail: reminderEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailRetry": "Non è stato possibile consegnare l'e-mail al server. Riprovare? Non verrà inviata due volte.",
+  "@reminderEmailRetry": {
+    "description": "#3673 reminders by e-mail: reminderEmailRetry"
+  },
+  "reminderEmailTo": "A {recipient}, l'e-mail di contatto del profilo del cliente",
+  "@reminderEmailTo": {
+    "description": "#3673 reminders by e-mail: reminderEmailTo",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailUnconfirmed": "Nessuna risposta confermata. Non è stato registrato nulla; verifica con il cliente prima di decidere se è arrivata.",
+  "@reminderEmailUnconfirmed": {
+    "description": "#3673 reminders by e-mail: reminderEmailUnconfirmed"
+  },
   "reminderHistoryLine": "Sollecito {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
@@ -14913,6 +14971,18 @@
   "reminderStatusDeclared": "Condiviso dal mittente — una sua dichiarazione, non una ricevuta",
   "@reminderStatusDeclared": {
     "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusEmailAccepted": "Accettata dal provider e-mail — non prova che sia stata letta",
+  "@reminderStatusEmailAccepted": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailAccepted"
+  },
+  "reminderStatusEmailDeclared": "Arrivo confermato da una persona — la sua dichiarazione, non una ricevuta",
+  "@reminderStatusEmailDeclared": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailDeclared"
+  },
+  "reminderStatusEmailUnknown": "Nessuna risposta confermata dal provider e-mail",
+  "@reminderStatusEmailUnknown": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailUnknown"
   },
   "reminderStatusFailed": "Non consegnato",
   "@reminderStatusFailed": {
