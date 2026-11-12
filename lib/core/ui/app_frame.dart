@@ -15,11 +15,12 @@ const double kReadingColumnMaxWidth = 960;
 /// Routes drawn on a canvas (map, editors): they want the width. The Reserve
 /// hub is NOT one of them: it sits in the same column as the Calendar and
 /// the Alerts, so moving between the destinations never changes the width.
-const List<String> _kWideRoutePrefixes = [
+/// #3604 — a route that declares its own measure (`/invoices`, work) is
+/// not here: no route is in both.
+@visibleForTesting
+const List<String> kWideRoutePrefixes = [
   '/discover', '/kiosk', '/report-editor', '/editor',
   '/settings/sites', '/me', '/invoicing/wizard',
-  // #3587 — the invoicing home keeps an invoice open beside its tables.
-  '/invoices',
 ];
 
 /// A prefix names a path or its children — never a longer word that merely
@@ -28,7 +29,7 @@ bool _under(String path, String prefix) =>
     path == prefix || path.startsWith('$prefix/');
 
 double frameWidthFor(String path) =>
-    _kWideRoutePrefixes.any((prefix) => _under(path, prefix))
+    kWideRoutePrefixes.any((prefix) => _under(path, prefix))
         ? kAppFrameMaxWidth
         : kReadingColumnMaxWidth;
 
