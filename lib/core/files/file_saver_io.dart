@@ -202,13 +202,23 @@ Future<String> writeToChosenPlace(
   Future<String> Function(File target, List<int> bytes) atomic =
       writeFileAtomically,
   Future<void> Function(File target, List<int> bytes) direct = _writeDirect,
+  Future<List<int>?> Function(File target) existing = _existingBytes,
 }) async {
   try {
     return await atomic(target, bytes);
   } on _TemporaryFileRefused {
     // What the person is replacing, if anything: the direct write truncates
     // it at once, so it is read before a byte is written.
-    final before = await _bytesOf(target);
+    final List<int>? before;
+    try {
+      before = await existing(target);
+    } on FileSystemException catch (e, st) {
+      // A file that is there and cannot be read cannot be given back:
+      // nothing is written, so nothing is truncated.
+      TraceLogger.instance
+          .warn('files', 'file to replace not read', error: e, stackTrace: st);
+      rethrow;
+    }
     try {
       await direct(target, bytes);
       return target.path;
@@ -218,18 +228,6 @@ Future<String> writeToChosenPlace(
       await _restore(target, before);
       rethrow;
     }
-  }
-}
-
-/// The bytes of [file] when it exists and can be read; null otherwise (a
-/// file that cannot be read is treated as not there: nothing to give back).
-Future<List<int>?> _bytesOf(File file) async {
-  try {
-    return file.existsSync() ? await file.readAsBytes() : null;
-  } on Object catch (e, st) {
-    TraceLogger.instance
-        .warn('files', 'file to replace not read', error: e, stackTrace: st);
-    return null;
   }
 }
 
@@ -246,6 +244,11 @@ Future<void> _restore(File target, List<int>? before) async {
         .error('files', 'replaced file not given back', error: e, stackTrace: st);
   }
 }
+
+/// The bytes of the file at [target], or null when there is none; a file
+/// that is there and cannot be read throws.
+Future<List<int>?> _existingBytes(File target) async =>
+    target.existsSync() ? await target.readAsBytes() : null;
 
 Future<void> _writeDirect(File target, List<int> bytes) =>
     target.writeAsBytes(bytes, flush: true);

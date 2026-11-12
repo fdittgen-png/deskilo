@@ -269,6 +269,29 @@ void main() {
       expect(folders.writes, 0);
     });
 
+    test('a file to replace that cannot be read is not written over', () async {
+      // Without its bytes the original could not be given back, so the
+      // direct write is not attempted and the original is left as it is.
+      final target = '${root.path}/invoice.pdf';
+      const original = [9, 8, 7];
+      File(target).writeAsBytesSync(original);
+      var direct = 0;
+      final outcome = await save(
+        _Dialog(target),
+        write: (file, bytes) => writeToChosenPlace(
+          file,
+          bytes,
+          atomic: siblingRefused,
+          direct: (file, bytes) async => direct++,
+          existing: (file) async =>
+              throw FileSystemException('Permission denied', file.path),
+        ),
+      );
+      expect(outcome, isA<SaveFailed>());
+      expect(direct, 0);
+      expect(File(target).readAsBytesSync(), original);
+    });
+
     test('where the folder allows it, the first way is used and the direct '
         'write is not', () async {
       final target = '${root.path}/invoice.pdf';
