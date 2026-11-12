@@ -16,11 +16,7 @@ void main() {
   });
 
   test('canvas screens and Me keep the wide frame, children included', () {
-    for (final path in [
-      '/me', '/me/privacy', '/editor', '/kiosk', '/discover',
-      // The dashboards: their grid counts its columns from the width it gets.
-      '/bi', '/bi/report/r1', '/workspace-overview',
-    ]) {
+    for (final path in ['/me', '/me/privacy', '/editor', '/kiosk', '/discover']) {
       expect(frameWidthFor(path), kAppFrameMaxWidth, reason: path);
     }
   });

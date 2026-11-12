@@ -5,8 +5,15 @@
 // overflows, the grid has as many columns as its own width holds for the
 // named minimum tile width, and every figure is the Demo's own figure,
 // the same at every width.
+import 'dart:io';
+import 'dart:ui' as ui;
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
+import 'package:deskilo/app/shell/desk_scaffold.dart';
+import 'package:deskilo/core/theme/app_spacing.dart';
+import 'package:deskilo/core/ui/adaptive/page_measure.dart';
+import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/core/ui/kit/dashboard_grid.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
@@ -17,12 +24,14 @@ import 'package:deskilo/features/workspace/providers/bi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_journey.dart';
+import '../../ux/experience_guards.dart';
 
-const _widths = [390.0, 1024.0, 1440.0, 1920.0];
+const _widths = [390.0, 800.0, 1024.0, 1440.0, 1920.0];
 
 /// Tall enough that every tile of both pages is built: the figures are read
 /// whole, the fit is a question of the width.
@@ -43,6 +52,7 @@ Future<(DemoJourney, ProviderContainer)> _start(
       featureFlags: {...spaces[i].featureFlags, 'workspaceOverview': true},
     );
   }
+  await loadSheetFonts();
   await tester.pumpWidget(
     UncontrolledProviderScope(
       container: journey.root,
@@ -114,6 +124,54 @@ int _columnsExpected(WidgetTester tester, Finder grid, double minTileWidth) {
   return tiles < columns ? tiles : columns;
 }
 
+/// The desk's divider beside its navigation (`VerticalDivider(width: 1)`).
+const _deskDivider = 1.0;
+
+/// With SHEET=1 the whole window is written to
+/// `build/sheets/dashboard/<name>.png` once the page's checks passed (the
+/// shared helper draws the first repaint boundary, a part of the desk's
+/// navigation here). The real time that takes lets failed reads schedule
+/// their retries, which are run out before the test ends.
+Future<void> _sheet(WidgetTester tester, String name) async {
+  if (Platform.environment['SHEET'] == '1') {
+    final layer = tester.binding.renderViews.first.debugLayer! as OffsetLayer;
+    final size = tester.view.physicalSize / tester.view.devicePixelRatio;
+    final image = await tester.runAsync(
+      () => layer.toImage(Offset.zero & size),
+    );
+    final bytes = await tester.runAsync(
+      () => image!.toByteData(format: ui.ImageByteFormat.png),
+    );
+    final dir = Directory('build/sheets/dashboard')
+      ..createSync(recursive: true);
+    File('${dir.path}/$name.png').writeAsBytesSync(bytes!.buffer.asUint8List());
+  }
+  for (var i = 0; i < 6; i++) {
+    await tester.pump(const Duration(seconds: 10));
+  }
+}
+
+/// The width of a dashboard's grid in a [window] wide window, from the named
+/// measures: the desk's navigation beside it from the expanded class (a rail,
+/// a sidebar from the large one), the work area's gutters and its maximum,
+/// then the page's own [padding] on each side. Below the expanded class the
+/// page has the whole window, as it had in the frame.
+double _gridWidth(double window, double padding) {
+  final kind = WindowClass.ofWidth(window);
+  final navigation = kind.atLeast(WindowClass.large)
+      ? DeskScaffold.sidebarWidth
+      : kind.atLeast(WindowClass.expanded)
+      ? DeskScaffold.railWidth
+      : 0.0;
+  // The desk draws a hairline between its navigation and the page.
+  final room = navigation == 0 ? window : window - navigation - _deskDivider;
+  final page = (room - 2 * WorkArea.gutterFor(room)).clamp(
+    0.0,
+    kWorkAreaMaxWidth,
+  );
+  return page - 2 * padding;
+}
+
 final _overviewFigures = <double, Map<String, String>>{};
 final _analysisFiguresByWidth = <double, Map<String, String>>{};
 
@@ -135,6 +193,11 @@ void main() {
       expect(grids, findsWidgets, reason: 'the Demo owner reads figures');
       for (final e in grids.evaluate()) {
         final grid = find.byWidget(e.widget);
+        expect(
+          tester.getSize(grid).width,
+          _gridWidth(width, AppSpacing.screenGutter),
+          reason: '${_keyOf(e.widget)} at $width',
+        );
         expect(
           _columnsShown(tester, grid),
           _columnsExpected(tester, grid, kpiTileMinWidth),
@@ -183,6 +246,7 @@ void main() {
         _overviewFigures[_widths.first],
         reason: 'the same figures at every width',
       );
+      await _sheet(tester, 'overview-${width.toInt()}');
     });
 
     testWidgets('the analysis page at ${width.toInt()}: no overflow, its '
@@ -208,6 +272,11 @@ void main() {
       for (final e in grids.evaluate()) {
         final grid = find.byWidget(e.widget);
         expect(
+          tester.getSize(grid).width,
+          _gridWidth(width, AppSpacing.md),
+          reason: '${_keyOf(e.widget)} at $width',
+        );
+        expect(
           _columnsShown(tester, grid),
           _columnsExpected(tester, grid, biAnalysisMinWidth),
           reason: '${_keyOf(e.widget)} at $width',
@@ -225,6 +294,23 @@ void main() {
         }
       }
       _analysisFiguresByWidth[width] = shown;
+      await _sheet(tester, 'bi-${width.toInt()}');
+      // Scrolled: the analyses move under the filter bar, which stays.
+      await tester.drag(
+        find.byKey(const ValueKey('bi-page')),
+        const Offset(0, -_height / 2),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        tester.getRect(find.byKey(const ValueKey('bi-filter-bar'))).top,
+        greaterThanOrEqualTo(0),
+      );
+      expect(
+        find.byKey(const ValueKey('bi-filter-bar')).hitTestable(),
+        findsOneWidget,
+        reason: 'the filter bar stays in view while the grid scrolls',
+      );
+      await _sheet(tester, 'bi-${width.toInt()}-scrolled');
     });
   }
 }
