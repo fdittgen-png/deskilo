@@ -22,8 +22,8 @@ import 'receivables.dart';
 /// from the junction (`invoice_match_payments`, #3671): a payment's used
 /// amount is the sum of its parts, pending rows included. The per-invoice
 /// aggregate's latest payment is NOT counted: it names no part. The credits
-/// moved to another member ([moved]) exclude a whole payment.
-@visibleForTesting
+/// moved to another member ([moved]) exclude a whole payment. The Demo's
+/// customer statement reads its use this way too (#3673).
 PaymentUse paymentUseOf({
   required Iterable<(String paymentId, int cents)> junction,
   required Set<String> moved,
