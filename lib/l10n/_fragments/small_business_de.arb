@@ -47,8 +47,5 @@
       }
     }
   },
-  "smallBusinessCheckFigure": "Diese Grenze ist die zuletzt geprüfte: Bitte den geltenden Betrag beim Finanzamt bestätigen lassen.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  }
+  "smallBusinessMessageUnconfirmed": "{message} Diese Grenze ist die zuletzt geprüfte: Bitte den geltenden Betrag beim Finanzamt bestätigen lassen."
 }

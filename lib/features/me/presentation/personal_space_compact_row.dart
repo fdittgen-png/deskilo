@@ -61,7 +61,7 @@ class PersonalSpaceCompactRow extends ConsumerWidget {
         ),
         title: name,
         subtitle: stand0,
-        semanticLabel: '$name. $stand0',
+        semanticLabel: l10n.titleAndBody(name, stand0),
         onTap: onTap,
         trailing: book
             ? FilledButton.tonal(

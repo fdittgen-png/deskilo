@@ -307,8 +307,11 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   // filed under, and must never sit in a folder looking like the invoice.
   final stem = proforma
       ? safeFileSlug(
-          '${l10n.invoicePdfProforma} '
-          '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
+          l10n.invoicePdfProformaNamed(
+            invoice.number.isEmpty
+                ? '${invoice.clientName} $periodLabel'
+                : invoice.number,
+          ),
         )
       : safeFileSlug(invoice.number);
   final layoutXml = invoiceLayoutXmlOf(invoice, options, template, features, l10n);

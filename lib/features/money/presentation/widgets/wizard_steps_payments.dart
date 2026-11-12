@@ -361,7 +361,9 @@ class WizardSummaryStep extends ConsumerWidget {
             dense: true,
             leading: const Icon(Icons.flag_outlined),
             title: Text([invoice.number, invoice.memberName].join(' · ')),
-            subtitle: Text(who.isEmpty ? text : '$who — $text'),
+            subtitle: Text(
+              who.isEmpty ? text : context.l10n.titleDashDetail(who, text),
+            ),
           ),
         const SizedBox(height: AppSpacing.lg),
         FilledButton.icon(

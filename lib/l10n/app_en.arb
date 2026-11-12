@@ -485,9 +485,29 @@
   "@acctDeliverNothing": {
     "description": "#2370 Snack: the period holds no document to deliver."
   },
-  "acctDeliverNothingSent": "Nothing was delivered.",
-  "@acctDeliverNothingSent": {
-    "description": "#2370 Snack: a refusal before any document of the run was delivered."
+  "acctDeliverReasonNothingSent": "{reason} Nothing was delivered.",
+  "@acctDeliverReasonNothingSent": {
+    "description": "#3767 Why a delivery run was refused, followed by the statement that nothing was delivered.",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDeliverReasonStoppedAt": "{reason} Stopped at {month}. Delivered before it: {count}.",
+  "@acctDeliverReasonStoppedAt": {
+    "description": "#3767 Snack: why a delivery run stopped, followed by the month it stopped at and what the months before it delivered. The number is not a count: it is a figure after a label and a colon, read as a value; the sentence has no noun to agree with. [not a count: count]",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "acctDeliverRefused": "The accounting system refused this company: {detail}.",
   "@acctDeliverRefused": {
@@ -495,18 +515,6 @@
     "placeholders": {
       "detail": {
         "type": "String"
-      }
-    }
-  },
-  "acctDeliverStoppedAt": "Stopped at {month}. Delivered before it: {count}.",
-  "@acctDeliverStoppedAt": {
-    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
-    "placeholders": {
-      "month": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
       }
     }
   },
@@ -3370,6 +3378,24 @@
       }
     }
   },
+  "biChangeVsPrevious": "{change} vs previous period",
+  "@biChangeVsPrevious": {
+    "description": "#3767 A chip on a dashboard figure: the change against the previous period, e.g. \"+12 % vs previous period\". The change arrives already formatted.",
+    "placeholders": {
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biChangeVsYearAgo": "{change} vs last year",
+  "@biChangeVsYearAgo": {
+    "description": "#3767 A chip on a dashboard figure: the change against the same period last year, e.g. \"+12 % vs last year\". The change arrives already formatted.",
+    "placeholders": {
+      "change": {
+        "type": "String"
+      }
+    }
+  },
   "biCollectionCentre": "of what was invoiced",
   "@biCollectionCentre": {
     "description": "Business analytics dashboard: biCollectionCentre"
@@ -5987,14 +6013,6 @@
   "biViewsTeam": "Team views",
   "@biViewsTeam": {
     "description": "#1923 C Web-BI saved views"
-  },
-  "biVsPrevious": "vs previous period",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "vs last year",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
   },
   "billAccessorySupplements": "Accessory supplements",
   "@billAccessorySupplements": {
@@ -10300,6 +10318,18 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
+  "dotPair": "{first} · {second}",
+  "@dotPair": {
+    "description": "#3767 Two independent facts on one line, e.g. \"Sent 3 May · test\". One message so the language places the separator.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
   "dunningAutomatic": "Automatic reminders",
   "@dunningAutomatic": {
     "description": "Shown as a title in dunning rules dialog (money)."
@@ -11386,6 +11416,18 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "environmentsPair": "{dev} + {prod}",
+  "@environmentsPair": {
+    "description": "#3767 The two sides of a twin pair named side by side, e.g. \"Development — for trying things out + Production — the invoices are owed\".",
+    "placeholders": {
+      "dev": {
+        "type": "String"
+      },
+      "prod": {
+        "type": "String"
+      }
+    }
+  },
   "equipmentCost": "Cost {amount}",
   "@equipmentCost": {
     "description": "#2576 equipment register",
@@ -11716,15 +11758,6 @@
       }
     }
   },
-  "eventForSubject": "for {name}",
-  "@eventForSubject": {
-    "description": "Suffix when an admin acted on someone else's behalf",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "eventInvoiceIssuedLine": "New invoice {number}",
   "@eventInvoiceIssuedLine": {
     "description": "#3672 a new invoice told to its customer",
@@ -11830,6 +11863,30 @@
       },
       "date": {
         "type": "String"
+      }
+    }
+  },
+  "eventLineForSubject": "{line} for {name}",
+  "@eventLineForSubject": {
+    "description": "#3767 An event line followed by whose bill or account it lands on, e.g. \"Service charge booked for Ana\". {line} is the whole event sentence.",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "eventLineRepeated": "{line} ×{count}",
+  "@eventLineRepeated": {
+    "description": "#3767 An event line with how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
       }
     }
   },
@@ -11953,15 +12010,6 @@
       },
       "when": {
         "type": "String"
-      }
-    }
-  },
-  "eventRepeatedMarker": "×{count}",
-  "@eventRepeatedMarker": {
-    "description": "#3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
-    "placeholders": {
-      "count": {
-        "type": "int"
       }
     }
   },
@@ -15799,11 +15847,38 @@
   "@gobdProcedureImmutableHeading": {
     "description": "Procedure documentation (#2375): heading"
   },
-  "gobdProcedureRetentionUntil": "a document dated at the end of this period may be erased from {date}",
-  "@gobdProcedureRetentionUntil": {
-    "description": "Procedure documentation (#2375): the first day a document of the period may be erased",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; a document dated at the end of this period may be erased from {date}. {source}",
+  "@gobdProcedureRetentionLine": {
+    "description": "#3767 One line of the procedure document: a class of document, its retention rule, the date from which a document dated at the end of the period may be erased, and the legal source. The date arrives already formatted.",
     "placeholders": {
+      "docClass": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      },
       "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; a document dated at the end of this period may be erased from {date} (not yet confirmed). {source}",
+  "@gobdProcedureRetentionLineUnconfirmed": {
+    "description": "#3767 The same line when the retention rule is not confirmed yet. The date arrives already formatted.",
+    "placeholders": {
+      "docClass": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "source": {
         "type": "String"
       }
     }
@@ -20055,6 +20130,15 @@
   "@invoicePdfProforma": {
     "description": "The word a proforma document carries in its header and as its watermark"
   },
+  "invoicePdfProformaNamed": "Proforma {name}",
+  "@invoicePdfProformaNamed": {
+    "description": "#3767 The file name stem of a proforma: the word Proforma and what it covers (the invoice number, or the client and period).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "invoicePdfPurchaseOrder": "Order reference",
   "@invoicePdfPurchaseOrder": {
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
@@ -23053,6 +23137,15 @@
   "@levelPriceLabel": {
     "description": "Shown as a text in space scan (reservations), and 3 other places."
   },
+  "levelPriceLine": "{price} / Price per half-day",
+  "@levelPriceLine": {
+    "description": "#3767 The price of a whole level as one line, e.g. \"12.00 EUR / Price per half-day\". The price arrives already formatted.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "levelReorderStale": "The levels changed meanwhile. Nothing was saved; the current order is shown.",
   "@levelReorderStale": {
     "description": "#2010 Level reorder: levelReorderStale"
@@ -24645,6 +24738,15 @@
   "mcpRefusalClientNotApproved": "This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.",
   "@mcpRefusalClientNotApproved": {
     "description": "#2145 Connect an assistant: mcpRefusalClientNotApproved"
+  },
+  "mcpRefusalClientNotApprovedNamed": "This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant. Waiting for the server's operator: {names}.",
+  "@mcpRefusalClientNotApprovedNamed": {
+    "description": "#3767 The refusal \"this assistant is not approved yet\" followed by the people who can approve it. {names} is a list of people, already joined.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
   },
   "mcpRefusalNoIdentity": "Confirm your identity in DesKilo under Assistants first, then connect again from the assistant.",
   "@mcpRefusalNoIdentity": {
@@ -28842,6 +28944,18 @@
   "planFromLabel": "From",
   "@planFromLabel": {
     "description": "Tooltip of the browse-window start time chip in the plan header (#184)"
+  },
+  "planFromTermTime": "{term} {time}",
+  "@planFromTermTime": {
+    "description": "The start time of a booking period on its button, e.g. \"From 09:00\". {term} is the workspace's own word for the start (already translated or renamed in the vocabulary editor), {time} the formatted time. [workspace term: term]",
+    "placeholders": {
+      "term": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
   },
   "planFullDayChip": "Day",
   "@planFullDayChip": {
@@ -35510,18 +35624,6 @@
       }
     }
   },
-  "sentencePair": "{first} {second}",
-  "@sentencePair": {
-    "description": "#3652 Two sentences read as one text, separated by a space.",
-    "placeholders": {
-      "first": {
-        "type": "String"
-      },
-      "second": {
-        "type": "String"
-      }
-    }
-  },
   "seriesBookedCount": "{count, plural, one{1 booking created} other{{count} bookings created}}",
   "@seriesBookedCount": {
     "description": "Title of the series result dialog",
@@ -39268,9 +39370,14 @@
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
   },
-  "smallBusinessCheckFigure": "This limit is the last one verified: check the current figure with your tax office.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  "smallBusinessMessageUnconfirmed": "{message} This limit is the last one verified: check the current figure with your tax office.",
+  "@smallBusinessMessageUnconfirmed": {
+    "description": "#3767 The small-business threshold notice, followed by the advice to check the figure when the limit is not the confirmed one.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
   },
   "smallBusinessNearImmediate": "Your net turnover this year ({turnover}) is close to the limit of {limit}. Passing it ends the exemption on the very supply that passes it.",
   "@smallBusinessNearImmediate": {
@@ -44221,6 +44328,15 @@
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
   },
+  "vatDeclDisclaimerWithBasis": "{basis} Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.",
+  "@vatDeclDisclaimerWithBasis": {
+    "description": "#3767 The disclaimer printed on a VAT declaration, after the sentence that names the basis of its figures.",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      }
+    }
+  },
   "vatDeclEdiTva": "EDI-TVA file (CA3)",
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
@@ -44349,6 +44465,15 @@
   "@vatDeclNet": {
     "description": "Net taxable base column"
   },
+  "vatDeclNetAmount": "Net base {amount}",
+  "@vatDeclNetAmount": {
+    "description": "#3767 The net base of a VAT declaration line, e.g. \"Net base 100.00 EUR\". The amount arrives with its currency.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "vatDeclPayable": "VAT payable",
   "@vatDeclPayable": {
     "description": "#2357 input VAT: vatDeclPayable"
@@ -44426,9 +44551,33 @@
   "@vatDeclTotals": {
     "description": "Totals row"
   },
+  "vatDeclTotalsLine": "Totals: {net} · VAT {vat} · {count, plural, one{1 invoice} other{{count} invoices}}",
+  "@vatDeclTotalsLine": {
+    "description": "#3767 The totals line of a VAT declaration: net, VAT and how many invoices it covers (a count, with plural forms). The amounts arrive with their currency.",
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "vat": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "vatDeclVat": "VAT",
   "@vatDeclVat": {
     "description": "Tax amount column"
+  },
+  "vatDeclVatAmount": "VAT {amount}",
+  "@vatDeclVatAmount": {
+    "description": "#3767 The VAT of a VAT declaration line, e.g. \"VAT 19.00 EUR\". The amount arrives with its currency.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "vatDeclVatId": "VAT ID",
   "@vatDeclVatId": {
@@ -44664,6 +44813,15 @@
   "vatSeed": "Use the usual rates",
   "@vatSeed": {
     "description": "Button seeding the country's usual rates"
+  },
+  "vatSeedWithRates": "Use the usual rates ({rates})",
+  "@vatSeedWithRates": {
+    "description": "#3767 The button that fills the VAT rates with the country's usual ones, naming them, e.g. \"Use the usual rates (19 %, 7 %)\".",
+    "placeholders": {
+      "rates": {
+        "type": "String"
+      }
+    }
   },
   "vatServiceRate": "VAT rate",
   "@vatServiceRate": {

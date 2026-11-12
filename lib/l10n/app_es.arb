@@ -214,9 +214,9 @@
   "acctDeliverMissing": "Asigne primero estas correspondencias: {keys}",
   "acctDeliverNotConnected": "Esta conexión está desconectada: vuelva a conectarla y luego envíe.",
   "acctDeliverNothing": "No hay nada que enviar en este periodo.",
-  "acctDeliverNothingSent": "No se ha enviado nada.",
+  "acctDeliverReasonNothingSent": "{reason} No se ha enviado nada.",
+  "acctDeliverReasonStoppedAt": "{reason} Detenido en {month}. Enviados antes: {count}.",
   "acctDeliverRefused": "El sistema contable ha rechazado esta empresa: {detail}.",
-  "acctDeliverStoppedAt": "Detenido en {month}. Enviados antes: {count}.",
   "acctDeliverYear": "Enviar {year} a {target}",
   "acctDeliveryAcknowledged": "Recibido por el sistema",
   "acctDeliveryAttempts": "{count, plural, one{un intento} other{{count} intentos}}",
@@ -1203,6 +1203,8 @@
     "description": "#2582 purchase analytics"
   },
   "biChangePoints": "{value} p. p.",
+  "biChangeVsPrevious": "{change} vs periodo anterior",
+  "biChangeVsYearAgo": "{change} vs año pasado",
   "biCollectionCentre": "de lo facturado",
   "@biCollectionCentre": {
     "description": "Business analytics dashboard: biCollectionCentre"
@@ -2747,14 +2749,6 @@
   "biViews": "Vistas",
   "biViewsMine": "Mis vistas",
   "biViewsTeam": "Vistas del equipo",
-  "biVsPrevious": "vs periodo anterior",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "vs año pasado",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
-  },
   "billAccessorySupplements": "Suplementos de accesorios",
   "billCreditNoteCard": "Nota de crédito {number}",
   "@billCreditNoteCard": {
@@ -5028,6 +5022,7 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
+  "dotPair": "{first} · {second}",
   "dunningAutomatic": "Recordatorios automáticos",
   "dunningAutomaticHint": "Una vez al día, las facturas que superan su plazo de pago registrado pasan solas al siguiente nivel de recordatorio — por el importe aún pendiente, nunca mientras un pago está pendiente o la factura está en suspenso. Las facturas sin plazo registrado quedan en sus manos. Desactivado: usted envía cada recordatorio.",
   "dunningBetweenDays": "Días entre recordatorios",
@@ -5716,6 +5711,7 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "environmentsPair": "{dev} + {prod}",
   "equipmentCost": "Coste {amount}",
   "@equipmentCost": {
     "description": "#2576 equipment register",
@@ -5980,7 +5976,6 @@
   },
   "eventExpenseScheduleLine": "{actor} programa «{title}» — {amount} recurrente",
   "eventExpenseSubmitted": "{actor} envió un gasto de {amount}",
-  "eventForSubject": "para {name}",
   "eventInvoiceIssuedLine": "Nueva factura {number}",
   "eventInvoicePaid": "Factura {number} pagada — {amount}",
   "@eventInvoicePaid": {
@@ -6044,6 +6039,8 @@
       }
     }
   },
+  "eventLineForSubject": "{line} para {name}",
+  "eventLineRepeated": "{line} ×{count}",
   "eventOpenSource": "Abrir el documento de compra",
   "eventOutcomeApplied": "Hecho",
   "eventOutcomeConfirmed": "Confirmado",
@@ -6079,7 +6076,6 @@
   "eventQuotaRequested": "{actor} solicita {halfDays, plural, one{1 media jornada extra} other{{halfDays} medias jornadas extra}} para {period}",
   "eventReject": "Rechazar",
   "eventRejectedBy": "Rechazado por {name} · {when}",
-  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} canceló la reserva de {target}",
   "eventReservationCreated": "{actor} reservó {target}",
   "eventReservationDeleteCheckedIn": "registrada",
@@ -7806,7 +7802,8 @@
   "gobdProcedureHandoverHeading": "Entrega de datos (Z3)",
   "gobdProcedureImmutableBody": "Una factura o nota de crédito emitida no se puede modificar ni eliminar: la base de datos lo rechaza. Cada documento se firma en una cadena con el anterior. Una corrección es un documento nuevo (nota de crédito o factura de sustitución) que nombra el que corrige. Un periodo cerrado rechaza anulaciones y pagos fechados en él.",
   "gobdProcedureImmutableHeading": "Inalterabilidad",
-  "gobdProcedureRetentionUntil": "un documento fechado al final de este periodo puede borrarse a partir del {date}",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; un documento fechado al final de este periodo puede borrarse a partir del {date}. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; un documento fechado al final de este periodo puede borrarse a partir del {date} (aún sin confirmar). {source}",
   "gobdProcedureSchemaApp": "Versión de esquema para la que se compiló esta aplicación: {version}",
   "gobdProcedureSchemaLive": "Versión del esquema de base de datos de esta instalación: {version}",
   "gobdProcedureSchemaUnknown": "Versión del esquema de base de datos de esta instalación: no se pudo leer al elaborar este documento",
@@ -9673,6 +9670,7 @@
   "invoicePdfPage": "Página",
   "invoicePdfPayments": "Pagos",
   "invoicePdfProforma": "Proforma",
+  "invoicePdfProformaNamed": "Proforma {name}",
   "invoicePdfPurchaseOrder": "Referencia de pedido",
   "@invoicePdfPurchaseOrder": {
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
@@ -11440,6 +11438,7 @@
   "levelPermissionAllowed": "Puede reservar una mesa, oficina o planta entera",
   "levelPermissionDenied": "No puede reservar una mesa, oficina o planta entera",
   "levelPriceLabel": "Precio por media jornada",
+  "levelPriceLine": "{price} / Precio por media jornada",
   "levelReorderStale": "Los niveles cambiaron mientras tanto. No se guardó nada; se muestra el orden actual.",
   "levelReserveButton": "Reservar la planta",
   "levelSupplementLabel": "Reservas de planta",
@@ -11914,6 +11913,7 @@
   "mcpPolicyTitle": "Acceso de asistentes",
   "mcpPolicyUnavailable": "No se pudieron cargar los ajustes de asistentes. Inténtelo más tarde.",
   "mcpRefusalClientNotApproved": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente.",
+  "mcpRefusalClientNotApprovedNamed": "Este asistente aún no está aprobado en este servidor. El operador aprueba cada asistente una vez; pídaselo y vuelva a conectar desde el asistente. Esperando al operador del servidor: {names}.",
   "mcpRefusalNoIdentity": "Confirme primero su identidad en DesKilo en Asistentes y vuelva a conectar desde el asistente.",
   "mcpRefusalNotEligible": "Su acceso a los asistentes aún no está aprobado. Solicítelo en DesKilo en Asistentes y vuelva a conectar desde el asistente.",
   "mcpRefusalOfferChanged": "Lo que ofrece este espacio de trabajo cambió mientras elegía. Vuelva a conectar desde el asistente para ver la oferta actual.",
@@ -13560,6 +13560,7 @@
   },
   "planEndBeforeStart": "El fin debe ser posterior al inicio.",
   "planFromLabel": "Desde",
+  "planFromTermTime": "{term} {time}",
   "planFullDayChip": "Día",
   "planFullDayError": "Aquí las reservas cubren el día completo.",
   "planHalfDayError": "Aquí las reservas son por media jornada.",
@@ -17360,7 +17361,6 @@
       }
     }
   },
-  "sentencePair": "{first} {second}",
   "seriesBookedCount": "{count, plural, one{1 reserva creada} other{{count} reservas creadas}}",
   "seriesPreviewBookOthers": "{count, plural, one{Reservar la otra fecha} other{Reservar las otras {count} fechas}}",
   "seriesPreviewFailing": "Estas fechas no se pueden reservar:",
@@ -18788,10 +18788,7 @@
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
   },
-  "smallBusinessCheckFigure": "Este límite es el último verificado: confirme la cifra vigente con su administración tributaria.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  },
+  "smallBusinessMessageUnconfirmed": "{message} Este límite es el último verificado: confirme la cifra vigente con su administración tributaria.",
   "smallBusinessNearImmediate": "Su facturación neta de este año ({turnover}) se acerca al límite de {limit}. Superarlo pone fin a la exención en la propia operación que lo supera.",
   "@smallBusinessNearImmediate": {
     "description": "#2440 small-business threshold: smallBusinessNearImmediate",
@@ -21196,6 +21193,7 @@
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
   },
+  "vatDeclDisclaimerWithBasis": "{basis} Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.",
   "vatDeclEdiTva": "Archivo EDI-TVA (CA3)",
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
@@ -21324,6 +21322,7 @@
   "@vatDeclNet": {
     "description": "Net taxable base column"
   },
+  "vatDeclNetAmount": "Base imponible {amount}",
   "vatDeclPayable": "IVA a ingresar",
   "@vatDeclPayable": {
     "description": "#2357 input VAT: vatDeclPayable"
@@ -21401,10 +21400,12 @@
   "@vatDeclTotals": {
     "description": "Totals row"
   },
+  "vatDeclTotalsLine": "Totales: {net} · IVA {vat} · {count, plural, one{1 factura} other{{count} facturas}}",
   "vatDeclVat": "IVA",
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
+  "vatDeclVatAmount": "IVA {amount}",
   "vatDeclVatId": "NIF-IVA",
   "@vatDeclVatId": {
     "description": "VAT identifier label"
@@ -21587,6 +21588,7 @@
   },
   "vatSaved": "Tipos de IVA guardados.",
   "vatSeed": "Usar los tipos habituales",
+  "vatSeedWithRates": "Usar los tipos habituales ({rates})",
   "vatServiceRate": "Tipo de IVA",
   "vatServiceRateDefault": "Tipo por defecto del espacio",
   "vatShareAmount": "IVA incl. {amount}",

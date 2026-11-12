@@ -337,8 +337,11 @@ class _VatScreenState extends ConsumerState<VatScreen> {
             }
           },
           child: Text(
-            '${l10n.vatSeed} '
-            '(${catalogue.map((r) => appFormatOf(context).ratePercent(r.percent)).join(', ')})',
+            l10n.vatSeedWithRates(
+              catalogue
+                  .map((r) => appFormatOf(context).ratePercent(r.percent))
+                  .join(', '),
+            ),
           ),
         ),
       // Country caveats (US sales tax, Canadian provinces, the Swiss

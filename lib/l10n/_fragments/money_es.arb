@@ -367,5 +367,9 @@
   "cashHubInOut": "Entradas y salidas por mes",
   "cashHubToPay": "Por pagar",
   "hubAccountingTitle": "Contabilidad e IVA",
-  "hubAccountingSubtitle": "Libros, exportaciones e importaciones, software contable, extractos bancarios, IVA e identidad legal en un solo lugar"
+  "hubAccountingSubtitle": "Libros, exportaciones e importaciones, software contable, extractos bancarios, IVA e identidad legal en un solo lugar",
+  "vatDeclDisclaimerWithBasis": "{basis} Generada a partir de las facturas emitidas del periodo. Verifíquela con su contabilidad antes de presentarla — es una ayuda, no asesoría fiscal.",
+  "vatDeclNetAmount": "Base imponible {amount}",
+  "vatDeclVatAmount": "IVA {amount}",
+  "vatDeclTotalsLine": "Totales: {net} · IVA {vat} · {count, plural, one{1 factura} other{{count} facturas}}"
 }

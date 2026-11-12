@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -10,6 +11,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -102,9 +104,7 @@ Future<void> showConsumptionSheet(
                     // #731 — an empty shelf cannot be consumed.
                     enabled: servesQuantity(item, 1),
                     child: Text(
-                      '${item.name} — '
-                      '${currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents)}'
-                      '${item.stock == null ? '' : item.stock == 0 ? ' · ${l10n.serviceOutOfStock}' : ' · ${l10n.serviceStockCount(item.stock!)}'}',
+                      _serviceLabel(l10n, item, currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents)),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -213,3 +213,17 @@ Future<void> showConsumptionSheet(
   );
   ref.invalidate(eventsProvider);
 }
+
+/// A service in the picker: its name, then its price and what is left of it
+/// (#3767: the separators are messages, not literals).
+String _serviceLabel(AppLocalizations l10n, ServiceItem item, String price) =>
+    l10n.titleDashDetail(
+      item.name,
+      factLine(l10n, [
+        price,
+        if (item.stock == 0)
+          l10n.serviceOutOfStock
+        else if (item.stock != null)
+          l10n.serviceStockCount(item.stock!),
+      ]),
+    );

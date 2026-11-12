@@ -61,21 +61,18 @@ String _reasonOf(AppLocalizations l10n, DeliveryRun reason) => switch (reason) {
     fine: done.needingAttention == 0,
   ),
   DeliveryRunStopped(:final reason, :final month, :final before) => (
-    text: [
-      _reasonOf(l10n, reason),
-      if (before.count(DeliveryRunStatus.acknowledged) == 0)
-        l10n.acctDeliverNothingSent
-      else
-        l10n.acctDeliverStoppedAt(
-          monthYear(month),
-          before.count(DeliveryRunStatus.acknowledged),
-        ),
-    ].join(' '),
+    text: before.count(DeliveryRunStatus.acknowledged) == 0
+        ? l10n.acctDeliverReasonNothingSent(_reasonOf(l10n, reason))
+        : l10n.acctDeliverReasonStoppedAt(
+            _reasonOf(l10n, reason),
+            monthYear(month),
+            before.count(DeliveryRunStatus.acknowledged),
+          ),
     fine: false,
   ),
   null => null,
   final DeliveryRun reason => (
-    text: l10n.sentencePair(_reasonOf(l10n, reason), l10n.acctDeliverNothingSent),
+    text: l10n.acctDeliverReasonNothingSent(_reasonOf(l10n, reason)),
     fine: false,
   ),
 };

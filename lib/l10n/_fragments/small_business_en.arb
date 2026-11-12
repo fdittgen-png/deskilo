@@ -47,8 +47,13 @@
       }
     }
   },
-  "smallBusinessCheckFigure": "This limit is the last one verified: check the current figure with your tax office.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
+  "smallBusinessMessageUnconfirmed": "{message} This limit is the last one verified: check the current figure with your tax office.",
+  "@smallBusinessMessageUnconfirmed": {
+    "description": "#3767 The small-business threshold notice, followed by the advice to check the figure when the limit is not the confirmed one.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
   }
 }

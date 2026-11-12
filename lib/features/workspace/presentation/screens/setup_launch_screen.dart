@@ -301,8 +301,12 @@ class _MilestoneTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: Icon(m.reached ? Icons.check_circle : Icons.pending_outlined),
       title: Text(
-        '${l10n.setupMilestoneName(m.milestone)} — '
-        '${m.reached ? l10n.setupLaunchReached : l10n.setupGuideProgress(m.ready, m.required)}',
+        l10n.titleDashDetail(
+          l10n.setupMilestoneName(m.milestone),
+          m.reached
+              ? l10n.setupLaunchReached
+              : l10n.setupGuideProgress(m.ready, m.required),
+        ),
       ),
       subtitle: Text(
         milestone.evidence

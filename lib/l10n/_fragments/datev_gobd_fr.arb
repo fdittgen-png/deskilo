@@ -19,7 +19,6 @@
   "gobdProcedureSchemaApp": "Version de schéma pour laquelle cette application est construite : {version}",
   "gobdProcedureImmutableHeading": "Inaltérabilité",
   "gobdProcedureImmutableBody": "Une facture ou un avoir émis ne peut être ni modifié ni supprimé : la base de données le refuse. Chaque document est signé dans une chaîne avec le précédent. Une correction est un nouveau document (avoir ou facture de remplacement) qui cite celui qu'il corrige. Une période clôturée refuse les annulations et les paiements datés en son sein.",
-  "gobdProcedureRetentionUntil": "un document daté de la fin de cette période peut être effacé à partir du {date}",
   "gobdProcedureHandoverHeading": "Remise des données (Z3)",
   "gobdProcedureHandoverBody": "Ce paquet suit le Beschreibungsstandard : index.xml décrit chaque table, ses colonnes, clés et jointures, et nomme la DTD gdpdu-01-08-2002.dtd fournie à côté. Chaque table est un fichier CSV UTF-8 sans ligne d'en-tête. Le dossier belege contient la facture électronique structurée de chaque facture et, lorsqu'il a été produit, son PDF/A-3 avec ce XML intégré.",
   "gobdProcedureExportsHeading": "Exports",
@@ -31,5 +30,7 @@
   "datevProblemSachkontenlaenge": "la longueur de compte {length} n'est pas comprise entre 4 et 8",
   "datevProblemCurrency": "les montants sont en {currency} ; le fichier DATEV est écrit en euros",
   "datevProblemReferenceTooLong": "{field} « {value} » dépasse la longueur que DATEV accepte et serait tronqué",
-  "datevProblemFiscalYearStarts": "les profils comptables des sites commencent l'exercice à des dates différentes"
+  "datevProblemFiscalYearStarts": "les profils comptables des sites commencent l'exercice à des dates différentes",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; un document daté de la fin de cette période peut être effacé à partir du {date}. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; un document daté de la fin de cette période peut être effacé à partir du {date} (pas encore confirmée). {source}"
 }
