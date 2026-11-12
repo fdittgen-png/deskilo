@@ -5,9 +5,11 @@
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/core/ui/kit/customer_row.dart';
+import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -44,6 +46,8 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
 const _pages = [
   ('/invoices', PageKind.records, 'money', 'invoices'),
   ('/me', PageKind.dashboard, 'me', 'overview'),
+  // #3606 — the first records table.
+  ('/invoice-register', PageKind.records, 'money', 'invoice-register'),
 ];
 
 void main() {
@@ -63,8 +67,17 @@ void main() {
             tester,
             kind: kind,
             size: size,
-            rowTypes: const [KitTableLine, CustomerRow],
-            tableTypes: const [KitTableHeader, CustomerHeader],
+            rowTypes: const [
+              KitTableLine,
+              CustomerRow,
+              RecordRow<Invoice>,
+              RecordsHeader<Invoice>,
+            ],
+            tableTypes: const [
+              KitTableHeader,
+              CustomerHeader,
+              RecordsHeader<Invoice>,
+            ],
           ),
           isEmpty,
           reason: details.join('\n'),

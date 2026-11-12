@@ -24394,6 +24394,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get recordsSelectRow => 'Seleziona questa riga';
+
+  @override
   String recordsSelectShown(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

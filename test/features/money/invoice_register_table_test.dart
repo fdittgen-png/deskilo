@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../ux/experience_guards.dart';
 
 Finder _k(String key) => find.byKey(ValueKey(key));
 
@@ -162,5 +163,30 @@ void main() {
     expect(body, contains(',166.00,"CHF",'));
     expect(body, isNot(contains(',=HYPERLINK')));
     expect(body, isNot(contains('"=HYPERLINK')));
+  });
+
+  testWidgets('at 390 the register is cards and keeps the phone guards', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    final money = await _money();
+    SharedPreferences.setMockInitialValues({});
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(money: money),
+        child: const DeskiloApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)))
+        .read(routerProvider)
+        .go('/invoice-register');
+    await tester.pumpAndSettle();
+    expect(_k('records-card-${money.invoices.first.id}'), findsOneWidget);
+    expect(guardProblems(tester, width: 390), isEmpty);
+    semantics.dispose();
   });
 }

@@ -108,12 +108,9 @@ class RecordsHeader<T> extends StatelessWidget {
         leading: selectable
             ? Checkbox(
                 key: const ValueKey('records-select-shown'),
-                materialTapTargetSize: dense
-                    ? MaterialTapTargetSize.shrinkWrap
-                    : MaterialTapTargetSize.padded,
-                visualDensity: dense
-                    ? VisualDensity.compact
-                    : VisualDensity.standard,
+                visualDensity: rowDensity(
+                  dense ? recordRowHeight : kMinInteractiveDimension,
+                ),
                 tristate: true,
                 value: all ? true : (selectedShown == 0 ? false : null),
                 semanticLabel: l10n.recordsSelectShown(shown),
@@ -232,12 +229,8 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                     ],
                     leading: widget.selectable
                         ? Checkbox(
-                            materialTapTargetSize: dense
-                                ? MaterialTapTargetSize.shrinkWrap
-                                : MaterialTapTargetSize.padded,
-                            visualDensity: dense
-                                ? VisualDensity.compact
-                                : VisualDensity.standard,
+                            visualDensity: rowDensity(side),
+                            semanticLabel: l10n.recordsSelectRow,
                             value: widget.selected,
                             onChanged: (v) => widget.onTick(v ?? false),
                           )
@@ -274,6 +267,16 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
       ),
     );
   }
+}
+
+/// The height of a desk row with a mouse; touched, a row is 48.
+const double recordRowHeight = 36;
+
+/// The density that makes a padded control exactly [side] high (a 48 one
+/// loses 4 per density step).
+VisualDensity rowDensity(double side) {
+  final step = (side - kMinInteractiveDimension) / 4;
+  return VisualDensity(horizontal: step, vertical: step);
 }
 
 /// The width a row's actions take beside the cells: two controls as high

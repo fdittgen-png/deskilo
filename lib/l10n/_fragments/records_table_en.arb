@@ -84,5 +84,9 @@
   "recordsTryAgain": "Try again",
   "@recordsTryAgain": {
     "description": "#3606 records table"
+  },
+  "recordsSelectRow": "Select this row",
+  "@recordsSelectRow": {
+    "description": "#3606 records table"
   }
 }

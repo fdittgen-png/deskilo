@@ -24443,6 +24443,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get recordsSelectRow => 'Sélectionner cette ligne';
+
+  @override
   String recordsSelectShown(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

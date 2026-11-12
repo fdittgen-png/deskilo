@@ -39383,6 +39383,12 @@ abstract class AppLocalizations {
   /// #3606 records table
   ///
   /// In en, this message translates to:
+  /// **'Select this row'**
+  String get recordsSelectRow;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
   /// **'{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}'**
   String recordsSelectShown(int count);
 

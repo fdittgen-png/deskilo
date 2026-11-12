@@ -14931,6 +14931,7 @@
   "recordsLocationUndeclared": "Non déclaré par l'exploitant de cette installation : l'application n'indique aucun lieu",
   "recordsMoreActions": "Plus d’actions",
   "recordsPartlyRead": "{loaded, plural, =1{1 chargé — tout n’est pas encore lu} other{{loaded} chargés — tout n’est pas encore lu}}",
+  "recordsSelectRow": "Sélectionner cette ligne",
   "recordsSelectShown": "{count, plural, =1{Sélectionner le seul affiché} other{Sélectionner les {count} affichés}}",
   "recordsSelected": "{count, plural, =1{1 sélectionné} other{{count} sélectionnés}}",
   "recordsShown": "{count, plural, =1{1 affiché} other{{count} affichés}}",

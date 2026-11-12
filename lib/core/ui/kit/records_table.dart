@@ -324,7 +324,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       setState(() => _focused = (_focused + by).clamp(0, shown.length - 1));
     }
 
-    final rowHeight = _touch ? kMinInteractiveDimension : recordRowDeskHeight;
+    final rowHeight = _touch ? kMinInteractiveDimension : recordRowHeight;
     T? focusedRow() =>
         shown.isEmpty ? null : shown[_focused.clamp(0, shown.length - 1)];
     return Shortcuts(
@@ -406,13 +406,16 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     itemBuilder: (context, i) {
       final r = shown[i];
       final key = widget.keyOf(r);
-      return InkWell(
-        key: ValueKey('records-card-$key'),
-        onTap: () => widget.onOpen(r),
-        onLongPress: _selectable
-            ? () => _tick(key, !_selected.contains(key))
-            : null,
-        child: widget.cardBuilder(context, r),
+      // The card's words name its tap.
+      return MergeSemantics(
+        child: InkWell(
+          key: ValueKey('records-card-$key'),
+          onTap: () => widget.onOpen(r),
+          onLongPress: _selectable
+              ? () => _tick(key, !_selected.contains(key))
+              : null,
+          child: widget.cardBuilder(context, r),
+        ),
       );
     },
   );
@@ -443,6 +446,3 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
 
 /// The filter field's width beside the chips.
 const double recordsFilterWidth = 280;
-
-/// A desk row's height with a mouse; touched, a row is 48.
-const double recordRowDeskHeight = 36;

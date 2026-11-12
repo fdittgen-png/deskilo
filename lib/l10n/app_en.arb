@@ -31764,6 +31764,10 @@
       }
     }
   },
+  "recordsSelectRow": "Select this row",
+  "@recordsSelectRow": {
+    "description": "#3606 records table"
+  },
   "recordsSelectShown": "{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}",
   "@recordsSelectShown": {
     "description": "#3606 records table",

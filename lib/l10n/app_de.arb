@@ -14931,6 +14931,7 @@
   "recordsLocationUndeclared": "Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort",
   "recordsMoreActions": "Weitere Aktionen",
   "recordsPartlyRead": "{loaded, plural, =1{1 geladen — noch nicht alles gelesen} other{{loaded} geladen — noch nicht alles gelesen}}",
+  "recordsSelectRow": "Diese Zeile auswählen",
   "recordsSelectShown": "{count, plural, =1{Den 1 angezeigten auswählen} other{Die {count} angezeigten auswählen}}",
   "recordsSelected": "{count, plural, =1{1 ausgewählt} other{{count} ausgewählt}}",
   "recordsShown": "{count, plural, =1{1 angezeigt} other{{count} angezeigt}}",

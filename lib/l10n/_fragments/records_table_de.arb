@@ -12,5 +12,6 @@
   "recordsColumns": "Spalten",
   "recordsSortBy": "Nach {column} sortieren",
   "recordsFailed": "Die Liste konnte nicht gelesen werden.",
-  "recordsTryAgain": "Erneut versuchen"
+  "recordsTryAgain": "Erneut versuchen",
+  "recordsSelectRow": "Diese Zeile auswählen"
 }

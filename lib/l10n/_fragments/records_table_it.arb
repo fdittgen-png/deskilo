@@ -12,5 +12,6 @@
   "recordsColumns": "Colonne",
   "recordsSortBy": "Ordina per {column}",
   "recordsFailed": "Non è stato possibile leggere l’elenco.",
-  "recordsTryAgain": "Riprova"
+  "recordsTryAgain": "Riprova",
+  "recordsSelectRow": "Seleziona questa riga"
 }
