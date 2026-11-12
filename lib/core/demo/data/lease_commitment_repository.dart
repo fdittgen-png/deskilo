@@ -7,9 +7,19 @@ import '../../../features/money/domain/lease_commitment.dart';
 class FakeLeaseCommitmentRepository implements LeaseCommitmentRepository {
   FakeLeaseCommitmentRepository([
     Map<String, List<CommitmentOccurrence>> byLease = const {},
+    this.termOf = const {},
+    this.rejected = const {},
   ]) : _byLease = {for (final e in byLease.entries) e.key: [...e.value]};
 
   final Map<String, List<CommitmentOccurrence>> _byLease;
+
+  /// #3785 — the term (the schedule) each occurrence was generated from, by
+  /// occurrence id, as `expense_occurrences.schedule_id` holds it.
+  final Map<String, String> termOf;
+
+  /// #3785 — the occurrences a person rejected (`status = 'rejected'`): the
+  /// page still lists them, nothing expects them any more.
+  final Set<String> rejected;
 
   /// #3785 — every lease's occurrences as they stand, for the space's cost
   /// figures.

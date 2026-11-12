@@ -16,9 +16,10 @@
 //   * the book depreciation is known only when confirmed, complete
 //     period-movement book batches in the space's currency tile the months
 //     exactly (#2576), never 0 otherwise;
-//   * the unbilled commitments are what the lease occurrences due in the
-//     months still expect; the months after the last occurrence held are
-//     projected from it, month by month, as the sweep would generate them;
+//   * the unbilled commitments are what the contract schedules (each lease
+//     term, each room rented at a fixed cost) still expect in the months:
+//     a generated occurrence less its matched bills, the ones not generated
+//     yet projected within the schedule's end (demo_contract_schedules.dart);
 //   * the forecast is what the space owes its suppliers at the end of the
 //     months plus those commitments.
 //
@@ -28,16 +29,18 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/asset_valuation.dart';
-import '../../../features/money/domain/lease_commitment.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/workspace_asset.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_purchases.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import 'asset_valuation_repository.dart';
+import 'demo_contract_schedules.dart';
 import 'kpi_repositories.dart';
 import 'lease_commitment_repository.dart';
+import 'premises_lease_repository.dart';
 import 'purchase_repository.dart';
+import 'room_rental_repository.dart';
 import 'workspace_asset_repository.dart';
 
 /// What one Demo space's cost figures are computed from.
@@ -47,6 +50,8 @@ typedef DemoCostSources = ({
   FakeWorkspaceAssetRepository assets,
   FakeAssetValuationRepository valuations,
   FakeLeaseCommitmentRepository commitments,
+  FakePremisesLeaseRepository leases,
+  FakeRoomRentalRepository rooms,
 });
 
 /// The figures of the purchase lines of the months.
@@ -57,9 +62,6 @@ typedef _Lines = ({
   int unqualified,
   bool mixed,
 });
-
-/// What the contracts still expect in the months, and the part already due.
-typedef _Unbilled = ({int total, int overdue});
 
 /// Every purchase document of the space with its lines, as the purchases
 /// page lists and opens them: the documents and the receipts of the claims.
@@ -314,41 +316,18 @@ class DemoCostKpiRepository implements CostKpiRepository {
     return first == start && last == cut && days == _days(start, cut) + 1;
   }
 
-  /// What the lease occurrences due in the months still expect: a generated
-  /// occurrence less the bills matched to it (never below 0), the months
-  /// after the last one projected from it.
-  _Unbilled _unbilled(String fromMonth, String toMonth) {
-    final start = _firstDay(fromMonth);
-    final cut = _lastDay(toMonth);
-    final today = _day(now);
-    var total = 0, overdue = 0;
-    void count(DateTime due, int left) {
-      if (due.isBefore(start) || due.isAfter(cut)) return;
-      total += left;
-      if (due.isBefore(today)) overdue += left;
-    }
-
-    for (final occurrences in sources.commitments.occurrencesByLease.values) {
-      if (occurrences.isEmpty) continue;
-      for (final o in occurrences) {
-        count(_day(o.dueOn), o.remainingCents < 0 ? 0 : o.remainingCents);
-      }
-      final last = occurrences.reduce(
-        (a, b) => a.dueOn.isAfter(b.dueOn) ? a : b,
-      );
-      for (var k = 1; ; k++) {
-        final due = _projected(last, k);
-        if (due.isAfter(cut)) break;
-        count(due, last.expectedCents);
-      }
-    }
-    return (total: total, overdue: overdue);
-  }
-
-  /// The [k]th monthly occurrence after [last], as the schedule would
-  /// generate it.
-  static DateTime _projected(CommitmentOccurrence last, int k) =>
-      DateTime(last.dueOn.year, last.dueOn.month + k, last.dueOn.day);
+  /// What the contract schedules still expect in the months (0532).
+  DemoUnbilled _unbilled(String fromMonth, String toMonth) => demoUnbilled(
+    schedules: demoContractSchedules(
+      leases: sources.leases.leases,
+      rentals: sources.rooms.rentals,
+      commitments: sources.commitments,
+    ),
+    commitments: sources.commitments,
+    start: _firstDay(fromMonth),
+    cut: _lastDay(toMonth),
+    today: _day(now),
+  );
 
   static DateTime _day(DateTime d) => DateTime(d.year, d.month, d.day);
 

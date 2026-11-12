@@ -7,6 +7,7 @@
 // `kpi_memberships_current` / `kpi_overdue_receivables` 0536,
 // `kpi_pending_actions_current` 0598).
 import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
+import 'package:deskilo/core/demo/data/demo_contract_schedules.dart';
 import 'package:deskilo/core/demo/data/demo_cost_allocation_repository.dart';
 import 'package:deskilo/core/demo/data/demo_cost_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/demo_overview_kpi_repository.dart';
@@ -14,13 +15,17 @@ import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
+import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/asset_valuation.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
+import 'package:deskilo/features/money/domain/premises_lease.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/room_rental.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/workspace/domain/cost_allocation.dart';
@@ -211,6 +216,38 @@ List<Invoice> _invoices() => [
   _invoice('i6', total: 800, period: '2026-05'),
 ];
 
+/// The lease the occurrences come from: the rent, generated for April and
+/// May, and a service charge advance of 150.00 a month nothing generated.
+FakePremisesLeaseRepository _lease({
+  DateTime? chargesUntil,
+  LeaseStatus status = LeaseStatus.active,
+}) => FakePremisesLeaseRepository([
+  PremisesLease(
+    id: 'lease-1',
+    revision: 1,
+    supplierId: 'landlord',
+    supplierName: 'Landlord',
+    premises: 'Premises',
+    startsOn: DateTime(2026, 4),
+    status: status,
+    terms: [
+      LeaseTerm(
+        id: 'term-rent',
+        kind: LeaseTermKind.rent,
+        amountCents: 222000,
+        effectiveFrom: DateTime(2026, 4),
+      ),
+      LeaseTerm(
+        id: 'term-charges',
+        kind: LeaseTermKind.serviceChargeAdvance,
+        amountCents: 15000,
+        effectiveFrom: DateTime(2026, 4),
+        effectiveTo: chargesUntil,
+      ),
+    ],
+  ),
+]);
+
 DemoCostKpiRepository _costs({
   FakePurchaseRepository? purchases,
   Set<WorkspaceFeature>? features,
@@ -279,22 +316,27 @@ DemoCostKpiRepository _costs({
         ],
       },
     ),
-    commitments: FakeLeaseCommitmentRepository({
-      'lease-1': [
-        CommitmentOccurrence(
-          id: 'occ-apr',
-          dueOn: DateTime(2026, 4),
-          expectedCents: 222000,
-          matchedCents: 222000,
-        ),
-        CommitmentOccurrence(
-          id: 'occ-may',
-          dueOn: DateTime(2026, 5),
-          expectedCents: 222000,
-          matchedCents: 2000,
-        ),
-      ],
-    }),
+    commitments: FakeLeaseCommitmentRepository(
+      {
+        'lease-1': [
+          CommitmentOccurrence(
+            id: 'occ-apr',
+            dueOn: DateTime(2026, 4),
+            expectedCents: 222000,
+            matchedCents: 222000,
+          ),
+          CommitmentOccurrence(
+            id: 'occ-may',
+            dueOn: DateTime(2026, 5),
+            expectedCents: 222000,
+            matchedCents: 2000,
+          ),
+        ],
+      },
+      {'occ-apr': 'term-rent', 'occ-may': 'term-rent'},
+    ),
+    leases: _lease(),
+    rooms: FakeRoomRentalRepository(),
   ),
   currencyOf: (_) => 'EUR',
   features: () =>
@@ -325,24 +367,26 @@ void main() {
       expect(k.contributionMinor, 4200);
       expect(k.bookDepreciationMinor, 2500);
       expect(k.afterDepreciationMinor, 1700);
-      // April's occurrence is matched in full.
-      expect(k.unbilledMinor, 0);
-      expect(k.forecastMinor, 9000);
+      // April's rent occurrence is matched in full; the service charge
+      // advance, never generated, is projected from its first day.
+      expect(k.unbilledMinor, 15000);
+      expect(k.forecastMinor, 24000);
       expect(k.quality, isEmpty);
       expect(k.reasons, ['tax_unqualified', 'unresolved_lines']);
     });
 
-    test('May: the occurrence still expected, overdue since the 1st, and '
-        'June projected from it', () async {
+    test('May: the rent occurrence and the service charge still expected, '
+        'overdue since the 1st; June projected from both terms', () async {
       final may = await _costs().summary(
         _ws,
         fromMonth: '2026-05',
         toMonth: '2026-05',
       );
-      expect(may.unbilledMinor, 220000);
-      expect(may.unbilledOverdueMinor, 220000);
+      // 222000 - 2000 matched + 15000 (the charges, projected).
+      expect(may.unbilledMinor, 235000);
+      expect(may.unbilledOverdueMinor, 235000);
       expect(may.unbilledUpcomingMinor, 0);
-      expect(may.forecastMinor, 229000);
+      expect(may.forecastMinor, 244000);
       // The May confirmed batch is missing: unknown, never 0.
       expect(may.bookDepreciationMinor, isNull);
       expect(may.afterDepreciationMinor, isNull);
@@ -353,8 +397,9 @@ void main() {
         fromMonth: '2026-06',
         toMonth: '2026-06',
       );
-      expect(june.unbilledMinor, 222000);
-      expect(june.unbilledUpcomingMinor, 222000);
+      // The rent's next due day follows its last occurrence (May).
+      expect(june.unbilledMinor, 237000);
+      expect(june.unbilledUpcomingMinor, 237000);
     });
 
     test('a batch that does not tile the months leaves the depreciation '
@@ -392,6 +437,155 @@ void main() {
           .summary(_ws, fromMonth: '2026-04', toMonth: '2026-04');
       expect(k.quality, contains(KpiQuality.unavailable));
       expect(k.reasons, contains('currency_mix'));
+    });
+  });
+
+  group('the contract schedules (0474, 0515, 0532)', () {
+    DemoUnbilled june(
+      List<DemoContractSchedule> schedules,
+      FakeLeaseCommitmentRepository commitments,
+    ) => demoUnbilled(
+      schedules: schedules,
+      commitments: commitments,
+      start: DateTime(2026, 6),
+      cut: DateTime(2026, 6, 30),
+      today: _now,
+    );
+
+    List<DemoContractSchedule> of(
+      FakePremisesLeaseRepository leases, {
+      FakeLeaseCommitmentRepository? commitments,
+      List<RoomRental> rentals = const [],
+    }) => demoContractSchedules(
+      leases: leases.leases,
+      rentals: rentals,
+      commitments: commitments ?? FakeLeaseCommitmentRepository(),
+    );
+
+    test('a term that ended expects nothing after its end', () {
+      final ended = of(_lease(chargesUntil: DateTime(2026, 5, 31)));
+      // The rent only: 222000 from April on, nothing generated.
+      expect(june(ended, FakeLeaseCommitmentRepository()).total, 222000);
+    });
+
+    test('a lease given notice ends its terms on its end', () {
+      final leases = _lease();
+      leases.leases[0] = PremisesLease(
+        id: 'lease-1',
+        revision: 2,
+        supplierId: 'landlord',
+        supplierName: 'Landlord',
+        premises: 'Premises',
+        startsOn: DateTime(2026, 4),
+        status: LeaseStatus.noticeGiven,
+        effectiveEnd: DateTime(2026, 5, 31),
+        terms: leases.leases[0].terms,
+      );
+      expect(june(of(leases), FakeLeaseCommitmentRepository()).total, 0);
+    });
+
+    test('a count that runs out stops the projection', () {
+      final schedule = (
+        id: 's',
+        amountCents: 1000,
+        unit: 'month',
+        every: 1,
+        nextDue: DateTime(2026, 5),
+        done: 2,
+        endsOn: null,
+        repeatCount: 3,
+        active: true,
+      );
+      final r = demoUnbilled(
+        schedules: [schedule],
+        commitments: FakeLeaseCommitmentRepository(),
+        start: DateTime(2026, 5),
+        cut: DateTime(2026, 7, 31),
+        today: _now,
+      );
+      // May is the third and last occurrence; June and July are not.
+      expect(r.total, 1000);
+      expect(r.overdue, 1000);
+    });
+
+    test('a rejected occurrence expects nothing', () {
+      final commitments = FakeLeaseCommitmentRepository(
+        {
+          'lease-1': [
+            CommitmentOccurrence(
+              id: 'occ-jun',
+              dueOn: DateTime(2026, 6),
+              expectedCents: 222000,
+              matchedCents: 0,
+            ),
+          ],
+        },
+        {'occ-jun': 'term-rent'},
+        {'occ-jun'},
+      );
+      final schedules = of(
+        _lease(chargesUntil: DateTime(2026, 5, 31)),
+        commitments: commitments,
+      );
+      // Generated for June, so not projected; rejected, so not expected.
+      expect(june(schedules, commitments).total, 0);
+    });
+
+    test('a schedule on the 31st falls on the last day of a shorter month', () {
+      expect(
+        addScheduleInterval(DateTime(2026, 1, 31), 'month', 1),
+        DateTime(2026, 2, 28),
+      );
+      expect(
+        addScheduleInterval(DateTime(2028, 1, 31), 'month', 1),
+        DateTime(2028, 2, 29),
+      );
+      expect(
+        addScheduleInterval(DateTime(2026, 3, 31), 'year', 1),
+        DateTime(2027, 3, 31),
+      );
+      final r = demoUnbilled(
+        schedules: [
+          (
+            id: 's',
+            amountCents: 500,
+            unit: 'month',
+            every: 1,
+            nextDue: DateTime(2026, 1, 31),
+            done: 0,
+            endsOn: null,
+            repeatCount: null,
+            active: true,
+          ),
+        ],
+        commitments: FakeLeaseCommitmentRepository(),
+        start: DateTime(2026, 2),
+        cut: DateTime(2026, 2, 28),
+        today: _now,
+      );
+      // February's occurrence falls on the 28th, inside February.
+      expect(r.total, 500);
+    });
+
+    test('a room rented at a fixed cost per month is a schedule', () {
+      final schedules = of(
+        FakePremisesLeaseRepository(),
+        rentals: [
+          RoomRental(
+            id: 'rental-1',
+            revision: 1,
+            officeId: 'office-1',
+            officeName: 'Studio',
+            supplierId: 'lessor',
+            supplierName: 'Lessor',
+            availableFrom: DateTime(2026),
+            availableUntil: DateTime(2026, 12, 31),
+            status: RoomRentalStatus.active,
+            costCents: 40000,
+          ),
+        ],
+      );
+      expect(june(schedules, FakeLeaseCommitmentRepository()).total, 40000);
     });
   });
 
@@ -505,6 +699,52 @@ void main() {
       expect(both.directMinor, 10000);
       expect(both.unallocatedMinor, 4800);
       expect(both.reasons, containsAll(['rule_conflict', 'unallocated']));
+    });
+
+    test('a resource whose shares net to zero is listed at 0', () async {
+      final purchases = _purchases()
+        ..add(
+          _doc(
+            'credit-s',
+            kind: PurchaseKind.creditNote,
+            category: 'Supplies',
+            received: DateTime(2026, 4, 25),
+            lines: [_line(1, 'operating', gross: 14800)],
+          ),
+        );
+      final r = DemoCostAllocationRepository(
+        purchases: purchases,
+        plan: plan(),
+        currencyOf: (_) => 'EUR',
+        now: _now,
+      );
+      await rule(r, const [
+        AllocationWeight(
+          resourceKind: 'level',
+          resourceId: 'level-a',
+          weight: 1,
+        ),
+      ]);
+      await rule(
+        r,
+        const [
+          AllocationWeight(
+            resourceKind: 'level',
+            resourceId: 'level-a',
+            weight: 1,
+          ),
+        ],
+        category: 'Supplies',
+        id: 'supplies',
+      );
+      final k = await r.summary(_ws, fromMonth: '2026-04', toMonth: '2026-04');
+      // +14800 from "Cleaning", -14800 from the "Supplies" credit note.
+      expect(k.operatingCostsMinor, 0);
+      expect(
+        {for (final x in k.resources) x.resourceId: x.allocatedMinor},
+        {'level-a': 0},
+      );
+      expect(k.resources.single.revisions, hasLength(2));
     });
 
     test('no rule: nothing allocated, all of it unallocated', () async {
@@ -646,6 +886,82 @@ void main() {
       expect(f.value, 2);
       expect(f.quality, {KpiQuality.notRecorded});
       expect(f.reasons, ['current_state']);
+    });
+
+    Future<OverviewFigure> overdueOf(
+      List<Invoice> invoices, {
+      Map<String, InvoiceMatch> matches = const {},
+    }) {
+      final money = FakeMoneyRepository()..invoices.addAll(invoices);
+      money.invoiceMatchesStore.addAll(matches);
+      return DemoOverviewKpiRepository(
+        workspaces: FakeWorkspaceRepository.withWorkspace(),
+        events: FakeEventRepository(),
+        money: money,
+        now: _now,
+      ).figure(
+        _ws,
+        'sales.overdue_receivables',
+        fromMonth: '2026-05',
+        toMonth: '2026-05',
+      );
+    }
+
+    test('an overdue invoice in another currency leaves the amount unknown, '
+        'never a sum', () async {
+      final f = await overdueOf([
+        _invoice('e1', total: 10000, dueOn: DateTime(2026, 4)),
+        _invoice('u1', total: 5000, dueOn: DateTime(2026, 4), currency: 'USD'),
+      ]);
+      expect(f.value, isNull);
+      expect(f.quality, {KpiQuality.unavailable});
+      expect(f.reasons, ['currency_mix']);
+    });
+
+    test('a credit note in another currency holds its invoice', () async {
+      final f = await overdueOf([
+        _invoice('h1', total: 10000, dueOn: DateTime(2026, 4)),
+        _invoice('h1c', total: -2000, replaces: 'h1', currency: 'USD'),
+      ]);
+      expect(f.value, 0);
+      expect(f.count, 0);
+      expect(f.heldCount, 1);
+    });
+
+    test('a written-off or settling match, and a voided invoice, owe '
+        'nothing', () async {
+      final f = await overdueOf(
+        [
+          _invoice('w1', total: 10000, dueOn: DateTime(2026, 4)),
+          _invoice('x1', total: 10000, dueOn: DateTime(2026, 4)),
+          _invoice(
+            'v1',
+            total: 10000,
+            dueOn: DateTime(2026, 4),
+            voidedAt: DateTime(2026, 4, 20),
+          ),
+          _invoice('o1', total: 3000, dueOn: DateTime(2026, 4)),
+        ],
+        matches: {
+          'w1': InvoiceMatch(
+            invoiceId: 'w1',
+            paidCents: 4000,
+            resolution: 'under',
+            matchedAt: DateTime(2026, 4, 10),
+            writeoffAt: DateTime(2026, 4, 12),
+          ),
+          'x1': InvoiceMatch(
+            invoiceId: 'x1',
+            paidCents: 9900,
+            resolution: 'exact',
+            matchedAt: DateTime(2026, 4, 10),
+          ),
+        },
+      );
+      // Only o1 is still collectible; none is held.
+      expect(f.value, 3000);
+      expect(f.count, 1);
+      expect(f.heldCount, 0);
     });
   });
 }

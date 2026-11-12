@@ -20,6 +20,9 @@ import 'data/demo_cost_kpi_repository.dart';
 import 'data/demo_overview_kpi_repository.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/lease_commitment_repository.dart';
+import 'data/premises_lease_repository.dart';
+import 'data/purchase_repository.dart';
+import 'data/room_rental_repository.dart';
 import 'data/workspace_asset_repository.dart';
 import 'demo_fixture.dart';
 import 'seed/demo_city_books_seed.dart';
@@ -62,10 +65,7 @@ String Function(String) _currencyOf(DemoFixture fixture) =>
 
 /// The cost figures and the cost allocation of each space, from [costs],
 /// and the overview's own figures.
-List<Override> _analysisOverrides(
-  DemoFixture fixture,
-  _SpaceCosts costs,
-) {
+List<Override> _analysisOverrides(DemoFixture fixture, _SpaceCosts costs) {
   final now = fixture.seededAt;
   final currencyOf = _currencyOf(fixture);
   DemoCostAllocationRepository allocation(
@@ -157,6 +157,13 @@ Override _overviewOverride(DemoFixture fixture) {
   );
 }
 
+/// One space's equipment register, lease and rented rooms.
+typedef DemoSpaceContracts = ({
+  FakeWorkspaceAssetRepository assets,
+  FakePremisesLeaseRepository lease,
+  FakeRoomRentalRepository rooms,
+});
+
 /// #2576 the accountant's valuations of each space's equipment, #2575 what
 /// its lease still expects, and #3785 the analyses the Demo computes: the
 /// cost figures from them, the cost allocation, the overview's own figures.
@@ -165,13 +172,13 @@ List<Override> demoBookFigureOverrides(
   ({DemoPurchasing home, DemoPurchasing london, DemoPurchasing newYork})
   purchasing,
   ({
-    FakeWorkspaceAssetRepository home,
-    FakeWorkspaceAssetRepository london,
-    FakeWorkspaceAssetRepository newYork,
+    DemoSpaceContracts home,
+    DemoSpaceContracts london,
+    DemoSpaceContracts newYork,
   })
-  assets,
+  spaces,
   ({
-    FakeWorkspaceAssetRepository assets,
+    DemoSpaceContracts contracts,
     FakeAssetValuationRepository valuations,
     FakeLeaseCommitmentRepository commitments,
   })
@@ -195,24 +202,19 @@ List<Override> demoBookFigureOverrides(
         _ => home,
       };
   DemoCostSources sources(
-    DemoPurchasing p,
+    FakePurchaseRepository p,
     List<Invoice> Function() invoices,
-    FakeWorkspaceAssetRepository a,
+    DemoSpaceContracts c,
     FakeAssetValuationRepository v,
-    FakeLeaseCommitmentRepository c,
+    FakeLeaseCommitmentRepository l,
   ) => (
-    purchases: p.purchases,
+    purchases: p,
     invoices: invoices,
-    assets: a,
+    assets: c.assets,
     valuations: v,
-    commitments: c,
-  );
-  final home = sources(
-    purchasing.home,
-    () => fixture.money.invoices,
-    assets.home,
-    valuations.home,
-    commitments.home,
+    commitments: l,
+    leases: c.lease,
+    rooms: c.rooms,
   );
   return [
     assetValuationRepositoryProvider.overrideWith(
@@ -233,37 +235,43 @@ List<Override> demoBookFigureOverrides(
         twin.commitments,
       ),
     ),
-    // Leipzig reads the purchases, the register and the lease of Pézenas,
-    // as its pages do, and its own invoices.
+    // Leipzig reads the purchases, the register, the lease and the rooms of
+    // Pézenas, as its pages do, and its own invoices.
     ..._analysisOverrides(fixture, (
-      home: home,
-      leipzig: (
-        purchases: home.purchases,
-        invoices: () => fixture.secondSpace.money.invoices,
-        assets: home.assets,
-        valuations: home.valuations,
-        commitments: home.commitments,
+      home: sources(
+        purchasing.home.purchases,
+        () => fixture.money.invoices,
+        spaces.home,
+        valuations.home,
+        commitments.home,
+      ),
+      leipzig: sources(
+        purchasing.home.purchases,
+        () => fixture.secondSpace.money.invoices,
+        spaces.home,
+        valuations.home,
+        commitments.home,
       ),
       london: sources(
-        purchasing.london,
+        purchasing.london.purchases,
         () => fixture.london.money.invoices,
-        assets.london,
+        spaces.london,
         valuations.london,
         commitments.london,
       ),
       newYork: sources(
-        purchasing.newYork,
+        purchasing.newYork.purchases,
         () => fixture.newYork.money.invoices,
-        assets.newYork,
+        spaces.newYork,
         valuations.newYork,
         commitments.newYork,
       ),
-      twin: (
-        purchases: fixture.twin.purchasing.purchases,
-        invoices: () => fixture.twin.money.invoices,
-        assets: twin.assets,
-        valuations: twin.valuations,
-        commitments: twin.commitments,
+      twin: sources(
+        fixture.twin.purchasing.purchases,
+        () => fixture.twin.money.invoices,
+        twin.contracts,
+        twin.valuations,
+        twin.commitments,
       ),
     )),
   ];

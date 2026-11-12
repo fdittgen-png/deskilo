@@ -206,12 +206,11 @@ List<Override> demoCityCommerceOverrides(
       twin: twin.rooms,
     )),
     ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing, orderSpaces),
-    ...demoBookFigureOverrides(
-      fixture,
-      (home: purchasing, london: londonPurchasing, newYork: nyPurchasing),
-      (home: mainAssets, london: londonAssets, newYork: nyAssets),
-      (assets: twin.assets, valuations: twin.valuations, commitments: twin.commitments),
-    ),
+    ...demoBookFigureOverrides(fixture, (home: purchasing, london: londonPurchasing, newYork: nyPurchasing), (
+      home: (assets: mainAssets, lease: mainLease, rooms: homeRooms),
+      london: (assets: londonAssets, lease: londonLease, rooms: londonRooms),
+      newYork: (assets: nyAssets, lease: nyLease, rooms: nyRooms),
+    ), (contracts: (assets: twin.assets, lease: twin.lease, rooms: twin.rooms), valuations: twin.valuations, commitments: twin.commitments)),
   ];
 }
 

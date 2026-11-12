@@ -289,18 +289,21 @@ class DemoCostAllocationRepository implements CostAllocationRepository {
   }
 
   /// What each resource received, with the revisions behind it, by kind
-  /// then id; a resource that received nothing is left out.
+  /// then id; a resource without a share is left out, one whose
+  /// shares net to zero is listed at 0.
   List<ResourceAllocation> _resources(List<_Group> groups) {
     final minor = <(String, String), int>{};
     final revisions = <(String, String), Set<(String, int)>>{};
     for (final g in groups) {
+      // A zero share is no share; shares that net to zero are (0531).
       for (final s in g.shares ?? const <AllocationShare>[]) {
+        if (s.minor == 0) continue;
         final key = (s.resourceKind, s.resourceId);
         minor[key] = (minor[key] ?? 0) + s.minor;
         (revisions[key] ??= {}).add((g.rule.ruleId, g.rule.revision));
       }
     }
-    final keys = minor.keys.where((k) => minor[k] != 0).toList()
+    final keys = minor.keys.toList()
       ..sort(
         (a, b) => a.$1 != b.$1 ? a.$1.compareTo(b.$1) : a.$2.compareTo(b.$2),
       );
