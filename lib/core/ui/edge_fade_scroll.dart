@@ -126,16 +126,16 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
   Widget build(BuildContext context) {
     final faded = _faded(context);
     return MousePresence(builder: (context, mouse, _) {
-      if (!mouse) return faded;
       final l10n = context.l10n;
       // The strip keeps its own constraints: the arrows lie over it,
-      // they never resize or re-centre it.
+      // they never resize or re-centre it. The Stack is there with or
+      // without a mouse, so plugging one in keeps the strip's place.
       return Stack(
         fit: StackFit.passthrough,
         alignment: AlignmentDirectional.centerStart,
         children: [
           faded,
-          if (_before)
+          if (mouse && _before)
             PositionedDirectional(
               start: 0,
               child: _Arrow(
@@ -145,7 +145,7 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
                 onPressed: () => _page(forward: false),
               ),
             ),
-          if (_more)
+          if (mouse && _more)
             PositionedDirectional(
               end: 0,
               child: _Arrow(
