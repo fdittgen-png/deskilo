@@ -1,0 +1,9 @@
+{
+  "featureKioskEnrolmentTitle": "Registrazione dei chioschi",
+  "featureKioskEnrolmentDesc": "Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo.",
+  "settingLabelSecurityBadgeSigninWhere": "L’accesso con badge funziona su",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: solo sui dispositivi che l’azienda ha registrato come chioschi, che salutano ogni persona per nome. any_device: su qualsiasi dispositivo, dove nessuno viene nominato prima del PIN.",
+  "eventTypeKioskDevice": "Dispositivi chiosco",
+  "eventKioskDeviceEnrolled": "{actor} ha registrato il chiosco «{device}»",
+  "eventKioskDeviceRevoked": "{actor} ha revocato il chiosco «{device}»"
+}

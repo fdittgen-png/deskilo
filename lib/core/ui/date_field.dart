@@ -14,6 +14,7 @@ import '../format/date_input.dart';
 import '../i18n/format_controller.dart';
 import '../l10n/context_l10n.dart';
 import '../time/clock.dart';
+import 'adaptive/task_surface.dart';
 import 'form_kit.dart';
 
 export '../format/date_input.dart' show DateInputProblem, DateRead;
@@ -170,6 +171,7 @@ class _AppDateFieldState extends State<AppDateField> {
       helpText: widget.pickerHelpText,
     );
     if (picked == null || !mounted) return;
+    TaskSession.maybeOf(context)?.markChanged();
     _write(picked);
     _edited();
   }

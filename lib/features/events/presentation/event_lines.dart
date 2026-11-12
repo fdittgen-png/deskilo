@@ -271,7 +271,8 @@ bool _appendsSubject(WorkspaceEvent event) {
   // who changed it, and would read oddly "for" the owner it tells.
   if (namesMember ||
       event.type == EventType.paymentInstructionsChange ||
-      event.type == EventType.settlementReview) {
+      event.type == EventType.settlementReview ||
+      event.type == EventType.kioskDevice) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -297,6 +298,9 @@ String _noticeOrFallbackLine(
   EventType.invoiceIssued => l10n.eventInvoiceIssuedLine(
     '${event.payload['number'] ?? ''}',
   ),
+  EventType.kioskDevice => event.payload['change'] == 'revoked'
+      ? l10n.eventKioskDeviceRevoked(actor, '${event.payload['device_name'] ?? ''}')
+      : l10n.eventKioskDeviceEnrolled(actor, '${event.payload['device_name'] ?? ''}'),
   EventType.settlementReview => l10n.eventSettlementReview(
     '${event.payload['settlement_id'] ?? ''}',
     '${event.payload['reason'] ?? ''}',

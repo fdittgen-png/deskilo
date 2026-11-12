@@ -18,6 +18,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/adaptive/task_surface.dart' show TaskSession;
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/kit/kit_action_button.dart';
@@ -184,6 +185,7 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
       refusal = PaymentRefusal.of(e);
     }
     if (!mounted) return;
+    if (outcome != null) TaskSession.maybeOf(context)?.completed();
     setState(() {
       _busy = false;
       _outcome = outcome;

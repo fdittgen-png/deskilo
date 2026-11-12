@@ -2,6 +2,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+/// Whether an input method is still composing a word in [value] (a
+/// candidate being chosen): no key sends or submits then. The one check for
+/// the message composer and the form kit.
+bool isComposingText(TextEditingValue value) => value.composing.isValid;
+
 /// The keys of a message composer around its multiline [child] field:
 /// Return inserts a newline (the field's own behaviour, never a send);
 /// Ctrl+Enter or Cmd+Enter sends through [onSend], the same command the
@@ -20,7 +25,7 @@ class ComposerSendKeys extends StatelessWidget {
   final Widget child;
 
   void _send() {
-    if (controller.value.composing.isValid) return;
+    if (isComposingText(controller.value)) return;
     onSend();
   }
 

@@ -8999,6 +8999,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String eventKioskDeviceEnrolled(String actor, String device) {
+    return '$actor a enregistré le kiosque « $device »';
+  }
+
+  @override
+  String eventKioskDeviceRevoked(String actor, String device) {
+    return '$actor a révoqué le kiosque « $device »';
+  }
+
+  @override
   String eventLeaseNoticeLine(String actor, String premises, String date) {
     return '$actor donne congé pour $premises ; le bail prendrait fin le $date';
   }
@@ -9202,6 +9212,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Annulation de solde';
+
+  @override
+  String get eventTypeKioskDevice => 'Appareils kiosque';
 
   @override
   String get eventTypeLeaseChange => 'Changement du bail';
@@ -10607,6 +10620,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureInvoicingWizardTitle => 'Assistant de facturation';
+
+  @override
+  String get featureKioskEnrolmentDesc =>
+      'Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil.';
+
+  @override
+  String get featureKioskEnrolmentTitle => 'Enregistrement des kiosques';
 
   @override
   String get featureKioskMemberPhotosDesc =>
@@ -27688,6 +27708,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le moins de chiffres qu\'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu\'à leur changement.';
 
   @override
+  String get settingHintSecurityBadgeSigninWhere =>
+      'enrolled_kiosks : seulement sur les appareils que l’entreprise a enregistrés comme kiosques, qui accueillent chacun par son nom. any_device : sur tout appareil, où personne n’est nommé avant le PIN.';
+
+  @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
       'Badges différents de cet espace avec un PIN erroné pendant la période de verrouillage avant suspension et alerte des propriétaires. Un seul badge ne peut pas l’atteindre. Ce plafond peut seulement être réduit.';
 
@@ -27974,6 +27998,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgePinMinLength =>
       'PIN de badge : longueur minimale';
+
+  @override
+  String get settingLabelSecurityBadgeSigninWhere =>
+      'La connexion par badge fonctionne sur';
 
   @override
   String get settingLabelSecurityBadgeWorkspaceFailureLimit =>

@@ -1,0 +1,46 @@
+{
+  "featureKioskEnrolmentTitle": "Kiosk enrolment",
+  "@featureKioskEnrolmentTitle": {
+    "description": "Shown as a text in features."
+  },
+  "featureKioskEnrolmentDesc": "Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device.",
+  "@featureKioskEnrolmentDesc": {
+    "description": "Shown as a text in features."
+  },
+  "settingLabelSecurityBadgeSigninWhere": "Badge sign-in works on",
+  "@settingLabelSecurityBadgeSigninWhere": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: only on the devices this business enrolled as kiosks, which greet each person by name. any_device: on any device, where nobody is named before the PIN.",
+  "@settingHintSecurityBadgeSigninWhere": {
+    "description": "Shown as a text in settings labels (workspace)."
+  },
+  "eventTypeKioskDevice": "Kiosk devices",
+  "@eventTypeKioskDevice": {
+    "description": "Shown as a text in event labels (events)."
+  },
+  "eventKioskDeviceEnrolled": "{actor} enrolled the kiosk “{device}”",
+  "@eventKioskDeviceEnrolled": {
+    "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {device} (String).",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "eventKioskDeviceRevoked": "{actor} revoked the kiosk “{device}”",
+  "@eventKioskDeviceRevoked": {
+    "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {device} (String).",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "device": {
+        "type": "String"
+      }
+    }
+  }
+}

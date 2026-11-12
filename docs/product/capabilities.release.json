@@ -1779,6 +1779,12 @@
       "capabilities": []
     },
     {
+      "key": "kioskEnrolment",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "kioskMemberPhotos",
       "maturity": "beta",
       "lifecycle": "active",

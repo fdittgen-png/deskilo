@@ -4,6 +4,7 @@
 // what it is, and its amount. The whole line toggles.
 import 'package:flutter/material.dart';
 
+import '../adaptive/task_surface.dart';
 import 'kit_metrics.dart';
 
 class SelectRow extends StatelessWidget {
@@ -35,7 +36,12 @@ class SelectRow extends StatelessWidget {
       checked: selected,
       enabled: enabled,
       child: InkWell(
-        onTap: enabled ? () => onChanged(!selected) : null,
+        onTap: enabled
+            ? () {
+                TaskSession.maybeOf(context)?.markChanged();
+                onChanged(!selected);
+              }
+            : null,
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 60),
           child: Padding(

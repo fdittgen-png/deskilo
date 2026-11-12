@@ -33,6 +33,7 @@ import 'features/profile/providers/profile_providers.dart';
 import 'features/reservations/providers/reservation_providers.dart'
     show audienceMembersFromReservations;
 import 'features/workspace/providers/settings_providers.dart';
+import 'features/workspace/providers/task_context_wiring.dart';
 import 'features/workspace/providers/workspace_providers.dart';
 import 'features/workspace/providers/workspace_roles_providers.dart';
 
@@ -127,6 +128,7 @@ Future<void> main() async {
         sessionSourceFromAuth, // #2495
         captureReaderNameFromProfile, // #2495
         enabledFeatureKeysFromWorkspace, // #2495
+        taskContextFromWorkspace, // #3608
         activeSettingsFromWorkspace, // #2486
         platformSettingsFromWorkspace, // #2553
         audienceRolesFromWorkspace, // #2575

@@ -5972,6 +5972,8 @@
       }
     }
   },
+  "eventKioskDeviceEnrolled": "{actor} registró el quiosco «{device}»",
+  "eventKioskDeviceRevoked": "{actor} revocó el quiosco «{device}»",
   "eventLeaseNoticeLine": "{actor} da el preaviso de {premises}; el contrato terminaría el {date}",
   "@eventLeaseNoticeLine": {
     "description": "#2569 lease change validation",
@@ -6127,6 +6129,7 @@
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
+  "eventTypeKioskDevice": "Dispositivos de quiosco",
   "eventTypeLeaseChange": "Cambio del contrato de alquiler",
   "@eventTypeLeaseChange": {
     "description": "#2569 lease change validation"
@@ -6797,6 +6800,8 @@
   "featureInvoicingDesc": "Facturas inmutables y firmadas en un archivo — descarga o comparte en PDF.",
   "featureInvoicingWizardDesc": "Un proceso guiado de cierre mensual para la persona de finanzas: una pasada de inicio de mes para las suscripciones pagadas por adelantado y otra de fin de mes para el uso y los cargos adicionales — revisión, emisión en lote, envío, recordatorios vencidos, registro y validación de pagos, conciliación con facturas, reagrupación, anulación o reembolso, y un resumen con lo que queda y a quién le toca. Desactivado: las pantallas separadas.",
   "featureInvoicingWizardTitle": "Asistente de facturación",
+  "featureKioskEnrolmentDesc": "Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo.",
+  "featureKioskEnrolmentTitle": "Registro de quioscos",
   "featureKioskMemberPhotosDesc": "El recibo del quiosco muestra la foto de perfil del miembro: el control visual de credencial equivocada.",
   "featureKioskMemberPhotosTitle": "Fotos de los miembros en el quiosco",
   "featureKioskMode": "Modo quiosco",
@@ -17505,6 +17510,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: solo en los dispositivos que la empresa registró como quioscos, que saludan a cada persona por su nombre. any_device: en cualquier dispositivo, donde nadie se nombra antes del PIN.",
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.",
   "settingHintSecurityInvitationExpiryDays": "Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.",
   "@settingHintSecurityInvitationExpiryDays": {
@@ -17693,6 +17699,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "PIN de tarjeta: longitud mínima",
+  "settingLabelSecurityBadgeSigninWhere": "El acceso con credencial funciona en",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Límite de fallos de tarjeta del espacio",
   "settingLabelSecurityInvitationExpiryDays": "Validez de una invitación",
   "@settingLabelSecurityInvitationExpiryDays": {

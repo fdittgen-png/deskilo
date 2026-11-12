@@ -5972,6 +5972,8 @@
       }
     }
   },
+  "eventKioskDeviceEnrolled": "{actor} hat den Kiosk „{device}“ registriert",
+  "eventKioskDeviceRevoked": "{actor} hat den Kiosk „{device}“ widerrufen",
   "eventLeaseNoticeLine": "{actor} kündigt {premises}; der Mietvertrag würde am {date} enden",
   "@eventLeaseNoticeLine": {
     "description": "#2569 lease change validation",
@@ -6127,6 +6129,7 @@
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
+  "eventTypeKioskDevice": "Kiosk-Geräte",
   "eventTypeLeaseChange": "Mietvertragsänderung",
   "@eventTypeLeaseChange": {
     "description": "#2569 lease change validation"
@@ -6797,6 +6800,8 @@
   "featureInvoicingDesc": "Unveränderliche, signierte Rechnungen im Archiv — als PDF herunterladen oder teilen.",
   "featureInvoicingWizardDesc": "Ein geführter Monatsabschluss für die Finanzperson: ein Monatsanfangslauf für die im Voraus bezahlten Abonnements und ein Monatsendlauf für Nutzung und Zusatzkosten — Prüfung, Ausstellung im Stapel, Versand, fällige Mahnungen, Erfassen und Bestätigen von Zahlungen, Zuordnen zu Rechnungen, Zusammenfassen, Abschreiben oder Erstatten, und eine Zusammenfassung mit dem, was offen bleibt und wer am Zug ist. Aus: die einzelnen Bildschirme.",
   "featureInvoicingWizardTitle": "Rechnungsassistent",
+  "featureKioskEnrolmentDesc": "Registrieren Sie die Geräte, die als Kiosk dienen; die Anmeldung per Ausweis funktioniert dann nur auf ihnen, es sei denn, das Unternehmen erlaubt jedes Gerät. Ausgeschaltet funktioniert die Anmeldung per Ausweis auf jedem Gerät.",
+  "featureKioskEnrolmentTitle": "Kiosk-Registrierung",
   "featureKioskMemberPhotosDesc": "Der Kiosk-Beleg zeigt das Profilfoto des Mitglieds — die visuelle Falsch-Badge-Kontrolle.",
   "featureKioskMemberPhotosTitle": "Mitgliederfotos am Kiosk",
   "featureKioskMode": "Kiosk-Modus",
@@ -17505,6 +17510,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: nur auf den Geräten, die das Unternehmen als Kiosk registriert hat; sie begrüßen jede Person mit Namen. any_device: auf jedem Gerät, auf dem vor der PIN niemand genannt wird.",
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Verschiedene Badges des Bereichs mit falscher PIN innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Ein einzelnes Badge erreicht die Grenze nicht. Die Grenze kann nur gesenkt werden.",
   "settingHintSecurityInvitationExpiryDays": "Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.",
   "@settingHintSecurityInvitationExpiryDays": {
@@ -17693,6 +17699,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "Kürzeste Badge-PIN",
+  "settingLabelSecurityBadgeSigninWhere": "Anmeldung per Ausweis funktioniert auf",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Grenze für Badge-Fehlversuche im Bereich",
   "settingLabelSecurityInvitationExpiryDays": "Gültigkeit einer Einladung",
   "@settingLabelSecurityInvitationExpiryDays": {

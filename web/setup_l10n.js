@@ -756,6 +756,10 @@ window.SETUP_L10N={
    "retUsRule": "The retention rule applies",
    "badgeFailureLimit": "Badges failing sign-in per workspace",
    "badgeFailureLimitHint": "When this many different badges of the workspace fail their PIN within the lockout window, badge sign-in pauses for that window and owners receive an alert; one badge alone cannot pause it. Set a value from 1 to 50 in Workspace settings → Security; 50 is the default.",
+   "badgeSigninWhere": "Badge sign-in works on",
+   "badgeSigninWhereHint": "Only on the devices the business enrols as kiosks, which greet each person by name, or on any device, where nobody is named before the PIN. A business that already issued badges stays on any device until its owner switches. The XML keeps this answer for setup; enter it in the app.",
+   "badgeWhereKiosks": "Enrolled kiosks only",
+   "badgeWhereAnyDevice": "Any device",
    "identityBusinessKind": "Kind of business",
    "identityBusinessKindHint": "Set in the app, on the first setup step: it proposes the features this kind of business needs.",
    "businessKind_coworking": "Coworking space",
@@ -1390,6 +1394,10 @@ window.SETUP_L10N={
    "invoiceEmail": [
     "Invoices by e-mail",
     "An issued invoice can be sent by e-mail from the server, with the business's own sender, to the customer's contact address, in the customer's document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before."
+   ],
+   "kioskEnrolment": [
+    "Kiosk enrolment",
+    "Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device."
    ]
   },
   "process": {
@@ -2538,6 +2546,10 @@ window.SETUP_L10N={
    "retUsRule": "La règle de conservation s'applique",
    "badgeFailureLimit": "Badges en échec de connexion par espace",
    "badgeFailureLimitHint": "Quand ce nombre de badges différents de l’espace échouent à leur PIN pendant la fenêtre de blocage, la connexion par badge est suspendue pour cette fenêtre et les propriétaires reçoivent une alerte ; un seul badge ne peut pas la suspendre. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut.",
+   "badgeSigninWhere": "La connexion par badge fonctionne sur",
+   "badgeSigninWhereHint": "Seulement sur les appareils que l’entreprise enregistre comme kiosques, qui accueillent chacun par son nom, ou sur tout appareil, où personne n’est nommé avant le PIN. Une entreprise qui a déjà émis des badges reste sur « tout appareil » jusqu’à ce que son propriétaire change. Le XML garde cette réponse pour la mise en place ; saisissez-la dans l’app.",
+   "badgeWhereKiosks": "Kiosques enregistrés seulement",
+   "badgeWhereAnyDevice": "Tout appareil",
    "identityBusinessKind": "Genre d’activité",
    "identityBusinessKindHint": "À choisir dans l’application, à la première étape : il propose les fonctions dont ce genre d’activité a besoin.",
    "businessKind_coworking": "Espace de coworking",
@@ -3172,6 +3184,10 @@ window.SETUP_L10N={
    "invoiceEmail": [
     "Factures par e-mail",
     "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant."
+   ],
+   "kioskEnrolment": [
+    "Enregistrement des kiosques",
+    "Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil."
    ]
   },
   "process": {
@@ -4320,6 +4336,10 @@ window.SETUP_L10N={
    "retUsRule": "Die Aufbewahrungsregel gilt",
    "badgeFailureLimit": "Badges mit fehlgeschlagener Anmeldung pro Workspace",
    "badgeFailureLimitHint": "Wenn so viele verschiedene Badges des Workspace im Sperrfenster an ihrer PIN scheitern, pausiert die Badge-Anmeldung für dieses Fenster und Eigentümer erhalten eine Warnung; ein einzelnes Badge kann sie nicht pausieren. In den Workspace-Einstellungen → Sicherheit sind 1 bis 50 möglich; Standard ist 50.",
+   "badgeSigninWhere": "Anmeldung per Ausweis funktioniert auf",
+   "badgeSigninWhereHint": "Nur auf den Geräten, die das Unternehmen als Kiosk registriert und die jede Person mit Namen begrüßen, oder auf jedem Gerät, auf dem vor der PIN niemand genannt wird. Ein Unternehmen, das bereits Ausweise ausgegeben hat, bleibt bei „jedes Gerät“, bis seine Inhaberin oder sein Inhaber umstellt. Das XML behält diese Antwort für die Einrichtung; geben Sie sie in der App ein.",
+   "badgeWhereKiosks": "Nur registrierte Kioske",
+   "badgeWhereAnyDevice": "Jedes Gerät",
    "identityBusinessKind": "Art des Unternehmens",
    "identityBusinessKindHint": "Wird in der App im ersten Einrichtungsschritt gewählt: Sie schlägt die Funktionen vor, die diese Art von Unternehmen braucht.",
    "businessKind_coworking": "Coworking-Space",
@@ -4954,6 +4974,10 @@ window.SETUP_L10N={
    "invoiceEmail": [
     "Rechnungen per E-Mail",
     "Eine ausgestellte Rechnung kann vom Server per E-Mail mit dem eigenen Absender des Unternehmens an die Kontaktadresse des Kunden gesendet werden, in der Dokumentsprache des Kunden. Jede Rechnung wird einmal versandt; ein erneuter Versand ist eine bewusste Handlung mit eigenem Nachweis. Aus: Rechnungen werden wie bisher geteilt oder heruntergeladen."
+   ],
+   "kioskEnrolment": [
+    "Kiosk-Registrierung",
+    "Registrieren Sie die Geräte, die als Kiosk dienen; die Anmeldung per Ausweis funktioniert dann nur auf ihnen, es sei denn, das Unternehmen erlaubt jedes Gerät. Ausgeschaltet funktioniert die Anmeldung per Ausweis auf jedem Gerät."
    ]
   },
   "process": {
@@ -6102,6 +6126,10 @@ window.SETUP_L10N={
    "retUsRule": "Se aplica la regla de conservación",
    "badgeFailureLimit": "Credenciales con acceso fallido por espacio",
    "badgeFailureLimitHint": "Cuando este número de credenciales distintas del espacio fallan su PIN dentro de la ventana de bloqueo, el acceso con credencial se pausa durante esa ventana y los propietarios reciben una alerta; una sola credencial no puede pausarlo. Elija de 1 a 50 en los ajustes del espacio → Seguridad; 50 por defecto.",
+   "badgeSigninWhere": "El acceso con credencial funciona en",
+   "badgeSigninWhereHint": "Solo en los dispositivos que la empresa registra como quioscos, que saludan a cada persona por su nombre, o en cualquier dispositivo, donde nadie se nombra antes del PIN. Una empresa que ya emitió credenciales sigue en «cualquier dispositivo» hasta que su titular cambie. El XML conserva esta respuesta para la configuración; introdúzcala en la app.",
+   "badgeWhereKiosks": "Solo quioscos registrados",
+   "badgeWhereAnyDevice": "Cualquier dispositivo",
    "identityBusinessKind": "Tipo de negocio",
    "identityBusinessKindHint": "Se elige en la aplicación, en el primer paso: propone las funciones que necesita este tipo de negocio.",
    "businessKind_coworking": "Espacio de coworking",
@@ -6736,6 +6764,10 @@ window.SETUP_L10N={
    "invoiceEmail": [
     "Facturas por correo",
     "Una factura emitida puede enviarse por correo desde el servidor, con el remitente de la empresa, a la dirección de contacto del cliente, en el idioma de sus documentos. Cada factura se envía una vez; volver a enviarla es un acto deliberado, con su propio registro. Desactivado: las facturas se comparten o descargan como antes."
+   ],
+   "kioskEnrolment": [
+    "Registro de quioscos",
+    "Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo."
    ]
   },
   "process": {
@@ -7884,6 +7916,10 @@ window.SETUP_L10N={
    "retUsRule": "Vale la regola di conservazione",
    "badgeFailureLimit": "Badge con accesso fallito per spazio",
    "badgeFailureLimitHint": "Quando questo numero di badge diversi dello spazio sbaglia il PIN nella finestra di blocco, l’accesso con badge si sospende per quella finestra e i proprietari ricevono un avviso; un solo badge non può sospenderlo. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 è il valore predefinito.",
+   "badgeSigninWhere": "L’accesso con badge funziona su",
+   "badgeSigninWhereHint": "Solo sui dispositivi che l’azienda registra come chioschi, che salutano ogni persona per nome, oppure su qualsiasi dispositivo, dove nessuno viene nominato prima del PIN. Un’azienda che ha già emesso badge resta su «qualsiasi dispositivo» finché il titolare non cambia. L’XML conserva questa risposta per la configurazione; la inserisca nell’app.",
+   "badgeWhereKiosks": "Solo chioschi registrati",
+   "badgeWhereAnyDevice": "Qualsiasi dispositivo",
    "identityBusinessKind": "Tipo di attività",
    "identityBusinessKindHint": "Si sceglie nell’app, al primo passo: propone le funzioni di cui questo tipo di attività ha bisogno.",
    "businessKind_coworking": "Spazio di coworking",
@@ -8518,6 +8554,10 @@ window.SETUP_L10N={
    "invoiceEmail": [
     "Fatture via e-mail",
     "Una fattura emessa può essere inviata via e-mail dal server, con il mittente dell'azienda, all'indirizzo di contatto del cliente, nella lingua dei suoi documenti. Ogni fattura viene inviata una volta; inviarla di nuovo è un atto deliberato, con una propria traccia. Disattivato: le fatture si condividono o si scaricano come prima."
+   ],
+   "kioskEnrolment": [
+    "Registrazione dei chioschi",
+    "Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo."
    ]
   },
   "process": {
