@@ -158,8 +158,7 @@ enum WorkspaceFeature {
   /// #827 — the invoicing wizard: one guided month-close process.
   invoicingWizard,
 
-  /// #828 — shared expenses distributed over the members, reversals as
-  /// credit notes.
+  /// #828 — shared expenses split over the members; reversals as credit notes.
   expenseRepartition,
 
   /// #831 — settled sources fold under their settlement: documentation
@@ -416,7 +415,8 @@ enum WorkspaceFeature {
   mtdSubmission,
   purchaseOrders,
   guestPasses,
-  placeBooking;
+  placeBooking,
+  reminderEmail;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

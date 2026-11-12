@@ -153,3 +153,4 @@ mtdSubmission | GB | n n y n n n n n n y
 purchaseOrders | everywhere | y y y y y y y y y y
 guestPasses | everywhere | y y y y y y y y y y
 placeBooking | everywhere | y y y y y y y y y y
+reminderEmail | everywhere | y y y y y y y y y y

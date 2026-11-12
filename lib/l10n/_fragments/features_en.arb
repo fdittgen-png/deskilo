@@ -801,5 +801,13 @@
   },
   "@featurePlaceBookingDesc": {
     "description": "#3550 the places flag"
+  },
+  "featureReminderEmailTitle": "Reminders by e-mail",
+  "@featureReminderEmailTitle": {
+    "description": "#3673 the reminders-by-e-mail feature"
+  },
+  "featureReminderEmailDesc": "A payment reminder can also be sent by e-mail, from the server, with your business's own sender, in the customer's document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only.",
+  "@featureReminderEmailDesc": {
+    "description": "#3673 the reminders-by-e-mail feature"
   }
 }

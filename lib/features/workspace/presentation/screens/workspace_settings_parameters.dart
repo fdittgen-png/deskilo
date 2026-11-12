@@ -12,11 +12,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
 import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../money/presentation/widgets/billing_rules_dialog.dart';
-import '../../../money/presentation/widgets/dunning_rules_dialog.dart';
+import '../../../money/presentation/widgets/money_settings_rows.dart';
 import '../../domain/invitation_message.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
+import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/new_member_defaults_tiles.dart';
 import '../widgets/settings_editor.dart';
@@ -394,8 +394,25 @@ class WorkspaceParameterTiles {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    onTap: () => showDunningRulesDialog(context, ref),
+                    onTap: () => MoneySettingsRows.openReminderRules(context, ref),
                   ),
+                  // #3673 — the business's one e-mail sender: its orders
+                  // and its reminders by e-mail go out with it.
+                  if (ref.watch(enabledFeaturesSyncProvider).any((f) =>
+                          f == WorkspaceFeature.purchaseOrders ||
+                          f == WorkspaceFeature.reminderEmail) &&
+                      ref
+                          .watch(myPermissionsProvider)
+                          .contains(WorkspacePermission.manageBilling))
+                    HelpRow(
+                      key: const Key('workspaceSettingsMailSender'),
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.forward_to_inbox_outlined),
+                      title: l10n.purchaseOrderMailSettings,
+                      subtitle: Text(l10n.businessMailSenderSubtitle),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: _openMailSender,
+                    ),
                   // #2484 — the registry of business values, edited here.
                   if (ref
                       .watch(enabledFeaturesSyncProvider)
@@ -430,9 +447,17 @@ class WorkspaceParameterTiles {
                       subtitle: Text(
                         l10n.billingRulesSubtitle,
                       ),
-                      onTap: () => showBillingRulesDialog(context, ref),
+                      onTap: () => MoneySettingsRows.openBillingRules(context, ref),
                     ),
       ];
+
+  /// #3673 — opens the business's e-mail sender.
+  Future<void> _openMailSender() async {
+    final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
+    if (workspaceId != null) {
+      await MoneySettingsRows.openMailSender(context, ref, workspaceId);
+    }
+  }
 
   /// #763 — a control with no free suffix slot gets the ? at its side.
   Widget _withDot(Widget field, String topic, {required String anchor}) => Row(

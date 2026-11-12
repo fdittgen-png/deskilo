@@ -618,6 +618,10 @@ window.SETUP_REGISTRY={
   [
    "placeBooking",
    true
+  ],
+  [
+   "reminderEmail",
+   false
   ]
  ],
  "requires": {
@@ -723,7 +727,8 @@ window.SETUP_REGISTRY={
   "planDecor": "placeBooking",
   "mtdSubmission": "vatDeclarations",
   "purchaseOrders": "purchases",
-  "guestPasses": "invoicing"
+  "guestPasses": "invoicing",
+  "reminderEmail": "dunning"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1289,7 +1294,8 @@ window.SETUP_PROCESSES=[
     "features": [
      "onlinePayments",
      "dunning",
-     "paymentReminders"
+     "paymentReminders",
+     "reminderEmail"
     ]
    },
    {
@@ -1627,7 +1633,8 @@ window.SETUP_LEVELS={
       "invoicingWizard",
       "settlementFold",
       "carnets",
-      "guestPasses"
+      "guestPasses",
+      "reminderEmail"
      ],
      "needs": {}
     }

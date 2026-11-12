@@ -265,5 +265,7 @@
   "featureGuestPassesTitle": "Pases de invitado en recepción",
   "featureGuestPassesDesc": "Vender un pase de día o por horas a un invitado que no es miembro: se le reserva el puesto, se le cobra y factura el pase y se puede registrar un pago. Desactivado: no se vende ningún pase; los pases anteriores y sus facturas se conservan.",
   "featurePlaceBookingTitle": "Plazas reservables",
-  "featurePlaceBookingDesc": "El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan."
+  "featurePlaceBookingDesc": "El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan.",
+  "featureReminderEmailTitle": "Recordatorios por correo electrónico",
+  "featureReminderEmailDesc": "Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación."
 }

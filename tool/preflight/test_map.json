@@ -23,6 +23,24 @@
     },
     {
       "patterns": [
+        "lib/features/workspace/domain/workspace_feature.dart",
+        "lib/features/workspace/domain/feature_manifest*.dart"
+      ],
+      "tests": [
+        "test/parity/vat_forms_availability_parity_test.dart",
+        "test/tool/project_scale_test.dart",
+        "test/core/demo/demo_scenarios_test.dart",
+        "test/features/workspace/setup_levels_test.dart",
+        "test/features/task_recorder/features_switch_journey_test.dart",
+        "test/features/workspace/features_screen_test.dart",
+        "test/features/workspace/workspace_feature_test.dart",
+        "test/lint/setup_levels_web_test.dart",
+        "test/lint/setup_step_coverage_test.dart"
+      ],
+      "note": "#3673 -- a new WorkspaceFeature also needs: its setup level and its setup step (setup_step_reach.dart; then build_setup_l10n), a Demo scenario or a left-off reason, the recorder's feature keys, the features-by-country golden (UPDATE_PARITY_GOLDENS=1), the default-off pins, and the template migration (supabase/templates + build_template_field_registry_sql)"
+    },
+    {
+      "patterns": [
         "tool/**"
       ],
       "tests": [

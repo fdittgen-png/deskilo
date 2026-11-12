@@ -8609,6 +8609,18 @@ abstract class AppLocalizations {
   /// **'What kind of business is it?'**
   String get businessKindTitle;
 
+  /// #3673 the business's one e-mail sender
+  ///
+  /// In en, this message translates to:
+  /// **'The sender of your purchase orders and reminders by e-mail'**
+  String get businessMailSenderSubtitle;
+
+  /// #3673 the business's one e-mail sender
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail sending, in the business settings'**
+  String get businessMailSenderWhere;
+
   /// Money-tab button opening the package buy sheet (package-plan members)
   ///
   /// In en, this message translates to:
@@ -17756,6 +17768,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Region & formats'**
   String get featureRegionalFormatsTitle;
+
+  /// #3673 the reminders-by-e-mail feature
+  ///
+  /// In en, this message translates to:
+  /// **'A payment reminder can also be sent by e-mail, from the server, with your business\'s own sender, in the customer\'s document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only.'**
+  String get featureReminderEmailDesc;
+
+  /// #3673 the reminders-by-e-mail feature
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders by e-mail'**
+  String get featureReminderEmailTitle;
 
   /// #864 - feature description
   ///

@@ -265,5 +265,7 @@
   "featureGuestPassesTitle": "Gästepässe am Empfang",
   "featureGuestPassesDesc": "Einem Gast, der kein Mitglied ist, einen Tages- oder Stundenpass verkaufen: Der Platz wird für ihn gebucht, der Pass wird ihm berechnet und in Rechnung gestellt, und eine Zahlung kann erfasst werden. Aus: Es wird kein Pass verkauft; frühere Pässe und ihre Rechnungen bleiben.",
   "featurePlaceBookingTitle": "Buchbare Plätze",
-  "featurePlaceBookingDesc": "Das Unternehmen hat Plätze, die gebucht werden: Sitzplätze, Tische, Räume und einen Raumplan. Aus: Plan, Reservierungen und alle Platzfunktionen sind ausgeblendet, für ein Studio, eine Praxis oder einen Salon, der Leistungen verkauft, keine Plätze. Frühere Buchungen bleiben."
+  "featurePlaceBookingDesc": "Das Unternehmen hat Plätze, die gebucht werden: Sitzplätze, Tische, Räume und einen Raumplan. Aus: Plan, Reservierungen und alle Platzfunktionen sind ausgeblendet, für ein Studio, eine Praxis oder einen Salon, der Leistungen verkauft, keine Plätze. Frühere Buchungen bleiben.",
+  "featureReminderEmailTitle": "Mahnungen per E-Mail",
+  "featureReminderEmailDesc": "Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung."
 }

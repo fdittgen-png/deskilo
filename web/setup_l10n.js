@@ -1382,6 +1382,10 @@ window.SETUP_L10N={
    "placeBooking": [
     "Places to book",
     "The business has places people book: seats, desks, rooms and a floor plan. Off: the plan, reservations and every place feature are hidden, for a studio, practice or salon that sells services, not places. Earlier bookings stay."
+   ],
+   "reminderEmail": [
+    "Reminders by e-mail",
+    "A payment reminder can also be sent by e-mail, from the server, with your business's own sender, in the customer's document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only."
    ]
   },
   "process": {
@@ -3156,6 +3160,10 @@ window.SETUP_L10N={
    "placeBooking": [
     "Places à réserver",
     "L'activité a des places que l'on réserve : sièges, bureaux, salles et un plan. Désactivé : le plan, les réservations et toutes les fonctions liées aux places sont masqués, pour un studio, un cabinet ou un salon qui vend des prestations, pas des places. Les réservations passées restent."
+   ],
+   "reminderEmail": [
+    "Relances par e-mail",
+    "Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n'arrivent que dans le fil et par notification."
    ]
   },
   "process": {
@@ -4930,6 +4938,10 @@ window.SETUP_L10N={
    "placeBooking": [
     "Buchbare Plätze",
     "Das Unternehmen hat Plätze, die gebucht werden: Sitzplätze, Tische, Räume und einen Raumplan. Aus: Plan, Reservierungen und alle Platzfunktionen sind ausgeblendet, für ein Studio, eine Praxis oder einen Salon, der Leistungen verkauft, keine Plätze. Frühere Buchungen bleiben."
+   ],
+   "reminderEmail": [
+    "Mahnungen per E-Mail",
+    "Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung."
    ]
   },
   "process": {
@@ -6704,6 +6716,10 @@ window.SETUP_L10N={
    "placeBooking": [
     "Plazas reservables",
     "El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan."
+   ],
+   "reminderEmail": [
+    "Recordatorios por correo electrónico",
+    "Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación."
    ]
   },
   "process": {
@@ -8478,6 +8494,10 @@ window.SETUP_L10N={
    "placeBooking": [
     "Posti prenotabili",
     "L'attività ha posti che si prenotano: sedute, scrivanie, sale e una planimetria. Disattivato: la planimetria, le prenotazioni e tutte le funzioni dei posti sono nascoste, per uno studio, un ambulatorio o un salone che vende servizi, non posti. Le prenotazioni passate restano."
+   ],
+   "reminderEmail": [
+    "Solleciti via e-mail",
+    "Un sollecito di pagamento può partire anche via e-mail, dal server, con il mittente della sua attività, nella lingua dei documenti del cliente. Ogni livello parte una sola volta; la risposta del fornitore è conservata con il sollecito. Disattivato: i solleciti arrivano solo nel feed e come notifica."
    ]
   },
   "process": {

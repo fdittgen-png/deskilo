@@ -37,6 +37,10 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.recordingPrivacy:
       'filming mode would replace the invented cast by other invented '
       'people on every screen',
+  // #3673 — reminders by e-mail leave from the server.
+  WorkspaceFeature.reminderEmail:
+      'a reminder e-mail leaves from the server through the business\'s own '
+      'provider; the Demo sends no e-mail',
 };
 
 /// ws-1: every feature on, except [demoFeaturesLeftOff] and anything whose
