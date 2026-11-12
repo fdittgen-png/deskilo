@@ -809,5 +809,13 @@
   "featureReminderEmailDesc": "A payment reminder can also be sent by e-mail, from the server, with your business's own sender, in the customer's document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only.",
   "@featureReminderEmailDesc": {
     "description": "#3673 the reminders-by-e-mail feature"
+  },
+  "featureInvoiceEmailTitle": "Invoices by e-mail",
+  "@featureInvoiceEmailTitle": {
+    "description": "#3673 feature switch: featureInvoiceEmailTitle"
+  },
+  "featureInvoiceEmailDesc": "An issued invoice can be sent by e-mail from the server, with the business's own sender, to the customer's contact address, in the customer's document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before.",
+  "@featureInvoiceEmailDesc": {
+    "description": "#3673 feature switch: featureInvoiceEmailDesc"
   }
 }

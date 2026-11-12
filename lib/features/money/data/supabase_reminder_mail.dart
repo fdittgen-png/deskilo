@@ -3,7 +3,6 @@
 // #3673 — reminders by e-mail against the server: the target and the
 // decision are RPCs (0726), the send is the `send-reminder-email` function,
 // which holds the key.
-import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/reminder_mail.dart';
@@ -89,9 +88,9 @@ class SupabaseReminderMail implements ReminderMail {
     return ReminderMailSend.fromJson(response.data);
   }
 
-  /// The function's refusals (send-reminder-email): 409 is the fence, any
-  /// other 4xx a refusal; a 5xx may not have reached the database.
-  @visibleForTesting
+  /// The function's refusals (send-reminder-email, and send-invoice-email
+  /// alike): 409 is the fence, any other 4xx a refusal; a 5xx may not have
+  /// reached the database.
   static ReminderMailRefusal? refusalOf(FunctionException e) {
     final details = e.details;
     final body = details is Map ? details : const <String, Object?>{};

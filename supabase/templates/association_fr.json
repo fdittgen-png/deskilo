@@ -120,6 +120,7 @@
         "inputVat": false,
         "instanceWizard": false,
         "invoiceAddressWindow": false,
+        "invoiceEmail": false,
         "invoiceJourney": false,
         "invoicePdfTemplate": false,
         "invoiceSettlement": false,

@@ -13,7 +13,7 @@ export type SendOrder = {
   fileName: string;
   attemptId: string;
   /** What is sent, in the idempotency key: a purchase order by default. */
-  kind?: "purchase-order" | "payment-reminder";
+  kind?: "purchase-order" | "payment-reminder" | "invoice";
 };
 
 export type OrderMailResult =

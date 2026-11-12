@@ -372,6 +372,30 @@
   "amenityMonitor": "Écran",
   "amenityStandingDesk": "Bureau debout",
   "amenityWindow": "Côté fenêtre",
+  "amountFieldNegative": "Un montant inférieur à zéro n'est pas permis ici.",
+  "@amountFieldNegative": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNotANumber": "Ce n'est pas un montant. Utilisez des chiffres et un seul séparateur décimal.",
+  "@amountFieldNotANumber": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldRequired": "Saisissez un montant.",
+  "@amountFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} n'a pas de décimales.} =1{{currency} a une décimale.} other{{currency} a {digits} décimales.}}",
+  "@amountFieldTooManyDecimals": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "digits": {
+        "type": "int"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "applicationAcceptedVote": "A accepté cette demande",
   "@applicationAcceptedVote": {
@@ -2907,6 +2931,10 @@
   "bookChartTitle": "Plan comptable · {site}",
   "bookCurrency": "Devise de tenue",
   "bookEffectiveFrom": "En vigueur à partir du {date}",
+  "bookEffectiveFromLabel": "En vigueur à partir du",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookExternalOther": "Autre…",
   "bookExternalSystem": "Logiciel qui fait foi",
   "bookFiscalPreview": "Exercice {label} : {start} – {end}",
@@ -4227,6 +4255,9 @@
   "customerStoryNow": "Maintenant : {words}",
   "customerStoryPaid": "Facture {number} payée",
   "customerStoryReminders": "{count, plural, =1{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
+  "dashboardTrendDown": "En baisse",
+  "dashboardTrendFlat": "Inchangé",
+  "dashboardTrendUp": "En hausse",
   "dataReportArchived": "Archivé",
   "dataReportColumnAttended": "Présences",
   "dataReportColumnCancelled": "Annulées",
@@ -4250,6 +4281,35 @@
   "dataReportPartPurchases": "Achats et fournisseurs",
   "dataReportSubtitle": "Membres, réservations, factures, paiements, achats et le plan avec ses prix, avec les totaux, à lire ou à imprimer.",
   "dataReportTitle": "Rapport de données de l’espace",
+  "dateFieldImpossible": "Cette date n'existe pas.",
+  "@dateFieldImpossible": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldMalformed": "Ce n'est pas une date. Saisissez le jour, le mois et l'année dans votre format de date, avec une année à quatre chiffres, ou en huit chiffres.",
+  "@dateFieldMalformed": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldOutOfRange": "Cette date est en dehors des dates permises ici.",
+  "@dateFieldOutOfRange": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldReadAs": "Lu comme {date}",
+  "@dateFieldReadAs": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFieldRequired": "Saisissez une date.",
+  "@dateFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldTwoDigitYear": "Saisissez l'année avec quatre chiffres.",
+  "@dateFieldTwoDigitYear": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
   "datevAccountLength": "Longueur des comptes (Sachkontenlänge)",
   "datevAccountsIntro": "Votre comptable vous donne les numéros de conseil et de dossier. DATEV refuse un fichier dont les numéros ne correspondent pas — c’est ce qui l’empêche d’atterrir dans les comptes d’une autre société.",
   "@datevAccountsIntro": {
@@ -4698,7 +4758,6 @@
   "deskNavCollapse": "Réduire le menu",
   "deskNavExpand": "Élargir le menu",
   "deskSupplementLabel": "Réservations de table",
-  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Vider le journal",
   "developerEmpty": "Aucune entrée de journal pour l'instant.",
   "developerExport": "Exporter le journal",
@@ -6655,6 +6714,8 @@
   "@featureInvoiceAddressWindowDesc": {
     "description": "Features screen description for the #869 window-envelope address placement flag"
   },
+  "featureInvoiceEmailDesc": "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant.",
+  "featureInvoiceEmailTitle": "Factures par e-mail",
   "featureInvoiceJourneyDesc": "Chaque facture montre où elle en est — Émise, Paiement, Confirmation, Close — et à qui est le tour : le membre paie, un admin confirme le paiement déclaré, l'émetteur le rapproche, les valideurs décident. Le hub des émetteurs ajoute un bandeau d'étapes avec les compteurs et une explication « Comment ça marche ».",
   "featureInvoiceJourneyTitle": "Le parcours d'une facture",
   "featureInvoicePdfTemplate": "Modèle de PDF de facture",
@@ -8573,6 +8634,102 @@
         "type": "String"
       }
     }
+  },
+  "invoiceEmailFailed": "La facture n'a pas pu être envoyée par e-mail. Rien n'a été envoyé.",
+  "@invoiceEmailFailed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailFailed"
+  },
+  "invoiceEmailHeading": "Par e-mail",
+  "@invoiceEmailHeading": {
+    "description": "#3673 invoices by e-mail: invoiceEmailHeading"
+  },
+  "invoiceEmailNoLanguage": "La langue des documents du client n'est pas connue : la facture n'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la facture.",
+  "@invoiceEmailNoLanguage": {
+    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
+  },
+  "invoiceEmailRefused": "L'e-mail a été refusé : {reason}. Rien n'a été envoyé.",
+  "@invoiceEmailRefused": {
+    "description": "#3673 invoices by e-mail: invoiceEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailSendAgain": "Renvoyer",
+  "@invoiceEmailSendAgain": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSendAgain"
+  },
+  "invoiceEmailSentOn": "Envoyée par e-mail à {recipient} le {date}",
+  "@invoiceEmailSentOn": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSentOn",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextCredit": "Veuillez trouver ci-joint l'avoir {number} de {amount}.",
+  "@invoiceEmailTextCredit": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextCredit",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwed": "Veuillez trouver ci-joint la facture {number}. Montant restant dû : {amount}.",
+  "@invoiceEmailTextOwed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwed",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwedBy": "Veuillez trouver ci-joint la facture {number}. Montant restant dû : {amount}, à régler au plus tard le {due}.",
+  "@invoiceEmailTextOwedBy": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwedBy",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextPaid": "Veuillez trouver ci-joint la facture {number} de {amount}. Elle est réglée : rien n'est dû.",
+  "@invoiceEmailTextPaid": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextPaid",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailUnconfirmed": "Aucune réponse confirmée. Vérifiez auprès du client avant de décider si elle est arrivée.",
+  "@invoiceEmailUnconfirmed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailUnconfirmed"
+  },
+  "invoiceEmailVoided": "Une facture annulée n'est pas envoyée par e-mail",
+  "@invoiceEmailVoided": {
+    "description": "#3673 invoices by e-mail: invoiceEmailVoided"
   },
   "invoiceEssentialsRefused": "La facture n'a pas été émise : des informations obligatoires manquent.",
   "@invoiceEssentialsRefused": {
@@ -21476,6 +21633,8 @@
   "whatsappSaveFailed": "Impossible d'enregistrer le numéro WhatsApp",
   "whatsappSaved": "Numéro WhatsApp enregistré",
   "whatsappTitle": "WhatsApp",
+  "windowTitle": "{place} — {business} — {app}",
+  "windowTitleNoBusiness": "{place} — {app}",
   "wizardBack": "Retour",
   "wizardCloseHint": "Un membre avec plusieurs factures ouvertes peut n'en payer QU'UNE ; le reste d'une facture partiellement payée peut être abandonné ; un avoir est remboursé. Chacun passe par la validation.",
   "wizardCloseNone": "Rien à regrouper, abandonner ou rembourser.",

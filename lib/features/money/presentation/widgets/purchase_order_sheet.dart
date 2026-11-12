@@ -11,12 +11,11 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
+import '../../../../core/format/amount_input.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -43,7 +42,12 @@ class PurchaseOrderSheet {
     ];
     final items = await ref.read(servicesProvider.future);
     if (!context.mounted) return false;
-    final form = _OrderForm(order, items);
+    final form = _OrderForm(
+      order,
+      items,
+      order?.currency ?? appFormatOf(context).currencyCode,
+      appFormatOf(context).locale,
+    );
     return showAppFormSheet(
       context,
       AppFormSheet(
@@ -78,7 +82,7 @@ class PurchaseOrderSheet {
 /// The form's state: its controllers, the chosen supplier, date and items,
 /// and the request id the current entries go under.
 class _OrderForm {
-  _OrderForm(this.order, this.items)
+  _OrderForm(this.order, this.items, this.currency, String locale)
     : supplierId = order?.supplierId,
       expectedOn = order?.expectedOn,
       lines = order == null ? 1 : order.lines.length,
@@ -95,16 +99,24 @@ class _OrderForm {
           'desc-$i': l.description,
           'qty-$i': _qtyText(l.quantity),
           'unit-$i': l.unit,
-          'price-$i': centsToMajor(l.unitPriceCents),
+          'price-$i': amountInputText(
+            l.unitPriceCents,
+            currency: currency,
+            locale: locale,
+          ),
           'vat-$i': l.vatRatePercent == null ? '' : _qtyText(l.vatRatePercent!),
         },
       });
 
   final PurchaseOrder? order;
   final List<ServiceItem> items;
+
+  /// The order's currency (a new order's is the space's).
+  final String currency;
   final FormControllers fields;
   String? supplierId;
   DateTime? expectedOn;
+  DateInputProblem? expectedProblem;
   int lines;
   final List<String?> itemIds;
 
@@ -135,7 +147,13 @@ class _OrderForm {
           description: fields['desc-$i'].text,
           quantity: _number(fields['qty-$i'].text) ?? 0,
           unit: fields['unit-$i'].text,
-          unitPriceCents: parseMinorInput(fields['price-$i'].text, locale: locale) ?? -1,
+          unitPriceCents: readAmountInput(
+                fields['price-$i'].text,
+                locale: locale,
+                currency: currency,
+                allowNegative: false,
+              ).minor ??
+              -1,
           vatRatePercent: fields['vat-$i'].text.trim().isEmpty
               ? null
               : (_number(fields['vat-$i'].text) ?? -1),
@@ -157,6 +175,9 @@ class _OrderForm {
   FieldErrors errors(AppLocalizations l10n, String locale) {
     final d = draft(locale);
     final out = <String, String>{};
+    if (expectedProblem case final problem?) {
+      out['expected'] = dateInputProblemText(l10n, problem);
+    }
     if (d.problems.contains(PurchaseOrderProblem.noSupplier)) {
       out['supplier'] = l10n.purchaseOrderNeedsSupplier;
     }
@@ -189,7 +210,6 @@ class _OrderForm {
     List<Supplier> suppliers,
     VoidCallback refresh,
   ) {
-    final material = MaterialLocalizations.of(context);
     return [
       DropdownButtonFormField<String?>(
         key: const ValueKey('purchase-order-supplier'),
@@ -212,29 +232,18 @@ class _OrderForm {
         },
       ),
       const FormGap(),
-      OutlinedButton(
+      AppDateField(
         key: const ValueKey('purchase-order-expected'),
-        onPressed: () async {
-          final picked = await showDatePicker(
-            context: context,
-            initialDate: expectedOn ?? ref.read(clockProvider).now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-            helpText: l10n.purchaseOrderPickDate,
-          );
-          if (picked != null) {
-            expectedOn = picked;
-            refresh();
-          }
+        fieldKey: 'expected',
+        label: l10n.purchaseOrderExpected,
+        value: expectedOn,
+        first: DateTime(2000),
+        last: DateTime(2100),
+        pickerHelpText: l10n.purchaseOrderPickDate,
+        onChanged: (read) {
+          expectedOn = read.date;
+          expectedProblem = read.problem;
         },
-        child: Text(
-          expectedOn == null
-              ? l10n.purchaseOrderExpected
-              : l10n.labelWithValue(
-                    l10n.purchaseOrderExpected,
-                    material.formatMediumDate(expectedOn!),
-                  ),
-        ),
       ),
       const FormGap(),
       AppTextField(
@@ -339,12 +348,13 @@ class _OrderForm {
       label: l10n.purchaseOrderUnit,
       maxLength: 20,
     ),
-    AppTextField(
+    AppAmountField(
       key: ValueKey('purchase-order-price-$i'),
       controller: fields['price-$i'],
       fieldKey: 'price-$i',
       label: l10n.purchaseOrderUnitPrice,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      currency: currency,
+      allowNegative: false,
     ),
     AppTextField(
       key: ValueKey('purchase-order-vat-$i'),

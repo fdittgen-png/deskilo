@@ -408,7 +408,7 @@ void main() {
       await tester.ensureVisible(
         find.byKey(const ValueKey('purchase-fx-date')),
       );
-      await tester.tap(find.byKey(const ValueKey('purchase-fx-date')));
+      await tester.tap(find.byKey(const ValueKey('purchase-fx-date-pick')));
       await _step(tester);
       await tester.tap(find.text('OK'));
       await _step(tester);

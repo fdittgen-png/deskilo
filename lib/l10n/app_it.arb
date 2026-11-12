@@ -372,6 +372,30 @@
   "amenityMonitor": "Monitor",
   "amenityStandingDesk": "Scrivania in piedi",
   "amenityWindow": "Vicino alla finestra",
+  "amountFieldNegative": "Qui non è consentito un importo inferiore a zero.",
+  "@amountFieldNegative": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNotANumber": "Non è un importo. Usi cifre e un solo separatore decimale.",
+  "@amountFieldNotANumber": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldRequired": "Inserisca un importo.",
+  "@amountFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} non ha decimali.} =1{{currency} ha un decimale.} other{{currency} ha {digits} decimali.}}",
+  "@amountFieldTooManyDecimals": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "digits": {
+        "type": "int"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "applicationAcceptedVote": "Ha approvato questa richiesta",
   "@applicationAcceptedVote": {
@@ -2907,6 +2931,10 @@
   "bookChartTitle": "Piano dei conti · {site}",
   "bookCurrency": "Valuta funzionale",
   "bookEffectiveFrom": "In vigore dal {date}",
+  "bookEffectiveFromLabel": "In vigore dal",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookExternalOther": "Altro…",
   "bookExternalSystem": "Sistema che fa fede",
   "bookFiscalPreview": "Esercizio {label}: {start} – {end}",
@@ -4227,6 +4255,9 @@
   "customerStoryNow": "Adesso: {words}",
   "customerStoryPaid": "Fattura {number} pagata",
   "customerStoryReminders": "{count, plural, =1{Sollecito condiviso per {number}} other{{count} solleciti condivisi per {number}}}",
+  "dashboardTrendDown": "In calo",
+  "dashboardTrendFlat": "Invariato",
+  "dashboardTrendUp": "In aumento",
   "dataReportArchived": "Archiviato",
   "dataReportColumnAttended": "Presenze",
   "dataReportColumnCancelled": "Annullate",
@@ -4250,6 +4281,35 @@
   "dataReportPartPurchases": "Acquisti e fornitori",
   "dataReportSubtitle": "Membri, prenotazioni, fatture, pagamenti, acquisti e la pianta con i suoi prezzi, con i totali, da leggere o stampare.",
   "dataReportTitle": "Rapporto dati dello spazio",
+  "dateFieldImpossible": "Questa data non esiste.",
+  "@dateFieldImpossible": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldMalformed": "Non è una data. Inserisca giorno, mese e anno nel suo formato di data, con l'anno a quattro cifre, oppure come otto cifre.",
+  "@dateFieldMalformed": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldOutOfRange": "Questa data è fuori dalle date consentite qui.",
+  "@dateFieldOutOfRange": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldReadAs": "Letto come {date}",
+  "@dateFieldReadAs": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFieldRequired": "Inserisca una data.",
+  "@dateFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldTwoDigitYear": "Inserisca l'anno con quattro cifre.",
+  "@dateFieldTwoDigitYear": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
   "datevAccountLength": "Lunghezza dei conti (Sachkontenlänge)",
   "datevAccountsIntro": "I numeri di consulente e di cliente glieli dà il commercialista. DATEV rifiuta un file con numeri non corrispondenti — ed è proprio questo che lo tiene fuori dai libri dell’azienda sbagliata.",
   "@datevAccountsIntro": {
@@ -4698,7 +4758,6 @@
   "deskNavCollapse": "Restringi il menu",
   "deskNavExpand": "Allarga il menu",
   "deskSupplementLabel": "Prenotazioni di tavolo",
-  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Svuota registro",
   "developerEmpty": "Ancora nessuna voce nel registro.",
   "developerExport": "Esporta registro",
@@ -6655,6 +6714,8 @@
   "@featureInvoiceAddressWindowDesc": {
     "description": "Features screen description for the #869 window-envelope address placement flag"
   },
+  "featureInvoiceEmailDesc": "Una fattura emessa può essere inviata via e-mail dal server, con il mittente dell'azienda, all'indirizzo di contatto del cliente, nella lingua dei suoi documenti. Ogni fattura viene inviata una volta; inviarla di nuovo è un atto deliberato, con una propria traccia. Disattivato: le fatture si condividono o si scaricano come prima.",
+  "featureInvoiceEmailTitle": "Fatture via e-mail",
   "featureInvoiceJourneyDesc": "Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l'emittente lo abbina, i validatori decidono. L'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».",
   "featureInvoiceJourneyTitle": "Il percorso di una fattura",
   "featureInvoicePdfTemplate": "Modello PDF della fattura",
@@ -8573,6 +8634,102 @@
         "type": "String"
       }
     }
+  },
+  "invoiceEmailFailed": "Non è stato possibile inviare la fattura via e-mail. Non è stato inviato nulla.",
+  "@invoiceEmailFailed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailFailed"
+  },
+  "invoiceEmailHeading": "Via e-mail",
+  "@invoiceEmailHeading": {
+    "description": "#3673 invoices by e-mail: invoiceEmailHeading"
+  },
+  "invoiceEmailNoLanguage": "La lingua dei documenti del cliente non è nota, quindi la fattura non è stata inviata via e-mail. Scegli la sua lingua o condividi la fattura.",
+  "@invoiceEmailNoLanguage": {
+    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
+  },
+  "invoiceEmailRefused": "L'e-mail è stata rifiutata: {reason}. Non è stato inviato nulla.",
+  "@invoiceEmailRefused": {
+    "description": "#3673 invoices by e-mail: invoiceEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailSendAgain": "Invia di nuovo",
+  "@invoiceEmailSendAgain": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSendAgain"
+  },
+  "invoiceEmailSentOn": "Inviata via e-mail a {recipient} il {date}",
+  "@invoiceEmailSentOn": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSentOn",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextCredit": "In allegato la nota di credito {number} di {amount}.",
+  "@invoiceEmailTextCredit": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextCredit",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwed": "In allegato la fattura {number}. Importo ancora dovuto: {amount}.",
+  "@invoiceEmailTextOwed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwed",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwedBy": "In allegato la fattura {number}. Importo ancora dovuto: {amount}, con scadenza il {due}.",
+  "@invoiceEmailTextOwedBy": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwedBy",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextPaid": "In allegato la fattura {number} di {amount}. È pagata: non è dovuto nulla.",
+  "@invoiceEmailTextPaid": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextPaid",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailUnconfirmed": "Nessuna risposta confermata. Verifica con il cliente prima di decidere se è arrivata.",
+  "@invoiceEmailUnconfirmed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailUnconfirmed"
+  },
+  "invoiceEmailVoided": "Una fattura annullata non viene inviata via e-mail",
+  "@invoiceEmailVoided": {
+    "description": "#3673 invoices by e-mail: invoiceEmailVoided"
   },
   "invoiceEssentialsRefused": "La fattura non è stata emessa: mancano dati obbligatori.",
   "@invoiceEssentialsRefused": {
@@ -21476,6 +21633,8 @@
   "whatsappSaveFailed": "Impossibile salvare il numero WhatsApp",
   "whatsappSaved": "Numero WhatsApp salvato",
   "whatsappTitle": "WhatsApp",
+  "windowTitle": "{place} — {business} — {app}",
+  "windowTitleNoBusiness": "{place} — {app}",
   "wizardBack": "Indietro",
   "wizardCloseHint": "Un membro con più fatture aperte può pagarne UNA; a una fattura pagata in parte si può stralciare il resto; una nota di credito viene rimborsata. Ognuna passa dalla convalida.",
   "wizardCloseNone": "Niente da raggruppare, stralciare o rimborsare.",

@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
+import '../format/amount_input.dart';
 import '../format/cents.dart';
 import '../format/decimal_input.dart';
 import '../settings/setting_defaults.g.dart';
@@ -135,6 +136,19 @@ class AppFormat {
 
   /// #3487 — a typed amount in minor units (`parseMinorInput`).
   int? parseMinor(String raw) => parseMinorInput(raw, locale: locale);
+
+  /// A typed amount of [currency] (the record's) in its minor units, or why
+  /// it is refused (`readAmountInput`).
+  AmountRead readAmount(
+    String raw, {
+    required String currency,
+    required bool allowNegative,
+  }) => readAmountInput(
+    raw,
+    locale: locale,
+    currency: currency,
+    allowNegative: allowNegative,
+  );
 
   // ── dates and times ──────────────────────────────────────────────
 

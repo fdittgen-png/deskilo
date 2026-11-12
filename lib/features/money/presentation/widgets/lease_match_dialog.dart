@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -63,11 +62,21 @@ class _MatchDialogState extends ConsumerState<_MatchDialog> {
   void _pick(String? id) => setState(() {
     _purchaseId = id;
     _lineNo = 1;
-    _amount.text = centsToMajor(widget.occurrence.remainingCents);
+    _amount.text = amountInputText(
+      widget.occurrence.remainingCents,
+      currency: widget.currencyCode,
+      locale: appFormatOf(context).locale,
+    );
   });
 
   Future<void> _save(PurchaseDetail detail) async {
-    final cents = appFormatOf(context).parseMinor(_amount.text);
+    final cents = appFormatOf(context)
+        .readAmount(
+          _amount.text,
+          currency: widget.currencyCode,
+          allowNegative: false,
+        )
+        .minor;
     if (cents == null || cents <= 0 || cents > widget.occurrence.remainingCents) {
       setState(() => _invalid = true);
       return;
@@ -183,13 +192,14 @@ class _MatchDialogState extends ConsumerState<_MatchDialog> {
                 onChanged: (v) => setState(() => _lineNo = v ?? _lineNo),
               ),
             if (detail != null)
-              AppTextField(
+              AppAmountField(
                 key: const ValueKey('match-amount'),
                 controller: _amount,
                 label: l10n.leaseMatchAmount,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+                currency: widget.currencyCode,
+                allowNegative: false,
+                isRequired: true,
+                showProblem: _invalid,
               ),
             if (_invalid)
               Padding(

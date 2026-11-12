@@ -1,0 +1,99 @@
+{
+  "@@locale": "es",
+  "invoiceEmailTextOwed": "Adjuntamos la factura {number}. Importe pendiente: {amount}.",
+  "@invoiceEmailTextOwed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwed",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwedBy": "Adjuntamos la factura {number}. Importe pendiente: {amount}, con vencimiento el {due}.",
+  "@invoiceEmailTextOwedBy": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwedBy",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextPaid": "Adjuntamos la factura {number} por {amount}. Está pagada: no se debe nada.",
+  "@invoiceEmailTextPaid": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextPaid",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextCredit": "Adjuntamos la nota de crédito {number} por {amount}.",
+  "@invoiceEmailTextCredit": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextCredit",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailHeading": "Por correo",
+  "@invoiceEmailHeading": {
+    "description": "#3673 invoices by e-mail: invoiceEmailHeading"
+  },
+  "invoiceEmailSendAgain": "Volver a enviar",
+  "@invoiceEmailSendAgain": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSendAgain"
+  },
+  "invoiceEmailSentOn": "Enviada por correo a {recipient} el {date}",
+  "@invoiceEmailSentOn": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSentOn",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailVoided": "Una factura anulada no se envía por correo",
+  "@invoiceEmailVoided": {
+    "description": "#3673 invoices by e-mail: invoiceEmailVoided"
+  },
+  "invoiceEmailRefused": "El correo fue rechazado: {reason}. No se envió nada.",
+  "@invoiceEmailRefused": {
+    "description": "#3673 invoices by e-mail: invoiceEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailUnconfirmed": "No llegó ninguna respuesta confirmada. Consulte con el cliente antes de decidir si llegó.",
+  "@invoiceEmailUnconfirmed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailUnconfirmed"
+  },
+  "invoiceEmailFailed": "No se pudo enviar la factura por correo. No se envió nada.",
+  "@invoiceEmailFailed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailFailed"
+  },
+  "invoiceEmailNoLanguage": "No se conoce el idioma de documentos del cliente, así que la factura no se envió por correo. Elija su idioma o comparta la factura.",
+  "@invoiceEmailNoLanguage": {
+    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
+  }
+}

@@ -1496,6 +1496,30 @@ abstract class AppLocalizations {
   /// **'Window seat'**
   String get amenityWindow;
 
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'An amount below zero is not allowed here.'**
+  String get amountFieldNegative;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Not an amount. Use digits and one decimal separator.'**
+  String get amountFieldNotANumber;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount.'**
+  String get amountFieldRequired;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'{digits, plural, =0{{currency} has no decimals.} =1{{currency} has one decimal.} other{{currency} has {digits} decimals.}}'**
+  String amountFieldTooManyDecimals(int digits, String currency);
+
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
   ///
   /// In en, this message translates to:
@@ -7679,6 +7703,12 @@ abstract class AppLocalizations {
   /// **'Takes effect from {date}'**
   String bookEffectiveFrom(String date);
 
+  /// #3612 the label of the typed or picked date a book takes effect from
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect from'**
+  String get bookEffectiveFromLabel;
+
   /// #2577 the book software picker: a software the catalogue does not list, typed by the person
   ///
   /// In en, this message translates to:
@@ -10865,6 +10895,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
   String customerStoryReminders(int count, String number);
 
+  /// Said by a screen reader for the arrow beside a figure's change: the figure fell since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Down'**
+  String get dashboardTrendDown;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure is the same as in the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Unchanged'**
+  String get dashboardTrendFlat;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure rose since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Up'**
+  String get dashboardTrendUp;
+
   /// #2862 data report: dataReportArchived
   ///
   /// In en, this message translates to:
@@ -11002,6 +11050,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace data report'**
   String get dataReportTitle;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'This date does not exist.'**
+  String get dateFieldImpossible;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Not a date. Type day, month and year in your date format, with a four-digit year, or as eight digits.'**
+  String get dateFieldMalformed;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'This date is outside the dates allowed here.'**
+  String get dateFieldOutOfRange;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Read as {date}'**
+  String dateFieldReadAs(String date);
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a date.'**
+  String get dateFieldRequired;
+
+  /// #3612 desk entry: the typed date and amount fields of the form kit
+  ///
+  /// In en, this message translates to:
+  /// **'Type the year with four digits.'**
+  String get dateFieldTwoDigitYear;
 
   /// DATEV export dialog (#2375): the Sachkontenlänge of the chart
   ///
@@ -11740,12 +11824,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Desk reservations'**
   String get deskSupplementLabel;
-
-  /// #3773 the desk window's (or browser tab's) title: the place on screen, then the business; a language may order them
-  ///
-  /// In en, this message translates to:
-  /// **'{place} — {business}'**
-  String deskWindowTitle(String place, String business);
 
   /// App-bar action emptying the trace buffer and file
   ///
@@ -16976,6 +17054,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.'**
   String get featureInvoiceAddressWindowDesc;
+
+  /// #3673 feature switch: featureInvoiceEmailDesc
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice can be sent by e-mail from the server, with the business\'s own sender, to the customer\'s contact address, in the customer\'s document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before.'**
+  String get featureInvoiceEmailDesc;
+
+  /// #3673 feature switch: featureInvoiceEmailTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices by e-mail'**
+  String get featureInvoiceEmailTitle;
 
   /// Shown as a text in feature copy (workspace).
   ///
@@ -22934,6 +23024,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ready — nothing EN 16931 requires is missing, and this format passes the official validator ({validator}).'**
   String invoiceEInvoiceValidated(String validator);
+
+  /// #3673 invoices by e-mail: invoiceEmailFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice could not be e-mailed. Nothing was sent.'**
+  String get invoiceEmailFailed;
+
+  /// #3673 invoices by e-mail: invoiceEmailHeading
+  ///
+  /// In en, this message translates to:
+  /// **'By e-mail'**
+  String get invoiceEmailHeading;
+
+  /// #3673 invoices by e-mail: invoiceEmailNoLanguage
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s document language is not known, so the invoice was not e-mailed. Choose their language, or share the invoice.'**
+  String get invoiceEmailNoLanguage;
+
+  /// #3673 invoices by e-mail: invoiceEmailRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail was refused: {reason}. Nothing was sent.'**
+  String invoiceEmailRefused(String reason);
+
+  /// #3673 invoices by e-mail: invoiceEmailSendAgain
+  ///
+  /// In en, this message translates to:
+  /// **'Send again'**
+  String get invoiceEmailSendAgain;
+
+  /// #3673 invoices by e-mail: invoiceEmailSentOn
+  ///
+  /// In en, this message translates to:
+  /// **'E-mailed to {recipient} on {date}'**
+  String invoiceEmailSentOn(String recipient, String date);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextCredit
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached credit note {number} for {amount}.'**
+  String invoiceEmailTextCredit(String number, String amount);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextOwed
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached invoice {number}. Amount still owed: {amount}.'**
+  String invoiceEmailTextOwed(String number, String amount);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextOwedBy
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached invoice {number}. Amount still owed: {amount}, due on {due}.'**
+  String invoiceEmailTextOwedBy(String number, String amount, String due);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextPaid
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached invoice {number} for {amount}. It is paid: nothing is owed.'**
+  String invoiceEmailTextPaid(String number, String amount);
+
+  /// #3673 invoices by e-mail: invoiceEmailUnconfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed answer came back. Check with the customer before deciding whether it arrived.'**
+  String get invoiceEmailUnconfirmed;
+
+  /// #3673 invoices by e-mail: invoiceEmailVoided
+  ///
+  /// In en, this message translates to:
+  /// **'A voided invoice is not e-mailed'**
+  String get invoiceEmailVoided;
 
   /// #1916 invoice essentials: invoiceEssentialsRefused
   ///
@@ -56106,6 +56268,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WhatsApp'**
   String get whatsappTitle;
+
+  /// #3605 the window's (or browser tab's) title: the place on screen, the business, the app's name; a language may order them
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {business} — {app}'**
+  String windowTitle(String place, String business, String app);
+
+  /// #3605 the window's title for a place with no business selected: the place, the app's name
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {app}'**
+  String windowTitleNoBusiness(String place, String app);
 
   /// Shown as a button or chip label in wizard scaffold (core).
   ///

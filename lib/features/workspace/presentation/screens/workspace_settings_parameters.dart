@@ -396,11 +396,12 @@ class WorkspaceParameterTiles {
                     ),
                     onTap: () => MoneySettingsRows.openReminderRules(context, ref),
                   ),
-                  // #3673 — the business's one e-mail sender: its orders
-                  // and its reminders by e-mail go out with it.
+                  // #3673 — the business's one e-mail sender: its orders,
+                  // its reminders and its invoices by e-mail go out with it.
                   if (ref.watch(enabledFeaturesSyncProvider).any((f) =>
                           f == WorkspaceFeature.purchaseOrders ||
-                          f == WorkspaceFeature.reminderEmail) &&
+                          f == WorkspaceFeature.reminderEmail ||
+                          f == WorkspaceFeature.invoiceEmail) &&
                       ref
                           .watch(myPermissionsProvider)
                           .contains(WorkspacePermission.manageBilling))

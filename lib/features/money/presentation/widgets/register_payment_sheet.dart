@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -11,6 +10,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
@@ -51,7 +51,8 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
   final _amount = TextEditingController();
   final _note = TextEditingController();
   PaymentMethod _method = PaymentMethod.bankTransfer;
-  late DateTime _paidOn = ref.read(clockProvider).now();
+  late final DateTime _today = _dayOf(ref.read(clockProvider).now());
+  late DateRead _paidOn = (date: _today, problem: null);
   bool _busy = false;
 
   @override
@@ -61,9 +62,16 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
     super.dispose();
   }
 
+  static DateTime _dayOf(DateTime t) => DateTime(t.year, t.month, t.day);
+
+  String get _currency =>
+      ref.read(currentWorkspaceProvider).value?.currencyCode ?? '';
+
   int? get _cents {
-    // #1140 — the currency's own minor digits, never a literal 100.
-    final c = appFormatOf(context).parseMinor(_amount.text);
+    // The currency's own minor digits, never a literal 100.
+    final c = appFormatOf(context)
+        .readAmount(_amount.text, currency: _currency, allowNegative: false)
+        .minor;
     return (c == null || c <= 0) ? null : c;
   }
 
@@ -72,7 +80,13 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
     final workspace = ref.read(currentWorkspaceProvider).value;
     final memberId = _memberId;
     final cents = _cents;
-    if (workspace == null || memberId == null || cents == null) return;
+    final paidOn = _paidOn.date;
+    if (workspace == null ||
+        memberId == null ||
+        cents == null ||
+        paidOn == null) {
+      return;
+    }
     setState(() => _busy = true);
     // The month a payment belongs to is the decision, and it lives in
     // application/record_payment.dart — not in this widget (#1449).
@@ -88,7 +102,7 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
         amountCents: cents,
         note: _note.text,
         method: _method,
-        paidOn: _paidOn,
+        paidOn: paidOn,
       ),
     );
     if (!mounted) return;
@@ -150,16 +164,13 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     onChanged: (v) => setState(() => _memberId = v),
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  TextField(
+                  AppAmountField(
                     key: const ValueKey('register-payment-amount'),
                     controller: _amount,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    label: l10n.registerPaymentAmount,
+                    currency: currency,
+                    allowNegative: false,
                     onChanged: (_) => setState(() {}),
-                    decoration: InputDecoration(
-                      labelText: l10n.registerPaymentAmount,
-                      suffixText: currency,
-                    ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   DropdownButtonFormField<PaymentMethod>(
@@ -174,21 +185,14 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                     onChanged: (v) =>
                         setState(() => _method = v ?? PaymentMethod.other),
                   ),
-                  ListTile(
+                  AppDateField(
                     key: const ValueKey('register-payment-date'),
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.event_outlined),
-                    title: Text(l10n.registerPaymentDate),
-                    subtitle: Text(appFormatOf(context).dates(DateShape.date).format(_paidOn)),
-                    onTap: () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: _paidOn,
-                        firstDate: DateTime(_paidOn.year - 1),
-                        lastDate: _paidOn.add(const Duration(days: 1)),
-                      );
-                      if (picked != null) setState(() => _paidOn = picked);
-                    },
+                    label: l10n.registerPaymentDate,
+                    value: _paidOn.date,
+                    first: DateTime(_today.year - 1),
+                    last: _today.add(const Duration(days: 1)),
+                    isRequired: true,
+                    onChanged: (read) => setState(() => _paidOn = read),
                   ),
                   TextField(
                     key: const ValueKey('register-payment-note'),
@@ -200,7 +204,10 @@ class _RegisterPaymentSheetState extends ConsumerState<_RegisterPaymentSheet> {
                   FilledButton(
                     key: const ValueKey('register-payment-submit'),
                     onPressed:
-                        _busy || _memberId == null || _cents == null
+                        _busy ||
+                                _memberId == null ||
+                                _cents == null ||
+                                _paidOn.date == null
                             ? null
                             : _submit,
                     child: Text(l10n.registerPaymentSubmit),

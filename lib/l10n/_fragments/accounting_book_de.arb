@@ -14,6 +14,10 @@
   "bookBasisAccrual": "Soll-Versteuerung",
   "bookBasisCash": "Ist-Versteuerung",
   "bookEffectiveFrom": "Gültig ab {date}",
+  "bookEffectiveFromLabel": "Gültig ab",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookFiscalPreview": "Geschäftsjahr {label}: {start} – {end}",
   "bookProblemExternal": "Nennen Sie das externe System, das die offiziellen Bücher führt.",
   "bookProblemCurrency": "Für diese Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt.",

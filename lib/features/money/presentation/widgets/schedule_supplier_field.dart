@@ -2,9 +2,10 @@
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/supplier_providers.dart';
 
@@ -68,47 +69,83 @@ String? scheduleSupplierName(
   return null;
 }
 
-/// The optional last date of a schedule; cleared, it runs until stopped.
+/// The optional last date of a schedule; left empty, it runs until
+/// stopped. [onChanged] receives what the typed or picked text reads as.
 class ScheduleEndsTile extends StatelessWidget {
   const ScheduleEndsTile({
     required this.startsOn,
     required this.endsOn,
-    required this.dates,
     required this.onChanged,
+    this.showProblem = false,
     super.key,
   });
 
   final DateTime startsOn;
   final DateTime? endsOn;
-  final DateFormat dates;
-  final ValueChanged<DateTime?> onChanged;
+  final ValueChanged<DateRead> onChanged;
+  final bool showProblem;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final ends = endsOn;
-    return ListTile(
+    return AppDateField(
       key: const ValueKey('schedule-ends'),
-      contentPadding: EdgeInsets.zero,
-      title: Text(l10n.scheduleEndsOn),
-      subtitle: Text(ends == null ? l10n.scheduleNoEnd : dates.format(ends)),
-      trailing: ends == null
-          ? const Icon(Icons.edit_calendar_outlined)
-          : IconButton(
-              key: const ValueKey('expense-schedule-sheet-a11y-clear-date'),
-              tooltip: l10n.a11yClearDate,
-              icon: const Icon(Icons.clear),
-              onPressed: () => onChanged(null),
-            ),
-      onTap: () async {
-        final picked = await showDatePicker(
-          context: context,
-          initialDate: ends ?? startsOn.add(const Duration(days: 365)),
-          firstDate: startsOn,
-          lastDate: startsOn.add(const Duration(days: 3650)),
-        );
-        if (picked != null) onChanged(picked);
-      },
+      label: l10n.scheduleEndsOn,
+      helper: l10n.scheduleNoEnd,
+      value: endsOn,
+      first: startsOn,
+      last: startsOn.add(const Duration(days: 3650)),
+      showProblem: showProblem,
+      onChanged: onChanged,
     );
   }
+}
+
+/// The first date of a new schedule: from a year back to two years ahead.
+class ScheduleStartsField extends StatelessWidget {
+  const ScheduleStartsField({
+    required this.now,
+    required this.value,
+    required this.showProblem,
+    required this.onChanged,
+    super.key,
+  });
+
+  final DateTime now;
+  final DateTime? value;
+  final bool showProblem;
+  final ValueChanged<DateRead> onChanged;
+
+  @override
+  Widget build(BuildContext context) => AppDateField(
+    label: context.l10n.scheduleStartsOn,
+    value: value,
+    first: now.subtract(const Duration(days: 366)),
+    last: now.add(const Duration(days: 730)),
+    isRequired: true,
+    showProblem: showProblem,
+    // recorder-key-exempt: the sheet keys this field (`schedule-starts`).
+    onChanged: onChanged,
+  );
+}
+
+/// Closes the new-schedule sheet with its entries, unless a date or the
+/// amount could not be read: then [onUnread], and the sheet stays open with
+/// each field saying why under itself.
+void submitScheduleEntries(
+  BuildContext context, {
+  required DateRead starts,
+  required DateRead ends,
+  required String amount,
+  required String currency,
+  required VoidCallback onUnread,
+}) {
+  final unread =
+      starts.date == null ||
+      ends.problem != null ||
+      appFormatOf(context)
+              .readAmount(amount, currency: currency, allowNegative: false)
+              .problem !=
+          null;
+  unread ? onUnread() : Navigator.of(context).pop(true);
 }

@@ -26,6 +26,7 @@ import '../../application/invoice_detail_facts.dart';
 import '../../application/receivables.dart';
 import '../../providers/money_providers.dart';
 import '../dunning_hold_actions.dart';
+import '../invoice_email_actions.dart';
 import '../invoice_status.dart';
 import '../widgets/invoice_detail_sheet.dart' show InvoiceApprovals;
 import '../widgets/reminder_evidence_list.dart';
@@ -189,6 +190,8 @@ class InvoicePage extends ConsumerWidget {
                         children: [ReminderEvidenceList(invoiceId: invoice.id)],
                       ),
                     ),
+                  // #3673 — the invoice by e-mail: what the server recorded.
+                  InvoiceEmailPanel(invoice: invoice),
                   if (match?.eventId case final eventId?)
                     Material(
                       // Its tile paints on the card, not under it.

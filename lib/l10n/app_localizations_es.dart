@@ -877,6 +877,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get amenityWindow => 'Junto a la ventana';
 
   @override
+  String get amountFieldNegative =>
+      'Aquí no se permite un importe inferior a cero.';
+
+  @override
+  String get amountFieldNotANumber =>
+      'No es un importe. Use cifras y un solo separador decimal.';
+
+  @override
+  String get amountFieldRequired => 'Escriba un importe.';
+
+  @override
+  String amountFieldTooManyDecimals(int digits, String currency) {
+    String _temp0 = intl.Intl.pluralLogic(
+      digits,
+      locale: localeName,
+      other: '$currency tiene $digits decimales.',
+      one: '$currency tiene un decimal.',
+      zero: '$currency no tiene decimales.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -4879,6 +4902,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get bookEffectiveFromLabel => 'Vigente desde el';
+
+  @override
   String get bookExternalOther => 'Otro…';
 
   @override
@@ -6847,6 +6873,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'Baja';
+
+  @override
+  String get dashboardTrendFlat => 'Sin cambios';
+
+  @override
+  String get dashboardTrendUp => 'Sube';
+
+  @override
   String get dataReportArchived => 'Archivado';
 
   @override
@@ -6916,6 +6951,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dataReportTitle => 'Informe de datos del espacio';
+
+  @override
+  String get dateFieldImpossible => 'Esta fecha no existe.';
+
+  @override
+  String get dateFieldMalformed =>
+      'No es una fecha. Escriba el día, el mes y el año en su formato de fecha, con un año de cuatro cifras, o como ocho cifras.';
+
+  @override
+  String get dateFieldOutOfRange =>
+      'Esta fecha está fuera de las fechas permitidas aquí.';
+
+  @override
+  String dateFieldReadAs(String date) {
+    return 'Leído como $date';
+  }
+
+  @override
+  String get dateFieldRequired => 'Escriba una fecha.';
+
+  @override
+  String get dateFieldTwoDigitYear => 'Escriba el año con cuatro cifras.';
 
   @override
   String get datevAccountLength => 'Longitud de las cuentas (Sachkontenlänge)';
@@ -7349,11 +7406,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deskSupplementLabel => 'Reservas de mesa';
-
-  @override
-  String deskWindowTitle(String place, String business) {
-    return '$place — $business';
-  }
 
   @override
   String get developerClear => 'Vaciar registro';
@@ -10434,6 +10486,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get featureInvoiceAddressWindowDesc =>
       'Coloca al destinatario donde lo muestra un sobre con ventanilla, para que una factura impresa pueda doblarse y enviarse. El lado sigue al país y puede cambiarse.';
+
+  @override
+  String get featureInvoiceEmailDesc =>
+      'Una factura emitida puede enviarse por correo desde el servidor, con el remitente de la empresa, a la dirección de contacto del cliente, en el idioma de sus documentos. Cada factura se envía una vez; volver a enviarla es un acto deliberado, con su propio registro. Desactivado: las facturas se comparten o descargan como antes.';
+
+  @override
+  String get featureInvoiceEmailTitle => 'Facturas por correo';
 
   @override
   String get featureInvoiceJourneyDesc =>
@@ -14211,6 +14270,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String invoiceEInvoiceValidated(String validator) {
     return 'Listo — no falta nada de lo que exige la EN 16931, y este formato supera el validador oficial ($validator).';
   }
+
+  @override
+  String get invoiceEmailFailed =>
+      'No se pudo enviar la factura por correo. No se envió nada.';
+
+  @override
+  String get invoiceEmailHeading => 'Por correo';
+
+  @override
+  String get invoiceEmailNoLanguage =>
+      'No se conoce el idioma de documentos del cliente, así que la factura no se envió por correo. Elija su idioma o comparta la factura.';
+
+  @override
+  String invoiceEmailRefused(String reason) {
+    return 'El correo fue rechazado: $reason. No se envió nada.';
+  }
+
+  @override
+  String get invoiceEmailSendAgain => 'Volver a enviar';
+
+  @override
+  String invoiceEmailSentOn(String recipient, String date) {
+    return 'Enviada por correo a $recipient el $date';
+  }
+
+  @override
+  String invoiceEmailTextCredit(String number, String amount) {
+    return 'Adjuntamos la nota de crédito $number por $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwed(String number, String amount) {
+    return 'Adjuntamos la factura $number. Importe pendiente: $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwedBy(String number, String amount, String due) {
+    return 'Adjuntamos la factura $number. Importe pendiente: $amount, con vencimiento el $due.';
+  }
+
+  @override
+  String invoiceEmailTextPaid(String number, String amount) {
+    return 'Adjuntamos la factura $number por $amount. Está pagada: no se debe nada.';
+  }
+
+  @override
+  String get invoiceEmailUnconfirmed =>
+      'No llegó ninguna respuesta confirmada. Consulte con el cliente antes de decidir si llegó.';
+
+  @override
+  String get invoiceEmailVoided => 'Una factura anulada no se envía por correo';
 
   @override
   String get invoiceEssentialsRefused =>
@@ -34719,6 +34829,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String windowTitle(String place, String business, String app) {
+    return '$place — $business — $app';
+  }
+
+  @override
+  String windowTitleNoBusiness(String place, String app) {
+    return '$place — $app';
+  }
 
   @override
   String get wizardBack => 'Atrás';

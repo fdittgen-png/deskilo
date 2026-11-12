@@ -1386,6 +1386,10 @@ window.SETUP_L10N={
    "reminderEmail": [
     "Reminders by e-mail",
     "A payment reminder can also be sent by e-mail, from the server, with your business's own sender, in the customer's document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only."
+   ],
+   "invoiceEmail": [
+    "Invoices by e-mail",
+    "An issued invoice can be sent by e-mail from the server, with the business's own sender, to the customer's contact address, in the customer's document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before."
    ]
   },
   "process": {
@@ -3164,6 +3168,10 @@ window.SETUP_L10N={
    "reminderEmail": [
     "Relances par e-mail",
     "Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n'arrivent que dans le fil et par notification."
+   ],
+   "invoiceEmail": [
+    "Factures par e-mail",
+    "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant."
    ]
   },
   "process": {
@@ -4942,6 +4950,10 @@ window.SETUP_L10N={
    "reminderEmail": [
     "Mahnungen per E-Mail",
     "Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung."
+   ],
+   "invoiceEmail": [
+    "Rechnungen per E-Mail",
+    "Eine ausgestellte Rechnung kann vom Server per E-Mail mit dem eigenen Absender des Unternehmens an die Kontaktadresse des Kunden gesendet werden, in der Dokumentsprache des Kunden. Jede Rechnung wird einmal versandt; ein erneuter Versand ist eine bewusste Handlung mit eigenem Nachweis. Aus: Rechnungen werden wie bisher geteilt oder heruntergeladen."
    ]
   },
   "process": {
@@ -6720,6 +6732,10 @@ window.SETUP_L10N={
    "reminderEmail": [
     "Recordatorios por correo electrónico",
     "Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación."
+   ],
+   "invoiceEmail": [
+    "Facturas por correo",
+    "Una factura emitida puede enviarse por correo desde el servidor, con el remitente de la empresa, a la dirección de contacto del cliente, en el idioma de sus documentos. Cada factura se envía una vez; volver a enviarla es un acto deliberado, con su propio registro. Desactivado: las facturas se comparten o descargan como antes."
    ]
   },
   "process": {
@@ -8498,6 +8514,10 @@ window.SETUP_L10N={
    "reminderEmail": [
     "Solleciti via e-mail",
     "Un sollecito di pagamento può partire anche via e-mail, dal server, con il mittente della sua attività, nella lingua dei documenti del cliente. Ogni livello parte una sola volta; la risposta del fornitore è conservata con il sollecito. Disattivato: i solleciti arrivano solo nel feed e come notifica."
+   ],
+   "invoiceEmail": [
+    "Fatture via e-mail",
+    "Una fattura emessa può essere inviata via e-mail dal server, con il mittente dell'azienda, all'indirizzo di contatto del cliente, nella lingua dei suoi documenti. Ogni fattura viene inviata una volta; inviarla di nuovo è un atto deliberato, con una propria traccia. Disattivato: le fatture si condividono o si scaricano come prima."
    ]
   },
   "process": {

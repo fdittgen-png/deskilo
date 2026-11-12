@@ -131,6 +131,10 @@ const Map<String, String> _notExported = {
   'invoice_issue_notices':
       '#3672 -- whether telling a customer about a new invoice was queued: a delivery '
           'record of this server; the invoices and their feed events are exported themselves',
+  'invoice_email_sends':
+      '#3673 -- the e-mail sends of invoices, each with its provider answer: '
+          'delivery evidence of this server, kept beside the reminder e-mails and '
+          'like them outside the export; the invoices are exported themselves',
   'reminder_email_sends':
       '#3673 -- the e-mail sends of payment reminders, each with its provider '
           'answer: delivery evidence of this server, kept beside the reminder '
