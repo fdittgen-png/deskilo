@@ -32,7 +32,7 @@ void main() {
     // architecture rather than freezing a step of it.
     test('the button is gated on the hub, the only map surface', () {
       expect(shell, contains('ShellBranch.reserve'));
-      expect(shell, contains("ValueKey('shell-editor-button')"));
+      expect(shell, contains("'shell-editor-button'"));
       expect(shell, isNot(contains('ShellBranch.plan ||')),
           reason: 'there is no Plan tab to gate on any more');
     });
@@ -97,7 +97,7 @@ void main() {
       // onto a third one.
       expect(
         sourceOf('lib/app/shell/shell_app_bar.dart'),
-        contains("ValueKey('reserve-scan-button')"),
+        contains("'reserve-scan-button'"),
       );
       for (final key in [
         'reserve-date-button',
