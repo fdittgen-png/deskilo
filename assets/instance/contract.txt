@@ -2188,6 +2188,7 @@ constraint workspaces.workspaces_whatsapp_group_check CHECK (((whatsapp_group = 
 routine public.accept_commitment_variance_v1(p_workspace_id uuid, p_occurrence_id uuid, p_purchase_id uuid, p_line_no integer, p_amount_cents bigint, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:cd7e645ed290
 routine public.accept_privacy_policy(p_version text) -> void | function | definer | volatile | exec:authenticated,service_role | body:f66d5b7a2f31
 routine public.account_audience_of(p_user uuid, p_field text) -> text | function | definer | stable | exec:service_role | body:f3ecc8c826e6
+routine public.account_auth_locale(p_user uuid) -> text | function | definer | stable | exec:service_role | body:0fb98fd8f84f
 routine public.account_blocked_between(p_a uuid, p_b uuid) -> boolean | function | definer | stable | exec:service_role | body:b531a1ec4c40
 routine public.account_display_name(p_user uuid) -> text | function | definer | stable | exec:service_role | body:23e2dc88d818
 routine public.account_field_visible_to(p_owner uuid, p_field text, p_viewer uuid) -> boolean | function | definer | stable | exec: | body:8ee097edc3f9
@@ -2417,6 +2418,7 @@ routine public.desk_room_visible(p_desk uuid) -> boolean | function | definer | 
 routine public.deskilo_schema_version() -> integer | function | invoker | stable | exec:anon,authenticated,service_role | body:f2f88751992a
 routine public.direct_conversation(p_workspace_id uuid, p_other_member_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:317959433a98
 routine public.directory_identity_unlinked() -> trigger | function | definer | volatile | exec:service_role | body:ee068aa5fb8e
+routine public.directory_people_auth_locale() -> trigger | function | definer | volatile | exec:service_role | body:c676e234702a
 routine public.discard_setup_step_draft(p_workspace_id uuid, p_step text, p_expected_version integer) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:f3a158307f8f
 routine public.distribute_expense(p_workspace_id uuid, p_title text, p_amount_cents integer, p_method text, p_period text, p_shares jsonb, p_source_event_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:b855cb698f0a
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
@@ -2985,6 +2987,7 @@ routine public.profile_full_name(p profiles) -> text | function | invoker | immu
 routine public.profile_person_name(p profiles) -> text | function | invoker | immutable | exec:authenticated,service_role | body:e98ff75cb6c9
 routine public.profile_postal_block(p profiles, p_workspace_country text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:074745db0a8d
 routine public.profile_row_readable(p_subject uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:94cb2c4c6d95
+routine public.profiles_auth_locale() -> trigger | function | definer | volatile | exec:service_role | body:7875a9bd8362
 routine public.profiles_default_workspace_ref() -> trigger | function | definer | volatile | exec:service_role | body:8ca04a9d8556
 routine public.propose_price_negotiation(p_member_id uuid, p_fee_cents integer, p_overage_fee_cents integer, p_discount_percent numeric, p_note text, p_valid_from date, p_subscription_pct integer, p_items jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:629fe93a2903
 routine public.protect_enrolled_installation() -> trigger | function | invoker | volatile | exec: | body:1bfa66ade934
@@ -3390,6 +3393,7 @@ routine public.sweep_expense_schedules(p_workspace_id uuid) -> integer | functio
 routine public.sweep_payment_reminders(p_workspace_id uuid) -> integer | function | definer | volatile | exec:authenticated,service_role | body:87b0b8eaded7
 routine public.sweep_pending_events(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:44585fc4a001
 routine public.swiss_uid_valid(p_uid text, p_require_suffix boolean) -> boolean | function | invoker | immutable | exec:service_role | body:30284487e8dc
+routine public.sync_auth_locale(p_user uuid) -> void | function | definer | volatile | exec:service_role | body:ebeb2640c9fd
 routine public.sync_person_preferences() -> trigger | function | definer | volatile | exec:service_role | body:7deaaebe6dfa
 routine public.system_column_names() -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:a9f38911774d
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
