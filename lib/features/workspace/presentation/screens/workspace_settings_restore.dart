@@ -5,6 +5,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/retention_text.dart';
@@ -81,9 +82,17 @@ class WorkspaceSettingsRestore {
   /// transactional replace via the import RPC, settings via the existing
   /// owner writers. Throws what the server refused; [progress] says how
   /// far it got.
-  Future<void> importXml(Workspace workspace, XmlImportProgress progress) async {
+  ///
+  /// #3818 — [dropped] is a file dropped on the tool instead of picked:
+  /// it goes through the same parse, the same checks and the same
+  /// confirmation; a drop never restores directly.
+  Future<void> importXml(
+    Workspace workspace,
+    XmlImportProgress progress, {
+    XFile? dropped,
+  }) async {
     final context = this.context;
-    final read = await _readFile();
+    final read = await _readFile(dropped);
     if (read == null) return;
     final (content, data) = read;
     final choice = await _configurationChoice(data);
@@ -108,17 +117,10 @@ class WorkspaceSettingsRestore {
 
   /// The picked file, parsed and placement-checked; null when cancelled
   /// or refused (the refusal already told).
-  Future<(String, WorkspaceXmlData)?> _readFile() async {
+  Future<(String, WorkspaceXmlData)?> _readFile(XFile? dropped) async {
     final context = this.context;
     final l10n = context.l10n;
-    final pick = ref.read(filePickerProvider);
-    final file = await pick(XTypeGroup(
-      // Acronym identical in every locale (IBAN precedent, #155); the
-      // key exists so the parity gate covers the whole set.
-      label: l10n.workspaceXmlFileTypeLabel,
-      extensions: const ['xml'],
-      mimeTypes: const ['application/xml', 'text/xml'],
-    ));
+    final file = dropped ?? await ref.read(filePickerProvider)(_xmlTypes(l10n));
     if (file == null) return null; // cancelled
     // Explicit UTF-8 decode: the export declares UTF-8 (#164), and
     // XFile.readAsString is not UTF-8-safe for data-backed files.
@@ -154,6 +156,28 @@ class WorkspaceSettingsRestore {
     }
     return (content, data);
   }
+
+  // Acronym identical in every locale (IBAN precedent, #155); the key
+  // exists so the parity gate covers the whole set.
+  static XTypeGroup _xmlTypes(AppLocalizations l10n) => XTypeGroup(
+    label: l10n.workspaceXmlFileTypeLabel,
+    extensions: const ['xml'],
+    mimeTypes: const ['application/xml', 'text/xml'],
+  );
+
+  /// #3818 — [child] (the restore tool) also takes a workspace file
+  /// dropped onto it, handed to [onFile] — the screen's import, which
+  /// asks the same destructive confirmation as the picker path.
+  Widget dropZone({
+    required Widget child,
+    required Future<void> Function(XFile file) onFile,
+    required bool enabled,
+  }) => FileDropZone(
+    typeGroup: _xmlTypes(context.l10n),
+    onFile: onFile,
+    enabled: enabled,
+    child: child,
+  );
 
   bool _transferOn() => ref
       .read(enabledFeaturesSyncProvider)
