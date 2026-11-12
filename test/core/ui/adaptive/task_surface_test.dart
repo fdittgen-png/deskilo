@@ -46,9 +46,18 @@ class _RouteCounter extends NavigatorObserver {
   @override
   void didPop(Route<Object?> route, Route<Object?>? previousRoute) =>
       probe.routes.remove(route);
+
+  @override
+  void didRemove(Route<Object?> route, Route<Object?>? previousRoute) =>
+      probe.routes.remove(route);
 }
 
-Future<_Probe> _open(WidgetTester tester, TaskSize size) async {
+Future<_Probe> _open(
+  WidgetTester tester,
+  TaskSize size, {
+  Listenable? workspace,
+  WidgetBuilder? body,
+}) async {
   final probe = _Probe();
   final name = TextEditingController();
   final note = TextEditingController();
@@ -64,28 +73,31 @@ Future<_Probe> _open(WidgetTester tester, TaskSize size) async {
               probe.result = await showTask<bool>(
                 context,
                 size: size,
-                builder: (_) => AppFormSheet(
-                  title: 'New thing',
-                  submitLabel: 'Save',
-                  submitKey: const ValueKey('save'),
-                  onSubmit: () async {
-                    probe.submits++;
-                    return null;
-                  },
-                  builder: (context, refresh) => [
-                    AppTextField(
-                      key: const ValueKey('name'),
-                      controller: name,
-                      label: 'Name',
+                workspace: workspace,
+                builder:
+                    body ??
+                    (_) => AppFormSheet(
+                      title: 'New thing',
+                      submitLabel: 'Save',
+                      submitKey: const ValueKey('save'),
+                      onSubmit: () async {
+                        probe.submits++;
+                        return null;
+                      },
+                      builder: (context, refresh) => [
+                        AppTextField(
+                          key: const ValueKey('name'),
+                          controller: name,
+                          label: 'Name',
+                        ),
+                        AppTextField(
+                          key: const ValueKey('note'),
+                          controller: note,
+                          label: 'Note',
+                          maxLines: 4,
+                        ),
+                      ],
                     ),
-                    AppTextField(
-                      key: const ValueKey('note'),
-                      controller: note,
-                      label: 'Note',
-                      maxLines: 4,
-                    ),
-                  ],
-                ),
               );
             },
             child: const Text('open'),
@@ -233,58 +245,127 @@ void main() {
         expect(_dialog, findsOneWidget);
       },
     );
+  });
 
-    testWidgets('Escape closes an unchanged task at once', (tester) async {
-      _window(tester, _desk);
-      final probe = await _open(tester, TaskSize.standard);
-      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
-      await tester.pumpAndSettle();
-      expect(_panel, findsNothing);
-      expect(
-        find.byKey(const ValueKey('unsaved-changes-dialog')),
-        findsNothing,
-      );
-      expect(probe.result, isNull);
-      expect(probe.routes, hasLength(1));
-    });
+  group('leaving a task', () {
+    final question = find.byKey(const ValueKey('unsaved-changes-dialog'));
 
-    testWidgets('a close the body asks for itself is never questioned', (
+    /// The five ways out, each as the person takes it.
+    final ways = <String, Future<void> Function(WidgetTester)>{
+      'Escape': (t) => t.sendKeyEvent(LogicalKeyboardKey.escape),
+      'the scrim': (t) => t.tapAt(const Offset(8, 8)),
+      'the back button': (t) => t.binding.handlePopRoute(),
+      'Cancel': (t) => t.tap(find.byKey(const ValueKey('form-sheet-cancel'))),
+      'a drag': (t) =>
+          t.fling(find.text('New thing'), const Offset(0, 600), 3000),
+    };
+
+    for (final MapEntry(key: way, value: take) in ways.entries) {
+      final window = way == 'a drag' ? _phone : _desk;
+
+      testWidgets('$way closes an unchanged task at once', (tester) async {
+        _window(tester, window);
+        final probe = await _open(tester, TaskSize.standard);
+        await take(tester);
+        await tester.pumpAndSettle();
+        expect(question, findsNothing);
+        expect(probe.routes, hasLength(1));
+      });
+
+      testWidgets('$way on a changed task asks; keep stays, discard leaves', (
+        tester,
+      ) async {
+        _window(tester, window);
+        final probe = await _open(tester, TaskSize.standard);
+        await tester.enterText(_name, 'Ada');
+        await tester.pump();
+        await take(tester);
+        await tester.pumpAndSettle();
+        expect(question, findsOneWidget);
+        await tester.tap(find.byKey(const ValueKey('unsaved-changes-keep')));
+        await tester.pumpAndSettle();
+        expect(find.text('Ada'), findsOneWidget);
+        expect(probe.routes, hasLength(2));
+        await take(tester);
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('unsaved-changes-discard')));
+        await tester.pumpAndSettle();
+        expect(probe.routes, hasLength(1));
+        expect(probe.submits, 0);
+      });
+    }
+
+    testWidgets('a Close after a completed submit does not ask', (
       tester,
     ) async {
       _window(tester, _desk);
-      final probe = await _open(tester, TaskSize.standard);
-      await tester.enterText(_name, 'Ada');
-      await Navigator.of(tester.element(_name)).maybePop();
-      await tester.pumpAndSettle();
-      expect(
-        find.byKey(const ValueKey('unsaved-changes-dialog')),
-        findsNothing,
+      final field = TextEditingController();
+      addTearDown(field.dispose);
+      final probe = await _open(
+        tester,
+        TaskSize.standard,
+        body: (context) => Column(
+          children: [
+            AppTextField(
+              key: const ValueKey('name'),
+              controller: field,
+              label: 'Name',
+            ),
+            TextButton(
+              onPressed: () => TaskSession.maybeOf(context)!.completed(),
+              child: const Text('send'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).maybePop(),
+              child: const Text('close'),
+            ),
+          ],
+        ),
       );
-      expect(_panel, findsNothing);
+      await tester.enterText(_name, 'Ada');
+      await tester.tap(find.text('send'));
+      await tester.pump();
+      await tester.tap(find.text('close'));
+      await tester.pumpAndSettle();
+      expect(question, findsNothing);
       expect(probe.routes, hasLength(1));
     });
 
-    testWidgets('Escape on a changed task asks; keep stays, discard leaves', (
+    testWidgets('a letter typed into a raw field marks the task', (
       tester,
     ) async {
       _window(tester, _desk);
-      final probe = await _open(tester, TaskSize.standard);
-      await tester.enterText(_name, 'Ada');
+      await _open(
+        tester,
+        TaskSize.standard,
+        body: (_) => const Material(child: TextField(key: ValueKey('raw'))),
+      );
+      await tester.tap(find.byKey(const ValueKey('raw')));
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyA);
       await tester.pump();
       await tester.sendKeyEvent(LogicalKeyboardKey.escape);
       await tester.pumpAndSettle();
-      final question = find.byKey(const ValueKey('unsaved-changes-dialog'));
       expect(question, findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('unsaved-changes-keep')));
+    });
+
+    testWidgets('a change of workspace closes a changed task, unasked', (
+      tester,
+    ) async {
+      _window(tester, _desk);
+      final workspace = ValueNotifier('ws-1');
+      addTearDown(workspace.dispose);
+      final probe = await _open(
+        tester,
+        TaskSize.standard,
+        workspace: workspace,
+      );
+      await tester.enterText(_name, 'Ada');
+      await tester.pump();
+      workspace.value = 'ws-2';
       await tester.pumpAndSettle();
-      expect(_panel, findsOneWidget);
-      expect(find.text('Ada'), findsOneWidget);
-      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('unsaved-changes-discard')));
-      await tester.pumpAndSettle();
+      expect(question, findsNothing);
       expect(_panel, findsNothing);
-      expect(probe.submits, 0);
+      expect(find.text('Ada'), findsNothing);
       expect(probe.routes, hasLength(1));
     });
   });

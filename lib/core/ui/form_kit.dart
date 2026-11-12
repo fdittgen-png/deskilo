@@ -353,6 +353,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
     final problem = await widget.onSubmit();
     if (!mounted) return;
     if (problem == null) {
+      TaskSession.maybeOf(context)?.completed();
       Navigator.of(context).pop(true);
       return;
     }
@@ -446,7 +447,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
                       key: const ValueKey('form-sheet-cancel'),
                       onPressed: _saving
                           ? null
-                          : () => Navigator.of(context).pop(false),
+                          : () => Navigator.of(context).maybePop(false),
                       child: Text(
                         MaterialLocalizations.of(context).cancelButtonLabel,
                       ),
@@ -475,10 +476,19 @@ class _AppFormSheetState extends State<AppFormSheet> {
 
 /// Opens an [AppFormSheet] as a standard task (a sheet on a phone, a side
 /// panel at the desk, #3608); true when it was submitted successfully.
-Future<bool> showAppFormSheet(BuildContext context, AppFormSheet sheet) async =>
+/// [account] and [workspace] close it when the opener's context changes
+/// ([showTask]).
+Future<bool> showAppFormSheet(
+  BuildContext context,
+  AppFormSheet sheet, {
+  Listenable? account,
+  Listenable? workspace,
+}) async =>
     await showTask<bool>(
       context,
       size: TaskSize.standard,
       builder: (_) => sheet,
+      account: account,
+      workspace: workspace,
     ) ??
     false;

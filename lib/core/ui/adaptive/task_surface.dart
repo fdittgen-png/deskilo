@@ -12,14 +12,26 @@
 // goes away). Being a popup route, the desk's navigation rests while it is
 // open, as for any dialog.
 //
-// While the session holds a change ([TaskSession.markChanged], called by the
-// form kit's fields), Escape and a sheet dragged down first ask whether to
-// discard; unchanged, they close at once. A close the body asks for itself
-// (its Cancel, its Close after a result) is never questioned.
+// Typed work is never lost without a question. While the session holds a
+// change ([TaskSession.markChanged]: the form kit's fields, and any key that
+// edits a text field inside the task), every way out asks first — Escape,
+// the scrim, a drag, the back button and the body's own Cancel or Close —
+// with the one discard question. Only a completed submit
+// ([TaskSession.completed]) takes the mark away, and a body that no longer
+// shows a text field (it shows the result of what was sent) has nothing
+// typed left to lose.
+//
+// A task ends with its context: when the signed-in person changes (sign-out,
+// an expired session) or the account or workspace the opener names changes,
+// it is closed at once and without a question. The work was the previous
+// context's; showing it to the next person or business would be the loss.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../session/session_source.dart';
 import '../kit/kit_metrics.dart';
 import '../unsaved_changes_guard.dart';
 import 'window_class.dart';
@@ -81,13 +93,17 @@ class TaskSession {
   TaskSession._(this.size);
 
   final TaskSize size;
-  bool _changed = false;
+  final ValueNotifier<bool> _changed = ValueNotifier(false);
 
   /// Whether something in the task was changed since it opened.
-  bool get changed => _changed;
+  bool get changed => _changed.value;
 
-  /// Records a change: Escape now asks before the task is left.
-  void markChanged() => _changed = true;
+  /// Records a change: every way out now asks before the task is left.
+  void markChanged() => _changed.value = true;
+
+  /// The form's submit completed: what was typed is kept, leaving asks no
+  /// more.
+  void completed() => _changed.value = false;
 
   /// The session [context] is part of; null outside a task.
   static TaskSession? maybeOf(BuildContext context) =>
@@ -112,12 +128,16 @@ final Map<Object, _TaskRoute<Object?>> _openTasks = {};
 ///
 /// [sessionKey] names the task (for example its account, workspace and
 /// record): while a task under that key is open, the call returns its
-/// result instead of opening another.
+/// result instead of opening another. A notification of [account] or
+/// [workspace] (the opener's context changed) closes the task at once;
+/// a change of the signed-in person does so without being passed.
 Future<T?> showTask<T>(
   BuildContext context, {
   required TaskSize size,
   required WidgetBuilder builder,
   Object? sessionKey,
+  Listenable? account,
+  Listenable? workspace,
 }) {
   final open = sessionKey == null ? null : _openTasks[sessionKey];
   if (open != null && open.isActive) {
@@ -130,6 +150,7 @@ Future<T?> showTask<T>(
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     themes: InheritedTheme.capture(from: context, to: navigator.context),
     container: _containerFor(size, WindowClass.of(context)),
+    context: Listenable.merge([?account, ?workspace]),
   );
   if (sessionKey != null) {
     _openTasks[sessionKey] = route;
@@ -151,8 +172,11 @@ class _TaskRoute<T> extends PopupRoute<T> {
     required this.barrierLabel,
     required this.themes,
     required this.container,
+    required this.context,
   }) : session = TaskSession._(size);
 
+  /// Notifies when the opener's account or workspace changes.
+  final Listenable context;
   final TaskSize size;
   final WidgetBuilder builder;
   final CapturedThemes themes;
@@ -222,25 +246,104 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     });
   }
 
-  /// Escape or a drag: true when the task was left. Unchanged, it closes as
-  /// any modal does; changed, only after the person chose to discard.
-  Future<bool> _leave() async {
-    final navigator = Navigator.of(context);
-    if (!_route.session.changed) return navigator.maybePop();
-    if (!await confirmDiscardChanges(context) || !navigator.mounted) {
-      return false;
+  ProviderSubscription<AsyncValue<String?>>? _person;
+
+  @override
+  void initState() {
+    super.initState();
+    _route.context.addListener(_contextChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_person != null) return;
+    final ProviderContainer providers;
+    try {
+      providers = ProviderScope.containerOf(context, listen: false);
+    } on StateError {
+      return; // A task shown without the app's providers (a bare widget).
     }
-    navigator.pop();
-    return true;
+    final opened = providers.read(sessionStateProvider).value;
+    _person = providers.listen(sessionStateProvider, (_, next) {
+      if (next.hasValue && next.value != opened) _contextChanged();
+    });
+  }
+
+  @override
+  void dispose() {
+    _route.context.removeListener(_contextChanged);
+    _person?.close();
+    super.dispose();
+  }
+
+  /// The context the task was opened in is gone: the task goes with it,
+  /// unasked (see the head of this file).
+  void _contextChanged() => scheduleMicrotask(() {
+    final navigator = _route.navigator;
+    if (_route.isActive && navigator != null) navigator.removeRoute(_route);
+  });
+
+  /// Whether a text field is still shown in the body: once only a result
+  /// is, nothing typed is left to lose.
+  bool _showsText() {
+    var found = false;
+    void visit(Element element) {
+      if (found) return;
+      if (element.widget is EditableText) {
+        found = true;
+        return;
+      }
+      element.visitChildren(visit);
+    }
+
+    final body = _bodyKey.currentContext;
+    if (body is Element) visit(body);
+    return found;
+  }
+
+  /// A way out was refused because the task holds a change: ask, and leave
+  /// with what was being popped when the person discards.
+  Future<void> _leave(bool didPop, Object? result) async {
+    if (didPop) return;
+    final navigator = Navigator.of(context);
+    if (!_showsText() || await confirmDiscardChanges(context)) {
+      if (navigator.mounted && _route.isActive) navigator.pop(result);
+    }
   }
 
   /// A sheet dragged down: closes, or (kept after the question) comes back.
   Future<void> _sheetClosing() async {
-    await _leave();
+    await Navigator.of(context).maybePop();
     if (mounted && _route.isActive) {
       await _route.sheetController.forward();
     }
   }
+
+  /// A key that edits the focused text field marks the session: the
+  /// fallback for a field that is not the kit's.
+  KeyEventResult _watchKeys(FocusNode node, KeyEvent event) {
+    if (event is KeyUpEvent) return KeyEventResult.ignored;
+    final field = FocusManager.instance.primaryFocus?.context
+        ?.findAncestorWidgetOfExactType<EditableText>();
+    if (field == null || field.readOnly) return KeyEventResult.ignored;
+    final keyboard = HardwareKeyboard.instance;
+    final chord = keyboard.isControlPressed || keyboard.isMetaPressed;
+    final key = event.logicalKey;
+    final typed = event.character;
+    final edits = chord
+        ? key == LogicalKeyboardKey.keyV || key == LogicalKeyboardKey.keyX
+        : key == LogicalKeyboardKey.backspace ||
+              key == LogicalKeyboardKey.delete ||
+              (typed != null &&
+                  typed.isNotEmpty &&
+                  typed.codeUnitAt(0) >= _firstPrintable);
+    if (edits) _route.session.markChanged();
+    return KeyEventResult.ignored;
+  }
+
+  /// The first character code that is text, not a control.
+  static const int _firstPrintable = 0x20;
 
   @override
   Widget build(BuildContext context) {
@@ -252,17 +355,23 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     );
     return _TaskSessionScope(
       session: _route.session,
-      child: Actions(
-        actions: {
-          DismissIntent: CallbackAction<DismissIntent>(
-            onInvoke: (_) => _leave(),
-          ),
-        },
-        child: switch (container) {
-          _TaskContainer.sheet => _sheet(body),
-          _TaskContainer.dialog => _dialog(body),
-          _TaskContainer.sidePanel => _sidePanel(body),
-        },
+      child: ValueListenableBuilder<bool>(
+        valueListenable: _route.session._changed,
+        builder: (context, changed, child) => PopScope<Object?>(
+          canPop: !changed,
+          onPopInvokedWithResult: _leave,
+          child: child!,
+        ),
+        child: Focus(
+          canRequestFocus: false,
+          skipTraversal: true,
+          onKeyEvent: _watchKeys,
+          child: switch (container) {
+            _TaskContainer.sheet => _sheet(body),
+            _TaskContainer.dialog => _dialog(body),
+            _TaskContainer.sidePanel => _sidePanel(body),
+          },
+        ),
       ),
     );
   }
