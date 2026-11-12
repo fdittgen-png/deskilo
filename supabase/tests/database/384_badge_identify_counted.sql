@@ -55,7 +55,7 @@ select public.badge_auth_verify('3840000000000001','000000') from generate_serie
 select is(public.badge_auth_verify('3840000000000002','482615')->>'ok','true','one badge failing again and again leaves the others usable');
 select is((select count(*)::int from public.events where workspace_id=pg_temp.u(101) and type='badge_security_alert'),0,'and alerts nobody');
 select public.badge_auth_verify('3840000000000002','000000');
-select is(public.badge_auth_verify('3840000000000002','482615')->>'reason','locked','two different badges failing reach the business ceiling');
+select is(public.badge_auth_verify('3840000000000002','482615')->>'reason','refused','two different badges failing reach the business ceiling: off a kiosk its tags answer as unknown ones (#3675)');
 
 select * from finish();
 rollback;

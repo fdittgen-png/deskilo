@@ -5972,6 +5972,8 @@
       }
     }
   },
+  "eventKioskDeviceEnrolled": "{actor} a enregistré le kiosque « {device} »",
+  "eventKioskDeviceRevoked": "{actor} a révoqué le kiosque « {device} »",
   "eventLeaseNoticeLine": "{actor} donne congé pour {premises} ; le bail prendrait fin le {date}",
   "@eventLeaseNoticeLine": {
     "description": "#2569 lease change validation",
@@ -6127,6 +6129,7 @@
   "@eventTypeInvoiceWriteoff": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
+  "eventTypeKioskDevice": "Appareils kiosque",
   "eventTypeLeaseChange": "Changement du bail",
   "@eventTypeLeaseChange": {
     "description": "#2569 lease change validation"
@@ -6797,6 +6800,8 @@
   "featureInvoicingDesc": "Factures immuables et signées dans une archive — à télécharger ou partager en PDF.",
   "featureInvoicingWizardDesc": "Un processus guidé de clôture mensuelle pour le responsable financier : une passe de début de mois pour les abonnements payés d'avance et une passe de fin de mois pour la consommation et les frais supplémentaires — revue, émission en lot, envoi, relances dues, enregistrement et validation des paiements, rapprochement avec les factures, regroupement, abandon de créance ou remboursement, et un récapitulatif avec ce qui reste à faire et par qui. Désactivé : les écrans séparés.",
   "featureInvoicingWizardTitle": "Assistant de facturation",
+  "featureKioskEnrolmentDesc": "Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil.",
+  "featureKioskEnrolmentTitle": "Enregistrement des kiosques",
   "featureKioskMemberPhotosDesc": "Le reçu de la borne affiche la photo de profil du membre — le contrôle visuel du mauvais badge.",
   "featureKioskMemberPhotosTitle": "Photos des membres à la borne",
   "featureKioskMode": "Mode borne",
@@ -17504,6 +17509,7 @@
     "description": "#2485 settings: Setting hint."
   },
   "settingHintSecurityBadgePinMinLength": "Le moins de chiffres qu'un nouveau PIN de badge peut avoir. Les PIN déjà définis continuent de fonctionner jusqu'à leur changement.",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks : seulement sur les appareils que l’entreprise a enregistrés comme kiosques, qui accueillent chacun par son nom. any_device : sur tout appareil, où personne n’est nommé avant le PIN.",
   "settingHintSecurityBadgeWorkspaceFailureLimit": "Badges différents de cet espace avec un PIN erroné pendant la période de verrouillage avant suspension et alerte des propriétaires. Un seul badge ne peut pas l’atteindre. Ce plafond peut seulement être réduit.",
   "settingHintSecurityInvitationExpiryDays": "Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.",
   "@settingHintSecurityInvitationExpiryDays": {
@@ -17692,6 +17698,7 @@
     "description": "#2485 settings: Setting label."
   },
   "settingLabelSecurityBadgePinMinLength": "PIN de badge : longueur minimale",
+  "settingLabelSecurityBadgeSigninWhere": "La connexion par badge fonctionne sur",
   "settingLabelSecurityBadgeWorkspaceFailureLimit": "Plafond des échecs de badge de l’espace",
   "settingLabelSecurityInvitationExpiryDays": "Validité d'une invitation",
   "@settingLabelSecurityInvitationExpiryDays": {

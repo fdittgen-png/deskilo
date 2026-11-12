@@ -233,6 +233,7 @@ void main() {
       'guestPasses': true,
       'reminderEmail': true,
       'invoiceEmail': true,
+      'kioskEnrolment': true,
       'guestParticipation': true,
     });
 

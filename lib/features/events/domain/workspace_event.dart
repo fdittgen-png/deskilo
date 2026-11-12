@@ -116,6 +116,10 @@ enum EventType {
   /// queued from the server). One per invoice, applied, never a request.
   invoiceIssued('invoice_issued'),
 
+  /// #3675 — a device was enrolled as a kiosk of the business, or revoked;
+  /// every owner is told who did it and which device.
+  kioskDevice('kiosk_device'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

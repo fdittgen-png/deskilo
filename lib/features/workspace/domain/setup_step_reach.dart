@@ -54,7 +54,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
   // The availability rules every booking surface checks, and the values
   // the space sets for itself.
   'limits': {_F.bookingGate, _F.configurableSettings},
-  'kiosk': {_F.nfcBadges, _F.qrBadges, _F.kioskMemberPhotos, _F.badgeSignIn},
+  'kiosk': {_F.nfcBadges, _F.qrBadges, _F.kioskMemberPhotos, _F.badgeSignIn, _F.kioskEnrolment},
   // Billing, one tap away: carnets, a member's own conditions and the
   // billing rules that invoice the fee ahead and the usage after.
   'pricing': {

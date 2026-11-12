@@ -8980,6 +8980,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String eventKioskDeviceEnrolled(String actor, String device) {
+    return '$actor registró el quiosco «$device»';
+  }
+
+  @override
+  String eventKioskDeviceRevoked(String actor, String device) {
+    return '$actor revocó el quiosco «$device»';
+  }
+
+  @override
   String eventLeaseNoticeLine(String actor, String premises, String date) {
     return '$actor da el preaviso de $premises; el contrato terminaría el $date';
   }
@@ -9178,6 +9188,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Anulación de saldo';
+
+  @override
+  String get eventTypeKioskDevice => 'Dispositivos de quiosco';
 
   @override
   String get eventTypeLeaseChange => 'Cambio del contrato de alquiler';
@@ -10578,6 +10591,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureInvoicingWizardTitle => 'Asistente de facturación';
+
+  @override
+  String get featureKioskEnrolmentDesc =>
+      'Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo.';
+
+  @override
+  String get featureKioskEnrolmentTitle => 'Registro de quioscos';
 
   @override
   String get featureKioskMemberPhotosDesc =>
@@ -27602,6 +27622,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las cifras mínimas de un nuevo PIN de tarjeta. Los PIN ya definidos siguen funcionando hasta que se cambien.';
 
   @override
+  String get settingHintSecurityBadgeSigninWhere =>
+      'enrolled_kiosks: solo en los dispositivos que la empresa registró como quioscos, que saludan a cada persona por su nombre. any_device: en cualquier dispositivo, donde nadie se nombra antes del PIN.';
+
+  @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
       'Credenciales distintas de este espacio con un PIN fallido durante el período de bloqueo antes de suspender el acceso y avisar a los propietarios. Una sola credencial no lo alcanza. Solo se puede reducir.';
 
@@ -27891,6 +27915,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgePinMinLength =>
       'PIN de tarjeta: longitud mínima';
+
+  @override
+  String get settingLabelSecurityBadgeSigninWhere =>
+      'El acceso con credencial funciona en';
 
   @override
   String get settingLabelSecurityBadgeWorkspaceFailureLimit =>

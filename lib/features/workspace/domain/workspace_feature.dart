@@ -99,10 +99,9 @@ enum WorkspaceFeature {
   /// deviation explains itself and passes the expense validation.
   scheduledExpenses,
 
-  /// #793 — the avatar monogram identifies ONE member: the initials of
-  /// the first and family name, lengthened on a clash and numbered only
-  /// when the letters run out. OFF keeps the single first letter, which
-  /// drew three identical `M` circles in a workspace of three Mathieus.
+  /// #793 — the avatar monogram identifies ONE member: the initials of the first and family name,
+  /// lengthened on a clash and numbered only when the letters run out. OFF keeps the single first
+  /// letter, which drew three identical `M` circles in a workspace of three Mathieus.
   uniqueMonograms,
 
   /// #798 — the two swipes on a message everyone already knows from
@@ -416,7 +415,8 @@ enum WorkspaceFeature {
   guestPasses,
   placeBooking,
   reminderEmail,
-  invoiceEmail;
+  invoiceEmail,
+  kioskEnrolment;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

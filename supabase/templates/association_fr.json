@@ -126,6 +126,7 @@
         "invoiceSettlement": false,
         "invoicing": true,
         "invoicingWizard": false,
+        "kioskEnrolment": false,
         "kioskMemberPhotos": false,
         "kioskMode": false,
         "letterStandard": false,

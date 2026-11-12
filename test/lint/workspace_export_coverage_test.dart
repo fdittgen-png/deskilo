@@ -131,6 +131,10 @@ const Map<String, String> _notExported = {
   'invoice_issue_notices':
       '#3672 -- whether telling a customer about a new invoice was queued: a delivery '
           'record of this server; the invoices and their feed events are exported themselves',
+  'kiosk_devices':
+      '#3675 -- the devices a business enrolled as kiosks, with the hash of each '
+          'credential: a security record of this server, bound to the device it '
+          'was enrolled on; an export never carries a credential or its hash',
   'invoice_email_sends':
       '#3673 -- the e-mail sends of invoices, each with its provider answer: '
           'delivery evidence of this server, kept beside the reminder e-mails and '

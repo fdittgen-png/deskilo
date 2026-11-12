@@ -1,0 +1,120 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #662 — sign in by scanning an RFID badge. The tag IDENTIFIES, a PIN
+// CONFIRMS, and only this function can turn the pair into a session.
+//
+// WHY HERE AND NOT IN SQL. A database function that mints a login would
+// be one `grant` away from being callable by `anon`, and an RFID UID is
+// not a secret — it is broadcast to any reader a few centimetres away
+// and clonable for about thirty euros. So `badge_auth_verify` is REVOKED
+// from public, anon and authenticated (migration 0123), and reachable
+// only by the service role that lives in this function's environment.
+//
+// TWO STEPS, ONE FORM.
+//   {uid}        -> the scan. The same answer for every well-formed tag:
+//                   nobody is named before the PIN. Counted in the database
+//                   per tag and per source (GHSA-9525-vh85-5hjg); past either
+//                   ceiling it answers "locked" (wait).
+//   {uid, pin}   -> a one-time token the client exchanges for a session
+//                   via supabase.auth.verifyOtp. The session is minted by
+//                   GoTrue from an e-mail this function never returns.
+//
+// FAILURES ARE UNIFORM. Unknown tag, disarmed badge, wrong PIN and
+// lockout all answer the same way, because telling them apart is how an
+// attacker learns which tags are real. The distinction lives in the
+// attempt log, which nothing outside the service role can read.
+
+import { refuseDelegated } from "../_shared/delegated.ts";
+import { callerOf, identifyAnswer, kioskOf, UID_PATTERN } from "./badge_guard.ts";
+
+export type Deps = {
+  // deno-lint-ignore no-explicit-any
+  rpc: (fn: string, args: Record<string, unknown>) => PromiseLike<{ data: any; error: { message: string } | null }>;
+  emailOf: (userId: string) => Promise<string | null>;
+  /** A one-time sign-in token hash for that e-mail, or null. */
+  tokenFor: (email: string) => Promise<string | null>;
+};
+
+export const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-deskilo-kiosk",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+
+function json(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...CORS, "Content-Type": "application/json" },
+  });
+}
+
+/// The single refusal. Deliberately says nothing about WHY — see the
+/// header. `locked` is separated only so the client can tell the member
+/// to wait rather than keep trying; it reveals nothing about the tag,
+/// because a lockout is reported for unknown tags too.
+function refused(reason: "refused" | "locked"): Response {
+  return json({ ok: false, reason }, 200);
+}
+
+export async function handle(req: Request, deps: Deps): Promise<Response> {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
+  if (req.method !== "POST") return json({ ok: false, reason: "refused" }, 405);
+  // #1614 — a badge sign-in is never asked for with a delegated token.
+  const delegated = refuseDelegated(req, CORS);
+  if (delegated) return delegated;
+
+  let uid: string | undefined;
+  let pin: string | undefined;
+  try {
+    const body = await req.json();
+    uid = typeof body?.uid === "string" ? body.uid.trim() : undefined;
+    pin = typeof body?.pin === "string" ? body.pin.trim() : undefined;
+  } catch (_) {
+    return refused("refused");
+  }
+  // A UID is lowercase hex without separators — the same normalization
+  // register_nfc_badge applies. Reject anything else before it reaches
+  // the database rather than hashing arbitrary input.
+  if (!uid || !UID_PATTERN.test(uid)) return refused("refused");
+  if (pin !== undefined && !/^[0-9]{4,8}$/.test(pin)) return refused("refused");
+
+  // #3675: an enrolled kiosk's credential, if the device sent one; the
+  // database decides whether it is one, and of the tag's business.
+  const kiosk = kioskOf(req);
+  const { data, error } = await deps.rpc("badge_auth_verify", {
+    p_uid: uid,
+    p_pin: pin ?? null,
+    // The source is hashed in the database and only ever counted.
+    p_source: callerOf(req),
+    p_device_id: kiosk?.device_id ?? null,
+    p_device_secret: kiosk?.device_secret ?? null,
+  });
+  if (error) {
+    console.error("badge_auth_verify failed", error.message);
+    return refused("refused");
+  }
+  if (!data?.ok) {
+    return refused(data?.reason === "locked" ? "locked" : "refused");
+  }
+
+  // SCAN — the same answer for every tag: the form asks for the PIN. On an
+  // enrolled kiosk of the tag's business the database adds the name.
+  if (pin === undefined) {
+    return json(identifyAnswer(data.display_name));
+  }
+
+  // AUTHENTICATE — the PIN matched. Turn the verified user into a
+  // one-time link and return only its token hash; the client exchanges
+  // that for a session itself, so no access token is ever assembled here.
+  const email = await deps.emailOf(data.user_id);
+  if (!email) return refused("refused");
+  const tokenHash = await deps.tokenFor(email);
+  if (!tokenHash) return refused("refused");
+  return json({
+    ok: true,
+    step: "authenticate",
+    // Exchanged client-side with verifyOtp({ type: 'email', token_hash }).
+    token_hash: tokenHash,
+  });
+}
