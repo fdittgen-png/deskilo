@@ -1109,7 +1109,9 @@ void main() {
 
     expect(money.invoiceMatchesStore[invoice.id]!.pending, isTrue);
     // #3587 — the pending match stays open, counted To confirm, and its
-    // page offers no further match or reminder.
+    // page offers no further match or reminder. #3607 — the invoice is a
+    // page over the home: closed first.
+    await closeInvoicePage(tester);
     expect(
       find.byWidgetPredicate((w) =>
           w.key is ValueKey<String> &&

@@ -17927,6 +17927,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get listDetailResize => 'Redimensionner le volet de la fiche';
+
+  @override
   String get listWholeReservable => 'Réservable en entier';
 
   @override

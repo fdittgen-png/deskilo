@@ -11501,6 +11501,7 @@
   "linkedAccountsUnlink": "Délier",
   "listCoversSeats": "{count, plural, =1{1 place} other{{count} places}}",
   "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "listDetailResize": "Redimensionner le volet de la fiche",
   "listWholeReservable": "Réservable en entier",
   "localGapsTitle": "Pour terminer la configuration de cet espace",
   "localNeedsTitle": "Vous les ajouterez vous-même ; un modèle ne les transporte jamais :",

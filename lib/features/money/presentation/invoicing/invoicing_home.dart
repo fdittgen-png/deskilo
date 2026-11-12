@@ -135,7 +135,12 @@ class InvoicingHome extends StatefulWidget {
     this.filter,
     this.legalNotes,
     this.wide,
+    this.listKey,
   });
+
+  /// #3607 — names the list, so the page beside it reads the order of its
+  /// invoices ([InvoicingList.orderUnder]).
+  final GlobalKey? listKey;
 
   final InvoicingHomeData data;
   final InvoicingHomeActions actions;
@@ -272,28 +277,31 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                   ],
                 ),
               ),
-              InvoicingList(
-                key: const ValueKey('invoicing-list'),
-                receivables: data.receivables,
-                today: data.today,
-                mode: data.mode,
-                holdsUnassigned: data.holdsUnassigned,
-                remindersKnown: data.creditsKnown,
-                filter: filter,
-                view: _view,
-                query: _query,
-                searchOpen: widget.searchOpen,
-                wide: wide,
-                onFilter: _choose,
-                onView: (v) => setState(() => _view = v),
-                onOpenInvoice: widget.actions.onOpenInvoice,
-                onOpenCustomer: widget.actions.onOpenCustomer,
-                onCustomerAction: widget.actions.onCustomerAction,
-                todo: switch (_todo) {
-                  final kind? => (kind: kind, title: _todoTitle(l, kind)),
-                  null => null,
-                },
-                onClearTodo: () => setState(() => _todo = null),
+              KeyedSubtree(
+                key: widget.listKey,
+                child: InvoicingList(
+                  key: const ValueKey('invoicing-list'),
+                  receivables: data.receivables,
+                  today: data.today,
+                  mode: data.mode,
+                  holdsUnassigned: data.holdsUnassigned,
+                  remindersKnown: data.creditsKnown,
+                  filter: filter,
+                  view: _view,
+                  query: _query,
+                  searchOpen: widget.searchOpen,
+                  wide: wide,
+                  onFilter: _choose,
+                  onView: (v) => setState(() => _view = v),
+                  onOpenInvoice: widget.actions.onOpenInvoice,
+                  onOpenCustomer: widget.actions.onOpenCustomer,
+                  onCustomerAction: widget.actions.onCustomerAction,
+                  todo: switch (_todo) {
+                    final kind? => (kind: kind, title: _todoTitle(l, kind)),
+                    null => null,
+                  },
+                  onClearTodo: () => setState(() => _todo = null),
+                ),
               ),
             ],
           );

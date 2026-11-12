@@ -17879,6 +17879,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get listDetailResize => 'Cambiar el ancho del panel del registro';
+
+  @override
   String get listWholeReservable => 'Reservable entero';
 
   @override

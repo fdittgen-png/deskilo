@@ -11,7 +11,6 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
@@ -177,7 +176,11 @@ Future<Finder> invoicingRow(WidgetTester tester, String invoiceId) async {
 /// `invoiceFitsBeside`, full screen otherwise); a member opens its DETAIL
 /// sheet from their archive's row.
 Future<void> openInvoice(WidgetTester tester, String invoiceId) async {
-  if (find.byKey(const ValueKey('invoicing-home')).evaluate().isNotEmpty) {
+  // The home may be under an invoice page (offstage): it is still there.
+  if (find
+      .byKey(const ValueKey('invoicing-home'), skipOffstage: false)
+      .evaluate()
+      .isNotEmpty) {
     await closeInvoicePage(tester);
     await tester.tap(await invoicingRow(tester, invoiceId));
   } else {
@@ -208,10 +211,21 @@ FakeEventRepository registeredPayment(String memberId, int amountCents) =>
 /// #3587 R1-d — closes an invoice page opened full screen; a no-op when
 /// none is open.
 Future<void> closeInvoicePage(WidgetTester tester) async {
-  final page = find.ancestor(
-      of: find.byType(InvoicePage), matching: find.byType(Dialog));
-  if (page.evaluate().isEmpty) return;
-  await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+  // #3607 — the invoice is a page at its address (or the pane beside the
+  // list on a large window); a page opened from inside another page is
+  // still a dialog. Its own close button closes it wherever it stands.
+  final close = find.byKey(const ValueKey('invoice-page-close'));
+  final back = find.descendant(
+    of: find.byType(InvoicePage),
+    matching: find.byType(BackButton),
+  );
+  if (close.evaluate().isNotEmpty) {
+    await tester.tap(close.last);
+  } else if (back.evaluate().isNotEmpty) {
+    await tester.tap(back.last);
+  } else {
+    return;
+  }
   await tester.pumpAndSettle();
 }
 

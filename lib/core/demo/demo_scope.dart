@@ -123,6 +123,7 @@ import '../storage/entry_intent_store.dart';
 import '../storage/help_hint_store.dart';
 import '../storage/note_seen_store.dart';
 import '../storage/notification_filter_store.dart';
+import '../storage/pane_width_store.dart';
 import '../storage/space_prefs_store.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
@@ -130,6 +131,7 @@ import '../webmcp/webmcp_device_switch.dart';
 import 'data/action_confirmation_repository.dart';
 import 'data/demo_no_backend.dart';
 import 'data/demo_setup_repository.dart';
+import 'data/device_prefs.dart' show DemoDevicePrefs;
 import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
 import 'data/mcp_admin_repository.dart';
@@ -393,9 +395,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       themeStoreProvider.overrideWithValue(fixture.prefs.theme),
       navigationStyleStoreProvider
           .overrideWithValue(fixture.prefs.navigationStyle),
-      shellBarHiddenStoreProvider.overrideWithValue(fixture.prefs.shellBarHidden),
-      shellSwipeCoachStoreProvider.overrideWithValue(fixture.prefs.shellSwipeCoach),
-      deskRailCollapsedStoreProvider.overrideWithValue(fixture.prefs.deskRailCollapsed),
+      ..._shellPrefOverrides(fixture.prefs),
       pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
       webMcpSwitchStoreProvider.overrideWithValue(fixture.prefs.webMcpSwitch),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
@@ -479,4 +479,14 @@ List<Override> _fileOverrides(DemoFixture fixture) => [
   fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
   typedFileSaverProvider.overrideWithValue(fixture.outward.saveFileTyped),
   saveFolderStoreProvider.overrideWithValue(fixture.prefs.saveFolder),
+];
+
+/// How the shell and the desk are drawn on this device (the bar swiped
+/// away, the swipe hint seen, the rail, #3607's record pane widths), on
+/// the fixture like every other device value.
+List<Override> _shellPrefOverrides(DemoDevicePrefs prefs) => [
+  shellBarHiddenStoreProvider.overrideWithValue(prefs.shellBarHidden),
+  shellSwipeCoachStoreProvider.overrideWithValue(prefs.shellSwipeCoach),
+  deskRailCollapsedStoreProvider.overrideWithValue(prefs.deskRailCollapsed),
+  paneWidthStoreProvider.overrideWithValue(prefs.paneWidths),
 ];

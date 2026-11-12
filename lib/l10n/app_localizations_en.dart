@@ -17753,6 +17753,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get listDetailResize => 'Resize the record pane';
+
+  @override
   String get listWholeReservable => 'Reservable as a whole';
 
   @override

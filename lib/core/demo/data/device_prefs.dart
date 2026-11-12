@@ -31,6 +31,7 @@ import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
+import 'package:deskilo/core/storage/pane_width_store.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
@@ -85,6 +86,18 @@ class InMemoryNavigationStyleStore implements NavigationStyleStore {
   Future<String?> read() async => style;
   @override
   Future<void> write(String? style) async => this.style = style;
+}
+
+/// #3607 — the record pane's width per list, in memory.
+class InMemoryPaneWidthStore implements PaneWidthStore {
+  final Map<String, String> widths = {};
+
+  @override
+  Future<String?> read(String list) async => widths[list];
+
+  @override
+  Future<void> write(String list, String? width) async =>
+      width == null ? widths.remove(list) : widths[list] = width;
 }
 
 /// #1173 — one of the two shell flags (bar swiped away, swipe hint seen).
@@ -147,6 +160,7 @@ class DemoDevicePrefs {
 
   /// #3603 — the desk's sidebar starts with its labels.
   final InMemoryShellFlagStore deskRailCollapsed = InMemoryShellFlagStore();
+  final InMemoryPaneWidthStore paneWidths = InMemoryPaneWidthStore();
 
   /// #1914 — push opt-out, kept in the demonstration's own memory.
   final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();
