@@ -102,6 +102,8 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
     _F.reportDesignExchange,
     _F.letterStandard,
     _F.invoiceAddressWindow,
+    // #3673 — the document sent by e-mail, in the customer's language.
+    _F.invoiceEmail,
   },
   'accounting': {_F.accountingPeriods, _F.accountingConnectors, _F.bankImport},
   // The reminder rules and the payment conditions they recall.

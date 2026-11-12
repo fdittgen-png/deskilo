@@ -267,5 +267,7 @@
   "featurePlaceBookingTitle": "Plazas reservables",
   "featurePlaceBookingDesc": "El negocio tiene plazas que se reservan: asientos, mesas, salas y un plano. Desactivado: el plano, las reservas y todas las funciones de plazas se ocultan, para un estudio, consulta o salón que vende servicios, no plazas. Las reservas anteriores se conservan.",
   "featureReminderEmailTitle": "Recordatorios por correo electrónico",
-  "featureReminderEmailDesc": "Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación."
+  "featureReminderEmailDesc": "Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación.",
+  "featureInvoiceEmailTitle": "Facturas por correo",
+  "featureInvoiceEmailDesc": "Una factura emitida puede enviarse por correo desde el servidor, con el remitente de la empresa, a la dirección de contacto del cliente, en el idioma de sus documentos. Cada factura se envía una vez; volver a enviarla es un acto deliberado, con su propio registro. Desactivado: las facturas se comparten o descargan como antes."
 }

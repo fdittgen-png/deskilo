@@ -41,6 +41,10 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.reminderEmail:
       'a reminder e-mail leaves from the server through the business\'s own '
       'provider; the Demo sends no e-mail',
+  // #3673 — invoices by e-mail leave from the server too.
+  WorkspaceFeature.invoiceEmail:
+      'an invoice e-mail leaves from the server through the business\'s own '
+      'provider; the Demo sends no e-mail',
 };
 
 /// ws-1: every feature on, except [demoFeaturesLeftOff] and anything whose

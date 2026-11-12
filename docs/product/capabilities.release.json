@@ -1740,6 +1740,12 @@
       "capabilities": []
     },
     {
+      "key": "invoiceEmail",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "invoiceJourney",
       "maturity": "beta",
       "lifecycle": "active",
