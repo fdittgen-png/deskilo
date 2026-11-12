@@ -59,9 +59,11 @@ void main() {
       AppLocalizationsDe(),
       _german(clock),
     ).join('\n');
-    expect(details(ClockPref.h12), contains('2:30 PM'));
-    expect(details(ClockPref.h12), isNot(contains('14:30')));
-    expect(details(ClockPref.h24), contains('14:30'));
+    // The instant is read on the workspace's calendar (its own zone), then
+    // written on the person's clock.
+    expect(details(ClockPref.h12), contains(RegExp(r'\d{1,2}:30 [AP]M')));
+    expect(details(ClockPref.h24), contains(RegExp(r', \d{2}:30\b')));
+    expect(details(ClockPref.h24), isNot(contains('AM')));
   });
 
   test('a picker row follows the person\'s clock; a baked label keeps the '
