@@ -1,8 +1,11 @@
 {
   "invoiceRegisterPeriod": "Période : {from} – {to}",
   "invoiceRegisterPeriodClear": "Afficher toutes les périodes",
-  "invoiceRegisterExportSelected": "{count, plural, =1{Exporter 1 facture} other{Exporter {count} factures}}",
   "invoiceRegisterStatus": "Statut",
   "invoiceRegisterPeriodColumn": "Période",
-  "invoiceRegisterIntegrity": "Empreinte"
+  "invoiceRegisterIntegrity": "Empreinte",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{Télécharger 1 facture} other{Télécharger {count} factures}}",
+  "invoiceRegisterNumber": "Numéro",
+  "invoiceRegisterMember": "Membre",
+  "invoiceRegisterCurrency": "Devise"
 }

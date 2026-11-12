@@ -19793,9 +19793,13 @@
   "@invoiceRegisterAmount": {
     "description": "Register column header"
   },
-  "invoiceRegisterExportSelected": "{count, plural, =1{Export 1 invoice} other{Export {count} invoices}}",
-  "@invoiceRegisterExportSelected": {
-    "description": "#3606 the invoice register as a records table",
+  "invoiceRegisterCurrency": "Currency",
+  "@invoiceRegisterCurrency": {
+    "description": "#3606 the register's download of a selection (CSV)"
+  },
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}",
+  "@invoiceRegisterDownloadSelected": {
+    "description": "#3606 the register's download of a selection (CSV)",
     "placeholders": {
       "count": {
         "type": "int"
@@ -19806,9 +19810,17 @@
   "@invoiceRegisterIntegrity": {
     "description": "#3606 the invoice register as a records table"
   },
+  "invoiceRegisterMember": "Member",
+  "@invoiceRegisterMember": {
+    "description": "#3606 the register's download of a selection (CSV)"
+  },
   "invoiceRegisterName": "Name",
   "@invoiceRegisterName": {
     "description": "Register column header: the member for an issuer, the invoice number for a member"
+  },
+  "invoiceRegisterNumber": "Number",
+  "@invoiceRegisterNumber": {
+    "description": "#3606 the register's download of a selection (CSV)"
   },
   "invoiceRegisterPeriod": "Period: {from} – {to}",
   "@invoiceRegisterPeriod": {

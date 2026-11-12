@@ -24639,11 +24639,17 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get invoiceRegisterAmount;
 
-  /// #3606 the invoice register as a records table
+  /// #3606 the register's download of a selection (CSV)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Export 1 invoice} other{Export {count} invoices}}'**
-  String invoiceRegisterExportSelected(int count);
+  /// **'Currency'**
+  String get invoiceRegisterCurrency;
+
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}'**
+  String invoiceRegisterDownloadSelected(int count);
 
   /// #3606 the invoice register as a records table
   ///
@@ -24651,11 +24657,23 @@ abstract class AppLocalizations {
   /// **'Fingerprint'**
   String get invoiceRegisterIntegrity;
 
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get invoiceRegisterMember;
+
   /// Register column header: the member for an issuer, the invoice number for a member
   ///
   /// In en, this message translates to:
   /// **'Name'**
   String get invoiceRegisterName;
+
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get invoiceRegisterNumber;
 
   /// Register filter chip: the days the register is narrowed to by a drill-through
   ///

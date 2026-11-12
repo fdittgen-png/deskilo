@@ -117,6 +117,19 @@ PeriodSettlement? settlementOfPeriod(
   );
 }
 
+/// The words of [status], as the chip and an export say them.
+String invoiceLifecycleLabel(AppLocalizations l10n, InvoiceLifecycle status) =>
+    switch (status) {
+      InvoiceLifecycle.open => l10n.invoiceStatusOpen,
+      InvoiceLifecycle.awaitingValidation => l10n.invoiceMatchPendingBadge,
+      InvoiceLifecycle.paid => l10n.invoiceMatchedBadge,
+      InvoiceLifecycle.partiallyPaid => l10n.invoiceStatusPartiallyPaid,
+      InvoiceLifecycle.remainderCancelled =>
+        l10n.invoiceStatusRemainderCancelled,
+      InvoiceLifecycle.refunded => l10n.refStatusRefunded,
+      InvoiceLifecycle.erroneous => l10n.invoiceVoidedChip,
+    };
+
 /// The lifecycle as a compact chip. Replaces the dot-joined status words
 /// that used to hide inside a row's grey subtitle line.
 class InvoiceStatusChip extends StatelessWidget {
@@ -128,41 +141,28 @@ class InvoiceStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final colors = Theme.of(context).colorScheme;
-    final (Color background, Color foreground, String label) = switch (status) {
+    final label = invoiceLifecycleLabel(l10n, status);
+    final (Color background, Color foreground) = switch (status) {
       InvoiceLifecycle.open => (
           colors.surfaceContainerHighest,
           colors.onSurfaceVariant,
-          l10n.invoiceStatusOpen,
         ),
       InvoiceLifecycle.awaitingValidation => (
           colors.primaryContainer,
           colors.onPrimaryContainer,
-          l10n.invoiceMatchPendingBadge,
         ),
-      InvoiceLifecycle.paid => (
+      InvoiceLifecycle.paid || InvoiceLifecycle.refunded => (
           colors.secondaryContainer,
           colors.onSecondaryContainer,
-          l10n.invoiceMatchedBadge,
         ),
-      InvoiceLifecycle.partiallyPaid => (
-          colors.tertiaryContainer,
-          colors.onTertiaryContainer,
-          l10n.invoiceStatusPartiallyPaid,
-        ),
+      InvoiceLifecycle.partiallyPaid ||
       InvoiceLifecycle.remainderCancelled => (
           colors.tertiaryContainer,
           colors.onTertiaryContainer,
-          l10n.invoiceStatusRemainderCancelled,
-        ),
-      InvoiceLifecycle.refunded => (
-          colors.secondaryContainer,
-          colors.onSecondaryContainer,
-          l10n.refStatusRefunded,
         ),
       InvoiceLifecycle.erroneous => (
           colors.errorContainer,
           colors.onErrorContainer,
-          l10n.invoiceVoidedChip,
         ),
     };
     return Container(

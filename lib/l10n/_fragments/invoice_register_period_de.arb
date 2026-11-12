@@ -1,8 +1,11 @@
 {
   "invoiceRegisterPeriod": "Zeitraum: {from} – {to}",
   "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen",
-  "invoiceRegisterExportSelected": "{count, plural, =1{1 Rechnung exportieren} other{{count} Rechnungen exportieren}}",
   "invoiceRegisterStatus": "Status",
   "invoiceRegisterPeriodColumn": "Zeitraum",
-  "invoiceRegisterIntegrity": "Fingerabdruck"
+  "invoiceRegisterIntegrity": "Fingerabdruck",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{1 Rechnung herunterladen} other{{count} Rechnungen herunterladen}}",
+  "invoiceRegisterNumber": "Nummer",
+  "invoiceRegisterMember": "Mitglied",
+  "invoiceRegisterCurrency": "Währung"
 }

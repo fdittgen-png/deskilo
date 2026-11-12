@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3606 — the invoice register as a records table, its first consumer. The
-// export of a selection carries exactly the selected invoices: after a
-// filter change (a hidden row leaves the selection) and after a reload (a
-// row that is gone is dropped, and the table says so). The footer totals
-// per currency, says what it adds up, and never sums two currencies.
+// download of a selection (a CSV of the register's columns) carries exactly
+// the selected invoices: after a filter change (a hidden row leaves the
+// selection) and after a reload (a row that is gone is dropped, and the
+// table says so before the download). Each amount is in its own currency's
+// column, a name that starts with = is not run by a spreadsheet, and the
+// footer totals per currency, says what it adds up, never sums two.
 import 'dart:convert';
 
 import 'package:deskilo/app/app.dart';
@@ -51,6 +53,7 @@ Future<List<({String name, String body})>> _pump(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(money: money),
+        fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
         typedFileSaverProvider.overrideWithValue(({
           required bytes,
           required fileName,
@@ -70,26 +73,20 @@ Future<List<({String name, String body})>> _pump(
   return saved;
 }
 
-/// Exports the selection as a documents-only SAF-T file.
-Future<String> _exportSelection(
+/// Downloads the selection; the file's text.
+Future<String> _download(
   WidgetTester tester,
   List<({String name, String body})> saved,
 ) async {
-  await tester.tap(_k('records-bulk-export'));
+  await tester.tap(_k('records-bulk-download'));
   await tester.pumpAndSettle();
-  await tester.tap(_k('accounting-export-saft'));
-  await tester.pumpAndSettle();
-  // The documents-only branch, where the file offers postings too.
-  if (_k('saft-documents-only').evaluate().isNotEmpty) {
-    await tester.tap(_k('saft-documents-only'));
-    await tester.pumpAndSettle();
-  }
-  expect(saved, isNotEmpty, reason: 'the export wrote a file');
+  expect(saved, isNotEmpty, reason: 'the download wrote a file');
+  expect(saved.last.name, endsWith('.csv'));
   return saved.last.body;
 }
 
 void main() {
-  testWidgets('the export carries exactly the selection, after a filter '
+  testWidgets('the download carries exactly the selection, after a filter '
       'takes a selected row out of it', (tester) async {
     final money = await _money();
     final saved = await _pump(tester, money);
@@ -101,11 +98,12 @@ void main() {
     // A filter that hides b takes it out of the selection.
     await tester.enterText(_k('records-filter'), a.number);
     await tester.pumpAndSettle();
-    final body = await _exportSelection(tester, saved);
+    final body = await _download(tester, saved);
     expect(body, contains(a.number));
     expect(body, isNot(contains(b.number)));
     expect(body, isNot(contains(c.number)));
-    expect(body, contains('<NumberOfEntries>1</NumberOfEntries>'));
+    // The header and one line.
+    expect(body.trim().split('\r\n'), hasLength(2));
   });
 
   testWidgets('after a reload without a selected invoice it is dropped, the '
@@ -122,7 +120,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(_k('records-dropped'), findsOneWidget);
     expect(find.text('1 selected'), findsOneWidget);
-    final body = await _exportSelection(tester, saved);
+    final body = await _download(tester, saved);
     expect(body, contains(a.number));
     expect(body, isNot(contains(b.number)));
     expect(body, isNot(contains(c.number)));
@@ -142,5 +140,27 @@ void main() {
     expect(find.text('Total of the selection'), findsOneWidget);
     expect(_k('records-total-EUR'), findsNothing);
     expect(_k('records-total-CHF'), findsOneWidget);
+  });
+
+  testWidgets('each amount in its own currency\'s column, no total row; a '
+      'name that starts with = is not run by a spreadsheet', (tester) async {
+    final money = await _money();
+    money.invoices[0] = money.invoices[0].copyWith(
+      memberName: '=HYPERLINK("x")',
+    );
+    final saved = await _pump(tester, money);
+    await tester.tap(_k('records-select-shown'));
+    await tester.pumpAndSettle();
+    final body = await _download(tester, saved);
+    final lines = body.replaceFirst('\uFEFF', '').trim().split('\r\n');
+    expect(
+      lines.first,
+      '"Date","Number","Member","Period","Amount","Currency","Status"',
+    );
+    expect(lines, hasLength(4), reason: 'three invoices, no total row');
+    expect(body, contains(',166.00,"EUR",'));
+    expect(body, contains(',166.00,"CHF",'));
+    expect(body, isNot(contains(',=HYPERLINK')));
+    expect(body, isNot(contains('"=HYPERLINK')));
   });
 }

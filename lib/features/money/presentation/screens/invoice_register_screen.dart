@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/files/file_delivery.dart';
+import '../../../../core/files/file_delivery_notice.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/records_table.dart';
@@ -15,6 +18,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_view.dart';
+import '../../domain/register_csv.dart';
 import '../../domain/register_period.dart';
 import '../../providers/money_providers.dart';
 import '../accounting_export.dart';
@@ -243,7 +247,6 @@ class _InvoiceRegisterScreenState
       canIssue: canIssue,
       showMemberName: showMemberNames,
     );
-    final byId = {for (final i in invoices) i.id: i};
     return Column(children: [
       if (years.length > 1)
         Padding(
@@ -341,15 +344,21 @@ class _InvoiceRegisterScreenState
             ),
           ],
           bulkActions: [
+            // #3606 — the selection as a CSV of the register's columns,
+            // behind the register's export permission. Not an accounting
+            // file: the year's audit export stays whole, on the app bar.
             if (canExport)
               RecordBulkAction(
-                id: 'export',
-                label: l10n.invoiceRegisterExportSelected,
-                icon: Icons.plagiarism_outlined,
-                // Exactly the selected invoices, nothing the filter hides.
-                onRun: (keys) => _export(
-                  [for (final k in keys) ?byId[k]],
-                  label: l10n.invoiceRegisterExportSelected(keys.length),
+                id: 'download',
+                label: l10n.invoiceRegisterDownloadSelected,
+                icon: Icons.file_download_outlined,
+                onRun: (keys) => _download(
+                  context,
+                  [
+                    for (final i in invoices)
+                      if (keys.contains(i.id)) i,
+                  ],
+                  matches: matches,
                 ),
               ),
           ],
@@ -375,6 +384,47 @@ class _InvoiceRegisterScreenState
         ),
       ),
     ]);
+  }
+
+  /// #3606 — [selected] as the register's CSV, through the platform's
+  /// file delivery.
+  Future<void> _download(
+    BuildContext context,
+    List<Invoice> selected, {
+    required Map<String, InvoiceMatch> matches,
+  }) async {
+    final l10n = context.l10n;
+    final bytes = registerCsv(
+      selected,
+      header: (
+        date: l10n.numberSequenceDatePart,
+        number: l10n.invoiceRegisterNumber,
+        member: l10n.invoiceRegisterMember,
+        period: l10n.invoiceRegisterPeriodColumn,
+        amount: l10n.invoiceRegisterAmount,
+        currency: l10n.invoiceRegisterCurrency,
+        status: l10n.invoiceRegisterStatus,
+      ),
+      period: (i) => invoicePeriodLabel(context, i),
+      status: (i) =>
+          invoiceLifecycleLabel(l10n, invoiceLifecycleOf(i, matches[i.id])),
+    );
+    final name = registerCsvName(
+      ref.read(currentWorkspaceProvider).value?.name ?? '',
+      ref.read(clockProvider).now(),
+    );
+    Future<void> deliver() async {
+      final delivery = await deliverFile(
+        context,
+        ref,
+        bytes: bytes,
+        fileName: name,
+      );
+      if (!context.mounted) return;
+      announceFileDelivery(context, delivery, retry: deliver);
+    }
+
+    await deliver();
   }
 
   Future<void> _open(

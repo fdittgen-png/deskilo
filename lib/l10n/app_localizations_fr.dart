@@ -15347,12 +15347,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceRegisterAmount => 'Montant';
 
   @override
-  String invoiceRegisterExportSelected(int count) {
+  String get invoiceRegisterCurrency => 'Devise';
+
+  @override
+  String invoiceRegisterDownloadSelected(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Exporter $count factures',
-      one: 'Exporter 1 facture',
+      other: 'Télécharger $count factures',
+      one: 'Télécharger 1 facture',
     );
     return '$_temp0';
   }
@@ -15361,7 +15364,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceRegisterIntegrity => 'Empreinte';
 
   @override
+  String get invoiceRegisterMember => 'Membre';
+
+  @override
   String get invoiceRegisterName => 'Nom';
+
+  @override
+  String get invoiceRegisterNumber => 'Numéro';
 
   @override
   String invoiceRegisterPeriod(String from, String to) {
