@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:flutter/widgets.dart' show Locale;
 import 'package:intl/intl.dart';
 
-import '../settings/setting_defaults.g.dart';
+import '../../l10n/app_localizations.dart';
 
 /// A currency formatter that knows its code (#711).
 ///
@@ -13,13 +14,49 @@ import '../settings/setting_defaults.g.dart';
 /// member's `AppFormat.locale`, or a document's) and the currency's
 /// minor digits, and offers [formatMinor] so a caller hands over what
 /// it has — the stored integer — and never divides.
+/// #3658 — an amount whose currency is not known is incomplete, not smaller:
+/// its scale itself is unknown (1 250 units are 1 250 JPY or 1.250 KWD). A
+/// document, a file or a payment refuses it at its boundary with this.
+class CurrencyUnavailable implements Exception {
+  const CurrencyUnavailable([this.where = '']);
+
+  /// What needed the currency, for the trace.
+  final String where;
+
+  @override
+  String toString() => 'CurrencyUnavailable($where)';
+}
+
+final RegExp _isoCode = RegExp(r'^[A-Z]{3}$');
+
+/// Whether [code] names a currency (ISO 4217's shape).
+bool isCurrencyCode(String? code) => code != null && _isoCode.hasMatch(code);
+
+/// [code] when it names a currency; [CurrencyUnavailable] otherwise.
+String requireCurrency(String? code, {String where = ''}) {
+  if (!isCurrencyCode(code)) throw CurrencyUnavailable(where);
+  return code!;
+}
+
+/// "Currency unavailable" in [locale]'s language (English when the app has
+/// none for it): what stands in place of an amount whose currency is not
+/// known. The stored units are never shown as an amount.
+String currencyUnavailableText(String? locale) {
+  final language = (locale ?? '').split(RegExp('[_-]')).first;
+  final supported = AppLocalizations.supportedLocales
+      .any((l) => l.languageCode == language);
+  return lookupAppLocalizations(Locale(supported ? language : 'en'))
+      .moneyCurrencyUnavailable;
+}
+
 class MoneyFormat {
   MoneyFormat(
     this.code, {
     required String? locale,
     this.spaceAlphabetic = false,
     bool distinct = false,
-  }) : _format = NumberFormat.currency(
+  }) : _unavailable = null,
+       _format = NumberFormat.currency(
           locale: locale,
           name: code,
           symbol: distinct
@@ -31,8 +68,20 @@ class MoneyFormat {
           decimalDigits: Currencies.minorDigits(code),
         );
 
+  /// #3658 — the formatter of an amount whose currency is not known: every
+  /// amount reads [text] ("Currency unavailable"), never a number.
+  MoneyFormat.unavailable({required String text, required String? locale})
+    : code = '',
+      spaceAlphabetic = false,
+      _unavailable = text,
+      _format = NumberFormat.decimalPattern(locale);
+
   final String code;
   final NumberFormat _format;
+  final String? _unavailable;
+
+  /// Whether the currency is unknown: amounts read "Currency unavailable".
+  bool get unavailable => _unavailable != null;
 
   /// #3591 -- on a screen, an alphabetic symbol (CHF, PLN) is set off from the
   /// number by a no-break space (`CHF 95.00`, `95,00 CHF`). Documents and
@@ -40,14 +89,14 @@ class MoneyFormat {
   final bool spaceAlphabetic;
 
   /// The stored minor-unit amount, spelled for the reader.
-  String formatMinor(int minor) => _spaced(
+  String formatMinor(int minor) => _unavailable ?? _spaced(
         _format.format(Currencies.toMajor(minor, code)),
         _format.currencySymbol,
         spaceAlphabetic: spaceAlphabetic,
       );
 
   /// A MAJOR-unit number — kept for callers that already hold one.
-  String format(num major) => _spaced(
+  String format(num major) => _unavailable ?? _spaced(
         _format.format(major),
         _format.currencySymbol,
         spaceAlphabetic: spaceAlphabetic,
@@ -56,9 +105,10 @@ class MoneyFormat {
   /// The locale it spells amounts in.
   String get locale => _format.locale;
 
-  String get currencySymbol => _format.currencySymbol;
+  String get currencySymbol => _unavailable == null ? _format.currencySymbol : '';
 
-  String get currencyName => _format.currencyName ?? code;
+  String get currencyName =>
+      _unavailable == null ? (_format.currencyName ?? code) : '';
 }
 
 final RegExp _alphabetic = RegExp(r'^[A-Za-z]{3}$');
@@ -113,15 +163,16 @@ String _distinctSymbol(String code, {required String? locale}) =>
 final Map<(String?, String), String> _distinctSymbols = {};
 
 /// The one-liner the sweep replaced `NumberFormat.simpleCurrency(name:)`
-/// with. Null or empty code reads as the registry's default currency (the
-/// euro until an operator changes it), as the old call read the euro.
+/// with. #3658: a missing or malformed code is not read as any currency —
+/// every amount then reads "Currency unavailable".
 MoneyFormat moneyFormat(
   String? code, {
   required String? locale,
   bool spaceAlphabetic = false,
 }) =>
-    MoneyFormat(
-      (code == null || code.isEmpty) ? SettingDefaults.localeDefaultCurrency : code,
-      locale: locale,
-      spaceAlphabetic: spaceAlphabetic,
-    );
+    isCurrencyCode(code)
+        ? MoneyFormat(code!, locale: locale, spaceAlphabetic: spaceAlphabetic)
+        : MoneyFormat.unavailable(
+            text: currencyUnavailableText(locale),
+            locale: locale,
+          );

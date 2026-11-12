@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/i18n/money_format.dart';
 import '../../../core/settings/settings.dart';
 import '../../../core/state/policy_read.dart';
 import '../../../core/text/collation.dart';
@@ -580,7 +580,8 @@ Future<List<NumberSequence>> numberSequences(Ref ref) async {
 Future<WorkspaceStatus> workspaceStatus(Ref ref, String from, String to) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) {
-    return WorkspaceStatus(from: from, to: to, currency: SettingDefaults.localeDefaultCurrency);
+    // #3658 — no business, no currency: the status is not made up in one.
+    throw const CurrencyUnavailable('workspace status');
   }
   return ref
       .read(billingRulesRepositoryProvider)

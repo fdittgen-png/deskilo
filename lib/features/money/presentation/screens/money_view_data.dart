@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/providers/event_providers.dart';
@@ -192,7 +191,7 @@ class MoneyViewData {
   PaymentInstructions get paymentInstructions =>
       PaymentInstructions.fromDb(workspace?.paymentInstructions ?? const {});
 
-  String get currencyCode => workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
+  String get currencyCode => workspace?.currencyCode ?? format.currencyCode;
 
   /// #3484 — the member's formats, for the amounts this view prints.
   final AppFormat format;

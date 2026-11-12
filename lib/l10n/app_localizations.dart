@@ -32234,6 +32234,12 @@ abstract class AppLocalizations {
   /// **'Payments & credits'**
   String get moneyCredits;
 
+  /// #3658 — shown in place of an amount whose currency is not known: never a bare number, whose scale is unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency unavailable'**
+  String get moneyCurrencyUnavailable;
+
   /// Label of the expense description input
   ///
   /// In en, this message translates to:

@@ -12396,6 +12396,7 @@
   "moneyAmountLabel": "Betrag",
   "moneyBaseFee": "Basis-Abo",
   "moneyCredits": "Zahlungen & Gutschriften",
+  "moneyCurrencyUnavailable": "Währung nicht verfügbar",
   "moneyDescriptionLabel": "Beschreibung",
   "moneyDueIn": "{days, plural, =1{Fällig in 1 Tag} other{Fällig in {days} Tagen}}",
   "moneyExpenseCategoryLabel": "Kategorie",

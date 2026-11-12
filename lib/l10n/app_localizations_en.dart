@@ -19890,6 +19890,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneyCredits => 'Payments & credits';
 
   @override
+  String get moneyCurrencyUnavailable => 'Currency unavailable';
+
+  @override
   String get moneyDescriptionLabel => 'Description';
 
   @override

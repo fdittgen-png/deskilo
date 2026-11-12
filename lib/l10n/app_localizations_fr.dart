@@ -20099,6 +20099,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moneyCredits => 'Paiements et crédits';
 
   @override
+  String get moneyCurrencyUnavailable => 'Devise indisponible';
+
+  @override
   String get moneyDescriptionLabel => 'Description';
 
   @override

@@ -32,7 +32,7 @@ library;
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../core/settings/setting_defaults.g.dart';
+import '../../../core/i18n/money_format.dart';
 import '../../../core/text/csv.dart';
 import 'accounting_source_snapshot.dart';
 import 'ledger_entry.dart';
@@ -255,8 +255,8 @@ String buildAuditTrailCsv({
       csvCell(event.relatesTo),
       csvCell(event.description),
       // The trail has no currency column: the amounts are in the workspace's
-      // currency (#2488; the registry default only when none is named).
-      minorToText(event.amountCents, currencyCode ?? SettingDefaults.localeDefaultCurrency),
+      // currency (#2488); a file without it is refused, never guessed (#3658).
+      minorToText(event.amountCents, requireCurrency(currencyCode, where: 'audit trail')),
       csvCell(event.counterparty),
       csvCell(event.actor),
       csvCell(event.status),
