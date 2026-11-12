@@ -14,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../fake_money_repository.dart';
 import '../mock_providers.dart';
 import '../settings_sections.dart';
+import '../shell_bar.dart';
 
 Future<FakeWorkspaceRepository> pumpMembers(
   WidgetTester tester, {
@@ -54,7 +55,7 @@ Future<FakeWorkspaceRepository> pumpMembers(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
+  await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
   await tester.ensureVisible(find.text('Members & plans'));
