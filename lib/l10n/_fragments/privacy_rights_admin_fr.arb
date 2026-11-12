@@ -49,7 +49,7 @@
   "privacyIncidentOther": "Un autre incident",
   "privacyAdminIncidentNote": "Ce qui s'est passé (facultatif, 1000 caractères au plus)",
   "privacyAdminIncidentSend": "Enregistrer et prévenir",
-  "privacyAdminIncidentRecorded": "{count, plural, =0{Enregistré. Personne ne détient ce droit : personne n'a été prévenu.} =1{Enregistré. 1 personne a été prévenue.} other{Enregistré. {count} personnes ont été prévenues.}}",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Enregistré. Personne ne détient ce droit : personne n'a été prévenu.} one{Enregistré. 1 personne a été prévenue.} other{Enregistré. {count} personnes ont été prévenues.}}",
   "@privacyAdminIncidentRecorded": {
     "placeholders": {
       "count": {

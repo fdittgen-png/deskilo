@@ -8,7 +8,7 @@
   "validationStepOwnerToo": "y la propiedad, siempre",
   "validationStepApplies": "surte efecto",
   "validationThresholdNote": "Los importes menores se aplican de inmediato.",
-  "validationStepQuorum": "{who} — {count, plural, =1{1 cualquiera} other{{count} cualesquiera}}",
+  "validationStepQuorum": "{who} — {count, plural, one{1 cualquiera} other{{count} cualesquiera}}",
   "validationStepSequential": "{who} — {count} por turnos",
   "validationTitle": "Reglas de validación",
   "validationDefaultPolicy": "Regla predeterminada",

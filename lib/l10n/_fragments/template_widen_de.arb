@@ -1,7 +1,7 @@
 {
   "templateWidenTitle": "Diese Vorlage lesbar machen für: {audience}?",
-  "templateWidenCount": "{count, plural, =1{1 Einstellung wird lesbar, genau so, wie die Vorlage sie jetzt enthält.} other{{count} Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.}}",
-  "templateWidenExcluded": "{count, plural, =1{1 Art von Wert verlässt den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).} other{{count} Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).}}",
+  "templateWidenCount": "{count, plural, one{1 Einstellung wird lesbar, genau so, wie die Vorlage sie jetzt enthält.} other{{count} Einstellungen werden lesbar, genau so, wie die Vorlage sie jetzt enthält.}}",
+  "templateWidenExcluded": "{count, plural, one{1 Art von Wert verlässt den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).} other{{count} Arten von Werten verlassen den Workspace nie mit ihr (Bankdaten, Standorte, Adressen…).}}",
   "templateWidenConfirm": "Lesbar machen",
   "templateProfileFull": "Vollständiges Konfigurationsprofil",
   "templateProfileSelected": "Ausgewählte Gruppen: {chosen} von {total}",

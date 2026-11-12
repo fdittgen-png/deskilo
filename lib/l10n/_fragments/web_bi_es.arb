@@ -60,7 +60,7 @@
   "biRefusedGrain": "Este análisis no se ofrece para esa duración de periodo.",
   "biRefusedComparison": "Este análisis no puede hacer esa comparación.",
   "biRefusedGrouping": "Este análisis no se puede agrupar así.",
-  "biRefusedBudget": "{count, plural, =1{Hay más de 1 grupo; elija «Sin agrupar».} other{Hay más de {count} grupos; elija «Sin agrupar».}}",
+  "biRefusedBudget": "{count, plural, one{Hay más de 1 grupo; elija «Sin agrupar».} other{Hay más de {count} grupos; elija «Sin agrupar».}}",
   "biComparedNotRecorded": "{period} no se registró (el historial empieza el {since}); no hay comparación.",
   "biComparedPartial": "{period} solo está registrado en parte.",
   "biExposureDiffers": "Los dos periodos no ofrecen la misma base; la tasa lo tiene en cuenta, las cifras brutas no se comparan directamente.",
@@ -97,12 +97,12 @@
   "biViewForbidden": "No puede cambiar esta vista.",
   "biViewInvalid": "Este nombre o vista no se puede guardar.",
   "biViewUnreadable": "Esta vista no se puede abrir aquí: se guardó en una forma que esta versión no lee, o ninguno de sus análisis está disponible para usted.",
-  "biCardsUnavailable": "{count, plural, =1{1 análisis de esta vista no está disponible para usted y se omite.} other{{count} análisis de esta vista no están disponibles para usted y se omiten.}}",
+  "biCardsUnavailable": "{count, plural, one{1 análisis de esta vista no está disponible para usted y se omite.} other{{count} análisis de esta vista no están disponibles para usted y se omiten.}}",
   "biCards": "Análisis mostrados",
   "biFinanceInvoiced": "Facturado",
   "biFinanceCollected": "Cobrado",
-  "biFinanceInvoicedBasis": "{count, plural, =1{De 1 factura; abonos {credit}, mostrados aparte} other{De {count} facturas; abonos {credit}, mostrados aparte}}",
-  "biFinanceCollectedBasis": "{count, plural, =1{De 1 pago conciliado con facturas} other{De {count} pagos conciliados con facturas}}",
+  "biFinanceInvoicedBasis": "{count, plural, one{De 1 factura; abonos {credit}, mostrados aparte} other{De {count} facturas; abonos {credit}, mostrados aparte}}",
+  "biFinanceCollectedBasis": "{count, plural, one{De 1 pago conciliado con facturas} other{De {count} pagos conciliados con facturas}}",
   "biFinanceCurrencyMix": "Este periodo contiene importes en otra moneda; monedas distintas no se suman, así que no se muestra ninguno.",
   "biFinanceNotExact": "Un importe es demasiado grande para mostrarlo con exactitud, así que no se muestra.",
   "biFinancePartial": "El periodo no ha terminado: estas cifras aún cambiarán.",
@@ -115,5 +115,5 @@
   "biFinanceLastChange": "Último cambio en la fuente: {date}",
   "biFinanceComputed": "Calculado el {date}",
   "biIncompatible": "El servidor define ahora esta cifra de otra forma que la que conoce esta versión de la aplicación: actualice la aplicación para verla.",
-  "biViewCardsIncompatible": "{count, plural, =1{1 análisis de esta vista se guardó cuando su cifra significaba otra cosa y se omite en lugar de mostrarse con otro significado.} other{{count} análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado.}}"
+  "biViewCardsIncompatible": "{count, plural, one{1 análisis de esta vista se guardó cuando su cifra significaba otra cosa y se omite en lugar de mostrarse con otro significado.} other{{count} análisis de esta vista se guardaron cuando su cifra significaba otra cosa y se omiten en lugar de mostrarse con otro significado.}}"
 }

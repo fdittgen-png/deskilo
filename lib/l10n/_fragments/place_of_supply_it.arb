@@ -64,7 +64,7 @@
   "featureRecapitulativeStatementDesc": "I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l'elenco che l'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.",
   "recapCsv": "Elenco riepilogativo (CSV)",
   "recapEmpty": "Nessuna inversione contabile in questo periodo.",
-  "recapDue": "È dovuto un elenco riepilogativo per {month}: {count, plural, =1{1 fattura in inversione contabile} other{{count} fatture in inversione contabile}}. Lo esporti dalle dichiarazioni IVA.",
+  "recapDue": "È dovuto un elenco riepilogativo per {month}: {count, plural, one{1 fattura in inversione contabile} other{{count} fatture in inversione contabile}}. Lo esporti dalle dichiarazioni IVA.",
   "@recapDue": {
     "placeholders": {
       "month": {

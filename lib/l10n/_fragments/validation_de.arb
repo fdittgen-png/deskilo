@@ -1,12 +1,12 @@
 {
   "@@locale": "de",
-  "eventValidations": "{current}/{required, plural, =1{1 Bestätigung} other{{required} Bestätigungen}}",
+  "eventValidations": "{current}/{required, plural, one{1 Bestätigung} other{{required} Bestätigungen}}",
   "eventValidatedBy": "Bestätigt von {name} · {when}",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
   "eventSystemDecider": "System",
   "validationTrailTitle": "Freigabeverlauf",
   "validationTrailNone": "Noch keine Entscheidung.",
   "validationTrailStep": "Stufe {order}",
-  "validationTrailAwaiting": "{count, plural, =1{Noch eine Freigabe ausstehend.} other{Noch {count} Freigaben ausstehend.}}",
+  "validationTrailAwaiting": "{count, plural, one{Noch eine Freigabe ausstehend.} other{Noch {count} Freigaben ausstehend.}}",
   "eventValidationStage": "Freigabe {stage} von {required} angefragt"
 }

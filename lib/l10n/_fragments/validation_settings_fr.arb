@@ -8,7 +8,7 @@
   "validationStepOwnerToo": "et le propriétaire, toujours",
   "validationStepApplies": "cela prend effet",
   "validationThresholdNote": "Les montants plus faibles s'appliquent aussitôt.",
-  "validationStepQuorum": "{who} — {count, plural, =1{1 au choix} other{{count} au choix}}",
+  "validationStepQuorum": "{who} — {count, plural, one{{count} au choix} other{{count} au choix}}",
   "validationStepSequential": "{who} — {count} à la suite",
   "validationTitle": "Règles de validation",
   "validationDefaultPolicy": "Règle par défaut",

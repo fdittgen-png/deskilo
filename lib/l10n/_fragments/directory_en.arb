@@ -31,14 +31,14 @@
   },
   "directoryLastSeenMinutes": "Seen {minutes} min ago",
   "@directoryLastSeenMinutes": {
-    "description": "Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: minutes]",
     "placeholders": {
       "minutes": {
         "type": "int"
       }
     }
   },
-  "directoryLastSeenHours": "{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}",
+  "directoryLastSeenHours": "{hours, plural, one{Seen 1 hour ago} other{Seen {hours} hours ago}}",
   "@directoryLastSeenHours": {
     "description": "Directory offline chip: compact relative last-seen, under a day",
     "placeholders": {
@@ -47,7 +47,7 @@
       }
     }
   },
-  "directoryLastSeenDays": "{days, plural, =1{Seen 1 day ago} other{Seen {days} days ago}}",
+  "directoryLastSeenDays": "{days, plural, one{Seen 1 day ago} other{Seen {days} days ago}}",
   "@directoryLastSeenDays": {
     "description": "Directory offline chip: compact relative last-seen, a day or more",
     "placeholders": {
@@ -103,7 +103,7 @@
   },
   "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
   "@memberPageWorkspaceDefaultValue": {
-    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"

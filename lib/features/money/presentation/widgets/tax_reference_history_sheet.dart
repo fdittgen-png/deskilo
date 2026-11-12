@@ -7,6 +7,7 @@
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -74,12 +75,12 @@ Future<void> showTaxReferenceHistorySheet(
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(
-                taxValueSummary(v.value).isEmpty
+                taxValueSummary(v.value, appFormatOf(context).locale).isEmpty
                     ? v.country
-                    : taxValueSummary(v.value),
+                    : taxValueSummary(v.value, appFormatOf(context).locale),
               ),
               subtitle: Text(
-                '${v.validTo == null ? l10n.taxRefValidFromDate(v.validFrom) : l10n.taxRefValidFromUntilDate(v.validFrom, v.validTo!)}'
+                '${v.validTo == null ? l10n.taxRefValidFromDate(appFormatOf(context).isoDay(v.validFrom)) : l10n.taxRefValidFromUntilDate(appFormatOf(context).isoDay(v.validFrom), appFormatOf(context).isoDay(v.validTo!))}'
                 ' · ${v.source}',
               ),
               trailing: commands == null || v.confirmed

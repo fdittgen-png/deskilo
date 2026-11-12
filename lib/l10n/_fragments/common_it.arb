@@ -53,7 +53,7 @@
     "description": "Support block body (#560)"
   },
   "shellSwipeCoachMark": "Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.",
-  "shellPendingDecisions": "{count, plural, =1{1 decisione la aspetta} other{{count} decisioni la aspettano}}",
+  "shellPendingDecisions": "{count, plural, one{1 decisione la aspetta} other{{count} decisioni la aspettano}}",
   "shellBarHideHint": "Tenga premuto per la vista a schermo intero",
   "shellBarShowHint": "Tenga premuto per mostrare la barra di navigazione",
   "shellBarHiddenAnnounce": "Barra di navigazione nascosta",

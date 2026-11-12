@@ -198,7 +198,7 @@
   "@planUntilDateLabel": {
     "description": "Label of the series end-date picker"
   },
-  "seriesBookedCount": "{count, plural, =1{1 booking created} other{{count} bookings created}}",
+  "seriesBookedCount": "{count, plural, one{1 booking created} other{{count} bookings created}}",
   "@seriesBookedCount": {
     "description": "Title of the series result dialog",
     "placeholders": {

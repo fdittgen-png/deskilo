@@ -11,11 +11,11 @@
   "biItemProductTitle": "Marge par produit",
   "biItemProductBasis": "Vendu {revenue} HT, coût {cost} ({method})",
   "biItemProductDefinition": "Chaque article consommé par les membres sur la période : son chiffre d’affaires HT moins les unités vendues au coût unitaire, lu selon la méthode de coût de l’espace. Une marge, pas un bénéfice : aucun autre coût n’est imputé.",
-  "biItemUncosted": "{count, plural, =1{1 produit vendu n’a jamais été acheté : sans coût, il est laissé hors du coût et de la marge} other{{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge}}",
+  "biItemUncosted": "{count, plural, one{{count} produit vendu n’a jamais été acheté : sans coût, il est laissé hors du coût et de la marge} other{{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge}}",
   "biItemMethodAverage": "coût moyen",
   "biItemMethodLast": "dernier achat",
   "biItemVendorTitle": "Prix des fournisseurs comparés",
-  "biItemVendorBasis": "{count, plural, =1{1 fournisseur} other{{count} fournisseurs}}",
+  "biItemVendorBasis": "{count, plural, one{{count} fournisseur} other{{count} fournisseurs}}",
   "biItemVendorDefinition": "Pour chaque fournisseur : ce que les articles achetés chez lui sur la période ont coûté au-delà du prix unitaire le plus bas payé sur la période pour le même article, tous fournisseurs confondus. Aucune marge par fournisseur n’est donnée : aucune vente n’indique quel achat elle a consommé.",
-  "biItemUnresolved": "{count, plural, =1{1 ligne d’achat ne nomme une fourniture que par son texte : elle n’est rattachée à aucun article et reste à part} other{{count} lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part}}"
+  "biItemUnresolved": "{count, plural, one{{count} ligne d’achat ne nomme une fourniture que par son texte : elle n’est rattachée à aucun article et reste à part} other{{count} lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part}}"
 }

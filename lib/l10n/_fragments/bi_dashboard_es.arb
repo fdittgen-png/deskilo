@@ -77,7 +77,7 @@
   "@biProjectionTitle": {
     "description": "Business analytics dashboard: biProjectionTitle"
   },
-  "biProjectionBasis": "Una recta trazada sobre {count, plural, =1{el último periodo completo} other{los últimos {count} periodos completos}}, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.",
+  "biProjectionBasis": "Una recta trazada sobre {count, plural, one{el último periodo completo} other{los últimos {count} periodos completos}}, prolongada. La banda sombreada es el rango probable. Una estimación, no una promesa.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -86,7 +86,7 @@
       }
     }
   },
-  "biProjectionNotEnough": "Aún no hay historial suficiente para proyectar: {have, plural, =1{1 periodo completo} other{{have} periodos completos}} hasta ahora, {need, plural, =1{se necesita 1} other{se necesitan {need}}}.",
+  "biProjectionNotEnough": "Aún no hay historial suficiente para proyectar: {have, plural, one{1 periodo completo} other{{have} periodos completos}} hasta ahora, {need, plural, one{se necesita 1} other{se necesitan {need}}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {

@@ -34,7 +34,7 @@
       }
     }
   },
-  "biCustomerCohortLine": "{count, plural, =1{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}",
+  "biCustomerCohortLine": "{count, plural, one{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}",
   "@biCustomerCohortLine": {
     "description": "#3294 customer analytics",
     "placeholders": {

@@ -101,7 +101,7 @@
   "@setupLimitsPerMember": {
     "description": "#2871 setup run steps: setupLimitsPerMember"
   },
-  "setupLimitsPreviewAhead": "{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}",
+  "setupLimitsPreviewAhead": "{days, plural, one{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}",
   "@setupLimitsPreviewAhead": {
     "description": "#2871 setup run steps: setupLimitsPreviewAhead",
     "placeholders": {
@@ -122,7 +122,7 @@
       }
     }
   },
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}",
+  "setupLimitsPreviewAtOnce": "{count, plural, one{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}",
   "@setupLimitsPreviewAtOnce": {
     "description": "#2871 setup run steps: setupLimitsPreviewAtOnce",
     "placeholders": {

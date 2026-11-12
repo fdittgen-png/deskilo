@@ -43,7 +43,7 @@
       }
     }
   },
-  "bankStatementCounts": "{count, plural, =1{1 movement} other{{count} movements}}, {open} to do",
+  "bankStatementCounts": "{count, plural, one{1 movement} other{{count} movements}}, {open, plural, one{{open} to do} other{{open} to do}}",
   "@bankStatementCounts": {
     "description": "#2380 Bank statements: the movements of one statement and how many still wait.",
     "placeholders": {
@@ -91,9 +91,9 @@
   "@bankFormatRead": {
     "description": "#2380 Format dialog and CSV sheet: read the file."
   },
-  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.",
+  "bankImported": "Imported: {created, plural, one{1 new entry} other{{created} new entries}}, {known, plural, one{1 already known} other{{known} already known}}, {review} to review.",
   "@bankImported": {
-    "description": "#2380 Snack: what an import did.",
+    "description": "#2380 Snack: what an import did. The number review is a figure after a comma before an invariable phrase. [not a count: review]",
     "placeholders": {
       "created": {
         "type": "int"
@@ -158,7 +158,7 @@
   },
   "bankRefusedAtLine": "{reason} (line {line})",
   "@bankRefusedAtLine": {
-    "description": "#2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number.",
+    "description": "#2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "reason": {
         "type": "String"
@@ -238,7 +238,7 @@
   "@bankBasisAmount": {
     "description": "#2380 Why suggested: same amount, same payer, recent."
   },
-  "bankConfirmReferences": "{count, plural, =1{Confirm 1 match by reference} other{Confirm {count} matches by reference}}",
+  "bankConfirmReferences": "{count, plural, one{Confirm 1 match by reference} other{Confirm {count} matches by reference}}",
   "@bankConfirmReferences": {
     "description": "#2380 Lines sheet: confirm every match by structured reference.",
     "placeholders": {
@@ -247,7 +247,7 @@
       }
     }
   },
-  "bankConfirmedReferences": "{count, plural, =1{1 payment matched.} other{{count} payments matched.}}",
+  "bankConfirmedReferences": "{count, plural, one{1 payment matched.} other{{count} payments matched.}}",
   "@bankConfirmedReferences": {
     "description": "#2380 Snack: how many reference matches were confirmed.",
     "placeholders": {
@@ -412,7 +412,7 @@
   },
   "bankCsvColumn": "Column {n} ({first})",
   "@bankCsvColumn": {
-    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number.",
+    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number. [not a count: n]",
     "placeholders": {
       "n": {
         "type": "int"

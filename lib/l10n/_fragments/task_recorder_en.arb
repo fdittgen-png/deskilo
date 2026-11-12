@@ -24,7 +24,7 @@
   "@taskRecorderDisclosureBody": {
     "description": "#1865 task recorder: taskRecorderDisclosureBody"
   },
-  "taskRecorderLimits": "Up to {steps, plural, =1{1 step} other{{steps} steps}} or {minutes, plural, =1{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, =1{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.",
+  "taskRecorderLimits": "Up to {steps, plural, one{1 step} other{{steps} steps}} or {minutes, plural, one{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, one{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.",
   "@taskRecorderLimits": {
     "description": "#1865 task recorder: taskRecorderLimits",
     "placeholders": {
@@ -83,7 +83,7 @@
   "@taskRecorderRecording": {
     "description": "#1865 task recorder: taskRecorderRecording"
   },
-  "taskRecorderIndicator": "{count, plural, =1{Recording a task: 1 step} other{Recording a task: {count} steps}}",
+  "taskRecorderIndicator": "{count, plural, one{Recording a task: 1 step} other{Recording a task: {count} steps}}",
   "@taskRecorderIndicator": {
     "description": "#1865 task recorder: taskRecorderIndicator",
     "placeholders": {
@@ -100,7 +100,7 @@
   "@taskRecorderNoRecordings": {
     "description": "#1865 task recorder: taskRecorderNoRecordings"
   },
-  "taskRecorderStepCount": "{count, plural, =1{1 step} other{{count} steps}}",
+  "taskRecorderStepCount": "{count, plural, one{1 step} other{{count} steps}}",
   "@taskRecorderStepCount": {
     "description": "#1865 task recorder: taskRecorderStepCount",
     "placeholders": {
@@ -270,7 +270,7 @@
   "@taskRecorderPutBack": {
     "description": "#1865 task recorder: taskRecorderPutBack"
   },
-  "taskRecorderEditedNote": "{count, plural, =1{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}",
+  "taskRecorderEditedNote": "{count, plural, one{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}",
   "@taskRecorderEditedNote": {
     "description": "#1865 task recorder: taskRecorderEditedNote",
     "placeholders": {
@@ -478,7 +478,7 @@
   },
   "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
   "@taskWorkbenchAccepted": {
-    "description": "#1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
+    "description": "#1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: megabytes]",
     "placeholders": {
       "megabytes": {
         "type": "int"

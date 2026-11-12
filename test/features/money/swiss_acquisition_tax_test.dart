@@ -50,7 +50,7 @@ Future<void> _tapKey(WidgetTester tester, String key) async {
 
 Future<void> _pickRate(WidgetTester tester, String prefix) async {
   await _tapKey(tester, '$prefix-vat-rate');
-  await tester.tap(find.text('8.1 %').last);
+  await tester.tap(find.text('8.1%').last);
   await tester.pumpAndSettle();
 }
 
@@ -214,6 +214,6 @@ void main() {
     unawaited(GoRouter.of(context).push('/vat-declarations'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Acquisition tax · 8.1 %'), findsOneWidget);
+    expect(find.textContaining('Acquisition tax · 8.1%'), findsOneWidget);
   });
 }

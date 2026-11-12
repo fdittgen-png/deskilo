@@ -92,7 +92,7 @@
   "@meOverviewAttentionApplicationsUnavailable": {
     "description": "#2554 Overview: my requests could not be read"
   },
-  "meOverviewAttentionConversation": "{count, plural, =1{1 unread message} other{{count} unread messages}}",
+  "meOverviewAttentionConversation": "{count, plural, one{1 unread message} other{{count} unread messages}}",
   "@meOverviewAttentionConversation": {
     "description": "#2554 Overview: unread messages in one conversation",
     "placeholders": {
@@ -113,7 +113,7 @@
   "@meOverviewAttentionMessagesPartial": {
     "description": "#2554 Overview: some servers' conversations could not be read"
   },
-  "meOverviewAttentionMore": "{count, plural, =1{1 more} other{{count} more}}",
+  "meOverviewAttentionMore": "{count, plural, one{1 more} other{{count} more}}",
   "@meOverviewAttentionMore": {
     "description": "#2554 Overview: how many more items wait beyond the ones shown",
     "placeholders": {

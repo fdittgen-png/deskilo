@@ -231,7 +231,7 @@
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
   },
-  "eventExpenseRepartitionLine": "{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}",
+  "eventExpenseRepartitionLine": "{count, plural, one{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}",
   "@eventExpenseRepartitionLine": {
     "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {title} (String), {amount} (String), {count} (int).",
     "placeholders": {
@@ -358,7 +358,7 @@
   },
   "eventLineRepeated": "{line} ×{count}",
   "@eventLineRepeated": {
-    "description": "#3767 An event line with how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "#3767 An event line with how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "line": {
         "type": "String"

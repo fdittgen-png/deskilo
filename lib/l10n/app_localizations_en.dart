@@ -451,7 +451,13 @@ class AppLocalizationsEn extends AppLocalizations {
       one: 'One document logged',
       zero: 'No new document logged',
     );
-    return '$_temp0, $unchanged unchanged';
+    String _temp1 = intl.Intl.pluralLogic(
+      unchanged,
+      locale: localeName,
+      other: '$unchanged unchanged',
+      one: '$unchanged unchanged',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -2401,7 +2407,13 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$count movements',
       one: '1 movement',
     );
-    return '$_temp0, $open to do';
+    String _temp1 = intl.Intl.pluralLogic(
+      open,
+      locale: localeName,
+      other: '$open to do',
+      one: '$open to do',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -11567,6 +11579,30 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'The previous file is still being processed. Drop the next one when it is done.';
+
+  @override
+  String get fileDropFolder =>
+      'A folder cannot be dropped here. Drop one file.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Drop the file here. This place takes $kinds.';
+  }
+
+  @override
+  String get fileDropReadFailed => 'The dropped file could not be read.';
+
+  @override
+  String get fileDropSeveral => 'Drop one file at a time.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'This place takes $kinds files. Drop another file, or use the button.';
+  }
+
+  @override
   String get fileExportKeep => 'Keep in Deskilo';
 
   @override
@@ -12439,8 +12475,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoffTitle => 'Before you save';
 
   @override
-  String handoffTransfersQuoted(String files, String deliveries) {
-    return 'The report quotes the Transfers list of the year: $files file(s) handed out and $deliveries document(s) delivered to a connection, each with its SHA-256';
+  String handoffTransfersQuoted(int files, int deliveries) {
+    String _temp0 = intl.Intl.pluralLogic(
+      files,
+      locale: localeName,
+      other: '$files files',
+      one: '$files file',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      deliveries,
+      locale: localeName,
+      other: '$deliveries documents',
+      one: '$deliveries document',
+    );
+    return 'The report quotes the Transfers list of the year: $_temp0 handed out and $_temp1 delivered to a connection, each with its SHA-256';
   }
 
   @override
@@ -14734,6 +14782,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceLineAdjustment => 'Adjustment';
 
   @override
+  String invoiceLineCancelled(String what) {
+    return 'Cancelled: $what';
+  }
+
+  @override
   String get invoiceMatchAction => 'Mark as paid';
 
   @override
@@ -15880,12 +15933,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      level,
-      locale: localeName,
-      other: 'reminder $level sent',
-    );
-    return '$_temp0';
+    return 'reminder $level sent';
   }
 
   @override
@@ -28333,12 +28381,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String setupApprovalsTooMany(int required, int people) {
     String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvals',
+      one: '$required approval',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: 'only $people people',
       one: 'only 1 person',
     );
-    return '$required approvals can never be gathered: $_temp0 can approve. Ask for fewer, or make more members administrators.';
+    return '$_temp0 can never be gathered: $_temp1 can approve. Ask for fewer, or make more members administrators.';
   }
 
   @override

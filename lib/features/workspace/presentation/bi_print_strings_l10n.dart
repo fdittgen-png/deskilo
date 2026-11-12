@@ -69,7 +69,7 @@ BiPrintStrings biPrintStringsOf(
         periodName: (p) => biPeriodLabel(p, l10n, locale),
         metricTitle: (id) => biMetricTitle(l10n, id),
         dateTime: (at) =>
-            DateFormat.yMMMd(locale).add_Hm().format(wall(at)),
+            DateFormat.yMMMd(locale).add_jm().format(wall(at)),
         dateBasis: (b) => _basis(l10n, b),
         coverage: (c) => _coverage(l10n, c),
         filter: (f) =>

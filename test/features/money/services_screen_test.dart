@@ -162,8 +162,8 @@ void main() {
     ]);
     await pumpServices(tester, money: money, workspace: workspace);
 
-    expect(find.textContaining('incl. VAT 5.5 %'), findsOneWidget);
-    expect(find.textContaining('incl. VAT 20 %'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 5.5%'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 20%'), findsOneWidget);
   });
 
   testWidgets('no VAT regime → prices stay bare (#537)', (tester) async {

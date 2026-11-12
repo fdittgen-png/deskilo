@@ -43,7 +43,7 @@
       }
     }
   },
-  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort}: 1 order} other{{cohort}: {count} orders}}",
+  "biVendorDeliveryCohortLine": "{count, plural, one{{cohort}: 1 order} other{{cohort}: {count} orders}}",
   "@biVendorDeliveryCohortLine": {
     "description": "#3294 step 5 vendor delivery analytics",
     "placeholders": {

@@ -14,7 +14,7 @@
   "setupOnlineKeyInstallation": "Definida por la instalación, que esta prueba no puede leer",
   "setupApprovalsOwnRulesTitle": "Reglas propias",
   "setupApprovalsOwnRulesNone": "Cada solicitud sigue la regla por defecto de arriba.",
-  "setupApprovalsOwnRulesShort": "{count, plural, =1{Una regla pide más aprobaciones de las que pueden dar las personas: sus solicitudes nunca se deciden. Cámbiela en las reglas de aprobación.} other{{count} reglas piden más aprobaciones de las que pueden dar las personas: sus solicitudes nunca se deciden. Cámbielas en las reglas de aprobación.}}",
-  "setupApprovalsRuleReach": "{required, plural, =1{1 aprobación} other{{required} aprobaciones}}, {people, plural, =1{1 persona puede aprobar} other{{people} personas pueden aprobar}}",
-  "setupApprovalsRuleShort": "{required, plural, =1{1 aprobación} other{{required} aprobaciones}}, pero {people, plural, =0{nadie puede aprobar} =1{solo 1 persona puede aprobar} other{solo {people} personas pueden aprobar}}"
+  "setupApprovalsOwnRulesShort": "{count, plural, one{Una regla pide más aprobaciones de las que pueden dar las personas: sus solicitudes nunca se deciden. Cámbiela en las reglas de aprobación.} other{{count} reglas piden más aprobaciones de las que pueden dar las personas: sus solicitudes nunca se deciden. Cámbielas en las reglas de aprobación.}}",
+  "setupApprovalsRuleReach": "{required, plural, one{1 aprobación} other{{required} aprobaciones}}, {people, plural, one{1 persona puede aprobar} other{{people} personas pueden aprobar}}",
+  "setupApprovalsRuleShort": "{required, plural, one{1 aprobación} other{{required} aprobaciones}}, pero {people, plural, =0{nadie puede aprobar} one{solo 1 persona puede aprobar} other{solo {people} personas pueden aprobar}}"
 }

@@ -4,7 +4,7 @@
   "supportHour": "Letzte Stunde",
   "supportDay": "Letzte 24 Stunden",
   "supportPrepare": "Vorschau vorbereiten",
-  "supportSize": "Vorschau: {bytes, plural, =1{1 Byte} other{{bytes} Bytes}}",
+  "supportSize": "Vorschau: {bytes, plural, one{1 Byte} other{{bytes} Bytes}}",
   "supportSaved": "Lokal gespeichert",
   "supportChanged": "Der Kontext hat sich geändert. Erstellen Sie eine neue Vorschau.",
   "supportFailed": "Supportdetails konnten nicht vorbereitet werden. Erneut versuchen.",

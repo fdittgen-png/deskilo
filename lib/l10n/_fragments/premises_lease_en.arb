@@ -151,7 +151,7 @@
       }
     }
   },
-  "leaseOccurrencesAfter": "{count, plural, =1{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}",
+  "leaseOccurrencesAfter": "{count, plural, one{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {
@@ -647,7 +647,7 @@
   },
   "equipmentHeading": "#{number} {name}",
   "@equipmentHeading": {
-    "description": "#2576 equipment register. The number is not a count: it is an item number.",
+    "description": "#2576 equipment register. The number is not a count: it is an item number. [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"

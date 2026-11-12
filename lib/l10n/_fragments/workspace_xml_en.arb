@@ -26,7 +26,7 @@
   },
   "workspaceXmlImportPreviewCounts": "Levels: {levels} · Offices: {offices} · Desks: {desks} · Seats: {seats}",
   "@workspaceXmlImportPreviewCounts": {
-    "description": "Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: levels, offices, desks, seats]",
     "placeholders": {
       "levels": {
         "type": "int"
@@ -44,7 +44,7 @@
   },
   "workspaceXmlImportPreviewAccessories": "Accessories: {count}",
   "@workspaceXmlImportPreviewAccessories": {
-    "description": "Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"

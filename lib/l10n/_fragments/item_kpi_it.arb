@@ -11,11 +11,11 @@
   "biItemProductTitle": "Margine per prodotto",
   "biItemProductBasis": "Venduto a {revenue} netto, costo {cost} ({method})",
   "biItemProductDefinition": "Ogni articolo consumato dai membri nel periodo: il ricavo netto meno le unità vendute al costo unitario, secondo il metodo di costo dello spazio. Un margine, non un utile: nessun altro costo viene imputato.",
-  "biItemUncosted": "{count, plural, =1{1 prodotto venduto non è mai stato acquistato: non ha costo e resta fuori da costo e margine} other{{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori da costo e margine}}",
+  "biItemUncosted": "{count, plural, one{1 prodotto venduto non è mai stato acquistato: non ha costo e resta fuori da costo e margine} other{{count} prodotti venduti non sono mai stati acquistati: non hanno costo e restano fuori da costo e margine}}",
   "biItemMethodAverage": "costo medio",
   "biItemMethodLast": "ultimo acquisto",
   "biItemVendorTitle": "Prezzi dei fornitori a confronto",
-  "biItemVendorBasis": "{count, plural, =1{1 fornitore} other{{count} fornitori}}",
+  "biItemVendorBasis": "{count, plural, one{1 fornitore} other{{count} fornitori}}",
   "biItemVendorDefinition": "Per ogni fornitore: quanto gli articoli acquistati da lui nel periodo sono costati oltre il prezzo unitario più basso pagato nel periodo per lo stesso articolo, da qualunque fornitore. Nessun margine per fornitore: nessuna vendita registra quale acquisto ha consumato.",
-  "biItemUnresolved": "{count, plural, =1{1 riga d’acquisto indica una scorta solo con il suo testo: non è abbinata a nessun articolo e resta fuori} other{{count} righe d’acquisto indicano una scorta solo con il suo testo: non sono abbinate a nessun articolo e restano fuori}}"
+  "biItemUnresolved": "{count, plural, one{1 riga d’acquisto indica una scorta solo con il suo testo: non è abbinata a nessun articolo e resta fuori} other{{count} righe d’acquisto indicano una scorta solo con il suo testo: non sono abbinate a nessun articolo e restano fuori}}"
 }

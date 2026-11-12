@@ -77,7 +77,7 @@
   "@biProjectionTitle": {
     "description": "Business analytics dashboard: biProjectionTitle"
   },
-  "biProjectionBasis": "Una retta tracciata su{count, plural, =1{l'ultimo periodo completo} other{gli ultimi {count} periodi completi}}, prolungata. La fascia ombreggiata è l'intervallo probabile. Una stima, non una promessa.",
+  "biProjectionBasis": "Una retta tracciata su{count, plural, one{l'ultimo periodo completo} other{gli ultimi {count} periodi completi}}, prolungata. La fascia ombreggiata è l'intervallo probabile. Una stima, non una promessa.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -86,7 +86,7 @@
       }
     }
   },
-  "biProjectionNotEnough": "Storico ancora insufficiente per proiettare: finora {have, plural, =1{1 periodo completo} other{{have} periodi completi}}, {need, plural, =1{ne serve 1} other{ne servono {need}}}.",
+  "biProjectionNotEnough": "Storico ancora insufficiente per proiettare: finora {have, plural, one{1 periodo completo} other{{have} periodi completi}}, {need, plural, one{ne serve 1} other{ne servono {need}}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {

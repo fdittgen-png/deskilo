@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2477 -- how the tax reference screen names a value and a domain.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/rate_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import 'tax_reference_component_fields.dart';
 
 /// A one-line reading of a value, for lists.
-String taxValueSummary(TaxValue v) => switch (v) {
-  RateValue() => '${v.label} (${percentText(v.percent)} %)',
+String taxValueSummary(TaxValue v, String? locale) => switch (v) {
+  RateValue() => '${v.label} (${ratePercentText(v.percent, locale: locale)})',
   EuMemberValue() => v.aliasOf,
   ExemptionTextValue() => v.text,
   VatIdPatternValue() => v.pattern,
@@ -23,7 +23,7 @@ String taxValueSummary(TaxValue v) => switch (v) {
   FormBoxValue() => v.label,
   AccountMapValue() =>
     '${v.role}: ${v.account.isNotEmpty ? v.account : v.taxCode}',
-  SalesTaxValue() => '${v.state} ${percentText(v.percent)} %',
+  SalesTaxValue() => '${v.state} ${ratePercentText(v.percent, locale: locale)}',
   TaxabilityValue() => v.status,
   RateComponentValue() => rateComponentsText(v).replaceAll('\n', ' + '),
   RetentionValue() => '${v.years} (${v.from})',

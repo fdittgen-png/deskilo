@@ -12,6 +12,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/i18n/rate_format.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';
@@ -342,9 +343,7 @@ Map<String, Object?> workspaceReportData(
     'lines': [
       for (final band in facts.bands)
         {
-          'label':
-              '${subscriptionLabel(strings, band.toPct, association: facts.association)}'
-              ' (${band.fromPct + 1}–${band.toPct}%)',
+          'label': _bandLabel(strings, facts.association, band),
           'amount': currency.formatMinor(band.feeCents),
         },
       for (final service in facts.services)
@@ -400,4 +399,12 @@ Map<String, Object?> reminderReportData(
       legacy: isLegacyInvoice(invoice),
     ),
   };
+}
+
+/// A fee band: its subscription label and the share it spans, the upper
+/// share in the document's locale.
+String _bandLabel(ReportStrings strings, bool association, FeeBand band) {
+  final locale = strings.formatLocale;
+  return '${subscriptionLabel(strings, band.toPct, association: association)}'
+      ' (${band.fromPct + 1}–${ratePercentText(band.toPct, locale: locale)})';
 }

@@ -15,7 +15,7 @@
   "@directoryLocationMissing": {
     "description": "Shown as a text in directory map (directory)."
   },
-  "directoryPinsMissing": "{count, plural, =1{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}",
+  "directoryPinsMissing": "{count, plural, one{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",
     "placeholders": {
@@ -24,7 +24,7 @@
       }
     }
   },
-  "directoryPinsNoAddress": "{count, plural, =1{1 has no published address.} other{{count} have no published address.}}",
+  "directoryPinsNoAddress": "{count, plural, one{1 has no published address.} other{{count} have no published address.}}",
   "@directoryPinsNoAddress": {
     "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).",
     "placeholders": {
@@ -33,7 +33,7 @@
       }
     }
   },
-  "directoryPinsLookupFailed": "{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}",
+  "directoryPinsLookupFailed": "{count, plural, one{1 could not be looked up.} other{{count} could not be looked up.}}",
   "@directoryPinsLookupFailed": {
     "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).",
     "placeholders": {

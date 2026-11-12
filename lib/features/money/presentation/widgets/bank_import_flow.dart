@@ -8,10 +8,12 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/bank_import_commands.dart';
 import '../../domain/bank/bank_file.dart';
 import '../../domain/bank/bank_statement.dart';
@@ -34,13 +36,21 @@ class BankImportFlow {
   final String workspaceId;
   final String currency;
 
+  /// What the place takes: the picker's filter and the drop zone's.
+  static XTypeGroup typeGroup(AppLocalizations l10n) =>
+      XTypeGroup(label: l10n.bankFileTypeLabel, extensions: _bankFileExtensions);
+
   Future<void> run(BuildContext context) async {
+    final file = await _ref.read(filePickerProvider)(typeGroup(context.l10n));
+    if (file == null || !context.mounted) return;
+    await importFile(context, file);
+  }
+
+  /// Reads and imports [file] — the picked one or a dropped one alike
+  /// (#3623): the same size bound, format choice and refusals.
+  Future<void> importFile(BuildContext context, XFile file) async {
     final ref = _ref;
     final l10n = context.l10n;
-    final file = await ref.read(filePickerProvider)(
-      XTypeGroup(label: l10n.bankFileTypeLabel, extensions: _bankFileExtensions),
-    );
-    if (file == null || !context.mounted) return;
     final settings = ref.read(bankImportSettingsProvider);
     // A file over the bound is refused before its bytes are read.
     if (await file.length() > settings.maxBytes) {
@@ -95,6 +105,32 @@ class BankImportFlow {
           : l10n.bankImported(result.created, result.known, result.review),
     );
   }
+}
+
+/// #3623 — a bank file dropped onto [child] is imported exactly as a picked
+/// one: the same size bound, format choice and refusals.
+class BankImportDropZone extends ConsumerWidget {
+  const BankImportDropZone({
+    required this.workspaceId,
+    required this.currency,
+    required this.child,
+    super.key,
+  });
+
+  final String workspaceId;
+  final String currency;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => FileDropZone(
+    typeGroup: BankImportFlow.typeGroup(context.l10n),
+    onFile: (file) => BankImportFlow(
+      ref,
+      workspaceId: workspaceId,
+      currency: currency,
+    ).importFile(context, file),
+    child: child,
+  );
 }
 
 /// Which format a file is read as; the recognised one is chosen.

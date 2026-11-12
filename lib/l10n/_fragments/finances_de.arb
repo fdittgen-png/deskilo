@@ -86,7 +86,7 @@
       }
     }
   },
-  "financesOverdueCount": "{count, plural, =1{1 überfällig} other{{count} überfällig}}",
+  "financesOverdueCount": "{count, plural, one{1 überfällig} other{{count} überfällig}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {

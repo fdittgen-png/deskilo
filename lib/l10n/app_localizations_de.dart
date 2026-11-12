@@ -454,7 +454,13 @@ class AppLocalizationsDe extends AppLocalizations {
       one: 'Ein Beleg protokolliert',
       zero: 'Kein neuer Beleg protokolliert',
     );
-    return '$_temp0, $unchanged unverändert';
+    String _temp1 = intl.Intl.pluralLogic(
+      unchanged,
+      locale: localeName,
+      other: '$unchanged unverändert',
+      one: '$unchanged unverändert',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -2422,7 +2428,13 @@ class AppLocalizationsDe extends AppLocalizations {
       other: '$count Bewegungen',
       one: '1 Bewegung',
     );
-    return '$_temp0, $open offen';
+    String _temp1 = intl.Intl.pluralLogic(
+      open,
+      locale: localeName,
+      other: '$open offen',
+      one: '$open offen',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -11665,6 +11677,31 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'Die vorige Datei wird noch verarbeitet. Legen Sie die nächste ab, wenn sie fertig ist.';
+
+  @override
+  String get fileDropFolder =>
+      'Ein Ordner kann hier nicht abgelegt werden. Legen Sie eine Datei ab.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Datei hier ablegen. Hier werden $kinds angenommen.';
+  }
+
+  @override
+  String get fileDropReadFailed =>
+      'Die abgelegte Datei konnte nicht gelesen werden.';
+
+  @override
+  String get fileDropSeveral => 'Bitte nur eine Datei auf einmal ablegen.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'Hier werden nur Dateien vom Typ $kinds angenommen. Legen Sie eine andere Datei ab oder nutzen Sie die Schaltfläche.';
+  }
+
+  @override
   String get fileExportKeep => 'In Deskilo behalten';
 
   @override
@@ -12548,8 +12585,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get handoffTitle => 'Vor dem Speichern';
 
   @override
-  String handoffTransfersQuoted(String files, String deliveries) {
-    return 'Der Bericht zitiert die Übertragungsliste des Jahres: $files ausgegebene Datei(en) und $deliveries an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256';
+  String handoffTransfersQuoted(int files, int deliveries) {
+    String _temp0 = intl.Intl.pluralLogic(
+      files,
+      locale: localeName,
+      other: '$files ausgegebene Dateien',
+      one: '$files ausgegebene Datei',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      deliveries,
+      locale: localeName,
+      other: '$deliveries an eine Verbindung übermittelte Dokumente',
+      one: '$deliveries an eine Verbindung übermitteltes Dokument',
+    );
+    return 'Der Bericht zitiert die Übertragungsliste des Jahres: $_temp0 und $_temp1, jeweils mit SHA-256';
   }
 
   @override
@@ -14878,6 +14927,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceLineAdjustment => 'Anpassung';
 
   @override
+  String invoiceLineCancelled(String what) {
+    return 'Storniert: $what';
+  }
+
+  @override
   String get invoiceMatchAction => 'Als bezahlt markieren';
 
   @override
@@ -16034,12 +16088,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      level,
-      locale: localeName,
-      other: 'Mahnung $level gesendet',
-    );
-    return '$_temp0';
+    return 'Mahnung $level gesendet';
   }
 
   @override
@@ -28633,12 +28682,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String setupApprovalsTooMany(int required, int people) {
     String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required Freigaben kommen',
+      one: '$required Freigabe kommt',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: 'nur $people Personen können',
       one: 'nur 1 Person kann',
     );
-    return '$required Freigaben kommen nie zusammen: $_temp0 freigeben. Verlangen Sie weniger, oder machen Sie weitere Mitglieder zu Administratoren.';
+    return '$_temp0 nie zusammen: $_temp1 freigeben. Verlangen Sie weniger, oder machen Sie weitere Mitglieder zu Administratoren.';
   }
 
   @override

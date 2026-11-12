@@ -1,1 +1,3 @@
-
+# #3651, #3743: findings of test/lint/arb_plural_test.dart that cannot be fixed yet,
+# one per line as "key placeholder language" (the finding names them). The file
+# only shrinks; it is empty: every count of every language is in a plural.

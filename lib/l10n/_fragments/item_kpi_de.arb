@@ -11,11 +11,11 @@
   "biItemProductTitle": "Marge nach Produkt",
   "biItemProductBasis": "Netto für {revenue} verkauft, Kosten {cost} ({method})",
   "biItemProductDefinition": "Jeder Artikel, den die Mitglieder im Zeitraum verbraucht haben: sein Nettoerlös abzüglich der verkauften Stück zu den Stückkosten nach der Kostenmethode des Space. Eine Marge, kein Gewinn: weitere Kosten werden nicht zugerechnet.",
-  "biItemUncosted": "{count, plural, =1{1 verkauftes Produkt wurde nie eingekauft: Es hat keine Kosten und bleibt aus Kosten und Marge heraus} other{{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus}}",
+  "biItemUncosted": "{count, plural, one{1 verkauftes Produkt wurde nie eingekauft: Es hat keine Kosten und bleibt aus Kosten und Marge heraus} other{{count} verkaufte Produkte wurden nie eingekauft: Sie haben keine Kosten und bleiben aus Kosten und Marge heraus}}",
   "biItemMethodAverage": "Durchschnittskosten",
   "biItemMethodLast": "letzter Einkauf",
   "biItemVendorTitle": "Lieferantenpreise im Vergleich",
-  "biItemVendorBasis": "{count, plural, =1{1 Lieferant} other{{count} Lieferanten}}",
+  "biItemVendorBasis": "{count, plural, one{1 Lieferant} other{{count} Lieferanten}}",
   "biItemVendorDefinition": "Für jeden Lieferanten: was die im Zeitraum bei ihm gekauften Artikel über dem niedrigsten Stückpreis gekostet haben, der im Zeitraum für denselben Artikel bei irgendeinem Lieferanten gezahlt wurde. Eine Marge je Lieferant gibt es nicht: Kein Verkauf hält fest, welchen Einkauf er verbraucht hat.",
-  "biItemUnresolved": "{count, plural, =1{1 Einkaufsposition nennt einen Vorrat nur mit seinem Text: Sie wird keinem Artikel zugeordnet und bleibt außen vor} other{{count} Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor}}"
+  "biItemUnresolved": "{count, plural, one{1 Einkaufsposition nennt einen Vorrat nur mit seinem Text: Sie wird keinem Artikel zugeordnet und bleibt außen vor} other{{count} Einkaufspositionen nennen einen Vorrat nur mit seinem Text: Sie werden keinem Artikel zugeordnet und bleiben außen vor}}"
 }

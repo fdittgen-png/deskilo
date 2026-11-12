@@ -4,9 +4,9 @@
   "@moneyBaseFee": {
     "description": "Statement line for the plan's monthly fee"
   },
-  "moneyUsage": "{used} of {included, plural, =1{1 half-day} other{{included} half-days}} used",
+  "moneyUsage": "{used} of {included, plural, one{1 half-day} other{{included} half-days}} used",
   "@moneyUsage": {
-    "description": "Statement usage line for quota plans",
+    "description": "Statement usage line for quota plans The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]",
     "placeholders": {
       "used": {
         "type": "int"
@@ -25,7 +25,7 @@
       }
     }
   },
-  "moneyOverage": "{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}",
+  "moneyOverage": "{count, plural, one{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}",
   "@moneyOverage": {
     "description": "Statement line for usage beyond the included quota",
     "placeholders": {
@@ -127,7 +127,7 @@
   "plansEditorEdit": "Edit plan",
   "plansEditorInactive": "Inactive",
   "plansEditorUnlimited": "unlimited half-days",
-  "plansEditorQuota": "{count, plural, =1{1 half-day} other{{count} half-days}}",
+  "plansEditorQuota": "{count, plural, one{1 half-day} other{{count} half-days}}",
   "plansEditorPerExtra": "{price}/extra half-day",
   "planNameLabel": "Name",
   "planBaseFeeLabel": "Monthly base fee",
@@ -456,7 +456,7 @@
   "@moneyFaceDocuments": {
     "description": "Shown as a text in money faces view (money)."
   },
-  "moneyOverdueBanner": "{count, plural, =1{1 overdue} other{{count} overdue}} — {amount} to settle",
+  "moneyOverdueBanner": "{count, plural, one{1 overdue} other{{count} overdue}} — {amount} to settle",
   "moneyPayNow": "Pay now",
   "@moneyPayNow": {
     "description": "Shown as a tooltip in my invoices list (money), and 2 other places."
@@ -465,9 +465,9 @@
   "@moneyOpenInvoicesTitle": {
     "description": "Shown as a text in invoice overview (money)."
   },
-  "moneyOpenInvoicesSummary": "{count, plural, =1{1 open} other{{count} open}} · {amount} due",
-  "moneyDueIn": "{days, plural, =1{Due in 1 day} other{Due in {days} days}}",
-  "moneyOverdueBy": "{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}",
+  "moneyOpenInvoicesSummary": "{count, plural, one{1 open} other{{count} open}} · {amount} due",
+  "moneyDueIn": "{days, plural, one{Due in 1 day} other{Due in {days} days}}",
+  "moneyOverdueBy": "{days, plural, =0{Due today} one{Overdue by 1 day} other{Overdue by {days} days}}",
   "moneyNothingOpen": "Nothing open — you are up to date.",
   "@moneyNothingOpen": {
     "description": "Shown as a text in invoice overview (money)."
@@ -516,7 +516,7 @@
     }
   },
   "@moneyRemindedTimes": {
-    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -553,7 +553,7 @@
     "description": "Shown as a text in services screen (money), and 1 other place."
   },
   "@serviceStockCount": {
-    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -647,7 +647,7 @@
   },
   "negotiationPercent": "{value} %",
   "@negotiationPercent": {
-    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage.",
+    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]",
     "placeholders": {
       "value": {
         "type": "int"
@@ -672,7 +672,7 @@
   },
   "scheduledExpensesFinished": "Ended and rejected ({count})",
   "@scheduledExpensesFinished": {
-    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -775,7 +775,7 @@
   "@scheduleYearly": {
     "description": "Shown as a text in expense schedule sheet (money)."
   },
-  "scheduleEveryDays": "{count, plural, =1{every day} other{every {count} days}}",
+  "scheduleEveryDays": "{count, plural, one{every day} other{every {count} days}}",
   "@scheduleEveryDays": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -784,7 +784,7 @@
       }
     }
   },
-  "scheduleEveryWeeks": "{count, plural, =1{every week} other{every {count} weeks}}",
+  "scheduleEveryWeeks": "{count, plural, one{every week} other{every {count} weeks}}",
   "@scheduleEveryWeeks": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -793,7 +793,7 @@
       }
     }
   },
-  "scheduleEveryMonths": "{count, plural, =1{every month} other{every {count} months}}",
+  "scheduleEveryMonths": "{count, plural, one{every month} other{every {count} months}}",
   "@scheduleEveryMonths": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -802,7 +802,7 @@
       }
     }
   },
-  "scheduleTimes": "{count, plural, =1{1 time} other{{count} times}}",
+  "scheduleTimes": "{count, plural, one{1 time} other{{count} times}}",
   "@scheduleTimes": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -942,7 +942,7 @@
       }
     }
   },
-  "vatDeclTotalsLine": "Totals: {net} · VAT {vat} · {count, plural, =1{1 invoice} other{{count} invoices}}",
+  "vatDeclTotalsLine": "Totals: {net} · VAT {vat} · {count, plural, one{1 invoice} other{{count} invoices}}",
   "@vatDeclTotalsLine": {
     "description": "#3767 The totals line of a VAT declaration: net, VAT and how many invoices it covers (a count, with plural forms). The amounts arrive with their currency.",
     "placeholders": {

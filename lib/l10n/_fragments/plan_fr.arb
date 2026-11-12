@@ -46,7 +46,7 @@
   "repeatWeekdays": "Tous les jours ouvrés",
   "repeatWeekly": "Chaque semaine",
   "planUntilDateLabel": "Répéter jusqu'au",
-  "seriesBookedCount": "{count, plural, =1{1 réservation créée} other{{count} réservations créées}}",
+  "seriesBookedCount": "{count, plural, one{{count} réservation créée} other{{count} réservations créées}}",
   "seriesSkippedTitle": "Ignorées (déjà prises) :",
   "commonOk": "OK",
   "reminderTitle": "Arrivée bientôt",

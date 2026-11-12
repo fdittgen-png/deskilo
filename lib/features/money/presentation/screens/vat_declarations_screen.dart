@@ -118,7 +118,7 @@ class _VatDeclarationsScreenState
       countryCode: workspace?.countryCode ?? '',
       disclaimer: l10n.vatDeclDisclaimerWithBasis(_basisNote(l10n, reference)),
       statusLabel: _statusLabel(l10n, declaration),
-      rate: (value) => '${appFormatOf(context).numbers().format(value)} %',
+      rate: appFormatOf(context).ratePercent,
       lineNote: (line) => _lineNote(l10n, line),
       money: appFormatOf(context).moneyIn(declaration.currency).formatMinor,
       date: dateFormat.format,

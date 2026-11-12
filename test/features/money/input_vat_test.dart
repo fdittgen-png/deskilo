@@ -71,7 +71,7 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '120');
     await tester.tap(find.byKey(const ValueKey('expense-vat-rate')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('20 %').last);
+    await tester.tap(find.text('20%').last);
     await tester.pumpAndSettle();
     await tester.enterText(
       find.descendant(
@@ -103,7 +103,7 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Amount'), '1200');
     await tester.tap(find.byKey(const ValueKey('expense-vat-rate')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('20 %').last);
+    await tester.tap(find.text('20%').last);
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('expense-vat-asset')));
     await tester.tap(find.byKey(const ValueKey('expense-vat-asset')));
@@ -144,7 +144,7 @@ void main() {
     await tester.ensureVisible(find.byKey(const ValueKey('schedule-vat-rate')));
     await tester.tap(find.byKey(const ValueKey('schedule-vat-rate')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('20 %').last);
+    await tester.tap(find.text('20%').last);
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const ValueKey('schedule-submit')));
     await tester.tap(find.byKey(const ValueKey('schedule-submit')));
@@ -248,7 +248,7 @@ void main() {
     unawaited(GoRouter.of(context).push('/vat-declarations'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Deductible VAT · 20 %'), findsOneWidget);
+    expect(find.textContaining('Deductible VAT · 20%'), findsOneWidget);
     expect(find.byKey(const ValueKey('vat-decl-balance-sep')), findsOneWidget);
     expect(find.textContaining('VAT credit: 10 EUR'), findsOneWidget);
   });

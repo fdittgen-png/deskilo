@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
   "billSubscription": "Suscripción {pct} %",
-  "billEntitlement": "{used} de {included, plural, =1{1 media jornada facturada} other{{included} medias jornadas facturadas}} ({openDays, plural, =1{1 día de apertura} other{{openDays} días de apertura}})",
+  "billEntitlement": "{used} de {included, plural, one{1 media jornada facturada} other{{included} medias jornadas facturadas}} ({openDays, plural, one{1 día de apertura} other{{openDays} días de apertura}})",
   "billOverage": "{extra, plural, one{{extra} media jornada extra} other{{extra} medias jornadas extra}}",
   "billServices": "Servicios consumidos",
   "billServicesTotal": "Total de servicios",
@@ -186,5 +186,14 @@
   },
   "invoiceExportGenericJournal": "Diario (CSV, para cualquier programa contable)",
   "journalNeedsLocalBook": "El diario sale de una contabilidad llevada aquí: configure primero el plan de cuentas del emisor.",
-  "journalBlocked": "Asigne primero estos roles en el plan de cuentas: {roles}"
+  "journalBlocked": "Asigne primero estos roles en el plan de cuentas: {roles}",
+  "invoiceLineCancelled": "Anulado: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  }
 }

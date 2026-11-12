@@ -97,7 +97,7 @@
   "@biProjectionTitle": {
     "description": "Business analytics dashboard: biProjectionTitle"
   },
-  "biProjectionBasis": "A straight line through {count, plural, =1{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.",
+  "biProjectionBasis": "A straight line through {count, plural, one{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -106,7 +106,7 @@
       }
     }
   },
-  "biProjectionNotEnough": "Not enough history to project yet: {have, plural, =1{1 complete period} other{{have} complete periods}} so far, {need, plural, =1{1 needed} other{{need} needed}}.",
+  "biProjectionNotEnough": "Not enough history to project yet: {have, plural, one{1 complete period} other{{have} complete periods}} so far, {need, plural, one{1 needed} other{{need} needed}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {

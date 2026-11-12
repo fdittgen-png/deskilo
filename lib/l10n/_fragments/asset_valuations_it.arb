@@ -59,7 +59,7 @@
       }
     }
   },
-  "valuationRows": "{count, plural, =1{1 attrezzatura} other{{count} attrezzature}}",
+  "valuationRows": "{count, plural, one{1 attrezzatura} other{{count} attrezzature}}",
   "@valuationRows": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -68,7 +68,7 @@
       }
     }
   },
-  "valuationMismatches": "{count, plural, =1{1 riga non quadra} other{{count} righe non quadrano}}",
+  "valuationMismatches": "{count, plural, one{1 riga non quadra} other{{count} righe non quadrano}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -238,7 +238,7 @@
   "@valuationPick": {
     "description": "#2576 accountant valuations"
   },
-  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 attrezzatura} other{{count} attrezzature}}",
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, one{1 attrezzatura} other{{count} attrezzature}}",
   "@valuationPreview": {
     "description": "#2576 accountant valuations",
     "placeholders": {

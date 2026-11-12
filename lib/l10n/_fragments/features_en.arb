@@ -704,7 +704,7 @@
   "@featureIntakeStoppedNote": {
     "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
   },
-  "featureOptInAlsoOn": "{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
+  "featureOptInAlsoOn": "{count, plural, one{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
   "@featureOptInAlsoOn": {
     "description": "#1851 B feature switch consent: featureOptInAlsoOn",
     "placeholders": {

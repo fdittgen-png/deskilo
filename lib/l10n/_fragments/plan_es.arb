@@ -46,7 +46,7 @@
   "repeatWeekdays": "Cada día laborable",
   "repeatWeekly": "Semanalmente",
   "planUntilDateLabel": "Repetir hasta",
-  "seriesBookedCount": "{count, plural, =1{1 reserva creada} other{{count} reservas creadas}}",
+  "seriesBookedCount": "{count, plural, one{1 reserva creada} other{{count} reservas creadas}}",
   "seriesSkippedTitle": "Omitidas (ya ocupadas):",
   "commonOk": "Aceptar",
   "reminderTitle": "Regístrese pronto",

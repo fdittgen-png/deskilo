@@ -41,7 +41,7 @@
   "@amountFieldNegative": {
     "description": "#3612 desk entry: the typed date and amount fields of the form kit"
   },
-  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} n'a pas de décimales.} =1{{currency} a une décimale.} other{{currency} a {digits} décimales.}}",
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} n'a pas de décimales.} one{{currency} a une décimale.} other{{currency} a {digits} décimales.}}",
   "@amountFieldTooManyDecimals": {
     "description": "#3612 desk entry: the typed date and amount fields of the form kit",
     "placeholders": {

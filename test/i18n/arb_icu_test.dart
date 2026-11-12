@@ -2,9 +2,10 @@
 //
 // #3485 -- the structure of the ICU messages, which `arb_key_parity_test`
 // (key sets only) cannot see:
-//   (a) every locale carries the same plural / select case set as English, so
-//       a case one language has and another lacks fails here (`=0` in French
-//       only was the first);
+//   (a) every locale carries the same placeholders, plural variables and
+//       select case sets as English; a plural's own cases are the language's
+//       (#3743: `one` / `other`, `=0` for a different sentence, so French may
+//       carry an `=0` English does not), checked by test/lint/arb_plural_test;
 //   (b) a message that interpolates `{count}` / `{n}` without a plural reads
 //       wrong at 1: it takes plural forms or sits on a reasoned allow-list;
 //   (c) no select echoes its own argument: a dictionary word is a key per
@@ -13,9 +14,12 @@
 // The ceilings are the measure of 2026-11-10; the follow-up slices lower them.
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' show Locale;
 
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../lint/icu_message.dart';
 
 const _locales = ['fr', 'de', 'es', 'it'];
 
@@ -122,7 +126,13 @@ List<String> _constructs(String text) {
           scan(rest.substring(open + 1, close));
           q = close + 1;
         }
-        out.add((arg: head.group(1)!, kind: head.group(2)!, cases: cases..sort()));
+        final kind = head.group(2)!;
+        out.add((
+          arg: head.group(1)!,
+          kind: kind,
+          // A plural's cases are the language's own (#3743).
+          cases: kind == 'select' ? (cases..sort()) : <String>[],
+        ));
       }
       k = end + 1;
     }
@@ -136,7 +146,7 @@ List<String> _constructs(String text) {
 void main() {
   final en = _messages('en');
 
-  test('every locale carries the English plural and select case sets', () {
+  test('every locale carries the English placeholders, plurals and selects', () {
     final problems = <String>[];
     for (final locale in _locales) {
       final other = _messages(locale);
@@ -145,6 +155,15 @@ void main() {
         final theirs = _constructs(other[e.key] ?? '');
         if ('$mine' != '$theirs') {
           problems.add('$locale ${e.key}: en $mine vs $locale $theirs');
+        }
+        final placeholders = allArgs(parseIcu(e.value));
+        final mineArgs = allArgs(parseIcu(other[e.key] ?? ''));
+        if (placeholders.difference(mineArgs).isNotEmpty ||
+            mineArgs.difference(placeholders).isNotEmpty) {
+          problems.add(
+            '$locale ${e.key}: placeholders en ${placeholders.toList()..sort()}'
+            ' vs $locale ${mineArgs.toList()..sort()}',
+          );
         }
       }
     }
@@ -170,7 +189,7 @@ void main() {
       offenders.difference(_bareCountAllowed.keys.toSet()),
       isEmpty,
       reason: 'a count without plural forms (#3485): give it '
-          '{count, plural, =1{…} other{…}} in all five languages',
+          '{count, plural, one{…} other{…}} in all five languages',
     );
     expect(
       _bareCountAllowed.keys.toSet().difference(offenders),
@@ -192,6 +211,31 @@ void main() {
         expect(one, isNot(many), reason: locale.languageCode);
         expect(one, isNot(contains('{')));
       }
+    }
+  });
+
+  test('a language reads its own plural categories (#3743)', () {
+    // French `one` covers 0 and 1: "0 jour", "1 jour", "2 jours".
+    final fr = lookupAppLocalizations(const Locale('fr'));
+    for (final (days, late, seen, value) in [
+      (0, '0 jour de retard', 'Vu il y a 0 jour', '0 jour'),
+      (1, '1 jour de retard', 'Vu il y a 1 jour', '1 jour'),
+      (2, '2 jours de retard', 'Vu il y a 2 jours', '2 jours'),
+    ]) {
+      expect(fr.invoicingDaysLate(days), late);
+      expect(fr.directoryLastSeenDays(days), seen);
+      expect(fr.policyDaysValue(days), value);
+    }
+    // The other four languages are unchanged at 1 and at n.
+    for (final (code, one, many) in [
+      ('en', '1 day', '3 days'),
+      ('de', '1 Tag', '3 Tage'),
+      ('es', '1 día', '3 días'),
+      ('it', '1 giorno', '3 giorni'),
+    ]) {
+      final words = lookupAppLocalizations(Locale(code));
+      expect(words.policyDaysValue(1), one, reason: code);
+      expect(words.policyDaysValue(3), many, reason: code);
     }
   });
 

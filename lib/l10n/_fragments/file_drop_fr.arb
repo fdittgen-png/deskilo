@@ -1,0 +1,9 @@
+{
+  "@@locale": "fr",
+  "fileDropOverlay": "Déposez le fichier ici. Cet endroit accepte {kinds}.",
+  "fileDropWrongKind": "Cet endroit n'accepte que les fichiers {kinds}. Déposez un autre fichier ou utilisez le bouton.",
+  "fileDropSeveral": "Déposez un seul fichier à la fois.",
+  "fileDropFolder": "Un dossier ne peut pas être déposé ici. Déposez un fichier.",
+  "fileDropBusy": "Le fichier précédent est encore en cours de traitement. Déposez le suivant quand il est terminé.",
+  "fileDropReadFailed": "Le fichier déposé n'a pas pu être lu."
+}

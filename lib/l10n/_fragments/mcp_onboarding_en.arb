@@ -209,7 +209,7 @@
   "@instanceGrantReason": {
     "description": "#2145 assistant onboarding: instanceGrantReason"
   },
-  "instanceGrantDaysLabel": "For {days, plural, =1{1 day} other{{days} days}}",
+  "instanceGrantDaysLabel": "For {days, plural, one{1 day} other{{days} days}}",
   "@instanceGrantDaysLabel": {
     "description": "#2145 assistant onboarding: instanceGrantDaysLabel",
     "placeholders": {

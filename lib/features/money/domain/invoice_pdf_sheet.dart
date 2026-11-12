@@ -7,6 +7,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../core/i18n/rate_format.dart';
 import 'address_window.dart';
 import 'invoice_pdf.dart';
 import 'invoice_pdf_body.dart';
@@ -81,7 +82,7 @@ class InvoiceSheet {
 
   /// '20 %', '5.5 %' — beside the caption, so one row reads 'VAT 20 %'.
   String ratePercent(double percent) =>
-      '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+      ratePercentText(percent, locale: strings.formatLocale);
 
   late final List<pw.Widget> headerWidgets = _headerWidgets();
   late final List<pw.Widget> windowHeaderWidgets = _windowHeaderWidgets();

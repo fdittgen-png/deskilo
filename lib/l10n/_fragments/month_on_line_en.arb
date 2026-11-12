@@ -2,7 +2,7 @@
   "@@locale": "en",
   "billParticipationMonth": "{month} {pct}%",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage.",
+    "description": "#1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "month": {
         "type": "String"
@@ -14,7 +14,7 @@
   },
   "billSubscriptionMonth": "Subscription {month} {pct}%",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage.",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "month": {
         "type": "String"

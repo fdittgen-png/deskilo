@@ -124,7 +124,7 @@ Future<({List<double> percents, MoneyFormat currency})?> receiptVatContext(
 
 /// « 20 % », in the reader's number format.
 String expenseVatPercentLabel(AppFormat format, double percent) =>
-    format.rate(percent);
+    format.ratePercent(percent);
 
 /// The fields, keyed `<keyPrefix>-vat-rate`, `-vat-deductible`,
 /// `-vat-asset` and, where the choice offers it, `-vat-acquisition`;
@@ -208,7 +208,7 @@ List<Widget> _flagSwitches(
 
 /// « 20 % », in the reader's number format.
 String _percentLabel(MoneyFormat currency, double percent) =>
-    AppFormat(locale: currency.locale, currencyCode: currency.code).rate(percent);
+    AppFormat(locale: currency.locale, currencyCode: currency.code).ratePercent(percent);
 
 /// The hint, and once amount and share are typed, the deductible VAT
 /// they make (`vatInputSplit`, the server's rounding); for an acquisition

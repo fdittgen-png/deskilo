@@ -3,5 +3,5 @@
   "discoveryStartBody": "Saisissez une ville, un service ou un nom.",
   "discoveryNoMatchTitle": "Rien trouvé pour « {query} »",
   "discoveryClearSearch": "Effacer la recherche",
-  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{Un annuaire n’a pas répondu.} other{{count} annuaires n’ont pas répondu.}} Ces résultats peuvent être incomplets."
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, =0{{count} annuaires n’ont pas répondu.} one{Un annuaire n’a pas répondu.} other{{count} annuaires n’ont pas répondu.}} Ces résultats peuvent être incomplets."
 }
