@@ -5,10 +5,10 @@
 // refuse it with a reason, and record a privacy incident. Each shows the
 // SERVER's reason when it refuses (the sheet stays open), because the right
 // to decide is the server's and the person must be able to act on its words.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -110,7 +110,7 @@ Future<void> showRecordRequestSheet(
         ListTile(
           key: const ValueKey('privacy-admin-received'),
           contentPadding: EdgeInsets.zero,
-          title: Text(l10n.privacyAdminReceivedOn(isoDay(received))),
+          title: Text(l10n.privacyAdminReceivedOn(appFormatOf(context).calendarDay(received))),
           trailing: const Icon(Icons.calendar_today_outlined),
           onTap: () async {
             final picked = await showDatePicker(

@@ -226,7 +226,7 @@ class _StatusBody extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         for (final (m, pct, figures) in [
           for (final m in status.members)
-            (m, '${m.subscriptionPct} %', '${currency.formatMinor(m.invoicedCents)} / ${currency.formatMinor(m.paidCents)}'),
+            (m, appFormatOf(context).ratePercent(m.subscriptionPct), '${currency.formatMinor(m.invoicedCents)} / ${currency.formatMinor(m.paidCents)}'),
         ])
           ListTile(
             key: ValueKey('status-member-${m.memberId}'),

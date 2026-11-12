@@ -5,6 +5,7 @@
 // VAT rates in force and the sites, each in the reader's locale.
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/rate_format.dart';
 import '../../../core/time/work_hours.dart';
 import '../domain/closure_day.dart';
 import '../domain/site.dart';
@@ -44,8 +45,10 @@ List<String> configVatRates(
   String? locale,
   Iterable<({String label, double percent})> rates,
 ) {
-  final percent = NumberFormat.decimalPattern(locale);
-  return [for (final r in rates) '${r.label} — ${percent.format(r.percent)} %'];
+  return [
+    for (final r in rates)
+      '${r.label} — ${ratePercentText(r.percent, locale: locale)}',
+  ];
 }
 
 /// One line per site: its name and its address.

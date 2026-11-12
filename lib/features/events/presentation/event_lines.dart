@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/i18n/rate_format.dart';
 import '../../../core/l10n/payment_instructions_labels.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../money/domain/usage_record.dart';
@@ -133,13 +134,13 @@ String eventLine(
           names[event.subjectMemberId] ?? '',
           [
             if (event.payload['subscription_pct'] != null)
-              '${event.payload['subscription_pct']} %',
+              ratePercentText(event.payload['subscription_pct'] as num, locale: currency.locale),
             if (event.payload['fee_cents'] != null)
               currency.formatMinor((event.payload['fee_cents'] as num).toInt()),
             if (event.payload['overage_fee_cents'] != null)
               '${currency.formatMinor((event.payload['overage_fee_cents'] as num).toInt())}/½',
             if (event.payload['discount_percent'] != null)
-              '−${event.payload['discount_percent']} %',
+              '−${ratePercentText(event.payload['discount_percent'] as num, locale: currency.locale)}',
             if (((event.payload['item_count'] as num?)?.toInt() ?? 0) > 0)
               l10n.eventPriceNegotiationItems(
                   (event.payload['item_count'] as num).toInt()),

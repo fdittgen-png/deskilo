@@ -26,7 +26,6 @@ lib/features/money/presentation/report_sample_data.dart :: {'number': 'INV-2026-
 lib/features/money/presentation/report_sample_data.dart :: {'number': 'INV-2026-0008', 'date': '2026-09-12', 'customer': 'Atelier Dupont SARL', 'rate': '20 %', 'category': 'S', 'net': '500,00 €', 'vat': '100,00 €', 'gross': '600,00 €', 'reverses': ''}, :: 1 :: sample data of the report designer's preview, not a rate in force
 lib/features/money/presentation/report_sample_data.dart :: {'rate': '20 %', 'category': 'S', 'count': '2', 'net': '1 000,00 €', 'vat': '200,00 €', 'gross': '1 200,00 €'}, :: 1 :: sample data of the report designer's preview, not a rate in force
 lib/features/money/presentation/screens/vat_screen.dart :: onPressed: () => _add(const VatRate(label: '', percent: 0)), :: 1 :: the empty new-row default of the rate editor
-lib/features/money/presentation/widgets/negotiation_card.dart :: '0 %', :: 1 :: UI: the "no discount" placeholder, not a tax value
 lib/features/money/domain/accounting_targets_sage.dart :: countries: {'US', 'CA', 'GB'}, :: 1 :: the countries a product (Sage Intacct) is sold in, a target descriptor, not a tax value
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 'ES' => esAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 'IT' => itAnnualSummaryName, :: 1 :: which country's periodic returns add up to an annual summary sheet: structure (a new country is new code)

@@ -7,6 +7,7 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -137,11 +138,11 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
               ListTile(
                 key: ValueKey('tax-reference-${r.domain.wire}-${r.country}-${r.key}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(taxValueSummary(r.value).isEmpty
+                title: Text(taxValueSummary(r.value, appFormatOf(context).locale).isEmpty
                     ? r.country
-                    : taxValueSummary(r.value)),
+                    : taxValueSummary(r.value, appFormatOf(context).locale)),
                 subtitle: Text('${r.country} · ${r.key} · '
-                    '${l10n.taxRefValidFromDate(r.validFrom)} · ${r.source}'),
+                    '${l10n.taxRefValidFromDate(appFormatOf(context).isoDay(r.validFrom))} · ${r.source}'),
                 leading: Icon(
                   r.confirmed ? Icons.verified_outlined : Icons.help_outline,
                   semanticLabel:

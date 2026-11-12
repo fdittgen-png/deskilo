@@ -5,11 +5,11 @@
 // own line under its own name -- no VAT wording -- the customer's exemption
 // certificate when one took lines out of the tax, the payments and the total.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../core/i18n/rate_format.dart';
 import 'invoice_pdf.dart' show InvoicePdfStrings;
 
 /// The tax of [invoice] per jurisdiction, in the order it was frozen: the
@@ -93,7 +93,7 @@ pw.Widget salesTaxTotals({
             ),
             for (final t in salesTaxByJurisdiction(invoice.vatTotals))
               row(
-                '${t.name} ${percentText(t.percent)} %',
+                _jurisdictionLabel(t.name, t.percent, strings.formatLocale),
                 money(t.taxCents),
                 top: 2,
               ),
@@ -121,4 +121,10 @@ pw.Widget salesTaxTotals({
       ),
     ],
   );
+}
+
+/// A jurisdiction beside its rate, the rate in the document's locale.
+String _jurisdictionLabel(String name, double percent, String? locale) {
+  final rate = ratePercentText(percent, locale: locale);
+  return '$name $rate';
 }

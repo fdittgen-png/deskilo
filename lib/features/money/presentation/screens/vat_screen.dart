@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/format/decimal_input.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -121,11 +122,11 @@ class _VatScreenState extends ConsumerState<VatScreen> {
       );
       return;
     }
-    final pctText = vatPercentText(pct);
+    final pctText = appFormatOf(context).ratePercent(pct);
     final relabelled = draft.label.text
-        .replaceFirst(RegExp(r'\d+([.,]\d+)?\s*%'), '$pctText %');
+        .replaceFirst(RegExp(r'\d+([.,]\d+)?\s*%'), pctText);
     final label = relabelled == draft.label.text
-        ? '${draft.label.text} $pctText %'
+        ? '${draft.label.text} $pctText'
         : relabelled;
     setState(() {
       draft.validTo = day;
@@ -336,7 +337,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
           },
           child: Text(
             '${l10n.vatSeed} '
-            '(${catalogue.map((r) => '${vatPercentText(r.percent)} %').join(', ')})',
+            '(${catalogue.map((r) => appFormatOf(context).ratePercent(r.percent)).join(', ')})',
           ),
         ),
       // Country caveats (US sales tax, Canadian provinces, the Swiss

@@ -137,7 +137,7 @@ void main() {
   });
 
   test('the rate label drops the decimals of a whole rate', () {
-    expect(VatDeclarationRow.percentLabel(20), '20 %');
-    expect(VatDeclarationRow.percentLabel(5.5), '5.5 %');
+    expect(VatDeclarationRow.percentLabel(20, 'en_GB'), '20%');
+    expect(VatDeclarationRow.percentLabel(5.5, 'fr_FR').replaceAll('\u202f', ' ').replaceAll('\u00a0', ' '), '5,5 %');
   });
 }

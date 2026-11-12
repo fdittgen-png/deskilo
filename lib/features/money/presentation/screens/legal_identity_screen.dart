@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -307,8 +308,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
             subtitle: rates.isEmpty
                 ? Text(l10n.vatEmpty)
                 : Text(rates
-                    .map((rate) => '${rate.label} '
-                        '(${rate.percent == rate.percent.roundToDouble() ? rate.percent.toStringAsFixed(0) : rate.percent})')
+                    .map((rate) => '${rate.label} (${appFormatOf(context).ratePercent(rate.percent)})')
                     .join(' · ')),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/vat'),

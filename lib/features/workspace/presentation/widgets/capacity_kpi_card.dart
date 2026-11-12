@@ -259,7 +259,7 @@ List<String> capacityKpiDetails(
   final since = kpi.historySince;
   final sinceLabel = _since(kpi, locale);
   final computed = DateFormat.yMd(locale)
-      .add_Hm()
+      .add_jm()
       .format(WorkspaceTime.wall(kpi.computedAt));
   return <String>[
     l10n.capacityKpiDefinition,

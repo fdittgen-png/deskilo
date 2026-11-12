@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/booking_success_text.dart';
@@ -27,7 +28,7 @@ void announceBooking(
     context,
     bookingSuccessText(
       l10n,
-      Localizations.localeOf(context).toLanguageTag(),
+      appFormatOf(context).copyWith(locale: Localizations.localeOf(context).toLanguageTag()),
       checkedIn: checkedIn,
       start: start,
       end: end,
