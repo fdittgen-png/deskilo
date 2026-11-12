@@ -96,6 +96,51 @@ int _branchOf(List<List<String>> tabs, String path) =>
 String _branchLocation(List<List<String>> tabs, int branch) =>
     tabs[branch].first;
 
+/// #3605 — where [path] sits in the business's navigation, as the desk's
+/// breadcrumb and the window's title name it, and the tabs as the desk offers
+/// them. A tab whose place is not a destination here (the overview of a
+/// business with places) keeps the title its bar gave it. Needs the router
+/// above [context] (InheritedGoRouter).
+({List<DeskCrumb> crumbs, ShellTabs tabs}) deskPlaceOf(
+  BuildContext context,
+  WidgetRef ref,
+  GoRouter router,
+  String path,
+) {
+  final l10n = context.l10n;
+  final tabTitles = shellTabTitles(context, l10n);
+  final navs = shellNavFor(
+    ref.watch(enabledFeaturesSyncProvider),
+    ref.watch(myPermissionsProvider),
+  );
+  final paths = _tabPaths(router);
+  final branch = _branchOf(paths, path);
+  final ShellTabs tabs = (
+    tabTitles: tabTitles,
+    visibleBranches: [for (final n in navs) n.branch],
+    navs: navs,
+    currentIndex: branch,
+    onBranch: (b) => router.go(_branchLocation(paths, b)),
+  );
+  final crumbs = ShellMenu.of(
+    context,
+    ref,
+    permanent: true,
+    tabs: tabs,
+  ).crumbsOf(path);
+  final tabTitle = path == '/workspace-overview'
+      ? l10n.overviewTitle
+      : branch >= 0
+      ? tabTitles[branch]
+      : null;
+  return (
+    crumbs: crumbs.isEmpty && tabTitle != null
+        ? <DeskCrumb>[(label: tabTitle, entry: null)]
+        : crumbs,
+    tabs: tabs,
+  );
+}
+
 /// The desk around [child], the router's navigator, for the page at [path].
 class DeskFrame extends StatelessWidget {
   const DeskFrame({
@@ -126,40 +171,15 @@ class _Desk extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.l10n;
     final router = GoRouter.of(context);
-    final tabTitles = shellTabTitles(context, l10n);
-    final navs = shellNavFor(
-      ref.watch(enabledFeaturesSyncProvider),
-      ref.watch(myPermissionsProvider),
-    );
-    final visibleBranches = [for (final n in navs) n.branch];
+    final (:crumbs, :tabs) = deskPlaceOf(context, ref, router, path);
+    final shown = crumbs;
+    final tabTitles = tabs.tabTitles;
+    final visibleBranches = tabs.visibleBranches;
+    final navs = tabs.navs;
+    final branch = tabs.currentIndex;
+    final onBranch = tabs.onBranch;
     final pendingEvents = ref.watch(myPendingEventCountProvider).value ?? 0;
-    final tabs = _tabPaths(router);
-    final branch = _branchOf(tabs, path);
-    void onBranch(int b) => router.go(_branchLocation(tabs, b));
-    final crumbs = ShellMenu.of(
-      context,
-      ref,
-      permanent: true,
-      tabs: (
-        tabTitles: tabTitles,
-        visibleBranches: visibleBranches,
-        navs: navs,
-        currentIndex: branch,
-        onBranch: onBranch,
-      ),
-    ).crumbsOf(path);
-    // A tab whose place is not a destination here (the overview of a
-    // business with places) keeps the title its bar gave it.
-    final tabTitle = path == '/workspace-overview'
-        ? l10n.overviewTitle
-        : branch >= 0
-        ? tabTitles[branch]
-        : null;
-    final shown = crumbs.isEmpty && tabTitle != null
-        ? <DeskCrumb>[(label: tabTitle, entry: null)]
-        : crumbs;
     return ValueListenableBuilder(
       valueListenable: ref.watch(deskModalObserverProvider).scrim,
       builder: (context, scrim, _) => DeskScaffold(
@@ -174,7 +194,6 @@ class _Desk extends ConsumerWidget {
           onBranch: onBranch,
         ),
         title: _DeskBreadcrumb(crumbs: shown, router: router),
-        place: shown.lastOrNull?.label,
         actions: shellBarActions(context, ref, currentIndex: branch),
         path: path,
         scrim: scrim,

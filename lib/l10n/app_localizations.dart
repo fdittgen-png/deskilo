@@ -10979,6 +10979,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
   String customerStoryReminders(int count, String number);
 
+  /// Said by a screen reader for the arrow beside a figure's change: the figure fell since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Down'**
+  String get dashboardTrendDown;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure is the same as in the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Unchanged'**
+  String get dashboardTrendFlat;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure rose since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Up'**
+  String get dashboardTrendUp;
+
   /// #2862 data report: dataReportArchived
   ///
   /// In en, this message translates to:
@@ -11890,12 +11908,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Desk reservations'**
   String get deskSupplementLabel;
-
-  /// #3773 the desk window's (or browser tab's) title: the place on screen, then the business; a language may order them
-  ///
-  /// In en, this message translates to:
-  /// **'{place} — {business}'**
-  String deskWindowTitle(String place, String business);
 
   /// App-bar action emptying the trace buffer and file
   ///
@@ -56220,6 +56232,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WhatsApp'**
   String get whatsappTitle;
+
+  /// #3605 the window's (or browser tab's) title: the place on screen, the business, the app's name; a language may order them
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {business} — {app}'**
+  String windowTitle(String place, String business, String app);
+
+  /// #3605 the window's title for a place with no business selected: the place, the app's name
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {app}'**
+  String windowTitleNoBusiness(String place, String app);
 
   /// Shown as a button or chip label in wizard scaffold (core).
   ///

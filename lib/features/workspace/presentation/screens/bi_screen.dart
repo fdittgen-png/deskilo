@@ -15,6 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -27,6 +28,11 @@ import '../widgets/bi_module_section.dart';
 import '../widgets/bi_report_section.dart';
 import '../widgets/bi_toolbar.dart';
 import '../widgets/bi_views_bar.dart';
+
+/// The narrowest an analysis is drawn on the page's grid.
+@visibleForTesting
+// content-fit: an analysis card already works at 336 dp, its width on a 360 dp phone
+const double biAnalysisMinWidth = 340;
 
 String _biAreaName(AppLocalizations l10n, BiArea area) => switch (area) {
   BiArea.overview => l10n.biAreaOverview,
@@ -45,7 +51,6 @@ class BiScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
     final modules = visibleBiModules(
       ref.watch(enabledFeaturesSyncProvider),
       ref.watch(myPermissionsProvider),
@@ -96,15 +101,6 @@ class BiScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.biTitle),
-        actions: [
-          if (query != null && workspaceId != null && shown.isNotEmpty)
-            BiExportActions(
-              workspaceId: workspaceId,
-              openId: saved,
-              query: query,
-              modules: shown,
-            ),
-        ],
         // Opened from an address (or after a toolbar change) there is no
         // page below: offer the way home instead of a dead end.
         leading: context.canPop()
@@ -116,9 +112,9 @@ class BiScreen extends ConsumerWidget {
                 onPressed: () => context.go('/reserve'),
               ),
       ),
-      body: ListView(
+      body: DashboardScrollView(
         key: const ValueKey('bi-page'),
-        children: [
+        header: [
           if (query == null)
             _InvalidAddress(
               onReset: () => go(BiQueryContext.standard, 'standard'),
@@ -141,44 +137,118 @@ class BiScreen extends ConsumerWidget {
                 visibleModules: visibleIds,
                 onOpen: (view, q) => go(q, view?.id ?? 'standard'),
               ),
-            BiToolbar(
-              key: const ValueKey('bi-bi-toolbar'),
-              query: query,
-              modules: modules,
-              today: today,
-              onChanged: ask,
-              cardTitle: (id) => biModuleViews[id]?.title(l10n) ?? id,
-            ),
-            if (unavailable > 0)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                child: Text(
-                  l10n.biCardsUnavailable(unavailable),
-                  key: const ValueKey('bi-cards-unavailable'),
-                ),
-              ),
-            for (final (i, m) in shown.indexed) ...[
-              if (i == 0 || shown[i - 1].area != m.area)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.md,
-                    AppSpacing.md,
-                    AppSpacing.md,
-                    0,
-                  ),
-                  child: Text(
-                    _biAreaName(l10n, m.area),
-                    key: ValueKey('bi-area-${m.area.name}'),
-                    style: theme.textTheme.titleMedium,
-                  ),
-                ),
-              BiModuleSection(module: m, query: query),
-            ],
           ],
+        ],
+        // The analysis' one context stays in view while its figures scroll.
+        filterBar: query == null
+            ? null
+            : FilterBar(
+                key: const ValueKey('bi-filter-bar'),
+                filters: BiToolbar(
+                  key: const ValueKey('bi-bi-toolbar'),
+                  query: query,
+                  modules: modules,
+                  today: today,
+                  onChanged: ask,
+                  cardTitle: (id) => biModuleViews[id]?.title(l10n) ?? id,
+                ),
+                actions: [
+                  if (workspaceId != null && shown.isNotEmpty)
+                    BiExportActions(
+                      workspaceId: workspaceId,
+                      openId: saved,
+                      query: query,
+                      modules: shown,
+                    ),
+                ],
+              ),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.md,
+          0,
+          AppSpacing.md,
+          AppSpacing.md,
+        ),
+        children: [
+          if (query != null)
+            _Analyses(shown: shown, query: query, unavailable: unavailable),
         ],
       ),
     );
   }
+}
+
+/// The analyses on the page's grid, under the heading of their area, after
+/// the count of the chosen ones the reader may not see.
+class _Analyses extends StatelessWidget {
+  const _Analyses({
+    required this.shown,
+    required this.query,
+    required this.unavailable,
+  });
+
+  final List<BiModule> shown;
+  final BiQueryContext query;
+  final int unavailable;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final style = Theme.of(context).textTheme.titleMedium;
+    // A table or a chart lays its rows out beside the compared period: it
+    // takes two columns where the grid has them.
+    final span = query.view == BiView.dashboard ? 1 : 2;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (unavailable > 0)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.md),
+            child: Text(
+              l10n.biCardsUnavailable(unavailable),
+              key: const ValueKey('bi-cards-unavailable'),
+            ),
+          ),
+        for (final (area, inArea) in _byArea(shown)) ...[
+          Padding(
+            padding: const EdgeInsets.only(
+              top: AppSpacing.md,
+              bottom: AppSpacing.sm,
+            ),
+            child: Text(
+              _biAreaName(l10n, area),
+              key: ValueKey('bi-area-${area.name}'),
+              style: style,
+            ),
+          ),
+          DashboardGrid(
+            key: ValueKey('bi-grid-${area.name}'),
+            minTileWidth: biAnalysisMinWidth,
+            children: [
+              for (final m in inArea)
+                DashboardTile(
+                  span: span,
+                  child: BiModuleSection(module: m, query: query),
+                ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+/// [shown] cut into runs of one area, in the page's order: a chosen order
+/// that returns to an area starts a new run under its heading again.
+List<(BiArea, List<BiModule>)> _byArea(List<BiModule> shown) {
+  final runs = <(BiArea, List<BiModule>)>[];
+  for (final m in shown) {
+    if (runs.isNotEmpty && runs.last.$1 == m.area) {
+      runs.last.$2.add(m);
+    } else {
+      runs.add((m.area, [m]));
+    }
+  }
+  return runs;
 }
 
 /// A view id (uuid) or `standard`; anything else is a manipulated
