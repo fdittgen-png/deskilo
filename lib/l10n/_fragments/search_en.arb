@@ -1,0 +1,63 @@
+{
+  "searchTitle": "Search",
+  "@searchTitle": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchTitle"
+  },
+  "searchHint": "A page, an action, a member, an invoice…",
+  "@searchHint": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchHint"
+  },
+  "searchRecent": "Recent",
+  "@searchRecent": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchRecent"
+  },
+  "searchNothing": "Nothing found for “{query}”.",
+  "@searchNothing": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchNothing",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchKindPage": "Page",
+  "@searchKindPage": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindPage"
+  },
+  "searchKindAction": "Action",
+  "@searchKindAction": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindAction"
+  },
+  "searchKindMember": "Member",
+  "@searchKindMember": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindMember"
+  },
+  "searchKindInvoice": "Invoice",
+  "@searchKindInvoice": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindInvoice"
+  },
+  "searchKindCustomer": "Customer",
+  "@searchKindCustomer": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindCustomer"
+  },
+  "searchKindSupplier": "Supplier",
+  "@searchKindSupplier": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindSupplier"
+  },
+  "searchActionNewInvoice": "New invoice",
+  "@searchActionNewInvoice": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionNewInvoice"
+  },
+  "searchActionNewPurchase": "New purchase",
+  "@searchActionNewPurchase": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionNewPurchase"
+  },
+  "searchActionInvite": "Invite a member",
+  "@searchActionInvite": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionInvite"
+  },
+  "searchRecordUnreadable": "This record cannot be opened: it does not exist or you may not read it.",
+  "@searchRecordUnreadable": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchRecordUnreadable"
+  }
+}

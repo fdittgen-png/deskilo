@@ -482,4 +482,11 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.kioskMode,
   ),
+  // #3610 — search and the app's keys: a page, an action or a record
+  // found from anywhere, among what the person may open. On by default.
+  WorkspaceFeature.quickSearch: FeatureManifestEntry(
+    feature: WorkspaceFeature.quickSearch,
+    surface: FeatureSurface.everywhere,
+    tier: FeatureTier.core,
+  ),
 };

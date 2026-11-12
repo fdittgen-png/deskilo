@@ -11051,6 +11051,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureQrBadgesTitle => 'Badges QR';
 
   @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d\'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l\'application ; les touches propres d\'une page restent.';
+
+  @override
+  String get featureQuickSearchTitle => 'Recherche et touches';
+
+  @override
   String get featureRecapitulativeStatementDesc =>
       'Les services autoliquidés par des entreprises d\'autres pays de l\'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l\'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu\'une déclaration est due. Désactivé : ni export ni avis.';
 
@@ -27299,6 +27306,51 @@ class AppLocalizationsFr extends AppLocalizations {
   String get schemaUpdateTitle => 'Ce serveur doit être mis à jour';
 
   @override
+  String get searchActionInvite => 'Inviter un membre';
+
+  @override
+  String get searchActionNewInvoice => 'Nouvelle facture';
+
+  @override
+  String get searchActionNewPurchase => 'Nouvel achat';
+
+  @override
+  String get searchHint => 'Une page, une action, un membre, une facture…';
+
+  @override
+  String get searchKindAction => 'Action';
+
+  @override
+  String get searchKindCustomer => 'Client';
+
+  @override
+  String get searchKindInvoice => 'Facture';
+
+  @override
+  String get searchKindMember => 'Membre';
+
+  @override
+  String get searchKindPage => 'Page';
+
+  @override
+  String get searchKindSupplier => 'Fournisseur';
+
+  @override
+  String searchNothing(String query) {
+    return 'Rien trouvé pour « $query ».';
+  }
+
+  @override
+  String get searchRecent => 'Récents';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Cette fiche ne peut pas être ouverte : elle n\'existe pas ou vous ne pouvez pas la lire.';
+
+  @override
+  String get searchTitle => 'Rechercher';
+
+  @override
   String get seatDayAhead => 'À venir';
 
   @override
@@ -30340,6 +30392,42 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Balayez la barre vers le bas pour l\'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.';
+
+  @override
+  String get shortcutClose => 'Fermer';
+
+  @override
+  String get shortcutFilter => 'Filtrer cette liste';
+
+  @override
+  String get shortcutKeys => 'Les touches de cette page';
+
+  @override
+  String get shortcutKeysTitle => 'Touches du clavier';
+
+  @override
+  String get shortcutNew => 'Nouveau';
+
+  @override
+  String get shortcutOpenCalendar => 'Ouvrir le calendrier d\'un champ de date';
+
+  @override
+  String get shortcutPrint => 'Le document de cette page';
+
+  @override
+  String get shortcutRedo => 'Rétablir';
+
+  @override
+  String get shortcutSave => 'Enregistrer';
+
+  @override
+  String get shortcutSearch => 'Trouver une page, une action ou une fiche';
+
+  @override
+  String get shortcutSubmit => 'Enregistrer ou envoyer';
+
+  @override
+  String get shortcutUndo => 'Annuler';
 
   @override
   String get siteCity => 'Ville';

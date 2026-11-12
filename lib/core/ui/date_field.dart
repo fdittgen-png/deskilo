@@ -4,6 +4,8 @@
 // rules). What the field understood is written under it before anything
 // is saved; a date it cannot read is refused in words under the field once
 // the person leaves it, or as soon as the form asks for its problems.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +15,8 @@ import '../../l10n/app_localizations.dart';
 import '../format/date_input.dart';
 import '../i18n/format_controller.dart';
 import '../l10n/context_l10n.dart';
+import '../shortcuts/app_shortcuts.dart';
+import '../shortcuts/shortcut_scope.dart';
 import '../time/clock.dart';
 import 'adaptive/task_surface.dart';
 import 'form_kit.dart';
@@ -176,6 +180,11 @@ class _AppDateFieldState extends State<AppDateField> {
     _edited();
   }
 
+  Future<void> _pickByKey() async {
+    await _pick();
+    if (mounted) _focus.requestFocus();
+  }
+
   String? _problem(DateRead read) {
     final key = widget.fieldKey;
     final given =
@@ -201,6 +210,14 @@ class _AppDateFieldState extends State<AppDateField> {
       skipTraversal: true,
       canRequestFocus: false,
       onFocusChange: (has) => setState(() => _left = _left || !has),
+      // #3610 — Alt+Down (the registry's calendar key) opens the calendar
+      // from the field, as desktop date fields do; the field keeps the
+      // focus when it closes.
+      onKeyEvent: (node, event) => widget.enabled
+          ? runShortcuts(event, {
+              AppShortcutId.openCalendar: () => unawaited(_pickByKey()),
+            })
+          : KeyEventResult.ignored,
       child: TextField(
         controller: _text,
         focusNode: _focus,

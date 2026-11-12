@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
+import '../../core/shortcuts/shortcut_scope.dart';
 import '../../core/ui/kit/row_menu.dart';
 import '../../features/events/providers/attention_providers.dart';
 import '../../features/reservations/presentation/widgets/space_scan.dart';
@@ -47,7 +48,10 @@ class ShellBarControl {
 /// inbox and the way back to the account never leave the bar; the settings
 /// door is opened daily; a space is scanned on site; the editor is a tool
 /// of the few who draw the plan.
-enum _ShellBarRank { inbox, account, settings, scan, editor }
+/// #3610 — the bar's search button.
+const shellSearchButtonId = 'shell-search-button';
+
+enum _ShellBarRank { inbox, search, account, settings, scan, editor }
 
 /// The app bar's actions for the branch at [currentIndex], every one a
 /// button: the desk's bar, which has the room for all of them.
@@ -149,6 +153,15 @@ List<ShellBarControl> shellBarControls(
     // could not offer. Hidden when the workspace gated events off.
     // #719 → the GDPR rights moved to Me › Me with the rest of the
     // person's own pages (#1823); the avatar below is one tap away.
+    // #3610 — search: what Ctrl/⌘+K opens, for a pointer and a phone.
+    if (features.contains(WorkspaceFeature.quickSearch))
+      leaving(
+        id: shellSearchButtonId,
+        rank: _ShellBarRank.search,
+        icon: Icons.search,
+        label: l10n.searchTitle,
+        onPressed: () => ShortcutHost.openSearch(context),
+      ),
     if (features.contains(WorkspaceFeature.eventsTab))
       ShellBarControl(
         id: 'shell-events-bell',

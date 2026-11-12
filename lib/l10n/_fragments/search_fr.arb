@@ -1,0 +1,16 @@
+{
+  "searchTitle": "Rechercher",
+  "searchHint": "Une page, une action, un membre, une facture…",
+  "searchRecent": "Récents",
+  "searchNothing": "Rien trouvé pour « {query} ».",
+  "searchKindPage": "Page",
+  "searchKindAction": "Action",
+  "searchKindMember": "Membre",
+  "searchKindInvoice": "Facture",
+  "searchKindCustomer": "Client",
+  "searchKindSupplier": "Fournisseur",
+  "searchActionNewInvoice": "Nouvelle facture",
+  "searchActionNewPurchase": "Nouvel achat",
+  "searchActionInvite": "Inviter un membre",
+  "searchRecordUnreadable": "Cette fiche ne peut pas être ouverte : elle n'existe pas ou vous ne pouvez pas la lire."
+}

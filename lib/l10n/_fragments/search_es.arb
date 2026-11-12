@@ -1,0 +1,16 @@
+{
+  "searchTitle": "Buscar",
+  "searchHint": "Una página, una acción, un miembro, una factura…",
+  "searchRecent": "Recientes",
+  "searchNothing": "No se encontró nada para «{query}».",
+  "searchKindPage": "Página",
+  "searchKindAction": "Acción",
+  "searchKindMember": "Miembro",
+  "searchKindInvoice": "Factura",
+  "searchKindCustomer": "Cliente",
+  "searchKindSupplier": "Proveedor",
+  "searchActionNewInvoice": "Nueva factura",
+  "searchActionNewPurchase": "Nueva compra",
+  "searchActionInvite": "Invitar a un miembro",
+  "searchRecordUnreadable": "Este registro no se puede abrir: no existe o no puede leerlo."
+}

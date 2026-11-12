@@ -416,7 +416,9 @@ enum WorkspaceFeature {
   placeBooking,
   reminderEmail,
   invoiceEmail,
-  kioskEnrolment;
+  kioskEnrolment,
+  // #3610 — search (Ctrl/⌘+K, the bar's button) and the app's keys.
+  quickSearch;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

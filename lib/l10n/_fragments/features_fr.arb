@@ -269,5 +269,7 @@
   "featureReminderEmailTitle": "Relances par e-mail",
   "featureReminderEmailDesc": "Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n'arrivent que dans le fil et par notification.",
   "featureInvoiceEmailTitle": "Factures par e-mail",
-  "featureInvoiceEmailDesc": "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant."
+  "featureInvoiceEmailDesc": "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant.",
+  "featureQuickSearchTitle": "Recherche et touches",
+  "featureQuickSearchDesc": "Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l'application ; les touches propres d'une page restent."
 }

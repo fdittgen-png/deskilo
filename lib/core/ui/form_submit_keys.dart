@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import '../shortcuts/app_shortcuts.dart';
 import 'adaptive/task_surface.dart';
 import 'composer_send_keys.dart';
 
@@ -34,12 +35,17 @@ class FormSubmitKeys extends StatelessWidget {
 
   KeyEventResult _onKey(BuildContext context, KeyEvent event) {
     final key = event.logicalKey;
-    if (key != LogicalKeyboardKey.enter &&
+    final keyboard = HardwareKeyboard.instance;
+    // #3610 — the registry's save key (Ctrl/Cmd+S) submits as well.
+    final save = appShortcut(
+      AppShortcutId.save,
+    ).activators.any((a) => a.accepts(event, keyboard));
+    if (!save &&
+        key != LogicalKeyboardKey.enter &&
         key != LogicalKeyboardKey.numpadEnter) {
       return KeyEventResult.ignored;
     }
-    final keyboard = HardwareKeyboard.instance;
-    final chord = keyboard.isControlPressed || keyboard.isMetaPressed;
+    final chord = save || keyboard.isControlPressed || keyboard.isMetaPressed;
     final field = _focusedText();
     if (field != null && isComposingText(field.controller.value)) {
       return KeyEventResult.ignored;

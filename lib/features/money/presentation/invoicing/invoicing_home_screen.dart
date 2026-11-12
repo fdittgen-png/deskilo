@@ -11,6 +11,8 @@
 // flows that exist today: "Invoice {month}" opens the month's list
 // (R1-e), the reminder and payment entries filter the list (R1-f), and a
 // customer opens their oldest open invoice (R1-g).
+import 'dart:async';
+
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +23,8 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
+import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/storage/pane_width_store.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
@@ -36,6 +40,7 @@ import '../invoice_actions.dart';
 import '../widgets/invoice_form_sheet.dart';
 import 'invoice_month_flow.dart';
 import 'invoice_page.dart';
+import 'invoicing_customer_link.dart';
 import 'invoicing_home.dart';
 import 'invoicing_list.dart';
 import 'invoicing_live_pages.dart';
@@ -71,6 +76,7 @@ class InvoicingHomeScreen extends ConsumerStatefulWidget {
     required this.isEu,
     required this.showMemberNames,
     this.legalNotes,
+    this.openCustomer,
   });
 
   /// The More menu's entries after "Paid and closed invoices".
@@ -78,6 +84,9 @@ class InvoicingHomeScreen extends ConsumerStatefulWidget {
   final bool isEu;
   final bool showMemberNames;
   final List<Widget>? legalNotes;
+
+  /// #3610 — the customer the address names, opened once.
+  final String? openCustomer;
 
   @override
   ConsumerState<InvoicingHomeScreen> createState() =>
@@ -106,6 +115,30 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   bool _wide = false;
 
   @override
+  void initState() {
+    super.initState();
+    _openLinked(widget.openCustomer);
+  }
+
+  @override
+  void didUpdateWidget(InvoicingHomeScreen old) {
+    super.didUpdateWidget(old);
+    if (widget.openCustomer != old.openCustomer) {
+      _openLinked(widget.openCustomer);
+    }
+  }
+
+  /// The customer the address names, once its frame is drawn.
+  void _openLinked(String? customer) {
+    if (customer == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        unawaited(openLinkedCustomer(context, ref, customer, _openCustomer));
+      }
+    });
+  }
+
+  @override
   void dispose() {
     _filter.dispose();
     super.dispose();
@@ -115,7 +148,14 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final invoices = ref.watch(invoicesProvider);
-    return Scaffold(
+    // #3610 — N: a new invoice; /: the search over the list.
+    return ShortcutScope(
+      handlers: {
+        AppShortcutId.newRecord: () =>
+            unawaited(showInvoiceIssueSheet(context, ref)),
+        AppShortcutId.filter: () => setState(() => _searchOpen = true),
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: PageTitle(l.featureInvoicing),
         actions: [
@@ -165,6 +205,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           );
         },
       ),
+    ),
     );
   }
 

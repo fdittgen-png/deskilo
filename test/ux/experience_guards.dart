@@ -95,12 +95,23 @@ Future<void> writeSheet(
   WidgetTester tester, {
   required String sheet,
   required String name,
+  bool whole = false,
 }) async {
   if (Platform.environment['SHEET'] != '1') return;
-  final target = tester.firstRenderObject<RenderRepaintBoundary>(
-    find.byType(RepaintBoundary).first,
-  );
-  final image = await tester.runAsync(target.toImage);
+  final ui.Image? image;
+  if (whole) {
+    // #3610 — the whole window, a dialog over the page included.
+    final view = tester.binding.renderViews.first;
+    final layer = view.debugLayer! as OffsetLayer;
+    image = await tester.runAsync(
+      () => layer.toImage(Offset.zero & view.size),
+    );
+  } else {
+    final target = tester.firstRenderObject<RenderRepaintBoundary>(
+      find.byType(RepaintBoundary).first,
+    );
+    image = await tester.runAsync(target.toImage);
+  }
   final bytes = await tester.runAsync(
     () => image!.toByteData(format: ui.ImageByteFormat.png),
   );
@@ -433,8 +444,12 @@ List<({Rect rect, bool named, String label})> tappableRects(WidgetTester tester)
 /// The focus nodes a person can reach on screen: enabled, visible, not
 /// excluded. [tabStops]: those the Tab key stops on; else those it skips
 /// (rows inside a composite that arrows move through).
-List<FocusNode> _focusables({required bool tabStops}) => [
-  for (final n in FocusManager.instance.rootScope.descendants)
+/// [scope]: only inside it (a window open over the page, #3610).
+List<FocusNode> _focusables({
+  required bool tabStops,
+  FocusScopeNode? scope,
+}) => [
+  for (final n in (scope ?? FocusManager.instance.rootScope).descendants)
     if (n.canRequestFocus &&
         n.skipTraversal != tabStops &&
         n.context != null &&
@@ -455,10 +470,18 @@ bool _onScreen(FocusNode n) {
 /// The keyboard contract: Tab reaches every Tab stop exactly once in a
 /// cycle; a control Tab skips (a row of a composite) is reached by an arrow
 /// key from a Tab stop; nothing is left that no key reaches.
-Future<Set<String>> keyboardProblems(WidgetTester tester) async {
+/// [within]: a window open over the page (a dialog), walked alone: the
+/// page under it is out of Tab's reach by design.
+Future<Set<String>> keyboardProblems(
+  WidgetTester tester, {
+  Finder? within,
+}) async {
   final problems = <String>{};
-  final stops = _focusables(tabStops: true).toSet();
-  final skipped = _focusables(tabStops: false).toSet();
+  final scope = within == null
+      ? null
+      : FocusScope.of(tester.element(within.first));
+  final stops = _focusables(tabStops: true, scope: scope).toSet();
+  final skipped = _focusables(tabStops: false, scope: scope).toSet();
   final seen = <FocusNode>[];
   for (var i = 0; i < stops.length * 2 + 4; i++) {
     await tester.sendKeyEvent(LogicalKeyboardKey.tab);
@@ -521,10 +544,12 @@ Future<void> writeDeskSheet(
   required String screen,
   required double width,
   required Brightness brightness,
+  bool whole = false,
 }) => writeSheet(
   tester,
   sheet: module,
   name: '$screen--${width.toInt()}--${brightness.name}',
+  whole: whole,
 );
 
 // ---------------------------------------------------------------------------

@@ -52,6 +52,7 @@ const Set<String> workspaceFeatureKeys = {
   'reminderEmail',
   'invoiceEmail',
   'kioskEnrolment',
+  'quickSearch',
   'notificationGrouping',
   'bookingPolicies',
   'nfcSeatTags',

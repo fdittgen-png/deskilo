@@ -1398,6 +1398,10 @@ window.SETUP_L10N={
    "kioskEnrolment": [
     "Kiosk enrolment",
     "Enrol the devices used as kiosks; badge sign-in then works only on them, unless the business allows any device. With this off, badge sign-in works from any device."
+   ],
+   "quickSearch": [
+    "Search and keys",
+    "Ctrl+K (⌘K on a Mac) or the bar's search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page's own keys stay."
    ]
   },
   "process": {
@@ -3188,6 +3192,10 @@ window.SETUP_L10N={
    "kioskEnrolment": [
     "Enregistrement des kiosques",
     "Enregistrer les appareils qui servent de kiosque ; la connexion par badge ne fonctionne alors que sur eux, sauf si l’entreprise autorise tout appareil. Désactivé, la connexion par badge fonctionne depuis n’importe quel appareil."
+   ],
+   "quickSearch": [
+    "Recherche et touches",
+    "Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l'application ; les touches propres d'une page restent."
    ]
   },
   "process": {
@@ -4978,6 +4986,10 @@ window.SETUP_L10N={
    "kioskEnrolment": [
     "Kiosk-Registrierung",
     "Registrieren Sie die Geräte, die als Kiosk dienen; die Anmeldung per Ausweis funktioniert dann nur auf ihnen, es sei denn, das Unternehmen erlaubt jedes Gerät. Ausgeschaltet funktioniert die Anmeldung per Ausweis auf jedem Gerät."
+   ],
+   "quickSearch": [
+    "Suche und Tasten",
+    "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben."
    ]
   },
   "process": {
@@ -6768,6 +6780,10 @@ window.SETUP_L10N={
    "kioskEnrolment": [
     "Registro de quioscos",
     "Registre los dispositivos que sirven de quiosco; el acceso con credencial funciona entonces solo en ellos, salvo que la empresa permita cualquier dispositivo. Desactivado, el acceso con credencial funciona desde cualquier dispositivo."
+   ],
+   "quickSearch": [
+    "Búsqueda y teclas",
+    "Ctrl+K (⌘K en un Mac) o el botón de búsqueda de la barra encuentra una página, una acción o un registro — un miembro, un cliente, una factura por su número, un proveedor — entre lo que la persona puede abrir; lo reciente primero. ? muestra las teclas de la página. Desactivado: sin botón de búsqueda ni teclas de la aplicación; las teclas propias de una página se mantienen."
    ]
   },
   "process": {
@@ -8558,6 +8574,10 @@ window.SETUP_L10N={
    "kioskEnrolment": [
     "Registrazione dei chioschi",
     "Registri i dispositivi usati come chioschi; l’accesso con badge funziona allora solo su di essi, a meno che l’azienda non consenta qualsiasi dispositivo. Disattivato, l’accesso con badge funziona da qualsiasi dispositivo."
+   ],
+   "quickSearch": [
+    "Ricerca e tasti",
+    "Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell'app; restano i tasti propri di una pagina."
    ]
   },
   "process": {

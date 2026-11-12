@@ -40,10 +40,17 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
     final controls = shellBarControls(context, ref, currentIndex: currentIndex);
     return LayoutBuilder(
       builder: (context, constraints) {
-        final fit = _fit(
-          controls,
-          slots: _slots(context, constraints.maxWidth),
-        );
+        final slots = _slots(context, constraints.maxWidth);
+        var fit = _fit(controls, slots: slots);
+        // #3610 — search has a button only where every control still fits
+        // beside it; a narrower bar keeps its controls (the drawer's first
+        // entry and Ctrl/⌘+K open search there).
+        if (fit.overflow.isNotEmpty) {
+          fit = _fit([
+            for (final c in controls)
+              if (c.id != shellSearchButtonId) c,
+          ], slots: slots);
+        }
         final shown = [for (final c in fit.shown) c.button];
         return ShellTitleBar(
           collapsible: collapsible,

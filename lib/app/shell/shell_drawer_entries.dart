@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
+import '../../core/shortcuts/shortcut_scope.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
     show taskWizardRoute;
 import '../../features/workspace/domain/workspace_feature.dart';
@@ -115,6 +116,14 @@ class DrawerEntries {
 
   List<DrawerEntry> navigation() {
     return <DrawerEntry>[
+      // #3610 — on a narrow window search is the drawer's first entry: the
+      // bar keeps its controls. The desk has its bar's button.
+      if (!permanent && features.contains(WorkspaceFeature.quickSearch))
+        DrawerEntry('drawer-search', Icons.search, l10n.searchTitle, () {
+          final open = ShortcutHost.searchOf(context);
+          Navigator.of(context).pop();
+          open?.call();
+        }),
       if (mayOnPlaces(WorkspacePermission.makeReservations))
         DrawerEntry(
           'drawer-reserve',

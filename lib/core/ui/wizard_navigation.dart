@@ -2,9 +2,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../l10n/context_l10n.dart';
+import '../shortcuts/app_shortcuts.dart';
 
 /// Connects the existing router's exit callback to the mounted flow.
 class WizardNavigationController {
@@ -83,8 +83,9 @@ class _WizardNavigationState extends State<WizardNavigation> {
   Widget build(BuildContext context) => PopScope<Object?>(
     canPop: !widget.busy && widget.onStepBack == null && !widget.hasDraft,
     onPopInvokedWithResult: (didPop, _) { if (!didPop) unawaited(_back()); },
-    child: CallbackShortcuts(bindings: {
-      const SingleActivator(LogicalKeyboardKey.escape): _back,
-    }, child: widget.builder(_back)),
+    // #3610 — the registry's close key.
+    child: CallbackShortcuts(
+      bindings: shortcutBindings({AppShortcutId.close: _back}),
+      child: widget.builder(_back)),
   );
 }
