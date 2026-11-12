@@ -31,7 +31,7 @@ part 'desk_frame.g.dart';
 /// dialog, a sheet, a menu page): the desk's navigation takes no input while
 /// one is open, and lies under its scrim.
 class DeskModalObserver extends NavigatorObserver {
-  final List<PopupRoute<dynamic>> _open = [];
+  final List<PopupRoute<Object?>> _open = [];
 
   /// The scrim of the window on top; null while none is open.
   final ValueNotifier<Color?> scrim = ValueNotifier(null);
@@ -41,7 +41,7 @@ class DeskModalObserver extends NavigatorObserver {
       : (_open.last.barrierColor ?? Colors.transparent);
 
   @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void didPush(Route<Object?> route, Route<Object?>? previousRoute) {
     if (route is PopupRoute) {
       _open.add(route);
       _changed();
@@ -49,20 +49,20 @@ class DeskModalObserver extends NavigatorObserver {
   }
 
   @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+  void didPop(Route<Object?> route, Route<Object?>? previousRoute) =>
       _gone(route);
 
   @override
-  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+  void didRemove(Route<Object?> route, Route<Object?>? previousRoute) =>
       _gone(route);
 
   @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+  void didReplace({Route<Object?>? newRoute, Route<Object?>? oldRoute}) {
     if (oldRoute != null) _gone(oldRoute);
     if (newRoute is PopupRoute) didPush(newRoute, null);
   }
 
-  void _gone(Route<dynamic> route) {
+  void _gone(Route<Object?> route) {
     if (_open.remove(route)) _changed();
   }
 }
@@ -143,6 +143,16 @@ class _Desk extends ConsumerWidget {
         onBranch: onBranch,
       ),
     ).crumbsOf(path);
+    // A tab whose place is not a destination here (the overview of a
+    // business with places) keeps the title its bar gave it.
+    final tabTitle = path == '/workspace-overview'
+        ? l10n.overviewTitle
+        : branch >= 0
+        ? tabTitles[branch]
+        : null;
+    final shown = crumbs.isEmpty && tabTitle != null
+        ? <DeskCrumb>[(label: tabTitle, entry: null)]
+        : crumbs;
     return ValueListenableBuilder(
       valueListenable: ref.watch(deskModalObserverProvider).scrim,
       builder: (context, scrim, _) => DeskScaffold(
@@ -156,8 +166,8 @@ class _Desk extends ConsumerWidget {
           pendingEvents: pendingEvents,
           onBranch: onBranch,
         ),
-        title: _DeskBreadcrumb(crumbs: crumbs, router: router),
-        place: crumbs.lastOrNull?.label,
+        title: _DeskBreadcrumb(crumbs: shown, router: router),
+        place: shown.lastOrNull?.label,
         actions: shellBarActions(context, ref, currentIndex: branch),
         path: path,
         scrim: scrim,

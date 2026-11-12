@@ -46,6 +46,15 @@ Finder navDestination(IconData icon) {
   return desk.evaluate().isEmpty ? desk : desk.first;
 }
 
+/// #3603 — the page's own scrollable: inside the desk's page area where the
+/// desk is drawn (its navigation scrolls too), else the first on screen.
+Finder pageScrollable() {
+  final page = find.byKey(const ValueKey('desk-page'));
+  return page.evaluate().isEmpty
+      ? find.byType(Scrollable).first
+      : find.descendant(of: page, matching: find.byType(Scrollable)).first;
+}
+
 /// Opens the Reserve hub: the bar's raised button, or the desk's entry
 /// (#3603 — the desk has no raised button).
 Future<void> openReserveHub(WidgetTester tester) async {

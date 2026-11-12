@@ -164,6 +164,9 @@ void main() {
     expect(stored.requiredCount, 1);
     expect(stored.adminsMayValidate, isTrue);
     expect(find.text('Validation rule saved.'), findsOneWidget);
+    // #3603 — beside the desk's navigation the note covers the sheet's
+    // button: it is let go first, as a person would wait for it.
+    await tester.pump(const Duration(seconds: 5));
 
     // Re-opening reflects what was stored, and turning one back off
     // persists that too.

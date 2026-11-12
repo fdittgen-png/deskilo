@@ -71,7 +71,8 @@ void main() {
   }
 
   testWidgets('on a roomy bar the space keeps its ring', (tester) async {
-    await _pump(tester, width: 1024, textScale: 1, branded: true);
+    // Below the desk (#3603), whose top bar names the place instead.
+    await _pump(tester, width: 800, textScale: 1, branded: true);
     expect(tester.takeException(), isNull);
     expect(_ring, findsOneWidget);
     expect(_avatar, findsOneWidget);
