@@ -5111,6 +5111,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookTypeLiability => 'Liability';
 
   @override
+  String get bookingAdminNoLevel =>
+      'An admin cannot assign a whole level here.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Checked in at $space until $until.';
   }
@@ -5123,6 +5127,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Checked in until $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead => 'The new end must be later than now.';
 
   @override
   String get bookingGateBlocked => 'Not bookable as chosen';
@@ -5153,6 +5160,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This reservation is no longer checked in — it was checked out or closed in the meantime.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'This booking is no longer reserved, so it cannot be checked in.';
+
+  @override
   String get bookingNotAMember =>
       'You are no longer a member of this space — ask an administrator for an invitation.';
 
@@ -5161,8 +5172,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'You may not make reservations in this space. Ask an owner to let members book.';
 
   @override
+  String get bookingNotCancellable =>
+      'This booking can no longer be cancelled.';
+
+  @override
+  String get bookingNotYours => 'This booking is not yours.';
+
+  @override
   String get bookingOnePlace =>
       'You already have a booking in that period — one place at a time.';
+
+  @override
+  String get bookingOnlyUpcoming => 'Only upcoming bookings can be changed.';
 
   @override
   String get bookingOpenDetails => 'Details';
@@ -5272,8 +5293,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'A booking that has started keeps its start time.';
+
+  @override
   String get bookingSameDayError =>
       'A booking ends on the day it starts — book the next day separately.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'A series can cover at most $days days.',
+      one: 'A series can cover at most 1 day.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>

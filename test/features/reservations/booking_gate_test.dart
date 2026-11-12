@@ -243,25 +243,30 @@ void main() {
       }
     });
 
-    test('the mapper recognizes every substring the gate names', () {
+    test('the mapper recognizes every refusal the gate names, by its code '
+        '(#3810)', () {
       const policies = BookingPolicies();
       for (final refusal in BookingRefusal.values) {
-        final message = switch (refusal) {
-          BookingRefusal.beyondHorizon =>
-            'beyond the advance-booking horizon of 90 days',
-          BookingRefusal.tooShort => 'below the minimum duration of 30 minutes',
-          BookingRefusal.tooLong =>
-            'above the maximum duration of 1440 minutes',
-          BookingRefusal.outsideHoursAheadOnly =>
-            'only spontaneous check-ins are possible outside the opening '
-                'hours — booking ahead is not',
-          BookingRefusal.outsideHoursOff =>
-            'bookings outside the opening hours are not allowed',
-          _ => 'x ${BookingGate.serverSubstringOf(refusal)} y',
+        // The code and the values the server raises since 0739.
+        final (code, detail) = switch (refusal) {
+          BookingRefusal.closedDay => ('DKK01', null),
+          BookingRefusal.seatBlocked => ('DKK07', null),
+          BookingRefusal.beyondHorizon => ('DKK08', '{"days" : 90}'),
+          BookingRefusal.tooShort => ('DKK09', '{"minutes" : 30}'),
+          BookingRefusal.tooLong => ('DKK10', '{"minutes" : 1440}'),
+          BookingRefusal.past => ('DKK11', null),
+          BookingRefusal.walkUpNotToday => ('DKK12', null),
+          BookingRefusal.crossesMidnight => ('DKK13', null),
+          BookingRefusal.outsideHoursAheadOnly => ('DKK15', null),
+          BookingRefusal.outsideHoursOff => ('DKK16', null),
         };
         final mapped = bookingErrorText(
           englishL10n,
-          PostgrestException(message: message),
+          PostgrestException(
+            message: BookingGate.serverSubstringOf(refusal),
+            code: code,
+            details: detail,
+          ),
           'fallback',
         );
         expect(mapped, isNot('fallback'), reason: refusal.name);

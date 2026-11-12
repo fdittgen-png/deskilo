@@ -3089,6 +3089,10 @@
   "bookTypeExpense": "Gasto",
   "bookTypeIncome": "Ingreso",
   "bookTypeLiability": "Pasivo",
+  "bookingAdminNoLevel": "Un administrador no puede asignar una planta entera aquí.",
+  "@bookingAdminNoLevel": {
+    "description": "#3810 booking refusal DKK35: an admin may not assign a whole level here"
+  },
   "bookingCheckedInAtUntil": "Registrado en {space} hasta las {until}.",
   "@bookingCheckedInAtUntil": {
     "description": "#663 - check-in confirmation naming the space",
@@ -3111,6 +3115,10 @@
       }
     }
   },
+  "bookingEndMustLieAhead": "El nuevo final debe ser posterior a ahora.",
+  "@bookingEndMustLieAhead": {
+    "description": "#3810 booking refusal DKK32: a new end in the past"
+  },
   "bookingGateBlocked": "No reservable así",
   "bookingHorizonError": "{days, plural, one{Demasiado lejos — las reservas se abren con {days} día de antelación.} other{Demasiado lejos — las reservas se abren con {days} días de antelación.}}",
   "@bookingHorizonError": {
@@ -3124,12 +3132,28 @@
   "bookingModeCheckInNow": "Registrarse ahora",
   "bookingMoreOptions": "Más opciones",
   "bookingNoLongerCheckedIn": "Esta reserva ya no está registrada — se cerró mientras tanto.",
+  "bookingNoLongerReserved": "Esta reserva ya no está reservada; no se puede registrar la llegada.",
+  "@bookingNoLongerReserved": {
+    "description": "#3810 booking refusal DKK36: check-in on a booking no longer reserved"
+  },
   "bookingNotAMember": "Ya no es miembro de este espacio — pida una invitación a un administrador.",
   "bookingNotAllowedError": "No puede hacer reservas en este espacio. Pida a un propietario que permita reservar a los miembros.",
   "@bookingNotAllowedError": {
     "description": "Refusal when the member does not hold makeReservations (#3269)"
   },
+  "bookingNotCancellable": "Esta reserva ya no se puede cancelar.",
+  "@bookingNotCancellable": {
+    "description": "#3810 booking refusal DKK30: the booking can no longer be cancelled"
+  },
+  "bookingNotYours": "Esta reserva no es suya.",
+  "@bookingNotYours": {
+    "description": "#3810 booking refusal DKK29: the booking belongs to someone else"
+  },
   "bookingOnePlace": "Ya tiene una reserva en ese periodo — un sitio a la vez.",
+  "bookingOnlyUpcoming": "Solo se pueden modificar las reservas futuras.",
+  "@bookingOnlyUpcoming": {
+    "description": "#3810 booking refusal DKK33: only upcoming bookings can be edited"
+  },
   "bookingOpenDetails": "Detalles",
   "bookingOutsideHoursError": "Las reservas deben permanecer dentro del horario laboral.",
   "bookingOutsideOffError": "Las reservas fuera del horario de apertura no están permitidas.",
@@ -3256,7 +3280,20 @@
       }
     }
   },
+  "bookingRunningKeepsStart": "Una reserva en curso conserva su hora de inicio.",
+  "@bookingRunningKeepsStart": {
+    "description": "#3810 booking refusal DKK31: a running booking cannot move its start"
+  },
   "bookingSameDayError": "Una reserva termina el día en que empieza: reserve el día siguiente por separado.",
+  "bookingSeriesTooLong": "{days, plural, =1{Una serie puede abarcar como máximo 1 día.} other{Una serie puede abarcar como máximo {days} días.}}",
+  "@bookingSeriesTooLong": {
+    "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "bookingSpaceChainTaken": "Este espacio, o un espacio que lo contiene, ya está reservado en ese periodo.",
   "bookingTooLongError": "{minutes, plural, one{Demasiado larga — una reserva dura como máximo {minutes} minuto.} other{Demasiado larga — una reserva dura como máximo {minutes} minutos.}}",
   "@bookingTooLongError": {

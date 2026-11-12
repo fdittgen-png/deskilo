@@ -102,12 +102,12 @@ class FakeReservationRepository implements ReservationRepository {
     if (_touchesOutside(startsAt, endsAt)) {
       if (outsideHoursMode == OutsideHoursMode.off) {
         throw const PostgrestException(
-            message: 'bookings outside the opening hours are not allowed');
+            message: 'bookings outside the opening hours are not allowed', code: 'DKK16');
       }
       if (outsideHoursMode == OutsideHoursMode.walkupOnly && !walkUp) {
         throw const PostgrestException(
-            message: 'only spontaneous check-ins are possible outside '
-                'the opening hours — booking ahead is not');
+            code: 'DKK15', message: 'only spontaneous check-ins are possible '
+                'outside the opening hours — booking ahead is not');
       }
     }
   }
@@ -136,7 +136,7 @@ class FakeReservationRepository implements ReservationRepository {
             r.startsAt.isBefore(end)).length;
     if (busy >= simultaneousAllowance) {
       throw const PostgrestException(
-          message: 'you already have a reservation in that period');
+          message: 'you already have a reservation in that period', code: 'DKK19');
     }
   }
 
@@ -459,10 +459,10 @@ class FakeReservationRepository implements ReservationRepository {
         at.month == r.startsAt.month &&
         at.day == r.startsAt.day;
     if (at.isBefore(r.startsAt.subtract(leeway)) && !sameDay) {
-      throw const PostgrestException(message: 'check-in window not open yet');
+      throw const PostgrestException(message: 'check-in window not open yet', code: 'DKK17');
     }
     if (!at.isBefore(r.endsAt)) {
-      throw const PostgrestException(message: 'check-in window closed');
+      throw const PostgrestException(message: 'check-in window closed', code: 'DKK18');
     }
     // 0079/0119 mirror: stale check-ins complete at their own end;
     // check-ins still RUNNING elsewhere refuse once they reach the
@@ -478,7 +478,7 @@ class FakeReservationRepository implements ReservationRepository {
         running++;
         if (running >= simultaneousAllowance) {
           throw const PostgrestException(
-              message: 'already checked in elsewhere');
+              message: 'already checked in elsewhere', code: 'DKK20');
         }
         continue;
       }
@@ -536,7 +536,7 @@ class FakeReservationRepository implements ReservationRepository {
     // badge member is active elsewhere — pinned substring.
     if (badgeToken == 'busy-badge') {
       throw const PostgrestException(
-          message: 'you already have a reservation in that period');
+          message: 'you already have a reservation in that period', code: 'DKK19');
     }
     // #622 — mirror the exclusion constraint for kiosk walk-ups: an
     // ACTIVE reservation by ANOTHER member on the target refuses with
@@ -616,15 +616,15 @@ class FakeReservationRepository implements ReservationRepository {
     if (r.status == ReservationStatus.checkedIn) {
       if (startsAt != r.startsAt) {
         throw const PostgrestException(
-            message: 'a running booking keeps its start');
+            message: 'a running booking keeps its start', code: 'DKK31');
       }
       if (!endsAt.isAfter(now())) {
         throw const PostgrestException(
-            message: 'the new end must lie ahead');
+            message: 'the new end must lie ahead', code: 'DKK32');
       }
     } else if (r.status != ReservationStatus.reserved) {
       throw const PostgrestException(
-          message: 'only upcoming reservations can be edited');
+          message: 'only upcoming reservations can be edited', code: 'DKK33');
     }
     if (_overlapsActive(r.seatId, r.officeId, startsAt, endsAt,
         ignoreId: reservationId)) {
