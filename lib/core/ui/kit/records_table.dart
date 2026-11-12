@@ -320,6 +320,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       setState(() => _focused = (_focused + by).clamp(0, shown.length - 1));
     }
 
+    final rowHeight = _touch ? kMinInteractiveDimension : recordRowDeskHeight;
     T? focusedRow() =>
         shown.isEmpty ? null : shown[_focused.clamp(0, shown.length - 1)];
     return Shortcuts(
@@ -356,7 +357,8 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                 selectedShown: selectedShown,
                 onSelectShown: (on) => _selectShown(shown, on),
                 selectable: _selectable,
-                actionsWidth: recordActionsWidth,
+                actionsWidth: recordActionsWidth(rowHeight),
+                dense: !_touch,
               ),
               const Divider(height: 1),
               Expanded(
@@ -372,15 +374,15 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                       columns: columns,
                       actions: widget.rowActions?.call(r) ?? const [],
                       onOpen: () {
+                        // A clicked row brings the keyboard to the table.
+                        _rowsFocus.requestFocus();
                         setState(() => _focused = i);
                         widget.onOpen(r);
                       },
                       selected: _selected.contains(key),
                       onTick: (on) => _tick(key, on),
                       focused: _rowsFocus.hasFocus && i == _focused,
-                      minHeight: _touch
-                          ? kMinInteractiveDimension
-                          : recordRowDeskHeight,
+                      minHeight: rowHeight,
                       selectable: _selectable,
                     );
                   },

@@ -55,8 +55,12 @@ class RecordsHeader<T> extends StatelessWidget {
     required this.onSelectShown,
     required this.selectable,
     required this.actionsWidth,
+    this.dense = false,
     super.key,
   });
+
+  /// Whether the rows under it are a mouse's short rows.
+  final bool dense;
 
   final List<RecordColumn<T>> columns;
   final RecordsQuery query;
@@ -104,6 +108,12 @@ class RecordsHeader<T> extends StatelessWidget {
         leading: selectable
             ? Checkbox(
                 key: const ValueKey('records-select-shown'),
+                materialTapTargetSize: dense
+                    ? MaterialTapTargetSize.shrinkWrap
+                    : MaterialTapTargetSize.padded,
+                visualDensity: dense
+                    ? VisualDensity.compact
+                    : VisualDensity.standard,
                 tristate: true,
                 value: all ? true : (selectedShown == 0 ? false : null),
                 semanticLabel: l10n.recordsSelectShown(shown),
@@ -161,6 +171,18 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
     final theme = Theme.of(context);
     final first = widget.actions.firstOrNull;
     final showFirst = first != null && (_hover || widget.focused);
+    // With a mouse the row is short, and so are its controls (#3605: every
+    // row action is also reached by the keyboard and the menu).
+    final side = widget.minHeight;
+    final dense = side < kMinInteractiveDimension;
+    final buttonStyle = IconButton.styleFrom(
+      tapTargetSize: dense
+          ? MaterialTapTargetSize.shrinkWrap
+          : MaterialTapTargetSize.padded,
+      fixedSize: Size.square(side),
+      minimumSize: Size.square(side),
+      padding: EdgeInsets.zero,
+    );
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
@@ -210,6 +232,12 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                     ],
                     leading: widget.selectable
                         ? Checkbox(
+                            materialTapTargetSize: dense
+                                ? MaterialTapTargetSize.shrinkWrap
+                                : MaterialTapTargetSize.padded,
+                            visualDensity: dense
+                                ? VisualDensity.compact
+                                : VisualDensity.standard,
                             value: widget.selected,
                             onChanged: (v) => widget.onTick(v ?? false),
                           )
@@ -219,20 +247,22 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                       children: [
                         if (showFirst && first.unavailable == null)
                           IconButton(
+                            style: buttonStyle,
                             tooltip: first.label,
                             icon: Icon(first.icon),
                             onPressed: () => first.onRun(widget.row),
                           )
                         else
-                          const SizedBox(width: kMinInteractiveDimension),
+                          SizedBox(width: side),
                         if (widget.actions.isNotEmpty)
                           IconButton(
+                            style: buttonStyle,
                             tooltip: l10n.recordsMoreActions,
                             icon: const Icon(Icons.more_horiz),
                             onPressed: _openMenu,
                           )
                         else
-                          const SizedBox(width: kMinInteractiveDimension),
+                          SizedBox(width: side),
                       ],
                     ),
                   ),
@@ -246,8 +276,9 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
   }
 }
 
-/// The width a row's actions take, beside the cells.
-const double recordActionsWidth = 2 * kMinInteractiveDimension;
+/// The width a row's actions take beside the cells: two controls as high
+/// as the row.
+double recordActionsWidth(double rowHeight) => 2 * rowHeight;
 
 /// The actions on the selection, each naming what it does to how many.
 class RecordsBulkBar extends StatelessWidget {
