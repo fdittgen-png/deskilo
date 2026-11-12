@@ -6,6 +6,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/refusal_matchers.dart';
 import '../../helpers/screens/invoice_writeoff.dart' show partialMatch;
 import '../../helpers/screens/invoices.dart' show seededMoney;
 import '../../helpers/test_clock.dart';
@@ -91,7 +92,7 @@ void main() {
         paymentLedgerId: paymentId,
         resolution: 'exact',
       ),
-      throwsStateError,
+      throwsRefusal('DKI06'),
     );
   });
 

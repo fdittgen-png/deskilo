@@ -94,7 +94,7 @@ void main() {
       expect(find.text('50%'), findsOneWidget);
       expect(
         _text(tester, 'setup-new-members-preview-start'),
-        'A new member starts on a 50 % subscription (Pay as you go).',
+        'A new member starts on a 50% subscription (Pay as you go).',
       );
       expect(
         find.byKey(const ValueKey('setup-new-members-question-company')),
@@ -113,7 +113,7 @@ void main() {
       await tester.pump();
       expect(
         _text(tester, 'setup-new-members-preview-start'),
-        startsWith('A new member starts on a 55 %'),
+        startsWith('A new member starts on a 55%'),
       );
       expect(r.newMemberDefaults['ws-1']!.subscriptionPct, 50);
 

@@ -112,7 +112,7 @@ select is(pg_temp.state(), '1/1/1', 'the refusal changed no match, no junction r
 select is((select invoice_id from public.invoice_match_payments where payment_ledger_id = pg_temp.g('p1')),
           pg_temp.g('ia'), 'the payment is still consumed by A only');
 select throws_ok(format($$ select public.match_invoice(%L, %L, 'exact', '') $$, pg_temp.g('ia'), pg_temp.g('p1')),
-  'P0001', 'invoice already matched', 'retrying the same match consumes nothing twice');
+  'DKI06', 'invoice already matched', 'retrying the same match consumes nothing twice');  -- #3811: its code
 select is(pg_temp.state(), '1/1/1', 'the retry changed nothing either');
 
 -- stale remainder: invoice C takes a partial, the chooser still sized for 5000

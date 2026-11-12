@@ -2,6 +2,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/rate_format.dart';
 import 'period_label.dart';
 
 /// #3809 (part of #3657) — what a line says, printed from the facts the
@@ -52,14 +53,18 @@ String subscriptionLabel(
   required bool association,
   String month = '',
 }) {
+  // The document's format locale, else its own language: a French document
+  // that names no format locale still writes `100 %`, not an English `100%`.
+  final rate = ratePercentText(
+    pct,
+    locale: strings.formatLocale ?? strings.localeName,
+  );
   if (month.isNotEmpty) {
     return association
-        ? strings.participationMonth(month, pct)
-        : strings.subscriptionMonth(month, pct);
+        ? strings.participationMonth(month, rate)
+        : strings.subscriptionMonth(month, rate);
   }
-  return association
-      ? strings.participation(pct)
-      : strings.subscription(pct);
+  return association ? strings.participation(rate) : strings.subscription(rate);
 }
 
 String invoiceLineText(

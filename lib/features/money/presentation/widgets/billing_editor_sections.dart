@@ -100,7 +100,6 @@ class BillingLevelChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return Wrap(
       spacing: 8,
       runSpacing: 4,
@@ -108,14 +107,14 @@ class BillingLevelChips extends StatelessWidget {
         for (final preset in SubscriptionLevels.presets)
           FilterChip(
             key: ValueKey('billing-percent-value-$preset'),
-            label: Text(l10n.percentValue(preset)),
+            label: Text(appFormatOf(context).ratePercent(preset)),
             selected: enabledPresets.contains(preset),
             onSelected: (selected) =>
                 onPresetSelected(preset, selected: selected),
           ),
         for (final level in extraLevels)
           InputChip(
-            label: Text(l10n.percentValue(level)),
+            label: Text(appFormatOf(context).ratePercent(level)),
             onDeleted: () => onExtraDeleted(level),
           ),
       ],

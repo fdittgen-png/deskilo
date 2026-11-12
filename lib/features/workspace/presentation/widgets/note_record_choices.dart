@@ -2,10 +2,11 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
+import '../../../../core/i18n/reference_when.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/event_decision.dart';
@@ -52,6 +53,7 @@ Future<NoteRecordChoices> noteRecordChoices(
   NoteRecordKind kind,
 ) async {
   final l10n = context.l10n;
+  final reader = appFormatOf(context);
   final localeName = Localizations.maybeLocaleOf(context)?.toString();
   final bakedLocale = referenceLocale(ref, context);
   final bakedL10n = referenceL10n(ref, context);
@@ -81,10 +83,9 @@ Future<NoteRecordChoices> noteRecordChoices(
           continue;
         }
         final who = names[event.subjectMemberId] ?? '';
-        String label(AppLocalizations strings, String? locale) {
-          final when = DateFormat.MMMd(locale)
-              .add_jm()
-              .format(event.createdAt.toLocal());
+        String label(AppLocalizations strings, String? locale,
+            {AppFormat? reader}) {
+          final when = referenceWhen(event.createdAt, locale, reader: reader);
           return [eventTypeLabel(strings, event.type), who, when]
               .where((p) => p.isNotEmpty)
               .join(' · ');
@@ -94,7 +95,7 @@ Future<NoteRecordChoices> noteRecordChoices(
         final created = event.createdAt.toLocal();
         candidates.add(refCandidate(
           id: event.id,
-          label: label(l10n, localeName),
+          label: label(l10n, localeName, reader: reader),
           icon: noteRecordIcon(kind),
           extraKeywords: event.status.name,
           at: created,

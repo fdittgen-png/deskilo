@@ -238,7 +238,8 @@ void main() {
       scale: 1,
       decision: (ref, eventId, {required accept}) async {
         asked++;
-        throw const PostgrestException(message: 'event already decided');
+        throw const PostgrestException(
+            message: 'event already decided', code: 'DKD01');
       },
     );
     await tester.tap(find.byKey(const ValueKey('invoice-page-confirm')));

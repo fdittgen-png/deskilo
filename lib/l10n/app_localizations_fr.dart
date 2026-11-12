@@ -4694,13 +4694,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billPackages => 'Forfaits de jours';
 
   @override
-  String billParticipation(int pct) {
-    return 'Participation $pct %';
+  String billParticipation(String pct) {
+    return 'Participation $pct';
   }
 
   @override
-  String billParticipationMonth(String month, int pct) {
-    return '$month $pct %';
+  String billParticipationMonth(String month, String pct) {
+    return '$month $pct';
   }
 
   @override
@@ -4735,13 +4735,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billSettled => 'Réglé';
 
   @override
-  String billSubscription(int pct) {
-    return 'Abonnement $pct %';
+  String billSubscription(String pct) {
+    return 'Abonnement $pct';
   }
 
   @override
-  String billSubscriptionMonth(String month, int pct) {
-    return 'Abonnement $month $pct %';
+  String billSubscriptionMonth(String month, String pct) {
+    return 'Abonnement $month $pct';
   }
 
   @override
@@ -4763,8 +4763,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get billingBandFee => 'Tarif mensuel';
 
   @override
-  String billingBandFrom(int from) {
-    return 'dès $from %';
+  String billingBandFrom(String from) {
+    return 'dès $from';
   }
 
   @override
@@ -20539,8 +20539,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moneySubmitPayment => 'Soumettre pour confirmation';
 
   @override
-  String moneySubscriptionPct(int pct) {
-    return 'Abonnement $pct %';
+  String moneySubscriptionPct(String pct) {
+    return 'Abonnement $pct';
   }
 
   @override
@@ -20911,11 +20911,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get negotiationPendingBadge => 'en attente de validation';
 
   @override
-  String negotiationPercent(int value) {
-    return '$value %';
-  }
-
-  @override
   String get negotiationProposeHint =>
       'Laissez un champ vide pour garder le tarif. Les conditions passent par la validation avant de s\'appliquer.';
 
@@ -20988,8 +20983,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get newMemberSubscriptionMore => 'Abonnement plus grand';
 
   @override
-  String newMemberSubscriptionValue(int percent) {
-    return '$percent %';
+  String newMemberSubscriptionValue(String percent) {
+    return '$percent';
   }
 
   @override
@@ -21872,11 +21867,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pendingStillWaiting => 'Toujours en attente d’approbation.';
-
-  @override
-  String percentValue(int value) {
-    return '$value %';
-  }
 
   @override
   String get periodReservationsEmpty => 'Aucune réservation ces mois-ci.';
@@ -25004,6 +24994,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalPermission =>
       'Vous n\'avez pas l\'autorisation pour cela. Un propriétaire de l\'espace peut l\'accorder dans Gestion des rôles.';
+
+  @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'Cette installation est un espace personnel : elle n\'héberge aucun espace de travail. Créez l\'espace de travail sur une installation qui en héberge.';
 
   @override
   String get refusalSession =>
@@ -29719,8 +29713,8 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une personne qui demande à rejoindre donne son nom et son adresse e-mail, rien de plus.';
 
   @override
-  String setupNewMembersPreviewStart(int pct, String policy) {
-    return 'Un nouveau membre commence avec un abonnement à $pct % ($policy).';
+  String setupNewMembersPreviewStart(String pct, String policy) {
+    return 'Un nouveau membre commence avec un abonnement à $pct ($policy).';
   }
 
   @override
@@ -30005,13 +29999,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setupPresetNameStandard => 'Standard';
 
   @override
-  String setupPricingBand(int from, int to, String fee, String extra) {
-    return '$from–$to % : $fee par mois, $extra par demi-journée en plus';
+  String setupPricingBand(String from, String to, String fee, String extra) {
+    return '$from–$to : $fee par mois, $extra par demi-journée en plus';
   }
 
   @override
-  String setupPricingLevel(int pct) {
-    return 'Abonnement à $pct %';
+  String setupPricingLevel(String pct) {
+    return 'Abonnement à $pct';
   }
 
   @override
@@ -35902,8 +35896,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get workspaceDangerZone => 'Zone de danger';
 
   @override
-  String workspaceDeskOpacityValue(int percent) {
-    return 'Opacité : $percent %';
+  String workspaceDeskOpacityValue(String percent) {
+    return 'Opacité : $percent';
   }
 
   @override

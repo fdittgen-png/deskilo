@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -236,7 +237,7 @@ class _LevelsPreset extends StatelessWidget {
 
   /// #3283 — a level explained with this month's own open days, never a
   /// universal rule; unread days say so instead of inventing an example.
-  List<Widget> _basis(AppLocalizations l10n) => switch (basis) {
+  List<Widget> _basis(AppLocalizations l10n, AppFormat format) => switch (basis) {
     (openDays: final days?, failed: _) => [
       Text(
         l10n.setupPricingLevelsBasis(days),
@@ -245,7 +246,7 @@ class _LevelsPreset extends StatelessWidget {
       for (final pct in SubscriptionLevels.presets)
         Text(
           l10n.setupPricingLevelIncludes(
-            l10n.percentValue(pct),
+            format.ratePercent(pct),
             includedHalfDays(days, pct),
           ),
           key: ValueKey('setup-pricing-includes-$pct'),
@@ -275,7 +276,7 @@ class _LevelsPreset extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         Text(l10n.setupPricingLevelsBody),
         const SizedBox(height: AppSpacing.sm),
-        ..._basis(l10n),
+        ..._basis(l10n, appFormatOf(context)),
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.xs,
@@ -283,7 +284,7 @@ class _LevelsPreset extends StatelessWidget {
             for (final preset in SubscriptionLevels.presets)
               FilterChip(
                 key: ValueKey('setup-pricing-level-$preset'),
-                label: Text(l10n.percentValue(preset)),
+                label: Text(appFormatOf(context).ratePercent(preset)),
                 selected: presets.contains(preset),
                 onSelected: busy ? null : (on) => onToggle(preset, on: on),
               ),
@@ -332,8 +333,8 @@ class _Catalogue extends StatelessWidget {
           _Line(
             key: ValueKey('setup-pricing-band-${b.toPct}'),
             text: l10n.setupPricingBand(
-              b.fromPct,
-              b.toPct,
+              appFormatOf(context).ratePercent(b.fromPct),
+              appFormatOf(context).ratePercent(b.toPct),
               money(b.feeCents),
               money(b.overageFeeCents),
             ),

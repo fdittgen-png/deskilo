@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -59,13 +60,13 @@ String invoiceRefusalText(
   String? fallback,
 }) {
   if (error is InvoiceIssueDeclined) return l10n.invoiceIssueDeclined;
-  final text = error.toString();
-  if (text.contains('already invoiced')) return l10n.invoiceAlreadyInvoiced;
-  if (text.contains('invoice_feature_disabled')) {
-    return l10n.invoiceFeatureDisabled;
-  }
-  if (text.contains('invoice_essentials_missing')) {
-    return l10n.invoiceEssentialsRefused;
-  }
-  return fallback ?? l10n.workspaceGenericError;
+  // #3811 — read by the server's codes (0396, 0740), never its sentences.
+  final refusal = refusalCodeOf(error);
+  return switch (refusal.code) {
+    'DKI07' => l10n.invoiceAlreadyInvoiced,
+    'DKI01' when refusal.details == 'invoice_feature_disabled' =>
+      l10n.invoiceFeatureDisabled,
+    'DKI01' => l10n.invoiceEssentialsRefused,
+    _ => fallback ?? l10n.workspaceGenericError,
+  };
 }

@@ -69,10 +69,6 @@ const _allowed = <String, (int, String)>{
     1,
     "machine stamps: file names and the raw developer log, never a member-facing date",
   ),
-  'lib/features/reservations/presentation/widgets/message_reserver.dart': (
-    2,
-    "a baked label: the message to a reserver is written in the space's reference language, stored as text",
-  ),
   'lib/features/workspace/presentation/bi_print_strings_l10n.dart': (
     4,
     "a document: the printed analytics in the document's locale",
@@ -137,12 +133,8 @@ const _allowed = <String, (int, String)>{
     1,
     "a machine key: the ISO day a holiday is matched by, never shown",
   ),
-  'lib/features/workspace/presentation/widgets/member_note_composer.dart': (
-    2,
-    "a baked label: the reference a note carries is written in the note's language, stored as text",
-  ),
   'lib/features/workspace/presentation/widgets/note_record_choices.dart': (
-    6,
+    4,
     "a baked label: the reference a note carries is written in the note's language, stored as text",
   ),
   'lib/features/workspace/presentation/workspace_data_report_strings.dart': (

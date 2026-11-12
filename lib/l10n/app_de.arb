@@ -2799,24 +2799,24 @@
   "billOutstanding": "Offen",
   "billOverage": "{extra, plural, one{{extra} zusätzlicher halber Tag} other{{extra} zusätzliche halbe Tage}}",
   "billPackages": "Tagespakete",
-  "billParticipation": "Beitrag {pct} %",
+  "billParticipation": "Beitrag {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2828,16 +2828,16 @@
   "billServices": "Bezogene Leistungen",
   "billServicesTotal": "Summe Leistungen",
   "billSettled": "Beglichen",
-  "billSubscription": "Abo {pct} %",
-  "billSubscriptionMonth": "Abonnement {month} {pct} %",
+  "billSubscription": "Abo {pct}",
+  "billSubscriptionMonth": "Abonnement {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2847,7 +2847,7 @@
   "billingAdvanceDays": "Tage vor Monatsbeginn",
   "billingAllowCustom": "Individuell verhandelten Wert erlauben",
   "billingBandFee": "Monatsgebühr",
-  "billingBandFrom": "ab {from} %",
+  "billingBandFrom": "ab {from}",
   "billingBandOverage": "Mehrverbrauch",
   "billingBandTo": "Bis %",
   "billingBandsInvalid": "Die Bänder müssen ansteigen und bei 100 % enden.",
@@ -12579,7 +12579,7 @@
   "moneyStatementSettled": "Beglichen",
   "moneySubmitExpense": "Ausgabe einreichen",
   "moneySubmitPayment": "Zur Bestätigung einreichen",
-  "moneySubscriptionPct": "Abo {pct} %",
+  "moneySubscriptionPct": "Abo {pct}",
   "moneyUsage": "{used} von {included, plural, one{1 halben Tag} other{{included} halben Tagen}} genutzt",
   "moneyUsageUnlimited": "{used, plural, one{{used} halber Tag genutzt} other{{used} halbe Tage genutzt}}",
   "monthFreeCount": "{free}/{total}",
@@ -12704,7 +12704,6 @@
   "negotiationOverage": "Überschreitung je halben Tag",
   "negotiationPending": "Konditionen warten auf Prüfung.",
   "negotiationPendingBadge": "wartet auf Prüfung",
-  "negotiationPercent": "{value} %",
   "negotiationProposeHint": "Ein leeres Feld behält den Tarif. Die Konditionen durchlaufen die Prüfung, bevor sie gelten.",
   "negotiationProposeTitle": "Preisverhandlung",
   "negotiationProposed": "Konditionen vorgeschlagen — warten auf Prüfung.",
@@ -12775,12 +12774,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -13286,7 +13285,6 @@
   "pendingLastChecked": "Zuletzt geprüft {time}",
   "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Ihre Anfrage bleibt unverändert.",
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
-  "percentValue": "{value} %",
   "periodReservationsEmpty": "Keine Buchung in diesen Monaten.",
   "periodReservationsFailed": "Die Buchungen konnten nicht gelesen werden.",
   "periodReservationsLevel": "Nur auf {level}",
@@ -15222,6 +15220,10 @@
     "description": "#2332: refusalMoneyLocaleLocked"
   },
   "refusalPermission": "Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
+  "refusalPersonalHomeHostsNoWorkspace": "Diese Installation ist ein persönliches Zuhause und beherbergt keinen Arbeitsbereich. Legen Sie den Arbeitsbereich auf einer Installation an, die Arbeitsbereiche beherbergt.",
+  "@refusalPersonalHomeHostsNoWorkspace": {
+    "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
+  },
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
   "@refusalVatRateVersioned": {
@@ -18498,7 +18500,7 @@
   "setupNewMembersNoQuestions": "Keine Fragen: Man tritt mit Name und E-Mail-Adresse bei.",
   "setupNewMembersPreviewJoin": "Bei der Beitrittsanfrage beantwortet die Person:",
   "setupNewMembersPreviewNoQuestions": "Wer beitreten möchte, gibt Name und E-Mail-Adresse an, sonst nichts.",
-  "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} ({policy}).",
   "setupNewMembersQuestions": "Fragen beim Beitritt",
   "setupNewMembersSaveFailed": "Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.",
   "setupNextIndependent": "Sie können dies erledigen, während der frühere Meilenstein wartet.",
@@ -18566,8 +18568,8 @@
   "setupPresetNameComplet": "Komplett",
   "setupPresetNameEssentiel": "Basis",
   "setupPresetNameStandard": "Standard",
-  "setupPricingBand": "{from}–{to} %: {fee} im Monat, {extra} je zusätzlichem Halbtag",
-  "setupPricingLevel": "Mitgliedschaft zu {pct} %",
+  "setupPricingBand": "{from}–{to}: {fee} im Monat, {extra} je zusätzlichem Halbtag",
+  "setupPricingLevel": "Mitgliedschaft zu {pct}",
   "setupPricingLevelIncludes": "{level}: {count, plural, one{1 Halbtag} other{{count} Halbtage}} inklusive",
   "setupPricingLevelsBasis": "Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle, und ein Halbtag über den Anteil eines Mitglieds hinaus wird zum Zusatzpreis seiner Preisstufe berechnet. Diesen Monat ist Ihr Bereich {days, plural, one{1 Tag} other{{days} Tage}} geöffnet:",
   "setupPricingLevelsBasisUnknown": "Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle. Ihre Öffnungstage konnten nicht gelesen werden, daher wird kein Beispiel gezeigt.",
@@ -22141,7 +22143,7 @@
   "workspaceCountryLabel": "Land",
   "workspaceCurrencyLabel": "Währung",
   "workspaceDangerZone": "Gefahrenzone",
-  "workspaceDeskOpacityValue": "Deckkraft: {percent} %",
+  "workspaceDeskOpacityValue": "Deckkraft: {percent}",
   "workspaceDeskTransparencyHelper": "Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.",
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
   "workspaceExcelExport": "Daten exportieren (Excel)",
