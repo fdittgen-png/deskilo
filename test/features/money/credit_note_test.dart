@@ -7,7 +7,6 @@
 
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/screens/invoices.dart' show closeInvoicePage, invoicingRow, openInvoice, pumpInvoices, seededMoney;
@@ -29,8 +28,7 @@ void main() {
     await openInvoice(tester, invoice.id);
     expect(find.byKey(const ValueKey('invoice-remind-action')), findsNothing);
     expect(find.byKey(const ValueKey('invoice-match-action')), findsNothing);
-    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
-    await tester.pumpAndSettle();
+    await closeInvoicePage(tester);
 
     // The To do opens the list of the refunds to pay out; the credit
     // note's page records the refund from its bar.
