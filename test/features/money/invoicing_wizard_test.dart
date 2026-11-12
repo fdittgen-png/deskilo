@@ -244,7 +244,7 @@ void main() {
           'partial': (count: 1, last: now.subtract(const Duration(days: 15))),
         },
         rules: DunningRules.defaults,
-        now: now,
+        now: now, today: _day(now),
       );
       expect(plan.map((i) => '${i.invoice.id}:${i.level}'),
           ['partial:2', 'old:1']);
@@ -490,3 +490,6 @@ void main() {
     expect(find.byType(DeskiloApp), findsOneWidget);
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+/// #3659 -- an instant and the business's calendar day at it, judged
+/// together: elapsed time counts from [now], due days from [today] (the
+/// issuing business's day, never the device's).
+typedef BusinessMoment = ({DateTime now, DateTime today});
+
 /// Adding DAYS to a date, the way a calendar does it (#1231).
 ///
 /// `date.add(Duration(days: 7))` adds 168 hours, and a week containing a

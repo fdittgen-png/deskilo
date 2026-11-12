@@ -11776,6 +11776,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Espaces de développement — données de test, non comptées ci-dessus';
 
   @override
+  String financesDueCalendarUnknown(String date) {
+    return 'Échéance le $date · calendrier de l\'entreprise inconnu';
+  }
+
+  @override
+  String financesDueInZone(String text, String zone) {
+    return '$text · $zone';
+  }
+
+  @override
   String financesDueOn(String date) {
     return 'Échéance le $date';
   }

@@ -14,6 +14,7 @@ import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/domain/level.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/reservation.dart';
+import '../../providers/reservation_providers.dart';
 
 /// Fixed geometry of the month availability calendar. Pinned by test.
 abstract final class MonthGridMetrics {
@@ -117,12 +118,12 @@ class MonthGrid extends ConsumerWidget {
       cells.add(DateTime(last.year, last.month, last.day + 1));
     }
 
-    final today = ref.watch(clockProvider).now();
+    final dateOf = ref.watch(businessDateOfProvider), today = dateOf(ref.watch(clockProvider).now());
     final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
     // One occupancy fold for the whole grid instead of one reservation
     // scan per cell (perf audit).
     final occupied = plansReady
-        ? _occupiedByDay(cells, seatIdsOf)
+        ? _occupiedByDay(cells, seatIdsOf, dateOf)
         : const <DateTime, Set<String>>{};
 
     return Column(
@@ -193,6 +194,7 @@ class MonthGrid extends ConsumerWidget {
   Map<DateTime, Set<String>> _occupiedByDay(
     List<DateTime> cells,
     Iterable<String> Function(Reservation) seatIdsOf,
+    DateTime Function(DateTime instant) dateOf,
   ) {
     if (cells.isEmpty) return const {};
     final first = cells.first;
@@ -204,7 +206,7 @@ class MonthGrid extends ConsumerWidget {
       // unknown target (plan still loading) contributes nothing.
       final seatIds = seatIdsOf(r);
       if (seatIds.isEmpty) continue;
-      var day = DateTime(r.startsAt.year, r.startsAt.month, r.startsAt.day);
+      var day = dateOf(r.startsAt);
       if (day.isBefore(first)) day = first;
       // The +1 day slack keeps the loop bound conservative across time
       // zones; coversRange below is the exact test.

@@ -96,11 +96,12 @@ class _LoggingReservationRepository extends FakeReservationRepository {
     required DateTime from,
     required DateTime to,
   }) {
-    if (from.day == 1 &&
-        from.hour == 0 &&
-        from.minute == 0 &&
-        to == DateTime(from.year, from.month + 1)) {
-      monthFetches.add(from);
+    // #3659 — a month is fetched between the business's midnights.
+    final first = WorkspaceTime.dateOf(from);
+    if (first.day == 1 &&
+        WorkspaceTime.wall(from) == first &&
+        WorkspaceTime.dateOf(to) == DateTime(first.year, first.month + 1)) {
+      monthFetches.add(first);
     }
     return super.fetchWindow(workspaceId, from: from, to: to);
   }

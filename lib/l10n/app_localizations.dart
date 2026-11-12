@@ -19107,6 +19107,18 @@ abstract class AppLocalizations {
   /// **'Development spaces — test data, not counted above'**
   String get financesDevSection;
 
+  /// Me › Finances: the due line when the business's time zone is unknown, so lateness cannot be judged (#3659)
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date} · the business\'s calendar is unknown'**
+  String financesDueCalendarUnknown(String date);
+
+  /// Me › Finances: an invoice's due line followed by its business's time zone, shown when that zone differs from the device's (#3659)
+  ///
+  /// In en, this message translates to:
+  /// **'{text} · {zone}'**
+  String financesDueInZone(String text, String zone);
+
   /// Me › Finances
   ///
   /// In en, this message translates to:

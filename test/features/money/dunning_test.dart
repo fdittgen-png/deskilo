@@ -31,7 +31,7 @@ void main() {
           reminderCount: 0,
           lastReminderAt: null,
           rules: rules,
-          now: issued.add(const Duration(days: 13)),
+          at: (now: issued.add(const Duration(days: 13)), today: _day(issued.add(const Duration(days: 13)))),
         ),
         isNull,
       );
@@ -44,7 +44,7 @@ void main() {
           reminderCount: 0,
           lastReminderAt: null,
           rules: rules,
-          now: issued.add(const Duration(days: 14)),
+          at: (now: issued.add(const Duration(days: 14)), today: _day(issued.add(const Duration(days: 14)))),
         ),
         1,
       );
@@ -58,7 +58,7 @@ void main() {
           reminderCount: 1,
           lastReminderAt: last,
           rules: rules,
-          now: last.add(const Duration(days: 6)),
+          at: (now: last.add(const Duration(days: 6)), today: _day(last.add(const Duration(days: 6)))),
         ),
         isNull,
       );
@@ -68,7 +68,7 @@ void main() {
           reminderCount: 1,
           lastReminderAt: last,
           rules: rules,
-          now: last.add(const Duration(days: 7)),
+          at: (now: last.add(const Duration(days: 7)), today: _day(last.add(const Duration(days: 7)))),
         ),
         2,
       );
@@ -82,7 +82,7 @@ void main() {
           reminderCount: 2,
           lastReminderAt: issued.add(const Duration(days: 60)),
           rules: rules,
-          now: issued.add(const Duration(days: 365)),
+          at: (now: issued.add(const Duration(days: 365)), today: _day(issued.add(const Duration(days: 365)))),
         ),
         isNull,
       );
@@ -204,3 +204,6 @@ void main() {
     expect(money.pdfTemplate.invoiceBands.hasBands, isFalse);
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

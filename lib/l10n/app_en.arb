@@ -15305,6 +15305,27 @@
   "@financesDevSection": {
     "description": "Shown as a text in my finances parts (money)."
   },
+  "financesDueCalendarUnknown": "Due {date} · the business's calendar is unknown",
+  "@financesDueCalendarUnknown": {
+    "description": "Me › Finances: the due line when the business's time zone is unknown, so lateness cannot be judged (#3659)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "financesDueInZone": "{text} · {zone}",
+  "@financesDueInZone": {
+    "description": "Me › Finances: an invoice's due line followed by its business's time zone, shown when that zone differs from the device's (#3659)",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
   "financesDueOn": "Due {date}",
   "@financesDueOn": {
     "description": "Me › Finances",
