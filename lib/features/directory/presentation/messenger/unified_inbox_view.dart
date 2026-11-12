@@ -335,6 +335,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
         id: 'pin',
         label: pinned ? l10n.conversationUnpin : l10n.conversationPin,
         icon: Icons.push_pin_outlined,
+        // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
         onSelected: () => apply('pin'),
       ),
       if (flags != null) ...[
@@ -346,6 +347,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
           icon: flags.muted
               ? Icons.notifications_active_outlined
               : Icons.notifications_off_outlined,
+          // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
           onSelected: () => apply('mute'),
         ),
         if (entry.unread == 0)
@@ -353,6 +355,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
             id: 'unread',
             label: l10n.conversationMarkUnread,
             icon: Icons.mark_chat_unread_outlined,
+            // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
             onSelected: () => apply('unread'),
           ),
       ],
@@ -362,6 +365,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
             ? l10n.conversationUnarchive
             : l10n.conversationArchive,
         icon: Icons.archive_outlined,
+        // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
         onSelected: () => apply('archive'),
       ),
     ];

@@ -107,6 +107,7 @@ class ConversationBubble extends ConsumerWidget {
           id: 'quote',
           label: l10n.memberNoteQuote,
           icon: Icons.format_quote_outlined,
+          // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
           onSelected: () => quote(note),
         ),
       RowAction(
@@ -114,6 +115,7 @@ class ConversationBubble extends ConsumerWidget {
         label: l10n.memberNoteDelete,
         icon: Icons.delete_outline,
         destructive: true,
+        // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
         onSelected: () => deleteMemberNoteGuarded(context, ref, note),
       ),
       if (more != null)
@@ -121,6 +123,7 @@ class ConversationBubble extends ConsumerWidget {
           id: 'actions',
           label: l10n.messengerMessageActions,
           icon: Icons.more_horiz,
+          // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
           onSelected: more,
         ),
     ];
@@ -134,7 +137,7 @@ class ConversationBubble extends ConsumerWidget {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.messageGestures);
     final actions = _actions(context, ref, gestures: gestures);
-    final bubble = _bubble(context, ref, theme, actions);
+    final bubble = _withMenu(context, actions, _bubble(context, ref, theme));
     if (!gestures) return bubble;
     RowAction? action(String id) =>
         actions.where((a) => a.id == id).firstOrNull;
@@ -205,14 +208,35 @@ class ConversationBubble extends ConsumerWidget {
         child: Icon(icon, color: color),
       );
 
-  Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme,
-      List<RowAction> actions) {
+  /// #1824 — the ⋯ sits BESIDE the bubble, never inside it: the bubble's
+  /// long press must not land on a button's tooltip. It shows at rest
+  /// where the forward/lock sheet is offered, on hover and focus otherwise.
+  Widget _withMenu(
+          BuildContext context, List<RowAction> actions, Widget core) =>
+      Align(
+        alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+        child: RowMenu(
+          actions: actions,
+          keyPrefix: 'bubble-menu-${note.id}',
+          buttonKey: ValueKey('bubble-actions-${note.id}'),
+          tooltip: context.l10n.messengerMessageActions,
+          button: onActions != null
+              ? RowMenuButton.always
+              : RowMenuButton.onHover,
+          buttonFirst: mine,
+          expand: false,
+          focusable: true,
+          child: core,
+        ),
+      );
+
+  Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
     final l10n = context.l10n;
     final when = timeOnly
         ? ref.watch(appFormatProvider).time(note.createdAt)
         : appFormatOf(context).datesAndTime(DateShape.monthDay, note.createdAt);
     final split = splitLeadingQuote(note.body);
-    final core = KeyedSubtree(
+    return KeyedSubtree(
         key: ValueKey('bubble-${note.id}'),
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
@@ -320,26 +344,6 @@ class ConversationBubble extends ConsumerWidget {
           ),
         ),
       );
-    // #1824 — the ⋯ sits BESIDE the bubble, never inside it: the
-    // bubble's long press must not land on a button's tooltip. It shows
-    // at rest where the forward/lock sheet is offered, on hover and focus
-    // otherwise.
-    return Align(
-      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
-      child: RowMenu(
-        actions: actions,
-        keyPrefix: 'bubble-menu-${note.id}',
-        buttonKey: ValueKey('bubble-actions-${note.id}'),
-        tooltip: l10n.messengerMessageActions,
-        button: onActions != null
-            ? RowMenuButton.always
-            : RowMenuButton.onHover,
-        buttonFirst: mine,
-        expand: false,
-        focusable: true,
-        child: core,
-      ),
-    );
   }
 }
 

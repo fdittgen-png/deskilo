@@ -51,6 +51,41 @@ class NoteRow extends ConsumerWidget {
   String? _counterpartId(bool sentByMe) =>
       sentByMe ? note.toMemberId : note.fromMemberId;
 
+  /// The row's reply and delete, once: the menu and the swipes call
+  /// these very actions (#3611).
+  List<RowAction> _actions(
+    BuildContext context,
+    WidgetRef ref, {
+    required bool sentByMe,
+    required bool canReply,
+    required bool canDelete,
+  }) {
+    final l10n = context.l10n;
+    final partner = _counterpartId(sentByMe);
+    return [
+      if (canReply && partner != null)
+        RowAction(
+          id: 'reply',
+          label: l10n.memberNoteReply,
+          icon: Icons.reply,
+          // Replying = opening the conversation (refactor): the whole
+          // exchange in view beats a blank dialog.
+          // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
+          onSelected: () =>
+              openDirectConversation(context, ref, memberId: partner),
+        ),
+      if (canDelete)
+        RowAction(
+          id: 'delete',
+          label: l10n.memberNoteDelete,
+          icon: Icons.delete_outline,
+          destructive: true,
+          // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
+          onSelected: () => deleteMemberNoteGuarded(context, ref, note),
+        ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -138,27 +173,8 @@ class NoteRow extends ConsumerWidget {
         ));
       },
     );
-    final partner = _counterpartId(sentByMe);
-    final actions = [
-      if (canReply && partner != null)
-        RowAction(
-          id: 'reply',
-          label: l10n.memberNoteReply,
-          icon: Icons.reply,
-          // Replying = opening the conversation (refactor): the whole
-          // exchange in view beats a blank dialog.
-          onSelected: () =>
-              openDirectConversation(context, ref, memberId: partner),
-        ),
-      if (canDelete)
-        RowAction(
-          id: 'delete',
-          label: l10n.memberNoteDelete,
-          icon: Icons.delete_outline,
-          destructive: true,
-          onSelected: () => deleteMemberNoteGuarded(context, ref, note),
-        ),
-    ];
+    final actions = _actions(context, ref,
+        sentByMe: sentByMe, canReply: canReply, canDelete: canDelete);
     RowAction? action(String id) =>
         actions.where((a) => a.id == id).firstOrNull;
     // parity: note-menu-

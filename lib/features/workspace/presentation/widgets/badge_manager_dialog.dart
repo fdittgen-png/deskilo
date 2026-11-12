@@ -17,7 +17,6 @@ import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/row_menu.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/batch_cover.dart';
 import '../../domain/badge_pdf.dart';
@@ -26,6 +25,7 @@ import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import 'badge_pin_review_notice.dart';
 import 'nfc_tap_dialog.dart';
+import 'revoked_badge_row.dart';
 
 /// One member's badge manager (0043/0046, extracted for the 0053
 /// self-service pass): the badge list with revoke, the one-time QR with
@@ -335,12 +335,9 @@ class _BadgeManagerDialogState
   }
 
   /// One badge row: live badges keep the Revoke button; revoked ones
-  /// are deleted for good (field request — a badge history piles up
-  /// otherwise) by a swipe RIGHT or from the row's menu (#3611: ⋯, a
-  /// right click, a long press), both through the one [RowAction].
+  /// are deleted for good from a [RevokedBadgeRow].
   Widget _badgeRow(BuildContext context, MemberBadge badge) {
     final l10n = widget.l10n;
-    final colorScheme = Theme.of(context).colorScheme;
     final row = ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Icon(
@@ -385,44 +382,13 @@ class _BadgeManagerDialogState
         ),
       ]);
     }
-    final delete = RowAction(
-      id: 'delete',
-      label: l10n.commonDelete,
-      icon: Icons.delete_outline,
-      destructive: true,
-      onSelected: () async {
+    return RevokedBadgeRow(
+      badgeId: badge.id,
+      onDelete: () async {
         if (!await _delete(badge) || !mounted) return;
         setState(() => _badges?.removeWhere((b) => b.id == badge.id));
       },
-    );
-    // parity: badge-menu-
-    return Dismissible(
-      key: ValueKey('badge-dismiss-${badge.id}'),
-      direction: DismissDirection.startToEnd,
-      background: ColoredBox(
-        color: colorScheme.errorContainer,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Icon(
-              Icons.delete_outline,
-              color: colorScheme.onErrorContainer,
-            ),
-          ),
-        ),
-      ),
-      // The row leaves on the rebuild the action makes; the swipe itself
-      // never removes it, so a failed delete cannot lie about it.
-      confirmDismiss: (_) async {
-        await delete.onSelected();
-        return false;
-      },
-      child: RowMenu(
-        actions: [delete],
-        keyPrefix: 'badge-menu-${badge.id}',
-        child: row,
-      ),
+      child: row,
     );
   }
 
