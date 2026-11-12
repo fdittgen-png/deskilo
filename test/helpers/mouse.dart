@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3611 — driving a screen with a mouse alone: connect one, hover, click
-// with the secondary button.
+// with the secondary button. Connect the mouse BEFORE the first click: a
+// click adds its own mouse, and connecting a second one after it trips
+// the mouse tracker.
 import 'package:flutter/gestures.dart';
 import 'package:flutter_test/flutter_test.dart';
 
