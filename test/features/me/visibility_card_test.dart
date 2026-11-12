@@ -153,7 +153,7 @@ void main() {
     await _choose(tester, VisibilityField.contactChannels,
         VisibilityAudience.chosenSpaces, spaces: [me.refOf('ws-2')]);
     await _choose(tester, VisibilityField.reachability, VisibilityAudience.nobody);
-    expect(find.text('Members of 1 chosen space'), findsOneWidget);
+    expect(find.text('Members of 1 chosen place'), findsOneWidget);
 
     current = 'user-2';
     final colleague = await me.visibleAccount('user-1');

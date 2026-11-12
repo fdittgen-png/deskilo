@@ -196,7 +196,7 @@ void main() {
     await _settleLookups(tester, 1);
     expect(
       find.text(
-        '2 workspaces could not be placed on the map; their cards are below.',
+        '2 places could not be put on the map; their cards are below.',
       ),
       findsOneWidget,
     );
@@ -211,7 +211,7 @@ void main() {
     expect(find.text('1 could not be looked up.'), findsNothing);
     expect(
       find.text(
-        '1 workspace could not be placed on the map; its card is below.',
+        '1 place could not be put on the map; its card is below.',
       ),
       findsOneWidget,
       reason: 'only the place without an address is left',
@@ -267,7 +267,7 @@ void main() {
     expect(distinct.mostInFlight, 1);
     expect(
       find.text(
-        '5 workspaces could not be placed on the map; their cards are below.',
+        '5 places could not be put on the map; their cards are below.',
       ),
       findsOneWidget,
       reason: 'the five without an address, none deferred',

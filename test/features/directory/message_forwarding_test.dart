@@ -271,7 +271,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('forward-target-c-bob')));
     await tester.pumpAndSettle();
-    expect(find.text('This space does not allow forwarding its messages.'),
+    expect(find.text('This business does not allow forwarding its messages.'),
         findsOneWidget);
     expect(repo.forwards, isEmpty);
   });

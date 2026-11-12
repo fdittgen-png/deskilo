@@ -267,7 +267,7 @@ void main() {
         find.descendant(
           of: atelierHere,
           matching: find.text(
-            'Same name as another space · on this personal home',
+            'Same name as another place · on this personal home',
           ),
         ),
         findsOneWidget,
@@ -278,7 +278,7 @@ void main() {
           of: atelierAway,
           matching: find.text(
             'Verification unavailable · '
-            'Same name as another space · on server 1a2b3c4d',
+            'Same name as another place · on server 1a2b3c4d',
           ),
         ),
         findsOneWidget,
@@ -288,7 +288,7 @@ void main() {
       expect(
         find.descendant(
           of: unnamed,
-          matching: find.text('A workspace on another server'),
+          matching: find.text('A place on another server'),
         ),
         findsOneWidget,
       );

@@ -78,7 +78,7 @@ void main() {
       expect(
         find.descendant(
           of: _key('visibility-field-contact_channels'),
-          matching: find.text('Members of 1 chosen space'),
+          matching: find.text('Members of 1 chosen place'),
         ),
         findsOneWidget,
       );
@@ -98,9 +98,9 @@ void main() {
 
       expect(_key('visibility-conflict'), findsOneWidget);
       expect(find.text('This setting changed meanwhile'), findsOneWidget);
-      expect(find.text('Saved now: Members of my spaces'), findsOneWidget);
+      expect(find.text('Saved now: Members of my places'), findsOneWidget);
       expect(
-        find.text('Your change: Members of 1 chosen space'),
+        find.text('Your change: Members of 1 chosen place'),
         findsOneWidget,
       );
       expect(
@@ -120,7 +120,7 @@ void main() {
       expect(
         find.descendant(
           of: _key('visibility-field-contact_channels'),
-          matching: find.text('Members of my spaces'),
+          matching: find.text('Members of my places'),
         ),
         findsOneWidget,
         reason: 'the card rereads what is saved now',
