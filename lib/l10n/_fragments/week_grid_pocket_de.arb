@@ -1,0 +1,3 @@
+{
+  "weekHalfSlotLabel": "{seat}, {day}, {half, select, morning{Vormittag} other{Nachmittag}}, {state, select, free{frei} mine{Ihre Buchung} taken{belegt} blocked{gesperrt} other{geschlossen}}"
+}

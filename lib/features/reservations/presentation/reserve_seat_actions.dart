@@ -40,6 +40,7 @@ import '../domain/own_booking_removal.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
 import '../domain/series_preview.dart';
+import '../domain/upcoming_on_seat.dart';
 import '../providers/default_period_controller.dart';
 import '../providers/reservation_providers.dart';
 import 'booking_feedback.dart';
@@ -230,6 +231,12 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             replace: true,
           );
         }
+      case SeatState.free
+          when isLive &&
+              _myUpcoming(seat, reservations, myMemberId) != null:
+        // #3817 — free now, booked by this person for later today: their
+        // booking opens from its seat.
+        await _mySeatSheet(seat, _myUpcoming(seat, reservations, myMemberId)!);
       case SeatState.free:
         // #2016 — a live free-seat tap OFFERS the walk-up; the sheet
         // opens on Reserve with its period editable, and checking in
@@ -253,6 +260,17 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         await _othersBookingTap(seat, other, state);
     }
   }
+
+  Reservation? _myUpcoming(
+    Seat seat,
+    List<Reservation> reservations,
+    String? myMemberId,
+  ) => myUpcomingOnSeat(
+    reservations,
+    seatId: seat.id,
+    memberId: myMemberId,
+    now: ref.read(clockProvider).now(),
+  );
 
   /// Someone else's booking on [seat] — see [_openOthersBooking].
   Future<void> _othersBookingTap(
