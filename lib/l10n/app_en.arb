@@ -19245,6 +19245,15 @@
   "@invoiceLineAdjustment": {
     "description": "Fallback label of an adjustment position without a description"
   },
+  "invoiceLineCancelled": "Cancelled: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceMatchAction": "Mark as paid",
   "@invoiceMatchAction": {
     "description": "Open card button + match dialog title/confirm (0067)"

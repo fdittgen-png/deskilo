@@ -55,6 +55,7 @@ class ReportStrings {
     this.participationMonth = _participationMonth,
     this.subscriptionMonth = _subscriptionMonth,
     this.nameDashLabel = '{name} — {label}',
+    this.cancelledLine = _cancelledLine,
   });
 
   /// #3652 -- the label of a whole-bookable place on a statement ("Desk 4 —
@@ -125,6 +126,10 @@ class ReportStrings {
       };
 
   static String _overage(int extra) => '$extra extra half-days';
+
+  /// #3809 — a charge taken back, printed from its frozen facts.
+  final String Function(String what) cancelledLine;
+  static String _cancelledLine(String what) => 'Cancelled: $what';
   static String _participation(int pct) => 'Participation $pct%';
   static String _subscription(int pct) => 'Subscription $pct%';
   static String _participationMonth(String month, int pct) => '$month $pct%';
