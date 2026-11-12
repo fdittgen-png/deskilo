@@ -124,9 +124,14 @@ File? _materialIcons() {
 }
 
 /// With SHEET=1, loads Roboto and the icon font so a sheet shows real text
-/// and icons instead of boxes. Without it, nothing happens.
-Future<void> loadSheetFonts() async {
-  if (Platform.environment['SHEET'] != '1') return;
+/// and icons instead of boxes. Without it (and without [always]), nothing
+/// happens.
+///
+/// [always]: measure with the real fonts even when no sheet is written —
+/// the desk guards read text widths (a word cut across lines), which the
+/// test font does not have.
+Future<void> loadSheetFonts({bool always = false}) async {
+  if (!always && Platform.environment['SHEET'] != '1') return;
   final icons = _materialIcons();
   if (icons != null) {
     await (FontLoader(
@@ -243,6 +248,25 @@ Set<String> deskGuardProblems(
     final lines = painter.computeLineMetrics();
     painter.dispose();
     if (lines.length < 2) continue;
+    // In a table row, one word over two lines is cut: a date or a column
+    // title broken inside itself. Read from the paragraph's own layout.
+    final plain = box.text.toPlainText().trim();
+    final inRow = rows.any(
+      (r) => _within(box.localToGlobal(Offset.zero) & box.size, r),
+    );
+    if (inRow && plain.isNotEmpty && !plain.contains(RegExp(r'\s'))) {
+      final tops = {
+        for (final b in box.getBoxesForSelection(
+          TextSelection(baseOffset: 0, extentOffset: plain.length),
+        ))
+          b.top.round(),
+      };
+      if (tops.length > 1) {
+        problems.add('a word cut across lines');
+        note('cut word: "$plain"');
+      }
+      continue;
+    }
     var widest = 0.0;
     for (final line in lines) {
       if (line.width > widest) widest = line.width;
