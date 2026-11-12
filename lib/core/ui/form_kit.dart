@@ -28,8 +28,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../theme/app_spacing.dart';
-import 'app_sheet.dart';
+import 'adaptive/task_surface.dart';
 import 'form_error_summary.dart';
+import 'form_submit_keys.dart';
 import 'inline_banner.dart';
 
 export 'amount_field.dart';
@@ -351,6 +352,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
     final problem = await widget.onSubmit();
     if (!mounted) return;
     if (problem == null) {
+      TaskSession.maybeOf(context)?.completed();
       Navigator.of(context).pop(true);
       return;
     }
@@ -360,8 +362,16 @@ class _AppFormSheetState extends State<AppFormSheet> {
     });
   }
 
+  void _refresh() {
+    TaskSession.maybeOf(context)?.markChanged();
+    setState(() {});
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      FormSubmitKeys(onSubmit: _submit, child: _body(context));
+
+  Widget _body(BuildContext context) {
     final media = MediaQuery.of(context);
     // The keyboard when it is up, otherwise the system navigation bar.
     final bottom = media.viewInsets.bottom > 0
@@ -403,7 +413,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: widget.builder(context, () => setState(() {})),
+                      children: widget.builder(context, _refresh),
                     ),
                   ),
                 ],
@@ -436,7 +446,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
                       key: const ValueKey('form-sheet-cancel'),
                       onPressed: _saving
                           ? null
-                          : () => Navigator.of(context).pop(false),
+                          : () => Navigator.of(context).maybePop(false),
                       child: Text(
                         MaterialLocalizations.of(context).cancelButtonLabel,
                       ),
@@ -463,12 +473,12 @@ class _AppFormSheetState extends State<AppFormSheet> {
   }
 }
 
-/// Opens an [AppFormSheet]; true when it was submitted successfully.
+/// Opens an [AppFormSheet] as a standard task (a sheet on a phone, a side
+/// panel at the desk, #3608); true when it was submitted successfully.
 Future<bool> showAppFormSheet(BuildContext context, AppFormSheet sheet) async =>
-    await showAppSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
+    await showTask<bool>(
+      context,
+      size: TaskSize.standard,
       builder: (_) => sheet,
     ) ??
     false;

@@ -33,7 +33,7 @@ class UnsavedChangesGuard extends StatelessWidget {
     onPopInvokedWithResult: (didPop, result) async {
       if (didPop) return;
       final navigator = Navigator.of(context);
-      if (await _confirmDiscardChanges(context) && navigator.mounted) {
+      if (await confirmDiscardChanges(context) && navigator.mounted) {
         navigator.pop(result);
       }
     },
@@ -54,7 +54,7 @@ class UnsavedChangesGuard extends StatelessWidget {
 
 /// The question: true when the person chose to leave and drop the
 /// changes, false on "Keep editing" or when the question was dismissed.
-Future<bool> _confirmDiscardChanges(BuildContext context) async {
+Future<bool> confirmDiscardChanges(BuildContext context) async {
   final l10n = context.l10n;
   final leave = await showDialog<bool>(
     context: context,
