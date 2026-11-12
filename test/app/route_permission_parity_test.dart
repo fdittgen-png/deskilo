@@ -58,6 +58,7 @@ void main() {
   const cases = <String, Map<String, bool>>{
     '/services': {'services': true},
     '/nfc-config': {'nfcBadges': true},
+    '/kiosk-devices': {'kioskMode': true, 'kioskEnrolment': true},
   };
 
   for (final entry in cases.entries) {

@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
+import '../../features/kiosk/presentation/screens/kiosk_devices_screen.dart';
 import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
@@ -244,6 +245,19 @@ List<RouteBase> _configurationRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const NfcConfigScreen(),
+    ),
+    // #3675 — the business's kiosks: this device's enrolment, where badge
+    // sign-in works, and the devices with their revoke.
+    GoRoute(
+      path: '/kiosk-devices',
+      redirect: env.guard(
+        const RouteAccess(
+          permission: WorkspacePermission.operateKiosk,
+          features: [WorkspaceFeature.kioskEnrolment],
+          bypass: RoleBypass.owner,
+        ),
+      ),
+      builder: (context, state) => const KioskDevicesScreen(),
     ),
     // The workspace's manual payment methods (#486) — owner-only.
     GoRoute(

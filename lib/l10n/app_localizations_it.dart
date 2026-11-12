@@ -16759,7 +16759,108 @@ class AppLocalizationsIt extends AppLocalizations {
       'Lo spazio è chiuso oggi — check-in e prenotazioni non sono possibili.';
 
   @override
+  String kioskDeviceEnrolledBy(String name, String date) {
+    return 'Registrato da $name il $date';
+  }
+
+  @override
+  String kioskDeviceEnrolledOn(String date) {
+    return 'Registrato il $date';
+  }
+
+  @override
+  String kioskDeviceLastUsed(String date) {
+    return 'Ultimo uso il $date';
+  }
+
+  @override
+  String get kioskDeviceNeverUsed => 'Non ancora usato';
+
+  @override
+  String get kioskDeviceRevoke => 'Revoca';
+
+  @override
+  String kioskDeviceRevokeConfirm(String name) {
+    return 'Revocare «$name»? Smette subito di essere un chiosco di questa azienda; per usarlo di nuovo, lo registri di nuovo.';
+  }
+
+  @override
+  String kioskDeviceRevokeDone(String name) {
+    return '«$name» è revocato.';
+  }
+
+  @override
+  String get kioskDeviceRevokeFailed =>
+      'Non è stato possibile revocare il dispositivo. Riprovi.';
+
+  @override
+  String kioskDeviceRevokedOn(String date) {
+    return 'Revocato il $date';
+  }
+
+  @override
+  String get kioskDeviceThisOne => 'Questo dispositivo';
+
+  @override
+  String get kioskDevicesEmpty => 'Nessun dispositivo è ancora registrato.';
+
+  @override
+  String get kioskDevicesEntryHint =>
+      'Registri questo dispositivo, veda e revochi i chioschi dell’azienda';
+
+  @override
+  String get kioskDevicesIntro =>
+      'I dispositivi che questa azienda usa come chioschi. L’accesso con badge vi saluta ogni persona per nome e può essere limitato a essi.';
+
+  @override
+  String get kioskDevicesListTitle => 'Dispositivi registrati';
+
+  @override
+  String get kioskDevicesTitle => 'Dispositivi chiosco';
+
+  @override
   String get kioskDone => 'Fatto — è tutto a posto.';
+
+  @override
+  String get kioskEnrolAction => 'Registrare questo dispositivo';
+
+  @override
+  String get kioskEnrolDone =>
+      'Questo dispositivo è ora un chiosco dell’azienda.';
+
+  @override
+  String get kioskEnrolFailed =>
+      'Non è stato possibile registrare questo dispositivo. Riprovi.';
+
+  @override
+  String get kioskEnrolNameHint => 'Per esempio: tablet della reception';
+
+  @override
+  String get kioskEnrolNameLabel => 'Nome di questo dispositivo';
+
+  @override
+  String get kioskEnrolTrust =>
+      'La fiducia va al dispositivo stesso: una volta registrato, chiunque si trovi davanti può usare l’accesso con badge come a un chiosco di questa azienda. Se il dispositivo viene perso o ceduto, lo revochi qui sotto.';
+
+  @override
+  String get kioskEnrolTrustBrowser =>
+      'In un browser, la registrazione è conservata nella memoria di questo browser su questo computer. Cancellare i dati del browser la rimuove; revocarla qui è il rimedio per un dispositivo perso.';
+
+  @override
+  String kioskEnrolled(String name) {
+    return 'Questo dispositivo è registrato come «$name».';
+  }
+
+  @override
+  String get kioskEnrolledElsewhere =>
+      'Questo dispositivo è registrato come chiosco di un’altra azienda. Registrarlo qui sostituisce quella registrazione su questo dispositivo; l’altra azienda conserva il suo registro finché non lo revoca.';
+
+  @override
+  String get kioskForgetConfirm =>
+      'Questo dispositivo smette di essere un chiosco qui. L’azienda conserva il suo registro finché non viene revocato.';
+
+  @override
+  String get kioskForgetHere => 'Dimenticare su questo dispositivo';
 
   @override
   String get kioskGateBody =>
@@ -16826,7 +16927,34 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kioskScanQr => 'Scansiona il badge QR';
 
   @override
+  String get kioskSigninWhereAnyDevice => 'Qualsiasi dispositivo';
+
+  @override
+  String get kioskSigninWhereFailed =>
+      'Non è stato possibile salvare l’impostazione. Riprovi.';
+
+  @override
+  String get kioskSigninWhereKiosks => 'Solo chioschi registrati';
+
+  @override
+  String get kioskSigninWhereNoDevice =>
+      'Nessuno può accedere con badge finché non viene registrato un chiosco di questa azienda. Passare comunque a solo chioschi registrati?';
+
+  @override
+  String get kioskSigninWhereNoDeviceTitle => 'Nessun chiosco registrato';
+
+  @override
+  String get kioskSigninWhereRecommend =>
+      'L’accesso con badge funziona su qualsiasi dispositivo: un badge e il suo PIN accedono da ovunque. Con solo chioschi registrati, solo i chioschi di questa azienda consentono l’accesso con badge e salutano ogni persona per nome, e un badge provato altrove non viene mai bloccato al suo chiosco.';
+
+  @override
+  String get kioskSigninWhereSwitch => 'Passa';
+
+  @override
   String get kioskTapHint => 'Tocchi un posto per fare check-in';
+
+  @override
+  String get kioskThisDeviceTitle => 'Questo dispositivo';
 
   @override
   String get kitActionBusy => 'In corso…';

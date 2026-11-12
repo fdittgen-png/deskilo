@@ -168,6 +168,16 @@ List<Widget> workspaceSettingsTiles(
         title: Text(l10n.nfcConfigTitle),
         onTap: () => context.push('/nfc-config'),
       ),
+    // #3675 — the business's kiosks and where badge sign-in works.
+    if (perms.contains(WorkspacePermission.operateKiosk) &&
+        features.contains(WorkspaceFeature.kioskEnrolment))
+      ListTile(
+        key: const ValueKey('settings-workspace-sections-kiosk-devices'),
+        leading: const Icon(Icons.tablet_android_outlined),
+        title: Text(l10n.kioskDevicesTitle),
+        subtitle: Text(l10n.kioskDevicesEntryHint),
+        onTap: () => context.push('/kiosk-devices'),
+      ),
     // #945 — the workspace's sites, for those who manage them.
     if (perms.contains(WorkspacePermission.manageSites) &&
         features.contains(WorkspaceFeature.multiSite))
