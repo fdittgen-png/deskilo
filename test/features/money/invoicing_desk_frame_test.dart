@@ -12,7 +12,6 @@
 // not fit side by side, the pane stands over the list's end.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
-import 'package:deskilo/core/storage/prefs_stores.dart';
 import 'package:deskilo/core/ui/kit/list_detail_scaffold.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_home_screen.dart';
@@ -117,7 +116,7 @@ void main() {
               height: 600,
               child: ListDetailScaffold(
                 id: 'fit',
-                paneStore: const PrefsStringStore('list_detail_pane_fit'),
+                paneStore: InMemoryPaneWidthStore(),
                 listMin: kInvoicingListMinWidth,
                 list: const SizedBox.expand(key: ValueKey('list')),
                 selected: 'a',

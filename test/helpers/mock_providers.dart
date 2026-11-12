@@ -73,6 +73,7 @@ import 'package:deskilo/core/storage/entry_intent_store.dart';
 import 'package:deskilo/core/storage/help_hint_store.dart';
 import 'package:deskilo/core/storage/note_seen_store.dart';
 import 'package:deskilo/core/storage/notification_filter_store.dart';
+import 'package:deskilo/core/storage/pane_width_store.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/core/time/clock.dart';
@@ -597,6 +598,8 @@ List<Override> standardTestOverrides({
     // #3603 — the desk's sidebar or rail, per device: in memory per test.
     deskRailCollapsedStoreProvider
         .overrideWithValue(deskRailCollapsed ?? InMemoryShellFlagStore()),
+    // #3607 — the record pane's width per list, in memory.
+    paneWidthStoreProvider.overrideWithValue(InMemoryPaneWidthStore()),
     ..._profileOverrides(profile ?? FakeProfileRepository()),
     nfcUidReaderProvider.overrideWithValue(nfc ?? FakeNfcUidReader()),
     frontCameraStoreProvider

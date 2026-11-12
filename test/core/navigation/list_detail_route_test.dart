@@ -4,8 +4,8 @@
 // link to A → Close; a reload with A open; A → B → C by the arrow keys →
 // Back; on a large window (the pane) and on a phone (a page). The list's
 // state (its filter) survives every one of them.
+import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/navigation/list_detail_route.dart';
-import 'package:deskilo/core/storage/prefs_stores.dart';
 import 'package:deskilo/core/ui/kit/list_detail_scaffold.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class _ListState extends State<_List> {
   Widget build(BuildContext context) => Scaffold(
     body: ListDetailScaffold(
       id: 'test',
-      paneStore: const PrefsStringStore('list_detail_pane_test'),
+      paneStore: InMemoryPaneWidthStore(),
       selected: widget.selected,
       onClose: () => closeRecord(context, '/x'),
       order: () => _ids,

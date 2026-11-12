@@ -21,6 +21,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/storage/pane_width_store.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -147,6 +148,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             listPath: _invoicesPath,
             builder: (context, id) => ListDetailScaffold(
               id: 'invoices',
+              paneStore: ref.watch(paneWidthStoreProvider),
               listMin: kInvoicingListMinWidth,
               list: home,
               selected: recordBesideList(context) ? id : null,

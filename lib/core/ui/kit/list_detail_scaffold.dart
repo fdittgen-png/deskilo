@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../l10n/context_l10n.dart';
-import '../../storage/prefs_stores.dart';
+import '../../storage/pane_width_store.dart';
 
 /// The pane's widths.
 abstract final class ListDetailMetrics {
@@ -40,7 +40,7 @@ class ListDetailScaffold extends StatefulWidget {
     required this.selected,
     required this.detail,
     required this.onClose,
-    this.paneStore,
+    required this.paneStore,
     this.listMin = ListDetailMetrics.listMin,
     this.order,
     this.onMove,
@@ -58,8 +58,8 @@ class ListDetailScaffold extends StatefulWidget {
   /// Closes the pane: the route goes back to the list's own address.
   final VoidCallback onClose;
 
-  /// Where the pane's width is kept; by default the device's preferences.
-  final PrefsStringStore? paneStore;
+  /// Where the pane's width is kept (`paneWidthStoreProvider` in the app).
+  final PaneWidthStore paneStore;
 
   /// The narrowest the list keeps beside the pane: its table without a
   /// word cut. Narrower, the pane stands over the list's end.
@@ -86,9 +86,6 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
   /// still hears Escape and the arrow keys.
   final _own = FocusNode(debugLabel: 'list detail', skipTraversal: true);
 
-  PrefsStringStore get _store =>
-      widget.paneStore ?? PrefsStringStore('list_detail_pane_${widget.id}');
-
   @override
   void initState() {
     super.initState();
@@ -96,28 +93,24 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
       _before = FocusManager.instance.primaryFocus;
       _takeKeys();
     }
-    unawaited(
-      _store.read().then(
-        (v) {
-          final w = double.tryParse(v ?? '');
-          if (!mounted || w == null) return;
-          _width.value = w.clamp(
-            ListDetailMetrics.paneMin,
-            ListDetailMetrics.paneMax,
-          );
-        },
-        // The width is a convenience: the pane opens at its default when it
-        // cannot be read, and the log says why.
-        onError: (Object e, StackTrace s) => FlutterError.reportError(
-          FlutterErrorDetails(
-            exception: e,
-            stack: s,
-            library: 'list detail',
-            context: ErrorDescription('reading the pane width'),
-          ),
-        ),
-      ),
-    );
+    unawaited(_readWidth());
+  }
+
+  /// The width kept on the device. The width is a convenience: when it
+  /// cannot be read the pane opens at its default, and the log says so once.
+  Future<void> _readWidth() async {
+    try {
+      final w = double.tryParse(await widget.paneStore.read(widget.id) ?? '');
+      if (!mounted || w == null) return;
+      _width.value = w.clamp(
+        ListDetailMetrics.paneMin,
+        ListDetailMetrics.paneMax,
+      );
+    } on Object catch (e) {
+      debugPrint(
+        'list detail: the pane width of ${widget.id} was not read ($e)',
+      );
+    }
   }
 
   @override
@@ -186,7 +179,9 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
     move(order[next]);
   }
 
-  void _keep() => _store.write(_width.value.round().toString()).ignore();
+  void _keep() => widget.paneStore
+      .write(widget.id, _width.value.round().toString())
+      .ignore();
 
   @override
   Widget build(BuildContext context) {
