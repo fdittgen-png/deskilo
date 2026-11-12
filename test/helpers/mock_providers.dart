@@ -98,8 +98,6 @@ import 'package:deskilo/features/directory/providers/saved_places_providers.dart
 import 'package:deskilo/features/events/domain/event_repository.dart';
 import 'package:deskilo/features/events/providers/attention_providers.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
-import 'package:deskilo/features/kiosk/domain/kiosk_device.dart';
-import 'package:deskilo/features/kiosk/providers/kiosk_device_providers.dart';
 import 'package:deskilo/features/mcp/providers/assistant_setup_providers.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
@@ -143,6 +141,7 @@ import 'package:deskilo/features/workspace/application/pending_invitation.dart';
 import 'package:deskilo/features/workspace/application/template_compare.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/deployment.dart';
+import 'package:deskilo/features/workspace/domain/kiosk_device.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
 import 'package:deskilo/features/workspace/domain/kpi_items.dart';
@@ -158,6 +157,7 @@ import 'package:deskilo/features/workspace/providers/customer_kpi_providers.dart
 import 'package:deskilo/features/workspace/providers/deployment_providers.dart';
 import 'package:deskilo/features/workspace/providers/instance_providers.dart';
 import 'package:deskilo/features/workspace/providers/item_kpi_providers.dart';
+import 'package:deskilo/features/workspace/providers/kiosk_device_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
 import 'package:deskilo/features/workspace/providers/sales_kpi_providers.dart';

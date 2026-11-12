@@ -14,10 +14,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../workspace/providers/settings_providers.dart';
+import '../../providers/settings_providers.dart';
 
 /// The setting's key and its two values.
-const kioskSigninWhereKey = 'security.badge_signin_where';
+const _whereKey = 'security.badge_signin_where';
 const _kiosksOnly = 'enrolled_kiosks';
 const _anyDevice = 'any_device';
 
@@ -93,7 +93,7 @@ class _KioskSigninWhereCardState extends ConsumerState<KioskSigninWhereCard> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final definition = widget.settings.definitions[kioskSigninWhereKey];
+    final definition = widget.settings.definitions[_whereKey];
     // A registry read from the app's own bundle holds defaults only: shown,
     // never written over (the settings editor does the same).
     final editable =
@@ -103,7 +103,7 @@ class _KioskSigninWhereCardState extends ConsumerState<KioskSigninWhereCard> {
         !_busy;
     final value = definition == null
         ? _kiosksOnly
-        : widget.settings.read<String>(kioskSigninWhereKey);
+        : widget.settings.read<String>(_whereKey);
     return Card(
       child: Padding(
         padding: AppSpacing.gutterAll,

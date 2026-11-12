@@ -19,7 +19,7 @@ part 'auth_providers.g.dart';
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) =>
     SupabaseAuthRepository(ref.watch(personalClientProvider), callbackGuard: bootAuthCallbackGuard,
-        kioskCredential: () => ref.read(kioskCredentialStoreProvider).read());
+        badgeHeaders: () => kioskBadgeHeaders(ref.read(kioskCredentialStoreProvider)));
 
 @Riverpod(keepAlive: true)
 Stream<String?> authState(Ref ref) =>

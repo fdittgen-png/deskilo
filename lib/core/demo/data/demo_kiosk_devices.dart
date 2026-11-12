@@ -8,13 +8,14 @@
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
-import '../../../features/kiosk/domain/kiosk_device.dart';
-import '../../../features/kiosk/providers/kiosk_device_providers.dart';
+import '../../../features/workspace/domain/kiosk_device.dart';
+import '../../../features/workspace/providers/kiosk_device_providers.dart';
 import '../../backend/kiosk_credential_store.dart';
 import '../demo_dataset.dart';
 import '../demo_fixture.dart';
 
 /// The kiosks of the Demo's business, kept for the session.
+@visibleForTesting
 class DemoKioskDevices implements KioskDeviceRepository {
   DemoKioskDevices({required this.workspaceId, required this.today})
     : _devices = [

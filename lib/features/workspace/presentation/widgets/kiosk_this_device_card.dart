@@ -58,21 +58,8 @@ class _KioskThisDeviceCardState extends ConsumerState<KioskThisDeviceCard> {
       domain: 'kiosk',
       message: 'kiosk enrolment failed',
       errorText: l10n.kioskEnrolFailed,
-      action: () async {
-        final enrolment = await ref
-            .read(kioskDeviceRepositoryProvider)
-            .enrol(widget.workspaceId, name);
-        await ref
-            .read(kioskCredentialStoreProvider)
-            .write(
-              KioskCredential(
-                workspaceId: widget.workspaceId,
-                deviceId: enrolment.deviceId,
-                name: name,
-                secret: enrolment.credential,
-              ),
-            );
-      },
+      action: () =>
+          ref.read(kioskDeviceCommandsProvider).enrol(widget.workspaceId, name),
     );
     ref.invalidate(kioskDevicesProvider(widget.workspaceId));
     if (!mounted) return;
@@ -105,7 +92,7 @@ class _KioskThisDeviceCardState extends ConsumerState<KioskThisDeviceCard> {
       ),
     );
     if (sure != true) return;
-    await ref.read(kioskCredentialStoreProvider).forget();
+    await ref.read(kioskDeviceCommandsProvider).forget();
     widget.onChanged();
   }
 

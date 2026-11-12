@@ -10,6 +10,8 @@
 // Neither the credential nor its header is ever logged.
 import 'dart:convert';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../trace/trace_logger.dart';
@@ -46,12 +48,12 @@ class KioskCredential {
   static KioskCredential? _decode(String? raw) {
     if (raw == null || raw.isEmpty) return null;
     try {
-      final map = jsonDecode(raw) as Map<String, dynamic>;
+      final r = JsonReader.of(jsonDecode(raw), context: 'kiosk enrolment');
       final c = KioskCredential(
-        workspaceId: map['workspace_id'] as String,
-        deviceId: map['device_id'] as String,
-        name: map['name'] as String,
-        secret: map['secret'] as String,
+        workspaceId: r.string('workspace_id'),
+        deviceId: r.string('device_id'),
+        name: r.stringOr('name'),
+        secret: r.string('secret'),
       );
       return c.workspaceId.isEmpty || c.deviceId.isEmpty || c.secret.isEmpty
           ? null
@@ -81,6 +83,7 @@ abstract interface class KioskCredentialStore {
 }
 
 /// The platform's secure storage, under this server's origin.
+@visibleForTesting
 class SecureKioskCredentialStore implements KioskCredentialStore {
   SecureKioskCredentialStore(this._secrets, Uri origin)
     : _key = installationAuthNamespace(origin, 'kiosk.device');
@@ -114,6 +117,14 @@ class InMemoryKioskCredentialStore implements KioskCredentialStore {
 
   @override
   Future<void> forget() async => _held = null;
+}
+
+/// The badge function's header for this device's enrolment, or none.
+Future<Map<String, String>?> kioskBadgeHeaders(
+  KioskCredentialStore store,
+) async {
+  final held = await store.read();
+  return held == null ? null : {'x-deskilo-kiosk': held.header};
 }
 
 /// This device's enrolment store, for the server the app was started on.

@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
-import '../../features/kiosk/presentation/screens/kiosk_devices_screen.dart';
 import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
@@ -21,6 +20,7 @@ import '../../features/workspace/presentation/screens/colours_screen.dart';
 import '../../features/workspace/presentation/screens/deployment_screen.dart';
 import '../../features/workspace/presentation/screens/documents_screen.dart';
 import '../../features/workspace/presentation/screens/features_screen.dart';
+import '../../features/workspace/presentation/screens/kiosk_devices_screen.dart';
 import '../../features/workspace/presentation/screens/members_screen.dart';
 import '../../features/workspace/presentation/screens/nfc_config_screen.dart';
 import '../../features/workspace/presentation/screens/onboarding_screen.dart';

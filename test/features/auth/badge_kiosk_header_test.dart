@@ -67,7 +67,8 @@ void main() {
         }),
         authOptions: AuthClientOptions(pkceAsyncStorage: _MemoryStorage()),
       ),
-      kioskCredential: () async => kiosk,
+      badgeHeaders: () =>
+          kioskBadgeHeaders(InMemoryKioskCredentialStore(kiosk)),
     );
   }
 

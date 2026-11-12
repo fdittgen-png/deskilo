@@ -13,6 +13,7 @@
 # review {"path":"test/features/workspace/member_note_flow_test.dart","before":23,"after":26,"invariant":"#3611 a long press opens the message menu; Delete is chosen from it before the confirmation","cost":"one settle per menu entry tap, three deletions in two tests"}
 # review {"path":"test/features/workspace/member_notes_test.dart","before":12,"after":13,"invariant":"#3611 the long press opens the message menu before Delete asks for confirmation","cost":"one settle for the menu entry tap"}
 # review {"path":"test/features/workspace/my_badge_test.dart","before":16,"after":18,"invariant":"#3611 a mouse alone deletes a revoked badge from the menu button and from a right click","cost":"two settles reopening the badge list so it loads the seeded revoked badge"}
+# review {"path":"test/features/workspace/kiosk_devices_screen_test.dart","before":0,"after":14,"invariant":"#3675 the kiosk devices screen: enrol (name, tap), a refused enrolment, revoke with its confirmation, a failed read and Try again, and the setting's confirmation cancelled then accepted, each settled once before the store or the screen is read","cost":"five tests in about 4 s locally"}
 11 test/app/entry_intents_flow_test.dart
 23 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -130,6 +131,7 @@
 14 test/features/workspace/holiday_import_flow_test.dart
 17 test/features/workspace/invitation_journey_test.dart
 14 test/features/workspace/invitation_test.dart
+14 test/features/workspace/kiosk_devices_screen_test.dart
 15 test/features/workspace/member_join_validation_test.dart
 26 test/features/workspace/member_note_flow_test.dart
 13 test/features/workspace/member_notes_test.dart

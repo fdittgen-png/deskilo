@@ -3,6 +3,7 @@
 // #3675 — the devices a business enrolled as kiosks (kiosk_devices, 0734).
 // The list never carries a credential or its hash; the credential exists
 // only in the answer to an enrolment, once.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// One enrolled device of the business.
 class KioskDevice {
@@ -26,18 +27,17 @@ class KioskDevice {
 
   bool get revoked => revokedAt != null;
 
-  static KioskDevice? fromJson(Object? raw) {
-    if (raw is! Map) return null;
-    final id = raw['id'];
-    final enrolledAt = DateTime.tryParse('${raw['enrolled_at']}');
-    if (id is! String || id.isEmpty || enrolledAt == null) return null;
+  /// One row of `kiosk_devices_v1`; a row of another shape is a
+  /// JsonShapeException, never a device made up.
+  factory KioskDevice.fromJson(Object? raw) {
+    final r = JsonReader.of(raw, context: 'kiosk_devices_v1');
     return KioskDevice(
-      id: id,
-      name: '${raw['name'] ?? ''}',
-      enrolledBy: '${raw['enrolled_by'] ?? ''}',
-      enrolledAt: enrolledAt,
-      lastUsedAt: DateTime.tryParse('${raw['last_used_at']}'),
-      revokedAt: DateTime.tryParse('${raw['revoked_at']}'),
+      id: r.string('id'),
+      name: r.stringOr('name'),
+      enrolledBy: r.stringOr('enrolled_by'),
+      enrolledAt: r.dateTime('enrolled_at'),
+      lastUsedAt: r.dateTimeOrNull('last_used_at'),
+      revokedAt: r.dateTimeOrNull('revoked_at'),
     );
   }
 }

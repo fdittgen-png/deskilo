@@ -61,6 +61,59 @@ final class KioskDeviceRepositoryProvider
 String _$kioskDeviceRepositoryHash() =>
     r'd6bf6adfaa83765b1665ecc4ff9714b2b8cc8527';
 
+/// What the kiosk devices screen asks for.
+
+@ProviderFor(kioskDeviceCommands)
+final kioskDeviceCommandsProvider = KioskDeviceCommandsProvider._();
+
+/// What the kiosk devices screen asks for.
+
+final class KioskDeviceCommandsProvider
+    extends
+        $FunctionalProvider<
+          KioskDeviceCommands,
+          KioskDeviceCommands,
+          KioskDeviceCommands
+        >
+    with $Provider<KioskDeviceCommands> {
+  /// What the kiosk devices screen asks for.
+  KioskDeviceCommandsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'kioskDeviceCommandsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$kioskDeviceCommandsHash();
+
+  @$internal
+  @override
+  $ProviderElement<KioskDeviceCommands> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  KioskDeviceCommands create(Ref ref) {
+    return kioskDeviceCommands(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(KioskDeviceCommands value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<KioskDeviceCommands>(value),
+    );
+  }
+}
+
+String _$kioskDeviceCommandsHash() =>
+    r'393ee8341eb0b725092c2d8fceeb7fcccf705681';
+
 /// The devices of [workspaceId], newest first. A read that failed is said
 /// at once, with Try again (#3742): no automatic retries.
 

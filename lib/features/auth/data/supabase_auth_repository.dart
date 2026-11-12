@@ -10,7 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/auth_callback_guard.dart';
 import '../../../core/backend/auth_secret_store.dart';
 import '../../../core/backend/federation_authority.dart';
-import '../../../core/backend/kiosk_credential_store.dart';
 import '../../../core/backend/native_federation_flow.dart';
 import '../../../core/backend/schema_version.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -22,15 +21,12 @@ import '../domain/social_provider.dart';
 import 'guard_federation_port.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
-  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow, this.kioskCredential});
-
-  /// #3675 — this device's enrolment as a kiosk, if it has one: both badge
-  /// steps carry it, so the server can tell an enrolled kiosk of the tag's
-  /// business from any other device. Null: no device to name.
-  final Future<KioskCredential?> Function()? kioskCredential;
+  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow, this.badgeHeaders});
 
   final AuthCallbackGuard? callbackGuard;
   final Future<Object?> Function()? authorityRead;
+  /// #3675 — the enrolled kiosk's header, sent on both badge steps when this device holds one.
+  final Future<Map<String, String>?> Function()? badgeHeaders;
 
   /// Test seam for the system-browser adapter (#1648); production builds
   /// the real flow over the platform secret store.
@@ -479,27 +475,24 @@ class SupabaseAuthRepository implements AuthRepository {
 
   // ── badge sign-in (#662) ────────────────────────────────────────────
 
-  /// Both steps hit the same function; only the body differs. A missing
-  /// deployment (404) and a dead network are the SAME answer to the
-  /// caller — `unavailable` — because in both cases nothing about the
-  /// badge was judged, and showing "wrong PIN" would send someone
-  /// hunting for a mistake they did not make.
+  /// Both steps hit the same function; only the body differs. A missing deployment (404) and a
+  /// dead network are the SAME answer to the caller — `unavailable` — because in both cases nothing
+  /// about the badge was judged, and "wrong PIN" would send someone hunting for a mistake they did
+  /// not make.
   Future<Map<String, dynamic>?> _invokeBadge(Map<String, dynamic> body) async {
     try {
-      final kiosk = await kioskCredential?.call();
       final response = await _client.functions.invoke(
         'badge-signin',
         body: body,
-        headers: kiosk == null ? null : {'x-deskilo-kiosk': kiosk.header},
+        headers: await badgeHeaders?.call(),
       );
       final data = response.data;
       return data is Map ? Map<String, dynamic>.from(data) : null;
     } on Object catch (e, st) {
-      // A refusal comes back as 200 with ok:false, so ANY failure here is
-      // infrastructure, not judgement — #1086. This used to rethrow
-      // everything but a 404, which contradicted the contract above and
-      // reached two call sites with no catch: the sheet's spinner stayed
-      // up forever on a 500 or a dropped connection.
+      // A refusal comes back as 200 with ok:false, so ANY failure here is infrastructure, not
+      // judgement — #1086. This used to rethrow everything but a 404, which contradicted the
+      // contract above and reached two call sites with no catch: the sheet's spinner stayed up
+      // forever on a 500 or a dropped connection.
       TraceLogger.instance.warn(
         'auth',
         'badge-signin unreachable — answering unavailable',

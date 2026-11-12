@@ -19,11 +19,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../workspace/domain/workspace_permission.dart';
-import '../../../workspace/providers/settings_providers.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/kiosk_device.dart';
+import '../../domain/workspace_permission.dart';
 import '../../providers/kiosk_device_providers.dart';
+import '../../providers/settings_providers.dart';
+import '../../providers/workspace_providers.dart';
 import '../widgets/kiosk_signin_where_card.dart';
 import '../widgets/kiosk_this_device_card.dart';
 
@@ -70,20 +70,13 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
       ),
     );
     if (sure != true || !mounted) return;
-    final held = await _held;
-    if (!mounted) return;
     final ok = await runGuarded(
       context,
       domain: 'kiosk',
       message: 'kiosk revoke failed',
       errorText: l10n.kioskDeviceRevokeFailed,
-      action: () async {
-        await ref.read(kioskDeviceRepositoryProvider).revoke(device.id);
-        // Revoking the device in hand: it forgets its credential too.
-        if (held?.deviceId == device.id) {
-          await ref.read(kioskCredentialStoreProvider).forget();
-        }
-      },
+      // The device in hand forgets its credential too.
+      action: () => ref.read(kioskDeviceCommandsProvider).revoke(device.id),
     );
     ref.invalidate(kioskDevicesProvider(workspaceId));
     if (!mounted) return;
@@ -128,6 +121,7 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
                     ),
                     const SizedBox(height: AppSpacing.md),
                     KioskThisDeviceCard(
+                      key: const ValueKey('kiosk-this-device'),
                       workspaceId: workspace.id,
                       held: held.data,
                       onChanged: _heldChanged,
@@ -147,11 +141,15 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
                     ),
                     ...switch (devices) {
                       AsyncData(:final value) when value.isEmpty => [
-                        ListTile(title: Text(l10n.kioskDevicesEmpty)),
+                        ListTile(
+                          key: const ValueKey('kiosk-devices-empty'),
+                          title: Text(l10n.kioskDevicesEmpty),
+                        ),
                       ],
                       AsyncData(:final value) => [
                         for (final d in value)
                           _DeviceTile(
+                            key: ValueKey('kiosk-device-row-${d.id}'),
                             device: d,
                             thisOne: held.data?.deviceId == d.id,
                             onRevoke: () => unawaited(_revoke(workspace.id, d)),
@@ -162,6 +160,7 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
                           key: const ValueKey('kiosk-devices-failed'),
                           title: Text(l10n.readStateFailed),
                           trailing: TextButton(
+                            key: const ValueKey('kiosk-devices-retry'),
                             onPressed: () => ref.invalidate(
                               kioskDevicesProvider(workspace.id),
                             ),
@@ -181,6 +180,7 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
 
 class _DeviceTile extends ConsumerWidget {
   const _DeviceTile({
+    super.key,
     required this.device,
     required this.thisOne,
     required this.onRevoke,
