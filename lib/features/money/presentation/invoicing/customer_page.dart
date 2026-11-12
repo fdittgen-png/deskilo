@@ -37,6 +37,7 @@ class CustomerPage extends StatelessWidget {
     this.credit,
     this.payments = const [],
     this.onAssign,
+    this.onStatement,
   });
 
   final String customerId;
@@ -58,6 +59,9 @@ class CustomerPage extends StatelessWidget {
   /// "Assign to invoices" on the credit line; with [onAssign] null, none.
   final List<PaymentLeft> payments;
   final ValueChanged<PaymentLeft>? onAssign;
+
+  /// #3673 — prints the customer's statement of account; null, no button.
+  final VoidCallback? onStatement;
 
   List<Receivable> get _mine => [
     for (final r in receivables)
@@ -87,7 +91,18 @@ class CustomerPage extends StatelessWidget {
         ? null
         : row?.action;
     return Scaffold(
-      appBar: AppBar(title: Text(name)),
+      appBar: AppBar(
+        title: Text(name),
+        actions: [
+          if (onStatement case final print?)
+            IconButton(
+              key: const ValueKey('customer-page-statement'),
+              tooltip: l.reportDocCustomerStatement,
+              icon: const Icon(Icons.receipt_long_outlined),
+              onPressed: print,
+            ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
