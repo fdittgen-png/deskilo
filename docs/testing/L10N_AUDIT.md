@@ -24,9 +24,9 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:97` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:106` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:113` | title | Printing and workspace guide | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:217` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:218` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:219` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:225` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:226` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:227` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:230` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:233` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:239` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
