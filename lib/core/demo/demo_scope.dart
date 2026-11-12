@@ -359,11 +359,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ...realtimeSyncOverrides(fixture.realtime),
       notificationServiceProvider.overrideWithValue(fixture.notifications),
       appBadgeProvider.overrideWithValue(fixture.badge),
-      fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
-      typedFileSaverProvider.overrideWithValue(fixture.outward.saveFileTyped),
-      // #3613 — the folder a desktop save dialog starts in is a device
-      // preference; a visitor's is the demonstration's.
-      saveFolderStoreProvider.overrideWithValue(fixture.prefs.saveFolder),
+      ..._fileOverrides(fixture),
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
       linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
@@ -475,3 +471,11 @@ final Override _demoPersonalContext = personalContextProvider.overrideWith(
     );
   },
 );
+
+/// The local saves Demo keeps inert, and (#3613) the folder a desktop save
+/// dialog starts in, a device preference that is the demonstration's.
+List<Override> _fileOverrides(DemoFixture fixture) => [
+  fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
+  typedFileSaverProvider.overrideWithValue(fixture.outward.saveFileTyped),
+  saveFolderStoreProvider.overrideWithValue(fixture.prefs.saveFolder),
+];

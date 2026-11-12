@@ -29,8 +29,11 @@ abstract final class AppSnack {
     _show(
       context,
       text,
-      background: scheme.error,
-      foreground: scheme.onError,
+      look: (
+        background: scheme.error,
+        foreground: scheme.onError,
+        leading: null,
+      ),
       replace: replace,
       action: action,
     );
@@ -54,9 +57,11 @@ abstract final class AppSnack {
     _show(
       context,
       text,
-      background: AppStatusColors.successOf(brightness),
-      foreground: foreground,
-      leading: _ScaleInCheck(color: foreground),
+      look: (
+        background: AppStatusColors.successOf(brightness),
+        foreground: foreground,
+        leading: _ScaleInCheck(color: foreground),
+      ),
       trailing: secondaryAction,
       replace: replace,
       action: action,
@@ -78,9 +83,8 @@ abstract final class AppSnack {
   static void _show(
     BuildContext context,
     String text, {
-    Color? background,
-    Color? foreground,
-    Widget? leading,
+    /// The colours and the leading mark; null is the theme's default look.
+    ({Color background, Color foreground, Widget? leading})? look,
     Widget? trailing,
     required bool replace,
     SnackBarAction? action,
@@ -93,12 +97,13 @@ abstract final class AppSnack {
     // The message stays a plain [Text] — tests assert on the exact text.
     final message = Text(
       text,
-      style: foreground == null ? null : TextStyle(color: foreground),
+      style: look == null ? null : TextStyle(color: look.foreground),
     );
+    final leading = look?.leading;
     messenger.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: background,
+        backgroundColor: look?.background,
         action: action,
         content: leading == null && trailing == null
             ? message
