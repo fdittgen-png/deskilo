@@ -120,16 +120,8 @@ Future<void> showExpenseSchedulesSheet(
                 contentPadding: EdgeInsets.zero,
                 title: Text(s.title),
                 subtitle: Text(
-                  '${factLine(l10n, [
-                    currency.formatMinor(s.amountCents),
-                    _scheduleRuleText(l10n, s, dates),
-                    _pays(l10n, scheduleSupplierName(ref, workspace.id, s.supplierId)),
-                  ])}\n'
-                  '${factLine(l10n, [
-                    _statusText(l10n, s.status),
-                    if (s.nextDue != null)
-                      l10n.scheduleNextDue(dates.format(s.nextDue!)),
-                  ])}',
+                  '${factLine(l10n, [currency.formatMinor(s.amountCents), _scheduleRuleText(l10n, s, dates), _pays(l10n, scheduleSupplierName(ref, workspace.id, s.supplierId))])}\n'
+                  '${factLine(l10n, [_statusText(l10n, s.status), if (s.nextDue != null) l10n.scheduleNextDue(dates.format(s.nextDue!))])}',
                 ),
                 isThreeLine: true,
                 trailing: canEndSchedule(s.status)

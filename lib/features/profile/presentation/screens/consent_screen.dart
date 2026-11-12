@@ -70,7 +70,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   const SizedBox(height: 4),
                   Text(s.body, style: theme.textTheme.bodyMedium),
                   if (s.more.isNotEmpty) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(s.more, style: theme.textTheme.bodyMedium),
                   ],
                   const SizedBox(height: AppSpacing.md),
