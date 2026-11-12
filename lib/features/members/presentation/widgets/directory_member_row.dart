@@ -192,6 +192,7 @@ class DirectoryMemberRow extends StatelessWidget {
   Widget _swipeToChat(ThemeData theme, AppLocalizations l10n,
       Uri whatsappUri, Widget child) {
     final brightness = theme.brightness;
+    // parity: directory-wa-
     return Dismissible(
       key: ValueKey('directory-swipe-${card.member.id}'),
       direction: DismissDirection.startToEnd,

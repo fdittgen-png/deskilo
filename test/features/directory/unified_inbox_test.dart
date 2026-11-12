@@ -22,6 +22,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/mouse.dart';
 
 const other = 'https://other.example';
 
@@ -609,6 +610,26 @@ void main() {
       expect(find.byKey(const ValueKey('inbox-entry-c-flag')), findsOneWidget);
       // A person-to-person conversation keeps this device's marks.
       expect(find.byKey(const ValueKey('inbox-entry-c-ana')), findsNothing);
+    });
+
+    testWidgets('#3611 a mouse alone pins by right click and mutes from '
+        'the ⋯ that shows on hover', (tester) async {
+      await pumpInbox(tester, home: home, remote: remote);
+      final mouse = await connectMouse(tester);
+      final row = find.byKey(const ValueKey('inbox-entry-c-flag'));
+      await rightClick(tester, row);
+      await click(tester, find.byKey(const ValueKey('inbox-menu-pin')));
+      expect(find.byKey(const ValueKey('inbox-pinned-c-flag')), findsOneWidget);
+
+      const more = ValueKey('inbox-marks-c-flag');
+      await mouse.moveTo(Offset.zero);
+      await tester.pumpAndSettle();
+      expect(find.byKey(more), findsNothing);
+      await hoverOver(tester, mouse, row);
+      await click(tester, find.byKey(more));
+      await click(tester, find.byKey(const ValueKey('inbox-menu-mute')));
+      expect(home.flagLog, ['flags:c-flag', 'flags:c-flag']);
+      expect(find.byKey(const ValueKey('inbox-muted-c-flag')), findsOneWidget);
     });
 
     testWidgets('a person-to-person thread offers no server mute',

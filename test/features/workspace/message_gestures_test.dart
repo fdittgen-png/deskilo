@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/mouse.dart';
 import '../../helpers/pump_app.dart';
 
 MemberNote note({
@@ -170,11 +171,49 @@ void main() {
     expect(workspace.deletedNotes, isEmpty);
   });
 
+  testWidgets('#3611 a mouse alone quotes by right click and deletes from '
+      'the ⋯ that shows on hover', (tester) async {
+    final workspace = await pumpThread(tester, [
+      note(id: 'note-1', from: 'member-2', to: 'member-1', body: 'what time?'),
+      note(id: 'note-2'),
+    ]);
+    final mouse = await connectMouse(tester);
+    await rightClick(tester, find.byKey(const ValueKey('bubble-note-1')));
+    await click(tester, find.byKey(const ValueKey('bubble-menu-note-1-quote')));
+    expect(find.byKey(const ValueKey('composer-quote')), findsOneWidget);
+
+    const more = ValueKey('bubble-actions-note-2');
+    await hoverOver(tester, mouse, find.byKey(const ValueKey('bubble-note-2')));
+    await click(tester, find.byKey(more));
+    await click(tester, find.byKey(const ValueKey('bubble-menu-note-2-delete')));
+    await click(tester, find.byKey(const ValueKey('note-delete-confirm')));
+    expect(workspace.deletedNotes, ['note-2']);
+  });
+
+  testWidgets('the swipe and the menu are one action: the long press opens '
+      'the same Quote', (tester) async {
+    await pumpThread(tester, [
+      note(id: 'note-1', from: 'member-2', to: 'member-1', body: 'what time?'),
+    ]);
+    await tester.longPress(find.byKey(const ValueKey('bubble-note-1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('bubble-menu-note-1-quote')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('composer-quote')), findsOneWidget);
+  });
+
   testWidgets('with the feature off the bubble does not swipe at all',
       (tester) async {
     await pumpThread(tester, [note(id: 'note-1')], gestures: false);
     expect(find.byKey(const ValueKey('swipe-note-1')), findsNothing);
-    // The historical long-press delete is still there.
+    // The historical long-press delete is still there; quoting belongs
+    // to the feature and leaves the menu with it.
     expect(find.byKey(const ValueKey('bubble-note-1')), findsOneWidget);
+    await tester.longPress(find.byKey(const ValueKey('bubble-note-1')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('bubble-menu-note-1-delete')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('bubble-menu-note-1-quote')),
+        findsNothing);
   });
 }
