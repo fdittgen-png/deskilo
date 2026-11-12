@@ -31,11 +31,11 @@ import 'workspace_repository.dart';
 
 /// Where an invoice stands in the dunning rules (0331), as far as the
 /// overview reads it.
-enum DunningPhase { settled, unknownMaturity, preDue, overdue }
+enum _DunningPhase { settled, unknownMaturity, preDue, overdue }
 
 /// One invoice's state by `invoice_dunning_state_core`.
-typedef DunningFacts = ({
-  DunningPhase phase,
+typedef _DunningFacts = ({
+  _DunningPhase phase,
   int collectible,
   String? hold,
   String currency,
@@ -83,20 +83,20 @@ int _collectible(Invoice invoice, InvoiceMatch? match, int credited) {
 
 /// The phase of an invoice with [collectible] left, due on [due], on
 /// [today] (0331 `v_phase`): the due day itself is overdue.
-DunningPhase _phase(int collectible, DateTime? due, DateTime today) {
-  if (collectible == 0) return DunningPhase.settled;
-  if (due == null) return DunningPhase.unknownMaturity;
+_DunningPhase _phase(int collectible, DateTime? due, DateTime today) {
+  if (collectible == 0) return _DunningPhase.settled;
+  if (due == null) return _DunningPhase.unknownMaturity;
   final day = DateTime(today.year, today.month, today.day);
   return day.isBefore(DateTime(due.year, due.month, due.day))
-      ? DunningPhase.preDue
-      : DunningPhase.overdue;
+      ? _DunningPhase.preDue
+      : _DunningPhase.overdue;
 }
 
 /// `invoice_dunning_state_core` (0331) over the Demo's money, as of [today]:
 /// what is still collectible on [invoice], in which phase, and the hold
 /// that keeps it from the reminders (a recorded one, else another
 /// currency's credit, else a payment waiting for its validation).
-DunningFacts dunningFactsOf(
+_DunningFacts _dunningFactsOf(
   Invoice invoice,
   FakeMoneyRepository money,
   DateTime today,
@@ -192,9 +192,9 @@ class DemoOverviewKpiRepository implements OverviewKpiRepository {
           i.totalCents <= 0) {
         continue;
       }
-      final s = dunningFactsOf(i, money, now);
-      if (s.phase == DunningPhase.unknownMaturity) unknown++;
-      if (s.phase != DunningPhase.overdue) continue;
+      final s = _dunningFactsOf(i, money, now);
+      if (s.phase == _DunningPhase.unknownMaturity) unknown++;
+      if (s.phase != _DunningPhase.overdue) continue;
       if (s.currency.toUpperCase() != currency) mixed = true;
       if (s.hold != null) {
         held++;

@@ -32,7 +32,7 @@ import 'seed/demo_twin_seed.dart';
 import 'seed/demo_valuation_seed.dart';
 
 /// The cost sources of each of the Demo's five spaces.
-typedef DemoSpaceCosts = ({
+typedef _SpaceCosts = ({
   DemoCostSources home,
   DemoCostSources leipzig,
   DemoCostSources london,
@@ -62,9 +62,9 @@ String Function(String) _currencyOf(DemoFixture fixture) =>
 
 /// The cost figures and the cost allocation of each space, from [costs],
 /// and the overview's own figures.
-List<Override> demoAnalysisOverrides(
+List<Override> _analysisOverrides(
   DemoFixture fixture,
-  DemoSpaceCosts costs,
+  _SpaceCosts costs,
 ) {
   final now = fixture.seededAt;
   final currencyOf = _currencyOf(fixture);
@@ -235,7 +235,7 @@ List<Override> demoBookFigureOverrides(
     ),
     // Leipzig reads the purchases, the register and the lease of Pézenas,
     // as its pages do, and its own invoices.
-    ...demoAnalysisOverrides(fixture, (
+    ..._analysisOverrides(fixture, (
       home: home,
       leipzig: (
         purchases: home.purchases,

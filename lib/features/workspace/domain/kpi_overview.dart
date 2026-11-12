@@ -150,16 +150,3 @@ abstract interface class OverviewKpiRepository {
     required String toMonth,
   });
 }
-
-/// No server in the demonstration: the figures say so.
-class UnavailableOverviewKpiRepository implements OverviewKpiRepository {
-  const UnavailableOverviewKpiRepository();
-
-  @override
-  Future<OverviewFigure> figure(
-    String workspaceId,
-    String kpiId, {
-    required String fromMonth,
-    required String toMonth,
-  }) async => throw const KpiUnavailable('no server in this mode');
-}

@@ -260,28 +260,3 @@ abstract interface class CostAllocationRepository {
     required String requestId,
   });
 }
-
-/// No server in the demonstration: the card says so; nothing is saved.
-class UnavailableCostAllocationRepository implements CostAllocationRepository {
-  const UnavailableCostAllocationRepository();
-
-  @override
-  Future<CostAllocationKpi> summary(
-    String workspaceId, {
-    required String fromMonth,
-    required String toMonth,
-  }) async => throw const KpiUnavailable('no server in this mode');
-
-  @override
-  Future<List<AllocationRule>> rules(String workspaceId) async =>
-      throw const KpiUnavailable('no server in this mode');
-
-  @override
-  Future<AllocationRule> save(
-    String workspaceId, {
-    required String? ruleId,
-    required int expectedRevision,
-    required AllocationRuleDraft draft,
-    required String requestId,
-  }) async => throw const KpiUnavailable('no server in this mode');
-}
