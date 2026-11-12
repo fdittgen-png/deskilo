@@ -7500,6 +7500,10 @@
       }
     }
   },
+  "fileOpenSaved": "Öffnen",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
   "fileSaveFailedBecause": "Datei konnte nicht gespeichert werden: {reason}.",
   "@fileSaveFailedBecause": {
     "description": "Error notice with the reason a file could not be saved",
@@ -7508,6 +7512,10 @@
         "type": "String"
       }
     }
+  },
+  "fileSaveFailureChosenFolder": "der gewählte Ordner hat die Datei nicht angenommen",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   },
   "fileSaveFailureNoStorage": "kein Ordner auf diesem Gerät hat sie angenommen",
   "@fileSaveFailureNoStorage": {
@@ -7520,6 +7528,10 @@
   "fileSaveFailureWrite": "das Gerät hat das Schreiben verweigert",
   "@fileSaveFailureWrite": {
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
+  "fileShowInFolder": "Im Ordner zeigen",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
   },
   "financesAllSpaces": "Alle Spaces",
   "financesAmountHidden": "Betrag ausgeblendet",

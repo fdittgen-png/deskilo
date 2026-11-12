@@ -45,6 +45,9 @@ abstract final class AppSnack {
     bool replace = false,
     /// #1012 — a follow-up the notice offers ("Share" on a saved export).
     SnackBarAction? action,
+    /// #3613 — a second follow-up beside the message ("Show in folder"
+    /// next to "Open"): a snackbar has one action slot.
+    SnackBarAction? secondaryAction,
   }) {
     final brightness = Theme.of(context).brightness;
     final foreground = AppStatusColors.onSuccessOf(brightness);
@@ -54,6 +57,7 @@ abstract final class AppSnack {
       background: AppStatusColors.successOf(brightness),
       foreground: foreground,
       leading: _ScaleInCheck(color: foreground),
+      trailing: secondaryAction,
       replace: replace,
       action: action,
     );
@@ -77,6 +81,7 @@ abstract final class AppSnack {
     Color? background,
     Color? foreground,
     Widget? leading,
+    Widget? trailing,
     required bool replace,
     SnackBarAction? action,
   }) {
@@ -95,12 +100,12 @@ abstract final class AppSnack {
         behavior: SnackBarBehavior.floating,
         backgroundColor: background,
         action: action,
-        content: leading == null
+        content: leading == null && trailing == null
             ? message
             : Row(children: [
-                leading,
-                const SizedBox(width: 12),
+                if (leading != null) ...[leading, const SizedBox(width: 12)],
                 Expanded(child: message),
+                ?trailing,
               ]),
       ),
     );

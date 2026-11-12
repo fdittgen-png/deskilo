@@ -361,6 +361,9 @@ List<Override> demoOverrides(DemoFixture fixture) {
       appBadgeProvider.overrideWithValue(fixture.badge),
       fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
       typedFileSaverProvider.overrideWithValue(fixture.outward.saveFileTyped),
+      // #3613 — the folder a desktop save dialog starts in is a device
+      // preference; a visitor's is the demonstration's.
+      saveFolderStoreProvider.overrideWithValue(fixture.prefs.saveFolder),
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
       linkLauncherProvider.overrideWithValue(fixture.outward.openLink),

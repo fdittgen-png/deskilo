@@ -77,7 +77,7 @@ sealed class TaskDocxResult {
 class TaskDocxSaved extends TaskDocxResult {
   const TaskDocxSaved(this.outcome, this.fileName);
 
-  /// What the saver achieved; never [SaveFailed].
+  /// What the saver achieved; never [SaveFailed] nor [SaveCancelled].
   final SaveOutcome outcome;
   final String fileName;
 }
@@ -89,9 +89,15 @@ class TaskDocxRefused extends TaskDocxResult {
   final TaskExportRefusal refusal;
 }
 
-/// Built, but the save did not happen (cancelled, refused, failed).
+/// Built, but the save did not happen (refused, failed).
 class TaskDocxSaveFailed extends TaskDocxResult {
   const TaskDocxSaveFailed();
+}
+
+/// #3613 — built, and the person closed the save dialog: nothing was
+/// written, and it is not a failure.
+class TaskDocxSaveCancelled extends TaskDocxResult {
+  const TaskDocxSaveCancelled();
 }
 
 /// Exports recordings as Word documents through the local file saver.
@@ -137,10 +143,11 @@ class TaskDocxExporter {
     }
     final name = docxFileName(recording);
     try {
-      final outcome = await _save(bytes: bytes, fileName: name);
-      return outcome is SaveFailed
-          ? const TaskDocxSaveFailed()
-          : TaskDocxSaved(outcome, name);
+      return switch (await _save(bytes: bytes, fileName: name)) {
+        SaveFailed() => const TaskDocxSaveFailed(),
+        SaveCancelled() => const TaskDocxSaveCancelled(),
+        final outcome => TaskDocxSaved(outcome, name),
+      };
     } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'recorder',

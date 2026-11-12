@@ -40,6 +40,7 @@ import 'package:deskilo/features/directory/domain/saved_place.dart';
 import 'package:deskilo/features/reservations/providers/default_period_controller.dart';
 
 import '../../../features/workspace/application/creation_intent.dart';
+import '../../files/save_folder_store.dart';
 import '../../push/push_opt_out.dart';
 import '../../webmcp/webmcp_device_switch.dart';
 import 'default_level_store.dart';
@@ -189,6 +190,9 @@ class DemoDevicePrefs {
   /// Where the visitor was in the demonstration: never the live
   /// account's last place, and never written over it.
   final InMemoryResumePlaceStore resumePlaces = InMemoryResumePlaceStore();
+
+  /// #3613 — the folder a visitor's desktop save dialog last used.
+  final InMemorySaveFolderStore saveFolder = InMemorySaveFolderStore();
 
   /// #1855 — a visitor's interrupted booking is the demonstration's; the
   /// device's real ledger is neither read nor written by entering it.

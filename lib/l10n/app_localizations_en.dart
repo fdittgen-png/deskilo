@@ -11575,9 +11575,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileOpenSaved => 'Open';
+
+  @override
   String fileSaveFailedBecause(String reason) {
     return 'Could not save the file: $reason.';
   }
+
+  @override
+  String get fileSaveFailureChosenFolder =>
+      'the chosen folder did not accept the file';
 
   @override
   String get fileSaveFailureNoStorage =>
@@ -11588,6 +11595,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fileSaveFailureWrite => 'the device refused the write';
+
+  @override
+  String get fileShowInFolder => 'Show in folder';
 
   @override
   String get financesAllSpaces => 'All spaces';

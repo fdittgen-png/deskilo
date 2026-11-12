@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:file_selector/file_selector.dart' show getSaveLocation;
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, defaultTargetPlatform, visibleForTesting;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../trace/trace_logger.dart';
 import 'file_types.dart';
+import 'save_folder_store.dart';
 
 /// Android MediaStore bridge (MainActivity.kt): saves into the
 /// USER-VISIBLE Downloads collection — the app-private external dir is
@@ -102,21 +105,32 @@ Future<String?> saveToDownloads({
     switch (await saveToDownloadsTyped(bytes: bytes, fileName: fileName)) {
       SavedFile(:final path) || SavedPrivately(:final path) => path,
       DownloadRequested(:final fileName) => fileName,
-      SaveFailed() => null,
+      // The legacy string cannot say "cancelled"; this seam never asks,
+      // so it never sees one. Mapped here, at its boundary, and nowhere
+      // else.
+      SaveCancelled() || SaveFailed() => null,
     };
 
 /// #1885 — a file appears whole or not at all: the bytes go to a sibling
 /// temporary file, are flushed and size-checked, and only then take the
 /// final name. A failure at any point removes the temporary file and leaves
 /// what was there before (a previous valid export) untouched.
+///
+/// [beforeRename] runs between the write and the rename; a test injects a
+/// failure there to prove a write that stops half-way leaves nothing.
 @visibleForTesting
-Future<String> writeFileAtomically(File target, List<int> bytes) async {
+Future<String> writeFileAtomically(
+  File target,
+  List<int> bytes, {
+  Future<void> Function(File part)? beforeRename,
+}) async {
   final part = File('${target.path}.part');
   try {
     await part.writeAsBytes(bytes, flush: true);
     if (await part.length() != bytes.length) {
       throw FileSystemException('short write', part.path);
     }
+    if (beforeRename != null) await beforeRename(part);
     await part.rename(target.path);
     return target.path;
   } on Object catch (e, st) {
@@ -141,6 +155,102 @@ Future<SaveOutcome> saveToDownloadsTyped({
   required String fileName,
 }) =>
     saveOn(_platform, _deviceTargets, bytes: bytes, fileName: fileName);
+
+/// #3613 — the typed saver of this device. A desktop (Windows, macOS,
+/// Linux) asks where the file goes, starting from the folder remembered in
+/// [folders]; a phone keeps [saveToDownloadsTyped] exactly as before.
+/// `defaultTargetPlatform`, not `dart:io`: widget tests run as Android.
+TypedFileSaver typedSaverFor(SaveFolderStore folders) =>
+    switch (defaultTargetPlatform) {
+      TargetPlatform.macOS || TargetPlatform.windows || TargetPlatform.linux =>
+        ({required bytes, required fileName}) => saveAtChosenPlace(
+          pick: _pickWithFileSelector,
+          folders: folders,
+          bytes: bytes,
+          fileName: fileName,
+        ),
+      _ => saveToDownloadsTyped,
+    };
+
+/// Asks where [suggestedName] goes, starting in [initialDirectory]; null
+/// when the person closed the dialog.
+typedef SaveLocationPicker = Future<String?> Function({
+  required String suggestedName,
+  String? initialDirectory,
+});
+
+Future<String?> _pickWithFileSelector({
+  required String suggestedName,
+  String? initialDirectory,
+}) async =>
+    (await getSaveLocation(
+      suggestedName: suggestedName,
+      initialDirectory: initialDirectory,
+    ))
+        ?.path;
+
+/// #3613 — a desktop save: the dialog proposes [fileName] in the folder
+/// used last time; a closed dialog is [SaveCancelled] and writes and
+/// remembers nothing; the chosen file is written atomically and its folder
+/// remembered only once the write is acknowledged. A desktop that cannot
+/// show the dialog at all saves the way it did before ([withoutDialog]).
+@visibleForTesting
+Future<SaveOutcome> saveAtChosenPlace({
+  required SaveLocationPicker pick,
+  required SaveFolderStore folders,
+  required Uint8List bytes,
+  required String fileName,
+  Future<String> Function(File target, List<int> bytes) write =
+      writeFileAtomically,
+  TypedFileSaver withoutDialog = saveToDownloadsTyped,
+}) async {
+  final String? chosen;
+  try {
+    chosen = await pick(
+      suggestedName: fileName,
+      initialDirectory: await _lastFolder(folders),
+    );
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .warn('files', 'no save dialog here', error: e, stackTrace: st);
+    return withoutDialog(bytes: bytes, fileName: fileName);
+  }
+  if (chosen == null) return const SaveCancelled();
+  final target = File(chosen);
+  try {
+    final path = await write(target, bytes);
+    await _remember(folders, target.parent.path);
+    return SavedFile(path, atChosenPlace: true);
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .error('files', 'chosen place refused', error: e, stackTrace: st);
+    return const SaveFailed(SaveFailure.chosenFolderRefused);
+  }
+}
+
+/// The remembered folder while it still exists; a removed or unreadable
+/// one lets the dialog choose its own start.
+Future<String?> _lastFolder(SaveFolderStore folders) async {
+  try {
+    final folder = await folders.read();
+    return folder != null && Directory(folder).existsSync() ? folder : null;
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .warn('files', 'last folder unreadable', error: e, stackTrace: st);
+    return null;
+  }
+}
+
+/// Remembering is a convenience: a store that refuses does not undo a
+/// file that was written.
+Future<void> _remember(SaveFolderStore folders, String folder) async {
+  try {
+    await folders.write(folder);
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .warn('files', 'last folder not kept', error: e, stackTrace: st);
+  }
+}
 
 /// The decision per platform, over [targets]. Never throws: a refused
 /// folder or write is a [SaveFailed] with its reason, and nothing
