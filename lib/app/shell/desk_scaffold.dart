@@ -10,7 +10,6 @@
 // Tab moves through the navigation, then the top bar, then the page.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
@@ -38,23 +37,6 @@ bool deskShownAt(
     _showsDesk(context) &&
     (!workspaceChromeAccountRoutes.contains(path) || inBusiness);
 
-/// Material's default horizontal inset of a dialog (its own private
-/// `_defaultInsetPadding`), for a theme that sets none.
-const double _materialDialogInset = 40;
-
-/// #3603 — the windows opened over a desk page (dialogs) keep the width
-/// the page's column gave them before the desk took the window: the
-/// column less the dialog's insets on each side.
-ThemeData deskOverlayTheme(ThemeData theme, String path) {
-  final inset =
-      theme.dialogTheme.insetPadding?.horizontal ?? 2 * _materialDialogInset;
-  return theme.copyWith(
-    dialogTheme: theme.dialogTheme.copyWith(
-      constraints: BoxConstraints(maxWidth: frameWidthFor(path) - inset),
-    ),
-  );
-}
-
 /// The desk around one page.
 class DeskScaffold extends ConsumerWidget {
   const DeskScaffold({
@@ -64,8 +46,17 @@ class DeskScaffold extends ConsumerWidget {
     this.actions = const [],
     this.search,
     this.place,
+    this.path = '',
+    this.scrim,
     super.key,
   });
+
+  /// The page's address: its reading column (app_frame.dart).
+  final String path;
+
+  /// While a window (a dialog, a sheet) is open over the page: its scrim,
+  /// under which the navigation and the top bar rest, taking no input.
+  final Color? scrim;
 
   /// The label of the place on screen, for the window's (or the browser
   /// tab's) title: "place — business".
@@ -114,14 +105,17 @@ class DeskScaffold extends ConsumerWidget {
               FocusTraversalOrder(
                 order: const NumericFocusOrder(1),
                 child: FocusTraversalGroup(
-                  child: SizedBox(
-                    key: const ValueKey('desk-navigation'),
-                    width: rail ? railWidth : sidebarWidth,
-                    child: Column(
-                      children: [
-                        Expanded(child: navigation(rail: rail)),
-                        if (large) _NavigationToggle(collapsed: collapsed),
-                      ],
+                  child: _Chrome(
+                    scrim: scrim,
+                    child: SizedBox(
+                      key: const ValueKey('desk-navigation'),
+                      width: rail ? railWidth : sidebarWidth,
+                      child: Column(
+                        children: [
+                          Expanded(child: navigation(rail: rail)),
+                          if (large) _NavigationToggle(collapsed: collapsed),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -133,11 +127,14 @@ class DeskScaffold extends ConsumerWidget {
                     FocusTraversalOrder(
                       order: const NumericFocusOrder(2),
                       child: FocusTraversalGroup(
-                        child: AppBar(
-                          key: const ValueKey('desk-top-bar'),
-                          automaticallyImplyLeading: false,
-                          title: title,
-                          actions: [?search, ...actions],
+                        child: _Chrome(
+                          scrim: scrim,
+                          child: AppBar(
+                            key: const ValueKey('desk-top-bar'),
+                            automaticallyImplyLeading: false,
+                            title: title,
+                            actions: [?search, ...actions],
+                          ),
                         ),
                       ),
                     ),
@@ -146,18 +143,18 @@ class DeskScaffold extends ConsumerWidget {
                         order: const NumericFocusOrder(3),
                         child: FocusTraversalGroup(
                           // The page's semantics must not hide the navigation.
-                          // #3603 — the window is the desk's; the reading
-                        // column (or a canvas's wider one) is the page's.
-                        child: Semantics(
-                          container: true,
-                          child: AppFrame(
-                            inside: true,
-                            maxWidth: frameWidthFor(
-                              GoRouterState.of(context).uri.path,
+                          child: Semantics(
+                            container: true,
+                            // #3603 — the window is the desk's; the reading
+                            // column (or a canvas's wider one) is the page's,
+                            // and the windows opened over it stay within it.
+                            child: AppFrame(
+                              key: const ValueKey('desk-page'),
+                              inside: true,
+                              maxWidth: frameWidthFor(path),
+                              child: body,
                             ),
-                            child: body,
                           ),
-                        ),
                         ),
                       ),
                     ),
@@ -168,6 +165,33 @@ class DeskScaffold extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The desk's own controls, resting under [scrim] while a window is open
+/// over the page: no pointer, no key, the same shade as the page's.
+class _Chrome extends StatelessWidget {
+  const _Chrome({required this.scrim, required this.child});
+
+  final Color? scrim;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final shade = scrim;
+    final resting = shade != null;
+    return Stack(
+      children: [
+        IgnorePointer(
+          ignoring: resting,
+          child: ExcludeFocus(excluding: resting, child: child),
+        ),
+        if (shade != null)
+          Positioned.fill(
+            child: ColoredBox(key: const ValueKey('desk-scrim'), color: shade),
+          ),
+      ],
     );
   }
 }

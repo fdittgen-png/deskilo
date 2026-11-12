@@ -21,6 +21,7 @@ import 'active_tax_reference.dart';
 import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
 import 'router.dart';
+import 'shell/desk_frame.dart';
 import 'shell/desk_scaffold.dart';
 import 'shell/layer_chrome.dart';
 import 'switcher_cover_host.dart';
@@ -128,29 +129,23 @@ class DeskiloApp extends ConsumerWidget {
                 builder: (context, _) => Consumer(
                   builder: (context, ref, _) {
                     final path = router.routeInformationProvider.value.uri.path;
-                    // #3603 — on the desk the window is the desk's: its
-                    // page area takes the column (desk_scaffold.dart).
+                    // #3603 — on the desk the window is the desk's, drawn
+                    // around the navigator; its page area takes the column
+                    // (desk_frame.dart).
                     final desk = deskShownAt(
                       context,
                       path,
                       inBusiness:
                           ref.watch(currentWorkspaceProvider).value != null,
                     );
-                    final framed = AppFrame(
-                      maxWidth:
-                          desk ? double.infinity : frameWidthFor(path),
-                      // #2869 — the way back to the setup guide.
-                      child: SetupReturnBar(
-                        router: router,
-                        child: child ?? const SizedBox.shrink(),
-                      ),
+                    // #2869 — the way back to the setup guide.
+                    final page = SetupReturnBar(
+                      router: router,
+                      child: child ?? const SizedBox.shrink(),
                     );
                     return desk
-                        ? Theme(
-                            data: deskOverlayTheme(Theme.of(context), path),
-                            child: framed,
-                          )
-                        : framed;
+                        ? DeskFrame(router: router, path: path, child: page)
+                        : AppFrame(maxWidth: frameWidthFor(path), child: page);
                   },
                 ),
               ))),

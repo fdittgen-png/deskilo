@@ -18,7 +18,6 @@ import 'entry_resumption.dart';
 import 'format_surface_sync.dart';
 import 'page_routes.dart';
 import 'resume_places.dart';
-import 'route_classes.dart';
 import 'route_env.dart';
 import 'route_redirect.dart';
 import 'routes/auth_routes.dart';
@@ -36,7 +35,7 @@ import 'routes/profile_routes.dart';
 import 'routes/reservations_routes.dart';
 import 'routes/task_recorder_routes.dart';
 import 'routes/workspace_routes.dart';
-import 'shell/desk_route_shell.dart';
+import 'shell/desk_frame.dart' show deskModalObserverProvider;
 import 'shell/shell_routes.dart';
 
 export 'shell/shell_destinations.dart' show ShellBranch;
@@ -96,38 +95,31 @@ GoRouter router(Ref ref) {
     overridePlatformDefaultLocation: recoverDemo,
     // #2142 — tells a live task recording that a window opened or
     // closed; does nothing while none is live.
-    observers: [RecorderWindowObserver()],
+    // #3603 — and the desk, which rests its navigation while a window
+    // is open over the page.
+    observers: [RecorderWindowObserver(), ref.read(deskModalObserverProvider)],
     // #1650 — the rules live in route_policy.dart as a pure function over
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.
     redirect: (context, state) => appRedirect(env, state),
     routes: [
       ...authRoutes(env),
-      // #2388 — pages opened over another screen; before Me's routes,
-      // whose `/me/messages/:ref` would take the messenger's named pages.
-      for (final page in openedPages)
-        if (chromeOf(page.path) != RouteChrome.desk) page.route(),
+      for (final page in openedPages) page.route(), // #2388
       ...meRoutes(env),
       ...kioskRoutes(env),
+      ...workspaceRoutes(env),
       shellRoute(env),
-      // #3603 — the routes shown on the desk go inside it
-      // (desk_route_shell.dart); every other route stays where it was.
-      ...deskSplit([
-        for (final page in openedPages)
-          if (chromeOf(page.path) == RouteChrome.desk) page.route(),
-        ...workspaceRoutes(env),
-        ...profileRoutes(env),
-        ...helpRoutes(env),
-        ...eventsRoutes(env),
-        ...reservationsRoutes(env),
-        ...planRoutes(env),
-        ...directoryRoutes(env),
-        ...membersRoutes(env),
-        ...editorRoutes(env),
-        ...mcpRoutes(env),
-        ...taskRecorderRoutes(env),
-        ...moneyRoutes(env),
-      ]),
+      ...profileRoutes(env),
+      ...helpRoutes(env),
+      ...eventsRoutes(env),
+      ...reservationsRoutes(env),
+      ...planRoutes(env),
+      ...directoryRoutes(env),
+      ...membersRoutes(env),
+      ...editorRoutes(env),
+      ...mcpRoutes(env),
+      ...taskRecorderRoutes(env),
+      ...moneyRoutes(env),
     ],
   );
   ref.onDispose(router.dispose);

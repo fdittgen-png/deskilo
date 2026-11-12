@@ -32,6 +32,9 @@ typedef ShellTabs = ({
   ValueChanged<int> onBranch,
 });
 
+/// One part of the desk's breadcrumb: a label, and the entry it opens.
+typedef DeskCrumb = ({String label, DrawerEntry? entry});
+
 /// The entries of the navigation, in the groups the drawer shows them in.
 class ShellMenu {
   ShellMenu._({
@@ -53,8 +56,8 @@ class ShellMenu {
   }) {
     final (:tabTitles, :visibleBranches, :navs, :currentIndex, :onBranch) =
         tabs;
-    final state = GoRouterState.of(context);
-    final path = state.uri.path;
+    final uri = GoRouter.of(context).routeInformationProvider.value.uri;
+    final path = uri.path;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final perms = ref.watch(myPermissionsProvider);
@@ -99,7 +102,7 @@ class ShellMenu {
       isAdmin: member?.isAdmin ?? false,
       actsAsOwner: member?.actsAsOwner ?? false,
     );
-    final section = state.uri.queryParameters['section'];
+    final section = uri.queryParameters['section'];
     bool onSection(String id) =>
         path == '/reports' &&
         (section ?? sections.where((s) => s != 'analytics').firstOrNull) == id;
@@ -131,20 +134,25 @@ class ShellMenu {
   /// destination outside any group, the group alone for a route placed on a
   /// group with no entry current. Empty when the place is not offered to
   /// this person (its feature is off): nothing is named, nothing selected.
-  List<String> crumbsOf(String path) {
+  /// An entry's crumb opens its page, the way back from a page opened on it.
+  List<DeskCrumb> crumbsOf(String path) {
     for (final e in [...navigation, ...account]) {
-      if (entryIsCurrent(e, path)) return [e.label];
+      if (entryIsCurrent(e, path)) return [(label: e.label, entry: e)];
     }
     final place = placeOf(path);
-    List<String>? inGroup(NavGroup g) {
+    List<DeskCrumb>? inGroup(NavGroup g) {
       for (final s in g.sub) {
         final found = inGroup(s);
         if (found != null) return found;
       }
       for (final e in g.entries) {
-        if (entryIsCurrent(e, path)) return [g.title, e.label];
+        if (entryIsCurrent(e, path)) {
+          return [(label: g.title, entry: null), (label: e.label, entry: e)];
+        }
       }
-      return g.id == place && !g.isEmpty ? [g.title] : null;
+      return g.id == place && !g.isEmpty
+          ? [(label: g.title, entry: null)]
+          : null;
     }
 
     for (final g in groups) {

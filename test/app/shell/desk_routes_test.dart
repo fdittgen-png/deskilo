@@ -219,6 +219,11 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  /// The page's own scaffold, inside the desk's page area.
+  Finder pageScaffold() => find
+      .descendant(of: _key('desk-page'), matching: find.byType(Scaffold))
+      .first;
+
   /// The page inside the desk's page area: its own scaffold.
   Rect pageRect(WidgetTester tester) => tester.getRect(
     find
@@ -327,5 +332,107 @@ void main() {
     );
     // 880 on master at 1440 and 1920: the column less the two insets.
     expect(dialog.width, 880);
+  });
+
+  testWidgets('one desk for all: the same element across a tab, a page pushed '
+      'over it, and a go between two places', (tester) async {
+    final router = await _pump(tester);
+    await _go(tester, router, '/money');
+    final desk = tester.element(find.byType(DeskScaffold));
+    expect(find.byType(DeskScaffold), findsOneWidget);
+    unawaited(router.push('/money/purchases'));
+    await tester.pumpAndSettle();
+    expect(tester.element(find.byType(DeskScaffold)), same(desk));
+    await _go(tester, router, '/members');
+    expect(tester.element(find.byType(DeskScaffold)), same(desk));
+    expect(find.byType(DeskScaffold), findsOneWidget);
+  });
+
+  testWidgets('a phone keeps the back arrow of a page pushed over a tab, as '
+      'on master', (tester) async {
+    final router = await _pump(tester, size: const Size(390, 844));
+    unawaited(router.push('/money/purchases'));
+    await tester.pumpAndSettle();
+    expect(find.byType(BackButton), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/reserve');
+  });
+
+  testWidgets('a window open over the page rests the navigation: a sidebar '
+      'tap changes nothing and the sheet stays', (tester) async {
+    final router = await _pump(tester);
+    await _go(tester, router, '/money/purchases');
+    unawaited(
+      showAppFormSheet(
+        tester.element(pageScaffold()),
+        AppFormSheet(
+          title: 'T',
+          submitLabel: 'S',
+          onSubmit: () async => null,
+          builder: (context, refresh) => [const Text('x')],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(_key('desk-scrim'), findsWidgets);
+    await tester.tap(_key('drawer-reserve'), warnIfMissed: false);
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/money/purchases');
+    expect(find.byType(AppFormSheet), findsOneWidget);
+    Navigator.of(tester.element(find.byType(AppFormSheet))).pop();
+    await tester.pumpAndSettle();
+    expect(_key('desk-scrim'), findsNothing);
+    await tester.tap(_key('drawer-reserve'));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/reserve');
+  });
+
+  testWidgets('at 1024 the desk\'s own chrome has an overlay: a tooltip in '
+      'the top bar and a group\'s menu on the rail', (tester) async {
+    final router = await _pump(tester, size: const Size(1024, 768));
+    await _go(tester, router, '/money/purchases');
+    await tester.longPress(_key('shell-settings-button'));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.byType(Tooltip), findsWidgets);
+    expect(find.text(_en.settingsTitle), findsWidgets);
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+    await tester.tap(_key('rail-group-people'));
+    await tester.pumpAndSettle();
+    expect(_key('rail-drawer-members'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('opened directly on an address at 1440, the desk draws with '
+      'its place selected on the first settled frame', (tester) async {
+    tester.binding.platformDispatcher.defaultRouteNameTestValue =
+        '/money/purchases';
+    addTearDown(
+      tester.binding.platformDispatcher.clearDefaultRouteNameTestValue,
+    );
+    final router = await _pump(tester);
+    expect(router.state.uri.path, '/money/purchases');
+    expect(_key('shell-sidebar'), findsOneWidget);
+    expect(_selected(tester, 'drawer-purchases'), isTrue);
+  });
+
+  testWidgets('from a page with no arrow on the desk, the breadcrumb\'s entry '
+      'and the selected sidebar entry lead back to the place\'s page', (
+    tester,
+  ) async {
+    final router = await _pump(tester);
+    await _go(tester, router, '/members');
+    unawaited(router.push('/member/member-1'));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/member/member-1');
+    await tester.tap(_key('desk-crumb-drawer-members'));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/members');
+
+    unawaited(router.push('/member/member-1'));
+    await tester.pumpAndSettle();
+    await tester.tap(_key('drawer-members'));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/members');
   });
 }

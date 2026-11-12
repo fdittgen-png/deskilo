@@ -85,7 +85,7 @@ void main() {
       await _pump(tester, size: const Size(1440, 900), web: web);
       expect(_key('shell-sidebar'), findsOneWidget);
       expect(_key('desk-top-bar'), findsOneWidget);
-      expect(_key('desk-title'), findsOneWidget);
+      expect(_key('desk-breadcrumb'), findsOneWidget);
       expect(find.byType(ShellBottomBar), findsNothing);
       expect(find.byTooltip('Open navigation menu'), findsNothing);
       expect(tester.takeException(), isNull);

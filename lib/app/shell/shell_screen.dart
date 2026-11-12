@@ -98,18 +98,11 @@ class ShellScreen extends ConsumerWidget {
     final actions = shellBarActions(context, ref,
         currentIndex: navigationShell.currentIndex);
     // #3603 — from the expanded window class, the desk, on every platform.
+    // #3603 — from the expanded window class the desk is drawn around the
+    // whole app (desk_frame.dart): the tab is only its page, on the
+    // scaffold a tab page always had.
     if (deskShownAt(context, path, inBusiness: true)) {
-      return DeskScaffold(
-        navigation: ({required rail}) =>
-            navigation(permanent: true, rail: rail),
-        title: KeyedSubtree(
-          key: const ValueKey('desk-title'),
-          child: SpaceChip(tabTitle: tabTitle),
-        ),
-        place: tabTitle,
-        actions: actions,
-        body: page,
-      );
+      return Scaffold(body: page);
     }
     final barHidden = ref.watch(shellBarHiddenProvider).value ?? false;
     return Scaffold(

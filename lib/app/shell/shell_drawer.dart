@@ -77,7 +77,11 @@ void _openToPay(
   Set<WorkspacePermission> permissions, {
   required bool permanent,
 }) {
-  final navigator = Navigator.of(context);
+  // #3603 — the desk sits above the router's navigator: the sheet opens on
+  // that navigator, over the page.
+  final navigator = permanent
+      ? GoRouter.of(context).routerDelegate.navigatorKey.currentState!
+      : Navigator.of(context);
   if (!permanent) navigator.pop();
   unawaited(showPurchasesSheet(
     navigator.context,
@@ -132,7 +136,7 @@ class ShellDrawer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final path = GoRouterState.of(context).uri.path;
+    final path = GoRouter.of(context).routeInformationProvider.value.uri.path;
     final features = ref.watch(enabledFeaturesSyncProvider);
     final attention = ref.watch(workspaceAttentionProvider);
     final workspace = ref.watch(currentWorkspaceProvider).value;
