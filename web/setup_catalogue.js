@@ -626,6 +626,10 @@ window.SETUP_REGISTRY={
   [
    "invoiceEmail",
    false
+  ],
+  [
+   "kioskEnrolment",
+   false
   ]
  ],
  "requires": {
@@ -733,7 +737,8 @@ window.SETUP_REGISTRY={
   "purchaseOrders": "purchases",
   "guestPasses": "invoicing",
   "reminderEmail": "dunning",
-  "invoiceEmail": "invoicing"
+  "invoiceEmail": "invoicing",
+  "kioskEnrolment": "badgeSignIn"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1149,6 +1154,7 @@ window.SETUP_PROCESSES=[
      "qrBadges",
      "kioskMemberPhotos",
      "badgeSignIn",
+     "kioskEnrolment",
      "spaceQrCodes"
     ]
    }
@@ -1540,7 +1546,8 @@ window.SETUP_LEVELS={
       "qrBadges",
       "kioskMemberPhotos",
       "badgeSignIn",
-      "capacityKpi"
+      "capacityKpi",
+      "kioskEnrolment"
      ],
      "needs": {}
     }

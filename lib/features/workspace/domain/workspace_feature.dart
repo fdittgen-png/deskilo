@@ -416,7 +416,8 @@ enum WorkspaceFeature {
   guestPasses,
   placeBooking,
   reminderEmail,
-  invoiceEmail;
+  invoiceEmail,
+  kioskEnrolment;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

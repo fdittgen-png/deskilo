@@ -469,4 +469,13 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.invoicing,
     defaultOn: false,
   ),
+  // #3675 — the devices a business enrolled as kiosks, and badge sign-in
+  // limited to them. Under badge sign-in, asked for.
+  WorkspaceFeature.kioskEnrolment: FeatureManifestEntry(
+    feature: WorkspaceFeature.kioskEnrolment,
+    surface: FeatureSurface.kiosk,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.badgeSignIn,
+    defaultOn: false,
+  ),
 };

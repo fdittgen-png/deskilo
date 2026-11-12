@@ -100,6 +100,7 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.qrBadges,
         WorkspaceFeature.kioskMemberPhotos,
         WorkspaceFeature.badgeSignIn,
+        WorkspaceFeature.kioskEnrolment,
       },
     ),
   ],

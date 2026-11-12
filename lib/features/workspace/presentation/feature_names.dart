@@ -307,5 +307,6 @@ String _latestName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.placeBooking => l10n.featurePlaceBookingTitle,
       WorkspaceFeature.reminderEmail => l10n.featureReminderEmailTitle,
       WorkspaceFeature.invoiceEmail => l10n.featureInvoiceEmailTitle,
+      WorkspaceFeature.kioskEnrolment => l10n.featureKioskEnrolmentTitle,
       _ => feature.name,
     };
