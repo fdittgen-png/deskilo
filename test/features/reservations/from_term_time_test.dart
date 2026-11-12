@@ -17,7 +17,7 @@ Future<String> _button(WidgetTester tester) async {
       supportedLocales: AppLocalizations.supportedLocales,
       home: Builder(
         builder: (context) {
-          final l10n = AppLocalizations.of(context);
+          final l10n = AppLocalizations.of(context)!;
           text = l10n.planFromTermTime(
             lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
             '09:00',
