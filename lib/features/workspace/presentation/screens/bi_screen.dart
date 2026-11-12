@@ -51,7 +51,6 @@ class BiScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
     final modules = visibleBiModules(
       ref.watch(enabledFeaturesSyncProvider),
       ref.watch(myPermissionsProvider),
@@ -99,17 +98,6 @@ class BiScreen extends ConsumerWidget {
           ]
         : [for (final c in cards) ...modules.where((m) => m.id == c)];
     final unavailable = cards.where((c) => !visibleIds.contains(c)).length;
-    final export = query != null && workspaceId != null && shown.isNotEmpty
-        ? BiExportActions(
-            workspaceId: workspaceId,
-            openId: saved,
-            query: query,
-            modules: shown,
-          )
-        : null;
-    // A table or a chart lays its rows out beside the compared period: it
-    // takes two columns where the grid has them.
-    final span = query?.view == BiView.dashboard ? 1 : 2;
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.biTitle),
@@ -164,7 +152,15 @@ class BiScreen extends ConsumerWidget {
                   onChanged: ask,
                   cardTitle: (id) => biModuleViews[id]?.title(l10n) ?? id,
                 ),
-                actions: [?export],
+                actions: [
+                  if (workspaceId != null && shown.isNotEmpty)
+                    BiExportActions(
+                      workspaceId: workspaceId,
+                      openId: saved,
+                      query: query,
+                      modules: shown,
+                    ),
+                ],
               ),
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.md,
@@ -173,42 +169,70 @@ class BiScreen extends ConsumerWidget {
           AppSpacing.md,
         ),
         children: [
-          if (query != null) ...[
-            if (unavailable > 0)
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.md),
-                child: Text(
-                  l10n.biCardsUnavailable(unavailable),
-                  key: const ValueKey('bi-cards-unavailable'),
-                ),
-              ),
-            for (final (area, inArea) in _byArea(shown)) ...[
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: AppSpacing.md,
-                  bottom: AppSpacing.sm,
-                ),
-                child: Text(
-                  _biAreaName(l10n, area),
-                  key: ValueKey('bi-area-${area.name}'),
-                  style: theme.textTheme.titleMedium,
-                ),
-              ),
-              DashboardGrid(
-                key: ValueKey('bi-grid-${area.name}'),
-                minTileWidth: biAnalysisMinWidth,
-                children: [
-                  for (final m in inArea)
-                    DashboardTile(
-                      span: span,
-                      child: BiModuleSection(module: m, query: query),
-                    ),
-                ],
-              ),
-            ],
-          ],
+          if (query != null)
+            _Analyses(shown: shown, query: query, unavailable: unavailable),
         ],
       ),
+    );
+  }
+}
+
+/// The analyses on the page's grid, under the heading of their area, after
+/// the count of the chosen ones the reader may not see.
+class _Analyses extends StatelessWidget {
+  const _Analyses({
+    required this.shown,
+    required this.query,
+    required this.unavailable,
+  });
+
+  final List<BiModule> shown;
+  final BiQueryContext query;
+  final int unavailable;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final style = Theme.of(context).textTheme.titleMedium;
+    // A table or a chart lays its rows out beside the compared period: it
+    // takes two columns where the grid has them.
+    final span = query.view == BiView.dashboard ? 1 : 2;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (unavailable > 0)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.md),
+            child: Text(
+              l10n.biCardsUnavailable(unavailable),
+              key: const ValueKey('bi-cards-unavailable'),
+            ),
+          ),
+        for (final (area, inArea) in _byArea(shown)) ...[
+          Padding(
+            padding: const EdgeInsets.only(
+              top: AppSpacing.md,
+              bottom: AppSpacing.sm,
+            ),
+            child: Text(
+              _biAreaName(l10n, area),
+              key: ValueKey('bi-area-${area.name}'),
+              style: style,
+            ),
+          ),
+          DashboardGrid(
+            key: ValueKey('bi-grid-${area.name}'),
+            minTileWidth: biAnalysisMinWidth,
+            children: [
+              for (final m in inArea)
+                DashboardTile(
+                  span: span,
+                  child: BiModuleSection(module: m, query: query),
+                ),
+            ],
+          ),
+        ],
+      ],
     );
   }
 }

@@ -339,9 +339,30 @@ class BiModuleSection extends ConsumerWidget {
   );
 }
 
-/// The signed size of [c]: its points, else its amount, else its share;
-/// null when it is undefined.
-num? _signed(BiChange c) => c.points ?? c.absolute ?? c.relative;
+/// The comparison with the period before, after the sign of the change
+/// said in words, not by colour.
+class _ComparedLine extends StatelessWidget {
+  const _ComparedLine({required this.change, required this.text});
+
+  final BiChange change;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final direction = KpiTrendDirection.of(
+      change.points ?? change.absolute ?? change.relative,
+    );
+    return Row(
+      children: [
+        if (direction != null) ...[
+          KpiTrendMark(direction),
+          const SizedBox(width: AppSpacing.xs),
+        ],
+        Flexible(child: Text(text, key: const ValueKey('bi-compared'))),
+      ],
+    );
+  }
+}
 
 class _Result extends ConsumerWidget {
   const _Result({
@@ -411,30 +432,13 @@ class _Result extends ConsumerWidget {
           CapacityEvidence(kpi: k),
         Text(view.basis(total.current, l10n, locale)),
         if (comparedPeriod != null && compared != null)
-          Row(
-            children: [
-              // The sign of the change, said in words, not by colour.
-              if (KpiTrendDirection.of(_signed(changeOf(total, agg)))
-                  case final direction?) ...[
-                KpiTrendMark(direction),
-                const SizedBox(width: AppSpacing.xs),
-              ],
-              Flexible(
-                child: Text(
-                  l10n.biComparedLine(
-                    comparedLabel,
-                    view.value(compared.value(agg), locale, result.currency),
-                    biChangeLabel(
-                      changeOf(total, agg),
-                      l10n,
-                      locale,
-                      format: amount,
-                    ),
-                  ),
-                  key: const ValueKey('bi-compared'),
-                ),
-              ),
-            ],
+          _ComparedLine(
+            change: changeOf(total, agg),
+            text: l10n.biComparedLine(
+              comparedLabel,
+              view.value(compared.value(agg), locale, result.currency),
+              biChangeLabel(changeOf(total, agg), l10n, locale, format: amount),
+            ),
           ),
         ],
         for (final note in notes)
