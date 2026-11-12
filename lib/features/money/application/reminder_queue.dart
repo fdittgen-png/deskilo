@@ -14,6 +14,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/share/file_sharer.dart';
 import '../domain/invoice_commands.dart';
+import '../domain/reminder_mail.dart';
 import 'receivables.dart';
 import 'receivables_answers.dart';
 import 'send_reminder.dart';
@@ -47,6 +48,33 @@ enum ReminderHandled {
   failed,
 }
 
+/// #3673 — what the server recorded for a line's reminder e-mail at the
+/// line's own level (0728's rows, never what the app remembers).
+enum QueuedEmail {
+  /// No e-mail of this level, or one a person said did not arrive.
+  none,
+
+  /// The provider accepted it, or a person confirmed it arrived.
+  sent,
+
+  /// No confirmed outcome: a person decides whether it arrived.
+  toDecide,
+
+  /// Refused: nothing left, nothing counted; it may be sent or shared.
+  refused,
+}
+
+/// The state of [line]'s e-mail in [mail], the server's row for its invoice.
+QueuedEmail queuedEmailOf(QueuedReminder line, ReminderMailLine? mail) =>
+    switch (mail?.sentAt(line.level)?.state) {
+      ReminderMailState.accepted || ReminderMailState.delivered =>
+        QueuedEmail.sent,
+      ReminderMailState.pending || ReminderMailState.unconfirmed =>
+        QueuedEmail.toDecide,
+      ReminderMailState.refused => QueuedEmail.refused,
+      ReminderMailState.notDelivered || null => QueuedEmail.none,
+    };
+
 /// A customer to check before anyone chases them: money of theirs is held
 /// unassigned (the predicate of Payments to match).
 typedef CheckFirstCustomer = ({String customerId, String customerName});
@@ -59,7 +87,31 @@ class ReminderQueue {
     this.lines, [
     this.handled = const {},
     this.checkFirst = const [],
+    this.email = const {},
   ]);
+
+  /// invoice id -> what the server recorded for its e-mail at its level
+  /// (#3673); an absent id is [QueuedEmail.none].
+  final Map<String, QueuedEmail> email;
+
+  QueuedEmail emailOf(QueuedReminder line) =>
+      email[line.invoiceId] ?? QueuedEmail.none;
+
+  /// This queue with the server's e-mail rows read again.
+  ReminderQueue withEmail(Map<String, QueuedEmail> email) =>
+      ReminderQueue(lines, handled, checkFirst, email);
+
+  /// What the result page lists as e-mailed.
+  List<QueuedReminder> get emailed => [
+    for (final l in lines)
+      if (emailOf(l) == QueuedEmail.sent) l,
+  ];
+
+  /// What it lists as an e-mail to decide.
+  List<QueuedReminder> get toDecide => [
+    for (final l in lines)
+      if (emailOf(l) == QueuedEmail.toDecide) l,
+  ];
 
   final List<QueuedReminder> lines;
 
@@ -79,11 +131,17 @@ class ReminderQueue {
   /// The levels present, lowest first.
   List<int> get levels => ({for (final l in lines) l.level}.toList()..sort());
 
-  /// Whether [line] left the device (recorded or not): never shared again.
-  bool hasLeft(QueuedReminder line) => switch (handled[line.invoiceId]) {
-    ReminderHandled.shared || ReminderHandled.sharedNotRecorded => true,
-    _ => false,
-  };
+  /// Whether [line] left the device (recorded or not), or by e-mail (or may
+  /// have, until a person decides): never shared or e-mailed again.
+  bool hasLeft(QueuedReminder line) =>
+      switch (handled[line.invoiceId]) {
+        ReminderHandled.shared || ReminderHandled.sharedNotRecorded => true,
+        _ => false,
+      } ||
+      switch (emailOf(line)) {
+        QueuedEmail.sent || QueuedEmail.toDecide => true,
+        QueuedEmail.none || QueuedEmail.refused => false,
+      };
 
   /// Still to share: not shared yet (a dismissed or failed line stays).
   List<QueuedReminder> get remaining => [
@@ -120,7 +178,7 @@ class ReminderQueue {
   bool get isDone => lines.isNotEmpty && remaining.isEmpty;
 
   ReminderQueue withResult(String invoiceId, ReminderHandled result) =>
-      ReminderQueue(lines, {...handled, invoiceId: result}, checkFirst);
+      ReminderQueue(lines, {...handled, invoiceId: result}, checkFirst, email);
 
   /// This queue drawn again as [fresh] says (the reads changed): its lines
   /// and "check first" are [fresh]'s, and a line that already left the
@@ -140,6 +198,7 @@ class ReminderQueue {
       ],
       handled,
       fresh.checkFirst,
+      email,
     );
   }
 }

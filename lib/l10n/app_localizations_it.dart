@@ -24537,6 +24537,40 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reminderQueueDoneEmpty => 'Niente da condividere';
 
   @override
+  String reminderQueueEmailAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Invia via e-mail ai $count raggiungibili',
+      one: 'Invia via e-mail all\'unico raggiungibile',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailAllConfirm => 'Invia le e-mail';
+
+  @override
+  String reminderQueueEmailAllTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Inviare $count solleciti via e-mail?',
+      one: 'Inviare 1 sollecito via e-mail?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailUnreached =>
+      'Non è stato possibile consegnare l\'e-mail al server. Inviala di nuovo: non partirà due volte.';
+
+  @override
+  String reminderQueueEmailed(String recipient) {
+    return 'Inviato via e-mail a $recipient';
+  }
+
+  @override
   String get reminderQueueFailed =>
       'Non è stato possibile condividerla. Riprovi.';
 
@@ -24548,6 +24582,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String reminderQueueLevel(int level) {
     return 'Sollecito $level';
   }
+
+  @override
+  String get reminderQueueLevelMoved =>
+      'Il suo livello di sollecito è cambiato nel frattempo. Non è stato inviato nulla; resta per il prossimo passaggio.';
 
   @override
   String get reminderQueueNotRecorded =>
@@ -24565,6 +24603,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reminderQueueResultNone => 'Nessun sollecito condiviso';
+
+  @override
+  String reminderQueueResultSentTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count solleciti inviati',
+      one: '1 sollecito inviato',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reminderQueueResultSubtitle =>
@@ -24595,6 +24644,32 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get reminderQueueSharedNotRecorded =>
       'Condiviso, ma non registrato sulla fattura. Lo registri: non verrà condiviso di nuovo.';
+
+  @override
+  String reminderQueueStaysNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count righe restano da condividere: nessun indirizzo e-mail registrato.',
+      one: '1 riga resta da condividere: nessun indirizzo e-mail registrato.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reminderQueueStaysToDecide(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count righe attendono: prima va decisa un\'e-mail precedente.',
+      one: '1 riga attende: prima va deciso un\'e-mail precedente.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueStillOpenHeading => 'Ancora aperto';
 
   @override
   String get reminderQueueTitle => 'Solleciti da condividere';

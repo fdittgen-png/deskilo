@@ -30,6 +30,12 @@ class _Mail implements ReminderMail {
       const ReminderMailTarget(available: true);
 
   @override
+  Future<Map<String, ReminderMailLine>> lines(
+    String workspaceId,
+    List<String> invoiceIds,
+  ) async => const {};
+
+  @override
   Future<List<ReminderMailSend>> awaiting(String w, String i) async => [
     _waiting,
   ];

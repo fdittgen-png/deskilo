@@ -24334,6 +24334,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderQueueDoneEmpty => 'Nothing to share';
 
   @override
+  String reminderQueueEmailAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'E-mail the $count reachable',
+      one: 'E-mail the 1 reachable',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailAllConfirm => 'Send the e-mails';
+
+  @override
+  String reminderQueueEmailAllTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Send $count reminders by e-mail?',
+      one: 'Send 1 reminder by e-mail?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailUnreached =>
+      'The e-mail could not be handed to the server. E-mail it again: it will not leave twice.';
+
+  @override
+  String reminderQueueEmailed(String recipient) {
+    return 'E-mailed to $recipient';
+  }
+
+  @override
   String get reminderQueueFailed => 'Could not be shared. Try again.';
 
   @override
@@ -24344,6 +24378,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String reminderQueueLevel(int level) {
     return 'Reminder $level';
   }
+
+  @override
+  String get reminderQueueLevelMoved =>
+      'Its reminder level changed meanwhile. Nothing was sent; it is left for the next pass.';
 
   @override
   String get reminderQueueNotRecorded =>
@@ -24361,6 +24399,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderQueueResultNone => 'No reminder shared';
+
+  @override
+  String reminderQueueResultSentTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count reminders sent',
+      one: '1 reminder sent',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reminderQueueResultSubtitle =>
@@ -24391,6 +24440,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reminderQueueSharedNotRecorded =>
       'Shared, but not recorded on the invoice. Record it: it will not be shared again.';
+
+  @override
+  String reminderQueueStaysNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lines stay for sharing: no e-mail address on file.',
+      one: '1 line stays for sharing: no e-mail address on file.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reminderQueueStaysToDecide(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lines wait: an earlier e-mail is to be decided first.',
+      one: '1 line waits: an earlier e-mail is to be decided first.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueStillOpenHeading => 'Still open';
 
   @override
   String get reminderQueueTitle => 'Reminders to share';

@@ -103,6 +103,31 @@ class ReminderMailSend {
   bool get awaitsDecision => state == ReminderMailState.unconfirmed;
 }
 
+/// One invoice of the reminder queue as the server sees it (0728): whether
+/// its customer can be e-mailed, and its latest reminder e-mail as recorded.
+class ReminderMailLine {
+  const ReminderMailLine({required this.target, this.lastSend});
+
+  factory ReminderMailLine.fromJson(Object? raw) {
+    final last = JsonReader.of(
+      raw,
+      context: 'reminder mail line',
+    ).objectOrNull('last_send');
+    return ReminderMailLine(
+      target: ReminderMailTarget.fromJson(raw),
+      lastSend: last == null ? null : ReminderMailSend.fromJson(last.json),
+    );
+  }
+
+  final ReminderMailTarget target;
+  final ReminderMailSend? lastSend;
+
+  /// The e-mail recorded for the reminder at [level], or null when the
+  /// latest one is of another level.
+  ReminderMailSend? sentAt(int level) =>
+      lastSend?.level == level ? lastSend : null;
+}
+
 /// The letter as it leaves: composed by the app in the customer's document
 /// [language], which the server records and never chooses.
 class ReminderMailLetter {
@@ -147,6 +172,12 @@ class ReminderMailRefused extends ReminderMailRefusal {
 abstract interface class ReminderMail {
   /// Whether a reminder of [invoiceId] can leave by e-mail, and to whom.
   Future<ReminderMailTarget> target(String workspaceId, String invoiceId);
+
+  /// For the queue (0728): each of [invoiceIds] of the workspace, by id.
+  Future<Map<String, ReminderMailLine>> lines(
+    String workspaceId,
+    List<String> invoiceIds,
+  );
 
   /// The e-mails of [invoiceId] that nobody could confirm.
   Future<List<ReminderMailSend>> awaiting(String workspaceId, String invoiceId);

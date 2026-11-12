@@ -24578,6 +24578,40 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderQueueDoneEmpty => 'Nichts zu teilen';
 
   @override
+  String reminderQueueEmailAll(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Die $count erreichbaren per E-Mail senden',
+      one: 'Den 1 erreichbaren per E-Mail senden',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailAllConfirm => 'E-Mails senden';
+
+  @override
+  String reminderQueueEmailAllTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen per E-Mail senden?',
+      one: '1 Mahnung per E-Mail senden?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueEmailUnreached =>
+      'Die E-Mail konnte nicht an den Server übergeben werden. Senden Sie sie erneut: Sie geht nicht zweimal hinaus.';
+
+  @override
+  String reminderQueueEmailed(String recipient) {
+    return 'Per E-Mail an $recipient gesendet';
+  }
+
+  @override
   String get reminderQueueFailed =>
       'Konnte nicht geteilt werden. Bitte erneut versuchen.';
 
@@ -24589,6 +24623,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String reminderQueueLevel(int level) {
     return 'Mahnung $level';
   }
+
+  @override
+  String get reminderQueueLevelMoved =>
+      'Ihre Mahnstufe hat sich inzwischen geändert. Nichts wurde gesendet; sie bleibt für den nächsten Durchgang.';
 
   @override
   String get reminderQueueNotRecorded =>
@@ -24606,6 +24644,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reminderQueueResultNone => 'Keine Mahnung geteilt';
+
+  @override
+  String reminderQueueResultSentTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen gesendet',
+      one: '1 Mahnung gesendet',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reminderQueueResultSubtitle =>
@@ -24636,6 +24685,34 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get reminderQueueSharedNotRecorded =>
       'Geteilt, aber nicht auf der Rechnung vermerkt. Vermerken Sie sie: Sie wird nicht erneut geteilt.';
+
+  @override
+  String reminderQueueStaysNoAddress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Zeilen bleiben zum Teilen: keine E-Mail-Adresse hinterlegt.',
+      one: '1 Zeile bleibt zum Teilen: keine E-Mail-Adresse hinterlegt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String reminderQueueStaysToDecide(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Zeilen warten: über eine frühere E-Mail ist zuerst zu entscheiden.',
+      one:
+          '1 Zeile wartet: über eine frühere E-Mail ist zuerst zu entscheiden.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reminderQueueStillOpenHeading => 'Noch offen';
 
   @override
   String get reminderQueueTitle => 'Zu teilende Mahnungen';

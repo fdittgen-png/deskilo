@@ -39662,6 +39662,36 @@ abstract class AppLocalizations {
   /// **'Nothing to share'**
   String get reminderQueueDoneEmpty;
 
+  /// #3673 reminder queue by e-mail: reminderQueueEmailAll
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{E-mail the 1 reachable} other{E-mail the {count} reachable}}'**
+  String reminderQueueEmailAll(int count);
+
+  /// #3673 reminder queue by e-mail: reminderQueueEmailAllConfirm
+  ///
+  /// In en, this message translates to:
+  /// **'Send the e-mails'**
+  String get reminderQueueEmailAllConfirm;
+
+  /// #3673 reminder queue by e-mail: reminderQueueEmailAllTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}'**
+  String reminderQueueEmailAllTitle(int count);
+
+  /// #3673 reminder queue by e-mail: reminderQueueEmailUnreached
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail could not be handed to the server. E-mail it again: it will not leave twice.'**
+  String get reminderQueueEmailUnreached;
+
+  /// #3673 reminder queue by e-mail: reminderQueueEmailed
+  ///
+  /// In en, this message translates to:
+  /// **'E-mailed to {recipient}'**
+  String reminderQueueEmailed(String recipient);
+
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueFailed)
   ///
   /// In en, this message translates to:
@@ -39679,6 +39709,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminder {level}'**
   String reminderQueueLevel(int level);
+
+  /// #3673 reminder queue by e-mail: reminderQueueLevelMoved
+  ///
+  /// In en, this message translates to:
+  /// **'Its reminder level changed meanwhile. Nothing was sent; it is left for the next pass.'**
+  String get reminderQueueLevelMoved;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueNotRecorded)
   ///
@@ -39709,6 +39745,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No reminder shared'**
   String get reminderQueueResultNone;
+
+  /// #3673 reminder queue by e-mail: reminderQueueResultSentTitle
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 reminder sent} other{{count} reminders sent}}'**
+  String reminderQueueResultSentTitle(int count);
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)
   ///
@@ -39745,6 +39787,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shared, but not recorded on the invoice. Record it: it will not be shared again.'**
   String get reminderQueueSharedNotRecorded;
+
+  /// #3673 reminder queue by e-mail: reminderQueueStaysNoAddress
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}'**
+  String reminderQueueStaysNoAddress(int count);
+
+  /// #3673 reminder queue by e-mail: reminderQueueStaysToDecide
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}'**
+  String reminderQueueStaysToDecide(int count);
+
+  /// #3673 reminder queue by e-mail: reminderQueueStillOpenHeading
+  ///
+  /// In en, this message translates to:
+  /// **'Still open'**
+  String get reminderQueueStillOpenHeading;
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueTitle)
   ///

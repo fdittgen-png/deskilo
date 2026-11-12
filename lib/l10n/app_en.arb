@@ -31941,6 +31941,41 @@
   "@reminderQueueDoneEmpty": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
   },
+  "reminderQueueEmailAll": "{count, plural, =1{E-mail the 1 reachable} other{E-mail the {count} reachable}}",
+  "@reminderQueueEmailAll": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailAllConfirm": "Send the e-mails",
+  "@reminderQueueEmailAllConfirm": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
+  },
+  "reminderQueueEmailAllTitle": "{count, plural, =1{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}",
+  "@reminderQueueEmailAllTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueEmailUnreached": "The e-mail could not be handed to the server. E-mail it again: it will not leave twice.",
+  "@reminderQueueEmailUnreached": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
+  },
+  "reminderQueueEmailed": "E-mailed to {recipient}",
+  "@reminderQueueEmailed": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueEmailed",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
   "reminderQueueFailed": "Could not be shared. Try again.",
   "@reminderQueueFailed": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
@@ -31957,6 +31992,10 @@
         "type": "int"
       }
     }
+  },
+  "reminderQueueLevelMoved": "Its reminder level changed meanwhile. Nothing was sent; it is left for the next pass.",
+  "@reminderQueueLevelMoved": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueLevelMoved"
   },
   "reminderQueueNotRecorded": "Nothing was recorded: the share was closed.",
   "@reminderQueueNotRecorded": {
@@ -31977,6 +32016,15 @@
   "reminderQueueResultNone": "No reminder shared",
   "@reminderQueueResultNone": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
+  },
+  "reminderQueueResultSentTitle": "{count, plural, =1{1 reminder sent} other{{count} reminders sent}}",
+  "@reminderQueueResultSentTitle": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "reminderQueueResultSubtitle": "Each one is recorded on its invoice.",
   "@reminderQueueResultSubtitle": {
@@ -32011,6 +32059,28 @@
   "reminderQueueSharedNotRecorded": "Shared, but not recorded on the invoice. Record it: it will not be shared again.",
   "@reminderQueueSharedNotRecorded": {
     "description": "#3587 R1-f: a reminder left the device but recording its level failed; its action records only"
+  },
+  "reminderQueueStaysNoAddress": "{count, plural, =1{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}",
+  "@reminderQueueStaysNoAddress": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStaysToDecide": "{count, plural, =1{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}",
+  "@reminderQueueStaysToDecide": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderQueueStillOpenHeading": "Still open",
+  "@reminderQueueStillOpenHeading": {
+    "description": "#3673 reminder queue by e-mail: reminderQueueStillOpenHeading"
   },
   "reminderQueueTitle": "Reminders to share",
   "@reminderQueueTitle": {
