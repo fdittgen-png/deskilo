@@ -244,6 +244,31 @@ void main() {
       expect(folders.writes, 0);
     });
 
+    test('a direct write that fails half-way over a file the person chose to '
+        'replace gives that file back, whole', () async {
+      // The dialog let the person pick an existing file; the direct write
+      // truncates it at once, so a failure must not cost them the original.
+      final target = '${root.path}/invoice.pdf';
+      const original = [9, 8, 7, 6, 5, 4, 3];
+      File(target).writeAsBytesSync(original);
+      final outcome = await save(
+        _Dialog(target),
+        write: (file, bytes) => writeToChosenPlace(
+          file,
+          bytes,
+          atomic: siblingRefused,
+          direct: (file, bytes) async {
+            file.writeAsBytesSync(bytes.sublist(0, 2));
+            throw FileSystemException('disk full', file.path);
+          },
+        ),
+      );
+      expect(outcome, isA<SaveFailed>());
+      expect(File(target).readAsBytesSync(), original);
+      expect(root.listSync(), hasLength(1), reason: 'the original only');
+      expect(folders.writes, 0);
+    });
+
     test('where the folder allows it, the first way is used and the direct '
         'write is not', () async {
       final target = '${root.path}/invoice.pdf';

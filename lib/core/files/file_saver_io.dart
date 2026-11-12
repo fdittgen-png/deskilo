@@ -190,9 +190,11 @@ class _TemporaryFileRefused implements Exception {
 /// The second way exists for a sandboxed macOS build, where the save dialog
 /// grants the chosen file and not its folder, so no temporary file may be
 /// made beside it: the complete bytes are written to the chosen path itself
-/// in one write with flush ([direct]). That way is NOT atomic; a write that
-/// fails part-way deletes what it wrote (the chosen path is granted) and
-/// rethrows. Neither way leaves a temporary file behind.
+/// in one write with flush ([direct]). That way is NOT atomic, so a file the
+/// person chose to replace is kept in memory first: when the write fails
+/// part-way, its bytes are written back; a target that did not exist before
+/// is deleted (the chosen path is granted). Then the failure is rethrown.
+/// Neither way leaves a temporary file behind.
 @visibleForTesting
 Future<String> writeToChosenPlace(
   File target,
@@ -204,15 +206,44 @@ Future<String> writeToChosenPlace(
   try {
     return await atomic(target, bytes);
   } on _TemporaryFileRefused {
+    // What the person is replacing, if anything: the direct write truncates
+    // it at once, so it is read before a byte is written.
+    final before = await _bytesOf(target);
     try {
       await direct(target, bytes);
       return target.path;
     } on Object catch (e, st) {
       TraceLogger.instance
           .error('files', 'direct write failed', error: e, stackTrace: st);
-      await _discard(target);
+      await _restore(target, before);
       rethrow;
     }
+  }
+}
+
+/// The bytes of [file] when it exists and can be read; null otherwise (a
+/// file that cannot be read is treated as not there: nothing to give back).
+Future<List<int>?> _bytesOf(File file) async {
+  try {
+    return file.existsSync() ? await file.readAsBytes() : null;
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .warn('files', 'file to replace not read', error: e, stackTrace: st);
+    return null;
+  }
+}
+
+/// After a failed direct write: [before] is written back when the target
+/// existed, else what was written is removed. A failure here is traced,
+/// never thrown over the failure being reported.
+Future<void> _restore(File target, List<int>? before) async {
+  if (before == null) return _discard(target);
+  try {
+    await target.writeAsBytes(before, flush: true);
+    TraceLogger.instance.warn('files', 'replaced file given back');
+  } on Object catch (e, st) {
+    TraceLogger.instance
+        .error('files', 'replaced file not given back', error: e, stackTrace: st);
   }
 }
 
