@@ -6753,6 +6753,10 @@
   "@bookTypeLiability": {
     "description": "#1869 B chart of accounts"
   },
+  "bookingAdminNoLevel": "An admin cannot assign a whole level here.",
+  "@bookingAdminNoLevel": {
+    "description": "#3810 booking refusal DKK35: an admin may not assign a whole level here"
+  },
   "bookingCheckedInAtUntil": "Checked in at {space} until {until}.",
   "@bookingCheckedInAtUntil": {
     "description": "#663 - check-in confirmation naming the space",
@@ -6777,6 +6781,10 @@
         "type": "String"
       }
     }
+  },
+  "bookingEndMustLieAhead": "The new end must be later than now.",
+  "@bookingEndMustLieAhead": {
+    "description": "#3810 booking refusal DKK32: a new end in the past"
   },
   "bookingGateBlocked": "Not bookable as chosen",
   "@bookingGateBlocked": {
@@ -6807,6 +6815,10 @@
   "@bookingNoLongerCheckedIn": {
     "description": "#1908 — a checkout lost a race: the reservation was already checked out or closed by the day-end sweep"
   },
+  "bookingNoLongerReserved": "This booking is no longer reserved, so it cannot be checked in.",
+  "@bookingNoLongerReserved": {
+    "description": "#3810 booking refusal DKK36: check-in on a booking no longer reserved"
+  },
   "bookingNotAMember": "You are no longer a member of this space — ask an administrator for an invitation.",
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
@@ -6815,9 +6827,21 @@
   "@bookingNotAllowedError": {
     "description": "Refusal when the member does not hold makeReservations (#3269)"
   },
+  "bookingNotCancellable": "This booking can no longer be cancelled.",
+  "@bookingNotCancellable": {
+    "description": "#3810 booking refusal DKK30: the booking can no longer be cancelled"
+  },
+  "bookingNotYours": "This booking is not yours.",
+  "@bookingNotYours": {
+    "description": "#3810 booking refusal DKK29: the booking belongs to someone else"
+  },
   "bookingOnePlace": "You already have a booking in that period — one place at a time.",
   "@bookingOnePlace": {
     "description": "Refusal when the member already holds an overlapping active reservation (#412)"
+  },
+  "bookingOnlyUpcoming": "Only upcoming bookings can be changed.",
+  "@bookingOnlyUpcoming": {
+    "description": "#3810 booking refusal DKK33: only upcoming bookings can be edited"
   },
   "bookingOpenDetails": "Details",
   "@bookingOpenDetails": {
@@ -6968,9 +6992,22 @@
       }
     }
   },
+  "bookingRunningKeepsStart": "A booking that has started keeps its start time.",
+  "@bookingRunningKeepsStart": {
+    "description": "#3810 booking refusal DKK31: a running booking cannot move its start"
+  },
   "bookingSameDayError": "A booking ends on the day it starts — book the next day separately.",
   "@bookingSameDayError": {
     "description": "Shown as a text in booking error text (reservations), and 1 other place."
+  },
+  "bookingSeriesTooLong": "{days, plural, =1{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}",
+  "@bookingSeriesTooLong": {
+    "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
   },
   "bookingSpaceChainTaken": "This space, or a space it belongs to, is already reserved in that period.",
   "@bookingSpaceChainTaken": {

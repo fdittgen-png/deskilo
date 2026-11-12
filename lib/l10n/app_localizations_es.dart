@@ -5156,6 +5156,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookTypeLiability => 'Pasivo';
 
   @override
+  String get bookingAdminNoLevel =>
+      'Un administrador no puede asignar una planta entera aquí.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Registrado en $space hasta las $until.';
   }
@@ -5168,6 +5172,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Registrado hasta las $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead =>
+      'El nuevo final debe ser posterior a ahora.';
 
   @override
   String get bookingGateBlocked => 'No reservable así';
@@ -5200,6 +5208,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta reserva ya no está registrada — se cerró mientras tanto.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'Esta reserva ya no está reservada; no se puede registrar la llegada.';
+
+  @override
   String get bookingNotAMember =>
       'Ya no es miembro de este espacio — pida una invitación a un administrador.';
 
@@ -5208,8 +5220,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'No puede hacer reservas en este espacio. Pida a un propietario que permita reservar a los miembros.';
 
   @override
+  String get bookingNotCancellable => 'Esta reserva ya no se puede cancelar.';
+
+  @override
+  String get bookingNotYours => 'Esta reserva no es suya.';
+
+  @override
   String get bookingOnePlace =>
       'Ya tiene una reserva en ese periodo — un sitio a la vez.';
+
+  @override
+  String get bookingOnlyUpcoming =>
+      'Solo se pueden modificar las reservas futuras.';
 
   @override
   String get bookingOpenDetails => 'Detalles';
@@ -5320,8 +5342,23 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'Una reserva en curso conserva su hora de inicio.';
+
+  @override
   String get bookingSameDayError =>
       'Una reserva termina el día en que empieza: reserve el día siguiente por separado.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Una serie puede abarcar como máximo $days días.',
+      one: 'Una serie puede abarcar como máximo 1 día.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>

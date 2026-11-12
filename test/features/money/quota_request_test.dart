@@ -8,7 +8,6 @@
 // mapping when the server rejects a beyond-quota reservation.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/reservations/domain/quota_rules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -106,15 +105,15 @@ void main() {
       tester,
       reservations: ThrowingReservationRepository(
         const PostgrestException(
-          // Pins assert_member_quota's error text (0031) via
-          // QuotaExceededError.serverSubstring.
+          // assert_member_quota's refusal (0031), coded by 0739.
           message: 'half-day quota exceeded — request additional half-days',
+          code: 'DKK02', // #3810: the code 0739 raises
         ),
       ),
     );
     expect(
       'half-day quota exceeded — request additional half-days',
-      contains(QuotaExceededError.serverSubstring),
+      contains('half-day quota'),
     );
 
     await tester.tapAt(seatCenter(tester));
