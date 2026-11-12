@@ -14839,6 +14839,64 @@
   "registerPaymentSubmit": "Registrar",
   "registerPaymentTitle": "Registrar un pago",
   "reminderBody": "{target} empieza a las {time}",
+  "reminderChannelShare": "Compartir la carta",
+  "@reminderChannelShare": {
+    "description": "#3673 reminders by e-mail: reminderChannelShare"
+  },
+  "reminderEmailDecisionFailed": "No se pudo guardar su respuesta. Inténtelo de nuevo.",
+  "@reminderEmailDecisionFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailDecisionFailed"
+  },
+  "reminderEmailFailed": "No se pudo enviar el recordatorio por correo. No se envió ni registró nada.",
+  "@reminderEmailFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailFailed"
+  },
+  "reminderEmailLevelChanged": "El nivel del recordatorio cambió entretanto. No se envió nada; abra de nuevo el recordatorio.",
+  "@reminderEmailLevelChanged": {
+    "description": "#3673 reminders by e-mail: reminderEmailLevelChanged"
+  },
+  "reminderEmailNoAddress": "Este cliente no tiene ninguna dirección de correo registrada",
+  "@reminderEmailNoAddress": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
+  },
+  "reminderEmailNoLanguage": "No se conoce el idioma de documentos del cliente, así que el recordatorio no se envió por correo. Elija su idioma o comparta la carta.",
+  "@reminderEmailNoLanguage": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
+  },
+  "reminderEmailNoSender": "El remitente de correo de la empresa aún no está configurado",
+  "@reminderEmailNoSender": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoSender"
+  },
+  "reminderEmailOff": "Los recordatorios por correo están desactivados en este espacio",
+  "@reminderEmailOff": {
+    "description": "#3673 reminders by e-mail: reminderEmailOff"
+  },
+  "reminderEmailRefused": "El correo fue rechazado: {reason}. No se registró ningún recordatorio.",
+  "@reminderEmailRefused": {
+    "description": "#3673 reminders by e-mail: reminderEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailRetry": "No se pudo entregar el correo al servidor. ¿Intentarlo de nuevo? No se enviará dos veces.",
+  "@reminderEmailRetry": {
+    "description": "#3673 reminders by e-mail: reminderEmailRetry"
+  },
+  "reminderEmailTo": "A {recipient}, el correo de contacto del perfil del cliente",
+  "@reminderEmailTo": {
+    "description": "#3673 reminders by e-mail: reminderEmailTo",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailUnconfirmed": "No llegó ninguna respuesta confirmada. No se registró nada; consulte con el cliente antes de decidir si llegó.",
+  "@reminderEmailUnconfirmed": {
+    "description": "#3673 reminders by e-mail: reminderEmailUnconfirmed"
+  },
   "reminderHistoryLine": "Recordatorio {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine",
@@ -14913,6 +14971,18 @@
   "reminderStatusDeclared": "Compartido por el remitente — su declaración, no un acuse de recibo",
   "@reminderStatusDeclared": {
     "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusEmailAccepted": "Aceptado por el proveedor de correo — no prueba que se haya leído",
+  "@reminderStatusEmailAccepted": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailAccepted"
+  },
+  "reminderStatusEmailDeclared": "Llegada confirmada por una persona — su declaración, no un acuse de recibo",
+  "@reminderStatusEmailDeclared": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailDeclared"
+  },
+  "reminderStatusEmailUnknown": "Ninguna respuesta confirmada del proveedor de correo",
+  "@reminderStatusEmailUnknown": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailUnknown"
   },
   "reminderStatusFailed": "No entregado",
   "@reminderStatusFailed": {

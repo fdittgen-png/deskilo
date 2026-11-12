@@ -31732,6 +31732,64 @@
       }
     }
   },
+  "reminderChannelShare": "Share the letter",
+  "@reminderChannelShare": {
+    "description": "#3673 reminders by e-mail: reminderChannelShare"
+  },
+  "reminderEmailDecisionFailed": "Your answer could not be saved. Try again.",
+  "@reminderEmailDecisionFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailDecisionFailed"
+  },
+  "reminderEmailFailed": "The reminder could not be e-mailed. Nothing was sent or recorded.",
+  "@reminderEmailFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailFailed"
+  },
+  "reminderEmailLevelChanged": "The reminder level changed in the meantime. Nothing was sent; open the reminder again.",
+  "@reminderEmailLevelChanged": {
+    "description": "#3673 reminders by e-mail: reminderEmailLevelChanged"
+  },
+  "reminderEmailNoAddress": "This customer has no e-mail address on file",
+  "@reminderEmailNoAddress": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
+  },
+  "reminderEmailNoLanguage": "The customer's document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.",
+  "@reminderEmailNoLanguage": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
+  },
+  "reminderEmailNoSender": "The business's e-mail sender is not set up yet",
+  "@reminderEmailNoSender": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoSender"
+  },
+  "reminderEmailOff": "Reminders by e-mail are off in this space",
+  "@reminderEmailOff": {
+    "description": "#3673 reminders by e-mail: reminderEmailOff"
+  },
+  "reminderEmailRefused": "The e-mail was refused: {reason}. No reminder was recorded.",
+  "@reminderEmailRefused": {
+    "description": "#3673 reminders by e-mail: reminderEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailRetry": "The e-mail could not be handed to the server. Try again? It will not be sent twice.",
+  "@reminderEmailRetry": {
+    "description": "#3673 reminders by e-mail: reminderEmailRetry"
+  },
+  "reminderEmailTo": "To {recipient}, the contact e-mail of the customer's profile",
+  "@reminderEmailTo": {
+    "description": "#3673 reminders by e-mail: reminderEmailTo",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailUnconfirmed": "No confirmed answer came back. Nothing was recorded; check with the customer before deciding whether it arrived.",
+  "@reminderEmailUnconfirmed": {
+    "description": "#3673 reminders by e-mail: reminderEmailUnconfirmed"
+  },
   "reminderHistoryLine": "Reminder {level} · {origin} · {date}",
   "@reminderHistoryLine": {
     "description": "#1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation.",
@@ -31935,6 +31993,18 @@
   "reminderStatusDeclared": "Shared by the sender — their statement, not a receipt",
   "@reminderStatusDeclared": {
     "description": "#1922 reminder evidence: reminderStatusDeclared"
+  },
+  "reminderStatusEmailAccepted": "Accepted by the e-mail provider — not proof it was read",
+  "@reminderStatusEmailAccepted": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailAccepted"
+  },
+  "reminderStatusEmailDeclared": "Arrival confirmed by a person — their statement, not a receipt",
+  "@reminderStatusEmailDeclared": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailDeclared"
+  },
+  "reminderStatusEmailUnknown": "No confirmed answer from the e-mail provider",
+  "@reminderStatusEmailUnknown": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailUnknown"
   },
   "reminderStatusFailed": "Not delivered",
   "@reminderStatusFailed": {

@@ -24357,6 +24357,55 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reminderChannelShare => 'Compartir la carta';
+
+  @override
+  String get reminderEmailDecisionFailed =>
+      'No se pudo guardar su respuesta. Inténtelo de nuevo.';
+
+  @override
+  String get reminderEmailFailed =>
+      'No se pudo enviar el recordatorio por correo. No se envió ni registró nada.';
+
+  @override
+  String get reminderEmailLevelChanged =>
+      'El nivel del recordatorio cambió entretanto. No se envió nada; abra de nuevo el recordatorio.';
+
+  @override
+  String get reminderEmailNoAddress =>
+      'Este cliente no tiene ninguna dirección de correo registrada';
+
+  @override
+  String get reminderEmailNoLanguage =>
+      'No se conoce el idioma de documentos del cliente, así que el recordatorio no se envió por correo. Elija su idioma o comparta la carta.';
+
+  @override
+  String get reminderEmailNoSender =>
+      'El remitente de correo de la empresa aún no está configurado';
+
+  @override
+  String get reminderEmailOff =>
+      'Los recordatorios por correo están desactivados en este espacio';
+
+  @override
+  String reminderEmailRefused(String reason) {
+    return 'El correo fue rechazado: $reason. No se registró ningún recordatorio.';
+  }
+
+  @override
+  String get reminderEmailRetry =>
+      'No se pudo entregar el correo al servidor. ¿Intentarlo de nuevo? No se enviará dos veces.';
+
+  @override
+  String reminderEmailTo(String recipient) {
+    return 'A $recipient, el correo de contacto del perfil del cliente';
+  }
+
+  @override
+  String get reminderEmailUnconfirmed =>
+      'No llegó ninguna respuesta confirmada. No se registró nada; consulte con el cliente antes de decidir si llegó.';
+
+  @override
   String reminderHistoryLine(int level, String origin, String date) {
     return 'Recordatorio $level · $origin · $date';
   }
@@ -24513,6 +24562,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get reminderStatusDeclared =>
       'Compartido por el remitente — su declaración, no un acuse de recibo';
+
+  @override
+  String get reminderStatusEmailAccepted =>
+      'Aceptado por el proveedor de correo — no prueba que se haya leído';
+
+  @override
+  String get reminderStatusEmailDeclared =>
+      'Llegada confirmada por una persona — su declaración, no un acuse de recibo';
+
+  @override
+  String get reminderStatusEmailUnknown =>
+      'Ninguna respuesta confirmada del proveedor de correo';
 
   @override
   String get reminderStatusFailed => 'No entregado';

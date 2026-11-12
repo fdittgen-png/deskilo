@@ -1,0 +1,73 @@
+{
+  "@@locale": "de",
+  "reminderChannelShare": "Brief teilen",
+  "@reminderChannelShare": {
+    "description": "#3673 reminders by e-mail: reminderChannelShare"
+  },
+  "reminderEmailTo": "An {recipient}, die Kontakt-E-Mail aus dem Profil des Kunden",
+  "@reminderEmailTo": {
+    "description": "#3673 reminders by e-mail: reminderEmailTo",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailNoAddress": "Für diesen Kunden ist keine E-Mail-Adresse hinterlegt",
+  "@reminderEmailNoAddress": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
+  },
+  "reminderEmailNoSender": "Der E-Mail-Absender des Unternehmens ist noch nicht eingerichtet",
+  "@reminderEmailNoSender": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoSender"
+  },
+  "reminderEmailOff": "Mahnungen per E-Mail sind in diesem Bereich ausgeschaltet",
+  "@reminderEmailOff": {
+    "description": "#3673 reminders by e-mail: reminderEmailOff"
+  },
+  "reminderEmailNoLanguage": "Die Dokumentsprache des Kunden ist unbekannt, daher wurde die Mahnung nicht per E-Mail gesendet. Wählen Sie seine Sprache oder teilen Sie den Brief.",
+  "@reminderEmailNoLanguage": {
+    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
+  },
+  "reminderEmailRefused": "Die E-Mail wurde abgelehnt: {reason}. Es wurde keine Mahnung erfasst.",
+  "@reminderEmailRefused": {
+    "description": "#3673 reminders by e-mail: reminderEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderEmailUnconfirmed": "Keine bestätigte Antwort. Nichts wurde erfasst; klären Sie mit dem Kunden, ob sie angekommen ist, bevor Sie entscheiden.",
+  "@reminderEmailUnconfirmed": {
+    "description": "#3673 reminders by e-mail: reminderEmailUnconfirmed"
+  },
+  "reminderEmailLevelChanged": "Die Mahnstufe hat sich inzwischen geändert. Nichts wurde gesendet; öffnen Sie die Mahnung erneut.",
+  "@reminderEmailLevelChanged": {
+    "description": "#3673 reminders by e-mail: reminderEmailLevelChanged"
+  },
+  "reminderEmailRetry": "Die E-Mail konnte nicht an den Server übergeben werden. Erneut versuchen? Sie wird nicht zweimal gesendet.",
+  "@reminderEmailRetry": {
+    "description": "#3673 reminders by e-mail: reminderEmailRetry"
+  },
+  "reminderStatusEmailAccepted": "Vom E-Mail-Anbieter angenommen — kein Beweis, dass sie gelesen wurde",
+  "@reminderStatusEmailAccepted": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailAccepted"
+  },
+  "reminderStatusEmailUnknown": "Keine bestätigte Antwort des E-Mail-Anbieters",
+  "@reminderStatusEmailUnknown": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailUnknown"
+  },
+  "reminderStatusEmailDeclared": "Ankunft von einer Person bestätigt — ihre Aussage, keine Empfangsbestätigung",
+  "@reminderStatusEmailDeclared": {
+    "description": "#3673 reminders by e-mail: reminderStatusEmailDeclared"
+  },
+  "reminderEmailFailed": "Die Mahnung konnte nicht per E-Mail gesendet werden. Nichts wurde gesendet oder erfasst.",
+  "@reminderEmailFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailFailed"
+  },
+  "reminderEmailDecisionFailed": "Ihre Antwort konnte nicht gespeichert werden. Versuchen Sie es erneut.",
+  "@reminderEmailDecisionFailed": {
+    "description": "#3673 reminders by e-mail: reminderEmailDecisionFailed"
+  }
+}

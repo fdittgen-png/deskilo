@@ -16,9 +16,18 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/reminder_evidence.dart';
 import '../../providers/reminder_evidence_providers.dart';
 
+/// [email]: the reminder left by e-mail (#3673), so its provider is the
+/// e-mail provider and a confirmation is a person's.
 @visibleForTesting
-String reminderStatusLabel(AppLocalizations l10n, String status) =>
+String reminderStatusLabel(
+  AppLocalizations l10n,
+  String status, {
+  bool email = false,
+}) =>
     switch (status) {
+      'provider_accepted' when email => l10n.reminderStatusEmailAccepted,
+      'unknown' when email => l10n.reminderStatusEmailUnknown,
+      'declared_delivered' when email => l10n.reminderStatusEmailDeclared,
       'prepared' => l10n.reminderStatusPrepared,
       'queued' => l10n.reminderStatusQueued,
       'provider_accepted' =>
@@ -79,7 +88,7 @@ class ReminderEvidenceList extends ConsumerWidget {
             padding: const EdgeInsets.only(top: AppSpacing.xs),
             child: Text(
               '${l10n.reminderHistoryLine(item.level, _reminderOriginLabel(l10n, item.origin), date.format(item.preparedAt))}\n'
-              '${reminderStatusLabel(l10n, item.status)}',
+              '${reminderStatusLabel(l10n, item.status, email: item.attempts.any((a) => a.channel == 'email'))}',
               style: theme.textTheme.bodySmall,
             ),
           ),

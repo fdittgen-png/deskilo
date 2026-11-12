@@ -24427,6 +24427,55 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get reminderChannelShare => 'Partager la lettre';
+
+  @override
+  String get reminderEmailDecisionFailed =>
+      'Votre réponse n\'a pas pu être enregistrée. Réessayez.';
+
+  @override
+  String get reminderEmailFailed =>
+      'La relance n\'a pas pu être envoyée par e-mail. Rien n\'a été envoyé ni enregistré.';
+
+  @override
+  String get reminderEmailLevelChanged =>
+      'Le niveau de relance a changé entre-temps. Rien n\'a été envoyé ; rouvrez la relance.';
+
+  @override
+  String get reminderEmailNoAddress =>
+      'Ce client n\'a pas d\'adresse e-mail enregistrée';
+
+  @override
+  String get reminderEmailNoLanguage =>
+      'La langue des documents du client n\'est pas connue : la relance n\'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la lettre.';
+
+  @override
+  String get reminderEmailNoSender =>
+      'L\'expéditeur e-mail de l\'entreprise n\'est pas encore configuré';
+
+  @override
+  String get reminderEmailOff =>
+      'Les relances par e-mail sont désactivées dans cet espace';
+
+  @override
+  String reminderEmailRefused(String reason) {
+    return 'L\'e-mail a été refusé : $reason. Aucune relance n\'a été enregistrée.';
+  }
+
+  @override
+  String get reminderEmailRetry =>
+      'L\'e-mail n\'a pas pu être transmis au serveur. Réessayer ? Il ne sera pas envoyé deux fois.';
+
+  @override
+  String reminderEmailTo(String recipient) {
+    return 'À $recipient, l\'adresse de contact du profil du client';
+  }
+
+  @override
+  String get reminderEmailUnconfirmed =>
+      'Aucune réponse confirmée. Rien n\'a été enregistré ; vérifiez auprès du client avant de décider s\'il est arrivé.';
+
+  @override
   String reminderHistoryLine(int level, String origin, String date) {
     return 'Relance $level · $origin · $date';
   }
@@ -24584,6 +24633,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get reminderStatusDeclared =>
       'Partagée par l\'expéditeur — sa déclaration, pas un accusé de réception';
+
+  @override
+  String get reminderStatusEmailAccepted =>
+      'Accepté par le fournisseur d\'e-mail — ce n\'est pas la preuve qu\'il a été lu';
+
+  @override
+  String get reminderStatusEmailDeclared =>
+      'Arrivée confirmée par une personne — sa déclaration, pas un accusé de réception';
+
+  @override
+  String get reminderStatusEmailUnknown =>
+      'Aucune réponse confirmée du fournisseur d\'e-mail';
 
   @override
   String get reminderStatusFailed => 'Non distribuée';

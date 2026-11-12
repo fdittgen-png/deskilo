@@ -36,7 +36,11 @@ import 'report_strings_l10n.dart';
 /// band set for that level, else the shipped localized default, in the
 /// member's language (#496). A broken custom band set falls back to the
 /// default: a reminder must never fail on a template.
-Future<({InvoiceReport report, String title, AppLocalizations l10n})>
+///
+/// [language] is the member's resolved language, empty when it could not be
+/// decided (the letter then prints in the sender's): an e-mail is never sent
+/// on that guess (#3673).
+Future<({InvoiceReport report, String title, AppLocalizations l10n, String language})>
 reminderLetterReport(
   WidgetRef ref,
   BuildContext context,
@@ -89,14 +93,15 @@ reminderLetterReport(
   final report =
       (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
       renderReportBands(bands: fallback, data: texted)!;
-  return (report: report, title: title, l10n: l10n);
+  return (report: report, title: title, l10n: l10n, language: language);
 }
 
 /// Renders the reminder LETTER for [invoice] at [level] (#472): the
 /// owner's band set for that level, else the shipped localized default.
 /// A broken custom band set falls back to the default — a reminder must
 /// never fail on a template.
-Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
+Future<({List<int> bytes, String fileName, String title, String language})>
+buildReminderPdfFile(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice, {
@@ -133,5 +138,6 @@ Future<({List<int> bytes, String fileName, String title})> buildReminderPdfFile(
     bytes: bytes,
     fileName: '${safeFileSlug('$title ${invoice.number}')}.pdf',
     title: title,
+    language: letter.language,
   );
 }

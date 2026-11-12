@@ -39422,6 +39422,78 @@ abstract class AppLocalizations {
   /// **'{target} starts at {time}'**
   String reminderBody(String target, String time);
 
+  /// #3673 reminders by e-mail: reminderChannelShare
+  ///
+  /// In en, this message translates to:
+  /// **'Share the letter'**
+  String get reminderChannelShare;
+
+  /// #3673 reminders by e-mail: reminderEmailDecisionFailed
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer could not be saved. Try again.'**
+  String get reminderEmailDecisionFailed;
+
+  /// #3673 reminders by e-mail: reminderEmailFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder could not be e-mailed. Nothing was sent or recorded.'**
+  String get reminderEmailFailed;
+
+  /// #3673 reminders by e-mail: reminderEmailLevelChanged
+  ///
+  /// In en, this message translates to:
+  /// **'The reminder level changed in the meantime. Nothing was sent; open the reminder again.'**
+  String get reminderEmailLevelChanged;
+
+  /// #3673 reminders by e-mail: reminderEmailNoAddress
+  ///
+  /// In en, this message translates to:
+  /// **'This customer has no e-mail address on file'**
+  String get reminderEmailNoAddress;
+
+  /// #3673 reminders by e-mail: reminderEmailNoLanguage
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.'**
+  String get reminderEmailNoLanguage;
+
+  /// #3673 reminders by e-mail: reminderEmailNoSender
+  ///
+  /// In en, this message translates to:
+  /// **'The business\'s e-mail sender is not set up yet'**
+  String get reminderEmailNoSender;
+
+  /// #3673 reminders by e-mail: reminderEmailOff
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders by e-mail are off in this space'**
+  String get reminderEmailOff;
+
+  /// #3673 reminders by e-mail: reminderEmailRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail was refused: {reason}. No reminder was recorded.'**
+  String reminderEmailRefused(String reason);
+
+  /// #3673 reminders by e-mail: reminderEmailRetry
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail could not be handed to the server. Try again? It will not be sent twice.'**
+  String get reminderEmailRetry;
+
+  /// #3673 reminders by e-mail: reminderEmailTo
+  ///
+  /// In en, this message translates to:
+  /// **'To {recipient}, the contact e-mail of the customer\'s profile'**
+  String reminderEmailTo(String recipient);
+
+  /// #3673 reminders by e-mail: reminderEmailUnconfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed answer came back. Nothing was recorded; check with the customer before deciding whether it arrived.'**
+  String get reminderEmailUnconfirmed;
+
   /// #1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation.
   ///
   /// In en, this message translates to:
@@ -39661,6 +39733,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shared by the sender — their statement, not a receipt'**
   String get reminderStatusDeclared;
+
+  /// #3673 reminders by e-mail: reminderStatusEmailAccepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted by the e-mail provider — not proof it was read'**
+  String get reminderStatusEmailAccepted;
+
+  /// #3673 reminders by e-mail: reminderStatusEmailDeclared
+  ///
+  /// In en, this message translates to:
+  /// **'Arrival confirmed by a person — their statement, not a receipt'**
+  String get reminderStatusEmailDeclared;
+
+  /// #3673 reminders by e-mail: reminderStatusEmailUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed answer from the e-mail provider'**
+  String get reminderStatusEmailUnknown;
 
   /// #1922 reminder evidence: reminderStatusFailed
   ///

@@ -41,6 +41,9 @@ const Map<String, bool> functionVerifyJwt = {
   // who may send before the provider is reached.
   'send-purchase-order': true,
   'send-push': true,
+  // #3673 — an issuer's own session; begin_reminder_email_v1 decides who
+  // may send before the provider is reached.
+  'send-reminder-email': true,
   'stripe-webhook': false,
   // #2863 — a billing manager's own session; the database answers who
   // may ask before the registry is reached.

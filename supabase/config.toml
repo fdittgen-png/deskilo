@@ -118,6 +118,9 @@ verify_jwt = true
 [functions.send-purchase-order]
 verify_jwt = true
 
+[functions.send-reminder-email]
+verify_jwt = true
+
 [functions.supplier-lookup]
 verify_jwt = true
 
