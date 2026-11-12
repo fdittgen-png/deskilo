@@ -54,8 +54,13 @@ Future<bool> showAccountantHandoffPreflight(
       for (final l in c.value.entries)
         Text(
           key: ValueKey('handoff-total-${c.key}-${l.key}'),
-          '${l.key == 'voided' ? (l10n.handoffVoided) : (l10n.handoffIssued)}: '
-          '${l.value.count} · ${_amount(l.value.grossMinor, c.key)}',
+          l10n.dotPair(
+            l10n.labelWithValue(
+              l.key == 'voided' ? l10n.handoffVoided : l10n.handoffIssued,
+              '${l.value.count}',
+            ),
+            _amount(l.value.grossMinor, c.key),
+          ),
         ),
       if (report.payments[c.key] case final p?)
         Text(

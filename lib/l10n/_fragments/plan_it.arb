@@ -78,5 +78,6 @@
   "a11ySeatOccupied": "occupato",
   "a11ySeatMine": "il suo posto",
   "a11ySeatBlocked": "non disponibile",
-  "reservePlanLoading": "Caricamento della pianta…"
+  "reservePlanLoading": "Caricamento della pianta…",
+  "planFromTime": "Dalle {time}"
 }

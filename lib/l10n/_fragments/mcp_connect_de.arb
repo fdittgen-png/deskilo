@@ -75,5 +75,6 @@
   "mcpConnectWsNotOffered": "Assistenten sind eingeschaltet, aber Ihrer Rolle wird noch nichts angeboten. Ein Administrator des Arbeitsbereichs entscheidet.",
   "mcpConnectWsOff": "Assistenten sind in diesem Arbeitsbereich ausgeschaltet. Ein Administrator des Arbeitsbereichs schaltet sie in der Assistenten-Einrichtung ein.",
   "mcpConnectWsUnknown": "Wird angezeigt, sobald Ihr Zugang zu Assistenten freigegeben ist.",
-  "mcpConnectSwitchWorkspace": "Zu diesem Arbeitsbereich wechseln"
+  "mcpConnectSwitchWorkspace": "Zu diesem Arbeitsbereich wechseln",
+  "mcpRefusalClientNotApprovedNamed": "Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten. Wartet auf den Betreiber des Servers: {names}."
 }

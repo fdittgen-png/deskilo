@@ -39,5 +39,17 @@
   "environmentProdConfirmAction": "Declare production",
   "@environmentProdConfirmAction": {
     "description": "#917 workspace environment: environmentProdConfirmAction"
+  },
+  "environmentsPair": "{dev} + {prod}",
+  "@environmentsPair": {
+    "description": "#3767 The two sides of a twin pair named side by side, e.g. \"Development — for trying things out + Production — the invoices are owed\".",
+    "placeholders": {
+      "dev": {
+        "type": "String"
+      },
+      "prod": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -2644,5 +2644,14 @@
   "eventTypeInvoicePaymentReversed": "Payment match undone",
   "@eventTypeInvoicePaymentReversed": {
     "description": "#2380 event type: a match of money in was undone (0650)."
+  },
+  "invoicePdfProformaNamed": "Proforma {name}",
+  "@invoicePdfProformaNamed": {
+    "description": "#3767 The file name stem of a proforma: the word Proforma and what it covers (the invoice number, or the client and period).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

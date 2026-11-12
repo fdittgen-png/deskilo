@@ -349,5 +349,5 @@ String _environmentsLabel(
   if (group.length < 2) {
     return group.first.isDevelopment ? dev : prod;
   }
-  return '$dev + $prod';
+  return l10n.environmentsPair(dev, prod);
 }

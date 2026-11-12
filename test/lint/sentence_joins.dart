@@ -19,8 +19,11 @@ import 'package:analyzer/source/line_info.dart';
 import 'lint_sources.dart';
 
 /// A translated read: `l10n.key`, `l10n?.key`, `strings.key`,
-/// `context.l10n.key`.
-final RegExp _read = RegExp(r'\b(?:l10n|strings|labels)\??\.\w+');
+/// `context.l10n.key`. `localeName` is the name of the language, not a
+/// message: reading it beside a value builds no sentence.
+final RegExp _read = RegExp(
+  r'\b(?:l10n|strings|labels)\??\.(?!localeName\b)\w+',
+);
 
 /// A control tag of the report engine (Liquid): the tags a template uses to
 /// CHOOSE between messages — `if`, `elsif`, `else`, `endif`, the loop pair,
@@ -133,9 +136,10 @@ bool _isPartOfLarger(AstNode node) {
 }
 
 class _JoinFinder extends RecursiveAstVisitor<void> {
-  _JoinFinder(this.lineInfo);
+  _JoinFinder(this.lineInfo, this.spaceOnly);
 
   final LineInfo lineInfo;
+  final Set<String> spaceOnly;
   final out = <String>[];
 
   void _check(Expression node) {
@@ -168,7 +172,7 @@ class _JoinFinder extends RecursiveAstVisitor<void> {
 
   @override
   void visitMethodInvocation(MethodInvocation node) {
-    if (_spaceOnlyPatterns.contains(node.methodName.name)) {
+    if (spaceOnly.contains(node.methodName.name)) {
       final locals = _translatedLocals(node);
       final translated = node.argumentList.arguments.any((a) {
         final src = a.toSource();
@@ -204,9 +208,12 @@ class _JoinFinder extends RecursiveAstVisitor<void> {
 }
 
 /// The places of [source] holding a joined sentence, as `line: text`.
-List<String> sentenceJoins(String source) {
+/// [spaceOnly] names the shared messages that put only a space between their
+/// placeholders; it defaults to the ones the English fragments hold (none,
+/// since #3767 removed the last), a test passes its own to plant one.
+List<String> sentenceJoins(String source, {Set<String>? spaceOnly}) {
   final result = parseString(content: source, throwIfDiagnostics: false);
-  final finder = _JoinFinder(result.lineInfo);
+  final finder = _JoinFinder(result.lineInfo, spaceOnly ?? _spaceOnlyPatterns);
   result.unit.accept(finder);
   return finder.out;
 }

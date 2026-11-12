@@ -132,9 +132,14 @@ class _DeploymentScreenState extends ConsumerState<DeploymentScreen> {
         title: Text(to.isDevelopment
             ? (l10n.deploymentConfirmTitleDev)
             : (l10n.deploymentConfirmTitleProd)),
-        content: Text(
-          '${l10n.deploymentConfirmBody}\n\n'
-          '${entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')}',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.deploymentConfirmBody),
+            const SizedBox(height: AppSpacing.md),
+            Text(entities.map((e) => _deploymentEntityName(l10n, e)).join(', ')),
+          ],
         ),
         actions: [
           TextButton(

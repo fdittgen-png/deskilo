@@ -23,18 +23,6 @@
       }
     }
   },
-  "sentencePair": "{first} {second}",
-  "@sentencePair": {
-    "description": "#3652 Two sentences read as one text, separated by a space.",
-    "placeholders": {
-      "first": {
-        "type": "String"
-      },
-      "second": {
-        "type": "String"
-      }
-    }
-  },
   "valueInParens": "{value} ({note})",
   "@valueInParens": {
     "description": "#3652 A value followed by a short note in parentheses, e.g. \"Anna (you)\".",
@@ -194,5 +182,17 @@
   "shellBarShownAnnounce": "Navigation bar shown",
   "@shellBarShownAnnounce": {
     "description": "Screen-reader announcement when the bar comes back (#1173)"
+  },
+  "dotPair": "{first} · {second}",
+  "@dotPair": {
+    "description": "#3767 Two independent facts on one line, e.g. \"Sent 3 May · test\". One message so the language places the separator.",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
   }
 }

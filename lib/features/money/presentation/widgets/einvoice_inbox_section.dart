@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -202,10 +203,13 @@ class EInvoiceInboxSection extends ConsumerWidget {
                   contentPadding: EdgeInsets.zero,
                   title: Text('${d.supplierName} · ${d.number}'),
                   subtitle: Text(
-                    '${d.issueDate} · '
-                    '${minorToText(d.grossCents, d.currency)} ${d.currency}'
-                    ' · ${_status(context, d)}'
-                    '${d.supplierNumber.isEmpty ? '' : ' · ${l10n.eInvoiceInboxSupplierNumber(d.supplierNumber)}'}',
+                    factLine(l10n, [
+                      d.issueDate,
+                      '${minorToText(d.grossCents, d.currency)} ${d.currency}',
+                      _status(context, d),
+                      if (d.supplierNumber.isNotEmpty)
+                        l10n.eInvoiceInboxSupplierNumber(d.supplierNumber),
+                    ]),
                   ),
                   trailing: d.status != InboxStatus.received
                       ? null

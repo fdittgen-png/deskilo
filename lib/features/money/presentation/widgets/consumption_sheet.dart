@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -102,9 +103,16 @@ Future<void> showConsumptionSheet(
                     // #731 — an empty shelf cannot be consumed.
                     enabled: servesQuantity(item, 1),
                     child: Text(
-                      '${item.name} — '
-                      '${currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents)}'
-                      '${item.stock == null ? '' : item.stock == 0 ? ' · ${l10n.serviceOutOfStock}' : ' · ${l10n.serviceStockCount(item.stock!)}'}',
+                      l10n.titleDashDetail(
+                        item.name,
+                        factLine(l10n, [
+                          currency.formatMinor(negotiated?.itemPrice('services', item.id) ?? item.priceCents),
+                          if (item.stock == 0)
+                            l10n.serviceOutOfStock
+                          else if (item.stock != null)
+                            l10n.serviceStockCount(item.stock!),
+                        ]),
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

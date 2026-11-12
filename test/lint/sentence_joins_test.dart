@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'sentence_joins.dart';
 
+const _spaceOnly = {'sentencePair'};
+
 String _fn(String body) => 'String f(dynamic l10n, int a, int b) {\n$body\n}\n';
 
 void main() {
@@ -51,7 +53,10 @@ void main() {
   group('a space-only shared pattern is a join in another form', () {
     test('planted (d): sentencePair with a translated piece', () {
       expect(
-        sentenceJoins(_fn('  return l10n.sentencePair(l10n.booked, a);')),
+        sentenceJoins(
+          _fn('  return l10n.sentencePair(l10n.booked, a);'),
+          spaceOnly: _spaceOnly,
+        ),
         hasLength(1),
       );
     });
@@ -63,6 +68,7 @@ void main() {
             '  final label = l10n.booked;\n'
             '  return l10n.sentencePair(label, a);',
           ),
+          spaceOnly: _spaceOnly,
         ),
         hasLength(1),
       );
@@ -95,6 +101,17 @@ void main() {
       expect(
         sentenceJoins(_fn("  return '\${l10n.x} · '\n      '\$a';")),
         isEmpty,
+      );
+    });
+
+    test('the name of the language is not a translated read (#3767)', () {
+      expect(
+        sentenceJoins(_fn("  return '\${l10n.localeName} \$a';")),
+        isEmpty,
+      );
+      expect(
+        sentenceJoins(_fn("  return '\${l10n.booked} \$a';")),
+        hasLength(1),
       );
     });
 

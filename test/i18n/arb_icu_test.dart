@@ -26,7 +26,7 @@ const _locales = ['fr', 'de', 'es', 'it'];
 /// shrinks; a new count takes plural forms.
 const Map<String, String> _bareCountAllowed = {
   'acctDeliverInFlight': 'after a colon',
-  'acctDeliverStoppedAt': 'after a colon',
+  'acctDeliverReasonStoppedAt': 'after a colon',
   'availabilityHourOption': 'unit label',
   'bankCsvColumn': 'position',
   'biEditorColumns': 'of 12: a constant total',
@@ -35,7 +35,7 @@ const Map<String, String> _bareCountAllowed = {
   'biVendorCredited': 'in brackets',
   'capacityKpiRooms': 'after a colon',
   'compareOpen': 'in brackets',
-  'eventRepeatedMarker': 'a multiplier mark',
+  'eventLineRepeated': 'a multiplier mark',
   'financesRemindedTimes': 'a multiplier mark',
   'inboxRequestsCount': 'after a colon',
   'instanceDeployFunctions': 'in brackets',

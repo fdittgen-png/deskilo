@@ -75,5 +75,6 @@
   "mcpConnectWsNotOffered": "Les assistants sont activés, mais rien n'est encore proposé à votre rôle. Un administrateur de l'espace de travail décide.",
   "mcpConnectWsOff": "Les assistants sont désactivés dans cet espace de travail. Un administrateur de l'espace de travail les active dans la configuration des assistants.",
   "mcpConnectWsUnknown": "Affiché une fois votre accès aux assistants approuvé.",
-  "mcpConnectSwitchWorkspace": "Passer à cet espace de travail"
+  "mcpConnectSwitchWorkspace": "Passer à cet espace de travail",
+  "mcpRefusalClientNotApprovedNamed": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant. En attente de l'opérateur du serveur : {names}."
 }

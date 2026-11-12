@@ -368,5 +368,9 @@
   "cashHubInOut": "Ein- und Ausgänge nach Monat",
   "cashHubToPay": "Zu zahlen",
   "hubAccountingTitle": "Buchhaltung & MwSt",
-  "hubAccountingSubtitle": "Bücher, Exporte und Importe, Buchhaltungssoftware, Kontoauszüge, MwSt und Rechtsidentität an einem Ort"
+  "hubAccountingSubtitle": "Bücher, Exporte und Importe, Buchhaltungssoftware, Kontoauszüge, MwSt und Rechtsidentität an einem Ort",
+  "vatDeclDisclaimerWithBasis": "{basis} Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.",
+  "vatDeclNetAmount": "Bemessungsgrundlage {amount}",
+  "vatDeclVatAmount": "USt {amount}",
+  "vatDeclTotalsLine": "Summen: {net} · USt {vat} · {count, plural, =1{1 Rechnung} other{{count} Rechnungen}}"
 }

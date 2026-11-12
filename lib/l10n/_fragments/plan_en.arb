@@ -353,5 +353,14 @@
   "reservePlanLoading": "Loading the plan…",
   "@reservePlanLoading": {
     "description": "#3068 the label of the plan skeleton on Reserve"
+  },
+  "planFromTime": "From {time}",
+  "@planFromTime": {
+    "description": "The start time of a booking period on its button, e.g. \"From 09:00\".",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   }
 }

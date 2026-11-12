@@ -122,5 +122,14 @@
   "bookingNotAMember": "You are no longer a member of this space — ask an administrator for an invitation.",
   "@bookingNotAMember": {
     "description": "Refusal when an RPC answers 'not a member of this workspace' (#1030)"
+  },
+  "levelPriceLine": "{price} / Price per half-day",
+  "@levelPriceLine": {
+    "description": "#3767 The price of a whole level as one line, e.g. \"12.00 EUR / Price per half-day\". The price arrives already formatted.",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
   }
 }

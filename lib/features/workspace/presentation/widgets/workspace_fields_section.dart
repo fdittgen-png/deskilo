@@ -192,7 +192,7 @@ class _WorkspaceFieldsSectionState extends State<WorkspaceFieldsSection> {
     final label = field.labelIn(widget.locale);
     final help = field.helpIn(widget.locale);
     final optional = l10n.workspaceFieldsOptional;
-    final title = field.required ? label : '$label ($optional)';
+    final title = field.required ? label : l10n.valueInParens(label, optional);
     // A problem is shown only once the field has been answered: telling
     // somebody their empty form is wrong before they start is noise.
     final answered = widget.controller.answers.containsKey(field.key);

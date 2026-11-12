@@ -274,7 +274,10 @@ Map<String, Object?> paymentsReportData(
       for (final event in pending)
         {
           'label':
-              '${event.payload['note'] as String? ?? strings.eventTypePayment} — ${strings.paymentsPendingTag}',
+              strings.supplementOf(
+                event.payload['note'] as String? ?? strings.eventTypePayment,
+                strings.paymentsPendingTag,
+              ),
           'amount': currency.formatMinor(
             (event.payload['amount_cents'] as num?)?.toInt() ?? 0,
           ),

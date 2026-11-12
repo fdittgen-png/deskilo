@@ -69,6 +69,10 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
                   Text(s.title, style: theme.textTheme.titleMedium),
                   const SizedBox(height: 4),
                   Text(s.body, style: theme.textTheme.bodyMedium),
+                  if (s.more.isNotEmpty) ...[
+                    const SizedBox(height: 4),
+                    Text(s.more, style: theme.textTheme.bodyMedium),
+                  ],
                   const SizedBox(height: AppSpacing.md),
                 ],
                 // #1914 — the notice the server publishes for this

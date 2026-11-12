@@ -96,15 +96,6 @@
       }
     }
   },
-  "eventForSubject": "for {name}",
-  "@eventForSubject": {
-    "description": "Suffix when an admin acted on someone else's behalf",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
   "pushPendingTitle": "DesKilo",
   "pushPendingBody": "Someone needs your confirmation.",
   "@pushPendingTitle": {
@@ -337,15 +328,6 @@
   "@eventActionUnknown": {
     "description": "#3067 the verb of an event line, in words"
   },
-  "eventRepeatedMarker": "×{count}",
-  "@eventRepeatedMarker": {
-    "description": "#3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "eventOutcomeApplied": "Done",
   "@eventOutcomeApplied": {
     "description": "#3067 the name of the status mark on an event row"
@@ -361,5 +343,29 @@
   "eventOutcomeRejected": "Rejected",
   "@eventOutcomeRejected": {
     "description": "#3067 the name of the status mark on an event row"
+  },
+  "eventLineForSubject": "{line} for {name}",
+  "@eventLineForSubject": {
+    "description": "#3767 An event line followed by whose bill or account it lands on, e.g. \"Service charge booked for Ana\". {line} is the whole event sentence.",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "eventLineRepeated": "{line} ×{count}",
+  "@eventLineRepeated": {
+    "description": "#3767 An event line with how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

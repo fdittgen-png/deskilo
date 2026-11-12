@@ -176,10 +176,16 @@ class _OverviewTile extends StatelessWidget {
     final host = Uri.tryParse(s.source)?.host ?? s.source;
     final reachable = s.backend != McpBackendState.unavailable;
     final detail = reachable
-        ? '${l10n.mcpStatusIdentity}: '
-              '${_mcpStateLabel(l10n, s.identity)} · '
-              '${l10n.mcpStatusEligibility}: '
-              '${_mcpStateLabel(l10n, s.eligibility)}'
+        ? l10n.dotPair(
+            l10n.labelWithValue(
+              l10n.mcpStatusIdentity,
+              _mcpStateLabel(l10n, s.identity),
+            ),
+            l10n.labelWithValue(
+              l10n.mcpStatusEligibility,
+              _mcpStateLabel(l10n, s.eligibility),
+            ),
+          )
         : (l10n.mcpOverviewUnavailable);
     return ListTile(
       key: ValueKey(

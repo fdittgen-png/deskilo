@@ -334,5 +334,14 @@
   "mcpConnectSwitchWorkspace": "Switch to this workspace",
   "@mcpConnectSwitchWorkspace": {
     "description": "#2145 Connect an assistant: mcpConnectSwitchWorkspace"
+  },
+  "mcpRefusalClientNotApprovedNamed": "This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant. Waiting for the server's operator: {names}.",
+  "@mcpRefusalClientNotApprovedNamed": {
+    "description": "#3767 The refusal \"this assistant is not approved yet\" followed by the people who can approve it. {names} is a list of people, already joined.",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
   }
 }

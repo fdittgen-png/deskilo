@@ -35,10 +35,15 @@ String bookingRangeText(
   return switch (bookingWindowKindOf(start, end)) {
     BookingWindowKind.fullDay => lexiconText(context, key: 'reserveFullDayChip', fallback: l10n.reserveFullDayChip),
     BookingWindowKind.morning =>
-      '${lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip)} · ${fmt(start)} – ${fmtEnd()}',
+      l10n.dotPair(
+        lexiconText(context, key: 'planMorningChip', fallback: l10n.planMorningChip),
+        '${fmt(start)} – ${fmtEnd()}',
+      ),
     BookingWindowKind.afternoon =>
-      '${lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip)} · '
-          '${fmt(start)} – ${fmtEnd()}',
+      l10n.dotPair(
+        lexiconText(context, key: 'planAfternoonChip', fallback: l10n.planAfternoonChip),
+        '${fmt(start)} – ${fmtEnd()}',
+      ),
     BookingWindowKind.times => '${fmt(start)} – ${fmtEnd()}',
   };
 }

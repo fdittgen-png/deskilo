@@ -62,7 +62,7 @@ class SmallBusinessNotice extends ConsumerWidget {
         icon: Icons.warning_amber_outlined,
         text: alert.threshold.confirmed
             ? message
-            : l10n.sentencePair(message, l10n.smallBusinessCheckFigure),
+            : l10n.smallBusinessMessageUnconfirmed(message),
         severity: passed
             ? InlineBannerSeverity.error
             : InlineBannerSeverity.info,

@@ -1358,5 +1358,6 @@
   "eventTypeInvoicePaymentReversed": "Rapprochement de paiement annulé",
   "@eventTypeInvoicePaymentReversed": {
     "description": "#2380 event type: a match of money in was undone (0650)."
-  }
+  },
+  "invoicePdfProformaNamed": "Proforma {name}"
 }

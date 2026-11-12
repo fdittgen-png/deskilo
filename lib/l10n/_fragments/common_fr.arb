@@ -1,7 +1,6 @@
 {
   "titleAndBody": "{title}. {body}",
   "commaPair": "{first}, {second}",
-  "sentencePair": "{first} {second}",
   "valueInParens": "{value} ({note})",
   "titleDashDetail": "{first} — {second}",
   "labelWithValue": "{label} : {value}",
@@ -58,5 +57,6 @@
   "shellBarHideHint": "Appui long pour l’affichage plein écran",
   "shellBarShowHint": "Appui long pour afficher la barre de navigation",
   "shellBarHiddenAnnounce": "Barre de navigation masquée",
-  "shellBarShownAnnounce": "Barre de navigation affichée"
+  "shellBarShownAnnounce": "Barre de navigation affichée",
+  "dotPair": "{first} · {second}"
 }

@@ -914,5 +914,47 @@
   "hubAccountingSubtitle": "Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place",
   "@hubAccountingSubtitle": {
     "description": "the accounting and VAT page and its menu group"
+  },
+  "vatDeclDisclaimerWithBasis": "{basis} Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.",
+  "@vatDeclDisclaimerWithBasis": {
+    "description": "#3767 The disclaimer printed on a VAT declaration, after the sentence that names the basis of its figures.",
+    "placeholders": {
+      "basis": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclNetAmount": "Net base {amount}",
+  "@vatDeclNetAmount": {
+    "description": "#3767 The net base of a VAT declaration line, e.g. \"Net base 100.00 EUR\". The amount arrives with its currency.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclVatAmount": "VAT {amount}",
+  "@vatDeclVatAmount": {
+    "description": "#3767 The VAT of a VAT declaration line, e.g. \"VAT 19.00 EUR\". The amount arrives with its currency.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "vatDeclTotalsLine": "Totals: {net} · VAT {vat} · {count, plural, =1{1 invoice} other{{count} invoices}}",
+  "@vatDeclTotalsLine": {
+    "description": "#3767 The totals line of a VAT declaration: net, VAT and how many invoices it covers (a count, with plural forms). The amounts arrive with their currency.",
+    "placeholders": {
+      "net": {
+        "type": "String"
+      },
+      "vat": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

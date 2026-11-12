@@ -247,8 +247,12 @@ class SuppliersView extends ConsumerWidget {
             key: ValueKey('supplier-${s.id}'),
             contentPadding: EdgeInsets.zero,
             title: Text(
-              '${s.number} · ${s.name}'
-              '${s.isActive ? '' : ' (${l10n.suppliersArchivedTag})'}',
+              s.isActive
+                  ? '${s.number} · ${s.name}'
+                  : l10n.valueInParens(
+                      '${s.number} · ${s.name}',
+                      l10n.suppliersArchivedTag,
+                    ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -164,12 +164,17 @@ class _FirstStepsCard extends StatelessWidget {
             MeRow(
               key: ValueKey('me-started-${row.step.name}'),
               title: _stepLabel(l10n, row.step),
-              semanticLabel:
-                  '${_stepLabel(l10n, row.step)}, ${switch (row.state) {
-                    StartedState.done => l10n.meStartedDone,
-                    StartedState.next => l10n.meStartedNext,
-                    StartedState.later => '',
-                  }}'.replaceAll(RegExp(r',\s*$'), ''),
+              semanticLabel: switch (row.state) {
+                StartedState.done => l10n.commaPair(
+                  _stepLabel(l10n, row.step),
+                  l10n.meStartedDone,
+                ),
+                StartedState.next => l10n.commaPair(
+                  _stepLabel(l10n, row.step),
+                  l10n.meStartedNext,
+                ),
+                StartedState.later => _stepLabel(l10n, row.step),
+              },
               leading: Icon(
                 row.state == StartedState.done
                     ? Icons.check_circle

@@ -19,7 +19,6 @@
   "gobdProcedureSchemaApp": "Versione dello schema per cui è stata compilata questa app: {version}",
   "gobdProcedureImmutableHeading": "Inalterabilità",
   "gobdProcedureImmutableBody": "Una fattura o nota di credito emessa non può essere modificata né eliminata: il database lo rifiuta. Ogni documento è firmato in una catena con il precedente. Una correzione è un nuovo documento (nota di credito o fattura sostitutiva) che indica quello che corregge. Un periodo chiuso rifiuta annullamenti e pagamenti datati al suo interno.",
-  "gobdProcedureRetentionUntil": "un documento datato alla fine di questo periodo può essere cancellato dal {date}",
   "gobdProcedureHandoverHeading": "Consegna dei dati (Z3)",
   "gobdProcedureHandoverBody": "Questo pacchetto segue il Beschreibungsstandard: index.xml descrive ogni tabella, le sue colonne, chiavi e relazioni, e indica la DTD gdpdu-01-08-2002.dtd fornita accanto. Ogni tabella è un file CSV UTF-8 senza riga di intestazione. La cartella belege contiene la fattura elettronica strutturata di ogni fattura e, dove è stato generato, il suo PDF/A-3 con quell'XML incorporato.",
   "gobdProcedureExportsHeading": "Esportazioni",
@@ -31,5 +30,7 @@
   "datevProblemSachkontenlaenge": "la lunghezza del conto {length} non è compresa tra 4 e 8",
   "datevProblemCurrency": "gli importi sono in {currency}; il file DATEV è scritto in euro",
   "datevProblemReferenceTooLong": "{field} «{value}» supera la lunghezza accettata da DATEV e verrebbe troncato",
-  "datevProblemFiscalYearStarts": "i profili contabili delle sedi iniziano l'esercizio in giorni diversi"
+  "datevProblemFiscalYearStarts": "i profili contabili delle sedi iniziano l'esercizio in giorni diversi",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; un documento datato alla fine di questo periodo può essere cancellato dal {date}. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; un documento datato alla fine di questo periodo può essere cancellato dal {date} (non ancora confermata). {source}"
 }
