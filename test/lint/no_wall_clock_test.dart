@@ -60,7 +60,77 @@ const _exempt = <String, String>{
   'test/helpers/mock_providers.dart': 'InMemoryCacheStore mirrors real expiry',
 };
 
+/// #3659 (i18n I13) — a calendar day about a business fact is the
+/// business's, never the device's. In `lib/features/**/domain` and
+/// `**/application`, `.toLocal()` and a day built from `now`'s device
+/// components (`DateTime(now.year, now.month, now.day)`) decide a day on
+/// the device: take the day from the business's calendar instead
+/// (`businessTodayAt`, `WorkspaceCalendar.dateOf`, a `dayOf` parameter).
+/// The files below held such reads when the rule came, with their count;
+/// a count may only fall, and a file leaves the list at zero.
+const _deviceDayFiles = <String, int>{
+  'lib/features/money/domain/bill_pdf.dart': 1,
+  'lib/features/money/domain/company_lookup.dart': 1,
+  'lib/features/money/domain/einvoice_gateway.dart': 2,
+  'lib/features/money/domain/finance_filter.dart': 2,
+  'lib/features/money/domain/invoice_match_row.dart': 3,
+  'lib/features/money/domain/reminder_evidence.dart': 2,
+  'lib/features/money/domain/usage_record.dart': 5,
+  'lib/features/money/domain/vies_check.dart': 1,
+  'lib/features/profile/domain/rights_request.dart': 1,
+  'lib/features/reservations/domain/my_reservations_composition.dart': 2,
+  'lib/features/reservations/domain/my_reservations.dart': 2,
+};
+
+final _deviceDay = RegExp(
+  r'\.toLocal\(\)'
+  r'|DateTime\(\s*[\w.]*now\.year,\s*[\w.]*now\.month,\s*[\w.]*now\.day',
+  caseSensitive: false,
+);
+
+/// The device-day reads on the code [lines] of a file.
+int deviceDayReads(Iterable<String> lines) => lines
+    .where((l) => !l.trimLeft().startsWith('//'))
+    .map((l) => _deviceDay.allMatches(l).length)
+    .fold(0, (a, b) => a + b);
+
+bool _domainOrApplication(String path) =>
+    path.startsWith('lib/features/') &&
+    (path.contains('/domain/') || path.contains('/application/'));
+
 void main() {
+  test('a device-day read is seen; a business day is not (#3659)', () {
+    expect(deviceDayReads(['final d = at.toLocal();']), 1);
+    expect(deviceDayReads(['DateTime(now.year, now.month, now.day)']), 1);
+    expect(deviceDayReads(['DateTime(clock.now.year, clock.now.month, x)']),
+        0);
+    expect(deviceDayReads(['final d = calendar.dateOf(now);']), 0);
+    expect(deviceDayReads(['// was at.toLocal()']), 0);
+  });
+
+  test('no device day in a feature\'s domain or application, beyond the '
+      'named files, and none of theirs grows (#3659)', () {
+    final found = <String, int>{
+      for (final f in handWrittenDartFiles('lib/features'))
+        if (_domainOrApplication(f.path))
+          f.path: deviceDayReads(f.readAsLinesSync()),
+    }..removeWhere((_, n) => n == 0);
+    final grown = [
+      for (final MapEntry(key: path, value: n) in found.entries)
+        if (n > (_deviceDayFiles[path] ?? 0))
+          '$path: $n (allowed ${_deviceDayFiles[path] ?? 0})',
+    ];
+    final shrunk = [
+      for (final MapEntry(key: path, value: allowed) in _deviceDayFiles.entries)
+        if ((found[path] ?? 0) < allowed)
+          '$path: ${found[path] ?? 0} (listed $allowed)',
+    ];
+    expect(grown, isEmpty,
+        reason: 'a day decided on the device; read the business\'s calendar');
+    expect(shrunk, isEmpty,
+        reason: 'lower the count in _deviceDayFiles (or remove the file at 0)');
+  });
+
   test('no wall-clock reads outside the exempt list', () {
     final violations = <String>[];
 

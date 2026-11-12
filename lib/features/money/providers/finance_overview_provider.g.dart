@@ -199,3 +199,58 @@ abstract class _$InvoiceFocus
     return element.handleCreate(ref, build);
   }
 }
+
+/// #3659 — now, for Me's money: each invoice is late on its own business's
+/// day (`FinanceInvoiceDue.overdueAt`); this instant is renewed at the
+/// midnight of every business with an invoice to pay, so an open page turns
+/// an invoice late with no data change and no timer of its own.
+
+@ProviderFor(financeNow)
+final financeNowProvider = FinanceNowProvider._();
+
+/// #3659 — now, for Me's money: each invoice is late on its own business's
+/// day (`FinanceInvoiceDue.overdueAt`); this instant is renewed at the
+/// midnight of every business with an invoice to pay, so an open page turns
+/// an invoice late with no data change and no timer of its own.
+
+final class FinanceNowProvider
+    extends $FunctionalProvider<DateTime, DateTime, DateTime>
+    with $Provider<DateTime> {
+  /// #3659 — now, for Me's money: each invoice is late on its own business's
+  /// day (`FinanceInvoiceDue.overdueAt`); this instant is renewed at the
+  /// midnight of every business with an invoice to pay, so an open page turns
+  /// an invoice late with no data change and no timer of its own.
+  FinanceNowProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'financeNowProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$financeNowHash();
+
+  @$internal
+  @override
+  $ProviderElement<DateTime> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  DateTime create(Ref ref) {
+    return financeNow(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DateTime value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DateTime>(value),
+    );
+  }
+}
+
+String _$financeNowHash() => r'e4cd9f5fb8a32d2cf27ac36e37706198dd124033';

@@ -11663,6 +11663,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Development spaces — test data, not counted above';
 
   @override
+  String financesDueCalendarUnknown(String date) {
+    return 'Due $date · the business\'s calendar is unknown';
+  }
+
+  @override
+  String financesDueInZone(String text, String zone) {
+    return '$text · $zone';
+  }
+
+  @override
   String financesDueOn(String date) {
     return 'Due $date';
   }

@@ -369,7 +369,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
     final List<Reservation> reservations;
     try {
       reservations =
-          await ref.read(reservationsForDayProvider(dayKeyOf(from)).future);
+          await ref.read(reservationsForDayProvider(dayKeyOf(ref.read(businessDateOfProvider)(from))).future);
     } on Object catch (e, st) {
       debugPrint('focus window resolution failed: $e\n$st');
       TraceLogger.instance.error(

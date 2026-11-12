@@ -3,6 +3,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/settings/settings.dart';
+import '../../../core/time/calendar_days.dart';
 
 /// Mahnwesen (#472): the parameterizable dunning policy of a workspace,
 /// stored in `workspaces.dunning_rules` (migration 0093) — and the pure
@@ -111,18 +112,19 @@ class DunningRules {
 /// Level 1 is due on the invoice's frozen [dueOn] (#1913) when the server
 /// recorded one, and otherwise [DunningRules.firstAfterDays] after
 /// [issuedAt]; every further level waits [DunningRules.betweenDays]
-/// after the PREVIOUS reminder.
+/// after the PREVIOUS reminder. [at] carries the business's calendar day
+/// (#3659): the due day is the issuing business's, never the device's.
 int? dueReminderLevel({
   required DateTime issuedAt,
   required int reminderCount,
   required DateTime? lastReminderAt,
   required DunningRules rules,
-  required DateTime now,
+  required BusinessMoment at,
   DateTime? dueOn,
 }) {
+  final (:now, :today) = at;
   if (reminderCount >= rules.levels) return null;
   if (reminderCount == 0 && dueOn != null) {
-    final today = DateTime(now.year, now.month, now.day);
     return today.isBefore(dueOn) ? null : 1;
   }
   final since = reminderCount == 0 ? issuedAt : lastReminderAt ?? issuedAt;
