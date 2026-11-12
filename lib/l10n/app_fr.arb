@@ -7500,6 +7500,10 @@
       }
     }
   },
+  "fileOpenSaved": "Ouvrir",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
   "fileSaveFailedBecause": "Impossible d'enregistrer le fichier : {reason}.",
   "@fileSaveFailedBecause": {
     "description": "Error notice with the reason a file could not be saved",
@@ -7508,6 +7512,10 @@
         "type": "String"
       }
     }
+  },
+  "fileSaveFailureChosenFolder": "le dossier choisi n’a pas accepté le fichier",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   },
   "fileSaveFailureNoStorage": "aucun dossier de cet appareil ne l'a accepté",
   "@fileSaveFailureNoStorage": {
@@ -7520,6 +7528,10 @@
   "fileSaveFailureWrite": "l'appareil a refusé l'écriture",
   "@fileSaveFailureWrite": {
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
+  "fileShowInFolder": "Afficher dans le dossier",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
   },
   "financesAllSpaces": "Tous les espaces",
   "financesAmountHidden": "Montant masqué",
@@ -10630,7 +10642,31 @@
   "@kioskClosedToday": {
     "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
   },
+  "kioskDeviceEnrolledBy": "Enregistré par {name} le {date}",
+  "kioskDeviceEnrolledOn": "Enregistré le {date}",
+  "kioskDeviceLastUsed": "Dernière utilisation le {date}",
+  "kioskDeviceNeverUsed": "Pas encore utilisé",
+  "kioskDeviceRevokeConfirm": "Révoquer « {name} » ? Il cesse aussitôt d’être un kiosque de cette entreprise ; pour le réutiliser, enregistrez-le à nouveau.",
+  "kioskDeviceRevokeDone": "« {name} » est révoqué.",
+  "kioskDeviceRevokeFailed": "L’appareil n’a pas pu être révoqué. Réessayez.",
+  "kioskDeviceRevokedOn": "Révoqué le {date}",
+  "kioskDevicesEmpty": "Aucun appareil n’est encore enregistré.",
+  "kioskDevicesEntryHint": "Enregistrer cet appareil, voir et révoquer les kiosques de l’entreprise",
+  "kioskDevicesIntro": "Les appareils que cette entreprise utilise comme kiosques. La connexion par badge y accueille chacun par son nom, et peut leur être réservée.",
+  "kioskDevicesListTitle": "Appareils enregistrés",
+  "kioskDevicesTitle": "Appareils kiosque",
   "kioskDone": "C'est fait — tout est en ordre.",
+  "kioskEnrolAction": "Enregistrer cet appareil",
+  "kioskEnrolDone": "Cet appareil est désormais un kiosque de l’entreprise.",
+  "kioskEnrolFailed": "Cet appareil n’a pas pu être enregistré. Réessayez.",
+  "kioskEnrolNameHint": "Par exemple : tablette de l’accueil",
+  "kioskEnrolNameLabel": "Nom de cet appareil",
+  "kioskEnrolTrust": "C’est l’appareil lui-même qui reçoit la confiance : une fois enregistré, toute personne devant lui peut se connecter par badge comme à un kiosque de cette entreprise. Si l’appareil est perdu ou donné, révoquez-le ci-dessous.",
+  "kioskEnrolTrustBrowser": "Dans un navigateur, l’enregistrement est gardé dans le stockage de ce navigateur sur cet ordinateur. Effacer les données du navigateur le supprime ; le révoquer ici est le remède à un appareil perdu.",
+  "kioskEnrolled": "Cet appareil est enregistré sous le nom « {name} ».",
+  "kioskEnrolledElsewhere": "Cet appareil est enregistré comme kiosque d’une autre entreprise. L’enregistrer ici remplace cet enregistrement sur cet appareil ; l’autre entreprise garde son registre jusqu’à ce qu’elle le révoque.",
+  "kioskForgetConfirm": "Cet appareil cesse d’être un kiosque ici. L’entreprise garde son registre jusqu’à ce qu’il soit révoqué.",
+  "kioskForgetHere": "Oublier sur cet appareil",
   "kioskGateBody": "Ce compte est configuré comme borne de l'espace. En mode borne, la tablette n'affiche que le plan pour le pointage par badge — rien d'autre ne peut être ouvert. Pour quitter le mode borne, redémarrez la tablette.",
   "kioskGateReject": "Pas maintenant — ouvrir l'appli normalement",
   "kioskGateStart": "Démarrer le mode borne",
@@ -10665,6 +10701,13 @@
   "kioskRevertDone": "Ce profil est de nouveau un membre normal.",
   "kioskRevertTitle": "Appareil borne",
   "kioskScanQr": "Scanner le badge QR",
+  "kioskSigninWhereAnyDevice": "Tout appareil",
+  "kioskSigninWhereFailed": "Le réglage n’a pas pu être enregistré. Réessayez.",
+  "kioskSigninWhereKiosks": "Kiosques enregistrés seulement",
+  "kioskSigninWhereNoDevice": "Personne ne peut se connecter par badge tant qu’aucun kiosque de cette entreprise n’est enregistré. Passer quand même aux kiosques enregistrés seulement ?",
+  "kioskSigninWhereNoDeviceTitle": "Aucun kiosque n’est enregistré",
+  "kioskSigninWhereRecommend": "La connexion par badge fonctionne sur tout appareil : un badge et son PIN connectent depuis n’importe où. Avec les kiosques enregistrés seulement, seuls les kiosques de cette entreprise connectent par badge et accueillent chacun par son nom, et un badge essayé ailleurs n’est jamais bloqué à son kiosque.",
+  "kioskSigninWhereSwitch": "Passer",
   "kioskTapHint": "Touchez une place pour pointer",
   "kitActionBusy": "En cours…",
   "kitScrollBack": "Faire défiler en arrière",
@@ -12397,6 +12440,7 @@
   "moneyAmountLabel": "Montant",
   "moneyBaseFee": "Abonnement de base",
   "moneyCredits": "Paiements et crédits",
+  "moneyCurrencyUnavailable": "Devise indisponible",
   "moneyDescriptionLabel": "Description",
   "moneyDueIn": "{days, plural, =1{Échéance dans 1 jour} other{Échéance dans {days} jours}}",
   "moneyExpenseCategoryLabel": "Catégorie",

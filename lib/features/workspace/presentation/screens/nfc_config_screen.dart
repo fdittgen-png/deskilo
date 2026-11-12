@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -71,9 +72,8 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final enabled = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.nfcBadges);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final enabled = features.contains(WorkspaceFeature.nfcBadges);
     final device = _deviceStatus;
     // Precomputed (lint: no literals inside Text with interpolation).
     final deviceLine = switch (device) {
@@ -131,6 +131,20 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
               subtitle: Text(deviceLine),
             ),
           ),
+          // #3675 — the business's kiosks and where badge sign-in works.
+          if (features.contains(WorkspaceFeature.kioskEnrolment)) ...[
+            const SizedBox(height: AppSpacing.sm),
+            Card(
+              child: ListTile(
+                key: const ValueKey('nfc-kiosk-devices'),
+                leading: const Icon(Icons.tablet_android_outlined),
+                title: Text(l10n.kioskDevicesTitle),
+                subtitle: Text(l10n.kioskDevicesEntryHint),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => unawaited(context.push('/badge-kiosks')),
+              ),
+            ),
+          ],
         ],
       ),
     );

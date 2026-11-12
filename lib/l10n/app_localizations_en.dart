@@ -11575,9 +11575,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileOpenSaved => 'Open';
+
+  @override
   String fileSaveFailedBecause(String reason) {
     return 'Could not save the file: $reason.';
   }
+
+  @override
+  String get fileSaveFailureChosenFolder =>
+      'the chosen folder did not accept the file';
 
   @override
   String get fileSaveFailureNoStorage =>
@@ -11588,6 +11595,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fileSaveFailureWrite => 'the device refused the write';
+
+  @override
+  String get fileShowInFolder => 'Show in folder';
 
   @override
   String get financesAllSpaces => 'All spaces';
@@ -16626,7 +16636,101 @@ class AppLocalizationsEn extends AppLocalizations {
       'The workspace is closed today — check-in and reservations are not possible.';
 
   @override
+  String kioskDeviceEnrolledBy(String name, String date) {
+    return 'Enrolled by $name on $date';
+  }
+
+  @override
+  String kioskDeviceEnrolledOn(String date) {
+    return 'Enrolled on $date';
+  }
+
+  @override
+  String kioskDeviceLastUsed(String date) {
+    return 'Last used $date';
+  }
+
+  @override
+  String get kioskDeviceNeverUsed => 'Not used yet';
+
+  @override
+  String kioskDeviceRevokeConfirm(String name) {
+    return 'Revoke “$name”? It stops being a kiosk of this business at once; to use it again, enrol it again.';
+  }
+
+  @override
+  String kioskDeviceRevokeDone(String name) {
+    return '“$name” is revoked.';
+  }
+
+  @override
+  String get kioskDeviceRevokeFailed =>
+      'The device could not be revoked. Try again.';
+
+  @override
+  String kioskDeviceRevokedOn(String date) {
+    return 'Revoked on $date';
+  }
+
+  @override
+  String get kioskDevicesEmpty => 'No device is enrolled yet.';
+
+  @override
+  String get kioskDevicesEntryHint =>
+      'Enrol this device, see and revoke the business’s kiosks';
+
+  @override
+  String get kioskDevicesIntro =>
+      'The devices this business uses as kiosks. Badge sign-in greets people by name on them, and can be limited to them.';
+
+  @override
+  String get kioskDevicesListTitle => 'Enrolled devices';
+
+  @override
+  String get kioskDevicesTitle => 'Kiosk devices';
+
+  @override
   String get kioskDone => 'Done — you\'re all set.';
+
+  @override
+  String get kioskEnrolAction => 'Enrol this device';
+
+  @override
+  String get kioskEnrolDone => 'This device is now a kiosk of the business.';
+
+  @override
+  String get kioskEnrolFailed =>
+      'This device could not be enrolled. Try again.';
+
+  @override
+  String get kioskEnrolNameHint => 'For example: Front desk tablet';
+
+  @override
+  String get kioskEnrolNameLabel => 'Name of this device';
+
+  @override
+  String get kioskEnrolTrust =>
+      'The device itself is what is trusted: once enrolled, anyone at it can use badge sign-in as at a kiosk of this business. If the device is lost or given away, revoke it below.';
+
+  @override
+  String get kioskEnrolTrustBrowser =>
+      'In a browser, the enrolment is kept in this browser’s storage on this computer. Clearing the browser’s data removes it; revoking it here is the remedy for a lost device.';
+
+  @override
+  String kioskEnrolled(String name) {
+    return 'This device is enrolled as “$name”.';
+  }
+
+  @override
+  String get kioskEnrolledElsewhere =>
+      'This device is enrolled as a kiosk of another business. Enrolling it here replaces that enrolment on this device; the other business keeps its record until it revokes it.';
+
+  @override
+  String get kioskForgetConfirm =>
+      'This device stops being a kiosk here. The business keeps its record of it until it is revoked.';
+
+  @override
+  String get kioskForgetHere => 'Forget on this device';
 
   @override
   String get kioskGateBody =>
@@ -16691,6 +16795,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kioskScanQr => 'Scan the QR badge';
+
+  @override
+  String get kioskSigninWhereAnyDevice => 'Any device';
+
+  @override
+  String get kioskSigninWhereFailed =>
+      'The setting could not be saved. Try again.';
+
+  @override
+  String get kioskSigninWhereKiosks => 'Enrolled kiosks only';
+
+  @override
+  String get kioskSigninWhereNoDevice =>
+      'Nobody can sign in by badge until a kiosk of this business is enrolled. Switch to enrolled kiosks only anyway?';
+
+  @override
+  String get kioskSigninWhereNoDeviceTitle => 'No kiosk is enrolled';
+
+  @override
+  String get kioskSigninWhereRecommend =>
+      'Badge sign-in works on any device: a badge and its PIN sign in from anywhere. With enrolled kiosks only, only this business’s kiosks sign people in by badge and greet them by name, and a badge tried elsewhere is never locked at its kiosk.';
+
+  @override
+  String get kioskSigninWhereSwitch => 'Switch';
 
   @override
   String get kioskTapHint => 'Tap a seat to check in';
@@ -19891,6 +20019,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get moneyCredits => 'Payments & credits';
+
+  @override
+  String get moneyCurrencyUnavailable => 'Currency unavailable';
 
   @override
   String get moneyDescriptionLabel => 'Description';

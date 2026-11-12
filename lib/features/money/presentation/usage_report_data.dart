@@ -13,7 +13,6 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/clock.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -35,7 +34,7 @@ Map<String, Object?> usageReportData(
 }) {
   final l10n = l10nOverride ?? context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: appFormatOf(context).locale);
+  final currency = moneyFormat(requireCurrency(workspace?.currencyCode, where: 'usage report'), locale: appFormatOf(context).locale);
   final locale = localeName ?? Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
   final dayFormat = DateFormat.MMMEd(locale);

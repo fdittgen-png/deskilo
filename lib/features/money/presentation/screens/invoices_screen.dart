@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
@@ -74,7 +74,7 @@ class InvoicesScreen extends ConsumerWidget {
       );
     }
     final currency =
-        workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
+        workspace?.currencyCode ?? appFormatOf(context).currencyCode;
     final recapitulative = features.contains(
       WorkspaceFeature.recapitulativeStatement,
     );

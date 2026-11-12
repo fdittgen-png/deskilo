@@ -29,8 +29,11 @@ abstract final class AppSnack {
     _show(
       context,
       text,
-      background: scheme.error,
-      foreground: scheme.onError,
+      look: (
+        background: scheme.error,
+        foreground: scheme.onError,
+        leading: null,
+      ),
       replace: replace,
       action: action,
     );
@@ -45,15 +48,21 @@ abstract final class AppSnack {
     bool replace = false,
     /// #1012 — a follow-up the notice offers ("Share" on a saved export).
     SnackBarAction? action,
+    /// #3613 — a second follow-up beside the message ("Show in folder"
+    /// next to "Open"): a snackbar has one action slot.
+    SnackBarAction? secondaryAction,
   }) {
     final brightness = Theme.of(context).brightness;
     final foreground = AppStatusColors.onSuccessOf(brightness);
     _show(
       context,
       text,
-      background: AppStatusColors.successOf(brightness),
-      foreground: foreground,
-      leading: _ScaleInCheck(color: foreground),
+      look: (
+        background: AppStatusColors.successOf(brightness),
+        foreground: foreground,
+        leading: _ScaleInCheck(color: foreground),
+      ),
+      trailing: secondaryAction,
       replace: replace,
       action: action,
     );
@@ -74,9 +83,9 @@ abstract final class AppSnack {
   static void _show(
     BuildContext context,
     String text, {
-    Color? background,
-    Color? foreground,
-    Widget? leading,
+    /// The colours and the leading mark; null is the theme's default look.
+    ({Color background, Color foreground, Widget? leading})? look,
+    Widget? trailing,
     required bool replace,
     SnackBarAction? action,
   }) {
@@ -88,19 +97,20 @@ abstract final class AppSnack {
     // The message stays a plain [Text] — tests assert on the exact text.
     final message = Text(
       text,
-      style: foreground == null ? null : TextStyle(color: foreground),
+      style: look == null ? null : TextStyle(color: look.foreground),
     );
+    final leading = look?.leading;
     messenger.showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: background,
+        backgroundColor: look?.background,
         action: action,
-        content: leading == null
+        content: leading == null && trailing == null
             ? message
             : Row(children: [
-                leading,
-                const SizedBox(width: 12),
+                if (leading != null) ...[leading, const SizedBox(width: 12)],
                 Expanded(child: message),
+                ?trailing,
               ]),
       ),
     );

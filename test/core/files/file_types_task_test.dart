@@ -49,6 +49,7 @@ void main() {
       SavedPrivately('/data/x'),
       DownloadRequested('x'),
       SaveFailed(),
+      SaveCancelled(),
     ];
     final kinds = outcomes
         .map(
@@ -57,9 +58,10 @@ void main() {
             SavedPrivately() => 'private',
             DownloadRequested() => 'requested',
             SaveFailed() => 'failed',
+            SaveCancelled() => 'cancelled',
           },
         )
         .toList();
-    expect(kinds, ['file', 'private', 'requested', 'failed']);
+    expect(kinds, ['file', 'private', 'requested', 'failed', 'cancelled']);
   });
 }

@@ -44,8 +44,8 @@ begin
 
   -- One row the matrix governs in each table under test. The event is
   -- ABOUT the member, so the admin can only see it through the matrix.
-  insert into public.payment_intents (workspace_id, member_id, provider, order_id, period, amount_cents)
-  values (ws, m_member, 'stripe', 'matrix-1321', '2026-09', 100);
+  insert into public.payment_intents (workspace_id, member_id, provider, order_id, period, amount_cents, currency)
+  values (ws, m_member, 'stripe', 'matrix-1321', '2026-09', 100, 'EUR');
   insert into public.vat_declarations (workspace_id, period_start, period_end, lines,
                                        total_net_cents, total_vat_cents)
   values (ws, '2026-01-01', '2026-03-31', '[]', 0, 0);

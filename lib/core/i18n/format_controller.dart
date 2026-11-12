@@ -145,7 +145,7 @@ AppFormat _formatOf(
     // workspace's zone is what every screen showed before #1150.
     return const AppFormat(
         locale: SettingDefaults.localeDefaultLocale,
-        currencyCode: SettingDefaults.localeDefaultCurrency,
+        currencyCode: '',
         clock: ClockPref.h24);
   }
 }

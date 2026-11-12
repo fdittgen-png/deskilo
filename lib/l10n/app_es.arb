@@ -7500,6 +7500,10 @@
       }
     }
   },
+  "fileOpenSaved": "Abrir",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
   "fileSaveFailedBecause": "No se pudo guardar el archivo: {reason}.",
   "@fileSaveFailedBecause": {
     "description": "Error notice with the reason a file could not be saved",
@@ -7508,6 +7512,10 @@
         "type": "String"
       }
     }
+  },
+  "fileSaveFailureChosenFolder": "la carpeta elegida no aceptó el archivo",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   },
   "fileSaveFailureNoStorage": "ninguna carpeta de este dispositivo lo aceptó",
   "@fileSaveFailureNoStorage": {
@@ -7520,6 +7528,10 @@
   "fileSaveFailureWrite": "el dispositivo rechazó la escritura",
   "@fileSaveFailureWrite": {
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
+  "fileShowInFolder": "Mostrar en la carpeta",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
   },
   "financesAllSpaces": "Todos los espacios",
   "financesAmountHidden": "Importe oculto",
@@ -10630,7 +10642,31 @@
   "@kioskClosedToday": {
     "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
   },
+  "kioskDeviceEnrolledBy": "Registrado por {name} el {date}",
+  "kioskDeviceEnrolledOn": "Registrado el {date}",
+  "kioskDeviceLastUsed": "Último uso el {date}",
+  "kioskDeviceNeverUsed": "Aún sin usar",
+  "kioskDeviceRevokeConfirm": "¿Revocar «{name}»? Deja de inmediato de ser un quiosco de esta empresa; para volver a usarlo, regístrelo de nuevo.",
+  "kioskDeviceRevokeDone": "«{name}» está revocado.",
+  "kioskDeviceRevokeFailed": "No se pudo revocar el dispositivo. Inténtelo de nuevo.",
+  "kioskDeviceRevokedOn": "Revocado el {date}",
+  "kioskDevicesEmpty": "Aún no hay ningún dispositivo registrado.",
+  "kioskDevicesEntryHint": "Registre este dispositivo, vea y revoque los quioscos de la empresa",
+  "kioskDevicesIntro": "Los dispositivos que esta empresa usa como quioscos. El acceso con credencial saluda en ellos a cada persona por su nombre y puede limitarse a ellos.",
+  "kioskDevicesListTitle": "Dispositivos registrados",
+  "kioskDevicesTitle": "Dispositivos de quiosco",
   "kioskDone": "Listo — todo en orden.",
+  "kioskEnrolAction": "Registrar este dispositivo",
+  "kioskEnrolDone": "Este dispositivo es ahora un quiosco de la empresa.",
+  "kioskEnrolFailed": "No se pudo registrar este dispositivo. Inténtelo de nuevo.",
+  "kioskEnrolNameHint": "Por ejemplo: tableta de recepción",
+  "kioskEnrolNameLabel": "Nombre de este dispositivo",
+  "kioskEnrolTrust": "La confianza recae en el propio dispositivo: una vez registrado, cualquier persona ante él puede usar el acceso con credencial como en un quiosco de esta empresa. Si el dispositivo se pierde o se entrega, revóquelo abajo.",
+  "kioskEnrolTrustBrowser": "En un navegador, el registro se guarda en el almacenamiento de este navegador en este ordenador. Borrar los datos del navegador lo elimina; revocarlo aquí es el remedio ante un dispositivo perdido.",
+  "kioskEnrolled": "Este dispositivo está registrado como «{name}».",
+  "kioskEnrolledElsewhere": "Este dispositivo está registrado como quiosco de otra empresa. Registrarlo aquí sustituye ese registro en este dispositivo; la otra empresa conserva su registro hasta que lo revoque.",
+  "kioskForgetConfirm": "Este dispositivo deja de ser un quiosco aquí. La empresa conserva su registro hasta que se revoque.",
+  "kioskForgetHere": "Olvidar en este dispositivo",
   "kioskGateBody": "Esta cuenta está configurada como quiosco del espacio. En modo quiosco la tableta solo muestra el plano para fichar con la tarjeta — no se puede abrir nada más. Para salir del modo quiosco, reinicia la tableta.",
   "kioskGateReject": "Ahora no — abrir la app normalmente",
   "kioskGateStart": "Iniciar el modo quiosco",
@@ -10665,6 +10701,13 @@
   "kioskRevertDone": "Este perfil vuelve a ser un miembro normal.",
   "kioskRevertTitle": "Dispositivo quiosco",
   "kioskScanQr": "Escanear la tarjeta QR",
+  "kioskSigninWhereAnyDevice": "Cualquier dispositivo",
+  "kioskSigninWhereFailed": "No se pudo guardar el ajuste. Inténtelo de nuevo.",
+  "kioskSigninWhereKiosks": "Solo quioscos registrados",
+  "kioskSigninWhereNoDevice": "Nadie puede iniciar sesión con credencial hasta que se registre un quiosco de esta empresa. ¿Cambiar de todos modos a solo quioscos registrados?",
+  "kioskSigninWhereNoDeviceTitle": "No hay ningún quiosco registrado",
+  "kioskSigninWhereRecommend": "El acceso con credencial funciona en cualquier dispositivo: una credencial y su PIN inician sesión desde cualquier lugar. Con solo quioscos registrados, solo los quioscos de esta empresa inician sesión con credencial y saludan a cada persona por su nombre, y una credencial probada en otro lugar nunca se bloquea en su quiosco.",
+  "kioskSigninWhereSwitch": "Cambiar",
   "kioskTapHint": "Toque un asiento para registrarse",
   "kitActionBusy": "En curso…",
   "kitScrollBack": "Desplazar hacia atrás",
@@ -12397,6 +12440,7 @@
   "moneyAmountLabel": "Importe",
   "moneyBaseFee": "Suscripción base",
   "moneyCredits": "Pagos y créditos",
+  "moneyCurrencyUnavailable": "Moneda no disponible",
   "moneyDescriptionLabel": "Descripción",
   "moneyDueIn": "{days, plural, =1{Vence en 1 día} other{Vence en {days} días}}",
   "moneyExpenseCategoryLabel": "Categoría",

@@ -4,10 +4,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'file_saver_io.dart'
     if (dart.library.js_interop) 'file_saver_web.dart' as impl;
 import 'file_types.dart';
+import 'save_folder_store.dart';
 
 export 'file_saver_io.dart'
     if (dart.library.js_interop) 'file_saver_web.dart';
 export 'file_types.dart';
+export 'save_folder_store.dart';
 
 part 'file_saver.g.dart';
 
@@ -22,9 +24,11 @@ part 'file_saver.g.dart';
 @Riverpod(keepAlive: true)
 FileSaver fileSaver(Ref ref) => impl.saveToDownloads;
 
-/// #1872 — the same local save, answering with what it achieved.
+/// #1872 — the same local save, answering with what it achieved. #3613 —
+/// on a desktop it asks where, starting in the folder used last time.
 @Riverpod(keepAlive: true)
-TypedFileSaver typedFileSaver(Ref ref) => impl.saveToDownloadsTyped;
+TypedFileSaver typedFileSaver(Ref ref) =>
+    impl.typedSaverFor(ref.watch(saveFolderStoreProvider));
 
 /// Where "download" leads on this device: straight to the local saver, or
 /// (an iPhone, whose sandbox is not Files) to the Export… choice between a

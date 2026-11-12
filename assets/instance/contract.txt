@@ -3497,7 +3497,7 @@ routine public.workspace_recorded_payments_v1(p_workspace_id uuid, p_from date, 
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:28a091daecbb
 routine public.workspace_roles_import(p_workspace_id uuid, p_roles jsonb, p_mode text) -> void | function | definer | volatile | exec:service_role | body:c591069462d9
 routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7f151a021708
-routine public.workspace_status(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:05ed87a12d72
+routine public.workspace_status(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:a4a16db85444
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid) -> numeric | function | definer | stable | exec:service_role | body:3cebd09878ca
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:7fcabe234314
 routine public.workspace_taxes_land(p_workspace_id uuid, p_on date) -> boolean | function | definer | stable | exec:service_role | body:df7a28c6f29d

@@ -9,7 +9,6 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -397,7 +396,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
         const <String, List<EventDecision>>{};
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const [];
-    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     // #687 — MESSAGES ARE NOT NOTIFICATIONS ANY MORE.
     //
     // They were mixed into this feed because there was nowhere else for

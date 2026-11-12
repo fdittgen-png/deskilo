@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -50,7 +49,7 @@ class ServicesScreen extends ConsumerWidget {
         ref.watch(currentWorkspaceProvider).value?.vatRegime ==
             'vat_registered';
     final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate names no VAT suffix, never a wrong one
-    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final inactiveColor = Theme.of(context).disabledColor;
 
     return Scaffold(

@@ -466,6 +466,7 @@ Future<Map<String, String>> _bundle({required bool local}) async {
         ),
         generatedAt: _generatedAt,
         workspaceName: 'Cowork',
+        currencyCode: 'EUR',
         source: b.revisions,
       ),
     ),
@@ -603,6 +604,7 @@ final Map<String, Future<String> Function()> _files = {
       ),
       generatedAt: _generatedAt,
       workspaceName: 'Cowork',
+      currencyCode: 'EUR',
       source: b.revisions,
     );
   },

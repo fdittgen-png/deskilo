@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -92,7 +91,7 @@ class AccessoriesScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final accessoriesAsync =
         ref.watch(accessoriesProvider(includeInactive: true));
-    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final inactiveColor = Theme.of(context).disabledColor;
 
     // #537/#542 — each row names the rate ITS supplement carries: the
