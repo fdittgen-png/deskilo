@@ -30,6 +30,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/attention.dart';
@@ -85,7 +86,7 @@ class AttentionScreen extends ConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.featureDecisionSurfaceTitle),
+        title: PageTitle(l10n.featureDecisionSurfaceTitle),
       ),
       body: setup == null
           ? body

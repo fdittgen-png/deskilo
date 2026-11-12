@@ -24,6 +24,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../application/report_editor/bi_report_commands.dart';
 import '../../application/report_editor/bi_report_editor.dart';
 import '../../application/report_editor/bi_report_editor_state.dart';
@@ -277,7 +278,7 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
         icon: const Icon(Icons.close),
         onPressed: () => Navigator.of(context).maybePop(),
       ),
-      title: Text(s.name, key: const ValueKey('bi-editor-name')),
+      title: PageTitle(s.name, key: const ValueKey('bi-editor-name')),
       actions: [
         IconButton(
           key: const ValueKey('bi-editor-undo'),

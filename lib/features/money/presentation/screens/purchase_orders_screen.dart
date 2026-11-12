@@ -15,6 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
@@ -52,7 +53,7 @@ class PurchaseOrdersScreen extends ConsumerWidget {
         : ref.watch(purchaseOrdersProvider(workspace.id));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.purchaseOrdersTitle),
+        title: PageTitle(l10n.purchaseOrdersTitle),
         actions: [
           // #3307 — how the space e-mails its orders, for its billing
           // manager. #3673: the business's one sender is set in its own

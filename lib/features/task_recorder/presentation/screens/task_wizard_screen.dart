@@ -31,6 +31,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/stored_guide.dart';
 import '../../domain/stored_recording.dart';
@@ -56,7 +57,7 @@ class TaskWizardScreen extends ConsumerWidget {
     final text = Theme.of(context).textTheme;
     final available = ref.watch(taskRecorderAvailableProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.taskWizardTitle)),
+      appBar: AppBar(title: PageTitle(l10n.taskWizardTitle)),
       body: ListView(
         key: const ValueKey('task-wizard'),
         padding: AppSpacing.gutterAll,

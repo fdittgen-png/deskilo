@@ -1,0 +1,171 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3789 — the desk names a place once and with one name. For every desk
+// route, through the app at 1440 in English and German:
+// - the breadcrumb's entry is the label of the entry the navigation
+//   selects, and its group the label of the group that holds that entry;
+// - no text in the page's own bar is the breadcrumb's entry (the name is on
+//   screen once: PageTitle is silent there);
+// - the page's own title, where it has one, is its place's name: the list of
+//   routes where they differ is empty.
+// On a phone and a medium window every page keeps its title as before.
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/route_classes.dart';
+import 'package:deskilo/app/router.dart';
+import 'package:deskilo/core/demo/data/device_prefs.dart';
+import 'package:deskilo/core/locale/locale_controller.dart';
+import 'package:deskilo/core/ui/kit/page_title.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../helpers/mock_providers.dart';
+
+Finder _k(String key) => find.byKey(ValueKey(key));
+
+/// The desk routes without a parameter: each a place of its own.
+final List<String> _deskRoutes = [
+  for (final r in routeRules)
+    if (!r.pattern.contains(':') &&
+        r.kind == RouteClass.workspace &&
+        chromeOf(r.pattern) == RouteChrome.desk)
+      r.pattern,
+];
+
+Future<GoRouter> _pump(
+  WidgetTester tester, {
+  required Size size,
+  Locale locale = const Locale('en'),
+}) async {
+  tester.view.physicalSize = size;
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+  final features = WorkspaceFeature.values.toSet();
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        ...standardTestOverrides(
+          workspace: FakeWorkspaceRepository.withWorkspace(
+            featureFlags: {for (final f in features) f.name: true},
+          ),
+        ),
+        enabledFeaturesSyncProvider.overrideWithValue(features),
+        localeStoreProvider.overrideWithValue(
+          InMemoryLocaleStore()..languageCode = locale.languageCode,
+        ),
+      ],
+      child: const DeskiloApp(),
+    ),
+  );
+  await tester.pumpAndSettle();
+  return ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)))
+      .read(routerProvider);
+}
+
+List<String> _crumbs(WidgetTester tester) => [
+  for (final t in tester.widgetList<Text>(
+    find.descendant(of: _k('desk-breadcrumb'), matching: find.byType(Text)),
+  ))
+    t.data!,
+];
+
+/// The titles the page's own bars ask for (PageTitle's text, or a Text).
+List<String> _pageTitles(WidgetTester tester, {required Finder within}) => [
+  for (final bar in tester.widgetList<AppBar>(
+    find.descendant(of: within, matching: find.byType(AppBar)),
+  ))
+    if (bar.title case PageTitle(:final text))
+      text
+    else if (bar.title case Text(:final data?))
+      data,
+];
+
+/// The texts the page's own bars show.
+List<String> _barTexts(WidgetTester tester) => [
+  for (final t in tester.widgetList<Text>(
+    find.descendant(
+      of: find.descendant(of: _k('desk-page'), matching: find.byType(AppBar)),
+      matching: find.byType(Text),
+    ),
+  ))
+    ?t.data,
+];
+
+/// The label of the entry the navigation selects.
+String? _selectedEntry(WidgetTester tester) {
+  for (final tile in tester.widgetList<ListTile>(
+    find.descendant(of: _k('desk-navigation'), matching: find.byType(ListTile)),
+  )) {
+    if (!tile.selected) continue;
+    if (tile.title case Text(:final data?)) return data;
+  }
+  return null;
+}
+
+/// Goes to [path] and lets the page build: fixed frames, since some pages
+/// animate without end (a progress spinner), and what a page throws while
+/// it loads is not this test's subject.
+Future<void> _visit(WidgetTester tester, GoRouter router, String path) async {
+  router.go(path);
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 600));
+  while (tester.takeException() != null) {}
+}
+
+void main() {
+  for (final locale in const [Locale('en'), Locale('de')]) {
+    testWidgets('every desk route at 1440 (${locale.languageCode}): the '
+        'breadcrumb is the navigation\'s words and the page says its name '
+        'once', (tester) async {
+      final router = await _pump(
+        tester,
+        size: const Size(1440, 900),
+        locale: locale,
+      );
+      final wrongEntry = <String>[];
+      final twice = <String>[];
+      final differs = <String>[];
+      for (final path in _deskRoutes) {
+        await _visit(tester, router, path);
+        final crumbs = _crumbs(tester);
+        if (crumbs.isEmpty) continue;
+        final entry = crumbs.last;
+        final selected = _selectedEntry(tester);
+        if (selected != null && selected != entry) {
+          wrongEntry.add('$path: breadcrumb "$entry", navigation "$selected"');
+        }
+        if (_barTexts(tester).contains(entry)) {
+          twice.add('$path: "$entry"');
+        }
+        for (final title in _pageTitles(tester, within: _k('desk-page'))) {
+          if (title != entry) {
+            differs.add('$path: page "$title", place "$entry"');
+          }
+        }
+      }
+      expect(wrongEntry, isEmpty, reason: wrongEntry.join('\n'));
+      expect(twice, isEmpty, reason: twice.join('\n'));
+      expect(differs, isEmpty, reason: differs.join('\n'));
+    });
+  }
+
+  for (final size in const [Size(390, 844), Size(800, 900)]) {
+    testWidgets('at ${size.width.toInt()} every page shows its own title as '
+        'before', (tester) async {
+      final router = await _pump(tester, size: size);
+      final silent = <String>[];
+      for (final path in _deskRoutes) {
+        await _visit(tester, router, path);
+        for (final t in tester.widgetList<PageTitle>(find.byType(PageTitle))) {
+          if (find.text(t.text).evaluate().isEmpty) {
+            silent.add('$path: ${t.text}');
+          }
+        }
+      }
+      expect(silent, isEmpty, reason: silent.join('\n'));
+    });
+  }
+}

@@ -27,6 +27,7 @@ import '../../../../core/l10n/lexicon_defaults.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../providers/workspace_providers.dart';
@@ -115,7 +116,7 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.wordingTitle),
+        title: PageTitle(l10n.wordingTitle),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),

@@ -21,6 +21,7 @@ import '../../../../core/theme/status_colors.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/account_activity.dart';
@@ -71,7 +72,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n.tabMoney),
+          title: PageTitle(l10n.tabMoney),
           actions: [const InvoiceProcessHelpButton(),
             if (overview.hasValue) OwnFinanceExportMenu(overview: all)], // #2557 C3
           bottom: AppTabBar.bottom(

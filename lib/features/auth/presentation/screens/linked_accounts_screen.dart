@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../application/federation_handoff_controller.dart';
 import '../../domain/auth_outcome.dart';
 import '../../domain/social_provider.dart';
@@ -135,7 +136,7 @@ class _LinkedAccountsScreenState
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.linkedAccountsTitle),
+        title: PageTitle(l10n.linkedAccountsTitle),
       ),
       body: identities == null
           ? const Center(child: CircularProgressIndicator())

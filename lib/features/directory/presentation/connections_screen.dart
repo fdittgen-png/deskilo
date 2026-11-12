@@ -7,6 +7,7 @@ import '../../../core/backend/connected_installations.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import 'connection_dialog.dart';
 import 'connection_outcome_text.dart';
@@ -18,7 +19,7 @@ class ConnectionsScreen extends ConsumerWidget {
     final l = context.l10n;
     final sources = ref.watch(connectedSourcesProvider);
     return Scaffold(
-      appBar: AppBar(title: Text(l.portalConnections)),
+      appBar: AppBar(title: PageTitle(l.portalConnections)),
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('connections-portal-connect'),
         onPressed: () => showDialog<bool>(

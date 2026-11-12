@@ -22,6 +22,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../application/recorder_controller.dart';
 import '../../domain/stored_recording.dart';
 import '../../providers/recorder_providers.dart';
@@ -122,7 +123,7 @@ class _TaskRecorderScreenState extends ConsumerState<TaskRecorderScreen> {
     final live =
         state == RecorderState.recording || state == RecorderState.paused;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.taskRecorderTitle)),
+      appBar: AppBar(title: PageTitle(l10n.taskRecorderTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [

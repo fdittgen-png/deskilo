@@ -7,6 +7,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/providers/auth_providers.dart';
@@ -46,7 +47,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
             icon: const Icon(Icons.dns_outlined),
           ),
         ],
-        title: Text(
+        title: PageTitle(
           l10n.accountActivityTitle,
         ),
       ),

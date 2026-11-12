@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/site.dart';
@@ -25,7 +26,7 @@ class SitesScreen extends ConsumerWidget {
     final sites = ref.watch(sitesProvider);
     final levels = ref.watch(levelsProvider).value ?? const [];
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.featureMultiSite)),
+      appBar: AppBar(title: PageTitle(l10n.featureMultiSite)),
       floatingActionButton: FloatingActionButton.extended(
         key: const ValueKey('sites-add'),
         onPressed: () => _editSite(context, ref, null),

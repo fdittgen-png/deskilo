@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../money/presentation/widgets/payment_terms_card.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
@@ -237,7 +238,7 @@ class _MemberPageBody extends ConsumerWidget {
     return Scaffold(
       key: const ValueKey('member-page'),
       appBar: AppBar(
-        title: Text(name, overflow: TextOverflow.ellipsis),
+        title: PageTitle(name, overflow: TextOverflow.ellipsis),
         actions: [
           if (canMessage)
             IconButton(

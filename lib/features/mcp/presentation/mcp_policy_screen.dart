@@ -6,6 +6,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/mcp_admin.dart';
@@ -73,7 +74,7 @@ class _McpPolicyScreenState extends ConsumerState<McpPolicyScreen> {
         (active != null && active != workspaceId) ||
         (current.value != null && current.value != target);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.mcpPolicyTitle)),
+      appBar: AppBar(title: PageTitle(l10n.mcpPolicyTitle)),
       body: workspaceId == null
           ? const SizedBox.shrink()
           : target == null && current.isLoading

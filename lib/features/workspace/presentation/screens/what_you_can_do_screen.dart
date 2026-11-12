@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/access_summary.dart';
@@ -81,7 +82,7 @@ class WhatYouCanDoScreen extends ConsumerWidget {
           }();
 
     if (subject == null) {
-      return Scaffold(appBar: AppBar(title: Text(title)), body: const LoadingView());
+      return Scaffold(appBar: AppBar(title: PageTitle(title)), body: const LoadingView());
     }
     final sources = accessSources(
       member: subject,
@@ -92,7 +93,7 @@ class WhatYouCanDoScreen extends ConsumerWidget {
     final nothingMore = grantedBy(sources).isEmpty;
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: PageTitle(title)),
       body: ListView(
         padding: AppSpacing.lgAll,
         children: [

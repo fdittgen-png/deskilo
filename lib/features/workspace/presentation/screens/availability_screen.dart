@@ -13,6 +13,7 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/work_hours.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/booking_policies.dart';
 import '../../domain/workspace_feature.dart';
@@ -51,7 +52,7 @@ class AvailabilityScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.availabilityTitle),
+        title: PageTitle(l10n.availabilityTitle),
       ),
       body: switch ((weekdaysAsync, granularityAsync, closuresAsync)) {
         (

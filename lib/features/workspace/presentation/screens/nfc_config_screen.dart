@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
@@ -84,7 +85,7 @@ class _NfcConfigScreenState extends ConsumerState<NfcConfigScreen> {
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.nfcConfigTitle),
+        title: PageTitle(l10n.nfcConfigTitle),
         actions: [
           HelpDot(
             l10n.helpHintBadgesTopic,

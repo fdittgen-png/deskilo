@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
@@ -59,7 +60,7 @@ class PeriodReservationsScreen extends ConsumerWidget {
         l10n.periodReservationsUnnamed;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: PageTitle(
           fromMonth == toMonth
               ? l10n.periodReservationsTitle(fromMonth)
               : l10n.periodReservationsTitle('$fromMonth – $toMonth'),

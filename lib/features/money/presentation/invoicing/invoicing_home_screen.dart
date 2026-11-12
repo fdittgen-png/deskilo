@@ -24,6 +24,7 @@ import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/storage/pane_width_store.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
@@ -116,7 +117,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final invoices = ref.watch(invoicesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.featureInvoicing),
+        title: PageTitle(l.featureInvoicing),
         actions: [
           IconButton(
             key: const ValueKey('invoicing-search'),

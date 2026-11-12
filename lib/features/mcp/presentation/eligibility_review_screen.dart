@@ -9,6 +9,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_sheet.dart';
 import '../../../core/ui/inline_banner.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -144,7 +145,7 @@ class _EligibilityReviewScreenState
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.mcpReviewTitle),
+        title: PageTitle(l10n.mcpReviewTitle),
       ),
       body: caps.when(
         loading: () => const LoadingView(),

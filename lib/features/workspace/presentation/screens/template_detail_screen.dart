@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/template_compare.dart';
@@ -65,7 +66,7 @@ class _TemplateDetailScreenState extends ConsumerState<TemplateDetailScreen> {
       templateInspectionProvider(widget.template.id),
     );
     return Scaffold(
-      appBar: AppBar(title: Text(widget.template.name)),
+      appBar: AppBar(title: PageTitle(widget.template.name)),
       body: inspection.when(
         loading: () => const LoadingView(),
         error: (e, _) => Padding(

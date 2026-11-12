@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/setting_defaults.g.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -54,7 +55,7 @@ class InvoicesScreen extends ConsumerWidget {
     if (!canIssue) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n.myInvoicesTitle),
+          title: PageTitle(l10n.myInvoicesTitle),
           actions: [_memberMenu(context, more)],
         ),
         body: Column(

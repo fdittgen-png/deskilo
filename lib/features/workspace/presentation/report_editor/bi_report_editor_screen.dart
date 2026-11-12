@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../application/report_editor/bi_report_editor_state.dart';
 import '../../domain/bi_saved_view.dart';
@@ -82,7 +83,7 @@ class _Frame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(context.l10n.biEditorTitle)),
+    appBar: AppBar(title: PageTitle(context.l10n.biEditorTitle)),
     body: child,
   );
 }

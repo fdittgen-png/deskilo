@@ -7,6 +7,7 @@ import '../../../core/backend/connected_installation_providers.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/conversation_target.dart';
 import '../domain/messenger.dart';
@@ -117,7 +118,7 @@ class _MessengerState extends ConsumerState<AccountMessengerScreen> {
     void submit(String value) => setState(() => _query = value);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.portalMessenger),
+        title: PageTitle(l.portalMessenger),
         actions: [
           IconButton(
             key: const ValueKey('account-messenger-portal-connections'),

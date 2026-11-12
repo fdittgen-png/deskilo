@@ -11,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -405,7 +406,7 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
           // title's leading spacing, while every other screen puts its
           // help dot in the actions. Moved there, the title has room and
           // the app is one shape less inconsistent.
-          title: Text(l10n.reportEditorTitle,
+          title: PageTitle(l10n.reportEditorTitle,
               overflow: TextOverflow.ellipsis),
           actions: [
             HelpDot(l10n.helpTopicReportEditor,

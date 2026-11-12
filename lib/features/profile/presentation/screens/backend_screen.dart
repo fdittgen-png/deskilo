@@ -12,6 +12,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../widgets/backend_candidate_form.dart';
 import '../widgets/backend_how_to.dart';
@@ -60,7 +61,7 @@ class _BackendScreenState extends ConsumerState<BackendScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.backendServerTitle),
+        title: PageTitle(l10n.backendServerTitle),
         actions: [HelpDot(topic, anchor: HelpAnchor.backendServer)],
       ),
       body: ListView(

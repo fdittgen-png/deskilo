@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/feature_lifecycle.dart';
 import '../../domain/feature_switch_rows.dart';
@@ -88,7 +89,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.featuresTitle),
+        title: PageTitle(l10n.featuresTitle),
         actions: const [HelpDot('Features', anchor: HelpAnchor.featuresSwitch)],
       ),
       body: workspace == null

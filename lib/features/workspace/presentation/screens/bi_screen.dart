@@ -16,6 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -100,7 +101,7 @@ class BiScreen extends ConsumerWidget {
     final unavailable = cards.where((c) => !visibleIds.contains(c)).length;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.biTitle),
+        title: PageTitle(l10n.biTitle),
         // Opened from an address (or after a toolbar change) there is no
         // page below: offer the way home instead of a dead end.
         leading: context.canPop()

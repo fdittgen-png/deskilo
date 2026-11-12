@@ -7,6 +7,7 @@ import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../widgets/backend_candidate_form.dart';
 import 'new_instance_screen.dart';
 
@@ -50,7 +51,7 @@ class ServerChoiceScreen extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.serverChoiceTitle),
+        title: PageTitle(l10n.serverChoiceTitle),
         actions: [HelpDot(l10n.helpTopicServer, anchor: HelpAnchor.backendServer)],
       ),
       body: SafeArea(

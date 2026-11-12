@@ -22,6 +22,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/print_or_retry.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -411,7 +412,7 @@ class _VatDeclarationsScreenState
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(key: const ValueKey('vat-declarations-back-button'), onPressed: () => context.go('/money')),
-        title: Text(l10n.vatDeclScreenTitle),
+        title: PageTitle(l10n.vatDeclScreenTitle),
       ),
       body: regime != VatRegime.vatRegistered
           ? Padding(

@@ -14,6 +14,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -216,7 +217,7 @@ class _VatScreenState extends ConsumerState<VatScreen> {
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.vatRateHistory);
     final ratesAsync = ref.watch(vatRatesProvider);
-    final title = Text(l10n.vatTitle);
+    final title = PageTitle(l10n.vatTitle);
     if (workspace == null || ratesAsync.isLoading) {
       return Scaffold(
         appBar: AppBar(title: title),

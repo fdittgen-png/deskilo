@@ -14,6 +14,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/help_row.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_preferences.dart';
 import '../../providers/personal_preferences_providers.dart';
@@ -92,7 +93,7 @@ class RegionalFormatsScreen extends ConsumerWidget {
         : formatLocaleLabel(l10n, prefs.formatLocale);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.regionalFormatsTitle)),
+      appBar: AppBar(title: PageTitle(l10n.regionalFormatsTitle)),
       body: ListView(
         children: [
           const PreferenceScopeControls(),

@@ -11,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../money/presentation/vat_price_label.dart';
 import '../../../money/presentation/widgets/vat_rate_field.dart';
@@ -120,7 +121,7 @@ class AccessoriesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.accessoriesTitle),
+        title: PageTitle(l10n.accessoriesTitle),
       ),
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('accessories-new'),

@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/template_compare.dart';
@@ -70,7 +71,7 @@ class _TemplateCompareScreenState extends ConsumerState<TemplateCompareScreen> {
     final comparison = ref.watch(templateComparisonProvider(ids));
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.compareTitle),
+        title: PageTitle(l10n.compareTitle),
         actions: [
           IconButton(
             key: const ValueKey('compare-export'),

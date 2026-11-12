@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/kit/page_title.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../providers/assistant_setup_providers.dart';
@@ -68,7 +69,7 @@ class _ConnectAssistantScreenState
         : ref.watch(mcpConnectorUrlProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.mcpConnectTitle),
+        title: PageTitle(l10n.mcpConnectTitle),
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,

@@ -20,6 +20,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/setup_draft_form.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -217,7 +218,7 @@ class _Preview extends StatelessWidget {
             AppBar(
               primary: false,
               automaticallyImplyLeading: false,
-              title: Text(name, overflow: TextOverflow.ellipsis),
+              title: PageTitle(name, overflow: TextOverflow.ellipsis),
             ),
             Padding(
               padding: AppSpacing.mdAll,

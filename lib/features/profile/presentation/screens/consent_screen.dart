@@ -13,6 +13,7 @@ import '../../../../core/privacy/privacy_policy.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../providers/profile_providers.dart';
 import '../widgets/privacy_notice_view.dart';
 
@@ -49,7 +50,7 @@ class _ConsentScreenState extends ConsumerState<ConsentScreen> {
     final unavailable = profileAsync.hasError && !profileAsync.isLoading;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.consentTitle),
+        title: PageTitle(l10n.consentTitle),
         automaticallyImplyLeading: widget.review,
       ),
       body: SafeArea(

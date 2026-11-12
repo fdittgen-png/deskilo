@@ -23,6 +23,7 @@ import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../export/task_document.dart' show recordingRevision;
@@ -225,7 +226,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     final opened = _opened;
     final copy = _copy;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.taskWorkbenchTitle)),
+      appBar: AppBar(title: PageTitle(l10n.taskWorkbenchTitle)),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
@@ -388,7 +389,7 @@ class _StoryboardPageState extends State<_StoryboardPage> {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: PageTitle(
           l10n.taskWorkbenchReviewIllustrations,
         ),
       ),

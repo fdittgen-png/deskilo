@@ -15,6 +15,7 @@ import '../../../../core/locale/device_locale.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/wizard_form_layout.dart';
 import '../../../../core/ui/wizard_navigation.dart';
 import '../../../../core/ui/wizard_progress.dart';
@@ -376,7 +377,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (_joinMode) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n.onboardingTitle),
+          title: PageTitle(l10n.onboardingTitle),
           actions: [const ApplicationRequestsEntry(), const AccountPortalEntry(), signOut],
         ),
         body: _centered(Column(
