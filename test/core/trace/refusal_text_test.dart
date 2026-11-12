@@ -147,12 +147,16 @@ void main() {
       expect(raised, isTrue);
     });
 
-    test('already decided, and changed meanwhile', () {
-      expect(knownRefusalOf(_pg('already decided')), KnownRefusal.alreadyDecided);
-      expect(knownRefusalOf(_pg('you already decided this event')),
+    test('already decided, and changed meanwhile, by their codes (#3811)',
+        () {
+      expect(knownRefusalOf(_pg('already decided', code: 'DKD01')),
           KnownRefusal.alreadyDecided);
-      expect(knownRefusalOf(_pg('invoice is voided')),
+      expect(knownRefusalOf(_pg('you already decided this event', code: 'DKD01')),
+          KnownRefusal.alreadyDecided);
+      expect(knownRefusalOf(_pg('invoice is voided', code: 'DKI03')),
           KnownRefusal.changedMeanwhile);
+      // The sentence alone is no longer read: the code decides.
+      expect(knownRefusalOf(_pg('invoice is voided')), isNull);
     });
 
     test('anything else is not a known refusal', () {
