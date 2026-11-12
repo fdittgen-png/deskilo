@@ -5472,6 +5472,7 @@ const Set<String> uiRoutes = {
   '/payment-config',
   '/billing',
   '/invoices',
+  '/invoices/:id',
   '/invoice-register',
   '/einvoice-config',
   '/documents',
