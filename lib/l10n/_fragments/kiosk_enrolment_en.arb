@@ -42,5 +42,167 @@
         "type": "String"
       }
     }
+  },
+  "kioskDevicesTitle": "Kiosk devices",
+  "@kioskDevicesTitle": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskDevicesIntro": "The devices this business uses as kiosks. Badge sign-in greets people by name on them, and can be limited to them.",
+  "@kioskDevicesIntro": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskDevicesEntryHint": "Enrol this device, see and revoke the business’s kiosks",
+  "@kioskDevicesEntryHint": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolNameLabel": "Name of this device",
+  "@kioskEnrolNameLabel": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolNameHint": "For example: Front desk tablet",
+  "@kioskEnrolNameHint": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolAction": "Enrol this device",
+  "@kioskEnrolAction": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolTrust": "The device itself is what is trusted: once enrolled, anyone at it can use badge sign-in as at a kiosk of this business. If the device is lost or given away, revoke it below.",
+  "@kioskEnrolTrust": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolTrustBrowser": "In a browser, the enrolment is kept in this browser’s storage on this computer. Clearing the browser’s data removes it; revoking it here is the remedy for a lost device.",
+  "@kioskEnrolTrustBrowser": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolled": "This device is enrolled as “{name}”.",
+  "@kioskEnrolled": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskEnrolledElsewhere": "This device is enrolled as a kiosk of another business. Enrolling it here replaces that enrolment on this device; the other business keeps its record until it revokes it.",
+  "@kioskEnrolledElsewhere": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolDone": "This device is now a kiosk of the business.",
+  "@kioskEnrolDone": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskEnrolFailed": "This device could not be enrolled. Try again.",
+  "@kioskEnrolFailed": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskForgetHere": "Forget on this device",
+  "@kioskForgetHere": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskForgetConfirm": "This device stops being a kiosk here. The business keeps its record of it until it is revoked.",
+  "@kioskForgetConfirm": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereKiosks": "Enrolled kiosks only",
+  "@kioskSigninWhereKiosks": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereAnyDevice": "Any device",
+  "@kioskSigninWhereAnyDevice": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereRecommend": "Badge sign-in works on any device: a badge and its PIN sign in from anywhere. With enrolled kiosks only, only this business’s kiosks sign people in by badge and greet them by name, and a badge tried elsewhere is never locked at its kiosk.",
+  "@kioskSigninWhereRecommend": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereNoDeviceTitle": "No kiosk is enrolled",
+  "@kioskSigninWhereNoDeviceTitle": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereNoDevice": "Nobody can sign in by badge until a kiosk of this business is enrolled. Switch to enrolled kiosks only anyway?",
+  "@kioskSigninWhereNoDevice": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereSwitch": "Switch",
+  "@kioskSigninWhereSwitch": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskSigninWhereFailed": "The setting could not be saved. Try again.",
+  "@kioskSigninWhereFailed": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskDevicesListTitle": "Enrolled devices",
+  "@kioskDevicesListTitle": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskDevicesEmpty": "No device is enrolled yet.",
+  "@kioskDevicesEmpty": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskDeviceEnrolledBy": "Enrolled by {name} on {date}",
+  "@kioskDeviceEnrolledBy": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskDeviceEnrolledOn": "Enrolled on {date}",
+  "@kioskDeviceEnrolledOn": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskDeviceLastUsed": "Last used {date}",
+  "@kioskDeviceLastUsed": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskDeviceNeverUsed": "Not used yet",
+  "@kioskDeviceNeverUsed": {
+    "description": "#3675 — the kiosk devices screen."
+  },
+  "kioskDeviceRevokedOn": "Revoked on {date}",
+  "@kioskDeviceRevokedOn": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskDeviceRevokeConfirm": "Revoke “{name}”? It stops being a kiosk of this business at once; to use it again, enrol it again.",
+  "@kioskDeviceRevokeConfirm": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskDeviceRevokeDone": "“{name}” is revoked.",
+  "@kioskDeviceRevokeDone": {
+    "description": "#3675 — the kiosk devices screen.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "kioskDeviceRevokeFailed": "The device could not be revoked. Try again.",
+  "@kioskDeviceRevokeFailed": {
+    "description": "#3675 — the kiosk devices screen."
   }
 }

@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../l10n/context_l10n.dart';
+import '../links/link_launcher.dart';
 import '../ui/app_snack.dart';
 import 'file_delivery.dart';
 import 'file_saver.dart';
@@ -20,6 +24,8 @@ void announceFileDelivery(
 }) {
   final l10n = context.l10n;
   switch (delivery) {
+    case LocalSave(outcome: SavedFile(:final path, atChosenPlace: true)):
+      _announceAtChosenPlace(context, l10n, path);
     case LocalSave(outcome: SavedFile(:final path)):
       AppSnack.success(context, l10n.commonSavedTo(path));
     case LocalSave(outcome: SavedPrivately(:final path)):
@@ -43,7 +49,41 @@ void announceFileDelivery(
       AppSnack.info(context, l10n.fileHandedToShareSheet(fileName));
     case DeliveryCancelled():
       AppSnack.info(context, l10n.fileDeliveryCancelled);
+    case LocalSave(outcome: SaveCancelled()):
+      // #3613 — the person closed the desktop save dialog: they know, and
+      // nothing happened that needs saying.
+      break;
   }
+}
+
+/// #3613 — a desktop save the person placed and the write acknowledged:
+/// "Saved to", with Open and Show in folder through the app's one way out
+/// to the system ([linkLauncherProvider]). Show in folder opens the folder
+/// that holds the file.
+void _announceAtChosenPlace(
+  BuildContext context,
+  AppLocalizations l10n,
+  String path,
+) {
+  final launch = ProviderScope.containerOf(
+    context,
+    listen: false,
+  ).read(linkLauncherProvider);
+  final file = Uri.file(path);
+  AppSnack.success(
+    context,
+    l10n.commonSavedTo(path),
+    action: SnackBarAction(
+      key: const ValueKey('file-open'),
+      label: l10n.fileOpenSaved,
+      onPressed: () => unawaited(launch(file)),
+    ),
+    secondaryAction: SnackBarAction(
+      key: const ValueKey('file-show-in-folder'),
+      label: l10n.fileShowInFolder,
+      onPressed: () => unawaited(launch(file.resolve('.'))),
+    ),
+  );
 }
 
 /// The file's own name: an app-private path means nothing to the person
@@ -59,6 +99,9 @@ String _failure(AppLocalizations l10n, SaveFailure reason) => switch (reason) {
   ),
   SaveFailure.shareUnavailable => l10n.fileSaveFailedBecause(
     l10n.fileSaveFailureShare,
+  ),
+  SaveFailure.chosenFolderRefused => l10n.fileSaveFailedBecause(
+    l10n.fileSaveFailureChosenFolder,
   ),
   SaveFailure.unknown => l10n.commonSaveFailed,
 };

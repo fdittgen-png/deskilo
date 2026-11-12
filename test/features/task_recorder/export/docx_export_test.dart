@@ -487,19 +487,28 @@ void main() {
       expect(encodeRecordingText(r), before);
     });
 
-    test('a cancelled or failing save is reported as failed', () async {
+    test('a failing save is reported as failed', () async {
       final r = _fixture(BookingJourney.planConfirmed);
       final before = encodeRecordingText(r);
-      final cancelled = TaskDocxExporter(
+      final failed = TaskDocxExporter(
         ({required bytes, required fileName}) async => const SaveFailed(),
       );
       final throwing = TaskDocxExporter(
         ({required bytes, required fileName}) async =>
             throw const FileSystemLikeError(),
       );
-      expect(await cancelled.save(r, _l('en')), isA<TaskDocxSaveFailed>());
+      expect(await failed.save(r, _l('en')), isA<TaskDocxSaveFailed>());
       expect(await throwing.save(r, _l('en')), isA<TaskDocxSaveFailed>());
       expect(encodeRecordingText(r), before);
+    });
+
+    test('#3613 — a closed save dialog is a cancellation, not a failure',
+        () async {
+      final r = _fixture(BookingJourney.planConfirmed);
+      final cancelled = TaskDocxExporter(
+        ({required bytes, required fileName}) async => const SaveCancelled(),
+      );
+      expect(await cancelled.save(r, _l('en')), isA<TaskDocxSaveCancelled>());
     });
 
     test('a refused import never reaches the saver', () async {

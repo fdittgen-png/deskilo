@@ -26,10 +26,23 @@ sealed class SaveOutcome {
   const SaveOutcome();
 }
 
-/// The platform reported a user-visible file (Downloads, MediaStore).
+/// The platform reported a user-visible file (Downloads, MediaStore, or the
+/// place a desktop person chose).
 final class SavedFile extends SaveOutcome {
-  const SavedFile(this.path);
+  const SavedFile(this.path, {this.atChosenPlace = false});
   final String path;
+
+  /// #3613 — the person picked [path] in a desktop save dialog and the
+  /// write was acknowledged: the file can be opened and shown in its
+  /// folder from the notice. False for every other saver.
+  final bool atChosenPlace;
+}
+
+/// #3613 — the person closed the desktop save dialog. Nothing was written,
+/// nothing is announced and nothing counts as handed out: neither an error
+/// nor a delivery.
+final class SaveCancelled extends SaveOutcome {
+  const SaveCancelled();
 }
 
 /// Kept, but only where the app can see it (the Android fallback when
@@ -60,6 +73,10 @@ enum SaveFailure {
   /// The system share sheet could not be opened, so the bytes never left
   /// the app.
   shareUnavailable,
+
+  /// #3613 — the place chosen in a desktop save dialog did not take the
+  /// file; nothing half-written remains there.
+  chosenFolderRefused,
 
   /// The seam could not say more than "not saved".
   unknown,

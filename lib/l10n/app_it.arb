@@ -7500,6 +7500,10 @@
       }
     }
   },
+  "fileOpenSaved": "Apri",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
   "fileSaveFailedBecause": "Impossibile salvare il file: {reason}.",
   "@fileSaveFailedBecause": {
     "description": "Error notice with the reason a file could not be saved",
@@ -7508,6 +7512,10 @@
         "type": "String"
       }
     }
+  },
+  "fileSaveFailureChosenFolder": "la cartella scelta non ha accettato il file",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   },
   "fileSaveFailureNoStorage": "nessuna cartella di questo dispositivo lo ha accettato",
   "@fileSaveFailureNoStorage": {
@@ -7520,6 +7528,10 @@
   "fileSaveFailureWrite": "il dispositivo ha rifiutato la scrittura",
   "@fileSaveFailureWrite": {
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
+  "fileShowInFolder": "Mostra nella cartella",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
   },
   "financesAllSpaces": "Tutti gli spazi",
   "financesAmountHidden": "Importo nascosto",
@@ -10630,7 +10642,31 @@
   "@kioskClosedToday": {
     "description": "Kiosk banner/snack when today is not an open day (open weekdays or a closure day)"
   },
+  "kioskDeviceEnrolledBy": "Registrato da {name} il {date}",
+  "kioskDeviceEnrolledOn": "Registrato il {date}",
+  "kioskDeviceLastUsed": "Ultimo uso il {date}",
+  "kioskDeviceNeverUsed": "Non ancora usato",
+  "kioskDeviceRevokeConfirm": "Revocare «{name}»? Smette subito di essere un chiosco di questa azienda; per usarlo di nuovo, lo registri di nuovo.",
+  "kioskDeviceRevokeDone": "«{name}» è revocato.",
+  "kioskDeviceRevokeFailed": "Non è stato possibile revocare il dispositivo. Riprovi.",
+  "kioskDeviceRevokedOn": "Revocato il {date}",
+  "kioskDevicesEmpty": "Nessun dispositivo è ancora registrato.",
+  "kioskDevicesEntryHint": "Registri questo dispositivo, veda e revochi i chioschi dell’azienda",
+  "kioskDevicesIntro": "I dispositivi che questa azienda usa come chioschi. L’accesso con badge vi saluta ogni persona per nome e può essere limitato a essi.",
+  "kioskDevicesListTitle": "Dispositivi registrati",
+  "kioskDevicesTitle": "Dispositivi chiosco",
   "kioskDone": "Fatto — è tutto a posto.",
+  "kioskEnrolAction": "Registrare questo dispositivo",
+  "kioskEnrolDone": "Questo dispositivo è ora un chiosco dell’azienda.",
+  "kioskEnrolFailed": "Non è stato possibile registrare questo dispositivo. Riprovi.",
+  "kioskEnrolNameHint": "Per esempio: tablet della reception",
+  "kioskEnrolNameLabel": "Nome di questo dispositivo",
+  "kioskEnrolTrust": "La fiducia va al dispositivo stesso: una volta registrato, chiunque si trovi davanti può usare l’accesso con badge come a un chiosco di questa azienda. Se il dispositivo viene perso o ceduto, lo revochi qui sotto.",
+  "kioskEnrolTrustBrowser": "In un browser, la registrazione è conservata nella memoria di questo browser su questo computer. Cancellare i dati del browser la rimuove; revocarla qui è il rimedio per un dispositivo perso.",
+  "kioskEnrolled": "Questo dispositivo è registrato come «{name}».",
+  "kioskEnrolledElsewhere": "Questo dispositivo è registrato come chiosco di un’altra azienda. Registrarlo qui sostituisce quella registrazione su questo dispositivo; l’altra azienda conserva il suo registro finché non lo revoca.",
+  "kioskForgetConfirm": "Questo dispositivo smette di essere un chiosco qui. L’azienda conserva il suo registro finché non viene revocato.",
+  "kioskForgetHere": "Dimenticare su questo dispositivo",
   "kioskGateBody": "Questo account è configurato come chiosco dello spazio. In modalità chiosco il tablet mostra solo la piantina per il check-in con badge — non si può aprire altro. Per uscire dalla modalità chiosco, riavvii il tablet.",
   "kioskGateReject": "Non ora — apra l'app normalmente",
   "kioskGateStart": "Avvia la modalità chiosco",
@@ -10665,6 +10701,13 @@
   "kioskRevertDone": "Questo profilo è di nuovo un membro normale.",
   "kioskRevertTitle": "Dispositivo chiosco",
   "kioskScanQr": "Scansiona il badge QR",
+  "kioskSigninWhereAnyDevice": "Qualsiasi dispositivo",
+  "kioskSigninWhereFailed": "Non è stato possibile salvare l’impostazione. Riprovi.",
+  "kioskSigninWhereKiosks": "Solo chioschi registrati",
+  "kioskSigninWhereNoDevice": "Nessuno può accedere con badge finché non viene registrato un chiosco di questa azienda. Passare comunque a solo chioschi registrati?",
+  "kioskSigninWhereNoDeviceTitle": "Nessun chiosco registrato",
+  "kioskSigninWhereRecommend": "L’accesso con badge funziona su qualsiasi dispositivo: un badge e il suo PIN accedono da ovunque. Con solo chioschi registrati, solo i chioschi di questa azienda consentono l’accesso con badge e salutano ogni persona per nome, e un badge provato altrove non viene mai bloccato al suo chiosco.",
+  "kioskSigninWhereSwitch": "Passa",
   "kioskTapHint": "Tocchi un posto per fare check-in",
   "kitActionBusy": "In corso…",
   "kitScrollBack": "Scorri indietro",

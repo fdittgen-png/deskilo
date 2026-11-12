@@ -71,5 +71,17 @@
   "fileSaveFailureShare": "la feuille de partage n'a pas pu s'ouvrir",
   "@fileSaveFailureShare": {
     "description": "Reason phrase for fileSaveFailedBecause: the system share sheet could not open"
+  },
+  "fileOpenSaved": "Ouvrir",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
+  "fileShowInFolder": "Afficher dans le dossier",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
+  },
+  "fileSaveFailureChosenFolder": "le dossier choisi n’a pas accepté le fichier",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   }
 }

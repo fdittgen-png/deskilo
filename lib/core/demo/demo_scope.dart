@@ -5,6 +5,7 @@ import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
@@ -343,7 +344,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
-      workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
+      workspaceFilesRepositoryProvider.overrideWithValue(fixture.files), ...demoKioskOverrides(fixture), // #3675
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
       // #2573 — the demo files no expense request as a purchase document,
       // and the app's opener reads the server: none here.
@@ -361,8 +362,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ...realtimeSyncOverrides(fixture.realtime),
       notificationServiceProvider.overrideWithValue(fixture.notifications),
       appBadgeProvider.overrideWithValue(fixture.badge),
-      fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
-      typedFileSaverProvider.overrideWithValue(fixture.outward.saveFileTyped),
+      ..._fileOverrides(fixture),
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
       linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
@@ -472,6 +472,14 @@ final Override _demoPersonalContext = personalContextProvider.overrideWith(
     );
   },
 );
+
+/// The local saves Demo keeps inert, and (#3613) the folder a desktop save
+/// dialog starts in, a device preference that is the demonstration's.
+List<Override> _fileOverrides(DemoFixture fixture) => [
+  fileSaverProvider.overrideWithValue(fixture.outward.saveFile),
+  typedFileSaverProvider.overrideWithValue(fixture.outward.saveFileTyped),
+  saveFolderStoreProvider.overrideWithValue(fixture.prefs.saveFolder),
+];
 
 /// How the shell and the desk are drawn on this device (the bar swiped
 /// away, the swipe hint seen, the rail, #3607's record pane widths), on

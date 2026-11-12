@@ -11653,9 +11653,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get fileOpenSaved => 'Abrir';
+
+  @override
   String fileSaveFailedBecause(String reason) {
     return 'No se pudo guardar el archivo: $reason.';
   }
+
+  @override
+  String get fileSaveFailureChosenFolder =>
+      'la carpeta elegida no aceptó el archivo';
 
   @override
   String get fileSaveFailureNoStorage =>
@@ -11666,6 +11673,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fileSaveFailureWrite => 'el dispositivo rechazó la escritura';
+
+  @override
+  String get fileShowInFolder => 'Mostrar en la carpeta';
 
   @override
   String get financesAllSpaces => 'Todos los espacios';
@@ -16747,7 +16757,102 @@ class AppLocalizationsEs extends AppLocalizations {
       'El espacio está cerrado hoy — no es posible registrarse ni reservar.';
 
   @override
+  String kioskDeviceEnrolledBy(String name, String date) {
+    return 'Registrado por $name el $date';
+  }
+
+  @override
+  String kioskDeviceEnrolledOn(String date) {
+    return 'Registrado el $date';
+  }
+
+  @override
+  String kioskDeviceLastUsed(String date) {
+    return 'Último uso el $date';
+  }
+
+  @override
+  String get kioskDeviceNeverUsed => 'Aún sin usar';
+
+  @override
+  String kioskDeviceRevokeConfirm(String name) {
+    return '¿Revocar «$name»? Deja de inmediato de ser un quiosco de esta empresa; para volver a usarlo, regístrelo de nuevo.';
+  }
+
+  @override
+  String kioskDeviceRevokeDone(String name) {
+    return '«$name» está revocado.';
+  }
+
+  @override
+  String get kioskDeviceRevokeFailed =>
+      'No se pudo revocar el dispositivo. Inténtelo de nuevo.';
+
+  @override
+  String kioskDeviceRevokedOn(String date) {
+    return 'Revocado el $date';
+  }
+
+  @override
+  String get kioskDevicesEmpty => 'Aún no hay ningún dispositivo registrado.';
+
+  @override
+  String get kioskDevicesEntryHint =>
+      'Registre este dispositivo, vea y revoque los quioscos de la empresa';
+
+  @override
+  String get kioskDevicesIntro =>
+      'Los dispositivos que esta empresa usa como quioscos. El acceso con credencial saluda en ellos a cada persona por su nombre y puede limitarse a ellos.';
+
+  @override
+  String get kioskDevicesListTitle => 'Dispositivos registrados';
+
+  @override
+  String get kioskDevicesTitle => 'Dispositivos de quiosco';
+
+  @override
   String get kioskDone => 'Listo — todo en orden.';
+
+  @override
+  String get kioskEnrolAction => 'Registrar este dispositivo';
+
+  @override
+  String get kioskEnrolDone =>
+      'Este dispositivo es ahora un quiosco de la empresa.';
+
+  @override
+  String get kioskEnrolFailed =>
+      'No se pudo registrar este dispositivo. Inténtelo de nuevo.';
+
+  @override
+  String get kioskEnrolNameHint => 'Por ejemplo: tableta de recepción';
+
+  @override
+  String get kioskEnrolNameLabel => 'Nombre de este dispositivo';
+
+  @override
+  String get kioskEnrolTrust =>
+      'La confianza recae en el propio dispositivo: una vez registrado, cualquier persona ante él puede usar el acceso con credencial como en un quiosco de esta empresa. Si el dispositivo se pierde o se entrega, revóquelo abajo.';
+
+  @override
+  String get kioskEnrolTrustBrowser =>
+      'En un navegador, el registro se guarda en el almacenamiento de este navegador en este ordenador. Borrar los datos del navegador lo elimina; revocarlo aquí es el remedio ante un dispositivo perdido.';
+
+  @override
+  String kioskEnrolled(String name) {
+    return 'Este dispositivo está registrado como «$name».';
+  }
+
+  @override
+  String get kioskEnrolledElsewhere =>
+      'Este dispositivo está registrado como quiosco de otra empresa. Registrarlo aquí sustituye ese registro en este dispositivo; la otra empresa conserva su registro hasta que lo revoque.';
+
+  @override
+  String get kioskForgetConfirm =>
+      'Este dispositivo deja de ser un quiosco aquí. La empresa conserva su registro hasta que se revoque.';
+
+  @override
+  String get kioskForgetHere => 'Olvidar en este dispositivo';
 
   @override
   String get kioskGateBody =>
@@ -16812,6 +16917,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get kioskScanQr => 'Escanear la tarjeta QR';
+
+  @override
+  String get kioskSigninWhereAnyDevice => 'Cualquier dispositivo';
+
+  @override
+  String get kioskSigninWhereFailed =>
+      'No se pudo guardar el ajuste. Inténtelo de nuevo.';
+
+  @override
+  String get kioskSigninWhereKiosks => 'Solo quioscos registrados';
+
+  @override
+  String get kioskSigninWhereNoDevice =>
+      'Nadie puede iniciar sesión con credencial hasta que se registre un quiosco de esta empresa. ¿Cambiar de todos modos a solo quioscos registrados?';
+
+  @override
+  String get kioskSigninWhereNoDeviceTitle =>
+      'No hay ningún quiosco registrado';
+
+  @override
+  String get kioskSigninWhereRecommend =>
+      'El acceso con credencial funciona en cualquier dispositivo: una credencial y su PIN inician sesión desde cualquier lugar. Con solo quioscos registrados, solo los quioscos de esta empresa inician sesión con credencial y saludan a cada persona por su nombre, y una credencial probada en otro lugar nunca se bloquea en su quiosco.';
+
+  @override
+  String get kioskSigninWhereSwitch => 'Cambiar';
 
   @override
   String get kioskTapHint => 'Toque un asiento para registrarse';

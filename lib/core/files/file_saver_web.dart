@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:web/web.dart' as web;
 
 import 'file_types.dart';
+import 'save_folder_store.dart';
 
 /// The browser implementation of the local save.
 ///
@@ -48,6 +49,10 @@ Future<SaveOutcome> saveToDownloadsTyped({
   await saveToDownloads(bytes: bytes, fileName: fileName);
   return DownloadRequested(fileName);
 }
+
+/// #3613 — a browser never asks where: the download request is the save,
+/// exactly as before the desktop dialog existed.
+TypedFileSaver typedSaverFor(SaveFolderStore _) => saveToDownloadsTyped;
 
 /// Nothing to migrate: no build of this app ever wrote a file into a
 /// browser's storage, so there is no hidden directory to rescue exports

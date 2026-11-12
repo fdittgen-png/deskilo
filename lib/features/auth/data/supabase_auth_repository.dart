@@ -21,10 +21,12 @@ import '../domain/social_provider.dart';
 import 'guard_federation_port.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
-  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow});
+  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow, this.badgeHeaders});
 
   final AuthCallbackGuard? callbackGuard;
   final Future<Object?> Function()? authorityRead;
+  /// #3675 — the enrolled kiosk's header, sent on both badge steps when this device holds one.
+  final Future<Map<String, String>?> Function()? badgeHeaders;
 
   /// Test seam for the system-browser adapter (#1648); production builds
   /// the real flow over the platform secret store.
@@ -473,25 +475,24 @@ class SupabaseAuthRepository implements AuthRepository {
 
   // ── badge sign-in (#662) ────────────────────────────────────────────
 
-  /// Both steps hit the same function; only the body differs. A missing
-  /// deployment (404) and a dead network are the SAME answer to the
-  /// caller — `unavailable` — because in both cases nothing about the
-  /// badge was judged, and showing "wrong PIN" would send someone
-  /// hunting for a mistake they did not make.
+  /// Both steps hit the same function; only the body differs. A missing deployment (404) and a
+  /// dead network are the SAME answer to the caller — `unavailable` — because in both cases nothing
+  /// about the badge was judged, and "wrong PIN" would send someone hunting for a mistake they did
+  /// not make.
   Future<Map<String, dynamic>?> _invokeBadge(Map<String, dynamic> body) async {
     try {
       final response = await _client.functions.invoke(
         'badge-signin',
         body: body,
+        headers: await badgeHeaders?.call(),
       );
       final data = response.data;
       return data is Map ? Map<String, dynamic>.from(data) : null;
     } on Object catch (e, st) {
-      // A refusal comes back as 200 with ok:false, so ANY failure here is
-      // infrastructure, not judgement — #1086. This used to rethrow
-      // everything but a 404, which contradicted the contract above and
-      // reached two call sites with no catch: the sheet's spinner stayed
-      // up forever on a 500 or a dropped connection.
+      // A refusal comes back as 200 with ok:false, so ANY failure here is infrastructure, not
+      // judgement — #1086. This used to rethrow everything but a 404, which contradicted the
+      // contract above and reached two call sites with no catch: the sheet's spinner stayed up
+      // forever on a 500 or a dropped connection.
       TraceLogger.instance.warn(
         'auth',
         'badge-signin unreachable — answering unavailable',
