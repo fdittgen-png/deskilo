@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/auth_callback_guard.dart';
 import '../../../core/backend/auth_secret_store.dart';
 import '../../../core/backend/federation_authority.dart';
+import '../../../core/backend/kiosk_credential_store.dart';
 import '../../../core/backend/native_federation_flow.dart';
 import '../../../core/backend/schema_version.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -21,7 +22,12 @@ import '../domain/social_provider.dart';
 import 'guard_federation_port.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
-  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow});
+  SupabaseAuthRepository(this._client, {this.providerSettingsGet = http.get, this.callbackGuard, this.authorityRead, this.federationFlow, this.kioskCredential});
+
+  /// #3675 — this device's enrolment as a kiosk, if it has one: both badge
+  /// steps carry it, so the server can tell an enrolled kiosk of the tag's
+  /// business from any other device. Null: no device to name.
+  final Future<KioskCredential?> Function()? kioskCredential;
 
   final AuthCallbackGuard? callbackGuard;
   final Future<Object?> Function()? authorityRead;
@@ -480,9 +486,11 @@ class SupabaseAuthRepository implements AuthRepository {
   /// hunting for a mistake they did not make.
   Future<Map<String, dynamic>?> _invokeBadge(Map<String, dynamic> body) async {
     try {
+      final kiosk = await kioskCredential?.call();
       final response = await _client.functions.invoke(
         'badge-signin',
         body: body,
+        headers: kiosk == null ? null : {'x-deskilo-kiosk': kiosk.header},
       );
       final data = response.data;
       return data is Map ? Map<String, dynamic>.from(data) : null;
