@@ -6938,6 +6938,7 @@ Map<String, _Getter> _part19() => {
   'readinessAreaFirstBooking': (l) => l.readinessAreaFirstBooking,
   'readinessAreaResources': (l) => l.readinessAreaResources,
   'recordedPaymentsOff': (l) => l.recordedPaymentsOff,
+  'recordsSelectRow': (l) => l.recordsSelectRow,
   'refusalBankMatchClosedPeriod': (l) => l.refusalBankMatchClosedPeriod,
   'registerPaymentMethod': (l) => l.registerPaymentMethod,
   'reminderPdfTitleFirm': (l) => l.reminderPdfTitleFirm,

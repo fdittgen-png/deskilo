@@ -5,6 +5,8 @@
 # review {"path":"test/features/money/invoicing_navigation_ux_test.dart","before":0,"after":13,"invariant":"#3587 the invoicing home at 2x text on a phone: the owed card, the Paid chip, the switch to one line per invoice and the line, each scrolled to and settled before the overflow check, plus the More menu each tool test opens","cost":"five tests of about 1 s each locally; every settle waits for a scroll, a filter, the view switch or the menu animation"}
 # review {"path":"test/app/shell/desk_routes_test.dart","before":0,"after":10,"invariant":"each desk page is reached through the real router and settled before its rects and selection are read; a push, a back and a sheet and a dialog each settle once","cost":"18 tests in 7 s locally"}
 # review {"path":"test/app/shell/desk_routes_test.dart","before":10,"after":23,"invariant":"the desk drawn around the navigator is checked through the real router: one desk across a tab, a push and a go; a window open over the page rests the navigation and freeing it lets a tap through; a cold start on an address; the breadcrumb and the selected entry lead back; each step settles once before the address or a rect is read","cost":"24 tests in 10 s locally"}
+# review {"path":"test/core/ui/kit/records_table_test.dart","before":0,"after":20,"invariant":"each behaviour of the records table is a person's step settled before the next is read: a sort, a filter, a chip, a tick, a reload, a menu; the selection is checked to follow its keys across them","cost":"12 tests in 4 s locally"}
+# review {"path":"test/features/money/invoice_register_table_test.dart","before":0,"after":11,"invariant":"the register is opened through the app's router and its selection is downloaded after a filter and after a reload, each settled once","cost":"5 tests in 8 s locally"}
 11 test/app/entry_intents_flow_test.dart
 23 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -14,6 +16,7 @@
 17 test/core/help/help_hint_test.dart
 11 test/core/i18n/regional_formats_test.dart
 10 test/core/ui/canvas_controls_test.dart
+20 test/core/ui/kit/records_table_test.dart
 11 test/features/auth/auth_flow_test.dart
 10 test/features/auth/badge_sign_in_test.dart
 15 test/features/auth/federation_handoff_ui_test.dart
@@ -62,6 +65,7 @@
 11 test/features/money/finance_attention_test.dart
 14 test/features/money/input_vat_test.dart
 11 test/features/money/invoice_journey_test.dart
+11 test/features/money/invoice_register_table_test.dart
 21 test/features/money/invoice_register_test.dart
 11 test/features/money/invoice_template_test.dart
 80 test/features/money/invoices_test.dart

@@ -269,7 +269,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           SizedBox(
-            width: recordsFilterWidth,
+            width: _filterWidth,
             child: TextField(
               key: const ValueKey('records-filter'),
               controller: _filter,
@@ -445,4 +445,4 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
 }
 
 /// The filter field's width beside the chips.
-const double recordsFilterWidth = 280;
+const double _filterWidth = 280;

@@ -14,7 +14,7 @@ import '../../theme/app_spacing.dart';
 import 'records_table_model.dart';
 
 /// The cells of a row (or the header) in their columns.
-Widget recordCells<T>(
+Widget _recordCells<T>(
   List<RecordColumn<T>> columns,
   List<Widget> cells, {
   Widget? leading,
@@ -102,13 +102,13 @@ class RecordsHeader<T> extends StatelessWidget {
     final all = shown > 0 && selectedShown == shown;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      child: recordCells(
+      child: _recordCells(
         columns,
         [for (final c in columns) label(c)],
         leading: selectable
             ? Checkbox(
                 key: const ValueKey('records-select-shown'),
-                visualDensity: rowDensity(
+                visualDensity: _rowDensity(
                   dense ? recordRowHeight : kMinInteractiveDimension,
                 ),
                 tristate: true,
@@ -221,7 +221,7 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.md,
                   ),
-                  child: recordCells(
+                  child: _recordCells(
                     widget.columns,
                     [
                       for (final c in widget.columns)
@@ -229,7 +229,7 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                     ],
                     leading: widget.selectable
                         ? Checkbox(
-                            visualDensity: rowDensity(side),
+                            visualDensity: _rowDensity(side),
                             semanticLabel: l10n.recordsSelectRow,
                             value: widget.selected,
                             onChanged: (v) => widget.onTick(v ?? false),
@@ -274,7 +274,7 @@ const double recordRowHeight = 36;
 
 /// The density that makes a padded control exactly [side] high (a 48 one
 /// loses 4 per density step).
-VisualDensity rowDensity(double side) {
+VisualDensity _rowDensity(double side) {
   final step = (side - kMinInteractiveDimension) / 4;
   return VisualDensity(horizontal: step, vertical: step);
 }

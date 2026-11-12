@@ -40,6 +40,16 @@ import '../widgets/invoice_integrity_chip.dart';
 ///
 /// A member sees only what concerns them: issued and not tagged erroneous
 /// (RLS already scopes the rows to their own).
+/// What the register's table reads beside the invoices.
+typedef _RegisterView = ({
+  Map<String, InvoiceMatch> matches,
+  Map<String, ({int count, DateTime last})> reminders,
+  DateFormat dateFormat,
+  bool showMemberNames,
+  bool canIssue,
+  bool canExport,
+});
+
 class InvoiceRegisterScreen extends ConsumerStatefulWidget {
   const InvoiceRegisterScreen({super.key, this.from, this.to});
 
@@ -160,16 +170,17 @@ class _InvoiceRegisterScreenState
                 ) ??
                 _table(
               context,
-              l10n,
               invoices: _visible(invoices, canIssue),
               years: {for (final i in invoices) i.issuedAt.year}.toList()
                 ..sort((a, b) => b.compareTo(a)),
-              matches: matches,
-              reminders: reminders,
-              dateFormat: dateFormat,
-              showMemberNames: showMemberNames,
-              canIssue: canIssue,
-              canExport: canExport,
+              view: (
+                matches: matches,
+                reminders: reminders,
+                dateFormat: dateFormat,
+                showMemberNames: showMemberNames,
+                canIssue: canIssue,
+                canExport: canExport,
+              ),
             ),
           ),
         ),
@@ -222,59 +233,22 @@ class _InvoiceRegisterScreenState
       ];
 
   Widget _table(
-    BuildContext context,
-    AppLocalizations l10n, {
+    BuildContext context, {
     required List<Invoice> invoices,
     required List<int> years,
-    required Map<String, InvoiceMatch> matches,
-    required Map<String, ({int count, DateTime last})> reminders,
-    required DateFormat dateFormat,
-    required bool showMemberNames,
-    required bool canIssue,
-    required bool canExport,
+    required _RegisterView view,
   }) {
+    final l10n = context.l10n;
     final format = appFormatOf(context);
-    final theme = Theme.of(context);
-    final muted = theme.colorScheme.onSurfaceVariant;
-    String money(String currency, int minor) =>
-        format.moneyIn(currency).formatMinor(minor);
-    // The name that means something to THIS reader.
-    String name(Invoice i) => showMemberNames ? i.memberName : i.number;
     void open(Invoice i) => _open(
       i,
-      match: matches[i.id],
-      reminder: reminders[i.id],
-      canIssue: canIssue,
-      showMemberName: showMemberNames,
+      match: view.matches[i.id],
+      reminder: view.reminders[i.id],
+      canIssue: view.canIssue,
+      showMemberName: view.showMemberNames,
     );
     return Column(children: [
-      if (years.length > 1)
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.md,
-            AppSpacing.lg,
-            0,
-          ),
-          child: DropdownButtonFormField<int?>(
-            key: const ValueKey('invoice-register-year'),
-            initialValue: _year,
-            isExpanded: true,
-            items: [
-              DropdownMenuItem(
-                child: Text(l10n.invoiceRegisterAllYears),
-              ),
-              for (final year in years)
-                // A year is a number, not copy — but the lint reads the
-                // literal, so the digits go through a variable.
-                DropdownMenuItem(value: year, child: Text(year.toString())),
-            ],
-            onChanged: (value) => setState(() => _year = value),
-            decoration: InputDecoration(
-              labelText: l10n.numberSequenceDateYear,
-            ),
-          ),
-        ),
+      if (years.length > 1) _yearPicker(l10n, years),
       // #3606 — the register is a records table: sorted, filtered,
       // selected; one total per currency, never one sum across them.
       Expanded(
@@ -294,60 +268,13 @@ class _InvoiceRegisterScreenState
             title: l10n.invoicesEmpty,
           ),
           amountOf: (i) => (currency: i.currency, minor: i.totalCents),
-          formatAmount: money,
-          columns: [
-            RecordColumn(
-              id: 'date',
-              label: l10n.numberSequenceDatePart,
-              sortKey: (i) => i.issuedAt,
-              cell: (_, i) => Text(dateFormat.format(i.issuedAt)),
-            ),
-            RecordColumn(
-              id: 'name',
-              label: l10n.invoiceRegisterName,
-              flex: 3,
-              hideable: false,
-              sortKey: (i) => name(i).toLowerCase(),
-              cell: (_, i) => Text(name(i), overflow: TextOverflow.ellipsis),
-            ),
-            RecordColumn(
-              id: 'period',
-              label: l10n.invoiceRegisterPeriodColumn,
-              flex: 2,
-              cell: (context, i) => Text(
-                invoicePeriodLabel(context, i),
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: muted),
-              ),
-            ),
-            RecordColumn(
-              id: 'amount',
-              label: l10n.invoiceRegisterAmount,
-              numeric: true,
-              sortKey: (i) => i.totalCents,
-              cell: (_, i) => Text(money(i.currency, i.totalCents)),
-            ),
-            RecordColumn(
-              id: 'status',
-              label: l10n.invoiceRegisterStatus,
-              flex: 2,
-              cell: (_, i) => InvoiceStatusChip(
-                status: invoiceLifecycleOf(i, matches[i.id]),
-              ),
-            ),
-            // #956 — the fingerprint, checked on demand.
-            RecordColumn(
-              id: 'integrity',
-              label: l10n.invoiceRegisterIntegrity,
-              flex: 2,
-              cell: (_, i) => InvoiceIntegrityChip(invoiceId: i.id),
-            ),
-          ],
+          formatAmount: (c, m) => format.moneyIn(c).formatMinor(m),
+          columns: _columns(context, view),
           bulkActions: [
             // #3606 — the selection as a CSV of the register's columns,
             // behind the register's export permission. Not an accounting
             // file: the year's audit export stays whole, on the app bar.
-            if (canExport)
+            if (view.canExport)
               RecordBulkAction(
                 id: 'download',
                 label: l10n.invoiceRegisterDownloadSelected,
@@ -358,32 +285,126 @@ class _InvoiceRegisterScreenState
                     for (final i in invoices)
                       if (keys.contains(i.id)) i,
                   ],
-                  matches: matches,
+                  matches: view.matches,
                 ),
               ),
           ],
-          cardBuilder: (context, i) => Card(
-            child: ListTile(
-              title: Text(name(i), overflow: TextOverflow.ellipsis),
-              subtitle: Text(
-                '${dateFormat.format(i.issuedAt)} · '
-                '${invoicePeriodLabel(context, i)}',
-              ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(money(i.currency, i.totalCents)),
-                  InvoiceStatusChip(
-                    status: invoiceLifecycleOf(i, matches[i.id]),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          cardBuilder: (context, i) => _card(context, i, view),
         ),
       ),
     ]);
+  }
+
+  /// The year's narrowing, when the register spans more than one.
+  Widget _yearPicker(AppLocalizations l10n, List<int> years) => Padding(
+    padding: const EdgeInsets.fromLTRB(
+      AppSpacing.lg,
+      AppSpacing.md,
+      AppSpacing.lg,
+      0,
+    ),
+    child: DropdownButtonFormField<int?>(
+      key: const ValueKey('invoice-register-year'),
+      initialValue: _year,
+      isExpanded: true,
+      items: [
+        DropdownMenuItem(child: Text(l10n.invoiceRegisterAllYears)),
+        for (final year in years)
+          // A year is a number, not copy — but the lint reads the
+          // literal, so the digits go through a variable.
+          DropdownMenuItem(value: year, child: Text(year.toString())),
+      ],
+      onChanged: (value) => setState(() => _year = value),
+      decoration: InputDecoration(labelText: l10n.numberSequenceDateYear),
+    ),
+  );
+
+  /// The register's columns.
+  List<RecordColumn<Invoice>> _columns(
+    BuildContext context,
+    _RegisterView view,
+  ) {
+    final l10n = context.l10n;
+    final format = appFormatOf(context);
+    final muted = Theme.of(context).colorScheme.onSurfaceVariant;
+    String name(Invoice i) => _nameOf(i, view);
+    return [
+      RecordColumn(
+        id: 'date',
+        label: l10n.numberSequenceDatePart,
+        sortKey: (i) => i.issuedAt,
+        cell: (_, i) => Text(view.dateFormat.format(i.issuedAt)),
+      ),
+      RecordColumn(
+        id: 'name',
+        label: l10n.invoiceRegisterName,
+        flex: 3,
+        hideable: false,
+        sortKey: (i) => name(i).toLowerCase(),
+        cell: (_, i) => Text(name(i), overflow: TextOverflow.ellipsis),
+      ),
+      RecordColumn(
+        id: 'period',
+        label: l10n.invoiceRegisterPeriodColumn,
+        flex: 2,
+        cell: (context, i) => Text(
+          invoicePeriodLabel(context, i),
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: muted),
+        ),
+      ),
+      RecordColumn(
+        id: 'amount',
+        label: l10n.invoiceRegisterAmount,
+        numeric: true,
+        sortKey: (i) => i.totalCents,
+        cell: (_, i) =>
+            Text(format.moneyIn(i.currency).formatMinor(i.totalCents)),
+      ),
+      RecordColumn(
+        id: 'status',
+        label: l10n.invoiceRegisterStatus,
+        flex: 2,
+        cell: (_, i) => InvoiceStatusChip(
+          status: invoiceLifecycleOf(i, view.matches[i.id]),
+        ),
+      ),
+      // #956 — the fingerprint, checked on demand.
+      RecordColumn(
+        id: 'integrity',
+        label: l10n.invoiceRegisterIntegrity,
+        flex: 2,
+        cell: (_, i) => InvoiceIntegrityChip(invoiceId: i.id),
+      ),
+    ];
+  }
+
+  /// The name that means something to THIS reader.
+  static String _nameOf(Invoice i, _RegisterView view) =>
+      view.showMemberNames ? i.memberName : i.number;
+
+  /// An invoice as a card, on a phone.
+  Widget _card(BuildContext context, Invoice i, _RegisterView view) {
+    final format = appFormatOf(context);
+    return Card(
+      child: ListTile(
+        title: Text(_nameOf(i, view), overflow: TextOverflow.ellipsis),
+        subtitle: Text(
+          '${view.dateFormat.format(i.issuedAt)} · '
+          '${invoicePeriodLabel(context, i)}',
+        ),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(format.moneyIn(i.currency).formatMinor(i.totalCents)),
+            InvoiceStatusChip(
+              status: invoiceLifecycleOf(i, view.matches[i.id]),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// #3606 — [selected] as the register's CSV, through the platform's

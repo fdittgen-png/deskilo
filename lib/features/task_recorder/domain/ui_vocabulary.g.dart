@@ -11146,6 +11146,7 @@ const Set<String> uiLabelKeys = {
   'recordsLocationTitle',
   'recordsLocationUndeclared',
   'recordsMoreActions',
+  'recordsSelectRow',
   'recordsTotalOfSelection',
   'recordsTotalOfShown',
   'recordsTryAgain',
