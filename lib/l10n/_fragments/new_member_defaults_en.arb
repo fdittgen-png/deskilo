@@ -17,7 +17,7 @@
   },
   "newMemberSubscriptionValue": "{percent}%",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage. The number is not a count: it is a percentage.",
+    "description": "#1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]",
     "placeholders": {
       "percent": {
         "type": "int"

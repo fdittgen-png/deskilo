@@ -9,7 +9,7 @@
   "refFilterReset": "Zurücksetzen",
   "refFilterAmount": "Betrag",
   "refFilterAmountRange": "Betrag {low} – {high}",
-  "refFilterShow": "{count, plural, =1{1 Ergebnis anzeigen} other{{count} Ergebnisse anzeigen}}",
+  "refFilterShow": "{count, plural, one{1 Ergebnis anzeigen} other{{count} Ergebnisse anzeigen}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {

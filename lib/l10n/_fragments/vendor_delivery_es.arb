@@ -4,7 +4,7 @@
   "biVendorDeliveryDefinition": "Los pedidos enviados en el periodo. Un pedido recibido llega a tiempo cuando su última recepción es en la fecha prevista o antes. Un pedido sin fecha prevista, o aún esperado, no está ni a tiempo ni con retraso.",
   "biVendorDeliveryLead": "Días desde el envío hasta la última recepción: mediana {median}, percentil 90 {p90}",
   "biVendorDeliveryDelay": "Respecto a la fecha prevista (negativo = antes): mediana {median}, percentil 90 {p90}",
-  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort}: 1 pedido} other{{cohort}: {count} pedidos}}",
+  "biVendorDeliveryCohortLine": "{count, plural, one{{cohort}: 1 pedido} other{{cohort}: {count} pedidos}}",
   "biVendorDeliveryLine": "{name}: {onTime} a tiempo, {late} con retraso, de {orders} pedidos",
   "biVendorDeliveryOnTime": "Recibido a tiempo",
   "biVendorDeliveryLate": "Recibido con retraso",

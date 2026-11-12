@@ -68,7 +68,7 @@
   "@meStartedNext": {
     "description": "#3545 Getting started: the mark of the step to do now."
   },
-  "meStartedLeft": "{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}",
+  "meStartedLeft": "{count, plural, one{One step left · {next}} other{{count} steps left · {next}}}",
   "@meStartedLeft": {
     "description": "#3545 The one line at the end of Home while first steps remain: how many are left and which comes next.",
     "placeholders": {

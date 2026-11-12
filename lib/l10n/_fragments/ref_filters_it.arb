@@ -9,7 +9,7 @@
   "refFilterReset": "Reimposta",
   "refFilterAmount": "Importo",
   "refFilterAmountRange": "Importo {low} – {high}",
-  "refFilterShow": "{count, plural, =1{Mostra 1 risultato} other{Mostra {count} risultati}}",
+  "refFilterShow": "{count, plural, one{Mostra 1 risultato} other{Mostra {count} risultati}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {

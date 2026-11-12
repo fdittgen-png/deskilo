@@ -41,5 +41,5 @@
   "instanceGrant": "Aprobar el acceso",
   "instanceGrantTitle": "Aprobar el acceso a los asistentes para {name}",
   "instanceGrantReason": "Motivo",
-  "instanceGrantDaysLabel": "Durante {days, plural, =1{1 día} other{{days} días}}"
+  "instanceGrantDaysLabel": "Durante {days, plural, one{1 día} other{{days} días}}"
 }

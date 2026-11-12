@@ -9,7 +9,7 @@
       }
     }
   },
-  "reminderQueueEmailAll": "{count, plural, =1{Invia via e-mail all'unico raggiungibile} other{Invia via e-mail ai {count} raggiungibili}}",
+  "reminderQueueEmailAll": "{count, plural, one{Invia via e-mail all'unico raggiungibile} other{Invia via e-mail ai {count} raggiungibili}}",
   "@reminderQueueEmailAll": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
     "placeholders": {
@@ -18,7 +18,7 @@
       }
     }
   },
-  "reminderQueueEmailAllTitle": "{count, plural, =1{Inviare 1 sollecito via e-mail?} other{Inviare {count} solleciti via e-mail?}}",
+  "reminderQueueEmailAllTitle": "{count, plural, one{Inviare 1 sollecito via e-mail?} other{Inviare {count} solleciti via e-mail?}}",
   "@reminderQueueEmailAllTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
     "placeholders": {
@@ -31,7 +31,7 @@
   "@reminderQueueEmailAllConfirm": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
   },
-  "reminderQueueStaysNoAddress": "{count, plural, =1{1 riga resta da condividere: nessun indirizzo e-mail registrato.} other{{count} righe restano da condividere: nessun indirizzo e-mail registrato.}}",
+  "reminderQueueStaysNoAddress": "{count, plural, one{1 riga resta da condividere: nessun indirizzo e-mail registrato.} other{{count} righe restano da condividere: nessun indirizzo e-mail registrato.}}",
   "@reminderQueueStaysNoAddress": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
     "placeholders": {
@@ -40,7 +40,7 @@
       }
     }
   },
-  "reminderQueueStaysToDecide": "{count, plural, =1{1 riga attende: prima va deciso un'e-mail precedente.} other{{count} righe attendono: prima va decisa un'e-mail precedente.}}",
+  "reminderQueueStaysToDecide": "{count, plural, one{1 riga attende: prima va deciso un'e-mail precedente.} other{{count} righe attendono: prima va decisa un'e-mail precedente.}}",
   "@reminderQueueStaysToDecide": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
     "placeholders": {
@@ -57,7 +57,7 @@
   "@reminderQueueEmailUnreached": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
   },
-  "reminderQueueResultSentTitle": "{count, plural, =1{1 sollecito inviato} other{{count} solleciti inviati}}",
+  "reminderQueueResultSentTitle": "{count, plural, one{1 sollecito inviato} other{{count} solleciti inviati}}",
   "@reminderQueueResultSentTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
     "placeholders": {

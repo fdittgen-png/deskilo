@@ -43,7 +43,7 @@
       }
     }
   },
-  "carnetBalance": "{count, plural, =0{No half-days left} =1{1 half-day left} other{{count} half-days left}}",
+  "carnetBalance": "{count, plural, =0{No half-days left} one{1 half-day left} other{{count} half-days left}}",
   "@carnetBalance": {
     "description": "#1279 carnets: carnetBalance",
     "placeholders": {

@@ -5,7 +5,7 @@
   "onboardingShapeReal": "Un espace réel",
   "onboardingShapeRealHint": "Pour l'exploitation réelle : les factures émises sont dues.",
   "onboardingShapePair": "Une paire liée test et réel",
-  "onboardingSummaryCount": "{count, plural, =1{Crée un espace} other{Crée {count} espaces}}",
+  "onboardingSummaryCount": "{count, plural, =0{Crée {count} espaces} one{Crée un espace} other{Crée {count} espaces}}",
   "onboardingSummaryBillingOn": "La facturation réelle est possible : ses factures sont dues.",
   "onboardingSummaryBillingOff": "Aucune facturation réelle : les documents sont marqués comme test.",
   "onboardingSummaryServer": "Sur le serveur {host}",

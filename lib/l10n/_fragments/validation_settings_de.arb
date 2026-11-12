@@ -8,7 +8,7 @@
   "validationStepOwnerToo": "und der Inhaber, immer",
   "validationStepApplies": "es wird wirksam",
   "validationThresholdNote": "Kleinere Beträge gelten sofort.",
-  "validationStepQuorum": "{who} — {count, plural, =1{beliebige 1} other{beliebige {count}}}",
+  "validationStepQuorum": "{who} — {count, plural, one{beliebige 1} other{beliebige {count}}}",
   "validationStepSequential": "{who} — {count} nacheinander",
   "validationTitle": "Validierungsregeln",
   "validationDefaultPolicy": "Standardregel",

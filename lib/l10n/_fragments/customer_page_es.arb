@@ -8,7 +8,7 @@
   "customerStoryIssued": "Factura {number} emitida",
   "customerStoryPaid": "Factura {number} pagada",
   "customerStoryDeclared": "Dice haber pagado la factura {number}",
-  "customerStoryReminders": "{count, plural, =1{Recordatorio compartido para {number}} other{{count} recordatorios compartidos para {number}}}",
+  "customerStoryReminders": "{count, plural, one{Recordatorio compartido para {number}} other{{count} recordatorios compartidos para {number}}}",
   "customerStoryNow": "Ahora: {words}",
   "customerPageMatch": "Conciliar el pago"
 }

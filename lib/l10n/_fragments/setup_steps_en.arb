@@ -127,7 +127,7 @@
   "@setupPlacesEmpty": {
     "description": "#2870 setup steps: setupPlacesEmpty"
   },
-  "setupPlacesCounts": "{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}",
+  "setupPlacesCounts": "{rooms, plural, =0{no rooms} one{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} one{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} one{1 seat} other{{seats} seats}}",
   "@setupPlacesCounts": {
     "description": "#2870 setup steps: setupPlacesCounts",
     "placeholders": {

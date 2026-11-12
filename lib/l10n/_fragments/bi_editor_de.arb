@@ -307,7 +307,7 @@
       }
     }
   },
-  "biEditorRows": "{count, plural, =1{1 Zeile} other{{count} Zeilen}}",
+  "biEditorRows": "{count, plural, one{1 Zeile} other{{count} Zeilen}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {

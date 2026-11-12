@@ -17,7 +17,7 @@
   "@fieldProblemRequired": {
     "description": "#1288 custom fields: fieldProblemRequired"
   },
-  "fieldProblemTooShort": "{count, plural, =1{Almeno 1 carattere.} other{Almeno {count} caratteri.}}",
+  "fieldProblemTooShort": "{count, plural, one{Almeno 1 carattere.} other{Almeno {count} caratteri.}}",
   "@fieldProblemTooShort": {
     "description": "#1288 custom fields: fieldProblemTooShort",
     "placeholders": {
@@ -26,7 +26,7 @@
       }
     }
   },
-  "fieldProblemTooLong": "{count, plural, =1{Al massimo 1 carattere.} other{Al massimo {count} caratteri.}}",
+  "fieldProblemTooLong": "{count, plural, one{Al massimo 1 carattere.} other{Al massimo {count} caratteri.}}",
   "@fieldProblemTooLong": {
     "description": "#1288 custom fields: fieldProblemTooLong",
     "placeholders": {

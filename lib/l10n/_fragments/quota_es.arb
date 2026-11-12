@@ -7,7 +7,7 @@
   "memberMakeMember": "Retirar el rol Administrador/a",
   "memberRoleChangeRequested": "Cambio de rol enviado para validación.",
   "eventTypeQuota": "Medias jornadas extra",
-  "eventQuotaRequested": "{actor} solicita {halfDays, plural, =1{1 media jornada extra} other{{halfDays} medias jornadas extra}} para {period}",
+  "eventQuotaRequested": "{actor} solicita {halfDays, plural, one{1 media jornada extra} other{{halfDays} medias jornadas extra}} para {period}",
   "quotaExceededError": "Cuota mensual de medias jornadas alcanzada — solicite medias jornadas extra desde Mis finanzas.",
   "quotaRequestButton": "Solicitar medias jornadas extra",
   "quotaRequestTitle": "Solicitar medias jornadas extra",

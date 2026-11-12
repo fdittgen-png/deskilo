@@ -321,7 +321,7 @@
   },
   "setupGuideProgress": "{ready} of {required} done",
   "@setupGuideProgress": {
-    "description": "#2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: ready, required]",
     "placeholders": {
       "ready": {
         "type": "int"
@@ -333,7 +333,7 @@
   },
   "setupGuideEstimate": "about {low}–{high} min",
   "@setupGuideEstimate": {
-    "description": "#2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "#2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: low, high]",
     "placeholders": {
       "low": {
         "type": "int"
@@ -354,7 +354,7 @@
   },
   "setupGuideBanner": "{milestone}: {ready} of {required} done · Next: {step}",
   "@setupGuideBanner": {
-    "description": "#2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: ready, required]",
     "placeholders": {
       "milestone": {
         "type": "String"
@@ -376,7 +376,7 @@
   },
   "setupGuideUntil": "About {low}–{high} min until: {milestone}",
   "@setupGuideUntil": {
-    "description": "#2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "#2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: low, high]",
     "placeholders": {
       "low": {
         "type": "int"

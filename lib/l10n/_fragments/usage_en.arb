@@ -103,7 +103,7 @@
   "@usageMemberAll": {
     "description": "#833 - member filter: no narrowing"
   },
-  "usagePrepareBanner": "{count, plural, =1{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}",
+  "usagePrepareBanner": "{count, plural, one{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {
@@ -118,7 +118,7 @@
   },
   "usagePrepared": "Recorded: {count}",
   "@usagePrepared": {
-    "description": "#2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"

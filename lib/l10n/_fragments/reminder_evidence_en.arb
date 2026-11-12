@@ -10,7 +10,7 @@
   },
   "reminderHistoryLine": "Reminder {level} · {origin} · {date}",
   "@reminderHistoryLine": {
-    "description": "#1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"

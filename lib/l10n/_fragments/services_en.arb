@@ -68,7 +68,7 @@
   "@servicesOtherCategory": {
     "description": "#3552 the services list: the heading of services without a category"
   },
-  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "servicesDurationShort": "{minutes, plural, one{1 min} other{{minutes} min}}",
   "@servicesDurationShort": {
     "description": "#3552 the services list: a duration in minutes, short",
     "placeholders": {

@@ -1,12 +1,12 @@
 {
   "@@locale": "it",
-  "eventValidations": "{current}/{required, plural, =1{1 convalida} other{{required} convalide}}",
+  "eventValidations": "{current}/{required, plural, one{1 convalida} other{{required} convalide}}",
   "eventValidatedBy": "Convalidato da {name} · {when}",
   "eventRejectedBy": "Rifiutato da {name} · {when}",
   "eventSystemDecider": "Sistema",
   "validationTrailTitle": "Cronologia delle convalide",
   "validationTrailNone": "Nessuna decisione finora.",
   "validationTrailStep": "Passo {order}",
-  "validationTrailAwaiting": "{count, plural, =1{Manca 1 convalida.} other{Mancano {count} convalide.}}",
+  "validationTrailAwaiting": "{count, plural, one{Manca 1 convalida.} other{Mancano {count} convalide.}}",
   "eventValidationStage": "Convalida {stage} su {required} richiesta"
 }

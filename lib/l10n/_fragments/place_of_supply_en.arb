@@ -132,7 +132,7 @@
   "@recapEmpty": {
     "description": "#2354 recapitulative statement: recapEmpty"
   },
-  "recapDue": "An EU sales list is due for {month}: {count, plural, =1{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.",
+  "recapDue": "An EU sales list is due for {month}: {count, plural, one{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.",
   "@recapDue": {
     "description": "#2354 recapitulative statement: recapDue",
     "placeholders": {

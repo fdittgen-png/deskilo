@@ -27,7 +27,7 @@
   "@invoiceRegisterIntegrity": {
     "description": "#3606 the invoice register as a records table"
   },
-  "invoiceRegisterDownloadSelected": "{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}",
+  "invoiceRegisterDownloadSelected": "{count, plural, one{Download 1 invoice} other{Download {count} invoices}}",
   "@invoiceRegisterDownloadSelected": {
     "description": "#3606 the register's download of a selection (CSV)",
     "placeholders": {

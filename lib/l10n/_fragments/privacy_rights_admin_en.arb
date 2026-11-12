@@ -150,7 +150,7 @@
   "@privacyAdminIncidentSend": {
     "description": "Shown as the text in privacy admin sheets (members)."
   },
-  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} one{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
   "@privacyAdminIncidentRecorded": {
     "description": "Shown as the message in privacy admin sheets (members). Placeholders: {count} (int).",
     "placeholders": {

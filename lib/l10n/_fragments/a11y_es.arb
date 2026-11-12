@@ -6,6 +6,6 @@
   "a11yZoomIn": "Acercar",
   "a11yZoomOut": "Alejar",
   "a11yRecentre": "Ajustar el plano a la pantalla",
-  "formErrorSummaryTitle": "{count, plural, =1{1 campo requiere su atención} other{{count} campos requieren su atención}}",
+  "formErrorSummaryTitle": "{count, plural, one{1 campo requiere su atención} other{{count} campos requieren su atención}}",
   "formErrorSummaryGoTo": "Ir al primer problema"
 }

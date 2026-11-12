@@ -65,7 +65,7 @@
       }
     }
   },
-  "financesOverdueCount": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "financesOverdueCount": "{count, plural, one{1 overdue} other{{count} overdue}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {
@@ -76,7 +76,7 @@
   },
   "financesRemindedTimes": "Reminded ×{count}",
   "@financesRemindedTimes": {
-    "description": "Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -85,7 +85,7 @@
   },
   "financesReminderLevel": "Reminder {level}",
   "@financesReminderLevel": {
-    "description": "Me › Finances. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Me › Finances. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"

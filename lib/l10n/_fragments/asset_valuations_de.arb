@@ -59,7 +59,7 @@
       }
     }
   },
-  "valuationRows": "{count, plural, =1{1 Anlage} other{{count} Anlagen}}",
+  "valuationRows": "{count, plural, one{1 Anlage} other{{count} Anlagen}}",
   "@valuationRows": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -68,7 +68,7 @@
       }
     }
   },
-  "valuationMismatches": "{count, plural, =1{1 Zeile geht nicht auf} other{{count} Zeilen gehen nicht auf}}",
+  "valuationMismatches": "{count, plural, one{1 Zeile geht nicht auf} other{{count} Zeilen gehen nicht auf}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -238,7 +238,7 @@
   "@valuationPick": {
     "description": "#2576 accountant valuations"
   },
-  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 Anlage} other{{count} Anlagen}}",
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, one{1 Anlage} other{{count} Anlagen}}",
   "@valuationPreview": {
     "description": "#2576 accountant valuations",
     "placeholders": {

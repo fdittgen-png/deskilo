@@ -13,6 +13,6 @@
   "financesCoverageHome": "su instalación principal",
   "financesCoverageAnswered": "Leído desde {host}",
   "financesCoverageNoDocuments": "ningún documento",
-  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 documento} other{{count} documentos}}",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 documento} other{{count} documentos}}",
   "privacyExportInMyData": "Cada fuente se exporta por separado en Mis datos › Información personal."
 }

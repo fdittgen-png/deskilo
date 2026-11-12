@@ -6,7 +6,7 @@
   },
   "schemaUpdateBody": "This app needs version {version} of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.",
   "@schemaUpdateBody": {
-    "description": "#1312 Explanation on the schema-update screen. The number is not a count: it is a schema version.",
+    "description": "#1312 Explanation on the schema-update screen. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"

@@ -177,7 +177,7 @@
   },
   "instanceReadyInstall": "Le projet est vide : tout sera installé.",
   "instanceReadyResume": "{pending, plural, one{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migration, et seules celles-ci seront exécutées.} other{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.}}",
-  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : {pending, plural, =1{seule 1 migration manquante sera exécutée} other{seules les {pending} migrations manquantes seront exécutées}}.",
+  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : {pending, plural, one{seule {pending} migration manquante sera exécutée} other{seules les {pending} migrations manquantes seront exécutées}}.",
   "instanceReadyCurrent": "La version {version} de DesKilo est installée et à jour : le schéma n'a besoin de rien.",
   "instanceReadyAttention": "Ce projet demande votre attention — rien n'a été installé.",
   "instanceAttentionNotHealthy": "Supabase ne signale pas le projet comme opérationnel. Attendez qu'il le soit, ou restaurez-le dans le tableau de bord.",
@@ -192,5 +192,5 @@
   "instanceDoctorRun": "Lancer le contrôle de sécurité",
   "instanceDoctorProtected": "Protégé",
   "instanceDoctorAttention": "Attention requise",
-  "instanceDoctorPassed": "{count, plural, =1{1 contrôle réussi} other{{count} contrôles réussis}}"
+  "instanceDoctorPassed": "{count, plural, one{{count} contrôle réussi} other{{count} contrôles réussis}}"
 }

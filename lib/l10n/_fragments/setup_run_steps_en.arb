@@ -17,7 +17,7 @@
   },
   "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
   "@setupPricingBand": {
-    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage.",
+    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]",
     "placeholders": {
       "from": {
         "type": "int"
@@ -47,7 +47,7 @@
   },
   "setupPricingLevel": "Membership at {pct} %",
   "@setupPricingLevel": {
-    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage.",
+    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -113,7 +113,7 @@
   "@setupApprovalsPresetBody": {
     "description": "#2871 setup run steps: setupApprovalsPresetBody"
   },
-  "setupApprovalsPeople": "{count, plural, =1{1 person can approve.} other{{count} people can approve.}}",
+  "setupApprovalsPeople": "{count, plural, one{1 person can approve.} other{{count} people can approve.}}",
   "@setupApprovalsPeople": {
     "description": "#2871 setup run steps: setupApprovalsPeople",
     "placeholders": {
@@ -122,7 +122,7 @@
       }
     }
   },
-  "setupApprovalsTooMany": "{required} approvals can never be gathered: {people, plural, =1{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.",
+  "setupApprovalsTooMany": "{required, plural, one{{required} approval} other{{required} approvals}} can never be gathered: {people, plural, one{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.",
   "@setupApprovalsTooMany": {
     "description": "#2871 setup run steps: setupApprovalsTooMany",
     "placeholders": {
@@ -150,9 +150,9 @@
   "@setupApprovalsFlowRequestBody": {
     "description": "#2871 setup run steps: setupApprovalsFlowRequestBody"
   },
-  "setupApprovalsFlowValidators": "{required, plural, =1{1 of {people} approves} other{{required} of {people} approve}}",
+  "setupApprovalsFlowValidators": "{required, plural, one{1 of {people} approves} other{{required} of {people} approve}}",
   "@setupApprovalsFlowValidators": {
-    "description": "#2871 setup run steps: setupApprovalsFlowValidators",
+    "description": "#2871 setup run steps: setupApprovalsFlowValidators The number people is the denominator of a ratio, read as a value. [not a count: people]",
     "placeholders": {
       "required": {
         "type": "int"
@@ -162,7 +162,7 @@
       }
     }
   },
-  "setupApprovalsFlowWho": "{owners, plural, =1{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} =1{1 administrator} other{{admins} administrators}}",
+  "setupApprovalsFlowWho": "{owners, plural, one{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} one{1 administrator} other{{admins} administrators}}",
   "@setupApprovalsFlowWho": {
     "description": "#2871 setup run steps: setupApprovalsFlowWho",
     "placeholders": {
@@ -178,7 +178,7 @@
   "@setupApprovalsFlowOutcome": {
     "description": "#2871 setup run steps: setupApprovalsFlowOutcome"
   },
-  "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.",
+  "setupApprovalsFlowOutcomeBody": "{required, plural, one{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.",
   "@setupApprovalsFlowOutcomeBody": {
     "description": "#2871 setup run steps: setupApprovalsFlowOutcomeBody",
     "placeholders": {
@@ -191,7 +191,7 @@
   "@setupApprovalsPreviewRequest": {
     "description": "#2871 setup run steps: setupApprovalsPreviewRequest"
   },
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}",
+  "setupApprovalsPreviewWaiting": "{required, plural, one{Waiting for 1 approval} other{Waiting for {required} approvals}}",
   "@setupApprovalsPreviewWaiting": {
     "description": "#2871 setup run steps: setupApprovalsPreviewWaiting",
     "placeholders": {
@@ -200,7 +200,7 @@
       }
     }
   },
-  "setupPricingLevelsBasis": "A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member's share is charged at the extra rate of their band. This month your space is open {days, plural, =1{1 day} other{{days} days}}:",
+  "setupPricingLevelsBasis": "A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member's share is charged at the extra rate of their band. This month your space is open {days, plural, one{1 day} other{{days} days}}:",
   "@setupPricingLevelsBasis": {
     "description": "#3283 setup pricing: what a percentage level buys, on this workspace's own open days this month.",
     "placeholders": {
@@ -209,7 +209,7 @@
       }
     }
   },
-  "setupPricingLevelIncludes": "{level}: {count, plural, =1{1 half-day} other{{count} half-days}} included",
+  "setupPricingLevelIncludes": "{level}: {count, plural, one{1 half-day} other{{count} half-days}} included",
   "@setupPricingLevelIncludes": {
     "description": "#3283 setup pricing: the half-days a level includes this month.",
     "placeholders": {

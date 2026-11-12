@@ -27,7 +27,7 @@
   "setupHoursRange": "{from}–{to}",
   "setupHoursClosed": "Fermé",
   "setupPlacesEmpty": "Aucune place pour l’instant. Dessinez les salles, les bureaux et les postes dans l’éditeur, ou partez d’un modèle.",
-  "setupPlacesCounts": "{rooms, plural, =0{aucune salle} =1{1 salle} other{{rooms} salles}} · {desks, plural, =0{aucun bureau} =1{1 bureau} other{{desks} bureaux}} · {seats, plural, =0{aucun poste} =1{1 poste} other{{seats} postes}}",
+  "setupPlacesCounts": "{rooms, plural, =0{aucune salle} one{1 salle} other{{rooms} salles}} · {desks, plural, =0{aucun bureau} one{1 bureau} other{{desks} bureaux}} · {seats, plural, =0{aucun poste} one{1 poste} other{{seats} postes}}",
   "setupPlacesOpenEditor": "Ouvrir l’éditeur",
   "setupPlacesFromTemplate": "Partir d’un modèle",
   "setupPlacesPlanLabel": "Plan de {level}",

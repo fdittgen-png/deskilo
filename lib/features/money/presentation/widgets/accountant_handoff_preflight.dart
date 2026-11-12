@@ -68,7 +68,7 @@ Future<bool> showAccountantHandoffPreflight(
     ],
     if (report.transfers case final t?)
       Text(
-        l10n.handoffTransfersQuoted('${t.files.length}', '${t.deliveries.length}'),
+        l10n.handoffTransfersQuoted(t.files.length, t.deliveries.length),
         key: const ValueKey('handoff-transfers'),
       ),
     if (report.findings.isNotEmpty) ...[

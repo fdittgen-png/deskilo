@@ -551,7 +551,7 @@ abstract class AppLocalizations {
   /// #2370 Connection card: earlier connections of this issuer were revoked.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{One earlier connection was revoked} other{{count} earlier connections were revoked}}'**
+  /// **'{count, plural, one{One earlier connection was revoked} other{{count} earlier connections were revoked}}'**
   String acctConnRevokedBefore(int count);
 
   /// #2370 Snack: a connection was saved.
@@ -638,7 +638,7 @@ abstract class AppLocalizations {
   /// **'The books of this period cannot be posted yet: {subjects}.'**
   String acctDeliverBooksBlocked(String subjects);
 
-  /// #2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: delivered, unchanged, attention]
   ///
   /// In en, this message translates to:
   /// **'Delivered: {delivered} · already there: {unchanged} · to check: {attention}'**
@@ -650,7 +650,7 @@ abstract class AppLocalizations {
   /// **'The delivery did not go through. Nothing more was sent; try again later.'**
   String get acctDeliverFailed;
 
-  /// #2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Still being delivered by another run: {count}. Try again in a few minutes.'**
@@ -686,7 +686,7 @@ abstract class AppLocalizations {
   /// **'The accounting system refused this company: {detail}.'**
   String acctDeliverRefused(String detail);
 
-  /// #2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Stopped at {month}. Delivered before it: {count}.'**
@@ -707,7 +707,7 @@ abstract class AppLocalizations {
   /// #2370 Transfers list: how many sends a delivery took.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{one attempt} other{{count} attempts}}'**
+  /// **'{count, plural, one{one attempt} other{{count} attempts}}'**
   String acctDeliveryAttempts(int count);
 
   /// #2370 Delivery state: the answer is missing or differs; a readback decides.
@@ -797,7 +797,7 @@ abstract class AppLocalizations {
   /// #2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.
   ///
   /// In en, this message translates to:
-  /// **'{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged'**
+  /// **'{logged, plural, =0{No new document logged} one{One document logged} other{{logged} documents logged}}, {unchanged, plural, one{{unchanged} unchanged} other{{unchanged} unchanged}}'**
   String acctJournalLogged(int logged, int unchanged);
 
   /// #3152 accounting: the posting kind of the tax owed on a service bought abroad (CH Bezugsteuer, reverse charge).
@@ -989,7 +989,7 @@ abstract class AppLocalizations {
   /// #2370 Button: the mappings of a connection, with their number.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{Mappings} =1{One mapping} other{{count} mappings}}'**
+  /// **'{count, plural, =0{Mappings} one{One mapping} other{{count} mappings}}'**
   String acctMapsButton(int count);
 
   /// #2370 Mappings sheet: nothing mapped.
@@ -1235,7 +1235,7 @@ abstract class AppLocalizations {
   /// #2370 Transfers list: the documents a file is the delivery of.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{One document carried} other{{count} documents carried}}'**
+  /// **'{count, plural, one{One document carried} other{{count} documents carried}}'**
   String acctTransferDocuments(int count);
 
   /// #2370 Transfers list: one file, its format and period.
@@ -1247,7 +1247,7 @@ abstract class AppLocalizations {
   /// #2370 Transfers list: when, by whom and how many documents.
   ///
   /// In en, this message translates to:
-  /// **'{when} by {who} · {documents, plural, =1{one document} other{{documents} documents}}'**
+  /// **'{when} by {who} · {documents, plural, one{one document} other{{documents} documents}}'**
   String acctTransferFileMeta(String when, String who, int documents);
 
   /// #2370 Transfers list: the digest of what was carried.
@@ -1517,7 +1517,7 @@ abstract class AppLocalizations {
   /// #3612 desk entry: the typed date and amount fields of the form kit
   ///
   /// In en, this message translates to:
-  /// **'{digits, plural, =0{{currency} has no decimals.} =1{{currency} has one decimal.} other{{currency} has {digits} decimals.}}'**
+  /// **'{digits, plural, =0{{currency} has no decimals.} one{{currency} has one decimal.} other{{currency} has {digits} decimals.}}'**
   String amountFieldTooManyDecimals(int digits, String currency);
 
   /// Application name shown in the task switcher and app bar. Brand name — identical in all locales.
@@ -1625,7 +1625,7 @@ abstract class AppLocalizations {
   /// #3671: assign a payment to invoices (assignPaymentFull)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice paid in full} other{{count} invoices paid in full}}'**
+  /// **'{count, plural, one{1 invoice paid in full} other{{count} invoices paid in full}}'**
   String assignPaymentFull(int count);
 
   /// #3671: assign a payment to invoices (assignPaymentNoOpen)
@@ -1655,7 +1655,7 @@ abstract class AppLocalizations {
   /// #3671: assign a payment to invoices (assignPaymentPart)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice paid in part} other{{count} invoices paid in part}}'**
+  /// **'{count, plural, one{1 invoice paid in part} other{{count} invoices paid in part}}'**
   String assignPaymentPart(int count);
 
   /// #3671: assign a payment to invoices (assignPaymentPending)
@@ -2105,7 +2105,7 @@ abstract class AppLocalizations {
   /// #2326: attentionAdmit
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Admit 1 person asking to join} other{Admit {count} people asking to join}}'**
+  /// **'{count, plural, one{Admit 1 person asking to join} other{Admit {count} people asking to join}}'**
   String attentionAdmit(int count);
 
   /// #2326: attentionDecide
@@ -2117,7 +2117,7 @@ abstract class AppLocalizations {
   /// #2326: attentionIssue
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}'**
+  /// **'{count, plural, one{Invoice 1 member for the month} other{Invoice {count} members for the month}}'**
   String attentionIssue(int count);
 
   /// #2332: attentionSetUp
@@ -2129,7 +2129,7 @@ abstract class AppLocalizations {
   /// #2332: attentionUnblock
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}'**
+  /// **'{count, plural, one{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}'**
   String attentionUnblock(int count, String feature);
 
   /// #2326: attentionWaitingSince
@@ -2522,7 +2522,7 @@ abstract class AppLocalizations {
   /// **'Hours billed as a half day'**
   String get availabilityHalfDayHours;
 
-  /// Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h.
+  /// Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{count} h'**
@@ -2995,7 +2995,7 @@ abstract class AppLocalizations {
   /// **'The server is newer than this app — update the app when you can'**
   String get backendVersionAhead;
 
-  /// #1309 Server screen. The number is not a count: it is a schema version.
+  /// #1309 Server screen. The number is not a count: it is a schema version. [not a count: version]
   ///
   /// In en, this message translates to:
   /// **'Needs an update: this app needs schema {version}'**
@@ -3007,7 +3007,7 @@ abstract class AppLocalizations {
   /// **'Its owner updates it with the setup wizard or `dart run tool/instance.dart install`, which applies only what is missing.'**
   String get backendVersionBehindHow;
 
-  /// #1309 Server screen. The number is not a count: it is a schema version.
+  /// #1309 Server screen. The number is not a count: it is a schema version. [not a count: version]
   ///
   /// In en, this message translates to:
   /// **'Up to date (schema {version})'**
@@ -3340,13 +3340,13 @@ abstract class AppLocalizations {
   /// #2380 Lines sheet: confirm every match by structured reference.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Confirm 1 match by reference} other{Confirm {count} matches by reference}}'**
+  /// **'{count, plural, one{Confirm 1 match by reference} other{Confirm {count} matches by reference}}'**
   String bankConfirmReferences(int count);
 
   /// #2380 Snack: how many reference matches were confirmed.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 payment matched.} other{{count} payments matched.}}'**
+  /// **'{count, plural, one{1 payment matched.} other{{count} payments matched.}}'**
   String bankConfirmedReferences(int count);
 
   /// #2380 CSV sheet: the account the file is about.
@@ -3367,7 +3367,7 @@ abstract class AppLocalizations {
   /// **'Amount column (or money in)'**
   String get bankCsvAmount;
 
-  /// #2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number.
+  /// #2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number. [not a count: n]
   ///
   /// In en, this message translates to:
   /// **'Column {n} ({first})'**
@@ -3565,10 +3565,10 @@ abstract class AppLocalizations {
   /// **'This file was already imported. Nothing was added.'**
   String get bankImportRepeated;
 
-  /// #2380 Snack: what an import did.
+  /// #2380 Snack: what an import did. The number review is a figure after a comma before an invariable phrase. [not a count: review]
   ///
   /// In en, this message translates to:
-  /// **'Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.'**
+  /// **'Imported: {created, plural, one{1 new entry} other{{created} new entries}}, {known, plural, one{1 already known} other{{known} already known}}, {review} to review.'**
   String bankImported(int created, int known, int review);
 
   /// #2380 Movement status: a duplicate, settles nothing.
@@ -3811,7 +3811,7 @@ abstract class AppLocalizations {
   /// **'Stored value date (may default to booking date)'**
   String get bankReconValueDate;
 
-  /// #2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number.
+  /// #2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'{reason} (line {line})'**
@@ -3898,7 +3898,7 @@ abstract class AppLocalizations {
   /// #2380 Bank statements: the movements of one statement and how many still wait.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 movement} other{{count} movements}}, {open} to do'**
+  /// **'{count, plural, one{1 movement} other{{count} movements}}, {open, plural, one{{open} to do} other{{open} to do}}'**
   String bankStatementCounts(int count, int open);
 
   /// #2380 bank statements: tooltip of the action that downloads the imported file as it was.
@@ -4024,7 +4024,7 @@ abstract class AppLocalizations {
   /// #2582 cost allocation
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}'**
+  /// **'{count, plural, one{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}'**
   String biAllocationConflicts(int count);
 
   /// #2582 cost allocation
@@ -4216,7 +4216,7 @@ abstract class AppLocalizations {
   /// #1923 C Web-BI saved views
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}'**
+  /// **'{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}'**
   String biCardsUnavailable(int count);
 
   /// #2582 purchase analytics
@@ -4228,7 +4228,7 @@ abstract class AppLocalizations {
   /// #2582 purchase analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 payment} other{{count} payments}}'**
+  /// **'{count, plural, one{1 payment} other{{count} payments}}'**
   String biCashOutflowsBasis(int count);
 
   /// #2582 purchase analytics
@@ -4414,13 +4414,13 @@ abstract class AppLocalizations {
   /// #2582 cost figures
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}'**
+  /// **'{count, plural, one{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}'**
   String biCostsUnqualified(int count);
 
   /// #2582 cost figures
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}'**
+  /// **'{count, plural, one{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}'**
   String biCostsUnresolved(int count);
 
   /// #2581 analytical report print layout and exports
@@ -4468,7 +4468,7 @@ abstract class AppLocalizations {
   /// #3294 customer analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}'**
+  /// **'{count, plural, one{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}'**
   String biCustomerCohortLine(String cohort, int count, String amount);
 
   /// #3294 customer analytics
@@ -5371,7 +5371,7 @@ abstract class AppLocalizations {
   /// #2580 BI report editor
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 row} other{{count} rows}}'**
+  /// **'{count, plural, one{1 row} other{{count} rows}}'**
   String biEditorRows(int count);
 
   /// #2580 BI report editor
@@ -5635,7 +5635,7 @@ abstract class AppLocalizations {
   /// #2581 analytical report print layout and exports
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 card is not in this export: its figure, filters or grouping is not one an export answers yet.} other{{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.}}'**
+  /// **'{count, plural, one{1 card is not in this export: its figure, filters or grouping is not one an export answers yet.} other{{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.}}'**
   String biExportLeftOut(int count);
 
   /// Business analytics dashboard: biExportPdf
@@ -5701,7 +5701,7 @@ abstract class AppLocalizations {
   /// #1924 finance KPI / #1923 analyses picker
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}'**
+  /// **'{count, plural, one{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}'**
   String biFinanceCollectedBasis(int count);
 
   /// #1924 finance KPI / #1923 analyses picker
@@ -5737,7 +5737,7 @@ abstract class AppLocalizations {
   /// #1924 finance KPI / #1923 analyses picker
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}'**
+  /// **'{count, plural, one{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}'**
   String biFinanceInvoicedBasis(int count, String credit);
 
   /// #1924 finance KPI / #1923 analyses picker
@@ -5893,19 +5893,19 @@ abstract class AppLocalizations {
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}'**
+  /// **'{count, plural, one{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}'**
   String biItemUncosted(int count);
 
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}'**
+  /// **'{count, plural, one{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}'**
   String biItemUnresolved(int count);
 
   /// #3294 step 4 items on purchase lines
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 supplier} other{{count} suppliers}}'**
+  /// **'{count, plural, one{1 supplier} other{{count} suppliers}}'**
   String biItemVendorBasis(int count);
 
   /// #3294 step 4 items on purchase lines
@@ -6271,7 +6271,7 @@ abstract class AppLocalizations {
   /// Business analytics dashboard: biProjectionBasis
   ///
   /// In en, this message translates to:
-  /// **'A straight line through {count, plural, =1{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.'**
+  /// **'A straight line through {count, plural, one{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.'**
   String biProjectionBasis(int count);
 
   /// Business analytics dashboard: biProjectionLabel
@@ -6295,7 +6295,7 @@ abstract class AppLocalizations {
   /// Business analytics dashboard: biProjectionNotEnough
   ///
   /// In en, this message translates to:
-  /// **'Not enough history to project yet: {have, plural, =1{1 complete period} other{{have} complete periods}} so far, {need, plural, =1{1 needed} other{{need} needed}}.'**
+  /// **'Not enough history to project yet: {have, plural, one{1 complete period} other{{have} complete periods}} so far, {need, plural, one{1 needed} other{{need} needed}}.'**
   String biProjectionNotEnough(int have, int need);
 
   /// Business analytics dashboard: biProjectionTitle
@@ -6391,7 +6391,7 @@ abstract class AppLocalizations {
   /// #1923 B Web-BI toolbar and module section
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}'**
+  /// **'{count, plural, one{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}'**
   String biRefusedBudget(int count);
 
   /// #1923 B Web-BI toolbar and module section
@@ -6613,7 +6613,7 @@ abstract class AppLocalizations {
   /// #3294 step 3 sales analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}'**
+  /// **'{count, plural, one{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}'**
   String biSalesNetUnknown(int count);
 
   /// #3294 step 3 sales analytics
@@ -6660,7 +6660,7 @@ abstract class AppLocalizations {
   /// #3294 step 3 sales analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 service and package} other{{count} services and packages}}'**
+  /// **'{count, plural, one{1 service and package} other{{count} services and packages}}'**
   String biSalesServiceBasis(int count);
 
   /// #3294 step 3 sales analytics
@@ -6774,7 +6774,7 @@ abstract class AppLocalizations {
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 category} other{{count} categories}}'**
+  /// **'{count, plural, one{1 category} other{{count} categories}}'**
   String biVendorCategoryBasis(int count);
 
   /// #3294 step 2 vendor analytics
@@ -6798,7 +6798,7 @@ abstract class AppLocalizations {
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}'**
+  /// **'{count, plural, one{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}'**
   String biVendorCohortLine(String cohort, int count, String amount);
 
   /// #3294 step 2 vendor analytics
@@ -6852,7 +6852,7 @@ abstract class AppLocalizations {
   /// #3294 step 5 vendor delivery analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{{cohort}: 1 order} other{{cohort}: {count} orders}}'**
+  /// **'{count, plural, one{{cohort}: 1 order} other{{cohort}: {count} orders}}'**
   String biVendorDeliveryCohortLine(String cohort, int count);
 
   /// #3294 step 5 vendor delivery analytics
@@ -6953,7 +6953,7 @@ abstract class AppLocalizations {
   /// #3294 step 2 vendor analytics
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}'**
+  /// **'{count, plural, one{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}'**
   String biVendorLagUndated(int count);
 
   /// #3294 step 2 vendor analytics
@@ -7029,7 +7029,7 @@ abstract class AppLocalizations {
   /// #2578 saved-view cards saved for another metric version
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}'**
+  /// **'{count, plural, one{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}'**
   String biViewCardsIncompatible(int count);
 
   /// #1923 B Web-BI toolbar and module section
@@ -7191,7 +7191,7 @@ abstract class AppLocalizations {
   /// #2579 analytical reports
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}'**
+  /// **'{count, plural, one{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}'**
   String biViewWithheld(int count);
 
   /// #1923 C Web-BI saved views
@@ -7248,10 +7248,10 @@ abstract class AppLocalizations {
   /// **'The workspace refunded you this amount.'**
   String get billCreditNoteRefunded;
 
-  /// Entitlement line under the subscription header
+  /// Entitlement line under the subscription header The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]
   ///
   /// In en, this message translates to:
-  /// **'{used} of {included, plural, =1{1 half-day} other{{included} half-days}} billed ({openDays, plural, =1{1 day} other{{openDays} days}} open)'**
+  /// **'{used} of {included, plural, one{1 half-day} other{{included} half-days}} billed ({openDays, plural, one{1 day} other{{openDays} days}} open)'**
   String billEntitlement(int used, int included, int openDays);
 
   /// Bill card title for the invoice covering the browsed month (#510)
@@ -7302,13 +7302,13 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
-  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage.
+  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'Participation {pct}%'**
   String billParticipation(int pct);
 
-  /// #1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage.
+  /// #1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'{month} {pct}%'**
@@ -7367,13 +7367,13 @@ abstract class AppLocalizations {
   /// **'Settled'**
   String get billSettled;
 
-  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage.
+  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'Subscription {pct}%'**
   String billSubscription(int pct);
 
-  /// #1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage.
+  /// #1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'Subscription {month} {pct}%'**
@@ -7415,7 +7415,7 @@ abstract class AppLocalizations {
   /// **'Monthly fee'**
   String get billingBandFee;
 
-  /// Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage.
+  /// Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]
   ///
   /// In en, this message translates to:
   /// **'from {from}%'**
@@ -8516,7 +8516,7 @@ abstract class AppLocalizations {
   /// #3550 a shortened list: {list} is the first names, {count} how many more
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{{list} and 1 more} other{{list} and {count} more}}'**
+  /// **'{count, plural, one{{list} and 1 more} other{{list} and {count} more}}'**
   String businessKindAndMore(String list, int count);
 
   /// #3550 the line under the beta features: they can be switched on later
@@ -8612,7 +8612,7 @@ abstract class AppLocalizations {
   /// #3550 what a kind without places switches off, in one phrase; {count} features in all
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}'**
+  /// **'{count, plural, one{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}'**
   String businessKindPlacesOff(int count);
 
   /// #3550 the disclosure that lists every feature name of the proposal
@@ -9350,7 +9350,7 @@ abstract class AppLocalizations {
   /// #1279 carnets: carnetBalance
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No half-days left} =1{1 half-day left} other{{count} half-days left}}'**
+  /// **'{count, plural, =0{No half-days left} one{1 half-day left} other{{count} half-days left}}'**
   String carnetBalance(int count);
 
   /// #1279 carnets: carnetHalfDays
@@ -9620,7 +9620,7 @@ abstract class AppLocalizations {
   /// #1289 colours screen: how many own fills, order matters
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 colour of your own, in order.} other{{n} colours of your own, in order.}}'**
+  /// **'{n, plural, one{1 colour of your own, in order.} other{{n} colours of your own, in order.}}'**
   String coloursRoomsOwn(int n);
 
   /// #1289 colours screen: no own fills yet
@@ -9632,7 +9632,7 @@ abstract class AppLocalizations {
   /// #1289 colours screen: the fills were stored
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 room colour saved.} other{{n} room colours saved.}}'**
+  /// **'{n, plural, one{1 room colour saved.} other{{n} room colours saved.}}'**
   String coloursRoomsSaved(int n);
 
   /// #1289 colours screen: the write failed and nothing changed
@@ -9650,7 +9650,7 @@ abstract class AppLocalizations {
   /// #1289 colours screen: more fills than the plan can use
   ///
   /// In en, this message translates to:
-  /// **'The plan paints at most {most, plural, =1{1 room colour} other{{most} room colours}}.'**
+  /// **'The plan paints at most {most, plural, one{1 room colour} other{{most} room colours}}.'**
   String coloursTooMany(int most);
 
   /// Placeholder body shown on tabs whose feature is not yet implemented
@@ -9800,7 +9800,7 @@ abstract class AppLocalizations {
   /// #1660 template_compare
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}'**
+  /// **'{count, plural, one{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}'**
   String compareLimit(int count);
 
   /// #1660 template_compare
@@ -9884,7 +9884,7 @@ abstract class AppLocalizations {
   /// Shown as a field counter in member note composer (workspace). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 character left} other{{count} characters left}}'**
+  /// **'{count, plural, one{1 character left} other{{count} characters left}}'**
   String composerCharsLeft(int count);
 
   /// workspace groups: rename, description, admins, info
@@ -10310,7 +10310,7 @@ abstract class AppLocalizations {
   /// #687 - messaging centre
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 member} other{{count} members}}'**
+  /// **'{count, plural, one{1 member} other{{count} members}}'**
   String conversationMemberCount(int count);
 
   /// Shown as a title in unified inbox view (directory).
@@ -10976,7 +10976,7 @@ abstract class AppLocalizations {
   /// #3587 R1-g: the customer page (customerStoryReminders)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
+  /// **'{count, plural, one{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
   String customerStoryReminders(int count, String number);
 
   /// Said by a screen reader for the arrow beside a figure's change: the figure fell since the period it is compared with.
@@ -12032,16 +12032,16 @@ abstract class AppLocalizations {
   /// Directory offline chip: compact relative last-seen, a day or more
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{Seen 1 day ago} other{Seen {days} days ago}}'**
+  /// **'{days, plural, one{Seen 1 day ago} other{Seen {days} days ago}}'**
   String directoryLastSeenDays(int days);
 
   /// Directory offline chip: compact relative last-seen, under a day
   ///
   /// In en, this message translates to:
-  /// **'{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}'**
+  /// **'{hours, plural, one{Seen 1 hour ago} other{Seen {hours} hours ago}}'**
   String directoryLastSeenHours(int hours);
 
-  /// Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
+  /// Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: minutes]
   ///
   /// In en, this message translates to:
   /// **'Seen {minutes} min ago'**
@@ -12158,19 +12158,19 @@ abstract class AppLocalizations {
   /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}'**
+  /// **'{count, plural, one{1 could not be looked up.} other{{count} could not be looked up.}}'**
   String directoryPinsLookupFailed(int count);
 
   /// Shown as a text in directory map (directory). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
+  /// **'{count, plural, one{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}'**
   String directoryPinsMissing(int count);
 
   /// Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 has no published address.} other{{count} have no published address.}}'**
+  /// **'{count, plural, one{1 has no published address.} other{{count} have no published address.}}'**
   String directoryPinsNoAddress(int count);
 
   /// Section heading in the member detail sheet listing that member's upcoming reservations, each tappable to open its detail
@@ -12230,10 +12230,10 @@ abstract class AppLocalizations {
   /// #3545 Discover: one line when directories did not answer, beside the results that loaded.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
+  /// **'{count, plural, one{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
   String discoveryDirectoriesDidNotAnswer(int count);
 
-  /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: loaded, shown, answered, sources]
   ///
   /// In en, this message translates to:
   /// **'Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}'**
@@ -12503,7 +12503,7 @@ abstract class AppLocalizations {
   /// **'Days between reminders'**
   String get dunningBetweenDays;
 
-  /// Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.
+  /// Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} due'**
@@ -13265,7 +13265,7 @@ abstract class AppLocalizations {
   /// **'Desk name'**
   String get editorDeskNameLabel;
 
-  /// Default name of a new desk: its next position number in a name, not a count, e.g. "Desk 2".
+  /// Default name of a new desk: its next position number in a name, not a count, e.g. "Desk 2". [not a count: number]
   ///
   /// In en, this message translates to:
   /// **'Desk {number}'**
@@ -13397,7 +13397,7 @@ abstract class AppLocalizations {
   /// **'Office name'**
   String get editorOfficeNameLabel;
 
-  /// Default name of a new office: its next position number in a name, not a count, e.g. "Office 3".
+  /// Default name of a new office: its next position number in a name, not a count, e.g. "Office 3". [not a count: number]
   ///
   /// In en, this message translates to:
   /// **'Office {number}'**
@@ -14081,7 +14081,7 @@ abstract class AppLocalizations {
   /// **'Available for use on'**
   String get equipmentFieldUseDate;
 
-  /// #2576 equipment register. The number is not a count: it is an item number.
+  /// #2576 equipment register. The number is not a count: it is an item number. [not a count: number]
   ///
   /// In en, this message translates to:
   /// **'#{number} {name}'**
@@ -14336,7 +14336,7 @@ abstract class AppLocalizations {
   /// Shown as a text in event lines (events). Placeholders: {failures} (int), {minutes} (int).
   ///
   /// In en, this message translates to:
-  /// **'Badge sign-in paused after {failures, plural, =1{1 failed attempt} other{{failures} failed attempts}} in {minutes, plural, =1{1 minute} other{{minutes} minutes}}. Review the badges and ask members to use email while the lock clears.'**
+  /// **'Badge sign-in paused after {failures, plural, one{1 failed attempt} other{{failures} failed attempts}} in {minutes, plural, one{1 minute} other{{minutes} minutes}}. Review the badges and ask members to use email while the lock clears.'**
   String eventBadgeSecurityAlert(int failures, int minutes);
 
   /// Events feed (#2575): what the validators decide on
@@ -14360,7 +14360,7 @@ abstract class AppLocalizations {
   /// Shown as a text in event lines (events). Placeholders: {actor} (String), {title} (String), {amount} (String), {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}'**
+  /// **'{count, plural, one{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}'**
   String eventExpenseRepartitionLine(
     String actor,
     String title,
@@ -14398,7 +14398,7 @@ abstract class AppLocalizations {
   /// **'Invoice {number} paid — {amount}'**
   String eventInvoicePaid(String number, String amount);
 
-  /// Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation.
+  /// Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}: invoice {number} — {amount} still due'**
@@ -14490,7 +14490,7 @@ abstract class AppLocalizations {
   /// Shown as a text in event lines (events). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 item} other{{count} items}}'**
+  /// **'{count, plural, one{1 item} other{{count} items}}'**
   String eventPriceNegotiationItems(int count);
 
   /// Shown as a text in event lines (events). Placeholders: {actor} (String), {member} (String), {terms} (String).
@@ -14508,7 +14508,7 @@ abstract class AppLocalizations {
   /// Feed line of a quota-extension request event
   ///
   /// In en, this message translates to:
-  /// **'{actor} requests {halfDays, plural, =1{1 extra half-day} other{{halfDays} extra half-days}} for {period}'**
+  /// **'{actor} requests {halfDays, plural, one{1 extra half-day} other{{halfDays} extra half-days}} for {period}'**
   String eventQuotaRequested(String actor, int halfDays, String period);
 
   /// Reject button on a pending event; voids what it would apply
@@ -14523,7 +14523,7 @@ abstract class AppLocalizations {
   /// **'Declined by {name} · {when}'**
   String eventRejectedBy(String name, String when);
 
-  /// #3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.
+  /// #3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'×{count}'**
@@ -14589,7 +14589,7 @@ abstract class AppLocalizations {
   /// **'{actor} takes back the role {role} from {member}'**
   String eventRoleTakenBack(String actor, String role, String member);
 
-  /// Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural.
+  /// Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: quantity]
   ///
   /// In en, this message translates to:
   /// **'{name} ×{quantity} — {amount}'**
@@ -14835,16 +14835,16 @@ abstract class AppLocalizations {
   /// **'Validated by {name} · {when}'**
   String eventValidatedBy(String name, String when);
 
-  /// #848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps.
+  /// #848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps. [not a count: stage, required]
   ///
   /// In en, this message translates to:
   /// **'Validation {stage} of {required} requested'**
   String eventValidationStage(int stage, int required);
 
-  /// Quorum progress on a pending event (#130): accepts so far / accepts required
+  /// Quorum progress on a pending event (#130): accepts so far / accepts required The number current is the figure before of or a slash, read as a value of a ratio. [not a count: current]
   ///
   /// In en, this message translates to:
-  /// **'{current}/{required, plural, =1{1 validation} other{{required} validations}}'**
+  /// **'{current}/{required, plural, one{1 validation} other{{required} validations}}'**
   String eventValidations(int current, int required);
 
   /// Empty state of the Events tab
@@ -15720,7 +15720,7 @@ abstract class AppLocalizations {
   /// #2373 Accounting export sheet: products of the country (Sage 100 France, Sage 50 Germany) that import one of the offered files, and which one to choose.
   ///
   /// In en, this message translates to:
-  /// **'{products} {count, plural, =1{imports} other{import}} this file: choose “{format}” below.'**
+  /// **'{products} {count, plural, one{imports} other{import}} this file: choose “{format}” below.'**
   String exportImportedVia(String products, int count, String format);
 
   /// Accounting export sheet (#2379): a file from the local book is the complete books only if everything passes through the app
@@ -17688,7 +17688,7 @@ abstract class AppLocalizations {
   /// #1851 B feature switch consent: featureOptInAlsoOn
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}'**
+  /// **'{count, plural, one{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}'**
   String featureOptInAlsoOn(int count, String features);
 
   /// #1851 consent dialog body; features = the experimental feature names
@@ -18900,13 +18900,13 @@ abstract class AppLocalizations {
   /// #1288 custom fields: fieldProblemTooLong
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{At most 1 character.} other{At most {count} characters.}}'**
+  /// **'{count, plural, one{At most 1 character.} other{At most {count} characters.}}'**
   String fieldProblemTooLong(int count);
 
   /// #1288 custom fields: fieldProblemTooShort
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{At least 1 character.} other{At least {count} characters.}}'**
+  /// **'{count, plural, one{At least 1 character.} other{At least {count} characters.}}'**
   String fieldProblemTooShort(int count);
 
   /// #1288 custom fields: fieldProblemTooSmall
@@ -19098,7 +19098,7 @@ abstract class AppLocalizations {
   /// #2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.
   ///
   /// In en, this message translates to:
-  /// **'{workspace}: {count, plural, =1{1 document} other{{count} documents}}'**
+  /// **'{workspace}: {count, plural, one{1 document} other{{count} documents}}'**
   String financesCoverageWorkspace(String workspace, int count);
 
   /// Shown as a text in my finances parts (money).
@@ -19194,7 +19194,7 @@ abstract class AppLocalizations {
   /// Me › Finances
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
+  /// **'{count, plural, one{1 overdue} other{{count} overdue}}'**
   String financesOverdueCount(int count);
 
   /// Me › Finances
@@ -19233,13 +19233,13 @@ abstract class AppLocalizations {
   /// **'All periods'**
   String get financesPeriodAll;
 
-  /// Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural.
+  /// Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
   String financesRemindedTimes(int count);
 
-  /// Me › Finances. The number is not a count: it is a reminder level, a position in the escalation.
+  /// Me › Finances. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -19314,7 +19314,7 @@ abstract class AppLocalizations {
   /// #3286 form error summary: how many fields have a problem
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}'**
+  /// **'{count, plural, one{1 field needs your attention} other{{count} fields need your attention}}'**
   String formErrorSummaryTitle(int count);
 
   /// #2377 The Swiss archive's procedures document: access logging (GeBüV art. 8).
@@ -19398,7 +19398,7 @@ abstract class AppLocalizations {
   /// #1654 getting started card: gettingStartedAllowance
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{You may hold one booking at a time.} other{You may hold {count} bookings at a time.}}'**
+  /// **'{count, plural, one{You may hold one booking at a time.} other{You may hold {count} bookings at a time.}}'**
   String gettingStartedAllowance(int count);
 
   /// #1654 getting started card: gettingStartedAvailabilityUnknown
@@ -20067,7 +20067,7 @@ abstract class AppLocalizations {
   /// **'That was refused. Follow these steps, then try again.'**
   String get guideHostRecovery;
 
-  /// Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps.
+  /// Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps. [not a count: current, total]
   ///
   /// In en, this message translates to:
   /// **'Show the guide (step {current} of {total})'**
@@ -20121,7 +20121,7 @@ abstract class AppLocalizations {
   /// **'Waiting'**
   String get guideHostStatusWaiting;
 
-  /// #1867 live guide host. The number is not a count: it is a position in a sequence of steps.
+  /// #1867 live guide host. The number is not a count: it is a position in a sequence of steps. [not a count: current, total]
   ///
   /// In en, this message translates to:
   /// **'Step {current} of {total}'**
@@ -20220,13 +20220,13 @@ abstract class AppLocalizations {
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}'**
+  /// **'{count, plural, one{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}'**
   String handoffExcludedSettlements(int count);
 
   /// #1640 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 document in the file} other{{count} documents in the file}}'**
+  /// **'{count, plural, one{1 document in the file} other{{count} documents in the file}}'**
   String handoffIncluded(int count);
 
   /// #1640 accountant_handoff
@@ -20280,8 +20280,8 @@ abstract class AppLocalizations {
   /// #2378 accountant_handoff
   ///
   /// In en, this message translates to:
-  /// **'The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256'**
-  String handoffTransfersQuoted(String files, String deliveries);
+  /// **'The report quotes the Transfers list of the year: {files, plural, one{{files} file} other{{files} files}} handed out and {deliveries, plural, one{{deliveries} document} other{{deliveries} documents}} delivered to a connection, each with its SHA-256'**
+  String handoffTransfersQuoted(int files, int deliveries);
 
   /// #1870 accountant handoff blocking finding
   ///
@@ -21042,7 +21042,7 @@ abstract class AppLocalizations {
   /// #2051 open-data holiday import
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Import 1 closure day} other{Import {count} closure days}}'**
+  /// **'{count, plural, one{Import 1 closure day} other{Import {count} closure days}}'**
   String holidayImportConfirm(int count);
 
   /// #2051 open-data holiday import
@@ -21387,7 +21387,7 @@ abstract class AppLocalizations {
   /// **'Nothing unread — you are up to date.'**
   String get inboxNoUnread;
 
-  /// #2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Requests: {count}'**
@@ -21483,7 +21483,7 @@ abstract class AppLocalizations {
   /// **'Its migrations were recorded by other tooling, so where DesKilo would resume cannot be read. Use an empty project.'**
   String get instanceAttentionOtherTooling;
 
-  /// #1308 instance readiness. The number is not a count: it is a schema version.
+  /// #1308 instance readiness. The number is not a count: it is a schema version. [not a count: found, supported]
   ///
   /// In en, this message translates to:
   /// **'It runs Postgres {found}; DesKilo is built for Postgres {supported}.'**
@@ -21705,7 +21705,7 @@ abstract class AppLocalizations {
   /// **'Delegation withdrawn.'**
   String get instanceDelegationWithdrawn;
 
-  /// #977 instance wizard: instanceDeployFunctions. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #977 instance wizard: instanceDeployFunctions. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Deploy the functions: payments, e-invoices, push, badges ({count}).'**
@@ -21786,7 +21786,7 @@ abstract class AppLocalizations {
   /// #3489 Instance doctor: what an installation holds, in workspaces and members.
   ///
   /// In en, this message translates to:
-  /// **'{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}'**
+  /// **'{workspaces, plural, one{1 workspace} other{{workspaces} workspaces}}, {members, plural, one{1 member} other{{members} members}}'**
   String instanceDoctorHeld(int workspaces, int members);
 
   /// #1308 instance wizard doctor and token
@@ -21798,19 +21798,19 @@ abstract class AppLocalizations {
   /// #3489 Instance doctor report footer: how many findings are problems.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}'**
+  /// **'{count, plural, one{1 finding needs a human.} other{{count} findings need a human.}}'**
   String instanceDoctorNeedsHuman(int count);
 
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 check passed} other{{count} checks passed}}'**
+  /// **'{count, plural, one{1 check passed} other{{count} checks passed}}'**
   String instanceDoctorPassed(int count);
 
   /// #3489 Detail: number of policies.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}'**
+  /// **'{count, plural, one{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}'**
   String instanceDoctorPoliciesMatchDetail(int count);
 
   /// #3489 Policies equal the migrations.
@@ -21837,7 +21837,7 @@ abstract class AppLocalizations {
   /// **'Auth configuration'**
   String get instanceDoctorProbeAuth;
 
-  /// #3489 Detail of a failed probe. The number is not a count: it is an HTTP status code.
+  /// #3489 Detail of a failed probe. The number is not a count: it is an HTTP status code. [not a count: status]
   ///
   /// In en, this message translates to:
   /// **'Supabase answered {status}: {message}\n        The other checks ran without it.'**
@@ -21927,10 +21927,10 @@ abstract class AppLocalizations {
   /// **'Run the security check'**
   String get instanceDoctorRun;
 
-  /// #3489 Detail: tables exist but no schema version.
+  /// #3489 Detail: tables exist but no schema version. The number required is a schema version. [not a count: required]
   ///
   /// In en, this message translates to:
-  /// **'{tables, plural, =1{1 table exists} other{{tables} tables exist}}, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>'**
+  /// **'{tables, plural, one{1 table exists} other{{tables} tables exist}}, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>'**
   String instanceDoctorSchemaNoVersionDetail(int tables, int required);
 
   /// #3489 The schema records no version.
@@ -21942,7 +21942,7 @@ abstract class AppLocalizations {
   /// #3489 Detail: sign-ups but no confirmation.
   ///
   /// In en, this message translates to:
-  /// **'{created, plural, =1{1 signed up} other{{created} signed up}}, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.'**
+  /// **'{created, plural, one{1 signed up} other{{created} signed up}}, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.'**
   String instanceDoctorSignupsNobodyDetail(int created);
 
   /// #3489 Nobody confirmed a sign-up in seven days.
@@ -21954,7 +21954,7 @@ abstract class AppLocalizations {
   /// #3489 Detail: number of storage read policies.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}'**
+  /// **'{count, plural, one{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}'**
   String instanceDoctorStorageScopedDetail(int count);
 
   /// #3489 Storage reads are scoped to folders.
@@ -21966,7 +21966,7 @@ abstract class AppLocalizations {
   /// #3489 Instance doctor: accounts unconfirmed for over a day.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}'**
+  /// **'{count, plural, one{1 account cannot get in} other{{count} accounts cannot get in}}'**
   String instanceDoctorStuckTitle(int count);
 
   /// #977 instance wizard: instanceDoneIntro
@@ -22074,7 +22074,7 @@ abstract class AppLocalizations {
   /// #2145 assistant onboarding: instanceGrantDaysLabel
   ///
   /// In en, this message translates to:
-  /// **'For {days, plural, =1{1 day} other{{days} days}}'**
+  /// **'For {days, plural, one{1 day} other{{days} days}}'**
   String instanceGrantDaysLabel(int days);
 
   /// #2145 assistant onboarding: instanceGrantHelp
@@ -22119,7 +22119,7 @@ abstract class AppLocalizations {
   /// **'Approve assistant access for {name}'**
   String instanceGrantTitle(String name);
 
-  /// #977 instance wizard: instanceInstallSchema. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #977 instance wizard: instanceInstallSchema. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Install the schema: every migration of the app, in order ({count}).'**
@@ -22365,7 +22365,7 @@ abstract class AppLocalizations {
   /// **'The server could not be reached. Try again in a moment.'**
   String get instanceProbeUnavailable;
 
-  /// #977 instance wizard: instanceProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
+  /// #977 instance wizard: instanceProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: done, total]
   ///
   /// In en, this message translates to:
   /// **'{done} / {total} · {current}'**
@@ -22395,7 +22395,7 @@ abstract class AppLocalizations {
   /// **'This project needs attention — nothing was installed.'**
   String get instanceReadyAttention;
 
-  /// #1308 instance readiness. The number is not a count: it is a schema version.
+  /// #1308 instance readiness. The number is not a count: it is a schema version. [not a count: version]
   ///
   /// In en, this message translates to:
   /// **'DesKilo version {version} is installed and current: the schema needs nothing.'**
@@ -22413,10 +22413,10 @@ abstract class AppLocalizations {
   /// **'{pending, plural, one{A DesKilo install stopped part-way: {pending} migration remain and only those will run.} other{A DesKilo install stopped part-way: {pending} migrations remain and only those will run.}}'**
   String instanceReadyResume(int pending);
 
-  /// #1308 instance readiness
+  /// #1308 instance readiness The number version is a schema version. [not a count: version]
   ///
   /// In en, this message translates to:
-  /// **'DesKilo version {version} is installed: {pending, plural, =1{only the 1 missing migration will run} other{only the {pending} missing migrations will run}}.'**
+  /// **'DesKilo version {version} is installed: {pending, plural, one{only the 1 missing migration will run} other{only the {pending} missing migrations will run}}.'**
   String instanceReadyUpgrade(int version, int pending);
 
   /// #977 instance wizard: instanceRegion
@@ -22980,7 +22980,7 @@ abstract class AppLocalizations {
   /// Detail sheet: what the snapshotted annex carries (0064)
   ///
   /// In en, this message translates to:
-  /// **'Annex: {movements, plural, =1{1 movement} other{{movements} movements}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-ins}}'**
+  /// **'Annex: {movements, plural, one{1 movement} other{{movements} movements}}, {checkIns, plural, one{1 check-in} other{{checkIns} check-ins}}'**
   String invoiceAnnexSummary(int movements, int checkIns);
 
   /// Invoice bottom line (0063): consumptions minus payments — the solde
@@ -23040,7 +23040,7 @@ abstract class AppLocalizations {
   /// Archive: how many invoices the current filters show
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice} other{{count} invoices}}'**
+  /// **'{count, plural, one{1 invoice} other{{count} invoices}}'**
   String invoiceCountShown(int count);
 
   /// FAB + sheet title issuing an invoice
@@ -23634,7 +23634,7 @@ abstract class AppLocalizations {
   /// Confirm dialog of the invoice-all sweep
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}'**
+  /// **'{count, plural, one{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}'**
   String invoiceIssueAllConfirm(int count, String month, String total);
 
   /// Looks for the invoice in the archive; never sends it again
@@ -23682,13 +23682,13 @@ abstract class AppLocalizations {
   /// Snackbar after the invoice-all sweep
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice issued.} other{{count} invoices issued.}}'**
+  /// **'{count, plural, one{1 invoice issued.} other{{count} invoices issued.}}'**
   String invoiceIssuedCount(int count);
 
   /// Sweep result when some members could not be invoiced
   ///
   /// In en, this message translates to:
-  /// **'{issued, plural, =1{1 issued} other{{issued} issued}}, {failed, plural, =1{1 failed} other{{failed} failed}}.'**
+  /// **'{issued, plural, one{1 issued} other{{issued} issued}}, {failed, plural, one{1 failed} other{{failed} failed}}.'**
   String invoiceIssuedPartial(int issued, int failed);
 
   /// Shown as a text in invoice issue block text (money).
@@ -24156,7 +24156,7 @@ abstract class AppLocalizations {
   /// #3587 R1-e: the one filled action of the month flow, with the amount it issues
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}'**
+  /// **'{count, plural, =0{Issue invoices} one{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}'**
   String invoiceMonthIssue(int count, String amount);
 
   /// #3587 R1-e: chip on an issued invoice
@@ -24186,7 +24186,7 @@ abstract class AppLocalizations {
   /// #3587 R1-e: how many listed customers cannot be invoiced until fixed
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 needs a fix} other{{count} need a fix}}'**
+  /// **'{count, plural, one{1 needs a fix} other{{count} need a fix}}'**
   String invoiceMonthNeedsFixCount(int count);
 
   /// #3587 R1-e: caption of a customer whose details block the invoice: the status and what is missing, as one message
@@ -24231,7 +24231,7 @@ abstract class AppLocalizations {
   /// **'No invoice exists yet for what is listed below.'**
   String get invoiceMonthResultNoneSubtitle;
 
-  /// #3587 R1-e: result title when only some invoices were issued
+  /// #3587 R1-e: result title when only some invoices were issued The number total is the denominator of a ratio, read as a value. [not a count: total]
   ///
   /// In en, this message translates to:
   /// **'{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}'**
@@ -24240,13 +24240,13 @@ abstract class AppLocalizations {
   /// #3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}'**
+  /// **'{count, plural, one{The customer sees it in their account now.} other{Each customer sees it in their account now.}}'**
   String invoiceMonthResultSubtitle(int count);
 
   /// #3587 R1-e: result page title when something was issued
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice issued} other{{count} invoices issued}}'**
+  /// **'{count, plural, one{1 invoice issued} other{{count} invoices issued}}'**
   String invoiceMonthResultTitle(int count);
 
   /// #3587 R1-e: retry only the customers the server refused
@@ -24255,10 +24255,10 @@ abstract class AppLocalizations {
   /// **'Retry for these'**
   String get invoiceMonthRetry;
 
-  /// #3587 R1-e: how many customers are selected of those listed, and their total
+  /// #3587 R1-e: how many customers are selected of those listed, and their total The number total is the denominator of a ratio, read as a value. [not a count: total]
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}'**
+  /// **'{count, plural, one{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}'**
   String invoiceMonthSelected(int count, int total, String amount);
 
   /// #3587 R1-e: where what was not issued stays
@@ -24543,7 +24543,7 @@ abstract class AppLocalizations {
   /// **'The e-invoice was rejected: fix it and send it again'**
   String get invoicePageNowRejected;
 
-  /// #3587 R1-d story's now line. The number is not a count: it is a reminder level, a position in the escalation.
+  /// #3587 R1-d story's now line. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} is due'**
@@ -24606,10 +24606,10 @@ abstract class AppLocalizations {
   /// #3587 R1-d the collapsed reminder history under the story
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Reminders (1)} other{Reminders ({count})}}'**
+  /// **'{count, plural, one{Reminders (1)} other{Reminders ({count})}}'**
   String invoicePageReminders(int count);
 
-  /// #3587 R1-d bottom bar. The number is not a count: it is a reminder level, a position in the escalation.
+  /// #3587 R1-d bottom bar. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Share reminder {level}'**
@@ -24639,7 +24639,7 @@ abstract class AppLocalizations {
   /// **'Paid'**
   String get invoicePageStoryPaid;
 
-  /// #3587 R1-d story line. The number is not a count: it is a reminder level, a position in the escalation.
+  /// #3587 R1-d story line. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} sent'**
@@ -24942,7 +24942,7 @@ abstract class AppLocalizations {
   /// #3606 the register's download of a selection (CSV)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}'**
+  /// **'{count, plural, one{Download 1 invoice} other{Download {count} invoices}}'**
   String invoiceRegisterDownloadSelected(int count);
 
   /// #3606 the invoice register as a records table
@@ -25023,7 +25023,7 @@ abstract class AppLocalizations {
   /// **'Reminder recorded.'**
   String get invoiceReminded;
 
-  /// Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural.
+  /// Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
@@ -25206,16 +25206,16 @@ abstract class AppLocalizations {
   /// Summary strip: open count + outstanding amount
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 open} other{{count} open}} · {amount} outstanding'**
+  /// **'{count, plural, one{1 open} other{{count} open}} · {amount} outstanding'**
   String invoiceSummaryOpen(int count, String amount);
 
-  /// Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
+  /// Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{count} to invoice'**
   String invoiceSummaryToInvoice(int count);
 
-  /// Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
+  /// Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{count} to refund · {amount}'**
@@ -25245,7 +25245,7 @@ abstract class AppLocalizations {
   /// **'Body band (the invoice lines)'**
   String get invoiceTemplateBodyLabel;
 
-  /// Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.
+  /// Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -25470,19 +25470,19 @@ abstract class AppLocalizations {
   /// #3587 how many customers
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 customer} other{{count} customers}}'**
+  /// **'{count, plural, one{1 customer} other{{count} customers}}'**
   String invoicingCustomerCount(int count);
 
   /// #3587 lateness
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{1 day late} other{{days} days late}}'**
+  /// **'{days, plural, one{1 day late} other{{days} days late}}'**
   String invoicingDaysLate(int days);
 
   /// #3587 status
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{Due in 1 day} other{Due in {days} days}}'**
+  /// **'{days, plural, one{Due in 1 day} other{Due in {days} days}}'**
   String invoicingDueIn(int days);
 
   /// #3587 an invoice line's due date
@@ -25536,7 +25536,7 @@ abstract class AppLocalizations {
   /// #3587 how many invoices
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice} other{{count} invoices}}'**
+  /// **'{count, plural, one{1 invoice} other{{count} invoices}}'**
   String invoicingInvoiceCount(int count);
 
   /// #3587 the month's figure
@@ -25647,10 +25647,10 @@ abstract class AppLocalizations {
   /// **'Received in {month}'**
   String invoicingReceivedIn(String month);
 
-  /// #3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness
+  /// #3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness The number level is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
-  /// **'{level, plural, other{reminder {level} sent}}'**
+  /// **'reminder {level} sent'**
   String invoicingReminderLevelSent(int level);
 
   /// #3587 top bar: open the search field
@@ -25752,7 +25752,7 @@ abstract class AppLocalizations {
   /// #3587 status
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{1 day late} other{{days} days late}} · every reminder sent'**
+  /// **'{days, plural, one{1 day late} other{{days} days late}} · every reminder sent'**
   String invoicingStatusEveryReminderSent(int days);
 
   /// #3587 status
@@ -25803,10 +25803,10 @@ abstract class AppLocalizations {
   /// **'E-invoice rejected'**
   String get invoicingStatusRejected;
 
-  /// #3587 status
+  /// #3587 status The number level is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{1 day late} other{{days} days late}} · reminder {level} sent'**
+  /// **'{days, plural, one{1 day late} other{{days} days late}} · reminder {level} sent'**
   String invoicingStatusReminderSent(int days, int level);
 
   /// #3587 status: the customer declared a payment
@@ -25878,7 +25878,7 @@ abstract class AppLocalizations {
   /// #3587 To do: rejected e-invoices
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 e-invoice was rejected} other{{count} e-invoices were rejected}}'**
+  /// **'{count, plural, one{1 e-invoice was rejected} other{{count} e-invoices were rejected}}'**
   String invoicingTodoRejected(int count);
 
   /// #3587 To do: the reminder queue (by hand only)
@@ -26196,7 +26196,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice stage strip (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
+  /// **'{count, plural, one{1 overdue} other{{count} overdue}}'**
   String journeyOverdueCount(int count);
 
   /// Shown as a text in open invoice act view (money).
@@ -26205,7 +26205,7 @@ abstract class AppLocalizations {
   /// **'Open Events'**
   String get journeyPrimaryConfirmInEvents;
 
-  /// Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.
+  /// Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Send reminder {level}'**
@@ -27660,7 +27660,7 @@ abstract class AppLocalizations {
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}'**
+  /// **'{count, plural, one{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}'**
   String leaseOccurrencesAfter(int count);
 
   /// #2569 premises lease
@@ -28169,13 +28169,13 @@ abstract class AppLocalizations {
   /// Template apply preview (#1280): libraryAppliedChanges
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 change applied.} other{{count} changes applied.}}'**
+  /// **'{count, plural, one{1 change applied.} other{{count} changes applied.}}'**
   String libraryAppliedChanges(int count);
 
   /// Template apply preview (#1280): libraryApplyChanges
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}'**
+  /// **'{count, plural, =0{Nothing selected} one{Apply 1 change} other{Apply {count} changes}}'**
   String libraryApplyChanges(int count);
 
   /// Appended to a template card's plan counts when the template also carries configuration (hours, prices, rules) (#1280)
@@ -28193,7 +28193,7 @@ abstract class AppLocalizations {
   /// Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).
   ///
   /// In en, this message translates to:
-  /// **'{levels, plural, =1{1 level} other{{levels} levels}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}'**
+  /// **'{levels, plural, one{1 level} other{{levels} levels}} · {desks, plural, one{1 desk} other{{desks} desks}} · {seats, plural, one{1 seat} other{{seats} seats}}'**
   String libraryCounts(int levels, int desks, int seats);
 
   /// Template apply preview: this workspace changed the group since it last applied the same template (#1280)
@@ -28631,13 +28631,13 @@ abstract class AppLocalizations {
   /// #1825 — what a whole-space reservation includes: its seats
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 seat} other{{count} seats}}'**
+  /// **'{count, plural, one{1 seat} other{{count} seats}}'**
   String listCoversSeats(int count);
 
   /// #1825 — what a whole-space reservation includes: its tables
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 table} other{{count} tables}}'**
+  /// **'{count, plural, one{1 table} other{{count} tables}}'**
   String listCoversTables(int count);
 
   /// #3607 the edge between a list and its open record, dragged to resize the record's pane
@@ -29039,13 +29039,13 @@ abstract class AppLocalizations {
   /// #2145 Connect an assistant: mcpConnectAccessExpiresIn
   ///
   /// In en, this message translates to:
-  /// **'Approved — {days, plural, =1{1 day} other{{days} days}} left.'**
+  /// **'Approved — {days, plural, one{1 day} other{{days} days}} left.'**
   String mcpConnectAccessExpiresIn(int days);
 
   /// #2145 Connect an assistant: mcpConnectAccessExpiresSoon
   ///
   /// In en, this message translates to:
-  /// **'Approved — expires in {days, plural, =1{1 day} other{{days} days}}. Ask for approval again once it lapses.'**
+  /// **'Approved — expires in {days, plural, one{1 day} other{{days} days}}. Ask for approval again once it lapses.'**
   String mcpConnectAccessExpiresSoon(int days);
 
   /// #2145 Connect an assistant: mcpConnectAddTitle
@@ -30608,7 +30608,7 @@ abstract class AppLocalizations {
   /// **'What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace\'s bookings and invoices stay with that workspace and are not part of this file.'**
   String get meDataPersonalScope;
 
-  /// #2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: conversations, messages, workspaces]
   ///
   /// In en, this message translates to:
   /// **'Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}'**
@@ -30971,7 +30971,7 @@ abstract class AppLocalizations {
   /// #2554 Overview: unread messages in one conversation
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 unread message} other{{count} unread messages}}'**
+  /// **'{count, plural, one{1 unread message} other{{count} unread messages}}'**
   String meOverviewAttentionConversation(int count);
 
   /// #3545 E: a Needs-you row for an unpaid invoice: what, then which business
@@ -31019,7 +31019,7 @@ abstract class AppLocalizations {
   /// #2554 Overview: how many more items wait beyond the ones shown
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 more} other{{count} more}}'**
+  /// **'{count, plural, one{1 more} other{{count} more}}'**
   String meOverviewAttentionMore(int count);
 
   /// #2554 Overview: every source answered and nothing waits
@@ -31217,7 +31217,7 @@ abstract class AppLocalizations {
   /// Tooltip of the count on a space side (production or development) on Me › Home: the notifications that belong to it.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}'**
+  /// **'{count, plural, one{1 notification waits here} other{{count} notifications wait here}}'**
   String meSpaceNotifications(int count);
 
   /// Subtitle of a space card whose membership awaits approval.
@@ -31259,7 +31259,7 @@ abstract class AppLocalizations {
   /// #3545 The one line at the end of Home while first steps remain: how many are left and which comes next.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}'**
+  /// **'{count, plural, one{One step left · {next}} other{{count} steps left · {next}}}'**
   String meStartedLeft(int count, String next);
 
   /// #3545 Getting started: the mark of the step to do now.
@@ -31505,7 +31505,7 @@ abstract class AppLocalizations {
   /// #704 - the money section of a member profile
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{+1 more} other{+{count} more}}'**
+  /// **'{count, plural, one{+1 more} other{+{count} more}}'**
   String memberMoreInvoices(int count);
 
   /// Empty member-sheet explainer when the viewer has no actions for this row (e.g. an admin viewing a kiosk)
@@ -31754,7 +31754,7 @@ abstract class AppLocalizations {
   /// **'Member since {date}'**
   String memberPageSince(String date);
 
-  /// Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Workspace default ({count})'**
@@ -31790,7 +31790,7 @@ abstract class AppLocalizations {
   /// **'Reject membership'**
   String get memberRejectJoin;
 
-  /// Subtitle chip on a member row whose reservation cap is set. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).
+  /// Subtitle chip on a member row whose reservation cap is set. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: n]
   ///
   /// In en, this message translates to:
   /// **'max {n}'**
@@ -31874,7 +31874,7 @@ abstract class AppLocalizations {
   /// **'Send the financial agreement'**
   String get memberSendAgreement;
 
-  /// #628 - subtitle chip on a member row with an explicit simultaneous allowance. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).
+  /// #628 - subtitle chip on a member row with an explicit simultaneous allowance. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: n]
   ///
   /// In en, this message translates to:
   /// **'{n} at once'**
@@ -32459,7 +32459,7 @@ abstract class AppLocalizations {
   /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{Due in 1 day} other{Due in {days} days}}'**
+  /// **'{days, plural, one{Due in 1 day} other{Due in {days} days}}'**
   String moneyDueIn(int days);
 
   /// Label of the expense category dropdown
@@ -32525,7 +32525,7 @@ abstract class AppLocalizations {
   /// Shown as a text in invoice overview (money). Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 open} other{{count} open}} · {amount} due'**
+  /// **'{count, plural, one{1 open} other{{count} open}} · {amount} due'**
   String moneyOpenInvoicesSummary(int count, String amount);
 
   /// Shown as a text in invoice overview (money).
@@ -32537,19 +32537,19 @@ abstract class AppLocalizations {
   /// Statement line for usage beyond the included quota
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}'**
+  /// **'{count, plural, one{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}'**
   String moneyOverage(int count);
 
   /// Shown as a text in invoice overview (money), and 1 other place. Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 overdue} other{{count} overdue}} — {amount} to settle'**
+  /// **'{count, plural, one{1 overdue} other{{count} overdue}} — {amount} to settle'**
   String moneyOverdueBanner(int count, String amount);
 
   /// Shown as a text in my invoices list (money). Placeholders: {days} (int).
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}'**
+  /// **'{days, plural, =0{Due today} one{Overdue by 1 day} other{Overdue by {days} days}}'**
   String moneyOverdueBy(int days);
 
   /// Shown as a tooltip in my invoices list (money), and 2 other places.
@@ -32582,7 +32582,7 @@ abstract class AppLocalizations {
   /// **'Record a payment'**
   String get moneyRecordPayment;
 
-  /// Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural.
+  /// Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Reminded ×{count}'**
@@ -32642,16 +32642,16 @@ abstract class AppLocalizations {
   /// **'Submit for confirmation'**
   String get moneySubmitPayment;
 
-  /// Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage.
+  /// Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'Subscription {pct}%'**
   String moneySubscriptionPct(int pct);
 
-  /// Statement usage line for quota plans
+  /// Statement usage line for quota plans The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]
   ///
   /// In en, this message translates to:
-  /// **'{used} of {included, plural, =1{1 half-day} other{{included} half-days}} used'**
+  /// **'{used} of {included, plural, one{1 half-day} other{{included} half-days}} used'**
   String moneyUsage(int used, int included);
 
   /// Statement usage line for unlimited plans
@@ -32660,7 +32660,7 @@ abstract class AppLocalizations {
   /// **'{used, plural, one{{used} half-day used} other{{used} half-days used}}'**
   String moneyUsageUnlimited(int used);
 
-  /// Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position).
+  /// Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: free, total]
   ///
   /// In en, this message translates to:
   /// **'{free}/{total}'**
@@ -32999,7 +32999,7 @@ abstract class AppLocalizations {
   /// #2554 My spaces: the number of loaded spaces
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No space} =1{1 space} other{{count} spaces}}'**
+  /// **'{count, plural, =0{No space} one{1 space} other{{count} spaces}}'**
   String mySpacesCount(int count);
 
   /// #2554 My spaces: link to Discover
@@ -33092,7 +33092,7 @@ abstract class AppLocalizations {
   /// **'My review'**
   String get mySpacesReview;
 
-  /// #2554 My spaces: my own star rating of a space. The number is not a count: it is a rating of five stars, an index on a scale.
+  /// #2554 My spaces: my own star rating of a space. The number is not a count: it is a rating of five stars, an index on a scale. [not a count: stars]
   ///
   /// In en, this message translates to:
   /// **'My review: {stars} of 5'**
@@ -33248,7 +33248,7 @@ abstract class AppLocalizations {
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
 
-  /// Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage.
+  /// Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]
   ///
   /// In en, this message translates to:
   /// **'{value} %'**
@@ -33386,7 +33386,7 @@ abstract class AppLocalizations {
   /// **'A larger subscription'**
   String get newMemberSubscriptionMore;
 
-  /// #1294 a subscription percentage. The number is not a count: it is a percentage.
+  /// #1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]
   ///
   /// In en, this message translates to:
   /// **'{percent}%'**
@@ -33452,7 +33452,7 @@ abstract class AppLocalizations {
   /// **'Alert'**
   String get noteRefAlert;
 
-  /// #842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
+  /// #842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: shown, total]
   ///
   /// In en, this message translates to:
   /// **'{shown} of {total}'**
@@ -33560,7 +33560,7 @@ abstract class AppLocalizations {
   /// **'Unread'**
   String get notesFilterUnread;
 
-  /// Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. "Unread (3)".
+  /// Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. "Unread (3)". [not a count: unread]
   ///
   /// In en, this message translates to:
   /// **'Unread ({unread})'**
@@ -33983,7 +33983,7 @@ abstract class AppLocalizations {
   /// #1636 onboarding_creation
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Creates one workspace} other{Creates {count} workspaces}}'**
+  /// **'{count, plural, one{Creates one workspace} other{Creates {count} workspaces}}'**
   String onboardingSummaryCount(int count);
 
   /// #1636 onboarding_creation
@@ -34199,7 +34199,7 @@ abstract class AppLocalizations {
   /// #2583 the overview's own figures
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}'**
+  /// **'{count, plural, one{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}'**
   String overviewOverdueBasis(int count, String unknown, String held);
 
   /// #2583 the overview's own figures
@@ -34229,7 +34229,7 @@ abstract class AppLocalizations {
   /// #2580 overview: how many requests wait in the whole space, beside the list of what waits on this person
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{Nothing waits on a decision in the space.} =1{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}'**
+  /// **'{count, plural, =0{Nothing waits on a decision in the space.} one{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}'**
   String overviewPendingInSpace(int count);
 
   /// #2583 C2 overview layout
@@ -34894,7 +34894,7 @@ abstract class AppLocalizations {
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
 
-  /// A plain percentage value (level chips, member rows). The number is not a count: it is a percentage.
+  /// A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]
   ///
   /// In en, this message translates to:
   /// **'{value}%'**
@@ -35269,7 +35269,7 @@ abstract class AppLocalizations {
   /// #2185 place feedback
   ///
   /// In en, this message translates to:
-  /// **'{average} · {count, plural, =1{1 rating} other{{count} ratings}}'**
+  /// **'{average} · {count, plural, one{1 rating} other{{count} ratings}}'**
   String placeFeedbackAverage(String average, int count);
 
   /// #2185 place feedback
@@ -35287,7 +35287,7 @@ abstract class AppLocalizations {
   /// #3064 the member's own rating, apart from the average
   ///
   /// In en, this message translates to:
-  /// **'Your rating: {n, plural, =1{1 star} other{{n} stars}}'**
+  /// **'Your rating: {n, plural, one{1 star} other{{n} stars}}'**
   String placeFeedbackMine(int n);
 
   /// #3064 the member has not rated this place
@@ -35305,7 +35305,7 @@ abstract class AppLocalizations {
   /// #2185 place feedback
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 star} other{{n} stars}}'**
+  /// **'{n, plural, one{1 star} other{{n} stars}}'**
   String placeFeedbackStars(int n);
 
   /// #2185 place feedback
@@ -35635,7 +35635,7 @@ abstract class AppLocalizations {
   /// Booking error when the server rejects a misaligned window under a minute granularity (0032)
   ///
   /// In en, this message translates to:
-  /// **'Bookings must start and end on the {minutes, plural, =1{1-minute grid} other{{minutes}-minute grid}}.'**
+  /// **'Bookings must start and end on the {minutes, plural, one{1-minute grid} other{{minutes}-minute grid}}.'**
   String planSlotError(int minutes);
 
   /// Walk-up check-in: the start time is the current time
@@ -35725,7 +35725,7 @@ abstract class AppLocalizations {
   /// Quota summary
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 half-day} other{{count} half-days}}'**
+  /// **'{count, plural, one{1 half-day} other{{count} half-days}}'**
   String plansEditorQuota(int count);
 
   /// Owner plan-editor screen title (#105)
@@ -35767,7 +35767,7 @@ abstract class AppLocalizations {
   /// #649 - a day count shown beside the horizon slider
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  /// **'{count, plural, one{1 day} other{{count} days}}'**
   String policyDaysValue(int count);
 
   /// #649 - error when the minimum duration exceeds the maximum
@@ -35791,7 +35791,7 @@ abstract class AppLocalizations {
   /// #649 - an hour count shown beside a duration control
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 hour} other{{count} hours}}'**
+  /// **'{count, plural, one{1 hour} other{{count} hours}}'**
   String policyHoursValue(int count);
 
   /// #649 - subtitle of the booking-limits section
@@ -35827,7 +35827,7 @@ abstract class AppLocalizations {
   /// #649 - a minute count shown beside a duration control
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 minute} other{{count} minutes}}'**
+  /// **'{count, plural, one{1 minute} other{{count} minutes}}'**
   String policyMinutesValue(int count);
 
   /// Shown as a title in availability policies (workspace).
@@ -35998,7 +35998,7 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get portalDescription;
 
-  /// A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{name} ({count})'**
@@ -36463,7 +36463,7 @@ abstract class AppLocalizations {
   /// Shown as the message in privacy admin sheets (members). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}'**
+  /// **'{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} one{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}'**
   String privacyAdminIncidentRecorded(int count);
 
   /// Shown as the text in privacy admin sheets (members).
@@ -36859,7 +36859,7 @@ abstract class AppLocalizations {
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 feature changed.} other{{count} features changed.}}'**
+  /// **'{count, plural, one{1 feature changed.} other{{count} features changed.}}'**
   String processApplied(int count);
 
   /// Shown as the title in process names (workspace).
@@ -36889,13 +36889,13 @@ abstract class AppLocalizations {
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Switch off 1 feature} other{Switch off {count} features}}'**
+  /// **'{count, plural, one{Switch off 1 feature} other{Switch off {count} features}}'**
   String processConfirmOff(int count);
 
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Switch on 1 feature} other{Switch on {count} features}}'**
+  /// **'{count, plural, one{Switch on 1 feature} other{Switch on {count} features}}'**
   String processConfirmOn(int count);
 
   /// #1329 the process change preview and apply
@@ -36928,10 +36928,10 @@ abstract class AppLocalizations {
   /// **'Create, share and export workspace information.'**
   String get processDocumentsInformationDesc;
 
-  /// #1327 the process-first overview of the Features screen
+  /// #1327 the process-first overview of the Features screen The number enabled is the figure before of or a slash, read as a value of a ratio. [not a count: enabled]
   ///
   /// In en, this message translates to:
-  /// **'{enabled} of {total, plural, =1{1 feature on} other{{total} features on}}'**
+  /// **'{enabled} of {total, plural, one{1 feature on} other{{total} features on}}'**
   String processFeatureCount(int enabled, int total);
 
   /// #1327 the process-first overview of the Features screen
@@ -36967,7 +36967,7 @@ abstract class AppLocalizations {
   /// #1327 the process-first overview of the Features screen
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}'**
+  /// **'{count, plural, one{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}'**
   String processHeldBack(int count);
 
   /// #1329 the process change preview and apply
@@ -37039,7 +37039,7 @@ abstract class AppLocalizations {
   /// #1329 the process change preview and apply
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}'**
+  /// **'{count, plural, one{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}'**
   String processRemoveDependants(int count);
 
   /// Shown as the title in process names (workspace).
@@ -37150,10 +37150,10 @@ abstract class AppLocalizations {
   /// **'Partial'**
   String get processStatePartial;
 
-  /// #1327 the process-first overview of the Features screen
+  /// #1327 the process-first overview of the Features screen The number active is the figure before of or a slash, read as a value of a ratio. [not a count: active]
   ///
   /// In en, this message translates to:
-  /// **'{active} of {total, plural, =1{1 subprocess active} other{{total} subprocesses active}}'**
+  /// **'{active} of {total, plural, one{1 subprocess active} other{{total} subprocesses active}}'**
   String processSubprocessCount(int active, int total);
 
   /// #1327 the process-first overview of the Features screen
@@ -37204,7 +37204,7 @@ abstract class AppLocalizations {
   /// **'Tap to add a photo'**
   String get profilePhotoNone;
 
-  /// #3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count.
+  /// #3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count. [not a count: megabytes]
   ///
   /// In en, this message translates to:
   /// **'The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.'**
@@ -37423,13 +37423,13 @@ abstract class AppLocalizations {
   /// #1274 confirm creating the previewed days
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Create 1 closure day} other{Create {count} closure days}}'**
+  /// **'{count, plural, one{Create 1 closure day} other{Create {count} closure days}}'**
   String publicHolidaysConfirm(int count);
 
   /// #1274 how many closure days were written
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 closure day created} other{{count} closure days created}}'**
+  /// **'{count, plural, one{1 closure day created} other{{count} closure days created}}'**
   String publicHolidaysCreated(int count);
 
   /// #1274 this date's month already carries an invoice
@@ -38060,7 +38060,7 @@ abstract class AppLocalizations {
   /// **'For a receipt with several VAT rates, or equipment beside other items: one line each. It is submitted as one expense of the whole amount, which you paid.'**
   String get purchaseReceiptIntro;
 
-  /// #2573 purchase lines: place and several-line receipts. The number is not a count: it is a line number.
+  /// #2573 purchase lines: place and several-line receipts. The number is not a count: it is a line number. [not a count: number]
   ///
   /// In en, this message translates to:
   /// **'Line {number}'**
@@ -39581,7 +39581,7 @@ abstract class AppLocalizations {
   /// #2354 recapitulative statement: recapDue
   ///
   /// In en, this message translates to:
-  /// **'An EU sales list is due for {month}: {count, plural, =1{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.'**
+  /// **'An EU sales list is due for {month}: {count, plural, one{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.'**
   String recapDue(String month, int count);
 
   /// #2354 recapitulative statement: recapEmpty
@@ -39653,7 +39653,7 @@ abstract class AppLocalizations {
   /// #3606 records table
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}'**
+  /// **'{count, plural, one{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}'**
   String recordsDropped(int count);
 
   /// #3606 records table
@@ -39731,7 +39731,7 @@ abstract class AppLocalizations {
   /// #3606 records table
   ///
   /// In en, this message translates to:
-  /// **'{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}'**
+  /// **'{loaded, plural, one{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}'**
   String recordsPartlyRead(int loaded);
 
   /// #3606 records table
@@ -39743,19 +39743,19 @@ abstract class AppLocalizations {
   /// #3606 records table
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}'**
+  /// **'{count, plural, one{Select the 1 shown} other{Select the {count} shown}}'**
   String recordsSelectShown(int count);
 
   /// #3606 records table
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 selected} other{{count} selected}}'**
+  /// **'{count, plural, one{1 selected} other{{count} selected}}'**
   String recordsSelected(int count);
 
   /// #3606 records table
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 shown} other{{count} shown}}'**
+  /// **'{count, plural, one{1 shown} other{{count} shown}}'**
   String recordsShown(int count);
 
   /// #3606 records table
@@ -39851,7 +39851,7 @@ abstract class AppLocalizations {
   /// Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Show 1 result} other{Show {count} results}}'**
+  /// **'{count, plural, one{Show 1 result} other{Show {count} results}}'**
   String refFilterShow(int count);
 
   /// Shown as the text in ref picker sheet (workspace).
@@ -40184,7 +40184,7 @@ abstract class AppLocalizations {
   /// **'No confirmed answer came back. Nothing was recorded; check with the customer before deciding whether it arrived.'**
   String get reminderEmailUnconfirmed;
 
-  /// #1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation.
+  /// #1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level} · {origin} · {date}'**
@@ -40292,7 +40292,7 @@ abstract class AppLocalizations {
   /// **'Payment reminder'**
   String get reminderPdfTitleFriendly;
 
-  /// #3652 Title of a reminder letter of a given level, e.g. "Reminder 2". The number is a position, not a count.
+  /// #3652 Title of a reminder letter of a given level, e.g. "Reminder 2". The number is a position, not a count. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -40307,7 +40307,7 @@ abstract class AppLocalizations {
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueDetail)
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}'**
+  /// **'{days, plural, =0{{number} · due today} one{{number} · 1 day late} other{{number} · {days} days late}}'**
   String reminderQueueDetail(int days, String number);
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueDone)
@@ -40325,7 +40325,7 @@ abstract class AppLocalizations {
   /// #3673 reminder queue by e-mail: reminderQueueEmailAll
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{E-mail the 1 reachable} other{E-mail the {count} reachable}}'**
+  /// **'{count, plural, one{E-mail the 1 reachable} other{E-mail the {count} reachable}}'**
   String reminderQueueEmailAll(int count);
 
   /// #3673 reminder queue by e-mail: reminderQueueEmailAllConfirm
@@ -40337,7 +40337,7 @@ abstract class AppLocalizations {
   /// #3673 reminder queue by e-mail: reminderQueueEmailAllTitle
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}'**
+  /// **'{count, plural, one{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}'**
   String reminderQueueEmailAllTitle(int count);
 
   /// #3673 reminder queue by e-mail: reminderQueueEmailUnreached
@@ -40364,7 +40364,7 @@ abstract class AppLocalizations {
   /// **'You share each reminder yourself. It is recorded only when it was really shared.'**
   String get reminderQueueIntro;
 
-  /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation.
+  /// #3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'Reminder {level}'**
@@ -40409,7 +40409,7 @@ abstract class AppLocalizations {
   /// #3673 reminder queue by e-mail: reminderQueueResultSentTitle
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 reminder sent} other{{count} reminders sent}}'**
+  /// **'{count, plural, one{1 reminder sent} other{{count} reminders sent}}'**
   String reminderQueueResultSentTitle(int count);
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)
@@ -40421,7 +40421,7 @@ abstract class AppLocalizations {
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 reminder shared} other{{count} reminders shared}}'**
+  /// **'{count, plural, one{1 reminder shared} other{{count} reminders shared}}'**
   String reminderQueueResultTitle(int count);
 
   /// #3587 R1-f: the by-hand reminder queue (reminderQueueShare)
@@ -40451,13 +40451,13 @@ abstract class AppLocalizations {
   /// #3673 reminder queue by e-mail: reminderQueueStaysNoAddress
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}'**
+  /// **'{count, plural, one{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}'**
   String reminderQueueStaysNoAddress(int count);
 
   /// #3673 reminder queue by e-mail: reminderQueueStaysToDecide
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}'**
+  /// **'{count, plural, one{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}'**
   String reminderQueueStaysToDecide(int count);
 
   /// #3673 reminder queue by e-mail: reminderQueueStillOpenHeading
@@ -40733,7 +40733,7 @@ abstract class AppLocalizations {
   /// Shown as a text in expense repartition sheet (money). Placeholders: {count} (int), {amount} (String).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}'**
+  /// **'{count, plural, one{1 member · {amount}} other{{count} members · {amount}}}'**
   String repartitionSum(int count, String amount);
 
   /// Shown as a title in expense repartition sheet (money).
@@ -41009,7 +41009,7 @@ abstract class AppLocalizations {
   /// Shown as a text in report page designer (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 page} other{{count} pages}}'**
+  /// **'{count, plural, one{1 page} other{{count} pages}}'**
   String reportDesignerPages(int count);
 
   /// Report page designer: the merged-data preview mode (#548)
@@ -42581,7 +42581,7 @@ abstract class AppLocalizations {
   /// #2631 resource_reserve: reserveRoomFor
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Meeting room · 1 person} other{Meeting room · {count} people}}'**
+  /// **'{count, plural, one{Meeting room · 1 person} other{Meeting room · {count} people}}'**
   String reserveRoomFor(int count);
 
   /// #2631 resource_reserve: reserveSlotDay
@@ -42599,7 +42599,7 @@ abstract class AppLocalizations {
   /// #2631 resource_reserve: reserveSlotMinutes
   ///
   /// In en, this message translates to:
-  /// **'Booked in {minutes, plural, =1{1-minute slots} other{{minutes}-minute slots}}'**
+  /// **'Booked in {minutes, plural, one{1-minute slots} other{{minutes}-minute slots}}'**
   String reserveSlotMinutes(int minutes);
 
   /// Reserve hub banner while availability comes from the offline cache; time is when it was saved (#1305)
@@ -43259,7 +43259,7 @@ abstract class AppLocalizations {
   /// #2568 rented rooms
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Open to 1 chosen entry} other{Open to {count} chosen entries}}'**
+  /// **'{count, plural, one{Open to 1 chosen entry} other{Open to {count} chosen entries}}'**
   String roomRentAudienceNamed(int count);
 
   /// #2568 rented rooms
@@ -43619,7 +43619,7 @@ abstract class AppLocalizations {
   /// #2872 setup guide: what the open sample data batch holds
   ///
   /// In en, this message translates to:
-  /// **'This space holds sample data: {members, plural, =1{1 member} other{{members} members}}, {bookings, plural, =1{1 booking} other{{bookings} bookings}}, {payments, plural, =1{1 payment} other{{payments} payments}}.'**
+  /// **'This space holds sample data: {members, plural, one{1 member} other{{members} members}}, {bookings, plural, one{1 booking} other{{bookings} bookings}}, {payments, plural, one{1 payment} other{{payments} payments}}.'**
   String sampleDataCounts(int members, int bookings, int payments);
 
   /// #2872 setup guide: what filling the test space with sample data creates
@@ -43697,7 +43697,7 @@ abstract class AppLocalizations {
   /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{every day} other{every {count} days}}'**
+  /// **'{count, plural, one{every day} other{every {count} days}}'**
   String scheduleEveryDays(int count);
 
   /// Shown as the label of a field in expense schedule sheet (money).
@@ -43709,13 +43709,13 @@ abstract class AppLocalizations {
   /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{every month} other{every {count} months}}'**
+  /// **'{count, plural, one{every month} other{every {count} months}}'**
   String scheduleEveryMonths(int count);
 
   /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{every week} other{every {count} weeks}}'**
+  /// **'{count, plural, one{every week} other{every {count} weeks}}'**
   String scheduleEveryWeeks(int count);
 
   /// Shown as a text in expense schedule sheet (money).
@@ -43811,7 +43811,7 @@ abstract class AppLocalizations {
   /// #3485 Schedule interval or repetition count (ICU plural).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 time} other{{count} times}}'**
+  /// **'{count, plural, one{1 time} other{{count} times}}'**
   String scheduleTimes(int count);
 
   /// Shown as the label of a field in expense schedule sheet (money).
@@ -43898,7 +43898,7 @@ abstract class AppLocalizations {
   /// **'No scheduled expense yet.'**
   String get scheduledExpensesEmpty;
 
-  /// Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Ended and rejected ({count})'**
@@ -43916,7 +43916,7 @@ abstract class AppLocalizations {
   /// **'Scheduled expenses'**
   String get scheduledExpensesTitle;
 
-  /// #1312 Explanation on the schema-update screen. The number is not a count: it is a schema version.
+  /// #1312 Explanation on the schema-update screen. The number is not a count: it is a schema version. [not a count: version]
   ///
   /// In en, this message translates to:
   /// **'This app needs version {version} of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.'**
@@ -44003,13 +44003,13 @@ abstract class AppLocalizations {
   /// Title of the series result dialog
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 booking created} other{{count} bookings created}}'**
+  /// **'{count, plural, one{1 booking created} other{{count} bookings created}}'**
   String seriesBookedCount(int count);
 
   /// Shown as the text in series preview dialog (reservations). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Book the other date} other{Book the other {count} dates}}'**
+  /// **'{count, plural, one{Book the other date} other{Book the other {count} dates}}'**
   String seriesPreviewBookOthers(int count);
 
   /// Series preview (#2575): heading above the dates that would fail
@@ -44126,7 +44126,7 @@ abstract class AppLocalizations {
   /// **'Out of stock'**
   String get serviceOutOfStock;
 
-  /// Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
+  /// Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{count} in stock'**
@@ -44171,7 +44171,7 @@ abstract class AppLocalizations {
   /// #3552 the services list: a duration in minutes, short
   ///
   /// In en, this message translates to:
-  /// **'{minutes, plural, =1{1 min} other{{minutes} min}}'**
+  /// **'{minutes, plural, one{1 min} other{{minutes} min}}'**
   String servicesDurationShort(int minutes);
 
   /// Sheet title when editing an existing service
@@ -45617,7 +45617,7 @@ abstract class AppLocalizations {
   /// Shown as the body of a dialog in invoice pdf actions (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
+  /// **'{count, plural, one{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}'**
   String settlementAnnexBody(int count);
 
   /// Shown as a title in invoice pdf actions (money).
@@ -45635,7 +45635,7 @@ abstract class AppLocalizations {
   /// Confirm regrouping N invoices into one (#804)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}'**
+  /// **'{count, plural, one{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}'**
   String settlementConfirm(int count, String amount);
 
   /// Shown as a text in invoice actions (money), and 1 other place.
@@ -45743,7 +45743,7 @@ abstract class AppLocalizations {
   /// #2871 setup run steps: setupApprovalsFlowOutcomeBody
   ///
   /// In en, this message translates to:
-  /// **'{required, plural, =1{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.'**
+  /// **'{required, plural, one{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.'**
   String setupApprovalsFlowOutcomeBody(int required);
 
   /// #2871 setup run steps: setupApprovalsFlowRequest
@@ -45758,16 +45758,16 @@ abstract class AppLocalizations {
   /// **'A refund, a booking deletion, an expense…'**
   String get setupApprovalsFlowRequestBody;
 
-  /// #2871 setup run steps: setupApprovalsFlowValidators
+  /// #2871 setup run steps: setupApprovalsFlowValidators The number people is the denominator of a ratio, read as a value. [not a count: people]
   ///
   /// In en, this message translates to:
-  /// **'{required, plural, =1{1 of {people} approves} other{{required} of {people} approve}}'**
+  /// **'{required, plural, one{1 of {people} approves} other{{required} of {people} approve}}'**
   String setupApprovalsFlowValidators(int required, int people);
 
   /// #2871 setup run steps: setupApprovalsFlowWho
   ///
   /// In en, this message translates to:
-  /// **'{owners, plural, =1{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} =1{1 administrator} other{{admins} administrators}}'**
+  /// **'{owners, plural, one{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} one{1 administrator} other{{admins} administrators}}'**
   String setupApprovalsFlowWho(int owners, int admins);
 
   /// #2871 setup run steps: setupApprovalsOpenRules
@@ -45785,7 +45785,7 @@ abstract class AppLocalizations {
   /// #2871 setup run steps: setupApprovalsOwnRulesShort
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}'**
+  /// **'{count, plural, one{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}'**
   String setupApprovalsOwnRulesShort(int count);
 
   /// #2871 setup run steps: setupApprovalsOwnRulesTitle
@@ -45797,7 +45797,7 @@ abstract class AppLocalizations {
   /// #2871 setup run steps: setupApprovalsPeople
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 person can approve.} other{{count} people can approve.}}'**
+  /// **'{count, plural, one{1 person can approve.} other{{count} people can approve.}}'**
   String setupApprovalsPeople(int count);
 
   /// #2871 setup run steps: setupApprovalsPresetBody
@@ -45821,25 +45821,25 @@ abstract class AppLocalizations {
   /// #2871 setup run steps: setupApprovalsPreviewWaiting
   ///
   /// In en, this message translates to:
-  /// **'{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}'**
+  /// **'{required, plural, one{Waiting for 1 approval} other{Waiting for {required} approvals}}'**
   String setupApprovalsPreviewWaiting(int required);
 
   /// #2871 setup run steps: setupApprovalsRuleReach
   ///
   /// In en, this message translates to:
-  /// **'{required, plural, =1{1 approval} other{{required} approvals}}, {people, plural, =1{1 person can approve} other{{people} people can approve}}'**
+  /// **'{required, plural, one{1 approval} other{{required} approvals}}, {people, plural, one{1 person can approve} other{{people} people can approve}}'**
   String setupApprovalsRuleReach(int required, int people);
 
   /// #2871 setup run steps: setupApprovalsRuleShort
   ///
   /// In en, this message translates to:
-  /// **'{required, plural, =1{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} =1{only 1 person can approve} other{only {people} people can approve}}'**
+  /// **'{required, plural, one{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} one{only 1 person can approve} other{only {people} people can approve}}'**
   String setupApprovalsRuleShort(int required, int people);
 
   /// #2871 setup run steps: setupApprovalsTooMany
   ///
   /// In en, this message translates to:
-  /// **'{required} approvals can never be gathered: {people, plural, =1{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.'**
+  /// **'{required, plural, one{{required} approval} other{{required} approvals}} can never be gathered: {people, plural, one{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.'**
   String setupApprovalsTooMany(int required, int people);
 
   /// #2870 setup steps: setupBasicsPreviewDate
@@ -45932,7 +45932,7 @@ abstract class AppLocalizations {
   /// **'Saving…'**
   String get setupChoicesSaving;
 
-  /// Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Settings that will change: {count}'**
@@ -46406,7 +46406,7 @@ abstract class AppLocalizations {
   /// **'Your space has everything you chose.'**
   String get setupGuideAllDone;
 
-  /// #2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
+  /// #2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: ready, required]
   ///
   /// In en, this message translates to:
   /// **'{milestone}: {ready} of {required} done · Next: {step}'**
@@ -46429,7 +46429,7 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get setupGuideDone;
 
-  /// #2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
+  /// #2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: low, high]
   ///
   /// In en, this message translates to:
   /// **'about {low}–{high} min'**
@@ -46477,7 +46477,7 @@ abstract class AppLocalizations {
   /// **'More for your space'**
   String get setupGuideOptional;
 
-  /// #2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).
+  /// #2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: ready, required]
   ///
   /// In en, this message translates to:
   /// **'{ready} of {required} done'**
@@ -46519,7 +46519,7 @@ abstract class AppLocalizations {
   /// **'The setup status could not be read. Try again in a moment.'**
   String get setupGuideUnavailable;
 
-  /// #2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
+  /// #2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: low, high]
   ///
   /// In en, this message translates to:
   /// **'About {low}–{high} min until: {milestone}'**
@@ -47200,13 +47200,13 @@ abstract class AppLocalizations {
   /// #2871 setup run steps: setupLimitsPreviewAhead
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}'**
+  /// **'{days, plural, one{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}'**
   String setupLimitsPreviewAhead(int days);
 
   /// #2871 setup run steps: setupLimitsPreviewAtOnce
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}'**
+  /// **'{count, plural, one{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}'**
   String setupLimitsPreviewAtOnce(int count);
 
   /// #2871 setup run steps: setupLimitsPreviewLength
@@ -47305,7 +47305,7 @@ abstract class AppLocalizations {
   /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
   String get setupNewMembersPreviewNoQuestions;
 
-  /// #2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage.
+  /// #2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'A new member starts on a {pct} % subscription ({policy}).'**
@@ -47605,7 +47605,7 @@ abstract class AppLocalizations {
   /// **'Your chosen goal is configured. You can review or change it here at any time.'**
   String get setupOverviewReady;
 
-  /// Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Required tasks remaining: {count}'**
@@ -47650,7 +47650,7 @@ abstract class AppLocalizations {
   /// #2870 setup steps: setupPlacesCounts
   ///
   /// In en, this message translates to:
-  /// **'{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}'**
+  /// **'{rooms, plural, =0{no rooms} one{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} one{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} one{1 seat} other{{seats} seats}}'**
   String setupPlacesCounts(int rooms, int desks, int seats);
 
   /// #2870 setup steps: setupPlacesEmpty
@@ -47713,13 +47713,13 @@ abstract class AppLocalizations {
   /// **'Standard'**
   String get setupPresetNameStandard;
 
-  /// #2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage.
+  /// #2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]
   ///
   /// In en, this message translates to:
   /// **'{from}–{to} %: {fee} a month, {extra} per extra half-day'**
   String setupPricingBand(int from, int to, String fee, String extra);
 
-  /// #2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage.
+  /// #2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]
   ///
   /// In en, this message translates to:
   /// **'Membership at {pct} %'**
@@ -47728,13 +47728,13 @@ abstract class AppLocalizations {
   /// #3283 setup pricing: the half-days a level includes this month.
   ///
   /// In en, this message translates to:
-  /// **'{level}: {count, plural, =1{1 half-day} other{{count} half-days}} included'**
+  /// **'{level}: {count, plural, one{1 half-day} other{{count} half-days}} included'**
   String setupPricingLevelIncludes(String level, int count);
 
   /// #3283 setup pricing: what a percentage level buys, on this workspace's own open days this month.
   ///
   /// In en, this message translates to:
-  /// **'A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member\'s share is charged at the extra rate of their band. This month your space is open {days, plural, =1{1 day} other{{days} days}}:'**
+  /// **'A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member\'s share is charged at the extra rate of their band. This month your space is open {days, plural, one{1 day} other{{days} days}}:'**
   String setupPricingLevelsBasis(int days);
 
   /// #3283 setup pricing: the basis when the opening days could not be read.
@@ -48628,7 +48628,7 @@ abstract class AppLocalizations {
   /// Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 decision awaits you} other{{count} decisions await you}}'**
+  /// **'{count, plural, one{1 decision awaits you} other{{count} decisions await you}}'**
   String shellPendingDecisions(int count);
 
   /// Tooltip of the raised centre Reserve button in the bottom bar, and title of the reservation screen it opens
@@ -49978,7 +49978,7 @@ abstract class AppLocalizations {
   /// Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).
   ///
   /// In en, this message translates to:
-  /// **'Preview: {bytes, plural, =1{1 byte} other{{bytes} bytes}}'**
+  /// **'Preview: {bytes, plural, one{1 byte} other{{bytes} bytes}}'**
   String supportSize(int bytes);
 
   /// Shown as the title in support bundle screen (help), and 1 other place.
@@ -50155,7 +50155,7 @@ abstract class AppLocalizations {
   /// **'Task procedure'**
   String get taskExportDocFallbackTitle;
 
-  /// #1866 task export (Word document): Duration. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).
+  /// #1866 task export (Word document): Duration. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: minutes, seconds]
   ///
   /// In en, this message translates to:
   /// **'Duration: {minutes} min {seconds} s'**
@@ -50392,7 +50392,7 @@ abstract class AppLocalizations {
   /// #1866 task export (Word document): Pauses
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No pause} =1{Paused once} other{Paused {count} times}}'**
+  /// **'{count, plural, =0{No pause} one{Paused once} other{Paused {count} times}}'**
   String taskExportPauses(int count);
 
   /// #1866 task export (Word document): Platform
@@ -50818,7 +50818,7 @@ abstract class AppLocalizations {
   /// Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).
   ///
   /// In en, this message translates to:
-  /// **'not kept ({length, plural, =1{1 character} other{{length} characters}})'**
+  /// **'not kept ({length, plural, one{1 character} other{{length} characters}})'**
   String taskExportValueRedacted(int length);
 
   /// #1866 task export (Word document): ValueRoom
@@ -50863,7 +50863,7 @@ abstract class AppLocalizations {
   /// **'yes'**
   String get taskExportValueYes;
 
-  /// #1866 task export (Word document): Version. The number is not a count: it is a schema version.
+  /// #1866 task export (Word document): Version. The number is not a count: it is a schema version. [not a count: schema, contract]
   ///
   /// In en, this message translates to:
   /// **'Recording format {schema}, action contract {contract}'**
@@ -51316,7 +51316,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderEditedNote
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}'**
+  /// **'{count, plural, one{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}'**
   String taskRecorderEditedNote(int count);
 
   /// #1865 task recorder: taskRecorderEndInterrupted
@@ -51424,7 +51424,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderIndicator
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Recording a task: 1 step} other{Recording a task: {count} steps}}'**
+  /// **'{count, plural, one{Recording a task: 1 step} other{Recording a task: {count} steps}}'**
   String taskRecorderIndicator(int count);
 
   /// #1865 task recorder: taskRecorderLeaveOut
@@ -51436,7 +51436,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderLimits
   ///
   /// In en, this message translates to:
-  /// **'Up to {steps, plural, =1{1 step} other{{steps} steps}} or {minutes, plural, =1{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, =1{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.'**
+  /// **'Up to {steps, plural, one{1 step} other{{steps} steps}} or {minutes, plural, one{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, one{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.'**
   String taskRecorderLimits(int steps, int minutes, int days);
 
   /// #1865 task recorder: taskRecorderMyRecordings
@@ -51700,7 +51700,7 @@ abstract class AppLocalizations {
   /// #1865 task recorder: taskRecorderStepCount
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 step} other{{count} steps}}'**
+  /// **'{count, plural, one{1 step} other{{count} steps}}'**
   String taskRecorderStepCount(int count);
 
   /// #1865 task recorder: taskRecorderStepExcluded
@@ -52255,7 +52255,7 @@ abstract class AppLocalizations {
   /// **'The task recorder is turned off in this workspace: guides can be read and edited here, but not followed.'**
   String get taskWizardUnavailable;
 
-  /// #1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).
+  /// #1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: megabytes]
   ///
   /// In en, this message translates to:
   /// **'Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.'**
@@ -53206,7 +53206,7 @@ abstract class AppLocalizations {
   /// #1660 library
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No template shown} =1{1 template shown} other{{count} templates shown}}'**
+  /// **'{count, plural, =0{No template shown} one{1 template shown} other{{count} templates shown}}'**
   String templateResultCount(int count);
 
   /// #1657 template_validators
@@ -53236,13 +53236,13 @@ abstract class AppLocalizations {
   /// #1658 template_widen
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}'**
+  /// **'{count, plural, one{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}'**
   String templateWidenCount(int count);
 
   /// #1658 template_widen
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}'**
+  /// **'{count, plural, one{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}'**
   String templateWidenExcluded(int count);
 
   /// #1658 template_widen
@@ -54046,7 +54046,7 @@ abstract class AppLocalizations {
   /// #2590 usage preparation
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}'**
+  /// **'{count, plural, one{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}'**
   String usagePrepareBanner(int count);
 
   /// #2590 usage preparation
@@ -54055,7 +54055,7 @@ abstract class AppLocalizations {
   /// **'It was not recorded. Try again, or ask someone who manages the workspace.'**
   String get usagePrepareRefused;
 
-  /// #2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// #2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Recorded: {count}'**
@@ -54154,13 +54154,13 @@ abstract class AppLocalizations {
   /// Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).
   ///
   /// In en, this message translates to:
-  /// **'{updates, plural, =1{1 new update} other{{updates} new updates}} · {pending, plural, =1{1 awaiting your decision} other{{pending} awaiting your decision}}'**
+  /// **'{updates, plural, one{1 new update} other{{updates} new updates}} · {pending, plural, one{1 awaiting your decision} other{{pending} awaiting your decision}}'**
   String uxAttentionSummary(int updates, int pending);
 
   /// Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}'**
+  /// **'{count, plural, =0{No half-days left in your allowance this month} one{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}'**
   String uxBookingAllowanceLeft(int count);
 
   /// Shown as the text in booking review summary (reservations).
@@ -54634,7 +54634,7 @@ abstract class AppLocalizations {
   /// #1221 the middle step: who decides and how many are needed
   ///
   /// In en, this message translates to:
-  /// **'{who} — {count, plural, =1{any 1} other{any {count}}}'**
+  /// **'{who} — {count, plural, one{any 1} other{any {count}}}'**
   String validationStepQuorum(int count, String who);
 
   /// #1221 the validation screen, grouped by the process a rule interrupts
@@ -54643,7 +54643,7 @@ abstract class AppLocalizations {
   /// **'Someone asks'**
   String get validationStepRaised;
 
-  /// #1221 the middle step when the accepts are asked one after another. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
+  /// #1221 the middle step when the accepts are asked one after another. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{who} — {count} in turn'**
@@ -54664,7 +54664,7 @@ abstract class AppLocalizations {
   /// #841 - how many validations the event still owes
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}'**
+  /// **'{count, plural, one{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}'**
   String validationTrailAwaiting(int count);
 
   /// #841 - the trail when nothing has been decided yet
@@ -54673,7 +54673,7 @@ abstract class AppLocalizations {
   /// **'No decision yet.'**
   String get validationTrailNone;
 
-  /// #841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps.
+  /// #841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps. [not a count: order]
   ///
   /// In en, this message translates to:
   /// **'Step {order}'**
@@ -54835,37 +54835,37 @@ abstract class AppLocalizations {
   /// **'Choose a file without problems and say who sent it.'**
   String get valuationInvalid;
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the asset number is not a whole number from 1.'**
   String valuationIssueAsset(int line);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the basis is book or tax.'**
   String valuationIssueBasis(int line);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the number of columns is wrong.'**
   String valuationIssueColumns(int line);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the currency is not a three-letter code.'**
   String valuationIssueCurrency(int line);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: a date is not a real day written YYYY-MM-DD.'**
   String valuationIssueDate(int line);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: this asset already appears in the file.'**
@@ -54883,19 +54883,19 @@ abstract class AppLocalizations {
   /// **'The first line is not the documented header.'**
   String get valuationIssueHeader;
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: {column} is not a whole number of minor units.'**
   String valuationIssueMinor(int line, String column);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: a batch has one basis, one period and one currency.'**
   String valuationIssueMixed(int line);
 
-  /// #2576 accountant valuations. The number is not a count: it is a line number.
+  /// #2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]
   ///
   /// In en, this message translates to:
   /// **'Line {line}: the period ends before it starts.'**
@@ -55012,7 +55012,7 @@ abstract class AppLocalizations {
   /// #2576 accountant valuations
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 row does not balance} other{{count} rows do not balance}}'**
+  /// **'{count, plural, one{1 row does not balance} other{{count} rows do not balance}}'**
   String valuationMismatches(int count);
 
   /// #2576 accountant valuations
@@ -55048,7 +55048,7 @@ abstract class AppLocalizations {
   /// #2576 accountant valuations
   ///
   /// In en, this message translates to:
-  /// **'{basis}, {from} – {to}, {currency}: {count, plural, =1{1 asset} other{{count} assets}}'**
+  /// **'{basis}, {from} – {to}, {currency}: {count, plural, one{1 asset} other{{count} assets}}'**
   String valuationPreview(
     String basis,
     String from,
@@ -55084,7 +55084,7 @@ abstract class AppLocalizations {
   /// #2576 accountant valuations
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 asset} other{{count} assets}}'**
+  /// **'{count, plural, one{1 asset} other{{count} assets}}'**
   String valuationRows(int count);
 
   /// #2576 accountant valuations
@@ -56134,7 +56134,7 @@ abstract class AppLocalizations {
   /// Audience summary for chosen spaces, with how many were chosen.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}'**
+  /// **'{count, plural, one{Members of 1 chosen space} other{Members of {count} chosen spaces}}'**
   String visibilityChosenCount(int count);
 
   /// Audience: members of chosen spaces.
@@ -56686,7 +56686,7 @@ abstract class AppLocalizations {
   /// Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}'**
+  /// **'{count, plural, one{Issue 1 invoice} other{Issue {count} invoices}}'**
   String wizardIssueAll(int count);
 
   /// Shown as a text in wizard steps issue (money), and 1 other place. Placeholders: {name} (String).
@@ -56788,7 +56788,7 @@ abstract class AppLocalizations {
   /// Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}'**
+  /// **'{count, plural, one{Send 1 reminder} other{Send {count} reminders}}'**
   String wizardRemindAll(int count);
 
   /// Shown as a text in wizard steps issue (money).
@@ -56797,7 +56797,7 @@ abstract class AppLocalizations {
   /// **'Overdue by your reminder rules. One tap records every reminder and notifies the members; the letter opens per row.'**
   String get wizardRemindHint;
 
-  /// Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.
+  /// Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]
   ///
   /// In en, this message translates to:
   /// **'reminder {level}'**
@@ -56893,7 +56893,7 @@ abstract class AppLocalizations {
   /// **'Share the PDF'**
   String get wizardSendShare;
 
-  /// Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.
+  /// Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Regroup {count}'**
@@ -57439,7 +57439,7 @@ abstract class AppLocalizations {
   /// **'Danger zone'**
   String get workspaceDangerZone;
 
-  /// Live value label of the desk-opacity slider. The number is not a count: it is a percentage.
+  /// Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]
   ///
   /// In en, this message translates to:
   /// **'Opacity: {percent}%'**
@@ -57781,7 +57781,7 @@ abstract class AppLocalizations {
   /// **'Part of the import was applied before it stopped — check the settings and the floor plan below.'**
   String get workspaceXmlImportPartial;
 
-  /// Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'Accessories: {count}'**
@@ -57790,7 +57790,7 @@ abstract class AppLocalizations {
   /// #916 configuration transfer: workspaceXmlImportPreviewConfiguration
   ///
   /// In en, this message translates to:
-  /// **'Configuration: {settings, plural, =1{1 setting} other{{settings} settings}}, {rows, plural, =1{1 row} other{{rows} rows}} in {tables, plural, =1{1 table} other{{tables} tables}}'**
+  /// **'Configuration: {settings, plural, one{1 setting} other{{settings} settings}}, {rows, plural, one{1 row} other{{rows} rows}} in {tables, plural, one{1 table} other{{tables} tables}}'**
   String workspaceXmlImportPreviewConfiguration(
     int settings,
     int tables,
@@ -57803,7 +57803,7 @@ abstract class AppLocalizations {
   /// **'Configuration: not applied.'**
   String get workspaceXmlImportPreviewConfigurationSkipped;
 
-  /// Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.
+  /// Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: levels, offices, desks, seats]
   ///
   /// In en, this message translates to:
   /// **'Levels: {levels} · Offices: {offices} · Desks: {desks} · Seats: {seats}'**
@@ -57865,7 +57865,7 @@ abstract class AppLocalizations {
   /// #2372 - the Xero sales-invoice CSV export
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}'**
+  /// **'{count, plural, one{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}'**
   String xeroInvoiceCreditNotesLeftOut(int count);
 
   /// #2372 - the Xero sales-invoice CSV export

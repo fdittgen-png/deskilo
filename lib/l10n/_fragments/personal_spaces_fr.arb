@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "mySpacesCount": "{count, plural, =0{Aucun espace} =1{1 espace} other{{count} espaces}}",
+  "mySpacesCount": "{count, plural, =0{Aucun espace} one{1 espace} other{{count} espaces}}",
   "mySpacesHostHere": "Sur ce serveur",
   "mySpacesHostElsewhere": "Sur une autre installation",
   "mySpacesVerified": "Adhésion vérifiée",

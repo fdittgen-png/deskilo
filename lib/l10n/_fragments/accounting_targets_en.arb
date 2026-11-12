@@ -116,7 +116,7 @@
   "@acctConnRevocationUnconfirmed": {
     "description": "#2370 Connection card: the accounting system did not confirm it forgot the revoked connection's token, or cannot be asked; the person removes the app there."
   },
-  "acctConnRevokedBefore": "{count, plural, =1{One earlier connection was revoked} other{{count} earlier connections were revoked}}",
+  "acctConnRevokedBefore": "{count, plural, one{One earlier connection was revoked} other{{count} earlier connections were revoked}}",
   "@acctConnRevokedBefore": {
     "description": "#2370 Connection card: earlier connections of this issuer were revoked.",
     "placeholders": {
@@ -150,7 +150,7 @@
   "@acctConnRefresh": {
     "description": "#2370 Button: ask the system for fresh tokens and show the state."
   },
-  "acctMapsButton": "{count, plural, =0{Mappings} =1{One mapping} other{{count} mappings}}",
+  "acctMapsButton": "{count, plural, =0{Mappings} one{One mapping} other{{count} mappings}}",
   "@acctMapsButton": {
     "description": "#2370 Button: the mappings of a connection, with their number.",
     "placeholders": {
@@ -403,7 +403,7 @@
       }
     }
   },
-  "acctTransferFileMeta": "{when} by {who} · {documents, plural, =1{one document} other{{documents} documents}}",
+  "acctTransferFileMeta": "{when} by {who} · {documents, plural, one{one document} other{{documents} documents}}",
   "@acctTransferFileMeta": {
     "description": "#2370 Transfers list: when, by whom and how many documents.",
     "placeholders": {
@@ -435,7 +435,7 @@
   "@acctTransferClosed": {
     "description": "#2370 Transfers list: the file covers a closed period."
   },
-  "acctTransferDocuments": "{count, plural, =1{One document carried} other{{count} documents carried}}",
+  "acctTransferDocuments": "{count, plural, one{One document carried} other{{count} documents carried}}",
   "@acctTransferDocuments": {
     "description": "#2370 Transfers list: the documents a file is the delivery of.",
     "placeholders": {
@@ -472,7 +472,7 @@
   "@acctDeliveryRemoteDraft": {
     "description": "#2370 Transfers list: the system holds it as a draft, not posted."
   },
-  "acctDeliveryAttempts": "{count, plural, =1{one attempt} other{{count} attempts}}",
+  "acctDeliveryAttempts": "{count, plural, one{one attempt} other{{count} attempts}}",
   "@acctDeliveryAttempts": {
     "description": "#2370 Transfers list: how many sends a delivery took.",
     "placeholders": {
@@ -489,7 +489,7 @@
   "@refusalAccountingValue": {
     "description": "#2370 Refusal (DKA03): the server refused a value of an accounting connection (token, key, issuer, file)."
   },
-  "acctJournalLogged": "{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged",
+  "acctJournalLogged": "{logged, plural, =0{No new document logged} one{One document logged} other{{logged} documents logged}}, {unchanged, plural, one{{unchanged} unchanged} other{{unchanged} unchanged}}",
   "@acctJournalLogged": {
     "description": "#2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.",
     "placeholders": {

@@ -59,7 +59,7 @@
   "@setupApprovalsOwnRulesNone": {
     "description": "#2871 setup run steps: setupApprovalsOwnRulesNone"
   },
-  "setupApprovalsOwnRulesShort": "{count, plural, =1{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}",
+  "setupApprovalsOwnRulesShort": "{count, plural, one{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}",
   "@setupApprovalsOwnRulesShort": {
     "description": "#2871 setup run steps: setupApprovalsOwnRulesShort",
     "placeholders": {
@@ -68,7 +68,7 @@
       }
     }
   },
-  "setupApprovalsRuleReach": "{required, plural, =1{1 approval} other{{required} approvals}}, {people, plural, =1{1 person can approve} other{{people} people can approve}}",
+  "setupApprovalsRuleReach": "{required, plural, one{1 approval} other{{required} approvals}}, {people, plural, one{1 person can approve} other{{people} people can approve}}",
   "@setupApprovalsRuleReach": {
     "description": "#2871 setup run steps: setupApprovalsRuleReach",
     "placeholders": {
@@ -80,7 +80,7 @@
       }
     }
   },
-  "setupApprovalsRuleShort": "{required, plural, =1{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} =1{only 1 person can approve} other{only {people} people can approve}}",
+  "setupApprovalsRuleShort": "{required, plural, one{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} one{only 1 person can approve} other{only {people} people can approve}}",
   "@setupApprovalsRuleShort": {
     "description": "#2871 setup run steps: setupApprovalsRuleShort",
     "placeholders": {

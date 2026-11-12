@@ -15,7 +15,7 @@
   "availabilityGranularity30": "30-Minuten-Slots",
   "availabilityGranularity60": "1-Stunden-Slots",
   "availabilityGranularityFullDay": "Nur ganze Tage",
-  "planSlotError": "Buchungen müssen im {minutes, plural, =1{1-Minuten-Raster} other{{minutes}-Minuten-Raster}} beginnen und enden.",
+  "planSlotError": "Buchungen müssen im {minutes, plural, one{1-Minuten-Raster} other{{minutes}-Minuten-Raster}} beginnen und enden.",
   "planFullDayError": "Buchungen umfassen hier den ganzen Tag.",
   "availabilityGranularityHours": "Echte Uhrzeiten (exakt von–bis, Halb-/Ganztage als Schnellwahl)",
   "availabilityWorkHoursTitle": "Arbeitszeiten",
@@ -75,7 +75,7 @@
   "@policyDurationConflict": {
     "description": "#649 - error when the minimum duration exceeds the maximum"
   },
-  "policyDaysValue": "{count, plural, =1{1 Tag} other{{count} Tage}}",
+  "policyDaysValue": "{count, plural, one{1 Tag} other{{count} Tage}}",
   "@policyDaysValue": {
     "description": "#649 - a day count shown beside the horizon slider",
     "placeholders": {
@@ -84,7 +84,7 @@
       }
     }
   },
-  "policyMinutesValue": "{count, plural, =1{1 Minute} other{{count} Minuten}}",
+  "policyMinutesValue": "{count, plural, one{1 Minute} other{{count} Minuten}}",
   "@policyMinutesValue": {
     "description": "#649 - a minute count shown beside a duration control",
     "placeholders": {
@@ -93,7 +93,7 @@
       }
     }
   },
-  "policyHoursValue": "{count, plural, =1{1 Stunde} other{{count} Stunden}}",
+  "policyHoursValue": "{count, plural, one{1 Stunde} other{{count} Stunden}}",
   "@policyHoursValue": {
     "description": "#649 - an hour count shown beside a duration control",
     "placeholders": {
