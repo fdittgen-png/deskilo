@@ -62,7 +62,7 @@ Future<List<Invoice>> _invoices() async {
   return money.invoices;
 }
 
-Finder _row(Invoice i) => find.byKey(ValueKey('invoice-register-${i.id}'));
+Finder _row(Invoice i) => find.byKey(ValueKey('records-row-${i.id}'));
 
 Future<ReadProbe<List<Invoice>>> _pump(
   WidgetTester tester, {

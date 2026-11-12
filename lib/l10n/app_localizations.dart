@@ -24915,11 +24915,41 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get invoiceRegisterAmount;
 
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get invoiceRegisterCurrency;
+
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}'**
+  String invoiceRegisterDownloadSelected(int count);
+
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'Fingerprint'**
+  String get invoiceRegisterIntegrity;
+
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get invoiceRegisterMember;
+
   /// Register column header: the member for an issuer, the invoice number for a member
   ///
   /// In en, this message translates to:
   /// **'Name'**
   String get invoiceRegisterName;
+
+  /// #3606 the register's download of a selection (CSV)
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get invoiceRegisterNumber;
 
   /// Register filter chip: the days the register is narrowed to by a drill-through
   ///
@@ -24932,6 +24962,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show all periods'**
   String get invoiceRegisterPeriodClear;
+
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get invoiceRegisterPeriodColumn;
+
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get invoiceRegisterStatus;
 
   /// Screen title of the sortable invoice register (0072)
   ///
@@ -39374,6 +39416,36 @@ abstract class AppLocalizations {
   /// **'Not while filming mode is on: this form is showing an invented person, and saving it would write that over somebody\'s real details. Switch filming mode off first.'**
   String get recordingPrivacyWriteRefused;
 
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the selection'**
+  String get recordsClearSelection;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Columns'**
+  String get recordsColumns;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}'**
+  String recordsDropped(int count);
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'The list could not be read.'**
+  String get recordsFailed;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get recordsFilter;
+
   /// #2375 the accounting settings: a German space whose installation declares no country
   ///
   /// In en, this message translates to:
@@ -39427,6 +39499,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not declared by the operator of this installation: the app states no location'**
   String get recordsLocationUndeclared;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'More actions'**
+  String get recordsMoreActions;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}'**
+  String recordsPartlyRead(int loaded);
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Select this row'**
+  String get recordsSelectRow;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}'**
+  String recordsSelectShown(int count);
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 selected} other{{count} selected}}'**
+  String recordsSelected(int count);
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 shown} other{{count} shown}}'**
+  String recordsShown(int count);
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Sort by {column}'**
+  String recordsSortBy(String column);
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Total of the selection'**
+  String get recordsTotalOfSelection;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Total of the rows shown'**
+  String get recordsTotalOfShown;
+
+  /// #3606 records table
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get recordsTryAgain;
 
   /// Shown as the text in note record choices (workspace), and 1 other place.
   ///

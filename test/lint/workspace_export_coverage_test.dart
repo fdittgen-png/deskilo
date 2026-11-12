@@ -227,6 +227,9 @@ const Map<String, String> _notExported = {
   'provider_settlement_costs':
       '#3504 -- the costs a payment provider kept in a settlement, as it reported them: '
           'the provider issues and keeps them; the payout they belong to is a provider_payouts row',
+  'provider_settlement_polls':
+      '#3510 -- the settlement schedule\'s own state (where a read continues, its lease, '
+          'failures and next attempt): operating state of a job, nothing a business owns or exports',
   'provider_settlement_reviews':
       '#3510 -- settlement reports of a payment provider that the recorder refused and '
           'kept for review: the provider issues and keeps the reports; nothing of them is booked here',

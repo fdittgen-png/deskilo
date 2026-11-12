@@ -20059,9 +20059,34 @@
   "@invoiceRegisterAmount": {
     "description": "Register column header"
   },
+  "invoiceRegisterCurrency": "Currency",
+  "@invoiceRegisterCurrency": {
+    "description": "#3606 the register's download of a selection (CSV)"
+  },
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}",
+  "@invoiceRegisterDownloadSelected": {
+    "description": "#3606 the register's download of a selection (CSV)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceRegisterIntegrity": "Fingerprint",
+  "@invoiceRegisterIntegrity": {
+    "description": "#3606 the invoice register as a records table"
+  },
+  "invoiceRegisterMember": "Member",
+  "@invoiceRegisterMember": {
+    "description": "#3606 the register's download of a selection (CSV)"
+  },
   "invoiceRegisterName": "Name",
   "@invoiceRegisterName": {
     "description": "Register column header: the member for an issuer, the invoice number for a member"
+  },
+  "invoiceRegisterNumber": "Number",
+  "@invoiceRegisterNumber": {
+    "description": "#3606 the register's download of a selection (CSV)"
   },
   "invoiceRegisterPeriod": "Period: {from} – {to}",
   "@invoiceRegisterPeriod": {
@@ -20078,6 +20103,14 @@
   "invoiceRegisterPeriodClear": "Show all periods",
   "@invoiceRegisterPeriodClear": {
     "description": "Register filter chip: removes the period and shows every invoice"
+  },
+  "invoiceRegisterPeriodColumn": "Period",
+  "@invoiceRegisterPeriodColumn": {
+    "description": "#3606 the invoice register as a records table"
+  },
+  "invoiceRegisterStatus": "Status",
+  "@invoiceRegisterStatus": {
+    "description": "#3606 the invoice register as a records table"
   },
   "invoiceRegisterTitle": "Invoice register",
   "@invoiceRegisterTitle": {
@@ -31766,6 +31799,31 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsClearSelection": "Clear the selection",
+  "@recordsClearSelection": {
+    "description": "#3606 records table"
+  },
+  "recordsColumns": "Columns",
+  "@recordsColumns": {
+    "description": "#3606 records table"
+  },
+  "recordsDropped": "{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
+  "@recordsDropped": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsFailed": "The list could not be read.",
+  "@recordsFailed": {
+    "description": "#3606 records table"
+  },
+  "recordsFilter": "Filter",
+  "@recordsFilter": {
+    "description": "#3606 records table"
+  },
   "recordsLocationAoNotice": "A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.",
   "@recordsLocationAoNotice": {
     "description": "#2375 the accounting settings: a German space whose installation declares no country"
@@ -31811,6 +31869,71 @@
   "recordsLocationUndeclared": "Not declared by the operator of this installation: the app states no location",
   "@recordsLocationUndeclared": {
     "description": "#2378 records location"
+  },
+  "recordsMoreActions": "More actions",
+  "@recordsMoreActions": {
+    "description": "#3606 records table"
+  },
+  "recordsPartlyRead": "{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
+  "@recordsPartlyRead": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSelectRow": "Select this row",
+  "@recordsSelectRow": {
+    "description": "#3606 records table"
+  },
+  "recordsSelectShown": "{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}",
+  "@recordsSelectShown": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSelected": "{count, plural, =1{1 selected} other{{count} selected}}",
+  "@recordsSelected": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsShown": "{count, plural, =1{1 shown} other{{count} shown}}",
+  "@recordsShown": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSortBy": "Sort by {column}",
+  "@recordsSortBy": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsTotalOfSelection": "Total of the selection",
+  "@recordsTotalOfSelection": {
+    "description": "#3606 records table"
+  },
+  "recordsTotalOfShown": "Total of the rows shown",
+  "@recordsTotalOfShown": {
+    "description": "#3606 records table"
+  },
+  "recordsTryAgain": "Try again",
+  "@recordsTryAgain": {
+    "description": "#3606 records table"
   },
   "refFacetPerson": "Person",
   "@refFacetPerson": {

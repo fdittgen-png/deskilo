@@ -54,7 +54,7 @@ Future<FakeMoneyRepository> _pump(
   return money;
 }
 
-Finder _row(String id) => find.byKey(ValueKey('invoice-register-$id'));
+Finder _row(String id) => find.byKey(ValueKey('records-row-$id'));
 const _chip = ValueKey('invoice-register-period');
 const _clear = ValueKey('invoice-register-period-clear');
 
