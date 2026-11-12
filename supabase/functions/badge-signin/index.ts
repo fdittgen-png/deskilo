@@ -24,102 +24,32 @@
 // attacker learns which tags are real. The distinction lives in the
 // attempt log, which nothing outside the service role can read.
 
-import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { callerOf, identifyAnswer, UID_PATTERN } from "./badge_guard.ts";
+import { handle } from "./handler.ts";
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
-const CORS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
-
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...CORS, "Content-Type": "application/json" },
-  });
-}
-
-/// The single refusal. Deliberately says nothing about WHY — see the
-/// header. `locked` is separated only so the client can tell the member
-/// to wait rather than keep trying; it reveals nothing about the tag,
-/// because a lockout is reported for unknown tags too.
-function refused(reason: "refused" | "locked"): Response {
-  return json({ ok: false, reason }, 200);
-}
-
-Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
-  if (req.method !== "POST") return json({ ok: false, reason: "refused" }, 405);
-  // #1614 — a badge sign-in is never asked for with a delegated token.
-  const delegated = refuseDelegated(req, CORS);
-  if (delegated) return delegated;
-
-  let uid: string | undefined;
-  let pin: string | undefined;
-  try {
-    const body = await req.json();
-    uid = typeof body?.uid === "string" ? body.uid.trim() : undefined;
-    pin = typeof body?.pin === "string" ? body.pin.trim() : undefined;
-  } catch (_) {
-    return refused("refused");
-  }
-  // A UID is lowercase hex without separators — the same normalization
-  // register_nfc_badge applies. Reject anything else before it reaches
-  // the database rather than hashing arbitrary input.
-  if (!uid || !UID_PATTERN.test(uid)) return refused("refused");
-  if (pin !== undefined && !/^[0-9]{4,8}$/.test(pin)) return refused("refused");
-
-  const { data, error } = await supabase.rpc("badge_auth_verify", {
-    p_uid: uid,
-    p_pin: pin ?? null,
-    // The source is hashed in the database and only ever counted.
-    p_source: callerOf(req),
-  });
-  if (error) {
-    console.error("badge_auth_verify failed", error.message);
-    return refused("refused");
-  }
-  if (!data?.ok) {
-    return refused(data?.reason === "locked" ? "locked" : "refused");
-  }
-
-  // SCAN — the same answer for every tag: the form asks for the PIN.
-  if (pin === undefined) {
-    return json(identifyAnswer());
-  }
-
-  // AUTHENTICATE — the PIN matched. Turn the verified user into a
-  // one-time link and return only its token hash; the client exchanges
-  // that for a session itself, so no access token is ever assembled here.
-  const { data: userData, error: userError } = await supabase.auth.admin
-    .getUserById(data.user_id);
-  if (userError || !userData?.user?.email) {
-    console.error("no e-mail for verified badge user", userError?.message);
-    return refused("refused");
-  }
-
-  const { data: link, error: linkError } = await supabase.auth.admin
-    .generateLink({
-      type: "magiclink",
-      email: userData.user.email,
-    });
-  if (linkError || !link?.properties?.hashed_token) {
-    console.error("generateLink failed", linkError?.message);
-    return refused("refused");
-  }
-
-  return json({
-    ok: true,
-    step: "authenticate",
-    // Exchanged client-side with verifyOtp({ type: 'email', token_hash }).
-    token_hash: link.properties.hashed_token,
-  });
-});
+Deno.serve((req) =>
+  handle(req, {
+    rpc: (fn, args) => supabase.rpc(fn, args),
+    emailOf: async (userId) => {
+      const { data, error } = await supabase.auth.admin.getUserById(userId);
+      if (error || !data?.user?.email) {
+        console.error("no e-mail for verified badge user", error?.message);
+        return null;
+      }
+      return data.user.email;
+    },
+    tokenFor: async (email) => {
+      const { data, error } = await supabase.auth.admin.generateLink({ type: "magiclink", email });
+      if (error || !data?.properties?.hashed_token) {
+        console.error("generateLink failed", error?.message);
+        return null;
+      }
+      return data.properties.hashed_token;
+    },
+  })
+);
