@@ -32,9 +32,7 @@ class DeskRail extends StatelessWidget {
   final int Function(DrawerEntry) badgeOf;
   final VoidCallback onBackToMe;
 
-  bool _current(DrawerEntry e) =>
-      e.selected ||
-      (e.route != null && (path == e.route || path.startsWith('${e.route}/')));
+  bool _current(DrawerEntry e) => entryIsCurrent(e, path);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,7 @@ class DeskRail extends StatelessWidget {
             for (final e in destinations) item(e),
             const Divider(),
             for (final g in groups)
-              if (!g.isEmpty) _RailGroup(group: g, current: _current),
+              if (!g.isEmpty) _RailGroup(group: g, path: path),
             const Divider(),
             for (final e in account) item(e),
           ],
@@ -138,13 +136,13 @@ class _RailItem extends StatelessWidget {
 /// A group: its icon and title open its entries (and sub-groups) beside
 /// the rail.
 class _RailGroup extends StatelessWidget {
-  const _RailGroup({required this.group, required this.current});
+  const _RailGroup({required this.group, required this.path});
 
   final NavGroup group;
-  final bool Function(DrawerEntry) current;
+  final String path;
 
   bool _active(NavGroup g) =>
-      g.entries.any(current) || g.sub.any(_active);
+      groupIsCurrent(g.id, g.entries, path) || g.sub.any(_active);
 
   List<Widget> _children(NavGroup g) => [
     for (final e in g.entries)

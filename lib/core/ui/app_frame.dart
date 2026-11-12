@@ -40,14 +40,44 @@ bool phoneLandscape(BoxConstraints c) =>
     c.maxWidth > c.maxHeight && c.maxHeight < 520;
 
 class AppFrame extends StatelessWidget {
-  const AppFrame({super.key, required this.child, this.maxWidth = kAppFrameMaxWidth});
+  const AppFrame({
+    super.key,
+    required this.child,
+    this.maxWidth = kAppFrameMaxWidth,
+    this.inside = false,
+  });
   final Widget child;
   final double maxWidth;
 
+  /// #3603 — framing a part of the window (the desk's page area) rather
+  /// than the window: the column is measured against the space given, and
+  /// the page measures that space (or the column), never the window.
+  final bool inside;
+
   @override
   Widget build(BuildContext context) {
+    if (inside) {
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          final media = MediaQuery.of(context);
+          final area = Size(constraints.maxWidth, constraints.maxHeight);
+          if (area.width <= maxWidth) {
+            return MediaQuery(
+              data: media.copyWith(size: area),
+              child: child,
+            );
+          }
+          return _column(context, media.copyWith(size: area));
+        },
+      );
+    }
     final media = MediaQuery.of(context);
     if (media.size.width <= maxWidth) return child;
+    return _column(context, media);
+  }
+
+  /// [child] in a centred column [maxWidth] wide, inside [media]'s area.
+  Widget _column(BuildContext context, MediaQueryData media) {
     final theme = Theme.of(context);
     return ColoredBox(
       color: theme.scaffoldBackgroundColor,

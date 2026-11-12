@@ -42,10 +42,18 @@ enum RouteChrome { desk, kiosk, account, public }
 
 /// One registered route pattern and its class. `:name` matches a segment.
 class RouteRule {
-  const RouteRule(this.pattern, this.kind, [this._chrome]);
+  const RouteRule(this.pattern, this.kind, {this._chrome, this.place});
   final String pattern;
   final RouteClass kind;
   final RouteChrome? _chrome;
+
+  /// #3603 — where this page sits in the business's navigation: the key of
+  /// the entry it is reached from today (`drawer-…`; a tab is
+  /// `drawer-tab-<n>`, n its `ShellBranch`), or the id of a group whose
+  /// entries select themselves (`reporting`). The desk selects that entry
+  /// and names it in the breadcrumb and the window title; every desk route
+  /// declares one (test/lint/desk_places_test.dart).
+  final String? place;
 
   /// The chrome this route is shown in: declared where it differs from
   /// what its class implies (the kiosk's routes), else derived from it.
@@ -102,7 +110,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/p/:id', RouteClass.publicEntry),
   RouteRule('/connections', RouteClass.nativeAccount),
   RouteRule('/account-messages', RouteClass.nativeAccount),
-  RouteRule('/settings/public-page', RouteClass.workspace),
+  RouteRule('/settings/public-page', RouteClass.workspace, place: 'drawer-setup-guide'),
   RouteRule('/auth', RouteClass.publicEntry),
   // #3235 — the demo entry: public, for a signed-in person too.
   RouteRule('/demo', RouteClass.publicEntry),
@@ -125,8 +133,18 @@ const List<RouteRule> routeRules = [
   // device's local diagnostics: no workspace decides them, so they open
   // with zero workspaces and while a membership is pending. The workspace
   // sections inside Settings keep their own permissions and flags.
-  RouteRule('/settings', RouteClass.nativeAccount),
-  RouteRule('/developer', RouteClass.nativeAccount),
+  RouteRule(
+    '/settings',
+    RouteClass.nativeAccount,
+    chrome: RouteChrome.desk,
+    place: 'drawer-settings',
+  ),
+  RouteRule(
+    '/developer',
+    RouteClass.nativeAccount,
+    chrome: RouteChrome.desk,
+    place: 'drawer-settings',
+  ),
   // #2388 — pages opened over another screen (they were Navigator pushes
   // with no path): each has the class of the screen it is opened from.
   RouteRule('/discover/workspace', RouteClass.publicEntry),
@@ -142,8 +160,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/task-recorder/guide', RouteClass.nativeAccount),
   RouteRule('/task-recorder/recording', RouteClass.nativeAccount),
   RouteRule('/task-workbench/storyboard', RouteClass.publicEntry),
-  RouteRule('/money/repartition', RouteClass.workspace),
-  RouteRule('/money/settlement', RouteClass.workspace),
+  RouteRule('/money/repartition', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/settlement', RouteClass.workspace, place: 'drawer-tab-3'),
   RouteRule('/account-activity/history', RouteClass.nativeAccount),
   RouteRule('/help/support-bundle', RouteClass.publicEntry),
   RouteRule('/server/new-instance/first-start', RouteClass.operator),
@@ -152,86 +170,87 @@ const List<RouteRule> routeRules = [
   RouteRule('/mcp/confirm/:id', RouteClass.nativeAccount),
   RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/assistants', RouteClass.nativeAccount),
-  RouteRule('/assistants/connect', RouteClass.workspace),
+  RouteRule('/assistants/connect', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/database/assistant-approvals', RouteClass.nativeAccount),
   RouteRule('/installation/assistants', RouteClass.nativeAccount),
-  RouteRule('/settings/assistants', RouteClass.workspace),
-  RouteRule('/settings/assistant-setup', RouteClass.workspace),
+  RouteRule('/settings/assistants', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/assistant-setup', RouteClass.workspace, place: 'drawer-settings'),
   // #3603 — workspace routes for authorization, the kiosk's own chrome.
-  RouteRule('/kiosk-gate', RouteClass.workspace, RouteChrome.kiosk),
-  RouteRule('/kiosk', RouteClass.workspace, RouteChrome.kiosk),
-  RouteRule('/pending', RouteClass.workspace),
-  RouteRule('/messages', RouteClass.workspace),
-  RouteRule('/calendar', RouteClass.workspace),
-  RouteRule('/directory', RouteClass.workspace),
-  RouteRule('/money', RouteClass.workspace),
-  RouteRule('/reserve', RouteClass.workspace),
-  RouteRule('/formats', RouteClass.workspace),
-  RouteRule('/events', RouteClass.workspace),
-  RouteRule('/plan', RouteClass.workspace),
-  RouteRule('/conversation/:conversationId', RouteClass.workspace),
-  RouteRule('/res/:id', RouteClass.workspace),
-  RouteRule('/space/:kind/:id', RouteClass.workspace),
-  RouteRule('/library', RouteClass.workspace),
-  RouteRule('/workspace-code', RouteClass.workspace),
-  RouteRule('/nfc-config', RouteClass.workspace),
-  RouteRule('/payment-config', RouteClass.workspace),
-  RouteRule('/billing', RouteClass.workspace),
-  RouteRule('/invoices', RouteClass.workspace),
-  RouteRule('/invoice-register', RouteClass.workspace),
-  RouteRule('/einvoice-config', RouteClass.workspace),
-  RouteRule('/documents', RouteClass.workspace),
-  RouteRule('/invoicing/wizard', RouteClass.workspace),
-  RouteRule('/member/:memberId', RouteClass.workspace),
-  RouteRule('/report-editor', RouteClass.workspace),
-  RouteRule('/roles', RouteClass.workspace),
-  RouteRule('/settings/personal-info', RouteClass.workspace),
-  RouteRule('/settings/payment-terms', RouteClass.workspace),
-  RouteRule('/settings/sites', RouteClass.workspace),
-  RouteRule('/money/status', RouteClass.workspace),
-  RouteRule('/money/purchases', RouteClass.workspace),
-  RouteRule('/money/guest-passes', RouteClass.workspace),
-  RouteRule('/money/purchases/approvals', RouteClass.workspace),
-  RouteRule('/money/payments', RouteClass.workspace),
-  RouteRule('/money/suppliers', RouteClass.workspace),
-  RouteRule('/money/purchase-orders', RouteClass.workspace),
-  RouteRule('/suppliers', RouteClass.workspace),
-  RouteRule('/money/sales', RouteClass.workspace),
-  RouteRule('/money/cash', RouteClass.workspace),
-  RouteRule('/money/accounting', RouteClass.workspace),
-  RouteRule('/money/repartition-wizard', RouteClass.workspace),
-  RouteRule('/settings/wording', RouteClass.workspace),
-  RouteRule('/settings/colours', RouteClass.workspace),
-  RouteRule('/settings/roles-of-this-space', RouteClass.workspace),
-  RouteRule('/settings/what-you-can-do', RouteClass.workspace),
-  RouteRule('/settings/questions', RouteClass.workspace),
-  RouteRule('/attention', RouteClass.workspace),
-  RouteRule('/reservations/period', RouteClass.workspace),
-  RouteRule('/workspace-overview', RouteClass.workspace),
-  RouteRule('/setup', RouteClass.workspace),
-  RouteRule('/setup/levels', RouteClass.workspace),
-  RouteRule('/setup/launch', RouteClass.workspace),
-  RouteRule('/setup/step/:id', RouteClass.workspace),
-  RouteRule('/settings/number-sequences', RouteClass.workspace),
-  RouteRule('/members/managed', RouteClass.workspace),
-  RouteRule('/members/privacy', RouteClass.workspace),
-  RouteRule('/payment-methods', RouteClass.workspace),
-  RouteRule('/legal-identity', RouteClass.workspace),
-  RouteRule('/deployment', RouteClass.workspace),
-  RouteRule('/vat-declarations', RouteClass.workspace),
-  RouteRule('/vat', RouteClass.workspace),
-  RouteRule('/services', RouteClass.workspace),
-  RouteRule('/accessories', RouteClass.workspace),
-  RouteRule('/features', RouteClass.workspace),
-  RouteRule('/workspace-settings', RouteClass.workspace),
-  RouteRule('/reports', RouteClass.workspace),
-  RouteRule('/validation', RouteClass.workspace),
-  RouteRule('/availability', RouteClass.workspace),
-  RouteRule('/bi', RouteClass.workspace), // #1923
-  RouteRule('/bi/report/:id', RouteClass.workspace), // #2580
-  RouteRule('/members', RouteClass.workspace),
-  RouteRule('/editor', RouteClass.workspace),
-  RouteRule('/editor/level/:levelId', RouteClass.workspace),
+  RouteRule('/kiosk-gate', RouteClass.workspace, chrome: RouteChrome.kiosk),
+  RouteRule('/kiosk', RouteClass.workspace, chrome: RouteChrome.kiosk),
+  // A membership still pending reaches no destination: no desk.
+  RouteRule('/pending', RouteClass.workspace, chrome: RouteChrome.account),
+  RouteRule('/messages', RouteClass.workspace, place: 'drawer-tab-0'),
+  RouteRule('/calendar', RouteClass.workspace, place: 'drawer-tab-1'),
+  RouteRule('/directory', RouteClass.workspace, place: 'drawer-tab-2'),
+  RouteRule('/money', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/reserve', RouteClass.workspace, place: 'drawer-reserve'),
+  RouteRule('/formats', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/events', RouteClass.workspace, place: 'drawer-events'),
+  RouteRule('/plan', RouteClass.workspace, place: 'drawer-reserve'),
+  RouteRule('/conversation/:conversationId', RouteClass.workspace, place: 'drawer-tab-0'),
+  RouteRule('/res/:id', RouteClass.workspace, place: 'drawer-tab-1'),
+  RouteRule('/space/:kind/:id', RouteClass.workspace, place: 'drawer-reserve'),
+  RouteRule('/library', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/workspace-code', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/nfc-config', RouteClass.workspace, place: 'drawer-nfc-config'),
+  RouteRule('/payment-config', RouteClass.workspace, place: 'drawer-payment-config'),
+  RouteRule('/billing', RouteClass.workspace, place: 'drawer-billing'),
+  RouteRule('/invoices', RouteClass.workspace, place: 'drawer-invoices'),
+  RouteRule('/invoice-register', RouteClass.workspace, place: 'drawer-accounting-export'),
+  RouteRule('/einvoice-config', RouteClass.workspace, place: 'drawer-legal-identity'),
+  RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents'),
+  RouteRule('/invoicing/wizard', RouteClass.workspace, place: 'drawer-invoices'),
+  RouteRule('/member/:memberId', RouteClass.workspace, place: 'drawer-members'),
+  RouteRule('/report-editor', RouteClass.workspace, place: 'drawer-reports-templates'),
+  RouteRule('/roles', RouteClass.workspace, place: 'drawer-roles'),
+  RouteRule('/settings/personal-info', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases'),
+  RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals'),
+  RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
+  RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders'),
+  RouteRule('/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
+  RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-sales'),
+  RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash'),
+  RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting'),
+  RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-3'),
+  RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/roles-of-this-space', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/what-you-can-do', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/settings/questions', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/attention', RouteClass.workspace, place: 'drawer-events'),
+  RouteRule('/reservations/period', RouteClass.workspace, place: 'drawer-bi'),
+  RouteRule('/workspace-overview', RouteClass.workspace, place: 'drawer-nav-overview'),
+  RouteRule('/setup', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/setup/levels', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/setup/launch', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/setup/step/:id', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/settings/number-sequences', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/members/managed', RouteClass.workspace, place: 'drawer-members'),
+  RouteRule('/members/privacy', RouteClass.workspace, place: 'drawer-members'),
+  RouteRule('/payment-methods', RouteClass.workspace, place: 'drawer-payment-methods'),
+  RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity'),
+  RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations'),
+  RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat'),
+  RouteRule('/services', RouteClass.workspace, place: 'drawer-services'),
+  RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories'),
+  RouteRule('/features', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/workspace-settings', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/reports', RouteClass.workspace, place: 'reporting'),
+  RouteRule('/validation', RouteClass.workspace, place: 'drawer-settings'),
+  RouteRule('/availability', RouteClass.workspace, place: 'drawer-availability'),
+  RouteRule('/bi', RouteClass.workspace, place: 'drawer-bi'), // #1923
+  RouteRule('/bi/report/:id', RouteClass.workspace, place: 'drawer-bi'), // #2580
+  RouteRule('/members', RouteClass.workspace, place: 'drawer-members'),
+  RouteRule('/editor', RouteClass.workspace, place: 'drawer-setup-guide'),
+  RouteRule('/editor/level/:levelId', RouteClass.workspace, place: 'drawer-setup-guide'),
 ];
 
 /// Account routes whose content is the workspace's own sections: they open
@@ -250,6 +269,9 @@ RouteRule? matchRoute(String path) {
 /// The chrome [path] (no query) is shown in; an unknown path is public.
 RouteChrome chromeOf(String path) =>
     matchRoute(path)?.chrome ?? RouteChrome.public;
+
+/// #3603 — the place [path] (no query) declares, or null.
+String? placeOf(String path) => matchRoute(path)?.place;
 
 /// The class of [path] (no query), or [RouteClass.unknown].
 RouteClass classifyRoute(String path) =>

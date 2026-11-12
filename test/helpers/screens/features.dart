@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../mock_providers.dart';
+import '../navigation.dart' show pageScrollable;
 import '../settings_sections.dart';
 
 Future<FakeWorkspaceRepository> pumpSettings(
@@ -63,7 +64,11 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // list, so on a short viewport it is simply not built and the tap
   // finds nothing. Tall viewports hid that for as long as this helper
   // has existed.
-  await tester.scrollUntilVisible(find.byIcon(Icons.toggle_on_outlined), 200);
+  await tester.scrollUntilVisible(
+    find.byIcon(Icons.toggle_on_outlined),
+    200,
+    scrollable: pageScrollable(),
+  );
   await tester.ensureVisible(find.byIcon(Icons.toggle_on_outlined));
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.toggle_on_outlined));

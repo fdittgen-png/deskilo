@@ -14,13 +14,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/ui/adaptive/window_class.dart';
+import '../../core/ui/app_frame.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
 import 'desk_navigation.dart';
 
 /// Whether [context]'s window shows the desk: the expanded class or wider,
 /// at a text size the sidebar still holds on one line.
-bool showsDesk(BuildContext context) =>
+bool _showsDesk(BuildContext context) =>
     WindowClass.of(context).atLeast(WindowClass.expanded) &&
     MediaQuery.textScalerOf(context).scale(100) <= kWideNavigationMaxTextScale;
+
+/// Whether the desk is shown around [path] in [context]'s window: a route
+/// shown on the desk, a window that holds it, and for the account's
+/// settings ([workspaceChromeAccountRoutes]) a business selected.
+bool deskShownAt(
+  BuildContext context,
+  String path, {
+  required bool inBusiness,
+}) =>
+    chromeOf(path) == RouteChrome.desk &&
+    _showsDesk(context) &&
+    (!workspaceChromeAccountRoutes.contains(path) || inBusiness);
 
 /// The desk around one page.
 class DeskScaffold extends ConsumerWidget {
@@ -30,8 +45,22 @@ class DeskScaffold extends ConsumerWidget {
     required this.body,
     this.actions = const [],
     this.search,
+    this.place,
+    this.path = '',
+    this.scrim,
     super.key,
   });
+
+  /// The page's address: its reading column (app_frame.dart).
+  final String path;
+
+  /// While a window (a dialog, a sheet) is open over the page: its scrim,
+  /// under which the navigation and the top bar rest, taking no input.
+  final Color? scrim;
+
+  /// The label of the place on screen, for the window's (or the browser
+  /// tab's) title: "place — business".
+  final String? place;
 
   /// The business's navigation: the rail when [rail], else the sidebar.
   final Widget Function({required bool rail}) navigation;
@@ -58,56 +87,111 @@ class DeskScaffold extends ConsumerWidget {
     final large = WindowClass.of(context).atLeast(WindowClass.large);
     final collapsed = ref.watch(deskRailCollapsedProvider).value ?? false;
     final rail = !large || collapsed;
-    return Scaffold(
-      body: FocusTraversalGroup(
-        policy: OrderedTraversalPolicy(),
-        child: Row(
-          children: [
-            FocusTraversalOrder(
-              order: const NumericFocusOrder(1),
-              child: FocusTraversalGroup(
-                child: SizedBox(
-                  key: const ValueKey('desk-navigation'),
-                  width: rail ? railWidth : sidebarWidth,
-                  child: Column(
-                    children: [
-                      Expanded(child: navigation(rail: rail)),
-                      if (large) _NavigationToggle(collapsed: collapsed),
-                    ],
+    // #3603 — the window names the place and the business; with no
+    // business selected, the app alone.
+    final business = ref.watch(currentWorkspaceProvider).value?.name;
+    return Title(
+      title: business == null
+          ? context.l10n.appTitle
+          : place == null
+          ? business
+          : '$place — $business',
+      color: Theme.of(context).colorScheme.primary,
+      child: Scaffold(
+        body: FocusTraversalGroup(
+          policy: OrderedTraversalPolicy(),
+          child: Row(
+            children: [
+              FocusTraversalOrder(
+                order: const NumericFocusOrder(1),
+                child: FocusTraversalGroup(
+                  child: _Chrome(
+                    scrim: scrim,
+                    child: SizedBox(
+                      key: const ValueKey('desk-navigation'),
+                      width: rail ? railWidth : sidebarWidth,
+                      child: Column(
+                        children: [
+                          Expanded(child: navigation(rail: rail)),
+                          if (large) _NavigationToggle(collapsed: collapsed),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const VerticalDivider(width: 1),
-            Expanded(
-              child: Column(
-                children: [
-                  FocusTraversalOrder(
-                    order: const NumericFocusOrder(2),
-                    child: FocusTraversalGroup(
-                      child: AppBar(
-                        key: const ValueKey('desk-top-bar'),
-                        automaticallyImplyLeading: false,
-                        title: title,
-                        actions: [?search, ...actions],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: FocusTraversalOrder(
-                      order: const NumericFocusOrder(3),
+              const VerticalDivider(width: 1),
+              Expanded(
+                child: Column(
+                  children: [
+                    FocusTraversalOrder(
+                      order: const NumericFocusOrder(2),
                       child: FocusTraversalGroup(
-                        // The page's semantics must not hide the navigation.
-                        child: Semantics(container: true, child: body),
+                        child: _Chrome(
+                          scrim: scrim,
+                          child: AppBar(
+                            key: const ValueKey('desk-top-bar'),
+                            automaticallyImplyLeading: false,
+                            title: title,
+                            actions: [?search, ...actions],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: FocusTraversalOrder(
+                        order: const NumericFocusOrder(3),
+                        child: FocusTraversalGroup(
+                          // The page's semantics must not hide the navigation.
+                          child: Semantics(
+                            container: true,
+                            // #3603 — the window is the desk's; the reading
+                            // column (or a canvas's wider one) is the page's,
+                            // and the windows opened over it stay within it.
+                            child: AppFrame(
+                              key: const ValueKey('desk-page'),
+                              inside: true,
+                              maxWidth: frameWidthFor(path),
+                              child: body,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+/// The desk's own controls, resting under [scrim] while a window is open
+/// over the page: no pointer, no key, the same shade as the page's.
+class _Chrome extends StatelessWidget {
+  const _Chrome({required this.scrim, required this.child});
+
+  final Color? scrim;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final shade = scrim;
+    final resting = shade != null;
+    return Stack(
+      children: [
+        IgnorePointer(
+          ignoring: resting,
+          child: ExcludeFocus(excluding: resting, child: child),
+        ),
+        if (shade != null)
+          Positioned.fill(
+            child: ColoredBox(key: const ValueKey('desk-scrim'), color: shade),
+          ),
+      ],
     );
   }
 }

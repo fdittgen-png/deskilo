@@ -108,7 +108,14 @@ void main() {
           .go('/money/purchases/approvals');
       await tester.pumpAndSettle();
       expect(find.byType(PurchaseApprovalsScreen), findsOneWidget);
-      expect(find.text('Supplier bills to approve'), findsOneWidget);
+      // The screen's own title (#3603: the desk's top bar names it too).
+      expect(
+        find.descendant(
+          of: find.byType(PurchaseApprovalsScreen),
+          matching: find.text('Supplier bills to approve'),
+        ),
+        findsOneWidget,
+      );
       final container = ProviderScope.containerOf(
         tester.element(find.byType(PurchaseApprovalsScreen)),
       );

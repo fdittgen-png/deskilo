@@ -12,7 +12,6 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/money/presentation/widgets/invoice_form_sheet.dart';
 import '../../features/workspace/providers/conversation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../route_classes.dart';
 import 'desk_scaffold.dart';
 import 'shell_app_bar.dart';
 import 'shell_bar_visibility.dart';
@@ -99,17 +98,11 @@ class ShellScreen extends ConsumerWidget {
     final actions = shellBarActions(context, ref,
         currentIndex: navigationShell.currentIndex);
     // #3603 — from the expanded window class, the desk, on every platform.
-    if (chromeOf(path) == RouteChrome.desk && showsDesk(context)) {
-      return DeskScaffold(
-        navigation: ({required rail}) =>
-            navigation(permanent: true, rail: rail),
-        title: KeyedSubtree(
-          key: const ValueKey('desk-title'),
-          child: SpaceChip(tabTitle: tabTitle),
-        ),
-        actions: actions,
-        body: page,
-      );
+    // #3603 — from the expanded window class the desk is drawn around the
+    // whole app (desk_frame.dart): the tab is only its page, on the
+    // scaffold a tab page always had.
+    if (deskShownAt(context, path, inBusiness: true)) {
+      return Scaffold(body: page);
     }
     final barHidden = ref.watch(shellBarHiddenProvider).value ?? false;
     return Scaffold(

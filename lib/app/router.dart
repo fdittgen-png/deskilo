@@ -35,6 +35,7 @@ import 'routes/profile_routes.dart';
 import 'routes/reservations_routes.dart';
 import 'routes/task_recorder_routes.dart';
 import 'routes/workspace_routes.dart';
+import 'shell/desk_frame.dart' show deskModalObserverProvider;
 import 'shell/shell_routes.dart';
 
 export 'shell/shell_destinations.dart' show ShellBranch;
@@ -94,7 +95,9 @@ GoRouter router(Ref ref) {
     overridePlatformDefaultLocation: recoverDemo,
     // #2142 — tells a live task recording that a window opened or
     // closed; does nothing while none is live.
-    observers: [RecorderWindowObserver()],
+    // #3603 — and the desk, which rests its navigation while a window
+    // is open over the page.
+    observers: [RecorderWindowObserver(), ref.read(deskModalObserverProvider)],
     // #1650 — the rules live in route_policy.dart as a pure function over
     // facts; this closure only collects the facts and asks. Building them
     // reads; nothing here writes.

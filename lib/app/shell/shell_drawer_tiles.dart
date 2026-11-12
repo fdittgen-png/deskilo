@@ -8,9 +8,6 @@ import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
 import 'shell_drawer_entries.dart';
 
-bool _isCurrent(DrawerEntry e, String path) =>
-    e.selected || path == e.route || path.startsWith('${e.route}/');
-
 /// One destination. #2313 — one line per entry: a label that wraps onto
 /// three lines in a sidebar reads as fragments; it is cut with an ellipsis
 /// instead and the tooltip-free full name stays in the semantics label.
@@ -42,10 +39,7 @@ class DrawerTile extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       horizontalTitleGap: AppSpacing.md,
       minLeadingWidth: 24,
-      selected:
-          e.selected ||
-          (e.route != null &&
-              (path == e.route || path.startsWith('${e.route}/'))),
+      selected: entryIsCurrent(e, path),
       shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       selectedTileColor: Theme.of(context).colorScheme.secondaryContainer,
       selectedColor: Theme.of(context).colorScheme.onSecondaryContainer,
@@ -68,8 +62,13 @@ class DrawerGroup extends StatelessWidget {
     required this.path,
     required this.tile,
     this.after = const [],
+    this.active,
     super.key,
   });
+
+  /// Whether the group is where the person is; by default, one of [entries]
+  /// is current.
+  final bool? active;
 
   /// Widgets after the entries: a sub-group of the group.
   final List<Widget> after;
@@ -83,7 +82,7 @@ class DrawerGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final active = entries.any((e) => _isCurrent(e, path));
+    final active = this.active ?? groupIsCurrent(id, entries, path);
     if (entries.isEmpty && after.isEmpty) return const SizedBox.shrink();
     return ExpansionTile(
       key: PageStorageKey('drawer-group-$id-$active'),

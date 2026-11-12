@@ -3,10 +3,14 @@
 // #3587 R1-d -- the desk layout as the real app draws it. Every route sits
 // in the app's frame (AppFrame), which narrows the screen and rewrites the
 // window size; a screen pumped on its own never sees that. Here /invoices
-// is reached through the app itself at a 1440 x 900 window: the frame gives
-// it the wide width, the customer table shows, and an invoice opens in the
-// panel BESIDE the list, which keeps its table.
+// is reached through the app itself: the frame gives it the wide width, the
+// customer table shows, and an invoice opens in the panel BESIDE the list,
+// which keeps its table. #3603 — beside the desk's navigation the page has
+// that width at 1920, and at 1440 with the navigation narrowed to the rail;
+// at 1440 with the sidebar open (1167 px) it opens over the list until
+// #3773.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,9 +20,10 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 void main() {
-  testWidgets('at 1440 x 900 an invoice opens beside the list, whose table '
-      'stays', (tester) async {
-    tester.view.physicalSize = const Size(1440, 900);
+  for (final (width, rail) in [(1920.0, false), (1440.0, true)]) {
+  testWidgets('at ${width.toInt()} x 900${rail ? ' on the rail' : ''} an '
+      'invoice opens beside the list, whose table stays', (tester) async {
+    tester.view.physicalSize = Size(width, 900);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final money = FakeMoneyRepository();
@@ -29,7 +34,10 @@ void main() {
     );
     await tester.pumpWidget(
       ProviderScope(
-        overrides: standardTestOverrides(money: money),
+        overrides: standardTestOverrides(
+          money: money,
+          deskRailCollapsed: InMemoryShellFlagStore(value: rail),
+        ),
         child: const DeskiloApp(),
       ),
     );
@@ -62,4 +70,5 @@ void main() {
     // Beside the panel, the list is still a table.
     expect(find.text('INVOICE'), findsWidgets);
   });
+  }
 }

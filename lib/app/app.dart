@@ -21,6 +21,8 @@ import 'active_tax_reference.dart';
 import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
 import 'router.dart';
+import 'shell/desk_frame.dart';
+import 'shell/desk_scaffold.dart';
 import 'shell/layer_chrome.dart';
 import 'switcher_cover_host.dart';
 import 'theme.dart';
@@ -124,15 +126,27 @@ class DeskiloApp extends ConsumerWidget {
               animations: animations,
               child: BootSplash(child: SystemInsetsGuard(child: ListenableBuilder(
                 listenable: router.routeInformationProvider,
-                builder: (context, _) => AppFrame(
-                  maxWidth: frameWidthFor(
-                    router.routeInformationProvider.value.uri.path,
-                  ),
-                  // #2869 — the way back to the setup guide.
-                  child: SetupReturnBar(
-                    router: router,
-                    child: child ?? const SizedBox.shrink(),
-                  ),
+                builder: (context, _) => Consumer(
+                  builder: (context, ref, _) {
+                    final path = router.routeInformationProvider.value.uri.path;
+                    // #3603 — on the desk the window is the desk's, drawn
+                    // around the navigator; its page area takes the column
+                    // (desk_frame.dart).
+                    final desk = deskShownAt(
+                      context,
+                      path,
+                      inBusiness:
+                          ref.watch(currentWorkspaceProvider).value != null,
+                    );
+                    // #2869 — the way back to the setup guide.
+                    final page = SetupReturnBar(
+                      router: router,
+                      child: child ?? const SizedBox.shrink(),
+                    );
+                    return desk
+                        ? DeskFrame(router: router, path: path, child: page)
+                        : AppFrame(maxWidth: frameWidthFor(path), child: page);
+                  },
                 ),
               ))),
             ),

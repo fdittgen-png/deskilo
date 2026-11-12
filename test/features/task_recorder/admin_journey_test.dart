@@ -30,6 +30,7 @@ import 'package:go_router/go_router.dart';
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/navigation.dart' show pageScrollable;
 import '../../helpers/screens/validation_settings.dart' show admin;
 import 'fixtures/recording_fixtures.dart';
 
@@ -97,7 +98,7 @@ Future<void> _tapPermission(WidgetTester tester, String key) async {
   await tester.scrollUntilVisible(
     tile,
     300,
-    scrollable: find.byType(Scrollable).first,
+    scrollable: pageScrollable(),
   );
   await tester.ensureVisible(tile);
   await tester.pumpAndSettle();
