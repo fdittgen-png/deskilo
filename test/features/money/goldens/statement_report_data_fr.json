@@ -18,7 +18,7 @@
   "has_vat": false,
   "lines": [
     {
-      "label": "Abonnement 50 %",
+      "label": "Abonnement 50%",
       "amount": "€150.00",
       "negative": false
     },

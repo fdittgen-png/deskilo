@@ -82,7 +82,7 @@ class _BillingBandRowState extends State<BillingBandRow> {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          SizedBox(width: 72, child: Text(l10n.billingBandFrom(widget.from))),
+          SizedBox(width: 72, child: Text(l10n.billingBandFrom(appFormatOf(context).ratePercent(widget.from)))),
           Expanded(
             child: AppTextField(
               key: ValueKey('billing-band-to-${widget.index}'),

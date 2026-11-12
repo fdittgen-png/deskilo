@@ -2799,24 +2799,24 @@
   "billOutstanding": "Aperto",
   "billOverage": "{extra, plural, one{{extra} mezza giornata extra} other{{extra} mezze giornate extra}}",
   "billPackages": "Pacchetti di giorni",
-  "billParticipation": "Partecipazione {pct} %",
+  "billParticipation": "Partecipazione {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2828,16 +2828,16 @@
   "billServices": "Servizi consumati",
   "billServicesTotal": "Totale servizi",
   "billSettled": "Saldato",
-  "billSubscription": "Abbonamento {pct} %",
-  "billSubscriptionMonth": "Abbonamento {month} {pct} %",
+  "billSubscription": "Abbonamento {pct}",
+  "billSubscriptionMonth": "Abbonamento {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2847,7 +2847,7 @@
   "billingAdvanceDays": "Giorni prima dell’inizio del mese",
   "billingAllowCustom": "Consenti un valore personalizzato concordato",
   "billingBandFee": "Canone mensile",
-  "billingBandFrom": "da {from}%",
+  "billingBandFrom": "da {from}",
   "billingBandOverage": "Eccedenza",
   "billingBandTo": "Fino a %",
   "billingBandsInvalid": "Le fasce devono crescere e terminare al 100%.",
@@ -12567,7 +12567,7 @@
   "moneyStatementSettled": "Saldato",
   "moneySubmitExpense": "Invia una spesa",
   "moneySubmitPayment": "Invia per conferma",
-  "moneySubscriptionPct": "Abbonamento {pct} %",
+  "moneySubscriptionPct": "Abbonamento {pct}",
   "moneyUsage": "{used} su {included, plural, one{1 mezza giornata usata} other{{included} mezze giornate usate}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} mezza giornata usata} other{{used} mezze giornate usate}}",
   "monthFreeCount": "{free}/{total}",
@@ -12692,7 +12692,6 @@
   "negotiationOverage": "Eccedenza per mezza giornata",
   "negotiationPending": "Delle condizioni attendono convalida.",
   "negotiationPendingBadge": "in attesa di convalida",
-  "negotiationPercent": "{value} %",
   "negotiationProposeHint": "Lasci un campo vuoto per mantenere la tariffa. Le condizioni passano dalla convalida prima di applicarsi.",
   "negotiationProposeTitle": "Negoziazione di prezzo",
   "negotiationProposed": "Condizioni proposte — in attesa di convalida.",
@@ -12763,12 +12762,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -13274,7 +13273,6 @@
   "pendingLastChecked": "Ultimo controllo {time}",
   "pendingNotUpdated": "Stato non aggiornato — server non raggiungibile. La sua richiesta resta invariata.",
   "pendingStillWaiting": "Ancora in attesa di approvazione.",
-  "percentValue": "{value}%",
   "periodReservationsEmpty": "Nessuna prenotazione in questi mesi.",
   "periodReservationsFailed": "Non è stato possibile leggere le prenotazioni.",
   "periodReservationsLevel": "Solo su {level}",
@@ -18481,7 +18479,7 @@
   "setupNewMembersNoQuestions": "Nessuna domanda: si aderisce con nome e indirizzo e-mail.",
   "setupNewMembersPreviewJoin": "Quando chiede di aderire, la persona risponde a:",
   "setupNewMembersPreviewNoQuestions": "Chi chiede di aderire indica nome e indirizzo e-mail, nient’altro.",
-  "setupNewMembersPreviewStart": "Un nuovo membro inizia con un abbonamento al {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Un nuovo membro inizia con un abbonamento al {pct} ({policy}).",
   "setupNewMembersQuestions": "Domande poste all’adesione",
   "setupNewMembersSaveFailed": "Non è stato possibile salvare le impostazioni dei nuovi membri. Riprovi.",
   "setupNextIndependent": "Può svolgere questa attività mentre la tappa precedente è in attesa.",
@@ -18549,8 +18547,8 @@
   "setupPresetNameComplet": "Completo",
   "setupPresetNameEssentiel": "Essenziale",
   "setupPresetNameStandard": "Standard",
-  "setupPricingBand": "{from}–{to} %: {fee} al mese, {extra} per mezza giornata in più",
-  "setupPricingLevel": "Abbonamento al {pct} %",
+  "setupPricingBand": "{from}–{to}: {fee} al mese, {extra} per mezza giornata in più",
+  "setupPricingLevel": "Abbonamento al {pct}",
   "setupPricingLevelIncludes": "{level}: {count, plural, one{1 mezza giornata inclusa} other{{count} mezze giornate incluse}}",
   "setupPricingLevelsBasis": "Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte, e una mezza giornata oltre la quota di un membro è addebitata alla tariffa aggiuntiva della sua fascia. Questo mese il suo spazio è aperto {days, plural, one{1 giorno} other{{days} giorni}}:",
   "setupPricingLevelsBasisUnknown": "Un livello è la quota delle mezze giornate in cui il suo spazio è aperto nel mese: 100 % le comprende tutte. Non è stato possibile leggere i suoi giorni di apertura, quindi non viene mostrato alcun esempio.",
@@ -22124,7 +22122,7 @@
   "workspaceCountryLabel": "Paese",
   "workspaceCurrencyLabel": "Valuta",
   "workspaceDangerZone": "Zona pericolosa",
-  "workspaceDeskOpacityValue": "Opacità: {percent}%",
+  "workspaceDeskOpacityValue": "Opacità: {percent}",
   "workspaceDeskTransparencyHelper": "Riduca l'opacità dei tavoli per far trasparire la foto di sfondo del piano.",
   "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
   "workspaceExcelExport": "Esporta i dati (Excel)",

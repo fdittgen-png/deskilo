@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -65,11 +66,13 @@ class BiModuleView {
   )
   notes;
 
-  /// How it is computed.
+  /// How it is computed. It reads the reader's [AppFormat] (locale and
+  /// clock preference), not a bare locale: a time in it follows the
+  /// person's clock.
   final List<String> Function(
     BiMeasure m,
     AppLocalizations l10n,
-    String locale,
+    AppFormat format,
   )
   details;
 
@@ -171,8 +174,8 @@ final biModuleViews = <String, BiModuleView>{
       final k? => capacityKpiNotes(k, l10n, locale),
       null => const [],
     },
-    details: (m, l10n, locale) => switch (_seat(m)) {
-      final k? => capacityKpiDetails(k, l10n, locale),
+    details: (m, l10n, format) => switch (_seat(m)) {
+      final k? => capacityKpiDetails(k, l10n, format),
       null => const [],
     },
   ),
@@ -188,7 +191,7 @@ final biModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _financeNotes(m, l10n, true),
-    details: (m, l10n, locale) => _financeDetails(m, l10n, locale, true),
+    details: (m, l10n, format) => _financeDetails(m, l10n, format.locale, true),
   ),
   'finance.collected': BiModuleView(
     title: (l10n) => l10n.biFinanceCollected,
@@ -199,7 +202,7 @@ final biModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _financeNotes(m, l10n, false),
-    details: (m, l10n, locale) => _financeDetails(m, l10n, locale, false),
+    details: (m, l10n, format) => _financeDetails(m, l10n, format.locale, false),
   ),
   ...purchaseModuleViews,
   ...overviewModuleViews,
@@ -465,7 +468,7 @@ class _Result extends ConsumerWidget {
           tilePadding: EdgeInsets.zero,
           title: Text(l10n.capacityKpiExplain),
           children: [
-            for (final line in view.details(total.current, l10n, locale))
+            for (final line in view.details(total.current, l10n, appFormatOf(context)))
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Padding(

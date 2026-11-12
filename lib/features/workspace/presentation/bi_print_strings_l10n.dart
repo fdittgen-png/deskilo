@@ -7,6 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/app_format.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
@@ -26,16 +28,19 @@ BiPrintStrings biPrintStringsFor(BuildContext context, WidgetRef ref) {
     context.l10n,
     Localizations.localeOf(context).toString(),
     wall: calendar?.wall ?? (at) => at.toUtc(),
+    format: appFormatOf(context),
   );
 }
 
 /// The words and formats of a printout in [locale]; [wall] gives an instant
-/// as the workspace's clock reads it.
+/// as the workspace's clock reads it, and [format] carries the reader's own
+/// clock preference (12-hour in a 24-hour locale reads 12-hour here too).
 @visibleForTesting
 BiPrintStrings biPrintStringsOf(
   AppLocalizations l10n,
   String locale, {
   required DateTime Function(DateTime instant) wall,
+  required AppFormat format,
 }) =>
     BiPrintStrings(
       workspace: l10n.biPrintWorkspace,
@@ -68,8 +73,10 @@ BiPrintStrings biPrintStringsOf(
         number: (n) => NumberFormat.decimalPattern(locale).format(n),
         periodName: (p) => biPeriodLabel(p, l10n, locale),
         metricTitle: (id) => biMetricTitle(l10n, id),
-        dateTime: (at) =>
-            DateFormat.yMMMd(locale).add_jm().format(wall(at)),
+        dateTime: (at) {
+          final w = wall(at);
+          return '${DateFormat.yMMMd(locale).format(w)}, ${format.wallTime(w)}';
+        },
         dateBasis: (b) => _basis(l10n, b),
         coverage: (c) => _coverage(l10n, c),
         filter: (f) =>

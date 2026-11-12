@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/reference_when.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../workspace/domain/member_note_refs.dart';
@@ -35,9 +35,9 @@ String _blockingLabel(
   required String spaceName,
   String? localeName,
 }) {
-  final when = DateFormat.MMMd(
-    localeName,
-  ).add_jm().format(blocking.startsAt.toLocal());
+  // Baked into the message for every participant: the reference language's
+  // convention, not the sender's clock (see `referenceWhen`).
+  final when = referenceWhen(blocking.startsAt, localeName);
   return [name, spaceName, when].where((p) => p.isNotEmpty).join(' · ');
 }
 

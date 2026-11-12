@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../money/providers/money_providers.dart';
@@ -54,7 +55,7 @@ Future<void> pickMemberSubscription(
               for (final level in offered)
                 ChoiceChip(
                   key: ValueKey('member-subscription-action-percent-value-$level'),
-                  label: Text(l10n.percentValue(level)),
+                  label: Text(appFormatOf(context).ratePercent(level)),
                   selected: member.subscriptionPct == level,
                   onSelected: (_) => Navigator.of(context).pop(level),
                 ),

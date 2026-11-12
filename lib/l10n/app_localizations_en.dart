@@ -4641,13 +4641,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billPackages => 'Day packages';
 
   @override
-  String billParticipation(int pct) {
-    return 'Participation $pct%';
+  String billParticipation(String pct) {
+    return 'Participation $pct';
   }
 
   @override
-  String billParticipationMonth(String month, int pct) {
-    return '$month $pct%';
+  String billParticipationMonth(String month, String pct) {
+    return '$month $pct';
   }
 
   @override
@@ -4682,13 +4682,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billSettled => 'Settled';
 
   @override
-  String billSubscription(int pct) {
-    return 'Subscription $pct%';
+  String billSubscription(String pct) {
+    return 'Subscription $pct';
   }
 
   @override
-  String billSubscriptionMonth(String month, int pct) {
-    return 'Subscription $month $pct%';
+  String billSubscriptionMonth(String month, String pct) {
+    return 'Subscription $month $pct';
   }
 
   @override
@@ -4710,8 +4710,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billingBandFee => 'Monthly fee';
 
   @override
-  String billingBandFrom(int from) {
-    return 'from $from%';
+  String billingBandFrom(String from) {
+    return 'from $from';
   }
 
   @override
@@ -20289,8 +20289,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneySubmitPayment => 'Submit for confirmation';
 
   @override
-  String moneySubscriptionPct(int pct) {
-    return 'Subscription $pct%';
+  String moneySubscriptionPct(String pct) {
+    return 'Subscription $pct';
   }
 
   @override
@@ -20661,11 +20661,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get negotiationPendingBadge => 'awaiting validation';
 
   @override
-  String negotiationPercent(int value) {
-    return '$value %';
-  }
-
-  @override
   String get negotiationProposeHint =>
       'Leave a field empty to keep the tariff. The deal goes through validation before it applies.';
 
@@ -20737,8 +20732,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newMemberSubscriptionMore => 'A larger subscription';
 
   @override
-  String newMemberSubscriptionValue(int percent) {
-    return '$percent%';
+  String newMemberSubscriptionValue(String percent) {
+    return '$percent';
   }
 
   @override
@@ -21613,11 +21608,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pendingStillWaiting => 'Still awaiting approval.';
-
-  @override
-  String percentValue(int value) {
-    return '$value%';
-  }
 
   @override
   String get periodReservationsEmpty => 'No booking in these months.';
@@ -29331,8 +29321,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Someone asking to join gives their name and e-mail address, nothing more.';
 
   @override
-  String setupNewMembersPreviewStart(int pct, String policy) {
-    return 'A new member starts on a $pct % subscription ($policy).';
+  String setupNewMembersPreviewStart(String pct, String policy) {
+    return 'A new member starts on a $pct subscription ($policy).';
   }
 
   @override
@@ -29617,13 +29607,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupPresetNameStandard => 'Standard';
 
   @override
-  String setupPricingBand(int from, int to, String fee, String extra) {
-    return '$from–$to %: $fee a month, $extra per extra half-day';
+  String setupPricingBand(String from, String to, String fee, String extra) {
+    return '$from–$to: $fee a month, $extra per extra half-day';
   }
 
   @override
-  String setupPricingLevel(int pct) {
-    return 'Membership at $pct %';
+  String setupPricingLevel(String pct) {
+    return 'Membership at $pct';
   }
 
   @override
@@ -35425,8 +35415,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceDangerZone => 'Danger zone';
 
   @override
-  String workspaceDeskOpacityValue(int percent) {
-    return 'Opacity: $percent%';
+  String workspaceDeskOpacityValue(String percent) {
+    return 'Opacity: $percent';
   }
 
   @override

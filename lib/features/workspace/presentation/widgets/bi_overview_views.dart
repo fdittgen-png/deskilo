@@ -21,11 +21,11 @@ final overviewModuleViews = <String, BiModuleView>{
     notes: (m, l10n, locale) => [
       if (m.reasons.contains('current_state')) l10n.overviewCurrentState,
     ],
-    details: (m, l10n, locale) => [
+    details: (m, l10n, format) => [
       l10n.overviewMembershipsDefinition,
       if (_figure(m) case final f?)
         l10n.biFinanceComputed(
-          DateFormat.yMd(locale).format(WorkspaceTime.wall(f.computedAt)),
+          DateFormat.yMd(format.locale).format(WorkspaceTime.wall(f.computedAt)),
         ),
     ],
   ),
@@ -37,11 +37,11 @@ final overviewModuleViews = <String, BiModuleView>{
     notes: (m, l10n, locale) => [
       if (m.reasons.contains('current_state')) l10n.overviewCurrentState,
     ],
-    details: (m, l10n, locale) => [
+    details: (m, l10n, format) => [
       l10n.overviewPendingActionsDefinition,
       if (_figure(m) case final f?)
         l10n.biFinanceComputed(
-          DateFormat.yMd(locale).format(WorkspaceTime.wall(f.computedAt)),
+          DateFormat.yMd(format.locale).format(WorkspaceTime.wall(f.computedAt)),
         ),
     ],
   ),
@@ -61,11 +61,11 @@ final overviewModuleViews = <String, BiModuleView>{
       if (m.reasons.contains('amount_not_exact')) l10n.biFinanceNotExact,
       if (m.reasons.contains('current_state')) l10n.overviewCurrentState,
     ],
-    details: (m, l10n, locale) => [
+    details: (m, l10n, format) => [
       l10n.overviewOverdueDefinition,
       if (_figure(m) case final f?)
         l10n.biFinanceComputed(
-          DateFormat.yMd(locale).format(WorkspaceTime.wall(f.computedAt)),
+          DateFormat.yMd(format.locale).format(WorkspaceTime.wall(f.computedAt)),
         ),
     ],
   ),

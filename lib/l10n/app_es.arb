@@ -2799,24 +2799,24 @@
   "billOutstanding": "Pendiente",
   "billOverage": "{extra, plural, one{{extra} media jornada extra} other{{extra} medias jornadas extra}}",
   "billPackages": "Paquetes de días",
-  "billParticipation": "Participación {pct} %",
+  "billParticipation": "Participación {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2828,16 +2828,16 @@
   "billServices": "Servicios consumidos",
   "billServicesTotal": "Total de servicios",
   "billSettled": "Al día",
-  "billSubscription": "Suscripción {pct} %",
-  "billSubscriptionMonth": "Suscripción {month} {pct} %",
+  "billSubscription": "Suscripción {pct}",
+  "billSubscriptionMonth": "Suscripción {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2847,7 +2847,7 @@
   "billingAdvanceDays": "Días antes de que empiece el mes",
   "billingAllowCustom": "Permitir un valor personalizado negociado",
   "billingBandFee": "Cuota mensual",
-  "billingBandFrom": "desde {from} %",
+  "billingBandFrom": "desde {from}",
   "billingBandOverage": "Exceso",
   "billingBandTo": "Hasta %",
   "billingBandsInvalid": "Los tramos deben ser crecientes y terminar en 100 %.",
@@ -12567,7 +12567,7 @@
   "moneyStatementSettled": "Al día",
   "moneySubmitExpense": "Enviar un gasto",
   "moneySubmitPayment": "Enviar para confirmación",
-  "moneySubscriptionPct": "Suscripción {pct} %",
+  "moneySubscriptionPct": "Suscripción {pct}",
   "moneyUsage": "{used} de {included, plural, one{1 media jornada usada} other{{included} medias jornadas usadas}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} media jornada usada} other{{used} medias jornadas usadas}}",
   "monthFreeCount": "{free}/{total}",
@@ -12692,7 +12692,6 @@
   "negotiationOverage": "Exceso por medio día",
   "negotiationPending": "Unas condiciones esperan validación.",
   "negotiationPendingBadge": "pendiente de validación",
-  "negotiationPercent": "{value} %",
   "negotiationProposeHint": "Deje un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.",
   "negotiationProposeTitle": "Negociación de precios",
   "negotiationProposed": "Condiciones propuestas — pendientes de validación.",
@@ -12763,12 +12762,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -13274,7 +13273,6 @@
   "pendingLastChecked": "Última comprobación {time}",
   "pendingNotUpdated": "Estado no actualizado — no se pudo contactar con el servidor. Su solicitud no ha cambiado.",
   "pendingStillWaiting": "Sigue pendiente de aprobación.",
-  "percentValue": "{value} %",
   "periodReservationsEmpty": "Ninguna reserva en estos meses.",
   "periodReservationsFailed": "No se pudieron leer las reservas.",
   "periodReservationsLevel": "Solo en {level}",
@@ -18481,7 +18479,7 @@
   "setupNewMembersNoQuestions": "Ninguna pregunta: se une con su nombre y su dirección de correo.",
   "setupNewMembersPreviewJoin": "Al pedir unirse, la persona responde a:",
   "setupNewMembersPreviewNoQuestions": "Quien pide unirse indica su nombre y su dirección de correo, nada más.",
-  "setupNewMembersPreviewStart": "Un nuevo miembro empieza con una suscripción al {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Un nuevo miembro empieza con una suscripción al {pct} ({policy}).",
   "setupNewMembersQuestions": "Preguntas al unirse",
   "setupNewMembersSaveFailed": "No se han podido guardar los valores de los nuevos miembros. Inténtelo de nuevo.",
   "setupNextIndependent": "Puede avanzar en esta tarea mientras el hito anterior está en espera.",
@@ -18549,8 +18547,8 @@
   "setupPresetNameComplet": "Completo",
   "setupPresetNameEssentiel": "Esencial",
   "setupPresetNameStandard": "Estándar",
-  "setupPricingBand": "{from}–{to} %: {fee} al mes, {extra} por media jornada adicional",
-  "setupPricingLevel": "Membresía al {pct} %",
+  "setupPricingBand": "{from}–{to}: {fee} al mes, {extra} por media jornada adicional",
+  "setupPricingLevel": "Membresía al {pct}",
   "setupPricingLevelIncludes": "{level}: {count, plural, one{1 media jornada incluida} other{{count} medias jornadas incluidas}}",
   "setupPricingLevelsBasis": "Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas, y una media jornada más allá de la parte de un miembro se cobra a la tarifa adicional de su tramo. Este mes su espacio abre {days, plural, one{1 día} other{{days} días}}:",
   "setupPricingLevelsBasisUnknown": "Un nivel es la parte de las medias jornadas en que su espacio abre en un mes: 100 % son todas. No se pudieron leer sus días de apertura, así que no se muestra ningún ejemplo.",
@@ -22124,7 +22122,7 @@
   "workspaceCountryLabel": "País",
   "workspaceCurrencyLabel": "Moneda",
   "workspaceDangerZone": "Zona de peligro",
-  "workspaceDeskOpacityValue": "Opacidad: {percent} %",
+  "workspaceDeskOpacityValue": "Opacidad: {percent}",
   "workspaceDeskTransparencyHelper": "Reduce la opacidad de las mesas para que se vea la foto de fondo de la planta.",
   "workspaceDeskTransparencyTitle": "Transparencia de mesas",
   "workspaceExcelExport": "Exportar datos (Excel)",

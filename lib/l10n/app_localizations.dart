@@ -7302,17 +7302,17 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
-  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage. [not a count: pct]
+  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Participation {pct}%'**
-  String billParticipation(int pct);
+  /// **'Participation {pct}'**
+  String billParticipation(String pct);
 
-  /// #1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]
+  /// #1000 the recurring position names its month: billParticipationMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{month} {pct}%'**
-  String billParticipationMonth(String month, int pct);
+  /// **'{month} {pct}'**
+  String billParticipationMonth(String month, String pct);
 
   /// Bill section header for confirmed credits of the period
   ///
@@ -7367,17 +7367,17 @@ abstract class AppLocalizations {
   /// **'Settled'**
   String get billSettled;
 
-  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]
+  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {pct}%'**
-  String billSubscription(int pct);
+  /// **'Subscription {pct}'**
+  String billSubscription(String pct);
 
-  /// #1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]
+  /// #1000 the recurring position names its month: billSubscriptionMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {month} {pct}%'**
-  String billSubscriptionMonth(String month, int pct);
+  /// **'Subscription {month} {pct}'**
+  String billSubscriptionMonth(String month, String pct);
 
   /// Button splitting the last band into two
   ///
@@ -7415,11 +7415,11 @@ abstract class AppLocalizations {
   /// **'Monthly fee'**
   String get billingBandFee;
 
-  /// Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]
+  /// Derived lower boundary of a band row (exclusive). The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'from {from}%'**
-  String billingBandFrom(int from);
+  /// **'from {from}'**
+  String billingBandFrom(String from);
 
   /// Label of a band's price-per-extra-half-day field
   ///
@@ -32798,11 +32798,11 @@ abstract class AppLocalizations {
   /// **'Submit for confirmation'**
   String get moneySubmitPayment;
 
-  /// Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]
+  /// Statement line for the band fee of the member's percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {pct}%'**
-  String moneySubscriptionPct(int pct);
+  /// **'Subscription {pct}'**
+  String moneySubscriptionPct(String pct);
 
   /// Statement usage line for quota plans The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]
   ///
@@ -33404,12 +33404,6 @@ abstract class AppLocalizations {
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
 
-  /// Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]
-  ///
-  /// In en, this message translates to:
-  /// **'{value} %'**
-  String negotiationPercent(int value);
-
   /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
@@ -33542,11 +33536,11 @@ abstract class AppLocalizations {
   /// **'A larger subscription'**
   String get newMemberSubscriptionMore;
 
-  /// #1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]
+  /// #1294 a subscription percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{percent}%'**
-  String newMemberSubscriptionValue(int percent);
+  /// **'{percent}'**
+  String newMemberSubscriptionValue(String percent);
 
   /// While the device NFC status is being read
   ///
@@ -35049,12 +35043,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
-
-  /// A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]
-  ///
-  /// In en, this message translates to:
-  /// **'{value}%'**
-  String percentValue(int value);
 
   /// #2578 the bookings behind the capacity figure
   ///
@@ -47545,11 +47533,11 @@ abstract class AppLocalizations {
   /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
   String get setupNewMembersPreviewNoQuestions;
 
-  /// #2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]
+  /// #2871 setup run steps: setupNewMembersPreviewStart. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'A new member starts on a {pct} % subscription ({policy}).'**
-  String setupNewMembersPreviewStart(int pct, String policy);
+  /// **'A new member starts on a {pct} subscription ({policy}).'**
+  String setupNewMembersPreviewStart(String pct, String policy);
 
   /// #2871 setup run steps: setupNewMembersQuestions
   ///
@@ -47953,17 +47941,17 @@ abstract class AppLocalizations {
   /// **'Standard'**
   String get setupPresetNameStandard;
 
-  /// #2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]
+  /// #2871 setup run steps: setupPricingBand. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{from}–{to} %: {fee} a month, {extra} per extra half-day'**
-  String setupPricingBand(int from, int to, String fee, String extra);
+  /// **'{from}–{to}: {fee} a month, {extra} per extra half-day'**
+  String setupPricingBand(String from, String to, String fee, String extra);
 
-  /// #2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]
+  /// #2871 setup run steps: setupPricingLevel. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Membership at {pct} %'**
-  String setupPricingLevel(int pct);
+  /// **'Membership at {pct}'**
+  String setupPricingLevel(String pct);
 
   /// #3283 setup pricing: the half-days a level includes this month.
   ///
@@ -57751,11 +57739,11 @@ abstract class AppLocalizations {
   /// **'Danger zone'**
   String get workspaceDangerZone;
 
-  /// Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]
+  /// Live value label of the desk-opacity slider. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Opacity: {percent}%'**
-  String workspaceDeskOpacityValue(int percent);
+  /// **'Opacity: {percent}'**
+  String workspaceDeskOpacityValue(String percent);
 
   /// Helper under the desk-transparency slider explaining its effect.
   ///

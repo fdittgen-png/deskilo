@@ -309,7 +309,6 @@
   "negotiationKeepCurrent": "Mantieni attuale",
   "negotiationItems": "Servizi e pacchetti",
   "negotiationItemsHint": "Un prezzo unitario per questo membro; vuoto mantiene il catalogo.",
-  "negotiationPercent": "{value} %",
   "negotiationReadOnly": "Sola lettura",
   "scheduledExpensesTitle": "Spese programmate",
   "scheduledExpensesIntro": "Gli abbonamenti che lo spazio paga — internet, telefono, elettricità. La programmazione è validata una volta; ogni scadenza le viene presentata prima di contare.",
