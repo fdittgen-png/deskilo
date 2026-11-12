@@ -481,6 +481,5 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     surface: FeatureSurface.kiosk,
     tier: FeatureTier.platform,
     requires: WorkspaceFeature.kioskMode,
-    defaultOn: true,
   ),
 };
