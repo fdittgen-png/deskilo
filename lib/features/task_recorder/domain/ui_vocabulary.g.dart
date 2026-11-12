@@ -5044,6 +5044,7 @@ const List<String> uiKeyPatterns = [
   'week-day-header-{}',
   'week-free-{}-{}-',
   'week-grid-ink-well-{}',
+  'week-half-{}-{}-',
   'week-level-header-{}',
   'week-sheet-item-{}',
   'what-you-can-do-{}{}',
