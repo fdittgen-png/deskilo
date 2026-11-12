@@ -14,6 +14,10 @@
   "bookBasisAccrual": "Criterio de devengo",
   "bookBasisCash": "Criterio de caja",
   "bookEffectiveFrom": "Vigente desde el {date}",
+  "bookEffectiveFromLabel": "Vigente desde el",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookFiscalPreview": "Ejercicio {label}: {start} – {end}",
   "bookProblemExternal": "Indique el sistema externo que lleva los libros oficiales.",
   "bookProblemCurrency": "Esta moneda no tiene un número de decimales verificado.",

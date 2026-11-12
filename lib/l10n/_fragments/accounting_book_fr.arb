@@ -14,6 +14,10 @@
   "bookBasisAccrual": "Engagements",
   "bookBasisCash": "Encaissements",
   "bookEffectiveFrom": "En vigueur à partir du {date}",
+  "bookEffectiveFromLabel": "En vigueur à partir du",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookFiscalPreview": "Exercice {label} : {start} – {end}",
   "bookProblemExternal": "Indiquez le logiciel externe qui tient les livres officiels.",
   "bookProblemCurrency": "Cette devise n’a pas de nombre de décimales vérifié.",

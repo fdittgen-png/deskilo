@@ -118,6 +118,22 @@ Future<void> showExpenseSheet(
       errorKey: const ValueKey('expense-problem'),
       onDispose: fields.dispose,
       validate: () {
+        // An amount of the space's currency the field cannot read (an
+        // exponent, a decimal too many) is refused, never rounded.
+        final typed = appFormatOf(context).readAmount(
+          fields['amount'].text,
+          currency: currency.code,
+          allowNegative: false,
+        );
+        if (typed.problem case final problem?) {
+          return {
+            'amount': amountInputProblemText(
+              l10n,
+              problem,
+              currency: currency.code,
+            ),
+          };
+        }
         final outcome = expenseOutcome(draft());
         final field = fieldOf(outcome);
         return field == null ? const {} : {field: reason(outcome)!};
@@ -139,12 +155,13 @@ Future<void> showExpenseSheet(
         }
       },
       builder: (context, refresh) => [
-        AppTextField(
+        AppAmountField(
+          key: const ValueKey('expense-amount'),
           controller: fields['amount'],
           fieldKey: 'amount',
           label: l10n.moneyAmountLabel,
-          suffixText: currency.currencyName,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          currency: currency.code,
+          allowNegative: false,
           autofocus: true,
         ),
         const FormGap(),

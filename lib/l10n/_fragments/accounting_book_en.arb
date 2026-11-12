@@ -64,6 +64,10 @@
       }
     }
   },
+  "bookEffectiveFromLabel": "Takes effect from",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookFiscalPreview": "Fiscal year {label}: {start} – {end}",
   "@bookFiscalPreview": {
     "description": "#1869 accounting book sheet",

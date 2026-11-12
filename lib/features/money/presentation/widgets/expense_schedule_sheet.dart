@@ -15,6 +15,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
@@ -221,7 +222,6 @@ Future<bool> _showCreateExpenseScheduleSheet(
   final l10n = context.l10n;
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return false;
-  final dates = appFormatOf(context).dates(DateShape.date);
   final title = TextEditingController();
   final amount = TextEditingController();
   final description = TextEditingController();
@@ -230,7 +230,10 @@ Future<bool> _showCreateExpenseScheduleSheet(
   var unit = ScheduleUnit.month;
   final now = ref.read(clockProvider).now();
   var startsOn = now;
+  DateRead starts = (date: startsOn, problem: null);
   DateTime? endsOn;
+  DateRead ends = (date: null, problem: null);
+  var invalid = false;
   String? supplierId;
   final topic = l10n.helpTopicScheduledExpenses;
   // #2357 — the VAT every occurrence will carry.
@@ -258,14 +261,13 @@ Future<bool> _showCreateExpenseScheduleSheet(
             ),
           ),
           const SizedBox(height: 12),
-          TextField(
+          AppAmountField(
             key: const ValueKey('schedule-amount'),
             controller: amount,
-            decoration: InputDecoration(
-              labelText: l10n.moneyAmountLabel,
-              suffixText: currency.currencyName,
-            ),
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            label: l10n.moneyAmountLabel,
+            currency: currency.code,
+            allowNegative: false,
+            showProblem: invalid,
           ),
           const SizedBox(height: 12),
           TextField(
@@ -290,21 +292,18 @@ Future<bool> _showCreateExpenseScheduleSheet(
             onChanged: (v) => setSheetState(() => supplierId = v),
           ),
           const SizedBox(height: 12),
-          ListTile(
+          AppDateField(
             key: const ValueKey('schedule-starts'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.scheduleStartsOn),
-            subtitle: Text(dates.format(startsOn)),
-            trailing: const Icon(Icons.edit_calendar_outlined),
-            onTap: () async {
-              final picked = await showDatePicker(
-                context: context,
-                initialDate: startsOn,
-                firstDate: now.subtract(const Duration(days: 366)),
-                lastDate: now.add(const Duration(days: 730)),
-              );
-              if (picked != null) setSheetState(() => startsOn = picked);
-            },
+            label: l10n.scheduleStartsOn,
+            value: starts.date,
+            first: now.subtract(const Duration(days: 366)),
+            last: now.add(const Duration(days: 730)),
+            isRequired: true,
+            showProblem: invalid,
+            onChanged: (read) => setSheetState(() {
+              starts = read;
+              if (read.date case final date?) startsOn = date;
+            }),
           ),
           Row(children: [
             Expanded(
@@ -346,8 +345,11 @@ Future<bool> _showCreateExpenseScheduleSheet(
             key: const ValueKey('schedule-ends-tile'),
             startsOn: startsOn,
             endsOn: endsOn,
-            dates: dates,
-            onChanged: (d) => setSheetState(() => endsOn = d),
+            showProblem: invalid,
+            onChanged: (read) => setSheetState(() {
+              ends = read;
+              endsOn = read.date;
+            }),
           ),
           const SizedBox(height: 8),
           Text(
@@ -357,7 +359,22 @@ Future<bool> _showCreateExpenseScheduleSheet(
           const SizedBox(height: 12),
           FilledButton(
             key: const ValueKey('schedule-submit'),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () {
+              // A date or an amount the fields could not read stays in the
+              // sheet, each saying why under itself.
+              final unread = starts.date == null ||
+                  ends.problem != null ||
+                  appFormatOf(context)
+                          .readAmount(
+                            amount.text,
+                            currency: currency.code,
+                            allowNegative: false,
+                          )
+                          .problem !=
+                      null;
+              if (unread) return setSheetState(() => invalid = true);
+              Navigator.of(context).pop(true);
+            },
             child: Text(l10n.scheduleSubmit),
           ),
         ],
