@@ -7,7 +7,6 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../money/domain/ledger_entry.dart';
@@ -64,7 +63,7 @@ class MemberMoneyCard extends ConsumerWidget {
     final mayMove = !isSelf && permissions.contains(WorkspacePermission.issueInvoices);
 
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    final currencyCode = workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency;
+    final currencyCode = workspace?.currencyCode ?? appFormatOf(context).currencyCode;
     final currency = appFormatOf(context).moneyIn(currencyCode);
 
     final accountAsync = ref.watch(memberAccountProvider(memberId));

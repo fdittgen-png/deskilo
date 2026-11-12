@@ -2,8 +2,9 @@
 //
 // The app bar's space chip fits whatever title box the bar leaves it: on a
 // 360 px screen with twice the text and the web shell's drawer button and
-// actions beside it, the chip drops the space's avatar and ellipsizes the
-// name, so nothing overflows; on a roomy bar the ring stays.
+// actions beside it, the chip drops the space's avatar and the business's
+// line (the drawer names it, #3788) and keeps the page's name, so nothing
+// overflows; on a roomy bar the ring stays.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/workspace_avatar.dart';
@@ -61,10 +62,13 @@ void main() {
   for (final branded in [false, true]) {
     testWidgets('on a 360 px screen with twice the text the chip fits '
         '(${branded ? 'a branded space' : 'a plain space'}): the avatar is '
-        'dropped, the name ellipsizes, nothing overflows', (tester) async {
+        'dropped, the business line left out, nothing overflows', (
+      tester,
+    ) async {
       await _pump(tester, width: 360, textScale: 2, branded: branded);
       expect(tester.takeException(), isNull, reason: 'nothing overflows');
-      expect(_name, findsOneWidget);
+      expect(_name, findsNothing, reason: 'the drawer names the business');
+      expect(find.byKey(const ValueKey('space-chip-page')), findsOneWidget);
       expect(_avatar, findsNothing, reason: 'no room for the avatar');
       expect(_ring, findsNothing);
     });

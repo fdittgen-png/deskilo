@@ -7,6 +7,8 @@ import '../../../features/money/domain/purchase.dart';
 import '../data/einvoice_inbox_repository.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
+import 'demo_london_seed.dart';
+import 'demo_new_york_seed.dart';
 import 'demo_purchase_seed.dart';
 
 DemoPurchasing cityPurchasing(
@@ -17,7 +19,10 @@ DemoPurchasing cityPurchasing(
 }) {
   final suppliers = FakeSupplierRepository();
   final purchases = FakePurchaseRepository(
-    actor: actor, functionalCurrency: tenant ? 'USD' : 'GBP');
+    actor: actor,
+    functionalCurrency: tenant ? 'USD' : 'GBP',
+    workspaceId: tenant ? demoNewYorkSpaceId : demoLondonSpaceId,
+  );
   final prefix = tenant ? 'ny' : 'uk';
   final country = tenant ? 'US' : 'GB';
   final vending = Supplier(

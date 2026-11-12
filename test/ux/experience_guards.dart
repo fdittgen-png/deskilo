@@ -238,6 +238,7 @@ Set<String> deskGuardProblems(
     thrown = true;
   }
   if (thrown) problems.add('overflow or exception');
+  problems.addAll(cutInformationProblems(details: details));
   final rows = _rowRects(tester, rowTypes);
   // Text: a block of body text, one that wraps, runs at most
   // [bodyTextMaxWidth] outside a table row. A one-line label in a wide box
@@ -322,6 +323,77 @@ Set<String> deskGuardProblems(
       note('target ${node.rect.size} at ${node.rect.topLeft}: ${node.label}');
     }
     if (!node.named) problems.add('unnamed control');
+  }
+  return problems;
+}
+
+// ---------------------------------------------------------------------------
+// #3788 — a title or a line that carries information is never cut.
+// ---------------------------------------------------------------------------
+
+/// The lines a page marks as information, by their key: each is painted
+/// whole wherever it is on screen. A page adds its line here, not in a test.
+const List<Key> informationLineKeys = [
+  // Reserve's day line: the day, the hours and their time zone.
+  ValueKey('booking-window-summary'),
+];
+
+/// What stays outside the rule inside a title: names and free text people
+/// typed (a business's name), which may be cut where they cannot fit.
+const List<Key> typedTextKeys = [ValueKey('space-chip-name')];
+
+/// Whether [box] did not paint all of its text: past its last line (an
+/// ellipsis or a clip), or wider than itself on a line that does not wrap.
+bool _textCut(RenderParagraph box) {
+  if (box.didExceedMaxLines) return true;
+  if (box.softWrap) return false;
+  final painter = TextPainter(
+    text: box.text,
+    textDirection: box.textDirection,
+    textScaler: box.textScaler,
+  )..layout();
+  final wide = painter.width;
+  painter.dispose();
+  return wide > box.size.width + 0.5;
+}
+
+/// The paragraphs the rule holds: those in an app bar's title and those of
+/// an [informationLineKeys] line, less the [typedTextKeys] subtrees.
+Iterable<Element> _informationParagraphs() sync* {
+  final typed = {
+    for (final key in typedTextKeys)
+      ...find
+          .descendant(of: find.byKey(key), matching: find.byType(RichText))
+          .evaluate(),
+  };
+  final titles = [
+    for (final e in find.byType(AppBar).evaluate())
+      if ((e.widget as AppBar).title case final Widget title) title,
+  ];
+  final seen = <Element>{};
+  for (final finder in [
+    for (final title in titles) find.byWidget(title),
+    for (final key in informationLineKeys) find.byKey(key),
+  ]) {
+    for (final e
+        in find
+            .descendant(of: finder, matching: find.byType(RichText))
+            .evaluate()) {
+      if (!typed.contains(e) && seen.add(e)) yield e;
+    }
+  }
+}
+
+/// The titles and information lines on screen that are cut (an ellipsis,
+/// a clip, a line run past its box). [details] receives each cut text.
+Set<String> cutInformationProblems({List<String>? details}) {
+  final problems = <String>{};
+  for (final e in _informationParagraphs()) {
+    final box = e.renderObject;
+    if (box is! RenderParagraph || !box.hasSize || !box.attached) continue;
+    if (!_textCut(box)) continue;
+    problems.add('information cut');
+    details?.add('cut: "${box.text.toPlainText()}" in ${box.size.width}');
   }
   return problems;
 }
@@ -463,6 +535,15 @@ Future<void> writeDeskSheet(
 /// label, its input and its helper or error line, as its decorator draws
 /// them) touches or overlaps another's, or a helper or error text is cut
 /// (its paragraph ran past its lines). [details] receives what was found.
+///
+/// Known limits, so a false alarm or a false pass finds its reason here:
+/// * "value cut" flags any one-line value wider than its field. A free text
+///   that scrolls inside its field by design is not a cut: if a fixture
+///   with a long free text trips it, narrow the check to number and date
+///   fields (`keyboardType`) rather than shortening the fixture.
+/// * "form off the window" is for a dialog or a sheet, which must fit the
+///   window. A full-screen form that scrolls is taller than the window by
+///   design: measure its scroll viewport instead, not the form.
 Set<String> formLayoutProblems(
   WidgetTester tester, {
   required Finder form,

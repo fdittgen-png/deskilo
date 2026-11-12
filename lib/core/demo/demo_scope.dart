@@ -169,7 +169,7 @@ typedef _MainBooks = ({
 });
 
 _MainBooks _seedMainBooks(DemoFixture fixture) {
-  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money, plan: (fixture.workspaces, fixture.floorPlan), actor: () => fixture.activeMemberId);
+  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money, plan: (fixture.workspaces, fixture.floorPlan), actor: () => fixture.activeMemberId, workspaceId: demoFirstSpaceId);
   return (
     purchasing: purchasing,
     // #1869 in memory; #2365 posts the demo money and its supplier bills.

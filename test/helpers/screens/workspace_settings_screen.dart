@@ -15,6 +15,7 @@ import '../fake_money_repository.dart';
 import '../mock_providers.dart';
 import '../section_jump.dart';
 import '../settings_sections.dart';
+import '../shell_bar.dart';
 import '../workspace_settings_groups.dart';
 
 Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
@@ -54,7 +55,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
+  await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
   await tester.ensureVisible(find.text('Workspace'));

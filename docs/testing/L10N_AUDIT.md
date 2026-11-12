@@ -18,7 +18,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_city_money_seed.dart:150` | label | Workspace membership | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_money_seed.dart:156` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_money_seed.dart:164` | label | Exclusive monthly hire · ${workspace.sites.where((s) => s.id == rental.siteId).firstOrNull?.name ?? rental.siteId} | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_purchase_seed.dart:106` | title | Rent and service fees | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_purchase_seed.dart:111` | title | Rent and service fees | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:32` | title | Internet service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:89` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:97` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |

@@ -262,6 +262,7 @@ void main() {
           events: const [],
           generatedAt: DateTime.utc(2026, 5),
           workspaceName: 'W',
+          currencyCode: 'EUR',
           source: source,
         );
     expect(

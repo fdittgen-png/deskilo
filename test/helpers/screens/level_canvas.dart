@@ -17,6 +17,7 @@ import '../fake_accessory_repository.dart';
 import '../fake_floor_plan_repository.dart';
 import '../mock_providers.dart';
 import '../navigation.dart';
+import '../shell_bar.dart';
 
 /// Seeds a level (and whatever [seed] adds) BEFORE navigating into the
 /// canvas — the plan provider fetches on entry, so all fixtures must exist
@@ -48,7 +49,7 @@ Future<FakeFloorPlanRepository> pumpCanvas(
   // The editor icon lives on the Plan tab's app bar; the app now boots
   // on the Reserve hub.
   await switchToPlanTab(tester);
-  await tester.tap(find.byIcon(Icons.design_services_outlined));
+  await tapShellBarControl(tester, 'shell-editor-button');
   await tester.pumpAndSettle();
   await tester.tap(find.text('Ground floor'));
   await tester.pumpAndSettle();

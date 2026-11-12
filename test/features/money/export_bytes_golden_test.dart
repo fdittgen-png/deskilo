@@ -208,6 +208,7 @@ Map<String, String Function()> _files() => {
     events: buildAuditEvents(invoices: _invoices, matches: _matches),
     generatedAt: DateTime.utc(2026, 5, 1, 9),
     workspaceName: 'Pézenas Lab',
+    currencyCode: 'EUR',
   ),
   'saf_t.xml': () => buildSafTFile(SafTRequest(
     invoices: _invoices,

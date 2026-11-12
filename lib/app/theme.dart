@@ -9,6 +9,7 @@ import '../core/theme/app_radius.dart';
 import '../core/theme/contrast.dart';
 import '../core/theme/contrast_audit.dart';
 import '../core/theme/shell_metrics.dart';
+import 'shell/desk_page_frame.dart';
 
 /// DesKilo brand palette — muted burnt orange (spec §14, decided 2026-07-07).
 ///
@@ -215,7 +216,9 @@ class _InstantPageTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) =>
-      child;
+      // #3798 — every page, as its route builds it, framed in its measure
+      // when it stands in the desk's page area (desk_page_frame.dart).
+      framedOnDesk(child);
 }
 
 /// Delegates to [_delegate] unless the platform requests reduced motion
@@ -233,9 +236,12 @@ class _ReducedMotionAware extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) return child;
+    // #3798 — every page, as its route builds it, framed in its measure
+    // when it stands in the desk's page area (desk_page_frame.dart).
+    final page = framedOnDesk(child);
+    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) return page;
     return _delegate.buildTransitions(
-        route, context, animation, secondaryAnimation, child);
+        route, context, animation, secondaryAnimation, page);
   }
 }
 

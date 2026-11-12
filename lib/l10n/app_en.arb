@@ -26368,6 +26368,10 @@
   "@moneyCredits": {
     "description": "Statement line summing confirmed payments and credits"
   },
+  "moneyCurrencyUnavailable": "Currency unavailable",
+  "@moneyCurrencyUnavailable": {
+    "description": "#3658 — shown in place of an amount whose currency is not known: never a bare number, whose scale is unknown."
+  },
   "moneyDescriptionLabel": "Description",
   "@moneyDescriptionLabel": {
     "description": "Label of the expense description input"

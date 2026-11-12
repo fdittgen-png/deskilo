@@ -12,7 +12,6 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
-import '../../../core/settings/setting_defaults.g.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';
@@ -128,7 +127,7 @@ Map<String, Object?> agreementReportData(
   required TaxReferenceSet reference,
 }) {
   final workspace = facts.workspace;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: strings.formatLocale);
+  final currency = moneyFormat(requireCurrency(workspace?.currencyCode, where: 'letter'), locale: strings.formatLocale);
   final band = feeBandFor(facts.bands, subscriptionPct);
   final lines = <Map<String, Object?>>[
     if (band != null) ...[
@@ -211,7 +210,7 @@ Map<String, Object?> paymentsReportData(
 }) {
   final workspace = facts.workspace;
   final me = facts.me;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: strings.formatLocale);
+  final currency = moneyFormat(requireCurrency(workspace?.currencyCode, where: 'letter'), locale: strings.formatLocale);
   final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   final ledger = facts.ledger
       .where(
@@ -294,7 +293,7 @@ Map<String, Object?> workspaceReportData(
   required TaxReferenceSet reference,
 }) {
   final workspace = facts.workspace;
-  final currency = moneyFormat(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency, locale: strings.formatLocale);
+  final currency = moneyFormat(requireCurrency(workspace?.currencyCode, where: 'letter'), locale: strings.formatLocale);
   final levels = facts.levels;
   final plans = facts.plans;
   final hours = facts.hours;

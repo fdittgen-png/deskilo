@@ -261,6 +261,7 @@ void main() {
         events: const [],
         generatedAt: DateTime(2026, 5),
         workspaceName: 'Pézenas',
+        currencyCode: 'EUR',
       );
       expect(csv, contains('not a regulated audit file'));
       expect(source, contains('CALLED A TRAIL, NEVER AN "AUDIT FILE"'));
@@ -497,6 +498,7 @@ void main() {
         ),
         generatedAt: DateTime(2026, 5),
         workspaceName: 'Pézenas',
+        currencyCode: 'EUR',
       );
       expect(csv, contains('"Sample, Alex"'));
     });

@@ -7,6 +7,11 @@
 // over lib/ only falls; a form measured by the guard leaves it by getting
 // its gaps. A field is a widget whose name ends in Field or Fields
 // (AppTextField, DropdownButtonFormField, PurchasePlaceField, …).
+//
+// Known limits of this count (the measured guard is the real net):
+// * any `spacing:` counts as a gap, `spacing: 0` too;
+// * two fields with only an `if` element between them, or a field wrapped
+//   in Expanded or Padding, are not seen as neighbours.
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';

@@ -9,6 +9,7 @@ import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_window_summary.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/pump_app.dart';
@@ -83,54 +84,26 @@ void main() {
     );
   }
 
-  testWidgets('#3068 the caption is one line; the tooltip keeps all of it', (
-    tester,
-  ) async {
-    WorkspaceTime.install('Europe/Berlin');
-    addTearDown(WorkspaceTime.reset);
-    tester.view.physicalSize = const Size(360, 800);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    final day = DateTime(2026, 10, 25);
-    await pumpApp(
+  // #3788 — the day line carries the hours and their zone: it wraps onto a
+  // second line rather than cut them, on the hub at every width.
+  for (final size in const [Size(390, 844), Size(1024, 768), Size(1440, 900)]) {
+    testWidgets('the day line is whole on the hub at ${size.width.toInt()}', (
       tester,
-      Scaffold(
-        body: BookingWindowSummary(
-          window: HalfDayWindows.morning(day),
-          today: DateTime(day.year, day.month, day.day - 1),
-          timezone: 'Europe/Berlin',
-        ),
-      ),
-      overrides: [
-        appFormatProvider.overrideWithValue(
-          const AppFormat(
-            locale: 'en_US',
-            currencyCode: 'EUR',
-            clock: ClockPref.h24,
-            timeZoneMode: TimeZoneMode.device,
-          ),
-        ),
-      ],
-    );
-    await tester.pumpAndSettle();
-    final text = tester.widget<Text>(
-      find.byKey(const ValueKey('booking-window-summary')),
-    );
-    expect(text.maxLines, 1);
-    expect(text.overflow, TextOverflow.ellipsis);
-    final tip = tester.widget<Tooltip>(
-      find.ancestor(
-        of: find.byKey(const ValueKey('booking-window-summary')),
-        matching: find.byType(Tooltip),
-      ),
-    );
-    expect(tip.message, text.data);
-    final lineHeight = Theme.of(
-      tester.element(find.byKey(const ValueKey('booking-window-summary'))),
-    ).textTheme.bodySmall!;
-    expect(
-      tester.getSize(find.byKey(const ValueKey('booking-window-summary'))).height,
-      lessThan(lineHeight.fontSize! * (lineHeight.height ?? 1.5) * 1.5),
-    );
-  });
+    ) async {
+      await pumpHub(
+        tester,
+        granularity: BookingGranularity.halfDay,
+        size: size,
+      );
+      final line = find.byKey(const ValueKey('booking-window-summary'));
+      final paragraph = tester.renderObject<RenderParagraph>(
+        find.descendant(of: line, matching: find.byType(RichText)),
+      );
+      expect(paragraph.didExceedMaxLines, isFalse);
+      expect(tester.widget<Text>(line).maxLines, isNull);
+      final caption = tester.widget<Text>(line).data!;
+      expect(caption, matches(RegExp(r'\d{2}:\d{2}–\d{2}:\d{2} \(.+\)')));
+      expect(tester.takeException(), isNull);
+    });
+  }
 }

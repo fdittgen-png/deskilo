@@ -1,0 +1,6 @@
+{
+  "moneyCurrencyUnavailable": "Currency unavailable",
+  "@moneyCurrencyUnavailable": {
+    "description": "#3658 — shown in place of an amount whose currency is not known: never a bare number, whose scale is unknown."
+  }
+}

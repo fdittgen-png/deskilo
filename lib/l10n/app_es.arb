@@ -12440,6 +12440,7 @@
   "moneyAmountLabel": "Importe",
   "moneyBaseFee": "Suscripción base",
   "moneyCredits": "Pagos y créditos",
+  "moneyCurrencyUnavailable": "Moneda no disponible",
   "moneyDescriptionLabel": "Descripción",
   "moneyDueIn": "{days, plural, =1{Vence en 1 día} other{Vence en {days} días}}",
   "moneyExpenseCategoryLabel": "Categoría",

@@ -5218,6 +5218,7 @@ Map<String, _Getter> _part14() => {
   'memberRoleAdmin': (l) => l.memberRoleAdmin,
   'messageSearchTitle': (l) => l.messageSearchTitle,
   'messengerMessageActions': (l) => l.messengerMessageActions,
+  'moneyCurrencyUnavailable': (l) => l.moneyCurrencyUnavailable,
   'myReservationsSourceStale': (l) => l.myReservationsSourceStale,
   'myReservationsTabCancelled': (l) => l.myReservationsTabCancelled,
   'mySpacesFilterHistory': (l) => l.mySpacesFilterHistory,

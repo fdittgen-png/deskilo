@@ -81,26 +81,20 @@ void main() {
     expect(_named('en_GB', 'EUR', 1250), '€12.50');
   });
 
-  test(
-    'a record without a currency shows the number alone, never a default',
-    () {
-      for (final locale in ['en_US', 'de_DE', 'fr_FR', 'de_CH']) {
-        final shown = _named(locale, '', 123456);
-        expect(shown, isNot(contains('€')), reason: locale);
-        expect(shown, isNot(contains('EUR')), reason: locale);
-        expect(
-          shown.trim(),
-          shown,
-          reason: '$locale: no gap left for a symbol',
-        );
-        expect(
-          RegExp(r'[A-Za-z€£¥\$]').hasMatch(shown),
-          isFalse,
-          reason: '$locale: "$shown"',
-        );
-      }
-    },
-  );
+  test('a record without a currency shows no number, never a default (#3658)',
+      () {
+    const unavailable = {
+      'en_US': 'Currency unavailable',
+      'de_DE': 'Währung nicht verfügbar',
+      'fr_FR': 'Devise indisponible',
+      'de_CH': 'Währung nicht verfügbar',
+    };
+    for (final MapEntry(key: locale, value: text) in unavailable.entries) {
+      final shown = _named(locale, '', 123456);
+      expect(shown, text, reason: locale);
+      expect(RegExp(r'\d').hasMatch(shown), isFalse, reason: locale);
+    }
+  });
 
   test('a workspace screen is spelled as before: its one currency keeps its symbol', () {
     const format = AppFormat(locale: 'en_US', currencyCode: 'USD');
