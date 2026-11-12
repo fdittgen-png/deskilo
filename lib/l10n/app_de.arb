@@ -9816,6 +9816,15 @@
       }
     }
   },
+  "invoicingReminderLevelSent": "Mahnung {level} gesendet",
+  "@invoicingReminderLevelSent": {
+    "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "invoicingSearch": "Suchen",
   "@invoicingSearch": {
     "description": "#3587 top bar: open the search field"

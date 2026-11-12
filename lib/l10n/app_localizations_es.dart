@@ -15728,6 +15728,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String invoicingReminderLevelSent(int level) {
+    return 'recordatorio $level enviado';
+  }
+
+  @override
   String get invoicingSearch => 'Buscar';
 
   @override

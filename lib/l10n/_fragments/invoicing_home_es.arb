@@ -83,6 +83,8 @@
   "@invoicingStatusDueToday": {"description": "#3587 status"},
   "invoicingStatusReminderSent": "{days, plural, =1{1 día de retraso} other{{days} días de retraso}} · recordatorio {level} enviado",
   "@invoicingStatusReminderSent": {"description": "#3587 status", "placeholders": {"days": {"type": "int"}, "level": {"type": "int"}}},
+  "invoicingReminderLevelSent": "recordatorio {level} enviado",
+  "@invoicingReminderLevelSent": {"description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness", "placeholders": {"level": {"type": "int"}}},
   "invoicingStatusEveryReminderSent": "{days, plural, =1{1 día de retraso} other{{days} días de retraso}} · todos los recordatorios enviados",
   "@invoicingStatusEveryReminderSent": {"description": "#3587 status", "placeholders": {"days": {"type": "int"}}},
   "invoicingStatusSaysPaid": "Dice haber pagado el {date}",

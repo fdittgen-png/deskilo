@@ -15614,6 +15614,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String invoicingReminderLevelSent(int level) {
+    return 'reminder $level sent';
+  }
+
+  @override
   String get invoicingSearch => 'Search';
 
   @override

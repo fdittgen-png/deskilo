@@ -15766,6 +15766,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String invoicingReminderLevelSent(int level) {
+    return 'Mahnung $level gesendet';
+  }
+
+  @override
   String get invoicingSearch => 'Suchen';
 
   @override

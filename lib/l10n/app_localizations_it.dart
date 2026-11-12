@@ -15738,6 +15738,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String invoicingReminderLevelSent(int level) {
+    return 'sollecito $level inviato';
+  }
+
+  @override
   String get invoicingSearch => 'Cerca';
 
   @override
