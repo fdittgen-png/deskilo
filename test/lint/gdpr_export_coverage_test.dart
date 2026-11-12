@@ -78,6 +78,10 @@ const Map<String, String> _notExported = {
   'purchase_order_sends':
       '#3307 — an attempt to e-mail an order of the space to its supplier: '
           'who started it is a workspace record, in the workspace export',
+  'invoice_email_sends':
+      '#3673 — an attempt to e-mail an invoice: who sent it and the address it '
+          'went to are delivery evidence of the space; the member\'s invoices are '
+          'exported themselves',
   'reminder_email_sends':
       '#3673 — an attempt to e-mail a payment reminder: who sent it and the '
           'address it went to are collection evidence of the space, beside the '

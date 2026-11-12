@@ -10362,6 +10362,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.';
 
   @override
+  String get featureInvoiceEmailDesc =>
+      'An issued invoice can be sent by e-mail from the server, with the business\'s own sender, to the customer\'s contact address, in the customer\'s document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before.';
+
+  @override
+  String get featureInvoiceEmailTitle => 'Invoices by e-mail';
+
+  @override
   String get featureInvoiceJourneyDesc =>
       'Every invoice shows where it stands — Issued, Payment, Confirmation, Closed — and whose move it is: the member pays, an admin confirms the declared payment, the issuer matches it, the validators decide. The issuers\' hub adds a stage strip with live counts and a How-it-works explainer.';
 
@@ -14104,6 +14111,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String invoiceEInvoiceValidated(String validator) {
     return 'Ready — nothing EN 16931 requires is missing, and this format passes the official validator ($validator).';
   }
+
+  @override
+  String get invoiceEmailFailed =>
+      'The invoice could not be e-mailed. Nothing was sent.';
+
+  @override
+  String get invoiceEmailHeading => 'By e-mail';
+
+  @override
+  String get invoiceEmailNoLanguage =>
+      'The customer\'s document language is not known, so the invoice was not e-mailed. Choose their language, or share the invoice.';
+
+  @override
+  String invoiceEmailRefused(String reason) {
+    return 'The e-mail was refused: $reason. Nothing was sent.';
+  }
+
+  @override
+  String get invoiceEmailSendAgain => 'Send again';
+
+  @override
+  String invoiceEmailSentOn(String recipient, String date) {
+    return 'E-mailed to $recipient on $date';
+  }
+
+  @override
+  String invoiceEmailTextCredit(String number, String amount) {
+    return 'Please find attached credit note $number for $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwed(String number, String amount) {
+    return 'Please find attached invoice $number. Amount still owed: $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwedBy(String number, String amount, String due) {
+    return 'Please find attached invoice $number. Amount still owed: $amount, due on $due.';
+  }
+
+  @override
+  String invoiceEmailTextPaid(String number, String amount) {
+    return 'Please find attached invoice $number for $amount. It is paid: nothing is owed.';
+  }
+
+  @override
+  String get invoiceEmailUnconfirmed =>
+      'No confirmed answer came back. Check with the customer before deciding whether it arrived.';
+
+  @override
+  String get invoiceEmailVoided => 'A voided invoice is not e-mailed';
 
   @override
   String get invoiceEssentialsRefused =>

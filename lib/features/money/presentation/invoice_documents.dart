@@ -212,7 +212,14 @@ class InvoicePdfFileOptions {
     this.memberTerms,
     this.dueAt,
     this.memberCapacity,
+    this.language = '',
   });
+
+  /// #3673 — the language the document is printed in: '' for the
+  /// interface's (share, download and print, as before), else a supported
+  /// language code (the e-mail passes the customer's document language).
+  /// The template's texts, the words, the dates and the amounts follow it.
+  final String language;
 
   /// The workspace's own tax reference the document's mentions are stated on.
   final TaxReferenceSet reference;
@@ -253,12 +260,12 @@ class InvoicePdfFileOptions {
 /// — they are documentation appended behind, and the layout engine renders
 /// one document. Undesigned documents use the enabled letter standard.
 String? _layoutXmlOf(
-  BuildContext context,
   Invoice invoice,
   InvoicePdfFileOptions options,
+  InvoicePdfTemplate template,
   Set<WorkspaceFeature> features,
+  AppLocalizations l10n,
 ) {
-  final template = options.template;
   final workspace = options.workspace;
   final letterStandard = features.contains(WorkspaceFeature.letterStandard);
   if (!features.contains(WorkspaceFeature.reportLayouts) ||
@@ -270,7 +277,7 @@ String? _layoutXmlOf(
     kindId: 'invoice',
     countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
     letterStandard: letterStandard,
-    l10n: context.l10n,
+    l10n: l10n,
   );
   return options.proforma ? (template.layoutFor('proforma') ?? standard()) : standard();
 }
@@ -294,15 +301,22 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Invoice invoice,
   InvoicePdfFileOptions options,
 ) async {
-  final l10n = context.l10n;
+  // #3673 — the document's language: the caller's, or the interface's.
+  final language = options.language;
+  final named = language.isNotEmpty;
+  final l10n = named ? l10nForLanguage(language) : context.l10n;
+  final localeName = named ? language : null;
   final proforma = options.proforma;
-  final template = options.template;
+  final template =
+      named ? options.template.forLocale(language) : options.template;
   final workspace = options.workspace;
   // #3484 — read before the awaits: the document's amounts spell in it.
-  final formatLocale = appFormatOf(context).locale;
-  final periodLabel = invoicePeriodLabel(context, invoice);
+  final formatLocale = named ? language : appFormatOf(context).locale;
+  final periodLabel = named
+      ? invoicePeriodLabelOf(language, invoice)
+      : invoicePeriodLabel(context, invoice);
   final reportData = invoiceReportData(
-    reportStringsFor(context),
+    reportStringsFor(context, l10n: l10n, localeName: localeName),
     invoice,
     memberTerms: options.memberTerms,
     proforma: proforma,
@@ -325,6 +339,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     invoice,
     settledIn: options.settledIn,
     development: workspace?.isDevelopment ?? false,
+    l10n: l10n,
+    localeName: localeName,
   );
   // A proforma is named after what it covers — it has no number to be
   // filed under, and must never sit in a folder looking like the invoice.
@@ -334,11 +350,18 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
-  final layoutXml = _layoutXmlOf(context, invoice, options, features);
+  final layoutXml = _layoutXmlOf(invoice, options, template, features, l10n);
   final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
+    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
-  final annexes = invoiceAnnexesOf(context, invoice, options.annexInvoices, dateFormat);
+  final annexes = invoiceAnnexesOf(
+    context,
+    invoice,
+    options.annexInvoices,
+    dateFormat,
+    l10n: l10n,
+    localeName: localeName,
+  );
   // #2360 — a Swiss seller's invoice ends on the QR-bill its customer pays with.
   final qrPage = await swissQrPageFor(
     l10n,
@@ -484,13 +507,18 @@ bool rendersCopy(WidgetRef ref) {
 /// device offers.
 /// #831 — the watermark of a regrouped source: "Regrouped in INV-…", or
 /// '' for every other document.
-String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
+String settledStampOf(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  AppLocalizations? l10n,
+}) {
   if (!invoice.isFolded) return '';
-  final l10n = context.l10n;
+  final words = l10n ?? context.l10n;
   final number = settledByNumberOf(
     invoice,
     // #3680 — a settled stamp is printed from the archive as read.
     ref.read(invoicesProvider).requireValue,
   );
-  return l10n.invoicePdfSettledIn(number);
+  return words.invoicePdfSettledIn(number);
 }

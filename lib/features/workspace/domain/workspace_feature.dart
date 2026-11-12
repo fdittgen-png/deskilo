@@ -115,8 +115,7 @@ enum WorkspaceFeature {
   subscriptionInvoices,
 
   /// #802 — the end-of-month invoice for what the month actually cost
-  /// beyond the subscription. Off, the extras stay on the whole-month
-  /// invoice.
+  /// beyond the subscription. Off, the extras stay on the whole-month invoice.
   usageInvoices,
 
   /// #804 — several open invoices regrouped into one the member pays,
@@ -416,7 +415,8 @@ enum WorkspaceFeature {
   purchaseOrders,
   guestPasses,
   placeBooking,
-  reminderEmail;
+  reminderEmail,
+  invoiceEmail;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

@@ -175,6 +175,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.paymentReminders,
         // #3673 — reminders by e-mail, beside the reminders they send.
         WorkspaceFeature.reminderEmail,
+        // #3673 — invoices by e-mail, with the same sender.
+        WorkspaceFeature.invoiceEmail,
         WorkspaceFeature.carnets,
         WorkspaceFeature.adminInvoicing,
         WorkspaceFeature.subscriptionInvoices,
