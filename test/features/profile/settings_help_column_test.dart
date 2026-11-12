@@ -41,7 +41,7 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        await tester.tap(find.byIcon(Icons.settings_outlined));
+        await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
         await tester.pumpAndSettle();
         await openSettingsSection(tester, 'advanced');
         final front = find.byKey(const ValueKey('settings-front-camera'));
