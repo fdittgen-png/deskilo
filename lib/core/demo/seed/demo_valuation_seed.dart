@@ -4,12 +4,14 @@
 // year (confirmed, the espresso machine depreciated by 240.00) and a file
 // for this year still waiting for confirmation, with the printer unknown.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:meta/meta.dart';
 
 import '../../../features/money/domain/asset_valuation.dart';
 import '../data/asset_valuation_repository.dart';
 import 'demo_asset_seed.dart';
 import 'demo_purchase_history_seed.dart';
 
+@visibleForTesting
 FakeAssetValuationRepository seedDemoValuations(DateTime now) =>
     FakeAssetValuationRepository(
       batches: [

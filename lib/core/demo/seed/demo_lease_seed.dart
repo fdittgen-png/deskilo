@@ -106,7 +106,7 @@ FakeLeaseCommitmentRepository seedDemoCommitments(DateTime now) {
         ),
       );
   }
-  final studio = demoStudioOccurrences(now);
+  final studio = _studioOccurrences(now);
   return FakeLeaseCommitmentRepository(
     {'demo-lease-premises': lease, demoStudioRentalId: studio},
     {
@@ -137,7 +137,7 @@ CommitmentOccurrence _occurrence(
 /// The studio's occurrences (#3794): one a month from January, the months
 /// before this one matched by the bill of the same month
 /// (demo_purchase_history_seed.dart), this month still expected.
-List<CommitmentOccurrence> demoStudioOccurrences(DateTime now) => [
+List<CommitmentOccurrence> _studioOccurrences(DateTime now) => [
   for (var month = now.month; month >= 1; month--)
     _occurrence(
       'demo-occ-studio-$month',

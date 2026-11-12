@@ -50,7 +50,7 @@ DateTime get demoSeedNow =>
 /// and time: what the server reads as `now() at time zone` the workspace's
 /// own zone, so each space's "today" and month are its own. A zone the
 /// database does not know reads the instant in UTC.
-DateTime demoWallClock(DateTime instant, String timezone) {
+DateTime _wallClock(DateTime instant, String timezone) {
   final wall = tz.TZDateTime.from(instant, _zoneNamed(timezone));
   return DateTime(
     wall.year,
@@ -65,7 +65,7 @@ DateTime demoWallClock(DateTime instant, String timezone) {
 /// [instant] on the wall clock of [timezone], or [instant] as it is when no
 /// zone is named (a test that builds a figure without a space).
 DateTime demoWallClockOr(DateTime instant, String? timezone) =>
-    timezone == null ? instant : demoWallClock(instant, timezone);
+    timezone == null ? instant : _wallClock(instant, timezone);
 
 tz.Location _zoneNamed(String name) {
   // Reading the demo space's zone loads the zone database once.

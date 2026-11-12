@@ -182,12 +182,6 @@ List<Override> demoCityCommerceOverrides(
       (ref) => choose(ref, mainBooks, londonBooks, nyBooks, twin.books),
     ),
     retentionHoldRepositoryProvider.overrideWithValue(fixture.holds),
-    premisesLeaseRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, contracts).lease,
-    ),
-    workspaceAssetRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, contracts).assets,
-    ),
     // #2365 last year's books, closed and exported; #2370 the studio's Pennylane connection.
     bookPeriodRepositoryProvider.overrideWith(
       (ref) =>
@@ -207,18 +201,7 @@ List<Override> demoCityCommerceOverrides(
           ..isOwner = () => ref.read(myMemberProvider).value?.isOwner ?? false;
       },
     ),
-    // #2568 — the rooms the demo space rents.
-    roomRentalRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, contracts).rooms,
-    ),
-    // #3294 step 3 — the sales figures, from each space's invoices and rooms.
-    _salesOverride(fixture, (
-      home: homeRooms,
-      leipzig: contracts.leipzig.rooms,
-      london: londonRooms,
-      ny: nyRooms,
-      twin: twin.rooms,
-    )),
+    ..._contractOverrides(fixture, contracts),
     ..._kpiOverrides(fixture, buying, orderSpaces),
     ...demoBookFigureOverrides(
       fixture,
@@ -233,6 +216,32 @@ List<Override> demoCityCommerceOverrides(
     ),
   ];
 }
+
+/// The lease, the register and the rented rooms each space holds (#3797:
+/// Leipzig's its own), and #3294 step 3 the sales figures from each space's
+/// invoices and rooms.
+List<Override> _contractOverrides(
+  DemoFixture fixture,
+  DemoSpaces<DemoSpaceContracts> contracts,
+) => [
+  premisesLeaseRepositoryProvider.overrideWith(
+    (ref) => demoPickSpace(ref, contracts).lease,
+  ),
+  workspaceAssetRepositoryProvider.overrideWith(
+    (ref) => demoPickSpace(ref, contracts).assets,
+  ),
+  // #2568 — the rooms the demo space rents.
+  roomRentalRepositoryProvider.overrideWith(
+    (ref) => demoPickSpace(ref, contracts).rooms,
+  ),
+  _salesOverride(fixture, (
+    home: contracts.home.rooms,
+    leipzig: contracts.leipzig.rooms,
+    london: contracts.london.rooms,
+    ny: contracts.newYork.rooms,
+    twin: contracts.twin.rooms,
+  )),
+];
 
 /// #3797 — Leipzig's own purchases, register, lease and rooms, empty: a
 /// space a few weeks old has bought nothing yet, and says so.
