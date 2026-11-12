@@ -26,6 +26,7 @@ class AppFormat {
     required this.currencyCode,
     this.clock = ClockPref.auto,
     this.timeZoneMode = TimeZoneMode.workspace,
+    this.weekStart = WeekStartPref.locale,
   });
 
   /// The resolved format locale, e.g. `fr_CH`.
@@ -36,6 +37,10 @@ class AppFormat {
 
   final ClockPref clock;
   final TimeZoneMode timeZoneMode;
+
+  /// #3648 — the chosen first day of the week; read it through
+  /// `weekStartOf` (`week_start.dart`), which resolves the locale's own.
+  final WeekStartPref weekStart;
 
   /// Whatever the tests and the pre-#711 app always assumed, except the
   /// currency: no business, no currency (#3658), so its amounts read
@@ -249,12 +254,14 @@ class AppFormat {
     String? currencyCode,
     ClockPref? clock,
     TimeZoneMode? timeZoneMode,
+    WeekStartPref? weekStart,
   }) =>
       AppFormat(
         locale: locale ?? this.locale,
         currencyCode: currencyCode ?? this.currencyCode,
         clock: clock ?? this.clock,
         timeZoneMode: timeZoneMode ?? this.timeZoneMode,
+        weekStart: weekStart ?? this.weekStart,
       );
 }
 

@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
-import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'calendar_item_row.dart';
 
-/// #818 — the week as a strip: seven pills, Monday to Sunday, each with
+/// #818 — the week as a strip: seven pills, from the reader's first day of the week, each with
 /// its weekday, its number, its markers and a count. Tapping a pill
 /// scrolls the feed to that day (the caller decides); the whole week is
 /// loaded below.
@@ -41,7 +41,7 @@ class CalendarWeekStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context);
-    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
+    final headers = weekdayHeaders(appFormatOf(context));
     return Padding(
       key: const ValueKey('calendar-week-strip'),
       padding: AppSpacing.smH,
@@ -78,7 +78,7 @@ class CalendarWeekStrip extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                       child: Column(children: [
                         Text(
-                          weekdayFormat.format(day).substring(0, 1),
+                          headers[i].narrow, semanticsLabel: headers[i].full,
                           style: theme.textTheme.labelSmall?.copyWith(
                             color: scheme.onSurfaceVariant,
                           ),

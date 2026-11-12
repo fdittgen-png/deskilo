@@ -17,6 +17,7 @@ class FormatPrefs {
     this.formatLocale = '',
     this.clock = ClockPref.auto,
     this.timeZoneMode = TimeZoneMode.workspace,
+    this.weekStart = WeekStartPref.locale,
   });
 
   /// A BCP-47 tag for numbers and dates — `fr_CH`, `en_GB`, `de_AT` —
@@ -29,29 +30,38 @@ class FormatPrefs {
 
   final TimeZoneMode timeZoneMode;
 
+  /// #3648 — the day a week starts on in every grid, strip and picker: the
+  /// format locale's own, or the one the person chose.
+  final WeekStartPref weekStart;
+
   static const defaults = FormatPrefs();
 
   factory FormatPrefs.fromDb(Map<String, dynamic> db) => FormatPrefs(
         formatLocale: db['format_locale'] as String? ?? '',
         clock: ClockPref.fromWire(db['clock'] as String?),
         timeZoneMode: TimeZoneMode.fromWire(db['time_zone_mode'] as String?),
+        // A server that does not know the key yet sends none: the locale's own.
+        weekStart: WeekStartPref.fromWire(db['week_start'] as String?),
       );
 
   Map<String, dynamic> toDb() => {
         'format_locale': formatLocale,
         'clock': clock.wire,
         'time_zone_mode': timeZoneMode.wire,
+        'week_start': weekStart.wire,
       };
 
   FormatPrefs copyWith({
     String? formatLocale,
     ClockPref? clock,
     TimeZoneMode? timeZoneMode,
+    WeekStartPref? weekStart,
   }) =>
       FormatPrefs(
         formatLocale: formatLocale ?? this.formatLocale,
         clock: clock ?? this.clock,
         timeZoneMode: timeZoneMode ?? this.timeZoneMode,
+        weekStart: weekStart ?? this.weekStart,
       );
 
   @override
@@ -59,10 +69,11 @@ class FormatPrefs {
       other is FormatPrefs &&
       other.formatLocale == formatLocale &&
       other.clock == clock &&
-      other.timeZoneMode == timeZoneMode;
+      other.timeZoneMode == timeZoneMode &&
+      other.weekStart == weekStart;
 
   @override
-  int get hashCode => Object.hash(formatLocale, clock, timeZoneMode);
+  int get hashCode => Object.hash(formatLocale, clock, timeZoneMode, weekStart);
 }
 
 /// 24-hour, 12-hour, or whatever the format region prefers.
@@ -94,4 +105,21 @@ enum TimeZoneMode {
 
   static TimeZoneMode fromWire(String? wire) =>
       values.where((m) => m.wire == wire).firstOrNull ?? workspace;
+}
+
+/// #3648 — which day a week starts on: whatever the format locale starts it
+/// on, or the day the person (or the business) chose. [isoWeekday] is
+/// `DateTime.weekday`'s count (Monday 1 .. Sunday 7), null for [locale].
+enum WeekStartPref {
+  locale('locale', null),
+  monday('monday', DateTime.monday),
+  sunday('sunday', DateTime.sunday),
+  saturday('saturday', DateTime.saturday);
+
+  const WeekStartPref(this.wire, this.isoWeekday);
+  final String wire;
+  final int? isoWeekday;
+
+  static WeekStartPref fromWire(String? wire) =>
+      values.where((m) => m.wire == wire).firstOrNull ?? locale;
 }

@@ -24623,6 +24623,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get regionalFormatsTitle => 'Region & formats';
 
   @override
+  String get regionalWeekStart => 'Week starts on';
+
+  @override
+  String get regionalWeekStartAuto => 'As the region does';
+
+  @override
   String get registerPaymentAmount => 'Amount';
 
   @override

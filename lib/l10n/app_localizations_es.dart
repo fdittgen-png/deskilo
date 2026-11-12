@@ -24807,6 +24807,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get regionalFormatsTitle => 'Región y formatos';
 
   @override
+  String get regionalWeekStart => 'La semana empieza el';
+
+  @override
+  String get regionalWeekStartAuto => 'Según la región';
+
+  @override
   String get registerPaymentAmount => 'Importe';
 
   @override

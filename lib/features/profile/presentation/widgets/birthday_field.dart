@@ -11,6 +11,7 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_date_picker.dart';
 
 /// Shows [value] and edits it through the platform date picker.
 class BirthdayField extends StatelessWidget {
@@ -31,7 +32,7 @@ class BirthdayField extends StatelessWidget {
 
   Future<void> _pick(BuildContext context) async {
     final latest = DateTime(today.year, today.month, today.day);
-    final picked = await showDatePicker(
+    final picked = await showAppDatePicker(
       context: context,
       initialDate: value ?? DateTime(latest.year - 30, latest.month, latest.day),
       firstDate: DateTime(1900),

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/i18n/week_start.dart';
 import '../../../core/time/workspace_time.dart';
 
 /// #818 — the three ways to look at the hub's feed. The view decides
@@ -13,14 +14,20 @@ const int calendarAgendaDays = 30;
 /// workspace-local date-only value). Nothing here reads a clock or a
 /// provider, so a test can drive every view with plain dates.
 class CalendarSelection {
-  const CalendarSelection({required this.view, required this.anchor});
+  const CalendarSelection({
+    required this.view,
+    required this.anchor,
+    required this.firstWeekday,
+  });
 
   final CalendarView view;
   final DateTime anchor;
 
-  /// Monday of [anchor]'s ISO week.
-  DateTime get weekStart =>
-      DateTime(anchor.year, anchor.month, anchor.day - (anchor.weekday - 1));
+  /// #3648 — the ISO weekday the reader's week starts on (`weekStartOf`).
+  final int firstWeekday;
+
+  /// The first day of [anchor]'s week, in the reader's week.
+  DateTime get weekStart => startOfWeek(anchor, firstWeekday);
 
   /// The first day the FEED loads.
   DateTime get from => switch (view) {
@@ -46,15 +53,18 @@ class CalendarSelection {
   /// The arrows: 30 days on the agenda, a week, a month.
   CalendarSelection shifted(int steps) => switch (view) {
         CalendarView.agenda => CalendarSelection(
+            firstWeekday: firstWeekday,
             view: view,
             anchor: DateTime(anchor.year, anchor.month,
                 anchor.day + steps * calendarAgendaDays),
           ),
         CalendarView.week => CalendarSelection(
+            firstWeekday: firstWeekday,
             view: view,
             anchor: DateTime(anchor.year, anchor.month, anchor.day + 7 * steps),
           ),
         CalendarView.month => CalendarSelection(
+            firstWeekday: firstWeekday,
             view: view,
             // Keep the day of month where the month has it, else its last.
             anchor: _sameDayInMonth(anchor, steps),
@@ -68,10 +78,19 @@ class CalendarSelection {
   }
 
   CalendarSelection withView(CalendarView next) =>
-      CalendarSelection(view: next, anchor: anchor);
+      CalendarSelection(view: next, anchor: anchor, firstWeekday: firstWeekday);
+
+  /// The same selection read in another week (the reader changed theirs).
+  CalendarSelection withFirstWeekday(int next) => next == firstWeekday
+      ? this
+      : CalendarSelection(view: view, anchor: anchor, firstWeekday: next);
 
   CalendarSelection withAnchor(DateTime next) =>
-      CalendarSelection(view: view, anchor: DateTime(next.year, next.month, next.day));
+      CalendarSelection(
+        view: view,
+        anchor: DateTime(next.year, next.month, next.day),
+        firstWeekday: firstWeekday,
+      );
 
   /// Half-open UTC bounds of [from]..[to] on the workspace clock — what
   /// the query sends (#490).

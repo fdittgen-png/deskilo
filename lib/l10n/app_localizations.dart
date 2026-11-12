@@ -40058,6 +40058,18 @@ abstract class AppLocalizations {
   /// **'Region & formats'**
   String get regionalFormatsTitle;
 
+  /// #3648 - the Me > Region & formats row that chooses the first day of the week in every calendar, strip and date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Week starts on'**
+  String get regionalWeekStart;
+
+  /// #3648 - the week-start choice that follows the format region (the day names of the other choices come from the locale)
+  ///
+  /// In en, this message translates to:
+  /// **'As the region does'**
+  String get regionalWeekStartAuto;
+
   /// Shown as the label of a field in register payment sheet (money).
   ///
   /// In en, this message translates to:

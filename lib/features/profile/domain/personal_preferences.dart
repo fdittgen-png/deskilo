@@ -7,6 +7,8 @@ abstract final class PersonalPreference {
   static const formatLocale = 'format_locale';
   static const clock = 'clock';
   static const timeZoneMode = 'time_zone_mode';
+  /// #3648 — 'locale', 'monday', 'sunday' or 'saturday'.
+  static const weekStart = 'week_start';
   static const documentLocale = 'preferred_locale';
   static const uiLocale = 'ui_locale';
   static const theme = 'theme';
@@ -16,7 +18,7 @@ abstract final class PersonalPreference {
   /// Whether [documentLocale] (letters and notifications) follows the
   /// interface language or was chosen on its own; a personal default only.
   static const documentLocaleMode = 'document_locale_mode';
-  static const keys = {formatLocale, clock, timeZoneMode, documentLocale, uiLocale, theme, paymentProvider, privateValues, documentLocaleMode};
+  static const keys = {formatLocale, clock, timeZoneMode, weekStart, documentLocale, uiLocale, theme, paymentProvider, privateValues, documentLocaleMode};
   /// The keys a business may hold its own exception of (the reset clears them).
   static Set<String> get workspaceKeys => keys.difference({documentLocaleMode});
 }

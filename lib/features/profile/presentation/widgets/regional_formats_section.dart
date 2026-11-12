@@ -170,12 +170,72 @@ class RegionalFormatsScreen extends ConsumerWidget {
               timeZoneMode: on ? TimeZoneMode.device : TimeZoneMode.workspace,
             )),
           ),
+          // #3648 — the first day of the week, in every grid, strip and picker.
+          HelpRow(
+            key: const ValueKey('regional-week-start'),
+            leading: const Icon(Icons.calendar_view_week_outlined),
+            title: l10n.regionalWeekStart,
+            subtitle: Text(_weekStartLabel(l10n, format, prefs.weekStart)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _pickWeekStart(context, l10n, format, prefs, save),
+          ),
           // #3647 — its own preference, on the account: the interface
           // language no longer decides it once the person chose one.
           const DocumentLanguageTile(),
         ],
       ),
     );
+  }
+
+  /// "Monday" in the format locale, or the region-follows label.
+  String _weekStartLabel(
+    AppLocalizations l10n,
+    AppFormat format,
+    WeekStartPref pref,
+  ) {
+    final day = pref.isoWeekday;
+    if (day == null) return l10n.regionalWeekStartAuto;
+    // 2024-01-01 is a Monday: the day of month is the ISO weekday.
+    return format.dates(DateShape.weekdayLong).format(DateTime(2024, 1, day));
+  }
+
+  Future<void> _pickWeekStart(
+    BuildContext context,
+    AppLocalizations l10n,
+    AppFormat format,
+    FormatPrefs prefs,
+    Future<void> Function(FormatPrefs) save,
+  ) async {
+    final picked = await showAppSheet<WeekStartPref>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: AppSpacing.lgAll,
+              child: Text(
+                l10n.regionalWeekStart,
+                style: Theme.of(sheetContext).textTheme.titleMedium,
+              ),
+            ),
+            for (final pref in WeekStartPref.values)
+              ListTile(
+                key: ValueKey('regional-week-start-option-${pref.wire}'),
+                title: Text(_weekStartLabel(l10n, format, pref)),
+                trailing: prefs.weekStart == pref
+                    ? Icon(Icons.check,
+                        color: Theme.of(sheetContext).colorScheme.primary)
+                    : null,
+                selected: prefs.weekStart == pref,
+                onTap: () => Navigator.of(sheetContext).pop(pref),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (picked == null) return;
+    await save(prefs.copyWith(weekStart: picked));
   }
 
   /// The format list as a sheet of rows with a check mark — #713 words,

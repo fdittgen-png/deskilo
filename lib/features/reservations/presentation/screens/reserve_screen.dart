@@ -10,6 +10,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
@@ -242,7 +243,7 @@ class _ReserveScreenState extends ConsumerState<ReserveScreen>
   }
 
   Future<void> _pickDate() async {
-    final picked = await showDatePicker(
+    final picked = await showAppDatePicker(
       context: context,
       initialDate: _selectedDay,
       firstDate: _today,

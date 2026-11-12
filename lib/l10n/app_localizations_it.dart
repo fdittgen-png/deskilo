@@ -24830,6 +24830,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get regionalFormatsTitle => 'Regione e formati';
 
   @override
+  String get regionalWeekStart => 'La settimana inizia il';
+
+  @override
+  String get regionalWeekStartAuto => 'Come la regione';
+
+  @override
   String get registerPaymentAmount => 'Importo';
 
   @override

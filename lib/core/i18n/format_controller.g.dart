@@ -189,7 +189,7 @@ final class PersonalFormatProvider
   }
 }
 
-String _$personalFormatHash() => r'b9145362454cc5b8b06e7f0d8b4729d57170eb62';
+String _$personalFormatHash() => r'b082a0206e7175e73a946e46da7e3cddd52103ba';
 
 /// The open business's format for the signed-in member (#711): their
 /// format locale (or the shown language with the business's country), the
@@ -256,4 +256,4 @@ final class BusinessFormatProvider
   }
 }
 
-String _$businessFormatHash() => r'8a2d5d9451c1f78cdbd62ed30dca25d57343fcd2';
+String _$businessFormatHash() => r'05f8ea701b7e694c0079b5917984787ba23e4bd7';

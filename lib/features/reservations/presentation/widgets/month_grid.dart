@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -30,7 +31,7 @@ abstract final class MonthGridMetrics {
 /// today ring. Tapping a day selects it and (via [onDaySelected]) drills
 /// into the Day view where occupants are named. Leading/trailing days of
 /// the neighbouring months render muted and are not selectable, so the
-/// grid always shows whole Monday–Sunday weeks.
+/// grid always shows whole weeks from the reader's first day.
 class MonthGrid extends ConsumerWidget {
   const MonthGrid({
     required this.selectedDay,
@@ -103,8 +104,8 @@ class MonthGrid extends ConsumerWidget {
     final first = DateTime(selectedDay.year, selectedDay.month);
     final daysInMonth =
         DateTime(selectedDay.year, selectedDay.month + 1, 0).day;
-    // Monday-based leading blanks so weeks read Mon–Sun.
-    final leading = first.weekday - 1;
+    // Leading blanks so weeks start on the reader's first day.
+    final leading = weekColumnOf(first, weekStartOf(appFormatOf(context)));
     final cells = <DateTime>[];
     for (var i = 0; i < leading; i++) {
       cells.add(DateTime(first.year, first.month, i - leading + 1));
@@ -135,8 +136,8 @@ class MonthGrid extends ConsumerWidget {
                 Expanded(
                   child: Center(
                     child: Text(
-                      // 2026-06-01 is a Monday: index the weekday labels.
-                      weekdayFormat.format(DateTime(2026, 6, 1 + w)),
+                      // The first row's own days, so the names follow the grid.
+                      weekdayFormat.format(cells[w]),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
