@@ -15,6 +15,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -259,7 +260,8 @@ class BiModuleSection extends ConsumerWidget {
     final result = unsupported.isEmpty ? ref.watch(provider) : null;
     return Card(
       key: ValueKey('bi-module-${module.id}'),
-      margin: AppSpacing.mdAll,
+      // The page's grid spaces the analyses.
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: AppSpacing.mdAll,
         child: Column(
@@ -337,6 +339,31 @@ class BiModuleSection extends ConsumerWidget {
   );
 }
 
+/// The comparison with the period before, after the sign of the change
+/// said in words, not by colour.
+class _ComparedLine extends StatelessWidget {
+  const _ComparedLine({required this.change, required this.text});
+
+  final BiChange change;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final direction = KpiTrendDirection.of(
+      change.points ?? change.absolute ?? change.relative,
+    );
+    return Row(
+      children: [
+        if (direction != null) ...[
+          KpiTrendMark(direction),
+          const SizedBox(width: AppSpacing.xs),
+        ],
+        Flexible(child: Text(text, key: const ValueKey('bi-compared'))),
+      ],
+    );
+  }
+}
+
 class _Result extends ConsumerWidget {
   const _Result({
     required this.module,
@@ -405,18 +432,13 @@ class _Result extends ConsumerWidget {
           CapacityEvidence(kpi: k),
         Text(view.basis(total.current, l10n, locale)),
         if (comparedPeriod != null && compared != null)
-          Text(
-            l10n.biComparedLine(
-                  comparedLabel,
-                  view.value(compared.value(agg), locale, result.currency),
-                  biChangeLabel(
-                    changeOf(total, agg),
-                    l10n,
-                    locale,
-                    format: amount,
-                  ),
-                ),
-            key: const ValueKey('bi-compared'),
+          _ComparedLine(
+            change: changeOf(total, agg),
+            text: l10n.biComparedLine(
+              comparedLabel,
+              view.value(compared.value(agg), locale, result.currency),
+              biChangeLabel(changeOf(total, agg), l10n, locale, format: amount),
+            ),
           ),
         ],
         for (final note in notes)

@@ -32,7 +32,6 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/address_window.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -47,17 +46,16 @@ import 'period_label.dart';
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
 import 'report_layout_actions.dart';
-import 'report_layout_defaults.dart';
 import 'report_strings_l10n.dart';
 import 'swiss_qr_page.dart';
 
 // #3742 — the documents' policies, read before any of them is drawn.
 export 'document_policies.dart' show readDocumentPolicies;
-
 export 'invoice_reminder_letter.dart';
 export 'letter_doc_pdf.dart';
 export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
 export 'report_image_resolve.dart' show resolveReportImages;
+
 /// Renders the signed PDF. Every context-derived value is captured BEFORE
 /// the first await (use_build_context_synchronously).
 /// The active workspace's PDF template (#454) — empty when the
@@ -196,6 +194,7 @@ String developmentMark(BuildContext context, WidgetRef ref) =>
         ? (context.l10n.developmentWatermark)
         : '';
 
+
 /// What [buildInvoicePdfFile] renders besides the invoice itself.
 class InvoicePdfFileOptions {
   const InvoicePdfFileOptions({
@@ -212,7 +211,14 @@ class InvoicePdfFileOptions {
     this.memberTerms,
     this.dueAt,
     this.memberCapacity,
+    this.language = '',
   });
+
+  /// #3673 — the language the document is printed in: '' for the
+  /// interface's (share, download and print, as before), else a supported
+  /// language code (the e-mail passes the customer's document language).
+  /// The template's texts, the words, the dates and the amounts follow it.
+  final String language;
 
   /// The workspace's own tax reference the document's mentions are stated on.
   final TaxReferenceSet reference;
@@ -248,44 +254,6 @@ class InvoicePdfFileOptions {
   final String? memberCapacity;
 }
 
-/// A positioned layout wins over bands. A proforma without a layout of its
-/// own borrows the invoice's, as it borrows its bands. Annexes stay banded
-/// — they are documentation appended behind, and the layout engine renders
-/// one document. Undesigned documents use the enabled letter standard.
-String? _layoutXmlOf(
-  BuildContext context,
-  Invoice invoice,
-  InvoicePdfFileOptions options,
-  Set<WorkspaceFeature> features,
-) {
-  final template = options.template;
-  final workspace = options.workspace;
-  final letterStandard = features.contains(WorkspaceFeature.letterStandard);
-  if (!features.contains(WorkspaceFeature.reportLayouts) ||
-      options.annexInvoices.isNotEmpty) {
-    return null;
-  }
-  String? standard() => resolveLayoutXmlFor(
-    template: template,
-    kindId: 'invoice',
-    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
-    letterStandard: letterStandard,
-    l10n: context.l10n,
-  );
-  return options.proforma ? (template.layoutFor('proforma') ?? standard()) : standard();
-}
-
-/// #869 — the envelope window: the template's explicit choice wins,
-/// otherwise the seller's country decides the side. Off entirely when
-/// the workspace has not enabled the feature.
-AddressWindow _addressWindowOf(
-  InvoicePdfFileOptions options,
-  Set<WorkspaceFeature> features,
-) => features.contains(WorkspaceFeature.invoiceAddressWindow)
-    ? (options.template.addressWindow ??
-          addressWindowForCountry(options.workspace?.countryCode ?? ''))
-    : AddressWindow.off;
-
 Future<pw.Font> _asset(String asset) async =>
     pw.Font.ttf(await rootBundle.load(asset));
 
@@ -294,15 +262,22 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Invoice invoice,
   InvoicePdfFileOptions options,
 ) async {
-  final l10n = context.l10n;
+  // #3673 — the document's language: the caller's, or the interface's.
+  final language = options.language;
+  final named = language.isNotEmpty;
+  final l10n = named ? l10nForLanguage(language) : context.l10n;
+  final localeName = named ? language : null;
   final proforma = options.proforma;
-  final template = options.template;
+  final template =
+      named ? options.template.forLocale(language) : options.template;
   final workspace = options.workspace;
   // #3484 — read before the awaits: the document's amounts spell in it.
-  final formatLocale = appFormatOf(context).locale;
-  final periodLabel = invoicePeriodLabel(context, invoice);
+  final formatLocale = named ? language : appFormatOf(context).locale;
+  final periodLabel = named
+      ? invoicePeriodLabelOf(language, invoice)
+      : invoicePeriodLabel(context, invoice);
   final reportData = invoiceReportData(
-    reportStringsFor(context),
+    reportStringsFor(context, l10n: l10n, localeName: localeName),
     invoice,
     memberTerms: options.memberTerms,
     proforma: proforma,
@@ -325,6 +300,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     invoice,
     settledIn: options.settledIn,
     development: workspace?.isDevelopment ?? false,
+    l10n: l10n,
+    localeName: localeName,
   );
   // A proforma is named after what it covers — it has no number to be
   // filed under, and must never sit in a folder looking like the invoice.
@@ -334,11 +311,18 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
-  final layoutXml = _layoutXmlOf(context, invoice, options, features);
+  final layoutXml = invoiceLayoutXmlOf(invoice, options, template, features, l10n);
   final dateFormat = DateFormat.yMMMd(
-    Localizations.maybeLocaleOf(context)?.toString(),
+    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
-  final annexes = invoiceAnnexesOf(context, invoice, options.annexInvoices, dateFormat);
+  final annexes = invoiceAnnexesOf(
+    context,
+    invoice,
+    options.annexInvoices,
+    dateFormat,
+    l10n: l10n,
+    localeName: localeName,
+  );
   // #2360 — a Swiss seller's invoice ends on the QR-bill its customer pays with.
   final qrPage = await swissQrPageFor(
     l10n,
@@ -377,7 +361,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
-    addressWindow: _addressWindowOf(options, features),
+    addressWindow: invoiceAddressWindowOf(options, features),
     invoice: invoice,
     reportImages: reportImages,
     lineText: (line) => invoiceLineText(words, line,
@@ -484,13 +468,18 @@ bool rendersCopy(WidgetRef ref) {
 /// device offers.
 /// #831 — the watermark of a regrouped source: "Regrouped in INV-…", or
 /// '' for every other document.
-String settledStampOf(BuildContext context, WidgetRef ref, Invoice invoice) {
+String settledStampOf(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  AppLocalizations? l10n,
+}) {
   if (!invoice.isFolded) return '';
-  final l10n = context.l10n;
+  final words = l10n ?? context.l10n;
   final number = settledByNumberOf(
     invoice,
     // #3680 — a settled stamp is printed from the archive as read.
     ref.read(invoicesProvider).requireValue,
   );
-  return l10n.invoicePdfSettledIn(number);
+  return words.invoicePdfSettledIn(number);
 }

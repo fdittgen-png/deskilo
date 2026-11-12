@@ -74,7 +74,7 @@ List<String> _crumbs(WidgetTester tester) => [
 ];
 
 String _windowTitle(WidgetTester tester) =>
-    tester.widget<Title>(find.byType(Title).last).title;
+    tester.widget<Title>(find.byKey(const ValueKey('window-title'))).title;
 
 void main() {
   // The five pages of the acceptance, each with the entry it is reached from.
@@ -105,7 +105,7 @@ void main() {
           )
           .data!;
       expect(_crumbs(tester).last, label);
-      expect(_windowTitle(tester), '$label — Test Space');
+      expect(_windowTitle(tester), '$label — Test Space — DesKilo');
       expect(tester.takeException(), isNull);
     });
   }
@@ -155,7 +155,8 @@ void main() {
         .where((t) => t.selected);
     expect(selected, isEmpty);
     expect(_crumbs(tester), isEmpty);
-    expect(_windowTitle(tester), 'Test Space');
+    // No place: the app's name alone (#3605).
+    expect(_windowTitle(tester), 'DesKilo');
     expect(tester.takeException(), isNull);
   });
 

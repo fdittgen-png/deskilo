@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// A report page as its readers see it: the visuals in reading order on a
-// discrete responsive grid (12 columns wide, 4 medium, 1 compact), each a
-// card that answers its own registered figure. The editor draws the same
+// A report page as its readers see it: the visuals in reading order on the
+// dashboard grid (as many of its twelve columns as the canvas' own width
+// holds; a visual never narrower than it can be read), each a card that
+// answers its own registered figure. The editor draws the same
 // canvas, with a selection frame and keyboard moves on the cards.
 //   * only the page on screen is read; two visuals of the same figure and
 //     grouping are one provider, so one answer;
@@ -17,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_report_definition.dart';
 import '../../domain/bi_report_rules.dart';
@@ -25,12 +27,14 @@ import '../widgets/bi_module_section.dart' show biModuleViews;
 import 'bi_report_labels.dart';
 import 'bi_report_visual_body.dart';
 
-/// The grid's column counts and the width each needs.
-const _wideColumns = 12, _mediumColumns = 4;
-// content-fit: twelve columns need this room for a readable tile each
-const _wideWidth = 960.0;
-// content-fit: four columns need this room for a readable tile each
-const _mediumWidth = 560.0;
+/// The narrowest one of the canvas' twelve columns is drawn.
+// content-fit: a twelfth of the canvas holds the edge of a card and no less
+const double _cellMinWidth = 80;
+
+/// The narrowest a visual is drawn, whatever its span: it takes more
+/// columns, up to the whole row, before its figure is cut.
+// content-fit: a visual's card holds its title and its figure on one line
+const double _visualMinWidth = 280;
 
 /// The height of one grid row; a card grows past it when its text does.
 const _rowHeight = 72.0;
@@ -92,18 +96,23 @@ class BiReportCanvas extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final columns = width >= _wideWidth
-            ? _wideColumns
-            : width >= _mediumWidth
-            ? _mediumColumns
-            : 1;
+        const twelfths = BiVisualLayout.maxSpan;
+        final columns = dashboardColumns(
+          width,
+          minTileWidth: _cellMinWidth,
+          maxColumns: twelfths,
+        );
+        // The visual's share of the twelve columns, widened until it reads.
+        final readable =
+            ((_visualMinWidth + dashboardGap) * columns / (width + dashboardGap))
+                .ceil();
         double widthOf(BiReportVisual v) {
-          final cells = switch (columns) {
-            _wideColumns => v.layout.span,
-            _mediumColumns => (v.layout.span / 3).ceil().clamp(1, columns),
-            _ => 1,
-          };
-          return (width + AppSpacing.sm) * cells / columns - AppSpacing.sm;
+          final share = (v.layout.span * columns / twelfths).ceil();
+          return dashboardTileWidth(
+            width,
+            columns,
+            share < readable ? readable : share,
+          );
         }
 
         return Column(
@@ -133,8 +142,8 @@ class BiReportCanvas extends StatelessWidget {
                 policy: OrderedTraversalPolicy(),
                 child: Wrap(
                   key: ValueKey('bi-canvas-${p.id}'),
-                  spacing: AppSpacing.sm,
-                  runSpacing: AppSpacing.sm,
+                  spacing: dashboardGap,
+                  runSpacing: dashboardGap,
                   children: [
                     for (final (i, v) in visuals.indexed)
                       FocusTraversalOrder(

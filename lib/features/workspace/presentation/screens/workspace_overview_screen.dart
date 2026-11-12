@@ -24,6 +24,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/attention.dart';
 import '../../domain/bi_modules.dart';
@@ -259,9 +260,9 @@ class _Grouped extends StatelessWidget {
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
+          DashboardGrid(
+            key: ValueKey('overview-grid-${group.name}'),
+            minTileWidth: kpiTileMinWidth,
             children: [
               for (final m in inGroup)
                 _IndicatorTile(workspaceId: workspaceId, module: m),
@@ -288,10 +289,9 @@ class _Pinned extends StatelessWidget {
             context.l10n.overviewNoPinned,
             key: const ValueKey('overview-pinned-empty'),
           )
-        : Wrap(
+        : DashboardGrid(
             key: const ValueKey('overview-pinned'),
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
+            minTileWidth: kpiTileMinWidth,
             children: [
               for (final m in modules)
                 _IndicatorTile(
@@ -370,40 +370,14 @@ class _IndicatorTile extends ConsumerWidget {
       AsyncData() || AsyncError() => l10n.overviewUnavailable,
       _ => '…',
     };
-    return SizedBox(
-      width: 168,
-      child: Card(
-        key: ValueKey('overview-tile-${module.id}'),
-        margin: EdgeInsets.zero,
-        child: InkWell(
-          key: ValueKey('overview-open-${module.id}'),
-          onTap: () => context.push('/bi'),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.sm),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  view.title(l10n),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  value,
-                  key: ValueKey('overview-value-${module.id}'),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text(
-                  l10n.overviewThisMonth,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return KpiTile(
+      key: ValueKey('overview-tile-${module.id}'),
+      tapKey: ValueKey('overview-open-${module.id}'),
+      figureKey: ValueKey('overview-value-${module.id}'),
+      label: view.title(l10n),
+      figure: value,
+      note: l10n.overviewThisMonth,
+      onTap: () => context.push('/bi'),
     );
   }
 }

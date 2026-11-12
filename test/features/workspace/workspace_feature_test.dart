@@ -66,6 +66,7 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.guestPasses,
   // #3673 — reminders by e-mail are asked for.
   WorkspaceFeature.reminderEmail,
+  WorkspaceFeature.invoiceEmail,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -231,6 +232,7 @@ void main() {
       'purchaseOrders': true,
       'guestPasses': true,
       'reminderEmail': true,
+      'invoiceEmail': true,
       'guestParticipation': true,
     });
 

@@ -1,0 +1,99 @@
+{
+  "@@locale": "de",
+  "invoiceEmailTextOwed": "Anbei finden Sie die Rechnung {number}. Noch offener Betrag: {amount}.",
+  "@invoiceEmailTextOwed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwed",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwedBy": "Anbei finden Sie die Rechnung {number}. Noch offener Betrag: {amount}, fällig am {due}.",
+  "@invoiceEmailTextOwedBy": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwedBy",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextPaid": "Anbei finden Sie die Rechnung {number} über {amount}. Sie ist bezahlt: Es ist nichts offen.",
+  "@invoiceEmailTextPaid": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextPaid",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextCredit": "Anbei finden Sie die Gutschrift {number} über {amount}.",
+  "@invoiceEmailTextCredit": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextCredit",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailHeading": "Per E-Mail",
+  "@invoiceEmailHeading": {
+    "description": "#3673 invoices by e-mail: invoiceEmailHeading"
+  },
+  "invoiceEmailSendAgain": "Erneut senden",
+  "@invoiceEmailSendAgain": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSendAgain"
+  },
+  "invoiceEmailSentOn": "Am {date} per E-Mail an {recipient} gesendet",
+  "@invoiceEmailSentOn": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSentOn",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailVoided": "Eine stornierte Rechnung wird nicht per E-Mail gesendet",
+  "@invoiceEmailVoided": {
+    "description": "#3673 invoices by e-mail: invoiceEmailVoided"
+  },
+  "invoiceEmailRefused": "Die E-Mail wurde abgelehnt: {reason}. Nichts wurde gesendet.",
+  "@invoiceEmailRefused": {
+    "description": "#3673 invoices by e-mail: invoiceEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailUnconfirmed": "Keine bestätigte Antwort. Klären Sie mit dem Kunden, ob sie angekommen ist, bevor Sie entscheiden.",
+  "@invoiceEmailUnconfirmed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailUnconfirmed"
+  },
+  "invoiceEmailFailed": "Die Rechnung konnte nicht per E-Mail gesendet werden. Nichts wurde gesendet.",
+  "@invoiceEmailFailed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailFailed"
+  },
+  "invoiceEmailNoLanguage": "Die Dokumentsprache des Kunden ist unbekannt, daher wurde die Rechnung nicht per E-Mail gesendet. Wählen Sie seine Sprache oder teilen Sie die Rechnung.",
+  "@invoiceEmailNoLanguage": {
+    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
+  }
+}

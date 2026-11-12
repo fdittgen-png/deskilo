@@ -6889,6 +6889,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'En baisse';
+
+  @override
+  String get dashboardTrendFlat => 'Inchangé';
+
+  @override
+  String get dashboardTrendUp => 'En hausse';
+
+  @override
   String get dataReportArchived => 'Archivé';
 
   @override
@@ -7413,11 +7422,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deskSupplementLabel => 'Réservations de table';
-
-  @override
-  String deskWindowTitle(String place, String business) {
-    return '$place — $business';
-  }
 
   @override
   String get developerClear => 'Vider le journal';
@@ -10511,6 +10515,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get featureInvoiceAddressWindowDesc =>
       'Place le destinataire à l\'endroit qu\'une enveloppe à fenêtre laisse voir, pour qu\'une facture imprimée puisse être pliée et postée. Le côté suit le pays et reste modifiable.';
+
+  @override
+  String get featureInvoiceEmailDesc =>
+      'Une facture émise peut être envoyée par e-mail depuis le serveur, avec l\'expéditeur de l\'entreprise, à l\'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant.';
+
+  @override
+  String get featureInvoiceEmailTitle => 'Factures par e-mail';
 
   @override
   String get featureInvoiceJourneyDesc =>
@@ -14300,6 +14311,58 @@ class AppLocalizationsFr extends AppLocalizations {
   String invoiceEInvoiceValidated(String validator) {
     return 'Prêt — rien de ce qu’exige la norme EN 16931 ne manque, et ce format passe le validateur officiel ($validator).';
   }
+
+  @override
+  String get invoiceEmailFailed =>
+      'La facture n\'a pas pu être envoyée par e-mail. Rien n\'a été envoyé.';
+
+  @override
+  String get invoiceEmailHeading => 'Par e-mail';
+
+  @override
+  String get invoiceEmailNoLanguage =>
+      'La langue des documents du client n\'est pas connue : la facture n\'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la facture.';
+
+  @override
+  String invoiceEmailRefused(String reason) {
+    return 'L\'e-mail a été refusé : $reason. Rien n\'a été envoyé.';
+  }
+
+  @override
+  String get invoiceEmailSendAgain => 'Renvoyer';
+
+  @override
+  String invoiceEmailSentOn(String recipient, String date) {
+    return 'Envoyée par e-mail à $recipient le $date';
+  }
+
+  @override
+  String invoiceEmailTextCredit(String number, String amount) {
+    return 'Veuillez trouver ci-joint l\'avoir $number de $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwed(String number, String amount) {
+    return 'Veuillez trouver ci-joint la facture $number. Montant restant dû : $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwedBy(String number, String amount, String due) {
+    return 'Veuillez trouver ci-joint la facture $number. Montant restant dû : $amount, à régler au plus tard le $due.';
+  }
+
+  @override
+  String invoiceEmailTextPaid(String number, String amount) {
+    return 'Veuillez trouver ci-joint la facture $number de $amount. Elle est réglée : rien n\'est dû.';
+  }
+
+  @override
+  String get invoiceEmailUnconfirmed =>
+      'Aucune réponse confirmée. Vérifiez auprès du client avant de décider si elle est arrivée.';
+
+  @override
+  String get invoiceEmailVoided =>
+      'Une facture annulée n\'est pas envoyée par e-mail';
 
   @override
   String get invoiceEssentialsRefused =>
@@ -34769,6 +34832,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String windowTitle(String place, String business, String app) {
+    return '$place — $business — $app';
+  }
+
+  @override
+  String windowTitleNoBusiness(String place, String app) {
+    return '$place — $app';
+  }
 
   @override
   String get wizardBack => 'Retour';

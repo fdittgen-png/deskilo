@@ -32,6 +32,31 @@ import 'report_facts_of.dart';
 import 'report_image_resolve.dart';
 import 'report_strings_l10n.dart';
 
+/// The document language of [invoice]'s customer (#496): their preference
+/// → workspace language → country language; '' when it cannot be decided,
+/// and nothing is e-mailed on that guess (#3673). The reminder letter and
+/// the invoice by e-mail resolve it here, the same way.
+Future<String> customerDocumentLanguage(WidgetRef ref, Invoice invoice) async {
+  try {
+    // #3680 — the language comes from the members as read; a read that did
+    // not answer fails the document instead of choosing a language blindly.
+    // #3742 — awaited: a read still running is not a failure.
+    final members = await ref.read(workspaceMembersProvider.future);
+    final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
+    final userId = member?.userId;
+    final profile = userId == null
+        ? null
+        : ref.read(memberProfilesProvider).value?[userId];
+    return resolveMemberReportLanguage(
+      ref,
+      memberLocale:
+          member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
+    );
+  } on AmbiguousReportLanguage {
+    return '';
+  }
+}
+
 /// The reminder letter of [invoice] at [level], rendered (#472): the owner's
 /// band set for that level, else the shipped localized default, in the
 /// member's language (#496). A broken custom band set falls back to the
@@ -49,28 +74,9 @@ reminderLetterReport(
   required TaxReferenceSet reference,
   ReportBands? draftBands,
 }) async {
-  // #496 — the reminder letter prints in the MEMBER's language (their
-  // preference → workspace language → country language).
-  var language = '';
-  try {
-    // #3680 — the language comes from the members as read; a read that did
-    // not answer fails the letter instead of choosing a language blindly.
-    // #3742 — awaited: a read still running is not a failure.
-    final members = await ref.read(workspaceMembersProvider.future);
-    if (!context.mounted) throw StateError('the letter was left');
-    final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
-    final userId = member?.userId;
-    final profile = userId == null
-        ? null
-        : ref.read(memberProfilesProvider).value?[userId];
-    language = resolveMemberReportLanguage(
-      ref,
-      memberLocale:
-          member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
-    );
-  } on AmbiguousReportLanguage {
-    language = '';
-  }
+  // #496 — the reminder letter prints in the MEMBER's language.
+  final language = await customerDocumentLanguage(ref, invoice);
+  if (!context.mounted) throw StateError('the letter was left');
   final l10n = language.isEmpty ? context.l10n : l10nForLanguage(language);
   final title = level <= 1
       ? (l10n.reminderPdfTitleFriendly)

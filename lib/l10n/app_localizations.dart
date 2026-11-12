@@ -10895,6 +10895,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
   String customerStoryReminders(int count, String number);
 
+  /// Said by a screen reader for the arrow beside a figure's change: the figure fell since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Down'**
+  String get dashboardTrendDown;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure is the same as in the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Unchanged'**
+  String get dashboardTrendFlat;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure rose since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Up'**
+  String get dashboardTrendUp;
+
   /// #2862 data report: dataReportArchived
   ///
   /// In en, this message translates to:
@@ -11806,12 +11824,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Desk reservations'**
   String get deskSupplementLabel;
-
-  /// #3773 the desk window's (or browser tab's) title: the place on screen, then the business; a language may order them
-  ///
-  /// In en, this message translates to:
-  /// **'{place} — {business}'**
-  String deskWindowTitle(String place, String business);
 
   /// App-bar action emptying the trace buffer and file
   ///
@@ -17042,6 +17054,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place the recipient where a window envelope shows it, so a printed invoice can be folded and posted. The side follows the country and can be overridden.'**
   String get featureInvoiceAddressWindowDesc;
+
+  /// #3673 feature switch: featureInvoiceEmailDesc
+  ///
+  /// In en, this message translates to:
+  /// **'An issued invoice can be sent by e-mail from the server, with the business\'s own sender, to the customer\'s contact address, in the customer\'s document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before.'**
+  String get featureInvoiceEmailDesc;
+
+  /// #3673 feature switch: featureInvoiceEmailTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices by e-mail'**
+  String get featureInvoiceEmailTitle;
 
   /// Shown as a text in feature copy (workspace).
   ///
@@ -23000,6 +23024,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ready — nothing EN 16931 requires is missing, and this format passes the official validator ({validator}).'**
   String invoiceEInvoiceValidated(String validator);
+
+  /// #3673 invoices by e-mail: invoiceEmailFailed
+  ///
+  /// In en, this message translates to:
+  /// **'The invoice could not be e-mailed. Nothing was sent.'**
+  String get invoiceEmailFailed;
+
+  /// #3673 invoices by e-mail: invoiceEmailHeading
+  ///
+  /// In en, this message translates to:
+  /// **'By e-mail'**
+  String get invoiceEmailHeading;
+
+  /// #3673 invoices by e-mail: invoiceEmailNoLanguage
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s document language is not known, so the invoice was not e-mailed. Choose their language, or share the invoice.'**
+  String get invoiceEmailNoLanguage;
+
+  /// #3673 invoices by e-mail: invoiceEmailRefused
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail was refused: {reason}. Nothing was sent.'**
+  String invoiceEmailRefused(String reason);
+
+  /// #3673 invoices by e-mail: invoiceEmailSendAgain
+  ///
+  /// In en, this message translates to:
+  /// **'Send again'**
+  String get invoiceEmailSendAgain;
+
+  /// #3673 invoices by e-mail: invoiceEmailSentOn
+  ///
+  /// In en, this message translates to:
+  /// **'E-mailed to {recipient} on {date}'**
+  String invoiceEmailSentOn(String recipient, String date);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextCredit
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached credit note {number} for {amount}.'**
+  String invoiceEmailTextCredit(String number, String amount);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextOwed
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached invoice {number}. Amount still owed: {amount}.'**
+  String invoiceEmailTextOwed(String number, String amount);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextOwedBy
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached invoice {number}. Amount still owed: {amount}, due on {due}.'**
+  String invoiceEmailTextOwedBy(String number, String amount, String due);
+
+  /// #3673 invoices by e-mail: invoiceEmailTextPaid
+  ///
+  /// In en, this message translates to:
+  /// **'Please find attached invoice {number} for {amount}. It is paid: nothing is owed.'**
+  String invoiceEmailTextPaid(String number, String amount);
+
+  /// #3673 invoices by e-mail: invoiceEmailUnconfirmed
+  ///
+  /// In en, this message translates to:
+  /// **'No confirmed answer came back. Check with the customer before deciding whether it arrived.'**
+  String get invoiceEmailUnconfirmed;
+
+  /// #3673 invoices by e-mail: invoiceEmailVoided
+  ///
+  /// In en, this message translates to:
+  /// **'A voided invoice is not e-mailed'**
+  String get invoiceEmailVoided;
 
   /// #1916 invoice essentials: invoiceEssentialsRefused
   ///
@@ -56064,6 +56160,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WhatsApp'**
   String get whatsappTitle;
+
+  /// #3605 the window's (or browser tab's) title: the place on screen, the business, the app's name; a language may order them
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {business} — {app}'**
+  String windowTitle(String place, String business, String app);
+
+  /// #3605 the window's title for a place with no business selected: the place, the app's name
+  ///
+  /// In en, this message translates to:
+  /// **'{place} — {app}'**
+  String windowTitleNoBusiness(String place, String app);
 
   /// Shown as a button or chip label in wizard scaffold (core).
   ///
