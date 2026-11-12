@@ -19,5 +19,5 @@ String? vatRateSuffix({
       ? rates.where((r) => r.isDefault && r.active).firstOrNull
       : rates.where((r) => r.id == vatRateId).firstOrNull;
   if (rate == null || rate.percent <= 0) return null;
-  return format.rate(rate.percent);
+  return format.ratePercent(rate.percent);
 }

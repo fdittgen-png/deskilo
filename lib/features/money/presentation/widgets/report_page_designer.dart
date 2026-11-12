@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
@@ -85,7 +86,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
   final _footerKey = GlobalKey<ReportVisualEditorState>();
 
   /// '100 %' — a number, not a translatable phrase.
-  String _zoomLabel(double zoom) => '${(zoom * 100).round()} %';
+  String _zoomLabel(double zoom) => appFormatOf(context).fractionPercent(zoom);
 
   ReportBands get _bands => ReportBands(
         header: widget.header.text,

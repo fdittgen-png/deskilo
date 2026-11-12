@@ -62,12 +62,12 @@ void main() {
   });
 
   test('a VAT rate reads its label and its percentage in the locale', () {
-    expect(configVatRates('fr', [(label: 'Normal', percent: 20.0)]), [
-      'Normal — 20 %',
-    ]);
-    expect(configVatRates('fr', [(label: 'Réduit', percent: 5.5)]), [
-      'Réduit — 5,5 %',
-    ]);
+    String plain(List<String> l) =>
+        l.single.replaceAll(RegExp(r'[\u00A0\u202F]'), ' ');
+    expect(plain(configVatRates('fr', [(label: 'Normal', percent: 20.0)])),
+        'Normal — 20 %');
+    expect(plain(configVatRates('fr', [(label: 'Réduit', percent: 5.5)])),
+        'Réduit — 5,5 %');
   });
 
   test('a site reads its name and its address, without empty parts', () {

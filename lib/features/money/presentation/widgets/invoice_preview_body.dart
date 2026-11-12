@@ -115,7 +115,7 @@ class InvoicePreviewBody extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Text(
-                    l10n.vatPdfVatRate(appFormatOf(context).rate(total.percent)),
+                    l10n.vatPdfVatRate(appFormatOf(context).ratePercent(total.percent)),
                     style: hint,
                   ),
                 ),
