@@ -2247,7 +2247,7 @@ routine public.bank_original_workspace(p_name text) -> uuid | function | invoker
 routine public.bank_statement_lines_v1(p_statement_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4ba69858a780
 routine public.bank_statement_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:40e3eb8e6cf6
 routine public.bank_statements_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:dbd4baa5a18a
-routine public.begin_purchase_order_send_v1(p_workspace_id uuid, p_order_id uuid, p_revision integer, p_attempt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:af3d901632e5
+routine public.begin_purchase_order_send_v1(p_workspace_id uuid, p_order_id uuid, p_revision integer, p_attempt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8cfedcf371dd
 routine public.begin_reminder_email_v1(p_workspace_id uuid, p_invoice_id uuid, p_level integer, p_language text, p_attempt_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0222e8dbd5d3
 routine public.bi_batch_limit(p_workspace_id uuid) -> integer | function | definer | stable | exec:authenticated,service_role | body:5670ad62691e
 routine public.bi_batch_time_budget_ms(p_workspace_id uuid) -> integer | function | definer | stable | exec:service_role | body:b13385b30322

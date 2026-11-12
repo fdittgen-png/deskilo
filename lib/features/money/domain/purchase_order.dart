@@ -282,6 +282,13 @@ enum PurchaseOrderSendState {
       values.firstWhere((s) => s.wire == wire, orElse: () => pending);
 }
 
+/// #3774 — an earlier e-mail of this order has no confirmed outcome (it is
+/// unconfirmed, or pending past the bound): nothing was sent, and a person
+/// decides the earlier one first.
+class PurchaseOrderSendUndecided implements Exception {
+  const PurchaseOrderSendUndecided();
+}
+
 /// One e-mail attempt of an order (`purchase_order_sends`, 0683).
 class PurchaseOrderSend {
   const PurchaseOrderSend({

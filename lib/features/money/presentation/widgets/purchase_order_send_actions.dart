@@ -12,10 +12,12 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../application/purchase_order_commands.dart';
 import '../../domain/purchase_order.dart';
 import '../../providers/purchase_order_providers.dart';
+import '../mail_refusal_text.dart';
 import '../purchase_order_print.dart';
 
 class PurchaseOrderSendActions extends ConsumerWidget {
@@ -40,23 +42,43 @@ class PurchaseOrderSendActions extends ConsumerWidget {
     ).mail(workspaceId: workspaceId, order: order, letterhead: letterhead);
     if (mail == null || !context.mounted) return;
     PurchaseOrderSend? sent;
+    var undecided = false;
     await runGuarded(
       context,
       domain: 'money',
       message: 'purchase order e-mail failed',
       errorText: l10n.purchaseOrderRefused,
       action: () async {
-        sent = await ref
-            .read(purchaseOrderCommandsProvider)
-            .sendByEmail(workspaceId, order, newRequestId(), mail);
+        try {
+          sent = await ref
+              .read(purchaseOrderCommandsProvider)
+              .sendByEmail(workspaceId, order, newRequestId(), mail);
+        } on PurchaseOrderSendUndecided catch (e, st) {
+          // #3774 — nothing was sent: the earlier e-mail is decided first.
+          TraceLogger.instance.error(
+            'money',
+            'purchase order e-mail waits for a decision',
+            error: e,
+            stackTrace: st,
+          );
+          undecided = true;
+        }
       },
     );
     if (!context.mounted) return;
+    if (undecided) {
+      ref.invalidate(purchaseOrderSendsProvider(workspaceId));
+      AppSnack.error(context, l10n.purchaseOrderSendDecideFirst);
+      return;
+    }
     switch (sent) {
       case PurchaseOrderSend(state: PurchaseOrderSendState.accepted):
         AppSnack.info(context, l10n.purchaseOrderSentTo(sent!.recipient));
       case PurchaseOrderSend(state: PurchaseOrderSendState.refused):
-        AppSnack.error(context, l10n.purchaseOrderSendRefused(sent!.reason));
+        AppSnack.error(
+          context,
+          l10n.purchaseOrderSendRefused(mailRefusalText(l10n, sent!.reason)),
+        );
       case PurchaseOrderSend():
         AppSnack.error(context, l10n.purchaseOrderSendUnconfirmed);
       case null:
@@ -92,7 +114,10 @@ class PurchaseOrderSendActions extends ConsumerWidget {
       for (final s
           in ref.watch(purchaseOrderSendsProvider(workspaceId)).value ??
               const <PurchaseOrderSend>[])
-        if (s.orderId == order.id && s.awaitsDecision) s,
+        // #3774 — a pending one listed here has no outcome recorded either.
+        if (s.orderId == order.id &&
+            (s.awaitsDecision || s.state == PurchaseOrderSendState.pending))
+          s,
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

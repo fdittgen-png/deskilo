@@ -1,0 +1,33 @@
+{
+  "@@locale": "en",
+  "mailRefusalNoSender": "the business's e-mail sender was not set up",
+  "@mailRefusalNoSender": {
+    "description": "#3774 e-mail refusals: mailRefusalNoSender"
+  },
+  "mailRefusalInvalid": "an address or the attached letter was not valid",
+  "@mailRefusalInvalid": {
+    "description": "#3774 e-mail refusals: mailRefusalInvalid"
+  },
+  "mailRefusalProvider": "the e-mail provider answered {status}",
+  "@mailRefusalProvider": {
+    "description": "#3774 e-mail refusals: mailRefusalProvider",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "mailRefusalOther": "“{reason}”",
+  "@mailRefusalOther": {
+    "description": "#3774 e-mail refusals: mailRefusalOther",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "purchaseOrderSendDecideFirst": "An earlier e-mail of this order has no confirmed outcome. Say below whether it arrived before sending again.",
+  "@purchaseOrderSendDecideFirst": {
+    "description": "#3774 e-mail refusals: purchaseOrderSendDecideFirst"
+  }
+}

@@ -11217,6 +11217,32 @@
   "localSlotPaymentProvider": "Un proveedor de pagos en línea",
   "localSlotRecommended": "Recomendado",
   "localSlotSite": "Al menos una sede",
+  "mailRefusalInvalid": "una dirección o la carta adjunta no era válida",
+  "@mailRefusalInvalid": {
+    "description": "#3774 e-mail refusals: mailRefusalInvalid"
+  },
+  "mailRefusalNoSender": "el remitente de correo de la empresa no estaba configurado",
+  "@mailRefusalNoSender": {
+    "description": "#3774 e-mail refusals: mailRefusalNoSender"
+  },
+  "mailRefusalOther": "«{reason}»",
+  "@mailRefusalOther": {
+    "description": "#3774 e-mail refusals: mailRefusalOther",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "mailRefusalProvider": "el proveedor de correo respondió {status}",
+  "@mailRefusalProvider": {
+    "description": "#3774 e-mail refusals: mailRefusalProvider",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
   "managedAccessAdmins": "Admins",
   "@managedAccessAdmins": {
     "description": "#914 managed profile access: managedAccessAdmins"
@@ -13877,6 +13903,10 @@
   "purchaseOrderSave": "Guardar el borrador",
   "purchaseOrderSendArrived": "Llegó",
   "purchaseOrderSendAwaits": "Un correo a {recipient} no tiene un resultado confirmado. ¿Llegó?",
+  "purchaseOrderSendDecideFirst": "Un correo anterior de este pedido no tiene un resultado confirmado. Indique abajo si llegó antes de volver a enviar.",
+  "@purchaseOrderSendDecideFirst": {
+    "description": "#3774 e-mail refusals: purchaseOrderSendDecideFirst"
+  },
   "purchaseOrderSendEmail": "Enviar por correo",
   "purchaseOrderSendLost": "No llegó",
   "purchaseOrderSendRefused": "El correo fue rechazado: {reason}. El pedido sigue en borrador.",

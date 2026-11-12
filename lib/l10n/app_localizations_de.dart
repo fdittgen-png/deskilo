@@ -17597,6 +17597,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get localSlotSite => 'Mindestens ein Standort';
 
   @override
+  String get mailRefusalInvalid =>
+      'eine Adresse oder der angehängte Brief war ungültig';
+
+  @override
+  String get mailRefusalNoSender =>
+      'der E-Mail-Absender des Unternehmens war nicht eingerichtet';
+
+  @override
+  String mailRefusalOther(String reason) {
+    return '„$reason“';
+  }
+
+  @override
+  String mailRefusalProvider(String status) {
+    return 'der E-Mail-Anbieter antwortete $status';
+  }
+
+  @override
   String get managedAccessAdmins => 'Admins';
 
   @override
@@ -23202,6 +23220,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String purchaseOrderSendAwaits(String recipient) {
     return 'Eine E-Mail an $recipient hat kein bestätigtes Ergebnis. Ist sie angekommen?';
   }
+
+  @override
+  String get purchaseOrderSendDecideFirst =>
+      'Eine frühere E-Mail dieser Bestellung hat kein bestätigtes Ergebnis. Geben Sie unten an, ob sie angekommen ist, bevor Sie erneut senden.';
 
   @override
   String get purchaseOrderSendEmail => 'Per E-Mail senden';
