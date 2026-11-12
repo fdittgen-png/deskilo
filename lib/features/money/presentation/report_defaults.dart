@@ -625,14 +625,12 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
       ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
       ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),
       ReportDocSlot(key: 'bank_reconciliation') => bankReconciliationBands(l10n),
-      ReportDocSlot(key: 'general_ledger' || 'trial_balance' || 'journals') =>
-        bookReportBands(l10n, docId),
+      ReportDocSlot(key: 'general_ledger' || 'trial_balance' || 'journals') => bookReportBands(l10n, docId),
       ReportDocSlot(key: 'badges') => defaultBadgeSheetBands(l10n),
       ReportDocSlot(key: 'space_codes') => defaultSpaceCodesBands(l10n),
       // A doc the registry knows but this ladder does not is a bug to
       // hear about, not a reminder to render.
-      ReportDocSlot(:final key) =>
-        throw StateError('no default bands for report kind $key'),
+      ReportDocSlot(:final key) => throw StateError('no default bands for report kind $key'),
       ReportReminderSlot(:final level) => defaultReminderBands(level, l10n),
       // #1154 — an unknown id used to fall through to reminder level 1.
       null => ReportBands.empty,

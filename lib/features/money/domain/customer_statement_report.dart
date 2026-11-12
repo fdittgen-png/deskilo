@@ -15,23 +15,37 @@ import 'package:intl/intl.dart';
 import '../../../core/i18n/money_format.dart';
 import 'customer_statement.dart';
 
-/// The data of [statement] for the `customer_statement` kind, for
-/// [customerName] at [customerAddress], as of [asOf], under [letterhead]
-/// (the space's name and address), with amounts and days written in
-/// [locale] and the statement's own currency.
+/// Who the statement is for and who issues it: the customer in the
+/// address window, the day and the person issuing, and the [letterhead]
+/// (the space's name and address).
+class StatementLetter {
+  const StatementLetter({
+    required this.customerName,
+    required this.customerAddress,
+    required this.issued,
+    required this.issuedBy,
+    this.letterhead = const {},
+  });
+
+  final String customerName;
+  final String customerAddress;
+  final DateTime issued;
+  final String issuedBy;
+  final Map<String, Object?> letterhead;
+}
+
+/// The data of [statement] for the `customer_statement` kind, addressed by
+/// [letter], as of [asOf], with amounts and days written in [locale] and
+/// the statement's own currency.
 ///
 /// `rows` is one flat list, so the bands need no nested loop: a `document`
 /// row, then its `part` rows, then its `due` row; then one `credit` row per
 /// credit not yet applied.
 Map<String, Object?> customerStatementReportData(
-  StatementCurrency statement, {
-  required String customerName,
-  required String customerAddress,
+  StatementCurrency statement,
+  StatementLetter letter, {
   required DateTime asOf,
-  required DateTime issued,
-  required String issuedBy,
   required String locale,
-  Map<String, Object?> letterhead = const {},
 }) {
   final format = (
     money: moneyFormat(statement.currency, locale: locale).formatMinor,
@@ -39,12 +53,12 @@ Map<String, Object?> customerStatementReportData(
   );
   String day(DateTime? d) => d == null ? '' : format.date(d);
   return {
-    ...letterhead,
-    'client_name': customerName,
-    'client_address': customerAddress,
+    ...letter.letterhead,
+    'client_name': letter.customerName,
+    'client_address': letter.customerAddress,
     'as_of': format.date(asOf),
-    'issued': format.date(issued),
-    'issued_by': issuedBy,
+    'issued': format.date(letter.issued),
+    'issued_by': letter.issuedBy,
     'currency': statement.currency,
     'rows': [
       for (final line in statement.lines) ...[

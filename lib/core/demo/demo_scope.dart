@@ -55,7 +55,6 @@ import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
-import 'package:deskilo/features/money/providers/customer_statement_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_mail_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_mail_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
@@ -279,20 +278,6 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // The clock first: everything the fixture seeded is relative to it,
       // and it stands still on one fixed day, which the Demo bar names.
       clockProvider.overrideWithValue(FixedClock(fixture.seededAt)),
-      // #3673 — the customer statement by the page's own rules: the Demo
-      // has no server to ask.
-      customerStatementReaderProvider.overrideWithValue(
-        DemoCustomerStatementReader(
-          invoices: fixture.money,
-          ledgerOf: fixture.money.fetchWorkspaceLedger,
-          currencyOf: (id) =>
-              fixture.workspaces.workspaces
-                  .where((w) => w.id == id)
-                  .firstOrNull
-                  ?.currencyCode ??
-              '',
-        ),
-      ),
 
       // The repositories. Each of these would otherwise be constructed
       // from `Supabase.instance.client`; inside this scope none of them
@@ -333,7 +318,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // holds answers per space (demo_space_routing.dart).
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       ...demoSpaceOverrides(fixture),
-      ...demoGuestPassOverrides(fixture), // #3308
+      ...demoGuestPassOverrides(fixture), demoCustomerStatementOverride(fixture), // #3308, #3673
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354

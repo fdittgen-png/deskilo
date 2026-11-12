@@ -88,16 +88,18 @@ StatementCurrency _statement(String currency, int unit) => StatementCurrency(
 Map<String, Object?> _data(String currency, int unit, String locale) =>
     customerStatementReportData(
       _statement(currency, unit),
-      customerName: 'Ana Martin',
-      customerAddress: '12 rue des Lilas\n75011 Paris',
+      StatementLetter(
+        customerName: 'Ana Martin',
+        customerAddress: '12 rue des Lilas\n75011 Paris',
+        issued: _day,
+        issuedBy: 'Camille Owner',
+        letterhead: const {
+          'workspace': 'Test Space',
+          'workspace_address': '1 place du Marché\n69001 Lyon',
+        },
+      ),
       asOf: _day,
-      issued: _day,
-      issuedBy: 'Camille Owner',
       locale: locale,
-      letterhead: const {
-        'workspace': 'Test Space',
-        'workspace_address': '1 place du Marché\n69001 Lyon',
-      },
     );
 
 /// The report's words, one block per line.
