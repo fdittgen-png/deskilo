@@ -9,7 +9,7 @@
 -- with three decimals keeps its minor units. Only the customer, finance and
 -- issuers read it; an assistant's session does not. Rolled back.
 begin;
-select plan(13);
+select plan(14);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -107,6 +107,18 @@ create or replace function pg_temp.numbers(p_currency jsonb) returns text langua
   select string_agg(i ->> 'number', ',' order by i ->> 'number') from jsonb_array_elements(p_currency -> 'invoices') i;
 $f$;
 
+create or replace function pg_temp.summary(p_statement jsonb) returns jsonb language sql as $f$
+  select coalesce(jsonb_object_agg(c ->> 'currency', jsonb_build_object(
+           'still_due_cents', (c ->> 'still_due_cents')::int,
+           'unapplied_cents', (c ->> 'unapplied_cents')::int,
+           'balance_cents', (c ->> 'balance_cents')::int,
+           'invoices', (select coalesce(jsonb_object_agg(i ->> 'number', (i ->> 'still_due_cents')::int), '{}'::jsonb)
+                          from jsonb_array_elements(c -> 'invoices') i),
+           'credits', (select coalesce(jsonb_object_agg(cr ->> 'description', (cr ->> 'left_cents')::int), '{}'::jsonb)
+                         from jsonb_array_elements(c -> 'credits') cr))), '{}'::jsonb)
+    from jsonb_array_elements(p_statement -> 'currencies') c;
+$f$;
+
 do $s$ begin
   perform pg_temp.apply('P1', jsonb_build_array(jsonb_build_object('invoice_id', pg_temp.id('inv', 'ST-1A'), 'amount_cents', 4000)));
   perform pg_temp.apply('P', jsonb_build_array(
@@ -154,6 +166,12 @@ select ok(pg_temp.cur(pg_temp.statement('m2'), 'KWD') ->> 'still_due_cents' = '1
           and pg_temp.cur(pg_temp.statement('m2'), 'KWD') ->> 'balance_cents' = '12345'
           and pg_temp.cur(pg_temp.statement('m2'), 'KWD') ->> 'unapplied_cents' = '0',
           'a three-decimal currency keeps its minor units, and nothing of the euros is added to it');
+
+-- ── parity with the customer page (test/fixtures/customer_statement_parity.json;
+--    test/features/money/customer_statement_parity_test.dart reads the same) ──
+select is(pg_temp.summary(pg_temp.statement('m2')),
+          '{"EUR": {"balance_cents": 6500, "credits": {"P": 1000}, "invoices": {"ST-2A": 6000, "ST-2C": 3000, "ST-2D": -1500}, "still_due_cents": 7500, "unapplied_cents": 1000}, "KWD": {"balance_cents": 12345, "credits": {}, "invoices": {"ST-2G": 12345}, "still_due_cents": 12345, "unapplied_cents": 0}}'::jsonb,
+          'the server''s figures are the shared parity fixture''s, which the customer page''s also are');
 
 -- ── the cutoff ──────────────────────────────────────────────────────
 set local session_replication_role = replica;
