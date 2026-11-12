@@ -1,0 +1,16 @@
+{
+  "recordsFilter": "Filtra",
+  "recordsShown": "{count, plural, =1{1 mostrato} other{{count} mostrati}}",
+  "recordsSelected": "{count, plural, =1{1 selezionato} other{{count} selezionati}}",
+  "recordsSelectShown": "{count, plural, =1{Seleziona l'unico mostrato} other{Seleziona i {count} mostrati}}",
+  "recordsClearSelection": "Annulla la selezione",
+  "recordsTotalOfShown": "Totale delle righe mostrate",
+  "recordsTotalOfSelection": "Totale della selezione",
+  "recordsPartlyRead": "{loaded, plural, =1{1 caricato — non è ancora stato letto tutto} other{{loaded} caricati — non è ancora stato letto tutto}}",
+  "recordsDropped": "{count, plural, =1{1 riga selezionata non c’è più ed è stata esclusa} other{{count} righe selezionate non ci sono più e sono state escluse}}",
+  "recordsMoreActions": "Altre azioni",
+  "recordsColumns": "Colonne",
+  "recordsSortBy": "Ordina per {column}",
+  "recordsFailed": "Non è stato possibile leggere l’elenco.",
+  "recordsTryAgain": "Riprova"
+}

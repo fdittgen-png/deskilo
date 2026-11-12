@@ -1,0 +1,88 @@
+{
+  "recordsFilter": "Filter",
+  "@recordsFilter": {
+    "description": "#3606 records table"
+  },
+  "recordsShown": "{count, plural, =1{1 shown} other{{count} shown}}",
+  "@recordsShown": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSelected": "{count, plural, =1{1 selected} other{{count} selected}}",
+  "@recordsSelected": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSelectShown": "{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}",
+  "@recordsSelectShown": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsClearSelection": "Clear the selection",
+  "@recordsClearSelection": {
+    "description": "#3606 records table"
+  },
+  "recordsTotalOfShown": "Total of the rows shown",
+  "@recordsTotalOfShown": {
+    "description": "#3606 records table"
+  },
+  "recordsTotalOfSelection": "Total of the selection",
+  "@recordsTotalOfSelection": {
+    "description": "#3606 records table"
+  },
+  "recordsPartlyRead": "{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
+  "@recordsPartlyRead": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsDropped": "{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
+  "@recordsDropped": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsMoreActions": "More actions",
+  "@recordsMoreActions": {
+    "description": "#3606 records table"
+  },
+  "recordsColumns": "Columns",
+  "@recordsColumns": {
+    "description": "#3606 records table"
+  },
+  "recordsSortBy": "Sort by {column}",
+  "@recordsSortBy": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsFailed": "The list could not be read.",
+  "@recordsFailed": {
+    "description": "#3606 records table"
+  },
+  "recordsTryAgain": "Try again",
+  "@recordsTryAgain": {
+    "description": "#3606 records table"
+  }
+}

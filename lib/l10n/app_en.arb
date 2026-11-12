@@ -31488,6 +31488,31 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsClearSelection": "Clear the selection",
+  "@recordsClearSelection": {
+    "description": "#3606 records table"
+  },
+  "recordsColumns": "Columns",
+  "@recordsColumns": {
+    "description": "#3606 records table"
+  },
+  "recordsDropped": "{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
+  "@recordsDropped": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsFailed": "The list could not be read.",
+  "@recordsFailed": {
+    "description": "#3606 records table"
+  },
+  "recordsFilter": "Filter",
+  "@recordsFilter": {
+    "description": "#3606 records table"
+  },
   "recordsLocationAoNotice": "A German business keeps its electronic books in Germany or another EU member state (§ 146 Abs. 2a AO). Nothing declares this installation there.",
   "@recordsLocationAoNotice": {
     "description": "#2375 the accounting settings: a German space whose installation declares no country"
@@ -31533,6 +31558,67 @@
   "recordsLocationUndeclared": "Not declared by the operator of this installation: the app states no location",
   "@recordsLocationUndeclared": {
     "description": "#2378 records location"
+  },
+  "recordsMoreActions": "More actions",
+  "@recordsMoreActions": {
+    "description": "#3606 records table"
+  },
+  "recordsPartlyRead": "{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
+  "@recordsPartlyRead": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "loaded": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSelectShown": "{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}",
+  "@recordsSelectShown": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSelected": "{count, plural, =1{1 selected} other{{count} selected}}",
+  "@recordsSelected": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsShown": "{count, plural, =1{1 shown} other{{count} shown}}",
+  "@recordsShown": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recordsSortBy": "Sort by {column}",
+  "@recordsSortBy": {
+    "description": "#3606 records table",
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "recordsTotalOfSelection": "Total of the selection",
+  "@recordsTotalOfSelection": {
+    "description": "#3606 records table"
+  },
+  "recordsTotalOfShown": "Total of the rows shown",
+  "@recordsTotalOfShown": {
+    "description": "#3606 records table"
+  },
+  "recordsTryAgain": "Try again",
+  "@recordsTryAgain": {
+    "description": "#3606 records table"
   },
   "refFacetPerson": "Person",
   "@refFacetPerson": {

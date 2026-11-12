@@ -24219,6 +24219,30 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nicht, solange der Aufnahmemodus aktiv ist: Dieses Formular zeigt eine erfundene Person, und Speichern würde damit die echten Angaben einer Person überschreiben. Schalten Sie den Aufnahmemodus zuerst aus.';
 
   @override
+  String get recordsClearSelection => 'Auswahl aufheben';
+
+  @override
+  String get recordsColumns => 'Spalten';
+
+  @override
+  String recordsDropped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count ausgewählte Zeilen sind nicht mehr da und wurden ausgelassen',
+      one: '1 ausgewählte Zeile ist nicht mehr da und wurde ausgelassen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recordsFailed => 'Die Liste konnte nicht gelesen werden.';
+
+  @override
+  String get recordsFilter => 'Filtern';
+
+  @override
   String get recordsLocationAoNotice =>
       'Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat (§ 146 Abs. 2a AO). Nichts weist diese Installation dort aus.';
 
@@ -24254,6 +24278,67 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get recordsLocationUndeclared =>
       'Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort';
+
+  @override
+  String get recordsMoreActions => 'Weitere Aktionen';
+
+  @override
+  String recordsPartlyRead(int loaded) {
+    String _temp0 = intl.Intl.pluralLogic(
+      loaded,
+      locale: localeName,
+      other: '$loaded geladen — noch nicht alles gelesen',
+      one: '1 geladen — noch nicht alles gelesen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSelectShown(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Die $count angezeigten auswählen',
+      one: 'Den 1 angezeigten auswählen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ausgewählt',
+      one: '1 ausgewählt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsShown(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count angezeigt',
+      one: '1 angezeigt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSortBy(String column) {
+    return 'Nach $column sortieren';
+  }
+
+  @override
+  String get recordsTotalOfSelection => 'Summe der Auswahl';
+
+  @override
+  String get recordsTotalOfShown => 'Summe der angezeigten Zeilen';
+
+  @override
+  String get recordsTryAgain => 'Erneut versuchen';
 
   @override
   String get refFacetPerson => 'Person';
