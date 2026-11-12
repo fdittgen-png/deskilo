@@ -107,7 +107,7 @@ HomeState homeStateOf(WidgetRef ref) {
   final spaces = _spacesRead(ref);
   final bookings = _bookingsRead(ref, now);
   // Nothing waiting: no unpaid document, undecided request or unread message.
-  final items = attentionItemsOf(ref, now, spaces.refs);
+  final items = attentionItemsOf(ref, spaces.refs);
   final next = bookings.next;
   final bool? firstVisit =
       spaces.none == null || next == null || items == null

@@ -78,7 +78,7 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
   /// Today's reservations — client-side outcome resolution (#622): my
   /// own booking to check in, or the blocking one to message about.
   List<Reservation> _dayReservations(DateTime now) =>
-      ref.watch(reservationsForDayProvider(dayKeyOf(now))).value ?? const [];
+      ref.watch(reservationsForDayProvider(dayKeyOf(ref.watch(businessDateOfProvider)(now)))).value ?? const [];
 
   /// ANOTHER member's reservation holding this seat over the chosen
   /// window — the seat's own booking or a whole desk/office/level one

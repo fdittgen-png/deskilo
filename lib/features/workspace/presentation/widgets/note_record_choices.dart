@@ -83,7 +83,7 @@ Future<NoteRecordChoices> noteRecordChoices(
         final who = names[event.subjectMemberId] ?? '';
         String label(AppLocalizations strings, String? locale) {
           final when = DateFormat.MMMd(locale)
-              .add_Hm()
+              .add_jm()
               .format(event.createdAt.toLocal());
           return [eventTypeLabel(strings, event.type), who, when]
               .where((p) => p.isNotEmpty)

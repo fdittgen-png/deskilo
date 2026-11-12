@@ -131,7 +131,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tax-reference-history-rate-FR-standard')));
     await tester.pumpAndSettle();
     expect(find.textContaining('Standard 21 %'), findsOneWidget);
-    expect(find.textContaining('until 2027-01-01'), findsOneWidget);
+    expect(find.textContaining('until Jan 1, 2027'), findsOneWidget);
   });
 
   testWidgets('a version without a source is refused by the form', (tester) async {

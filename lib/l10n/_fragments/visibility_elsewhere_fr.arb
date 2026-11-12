@@ -1,6 +1,6 @@
 {
   "visibilityElsewhereTitle": "Sur mes autres serveurs",
-  "visibilityElsewhereIntro": "Sur un serveur connecté, vous avez le compte de ce serveur. Les personnes qui n'y partagent aucun espace avec vous voient ce que vous autorisez à toute personne connectée ; vos coordonnées et votre présence ne sortent jamais de vos espaces.",
+  "visibilityElsewhereIntro": "Sur un serveur connecté, vous avez le compte de ce serveur. Les personnes qui n'y partagent aucun lieu avec vous voient ce que vous autorisez à toute personne connectée ; vos coordonnées et votre présence ne sortent jamais de vos lieux.",
   "visibilityOnServer": "Qui me voit sur {host}",
   "@visibilityOnServer": {
     "placeholders": {

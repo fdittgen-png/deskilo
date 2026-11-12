@@ -18,14 +18,14 @@ import '../../workspace/domain/booking_granularity.dart';
   BookingWindows windows = BookingWindows.defaults,
 }) {
   if (granularity.isDayBased) {
-    final window = HalfDayWindows.fullDay(now);
+    final window = HalfDayWindows.fullDay(WorkspaceTime.dateOf(now));
     if (window.end.isAfter(now)) {
       return (start: window.start, end: window.end);
     }
     return (start: now, end: HalfDayWindows.windowForNow(now).end);
   }
   if (granularity == BookingGranularity.hours) {
-    final dayEnd = HalfDayWindows.fullDay(now).end;
+    final dayEnd = HalfDayWindows.fullDay(WorkspaceTime.dateOf(now)).end;
     if (dayEnd.isAfter(now)) return (start: now, end: dayEnd);
   }
   var end = now.add(windows.walkUpWindow);

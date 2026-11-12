@@ -345,7 +345,7 @@ class FakeReservationRepository implements ReservationRepository {
   /// canonical_walkup_start (0113): the slot start pairing with the
   /// chosen end, or null for overtime/odd windows.
   DateTime? _canonicalStartFor(DateTime startsAt, DateTime endsAt) {
-    final day = startsAt;
+    final day = WorkspaceTime.dateOf(startsAt);
     final morning = HalfDayWindows.morning(day);
     final afternoon = HalfDayWindows.afternoon(day);
     final full = HalfDayWindows.fullDay(day);

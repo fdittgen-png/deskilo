@@ -184,7 +184,7 @@ void main() {
       final router = await _pump(tester, me: me);
       expect(await goTo(tester, router, '/me/spaces'), '/me/spaces');
       expect(_key('my-spaces-count'), findsOneWidget);
-      expect(find.text('3 spaces'), findsOneWidget);
+      expect(find.text('3 places'), findsOneWidget);
       expect(
         tester.widget<Text>(_key('my-space-host-$_home:$_one')).data,
         'On this server',
@@ -206,7 +206,7 @@ void main() {
       expect(
         find.descendant(
           of: _key('my-space-open-$_home:$_two'),
-          matching: find.text('Open test space'),
+          matching: find.text('Open test business'),
         ),
         findsOneWidget,
       );
@@ -250,7 +250,7 @@ void main() {
       final router = await _pump(tester, me: me);
       await goTo(tester, router, '/me/spaces');
       expect(_key('my-spaces-unavailable'), findsOneWidget);
-      expect(find.text('Your spaces could not be read.'), findsOneWidget);
+      expect(find.text('Your places could not be read.'), findsOneWidget);
       expect(_key('my-spaces-empty'), findsNothing);
       expect(_key('my-spaces-count'), findsNothing);
 
@@ -272,7 +272,7 @@ void main() {
       );
       await goTo(tester, router, '/me/spaces');
       expect(_key('my-spaces-empty'), findsOneWidget);
-      expect(find.text('No space'), findsOneWidget);
+      expect(find.text('No place'), findsOneWidget);
       expect(tester.widget(_key('my-spaces-join')), isA<FilledButton>());
       expect(tester.widget(_key('my-spaces-create')), isA<TextButton>());
       expect(_key('my-spaces-manage'), findsNothing);
@@ -296,7 +296,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(_key('my-space-$_home:$_one'), findsNothing);
       expect(_key('my-space-$_home:$_two'), findsOneWidget);
-      expect(find.text('2 spaces'), findsOneWidget,
+      expect(find.text('2 places'), findsOneWidget,
           reason: 'the count is of the loaded spaces, not the matches');
       await tester.enterText(_key('my-spaces-search'), 'zeta');
       await tester.pumpAndSettle();
@@ -327,7 +327,7 @@ void main() {
   });
 
   group('Overview', () {
-    testWidgets('leads to All my spaces', (tester) async {
+    testWidgets('leads to All my places', (tester) async {
       final router = await _pump(tester, me: FakeMeRepository());
       await goTo(tester, router, '/me');
       await tapIn(tester, 'me-home-list', _key('me-home-all-spaces'));
@@ -415,7 +415,7 @@ void main() {
         (tester) async {
       final router = await _pump(tester, me: FakeMeRepository()..workspaceRefs = refs);
       await goTo(tester, router, '/me/spaces');
-      expect(find.text('2 spaces'), findsOneWidget);
+      expect(find.text('2 places'), findsOneWidget);
       for (final w in [_wa, _wb]) {
         expect(_key('my-space-$w:$_one'), findsOneWidget);
         expect(tester.widget<Text>(_key('my-space-host-$w:$_one')).data,

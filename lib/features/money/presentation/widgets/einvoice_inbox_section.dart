@@ -6,6 +6,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -25,16 +26,22 @@ class EInvoiceInboxSection extends ConsumerWidget {
 
   final String workspaceId;
 
+  /// What the place takes: the picker's filter and the drop zone's.
+  static XTypeGroup _typeGroup(BuildContext context) => XTypeGroup(
+    label: context.l10n.workspaceXmlFileTypeLabel,
+    extensions: const ['xml'],
+    mimeTypes: const ['application/xml', 'text/xml'],
+  );
+
   Future<void> _add(BuildContext context, WidgetRef ref) async {
+    final file = await ref.read(filePickerProvider)(_typeGroup(context));
+    if (file == null || !context.mounted) return;
+    await _receive(context, ref, file);
+  }
+
+  /// Receives [file] — picked or dropped alike (#3623).
+  Future<void> _receive(BuildContext context, WidgetRef ref, XFile file) async {
     final l10n = context.l10n;
-    final file = await ref.read(filePickerProvider)(
-      XTypeGroup(
-        label: l10n.workspaceXmlFileTypeLabel,
-        extensions: const ['xml'],
-        mimeTypes: const ['application/xml', 'text/xml'],
-      ),
-    );
-    if (file == null) return;
     final xml = utf8.decode(await file.readAsBytes());
     if (!context.mounted) return;
     ReceivedEInvoice? received;
@@ -169,7 +176,7 @@ class EInvoiceInboxSection extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final inbox = ref.watch(eInvoiceInboxProvider(workspaceId));
-    return Column(
+    final column = Column(
       key: const ValueKey('einvoice-inbox'),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -230,6 +237,14 @@ class EInvoiceInboxSection extends ConsumerWidget {
           _ => const LinearProgressIndicator(),
         },
       ],
+    );
+    // #3623 — a UBL or CII file dropped onto the inbox is received as a
+    // picked one; another kind says what the picker would have refused.
+    return FileDropZone(
+      typeGroup: _typeGroup(context),
+      wrongKindMessage: l10n.eInvoiceInboxUnreadable,
+      onFile: (file) => _receive(context, ref, file),
+      child: column,
     );
   }
 }

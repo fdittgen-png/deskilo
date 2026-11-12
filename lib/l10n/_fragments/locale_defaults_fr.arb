@@ -5,5 +5,13 @@
   "settingLabelLocaleDefaultCountry": "Pays par défaut",
   "settingHintLocaleDefaultCountry": "Le pays d'un nouvel espace de travail quand la région de l'appareil est inconnue. Une simple suggestion : elle ne décide d'aucun pays émetteur ni d'aucune taxe.",
   "settingLabelLocaleDefaultLocale": "Format par défaut des nombres et dates",
-  "settingHintLocaleDefaultLocale": "Le format utilisé avant qu'un membre ou un espace de travail en ait choisi un. Le choix du membre l'emporte toujours."
+  "settingHintLocaleDefaultLocale": "Le format utilisé avant qu'un membre ou un espace de travail en ait choisi un. Le choix du membre l'emporte toujours.",
+  "settingLabelLocaleDefaultWeekStart": "Premier jour de la semaine par défaut",
+  "@settingLabelLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting label."
+  },
+  "settingHintLocaleDefaultWeekStart": "Le jour où commencent les semaines dans les calendriers quand un membre n'en a choisi aucun : celui du format, ou toujours lundi, dimanche ou samedi. Le choix d'un membre l'emporte toujours.",
+  "@settingHintLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting hint."
+  }
 }

@@ -261,7 +261,7 @@ void main() {
         rowCount: record.rows,
         documentCount: 0,
         closedPeriod: true,
-        exportedAt: DateTime.utc(2026, 10, 15),
+        exportedAt: DateTime.utc(2026, 10, 15, 12),
       );
       final (madeAgain, filesAgain) = await archive(
         tester,
@@ -293,7 +293,7 @@ void main() {
               rowCount: 1,
               documentCount: 0,
               closedPeriod: true,
-              exportedAt: DateTime.utc(2026, 10, 15),
+              exportedAt: DateTime.utc(2026, 10, 15, 12),
             ),
           ],
         ),
@@ -302,7 +302,7 @@ void main() {
       expect(made, isFalse);
       expect(files, isEmpty);
       expect(log.records, isEmpty);
-      expect(find.text(l10n.fecArchiveChanged('2026-10-15')), findsOneWidget);
+      expect(find.text(l10n.fecArchiveChanged('Oct 15, 2026')), findsOneWidget);
     });
 
     testWidgets('an open year travels as provisional, never logged; a '
@@ -419,7 +419,7 @@ void main() {
               rowCount: 1,
               documentCount: 0,
               closedPeriod: true,
-              exportedAt: DateTime.utc(2027, 10, 15),
+              exportedAt: DateTime.utc(2027, 10, 15, 12),
             ),
           ],
         ),
@@ -429,7 +429,7 @@ void main() {
       expect(made, isFalse);
       expect(files, isEmpty);
       expect(log.records, isEmpty);
-      expect(find.text(l10n.fecArchiveChanged('2027-10-15')), findsOneWidget);
+      expect(find.text(l10n.fecArchiveChanged('Oct 15, 2027')), findsOneWidget);
     });
   });
 }

@@ -141,8 +141,8 @@ class NegotiationCard extends ConsumerWidget {
             if (deal?.subscriptionPct != null)
               row(
                 l10n.negotiationOccupation,
-                '${deal!.previousSubscriptionPct ?? '—'} %',
-                '${deal.subscriptionPct} %',
+                _occupation(appFormatOf(context), deal!.previousSubscriptionPct),
+                _occupation(appFormatOf(context), deal.subscriptionPct),
                 key: const ValueKey('negotiation-row-occupation'),
               ),
             row(
@@ -163,10 +163,10 @@ class NegotiationCard extends ConsumerWidget {
             ),
             row(
               l10n.negotiationDiscount,
-              '0 %',
+              appFormatOf(context).ratePercent(0),
               deal?.discountPercent == null
                   ? null
-                  : '${_pct(deal!.discountPercent!)} %',
+                  : appFormatOf(context).ratePercent(deal!.discountPercent!),
               key: const ValueKey('negotiation-row-discount'),
             ),
             // #744 — negotiated items against the catalogue.
@@ -201,6 +201,8 @@ class NegotiationCard extends ConsumerWidget {
       ),
     );
   }
+
+  static String _occupation(AppFormat f, int? p) => p == null ? '—' : f.ratePercent(p);
 
   static String _pct(double v) =>
       v == v.roundToDouble() ? v.toInt().toString() : v.toStringAsFixed(1);

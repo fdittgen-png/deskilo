@@ -17,6 +17,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
@@ -65,21 +66,27 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     return opened == null ? null : editedCopy(opened.recording, _leftOut);
   }
 
+  XTypeGroup get _types => XTypeGroup(
+    label: context.l10n.taskWorkbenchFileType,
+    extensions: workbenchExtensions,
+  );
+
   Future<void> _choose() async {
-    final l10n = context.l10n;
     final XFile? file;
     try {
-      file = await ref.read(filePickerProvider)(
-        XTypeGroup(
-          label: l10n.taskWorkbenchFileType,
-          extensions: workbenchExtensions,
-        ),
-      );
+      file = await ref.read(filePickerProvider)(_types);
     } on Object catch (e, st) {
       TraceLogger.instance.warn('recorder', 'picker failed', stackTrace: st);
       return;
     }
     if (file == null || !mounted) return;
+    await _take(file);
+  }
+
+  /// Opens [file] — picked or dropped alike (#3623): the same size bound,
+  /// the same refusals.
+  Future<void> _take(XFile file) async {
+    final l10n = context.l10n;
     WorkbenchImport result;
     try {
       // The size first: a file over the limit is refused unread.
@@ -227,7 +234,10 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     final copy = _copy;
     return Scaffold(
       appBar: AppBar(title: PageTitle(l10n.taskWorkbenchTitle)),
-      body: ListView(
+      body: FileDropZone(
+       typeGroup: _types,
+       onFile: _take,
+       child: ListView(
         padding: AppSpacing.gutterAll,
         children: [
           Text(
@@ -304,6 +314,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
             ),
           ],
         ],
+       ),
       ),
     );
   }

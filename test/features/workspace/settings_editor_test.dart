@@ -151,7 +151,7 @@ void main() {
         );
     final issued = DateTime(2026, 9);
     int? level(DunningRules r, DateTime now) => dueReminderLevel(
-        issuedAt: issued, reminderCount: 0, lastReminderAt: null, rules: r, now: now);
+        issuedAt: issued, reminderCount: 0, lastReminderAt: null, rules: r, at: (now: now, today: _day(now)));
 
     final before = rules(await store.load('ws-1'));
     expect(before.firstAfterDays, 14, reason: 'the stored 99 no longer decides it');
@@ -165,3 +165,6 @@ void main() {
     expect(DunningRules.fromJson(const {}), DunningRules.defaults);
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

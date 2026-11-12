@@ -72,25 +72,31 @@ class CalendarViewBar extends StatelessWidget {
                     labelled || value == current
                         ? Text(text, maxLines: 1, overflow: TextOverflow.ellipsis)
                         : null;
+                // #3620 -- a segment with no label is still named: the icon
+                // carries the view's name for the control's own node.
+                Widget iconFor(Object value, IconData icon, String text) => Icon(
+                      icon,
+                      semanticLabel: labelFor(value, text) == null ? text : null,
+                    );
                 return SegmentedButton<Object>(
                   key: const ValueKey('calendar-view-switch'),
                   showSelectedIcon: false,
                   segments: [
                     ButtonSegment(
                       value: CalendarView.agenda,
-                      icon: const Icon(Icons.view_agenda_outlined),
+                      icon: iconFor(CalendarView.agenda, Icons.view_agenda_outlined, l10n.calendarViewAgenda),
                       label: labelFor(CalendarView.agenda, l10n.calendarViewAgenda),
                       tooltip: l10n.calendarViewAgenda,
                     ),
                     ButtonSegment(
                       value: CalendarView.week,
-                      icon: const Icon(Icons.view_week_outlined),
+                      icon: iconFor(CalendarView.week, Icons.view_week_outlined, l10n.calendarViewWeek),
                       label: labelFor(CalendarView.week, l10n.calendarViewWeek),
                       tooltip: l10n.calendarViewWeek,
                     ),
                     ButtonSegment(
                       value: CalendarView.month,
-                      icon: const Icon(Icons.calendar_month_outlined),
+                      icon: iconFor(CalendarView.month, Icons.calendar_month_outlined, l10n.reserveMonthView),
                       label: labelFor(CalendarView.month, l10n.reserveMonthView),
                       tooltip: l10n.reserveMonthView,
                     ),
@@ -100,9 +106,9 @@ class CalendarViewBar extends StatelessWidget {
                         icon: alertsCount > 0
                             ? Badge.count(
                                 count: alertsCount,
-                                child: const Icon(Icons.notifications_outlined),
+                                child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
                               )
-                            : const Icon(Icons.notifications_outlined),
+                            : iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
                         label: labelFor(_alerts, l10n.calendarViewAlerts),
                         tooltip: l10n.calendarViewAlerts,
                       ),

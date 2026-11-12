@@ -353,7 +353,7 @@ class _DayTimelineState extends ConsumerState<DayTimeline> {
     }
 
     final now = ref.watch(clockProvider).now();
-    final isToday = DateUtils.isSameDay(now, widget.day);
+    final isToday = DateUtils.isSameDay(WorkspaceTime.dateOf(now), widget.day);
     final rowHeight = rows.rowHeightFor(_viewportHeight);
 
     return TimelineAxisView(

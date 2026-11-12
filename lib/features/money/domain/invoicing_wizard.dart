@@ -184,6 +184,7 @@ List<WizardRemindItem> remindPlan({
   required Map<String, ({int count, DateTime last})> reminders,
   required DunningRules rules,
   required DateTime now,
+  required DateTime today,
 }) {
   final due = <WizardRemindItem>[];
   for (final invoice in openInvoicesOf(invoices, matches)) {
@@ -196,7 +197,7 @@ List<WizardRemindItem> remindPlan({
       reminderCount: sent?.count ?? 0,
       lastReminderAt: sent?.last,
       rules: rules,
-      now: now,
+      at: (now: now, today: today),
     );
     if (level != null) due.add(WizardRemindItem(invoice: invoice, level: level));
   }

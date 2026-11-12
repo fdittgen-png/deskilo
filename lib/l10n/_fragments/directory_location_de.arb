@@ -3,7 +3,7 @@
   "directoryLocating": "Öffentliche Adresse wird gesucht…",
   "directoryApproximate": "Ungefähre Lage der Adresse",
   "directoryLocationMissing": "Standort nicht verfügbar. Der Eigentümer kann genaue Koordinaten veröffentlichen.",
-  "directoryPinsMissing": "{count, plural, =1{1 Arbeitsbereich konnte nicht auf der Karte platziert werden; seine Karte steht darunter.} other{{count} Arbeitsbereiche konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.}}",
+  "directoryPinsMissing": "{count, plural, =1{1 Ort konnte nicht auf der Karte platziert werden; seine Karte steht darunter.} other{{count} Orte konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.}}",
   "directoryPinsNoAddress": "{count, plural, =1{1 hat keine veröffentlichte Adresse.} other{{count} haben keine veröffentlichte Adresse.}}",
   "directoryPinsLookupFailed": "{count, plural, =1{1 konnte nicht nachgeschlagen werden.} other{{count} konnten nicht nachgeschlagen werden.}}",
   "directoryNothingToPin": "Keiner dieser Orte konnte auf der Karte platziert werden.",

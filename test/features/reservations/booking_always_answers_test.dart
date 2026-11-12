@@ -14,12 +14,17 @@
 // member's only recourse is to try again and risk booking twice.
 import 'dart:io';
 
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/reservations/domain/booking_success_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
+  AppFormat clockedFormat(String locale, [ClockPref clock = ClockPref.h24]) =>
+      AppFormat(locale: locale, currencyCode: '', clock: clock);
+
   setUpAll(() async {
     for (final locale in ['en', 'fr', 'de']) {
       await initializeDateFormatting(locale);
@@ -35,7 +40,7 @@ void main() {
 
     test('after the end: recorded, and why', () {
       for (final space in ['13', null]) {
-        final text = bookingSuccessText(englishL10n, 'en',
+        final text = bookingSuccessText(englishL10n, clockedFormat('en'),
             checkedIn: false,
             start: start,
             end: end,
@@ -49,7 +54,7 @@ void main() {
 
     test('before the end, or with no clock, it is a reservation', () {
       for (final now in [DateTime(2026, 10, 7, 18, 59), null]) {
-        final text = bookingSuccessText(englishL10n, 'en',
+        final text = bookingSuccessText(englishL10n, clockedFormat('en'),
             checkedIn: false,
             start: start,
             end: end,
@@ -60,11 +65,23 @@ void main() {
     });
   });
 
+  test('a 12-hour reader sees 2:30 PM, a 24-hour reader 14:30 (#3653)', () {
+    String text(ClockPref clock) => bookingSuccessText(englishL10n, clockedFormat('en', clock),
+        checkedIn: true,
+        start: DateTime(2026, 10, 7, 9),
+        end: DateTime(2026, 10, 7, 14, 30),
+        spaceName: '13');
+    expect(text(ClockPref.h12), contains('2:30'));
+    expect(text(ClockPref.h12), contains('PM'));
+    expect(text(ClockPref.h24), contains('14:30'));
+    expect(text(ClockPref.h24), isNot(contains('PM')));
+  });
+
   group('a check-in says when it runs until', () {
     test('names the space when there is one', () {
       final text = bookingSuccessText(
         englishL10n,
-        'en',
+        clockedFormat('en'),
         checkedIn: true,
         start: DateTime(2026, 8, 26, 10, 13),
         end: DateTime(2026, 8, 26, 12),
@@ -79,7 +96,7 @@ void main() {
       for (final name in [null, '', '   ']) {
         final text = bookingSuccessText(
           englishL10n,
-          'en',
+          clockedFormat('en'),
           checkedIn: true,
           start: DateTime(2026, 8, 26, 10),
           end: DateTime(2026, 8, 26, 12),
@@ -96,7 +113,7 @@ void main() {
         () {
       final text = bookingSuccessText(
         englishL10n,
-        'en',
+        clockedFormat('en'),
         checkedIn: true,
         start: DateTime(2026, 8, 26, 10, 13),
         end: DateTime(2026, 8, 26, 12),
@@ -111,7 +128,7 @@ void main() {
     test('a same-day window shows the date once and both times', () {
       final text = bookingSuccessText(
         englishL10n,
-        'en',
+        clockedFormat('en'),
         checkedIn: false,
         start: DateTime(2026, 8, 27, 8),
         end: DateTime(2026, 8, 27, 12),
@@ -132,7 +149,7 @@ void main() {
       // of the day it actually ends.
       final text = bookingSuccessText(
         englishL10n,
-        'en',
+        clockedFormat('en'),
         checkedIn: false,
         start: DateTime(2026, 8, 26, 18),
         end: DateTime(2026, 8, 27),
@@ -149,7 +166,7 @@ void main() {
     final start = DateTime(2026, 8, 27, 8);
     final end = DateTime(2026, 8, 27, 12);
     for (final locale in ['en', 'fr', 'de']) {
-      final text = bookingSuccessText(englishL10n, locale,
+      final text = bookingSuccessText(englishL10n, clockedFormat(locale),
           checkedIn: false, start: start, end: end, spaceName: 'A1');
       expect(text, isNot(contains('2026-08-27')),
           reason: 'a raw ISO timestamp is a HARD RULE violation');
@@ -165,7 +182,7 @@ void main() {
     // refusals, so a booking that WORKED would be announced as failed.
     final text = bookingSuccessText(
       englishL10n,
-      'zz-ZZ',
+      clockedFormat('zz-ZZ'),
       checkedIn: true,
       start: DateTime(2026, 8, 26, 10),
       end: DateTime(2026, 8, 26, 12),

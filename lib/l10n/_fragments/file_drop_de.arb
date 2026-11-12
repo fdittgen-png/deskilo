@@ -1,0 +1,9 @@
+{
+  "@@locale": "de",
+  "fileDropOverlay": "Datei hier ablegen. Hier werden {kinds} angenommen.",
+  "fileDropWrongKind": "Hier werden nur Dateien vom Typ {kinds} angenommen. Legen Sie eine andere Datei ab oder nutzen Sie die Schaltfläche.",
+  "fileDropSeveral": "Bitte nur eine Datei auf einmal ablegen.",
+  "fileDropFolder": "Ein Ordner kann hier nicht abgelegt werden. Legen Sie eine Datei ab.",
+  "fileDropBusy": "Die vorige Datei wird noch verarbeitet. Legen Sie die nächste ab, wenn sie fertig ist.",
+  "fileDropReadFailed": "Die abgelegte Datei konnte nicht gelesen werden."
+}

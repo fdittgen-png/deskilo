@@ -15,6 +15,8 @@ typedef HalfDayWindow = ({DateTime start, DateTime end});
 /// (migration 0087) — pinned by test.
 ///
 /// [day] carries the CALENDAR DATE the user picked (device-local pills);
+/// it is read as a date, never converted (#3659): an instant goes through
+/// `WorkspaceTime.dateOf` first, so the business's day is the one booked;
 /// the returned instants are that date's wall-clock hours on the
 /// WORKSPACE clock ([WorkspaceTime]) — the server enforces canonical
 /// windows in the workspace timezone, so a device hours away must still
@@ -26,7 +28,7 @@ abstract final class HalfDayWindows {
 
   /// Morning window of [day]'s date: work start – half boundary.
   static HalfDayWindow morning(DateTime day) {
-    final local = day.toLocal();
+    final local = day;
     final hours = WorkHours.current;
     return (
       start: _at(local, hours.startMinutes),
@@ -36,7 +38,7 @@ abstract final class HalfDayWindows {
 
   /// Afternoon window of [day]'s date: half boundary – work end.
   static HalfDayWindow afternoon(DateTime day) {
-    final local = day.toLocal();
+    final local = day;
     final hours = WorkHours.current;
     return (
       start: _at(local, hours.halfBoundaryMinutes),
@@ -46,7 +48,7 @@ abstract final class HalfDayWindows {
 
   /// Full-day window of [day]'s date: work start – work end.
   static HalfDayWindow fullDay(DateTime day) {
-    final local = day.toLocal();
+    final local = day;
     final hours = WorkHours.current;
     return (
       start: _at(local, hours.startMinutes),
@@ -54,13 +56,22 @@ abstract final class HalfDayWindows {
     );
   }
 
+  /// #3659 — the morning, afternoon and full day of the business's day at
+  /// [instant], never the device's.
+  static HalfDayWindow morningAt(DateTime instant) =>
+      morning(WorkspaceTime.dateOf(instant));
+  static HalfDayWindow afternoonAt(DateTime instant) =>
+      afternoon(WorkspaceTime.dateOf(instant));
+  static HalfDayWindow fullDayAt(DateTime instant) =>
+      fullDay(WorkspaceTime.dateOf(instant));
+
   /// Occupancy DISPLAY halves (#446): the week grid paints a booking in
   /// whichever half of the CALENDAR day it touches, so these split at
   /// midnight → boundary → midnight — an early booking outside working
   /// hours still shows in the AM half. Booking always uses the
   /// canonical windows above.
   static HalfDayWindow displayMorning(DateTime day) {
-    final local = day.toLocal();
+    final local = day;
     return (
       start: WorkspaceTime.at(local.year, local.month, local.day),
       end: _at(local, WorkHours.current.halfBoundaryMinutes),
@@ -69,7 +80,7 @@ abstract final class HalfDayWindows {
 
   /// Boundary → next local midnight; see [displayMorning].
   static HalfDayWindow displayAfternoon(DateTime day) {
-    final local = day.toLocal();
+    final local = day;
     return (
       start: _at(local, WorkHours.current.halfBoundaryMinutes),
       end: WorkspaceTime.at(local.year, local.month, local.day + 1),

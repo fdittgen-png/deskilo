@@ -162,6 +162,7 @@
   "backendTestSchemaMissing": "Erreicht, aber die DesKilo-Tabellen fehlen — führe zuerst die Migrationen aus supabase/migrations auf diesem Projekt aus.",
   "backendCopyLink": "Kopieren",
   "profilesUnavailable": "Ihre Arbeitsbereiche konnten nicht geladen werden.",
+  "mePlacesLoadFailed": "Ihre Orte konnten nicht geladen werden.",
   "consentUnavailable": "Ihr Konto konnte nicht geladen werden, daher gibt es noch nichts zu akzeptieren.",
   "backendModeDefault": "DesKilo-Dienst verwenden",
   "backendModeConnect": "Mit bestehender Organisation verbinden",

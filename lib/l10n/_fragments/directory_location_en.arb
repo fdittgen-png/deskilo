@@ -15,7 +15,7 @@
   "@directoryLocationMissing": {
     "description": "Shown as a text in directory map (directory)."
   },
-  "directoryPinsMissing": "{count, plural, =1{1 workspace could not be placed on the map; its card is below.} other{{count} workspaces could not be placed on the map; their cards are below.}}",
+  "directoryPinsMissing": "{count, plural, =1{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",
     "placeholders": {

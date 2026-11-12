@@ -186,5 +186,14 @@
   },
   "invoiceExportGenericJournal": "Journal (CSV, für jede Buchhaltungssoftware)",
   "journalNeedsLocalBook": "Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.",
-  "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}"
+  "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}",
+  "invoiceLineCancelled": "Storniert: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  }
 }

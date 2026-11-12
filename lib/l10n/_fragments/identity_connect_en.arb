@@ -9,7 +9,7 @@
       }
     }
   },
-  "identityConnectExplain": "{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the space still decides any request.",
+  "identityConnectExplain": "{host} will know it is you, through your Deskilo identity. Connecting does not make you a member, give you a role or connect an assistant: the business still decides any request.",
   "@identityConnectExplain": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: What connecting shares and what it never grants. Deskilo is the brand; do not translate it.",
     "placeholders": {
@@ -109,7 +109,7 @@
       }
     }
   },
-  "identityConnectConfirmApplyBody": "You are connected now. The space reviews your request; nothing else is shared.",
+  "identityConnectConfirmApplyBody": "You are connected now. The business reviews your request; nothing else is shared.",
   "@identityConnectConfirmApplyBody": {
     "description": "#1834 Connecting another server with the person's Deskilo identity: Body of the confirmation before sending the membership request."
   },

@@ -9,8 +9,10 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/text/collation.dart';
 import 'account_activity.dart';
+import 'finance_due.dart';
 import 'finance_hosts.dart';
-import 'invoice_due.dart';
+
+export 'finance_due.dart';
 
 /// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
 /// derives it).
@@ -51,9 +53,13 @@ class FinanceInvoice {
     this.dueOn,
     this.reminderCount = 0,
     this.lastReminderAt,
+    this.timezone,
   });
 
   final String id, workspaceId, workspaceName, number, currency;
+
+  /// #3659 — the issuing business's IANA zone (0736); null when unnamed.
+  final String? timezone;
   final DateTime issuedAt;
   final DateTime? dueOn, lastReminderAt;
   final int totalCents, paidCents, reminderCount;
@@ -70,12 +76,6 @@ class FinanceInvoice {
   /// A credit note gives money back: its face value is negative, the same
   /// rule the workspace's own documents follow (`Invoice.isCreditNote`).
   bool get isCreditNote => totalCents < 0;
-
-  /// Past the term: the due day counts, as the server and the register rule
-  /// (#3285: one rule, `invoiceDue`). A credit note is money due to me:
-  /// it is never late.
-  bool overdueAt(DateTime now) =>
-      state.toPay && !isCreditNote && dueOn != null && isOverdueOn(dueOn!, now);
 
   factory FinanceInvoice.fromJson(Map<String, dynamic> j) {
     final r = JsonReader(j, context: 'finance_invoice');
@@ -94,6 +94,7 @@ class FinanceInvoice {
       state: FinanceState.fromWire(r.json['state']),
       reminderCount: r.intOrNull('reminder_count') ?? 0,
       lastReminderAt: r.dateTimeOrNull('last_reminder_at'),
+      timezone: r.stringOrNull('workspace_timezone'),
     );
   }
 }

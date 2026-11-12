@@ -70,6 +70,10 @@ InvoiceJourney? _journey(
       : ref.read(dunningRulesProvider).value;
   final now =
       (watch ? ref.watch(clockProvider) : ref.read(clockProvider)).now();
+  final dayOf = (watch
+          ? ref.watch(invoicingBusinessProvider)
+          : ref.read(invoicingBusinessProvider))
+      .dayOf;
   final events = watch
       ? ref.watch(eventsProvider).value
       : ref.read(eventsProvider).value;
@@ -81,7 +85,7 @@ InvoiceJourney? _journey(
     match: match,
     reminder: reminder,
     rules: rules,
-    now: now,
+    at: (now: now, today: dayOf(now)),
     facts: journeyFactsOf(invoice, match, events ?? const []),
     replacedByNumber: replacedByNumber,
   );

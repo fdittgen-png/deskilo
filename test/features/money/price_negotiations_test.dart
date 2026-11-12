@@ -93,7 +93,7 @@ void main() {
         matching: find.text('—')), findsOneWidget);
     expect(find.descendant(
         of: find.byKey(const ValueKey('negotiation-row-discount')),
-        matching: find.text('10 %')), findsOneWidget);
+        matching: find.text('10%')), findsOneWidget);
     expect(find.textContaining('applies since May 2026'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('negotiation-who-can-see')));
@@ -215,7 +215,7 @@ void main() {
     await tester.pumpAndSettle();
     await openAlertsTab(tester);
     expect(find.textContaining('Flo proposes a deal for Ana'), findsOneWidget);
-    expect(find.textContaining('€150.00 · −10 %'), findsOneWidget);
+    expect(find.textContaining('€150.00 · −10%'), findsOneWidget);
   });
 
   // ---- #744 — services, packages and the occupation
@@ -240,10 +240,10 @@ void main() {
         scrollable: find.byType(Scrollable).first);
     expect(find.descendant(
         of: find.byKey(const ValueKey('negotiation-row-occupation')),
-        matching: find.text('60 %')), findsOneWidget);
+        matching: find.text('60%')), findsOneWidget);
     expect(find.descendant(
         of: find.byKey(const ValueKey('negotiation-row-occupation')),
-        matching: find.text('50 %')), findsOneWidget);
+        matching: find.text('50%')), findsOneWidget);
     final coffee = find.byKey(const ValueKey('negotiation-item-service-coffee'));
     expect(coffee, findsOneWidget);
     expect(find.descendant(of: coffee, matching: find.text('€1.00')),
@@ -330,7 +330,7 @@ void main() {
     ));
     await tester.pumpAndSettle();
     await openAlertsTab(tester);
-    expect(find.textContaining('60 % · 2 items'), findsOneWidget);
+    expect(find.textContaining('60% · 2 items'), findsOneWidget);
   });
 
   // ---- #749 — the two permissions

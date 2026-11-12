@@ -1,6 +1,6 @@
 {
   "inboxSourcePersonal": "I Suoi messaggi personali",
-  "inboxSourceWorkspaces": "I messaggi dei Suoi spazi",
+  "inboxSourceWorkspaces": "I messaggi dei Suoi posti",
   "inboxSourceFailed": "Impossibile leggere {source}. Il resto della posta in arrivo è mostrato.",
   "inboxSourceUnavailable": "{source} non è raggiungibile con il Suo accesso attuale. Le sue conversazioni mancano da questo elenco.",
   "inboxShowOlder": "Mostra conversazioni precedenti",

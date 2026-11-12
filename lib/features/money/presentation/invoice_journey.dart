@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import '../../../core/time/calendar_days.dart';
 import '../../events/domain/workspace_event.dart';
 import '../domain/dunning.dart';
 import '../domain/invoice_due.dart';
@@ -284,7 +285,7 @@ class InvoiceJourney {
     required InvoiceMatch? match,
     required ({int count, DateTime last})? reminder,
     required DunningRules rules,
-    required DateTime now,
+    required BusinessMoment at,
     InvoiceJourneyFacts facts = noJourneyFacts,
     String replacedByNumber = '',
   }) {
@@ -312,7 +313,7 @@ class InvoiceJourney {
     };
     final count = reminder?.count ?? 0;
     final due = invoiceDue(dueOn: invoice.dueOn, issuedAt: invoice.issuedAt,
-        termDays: rules.firstAfterDays, now: now);
+        termDays: rules.firstAfterDays, now: at.today);
     return InvoiceJourney(
       lifecycle: lifecycle,
       move: move,
@@ -334,7 +335,7 @@ class InvoiceJourney {
               reminderCount: count,
               lastReminderAt: reminder?.last,
               rules: rules,
-              now: now,
+              at: at,
             )
           : null,
       reminderCount: count,

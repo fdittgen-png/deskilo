@@ -122,7 +122,7 @@ class ReserveWindowRules {
     final own = BookingGranularity.forSlot(slotMinutes, granularity);
     if (own == granularity) return asked;
     if (own == BookingGranularity.fullDay) {
-      return HalfDayWindows.fullDay(asked.start);
+      return HalfDayWindows.fullDay(WorkspaceTime.dateOf(asked.start));
     }
     final step = Duration(minutes: own.stepMinutes ?? 60);
     final grid = ReserveWindowRules(own);
@@ -145,7 +145,7 @@ class ReserveWindowRules {
         HalfDayWindows.afternoon,
         HalfDayWindows.fullDay,
       ].any((build) {
-        final c = build(w.start);
+        final c = build(WorkspaceTime.dateOf(w.start));
         return c.start == w.start && c.end == w.end;
       });
 
@@ -163,7 +163,8 @@ class ReserveWindowRules {
     required bool ownSlot,
   }) {
     if (ownSlot) return window.end;
-    final fullDay = HalfDayWindows.fullDay(window.start).end;
+    final fullDay =
+        HalfDayWindows.fullDay(WorkspaceTime.dateOf(window.start)).end;
     return switch (granularity) {
       BookingGranularity.halfDay =>
         period == DefaultBookingPeriod.fullDay && fullDay.isAfter(window.start)

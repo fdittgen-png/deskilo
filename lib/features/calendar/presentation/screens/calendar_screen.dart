@@ -73,9 +73,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   @override
   void initState() {
     super.initState();
-    final now = ref.read(clockProvider).now();
-    _month = DateTime(now.year, now.month);
-    _selectedDay = DateTime(now.year, now.month, now.day);
+    // #3659 — the business's today, not the device's.
+    final today = WorkspaceTime.dateOf(ref.read(clockProvider).now());
+    _month = DateTime(today.year, today.month);
+    _selectedDay = today;
   }
 
   bool _sameDay(DateTime a, DateTime b) =>
@@ -290,7 +291,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               child: MonthDayPicker(
             month: _month,
             selectedDay: _selectedDay,
-            today: DateUtils.dateOnly(ref.watch(clockProvider).now()),
+            today: WorkspaceTime.dateOf(ref.watch(clockProvider).now()),
             // Mine vs others' markers (field request): a day with any of
             // MY bookings carries a red dot, a day with other members'
             // a blue one — a day with BOTH shows both dots side by side.

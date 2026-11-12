@@ -34,7 +34,15 @@ Future<FakeReservationRepository> pumpKiosk(
   bool startKiosk = true,
   FakeRealtimeSync? realtime,
   List<int>? openWeekdays,
+  // #3620 — the pocket guards walk the kiosk tablet in both orientations.
+  Size? size,
+  FakeReservationRepository? repo,
 }) async {
+  if (size != null) {
+    tester.view.physicalSize = size;
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+  }
   final plans = FakeFloorPlanRepository()..seedSmallPlan();
   if (bookableLevel) {
     plans.levels[0] = plans.levels[0].copyWith(
@@ -42,7 +50,7 @@ Future<FakeReservationRepository> pumpKiosk(
       priceCents: 1000,
     );
   }
-  final reservations = FakeReservationRepository();
+  final reservations = repo ?? FakeReservationRepository();
   final workspace = FakeWorkspaceRepository.withWorkspace(
     featureFlags: featureFlags,
   );
@@ -80,13 +88,19 @@ Future<FakeReservationRepository> pumpKiosk(
 }
 
 /// Centre of seat 'A1' on the kiosk canvas (footprint (2,2)..(8,6)).
+/// Transform-aware (#278 idiom): the fit scale follows the viewport, which
+/// the tablet guards (#3620) change.
 Offset seatCenter(WidgetTester tester) {
-  final canvas = tester.getTopLeft(find.byKey(_canvasKey));
-  return canvas +
+  final topLeft = tester.getTopLeft(find.byKey(_canvasKey));
+  final scale =
+      (tester.getTopRight(find.byKey(_canvasKey)).dx - topLeft.dx) /
+      (PlanCanvasMetrics.cells * PlanCanvasMetrics.cellSize);
+  return topLeft +
       const Offset(
-        5 * PlanCanvasMetrics.cellSize,
-        4 * PlanCanvasMetrics.cellSize,
-      );
+            5 * PlanCanvasMetrics.cellSize,
+            4 * PlanCanvasMetrics.cellSize,
+          ) *
+          scale;
 }
 
 const _canvasKey = ValueKey('kiosk-plan-canvas');

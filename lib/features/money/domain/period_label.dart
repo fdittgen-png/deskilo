@@ -2,6 +2,8 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/capitalize.dart';
+
 // #1061 — the period words with the locale as DATA, so the document
 // builders (and the CLI) call them without a BuildContext. The context
 // wrappers live in presentation/period_label.dart.
@@ -27,7 +29,7 @@ String monthNameOf(String? locale, String? period) {
   final month = int.tryParse(parts[1]);
   if (year == null || month == null) return '';
   final name = DateFormat.MMMM(locale).format(DateTime(year, month));
-  return name.isEmpty ? '' : name[0].toUpperCase() + name.substring(1);
+  return capitalizeFirst(name, locale: locale);
 }
 
 /// What an invoice COVERS, in words. The server stores the raw period as

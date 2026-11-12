@@ -3,11 +3,12 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/calendar/calendar_item.dart';
-import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/weekday_header.dart';
 import 'calendar_item_row.dart';
 
 /// #818 — the month as a SELECTOR with a glance: one compact cell per
@@ -50,25 +51,14 @@ class CalendarMonthGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final daysInMonth = DateUtils.getDaysInMonth(month.year, month.month);
-    final leading = DateTime(month.year, month.month).weekday - 1;
+    final leading = weekColumnOf(
+        DateTime(month.year, month.month), weekStartOf(appFormatOf(context)));
     final rows = ((leading + daysInMonth) / 7).ceil();
-    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
     return Padding(
       key: const ValueKey('calendar-month-grid'),
       padding: AppSpacing.smH,
       child: Column(children: [
-        Row(children: [
-          for (var i = 0; i < 7; i++)
-            Expanded(
-              child: Center(
-                child: Text(
-                  // 2026-06-01 is a Monday.
-                  weekdayFormat.format(DateTime(2026, 6, 1 + i)).substring(0, 1),
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ),
-            ),
-        ]),
+        const WeekdayHeaderRow(),
         for (var row = 0; row < rows; row++)
           Row(children: [
             for (var col = 0; col < 7; col++)
