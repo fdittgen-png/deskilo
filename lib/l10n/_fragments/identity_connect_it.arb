@@ -1,7 +1,7 @@
 {
   "@@locale": "it",
   "identityConnectTitle": "Connessione a {host}",
-  "identityConnectExplain": "{host} saprà che è Lei, grazie alla sua identità Deskilo. Connettersi non la rende membro, non le dà alcun ruolo e non collega alcun assistente: lo spazio decide sempre su ogni richiesta.",
+  "identityConnectExplain": "{host} saprà che è Lei, grazie alla sua identità Deskilo. Connettersi non la rende membro, non le dà alcun ruolo e non collega alcun assistente: l'attività decide sempre su ogni richiesta.",
   "identityConnectContinue": "Continua con Deskilo",
   "identityConnectExistingAccount": "Usa un account che ho già su questo server",
   "identityConnectWaiting": "Completi l'accesso nel browser, poi torni qui.",
@@ -21,6 +21,6 @@
   "identityConnectUnavailable": "Questo server non ha risposto.",
   "identityConnectRetry": "Riprova",
   "identityConnectConfirmApply": "Inviare la sua richiesta di adesione a {name}?",
-  "identityConnectConfirmApplyBody": "Ora è connesso. Lo spazio esamina la sua richiesta; non viene condiviso nient'altro.",
+  "identityConnectConfirmApplyBody": "Ora è connesso. L'attività esamina la sua richiesta; non viene condiviso nient'altro.",
   "identityConnectSend": "Invia richiesta"
 }

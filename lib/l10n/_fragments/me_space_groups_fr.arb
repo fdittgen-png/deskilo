@@ -5,12 +5,12 @@
   "meGroupRename": "Renommer",
   "meGroupDelete": "Supprimer le groupe",
   "meGroupMove": "Déplacer vers un groupe…",
-  "meGroupEmptyOwn": "Déplacez des espaces ici depuis leur menu.",
+  "meGroupEmptyOwn": "Déplacez des lieux ici depuis leur menu.",
   "meSortHand": "Mon ordre",
   "meSortRecent": "Utilisés récemment",
   "meSortRating": "Mieux notés",
   "meSortAlphabet": "A–Z",
   "meSortTooltip": "Trier",
-  "meSpacesSearch": "Rechercher mes espaces",
-  "meSpacesNoMatch": "Aucun espace ne correspond."
+  "meSpacesSearch": "Rechercher mes lieux",
+  "meSpacesNoMatch": "Aucun lieu ne correspond."
 }

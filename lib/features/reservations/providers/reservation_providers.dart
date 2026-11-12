@@ -26,6 +26,8 @@ import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
 import '../domain/series_preview.dart';
 
+export '../../workspace/providers/business_date_provider.dart'
+    show businessDateOfProvider;
 export 'my_reservations_providers.dart';
 
 part 'reservation_providers.g.dart';
@@ -91,8 +93,10 @@ Future<List<Reservation>> reservationsForDay(Ref ref, String dayKey) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   final parts = dayKey.split('-').map(int.parse).toList();
-  final from = DateTime(parts[0], parts[1], parts[2]);
-  final to = DateTime(parts[0], parts[1], parts[2] + 1);
+  // #3659 — the key is the business's calendar day: its own midnights.
+  final at = _midnightOf(ref);
+  final from = at(parts[0], parts[1], parts[2]);
+  final to = at(parts[0], parts[1], parts[2] + 1);
   return ref
       .watch(reservationRepositoryProvider)
       .fetchWindow(workspace.id, from: from, to: to);
@@ -133,23 +137,26 @@ Future<List<Reservation>> reservationsForMonth(Ref ref, String monthKey) async {
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace == null) return const [];
   final parts = monthKey.split('-').map(int.parse).toList();
-  final from = DateTime(parts[0], parts[1]);
-  final to = DateTime(parts[0], parts[1] + 1);
+  final at = _midnightOf(ref);
+  final from = at(parts[0], parts[1], 1);
+  final to = at(parts[0], parts[1] + 1, 1);
   return ref
       .watch(reservationRepositoryProvider)
       .fetchWindow(workspace.id, from: from, to: to);
 }
 
-/// Canonical family key for [reservationsForMonth] — LOCAL wall-clock
-/// month of [at], never UTC (#119).
-String monthKeyOf(DateTime at) {
-  final local = at.toLocal();
-  return yearMonth(local.year, local.month);
-}
+/// Canonical family key for [reservationsForMonth] — the month of the
+/// calendar [date] (a picked day, the shown month), never UTC (#119).
+String monthKeyOf(DateTime date) => yearMonth(date.year, date.month);
 
-/// Canonical family key for [reservationsForDay] — LOCAL wall-clock day.
-String dayKeyOf(DateTime at) {
-  return isoDay(at.toLocal());
+/// Canonical family key for [reservationsForDay] — the calendar [date].
+String dayKeyOf(DateTime date) => isoDay(date);
+
+/// #3659 — the midnight of a day on the business's calendar (its context);
+/// the device's only until the context is read.
+DateTime Function(int year, int month, int day) _midnightOf(Ref ref) {
+  final calendar = ref.watch(readyWorkspaceContextProvider)?.calendar;
+  return calendar == null ? DateTime.new : calendar.at;
 }
 
 /// The [reservationsForDay] keys a half-open window `[start, end)` touches —
@@ -160,9 +167,14 @@ String dayKeyOf(DateTime at) {
 /// `dayKeyOf(start)` misses it (the bug where a reservation showed on the
 /// Plan tab but not the Reserve hub). Fetch both and merge.
 @visibleForTesting
-List<String> dayKeysForWindow(DateTime start, DateTime end) {
-  final startKey = dayKeyOf(start);
-  final endKey = dayKeyOf(end.subtract(const Duration(microseconds: 1)));
+List<String> dayKeysForWindow(
+  DateTime start,
+  DateTime end,
+  DateTime Function(DateTime instant) dateOf,
+) {
+  final startKey = dayKeyOf(dateOf(start));
+  final endKey =
+      dayKeyOf(dateOf(end.subtract(const Duration(microseconds: 1))));
   return startKey == endKey ? [startKey] : [startKey, endKey];
 }
 
@@ -177,7 +189,8 @@ List<Reservation> reservationsAcrossWindow(
   DateTime end,
 ) {
   final byId = <String, Reservation>{};
-  for (final key in dayKeysForWindow(start, end)) {
+  for (final key
+      in dayKeysForWindow(start, end, ref.watch(businessDateOfProvider))) {
     for (final r in ref.watch(reservationsForDayProvider(key)).value ??
         const <Reservation>[]) {
       byId[r.id] = r;
@@ -194,7 +207,8 @@ bool reservationsUnavailableAcrossWindow(
   DateTime end,
 ) {
   var failed = false;
-  for (final key in dayKeysForWindow(start, end)) {
+  for (final key
+      in dayKeysForWindow(start, end, ref.watch(businessDateOfProvider))) {
     final read = ref.watch(reservationsForDayProvider(key));
     failed |= read.hasError && !read.hasValue;
   }
@@ -203,7 +217,8 @@ bool reservationsUnavailableAcrossWindow(
 
 /// Reads the window's day keys again (the retry of an unavailable window).
 void retryReservationsAcrossWindow(WidgetRef ref, DateTime start, DateTime end) {
-  for (final key in dayKeysForWindow(start, end)) {
+  for (final key
+      in dayKeysForWindow(start, end, ref.read(businessDateOfProvider))) {
     ref.invalidate(reservationsForDayProvider(key));
   }
 }

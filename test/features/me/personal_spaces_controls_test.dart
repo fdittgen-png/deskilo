@@ -233,7 +233,7 @@ void main() {
         findsOneWidget,
       );
       expect(
-        find.descendant(of: testSide, matching: find.text('Open test space')),
+        find.descendant(of: testSide, matching: find.text('Open test business')),
         findsOneWidget,
       );
       await _tap(tester, _key('my-space-open-$_home:$_two'));

@@ -1,7 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:intl/intl.dart';
 
 import 'period_label.dart';
+
+/// #3809 (part of #3657) — what a line says, printed from the facts the
+/// server froze with it, in the document's language (`room_day`: the room
+/// and its day; `cancelled`: what was taken back). Null for a kind or a
+/// version this reader does not know, or values it cannot read: the caller
+/// prints the frozen label instead, never an empty or invented text.
+String? _lineFactsText(ReportStrings strings, Map<String, Object?>? facts) {
+  if (facts == null || facts['version'] != 1) return null;
+  final values = facts['values'];
+  if (values is! Map) return null;
+  switch (facts['kind']) {
+    case 'room_day':
+      final room = values['room'];
+      final day = DateTime.tryParse('${values['day']}');
+      if (room is! String || day == null) return null;
+      final date = DateFormat.yMMMd(strings.dateLocale ?? strings.localeName)
+          .format(day);
+      return room.isEmpty ? date : '$room · $date';
+    case 'cancelled':
+      final of = values['of'];
+      final what = _lineFactsText(
+          strings, of is Map ? {for (final e in of.entries) '${e.key}': e.value} : null);
+      return what == null ? null : strings.cancelledLine(what);
+  }
+  return null;
+}
 
 /// Localized wording for one DERIVED invoice position (0062): the kind
 /// names the tracked source, the label carries its data. Reuses the
@@ -54,9 +81,8 @@ String invoiceLineText(
       'level' => strings.levelReservations,
       'office' => strings.officeReservations,
       'desk' => strings.deskReservations,
-      'adjustment' => line.label.isNotEmpty
-          ? line.label
-          : strings.lineAdjustment,
+      'adjustment' => _lineFactsText(strings, line.text) ??
+          (line.label.isNotEmpty ? line.label : strings.lineAdjustment),
       // 0063 — credits: payments and expense reimbursements carry
       // their ledger note behind the category label.
       'payment' => line.label.isEmpty
@@ -66,7 +92,7 @@ String invoiceLineText(
           ? (strings.categoryExpense)
           : '${strings.categoryExpense}'
               ' · ${line.label}',
-      _ => line.label,
+      _ => _lineFactsText(strings, line.text) ?? line.label,
     };
 
 /// Localized wording for one annex activity row (0064): the ledger
@@ -82,5 +108,6 @@ String annexEntryText(ReportStrings strings, InvoiceDetailEntry entry) {
     'service' => strings.categoryService,
     _ => entry.category,
   };
-  return entry.label.isEmpty ? category : '$category · ${entry.label}';
+  final label = _lineFactsText(strings, entry.text) ?? entry.label;
+  return label.isEmpty ? category : '$category · $label';
 }

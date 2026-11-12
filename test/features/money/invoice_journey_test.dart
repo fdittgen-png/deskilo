@@ -106,7 +106,7 @@ InvoiceJourney _journey(
       match: match,
       reminder: reminder,
       rules: _rules,
-      now: now ?? kTestNow,
+      at: (now: now ?? kTestNow, today: _day(now ?? kTestNow)),
       facts: journeyFactsOf(invoice, match, events),
       replacedByNumber: replacedBy,
     );
@@ -702,3 +702,6 @@ void main() {
     expect(MoneyFace.fromWire('invoices'), MoneyFace.invoices);
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

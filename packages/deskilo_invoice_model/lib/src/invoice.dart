@@ -44,6 +44,8 @@ sealed class InvoiceLine with _$InvoiceLine {
     /// [taxCents]); null on a VAT document, where [amountCents] is quoted.
     int? netCents,
     @Default(0) int taxCents,
+    /// #3809 — [label] as frozen facts (`{kind, version, values}`), or null.
+    Map<String, Object?>? text,
   }) = _InvoiceLine;
 }
 
@@ -57,6 +59,7 @@ sealed class InvoiceDetailEntry with _$InvoiceDetailEntry {
     required String category,
     @Default('') String label,
     required int amountCents,
+    Map<String, Object?>? text, // #3809: see InvoiceLine.text
   }) = _InvoiceDetailEntry;
 }
 
@@ -452,12 +455,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     detailLedger: [
       for (final entry
           in ((row['details'] as Map?)?['ledger'] as List? ?? const []))
-        InvoiceDetailEntry(
-          on: (entry as Map)['on'] as String? ?? '',
-          category: entry['category'] as String? ?? '',
-          label: entry['description'] as String? ?? '',
-          amountCents: (entry['amount_cents'] as num?)?.toInt() ?? 0,
-        ),
+        invoiceDetailFromSnapshot(entry as Map),
     ],
     vatTotals: [
       for (final total in (row['vat_totals'] as List? ?? const []))

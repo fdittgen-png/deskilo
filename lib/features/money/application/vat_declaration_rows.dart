@@ -6,6 +6,8 @@
 // The card maps over these values; it decides nothing.
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
+import '../../../core/i18n/rate_format.dart';
+
 /// Where a declaration stands.
 enum VatDeclarationStage { draft, prepared, filed }
 
@@ -37,11 +39,10 @@ class VatDeclarationRow {
   /// A line names what it is beside its rate (`namedBesideRate`).
   static bool hasNote(VatDeclarationLine line) => line.namedBesideRate;
 
-  /// `20 %`, `5.5 %`: a whole rate without decimals.
-  static String percentLabel(double percent) =>
-      percent == percent.roundToDouble()
-      ? '${percent.toStringAsFixed(0)} %'
-      : '$percent %';
+  /// `20 %`, `5,5 %`: the rate in the reader's [locale], a whole rate
+  /// without decimals.
+  static String percentLabel(double percent, String? locale) =>
+      ratePercentText(percent, locale: locale);
 
   /// Number, channel and receipt of a filed declaration, empty parts
   /// left out; null until it is filed.

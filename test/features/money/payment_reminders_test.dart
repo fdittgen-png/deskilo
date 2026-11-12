@@ -51,7 +51,7 @@ void main() {
             reminderCount: count,
             lastReminderAt: last,
             rules: rules,
-            now: now,
+            at: (now: now, today: _day(now)),
           );
       expect(due(DateTime(2026, 8, 14)), isNull);
       expect(due(DateTime(2026, 8, 15)), 1);
@@ -122,3 +122,6 @@ void main() {
     expect(find.textContaining('€250.00 still due'), findsOneWidget);
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

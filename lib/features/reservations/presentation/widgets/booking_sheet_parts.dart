@@ -8,6 +8,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/form_sheet.dart';
 
 /// #2016 — Reserve (the default) or Check in now in the booking sheet: an
@@ -127,7 +128,7 @@ class BookingDateTile extends StatelessWidget {
     title: Text(label),
     trailing: Text(appFormatOf(context).dates(DateShape.date).format(WorkspaceTime.wall(value))),
     onTap: () async {
-      final picked = await showDatePicker(
+      final picked = await showAppDatePicker(
         context: context,
         initialDate: WorkspaceTime.wall(value),
         // display(): appFormatOf(context).wall(TZDateTime) lands in package:timezone's

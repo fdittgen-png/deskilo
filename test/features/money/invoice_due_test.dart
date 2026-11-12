@@ -39,7 +39,7 @@ InvoiceJourney _journey(Invoice i, DateTime now, DunningRules rules) =>
     InvoiceJourney.of(
       invoice: i,
       rules: rules,
-      now: now,
+      at: (now: now, today: _day(now)),
       match: null,
       reminder: null,
       facts: journeyFactsOf(i, null, const []),
@@ -129,6 +129,7 @@ void main() {
       expect(journey.overdue, isTrue);
       expect(exposure.overdue, [i]);
       final finance = FinanceInvoice(
+        timezone: 'Europe/Paris',
         id: i.id,
         workspaceId: i.workspaceId,
         workspaceName: 'Space',
@@ -160,6 +161,7 @@ void main() {
       expect(_journey(i, now, rules).overdue, isTrue);
       expect(_exposure(i, now, rules).overdue, [i]);
       final finance = FinanceInvoice(
+        timezone: 'Europe/Paris',
         id: i.id,
         workspaceId: i.workspaceId,
         workspaceName: 'Space',
@@ -201,3 +203,6 @@ void main() {
     });
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) => DateTime(t.year, t.month, t.day);

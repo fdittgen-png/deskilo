@@ -65,6 +65,27 @@
       }
     }
   },
+  "financesDueInZone": "{text} · {zone}",
+  "@financesDueInZone": {
+    "description": "Me › Finances: an invoice's due line followed by its business's time zone, shown when that zone differs from the device's (#3659)",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "financesDueCalendarUnknown": "Due {date} · the business's calendar is unknown",
+  "@financesDueCalendarUnknown": {
+    "description": "Me › Finances: the due line when the business's time zone is unknown, so lateness cannot be judged (#3659)",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "financesOverdueCount": "{count, plural, one{1 overdue} other{{count} overdue}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
@@ -76,7 +97,7 @@
   },
   "financesRemindedTimes": "Reminded ×{count}",
   "@financesRemindedTimes": {
-    "description": "Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
+    "description": "Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural. The number count is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -85,7 +106,7 @@
   },
   "financesReminderLevel": "Reminder {level}",
   "@financesReminderLevel": {
-    "description": "Me › Finances. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
+    "description": "Me › Finances. The number is not a count: it is a reminder level, a position in the escalation. The number level is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"

@@ -259,7 +259,7 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
-  "threadNoRefs": "Las referencias solo se comparten con personas del mismo espacio.",
+  "threadNoRefs": "Las referencias solo se comparten con personas del mismo negocio.",
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
   },

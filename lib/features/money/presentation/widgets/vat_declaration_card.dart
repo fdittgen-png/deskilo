@@ -75,7 +75,7 @@ class VatDeclarationCard extends StatelessWidget {
                     'vat-decl-correction-${declaration.id}-${line.corrects}')
                 : null,
             '${VatDeclarationRow.hasNote(line) ? '${lineNote(line)} · ' : ''}'
-            '${VatDeclarationRow.percentLabel(line.percent)}'
+            '${VatDeclarationRow.percentLabel(line.percent, appFormatOf(context).locale)}'
             '${line.category.isEmpty ? '' : ' ${line.category}'} · '
             '${l10n.vatDeclNet} '
             '${centsToMajor(line.netCents)} ${declaration.currency} · '

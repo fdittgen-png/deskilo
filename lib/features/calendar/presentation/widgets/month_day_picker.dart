@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/weekday_header.dart';
 
 /// The month as a compact day picker (#478: the calendar is a picker, not
 /// the content itself): a weekday header, the month's days, a ring on
@@ -44,13 +45,14 @@ class MonthDayPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final daysInMonth = DateUtils.getDaysInMonth(month.year, month.month);
-    final leading = DateTime(month.year, month.month).weekday - 1;
+    final leading = weekColumnOf(
+        DateTime(month.year, month.month), weekStartOf(appFormatOf(context)));
     final rows = ((leading + daysInMonth) / 7).ceil();
     return Padding(
       padding: AppSpacing.smH,
       child: Column(
         children: [
-          const _WeekdayHeader(),
+          const WeekdayHeaderRow(),
           for (var row = 0; row < rows; row++)
             Row(
               children: [
@@ -77,30 +79,6 @@ class MonthDayPicker extends StatelessWidget {
       mine: myDays.contains(day),
       others: otherDays.contains(day),
       onPick: () => onSelect(day),
-    );
-  }
-}
-
-class _WeekdayHeader extends StatelessWidget {
-  const _WeekdayHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    final weekdayFormat = appFormatOf(context).dates(DateShape.weekday);
-    return Row(
-      children: [
-        for (var i = 0; i < 7; i++)
-          Expanded(
-            child: Center(
-              child: Text(
-                weekdayFormat
-                    .format(DateTime(2026, 6, 1 + i)) // a Monday
-                    .substring(0, 1),
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
-            ),
-          ),
-      ],
     );
   }
 }

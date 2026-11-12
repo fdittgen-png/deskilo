@@ -70,7 +70,7 @@ void main() {
     expect(find.byKey(const ValueKey('portal-enter')), findsNothing);
     await tester.tap(find.byKey(const ValueKey('portal-request-membership')));
     await tester.pumpAndSettle();
-    expect(find.text('Request sent. The workspace will review your profile.'),
+    expect(find.text('Request sent. The business will review your profile.'),
         findsOneWidget);
   });
 

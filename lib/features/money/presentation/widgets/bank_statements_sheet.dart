@@ -79,7 +79,7 @@ class BankStatementsView extends ConsumerWidget {
     final l10n = context.l10n;
     final statements = ref.watch(bankStatementsProvider(workspaceId));
     final day = appFormatOf(context).dates(DateShape.date);
-    return SheetShell(
+    final shell = SheetShell(
       title: l10n.bankStatementsTitle,
       children: [
         Text(l10n.bankStatementsIntro, style: Theme.of(context).textTheme.bodySmall),
@@ -142,6 +142,13 @@ class BankStatementsView extends ConsumerWidget {
                 ),
         ),
       ],
+    );
+    // #3623 — a bank file dropped onto the sheet is imported as a picked one.
+    if (!canMatch) return shell;
+    return BankImportDropZone(
+      workspaceId: workspaceId,
+      currency: currency,
+      child: shell,
     );
   }
 

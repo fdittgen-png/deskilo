@@ -10,6 +10,7 @@ import '../settings/setting_defaults.g.dart';
 import '../time/workspace_time.dart';
 import 'format_prefs.dart';
 import 'money_format.dart';
+import 'rate_format.dart';
 
 /// THE formatting seam (#711): every number, amount, date and time a
 /// member reads goes through here, in THEIR format locale, with the
@@ -26,6 +27,7 @@ class AppFormat {
     required this.currencyCode,
     this.clock = ClockPref.auto,
     this.timeZoneMode = TimeZoneMode.workspace,
+    this.weekStart = WeekStartPref.locale,
   });
 
   /// The resolved format locale, e.g. `fr_CH`.
@@ -36,6 +38,10 @@ class AppFormat {
 
   final ClockPref clock;
   final TimeZoneMode timeZoneMode;
+
+  /// #3648 — the chosen first day of the week; read it through
+  /// `weekStartOf` (`week_start.dart`), which resolves the locale's own.
+  final WeekStartPref weekStart;
 
   /// Whatever the tests and the pre-#711 app always assumed, except the
   /// currency: no business, no currency (#3658), so its amounts read
@@ -124,14 +130,15 @@ class AppFormat {
       : NumberFormat.decimalPatternDigits(locale: locale, decimalDigits: decimals)
           .format(value);
 
-  String percent(num fraction) =>
-      NumberFormat.percentPattern(locale).format(fraction);
+  /// A fraction as a percentage (`0.081` is `8.1 %`): the locale's percent
+  /// pattern and the value's own precision, never a literal sign.
+  String fractionPercent(num fraction) =>
+      fractionPercentText(fraction, locale: locale);
 
-  /// #3484 — a tax rate given in percent (`20` is 20 %): '20 %', '5,5 %'
-  /// (fr_FR), '7.7 %' (de_CH); a whole rate without decimals. Files print
-  /// rates with `percentText` instead.
-  String rate(double percent) =>
-      '${NumberFormat.decimalPattern(locale).format(percent)} %';
+  /// A rate already in percent (`20` is `20 %`, `8.1` is `8.1 %`, `9.975`
+  /// keeps its three decimals): `5,5 %` in fr_FR, `7.7%` in en_GB. Files
+  /// print rates with `percentText` instead.
+  String ratePercent(num percent) => ratePercentText(percent, locale: locale);
 
   /// #3487 — the number a member typed, in this locale's separators
   /// (`parseDecimalInput`); [grouping] off for a rate, a weight or a
@@ -201,6 +208,18 @@ class AppFormat {
   /// `28 Aug 2026` / `28 août 2026` / `28.08.2026`.
   String date(DateTime instant) => DateFormat.yMMMd(locale).format(_wall(instant));
 
+  /// A calendar day stored as `2026-08-28` (a validity date, a due day: no
+  /// instant, no zone), as `28 Aug 2026`; text that is not a day is
+  /// returned as it came, never blanked.
+  String isoDay(String day) {
+    final parsed = DateTime.tryParse(day);
+    return parsed == null ? day : calendarDay(parsed);
+  }
+
+  /// A calendar day picked or computed as a date (no instant, so no zone
+  /// shift), as `28 Aug 2026`.
+  String calendarDay(DateTime day) => DateFormat.yMMMd(locale).format(day);
+
   /// `Fri 28 Aug` — the short form for chips and rows.
   String shortDate(DateTime instant) =>
       DateFormat.MMMEd(locale).format(_wall(instant));
@@ -249,12 +268,14 @@ class AppFormat {
     String? currencyCode,
     ClockPref? clock,
     TimeZoneMode? timeZoneMode,
+    WeekStartPref? weekStart,
   }) =>
       AppFormat(
         locale: locale ?? this.locale,
         currencyCode: currencyCode ?? this.currencyCode,
         clock: clock ?? this.clock,
         timeZoneMode: timeZoneMode ?? this.timeZoneMode,
+        weekStart: weekStart ?? this.weekStart,
       );
 }
 

@@ -78,7 +78,7 @@ const _allowed = <String, (int, String)>{
     "a document: the printed analytics in the document's locale",
   ),
   'lib/features/workspace/presentation/config_pdf_lines.dart': (
-    5,
+    4,
     "a document: the configuration PDF prints in the document's locale",
   ),
   'lib/features/workspace/presentation/screens/workspace_settings_backup.dart': (

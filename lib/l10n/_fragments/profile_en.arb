@@ -503,6 +503,10 @@
   "@profilesUnavailable": {
     "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
   },
+  "mePlacesLoadFailed": "Your places could not be loaded.",
+  "@mePlacesLoadFailed": {
+    "description": "Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)"
+  },
   "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
   "@consentUnavailable": {
     "description": "Banner on the consent screen when the profile could not be fetched (#1650): a retry replaces the acceptance form"

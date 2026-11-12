@@ -57,8 +57,8 @@ class MeSpaceCard extends ConsumerWidget {
     final demo = DemoEnvironment.maybeOf(context) != null;
     final isProd = space.env.isProduction;
     final environment = demo ? l10n.demoSessionBadge : isProd
-        ? l10n.uxRealWorkspace
-        : l10n.uxTestSpace;
+        ? l10n.meRealBusiness
+        : l10n.meTestBusiness;
     final status = _pending
         ? (l10n.meSpacePending)
         : role;
@@ -83,7 +83,7 @@ class MeSpaceCard extends ConsumerWidget {
             message: [
               space.name,
               environment,
-              if (demo) l10n.demoSessionBadgeHint else if (space.isDevelopment) l10n.uxTestSpaceHint else l10n.uxRealSpaceHint,
+              if (demo) l10n.meDemoSessionBadgeHint else if (space.isDevelopment) l10n.meTestBusinessHint else l10n.uxRealSpaceHint,
               ?status,
               if (lastUsed) l10n.meSpaceLastUsed,
               if (waiting > 0) l10n.meSpaceNotifications(waiting),
@@ -146,7 +146,7 @@ class MeSpaceCard extends ConsumerWidget {
                     ],
                     Flexible(
                       child: Text(
-                        isProd ? l10n.uxOpenWorkspace : l10n.uxTestSpace,
+                        isProd ? l10n.uxOpenWorkspace : l10n.meTestBusiness,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge?.strong,

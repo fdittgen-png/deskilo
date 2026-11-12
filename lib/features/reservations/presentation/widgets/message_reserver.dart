@@ -37,7 +37,7 @@ String _blockingLabel(
 }) {
   final when = DateFormat.MMMd(
     localeName,
-  ).add_Hm().format(blocking.startsAt.toLocal());
+  ).add_jm().format(blocking.startsAt.toLocal());
   return [name, spaceName, when].where((p) => p.isNotEmpty).join(' · ');
 }
 

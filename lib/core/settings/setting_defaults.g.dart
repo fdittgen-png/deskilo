@@ -80,6 +80,8 @@ abstract final class SettingDefaults {
   static const String localeDefaultCurrency = 'EUR';
   /// `locale.default_locale`
   static const String localeDefaultLocale = 'en_US';
+  /// `locale.default_week_start`
+  static const String localeDefaultWeekStart = 'locale';
   /// `mcp.confirmation_expiry_minutes`
   static const int mcpConfirmationExpiryMinutes = 5;
   /// `mcp.notice_read_retention_days`

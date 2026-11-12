@@ -3,7 +3,7 @@
   "directoryLocating": "Localizando la dirección pública…",
   "directoryApproximate": "Ubicación aproximada de la dirección",
   "directoryLocationMissing": "Ubicación no disponible. El propietario puede publicar coordenadas precisas.",
-  "directoryPinsMissing": "{count, plural, one{1 espacio no se pudo situar en el mapa; su ficha está debajo.} other{{count} espacios no se pudieron situar en el mapa; sus fichas están debajo.}}",
+  "directoryPinsMissing": "{count, plural, one{1 lugar no se pudo situar en el mapa; su ficha está debajo.} other{{count} lugares no se pudieron situar en el mapa; sus fichas están debajo.}}",
   "directoryPinsNoAddress": "{count, plural, one{1 no tiene dirección publicada.} other{{count} no tienen dirección publicada.}}",
   "directoryPinsLookupFailed": "{count, plural, one{1 no se pudo buscar.} other{{count} no se pudieron buscar.}}",
   "directoryNothingToPin": "Ninguno de estos lugares se pudo situar en el mapa.",

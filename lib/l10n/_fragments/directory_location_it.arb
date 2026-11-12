@@ -3,7 +3,7 @@
   "directoryLocating": "Ricerca dell’indirizzo pubblico…",
   "directoryApproximate": "Posizione approssimativa dell’indirizzo",
   "directoryLocationMissing": "Posizione non disponibile. Il proprietario può pubblicare coordinate precise.",
-  "directoryPinsMissing": "{count, plural, one{1 spazio non è stato possibile collocarlo sulla mappa; la sua scheda è sotto.} other{{count} spazi non è stato possibile collocarli sulla mappa; le loro schede sono sotto.}}",
+  "directoryPinsMissing": "{count, plural, one{1 posto non è stato possibile collocarlo sulla mappa; la sua scheda è sotto.} other{{count} posti non è stato possibile collocarli sulla mappa; le loro schede sono sotto.}}",
   "directoryPinsNoAddress": "{count, plural, one{1 non ha un indirizzo pubblicato.} other{{count} non hanno un indirizzo pubblicato.}}",
   "directoryPinsLookupFailed": "{count, plural, one{La ricerca di 1 indirizzo non è riuscita.} other{La ricerca di {count} indirizzi non è riuscita.}}",
   "directoryNothingToPin": "Non è stato possibile collocare nessuno di questi luoghi sulla mappa.",

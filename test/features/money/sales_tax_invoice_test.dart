@@ -308,7 +308,7 @@ void reportDataTests() {
     expect((lines.first! as Map)['vat_rate'], '');
     expect(
       [for (final v in data['vat']! as List<Object?>) (v! as Map)['rate']],
-      ['New York State 4 %', 'New York City 4.5 %', 'MCTD 0.375 %'],
+      ['New York State 4%', 'New York City 4.5%', 'MCTD 0.375%'],
     );
     expect(data['net_total'], '\$150.00');
     expect(data['vat_total'], '\$8.88');

@@ -119,7 +119,7 @@ void main() {
   ) async {
     await _show(tester, _Home());
     expect(find.text('Atelier (2)'), findsOneWidget);
-    expect(find.text('A workspace on another server (1)'), findsOneWidget);
+    expect(find.text('A place on another server (1)'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('reachable-person-p-$_remote-p9')),
       findsOneWidget,
@@ -136,7 +136,7 @@ void main() {
       'the neutral label', (tester) async {
     await _show(tester, _Home()..remoteName = 'Studio Sud');
     expect(find.text('Studio Sud (1)'), findsOneWidget);
-    expect(find.text('A workspace on another server (1)'), findsNothing);
+    expect(find.text('A place on another server (1)'), findsNothing);
     expect(find.text('Atelier (2)'), findsOneWidget);
   });
 
@@ -164,7 +164,7 @@ void main() {
       find.byKey(const ValueKey('reachable-unverified-$_remote')),
       findsOneWidget,
     );
-    expect(find.text('A workspace on another server (0)'), findsOneWidget);
+    expect(find.text('A place on another server (0)'), findsOneWidget);
   });
 
   testWidgets('a refusal offers a retry, which recovers', (tester) async {

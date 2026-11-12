@@ -23,7 +23,7 @@
   "@meGroupMove": {
     "description": "Shown as a text in space row controls (me)."
   },
-  "meGroupEmptyOwn": "Move spaces here from their menu.",
+  "meGroupEmptyOwn": "Move places here from their menu.",
   "@meGroupEmptyOwn": {
     "description": "Shown as a text in me spaces list (me)."
   },
@@ -47,11 +47,11 @@
   "@meSortTooltip": {
     "description": "Shown as a tooltip in me spaces chrome (me)."
   },
-  "meSpacesSearch": "Search my spaces",
+  "meSpacesSearch": "Search my places",
   "@meSpacesSearch": {
     "description": "Shown as a button or chip label in personal spaces view (me), and 1 other place."
   },
-  "meSpacesNoMatch": "No space matches.",
+  "meSpacesNoMatch": "No place matches.",
   "@meSpacesNoMatch": {
     "description": "Shown as a text in me spaces list (me)."
   }

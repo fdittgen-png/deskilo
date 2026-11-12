@@ -133,18 +133,22 @@ class _ShellOverflowState extends State<_ShellOverflow> {
   final _menu = GlobalKey<RowMenuState>();
 
   @override
-  Widget build(BuildContext context) => RowMenu(
-    key: _menu,
-    actions: widget.entries,
-    keyPrefix: 'shell-overflow',
-    button: RowMenuButton.none,
-    expand: false,
-    child: Builder(
-      builder: (button) => IconButton(
-        key: const ValueKey('shell-overflow-button'),
-        icon: const Icon(Icons.more_vert),
-        tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
-        onPressed: () => unawaited(_menu.currentState?.open(anchor: button)),
+  // #3620 -- one named control: the menu's actions and the button's name
+  // are the same node, not an unnamed wrapper beside a named button.
+  Widget build(BuildContext context) => MergeSemantics(
+    child: RowMenu(
+      key: _menu,
+      actions: widget.entries,
+      keyPrefix: 'shell-overflow',
+      button: RowMenuButton.none,
+      expand: false,
+      child: Builder(
+        builder: (button) => IconButton(
+          key: const ValueKey('shell-overflow-button'),
+          icon: const Icon(Icons.more_vert),
+          tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
+          onPressed: () => unawaited(_menu.currentState?.open(anchor: button)),
+        ),
       ),
     ),
   );

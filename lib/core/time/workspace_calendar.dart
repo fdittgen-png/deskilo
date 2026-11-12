@@ -78,6 +78,10 @@ tz.Location _workspaceLocation(String name) {
   }
 }
 
+/// The IANA [name] as a location, or [WorkspaceCalendarUnavailable]: never
+/// the device's zone in its place (#3659).
+tz.Location workspaceLocationOf(String name) => _workspaceLocation(name);
+
 /// The workspace's calendar at the moment its context was captured.
 @immutable
 class WorkspaceCalendar {

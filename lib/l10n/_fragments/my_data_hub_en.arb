@@ -4,11 +4,11 @@
   "@meDataPersonalTitle": {
     "description": "#2557 My data › Personal information: the personal-account source card."
   },
-  "meDataPersonalScope": "What your personal home holds about you: your profile, preferences, conversations and the workspaces you name. Each workspace's bookings and invoices stay with that workspace and are not part of this file.",
+  "meDataPersonalScope": "What your personal home holds about you: your profile, preferences, conversations and the places you name. The bookings and invoices of each business stay with that business and are not part of this file.",
   "@meDataPersonalScope": {
     "description": "#2557 My data: what the personal export covers and what it leaves to each workspace."
   },
-  "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Workspaces named: {workspaces}",
+  "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Places named: {workspaces}",
   "@meDataPersonalSummary": {
     "description": "#2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: conversations, messages, workspaces]",
     "placeholders": {

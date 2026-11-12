@@ -30,7 +30,7 @@
   "@visibilitySpaceUnverified": {
     "description": "#2558 chosen-spaces picker: a space on another installation whose membership cannot be verified yet"
   },
-  "visibilitySpaceAmbiguous": "Same name as another space · {source}",
+  "visibilitySpaceAmbiguous": "Same name as another place · {source}",
   "@visibilitySpaceAmbiguous": {
     "description": "#2558 chosen-spaces picker: two spaces share a name; source says where this one is",
     "placeholders": {

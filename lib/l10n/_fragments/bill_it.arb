@@ -186,5 +186,14 @@
   },
   "invoiceExportGenericJournal": "Giornale (CSV, per qualsiasi software contabile)",
   "journalNeedsLocalBook": "Il giornale nasce da una contabilità tenuta qui: configura prima il piano dei conti dell'emittente.",
-  "journalBlocked": "Associa prima questi ruoli nel piano dei conti: {roles}"
+  "journalBlocked": "Associa prima questi ruoli nel piano dei conti: {roles}",
+  "invoiceLineCancelled": "Annullato: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  }
 }

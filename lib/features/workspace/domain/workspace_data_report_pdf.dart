@@ -40,6 +40,7 @@ class WorkspaceDataReportStrings {
     required this.day,
     required this.month,
     required this.number,
+    required this.percent,
   });
 
   final String title;
@@ -77,6 +78,9 @@ class WorkspaceDataReportStrings {
 
   /// A count or a number of hours.
   final String Function(num value) number;
+
+  /// A rate already in percent, in the locale's own percent pattern.
+  final String Function(num percent) percent;
 }
 
 /// Everything the PDF is drawn from.
@@ -259,7 +263,7 @@ String _cell(WorkspaceDataReportStrings s, DataReportCell kind, Object? v) =>
     switch (v) {
       null => '',
       final int cents when kind == DataReportCell.money => s.money(cents),
-      final int pct when kind == DataReportCell.percent => '${s.number(pct)} %',
+      final int pct when kind == DataReportCell.percent => s.percent(pct),
       final num n => s.number(n),
       final bool b => b ? s.yes : s.no,
       final DateTime m when kind == DataReportCell.month => s.month(m),

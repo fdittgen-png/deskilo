@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "createHostTitle": "Where should the space live?",
+  "createHostTitle": "Where should the business live?",
   "@createHostTitle": {
     "description": "#2562 C2c Create: title of the sheet choosing the server a new space is created on"
   },
@@ -12,11 +12,11 @@
   "@createHostHereDetail": {
     "description": "#2562 C2c Create: detail of 'This server'"
   },
-  "createHostAvailable": "Accepts new spaces",
+  "createHostAvailable": "Accepts new businesses",
   "@createHostAvailable": {
     "description": "#2562 C2c Create: an enrolled server that accepts new spaces"
   },
-  "createHostNotAccepting": "Not accepting new spaces",
+  "createHostNotAccepting": "Not accepting new businesses",
   "@createHostNotAccepting": {
     "description": "#2562 C2c Create: an enrolled server closed to new spaces (state and refusal)"
   },
@@ -49,7 +49,7 @@
   "@createHostChooseAgain": {
     "description": "#2562 C2c Create: action back to choosing a server"
   },
-  "createHostNone": "No server accepts new spaces for your personal home yet. Nothing was created.",
+  "createHostNone": "No server accepts new businesses for your personal home yet. Nothing was created.",
   "@createHostNone": {
     "description": "#2554 Create: a personal home that hosts no space and has no enrolled server offers nothing to create on"
   }

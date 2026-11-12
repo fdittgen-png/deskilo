@@ -1,5 +1,5 @@
 {
-  "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this space.",
+  "favoriteKeptOnDeviceRefused": "Kept on this device only: your account cannot save this place.",
   "@favoriteKeptOnDeviceRefused": {
     "description": "Shown as a text in personal space card (me)."
   },
