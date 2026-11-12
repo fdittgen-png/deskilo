@@ -9,6 +9,7 @@ import '../core/theme/app_radius.dart';
 import '../core/theme/contrast.dart';
 import '../core/theme/contrast_audit.dart';
 import '../core/theme/shell_metrics.dart';
+import 'shell/desk_page_frame.dart';
 
 /// DesKilo brand palette — muted burnt orange (spec §14, decided 2026-07-07).
 ///
@@ -187,12 +188,15 @@ PageTransitionsTheme _pageTransitions({required bool animations}) {
   if (!animations) {
     return PageTransitionsTheme(builders: {
       for (final platform in TargetPlatform.values)
-        platform: const _InstantPageTransitionsBuilder(),
+        platform: const _DeskFramed(_InstantPageTransitionsBuilder()),
     });
   }
-  const fade =
-      _ReducedMotionAware(FadeForwardsPageTransitionsBuilder());
-  const cupertino = _ReducedMotionAware(CupertinoPageTransitionsBuilder());
+  const fade = _DeskFramed(
+    _ReducedMotionAware(FadeForwardsPageTransitionsBuilder()),
+  );
+  const cupertino = _DeskFramed(
+    _ReducedMotionAware(CupertinoPageTransitionsBuilder()),
+  );
   return const PageTransitionsTheme(builders: {
     TargetPlatform.android: fade,
     TargetPlatform.fuchsia: fade,
@@ -204,6 +208,29 @@ PageTransitionsTheme _pageTransitions({required bool animations}) {
 }
 
 /// No transition at all: the new route is simply there.
+/// #3798 — every page, as its route builds it, framed in its measure when it
+/// stands in the desk's page area (desk_page_frame.dart).
+class _DeskFramed extends PageTransitionsBuilder {
+  const _DeskFramed(this._delegate);
+
+  final PageTransitionsBuilder _delegate;
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) => _delegate.buildTransitions(
+    route,
+    context,
+    animation,
+    secondaryAnimation,
+    framedOnDesk(child),
+  );
+}
+
 class _InstantPageTransitionsBuilder extends PageTransitionsBuilder {
   const _InstantPageTransitionsBuilder();
 
