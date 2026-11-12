@@ -176,7 +176,8 @@ double _gridWidth(double window, double padding) {
 /// server-only ones of the Demo (`UnavailableOverviewKpiRepository`,
 /// `UnavailableCostKpiRepository`, `UnavailableCostAllocationRepository`
 /// throw `KpiUnavailable('no server in this mode')`). Master's Demo fails the
-/// same ones at the same date; the defect is tracked apart from this page.
+/// same ones at the same date; the defect is #3785, and this list empties
+/// with it.
 const _serverOnly = {
   'assets.acquisitions',
   'assets.book_depreciation',
