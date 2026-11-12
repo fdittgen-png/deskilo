@@ -25,6 +25,7 @@ import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import 'badge_pin_review_notice.dart';
 import 'nfc_tap_dialog.dart';
+import 'revoked_badge_row.dart';
 
 /// One member's badge manager (0043/0046, extracted for the 0053
 /// self-service pass): the badge list with revoke, the one-time QR with
@@ -334,11 +335,9 @@ class _BadgeManagerDialogState
   }
 
   /// One badge row: live badges keep the Revoke button; revoked ones
-  /// are swiped RIGHT to delete for good (field request — a badge
-  /// history piles up otherwise).
+  /// are deleted for good from a [RevokedBadgeRow].
   Widget _badgeRow(BuildContext context, MemberBadge badge) {
     final l10n = widget.l10n;
-    final colorScheme = Theme.of(context).colorScheme;
     final row = ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Icon(
@@ -383,26 +382,12 @@ class _BadgeManagerDialogState
         ),
       ]);
     }
-    return Dismissible(
-      key: ValueKey('badge-dismiss-${badge.id}'),
-      direction: DismissDirection.startToEnd,
-      background: ColoredBox(
-        color: colorScheme.errorContainer,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Icon(
-              Icons.delete_outline,
-              color: colorScheme.onErrorContainer,
-            ),
-          ),
-        ),
-      ),
-      confirmDismiss: (_) => _delete(badge),
-      onDismissed: (_) => setState(
-        () => _badges?.removeWhere((b) => b.id == badge.id),
-      ),
+    return RevokedBadgeRow(
+      badgeId: badge.id,
+      onDelete: () async {
+        if (!await _delete(badge) || !mounted) return;
+        setState(() => _badges?.removeWhere((b) => b.id == badge.id));
+      },
       child: row,
     );
   }

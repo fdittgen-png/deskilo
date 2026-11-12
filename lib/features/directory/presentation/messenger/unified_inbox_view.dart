@@ -8,7 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/messaging_windows.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/row_menu.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/inbox_composition.dart';
@@ -232,7 +232,7 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
                     pinned: pinnedOf(entry),
                     selected: entry.key == widget.selected,
                     onOpen: () => _open(context, entry),
-                    onMarks: () => _marksMenu(context, entry),
+                    marks: _marks(context, entry),
                   ),
                 ],
               );
@@ -318,60 +318,68 @@ class _UnifiedInboxState extends ConsumerState<UnifiedInboxView> {
     ];
   }
 
-  /// Long-press: pin and archive (kept on this device).
-  Future<void> _marksMenu(BuildContext context, InboxEntry entry) async {
+  /// #3611 — the row's marks, once: the long press, a right click, the
+  /// ⋯ and the context-menu key open them alike. Pin and archive always
+  /// (kept on this device when the source has no preference); mute and
+  /// mark-unread where the server keeps the conversation's flags.
+  List<RowAction> _marks(BuildContext context, InboxEntry entry) {
     final l10n = context.l10n;
     final marks = ref.read(inboxMarksProvider);
     final flags = entry.flags;
     final pinned = flags?.pinned ?? marks.pinned.contains(entry.key);
     final archived = flags?.archived ?? marks.archived.contains(entry.key);
-    final choice = await showAppSheet<String>(
-      context: context,
-      showDragHandle: true,
-      builder: (sheet) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              key: const ValueKey('inbox-menu-pin'),
-              leading: const Icon(Icons.push_pin_outlined),
-              title: Text(pinned
-                  ? (l10n.conversationUnpin)
-                  : (l10n.conversationPin)),
-              onTap: () => Navigator.of(sheet).pop('pin'),
-            ),
-            if (flags != null) ...[
-              ListTile(
-                key: const ValueKey('inbox-menu-mute'),
-                leading: Icon(flags.muted
-                    ? Icons.notifications_active_outlined
-                    : Icons.notifications_off_outlined),
-                title: Text(flags.muted
-                    ? (l10n.conversationUnmute)
-                    : (l10n.conversationMute)),
-                onTap: () => Navigator.of(sheet).pop('mute'),
-              ),
-              if (entry.unread == 0)
-                ListTile(
-                  key: const ValueKey('inbox-menu-unread'),
-                  leading: const Icon(Icons.mark_chat_unread_outlined),
-                  title: Text(l10n.conversationMarkUnread),
-                  onTap: () => Navigator.of(sheet).pop('unread'),
-                ),
-            ],
-            ListTile(
-              key: const ValueKey('inbox-menu-archive'),
-              leading: const Icon(Icons.archive_outlined),
-              title: Text(archived
-                  ? (l10n.conversationUnarchive)
-                  : (l10n.conversationArchive)),
-              onTap: () => Navigator.of(sheet).pop('archive'),
-            ),
-          ],
-        ),
+    Future<void> apply(String choice) => _applyMark(context, entry,
+        choice: choice, pinned: pinned, archived: archived);
+    return [
+      RowAction(
+        id: 'pin',
+        label: pinned ? l10n.conversationUnpin : l10n.conversationPin,
+        icon: Icons.push_pin_outlined,
+        // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
+        onSelected: () => apply('pin'),
       ),
-    );
-    if (choice == null) return;
+      if (flags != null) ...[
+        RowAction(
+          id: 'mute',
+          label: flags.muted
+              ? l10n.conversationUnmute
+              : l10n.conversationMute,
+          icon: flags.muted
+              ? Icons.notifications_active_outlined
+              : Icons.notifications_off_outlined,
+          // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
+          onSelected: () => apply('mute'),
+        ),
+        if (entry.unread == 0)
+          RowAction(
+            id: 'unread',
+            label: l10n.conversationMarkUnread,
+            icon: Icons.mark_chat_unread_outlined,
+            // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
+            onSelected: () => apply('unread'),
+          ),
+      ],
+      RowAction(
+        id: 'archive',
+        label: archived
+            ? l10n.conversationUnarchive
+            : l10n.conversationArchive,
+        icon: Icons.archive_outlined,
+        // recorder-key-exempt: the RowMenu keys this entry <keyPrefix>-<id>
+        onSelected: () => apply('archive'),
+      ),
+    ];
+  }
+
+  /// One mark chosen from the row's menu.
+  Future<void> _applyMark(
+    BuildContext context,
+    InboxEntry entry, {
+    required String choice,
+    required bool pinned,
+    required bool archived,
+  }) async {
+    final flags = entry.flags;
     if (flags != null) {
       // The server's preference: set it there, then read the inbox again.
       final actions = ref.read(messengerActionsProvider(source: entry.source));

@@ -10584,6 +10584,8 @@
   "kioskScanQr": "QR-Badge scannen",
   "kioskTapHint": "Tippen Sie auf einen Platz zum Einchecken",
   "kitActionBusy": "Läuft …",
+  "kitScrollBack": "Zurück scrollen",
+  "kitScrollForward": "Weiter scrollen",
   "labelWithValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo gibt es in den folgenden Sprachen. Auf einem Gerät in einer anderen Sprache erscheint es auf {fallback}.",
   "languageNameCS": "Tschechisch",
@@ -12024,6 +12026,7 @@
   "memberNoteDeleteRead": "Schon gelesen — diese Nachricht kann nicht mehr zurückgenommen werden.",
   "memberNoteDeleted": "Nachricht gelöscht.",
   "memberNoteHint": "Ihre Nachricht",
+  "memberNoteQuote": "Zitieren",
   "memberNoteReceived": "Nachricht von {name}",
   "memberNoteReply": "Antworten",
   "@memberNoteReply": {

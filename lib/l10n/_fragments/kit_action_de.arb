@@ -1,3 +1,5 @@
 {
-  "kitActionBusy": "Läuft …"
+  "kitActionBusy": "Läuft …",
+  "kitScrollBack": "Zurück scrollen",
+  "kitScrollForward": "Weiter scrollen"
 }

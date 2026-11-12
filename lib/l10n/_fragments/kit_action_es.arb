@@ -1,3 +1,5 @@
 {
-  "kitActionBusy": "En curso…"
+  "kitActionBusy": "En curso…",
+  "kitScrollBack": "Desplazar hacia atrás",
+  "kitScrollForward": "Desplazar hacia adelante"
 }

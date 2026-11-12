@@ -307,6 +307,9 @@ void main() {
     // And a long-press deletes the received one, confirmed (#523).
     await tester.longPress(find.byKey(const ValueKey('bubble-note-in')));
     await tester.pumpAndSettle();
+    // #3611 — the long press opens the message menu; Delete is in it.
+    await tester.tap(find.byKey(const ValueKey('bubble-menu-note-in-delete')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
     await tester.pumpAndSettle();
     expect(workspace.memberNotes.where((n) => n.id == 'note-in'), isEmpty);

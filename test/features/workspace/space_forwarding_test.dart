@@ -86,6 +86,9 @@ void main() {
     final (messenger, _, _) = await pumpSpaceThread(tester);
     await tester.tap(find.byKey(const ValueKey('bubble-actions-n1')));
     await tester.pumpAndSettle();
+    // #3611 — the ⋯ opens the message menu; its last entry is the sheet.
+    await tester.tap(find.byKey(const ValueKey('bubble-menu-n1-actions')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('message-action-forward')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('forward-target-c1')), findsNothing);
@@ -101,6 +104,9 @@ void main() {
     await pumpSpaceThread(tester, flags: const {'messageForwarding': false});
     expect(find.byKey(const ValueKey('bubble-n1')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('bubble-actions-n1')));
+    await tester.pumpAndSettle();
+    // #3611 — the ⋯ opens the message menu; its last entry is the sheet.
+    await tester.tap(find.byKey(const ValueKey('bubble-menu-n1-actions')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('message-action-star')), findsOneWidget);
     expect(find.byKey(const ValueKey('message-action-forward')), findsNothing);
