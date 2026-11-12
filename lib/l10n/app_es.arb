@@ -7500,6 +7500,10 @@
       }
     }
   },
+  "fileOpenSaved": "Abrir",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
   "fileSaveFailedBecause": "No se pudo guardar el archivo: {reason}.",
   "@fileSaveFailedBecause": {
     "description": "Error notice with the reason a file could not be saved",
@@ -7508,6 +7512,10 @@
         "type": "String"
       }
     }
+  },
+  "fileSaveFailureChosenFolder": "la carpeta elegida no aceptó el archivo",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   },
   "fileSaveFailureNoStorage": "ninguna carpeta de este dispositivo lo aceptó",
   "@fileSaveFailureNoStorage": {
@@ -7520,6 +7528,10 @@
   "fileSaveFailureWrite": "el dispositivo rechazó la escritura",
   "@fileSaveFailureWrite": {
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
+  "fileShowInFolder": "Mostrar en la carpeta",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
   },
   "financesAllSpaces": "Todos los espacios",
   "financesAmountHidden": "Importe oculto",

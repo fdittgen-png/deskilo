@@ -96,6 +96,9 @@ class _RecordingReviewScreenState extends ConsumerState<RecordingReviewScreen> {
         AppSnack.error(context, l10n.taskExportRefused);
       case TaskDocxSaveFailed():
         AppSnack.error(context, l10n.taskExportSaveFailed);
+      case TaskDocxSaveCancelled():
+        // #3613 — the person closed the save dialog: nothing to say.
+        break;
     }
   }
 

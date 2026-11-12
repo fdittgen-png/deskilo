@@ -20,7 +20,8 @@ sealed class FileDelivery {
 }
 
 /// The local saver answered: a file the person can find, a private copy, a
-/// browser's request, or a failure — see [outcome].
+/// browser's request, a closed desktop save dialog, or a failure — see
+/// [outcome].
 final class LocalSave extends FileDelivery {
   const LocalSave(this.outcome);
   final SaveOutcome outcome;
@@ -51,8 +52,11 @@ final class DeliveryFailed extends FileDelivery {
 /// #2377 — whether [d] handed the file out: saved, kept privately, given to
 /// the browser or to the system sheet. A cancelled or failed delivery did
 /// not, and is never logged as a file handed out.
+///
+/// #3613 — a closed desktop save dialog ([SaveCancelled]) is not a
+/// delivery either.
 bool fileHandedOut(FileDelivery d) => switch (d) {
-  LocalSave(outcome: SaveFailed()) => false,
+  LocalSave(outcome: SaveFailed() || SaveCancelled()) => false,
   LocalSave() || HandedToShareSheet() => true,
   DeliveryCancelled() || DeliveryFailed() => false,
 };

@@ -75,17 +75,20 @@ final class FileSaverProvider
 
 String _$fileSaverHash() => r'607a5d2bab40420d0f9ff46a41cc2ef4eed2c382';
 
-/// #1872 — the same local save, answering with what it achieved.
+/// #1872 — the same local save, answering with what it achieved. #3613 —
+/// on a desktop it asks where, starting in the folder used last time.
 
 @ProviderFor(typedFileSaver)
 final typedFileSaverProvider = TypedFileSaverProvider._();
 
-/// #1872 — the same local save, answering with what it achieved.
+/// #1872 — the same local save, answering with what it achieved. #3613 —
+/// on a desktop it asks where, starting in the folder used last time.
 
 final class TypedFileSaverProvider
     extends $FunctionalProvider<TypedFileSaver, TypedFileSaver, TypedFileSaver>
     with $Provider<TypedFileSaver> {
-  /// #1872 — the same local save, answering with what it achieved.
+  /// #1872 — the same local save, answering with what it achieved. #3613 —
+  /// on a desktop it asks where, starting in the folder used last time.
   TypedFileSaverProvider._()
     : super(
         from: null,
@@ -119,7 +122,7 @@ final class TypedFileSaverProvider
   }
 }
 
-String _$typedFileSaverHash() => r'a55ade7563d9d229dcb2192cbc2301a32fc8ec84';
+String _$typedFileSaverHash() => r'51a3e3d6a8c64826a3e784fe573716861d29e97f';
 
 /// Where "download" leads on this device: straight to the local saver, or
 /// (an iPhone, whose sandbox is not Files) to the Export… choice between a

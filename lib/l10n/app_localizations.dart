@@ -18969,11 +18969,23 @@ abstract class AppLocalizations {
   /// **'Kept inside Deskilo: {fileName}. It is not in Downloads or Files — Share… sends it elsewhere.'**
   String fileKeptInApp(String fileName);
 
+  /// Notice action after a desktop save to a chosen place: open the saved file
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get fileOpenSaved;
+
   /// Error notice with the reason a file could not be saved
   ///
   /// In en, this message translates to:
   /// **'Could not save the file: {reason}.'**
   String fileSaveFailedBecause(String reason);
+
+  /// Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file
+  ///
+  /// In en, this message translates to:
+  /// **'the chosen folder did not accept the file'**
+  String get fileSaveFailureChosenFolder;
 
   /// Reason phrase for fileSaveFailedBecause: no writable folder on the device
   ///
@@ -18992,6 +19004,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'the device refused the write'**
   String get fileSaveFailureWrite;
+
+  /// Notice action after a desktop save to a chosen place: open the folder that holds the file
+  ///
+  /// In en, this message translates to:
+  /// **'Show in folder'**
+  String get fileShowInFolder;
 
   /// Shown as a button or chip label in my finances parts (money).
   ///

@@ -290,6 +290,14 @@ void main() {
       findsOneWidget,
     );
 
+    // #3613 — a closed save dialog is neither a failure nor a save.
+    h.saver.answer = const SaveCancelled();
+    ScaffoldMessenger.of(tester.element(export)).clearSnackBars();
+    await tester.pump(const Duration(seconds: 1));
+    await tester.tap(export);
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(SnackBar), findsNothing);
+
     h.saver.fail = true;
     ScaffoldMessenger.of(tester.element(export)).clearSnackBars();
     await tester.pumpAndSettle();

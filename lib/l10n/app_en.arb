@@ -15185,6 +15185,10 @@
       }
     }
   },
+  "fileOpenSaved": "Open",
+  "@fileOpenSaved": {
+    "description": "Notice action after a desktop save to a chosen place: open the saved file"
+  },
   "fileSaveFailedBecause": "Could not save the file: {reason}.",
   "@fileSaveFailedBecause": {
     "description": "Error notice with the reason a file could not be saved",
@@ -15193,6 +15197,10 @@
         "type": "String"
       }
     }
+  },
+  "fileSaveFailureChosenFolder": "the chosen folder did not accept the file",
+  "@fileSaveFailureChosenFolder": {
+    "description": "Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file"
   },
   "fileSaveFailureNoStorage": "no folder on this device would take it",
   "@fileSaveFailureNoStorage": {
@@ -15205,6 +15213,10 @@
   "fileSaveFailureWrite": "the device refused the write",
   "@fileSaveFailureWrite": {
     "description": "Reason phrase for fileSaveFailedBecause: the write was refused"
+  },
+  "fileShowInFolder": "Show in folder",
+  "@fileShowInFolder": {
+    "description": "Notice action after a desktop save to a chosen place: open the folder that holds the file"
   },
   "financesAllSpaces": "All spaces",
   "@financesAllSpaces": {
