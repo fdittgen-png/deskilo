@@ -83,7 +83,7 @@
   "@invoicingStatusDueToday": {"description": "#3587 status"},
   "invoicingStatusReminderSent": "{days, plural, =1{1 Tag überfällig} other{{days} Tage überfällig}} · Mahnung {level} gesendet",
   "@invoicingStatusReminderSent": {"description": "#3587 status", "placeholders": {"days": {"type": "int"}, "level": {"type": "int"}}},
-  "invoicingReminderLevelSent": "Mahnung {level} gesendet",
+  "invoicingReminderLevelSent": "{level, plural, other{Mahnung {level} gesendet}}",
   "@invoicingReminderLevelSent": {"description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness", "placeholders": {"level": {"type": "int"}}},
   "invoicingStatusEveryReminderSent": "{days, plural, =1{1 Tag überfällig} other{{days} Tage überfällig}} · jede Mahnung gesendet",
   "@invoicingStatusEveryReminderSent": {"description": "#3587 status", "placeholders": {"days": {"type": "int"}}},

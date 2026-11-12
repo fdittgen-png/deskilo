@@ -9816,7 +9816,7 @@
       }
     }
   },
-  "invoicingReminderLevelSent": "relance {level} envoyée",
+  "invoicingReminderLevelSent": "{level, plural, other{relance {level} envoyée}}",
   "@invoicingReminderLevelSent": {
     "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
     "placeholders": {

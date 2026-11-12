@@ -25314,7 +25314,7 @@ abstract class AppLocalizations {
   /// #3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness
   ///
   /// In en, this message translates to:
-  /// **'reminder {level} sent'**
+  /// **'{level, plural, other{reminder {level} sent}}'**
   String invoicingReminderLevelSent(int level);
 
   /// #3587 top bar: open the search field

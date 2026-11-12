@@ -39,11 +39,13 @@ import 'invoicing_reads.dart';
 import 'payments_to_match_screen.dart';
 
 /// The width of the invoice panel beside the list.
+@visibleForTesting
 const double kInvoicingPanelWidth = 440;
 
 /// #3773 — the narrowest the invoice list keeps its table (number, customer,
 /// amount, state) without cutting a word, in the five languages: measured on
 /// the Demo, where 1024 with the rail must still open an invoice over it.
+@visibleForTesting
 const double kInvoicingListMinWidth = 640;
 
 /// The rule between the list and the panel.
@@ -51,8 +53,9 @@ const double _dividerWidth = 1;
 
 /// Whether [width] holds the list and an open invoice beside it: the page
 /// asks whether both fit, not which window class its width falls in.
+@visibleForTesting
 bool invoiceFitsBeside(double width) =>
-    width >= kInvoicingListMinWidth + _dividerWidth + kInvoicingPanelWidth;
+    width >= kInvoicingListMinWidth + _dividerWidth + kInvoicingPanelWidth; // content-fit: the list and the open invoice side by side
 
 /// What the screen read: the receivables, the invoices by id, their matches.
 typedef _Read = ({

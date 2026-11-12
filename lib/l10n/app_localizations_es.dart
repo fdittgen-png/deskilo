@@ -15729,7 +15729,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    return 'recordatorio $level enviado';
+    String _temp0 = intl.Intl.pluralLogic(
+      level,
+      locale: localeName,
+      other: 'recordatorio $level enviado',
+    );
+    return '$_temp0';
   }
 
   @override
