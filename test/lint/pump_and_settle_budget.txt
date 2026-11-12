@@ -9,6 +9,7 @@
 # review {"path":"test/features/workspace/member_note_flow_test.dart","before":23,"after":26,"invariant":"#3611 a long press opens the message menu; Delete is chosen from it before the confirmation","cost":"one settle per menu entry tap, three deletions in two tests"}
 # review {"path":"test/features/workspace/member_notes_test.dart","before":12,"after":13,"invariant":"#3611 the long press opens the message menu before Delete asks for confirmation","cost":"one settle for the menu entry tap"}
 # review {"path":"test/features/workspace/my_badge_test.dart","before":16,"after":18,"invariant":"#3611 a mouse alone deletes a revoked badge from the menu button and from a right click","cost":"two settles reopening the badge list so it loads the seeded revoked badge"}
+# review {"path":"test/core/navigation/list_detail_route_test.dart","before":0,"after":13,"invariant":"#3607 each history case is a person's step through the router settled before the address, the pane and the focus are read: open, Back, a direct link, Escape, the arrow keys, a phone page","cost":"6 tests in 2 s locally"}
 11 test/app/entry_intents_flow_test.dart
 23 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -17,6 +18,7 @@
 11 test/core/demo/demo_entry_test.dart
 17 test/core/help/help_hint_test.dart
 11 test/core/i18n/regional_formats_test.dart
+13 test/core/navigation/list_detail_route_test.dart
 10 test/core/ui/canvas_controls_test.dart
 11 test/features/auth/auth_flow_test.dart
 10 test/features/auth/badge_sign_in_test.dart

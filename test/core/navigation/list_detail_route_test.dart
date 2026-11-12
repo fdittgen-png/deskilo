@@ -39,11 +39,6 @@ class _ListState extends State<_List> {
     super.dispose();
   }
 
-  void _move(String from, int by) {
-    final i = (_ids.indexOf(from) + by).clamp(0, _ids.length - 1);
-    moveToRecord(context, '/x', _ids[i]);
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
     body: ListDetailScaffold(
@@ -51,6 +46,8 @@ class _ListState extends State<_List> {
       paneStore: const PrefsStringStore('list_detail_pane_test'),
       selected: widget.selected,
       onClose: () => closeRecord(context, '/x'),
+      order: () => _ids,
+      onMove: (id) => moveToRecord(context, '/x', id),
       detail: (context, id) => Text('record $id', key: ValueKey('record-$id')),
       list: Column(
         children: [
@@ -58,14 +55,6 @@ class _ListState extends State<_List> {
           for (final id in _ids)
             Focus(
               focusNode: _rows[id],
-              onKeyEvent: (_, e) {
-                if (e is! KeyDownEvent) return KeyEventResult.ignored;
-                if (e.logicalKey == LogicalKeyboardKey.arrowDown) {
-                  _move(id, 1);
-                  return KeyEventResult.handled;
-                }
-                return KeyEventResult.ignored;
-              },
               child: TextButton(
                 key: ValueKey('row-$id'),
                 onPressed: () => openRecord(context, '/x', id),
@@ -194,14 +183,11 @@ void main() {
     final r = await _pump(tester, '/x', desk);
     await tester.tap(_k('row-a'));
     await tester.pumpAndSettle();
-    Focus.of(tester.element(_k('row-a'))).requestFocus();
-    await tester.pump();
+    // Opened by a click: the arrow keys reach the scaffold all the same.
     await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
     await tester.pumpAndSettle();
     expect(_at(r), '/x/b');
     expect(_k('record-b'), findsOneWidget);
-    Focus.of(tester.element(_k('row-b'))).requestFocus();
-    await tester.pump();
     await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
     await tester.pumpAndSettle();
     expect(_at(r), '/x/c');

@@ -33,7 +33,7 @@ Page<void> recordPage(
 }
 
 /// The record [path] names under [listPath] (`/x/a` → `a`), or null.
-String? recordIn(String path, String listPath) {
+String? _recordIn(String path, String listPath) {
   final prefix = '$listPath/';
   if (!path.startsWith(prefix)) return null;
   final rest = path.substring(prefix.length);
@@ -56,7 +56,7 @@ class OpenRecord extends StatelessWidget {
     return ListenableBuilder(
       listenable: info,
       builder: (context, _) =>
-          builder(context, recordIn(info.value.uri.path, listPath)),
+          builder(context, _recordIn(info.value.uri.path, listPath)),
     );
   }
 }

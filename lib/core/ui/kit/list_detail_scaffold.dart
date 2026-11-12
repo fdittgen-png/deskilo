@@ -42,6 +42,8 @@ class ListDetailScaffold extends StatefulWidget {
     required this.onClose,
     this.paneStore,
     this.listMin = ListDetailMetrics.listMin,
+    this.order,
+    this.onMove,
     super.key,
   });
 
@@ -63,6 +65,13 @@ class ListDetailScaffold extends StatefulWidget {
   /// word cut. Narrower, the pane stands over the list's end.
   final double listMin;
 
+  /// The records in the order the list shows them, read when an arrow key
+  /// is pressed; with [onMove], ↑ and ↓ move the open record along it.
+  final List<String> Function()? order;
+
+  /// Shows the record [id] instead of the open one (no new history entry).
+  final ValueChanged<String>? onMove;
+
   @override
   State<ListDetailScaffold> createState() => _ListDetailScaffoldState();
 }
@@ -73,13 +82,20 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
   /// What had the keyboard when the pane opened: it gets it back on close.
   FocusNode? _before;
 
+  /// The scaffold's own place for the keyboard: a record opened by a click
+  /// still hears Escape and the arrow keys.
+  final _own = FocusNode(debugLabel: 'list detail', skipTraversal: true);
+
   PrefsStringStore get _store =>
       widget.paneStore ?? PrefsStringStore('list_detail_pane_${widget.id}');
 
   @override
   void initState() {
     super.initState();
-    if (widget.selected != null) _before = FocusManager.instance.primaryFocus;
+    if (widget.selected != null) {
+      _before = FocusManager.instance.primaryFocus;
+      _takeKeys();
+    }
     unawaited(
       _store.read().then(
         (v) {
@@ -109,9 +125,17 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
     super.didUpdateWidget(old);
     if (old.selected == null && widget.selected != null) {
       _before = FocusManager.instance.primaryFocus;
+      _takeKeys();
     }
     if (old.selected != null && widget.selected == null) _giveBack();
   }
+
+  /// The keyboard comes to the scaffold when it is nowhere inside it.
+  void _takeKeys() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    final now = FocusManager.instance.primaryFocus;
+    final inside = now != null && (now == _own || now.ancestors.contains(_own));
+    if (mounted && !inside) _own.requestFocus();
+  });
 
   /// Closing gives the keyboard back to what had it: the row it was on
   /// when Escape was pressed, else the row it was on when the pane opened.
@@ -135,6 +159,7 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
 
   @override
   void dispose() {
+    _own.dispose();
     _width.dispose();
     super.dispose();
   }
@@ -147,6 +172,18 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
       ListDetailMetrics.paneMin,
       math.max(ListDetailMetrics.paneMin, room),
     );
+  }
+
+  /// ↑ ↓ while a record is open: the record before or after it in the list.
+  void _move(int by) {
+    final at = widget.selected;
+    final order = widget.order?.call() ?? const <String>[];
+    final move = widget.onMove;
+    final i = at == null ? -1 : order.indexOf(at);
+    if (move == null || i < 0) return;
+    final next = i + by;
+    if (next < 0 || next >= order.length) return;
+    move(order[next]);
   }
 
   void _keep() => _store.write(_width.value.round().toString()).ignore();
@@ -169,68 +206,76 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
           // (on the row it moves with) or in the pane. The wrapper is always
           // there, so the list's place in the tree never changes.
           bindings: {
-            if (selected != null)
+            if (selected != null) ...{
               const SingleActivator(LogicalKeyboardKey.escape): _close,
+              const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
+                  _move(-1),
+              const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
+                  _move(1),
+            },
           },
-          child: ValueListenableBuilder<double>(
-            valueListenable: _width,
-            builder: (context, kept, _) {
-              final pane = beside
-                  ? math.min(kept, room)
-                  : math.min(kept, box.maxWidth);
-              final taken = selected != null && beside
-                  ? pane + ListDetailMetrics.grip
-                  : 0.0;
-              return Stack(
-                children: [
-                  // Always the first child: the list keeps its state when
-                  // the pane opens and closes.
-                  PositionedDirectional(
-                    start: 0,
-                    top: 0,
-                    bottom: 0,
-                    end: taken,
-                    child: KeyedSubtree(
-                      key: const ValueKey('list-detail-list'),
-                      child: widget.list,
-                    ),
-                  ),
-                  if (selected != null)
+          child: Focus(
+            focusNode: _own,
+            child: ValueListenableBuilder<double>(
+              valueListenable: _width,
+              builder: (context, kept, _) {
+                final pane = beside
+                    ? math.min(kept, room)
+                    : math.min(kept, box.maxWidth);
+                final taken = selected != null && beside
+                    ? pane + ListDetailMetrics.grip
+                    : 0.0;
+                return Stack(
+                  children: [
+                    // Always the first child: the list keeps its state when
+                    // the pane opens and closes.
                     PositionedDirectional(
-                      end: 0,
+                      start: 0,
                       top: 0,
                       bottom: 0,
-                      width: beside ? pane + ListDetailMetrics.grip : pane,
-                      child: Material(
-                        elevation: beside ? 0 : _overElevation,
-                        child: Row(
-                          children: [
-                            if (beside)
-                              _Grip(
-                                onDrag: (d) => _drag(d, room),
-                                onEnd: _keep,
-                                label: context.l10n.listDetailResize,
-                              ),
-                            Expanded(
-                              child: _Pane(
-                                child: FocusScope(
-                                  key: const ValueKey('list-detail-pane'),
-                                  child: KeyedSubtree(
-                                    key: ValueKey(
-                                      'list-detail-record-$selected',
+                      end: taken,
+                      child: KeyedSubtree(
+                        key: const ValueKey('list-detail-list'),
+                        child: widget.list,
+                      ),
+                    ),
+                    if (selected != null)
+                      PositionedDirectional(
+                        end: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: beside ? pane + ListDetailMetrics.grip : pane,
+                        child: Material(
+                          elevation: beside ? 0 : _overElevation,
+                          child: Row(
+                            children: [
+                              if (beside)
+                                _Grip(
+                                  onDrag: (d) => _drag(d, room),
+                                  onEnd: _keep,
+                                  label: context.l10n.listDetailResize,
+                                ),
+                              Expanded(
+                                child: _Pane(
+                                  child: FocusScope(
+                                    key: const ValueKey('list-detail-pane'),
+                                    child: KeyedSubtree(
+                                      key: ValueKey(
+                                        'list-detail-record-$selected',
+                                      ),
+                                      child: widget.detail(context, selected),
                                     ),
-                                    child: widget.detail(context, selected),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
           ),
         );
       },

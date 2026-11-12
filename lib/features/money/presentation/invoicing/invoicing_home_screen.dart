@@ -47,7 +47,7 @@ import 'payments_to_match_screen.dart';
 const double kInvoicingListMinWidth = 640;
 
 /// The address of the invoice list; an open invoice is `/invoices/<id>`.
-const String invoicesPath = '/invoices';
+const String _invoicesPath = '/invoices';
 
 /// What the screen read: the receivables, the invoices by id, their matches.
 typedef _Read = ({
@@ -84,6 +84,9 @@ class InvoicingHomeScreen extends ConsumerStatefulWidget {
 
 class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   final _filter = ValueNotifier(InvoicingFilter.open);
+
+  /// Names the list, for the order the arrow keys move along.
+  final _listKey = GlobalKey();
   var _searchOpen = false;
 
   /// What the home read at its last build: the actions act on it.
@@ -141,17 +144,19 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           // it beside the list, which stays the same widget, so its view,
           // filter and search survive; a smaller one opens it as a page.
           return OpenRecord(
-            listPath: invoicesPath,
+            listPath: _invoicesPath,
             builder: (context, id) => ListDetailScaffold(
               id: 'invoices',
               listMin: kInvoicingListMinWidth,
               list: home,
               selected: recordBesideList(context) ? id : null,
-              onClose: () => closeRecord(context, invoicesPath),
+              onClose: () => closeRecord(context, _invoicesPath),
+              order: () => InvoicingList.orderUnder(_listKey),
+              onMove: (id) => moveToRecord(context, _invoicesPath, id),
               detail: (context, id) => InvoicePage(
                 key: ValueKey('invoicing-panel-$id'),
                 invoiceId: id,
-                onClose: () => closeRecord(context, invoicesPath),
+                onClose: () => closeRecord(context, _invoicesPath),
               ),
             ),
           );
@@ -284,6 +289,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     // now, not on what was read when they opened.
     _read = read;
     return InvoicingHome(
+      listKey: _listKey,
       data: data,
       searchOpen: _searchOpen,
       filter: _filter,
@@ -330,7 +336,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   /// a page otherwise.
   Future<void> _open(Invoice? invoice, Map<String, InvoiceMatch> _) async {
     if (invoice == null) return;
-    openRecord(context, invoicesPath, invoice.id);
+    openRecord(context, _invoicesPath, invoice.id);
   }
 
   Future<void> _customerAction(

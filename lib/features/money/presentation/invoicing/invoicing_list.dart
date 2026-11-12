@@ -117,19 +117,47 @@ class InvoicingList extends StatelessWidget {
     null => filter.holds(r, today),
   };
 
+  /// The rows the filter and the search keep.
+  List<Receivable> _shown(String text) {
+    final q = text.trim().toLowerCase();
+    return [
+      for (final r in receivables)
+        if (_selects(r) &&
+            (q.isEmpty ||
+                r.customerName.toLowerCase().contains(q) ||
+                r.number.toLowerCase().contains(q)))
+          r,
+    ];
+  }
+
+  /// The invoice rows in the order they are drawn: by due day, the paid
+  /// ones last paid first.
+  List<Receivable> _sorted(List<Receivable> shown) {
+    int key(Receivable r) => filter == InvoicingFilter.paid
+        ? -(r.paidOn ?? r.issuedOn).millisecondsSinceEpoch
+        : (r.dueOn ?? r.issuedOn).millisecondsSinceEpoch;
+    return [...shown]..sort((a, b) => key(a).compareTo(key(b)));
+  }
+
+  /// #3607 — the invoices in the order the list under [key] shows them
+  /// (an [InvoicingHome.listKey]): the arrow keys move the open invoice
+  /// along it.
+  static List<String> orderUnder(GlobalKey key) {
+    final list = switch (key.currentWidget) {
+      KeyedSubtree(:final InvoicingList child) => child,
+      _ => null,
+    };
+    if (list == null) return const [];
+    return [
+      for (final r in list._sorted(list._shown(list.query.text))) r.invoiceId,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) => ValueListenableBuilder(
     valueListenable: query,
     builder: (context, value, _) {
-      final q = value.text.trim().toLowerCase();
-      final shown = [
-        for (final r in receivables)
-          if (_selects(r) &&
-              (q.isEmpty ||
-                  r.customerName.toLowerCase().contains(q) ||
-                  r.number.toLowerCase().contains(q)))
-            r,
-      ];
+      final shown = _shown(value.text);
       final byCustomer =
           view == InvoicingView.customers && filter != InvoicingFilter.paid;
       return SliverMainAxisGroup(
@@ -144,7 +172,7 @@ class InvoicingList extends StatelessWidget {
             ),
             sliver: SliverToBoxAdapter(
               child: shown.isEmpty
-                  ? KitCard(child: QuietLine(_nothing(context.l10n, q)))
+                  ? KitCard(child: QuietLine(_nothing(context.l10n, value.text.trim().toLowerCase())))
                   : RowList(
                       rows: byCustomer
                           ? _customerRows(context, shown)
@@ -396,10 +424,7 @@ class InvoicingList extends StatelessWidget {
   List<Widget> _invoiceRows(BuildContext context, List<Receivable> shown) {
     final l = context.l10n;
     final format = appFormatOf(context);
-    int key(Receivable r) => filter == InvoicingFilter.paid
-        ? -(r.paidOn ?? r.issuedOn).millisecondsSinceEpoch
-        : (r.dueOn ?? r.issuedOn).millisecondsSinceEpoch;
-    final sorted = [...shown]..sort((a, b) => key(a).compareTo(key(b)));
+    final sorted = _sorted(shown);
     String due(Receivable r) => r.dueOn == null
         ? ''
         : format.dates(DateShape.monthDay).format(r.dueOn!);
