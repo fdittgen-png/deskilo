@@ -205,6 +205,9 @@ void main() {
 
     await tester.longPress(bubble);
     await tester.pumpAndSettle();
+    // #3611 — the long press opens the message menu; Delete is in it.
+    await tester.tap(find.byKey(const ValueKey('bubble-menu-note-in-delete')));
+    await tester.pumpAndSettle();
     expect(find.text('Delete this message? This cannot be undone.'),
         findsOneWidget);
     await tester.tap(find.text('Cancel'));
@@ -213,6 +216,9 @@ void main() {
     expect(bubble, findsOneWidget);
 
     await tester.longPress(bubble);
+    await tester.pumpAndSettle();
+    // #3611 — the long press opens the message menu; Delete is in it.
+    await tester.tap(find.byKey(const ValueKey('bubble-menu-note-in-delete')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
     await tester.pumpAndSettle();
@@ -288,6 +294,9 @@ void main() {
 
     // Long-press my message → confirm → gone everywhere.
     await tester.longPress(find.byKey(const ValueKey('bubble-note-mine')));
+    await tester.pumpAndSettle();
+    await tester.tap(
+        find.byKey(const ValueKey('bubble-menu-note-mine-delete')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('note-delete-confirm')));
     await tester.pumpAndSettle();

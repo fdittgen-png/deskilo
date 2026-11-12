@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/mouse.dart';
 
 Future<FakeWorkspaceRepository> openMyBadge(
   WidgetTester tester, {
@@ -134,6 +135,31 @@ void main() {
       find.byKey(ValueKey('badge-dismiss-${workspace.badges.single.id}')),
       findsNothing,
     );
+  });
+
+  testWidgets('#3611 a mouse alone deletes a revoked badge, from the ⋯ or '
+      'a right click', (tester) async {
+    final workspace = await openMyBadge(tester, plainMember: true);
+    final first = await workspace.issueMyBadge('ws-1');
+    await workspace.revokeMyBadge(first.badgeId);
+    await tester.tap(find.text('Close'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('settings-my-badge')));
+    await tester.pumpAndSettle();
+
+    final id = first.badgeId;
+    await connectMouse(tester);
+    // The ⋯ opens the menu; cancelling the confirmation keeps the badge.
+    await click(tester, find.byKey(ValueKey('badge-menu-$id-more')));
+    await click(tester, find.byKey(ValueKey('badge-menu-$id-delete')));
+    await click(tester, find.text('Cancel'));
+    expect(find.text('Revoked'), findsOneWidget);
+
+    await rightClick(tester, find.text('Revoked'));
+    await click(tester, find.byKey(ValueKey('badge-menu-$id-delete')));
+    await click(tester, find.byKey(const ValueKey('badge-delete-confirm')));
+    expect(find.text('Revoked'), findsNothing);
+    expect(workspace.badges, isEmpty);
   });
 
   testWidgets('I can revoke my own badge from the list', (tester) async {

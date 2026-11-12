@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/row_menu.dart';
 import '../../../../core/ui/private_value.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../domain/messenger.dart';
@@ -150,7 +151,8 @@ abstract final class InboxListRowMetrics {
 }
 
 /// One conversation of the inbox: who or what, where, the latest words,
-/// when, unread, muted and pinned; a tap opens it, a long press its marks.
+/// when, unread, muted and pinned; a tap opens it. Its marks open from
+/// the ⋯, a right click, a long press or the context-menu key (#3611).
 class InboxListRow extends ConsumerWidget {
   const InboxListRow({
     super.key,
@@ -159,13 +161,16 @@ class InboxListRow extends ConsumerWidget {
     required this.pinned,
     required this.selected,
     required this.onOpen,
-    required this.onMarks,
+    required this.marks,
   });
 
   final InboxEntry entry;
   final Map<String, String> servers;
   final bool pinned, selected;
-  final VoidCallback onOpen, onMarks;
+  final VoidCallback onOpen;
+
+  /// Pin, mute, mark unread, archive: the row's one menu.
+  final List<RowAction> marks;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -176,7 +181,14 @@ class InboxListRow extends ConsumerWidget {
       constraints: const BoxConstraints(
         minHeight: InboxListRowMetrics.minHeight,
       ),
-      child: ListTile(
+      // ⋯ on hover and focus: a phone keeps the long press, a desk
+      // reaches the same marks with the mouse or the keyboard.
+      child: RowMenu(
+        actions: marks,
+        keyPrefix: 'inbox-menu',
+        buttonKey: ValueKey('inbox-marks-${entry.contextId}'),
+        button: RowMenuButton.onHover,
+        child: ListTile(
         key: ValueKey('inbox-entry-${entry.contextId}'),
         selected: selected,
         leading: CircleAvatar(
@@ -244,7 +256,7 @@ class InboxListRow extends ConsumerWidget {
           ],
         ),
         onTap: onOpen,
-        onLongPress: onMarks,
+        ),
       ),
     );
   }

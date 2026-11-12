@@ -5,6 +5,10 @@
 # review {"path":"test/features/money/invoicing_navigation_ux_test.dart","before":0,"after":13,"invariant":"#3587 the invoicing home at 2x text on a phone: the owed card, the Paid chip, the switch to one line per invoice and the line, each scrolled to and settled before the overflow check, plus the More menu each tool test opens","cost":"five tests of about 1 s each locally; every settle waits for a scroll, a filter, the view switch or the menu animation"}
 # review {"path":"test/app/shell/desk_routes_test.dart","before":0,"after":10,"invariant":"each desk page is reached through the real router and settled before its rects and selection are read; a push, a back and a sheet and a dialog each settle once","cost":"18 tests in 7 s locally"}
 # review {"path":"test/app/shell/desk_routes_test.dart","before":10,"after":23,"invariant":"the desk drawn around the navigator is checked through the real router: one desk across a tab, a push and a go; a window open over the page rests the navigation and freeing it lets a tap through; a cold start on an address; the breadcrumb and the selected entry lead back; each step settles once before the address or a rect is read","cost":"24 tests in 10 s locally"}
+# review {"path":"test/features/directory/unified_inbox_test.dart","before":41,"after":42,"invariant":"#3611 a mouse alone pins by right click and mutes from the hover menu button of the same row menu","cost":"one settle for the mouse arriving over the inbox; the clicks settle in the mouse helper"}
+# review {"path":"test/features/workspace/member_note_flow_test.dart","before":23,"after":26,"invariant":"#3611 a long press opens the message menu; Delete is chosen from it before the confirmation","cost":"one settle per menu entry tap, three deletions in two tests"}
+# review {"path":"test/features/workspace/member_notes_test.dart","before":12,"after":13,"invariant":"#3611 the long press opens the message menu before Delete asks for confirmation","cost":"one settle for the menu entry tap"}
+# review {"path":"test/features/workspace/my_badge_test.dart","before":16,"after":18,"invariant":"#3611 a mouse alone deletes a revoked badge from the menu button and from a right click","cost":"two settles reopening the badge list so it loads the seeded revoked badge"}
 11 test/app/entry_intents_flow_test.dart
 23 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -28,7 +32,7 @@
 19 test/features/directory/connect_with_identity_sheet_test.dart
 12 test/features/directory/message_forwarding_test.dart
 23 test/features/directory/public_accounts_test.dart
-41 test/features/directory/unified_inbox_test.dart
+42 test/features/directory/unified_inbox_test.dart
 23 test/features/editor/editor_levels_test.dart
 22 test/features/editor/editor_ux_test.dart
 21 test/features/editor/level_canvas_test.dart
@@ -121,10 +125,10 @@
 17 test/features/workspace/invitation_journey_test.dart
 14 test/features/workspace/invitation_test.dart
 15 test/features/workspace/member_join_validation_test.dart
-23 test/features/workspace/member_note_flow_test.dart
-12 test/features/workspace/member_notes_test.dart
+26 test/features/workspace/member_note_flow_test.dart
+13 test/features/workspace/member_notes_test.dart
 18 test/features/workspace/member_roles_card_test.dart
-16 test/features/workspace/my_badge_test.dart
+18 test/features/workspace/my_badge_test.dart
 41 test/features/workspace/onboarding_flow_test.dart
 16 test/features/workspace/onboarding_handoff_test.dart
 25 test/features/workspace/process_overview_test.dart

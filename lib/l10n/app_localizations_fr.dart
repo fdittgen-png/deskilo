@@ -16767,6 +16767,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get kitActionBusy => 'En cours…';
 
   @override
+  String get kitScrollBack => 'Faire défiler en arrière';
+
+  @override
+  String get kitScrollForward => 'Faire défiler en avant';
+
+  @override
   String labelWithValue(String label, String value) {
     return '$label : $value';
   }
@@ -19466,6 +19472,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get memberNoteHint => 'Votre message';
+
+  @override
+  String get memberNoteQuote => 'Citer';
 
   @override
   String memberNoteReceived(String name) {
