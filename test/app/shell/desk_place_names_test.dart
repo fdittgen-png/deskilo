@@ -12,6 +12,8 @@
 //   the count only falls.
 // A pushed sub-page names itself and its pop gives the name back. On a
 // phone and a medium window every page keeps its title as before.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/router.dart';
@@ -184,7 +186,7 @@ void main() {
     final router = await _pump(tester, size: const Size(1440, 900));
     await _visit(tester, router, '/settings');
     final entry = _crumbs(tester).last;
-    router.push('/settings/colours');
+    unawaited(router.push('/settings/colours'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 600));
     expect(_crumbs(tester).last, isNot(entry));
