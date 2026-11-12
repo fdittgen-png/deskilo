@@ -13,7 +13,6 @@ import 'package:deskilo/features/workspace/domain/bi_overview_layout.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
-import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_overview.dart';
 import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -30,6 +29,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/unavailable_kpi_repository.dart';
 
 const _pending = 'purchases.pending_reviews';
 const _members = 'people.active_memberships_current';

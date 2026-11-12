@@ -4529,6 +4529,7 @@ const List<String> uiKeyPatterns = [
   'number-sequence-save-{}',
   'number-sequence-suffix-{}',
   'number-sequence-{}',
+  'ny-commitment-service-{}',
   'ny-commitment-{}',
   'ny-fee-match-{}',
   'ny-rent-match-{}',

@@ -133,38 +133,54 @@ FakePremisesLeaseRepository newYorkLease(DateTime now) {
 
 FakeLeaseCommitmentRepository newYorkCommitments(DateTime now) {
   final occurrences = <CommitmentOccurrence>[];
+  final terms = <String, String>{};
+  // #3785 — one occurrence per term and month, as each term's schedule
+  // generates it (0474): the rent and the service charge advance apart.
+  CommitmentOccurrence occurrence(
+    String id,
+    DateTime month,
+    String purchaseId,
+    ({String matchId, int lineNo, int cents}) line,
+  ) => CommitmentOccurrence(
+    id: id,
+    dueOn: month,
+    expectedCents: line.cents,
+    matchedCents: line.cents,
+    matches: [
+      CommitmentMatch(
+        id: line.matchId,
+        purchaseId: purchaseId,
+        lineNo: line.lineNo,
+        allocatedCents: line.cents,
+        lineGrossCents: line.cents,
+      ),
+    ],
+  );
   for (
     var month = DateTime(now.year - 4, now.month);
     month.isBefore(DateTime(now.year, now.month));
     month = DateTime(month.year, month.month + 1)
   ) {
     final period = yearMonth(month.year, month.month);
-    occurrences.add(
-      CommitmentOccurrence(
-        id: 'ny-commitment-$period',
-        dueOn: month,
-        expectedCents: 680000,
-        matchedCents: 680000,
-        matches: [
-          CommitmentMatch(
-            id: 'ny-rent-match-$period',
-            purchaseId: 'ny-rent-$period',
-            lineNo: 1,
-            allocatedCents: 600000,
-            lineGrossCents: 600000,
-          ),
-          CommitmentMatch(
-            id: 'ny-fee-match-$period',
-            purchaseId: 'ny-rent-$period',
-            lineNo: 2,
-            allocatedCents: 80000,
-            lineGrossCents: 80000,
-          ),
-        ],
-      ),
-    );
+    occurrences
+      ..add(
+        occurrence('ny-commitment-$period', month, 'ny-rent-$period', (
+          matchId: 'ny-rent-match-$period',
+          lineNo: 1,
+          cents: 600000,
+        )),
+      )
+      ..add(
+        occurrence('ny-commitment-service-$period', month, 'ny-rent-$period', (
+          matchId: 'ny-fee-match-$period',
+          lineNo: 2,
+          cents: 80000,
+        )),
+      );
+    terms['ny-commitment-$period'] = 'ny-rent';
+    terms['ny-commitment-service-$period'] = 'ny-service';
   }
-  return FakeLeaseCommitmentRepository({'ny-lease': occurrences});
+  return FakeLeaseCommitmentRepository({'ny-lease': occurrences}, terms);
 }
 
 FakeWorkspaceAssetRepository cityAssets(
