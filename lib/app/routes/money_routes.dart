@@ -5,7 +5,10 @@
 // the lists.
 import 'package:go_router/go_router.dart';
 
+import '../../core/navigation/list_detail_route.dart';
+
 import '../../features/money/domain/invoicing_wizard.dart';
+import '../../features/money/presentation/invoicing/invoice_page.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -74,6 +77,18 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
         const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
       ),
       builder: (context, state) => const InvoicesScreen(),
+      // #3607 — an open invoice's address: beside the list on a large
+      // window, a page of its own otherwise.
+      routes: [
+        GoRoute(
+          path: ':id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => InvoicePage(invoiceId: id),
+          ),
+        ),
+      ],
     ),
     // The sortable register (0072): every member reads their own, an
     // issuer the whole workspace's.

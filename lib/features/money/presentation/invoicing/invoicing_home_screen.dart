@@ -19,8 +19,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
@@ -38,24 +40,14 @@ import 'invoicing_live_pages.dart';
 import 'invoicing_reads.dart';
 import 'payments_to_match_screen.dart';
 
-/// The width of the invoice panel beside the list.
-@visibleForTesting
-const double kInvoicingPanelWidth = 440;
-
 /// #3773 — the narrowest the invoice list keeps its table (number, customer,
 /// amount, state) without cutting a word, in the five languages: measured on
-/// the Demo, where 1024 with the rail must still open an invoice over it.
+/// the Demo. Narrower, the open invoice stands over the list's end.
 @visibleForTesting
 const double kInvoicingListMinWidth = 640;
 
-/// The rule between the list and the panel.
-const double _dividerWidth = 1;
-
-/// Whether [width] holds the list and an open invoice beside it: the page
-/// asks whether both fit, not which window class its width falls in.
-@visibleForTesting
-bool invoiceFitsBeside(double width) =>
-    width >= kInvoicingListMinWidth + _dividerWidth + kInvoicingPanelWidth; // content-fit: the list and the open invoice side by side
+/// The address of the invoice list; an open invoice is `/invoices/<id>`.
+const String invoicesPath = '/invoices';
 
 /// What the screen read: the receivables, the invoices by id, their matches.
 typedef _Read = ({
@@ -94,9 +86,6 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   final _filter = ValueNotifier(InvoicingFilter.open);
   var _searchOpen = false;
 
-  /// The invoice open in the panel beside the list (a desk window).
-  String? _selected;
-
   /// What the home read at its last build: the actions act on it.
   _Read _read = (
     receivables: const [],
@@ -106,10 +95,6 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     creditsKnown: false,
     mode: ReminderMode.byHand,
   );
-
-  /// The screen's width is a desk's: an invoice opens beside the list. Read
-  /// from the constraints the app's frame gives, never from the window.
-  bool _desk = false;
 
   /// The screen's width is a wide window's: the cards side by side, the
   /// lists as tables.
@@ -146,32 +131,29 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ),
       body: LayoutBuilder(
         builder: (context, box) {
-          _desk = invoiceFitsBeside(box.maxWidth);
           _wide = isWideNavigationWidth(box.maxWidth);
           final home = switch (invoices) {
             AsyncData(:final value) => _home(context, value),
             AsyncError() => _home(context, const []),
             _ => const LoadingView(),
           };
-          final selected = _desk ? _selected : null;
-          // A desk keeps the invoice open beside the list. The list stays
-          // the same widget whether a panel is open or not, so its view,
-          // filter and search survive opening an invoice.
-          return Row(
-            children: [
-              Expanded(child: home),
-              if (selected != null) ...[
-                const VerticalDivider(width: _dividerWidth),
-                SizedBox(
-                  width: kInvoicingPanelWidth,
-                  child: InvoicePage(
-                    key: ValueKey('invoicing-panel-$selected'),
-                    invoiceId: selected,
-                    onClose: () => setState(() => _selected = null),
-                  ),
-                ),
-              ],
-            ],
+          // #3607 — the open invoice is in the address. A large window keeps
+          // it beside the list, which stays the same widget, so its view,
+          // filter and search survive; a smaller one opens it as a page.
+          return OpenRecord(
+            listPath: invoicesPath,
+            builder: (context, id) => ListDetailScaffold(
+              id: 'invoices',
+              listMin: kInvoicingListMinWidth,
+              list: home,
+              selected: recordBesideList(context) ? id : null,
+              onClose: () => closeRecord(context, invoicesPath),
+              detail: (context, id) => InvoicePage(
+                key: ValueKey('invoicing-panel-$id'),
+                invoiceId: id,
+                onClose: () => closeRecord(context, invoicesPath),
+              ),
+            ),
           );
         },
       ),
@@ -344,14 +326,11 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     return theirs.isEmpty ? '' : theirs.first.invoiceId;
   }
 
-  /// Opens [invoice]: beside the list on a desk, as a page otherwise.
+  /// Opens [invoice] at its address: beside the list on a large window, as
+  /// a page otherwise.
   Future<void> _open(Invoice? invoice, Map<String, InvoiceMatch> _) async {
     if (invoice == null) return;
-    if (_desk) {
-      setState(() => _selected = invoice.id);
-      return;
-    }
-    await openInvoicePage(context, invoice.id);
+    openRecord(context, invoicesPath, invoice.id);
   }
 
   Future<void> _customerAction(

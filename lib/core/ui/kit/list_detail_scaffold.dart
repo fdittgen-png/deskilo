@@ -41,6 +41,7 @@ class ListDetailScaffold extends StatefulWidget {
     required this.detail,
     required this.onClose,
     this.paneStore,
+    this.listMin = ListDetailMetrics.listMin,
     super.key,
   });
 
@@ -57,6 +58,10 @@ class ListDetailScaffold extends StatefulWidget {
 
   /// Where the pane's width is kept; by default the device's preferences.
   final PrefsStringStore? paneStore;
+
+  /// The narrowest the list keeps beside the pane: its table without a
+  /// word cut. Narrower, the pane stands over the list's end.
+  final double listMin;
 
   @override
   State<ListDetailScaffold> createState() => _ListDetailScaffoldState();
@@ -151,62 +156,90 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
     final selected = widget.selected;
     return LayoutBuilder(
       builder: (context, box) {
-        // The widest the pane may be here: the list keeps its minimum.
+        // The widest the pane may be beside the list: the list keeps its
+        // minimum. Where even the narrowest pane does not fit beside it, the
+        // pane stands over the list's end instead.
         final room = math.min(
           ListDetailMetrics.paneMax,
-          box.maxWidth - ListDetailMetrics.listMin - ListDetailMetrics.grip,
+          box.maxWidth - widget.listMin - ListDetailMetrics.grip,
         );
-        // Escape closes the record wherever the keyboard is, in the list
-        // (on the row it moves with) or in the pane. The wrapper is always
-        // there, so the list's place in the tree never changes.
+        final beside = room >= ListDetailMetrics.paneMin; // content-fit: the list and the narrowest pane side by side
         return CallbackShortcuts(
+          // Escape closes the record wherever the keyboard is, in the list
+          // (on the row it moves with) or in the pane. The wrapper is always
+          // there, so the list's place in the tree never changes.
           bindings: {
             if (selected != null)
               const SingleActivator(LogicalKeyboardKey.escape): _close,
           },
-          child: Row(
-            children: [
-              // Always the same child at the same place: the list keeps its
-              // state when the pane opens and closes.
-              Expanded(
-                child: KeyedSubtree(
-                  key: const ValueKey('list-detail-list'),
-                  child: widget.list,
-                ),
-              ),
-              if (selected != null) ...[
-                _Grip(
-                  onDrag: (d) => _drag(d, room),
-                  onEnd: _keep,
-                  label: context.l10n.listDetailResize,
-                ),
-                ValueListenableBuilder<double>(
-                  valueListenable: _width,
-                  builder: (context, w, child) => SizedBox(
-                    width: math.min(
-                      w,
-                      math.max(ListDetailMetrics.paneMin, room),
+          child: ValueListenableBuilder<double>(
+            valueListenable: _width,
+            builder: (context, kept, _) {
+              final pane = beside
+                  ? math.min(kept, room)
+                  : math.min(kept, box.maxWidth);
+              final taken = selected != null && beside
+                  ? pane + ListDetailMetrics.grip
+                  : 0.0;
+              return Stack(
+                children: [
+                  // Always the first child: the list keeps its state when
+                  // the pane opens and closes.
+                  PositionedDirectional(
+                    start: 0,
+                    top: 0,
+                    bottom: 0,
+                    end: taken,
+                    child: KeyedSubtree(
+                      key: const ValueKey('list-detail-list'),
+                      child: widget.list,
                     ),
-                    child: child,
                   ),
-                  child: _Pane(
-                    child: FocusScope(
-                      key: const ValueKey('list-detail-pane'),
-                      child: KeyedSubtree(
-                        key: ValueKey('list-detail-record-$selected'),
-                        child: widget.detail(context, selected),
+                  if (selected != null)
+                    PositionedDirectional(
+                      end: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: beside ? pane + ListDetailMetrics.grip : pane,
+                      child: Material(
+                        elevation: beside ? 0 : _overElevation,
+                        child: Row(
+                          children: [
+                            if (beside)
+                              _Grip(
+                                onDrag: (d) => _drag(d, room),
+                                onEnd: _keep,
+                                label: context.l10n.listDetailResize,
+                              ),
+                            Expanded(
+                              child: _Pane(
+                                child: FocusScope(
+                                  key: const ValueKey('list-detail-pane'),
+                                  child: KeyedSubtree(
+                                    key: ValueKey(
+                                      'list-detail-record-$selected',
+                                    ),
+                                    child: widget.detail(context, selected),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ],
+                ],
+              );
+            },
           ),
         );
       },
     );
   }
 }
+
+/// The lift of a pane drawn over the list's end.
+const double _overElevation = 8;
 
 /// Marks the pane, to tell a focus inside it from one in the list.
 class _Pane extends StatelessWidget {

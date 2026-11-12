@@ -215,6 +215,13 @@ const List<RouteRule> routeRules = [
     place: 'drawer-invoices',
     measure: PageMeasure.work,
   ),
+  // #3607 — an open invoice beside the list (or its page).
+  RouteRule(
+    '/invoices/:id',
+    RouteClass.workspace,
+    place: 'drawer-invoices',
+    measure: PageMeasure.work,
+  ),
   RouteRule('/invoice-register', RouteClass.workspace, place: 'drawer-accounting-export'),
   RouteRule('/einvoice-config', RouteClass.workspace, place: 'drawer-legal-identity'),
   RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents'),
