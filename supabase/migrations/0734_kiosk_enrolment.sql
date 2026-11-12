@@ -781,12 +781,14 @@ select 'workspace', w.id, 'security.badge_signin_where', '"any_device"'::jsonb,
 on conflict do nothing;
 
 -- ── where a failed PIN came from ────────────────────────────────────────
--- A failed PIN is counted on the side it came from: with a valid kiosk or
--- without one. Each side counts only its own, so nothing tried off a kiosk
--- locks a badge at its kiosk, and off a kiosk a real and an unknown tag
--- still lock alike. Every earlier row came without a kiosk.
+-- A failed PIN is counted where it came from: the business of the valid
+-- kiosk it came with, or none. A tag's failures are counted only among
+-- attempts from the same place, so nothing tried off a kiosk -- or at
+-- another business's kiosk -- locks a badge at its own, and in each place a
+-- real and an unknown tag still lock alike. Every earlier row came without a
+-- kiosk.
 alter table public.badge_auth_attempts
-  add column on_kiosk boolean not null default false;
+  add column kiosk_workspace_id uuid;
 
 -- Whether the business signs in on its enrolled kiosks only: the setting,
 -- in force while kiosk enrolment is on.
@@ -800,8 +802,8 @@ revoke execute on function public.badge_signin_kiosks_only(uuid) from public, an
 
 -- ── the pause ───────────────────────────────────────────────────────────
 -- Badge sign-in of a business is paused while as many distinct badges of it
--- as its ceiling failed their PIN within the window: at its kiosks where it
--- signs in on enrolled kiosks only, anywhere otherwise.
+-- as its ceiling failed their PIN within the window: at its own kiosks where
+-- it signs in on enrolled kiosks only, anywhere otherwise.
 create or replace function public.badge_signin_paused(p_workspace_id uuid)
 returns boolean language plpgsql stable security definer set search_path = '' as $fn$
 declare
@@ -812,19 +814,21 @@ begin
   return p_workspace_id is not null and (
     select count(distinct token_hash) from public.badge_auth_attempts
      where workspace_id = p_workspace_id and not succeeded and step = 'pin'
-       and (on_kiosk or not v_kiosks_only)
+       and (not v_kiosks_only or kiosk_workspace_id = p_workspace_id)
        and attempted_at > now() - make_interval(mins => v_window)) >= v_limit;
 end;
 $fn$;
 revoke execute on function public.badge_signin_paused(uuid) from public, anon, authenticated;
 
--- A failed PIN, on the side it came from. The owners are told once per
--- window when their business is paused -- or, off a kiosk, when one of its
--- badges reaches the lock there: the attempt is seen though it does not
--- bite. Restated from 0714 with the side; the one caller is badge_auth_verify.
+-- A failed PIN, with where it came from (p_kiosk: the business of the
+-- valid kiosk, or null). The owners are told once per window when their
+-- business is paused -- or when one of its badges reaches the lock anywhere
+-- but its own kiosk (p_tried_for): the attempt is seen though it does not
+-- bite. Restated from 0714 with the place; the one caller is
+-- badge_auth_verify.
 drop function if exists public.record_badge_auth_failure(text, uuid);
 create or replace function public.record_badge_auth_failure(
-  p_hash text, p_workspace uuid, p_on_kiosk boolean default false, p_tried_for uuid default null)
+  p_hash text, p_workspace uuid, p_kiosk uuid default null, p_tried_for uuid default null)
 returns void language plpgsql security definer set search_path = '' as $fn$
 declare
   v_window int := (public.setting_value(null, 'security.badge_lockout_minutes') #>> '{}')::int;
@@ -833,8 +837,8 @@ declare
   v_count int;
   v_tell boolean;
 begin
-  insert into public.badge_auth_attempts (token_hash, succeeded, workspace_id, step, on_kiosk)
-  values (p_hash, false, p_workspace, 'pin', coalesce(p_on_kiosk, false));
+  insert into public.badge_auth_attempts (token_hash, succeeded, workspace_id, step, kiosk_workspace_id)
+  values (p_hash, false, p_workspace, 'pin', p_kiosk);
   if v_told is null then return; end if;
   if p_workspace is not null then
     v_tell := public.badge_signin_paused(p_workspace);
@@ -842,9 +846,11 @@ begin
      where workspace_id = p_workspace and not succeeded and step = 'pin'
        and attempted_at > now() - make_interval(mins => v_window);
   else
-    -- p_tried_for: a badge of that business tried where it is not signed in.
+    -- p_tried_for: a badge of that business tried where it is not signed
+    -- in; counted in that place.
     select count(*) into v_count from public.badge_auth_attempts
-     where token_hash = p_hash and not succeeded and step = 'pin' and not on_kiosk
+     where token_hash = p_hash and not succeeded and step = 'pin'
+       and kiosk_workspace_id is not distinct from p_kiosk
        and attempted_at > now() - make_interval(mins => v_window);
     v_tell := v_count >= v_failures;
   end if;
@@ -862,7 +868,7 @@ begin
   end if;
 end;
 $fn$;
-revoke execute on function public.record_badge_auth_failure(text, uuid, boolean, uuid) from public, anon, authenticated;
+revoke execute on function public.record_badge_auth_failure(text, uuid, uuid, uuid) from public, anon, authenticated;
 
 drop function if exists public.badge_auth_verify(text, text, text);
 create or replace function public.badge_auth_verify(
@@ -970,12 +976,13 @@ begin
   -- An unknown tag retains its own lock without charging an unrelated workspace.
   perform pg_advisory_xact_lock(hashtextextended(
     'badge-signin:' || coalesce(v_badge.workspace_id::text, v_hash), 0));
-  -- The failures of this side only: with a valid kiosk, or without one.
+  -- The failures made in this place only: at a kiosk of the same business,
+  -- or without a kiosk.
   select count(*) filter (where attempted_at > now() - make_interval(mins => v_window)),
          count(*) filter (where attempted_at > now() - interval '1 hour'), count(*)
     into v_recent, v_hour, v_day from public.badge_auth_attempts
    where token_hash = v_hash and not succeeded and step = 'pin'
-     and on_kiosk = (v_kiosk is not null)
+     and kiosk_workspace_id is not distinct from v_kiosk
      and attempted_at > now() - interval '24 hours';
   if v_recent >= v_failures or v_hour >= 2*v_failures or v_day >= 3*v_failures then
     return jsonb_build_object('ok',false,'reason','locked');
@@ -986,12 +993,13 @@ begin
   end if;
   -- Off a kiosk of its own business, a tag of a business that signs in on
   -- enrolled kiosks only, or of a paused one, is answered and counted as an
-  -- unknown tag on this side: per tag, never against the business, and never
-  -- toward the lock at its kiosk. Its owners are told if it is hammered.
+  -- unknown tag in this place: per tag, never against the business, and
+  -- never toward the lock at its own kiosk. Its owners are told if it is
+  -- hammered.
   if not v_on_kiosk and v_badge.workspace_id is not null
      and (public.badge_signin_kiosks_only(v_badge.workspace_id)
           or public.badge_signin_paused(v_badge.workspace_id)) then
-    perform public.record_badge_auth_failure(v_hash, null, v_kiosk is not null, v_badge.workspace_id);
+    perform public.record_badge_auth_failure(v_hash, null, v_kiosk, v_badge.workspace_id);
     return jsonb_build_object('ok',false,'reason','refused');
   end if;
 
@@ -1003,11 +1011,11 @@ begin
   end if;
   if v_badge.id is null or v_member.id is null or not coalesce(v_enabled,false)
       or length(coalesce(p_uid,'')) < 8 or not coalesce(v_pin_matches,false) then
-    perform public.record_badge_auth_failure(v_hash, v_badge.workspace_id, v_kiosk is not null);
+    perform public.record_badge_auth_failure(v_hash, v_badge.workspace_id, v_kiosk);
     return jsonb_build_object('ok',false,'reason','refused');
   end if;
-  insert into public.badge_auth_attempts (token_hash,succeeded,workspace_id,step,on_kiosk)
-  values (v_hash,true,v_badge.workspace_id,'pin',v_kiosk is not null);
+  insert into public.badge_auth_attempts (token_hash,succeeded,workspace_id,step,kiosk_workspace_id)
+  values (v_hash,true,v_badge.workspace_id,'pin',v_kiosk);
   -- The right PIN: this badge's scans stop counting.
   delete from public.badge_auth_attempts
    where step = 'identify' and token_hash = v_hash;

@@ -8,7 +8,7 @@
 -- paused business answers "locked" for every tag; without one, no answer
 -- tells a tag of a business from an unknown tag. Rolled back.
 begin;
-select plan(39);
+select plan(44);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004000' || lpad(n::text,4,'0'))::uuid;
@@ -144,6 +144,20 @@ select is((select count(*)::int from public.events where workspace_id = pg_temp.
 select is(pg_temp.answers('4000000000000007', current_setting('t.n')::int + 1, 'a'),
           rtrim(repeat('refused ', current_setting('t.n')::int)) || ' locked',
   'failures at the kiosk still lock at the kiosk');
+
+-- ── nor anything tried at another business's kiosk ────────────────────
+select is(pg_temp.answers('4000000000000005', current_setting('t.n')::int + 1, 'a'),
+          pg_temp.answers('4000555555555555', current_setting('t.n')::int + 1, 'a'),
+  'at another business''s kiosk a real and an unknown tag answer the same sequence');
+select is(pg_temp.verify('4000000000000005', '482615', 'b') ->> 'display_name', 'Bo Lind',
+  'tries at another business''s kiosk never lock a badge at its own');
+select is((select count(*)::int from public.events where workspace_id = pg_temp.u(102) and type = 'badge_security_alert'), 1,
+  'and its owners are told once');
+select is(pg_temp.answers('4000000000000005', current_setting('t.n')::int + 1, 'b'),
+          rtrim(repeat('refused ', current_setting('t.n')::int)) || ' locked',
+  'failures at its own kiosk still lock there');
+select is(pg_temp.verify('4000000000000005', '000000') ->> 'reason', 'refused',
+  'and only there: off a kiosk it is refused, not locked');
 
 select public.store_setting(pg_temp.u(101), 'security.badge_signin_where', '"any_device"'::jsonb, 'test', null);
 select is(pg_temp.verify('4000000000000003', '482615') ->> 'ok', 'true', 'any device: the right PIN signs in anywhere');
