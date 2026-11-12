@@ -3,6 +3,8 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -70,7 +72,7 @@ class VatRateField extends ConsumerWidget {
         for (final rate in rates)
           DropdownMenuItem(
             value: rate.id,
-            child: Text(_vatRateOption(rate)),
+            child: Text(_vatRateOption(appFormatOf(context), rate)),
           ),
       ],
       onChanged: (picked) => onChanged(picked ?? ''),
@@ -79,12 +81,8 @@ class VatRateField extends ConsumerWidget {
 }
 
 /// How a rate reads in a picker: 'Standard (20 %)'.
-String _vatRateOption(VatRate rate) {
-  final percent = rate.percent == rate.percent.roundToDouble()
-      ? rate.percent.toStringAsFixed(0)
-      : rate.percent.toString();
-  return '${rate.label} ($percent %)';
-}
+String _vatRateOption(AppFormat format, VatRate rate) =>
+    '${rate.label} (${format.ratePercent(rate.percent)})';
 
 /// #2354 — where a catalogue service is supplied for VAT.
 ///

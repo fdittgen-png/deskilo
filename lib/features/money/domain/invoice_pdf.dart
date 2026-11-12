@@ -130,6 +130,7 @@ class InvoicePdfStrings {
     this.issuedByNamed = _labelValue,
     this.replacesNumbered = _labelValue,
     this.vatRated = _labelValue,
+    this.formatLocale,
   });
 
   /// #3652 -- a label with its value is ONE message per label, so word order
@@ -152,6 +153,10 @@ class InvoicePdfStrings {
 
   /// "VAT {value}" with the rate.
   final String vatRated;
+
+  /// The locale the document's numbers and rates read in (#3653); null reads
+  /// in the process default.
+  final String? formatLocale;
 
   String _fill(String template, String label, String value) =>
       template.replaceAll('{label}', label).replaceAll('{value}', value);

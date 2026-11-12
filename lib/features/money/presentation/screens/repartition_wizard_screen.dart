@@ -286,7 +286,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
     final names = ref.watch(memberNamesProvider).value ?? const {}; // empty-ok: names are labels; an unread one is left blank, never a figure
     final share = shares.where((s) => s.memberId == m.id).firstOrNull;
     final excluded = rule.excluded.contains(m.id);
-    final pctLabel = '${m.subscriptionPct} %';
+    final pctLabel = appFormatOf(context).ratePercent(m.subscriptionPct);
     final weight = _weights.putIfAbsent(
       m.id,
       () => TextEditingController(text: (rule.weights[m.id] ?? m.subscriptionPct).toString()),

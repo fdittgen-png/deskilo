@@ -3,9 +3,9 @@
 // #3308 — the pass part of a guest pass sale, shown inside THE identity
 // form (PersonalInfoForm.extraSection) so one Save sends the guest and
 // the pass together. The host keeps the draft; this only edits it.
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -116,7 +116,7 @@ class GuestPassSaleSection extends StatelessWidget {
           key: const ValueKey('guest-pass-day'),
           contentPadding: EdgeInsets.zero,
           title: Text(l10n.bookPeriodsFrom),
-          subtitle: Text(isoDay(draft.day)),
+          subtitle: Text(appFormatOf(context).calendarDay(draft.day)),
           trailing: const Icon(Icons.calendar_today_outlined),
           onTap: () async {
             final picked = await showDatePicker(

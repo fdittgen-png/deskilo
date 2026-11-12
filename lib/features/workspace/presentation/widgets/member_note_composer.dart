@@ -163,7 +163,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     final who = memberNames[reservation.memberId] ?? '';
     final space = spaceNames[target] ?? '';
     final when = DateFormat.MMMd(localeName)
-        .add_Hm()
+        .add_jm()
         .format(reservation.startsAt.toLocal());
     return [who, space, when].where((p) => p.isNotEmpty).join(' · ');
   }

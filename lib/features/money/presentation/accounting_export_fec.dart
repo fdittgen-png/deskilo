@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/features/enabled_feature_keys.dart';
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -211,7 +212,7 @@ class FecExportActions {
         case ArchiveFecChanged(:final logged):
           AppSnack.error(
             context,
-            context.l10n.fecArchiveChanged(isoDay(logged.exportedAt)),
+            context.l10n.fecArchiveChanged(appFormatOf(context).date(logged.exportedAt)),
           );
           return false;
         case final ArchiveFecWrite write:

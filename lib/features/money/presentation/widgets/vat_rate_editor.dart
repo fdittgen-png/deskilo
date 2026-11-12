@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -268,9 +269,9 @@ class VatRateValidityLines extends StatelessWidget {
                 [
                   draft.label.text,
                   if (draft.validFrom != '1900-01-01')
-                    l10n.vatSinceDate(draft.validFrom),
+                    l10n.vatSinceDate(appFormatOf(context).isoDay(draft.validFrom)),
                   if (draft.validTo case final until?)
-                    l10n.vatUntilDate(until),
+                    l10n.vatUntilDate(appFormatOf(context).isoDay(until)),
                 ].join(' · '),
                 style: Theme.of(context).textTheme.bodySmall,
               ),

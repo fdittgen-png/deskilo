@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../l10n/app_localizations.dart';
 
 /// THE booking-success → user-message mapper (#663), the counterpart of
@@ -22,7 +23,7 @@ import '../../../l10n/app_localizations.dart';
 /// its own header: the same switch lived on four screens and drifted.
 String bookingSuccessText(
   AppLocalizations l10n,
-  String locale, {
+  AppFormat format, {
   required bool checkedIn,
   required DateTime start,
   required DateTime end,
@@ -39,7 +40,7 @@ String bookingSuccessText(
   // WORKED into a message saying it failed, which is the exact bug this
   // whole change exists to remove. Fall back to a plain 24-hour clock
   // instead; a slightly less local-looking time beats a lie.
-  final until = _hm(locale, end);
+  final until = _hm(format, end);
   final space = (spaceName ?? '').trim();
 
   if (checkedIn) {
@@ -53,10 +54,10 @@ String bookingSuccessText(
   // A reservation may be for another day, so it carries its date. Same
   // day gets the times alone — repeating today's date reads as noise.
   final sameDay = _isSameDay(start, end);
-  final from = _hm(locale, start);
+  final from = _hm(format, start);
   final when = sameDay
-      ? '${_md(locale, start)} $from–$until'
-      : '${_md(locale, start)} $from → ${_md(locale, end)} $until';
+      ? '${_md(format.locale, start)} $from–$until'
+      : '${_md(format.locale, start)} $from → ${_md(format.locale, end)} $until';
 
   // A period already over when it was booked (same-day attendance,
   // 0116/0122) is recorded, not reserved: say so, or the member looks
@@ -74,11 +75,11 @@ String bookingSuccessText(
   return l10n.bookingReservedSpaceWhen(space, when);
 }
 
-/// Hours:minutes, falling back to a plain 24-hour clock when the locale
-/// has no date symbols loaded.
-String _hm(String locale, DateTime at) {
+/// Hours:minutes on the member's [clock], falling back to a plain 24-hour
+/// clock when the locale has no date symbols loaded.
+String _hm(AppFormat format, DateTime at) {
   try {
-    return DateFormat.Hm(locale).format(at);
+    return format.wallTime(at);
   } on Object {
     // trace-exempt: a formatting fallback is not a failure to report,
     // and this runs on the SUCCESS path where a logged error would read
