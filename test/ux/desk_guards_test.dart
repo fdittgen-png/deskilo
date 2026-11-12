@@ -172,4 +172,85 @@ void main() {
       },
     );
   }
+
+  testWidgets('a whole small button inside a scrolling list still fails: '
+      'only a control the list cuts at its edge is skipped', (tester) async {
+    final semantics = tester.ensureSemantics();
+    await _pump(
+      tester,
+      ListView(
+        children: [
+          const SizedBox(height: 200),
+          Center(
+            child: SizedBox(
+              width: 32,
+              height: 32,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                tooltip: 'Small',
+                onPressed: () {},
+                icon: const Icon(Icons.add, size: 16),
+              ),
+            ),
+          ),
+          const SizedBox(height: 2000),
+        ],
+      ),
+    );
+    expect(_problems(tester), contains('target under 48 dp'));
+    semantics.dispose();
+  });
+
+  testWidgets('a records page at 1440 whose table is narrow fails', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      const Align(
+        alignment: Alignment.topLeft,
+        child: SizedBox(width: 600, height: 400, child: _Table()),
+      ),
+    );
+    expect(
+      deskGuardProblems(
+        tester,
+        kind: PageKind.records,
+        size: const Size(1440, 900),
+        tableTypes: const [_Table],
+      ),
+      contains('table under 60 %'),
+    );
+  });
+
+  testWidgets('a button no key reaches inside a container Tab skips still '
+      'fails: the container is excused, not what it holds', (tester) async {
+    final hidden = FocusNode(skipTraversal: true);
+    addTearDown(hidden.dispose);
+    await _pump(
+      tester,
+      Column(
+        children: [
+          FilledButton(onPressed: () {}, child: const Text('Reached')),
+          Focus(
+            skipTraversal: true,
+            child: FilledButton(
+              focusNode: hidden,
+              onPressed: () {},
+              child: const Text('Never reached'),
+            ),
+          ),
+        ],
+      ),
+    );
+    expect(await keyboardProblems(tester), contains('unreachable by any key'));
+  });
+}
+
+/// A planted table, measured as a records page's table.
+class _Table extends StatelessWidget {
+  const _Table();
+
+  @override
+  Widget build(BuildContext context) => const ColoredBox(color: Colors.white);
 }
