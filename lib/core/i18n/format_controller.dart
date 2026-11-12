@@ -64,6 +64,7 @@ AppFormat personalFormat(Ref ref) {
     currencyCode: region.currency,
     clock: prefs.clock,
     timeZoneMode: TimeZoneMode.device,
+    weekStart: _chosenWeekStart(prefs, region),
   );
 }
 
@@ -100,8 +101,14 @@ AppFormat businessFormat(Ref ref) {
     // under them on upgrade.
     clock: prefs.clock,
     timeZoneMode: prefs.timeZoneMode,
+    weekStart: _chosenWeekStart(prefs, region),
   );
 }
+
+/// #3648 — the person's chosen first day of the week, else the platform's
+/// default for the business, else (both `locale`) the format locale's own.
+WeekStartPref _chosenWeekStart(FormatPrefs prefs, RegionDefaults region) =>
+    prefs.weekStart != WeekStartPref.locale ? prefs.weekStart : region.weekStart;
 
 /// The person's chosen format locale, when it is one the app formats in.
 String? _chosenLocale(FormatPrefs prefs) =>

@@ -9,6 +9,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -398,9 +400,10 @@ class ReserveWeekView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDay = host.selectedDay;
     final myMemberId = ref.watch(myMemberProvider).value?.id;
-    final monday = WeekGrid.weekStartOf(selectedDay);
-    final sunday = DateTime(monday.year, monday.month, monday.day + 6);
-    final monthKeys = {monthKeyOf(monday), monthKeyOf(sunday)};
+    final first = WeekGrid.firstDayOf(
+        selectedDay, weekStartOf(appFormatOf(context)));
+    final last = DateTime(first.year, first.month, first.day + 6);
+    final monthKeys = {monthKeyOf(first), monthKeyOf(last)};
     // De-duplicated by id: a reservation crossing the month boundary is
     // returned by both month windows.
     final byId = <String, Reservation>{};

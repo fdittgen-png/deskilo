@@ -9,11 +9,13 @@ import '../../../../core/calendar/calendar_item.dart';
 import '../../../../core/help/help_hint.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/week_start.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/app_frame.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/controls_feed_body.dart';
@@ -95,7 +97,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     final today = _today;
     _from = today;
     _to = today;
-    _selection = CalendarSelection(view: CalendarView.agenda, anchor: today);
+    _selection = CalendarSelection(view: CalendarView.agenda, anchor: today, firstWeekday: weekStartOf(ref.read(appFormatProvider)));
+    ref.listenManual(appFormatProvider, (_, f) => _selection = _selection.withFirstWeekday(weekStartOf(f)));
     // #3065 — /calendar?view=alerts opens the alerts on reload or a link.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) requestAlertsIfAddressAsks(context, ref);
@@ -141,11 +144,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
   }
 
   Future<void> _pickDay() async {
-    final picked = await showDatePicker(
+    final picked = await showAppDatePicker(
       context: context,
       initialDate: _from,
-      firstDate: DateTime(_from.year - 3),
-      lastDate: DateTime(_from.year + 3),
+      firstDate: DateTime(_from.year - 3), lastDate: DateTime(_from.year + 3),
     );
     if (picked != null) setState(() => _from = _to = picked);
     if (picked != null) _recordDay(picked); // #1881 B
@@ -157,11 +159,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       payload: {'date_relation': dateRelation(day, _today)});
 
   Future<void> _pickRange() async {
-    final picked = await showDateRangePicker(
+    final picked = await showAppDateRangePicker(
       context: context,
       initialDateRange: DateTimeRange(start: _from, end: _to),
-      firstDate: DateTime(_from.year - 3),
-      lastDate: DateTime(_from.year + 3),
+      firstDate: DateTime(_from.year - 3), lastDate: DateTime(_from.year + 3),
     );
     if (picked != null) {
       setState(() {
@@ -180,11 +181,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
   Future<void> _jump() async {
     final anchor = _selection.anchor;
-    final picked = await showDatePicker(
+    final picked = await showAppDatePicker(
       context: context,
       initialDate: anchor,
-      firstDate: DateTime(anchor.year - 3),
-      lastDate: DateTime(anchor.year + 3),
+      firstDate: DateTime(anchor.year - 3), lastDate: DateTime(anchor.year + 3),
     );
     if (picked != null) {
       setState(() => _selection = _selection.withAnchor(picked));

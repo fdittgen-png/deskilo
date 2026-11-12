@@ -24880,6 +24880,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get regionalFormatsTitle => 'Region & Formate';
 
   @override
+  String get regionalWeekStart => 'Die Woche beginnt am';
+
+  @override
+  String get regionalWeekStartAuto => 'Wie die Region';
+
+  @override
   String get registerPaymentAmount => 'Betrag';
 
   @override
@@ -27696,6 +27702,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Format, bevor ein Mitglied oder Arbeitsbereich eines gewählt hat. Die eigene Wahl des Mitglieds gilt immer.';
 
   @override
+  String get settingHintLocaleDefaultWeekStart =>
+      'Der Tag, an dem Wochen in Kalendern beginnen, wenn ein Mitglied keinen gewählt hat: der des Formats oder immer Montag, Sonntag oder Samstag. Die eigene Wahl eines Mitglieds hat immer Vorrang.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minuten, die die Person hat, um eine von einem Assistenten angeforderte Aktion zu bestätigen. Bereits gestellte Anfragen behalten ihre Zeit. Kann nur verkürzt werden.';
 
@@ -27982,6 +27992,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelLocaleDefaultLocale =>
       'Standardformat für Zahlen und Datum';
+
+  @override
+  String get settingLabelLocaleDefaultWeekStart => 'Standard-Wochenbeginn';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>

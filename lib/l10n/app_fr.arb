@@ -15195,6 +15195,14 @@
   "@regionalFormatsTitle": {
     "description": "#711 - globalization"
   },
+  "regionalWeekStart": "La semaine commence le",
+  "@regionalWeekStart": {
+    "description": "#3648 - the Me > Region & formats row that chooses the first day of the week in every calendar, strip and date picker"
+  },
+  "regionalWeekStartAuto": "Selon la région",
+  "@regionalWeekStartAuto": {
+    "description": "#3648 - the week-start choice that follows the format region (the day names of the other choices come from the locale)"
+  },
   "registerPaymentAmount": "Montant",
   "registerPaymentDate": "Payé le",
   "registerPaymentDone": "Paiement enregistré — le membre le confirme de son côté.",
@@ -17492,6 +17500,10 @@
   "settingHintLocaleDefaultCountry": "Le pays d'un nouvel espace de travail quand la région de l'appareil est inconnue. Une simple suggestion : elle ne décide d'aucun pays émetteur ni d'aucune taxe.",
   "settingHintLocaleDefaultCurrency": "Dans quelle devise les montants s'affichent avant qu'un espace de travail soit connecté, et celle d'un nouvel espace. Elle ne remplace jamais la devise manquante d'une facture.",
   "settingHintLocaleDefaultLocale": "Le format utilisé avant qu'un membre ou un espace de travail en ait choisi un. Le choix du membre l'emporte toujours.",
+  "settingHintLocaleDefaultWeekStart": "Le jour où commencent les semaines dans les calendriers quand un membre n'en a choisi aucun : celui du format, ou toujours lundi, dimanche ou samedi. Le choix d'un membre l'emporte toujours.",
+  "@settingHintLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting hint."
+  },
   "settingHintMcpConfirmationExpiryMinutes": "Minutes dont dispose la personne pour confirmer une action demandée par un assistant. Les demandes déjà faites gardent leur délai. Peut seulement être raccourci.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -17681,6 +17693,10 @@
   "settingLabelLocaleDefaultCountry": "Pays par défaut",
   "settingLabelLocaleDefaultCurrency": "Devise par défaut",
   "settingLabelLocaleDefaultLocale": "Format par défaut des nombres et dates",
+  "settingLabelLocaleDefaultWeekStart": "Premier jour de la semaine par défaut",
+  "@settingLabelLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting label."
+  },
   "settingLabelMcpConfirmationExpiryMinutes": "Délai de confirmation d'une action d'assistant",
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."

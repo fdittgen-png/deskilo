@@ -522,6 +522,10 @@ const Map<String, Set<String>> _notExportedColumns = {
     // preference, exported by export_my_personal_data_v1, never a fact of
     // the workspace; another installation's id must not travel as data.
     'default_workspace_network_id',
+    // The day a person's weeks start on (#3648): how their own screens draw
+    // a calendar, a display preference like their clock, never a fact of
+    // the workspace.
+    'week_start',
   },
   'workspaces': {
     // The birth record `installation id:local id` (#2561): stamped by the

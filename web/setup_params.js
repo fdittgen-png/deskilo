@@ -52,6 +52,8 @@ const DIR_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','opt
 // #2556 — the inbox's page per source (messaging.inbox_page_size, 1..100).
 const INBOX_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}]];
 // #2578 — rows per page of a figure's detail (bi.detail_page_size, 10..200).
+// #3648 — the day a week starts on where a member chose none (locale.default_week_start).
+const WEEK_START=[['locale','weekStartLocale'],['monday','weekStartMonday'],['sunday','weekStartSunday'],['saturday','weekStartSaturday']];
 const BI_DETAIL_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}],['200','optEntries',{n:200}]];
 // #2563 C2 — backchannel retention (platform setting
 // federation.retention_hours): 1..720 hours.
@@ -132,7 +134,7 @@ const PARAM_META=[
  ['bank.maxBytes','bankMaxBytes','enum',()=>BANK_MAX_BYTES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.maxLines','bankMaxLines','enum',()=>BANK_MAX_LINES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.matchWindow','bankMatchWindow','enum',()=>BANK_WINDOW.map(x=>x[0]),{needs:'bankImport'}],
- ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],['region.currency','regionCurrency','enum',REGION_CURRENCIES],['region.country','regionCountry','enum',()=>COUNTRIES.map(c=>c[0])],['region.locale','regionLocale','enum',()=>FORMAT_LOCALES.slice()],['map.tiles','mapTiles','text'],['map.geocoder','mapGeocoder','text'],
+ ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],['region.currency','regionCurrency','enum',REGION_CURRENCIES],['region.country','regionCountry','enum',()=>COUNTRIES.map(c=>c[0])],['region.locale','regionLocale','enum',()=>FORMAT_LOCALES.slice()],['region.weekStart','regionWeekStart','enum',()=>WEEK_START.map(x=>x[0])],['map.tiles','mapTiles','text'],['map.geocoder','mapGeocoder','text'],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],

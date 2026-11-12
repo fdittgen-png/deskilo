@@ -10,6 +10,7 @@
 // filled in from them.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../i18n/format_prefs.dart';
 import 'active_settings.dart';
 import 'setting_defaults.g.dart';
 import 'settings.dart';
@@ -19,6 +20,7 @@ class RegionDefaults {
     this.currency = SettingDefaults.localeDefaultCurrency,
     this.country = SettingDefaults.localeDefaultCountry,
     this.locale = SettingDefaults.localeDefaultLocale,
+    this.weekStart = WeekStartPref.locale,
   });
 
   static const defaults = RegionDefaults();
@@ -26,6 +28,11 @@ class RegionDefaults {
   final String currency;
   final String country;
   final String locale;
+
+  /// #3648 — the day a week starts on where a person chose none: the
+  /// registry's `locale.default_week_start`, `locale` (the format locale's
+  /// own) when the registry predates the key.
+  final WeekStartPref weekStart;
 
   /// A registry that predates a key (an older server) keeps its default.
   factory RegionDefaults.fromSettings(SettingsSet? settings) {
@@ -36,6 +43,8 @@ class RegionDefaults {
       currency: read('locale.default_currency', SettingDefaults.localeDefaultCurrency),
       country: read('locale.default_country', SettingDefaults.localeDefaultCountry),
       locale: read('locale.default_locale', SettingDefaults.localeDefaultLocale),
+      weekStart: WeekStartPref.fromWire(
+          read('locale.default_week_start', WeekStartPref.locale.wire)),
     );
   }
 }

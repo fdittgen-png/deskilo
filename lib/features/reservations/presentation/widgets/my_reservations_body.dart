@@ -27,6 +27,7 @@ import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/refusal_text.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -166,7 +167,7 @@ class _WindowHeader extends ConsumerWidget {
   final bool past;
 
   Future<void> _pick(BuildContext context, WidgetRef ref) async {
-    final picked = await showDateRangePicker(
+    final picked = await showAppDateRangePicker(
       context: context,
       firstDate: DateTime(window.from.year - _pickerYears),
       lastDate: DateTime(window.from.year + _pickerYears, 12, 31),

@@ -232,6 +232,7 @@ List<Override> formatPinOverrides({String locale = 'en_GB'}) {
     locale: locale,
     currencyCode: 'EUR',
     clock: ClockPref.h24,
+    weekStart: WeekStartPref.monday,
   );
   return [
     appFormatProvider.overrideWithValue(format),
@@ -363,11 +364,11 @@ List<Override> standardTestOverrides({
     // tests pin one.
     if (pinFormats) ...[
       appFormatProvider.overrideWithValue(
-        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode, weekStart: WeekStartPref.monday),
       ),
       // #3647 — a personal surface reads the person's format directly.
       personalFormatProvider.overrideWithValue(
-        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode, weekStart: WeekStartPref.monday),
       ),
     ],
     // #1303 — a fixed device locale: onboarding seeds its country from it,

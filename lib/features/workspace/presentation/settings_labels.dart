@@ -114,6 +114,7 @@ String _regionSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'locale.default_currency' => l10n.settingLabelLocaleDefaultCurrency,
       'locale.default_country' => l10n.settingLabelLocaleDefaultCountry,
       'locale.default_locale' => l10n.settingLabelLocaleDefaultLocale,
+      'locale.default_week_start' => l10n.settingLabelLocaleDefaultWeekStart,
       _ => key,
     };
 
@@ -223,6 +224,7 @@ String? _regionSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'locale.default_currency' => l10n.settingHintLocaleDefaultCurrency,
       'locale.default_country' => l10n.settingHintLocaleDefaultCountry,
       'locale.default_locale' => l10n.settingHintLocaleDefaultLocale,
+      'locale.default_week_start' => l10n.settingHintLocaleDefaultWeekStart,
       _ => null,
     };
 
