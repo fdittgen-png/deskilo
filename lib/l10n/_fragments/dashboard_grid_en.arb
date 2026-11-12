@@ -1,0 +1,14 @@
+{
+  "dashboardTrendUp": "Up",
+  "@dashboardTrendUp": {
+    "description": "Said by a screen reader for the arrow beside a figure's change: the figure rose since the period it is compared with."
+  },
+  "dashboardTrendDown": "Down",
+  "@dashboardTrendDown": {
+    "description": "Said by a screen reader for the arrow beside a figure's change: the figure fell since the period it is compared with."
+  },
+  "dashboardTrendFlat": "Unchanged",
+  "@dashboardTrendFlat": {
+    "description": "Said by a screen reader for the arrow beside a figure's change: the figure is the same as in the period it is compared with."
+  }
+}

@@ -10895,6 +10895,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}'**
   String customerStoryReminders(int count, String number);
 
+  /// Said by a screen reader for the arrow beside a figure's change: the figure fell since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Down'**
+  String get dashboardTrendDown;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure is the same as in the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Unchanged'**
+  String get dashboardTrendFlat;
+
+  /// Said by a screen reader for the arrow beside a figure's change: the figure rose since the period it is compared with.
+  ///
+  /// In en, this message translates to:
+  /// **'Up'**
+  String get dashboardTrendUp;
+
   /// #2862 data report: dataReportArchived
   ///
   /// In en, this message translates to:

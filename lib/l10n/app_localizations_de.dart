@@ -6888,6 +6888,15 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'Gesunken';
+
+  @override
+  String get dashboardTrendFlat => 'Unverändert';
+
+  @override
+  String get dashboardTrendUp => 'Gestiegen';
+
+  @override
   String get dataReportArchived => 'Archiviert';
 
   @override

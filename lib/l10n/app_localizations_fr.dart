@@ -6889,6 +6889,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'En baisse';
+
+  @override
+  String get dashboardTrendFlat => 'Inchangé';
+
+  @override
+  String get dashboardTrendUp => 'En hausse';
+
+  @override
   String get dataReportArchived => 'Archivé';
 
   @override

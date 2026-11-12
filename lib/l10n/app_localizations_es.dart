@@ -6873,6 +6873,15 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'Baja';
+
+  @override
+  String get dashboardTrendFlat => 'Sin cambios';
+
+  @override
+  String get dashboardTrendUp => 'Sube';
+
+  @override
   String get dataReportArchived => 'Archivado';
 
   @override
