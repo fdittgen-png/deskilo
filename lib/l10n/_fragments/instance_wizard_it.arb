@@ -177,7 +177,7 @@
   },
   "instanceReadyInstall": "Il progetto è vuoto: verrà installato tutto.",
   "instanceReadyResume": "{pending, plural, one{Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazione e verranno eseguite solo quelle.} other{Un'installazione di DesKilo si è fermata a metà: restano {pending} migrazioni e verranno eseguite solo quelle.}}",
-  "instanceReadyUpgrade": "La versione {version} di DesKilo è installata: {pending, plural, =1{verrà eseguita solo la migrazione mancante} other{verranno eseguite solo le {pending} migrazioni mancanti}}.",
+  "instanceReadyUpgrade": "La versione {version} di DesKilo è installata: {pending, plural, one{verrà eseguita solo la migrazione mancante} other{verranno eseguite solo le {pending} migrazioni mancanti}}.",
   "instanceReadyCurrent": "La versione {version} di DesKilo è installata e aggiornata: lo schema non richiede nulla.",
   "instanceReadyAttention": "Questo progetto richiede attenzione: non è stato installato nulla.",
   "instanceAttentionNotHealthy": "Supabase non segnala il progetto come operativo. Attenda che lo sia, oppure lo ripristini nella dashboard.",
@@ -192,5 +192,5 @@
   "instanceDoctorRun": "Avvia il controllo di sicurezza",
   "instanceDoctorProtected": "Protetto",
   "instanceDoctorAttention": "Richiede attenzione",
-  "instanceDoctorPassed": "{count, plural, =1{1 controllo superato} other{{count} controlli superati}}"
+  "instanceDoctorPassed": "{count, plural, one{1 controllo superato} other{{count} controlli superati}}"
 }

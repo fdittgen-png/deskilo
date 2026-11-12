@@ -138,7 +138,7 @@
   },
   "editorOfficeNameNumbered": "Office {number}",
   "@editorOfficeNameNumbered": {
-    "description": "Default name of a new office: its next position number in a name, not a count, e.g. \"Office 3\".",
+    "description": "Default name of a new office: its next position number in a name, not a count, e.g. \"Office 3\". [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"
@@ -147,7 +147,7 @@
   },
   "editorDeskNameNumbered": "Desk {number}",
   "@editorDeskNameNumbered": {
-    "description": "Default name of a new desk: its next position number in a name, not a count, e.g. \"Desk 2\".",
+    "description": "Default name of a new desk: its next position number in a name, not a count, e.g. \"Desk 2\". [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"

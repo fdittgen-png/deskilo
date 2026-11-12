@@ -1,8 +1,8 @@
 {
   "@@locale": "en",
-  "eventValidations": "{current}/{required, plural, =1{1 validation} other{{required} validations}}",
+  "eventValidations": "{current}/{required, plural, one{1 validation} other{{required} validations}}",
   "@eventValidations": {
-    "description": "Quorum progress on a pending event (#130): accepts so far / accepts required",
+    "description": "Quorum progress on a pending event (#130): accepts so far / accepts required The number current is the figure before of or a slash, read as a value of a ratio. [not a count: current]",
     "placeholders": {
       "current": {
         "type": "int"
@@ -50,14 +50,14 @@
   },
   "validationTrailStep": "Step {order}",
   "@validationTrailStep": {
-    "description": "#841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps.",
+    "description": "#841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps. [not a count: order]",
     "placeholders": {
       "order": {
         "type": "int"
       }
     }
   },
-  "validationTrailAwaiting": "{count, plural, =1{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}",
+  "validationTrailAwaiting": "{count, plural, one{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}",
   "@validationTrailAwaiting": {
     "description": "#841 - how many validations the event still owes",
     "placeholders": {
@@ -68,7 +68,7 @@
   },
   "eventValidationStage": "Validation {stage} of {required} requested",
   "@eventValidationStage": {
-    "description": "#848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps.",
+    "description": "#848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps. [not a count: stage, required]",
     "placeholders": {
       "stage": {
         "type": "int"

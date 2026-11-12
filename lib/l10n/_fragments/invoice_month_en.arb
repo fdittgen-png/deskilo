@@ -20,7 +20,7 @@
   "@invoiceMonthProforma": {
     "description": "#3587 R1-e: tooltip: preview a customer's proforma before issuing"
   },
-  "invoiceMonthResultTitle": "{count, plural, =1{1 invoice issued} other{{count} invoices issued}}",
+  "invoiceMonthResultTitle": "{count, plural, one{1 invoice issued} other{{count} invoices issued}}",
   "@invoiceMonthResultTitle": {
     "description": "#3587 R1-e: result page title when something was issued",
     "placeholders": {
@@ -65,9 +65,9 @@
   "@invoiceMonthDone": {
     "description": "#3587 R1-e: leave the result page"
   },
-  "invoiceMonthSelected": "{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}",
+  "invoiceMonthSelected": "{count, plural, one{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}",
   "@invoiceMonthSelected": {
-    "description": "#3587 R1-e: how many customers are selected of those listed, and their total",
+    "description": "#3587 R1-e: how many customers are selected of those listed, and their total The number total is the denominator of a ratio, read as a value. [not a count: total]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -80,7 +80,7 @@
       }
     }
   },
-  "invoiceMonthIssue": "{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}",
+  "invoiceMonthIssue": "{count, plural, =0{Issue invoices} one{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}",
   "@invoiceMonthIssue": {
     "description": "#3587 R1-e: the one filled action of the month flow, with the amount it issues",
     "placeholders": {
@@ -96,7 +96,7 @@
   "@invoiceMonthNeedsFix": {
     "description": "#3587 R1-e: status of a customer whose details block the invoice"
   },
-  "invoiceMonthNeedsFixCount": "{count, plural, =1{1 needs a fix} other{{count} need a fix}}",
+  "invoiceMonthNeedsFixCount": "{count, plural, one{1 needs a fix} other{{count} need a fix}}",
   "@invoiceMonthNeedsFixCount": {
     "description": "#3587 R1-e: how many listed customers cannot be invoiced until fixed",
     "placeholders": {
@@ -124,7 +124,7 @@
   },
   "invoiceMonthResultPartial": "{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}",
   "@invoiceMonthResultPartial": {
-    "description": "#3587 R1-e: result title when only some invoices were issued",
+    "description": "#3587 R1-e: result title when only some invoices were issued The number total is the denominator of a ratio, read as a value. [not a count: total]",
     "placeholders": {
       "issued": {
         "type": "int"
@@ -138,7 +138,7 @@
   "@invoiceMonthResultNone": {
     "description": "#3587 R1-e: result title when nothing was issued"
   },
-  "invoiceMonthResultSubtitle": "{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}",
+  "invoiceMonthResultSubtitle": "{count, plural, one{The customer sees it in their account now.} other{Each customer sees it in their account now.}}",
   "@invoiceMonthResultSubtitle": {
     "description": "#3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)",
     "placeholders": {

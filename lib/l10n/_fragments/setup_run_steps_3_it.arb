@@ -20,7 +20,7 @@
   "setupNotificationsPreviewPlace": "Scrivania 4",
   "setupLimitsSaveFailed": "Non è stato possibile salvare i limiti di prenotazione. Riprova.",
   "setupLimitsPerMember": "Un’autorizzazione impostata sulla pagina di un membro prevale sul numero di posti indicato qui.",
-  "setupLimitsPreviewAhead": "{days, plural, =1{Può prenotare fino a un giorno prima.} other{Può prenotare fino a {days} giorni prima.}}",
+  "setupLimitsPreviewAhead": "{days, plural, one{Può prenotare fino a un giorno prima.} other{Può prenotare fino a {days} giorni prima.}}",
   "setupLimitsPreviewLength": "Una prenotazione dura almeno {shortest} e al massimo {longest}.",
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{Può occupare un posto alla volta.} other{Può occupare fino a {count} posti alla volta.}}"
+  "setupLimitsPreviewAtOnce": "{count, plural, one{Può occupare un posto alla volta.} other{Può occupare fino a {count} posti alla volta.}}"
 }

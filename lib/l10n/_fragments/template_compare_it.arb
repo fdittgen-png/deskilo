@@ -15,7 +15,7 @@
   "compareMissing": "Non in questo modello",
   "compareUnknown": "Sconosciuto",
   "compareNotCarried": "Non trasportato",
-  "compareLimit": "{count, plural, =1{Si può confrontare solo 1 modello. Ne rimuova prima uno.} other{Si possono confrontare fino a {count} modelli. Ne rimuova prima uno.}}",
+  "compareLimit": "{count, plural, one{Si può confrontare solo 1 modello. Ne rimuova prima uno.} other{Si possono confrontare fino a {count} modelli. Ne rimuova prima uno.}}",
   "compareOpen": "Confronta ({count})",
   "compareAdd": "Aggiungi al confronto",
   "compareRemove": "Rimuovi dal confronto",

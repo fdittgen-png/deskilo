@@ -86,7 +86,7 @@
       }
     }
   },
-  "financesOverdueCount": "{count, plural, =1{1 scaduta} other{{count} scadute}}",
+  "financesOverdueCount": "{count, plural, one{1 scaduta} other{{count} scadute}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {

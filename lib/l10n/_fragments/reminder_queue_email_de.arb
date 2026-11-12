@@ -9,7 +9,7 @@
       }
     }
   },
-  "reminderQueueEmailAll": "{count, plural, =1{Den 1 erreichbaren per E-Mail senden} other{Die {count} erreichbaren per E-Mail senden}}",
+  "reminderQueueEmailAll": "{count, plural, one{Den 1 erreichbaren per E-Mail senden} other{Die {count} erreichbaren per E-Mail senden}}",
   "@reminderQueueEmailAll": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
     "placeholders": {
@@ -18,7 +18,7 @@
       }
     }
   },
-  "reminderQueueEmailAllTitle": "{count, plural, =1{1 Mahnung per E-Mail senden?} other{{count} Mahnungen per E-Mail senden?}}",
+  "reminderQueueEmailAllTitle": "{count, plural, one{1 Mahnung per E-Mail senden?} other{{count} Mahnungen per E-Mail senden?}}",
   "@reminderQueueEmailAllTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
     "placeholders": {
@@ -31,7 +31,7 @@
   "@reminderQueueEmailAllConfirm": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
   },
-  "reminderQueueStaysNoAddress": "{count, plural, =1{1 Zeile bleibt zum Teilen: keine E-Mail-Adresse hinterlegt.} other{{count} Zeilen bleiben zum Teilen: keine E-Mail-Adresse hinterlegt.}}",
+  "reminderQueueStaysNoAddress": "{count, plural, one{1 Zeile bleibt zum Teilen: keine E-Mail-Adresse hinterlegt.} other{{count} Zeilen bleiben zum Teilen: keine E-Mail-Adresse hinterlegt.}}",
   "@reminderQueueStaysNoAddress": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
     "placeholders": {
@@ -40,7 +40,7 @@
       }
     }
   },
-  "reminderQueueStaysToDecide": "{count, plural, =1{1 Zeile wartet: über eine frühere E-Mail ist zuerst zu entscheiden.} other{{count} Zeilen warten: über eine frühere E-Mail ist zuerst zu entscheiden.}}",
+  "reminderQueueStaysToDecide": "{count, plural, one{1 Zeile wartet: über eine frühere E-Mail ist zuerst zu entscheiden.} other{{count} Zeilen warten: über eine frühere E-Mail ist zuerst zu entscheiden.}}",
   "@reminderQueueStaysToDecide": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
     "placeholders": {
@@ -57,7 +57,7 @@
   "@reminderQueueEmailUnreached": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
   },
-  "reminderQueueResultSentTitle": "{count, plural, =1{1 Mahnung gesendet} other{{count} Mahnungen gesendet}}",
+  "reminderQueueResultSentTitle": "{count, plural, one{1 Mahnung gesendet} other{{count} Mahnungen gesendet}}",
   "@reminderQueueResultSentTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
     "placeholders": {

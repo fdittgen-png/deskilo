@@ -59,7 +59,7 @@
       }
     }
   },
-  "valuationRows": "{count, plural, =1{1 equipo} other{{count} equipos}}",
+  "valuationRows": "{count, plural, one{1 equipo} other{{count} equipos}}",
   "@valuationRows": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -68,7 +68,7 @@
       }
     }
   },
-  "valuationMismatches": "{count, plural, =1{1 fila no cuadra} other{{count} filas no cuadran}}",
+  "valuationMismatches": "{count, plural, one{1 fila no cuadra} other{{count} filas no cuadran}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -238,7 +238,7 @@
   "@valuationPick": {
     "description": "#2576 accountant valuations"
   },
-  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 equipo} other{{count} equipos}}",
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, one{1 equipo} other{{count} equipos}}",
   "@valuationPreview": {
     "description": "#2576 accountant valuations",
     "placeholders": {

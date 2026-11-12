@@ -52,7 +52,7 @@
   "@biCashOutflowsDefinition": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count, plural, =1{1 payment} other{{count} payments}}",
+  "biCashOutflowsBasis": "{count, plural, one{1 payment} other{{count} payments}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
@@ -101,7 +101,7 @@
   "@biContributionNotProfit": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnresolved": "{count, plural, =1{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}",
+  "biCostsUnresolved": "{count, plural, one{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -110,7 +110,7 @@
       }
     }
   },
-  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
+  "biCostsUnqualified": "{count, plural, one{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -203,7 +203,7 @@
       }
     }
   },
-  "biAllocationConflicts": "{count, plural, =1{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}",
+  "biAllocationConflicts": "{count, plural, one{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}",
   "@biAllocationConflicts": {
     "description": "#2582 cost allocation",
     "placeholders": {

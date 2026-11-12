@@ -5,7 +5,7 @@
   "onboardingShapeReal": "Un espacio real",
   "onboardingShapeRealHint": "Para la operación real: las facturas que emite se deben.",
   "onboardingShapePair": "Un par vinculado de prueba y real",
-  "onboardingSummaryCount": "{count, plural, =1{Crea un espacio} other{Crea {count} espacios}}",
+  "onboardingSummaryCount": "{count, plural, one{Crea un espacio} other{Crea {count} espacios}}",
   "onboardingSummaryBillingOn": "La facturación real es posible: sus facturas se deben.",
   "onboardingSummaryBillingOff": "Sin facturación real: los documentos se marcan como prueba.",
   "onboardingSummaryServer": "En el servidor {host}",

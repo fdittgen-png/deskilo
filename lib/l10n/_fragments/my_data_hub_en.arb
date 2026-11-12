@@ -10,7 +10,7 @@
   },
   "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Places named: {workspaces}",
   "@meDataPersonalSummary": {
-    "description": "#2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: conversations, messages, workspaces]",
     "placeholders": {
       "conversations": {
         "type": "int"

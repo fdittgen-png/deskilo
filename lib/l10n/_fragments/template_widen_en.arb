@@ -8,7 +8,7 @@
       }
     }
   },
-  "templateWidenCount": "{count, plural, =1{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}",
+  "templateWidenCount": "{count, plural, one{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}",
   "@templateWidenCount": {
     "description": "#1658 template_widen",
     "placeholders": {
@@ -17,7 +17,7 @@
       }
     }
   },
-  "templateWidenExcluded": "{count, plural, =1{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}",
+  "templateWidenExcluded": "{count, plural, one{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}",
   "@templateWidenExcluded": {
     "description": "#1658 template_widen",
     "placeholders": {

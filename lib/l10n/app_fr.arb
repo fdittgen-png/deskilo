@@ -193,7 +193,7 @@
   "acctConnRevoke": "Révoquer",
   "acctConnRevokeConfirm": "Révoquer cette connexion ? Son jeton est oublié aussitôt ; ses correspondances et les envois déjà faits restent listés.",
   "acctConnRevoked": "La connexion est révoquée.",
-  "acctConnRevokedBefore": "{count, plural, =1{Une connexion antérieure a été révoquée} other{{count} connexions antérieures ont été révoquées}}",
+  "acctConnRevokedBefore": "{count, plural, =0{{count} connexions antérieures ont été révoquées} one{Une connexion antérieure a été révoquée} other{{count} connexions antérieures ont été révoquées}}",
   "acctConnSaved": "La connexion est enregistrée.",
   "acctConnSignIn": "Se connecter à {target}",
   "acctConnSignInAgain": "Se reconnecter",
@@ -219,7 +219,7 @@
   "acctDeliverStoppedAt": "Arrêté à {month}. Envoyées avant : {count}.",
   "acctDeliverYear": "Envoyer {year} à {target}",
   "acctDeliveryAcknowledged": "Reçu par le système",
-  "acctDeliveryAttempts": "{count, plural, =1{une tentative} other{{count} tentatives}}",
+  "acctDeliveryAttempts": "{count, plural, =0{{count} tentatives} one{une tentative} other{{count} tentatives}}",
   "acctDeliveryConflict": "À vérifier : la réponse manque ou diffère",
   "acctDeliveryFailed": "Refusé",
   "acctDeliveryGenerated": "Fichier écrit",
@@ -234,7 +234,7 @@
   "acctEntraSecret": "Clé secrète client",
   "acctEntraTenant": "Locataire (ID d'annuaire ou domaine)",
   "acctEntraTitle": "Connecter {target} avec une application Microsoft Entra",
-  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} =1{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged} inchangées",
+  "acctJournalLogged": "{logged, plural, =0{Aucune nouvelle pièce enregistrée} one{Une pièce enregistrée} other{{logged} pièces enregistrées}}, {unchanged, plural, one{{unchanged} inchangée} other{{unchanged} inchangées}}",
   "acctKindAcquisitionTax": "Impôt sur les acquisitions",
   "acctKindCreditNote": "Avoir",
   "acctKindExpense": "Dépense",
@@ -266,7 +266,7 @@
   "acctMapRole": "Rôle dans la comptabilité",
   "acctMapTaxKey": "Composante de taxe",
   "acctMapTaxKeyHelper": "régime|autorité|traitement|taux|version, comme le rapport de TVA les regroupe : VAT|FR|taxed|20|2014",
-  "acctMapsButton": "{count, plural, =0{Correspondances} =1{Une correspondance} other{{count} correspondances}}",
+  "acctMapsButton": "{count, plural, =0{Correspondances} one{Une correspondance} other{{count} correspondances}}",
   "acctMapsEmpty": "Rien n'est encore mis en correspondance.",
   "acctMapsIntro": "Comment chaque compte, code de TVA, client et article de cette comptabilité s'appelle dans le système. Un envoi qui en demande un absent d'ici s'arrête et le nomme ; rien n'est remplacé par une valeur par défaut.",
   "acctMapsTitle": "Noms dans {target}",
@@ -307,9 +307,9 @@
   "acctTokenTooShort": "Collez le jeton en entier.",
   "acctTransferClosed": "période close",
   "acctTransferDocLine": "{number} · {kind} · {date}",
-  "acctTransferDocuments": "{count, plural, =1{Une pièce portée} other{{count} pièces portées}}",
+  "acctTransferDocuments": "{count, plural, =0{{count} pièces portées} one{Une pièce portée} other{{count} pièces portées}}",
   "acctTransferFile": "Fichier {format} · {from} – {to}",
-  "acctTransferFileMeta": "{when} par {who} · {documents, plural, =1{une pièce} other{{documents} pièces}}",
+  "acctTransferFileMeta": "{when} par {who} · {documents, plural, =0{{documents} pièces} one{une pièce} other{{documents} pièces}}",
   "acctTransferSha": "SHA-256 {digest}",
   "acctTransfersEmpty": "Rien n'a été remis ni envoyé dans cette période.",
   "acctTransfersIntro": "Chaque fichier remis et chaque pièce envoyée dans la période, avec le SHA-256 de ce qui a été porté : la preuve du lien numérique entre cette comptabilité et le système comptable.",
@@ -384,7 +384,7 @@
   "@amountFieldRequired": {
     "description": "#3612 desk entry: the typed date and amount fields of the form kit"
   },
-  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} n'a pas de décimales.} =1{{currency} a une décimale.} other{{currency} a {digits} décimales.}}",
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} n'a pas de décimales.} one{{currency} a une décimale.} other{{currency} a {digits} décimales.}}",
   "@amountFieldTooManyDecimals": {
     "description": "#3612 desk entry: the typed date and amount fields of the form kit",
     "placeholders": {
@@ -449,12 +449,12 @@
   "assignPaymentAction": "Affecter aux factures",
   "assignPaymentActionFor": "Affecter {amount} aux factures",
   "assignPaymentAmountLabel": "Montant pour la facture {number}",
-  "assignPaymentFull": "{count, plural, =1{1 facture payée en totalité} other{{count} factures payées en totalité}}",
+  "assignPaymentFull": "{count, plural, one{{count} facture payée en totalité} other{{count} factures payées en totalité}}",
   "assignPaymentNoOpen": "Aucune facture ouverte pour ce client : le paiement reste en avoir.",
   "assignPaymentNoteDefault": "Le paiement n'a couvert qu'une partie de cette facture.",
   "assignPaymentNoteLabel": "Note pour les factures payées en partie",
   "assignPaymentOver": "Plus que ce qui reste du paiement",
-  "assignPaymentPart": "{count, plural, =1{1 facture payée en partie} other{{count} factures payées en partie}}",
+  "assignPaymentPart": "{count, plural, one{{count} facture payée en partie} other{{count} factures payées en partie}}",
   "assignPaymentPending": "En attente d'approbation",
   "assignPaymentReadFailedInvoices": "Les factures n'ont pas pu être lues.",
   "assignPaymentReadFailedPayment": "Le paiement n'a pas pu être lu.",
@@ -529,7 +529,7 @@
   "assistantSetupStepWorkspace": "Activer les assistants pour cet espace de travail",
   "assistantSetupTitle": "Configuration des assistants",
   "assistantSetupTurnOn": "Activer",
-  "attentionAdmit": "{count, plural, =1{Admettre 1 personne qui demande à rejoindre} other{Admettre {count} personnes qui demandent à rejoindre}}",
+  "attentionAdmit": "{count, plural, one{Admettre {count} personne qui demande à rejoindre} other{Admettre {count} personnes qui demandent à rejoindre}}",
   "@attentionAdmit": {
     "description": "#2326: attentionAdmit"
   },
@@ -537,7 +537,7 @@
   "@attentionDecide": {
     "description": "#2326: attentionDecide"
   },
-  "attentionIssue": "{count, plural, =1{Facturer le mois à 1 membre} other{Facturer le mois à {count} membres}}",
+  "attentionIssue": "{count, plural, one{Facturer le mois à {count} membre} other{Facturer le mois à {count} membres}}",
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
@@ -545,7 +545,7 @@
   "@attentionSetUp": {
     "description": "#2332: attentionSetUp"
   },
-  "attentionUnblock": "{count, plural, =1{1 fonctionnalité activée attend « {feature} »} other{{count} fonctionnalités activées attendent « {feature} »}}",
+  "attentionUnblock": "{count, plural, one{{count} fonctionnalité activée attend « {feature} »} other{{count} fonctionnalités activées attendent « {feature} »}}",
   "@attentionUnblock": {
     "description": "#2332: attentionUnblock"
   },
@@ -881,8 +881,8 @@
   "bankBasisCreditorReference": "référence RF",
   "bankBasisInvoiceNumber": "numéro de facture dans le libellé",
   "bankBasisQrReference": "référence QR",
-  "bankConfirmReferences": "{count, plural, =1{Confirmer 1 rapprochement par référence} other{Confirmer {count} rapprochements par référence}}",
-  "bankConfirmedReferences": "{count, plural, =1{1 paiement rapproché.} other{{count} paiements rapprochés.}}",
+  "bankConfirmReferences": "{count, plural, one{Confirmer {count} rapprochement par référence} other{Confirmer {count} rapprochements par référence}}",
+  "bankConfirmedReferences": "{count, plural, one{{count} paiement rapproché.} other{{count} paiements rapprochés.}}",
   "bankCsvAccount": "Compte (IBAN)",
   "bankCsvAccountHint": "Un tableur indique rarement son compte ; le même compte garde ses mouvements séparés de ceux d'un autre.",
   "bankCsvAmount": "Colonne du montant (ou des entrées)",
@@ -919,7 +919,7 @@
   "bankImportAction": "Importer un relevé",
   "bankImportFailed": "Le relevé n'a pas pu être importé. Rien n'a été ajouté.",
   "bankImportRepeated": "Ce fichier a déjà été importé. Rien n'a été ajouté.",
-  "bankImported": "Importé : {created, plural, =1{1 nouvelle écriture} other{{created} nouvelles écritures}}, {known, plural, =1{1 déjà connue} other{{known} déjà connues}}, {review} à vérifier.",
+  "bankImported": "Importé : {created, plural, one{{created} nouvelle écriture} other{{created} nouvelles écritures}}, {known, plural, one{{known} déjà connue} other{{known} déjà connues}}, {review} à vérifier.",
   "bankLineDuplicate": "Doublon",
   "bankLineMatched": "Règle {number}",
   "bankLineMoneyOut": "Sortie, à rapprocher",
@@ -1046,7 +1046,7 @@
   "bankReviewDuplicate": "C'est un doublon",
   "bankReviewKeep": "Le conserver",
   "bankReviewTitle": "Déjà importé ?",
-  "bankStatementCounts": "{count, plural, =1{1 mouvement} other{{count} mouvements}}, {open} à traiter",
+  "bankStatementCounts": "{count, plural, one{{count} mouvement} other{{count} mouvements}}, {open, plural, one{{open} à traiter} other{{open} à traiter}}",
   "bankStatementOriginal": "Télécharger le fichier d'origine",
   "bankStatementPeriod": "{account} · {from} – {to}",
   "bankStatementsEmpty": "Aucun relevé importé pour l'instant.",
@@ -1085,7 +1085,7 @@
   "biAfterDepreciationDefinition": "Le facturé moins les charges d'exploitation enregistrées, moins les amortissements comptables des mêmes mois. Affiché seulement quand ces amortissements sont connus.",
   "biAfterDepreciationTitle": "Facturé moins charges d'exploitation et amortissements",
   "biAllocationBasis": "{direct} direct, {shared} partagé, {unallocated} non réparti",
-  "biAllocationConflicts": "{count, plural, =1{1 ligne est revendiquée par deux règles et reste non répartie tant que l'une d'elles demeure.} other{{count} lignes sont revendiquées par deux règles et restent non réparties tant que l'une d'elles demeure.}}",
+  "biAllocationConflicts": "{count, plural, one{{count} ligne est revendiquée par deux règles et reste non répartie tant que l'une d'elles demeure.} other{{count} lignes sont revendiquées par deux règles et restent non réparties tant que l'une d'elles demeure.}}",
   "biAllocationDefinition": "Les charges d'exploitation des mois, réparties entre niveaux et bureaux selon la règle en vigueur à la date de chaque document, au plus fort reste au centime près. Direct, partagé et non réparti font toujours le total des charges d'exploitation.",
   "biAllocationNotBilled": "Une analyse : aucun membre n'est facturé et aucun document ni écriture ne change.",
   "biAllocationRevision": "{basis} (révision {revision})",
@@ -1180,12 +1180,12 @@
   },
   "biBookingBasis": "La capacité réservée mesure les réservations, pas la présence réelle.",
   "biCards": "Analyses affichées",
-  "biCardsUnavailable": "{count, plural, =1{1 analyse de cette vue ne vous est pas accessible et est omise.} other{{count} analyses de cette vue ne vous sont pas accessibles et sont omises.}}",
+  "biCardsUnavailable": "{count, plural, one{{count} analyse de cette vue ne vous est pas accessible et est omise.} other{{count} analyses de cette vue ne vous sont pas accessibles et sont omises.}}",
   "biCashNotBankBalance": "Des paiements enregistrés, pas un solde bancaire rapproché.",
   "@biCashNotBankBalance": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count, plural, =1{1 paiement} other{{count} paiements}}",
+  "biCashOutflowsBasis": "{count, plural, one{{count} paiement} other{{count} paiements}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
@@ -1270,7 +1270,7 @@
   "@biCostsOperatingTitle": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnqualified": "{count, plural, =1{1 ligne dont la taxe récupérable n'est pas qualifiée compte pour son montant TTC.} other{{count} lignes dont la taxe récupérable n'est pas qualifiée comptent pour leur montant TTC.}}",
+  "biCostsUnqualified": "{count, plural, one{{count} ligne dont la taxe récupérable n'est pas qualifiée compte pour son montant TTC.} other{{count} lignes dont la taxe récupérable n'est pas qualifiée comptent pour leur montant TTC.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -1279,7 +1279,7 @@
       }
     }
   },
-  "biCostsUnresolved": "{count, plural, =1{1 ligne que personne n'a classée est exclue.} other{{count} lignes que personne n'a classées sont exclues.}}",
+  "biCostsUnresolved": "{count, plural, one{{count} ligne que personne n'a classée est exclue.} other{{count} lignes que personne n'a classées sont exclues.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -1307,7 +1307,7 @@
   "biCurrentBasis": "La période entière est incluse. La comparaison avec une période terminée ne porte pas sur une base équivalente.",
   "biCustomerCohortHeld": "Suspendues",
   "biCustomerCohortLate": "Payées en retard",
-  "biCustomerCohortLine": "{count, plural, =1{{cohort} : 1 facture, {amount}} other{{cohort} : {count} factures, {amount}}}",
+  "biCustomerCohortLine": "{count, plural, one{{cohort} : {count} facture, {amount}} other{{cohort} : {count} factures, {amount}}}",
   "biCustomerCohortOnTime": "Payées à l’heure",
   "biCustomerCohortOpen": "Impayées",
   "biCustomerCohortPartial": "Payées en partie",
@@ -1843,7 +1843,7 @@
   "@biEditorResetSelection": {
     "description": "#2580 BI report editor"
   },
-  "biEditorRows": "{count, plural, =1{1 rangée} other{{count} rangées}}",
+  "biEditorRows": "{count, plural, one{{count} rangée} other{{count} rangées}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {
@@ -2068,7 +2068,7 @@
   "@biExportFormatXlsx": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biExportLeftOut": "{count, plural, =1{1 carte n'est pas dans cet export : son chiffre, ses filtres ou son regroupement ne sont pas encore exportables.} other{{count} cartes ne sont pas dans cet export : leur chiffre, leurs filtres ou leur regroupement ne sont pas encore exportables.}}",
+  "biExportLeftOut": "{count, plural, one{{count} carte n'est pas dans cet export : son chiffre, ses filtres ou son regroupement ne sont pas encore exportables.} other{{count} cartes ne sont pas dans cet export : leur chiffre, leurs filtres ou leur regroupement ne sont pas encore exportables.}}",
   "@biExportLeftOut": {
     "description": "#2581 analytical report print layout and exports",
     "placeholders": {
@@ -2116,13 +2116,13 @@
   },
   "biExposureDiffers": "Les deux périodes n’offrent pas la même base ; le taux en tient compte, les chiffres bruts ne se comparent pas directement.",
   "biFinanceCollected": "Encaissé",
-  "biFinanceCollectedBasis": "{count, plural, =1{Sur 1 paiement rapproché de factures} other{Sur {count} paiements rapprochés de factures}}",
+  "biFinanceCollectedBasis": "{count, plural, one{Sur {count} paiement rapproché de factures} other{Sur {count} paiements rapprochés de factures}}",
   "biFinanceCollectedDefinition": "Paiements rapprochés de factures, selon le mois du rapprochement à l’heure de l’espace.",
   "biFinanceCollectedZero": "Mesuré : rien n’a été encaissé.",
   "biFinanceComputed": "Calculé le {date}",
   "biFinanceCurrencyMix": "Cette période contient des montants dans une autre devise ; des devises différentes ne s’additionnent pas, aucun montant n’est donc affiché.",
   "biFinanceInvoiced": "Facturé",
-  "biFinanceInvoicedBasis": "{count, plural, =1{Sur 1 facture ; avoirs {credit}, montrés à part} other{Sur {count} factures ; avoirs {credit}, montrés à part}}",
+  "biFinanceInvoicedBasis": "{count, plural, one{Sur {count} facture ; avoirs {credit}, montrés à part} other{Sur {count} factures ; avoirs {credit}, montrés à part}}",
   "biFinanceInvoicedDefinition": "Factures de ces mois, hors factures annulées et règlements groupés (un règlement regroupe des factures déjà comptées) ; totaux positifs seulement.",
   "biFinanceInvoicedZero": "Mesuré : rien n’a été facturé.",
   "biFinanceLastChange": "Dernière modification de la source : {date}",
@@ -2148,9 +2148,9 @@
   "biItemProductBasis": "Vendu {revenue} HT, coût {cost} ({method})",
   "biItemProductDefinition": "Chaque article consommé par les membres sur la période : son chiffre d’affaires HT moins les unités vendues au coût unitaire, lu selon la méthode de coût de l’espace. Une marge, pas un bénéfice : aucun autre coût n’est imputé.",
   "biItemProductTitle": "Marge par produit",
-  "biItemUncosted": "{count, plural, =1{1 produit vendu n’a jamais été acheté : sans coût, il est laissé hors du coût et de la marge} other{{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge}}",
-  "biItemUnresolved": "{count, plural, =1{1 ligne d’achat ne nomme une fourniture que par son texte : elle n’est rattachée à aucun article et reste à part} other{{count} lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part}}",
-  "biItemVendorBasis": "{count, plural, =1{1 fournisseur} other{{count} fournisseurs}}",
+  "biItemUncosted": "{count, plural, one{{count} produit vendu n’a jamais été acheté : sans coût, il est laissé hors du coût et de la marge} other{{count} produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge}}",
+  "biItemUnresolved": "{count, plural, one{{count} ligne d’achat ne nomme une fourniture que par son texte : elle n’est rattachée à aucun article et reste à part} other{{count} lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part}}",
+  "biItemVendorBasis": "{count, plural, one{{count} fournisseur} other{{count} fournisseurs}}",
   "biItemVendorDefinition": "Pour chaque fournisseur : ce que les articles achetés chez lui sur la période ont coûté au-delà du prix unitaire le plus bas payé sur la période pour le même article, tous fournisseurs confondus. Aucune marge par fournisseur n’est donnée : aucune vente n’indique quel achat elle a consommé.",
   "biItemVendorTitle": "Prix des fournisseurs comparés",
   "biKindCurrent": "Maintenant",
@@ -2407,7 +2407,7 @@
   "@biPrintWorkspace": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biProjectionBasis": "Une droite tracée sur {count, plural, =1{la dernière période complète} other{les {count} dernières périodes complètes}}, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
+  "biProjectionBasis": "Une droite tracée sur {count, plural, =0{les {count} dernières périodes complètes} one{la dernière période complète} other{les {count} dernières périodes complètes}}, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -2421,7 +2421,7 @@
     "description": "Business analytics dashboard: biProjectionLabel"
   },
   "biProjectionNext": "{period} : {value} ({low} – {high}) · {label}",
-  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have, plural, =1{1 période complète} other{{have} périodes complètes}} pour l'instant, {need, plural, =1{1 nécessaire} other{{need} nécessaires}}.",
+  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have, plural, one{{have} période complète} other{{have} périodes complètes}} pour l'instant, {need, plural, one{{need} nécessaire} other{{need} nécessaires}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {
@@ -2483,7 +2483,7 @@
   "biRecordedPast": "Période passée · données actuelles",
   "biRecordedPresent": "Période en cours · dates futures incluses",
   "biRefresh": "Actualiser les données",
-  "biRefusedBudget": "{count, plural, =1{Il y a plus de 1 groupe ; choisissez « Sans regroupement ».} other{Il y a plus de {count} groupes ; choisissez « Sans regroupement ».}}",
+  "biRefusedBudget": "{count, plural, one{Il y a plus de {count} groupe ; choisissez « Sans regroupement ».} other{Il y a plus de {count} groupes ; choisissez « Sans regroupement ».}}",
   "biRefusedComparison": "Cette analyse ne peut pas faire cette comparaison.",
   "biRefusedGrain": "Cette analyse n’est pas proposée pour cette durée de période.",
   "biRefusedGrouping": "Cette analyse ne peut pas être regroupée ainsi.",
@@ -2604,14 +2604,14 @@
   "biSalesKindService": "Services",
   "biSalesKindSubscription": "Abonnements",
   "biSalesKindTitle": "Ventes par nature",
-  "biSalesNetUnknown": "{count, plural, =1{1 ligne de vente n’a pas de taux de TVA lisible : son montant HT est inconnu et laissé hors du HT} other{{count} lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT}}",
+  "biSalesNetUnknown": "{count, plural, one{{count} ligne de vente n’a pas de taux de TVA lisible : son montant HT est inconnu et laissé hors du HT} other{{count} lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT}}",
   "biSalesNoDescription": "Sans libellé",
   "biSalesRoomBasis": "{charges} facturés pour {uses} réservations, les salles coûtent {cost} ({rooms} salles)",
   "biSalesRoomDefinition": "Pour chaque salle louée par l’espace : ce que ses réservations ont rapporté, hors taxe, moins le coût propre de la salle (son loyer échu dans la période, ou son coût par usage multiplié par les usages). Aucun autre coût n’est imputé à la salle : c’est une marge, pas un bénéfice.",
   "biSalesRoomLine": "{room} : facturé {charges}, coût {cost}, {uses} réservations",
   "biSalesRoomTitle": "Marge des salles louées",
   "biSalesRoomsOff": "L’espace ne loue aucune salle : activez les salles louées pour voir leur marge",
-  "biSalesServiceBasis": "{count, plural, =1{1 service et forfait} other{{count} services et forfaits}}",
+  "biSalesServiceBasis": "{count, plural, one{{count} service et forfait} other{{count} services et forfaits}}",
   "biSalesServiceDefinition": "Les lignes de services et de forfaits des factures de la période, hors TVA, par le libellé sous lequel elles ont été vendues.",
   "biSalesServiceTitle": "Ventes par service",
   "biSeatCentre": "du temps total des places",
@@ -2662,11 +2662,11 @@
   },
   "biTotal": "Total",
   "biUnavailable": "Cette analyse n’a pas pu être calculée.",
-  "biVendorCategoryBasis": "{count, plural, =1{1 catégorie} other{{count} catégories}}",
+  "biVendorCategoryBasis": "{count, plural, one{{count} catégorie} other{{count} catégories}}",
   "biVendorCategoryTitle": "Dépenses par catégorie",
   "biVendorCohortHeld": "En attente",
   "biVendorCohortLate": "Payées en retard",
-  "biVendorCohortLine": "{count, plural, =1{{cohort} : 1 facture, {amount}} other{{cohort} : {count} factures, {amount}}}",
+  "biVendorCohortLine": "{count, plural, one{{cohort} : {count} facture, {amount}} other{{cohort} : {count} factures, {amount}}}",
   "biVendorCohortOnTime": "Payées à l’échéance",
   "biVendorCohortOpen": "Impayées",
   "biVendorCohortPartial": "Payées en partie",
@@ -2675,7 +2675,7 @@
   "biVendorCredited": "Avoirs déduits : {amount} ({count})",
   "biVendorDelay": "Jours de l’échéance au paiement : médiane {median}, 90e centile {p90}, pondéré par montant {weighted} (négatif : en avance)",
   "biVendorDeliveryBasis": "{onTime} commandes reçues sur {completed} sont arrivées à la date prévue",
-  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort} : 1 commande} other{{cohort} : {count} commandes}}",
+  "biVendorDeliveryCohortLine": "{count, plural, one{{cohort} : {count} commande} other{{cohort} : {count} commandes}}",
   "biVendorDeliveryDefinition": "Les commandes envoyées dans la période. Une commande reçue est à temps quand sa dernière réception est à la date prévue ou avant. Une commande sans date prévue, ou encore attendue, n'est ni à temps ni en retard.",
   "biVendorDeliveryDelay": "Par rapport à la date prévue (négatif = en avance) : médiane {median}, 90e centile {p90}",
   "biVendorDeliveryLate": "Reçue en retard",
@@ -2691,7 +2691,7 @@
   "biVendorLagBasis": "{documents} factures ; médiane {median} jours, 90e centile {p90}",
   "biVendorLagDefinition": "Les factures fournisseurs approuvées datées de la période : les jours entre la date portée par le fournisseur et l’arrivée à l’espace, en moyenne ; le tableau détaille chaque fournisseur.",
   "biVendorLagTitle": "Délai de réception des factures",
-  "biVendorLagUndated": "{count, plural, =1{1 facture sans date du fournisseur ou de réception est laissée de côté} other{{count} factures sans date du fournisseur ou de réception sont laissées de côté}}",
+  "biVendorLagUndated": "{count, plural, one{{count} facture sans date du fournisseur ou de réception est laissée de côté} other{{count} factures sans date du fournisseur ou de réception sont laissées de côté}}",
   "biVendorNoCategory": "Sans catégorie",
   "biVendorNothingToMeasure": "Rien à mesurer sur la période",
   "biVendorPunctualityBasis": "{onTime} factures sur {settled} réglées payées à l’échéance",
@@ -2702,7 +2702,7 @@
   "biVendorSpendDefinition": "Les pièces d’achat approuvées datées de la période : ce qu’elles coûtent à l’espace, le HT plus la taxe non récupérable. Un avoir se déduit. Les pièces dans une autre devise ne sont pas converties.",
   "biVendorSpendTitle": "Dépenses par fournisseur",
   "biVendorUnassigned": "Sans fournisseur (justificatifs de membres) : {amount}",
-  "biViewCardsIncompatible": "{count, plural, =1{1 analyse de cette vue a été enregistrée quand son indicateur avait un autre sens ; elle est omise plutôt que montrées avec un autre sens.} other{{count} analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens.}}",
+  "biViewCardsIncompatible": "{count, plural, one{{count} analyse de cette vue a été enregistrée quand son indicateur avait un autre sens ; elle est omise plutôt que montrées avec un autre sens.} other{{count} analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens.}}",
   "biViewChart": "Graphique",
   "biViewClearMyDefault": "Ne plus ouvrir ma vue par défaut",
   "biViewClearTeamDefault": "Retirer la vue par défaut de l’équipe",
@@ -2735,7 +2735,7 @@
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
   },
-  "biViewWithheld": "{count, plural, =1{1 chiffre de cette vue n'est pas affiché : vous n'avez pas le droit de le lire.} other{{count} chiffres de cette vue ne sont pas affichés : vous n'avez pas le droit de les lire.}}",
+  "biViewWithheld": "{count, plural, one{{count} chiffre de cette vue n'est pas affiché : vous n'avez pas le droit de le lire.} other{{count} chiffres de cette vue ne sont pas affichés : vous n'avez pas le droit de les lire.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {
@@ -2773,7 +2773,7 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "billEntitlement": "{used} sur {included, plural, =1{1 demi-journée facturée} other{{included} demi-journées facturées}} ({openDays, plural, =1{1 jour d'ouverture} other{{openDays} jours d'ouverture}})",
+  "billEntitlement": "{used} sur {included, plural, one{{included} demi-journée facturée} other{{included} demi-journées facturées}} ({openDays, plural, one{{openDays} jour d'ouverture} other{{openDays} jours d'ouverture}})",
   "billInvoiceCard": "Facture {number}",
   "@billInvoiceCard": {
     "description": "Bill card title for the invoice covering the browsed month (#510)",
@@ -3303,7 +3303,7 @@
   "businessExampleSeveralRoomsOrSites": "Par exemple : un open space, deux salles de réunion et une seconde adresse en ville.",
   "businessExampleTracksPurchases": "Par exemple : le loyer, le ménage et la machine à café que vous achetez pour l'espace.",
   "businessExampleVatRegistered": "Par exemple : vos factures portent la TVA et vous déposez des déclarations de TVA.",
-  "businessKindAndMore": "{count, plural, =1{{list} et 1 autre} other{{list} et {count} autres}}",
+  "businessKindAndMore": "{count, plural, one{{list} et {count} autre} other{{list} et {count} autres}}",
   "businessKindConsentLater": "Vous pourrez les activer plus tard dans Fonctions.",
   "businessKindConsentTitle": "Pas encore stable — activé seulement si vous cochez",
   "businessKindDescCoworking": "Les membres réservent places, bureaux et salles sur un plan.",
@@ -3319,7 +3319,7 @@
   "businessKindNameStudio": "Studio",
   "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.",
   "businessKindNoChange": "Les fonctions restent telles quelles.",
-  "businessKindPlacesOff": "{count, plural, =1{tout ce qui concerne les places — sièges, plan, borne, salles (1 fonction)} other{tout ce qui concerne les places — sièges, plan, borne, salles ({count} fonctions)}}",
+  "businessKindPlacesOff": "{count, plural, one{tout ce qui concerne les places — sièges, plan, borne, salles ({count} fonction)} other{tout ce qui concerne les places — sièges, plan, borne, salles ({count} fonctions)}}",
   "businessKindShowAll": "Tout afficher",
   "businessKindSwitchesOff": "Désactive : {features}",
   "businessKindSwitchesOn": "Active : {features}",
@@ -3355,7 +3355,7 @@
   "@caTaxTitle": {
     "description": "#2361: caTaxTitle"
   },
-  "calendarAgendaEmpty": "{days, plural, one{Rien de prévu dans le prochain jour.} other{Rien de prévu dans les {days} prochains jours.}}",
+  "calendarAgendaEmpty": "{days, plural, =0{Rien de prévu dans les {days} prochains jours.} one{Rien de prévu dans le prochain jour.} other{Rien de prévu dans les {days} prochains jours.}}",
   "@calendarAgendaEmpty": {
     "placeholders": {
       "days": {
@@ -3363,7 +3363,7 @@
       }
     }
   },
-  "calendarAgendaRange": "{days, plural, one{Prochain jour} other{{days} prochains jours}}",
+  "calendarAgendaRange": "{days, plural, =0{{days} prochains jours} one{Prochain jour} other{{days} prochains jours}}",
   "@calendarAgendaRange": {
     "placeholders": {
       "days": {
@@ -3680,7 +3680,7 @@
   "captureRecordingHidden": "Masqué pendant l’enregistrement ou la recopie de votre écran.",
   "captureWebNotice": "Votre navigateur ne peut pas empêcher les captures d’écran de cette conversation.",
   "carnetAdd": "Ajouter un carnet",
-  "carnetBalance": "{count, plural, =0{Plus de demi-journée} =1{1 demi-journée restante} other{{count} demi-journées restantes}}",
+  "carnetBalance": "{count, plural, =0{Plus de demi-journée} one{1 demi-journée restante} other{{count} demi-journées restantes}}",
   "carnetHalfDays": "Demi-journées",
   "carnetName": "Nom",
   "carnetSell": "Vendre un carnet",
@@ -3800,7 +3800,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n, plural, =1{1 couleur à vous, dans cet ordre.} other{{n} couleurs à vous, dans cet ordre.}}",
+  "coloursRoomsOwn": "{n, plural, one{{n} couleur à vous, dans cet ordre.} other{{n} couleurs à vous, dans cet ordre.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -3813,7 +3813,7 @@
   "@coloursRoomsProduct": {
     "description": "#1289 colours screen: no own fills yet"
   },
-  "coloursRoomsSaved": "{n, plural, =1{1 couleur de salle enregistrée.} other{{n} couleurs de salles enregistrées.}}",
+  "coloursRoomsSaved": "{n, plural, one{{n} couleur de salle enregistrée.} other{{n} couleurs de salles enregistrées.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -3830,7 +3830,7 @@
   "@coloursTitle": {
     "description": "#1289 colours screen: the title"
   },
-  "coloursTooMany": "Le plan peint au plus {most, plural, =1{1 couleur de salle} other{{most} couleurs de salles}}.",
+  "coloursTooMany": "Le plan peint au plus {most, plural, one{{most} couleur de salle} other{{most} couleurs de salles}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {
@@ -3875,7 +3875,7 @@
   "compareExport": "Exporter vers Excel",
   "compareExported": "Classeur enregistré.",
   "compareInherits": "Garde celui de l'espace",
-  "compareLimit": "{count, plural, =1{Un seul modèle peut être comparé. Retirez-en un d'abord.} other{Jusqu'à {count} modèles peuvent être comparés. Retirez-en un d'abord.}}",
+  "compareLimit": "{count, plural, =0{Jusqu'à {count} modèles peuvent être comparés. Retirez-en un d'abord.} one{Un seul modèle peut être comparé. Retirez-en un d'abord.} other{Jusqu'à {count} modèles peuvent être comparés. Retirez-en un d'abord.}}",
   "compareLocal": "À définir localement",
   "compareMissing": "Absent de ce modèle",
   "compareNo": "Non",
@@ -3889,7 +3889,7 @@
   "compareUnknown": "Inconnu",
   "compareYes": "Oui",
   "composerAttach": "Joindre une référence",
-  "composerCharsLeft": "{count, plural, =1{1 caractère restant} other{{count} caractères restants}}",
+  "composerCharsLeft": "{count, plural, one{{count} caractère restant} other{{count} caractères restants}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {
@@ -3988,7 +3988,7 @@
   "conversationLinkUnreachable": "Cette conversation n’a pas pu être vérifiée, car son serveur n’a pas répondu. Rien n’a été ouvert.",
   "conversationLoadEarlier": "Charger les messages plus anciens",
   "conversationMarkUnread": "Marquer comme non lu",
-  "conversationMemberCount": "{count, plural, =1{1 membre} other{{count} membres}}",
+  "conversationMemberCount": "{count, plural, one{{count} membre} other{{count} membres}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
     "placeholders": {
@@ -4325,7 +4325,7 @@
   "customerStoryIssued": "Facture {number} émise",
   "customerStoryNow": "Maintenant : {words}",
   "customerStoryPaid": "Facture {number} payée",
-  "customerStoryReminders": "{count, plural, =1{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
+  "customerStoryReminders": "{count, plural, =0{{count} relances partagées pour {number}} one{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
   "dashboardTrendDown": "En baisse",
   "dashboardTrendFlat": "Inchangé",
   "dashboardTrendUp": "En hausse",
@@ -4864,8 +4864,8 @@
   "directoryClose": "Fermer",
   "directoryEmpty": "Aucun membre pour l'instant.",
   "directoryHomeUnavailable": "Ce serveur ne déclare aucun domicile personnel utilisable : l’annuaire ne peut pas s’ouvrir. Demandez à son exploitant.",
-  "directoryLastSeenDays": "{days, plural, =1{Vu il y a 1 jour} other{Vu il y a {days} jours}}",
-  "directoryLastSeenHours": "{hours, plural, =1{Vu il y a 1 heure} other{Vu il y a {hours} heures}}",
+  "directoryLastSeenDays": "{days, plural, one{Vu il y a {days} jour} other{Vu il y a {days} jours}}",
+  "directoryLastSeenHours": "{hours, plural, one{Vu il y a {hours} heure} other{Vu il y a {hours} heures}}",
   "directoryLastSeenMinutes": "Vu il y a {minutes} min",
   "directoryLinkAction": "Relier",
   "directoryLinkCheck": "Vérifier",
@@ -4885,9 +4885,9 @@
   "directoryNothingToPin": "Aucun de ces lieux n'a pu être placé sur la carte.",
   "directoryOnline": "En ligne",
   "directoryOpenGroup": "Ouvrir le groupe WhatsApp",
-  "directoryPinsLookupFailed": "{count, plural, =1{1 n'a pas pu être recherché.} other{{count} n'ont pas pu être recherchés.}}",
-  "directoryPinsMissing": "{count, plural, =1{1 lieu n'a pas pu être placé sur la carte ; sa fiche est en dessous.} other{{count} lieux n'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.}}",
-  "directoryPinsNoAddress": "{count, plural, =1{1 n'a pas d'adresse publiée.} other{{count} n'ont pas d'adresse publiée.}}",
+  "directoryPinsLookupFailed": "{count, plural, one{{count} n'a pas pu être recherché.} other{{count} n'ont pas pu être recherchés.}}",
+  "directoryPinsMissing": "{count, plural, one{{count} lieu n'a pas pu être placé sur la carte ; sa fiche est en dessous.} other{{count} lieux n'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.}}",
+  "directoryPinsNoAddress": "{count, plural, one{{count} n'a pas d'adresse publiée.} other{{count} n'ont pas d'adresse publiée.}}",
   "directoryReservationsHeading": "Réservations",
   "directoryReservedNow": "Réservé maintenant",
   "directoryReservedNowSeat": "Réservé maintenant · {seat}",
@@ -4897,7 +4897,7 @@
   "directoryWhatsapp": "Discuter sur WhatsApp",
   "discoveryBookmark": "Enregistrer",
   "discoveryClearSearch": "Effacer la recherche",
-  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{Un annuaire n’a pas répondu.} other{{count} annuaires n’ont pas répondu.}} Ces résultats peuvent être incomplets.",
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, =0{{count} annuaires n’ont pas répondu.} one{Un annuaire n’a pas répondu.} other{{count} annuaires n’ont pas répondu.}} Ces résultats peuvent être incomplets.",
   "discoveryLoadedCount": "Lieux chargés : {loaded} · affichés : {shown} · annuaires ayant répondu : {answered} sur {sources}",
   "discoveryMapContinue": "Continuer vers la carte",
   "discoveryMapDisclosureBody": "La carte est dessinée par {tiles}, et les adresses sans coordonnées sont placées par {geocoder}. Le fournisseur de la carte reçoit des informations de connexion et la zone affichée : l’adresse IP de votre appareil et la partie de la carte que vous regardez. Rien ne lui est envoyé si vous ne continuez pas.",
@@ -5911,7 +5911,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "eventBadgeSecurityAlert": "La connexion par badge est suspendue après {failures, plural, =1{1 échec} other{{failures} échecs}} en {minutes, plural, =1{1 minute} other{{minutes} minutes}}. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.",
+  "eventBadgeSecurityAlert": "La connexion par badge est suspendue après {failures, plural, one{{failures} échec} other{{failures} échecs}} en {minutes, plural, one{{minutes} minute} other{{minutes} minutes}}. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.",
   "@eventBadgeSecurityAlert": {
     "placeholders": {
       "failures": {
@@ -5924,7 +5924,7 @@
   },
   "eventCommitmentVarianceLine": "{actor} accepte un écart de {amount} sur {reference} (échéance {date}) : {reason}",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
-  "eventExpenseRepartitionLine": "{count, plural, =1{{actor} répartit « {title} » — {amount} entre 1 membre} other{{actor} répartit « {title} » — {amount} entre {count} membres}}",
+  "eventExpenseRepartitionLine": "{count, plural, one{{actor} répartit « {title} » — {amount} entre {count} membre} other{{actor} répartit « {title} » — {amount} entre {count} membres}}",
   "@eventExpenseRepartitionLine": {
     "placeholders": {
       "actor": {
@@ -6026,7 +6026,7 @@
       }
     }
   },
-  "eventPriceNegotiationItems": "{count, plural, =1{1 article} other{{count} articles}}",
+  "eventPriceNegotiationItems": "{count, plural, one{{count} article} other{{count} articles}}",
   "eventPriceNegotiationLine": "{actor} propose des conditions pour {member} : {terms}",
   "eventPrivacyIncident": "Un incident de confidentialité a été enregistré : {kind, select, data_breach{une fuite de données} wrong_invoice{une facture erronée} other{un autre incident}}. {note}",
   "@eventPrivacyIncident": {
@@ -6039,7 +6039,7 @@
       }
     }
   },
-  "eventQuotaRequested": "{actor} demande {halfDays, plural, =1{1 demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
+  "eventQuotaRequested": "{actor} demande {halfDays, plural, one{{halfDays} demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
   "eventReject": "Refuser",
   "eventRejectedBy": "Refusé par {name} · {when}",
   "eventRepeatedMarker": "×{count}",
@@ -6179,7 +6179,7 @@
   "eventUsageRecordDeleteLine": "{actor} demande la suppression d'un relevé d'usage ({space})",
   "eventValidatedBy": "Validé par {name} · {when}",
   "eventValidationStage": "Validation {stage} sur {required} demandée",
-  "eventValidations": "{current}/{required, plural, =1{1 validation} other{{required} validations}}",
+  "eventValidations": "{current}/{required, plural, one{{required} validation} other{{required} validations}}",
   "eventsEmpty": "Aucun événement pour l'instant.",
   "eventsFilterAll": "Tous",
   "eventsPendingHeader": "En attente de votre confirmation",
@@ -6363,7 +6363,7 @@
   "exportColumnNameX": "X",
   "exportColumnNameY": "Y",
   "exportDenmarkRegisteredSystem": "Danemark : la loi impose un système de comptabilité numérique enregistré, et DesKilo n’en est pas un. Transmettez vos factures à un système enregistré ({systems}) ou remettez à votre comptable l’export standard SAF-T DK qu’il produit. Aucun fichier ici ne remplit cette obligation à lui seul.",
-  "exportImportedVia": "{products} {count, plural, =1{importe} other{importent}} ce fichier : choisissez « {format} » ci-dessous.",
+  "exportImportedVia": "{products} {count, plural, =0{importent} one{importe} other{importent}} ce fichier : choisissez « {format} » ci-dessous.",
   "exportLocalBookOnly": "Établi à partir des écritures de votre comptabilité locale : votre comptabilité complète seulement si toutes les opérations de l’entreprise passent par DesKilo.",
   "exportNoCompleteBooks": "Reconstitué à partir des factures et des paiements — DesKilo ne tient pas de comptabilité en partie double, ce ne sont donc pas vos livres complets. Votre comptable le complète.",
   "@exportNoCompleteBooks": {
@@ -6972,7 +6972,7 @@
   },
   "featureOnlinePayments": "Paiements en ligne",
   "featureOnlinePaymentsDesc": "Permettre aux membres de payer leur facture en ligne (PayPal). Nécessite la configuration du prestataire de paiement sur le serveur.",
-  "featureOptInAlsoOn": "{count, plural, =1{Activé aussi, car nécessaire : {features}} other{Activés aussi, car nécessaires ({count}) : {features}}}",
+  "featureOptInAlsoOn": "{count, plural, =0{Activés aussi, car nécessaires ({count}) : {features}} one{Activé aussi, car nécessaire : {features}} other{Activés aussi, car nécessaires ({count}) : {features}}}",
   "featureOptInBody": "Pas encore évaluée comme stable : {features}. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.",
   "featureOptInConfirm": "Activer",
   "featureOptInStage": "{feature} : {stage}",
@@ -7422,7 +7422,7 @@
       }
     }
   },
-  "fieldProblemTooLong": "{count, plural, =1{Au plus 1 caractère.} other{Au plus {count} caractères.}}",
+  "fieldProblemTooLong": "{count, plural, one{Au plus {count} caractère.} other{Au plus {count} caractères.}}",
   "@fieldProblemTooLong": {
     "description": "#1288 custom fields: fieldProblemTooLong",
     "placeholders": {
@@ -7431,7 +7431,7 @@
       }
     }
   },
-  "fieldProblemTooShort": "{count, plural, =1{Au moins 1 caractère.} other{Au moins {count} caractères.}}",
+  "fieldProblemTooShort": "{count, plural, one{Au moins {count} caractère.} other{Au moins {count} caractères.}}",
   "@fieldProblemTooShort": {
     "description": "#1288 custom fields: fieldProblemTooShort",
     "placeholders": {
@@ -7562,7 +7562,7 @@
   "financesCoverageHome": "votre installation d’origine",
   "financesCoverageNoDocuments": "aucun document",
   "financesCoverageReading": "Lecture de {host}…",
-  "financesCoverageWorkspace": "{workspace} : {count, plural, =1{1 document} other{{count} documents}}",
+  "financesCoverageWorkspace": "{workspace} : {count, plural, one{{count} document} other{{count} documents}}",
   "financesDevSection": "Espaces de développement — données de test, non comptées ci-dessus",
   "financesDueCalendarUnknown": "Échéance le {date} · calendrier de l'entreprise inconnu",
   "@financesDueCalendarUnknown": {
@@ -7635,7 +7635,7 @@
   "@financesOutstanding": {
     "description": "Me › Finances"
   },
-  "financesOverdueCount": "{count, plural, =1{1 en retard} other{{count} en retard}}",
+  "financesOverdueCount": "{count, plural, one{{count} en retard} other{{count} en retard}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {
@@ -7724,7 +7724,7 @@
   "financesTypeCreditNote": "Avoir",
   "financesYourCredit": "Votre avoir",
   "formErrorSummaryGoTo": "Aller au premier problème",
-  "formErrorSummaryTitle": "{count, plural, =1{1 champ demande votre attention} other{{count} champs demandent votre attention}}",
+  "formErrorSummaryTitle": "{count, plural, one{{count} champ demande votre attention} other{{count} champs demandent votre attention}}",
   "gebuevProcedureAccessBody": "Chaque export comptable et chaque téléchargement d'archive est inscrit au journal des exports : qui, quand, quel fichier et son empreinte. La piste d'audit liste ces accès à côté des documents.",
   "gebuevProcedureAccessHeading": "Accès (art. 8)",
   "gebuevProcedureCarriersBody": "Cette archive se lit avec n'importe quel outil zip et éditeur de texte. Une copie de tout l'espace est prouvée par un export de l'espace terminé, inscrit avec son empreinte : la liste de préparation indique la date du dernier et en demande un nouveau lorsqu'il est ancien.",
@@ -7738,7 +7738,7 @@
   "gettingStartedActionFinishSetup": "Terminer la mise en place",
   "gettingStartedActionHelp": "Aide pour cet espace",
   "gettingStartedActionMembership": "Voir mon adhésion",
-  "gettingStartedAllowance": "{count, plural, =1{Vous pouvez tenir une réservation à la fois.} other{Vous pouvez tenir {count} réservations à la fois.}}",
+  "gettingStartedAllowance": "{count, plural, =0{Vous pouvez tenir {count} réservations à la fois.} one{Vous pouvez tenir une réservation à la fois.} other{Vous pouvez tenir {count} réservations à la fois.}}",
   "gettingStartedAvailabilityUnknown": "Les disponibilités n’ont pas pu être chargées. L’aide explique comment la réservation fonctionne ici.",
   "gettingStartedBooked": "Votre réservation est {state}. Votre adhésion indique ce qui est compris par ailleurs.",
   "gettingStartedClosedToday": "L’espace est fermé le jour sélectionné. Choisissez un autre jour pour voir ce qui est libre.",
@@ -7939,8 +7939,8 @@
   "handoffBlocked": "Ce fichier ne peut pas être transmis tant que la source n’est pas corrigée.",
   "handoffChanged": "Les factures ont changé pendant votre relecture. Exportez à nouveau pour voir les comptes actuels.",
   "handoffDuplicate": "{number} : apparaît deux fois dans la source",
-  "handoffExcludedSettlements": "{count, plural, =1{1 récapitulatif de règlement écarté : ses factures figurent déjà} other{{count} récapitulatifs de règlement écartés : leurs factures figurent déjà}}",
-  "handoffIncluded": "{count, plural, =1{1 document dans le fichier} other{{count} documents dans le fichier}}",
+  "handoffExcludedSettlements": "{count, plural, one{{count} récapitulatif de règlement écarté : ses factures figurent déjà} other{{count} récapitulatifs de règlement écartés : leurs factures figurent déjà}}",
+  "handoffIncluded": "{count, plural, one{{count} document dans le fichier} other{{count} documents dans le fichier}}",
   "handoffIssued": "Émises",
   "handoffMissingCurrency": "{number} : aucune devise",
   "handoffOrphanMatch": "Un paiement ({key}) ne correspond à aucun document de cet export",
@@ -7949,7 +7949,7 @@
   "handoffRowMismatch": "Les lignes du fichier ne correspondent pas aux documents ({detail})",
   "handoffSave": "Enregistrer le fichier et le rapport",
   "handoffTitle": "Avant d’enregistrer",
-  "handoffTransfersQuoted": "Le rapport reprend la liste des transferts de l'année : {files} fichier(s) remis et {deliveries} document(s) transmis à une connexion, chacun avec son SHA-256",
+  "handoffTransfersQuoted": "Le rapport reprend la liste des transferts de l'année : {files, plural, one{{files} fichier remis} other{{files} fichiers remis}} et {deliveries, plural, one{{deliveries} document transmis} other{{deliveries} documents transmis}} à une connexion, chacun avec son SHA-256",
   "handoffUnsupportedCurrency": "{number} : sa devise n’a pas de nombre de décimales vérifié",
   "handoffVoided": "Annulées",
   "helpContents": "Sommaire",
@@ -8130,7 +8130,7 @@
   "@holidayImportAction": {
     "description": "#2051 open-data holiday import"
   },
-  "holidayImportConfirm": "{count, plural, =1{Importer 1 jour de fermeture} other{Importer {count} jours de fermeture}}",
+  "holidayImportConfirm": "{count, plural, one{Importer {count} jour de fermeture} other{Importer {count} jours de fermeture}}",
   "@holidayImportConfirm": {
     "description": "#2051 open-data holiday import",
     "placeholders": {
@@ -8340,11 +8340,11 @@
   "instanceDoctorGuardRealtimeTitle": "Une table publiée en temps réel n'est pas protégée",
   "instanceDoctorGuardSecretGrantsDetail": "{names}\n        Les identifiants de paiement et de facture électronique, la configuration push et les tentatives de badge sont lus par le serveur, jamais par un client.",
   "instanceDoctorGuardSecretGrantsTitle": "Une table contenant des secrets accorde des droits à un rôle d'API",
-  "instanceDoctorHeld": "{workspaces, plural, =1{1 espace de travail} other{{workspaces} espaces de travail}}, {members, plural, =1{1 membre} other{{members} membres}}",
+  "instanceDoctorHeld": "{workspaces, plural, one{{workspaces} espace de travail} other{{workspaces} espaces de travail}}, {members, plural, one{{members} membre} other{{members} membres}}",
   "instanceDoctorIntro": "Avant que cet appareil l'utilise, le contrôle de sécurité doit passer : une alarme garde le bouton désactivé jusqu'à correction.",
-  "instanceDoctorNeedsHuman": "{count, plural, =1{1 constat demande une personne.} other{{count} constats demandent une personne.}}",
-  "instanceDoctorPassed": "{count, plural, =1{1 contrôle réussi} other{{count} contrôles réussis}}",
-  "instanceDoctorPoliciesMatchDetail": "{count, plural, =1{1 politique, exactement l'ensemble que créent les migrations} other{{count} politiques, exactement l'ensemble que créent les migrations}}",
+  "instanceDoctorNeedsHuman": "{count, plural, one{{count} constat demande une personne.} other{{count} constats demandent une personne.}}",
+  "instanceDoctorPassed": "{count, plural, one{{count} contrôle réussi} other{{count} contrôles réussis}}",
+  "instanceDoctorPoliciesMatchDetail": "{count, plural, one{{count} politique, exactement l'ensemble que créent les migrations} other{{count} politiques, exactement l'ensemble que créent les migrations}}",
   "instanceDoctorPoliciesMatchTitle": "Les politiques correspondent aux migrations",
   "instanceDoctorPolicyDriftSkippedDetail": "la liste attendue est vide — assets/instance/policies.txt n'a pas été lu, la dérive ne peut donc pas être jugée",
   "instanceDoctorPolicyDriftSkippedTitle": "Dérive des politiques non vérifiée",
@@ -8364,13 +8364,13 @@
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Seuls personal_home et workspace_host existent ; operator_set_installation_roles écrit un ensemble valide.",
   "instanceDoctorRolesUnknownTitle": "Les rôles de l'installation ne sont pas un ensemble connu",
   "instanceDoctorRun": "Lancer le contrôle de sécurité",
-  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, =1{1 table existe} other{{tables} tables existent}}, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige {required}. L'installation la met à niveau à partir de ce qu'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, one{{tables} table existe} other{{tables} tables existent}}, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige {required}. L'installation la met à niveau à partir de ce qu'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "instanceDoctorSchemaNoVersionTitle": "Le schéma n'a pas de version",
-  "instanceDoctorSignupsNobodyDetail": "{created, plural, =1{1 inscrit} other{{created} inscrits}}, 0 confirmé. L'inscription n'est pas seulement lente — personne ne l'a terminée.\n        Vérifiez d'abord l'URL du site ci-dessus : c'est celle du lien de l'e-mail.",
+  "instanceDoctorSignupsNobodyDetail": "{created, plural, one{{created} inscrit} other{{created} inscrits}}, 0 confirmé. L'inscription n'est pas seulement lente — personne ne l'a terminée.\n        Vérifiez d'abord l'URL du site ci-dessus : c'est celle du lien de l'e-mail.",
   "instanceDoctorSignupsNobodyTitle": "Personne n'a confirmé depuis sept jours",
-  "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 politique de lecture, qui nomme le dossier propriétaire du fichier} other{{count} politiques de lecture, chacune nommant le dossier propriétaire du fichier}}",
+  "instanceDoctorStorageScopedDetail": "{count, plural, one{{count} politique de lecture, qui nomme le dossier propriétaire du fichier} other{{count} politiques de lecture, chacune nommant le dossier propriétaire du fichier}}",
   "instanceDoctorStorageScopedTitle": "Les lectures du stockage sont circonscrites",
-  "instanceDoctorStuckTitle": "{count, plural, =1{1 compte ne peut pas entrer} other{{count} comptes ne peuvent pas entrer}}",
+  "instanceDoctorStuckTitle": "{count, plural, one{{count} compte ne peut pas entrer} other{{count} comptes ne peuvent pas entrer}}",
   "instanceDoneIntro": "L'instance est prête. Utilisez-la sur cet appareil, puis partagez le QR du serveur depuis l'écran Serveur pour que les membres rejoignent la même.",
   "@instanceDoneIntro": {
     "description": "#977 instance wizard: instanceDoneIntro"
@@ -8391,7 +8391,7 @@
   "instanceFamilyLoopback": "Assistant de bureau ou en ligne de commande",
   "instanceGrant": "Approuver l'accès",
   "instanceGrantDays": "Choisissez entre 1 et 30 jours.",
-  "instanceGrantDaysLabel": "Pour {days, plural, =1{1 jour} other{{days} jours}}",
+  "instanceGrantDaysLabel": "Pour {days, plural, one{{days} jour} other{{days} jours}}",
   "instanceGrantHelp": "Tant qu'aucun autre administrateur de la base de données n'existe, vous approuvez vous-même les accès — le vôtre compris — pour 30 jours au plus, avec une raison. Chaque approbation est enregistrée.",
   "instanceGrantNeedsGoogle": "Approuver un accès nécessite que cette session soit connectée avec Google.",
   "instanceGrantNoIdentity": "Cette personne n'a pas encore confirmé son identité.",
@@ -8492,7 +8492,7 @@
   "instanceReadyCurrent": "La version {version} de DesKilo est installée et à jour : le schéma n'a besoin de rien.",
   "instanceReadyInstall": "Le projet est vide : tout sera installé.",
   "instanceReadyResume": "{pending, plural, one{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migration, et seules celles-ci seront exécutées.} other{Une installation DesKilo s'est arrêtée en cours de route : il reste {pending} migrations, et seules celles-ci seront exécutées.}}",
-  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : {pending, plural, =1{seule 1 migration manquante sera exécutée} other{seules les {pending} migrations manquantes seront exécutées}}.",
+  "instanceReadyUpgrade": "La version {version} de DesKilo est installée : {pending, plural, one{seule {pending} migration manquante sera exécutée} other{seules les {pending} migrations manquantes seront exécutées}}.",
   "instanceRegion": "Région (la plus proche de l'espace)",
   "@instanceRegion": {
     "description": "#977 instance wizard: instanceRegion"
@@ -8644,7 +8644,7 @@
   "invoiceActionUnknownBody": "La demande a été envoyée mais la réponse n'est pas arrivée : elle a peut-être déjà été appliquée. Rien n'est renvoyé. Vérifiez à nouveau pour la retrouver.",
   "invoiceAllCaughtUp": "Tout est à jour — rien à facturer.",
   "invoiceAlreadyInvoiced": "Ce mois est déjà facturé pour ce membre.",
-  "invoiceAnnexSummary": "Annexe : {movements, plural, =1{1 mouvement} other{{movements} mouvements}}, {checkIns, plural, =1{1 pointage} other{{checkIns} pointages}}",
+  "invoiceAnnexSummary": "Annexe : {movements, plural, one{{movements} mouvement} other{{movements} mouvements}}, {checkIns, plural, one{{checkIns} pointage} other{{checkIns} pointages}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -8688,7 +8688,7 @@
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
   },
-  "invoiceCountShown": "{count, plural, =1{1 facture} other{{count} factures}}",
+  "invoiceCountShown": "{count, plural, one{{count} facture} other{{count} factures}}",
   "@invoiceCountShown": {
     "placeholders": {
       "count": {
@@ -8999,7 +8999,7 @@
   },
   "invoiceIssue": "Émettre la facture",
   "invoiceIssueAll": "Tout facturer",
-  "invoiceIssueAllConfirm": "{count, plural, =1{Émettre 1 facture pour {month}, {total} au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.} other{Émettre {count} factures pour {month}, {total} au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.}}",
+  "invoiceIssueAllConfirm": "{count, plural, one{Émettre {count} facture pour {month}, {total} au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.} other{Émettre {count} factures pour {month}, {total} au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.}}",
   "@invoiceIssueAllConfirm": {
     "placeholders": {
       "count": {
@@ -9020,7 +9020,7 @@
   "invoiceIssueUnknownBody": "La facture a été envoyée mais la réponse n'est pas arrivée : elle existe peut-être déjà. Rien n'est renvoyé. Vérifiez à nouveau pour la chercher.",
   "invoiceIssueUnknownTitle": "Résultat inconnu",
   "invoiceIssued": "Facture émise.",
-  "invoiceIssuedCount": "{count, plural, =1{1 facture émise.} other{{count} factures émises.}}",
+  "invoiceIssuedCount": "{count, plural, one{{count} facture émise.} other{{count} factures émises.}}",
   "@invoiceIssuedCount": {
     "placeholders": {
       "count": {
@@ -9028,7 +9028,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued, plural, =1{1 émise} other{{issued} émises}}, {failed, plural, =1{1 en échec} other{{failed} en échec}}.",
+  "invoiceIssuedPartial": "{issued, plural, one{{issued} émise} other{{issued} émises}}, {failed, plural, one{{failed} en échec} other{{failed} en échec}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -9278,12 +9278,12 @@
   "invoiceMonthDone": "Terminé",
   "invoiceMonthFix": "Compléter",
   "invoiceMonthHeld": "Attend une validation",
-  "invoiceMonthIssue": "{count, plural, =0{Émettre les factures} =1{Émettre 1 facture · {amount}} other{Émettre {count} factures · {amount}}}",
+  "invoiceMonthIssue": "{count, plural, =0{Émettre les factures} one{Émettre 1 facture · {amount}} other{Émettre {count} factures · {amount}}}",
   "invoiceMonthIssued": "Émise",
   "invoiceMonthIssuing": "Émission…",
   "invoiceMonthLeaveBlocked": "L'émission est en cours. Attendez qu'elle se termine.",
   "invoiceMonthNeedsFix": "À compléter",
-  "invoiceMonthNeedsFixCount": "{count, plural, =1{1 à compléter} other{{count} à compléter}}",
+  "invoiceMonthNeedsFixCount": "{count, plural, one{{count} à compléter} other{{count} à compléter}}",
   "invoiceMonthNeedsFixLine": "À compléter : {missing}",
   "invoiceMonthNotDone": "Non fait",
   "invoiceMonthNotIssued": "N'a pas pu être émise. Réessayez.",
@@ -9292,10 +9292,10 @@
   "invoiceMonthResultNone": "Aucune facture émise",
   "invoiceMonthResultNoneSubtitle": "Aucune facture n'existe encore pour ce qui suit.",
   "invoiceMonthResultPartial": "{issued, plural, one{{issued} facture émise sur {total}} other{{issued} factures émises sur {total}}}",
-  "invoiceMonthResultSubtitle": "{count, plural, =1{Le client la voit maintenant dans son compte.} other{Chaque client la voit maintenant dans son compte.}}",
-  "invoiceMonthResultTitle": "{count, plural, =1{1 facture émise} other{{count} factures émises}}",
+  "invoiceMonthResultSubtitle": "{count, plural, =0{Chaque client la voit maintenant dans son compte.} one{Le client la voit maintenant dans son compte.} other{Chaque client la voit maintenant dans son compte.}}",
+  "invoiceMonthResultTitle": "{count, plural, one{{count} facture émise} other{{count} factures émises}}",
   "invoiceMonthRetry": "Réessayer pour celles-ci",
-  "invoiceMonthSelected": "{count, plural, =1{1 sur {total} sélectionné · {amount}} other{{count} sur {total} sélectionnés · {amount}}}",
+  "invoiceMonthSelected": "{count, plural, one{{count} sur {total} sélectionné · {amount}} other{{count} sur {total} sélectionnés · {amount}}}",
   "invoiceMonthStays": "Ce qui n'a pas été fait reste dans « À faire ».",
   "invoiceMonthTitle": "Facturer {month}",
   "invoiceMonthUnknown": "Non confirmée : elle existe peut-être. Vérifiez à nouveau.",
@@ -9531,7 +9531,7 @@
       }
     }
   },
-  "invoicePageReminders": "{count, plural, =1{Relances (1)} other{Relances ({count})}}",
+  "invoicePageReminders": "{count, plural, one{Relances ({count})} other{Relances ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {
@@ -9702,7 +9702,7 @@
   "invoiceRegisterAllYears": "Toutes les années",
   "invoiceRegisterAmount": "Montant",
   "invoiceRegisterCurrency": "Devise",
-  "invoiceRegisterDownloadSelected": "{count, plural, =1{Télécharger 1 facture} other{Télécharger {count} factures}}",
+  "invoiceRegisterDownloadSelected": "{count, plural, one{Télécharger {count} facture} other{Télécharger {count} factures}}",
   "invoiceRegisterIntegrity": "Empreinte",
   "invoiceRegisterMember": "Membre",
   "invoiceRegisterName": "Nom",
@@ -9809,7 +9809,7 @@
   "@invoiceStatusRemainderCancelled": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
-  "invoiceSummaryOpen": "{count, plural, =1{1 en cours} other{{count} en cours}} · {amount} dus",
+  "invoiceSummaryOpen": "{count, plural, one{{count} en cours} other{{count} en cours}} · {amount} dus",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -9944,7 +9944,7 @@
       }
     }
   },
-  "invoicingCustomerCount": "{count, plural, =1{1 client} other{{count} clients}}",
+  "invoicingCustomerCount": "{count, plural, one{{count} client} other{{count} clients}}",
   "@invoicingCustomerCount": {
     "description": "#3587 how many customers",
     "placeholders": {
@@ -9953,7 +9953,7 @@
       }
     }
   },
-  "invoicingDaysLate": "{days, plural, =1{1 jour de retard} other{{days} jours de retard}}",
+  "invoicingDaysLate": "{days, plural, one{{days} jour de retard} other{{days} jours de retard}}",
   "@invoicingDaysLate": {
     "description": "#3587 lateness",
     "placeholders": {
@@ -9962,7 +9962,7 @@
       }
     }
   },
-  "invoicingDueIn": "{days, plural, =1{Échéance dans 1 jour} other{Échéance dans {days} jours}}",
+  "invoicingDueIn": "{days, plural, one{Échéance dans {days} jour} other{Échéance dans {days} jours}}",
   "@invoicingDueIn": {
     "description": "#3587 status",
     "placeholders": {
@@ -10008,7 +10008,7 @@
   "@invoicingFilterPaid": {
     "description": "#3587 list filter: paid and closed"
   },
-  "invoicingInvoiceCount": "{count, plural, =1{1 facture} other{{count} factures}}",
+  "invoicingInvoiceCount": "{count, plural, one{{count} facture} other{{count} factures}}",
   "@invoicingInvoiceCount": {
     "description": "#3587 how many invoices",
     "placeholders": {
@@ -10104,7 +10104,7 @@
       }
     }
   },
-  "invoicingReminderLevelSent": "{level, plural, other{relance {level} envoyée}}",
+  "invoicingReminderLevelSent": "relance {level} envoyée",
   "@invoicingReminderLevelSent": {
     "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
     "placeholders": {
@@ -10179,7 +10179,7 @@
   "@invoicingStatusDueToday": {
     "description": "#3587 status"
   },
-  "invoicingStatusEveryReminderSent": "{days, plural, =1{1 jour de retard} other{{days} jours de retard}} · toutes les relances envoyées",
+  "invoicingStatusEveryReminderSent": "{days, plural, one{{days} jour de retard} other{{days} jours de retard}} · toutes les relances envoyées",
   "@invoicingStatusEveryReminderSent": {
     "description": "#3587 status",
     "placeholders": {
@@ -10235,7 +10235,7 @@
   "@invoicingStatusRejected": {
     "description": "#3587 status"
   },
-  "invoicingStatusReminderSent": "{days, plural, =1{1 jour de retard} other{{days} jours de retard}} · relance {level} envoyée",
+  "invoicingStatusReminderSent": "{days, plural, one{{days} jour de retard} other{{days} jours de retard}} · relance {level} envoyée",
   "@invoicingStatusReminderSent": {
     "description": "#3587 status",
     "placeholders": {
@@ -10301,7 +10301,7 @@
   "@invoicingTodoRefunds": {
     "description": "#3587 To do: credit notes owed"
   },
-  "invoicingTodoRejected": "{count, plural, =1{1 facture électronique a été rejetée} other{{count} factures électroniques ont été rejetées}}",
+  "invoicingTodoRejected": "{count, plural, one{{count} facture électronique a été rejetée} other{{count} factures électroniques ont été rejetées}}",
   "@invoicingTodoRejected": {
     "description": "#3587 To do: rejected e-invoices",
     "placeholders": {
@@ -10540,7 +10540,7 @@
       }
     }
   },
-  "journeyOverdueCount": "{count, plural, =1{1 en retard} other{{count} en retard}}",
+  "journeyOverdueCount": "{count, plural, one{{count} en retard} other{{count} en retard}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {
@@ -11140,7 +11140,7 @@
   "@leaseNoticeTitle": {
     "description": "#2569 premises lease"
   },
-  "leaseOccurrencesAfter": "{count, plural, =1{1 échéance a déjà été présentées pour une date postérieure à la fin.} other{{count} échéances ont déjà été présentées pour une date postérieure à la fin.}}",
+  "leaseOccurrencesAfter": "{count, plural, one{{count} échéance a déjà été présentées pour une date postérieure à la fin.} other{{count} échéances ont déjà été présentées pour une date postérieure à la fin.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {
@@ -11404,11 +11404,11 @@
   "levelReorderStale": "Les niveaux ont changé entre-temps. Rien n'a été enregistré ; l'ordre actuel est affiché.",
   "levelReserveButton": "Réserver le niveau",
   "levelSupplementLabel": "Réservations de niveau",
-  "libraryAppliedChanges": "{count, plural, =1{1 changement appliqué.} other{{count} changements appliqués.}}",
-  "libraryApplyChanges": "{count, plural, =0{Rien de sélectionné} =1{Appliquer 1 changement} other{Appliquer {count} changements}}",
+  "libraryAppliedChanges": "{count, plural, one{{count} changement appliqué.} other{{count} changements appliqués.}}",
+  "libraryApplyChanges": "{count, plural, =0{Rien de sélectionné} one{Appliquer 1 changement} other{Appliquer {count} changements}}",
   "libraryCarriesSettings": "avec ses réglages",
   "libraryConfirmSensitive": "Cela modifie : {groups}. Appliquer ?",
-  "libraryCounts": "{levels, plural, =1{1 niveau} other{{levels} niveaux}} · {desks, plural, =1{1 table} other{{desks} tables}} · {seats, plural, =1{1 place} other{{seats} places}}",
+  "libraryCounts": "{levels, plural, one{{levels} niveau} other{{levels} niveaux}} · {desks, plural, one{{desks} table} other{{desks} tables}} · {seats, plural, one{{seats} place} other{{seats} places}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {
@@ -11535,8 +11535,8 @@
   "linkedAccountsLinked": "Lié",
   "linkedAccountsTitle": "Comptes liés",
   "linkedAccountsUnlink": "Délier",
-  "listCoversSeats": "{count, plural, =1{1 place} other{{count} places}}",
-  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "listCoversSeats": "{count, plural, one{{count} place} other{{count} places}}",
+  "listCoversTables": "{count, plural, one{{count} table} other{{count} tables}}",
   "listDetailResize": "Redimensionner le volet de la fiche",
   "listWholeReservable": "Réservable en entier",
   "localGapsTitle": "Pour terminer la configuration de cet espace",
@@ -11682,8 +11682,8 @@
   "mcpConfirmTitle": "Confirmer une demande d'assistant",
   "mcpConfirmUnavailable": "Cette demande n'a pas pu être chargée. Réessayez depuis le lien.",
   "mcpConfirmWorkspace": "Espace : {workspace}",
-  "mcpConnectAccessExpiresIn": "Approuvé — encore {days, plural, =1{1 jour} other{{days} jours}}.",
-  "mcpConnectAccessExpiresSoon": "Approuvé — expire dans {days, plural, =1{1 jour} other{{days} jours}}. Redemandez l’approbation une fois expiré.",
+  "mcpConnectAccessExpiresIn": "Approuvé — encore {days, plural, one{{days} jour} other{{days} jours}}.",
+  "mcpConnectAccessExpiresSoon": "Approuvé — expire dans {days, plural, one{{days} jour} other{{days} jours}}. Redemandez l’approbation une fois expiré.",
   "mcpConnectAddTitle": "Ajouter DesKilo à votre assistant",
   "mcpConnectAddressLabel": "Votre adresse DesKilo pour les assistants",
   "mcpConnectAllDone": "Tout est prêt. Testez la connexion ci-dessous.",
@@ -12027,7 +12027,7 @@
   "meNoSpaceTitle": "Vous n'avez encore aucun lieu",
   "meOverviewAttentionApplication": "Votre demande pour rejoindre {name} est en attente.",
   "meOverviewAttentionApplicationsUnavailable": "Vos demandes n'ont pas pu être lues.",
-  "meOverviewAttentionConversation": "{count, plural, =1{1 message non lu} other{{count} messages non lus}}",
+  "meOverviewAttentionConversation": "{count, plural, one{{count} message non lu} other{{count} messages non lus}}",
   "meOverviewAttentionDocumentTitle": "Facture {number} · {workspace}",
   "meOverviewAttentionDocumentToPay": "à payer · {number}",
   "meOverviewAttentionDocumentsPartial": "Certains documents n'ont pas pu être lus.",
@@ -12035,7 +12035,7 @@
   "meOverviewAttentionDue": "Échéance {date}",
   "meOverviewAttentionMessagesPartial": "Certaines conversations n'ont pas pu être lues.",
   "meOverviewAttentionMessagesUnavailable": "Vos conversations n'ont pas pu être lues.",
-  "meOverviewAttentionMore": "{count, plural, =1{1 de plus} other{{count} de plus}}",
+  "meOverviewAttentionMore": "{count, plural, one{{count} de plus} other{{count} de plus}}",
   "meOverviewAttentionNone": "Rien ne vous attend pour l'instant.",
   "meOverviewAttentionOpenConversation": "Ouvrir",
   "meOverviewAttentionOverdue": "En retard",
@@ -12072,14 +12072,14 @@
   "meSourceUnnamed": "Le serveur d'un lieu",
   "meSpaceException": "Dans cet espace",
   "meSpaceLastUsed": "Dernier utilisé",
-  "meSpaceNotifications": "{count, plural, =1{1 notification vous attend ici} other{{count} notifications vous attendent ici}}",
+  "meSpaceNotifications": "{count, plural, one{{count} notification vous attend ici} other{{count} notifications vous attendent ici}}",
   "meSpacePending": "En attente de validation",
   "meSpacesNoMatch": "Aucun lieu ne correspond.",
   "meSpacesSearch": "Rechercher mes lieux",
   "meStartedAccount": "Créer votre compte",
   "meStartedBooking": "Faire votre première réservation",
   "meStartedDone": "Fait",
-  "meStartedLeft": "{count, plural, =1{Encore une étape · {next}} other{Encore {count} étapes · {next}}}",
+  "meStartedLeft": "{count, plural, =0{Encore {count} étapes · {next}} one{Encore une étape · {next}} other{Encore {count} étapes · {next}}}",
   "meStartedNext": "Suivant",
   "meStartedProfile": "Ajouter votre nom et votre photo",
   "meStartedSpace": "Trouver un lieu",
@@ -12172,7 +12172,7 @@
   "@memberMonthInProgress": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "{count, plural, =1{+1 autre} other{+{count} autres}}",
+  "memberMoreInvoices": "{count, plural, one{+{count} autre} other{+{count} autres}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -12485,7 +12485,7 @@
   "moneyCredits": "Paiements et crédits",
   "moneyCurrencyUnavailable": "Devise indisponible",
   "moneyDescriptionLabel": "Description",
-  "moneyDueIn": "{days, plural, =1{Échéance dans 1 jour} other{Échéance dans {days} jours}}",
+  "moneyDueIn": "{days, plural, one{Échéance dans {days} jour} other{Échéance dans {days} jours}}",
   "moneyExpenseCategoryLabel": "Catégorie",
   "moneyExpensePending": "Dépense soumise — en attente d'approbation.",
   "moneyFaceDocuments": "Documents",
@@ -12499,11 +12499,11 @@
   "moneyNoInvoicesYet": "Pas encore de facture — l'espace facture le mois une fois clos.",
   "moneyNoteLabel": "Note (facultatif)",
   "moneyNothingOpen": "Rien d'ouvert — vous êtes à jour.",
-  "moneyOpenInvoicesSummary": "{count, plural, =1{1 ouverte} other{{count} ouvertes}} · {amount} dus",
+  "moneyOpenInvoicesSummary": "{count, plural, one{{count} ouverte} other{{count} ouvertes}} · {amount} dus",
   "moneyOpenInvoicesTitle": "Factures ouvertes",
-  "moneyOverage": "{count, plural, =1{Dépassement (1 demi-journée supplémentaire)} other{Dépassement ({count} demi-journées supplémentaires)}}",
-  "moneyOverdueBanner": "{count, plural, =1{1 en retard} other{{count} en retard}} — {amount} à régler",
-  "moneyOverdueBy": "{days, plural, =0{Échéance aujourd’hui} =1{En retard de 1 jour} other{En retard de {days} jours}}",
+  "moneyOverage": "{count, plural, one{Dépassement ({count} demi-journée supplémentaire)} other{Dépassement ({count} demi-journées supplémentaires)}}",
+  "moneyOverdueBanner": "{count, plural, one{{count} en retard} other{{count} en retard}} — {amount} à régler",
+  "moneyOverdueBy": "{days, plural, =0{Échéance aujourd’hui} one{En retard de 1 jour} other{En retard de {days} jours}}",
   "moneyPayNow": "Payer maintenant",
   "moneyPaymentDateLabel": "Date du paiement",
   "moneyPaymentPending": "Paiement soumis — en attente de confirmation.",
@@ -12529,7 +12529,7 @@
   "moneySubmitExpense": "Soumettre une dépense",
   "moneySubmitPayment": "Soumettre pour confirmation",
   "moneySubscriptionPct": "Abonnement {pct} %",
-  "moneyUsage": "{used} sur {included, plural, =1{1 demi-journée utilisée} other{{included} demi-journées utilisées}}",
+  "moneyUsage": "{used} sur {included, plural, one{{included} demi-journée utilisée} other{{included} demi-journées utilisées}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}}",
   "monthFreeCount": "{free}/{total}",
   "myBadgeTitle": "Mon badge",
@@ -12590,7 +12590,7 @@
   "myReservationsUnsupported": "Ce serveur ne liste pas encore les réservations pour l'espace personnel.",
   "myReservationsView": "Voir",
   "mySpacesAll": "Tous mes lieux",
-  "mySpacesCount": "{count, plural, =0{Aucun lieu} =1{1 lieu} other{{count} lieux}}",
+  "mySpacesCount": "{count, plural, =0{Aucun lieu} one{1 lieu} other{{count} lieux}}",
   "mySpacesDiscover": "Découvrir des lieux",
   "mySpacesFilterActive": "Actifs",
   "mySpacesFilterAll": "Tous",
@@ -12912,7 +12912,7 @@
   "onboardingStepWhere": "Où",
   "onboardingSummaryBillingOff": "Aucune facturation réelle : les documents sont marqués comme test.",
   "onboardingSummaryBillingOn": "La facturation réelle est possible : ses factures sont dues.",
-  "onboardingSummaryCount": "{count, plural, =1{Crée un espace} other{Crée {count} espaces}}",
+  "onboardingSummaryCount": "{count, plural, =0{Crée {count} espaces} one{Crée un espace} other{Crée {count} espaces}}",
   "onboardingSummaryServer": "Sur le serveur {host}",
   "onboardingTemplateSetsUp": "Configure : {groups}",
   "onboardingTemplatesFailedEmpty": "Les modèles n’ont pas pu être chargés : cet espace démarrerait vide. Revenez en arrière pour réessayer.",
@@ -13011,12 +13011,12 @@
   "@overviewNoPinned": {
     "description": "#2583 C2 overview layout"
   },
-  "overviewOverdueBasis": "{count, plural, =1{1 facture échue ; {unknown} sans échéance prouvée et {held} suspendues, à part} other{{count} factures échues ; {unknown} sans échéance prouvée et {held} suspendues, à part}}",
+  "overviewOverdueBasis": "{count, plural, one{{count} facture échue ; {unknown} sans échéance prouvée et {held} suspendues, à part} other{{count} factures échues ; {unknown} sans échéance prouvée et {held} suspendues, à part}}",
   "overviewOverdueDefinition": "Ce que les membres doivent encore sur les factures émises dont l'échéance prouvée est dépassée, après avoirs, paiements partiels et pertes, selon les règles de relance. Une facture sans échéance prouvée, ou suspendue, est comptée à part et n'entre pas dans le montant.",
   "overviewOverdueTitle": "Créances échues",
   "overviewPendingActions": "En attente d'une décision",
   "overviewPendingActionsDefinition": "Les demandes que les validateurs de l'espace n'ont pas encore tranchées et les personnes qui demandent à rejoindre, aujourd'hui.",
-  "overviewPendingInSpace": "{count, plural, =0{Rien n'attend de décision dans l'espace.} =1{1 demande attend une décision dans l'espace.} other{{count} demandes attendent une décision dans l'espace.}}",
+  "overviewPendingInSpace": "{count, plural, =0{Rien n'attend de décision dans l'espace.} one{1 demande attend une décision dans l'espace.} other{{count} demandes attendent une décision dans l'espace.}}",
   "overviewPinned": "Vos tuiles épinglées",
   "@overviewPinned": {
     "description": "#2583 C2 overview layout"
@@ -13438,7 +13438,7 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
-  "placeFeedbackAverage": "{average} · {count, plural, =1{1 note} other{{count} notes}}",
+  "placeFeedbackAverage": "{average} · {count, plural, one{{count} note} other{{count} notes}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",
     "placeholders": {
@@ -13458,13 +13458,13 @@
   "@placeFeedbackFavorite": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackMine": "Votre note : {n, plural, =1{1 étoile} other{{n} étoiles}}",
+  "placeFeedbackMine": "Votre note : {n, plural, one{{n} étoile} other{{n} étoiles}}",
   "placeFeedbackMineNone": "Vous ne l'avez pas notée",
   "placeFeedbackNoRating": "Pas encore de note",
   "@placeFeedbackNoRating": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackStars": "{n, plural, =1{1 étoile} other{{n} étoiles}}",
+  "placeFeedbackStars": "{n, plural, one{{n} étoile} other{{n} étoiles}}",
   "@placeFeedbackStars": {
     "description": "#2185 place feedback",
     "placeholders": {
@@ -13550,7 +13550,7 @@
   "planReservedBy": "Réservée par {name}",
   "planSeatBlocked": "Cette place est bloquée pour maintenance.",
   "planSendForConfirmation": "Envoyer pour confirmation",
-  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, =1{la grille de 1 minute} other{la grille de {minutes} minutes}}.",
+  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, one{la grille de {minutes} minute} other{la grille de {minutes} minutes}}.",
   "planStartNow": "Commence maintenant",
   "planStartsAt": "Commence à {time}",
   "planStateFree": "Libre",
@@ -13565,14 +13565,14 @@
   "plansEditorInactive": "Inactive",
   "plansEditorNew": "Nouvelle formule",
   "plansEditorPerExtra": "{price}/demi-journée suppl.",
-  "plansEditorQuota": "{count, plural, =1{1 demi-journée} other{{count} demi-journées}}",
+  "plansEditorQuota": "{count, plural, one{{count} demi-journée} other{{count} demi-journées}}",
   "plansEditorTitle": "Formules",
   "plansEditorUnlimited": "demi-journées illimitées",
   "policyAdminCheckoutDesc": "Un admin peut terminer le check-in en cours d'un membre.",
   "policyAdminCheckoutTitle": "Les admins peuvent faire le check-out des membres",
   "policyAllowPastDesc": "Les membres peuvent enregistrer une réservation déjà terminée (rattrapage).",
   "policyAllowPastTitle": "Autoriser les réservations passées",
-  "policyDaysValue": "{count, plural, =1{1 jour} other{{count} jours}}",
+  "policyDaysValue": "{count, plural, one{{count} jour} other{{count} jours}}",
   "@policyDaysValue": {
     "description": "#649 - a day count shown beside the horizon slider",
     "placeholders": {
@@ -13593,7 +13593,7 @@
   "@policyHorizonTitle": {
     "description": "#649 - advance_horizon_days control title"
   },
-  "policyHoursValue": "{count, plural, =1{1 heure} other{{count} heures}}",
+  "policyHoursValue": "{count, plural, one{{count} heure} other{{count} heures}}",
   "@policyHoursValue": {
     "description": "#649 - an hour count shown beside a duration control",
     "placeholders": {
@@ -13622,7 +13622,7 @@
   "@policyMinDurationTitle": {
     "description": "#649 - min_duration_minutes control title"
   },
-  "policyMinutesValue": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "policyMinutesValue": "{count, plural, one{{count} minute} other{{count} minutes}}",
   "@policyMinutesValue": {
     "description": "#649 - a minute count shown beside a duration control",
     "placeholders": {
@@ -13754,7 +13754,7 @@
   "privacyAdminExtendReason": "Motif de la prolongation (10 caractères au moins)",
   "privacyAdminIncidentIntro": "Les personnes qui gèrent les données personnelles de cet espace sont prévenues aussitôt. Dites ce qui s'est passé ; ne collez pas de données personnelles ici.",
   "privacyAdminIncidentNote": "Ce qui s'est passé (facultatif, 1000 caractères au plus)",
-  "privacyAdminIncidentRecorded": "{count, plural, =0{Enregistré. Personne ne détient ce droit : personne n'a été prévenu.} =1{Enregistré. 1 personne a été prévenue.} other{Enregistré. {count} personnes ont été prévenues.}}",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Enregistré. Personne ne détient ce droit : personne n'a été prévenu.} one{Enregistré. 1 personne a été prévenue.} other{Enregistré. {count} personnes ont été prévenues.}}",
   "@privacyAdminIncidentRecorded": {
     "placeholders": {
       "count": {
@@ -13971,25 +13971,25 @@
   "privateValuesHint": "Les montants et les aperçus restent masqués jusqu’à ce que vous les affichiez. Enregistré sur cet appareil et sur votre compte.",
   "privateValuesTitle": "Masquer les valeurs privées",
   "processAlsoNeeds": "Tout activer nécessite aussi : {features}",
-  "processApplied": "{count, plural, =1{1 fonctionnalité modifiée.} other{{count} fonctionnalités modifiées.}}",
+  "processApplied": "{count, plural, one{{count} fonctionnalité modifiée.} other{{count} fonctionnalités modifiées.}}",
   "processBillingPayments": "Facturation et paiements",
   "processBillingPaymentsDesc": "Facturer l’activité et suivre les sommes dues.",
   "processBlockedIntro": "{feature} est encore nécessaire à : {features}",
   "processChangeFailed": "Les fonctionnalités n'ont pas pu être modifiées. Rien n'a été écrit ; réessayez.",
-  "processConfirmOff": "{count, plural, =1{Désactiver 1 fonctionnalité} other{Désactiver {count} fonctionnalités}}",
-  "processConfirmOn": "{count, plural, =1{Activer 1 fonctionnalité} other{Activer {count} fonctionnalités}}",
+  "processConfirmOff": "{count, plural, one{Désactiver {count} fonctionnalité} other{Désactiver {count} fonctionnalités}}",
+  "processConfirmOn": "{count, plural, one{Activer {count} fonctionnalité} other{Activer {count} fonctionnalités}}",
   "processConflict": "Quelqu'un a modifié les fonctionnalités entre-temps. Voici l'aperçu à jour — vérifiez-le à nouveau.",
   "processCoordination": "Calendrier et coordination",
   "processCoordinationDesc": "Coordonner les activités, les messages et les décisions.",
   "processDocumentsInformation": "Documents et informations",
   "processDocumentsInformationDesc": "Créer, partager et exporter les informations de l’espace.",
-  "processFeatureCount": "{enabled} sur {total, plural, =1{1 fonctionnalité active} other{{total} fonctionnalités actives}}",
+  "processFeatureCount": "{enabled} sur {total, plural, one{{total} fonctionnalité active} other{{total} fonctionnalités actives}}",
   "processFeatureOff": "Désactivée",
   "processFeatureOn": "Activée",
   "processFeatureWaiting": "Activée, en attente de {feature}",
   "processFilterAll": "Tous",
   "processFilterEmpty": "Aucun processus ne correspond à ce filtre.",
-  "processHeldBack": "{count, plural, =1{1 fonctionnalité est activée mais attend un prérequis désactivé} other{{count} fonctionnalités sont activées mais attendent un prérequis désactivé}}",
+  "processHeldBack": "{count, plural, one{{count} fonctionnalité est activée mais attend un prérequis désactivé} other{{count} fonctionnalités sont activées mais attendent un prérequis désactivé}}",
   "processInProcess": "dans {process}",
   "processIntegrations": "Intégrations et automatisation",
   "processIntegrationsDesc": "Envoyer les notifications et documents par des services externes.",
@@ -14001,7 +14001,7 @@
   "processOffNote": "Désactivé : {features}",
   "processOperations": "Exploitation et administration",
   "processOperationsDesc": "Gérer la configuration et l’utilisation de l’application.",
-  "processRemoveDependants": "{count, plural, =1{Désactiver aussi la 1 fonctionnalité dépendante} other{Désactiver aussi les {count} fonctionnalités dépendantes}}",
+  "processRemoveDependants": "{count, plural, one{Désactiver aussi {count} fonctionnalité dépendante} other{Désactiver aussi les {count} fonctionnalités dépendantes}}",
   "processReservationsUsage": "Réservations et utilisation",
   "processReservationsUsageDesc": "Réserver les places et suivre leur utilisation.",
   "processSearchLabel": "Rechercher processus et fonctionnalités",
@@ -14020,7 +14020,7 @@
   "processStateAvailable": "Disponible",
   "processStateNeedsAttention": "À vérifier",
   "processStatePartial": "Partiel",
-  "processSubprocessCount": "{active} sur {total, plural, =1{1 sous-processus actif} other{{total} sous-processus actifs}}",
+  "processSubprocessCount": "{active} sur {total, plural, one{{total} sous-processus actif} other{{total} sous-processus actifs}}",
   "processSwitchHint": "Touchez une fonctionnalité pour la modifier parmi les interrupteurs.",
   "processSwitchOff": "Désactiver",
   "processSwitchOn": "Activer",
@@ -14059,7 +14059,7 @@
     "description": "#937 platform owner: profilesEmailCopied"
   },
   "profilesMakeDefault": "Utiliser par défaut au démarrage",
-  "profilesNotMember": "Non membre · {count, plural, one{1 membre} other{{count} membres}}",
+  "profilesNotMember": "Non membre · {count, plural, one{{count} membre} other{{count} membres}}",
   "@profilesNotMember": {
     "description": "#937 platform owner: profilesNotMember",
     "placeholders": {
@@ -14113,7 +14113,7 @@
   "@publicHolidaysAction": {
     "description": "#1274 the action that opens the holiday preview"
   },
-  "publicHolidaysConfirm": "{count, plural, =1{Créer 1 jour de fermeture} other{Créer {count} jours de fermeture}}",
+  "publicHolidaysConfirm": "{count, plural, one{Créer {count} jour de fermeture} other{Créer {count} jours de fermeture}}",
   "@publicHolidaysConfirm": {
     "description": "#1274 confirm creating the previewed days",
     "placeholders": {
@@ -14122,7 +14122,7 @@
       }
     }
   },
-  "publicHolidaysCreated": "{count, plural, =1{1 jour de fermeture créé} other{{count} jours de fermeture créés}}",
+  "publicHolidaysCreated": "{count, plural, one{{count} jour de fermeture créé} other{{count} jours de fermeture créés}}",
   "@publicHolidaysCreated": {
     "description": "#1274 how many closure days were written",
     "placeholders": {
@@ -15054,7 +15054,7 @@
   "readinessStateUnverified": "Pas encore vérifié",
   "readinessTitle": "Mise en place de cet espace",
   "recapCsv": "Déclaration européenne de services (CSV)",
-  "recapDue": "Une déclaration européenne de services est due pour {month} : {count, plural, =1{1 facture autoliquidée} other{{count} factures autoliquidées}}. Exportez-la depuis les déclarations de TVA.",
+  "recapDue": "Une déclaration européenne de services est due pour {month} : {count, plural, one{{count} facture autoliquidée} other{{count} factures autoliquidées}}. Exportez-la depuis les déclarations de TVA.",
   "@recapDue": {
     "placeholders": {
       "month": {
@@ -15085,7 +15085,7 @@
   },
   "recordsClearSelection": "Effacer la sélection",
   "recordsColumns": "Colonnes",
-  "recordsDropped": "{count, plural, =1{1 ligne sélectionnée n’est plus là et a été écartée} other{{count} lignes sélectionnées ne sont plus là et ont été écartées}}",
+  "recordsDropped": "{count, plural, one{{count} ligne sélectionnée n’est plus là et a été écartée} other{{count} lignes sélectionnées ne sont plus là et ont été écartées}}",
   "recordsFailed": "La liste n’a pas pu être lue.",
   "recordsFilter": "Filtrer",
   "recordsLocationAoNotice": "Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l'UE (§ 146 al. 2a AO). Rien ne déclare cette installation dans l'UE.",
@@ -15098,11 +15098,11 @@
   "recordsLocationTitle": "Où les registres sont conservés",
   "recordsLocationUndeclared": "Non déclaré par l'exploitant de cette installation : l'application n'indique aucun lieu",
   "recordsMoreActions": "Plus d’actions",
-  "recordsPartlyRead": "{loaded, plural, =1{1 chargé — tout n’est pas encore lu} other{{loaded} chargés — tout n’est pas encore lu}}",
+  "recordsPartlyRead": "{loaded, plural, one{{loaded} chargé — tout n’est pas encore lu} other{{loaded} chargés — tout n’est pas encore lu}}",
   "recordsSelectRow": "Sélectionner cette ligne",
-  "recordsSelectShown": "{count, plural, =1{Sélectionner le seul affiché} other{Sélectionner les {count} affichés}}",
-  "recordsSelected": "{count, plural, =1{1 sélectionné} other{{count} sélectionnés}}",
-  "recordsShown": "{count, plural, =1{1 affiché} other{{count} affichés}}",
+  "recordsSelectShown": "{count, plural, =0{Sélectionner les {count} affichés} one{Sélectionner le seul affiché} other{Sélectionner les {count} affichés}}",
+  "recordsSelected": "{count, plural, one{{count} sélectionné} other{{count} sélectionnés}}",
+  "recordsShown": "{count, plural, one{{count} affiché} other{{count} affichés}}",
   "recordsSortBy": "Trier par {column}",
   "recordsTotalOfSelection": "Total de la sélection",
   "recordsTotalOfShown": "Total des lignes affichées",
@@ -15125,7 +15125,7 @@
   },
   "refFilterMore": "Filtres",
   "refFilterReset": "Réinitialiser",
-  "refFilterShow": "{count, plural, =1{Afficher 1 résultat} other{Afficher {count} résultats}}",
+  "refFilterShow": "{count, plural, one{Afficher {count} résultat} other{Afficher {count} résultats}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {
@@ -15341,10 +15341,10 @@
   "reminderPdfTitleFriendly": "Rappel de paiement",
   "reminderPdfTitleLevel": "Relance {level}",
   "reminderQueueCheckFirst": "À vérifier d'abord : argent reçu et non affecté",
-  "reminderQueueDetail": "{days, plural, =0{{number} · échue aujourd'hui} =1{{number} · 1 jour de retard} other{{number} · {days} jours de retard}}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · échue aujourd'hui} one{{number} · 1 jour de retard} other{{number} · {days} jours de retard}}",
   "reminderQueueDone": "Terminé",
   "reminderQueueDoneEmpty": "Rien à partager",
-  "reminderQueueEmailAll": "{count, plural, =1{Envoyer l'unique joignable par e-mail} other{Envoyer les {count} joignables par e-mail}}",
+  "reminderQueueEmailAll": "{count, plural, =0{Envoyer les {count} joignables par e-mail} one{Envoyer l'unique joignable par e-mail} other{Envoyer les {count} joignables par e-mail}}",
   "@reminderQueueEmailAll": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
     "placeholders": {
@@ -15357,7 +15357,7 @@
   "@reminderQueueEmailAllConfirm": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
   },
-  "reminderQueueEmailAllTitle": "{count, plural, =1{Envoyer 1 relance par e-mail ?} other{Envoyer {count} relances par e-mail ?}}",
+  "reminderQueueEmailAllTitle": "{count, plural, one{Envoyer {count} relance par e-mail ?} other{Envoyer {count} relances par e-mail ?}}",
   "@reminderQueueEmailAllTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
     "placeholders": {
@@ -15391,7 +15391,7 @@
   "reminderQueueRecord": "Enregistrer",
   "reminderQueueRecordStays": "Tant qu’elle n’est pas enregistrée, la facture indique encore cette relance comme due.",
   "reminderQueueResultNone": "Aucune relance partagée",
-  "reminderQueueResultSentTitle": "{count, plural, =1{1 relance envoyée} other{{count} relances envoyées}}",
+  "reminderQueueResultSentTitle": "{count, plural, one{{count} relance envoyée} other{{count} relances envoyées}}",
   "@reminderQueueResultSentTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
     "placeholders": {
@@ -15401,12 +15401,12 @@
     }
   },
   "reminderQueueResultSubtitle": "Chacune est enregistrée sur sa facture.",
-  "reminderQueueResultTitle": "{count, plural, =1{1 relance partagée} other{{count} relances partagées}}",
+  "reminderQueueResultTitle": "{count, plural, one{{count} relance partagée} other{{count} relances partagées}}",
   "reminderQueueShare": "Partager",
   "reminderQueueShareNext": "Partager la suivante · {customer}",
   "reminderQueueShared": "Partagée",
   "reminderQueueSharedNotRecorded": "Partagée, mais pas enregistrée sur la facture. Enregistrez-la : elle ne sera pas partagée une seconde fois.",
-  "reminderQueueStaysNoAddress": "{count, plural, =1{1 ligne reste à partager : pas d'adresse e-mail enregistrée.} other{{count} lignes restent à partager : pas d'adresse e-mail enregistrée.}}",
+  "reminderQueueStaysNoAddress": "{count, plural, one{{count} ligne reste à partager : pas d'adresse e-mail enregistrée.} other{{count} lignes restent à partager : pas d'adresse e-mail enregistrée.}}",
   "@reminderQueueStaysNoAddress": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
     "placeholders": {
@@ -15415,7 +15415,7 @@
       }
     }
   },
-  "reminderQueueStaysToDecide": "{count, plural, =1{1 ligne attend : un e-mail précédent est d'abord à trancher.} other{{count} lignes attendent : un e-mail précédent est d'abord à trancher.}}",
+  "reminderQueueStaysToDecide": "{count, plural, one{{count} ligne attend : un e-mail précédent est d'abord à trancher.} other{{count} lignes attendent : un e-mail précédent est d'abord à trancher.}}",
   "@reminderQueueStaysToDecide": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
     "placeholders": {
@@ -15535,7 +15535,7 @@
     "description": "#934 workspace status / repartition wizard: repartitionStepRule"
   },
   "repartitionSubmit": "Comptabiliser les parts",
-  "repartitionSum": "{count, plural, =1{1 membre · {amount}} other{{count} membres · {amount}}}",
+  "repartitionSum": "{count, plural, one{{count} membre · {amount}} other{{count} membres · {amount}}}",
   "@repartitionSum": {
     "placeholders": {
       "count": {
@@ -15652,7 +15652,7 @@
   "reportDesignerInsert": "Insérer un élément",
   "reportDesignerKeepEditing": "Continuer",
   "reportDesignerMoveTo": "Déplacer vers la bande",
-  "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
+  "reportDesignerPages": "{count, plural, one{{count} page} other{{count} pages}}",
   "@reportDesignerPages": {
     "placeholders": {
       "count": {
@@ -16529,7 +16529,7 @@
     "description": "#2631 resource_reserve: reserveParkingStandard"
   },
   "reservePlanLoading": "Chargement du plan…",
-  "reserveRoomFor": "{count, plural, =1{Salle de réunion · 1 personne} other{Salle de réunion · {count} personnes}}",
+  "reserveRoomFor": "{count, plural, one{Salle de réunion · {count} personne} other{Salle de réunion · {count} personnes}}",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
     "placeholders": {
@@ -16546,7 +16546,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Réservée par {minutes, plural, =1{créneaux de 1 minute} other{créneaux de {minutes} minutes}}",
+  "reserveSlotMinutes": "Réservée par {minutes, plural, one{créneaux de {minutes} minute} other{créneaux de {minutes} minutes}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {
@@ -16993,7 +16993,7 @@
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
   },
-  "roomRentAudienceNamed": "{count, plural, =1{Ouverte à 1 entrée choisie} other{Ouverte à {count} entrées choisies}}",
+  "roomRentAudienceNamed": "{count, plural, one{Ouverte à {count} entrée choisie} other{Ouverte à {count} entrées choisies}}",
   "@roomRentAudienceNamed": {
     "description": "#2568 rented rooms",
     "placeholders": {
@@ -17212,7 +17212,7 @@
     "description": "#2362 sales tax: salesTaxWorksheetEmpty"
   },
   "sampleDataClear": "Effacer les données d'exemple",
-  "sampleDataCounts": "Cet espace contient des données d'exemple : {members, plural, =1{1 membre} other{{members} membres}}, {bookings, plural, =1{1 réservation} other{{bookings} réservations}}, {payments, plural, =1{1 paiement} other{{payments} paiements}}.",
+  "sampleDataCounts": "Cet espace contient des données d'exemple : {members, plural, one{{members} membre} other{{members} membres}}, {bookings, plural, one{{bookings} réservation} other{{bookings} réservations}}, {payments, plural, one{{payments} paiement} other{{payments} paiements}}.",
   "sampleDataExplain": "Remplissez cet espace de test avec quelques membres d'exemple, leurs réservations des deux dernières et des deux prochaines semaines et quelques paiements, construits à partir de vos propres places et de vos prix. Rien n'est envoyé à personne, et vous pouvez tout effacer ensuite.",
   "sampleDataFill": "Remplir avec des données d'exemple",
   "sampleDataFillFailed": "Les données d'exemple n'ont pas pu être créées.",
@@ -17228,10 +17228,10 @@
   "scheduleCancel": "Terminer cette programmation",
   "scheduleDaily": "quotidienne",
   "scheduleEndsOn": "Jusqu'au (facultatif)",
-  "scheduleEveryDays": "{count, plural, =1{tous les jours} other{tous les {count} jours}}",
+  "scheduleEveryDays": "{count, plural, =0{tous les {count} jours} one{tous les jours} other{tous les {count} jours}}",
   "scheduleEveryLabel": "Tous les",
-  "scheduleEveryMonths": "{count, plural, =1{tous les mois} other{tous les {count} mois}}",
-  "scheduleEveryWeeks": "{count, plural, =1{toutes les semaines} other{toutes les {count} semaines}}",
+  "scheduleEveryMonths": "{count, plural, =0{tous les {count} mois} one{tous les mois} other{tous les {count} mois}}",
+  "scheduleEveryWeeks": "{count, plural, =0{toutes les {count} semaines} one{toutes les semaines} other{toutes les {count} semaines}}",
   "scheduleMissingFields": "Le nom et le montant sont requis.",
   "scheduleMonthly": "mensuelle",
   "scheduleNew": "Programmer une dépense récurrente",
@@ -17247,7 +17247,7 @@
   "scheduleStatusRejected": "Rejetée",
   "scheduleSubmit": "Programmer",
   "scheduleSupplierLabel": "Fournisseur payé (facultatif)",
-  "scheduleTimes": "{count, plural, =1{1 fois} other{{count} fois}}",
+  "scheduleTimes": "{count, plural, one{{count} fois} other{{count} fois}}",
   "scheduleTimesLabel": "Répétitions (vide = jusqu'à la date de fin)",
   "scheduleTitleLabel": "Quoi (ex. Internet)",
   "scheduleUnitDays": "jours",
@@ -17311,8 +17311,8 @@
     }
   },
   "sentencePair": "{first} {second}",
-  "seriesBookedCount": "{count, plural, =1{1 réservation créée} other{{count} réservations créées}}",
-  "seriesPreviewBookOthers": "{count, plural, =1{Réserver l'autre date} other{Réserver les {count} autres dates}}",
+  "seriesBookedCount": "{count, plural, one{{count} réservation créée} other{{count} réservations créées}}",
+  "seriesPreviewBookOthers": "{count, plural, =0{Réserver les {count} autres dates} one{Réserver l'autre date} other{Réserver les {count} autres dates}}",
   "seriesPreviewFailing": "Ces dates ne peuvent pas être réservées :",
   "seriesPreviewNone": "Aucune de ces dates ne peut être réservée.",
   "seriesSkippedTitle": "Ignorées (déjà prises) :",
@@ -17339,7 +17339,7 @@
   "servicesDuration": "Durée (minutes)",
   "servicesDurationHint": "Laissez vide si elle ne se compte pas en temps.",
   "servicesDurationRange": "Entre {min} et {max} minutes.",
-  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "servicesDurationShort": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
   "servicesEdit": "Modifier le service",
   "servicesEmpty": "Aucun service pour l’instant.",
   "servicesInactive": "Inactif",
@@ -18022,7 +18022,7 @@
   },
   "settlementAction": "Regrouper en une facture",
   "settlementAnnexAlone": "Cette facture seule",
-  "settlementAnnexBody": "{count, plural, =1{La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.} other{Les {count} factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.}}",
+  "settlementAnnexBody": "{count, plural, =0{Les {count} factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.} one{La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.} other{Les {count} factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.}}",
   "@settlementAnnexBody": {
     "placeholders": {
       "count": {
@@ -18032,7 +18032,7 @@
   },
   "settlementAnnexTitle": "Joindre les factures regroupées ?",
   "settlementAnnexWith": "Les joindre",
-  "settlementConfirm": "{count, plural, =1{Regrouper 1 facture en une seule de {amount} ?} other{Regrouper {count} factures en une seule de {amount} ?}}",
+  "settlementConfirm": "{count, plural, one{Regrouper {count} facture en une seule de {amount} ?} other{Regrouper {count} factures en une seule de {amount} ?}}",
   "@settlementConfirm": {
     "placeholders": {
       "count": {
@@ -18087,23 +18087,23 @@
   "setupApprovalsApply": "Appliquer cette règle",
   "setupApprovalsApplyFailed": "La règle d'approbation n'a pas pu être enregistrée. Réessayez.",
   "setupApprovalsFlowOutcome": "Elle s'applique",
-  "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Dès qu'une approbation est donnée.} other{Dès que {required} approbations sont données.}} Un refus la clôt, et personne n'approuve sa propre demande.",
+  "setupApprovalsFlowOutcomeBody": "{required, plural, =0{Dès que {required} approbations sont données.} one{Dès qu'une approbation est donnée.} other{Dès que {required} approbations sont données.}} Un refus la clôt, et personne n'approuve sa propre demande.",
   "setupApprovalsFlowRequest": "Un membre demande",
   "setupApprovalsFlowRequestBody": "Un remboursement, la suppression d'une réservation, une dépense…",
-  "setupApprovalsFlowValidators": "{required, plural, =1{1 sur {people} approuve} other{{required} sur {people} approuvent}}",
-  "setupApprovalsFlowWho": "{owners, plural, =1{Le propriétaire} other{{owners} propriétaires}} et {admins, plural, =0{aucun administrateur} =1{1 administrateur} other{{admins} administrateurs}}",
+  "setupApprovalsFlowValidators": "{required, plural, one{{required} sur {people} approuve} other{{required} sur {people} approuvent}}",
+  "setupApprovalsFlowWho": "{owners, plural, =0{{owners} propriétaires} one{Le propriétaire} other{{owners} propriétaires}} et {admins, plural, =0{aucun administrateur} one{1 administrateur} other{{admins} administrateurs}}",
   "setupApprovalsOpenRules": "Règles par type de demande",
   "setupApprovalsOwnRulesNone": "Chaque demande suit la règle par défaut ci-dessus.",
-  "setupApprovalsOwnRulesShort": "{count, plural, =1{Une règle demande plus d’approbations que les personnes ne peuvent en donner : ses demandes ne sont jamais tranchées. Modifiez-la dans les règles d’approbation.} other{{count} règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.}}",
+  "setupApprovalsOwnRulesShort": "{count, plural, =0{{count} règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.} one{Une règle demande plus d’approbations que les personnes ne peuvent en donner : ses demandes ne sont jamais tranchées. Modifiez-la dans les règles d’approbation.} other{{count} règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.}}",
   "setupApprovalsOwnRulesTitle": "Règles propres",
-  "setupApprovalsPeople": "{count, plural, =1{1 personne peut approuver.} other{{count} personnes peuvent approuver.}}",
+  "setupApprovalsPeople": "{count, plural, one{{count} personne peut approuver.} other{{count} personnes peuvent approuver.}}",
   "setupApprovalsPresetBody": "Une règle pour chaque demande sans règle propre : remboursements, suppressions de réservation, dépenses, changements d'adhésion.",
   "setupApprovalsPresetTitle": "Le propriétaire ou un administrateur approuve",
   "setupApprovalsPreviewRequest": "Votre demande",
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{En attente d'une approbation} other{En attente de {required} approbations}}",
-  "setupApprovalsRuleReach": "{required, plural, =1{1 approbation} other{{required} approbations}}, {people, plural, =1{1 personne peut approuver} other{{people} personnes peuvent approuver}}",
-  "setupApprovalsRuleShort": "{required, plural, =1{1 approbation} other{{required} approbations}}, mais {people, plural, =0{personne ne peut approuver} =1{seule 1 personne peut approuver} other{seules {people} personnes peuvent approuver}}",
-  "setupApprovalsTooMany": "{required} approbations ne pourront jamais être réunies : {people, plural, =1{seule 1 personne peut} other{seules {people} personnes peuvent}} approuver. Demandez-en moins, ou nommez d'autres membres administrateurs.",
+  "setupApprovalsPreviewWaiting": "{required, plural, =0{En attente de {required} approbations} one{En attente d'une approbation} other{En attente de {required} approbations}}",
+  "setupApprovalsRuleReach": "{required, plural, one{{required} approbation} other{{required} approbations}}, {people, plural, one{{people} personne peut approuver} other{{people} personnes peuvent approuver}}",
+  "setupApprovalsRuleShort": "{required, plural, one{{required} approbation} other{{required} approbations}}, mais {people, plural, =0{personne ne peut approuver} one{seule 1 personne peut approuver} other{seules {people} personnes peuvent approuver}}",
+  "setupApprovalsTooMany": "{required, plural, one{{required} approbation ne pourra jamais être réunie} other{{required} approbations ne pourront jamais être réunies}} : {people, plural, one{seule {people} personne peut} other{seules {people} personnes peuvent}} approuver. Demandez-en moins, ou nommez d'autres membres administrateurs.",
   "setupBasicsPreviewDate": "La date du jour",
   "setupBasicsPreviewMoney": "Un montant",
   "setupBasicsPreviewTime": "L’heure actuelle",
@@ -18411,8 +18411,8 @@
   "setupLevelsSwitchOn": "Votre espace obtient :",
   "setupLevelsTitle": "Ce que fait votre espace",
   "setupLimitsPerMember": "Une autorisation fixée sur la page d’un membre passe avant le nombre de places indiqué ici.",
-  "setupLimitsPreviewAhead": "{days, plural, =1{Vous pouvez réserver jusqu’à un jour à l’avance.} other{Vous pouvez réserver jusqu’à {days} jours à l’avance.}}",
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{Vous pouvez occuper une place à la fois.} other{Vous pouvez occuper jusqu’à {count} places à la fois.}}",
+  "setupLimitsPreviewAhead": "{days, plural, =0{Vous pouvez réserver jusqu’à {days} jours à l’avance.} one{Vous pouvez réserver jusqu’à un jour à l’avance.} other{Vous pouvez réserver jusqu’à {days} jours à l’avance.}}",
+  "setupLimitsPreviewAtOnce": "{count, plural, =0{Vous pouvez occuper jusqu’à {count} places à la fois.} one{Vous pouvez occuper une place à la fois.} other{Vous pouvez occuper jusqu’à {count} places à la fois.}}",
   "setupLimitsPreviewLength": "Une réservation dure au moins {shortest} et au plus {longest}.",
   "setupLimitsSaveFailed": "Les limites de réservation n’ont pas pu être enregistrées. Réessayez.",
   "setupLockConfirmTitle": "Avant d'enregistrer",
@@ -18486,7 +18486,7 @@
   "setupPaymentsPreviewEmpty": "Les membres ne voient aucune instruction de paiement tant que vous n'en renseignez pas.",
   "setupPaymentsPreviewNote": "Sur un relevé impayé, sous ce que le membre doit :",
   "setupPaymentsSaveFailed": "Les instructions de paiement n'ont pas pu être enregistrées. Réessayez.",
-  "setupPlacesCounts": "{rooms, plural, =0{aucune salle} =1{1 salle} other{{rooms} salles}} · {desks, plural, =0{aucun bureau} =1{1 bureau} other{{desks} bureaux}} · {seats, plural, =0{aucun poste} =1{1 poste} other{{seats} postes}}",
+  "setupPlacesCounts": "{rooms, plural, =0{aucune salle} one{1 salle} other{{rooms} salles}} · {desks, plural, =0{aucun bureau} one{1 bureau} other{{desks} bureaux}} · {seats, plural, =0{aucun poste} one{1 poste} other{{seats} postes}}",
   "setupPlacesEmpty": "Aucune place pour l’instant. Dessinez les salles, les bureaux et les postes dans l’éditeur, ou partez d’un modèle.",
   "setupPlacesFromTemplate": "Partir d’un modèle",
   "setupPlacesOpenEditor": "Ouvrir l’éditeur",
@@ -18499,8 +18499,8 @@
   "setupPresetNameStandard": "Standard",
   "setupPricingBand": "{from}–{to} % : {fee} par mois, {extra} par demi-journée en plus",
   "setupPricingLevel": "Abonnement à {pct} %",
-  "setupPricingLevelIncludes": "{level} : {count, plural, =1{1 demi-journée incluse} other{{count} demi-journées incluses}}",
-  "setupPricingLevelsBasis": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert {days, plural, =1{1 jour} other{{days} jours}} :",
+  "setupPricingLevelIncludes": "{level} : {count, plural, one{{count} demi-journée incluse} other{{count} demi-journées incluses}}",
+  "setupPricingLevelsBasis": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert {days, plural, one{{days} jour} other{{days} jours}} :",
   "setupPricingLevelsBasisUnknown": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes. Vos jours d'ouverture n'ont pas pu être lus, aucun exemple n'est donc affiché.",
   "setupPricingLevelsBody": "Les niveaux que les membres peuvent choisir. Chacun est tarifé par la tranche dans laquelle il tombe.",
   "setupPricingNoBands": "Pas encore de prix : fixez les montants mensuels dans Facturation.",
@@ -18655,7 +18655,7 @@
   "shellBarHideHint": "Appui long pour l’affichage plein écran",
   "shellBarShowHint": "Appui long pour afficher la barre de navigation",
   "shellBarShownAnnounce": "Barre de navigation affichée",
-  "shellPendingDecisions": "{count, plural, =1{1 décision vous attend} other{{count} décisions vous attendent}}",
+  "shellPendingDecisions": "{count, plural, one{{count} décision vous attend} other{{count} décisions vous attendent}}",
   "shellReserveButton": "Réserver",
   "shellSwipeCoachMark": "Balayez la barre vers le bas pour l'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.",
   "siteCity": "Ville",
@@ -19353,7 +19353,7 @@
   "supportPrepare": "Préparer l’aperçu",
   "supportPrivacy": "Seuls les compteurs limités de cet appareil et les contrôles connus sont inclus. Identités, adresses serveur, identifiants, données métier et journaux bruts sont exclus. Les contrôles inconnus sont indisponibles ; un opérateur peut exécuter doctor --support-json séparément. Les fichiers partagés ne peuvent pas être révoqués.",
   "supportSaved": "Enregistré localement",
-  "supportSize": "Aperçu : {bytes, plural, =1{1 octet} other{{bytes} octets}}",
+  "supportSize": "Aperçu : {bytes, plural, one{{bytes} octet} other{{bytes} octets}}",
   "@supportSize": {
     "placeholders": {
       "bytes": {
@@ -19451,7 +19451,7 @@
   "taskExportOutcomeSeriesBooked": "la série a été réservée",
   "taskExportOutcomeUnknown": "aucune réponse n'a pu être confirmée ; le résultat est inconnu",
   "taskExportOutcomeUnregistered": "un résultat que cette version ne sait pas décrire",
-  "taskExportPauses": "{count, plural, =0{Aucune pause} =1{Une pause} other{{count} pauses}}",
+  "taskExportPauses": "{count, plural, =0{Aucune pause} one{Une pause} other{{count} pauses}}",
   "taskExportPlatform": "Enregistré sur : {platform}",
   "taskExportPrereqBookablePlace": "Au moins une place peut être réservée.",
   "taskExportPrereqSignedIn": "Vous êtes connecté.",
@@ -19522,7 +19522,7 @@
   "taskExportValuePlan": "plan",
   "taskExportValuePolicy": "une règle de réservation",
   "taskExportValueQuota": "un quota",
-  "taskExportValueRedacted": "non conservé ({length, plural, =1{1 caractère} other{{length} caractères}})",
+  "taskExportValueRedacted": "non conservé ({length, plural, one{{length} caractère} other{{length} caractères}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {
@@ -19612,7 +19612,7 @@
   "taskRecorderDiscard": "Jeter",
   "taskRecorderDisclosureBody": "L'enregistreur note les étapes que vous faites sur les écrans de cet espace — quel écran, quelle action, ce que l'application a répondu — sur cet appareil uniquement. Il ne garde jamais ce que vous tapez, ni noms, montants, messages, codes ou mots de passe. La connexion, le paiement, les messages et les autres écrans protégés ne laissent qu'un repère. Rien n'est envoyé : vous décidez de ce que vous exportez.",
   "taskRecorderDisclosureTitle": "Avant d'enregistrer",
-  "taskRecorderEditedNote": "{count, plural, =1{Copie modifiée : 1 étape exclue. L'enregistrement sur cet appareil reste inchangé.} other{Copie modifiée : {count} étapes exclues. L'enregistrement sur cet appareil reste inchangé.}}",
+  "taskRecorderEditedNote": "{count, plural, one{Copie modifiée : {count} étape exclue. L'enregistrement sur cet appareil reste inchangé.} other{Copie modifiée : {count} étapes exclues. L'enregistrement sur cet appareil reste inchangé.}}",
   "taskRecorderEndInterrupted": "Interrompu : l'application s'est arrêtée pendant l'enregistrement",
   "taskRecorderEndLimitReached": "Terminé : une limite a été atteinte",
   "taskRecorderEndReferenceMissing": "Arrêt : le formulaire actuel n’a pas pu être identifié. Ouvrez une page prise en charge et recommencez.",
@@ -19630,9 +19630,9 @@
   "taskRecorderFieldForWhom": "pour qui",
   "taskRecorderFieldRepeat": "répétition",
   "taskRecorderFieldTime": "horaire",
-  "taskRecorderIndicator": "{count, plural, =1{Enregistrement d'une tâche : 1 étape} other{Enregistrement d'une tâche : {count} étapes}}",
+  "taskRecorderIndicator": "{count, plural, one{Enregistrement d'une tâche : {count} étape} other{Enregistrement d'une tâche : {count} étapes}}",
   "taskRecorderLeaveOut": "Exclure de l'export",
-  "taskRecorderLimits": "Jusqu'à {steps, plural, =1{1 étape} other{{steps} étapes}} ou {minutes, plural, =1{1 minute} other{{minutes} minutes}} par enregistrement. Les enregistrements sont effacés de cet appareil après {days, plural, =1{1 jour} other{{days} jours}} ; un fichier exporté vous appartient et reste là où vous l'avez enregistré.",
+  "taskRecorderLimits": "Jusqu'à {steps, plural, one{{steps} étape} other{{steps} étapes}} ou {minutes, plural, one{{minutes} minute} other{{minutes} minutes}} par enregistrement. Les enregistrements sont effacés de cet appareil après {days, plural, one{{days} jour} other{{days} jours}} ; un fichier exporté vous appartient et reste là où vous l'avez enregistré.",
   "taskRecorderMyRecordings": "Mes enregistrements sur cet appareil",
   "taskRecorderNameHint": "Facultatif. Laissé vide, l'enregistrement porte l'heure de son démarrage.",
   "taskRecorderNameLabel": "Nommer cette tâche",
@@ -19676,7 +19676,7 @@
   "taskRecorderSignedOut": "Connectez-vous pour enregistrer une tâche.",
   "taskRecorderStart": "Commencer l'enregistrement",
   "taskRecorderStartFailed": "L'enregistrement n'a pas pu démarrer sur cet appareil.",
-  "taskRecorderStepCount": "{count, plural, =1{1 étape} other{{count} étapes}}",
+  "taskRecorderStepCount": "{count, plural, one{{count} étape} other{{count} étapes}}",
   "taskRecorderStepExcluded": "Un écran protégé — non enregistré",
   "taskRecorderStepNote": "Votre note",
   "taskRecorderStepUnrecorded": "Une étape que l'enregistreur ne sait pas décrire",
@@ -20321,13 +20321,13 @@
   "templateRequire": "Exiger : {capability}",
   "templateRequirementRemove": "Retirer l’exigence",
   "templateRequirementsReset": "Réinitialiser",
-  "templateResultCount": "{count, plural, =0{Aucun modèle affiché} =1{1 modèle affiché} other{{count} modèles affichés}}",
+  "templateResultCount": "{count, plural, =0{Aucun modèle affiché} one{1 modèle affiché} other{{count} modèles affichés}}",
   "templateValidatorsToChoose": "Choisissez qui valide {types} dans les réglages de validation ; ces règles n'ont pas été modifiées.",
   "templateWhy": "Pourquoi ce modèle correspond",
   "templateWhyHide": "Masquer le pourquoi",
   "templateWidenConfirm": "Rendre lisible",
-  "templateWidenCount": "{count, plural, =1{1 réglage devient lisible, tel que le modèle le contient maintenant.} other{{count} réglages deviennent lisibles, tels que le modèle les contient maintenant.}}",
-  "templateWidenExcluded": "{count, plural, =1{1 type de valeur ne part jamais avec lui (coordonnées bancaires, sites, adresses…).} other{{count} types de valeurs ne partent jamais avec lui (coordonnées bancaires, sites, adresses…).}}",
+  "templateWidenCount": "{count, plural, one{{count} réglage devient lisible, tel que le modèle le contient maintenant.} other{{count} réglages deviennent lisibles, tels que le modèle les contient maintenant.}}",
+  "templateWidenExcluded": "{count, plural, one{{count} type de valeur ne part jamais avec lui (coordonnées bancaires, sites, adresses…).} other{{count} types de valeurs ne partent jamais avec lui (coordonnées bancaires, sites, adresses…).}}",
   "templateWidenTitle": "Rendre ce modèle lisible par : {audience} ?",
   "templatesLoadFailed": "Les modèles n’ont pas pu être chargés.",
   "themeDark": "Sombre",
@@ -20491,7 +20491,7 @@
   "@usagePrepareAction": {
     "description": "#2590 usage preparation"
   },
-  "usagePrepareBanner": "{count, plural, =1{1 réservation de ce mois n'est pas encore enregistrées : cette liste peut être incomplète.} other{{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.}}",
+  "usagePrepareBanner": "{count, plural, one{{count} réservation de ce mois n'est pas encore enregistrées : cette liste peut être incomplète.} other{{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {
@@ -20555,7 +20555,7 @@
   "usageWas": "était {before}",
   "uxAdvancedSection": "Avancé",
   "uxAlertsFilterEmpty": "Aucune actualité ne correspond à ces filtres.",
-  "uxAttentionSummary": "{updates, plural, =1{1 nouveauté} other{{updates} nouveautés}} · {pending, plural, =1{1 décision en attente} other{{pending} décisions en attente}}",
+  "uxAttentionSummary": "{updates, plural, one{{updates} nouveauté} other{{updates} nouveautés}} · {pending, plural, one{{pending} décision en attente} other{{pending} décisions en attente}}",
   "@uxAttentionSummary": {
     "placeholders": {
       "updates": {
@@ -20566,7 +20566,7 @@
       }
     }
   },
-  "uxBookingAllowanceLeft": "{count, plural, =0{Plus aucune demi-journée dans votre forfait ce mois-ci} =1{1 demi-journée restante dans votre forfait ce mois-ci} other{{count} demi-journées restantes dans votre forfait ce mois-ci}}",
+  "uxBookingAllowanceLeft": "{count, plural, =0{Plus aucune demi-journée dans votre forfait ce mois-ci} one{1 demi-journée restante dans votre forfait ce mois-ci} other{{count} demi-journées restantes dans votre forfait ce mois-ci}}",
   "uxBookingChargePending": "Le montant et l’utilisation du forfait dépendent du plan du membre et sont réglés sur le relevé.",
   "uxBookingCheckInHelp": "Indiquer aussi ma présence lors de la confirmation de cette réservation.",
   "uxBookingFor": "Réservation pour",
@@ -20654,12 +20654,12 @@
   "validationSpecificAdmins": "Admins spécifiques",
   "validationStepApplies": "cela prend effet",
   "validationStepOwnerToo": "et le propriétaire, toujours",
-  "validationStepQuorum": "{who} — {count, plural, =1{1 au choix} other{{count} au choix}}",
+  "validationStepQuorum": "{who} — {count, plural, one{{count} au choix} other{{count} au choix}}",
   "validationStepRaised": "Quelqu’un demande",
   "validationStepSequential": "{who} — {count} à la suite",
   "validationThresholdNote": "Les montants plus faibles s'appliquent aussitôt.",
   "validationTitle": "Règles de validation",
-  "validationTrailAwaiting": "{count, plural, =1{En attente d’une validation de plus.} other{En attente de {count} validations de plus.}}",
+  "validationTrailAwaiting": "{count, plural, =0{En attente de {count} validations de plus.} one{En attente d’une validation de plus.} other{En attente de {count} validations de plus.}}",
   "validationTrailNone": "Aucune décision pour le moment.",
   "validationTrailStep": "Étape {order}",
   "validationTrailTitle": "Historique de validation",
@@ -20936,7 +20936,7 @@
   "@valuationManualUse": {
     "description": "#2576 accountant valuations"
   },
-  "valuationMismatches": "{count, plural, =1{1 ligne ne s'équilibre pas} other{{count} lignes ne s'équilibrent pas}}",
+  "valuationMismatches": "{count, plural, one{{count} ligne ne s'équilibre pas} other{{count} lignes ne s'équilibrent pas}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -20965,7 +20965,7 @@
   "@valuationPick": {
     "description": "#2576 accountant valuations"
   },
-  "valuationPreview": "{basis}, {from} – {to}, {currency} : {count, plural, =1{1 équipement} other{{count} équipements}}",
+  "valuationPreview": "{basis}, {from} – {to}, {currency} : {count, plural, one{{count} équipement} other{{count} équipements}}",
   "@valuationPreview": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -21002,7 +21002,7 @@
   "@valuationReplacesNone": {
     "description": "#2576 accountant valuations"
   },
-  "valuationRows": "{count, plural, =1{1 équipement} other{{count} équipements}}",
+  "valuationRows": "{count, plural, one{{count} équipement} other{{count} équipements}}",
   "@valuationRows": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -21650,7 +21650,7 @@
   "visibilityAskPublic": "Mon profil public est-il publié ?",
   "visibilityAskWrite": "Qui peut m’écrire ?",
   "visibilityBio": "Quelques mots sur vous",
-  "visibilityChosenCount": "{count, plural, =1{Membres d'1 lieu choisi} other{Membres de {count} lieux choisis}}",
+  "visibilityChosenCount": "{count, plural, one{Membres d'{count} lieu choisi} other{Membres de {count} lieux choisis}}",
   "visibilityChosenSpaces": "Membres de lieux choisis",
   "visibilityConflictKeep": "Garder le réglage enregistré",
   "visibilityConflictReview": "Revoir ma modification",
@@ -21830,7 +21830,7 @@
   "wizardCloseHint": "Un membre avec plusieurs factures ouvertes peut n'en payer QU'UNE ; le reste d'une facture partiellement payée peut être abandonné ; un avoir est remboursé. Chacun passe par la validation.",
   "wizardCloseNone": "Rien à regrouper, abandonner ou rembourser.",
   "wizardFinish": "Terminer",
-  "wizardIssueAll": "{count, plural, =1{Émettre 1 facture} other{Émettre {count} factures}}",
+  "wizardIssueAll": "{count, plural, one{Émettre {count} facture} other{Émettre {count} factures}}",
   "@wizardIssueAll": {
     "placeholders": {
       "count": {
@@ -21882,7 +21882,7 @@
     }
   },
   "wizardRefund": "Rembourser",
-  "wizardRemindAll": "{count, plural, =1{Envoyer 1 relance} other{Envoyer {count} relances}}",
+  "wizardRemindAll": "{count, plural, one{Envoyer {count} relance} other{Envoyer {count} relances}}",
   "@wizardRemindAll": {
     "placeholders": {
       "count": {
@@ -22181,7 +22181,7 @@
     "description": "#1532: workspaceXmlImportPartial"
   },
   "workspaceXmlImportPreviewAccessories": "Accessoires : {count}",
-  "workspaceXmlImportPreviewConfiguration": "Configuration : {settings, plural, =1{1 réglage} other{{settings} réglages}}, {rows, plural, =1{1 ligne} other{{rows} lignes}} dans {tables, plural, =1{1 table} other{{tables} tables}}",
+  "workspaceXmlImportPreviewConfiguration": "Configuration : {settings, plural, one{{settings} réglage} other{{settings} réglages}}, {rows, plural, one{{rows} ligne} other{{rows} lignes}} dans {tables, plural, one{{tables} table} other{{tables} tables}}",
   "@workspaceXmlImportPreviewConfiguration": {
     "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
     "placeholders": {
@@ -22209,7 +22209,7 @@
   "xeroInvoiceAccountCode": "Code du compte de ventes",
   "xeroInvoiceAccountsIntro": "Xero importe ces factures en brouillon : validez-les dans Xero. Le compte de ventes et les taux de taxe sont ceux de votre organisation : reprenez leurs noms dans Xero.",
   "xeroInvoiceAccountsTitle": "Export Xero",
-  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.} other{{count} avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.}}",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =0{{count} avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.} one{Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.} other{{count} avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.}}",
   "xeroInvoiceDateOrder": "Ordre des dates de votre organisation",
   "xeroInvoiceDayFirst": "Jour d’abord (31/12/2026)",
   "xeroInvoiceImportTaxExclusive": "Lors de l’import dans Xero, choisissez « Tax exclusive » (hors taxes) pour les montants : le fichier contient le net de chaque taux et la TVA enregistrée sur la facture.",

@@ -66,7 +66,7 @@
   "@biSalesServiceTitle": {
     "description": "#3294 step 3 sales analytics"
   },
-  "biSalesServiceBasis": "{count, plural, =1{1 service and package} other{{count} services and packages}}",
+  "biSalesServiceBasis": "{count, plural, one{1 service and package} other{{count} services and packages}}",
   "@biSalesServiceBasis": {
     "description": "#3294 step 3 sales analytics",
     "placeholders": {
@@ -131,7 +131,7 @@
   "@biSalesRoomsOff": {
     "description": "#3294 step 3 sales analytics"
   },
-  "biSalesNetUnknown": "{count, plural, =1{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}",
+  "biSalesNetUnknown": "{count, plural, one{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}",
   "@biSalesNetUnknown": {
     "description": "#3294 step 3 sales analytics",
     "placeholders": {

@@ -20,7 +20,7 @@
   "gettingStartedAvailabilityUnknown": "Die Verfügbarkeit konnte nicht geladen werden. Die Hilfe erklärt, wie Buchen hier funktioniert.",
   "gettingStartedMembershipUnknown": "Ihre Mitgliedschaft konnte gerade nicht geladen werden. Die Hilfe erklärt, wie dieser Workspace funktioniert.",
   "gettingStartedBooked": "Ihre Buchung ist {state}. Ihre Mitgliedschaft zeigt, was sonst noch enthalten ist.",
-  "gettingStartedAllowance": "{count, plural, =1{Sie können eine Buchung gleichzeitig halten.} other{Sie können {count} Buchungen gleichzeitig halten.}}",
+  "gettingStartedAllowance": "{count, plural, one{Sie können eine Buchung gleichzeitig halten.} other{Sie können {count} Buchungen gleichzeitig halten.}}",
   "gettingStartedStateReserved": "reserviert",
   "gettingStartedStateCheckedIn": "eingecheckt",
   "gettingStartedStateCompleted": "abgeschlossen",

@@ -4,7 +4,7 @@
   "supportHour": "Dernière heure",
   "supportDay": "Dernières 24 heures",
   "supportPrepare": "Préparer l’aperçu",
-  "supportSize": "Aperçu : {bytes, plural, =1{1 octet} other{{bytes} octets}}",
+  "supportSize": "Aperçu : {bytes, plural, one{{bytes} octet} other{{bytes} octets}}",
   "supportSaved": "Enregistré localement",
   "supportChanged": "Le contexte a changé. Préparez un nouvel aperçu.",
   "supportFailed": "Impossible de préparer les détails. Réessayez.",

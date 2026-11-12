@@ -70,7 +70,7 @@
   },
   "setupNewMembersPreviewStart": "A new member starts on a {pct} % subscription ({policy}).",
   "@setupNewMembersPreviewStart": {
-    "description": "#2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage.",
+    "description": "#2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"

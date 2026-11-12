@@ -24,7 +24,7 @@
   "@libraryEmpty": {
     "description": "Shown as a title in template gallery (workspace)."
   },
-  "libraryCounts": "{levels, plural, =1{1 level} other{{levels} levels}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
+  "libraryCounts": "{levels, plural, one{1 level} other{{levels} levels}} · {desks, plural, one{1 desk} other{{desks} desks}} · {seats, plural, one{1 seat} other{{seats} seats}}",
   "@libraryCounts": {
     "description": "Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).",
     "placeholders": {
@@ -120,7 +120,7 @@
   "@libraryReasonFeeSchedule": {
     "description": "Template apply preview (#1280): libraryReasonFeeSchedule"
   },
-  "libraryApplyChanges": "{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}",
+  "libraryApplyChanges": "{count, plural, =0{Nothing selected} one{Apply 1 change} other{Apply {count} changes}}",
   "@libraryApplyChanges": {
     "description": "Template apply preview (#1280): libraryApplyChanges",
     "placeholders": {
@@ -138,7 +138,7 @@
       }
     }
   },
-  "libraryAppliedChanges": "{count, plural, =1{1 change applied.} other{{count} changes applied.}}",
+  "libraryAppliedChanges": "{count, plural, one{1 change applied.} other{{count} changes applied.}}",
   "@libraryAppliedChanges": {
     "description": "Template apply preview (#1280): libraryAppliedChanges",
     "placeholders": {
@@ -369,7 +369,7 @@
   "@onboardingTemplatesFailedEmpty": {
     "description": "#1660 library"
   },
-  "templateResultCount": "{count, plural, =0{No template shown} =1{1 template shown} other{{count} templates shown}}",
+  "templateResultCount": "{count, plural, =0{No template shown} one{1 template shown} other{{count} templates shown}}",
   "@templateResultCount": {
     "description": "#1660 library",
     "placeholders": {

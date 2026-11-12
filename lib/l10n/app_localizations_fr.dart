@@ -278,6 +278,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$count connexions antérieures ont été révoquées',
       one: 'Une connexion antérieure a été révoquée',
+      zero: '$count connexions antérieures ont été révoquées',
     );
     return '$_temp0';
   }
@@ -390,6 +391,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$count tentatives',
       one: 'une tentative',
+      zero: '$count tentatives',
     );
     return '$_temp0';
   }
@@ -452,7 +454,13 @@ class AppLocalizationsFr extends AppLocalizations {
       one: 'Une pièce enregistrée',
       zero: 'Aucune nouvelle pièce enregistrée',
     );
-    return '$_temp0, $unchanged inchangées';
+    String _temp1 = intl.Intl.pluralLogic(
+      unchanged,
+      locale: localeName,
+      other: '$unchanged inchangées',
+      one: '$unchanged inchangée',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -717,6 +725,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$count pièces portées',
       one: 'Une pièce portée',
+      zero: '$count pièces portées',
     );
     return '$_temp0';
   }
@@ -733,6 +742,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$documents pièces',
       one: 'une pièce',
+      zero: '$documents pièces',
     );
     return '$when par $who · $_temp0';
   }
@@ -967,7 +977,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures payées en totalité',
-      one: '1 facture payée en totalité',
+      one: '$count facture payée en totalité',
     );
     return '$_temp0';
   }
@@ -993,7 +1003,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures payées en partie',
-      one: '1 facture payée en partie',
+      one: '$count facture payée en partie',
     );
     return '$_temp0';
   }
@@ -1287,7 +1297,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Admettre $count personnes qui demandent à rejoindre',
-      one: 'Admettre 1 personne qui demande à rejoindre',
+      one: 'Admettre $count personne qui demande à rejoindre',
     );
     return '$_temp0';
   }
@@ -1303,7 +1313,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Facturer le mois à $count membres',
-      one: 'Facturer le mois à 1 membre',
+      one: 'Facturer le mois à $count membre',
     );
     return '$_temp0';
   }
@@ -1319,7 +1329,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count fonctionnalités activées attendent « $feature »',
-      one: '1 fonctionnalité activée attend « $feature »',
+      one: '$count fonctionnalité activée attend « $feature »',
     );
     return '$_temp0';
   }
@@ -2045,7 +2055,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Confirmer $count rapprochements par référence',
-      one: 'Confirmer 1 rapprochement par référence',
+      one: 'Confirmer $count rapprochement par référence',
     );
     return '$_temp0';
   }
@@ -2056,7 +2066,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count paiements rapprochés.',
-      one: '1 paiement rapproché.',
+      one: '$count paiement rapproché.',
     );
     return '$_temp0';
   }
@@ -2193,13 +2203,13 @@ class AppLocalizationsFr extends AppLocalizations {
       created,
       locale: localeName,
       other: '$created nouvelles écritures',
-      one: '1 nouvelle écriture',
+      one: '$created nouvelle écriture',
     );
     String _temp1 = intl.Intl.pluralLogic(
       known,
       locale: localeName,
       other: '$known déjà connues',
-      one: '1 déjà connue',
+      one: '$known déjà connue',
     );
     return 'Importé : $_temp0, $_temp1, $review à vérifier.';
   }
@@ -2422,9 +2432,15 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count mouvements',
-      one: '1 mouvement',
+      one: '$count mouvement',
     );
-    return '$_temp0, $open à traiter';
+    String _temp1 = intl.Intl.pluralLogic(
+      open,
+      locale: localeName,
+      other: '$open à traiter',
+      one: '$open à traiter',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -2507,7 +2523,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lignes sont revendiquées par deux règles et restent non réparties tant que l\'une d\'elles demeure.',
-      one: '1 ligne est revendiquée par deux règles et reste non répartie tant que l\'une d\'elles demeure.',
+      one:
+          '$count ligne est revendiquée par deux règles et reste non répartie tant que l\'une d\'elles demeure.',
     );
     return '$_temp0';
   }
@@ -2624,7 +2641,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count analyses de cette vue ne vous sont pas accessibles et sont omises.',
-      one: '1 analyse de cette vue ne vous est pas accessible et est omise.',
+      one:
+          '$count analyse de cette vue ne vous est pas accessible et est omise.',
     );
     return '$_temp0';
   }
@@ -2639,7 +2657,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count paiements',
-      one: '1 paiement',
+      one: '$count paiement',
     );
     return '$_temp0';
   }
@@ -2763,7 +2781,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lignes dont la taxe récupérable n\'est pas qualifiée comptent pour leur montant TTC.',
-      one: '1 ligne dont la taxe récupérable n\'est pas qualifiée compte pour son montant TTC.',
+      one:
+          '$count ligne dont la taxe récupérable n\'est pas qualifiée compte pour son montant TTC.',
     );
     return '$_temp0';
   }
@@ -2774,7 +2793,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count lignes que personne n\'a classées sont exclues.',
-      one: '1 ligne que personne n\'a classée est exclue.',
+      one: '$count ligne que personne n\'a classée est exclue.',
     );
     return '$_temp0';
   }
@@ -2807,7 +2826,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$cohort : $count factures, $amount',
-      one: '$cohort : 1 facture, $amount',
+      one: '$cohort : $count facture, $amount',
     );
     return '$_temp0';
   }
@@ -3352,7 +3371,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count rangées',
-      one: '1 rangée',
+      one: '$count rangée',
     );
     return '$_temp0';
   }
@@ -3516,7 +3535,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count cartes ne sont pas dans cet export : leur chiffre, leurs filtres ou leur regroupement ne sont pas encore exportables.',
-      one: '1 carte n\'est pas dans cet export : son chiffre, ses filtres ou son regroupement ne sont pas encore exportables.',
+      one:
+          '$count carte n\'est pas dans cet export : son chiffre, ses filtres ou son regroupement ne sont pas encore exportables.',
     );
     return '$_temp0';
   }
@@ -3561,7 +3581,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Sur $count paiements rapprochés de factures',
-      one: 'Sur 1 paiement rapproché de factures',
+      one: 'Sur $count paiement rapproché de factures',
     );
     return '$_temp0';
   }
@@ -3591,7 +3611,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Sur $count factures ; avoirs $credit, montrés à part',
-      one: 'Sur 1 facture ; avoirs $credit, montrés à part',
+      one: 'Sur $count facture ; avoirs $credit, montrés à part',
     );
     return '$_temp0';
   }
@@ -3696,7 +3716,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count produits vendus n’ont jamais été achetés : sans coût, ils sont laissés hors du coût et de la marge',
-      one: '1 produit vendu n’a jamais été acheté : sans coût, il est laissé hors du coût et de la marge',
+      one:
+          '$count produit vendu n’a jamais été acheté : sans coût, il est laissé hors du coût et de la marge',
     );
     return '$_temp0';
   }
@@ -3708,7 +3729,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lignes d’achat ne nomment une fourniture que par son texte : elles ne sont rattachées à aucun article et restent à part',
-      one: '1 ligne d’achat ne nomme une fourniture que par son texte : elle n’est rattachée à aucun article et reste à part',
+      one:
+          '$count ligne d’achat ne nomme une fourniture que par son texte : elle n’est rattachée à aucun article et reste à part',
     );
     return '$_temp0';
   }
@@ -3719,7 +3741,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count fournisseurs',
-      one: '1 fournisseur',
+      one: '$count fournisseur',
     );
     return '$_temp0';
   }
@@ -3930,6 +3952,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'les $count dernières périodes complètes',
       one: 'la dernière période complète',
+      zero: 'les $count dernières périodes complètes',
     );
     return 'Une droite tracée sur $_temp0, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.';
   }
@@ -3954,13 +3977,13 @@ class AppLocalizationsFr extends AppLocalizations {
       have,
       locale: localeName,
       other: '$have périodes complètes',
-      one: '1 période complète',
+      one: '$have période complète',
     );
     String _temp1 = intl.Intl.pluralLogic(
       need,
       locale: localeName,
       other: '$need nécessaires',
-      one: '1 nécessaire',
+      one: '$need nécessaire',
     );
     return 'Pas encore assez d\'historique pour projeter : $_temp0 pour l\'instant, $_temp1.';
   }
@@ -4026,7 +4049,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           'Il y a plus de $count groupes ; choisissez « Sans regroupement ».',
-      one: 'Il y a plus de 1 groupe ; choisissez « Sans regroupement ».',
+      one: 'Il y a plus de $count groupe ; choisissez « Sans regroupement ».',
     );
     return '$_temp0';
   }
@@ -4167,7 +4190,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lignes de vente n’ont pas de taux de TVA lisible : leur montant HT est inconnu et laissé hors du HT',
-      one: '1 ligne de vente n’a pas de taux de TVA lisible : son montant HT est inconnu et laissé hors du HT',
+      one:
+          '$count ligne de vente n’a pas de taux de TVA lisible : son montant HT est inconnu et laissé hors du HT',
     );
     return '$_temp0';
   }
@@ -4212,7 +4236,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count services et forfaits',
-      one: '1 service et forfait',
+      one: '$count service et forfait',
     );
     return '$_temp0';
   }
@@ -4283,7 +4307,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count catégories',
-      one: '1 catégorie',
+      one: '$count catégorie',
     );
     return '$_temp0';
   }
@@ -4303,7 +4327,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$cohort : $count factures, $amount',
-      one: '$cohort : 1 facture, $amount',
+      one: '$cohort : $count facture, $amount',
     );
     return '$_temp0';
   }
@@ -4344,7 +4368,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$cohort : $count commandes',
-      one: '$cohort : 1 commande',
+      one: '$cohort : $count commande',
     );
     return '$_temp0';
   }
@@ -4417,7 +4441,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count factures sans date du fournisseur ou de réception sont laissées de côté',
-      one: '1 facture sans date du fournisseur ou de réception est laissée de côté',
+      one:
+          '$count facture sans date du fournisseur ou de réception est laissée de côté',
     );
     return '$_temp0';
   }
@@ -4480,7 +4505,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count analyses de cette vue ont été enregistrées quand leur indicateur avait un autre sens ; elles sont omises plutôt que montrées avec un autre sens.',
-      one: '1 analyse de cette vue a été enregistrée quand son indicateur avait un autre sens ; elle est omise plutôt que montrées avec un autre sens.',
+      one:
+          '$count analyse de cette vue a été enregistrée quand son indicateur avait un autre sens ; elle est omise plutôt que montrées avec un autre sens.',
     );
     return '$_temp0';
   }
@@ -4580,7 +4606,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count chiffres de cette vue ne sont pas affichés : vous n\'avez pas le droit de les lire.',
-      one: '1 chiffre de cette vue n\'est pas affiché : vous n\'avez pas le droit de le lire.',
+      one:
+          '$count chiffre de cette vue n\'est pas affiché : vous n\'avez pas le droit de le lire.',
     );
     return '$_temp0';
   }
@@ -4621,13 +4648,13 @@ class AppLocalizationsFr extends AppLocalizations {
       included,
       locale: localeName,
       other: '$included demi-journées facturées',
-      one: '1 demi-journée facturée',
+      one: '$included demi-journée facturée',
     );
     String _temp1 = intl.Intl.pluralLogic(
       openDays,
       locale: localeName,
       other: '$openDays jours d\'ouverture',
-      one: '1 jour d\'ouverture',
+      one: '$openDays jour d\'ouverture',
     );
     return '$used sur $_temp0 ($_temp1)';
   }
@@ -5422,7 +5449,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$list et $count autres',
-      one: '$list et 1 autre',
+      one: '$list et $count autre',
     );
     return '$_temp0';
   }
@@ -5486,7 +5513,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           'tout ce qui concerne les places — sièges, plan, borne, salles ($count fonctions)',
-      one: 'tout ce qui concerne les places — sièges, plan, borne, salles (1 fonction)',
+      one:
+          'tout ce qui concerne les places — sièges, plan, borne, salles ($count fonction)',
     );
     return '$_temp0';
   }
@@ -5567,6 +5595,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Rien de prévu dans les $days prochains jours.',
       one: 'Rien de prévu dans le prochain jour.',
+      zero: 'Rien de prévu dans les $days prochains jours.',
     );
     return '$_temp0';
   }
@@ -5578,6 +5607,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$days prochains jours',
       one: 'Prochain jour',
+      zero: '$days prochains jours',
     );
     return '$_temp0';
   }
@@ -6118,7 +6148,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n couleurs à vous, dans cet ordre.',
-      one: '1 couleur à vous, dans cet ordre.',
+      one: '$n couleur à vous, dans cet ordre.',
     );
     return '$_temp0';
   }
@@ -6133,7 +6163,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n couleurs de salles enregistrées.',
-      one: '1 couleur de salle enregistrée.',
+      one: '$n couleur de salle enregistrée.',
     );
     return '$_temp0';
   }
@@ -6151,7 +6181,7 @@ class AppLocalizationsFr extends AppLocalizations {
       most,
       locale: localeName,
       other: '$most couleurs de salles',
-      one: '1 couleur de salle',
+      one: '$most couleur de salle',
     );
     return 'Le plan peint au plus $_temp0.';
   }
@@ -6242,6 +6272,8 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           'Jusqu\'à $count modèles peuvent être comparés. Retirez-en un d\'abord.',
       one: 'Un seul modèle peut être comparé. Retirez-en un d\'abord.',
+      zero:
+          'Jusqu\'à $count modèles peuvent être comparés. Retirez-en un d\'abord.',
     );
     return '$_temp0';
   }
@@ -6294,7 +6326,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count caractères restants',
-      one: '1 caractère restant',
+      one: '$count caractère restant',
     );
     return '$_temp0';
   }
@@ -6556,7 +6588,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count membres',
-      one: '1 membre',
+      one: '$count membre',
     );
     return '$_temp0';
   }
@@ -6935,6 +6967,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$count relances partagées pour $number',
       one: 'Relance partagée pour $number',
+      zero: '$count relances partagées pour $number',
     );
     return '$_temp0';
   }
@@ -7547,7 +7580,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: 'Vu il y a $days jours',
-      one: 'Vu il y a 1 jour',
+      one: 'Vu il y a $days jour',
     );
     return '$_temp0';
   }
@@ -7558,7 +7591,7 @@ class AppLocalizationsFr extends AppLocalizations {
       hours,
       locale: localeName,
       other: 'Vu il y a $hours heures',
-      one: 'Vu il y a 1 heure',
+      one: 'Vu il y a $hours heure',
     );
     return '$_temp0';
   }
@@ -7637,7 +7670,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count n\'ont pas pu être recherchés.',
-      one: '1 n\'a pas pu être recherché.',
+      one: '$count n\'a pas pu être recherché.',
     );
     return '$_temp0';
   }
@@ -7649,7 +7682,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lieux n\'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.',
-      one: '1 lieu n\'a pas pu être placé sur la carte ; sa fiche est en dessous.',
+      one:
+          '$count lieu n\'a pas pu être placé sur la carte ; sa fiche est en dessous.',
     );
     return '$_temp0';
   }
@@ -7660,7 +7694,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count n\'ont pas d\'adresse publiée.',
-      one: '1 n\'a pas d\'adresse publiée.',
+      one: '$count n\'a pas d\'adresse publiée.',
     );
     return '$_temp0';
   }
@@ -7702,6 +7736,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$count annuaires n’ont pas répondu.',
       one: 'Un annuaire n’a pas répondu.',
+      zero: '$count annuaires n’ont pas répondu.',
     );
     return '$_temp0 Ces résultats peuvent être incomplets.';
   }
@@ -8921,13 +8956,13 @@ class AppLocalizationsFr extends AppLocalizations {
       failures,
       locale: localeName,
       other: '$failures échecs',
-      one: '1 échec',
+      one: '$failures échec',
     );
     String _temp1 = intl.Intl.pluralLogic(
       minutes,
       locale: localeName,
       other: '$minutes minutes',
-      one: '1 minute',
+      one: '$minutes minute',
     );
     return 'La connexion par badge est suspendue après $_temp0 en $_temp1. Vérifiez les badges et demandez aux membres de se connecter par e-mail en attendant.';
   }
@@ -8959,7 +8994,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$actor répartit « $title » — $amount entre $count membres',
-      one: '$actor répartit « $title » — $amount entre 1 membre',
+      one: '$actor répartit « $title » — $amount entre $count membre',
     );
     return '$_temp0';
   }
@@ -9060,7 +9095,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count articles',
-      one: '1 article',
+      one: '$count article',
     );
     return '$_temp0';
   }
@@ -9086,7 +9121,7 @@ class AppLocalizationsFr extends AppLocalizations {
       halfDays,
       locale: localeName,
       other: '$halfDays demi-journées supplémentaires',
-      one: '1 demi-journée supplémentaire',
+      one: '$halfDays demi-journée supplémentaire',
     );
     return '$actor demande $_temp0 pour $period';
   }
@@ -9308,7 +9343,7 @@ class AppLocalizationsFr extends AppLocalizations {
       required,
       locale: localeName,
       other: '$required validations',
-      one: '1 validation',
+      one: '$required validation',
     );
     return '$current/$_temp0';
   }
@@ -9773,6 +9808,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'importent',
       one: 'importe',
+      zero: 'importent',
     );
     return '$products $_temp0 ce fichier : choisissez « $format » ci-dessous.';
   }
@@ -10894,6 +10930,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Activés aussi, car nécessaires ($count) : $features',
       one: 'Activé aussi, car nécessaire : $features',
+      zero: 'Activés aussi, car nécessaires ($count) : $features',
     );
     return '$_temp0';
   }
@@ -11631,7 +11668,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Au plus $count caractères.',
-      one: 'Au plus 1 caractère.',
+      one: 'Au plus $count caractère.',
     );
     return '$_temp0';
   }
@@ -11642,7 +11679,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Au moins $count caractères.',
-      one: 'Au moins 1 caractère.',
+      one: 'Au moins $count caractère.',
     );
     return '$_temp0';
   }
@@ -11791,7 +11828,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count documents',
-      one: '1 document',
+      one: '$count document',
     );
     return '$workspace : $_temp0';
   }
@@ -11865,7 +11902,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en retard',
-      one: '1 en retard',
+      one: '$count en retard',
     );
     return '$_temp0';
   }
@@ -11945,7 +11982,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count champs demandent votre attention',
-      one: '1 champ demande votre attention',
+      one: '$count champ demande votre attention',
     );
     return '$_temp0';
   }
@@ -12003,6 +12040,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Vous pouvez tenir $count réservations à la fois.',
       one: 'Vous pouvez tenir une réservation à la fois.',
+      zero: 'Vous pouvez tenir $count réservations à la fois.',
     );
     return '$_temp0';
   }
@@ -12502,7 +12540,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count récapitulatifs de règlement écartés : leurs factures figurent déjà',
-      one: '1 récapitulatif de règlement écarté : ses factures figurent déjà',
+      one:
+          '$count récapitulatif de règlement écarté : ses factures figurent déjà',
     );
     return '$_temp0';
   }
@@ -12513,7 +12552,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count documents dans le fichier',
-      one: '1 document dans le fichier',
+      one: '$count document dans le fichier',
     );
     return '$_temp0';
   }
@@ -12553,8 +12592,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get handoffTitle => 'Avant d’enregistrer';
 
   @override
-  String handoffTransfersQuoted(String files, String deliveries) {
-    return 'Le rapport reprend la liste des transferts de l\'année : $files fichier(s) remis et $deliveries document(s) transmis à une connexion, chacun avec son SHA-256';
+  String handoffTransfersQuoted(int files, int deliveries) {
+    String _temp0 = intl.Intl.pluralLogic(
+      files,
+      locale: localeName,
+      other: '$files fichiers remis',
+      one: '$files fichier remis',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      deliveries,
+      locale: localeName,
+      other: '$deliveries documents transmis',
+      one: '$deliveries document transmis',
+    );
+    return 'Le rapport reprend la liste des transferts de l\'année : $_temp0 et $_temp1 à une connexion, chacun avec son SHA-256';
   }
 
   @override
@@ -12999,7 +13050,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Importer $count jours de fermeture',
-      one: 'Importer 1 jour de fermeture',
+      one: 'Importer $count jour de fermeture',
     );
     return '$_temp0';
   }
@@ -13463,13 +13514,13 @@ class AppLocalizationsFr extends AppLocalizations {
       workspaces,
       locale: localeName,
       other: '$workspaces espaces de travail',
-      one: '1 espace de travail',
+      one: '$workspaces espace de travail',
     );
     String _temp1 = intl.Intl.pluralLogic(
       members,
       locale: localeName,
       other: '$members membres',
-      one: '1 membre',
+      one: '$members membre',
     );
     return '$_temp0, $_temp1';
   }
@@ -13484,7 +13535,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count constats demandent une personne.',
-      one: '1 constat demande une personne.',
+      one: '$count constat demande une personne.',
     );
     return '$_temp0';
   }
@@ -13495,7 +13546,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count contrôles réussis',
-      one: '1 contrôle réussi',
+      one: '$count contrôle réussi',
     );
     return '$_temp0';
   }
@@ -13507,7 +13558,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count politiques, exactement l\'ensemble que créent les migrations',
-      one: '1 politique, exactement l\'ensemble que créent les migrations',
+      one: '$count politique, exactement l\'ensemble que créent les migrations',
     );
     return '$_temp0';
   }
@@ -13588,7 +13639,7 @@ class AppLocalizationsFr extends AppLocalizations {
       tables,
       locale: localeName,
       other: '$tables tables existent',
-      one: '1 table existe',
+      one: '$tables table existe',
     );
     return '$_temp0, mais aucune version de schéma : cette instance précède la migration 0226 et est donc en retard sur une application qui exige $required. L\'installation la met à niveau à partir de ce qu\'elle a enregistré.\n        Correctif : dart run tool/instance.dart install --ref <ref>\n        Si elle ne sait pas où reprendre, d\'abord : dart run tool/instance.dart record --ref <ref> --through <NNNN>';
   }
@@ -13603,7 +13654,7 @@ class AppLocalizationsFr extends AppLocalizations {
       created,
       locale: localeName,
       other: '$created inscrits',
-      one: '1 inscrit',
+      one: '$created inscrit',
     );
     return '$_temp0, 0 confirmé. L\'inscription n\'est pas seulement lente — personne ne l\'a terminée.\n        Vérifiez d\'abord l\'URL du site ci-dessus : c\'est celle du lien de l\'e-mail.';
   }
@@ -13619,7 +13670,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count politiques de lecture, chacune nommant le dossier propriétaire du fichier',
-      one: '1 politique de lecture, qui nomme le dossier propriétaire du fichier',
+      one:
+          '$count politique de lecture, qui nomme le dossier propriétaire du fichier',
     );
     return '$_temp0';
   }
@@ -13634,7 +13686,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count comptes ne peuvent pas entrer',
-      one: '1 compte ne peut pas entrer',
+      one: '$count compte ne peut pas entrer',
     );
     return '$_temp0';
   }
@@ -13707,7 +13759,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours',
-      one: '1 jour',
+      one: '$days jour',
     );
     return 'Pour $_temp0';
   }
@@ -13942,7 +13994,7 @@ class AppLocalizationsFr extends AppLocalizations {
       pending,
       locale: localeName,
       other: 'seules les $pending migrations manquantes seront exécutées',
-      one: 'seule 1 migration manquante sera exécutée',
+      one: 'seule $pending migration manquante sera exécutée',
     );
     return 'La version $version de DesKilo est installée : $_temp0.';
   }
@@ -14299,13 +14351,13 @@ class AppLocalizationsFr extends AppLocalizations {
       movements,
       locale: localeName,
       other: '$movements mouvements',
-      one: '1 mouvement',
+      one: '$movements mouvement',
     );
     String _temp1 = intl.Intl.pluralLogic(
       checkIns,
       locale: localeName,
       other: '$checkIns pointages',
-      one: '1 pointage',
+      one: '$checkIns pointage',
     );
     return 'Annexe : $_temp0, $_temp1';
   }
@@ -14347,7 +14399,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures',
-      one: '1 facture',
+      one: '$count facture',
     );
     return '$_temp0';
   }
@@ -14723,7 +14775,7 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           'Émettre $count factures pour $month, $total au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.',
       one:
-          'Émettre 1 facture pour $month, $total au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.',
+          'Émettre $count facture pour $month, $total au total ? Une facture émise ne se modifie plus — une erreur se corrige par un remplacement.',
     );
     return '$_temp0';
   }
@@ -14758,7 +14810,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures émises.',
-      one: '1 facture émise.',
+      one: '$count facture émise.',
     );
     return '$_temp0';
   }
@@ -14769,13 +14821,13 @@ class AppLocalizationsFr extends AppLocalizations {
       issued,
       locale: localeName,
       other: '$issued émises',
-      one: '1 émise',
+      one: '$issued émise',
     );
     String _temp1 = intl.Intl.pluralLogic(
       failed,
       locale: localeName,
       other: '$failed en échec',
-      one: '1 en échec',
+      one: '$failed en échec',
     );
     return '$_temp0, $_temp1.';
   }
@@ -15090,7 +15142,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count à compléter',
-      one: '1 à compléter',
+      one: '$count à compléter',
     );
     return '$_temp0';
   }
@@ -15138,6 +15190,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Chaque client la voit maintenant dans son compte.',
       one: 'Le client la voit maintenant dans son compte.',
+      zero: 'Chaque client la voit maintenant dans son compte.',
     );
     return '$_temp0';
   }
@@ -15148,7 +15201,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures émises',
-      one: '1 facture émise',
+      one: '$count facture émise',
     );
     return '$_temp0';
   }
@@ -15162,7 +15215,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count sur $total sélectionnés · $amount',
-      one: '1 sur $total sélectionné · $amount',
+      one: '$count sur $total sélectionné · $amount',
     );
     return '$_temp0';
   }
@@ -15384,7 +15437,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Relances ($count)',
-      one: 'Relances (1)',
+      one: 'Relances ($count)',
     );
     return '$_temp0';
   }
@@ -15587,7 +15640,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Télécharger $count factures',
-      one: 'Télécharger 1 facture',
+      one: 'Télécharger $count facture',
     );
     return '$_temp0';
   }
@@ -15749,7 +15802,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en cours',
-      one: '1 en cours',
+      one: '$count en cours',
     );
     return '$_temp0 · $amount dus';
   }
@@ -15906,7 +15959,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count clients',
-      one: '1 client',
+      one: '$count client',
     );
     return '$_temp0';
   }
@@ -15917,7 +15970,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours de retard',
-      one: '1 jour de retard',
+      one: '$days jour de retard',
     );
     return '$_temp0';
   }
@@ -15928,7 +15981,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: 'Échéance dans $days jours',
-      one: 'Échéance dans 1 jour',
+      one: 'Échéance dans $days jour',
     );
     return '$_temp0';
   }
@@ -15966,7 +16019,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures',
-      one: '1 facture',
+      one: '$count facture',
     );
     return '$_temp0';
   }
@@ -16033,12 +16086,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      level,
-      locale: localeName,
-      other: 'relance $level envoyée',
-    );
-    return '$_temp0';
+    return 'relance $level envoyée';
   }
 
   @override
@@ -16099,7 +16147,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours de retard',
-      one: '1 jour de retard',
+      one: '$days jour de retard',
     );
     return '$_temp0 · toutes les relances envoyées';
   }
@@ -16140,7 +16188,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours de retard',
-      one: '1 jour de retard',
+      one: '$days jour de retard',
     );
     return '$_temp0 · relance $level envoyée';
   }
@@ -16188,7 +16236,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures électroniques ont été rejetées',
-      one: '1 facture électronique a été rejetée',
+      one: '$count facture électronique a été rejetée',
     );
     return '$_temp0';
   }
@@ -16438,7 +16486,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en retard',
-      one: '1 en retard',
+      one: '$count en retard',
     );
     return '$_temp0';
   }
@@ -17338,7 +17386,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count échéances ont déjà été présentées pour une date postérieure à la fin.',
-      one: '1 échéance a déjà été présentées pour une date postérieure à la fin.',
+      one:
+          '$count échéance a déjà été présentées pour une date postérieure à la fin.',
     );
     return '$_temp0';
   }
@@ -17646,7 +17695,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count changements appliqués.',
-      one: '1 changement appliqué.',
+      one: '$count changement appliqué.',
     );
     return '$_temp0';
   }
@@ -17677,19 +17726,19 @@ class AppLocalizationsFr extends AppLocalizations {
       levels,
       locale: localeName,
       other: '$levels niveaux',
-      one: '1 niveau',
+      one: '$levels niveau',
     );
     String _temp1 = intl.Intl.pluralLogic(
       desks,
       locale: localeName,
       other: '$desks tables',
-      one: '1 table',
+      one: '$desks table',
     );
     String _temp2 = intl.Intl.pluralLogic(
       seats,
       locale: localeName,
       other: '$seats places',
-      one: '1 place',
+      one: '$seats place',
     );
     return '$_temp0 · $_temp1 · $_temp2';
   }
@@ -17950,7 +17999,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count places',
-      one: '1 place',
+      one: '$count place',
     );
     return '$_temp0';
   }
@@ -17961,7 +18010,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count tables',
-      one: '1 table',
+      one: '$count table',
     );
     return '$_temp0';
   }
@@ -18216,7 +18265,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours',
-      one: '1 jour',
+      one: '$days jour',
     );
     return 'Approuvé — encore $_temp0.';
   }
@@ -18227,7 +18276,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours',
-      one: '1 jour',
+      one: '$days jour',
     );
     return 'Approuvé — expire dans $_temp0. Redemandez l’approbation une fois expiré.';
   }
@@ -19382,7 +19431,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count messages non lus',
-      one: '1 message non lu',
+      one: '$count message non lu',
     );
     return '$_temp0';
   }
@@ -19424,7 +19473,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count de plus',
-      one: '1 de plus',
+      one: '$count de plus',
     );
     return '$_temp0';
   }
@@ -19552,7 +19601,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count notifications vous attendent ici',
-      one: '1 notification vous attend ici',
+      one: '$count notification vous attend ici',
     );
     return '$_temp0';
   }
@@ -19582,6 +19631,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Encore $count étapes · $next',
       one: 'Encore une étape · $next',
+      zero: 'Encore $count étapes · $next',
     );
     return '$_temp0';
   }
@@ -19730,7 +19780,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '+$count autres',
-      one: '+1 autre',
+      one: '+$count autre',
     );
     return '$_temp0';
   }
@@ -20305,7 +20355,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: 'Échéance dans $days jours',
-      one: 'Échéance dans 1 jour',
+      one: 'Échéance dans $days jour',
     );
     return '$_temp0';
   }
@@ -20348,7 +20398,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count ouvertes',
-      one: '1 ouverte',
+      one: '$count ouverte',
     );
     return '$_temp0 · $amount dus';
   }
@@ -20362,7 +20412,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Dépassement ($count demi-journées supplémentaires)',
-      one: 'Dépassement (1 demi-journée supplémentaire)',
+      one: 'Dépassement ($count demi-journée supplémentaire)',
     );
     return '$_temp0';
   }
@@ -20373,7 +20423,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count en retard',
-      one: '1 en retard',
+      one: '$count en retard',
     );
     return '$_temp0 — $amount à régler';
   }
@@ -20449,7 +20499,7 @@ class AppLocalizationsFr extends AppLocalizations {
       included,
       locale: localeName,
       other: '$included demi-journées utilisées',
-      one: '1 demi-journée utilisée',
+      one: '$included demi-journée utilisée',
     );
     return '$used sur $_temp0';
   }
@@ -21223,6 +21273,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Crée $count espaces',
       one: 'Crée un espace',
+      zero: 'Crée $count espaces',
     );
     return '$_temp0';
   }
@@ -21358,7 +21409,7 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           '$count factures échues ; $unknown sans échéance prouvée et $held suspendues, à part',
       one:
-          '1 facture échue ; $unknown sans échéance prouvée et $held suspendues, à part',
+          '$count facture échue ; $unknown sans échéance prouvée et $held suspendues, à part',
     );
     return '$_temp0';
   }
@@ -21981,7 +22032,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count notes',
-      one: '1 note',
+      one: '$count note',
     );
     return '$average · $_temp0';
   }
@@ -21998,7 +22049,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n étoiles',
-      one: '1 étoile',
+      one: '$n étoile',
     );
     return 'Votre note : $_temp0';
   }
@@ -22015,7 +22066,7 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other: '$n étoiles',
-      one: '1 étoile',
+      one: '$n étoile',
     );
     return '$_temp0';
   }
@@ -22216,7 +22267,7 @@ class AppLocalizationsFr extends AppLocalizations {
       minutes,
       locale: localeName,
       other: 'la grille de $minutes minutes',
-      one: 'la grille de 1 minute',
+      one: 'la grille de $minutes minute',
     );
     return 'Les réservations doivent commencer et finir sur $_temp0.';
   }
@@ -22277,7 +22328,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count demi-journées',
-      one: '1 demi-journée',
+      one: '$count demi-journée',
     );
     return '$_temp0';
   }
@@ -22309,7 +22360,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count jours',
-      one: '1 jour',
+      one: '$count jour',
     );
     return '$_temp0';
   }
@@ -22331,7 +22382,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count heures',
-      one: '1 heure',
+      one: '$count heure',
     );
     return '$_temp0';
   }
@@ -22360,7 +22411,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count minutes',
-      one: '1 minute',
+      one: '$count minute',
     );
     return '$_temp0';
   }
@@ -22973,7 +23024,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count fonctionnalités modifiées.',
-      one: '1 fonctionnalité modifiée.',
+      one: '$count fonctionnalité modifiée.',
     );
     return '$_temp0';
   }
@@ -23000,7 +23051,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Désactiver $count fonctionnalités',
-      one: 'Désactiver 1 fonctionnalité',
+      one: 'Désactiver $count fonctionnalité',
     );
     return '$_temp0';
   }
@@ -23011,7 +23062,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Activer $count fonctionnalités',
-      one: 'Activer 1 fonctionnalité',
+      one: 'Activer $count fonctionnalité',
     );
     return '$_temp0';
   }
@@ -23040,7 +23091,7 @@ class AppLocalizationsFr extends AppLocalizations {
       total,
       locale: localeName,
       other: '$total fonctionnalités actives',
-      one: '1 fonctionnalité active',
+      one: '$total fonctionnalité active',
     );
     return '$enabled sur $_temp0';
   }
@@ -23069,7 +23120,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count fonctionnalités sont activées mais attendent un prérequis désactivé',
-      one: '1 fonctionnalité est activée mais attend un prérequis désactivé',
+      one:
+          '$count fonctionnalité est activée mais attend un prérequis désactivé',
     );
     return '$_temp0';
   }
@@ -23123,7 +23175,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Désactiver aussi les $count fonctionnalités dépendantes',
-      one: 'Désactiver aussi la 1 fonctionnalité dépendante',
+      one: 'Désactiver aussi $count fonctionnalité dépendante',
     );
     return '$_temp0';
   }
@@ -23195,7 +23247,7 @@ class AppLocalizationsFr extends AppLocalizations {
       total,
       locale: localeName,
       other: '$total sous-processus actifs',
-      one: '1 sous-processus actif',
+      one: '$total sous-processus actif',
     );
     return '$active sur $_temp0';
   }
@@ -23300,7 +23352,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count membres',
-      one: '1 membre',
+      one: '$count membre',
     );
     return 'Non membre · $_temp0';
   }
@@ -23359,7 +23411,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Créer $count jours de fermeture',
-      one: 'Créer 1 jour de fermeture',
+      one: 'Créer $count jour de fermeture',
     );
     return '$_temp0';
   }
@@ -23370,7 +23422,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count jours de fermeture créés',
-      one: '1 jour de fermeture créé',
+      one: '$count jour de fermeture créé',
     );
     return '$_temp0';
   }
@@ -24610,7 +24662,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures autoliquidées',
-      one: '1 facture autoliquidée',
+      one: '$count facture autoliquidée',
     );
     return 'Une déclaration européenne de services est due pour $month : $_temp0. Exportez-la depuis les déclarations de TVA.';
   }
@@ -24660,7 +24712,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count lignes sélectionnées ne sont plus là et ont été écartées',
-      one: '1 ligne sélectionnée n’est plus là et a été écartée',
+      one: '$count ligne sélectionnée n’est plus là et a été écartée',
     );
     return '$_temp0';
   }
@@ -24717,7 +24769,7 @@ class AppLocalizationsFr extends AppLocalizations {
       loaded,
       locale: localeName,
       other: '$loaded chargés — tout n’est pas encore lu',
-      one: '1 chargé — tout n’est pas encore lu',
+      one: '$loaded chargé — tout n’est pas encore lu',
     );
     return '$_temp0';
   }
@@ -24732,6 +24784,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Sélectionner les $count affichés',
       one: 'Sélectionner le seul affiché',
+      zero: 'Sélectionner les $count affichés',
     );
     return '$_temp0';
   }
@@ -24742,7 +24795,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count sélectionnés',
-      one: '1 sélectionné',
+      one: '$count sélectionné',
     );
     return '$_temp0';
   }
@@ -24753,7 +24806,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count affichés',
-      one: '1 affiché',
+      one: '$count affiché',
     );
     return '$_temp0';
   }
@@ -24815,7 +24868,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Afficher $count résultats',
-      one: 'Afficher 1 résultat',
+      one: 'Afficher $count résultat',
     );
     return '$_temp0';
   }
@@ -25122,6 +25175,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Envoyer les $count joignables par e-mail',
       one: 'Envoyer l\'unique joignable par e-mail',
+      zero: 'Envoyer les $count joignables par e-mail',
     );
     return '$_temp0';
   }
@@ -25135,7 +25189,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Envoyer $count relances par e-mail ?',
-      one: 'Envoyer 1 relance par e-mail ?',
+      one: 'Envoyer $count relance par e-mail ?',
     );
     return '$_temp0';
   }
@@ -25188,7 +25242,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count relances envoyées',
-      one: '1 relance envoyée',
+      one: '$count relance envoyée',
     );
     return '$_temp0';
   }
@@ -25203,7 +25257,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count relances partagées',
-      one: '1 relance partagée',
+      one: '$count relance partagée',
     );
     return '$_temp0';
   }
@@ -25230,7 +25284,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lignes restent à partager : pas d\'adresse e-mail enregistrée.',
-      one: '1 ligne reste à partager : pas d\'adresse e-mail enregistrée.',
+      one: '$count ligne reste à partager : pas d\'adresse e-mail enregistrée.',
     );
     return '$_temp0';
   }
@@ -25242,7 +25296,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count lignes attendent : un e-mail précédent est d\'abord à trancher.',
-      one: '1 ligne attend : un e-mail précédent est d\'abord à trancher.',
+      one: '$count ligne attend : un e-mail précédent est d\'abord à trancher.',
     );
     return '$_temp0';
   }
@@ -25401,7 +25455,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count membres · $amount',
-      one: '1 membre · $amount',
+      one: '$count membre · $amount',
     );
     return '$_temp0';
   }
@@ -25562,7 +25616,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count pages',
-      one: '1 page',
+      one: '$count page',
     );
     return '$_temp0';
   }
@@ -26436,7 +26490,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Salle de réunion · $count personnes',
-      one: 'Salle de réunion · 1 personne',
+      one: 'Salle de réunion · $count personne',
     );
     return '$_temp0';
   }
@@ -26453,7 +26507,7 @@ class AppLocalizationsFr extends AppLocalizations {
       minutes,
       locale: localeName,
       other: 'créneaux de $minutes minutes',
-      one: 'créneaux de 1 minute',
+      one: 'créneaux de $minutes minute',
     );
     return 'Réservée par $_temp0';
   }
@@ -26889,7 +26943,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Ouverte à $count entrées choisies',
-      one: 'Ouverte à 1 entrée choisie',
+      one: 'Ouverte à $count entrée choisie',
     );
     return '$_temp0';
   }
@@ -27132,19 +27186,19 @@ class AppLocalizationsFr extends AppLocalizations {
       members,
       locale: localeName,
       other: '$members membres',
-      one: '1 membre',
+      one: '$members membre',
     );
     String _temp1 = intl.Intl.pluralLogic(
       bookings,
       locale: localeName,
       other: '$bookings réservations',
-      one: '1 réservation',
+      one: '$bookings réservation',
     );
     String _temp2 = intl.Intl.pluralLogic(
       payments,
       locale: localeName,
       other: '$payments paiements',
-      one: '1 paiement',
+      one: '$payments paiement',
     );
     return 'Cet espace contient des données d\'exemple : $_temp0, $_temp1, $_temp2.';
   }
@@ -27198,6 +27252,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'tous les $count jours',
       one: 'tous les jours',
+      zero: 'tous les $count jours',
     );
     return '$_temp0';
   }
@@ -27212,6 +27267,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'tous les $count mois',
       one: 'tous les mois',
+      zero: 'tous les $count mois',
     );
     return '$_temp0';
   }
@@ -27223,6 +27279,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'toutes les $count semaines',
       one: 'toutes les semaines',
+      zero: 'toutes les $count semaines',
     );
     return '$_temp0';
   }
@@ -27283,7 +27340,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count fois',
-      one: '1 fois',
+      one: '$count fois',
     );
     return '$_temp0';
   }
@@ -27405,7 +27462,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count réservations créées',
-      one: '1 réservation créée',
+      one: '$count réservation créée',
     );
     return '$_temp0';
   }
@@ -27417,6 +27474,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Réserver les $count autres dates',
       one: 'Réserver l\'autre date',
+      zero: 'Réserver les $count autres dates',
     );
     return '$_temp0';
   }
@@ -27519,7 +27577,7 @@ class AppLocalizationsFr extends AppLocalizations {
       minutes,
       locale: localeName,
       other: '$minutes min',
-      one: '1 min',
+      one: '$minutes min',
     );
     return '$_temp0';
   }
@@ -28414,6 +28472,8 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           'Les $count factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.',
       one: 'La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.',
+      zero:
+          'Les $count factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.',
     );
     return '$_temp0';
   }
@@ -28430,7 +28490,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Regrouper $count factures en une seule de $amount ?',
-      one: 'Regrouper 1 facture en une seule de $amount ?',
+      one: 'Regrouper $count facture en une seule de $amount ?',
     );
     return '$_temp0';
   }
@@ -28507,6 +28567,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Dès que $required approbations sont données.',
       one: 'Dès qu\'une approbation est donnée.',
+      zero: 'Dès que $required approbations sont données.',
     );
     return '$_temp0 Un refus la clôt, et personne n\'approuve sa propre demande.';
   }
@@ -28524,7 +28585,7 @@ class AppLocalizationsFr extends AppLocalizations {
       required,
       locale: localeName,
       other: '$required sur $people approuvent',
-      one: '1 sur $people approuve',
+      one: '$required sur $people approuve',
     );
     return '$_temp0';
   }
@@ -28536,6 +28597,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: '$owners propriétaires',
       one: 'Le propriétaire',
+      zero: '$owners propriétaires',
     );
     String _temp1 = intl.Intl.pluralLogic(
       admins,
@@ -28562,6 +28624,8 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           '$count règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.',
       one: 'Une règle demande plus d’approbations que les personnes ne peuvent en donner : ses demandes ne sont jamais tranchées. Modifiez-la dans les règles d’approbation.',
+      zero:
+          '$count règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.',
     );
     return '$_temp0';
   }
@@ -28575,7 +28639,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count personnes peuvent approuver.',
-      one: '1 personne peut approuver.',
+      one: '$count personne peut approuver.',
     );
     return '$_temp0';
   }
@@ -28598,6 +28662,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'En attente de $required approbations',
       one: 'En attente d\'une approbation',
+      zero: 'En attente de $required approbations',
     );
     return '$_temp0';
   }
@@ -28608,13 +28673,13 @@ class AppLocalizationsFr extends AppLocalizations {
       required,
       locale: localeName,
       other: '$required approbations',
-      one: '1 approbation',
+      one: '$required approbation',
     );
     String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: '$people personnes peuvent approuver',
-      one: '1 personne peut approuver',
+      one: '$people personne peut approuver',
     );
     return '$_temp0, $_temp1';
   }
@@ -28625,7 +28690,7 @@ class AppLocalizationsFr extends AppLocalizations {
       required,
       locale: localeName,
       other: '$required approbations',
-      one: '1 approbation',
+      one: '$required approbation',
     );
     String _temp1 = intl.Intl.pluralLogic(
       people,
@@ -28640,12 +28705,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String setupApprovalsTooMany(int required, int people) {
     String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approbations ne pourront jamais être réunies',
+      one: '$required approbation ne pourra jamais être réunie',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: 'seules $people personnes peuvent',
-      one: 'seule 1 personne peut',
+      one: 'seule $people personne peut',
     );
-    return '$required approbations ne pourront jamais être réunies : $_temp0 approuver. Demandez-en moins, ou nommez d\'autres membres administrateurs.';
+    return '$_temp0 : $_temp1 approuver. Demandez-en moins, ou nommez d\'autres membres administrateurs.';
   }
 
   @override
@@ -29484,6 +29555,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Vous pouvez réserver jusqu’à $days jours à l’avance.',
       one: 'Vous pouvez réserver jusqu’à un jour à l’avance.',
+      zero: 'Vous pouvez réserver jusqu’à $days jours à l’avance.',
     );
     return '$_temp0';
   }
@@ -29495,6 +29567,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'Vous pouvez occuper jusqu’à $count places à la fois.',
       one: 'Vous pouvez occuper une place à la fois.',
+      zero: 'Vous pouvez occuper jusqu’à $count places à la fois.',
     );
     return '$_temp0';
   }
@@ -29862,7 +29935,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count demi-journées incluses',
-      one: '1 demi-journée incluse',
+      one: '$count demi-journée incluse',
     );
     return '$level : $_temp0';
   }
@@ -29873,7 +29946,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: '$days jours',
-      one: '1 jour',
+      one: '$days jour',
     );
     return 'Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d\'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert $_temp0 :';
   }
@@ -30406,7 +30479,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count décisions vous attendent',
-      one: '1 décision vous attend',
+      one: '$count décision vous attend',
     );
     return '$_temp0';
   }
@@ -31202,7 +31275,7 @@ class AppLocalizationsFr extends AppLocalizations {
       bytes,
       locale: localeName,
       other: '$bytesString octets',
-      one: '1 octet',
+      one: '$bytesString octet',
     );
     return 'Aperçu : $_temp0';
   }
@@ -31713,7 +31786,7 @@ class AppLocalizationsFr extends AppLocalizations {
       length,
       locale: localeName,
       other: '$length caractères',
-      one: '1 caractère',
+      one: '$length caractère',
     );
     return 'non conservé ($_temp0)';
   }
@@ -32004,7 +32077,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           'Copie modifiée : $count étapes exclues. L\'enregistrement sur cet appareil reste inchangé.',
-      one: 'Copie modifiée : 1 étape exclue. L\'enregistrement sur cet appareil reste inchangé.',
+      one:
+          'Copie modifiée : $count étape exclue. L\'enregistrement sur cet appareil reste inchangé.',
     );
     return '$_temp0';
   }
@@ -32073,7 +32147,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Enregistrement d\'une tâche : $count étapes',
-      one: 'Enregistrement d\'une tâche : 1 étape',
+      one: 'Enregistrement d\'une tâche : $count étape',
     );
     return '$_temp0';
   }
@@ -32087,19 +32161,19 @@ class AppLocalizationsFr extends AppLocalizations {
       steps,
       locale: localeName,
       other: '$steps étapes',
-      one: '1 étape',
+      one: '$steps étape',
     );
     String _temp1 = intl.Intl.pluralLogic(
       minutes,
       locale: localeName,
       other: '$minutes minutes',
-      one: '1 minute',
+      one: '$minutes minute',
     );
     String _temp2 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
       other: '$days jours',
-      one: '1 jour',
+      one: '$days jour',
     );
     return 'Jusqu\'à $_temp0 ou $_temp1 par enregistrement. Les enregistrements sont effacés de cet appareil après $_temp2 ; un fichier exporté vous appartient et reste là où vous l\'avez enregistré.';
   }
@@ -32251,7 +32325,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count étapes',
-      one: '1 étape',
+      one: '$count étape',
     );
     return '$_temp0';
   }
@@ -33117,7 +33191,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count réglages deviennent lisibles, tels que le modèle les contient maintenant.',
-      one: '1 réglage devient lisible, tel que le modèle le contient maintenant.',
+      one:
+          '$count réglage devient lisible, tel que le modèle le contient maintenant.',
     );
     return '$_temp0';
   }
@@ -33129,7 +33204,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count types de valeurs ne partent jamais avec lui (coordonnées bancaires, sites, adresses…).',
-      one: '1 type de valeur ne part jamais avec lui (coordonnées bancaires, sites, adresses…).',
+      one:
+          '$count type de valeur ne part jamais avec lui (coordonnées bancaires, sites, adresses…).',
     );
     return '$_temp0';
   }
@@ -33654,7 +33730,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.',
-      one: '1 réservation de ce mois n\'est pas encore enregistrées : cette liste peut être incomplète.',
+      one:
+          '$count réservation de ce mois n\'est pas encore enregistrées : cette liste peut être incomplète.',
     );
     return '$_temp0';
   }
@@ -33726,13 +33803,13 @@ class AppLocalizationsFr extends AppLocalizations {
       updates,
       locale: localeName,
       other: '$updates nouveautés',
-      one: '1 nouveauté',
+      one: '$updates nouveauté',
     );
     String _temp1 = intl.Intl.pluralLogic(
       pending,
       locale: localeName,
       other: '$pending décisions en attente',
-      one: '1 décision en attente',
+      one: '$pending décision en attente',
     );
     return '$_temp0 · $_temp1';
   }
@@ -34010,7 +34087,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count au choix',
-      one: '1 au choix',
+      one: '$count au choix',
     );
     return '$who — $_temp0';
   }
@@ -34037,6 +34114,7 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other: 'En attente de $count validations de plus.',
       one: 'En attente d’une validation de plus.',
+      zero: 'En attente de $count validations de plus.',
     );
     return '$_temp0';
   }
@@ -34256,7 +34334,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count lignes ne s\'équilibrent pas',
-      one: '1 ligne ne s\'équilibre pas',
+      one: '$count ligne ne s\'équilibre pas',
     );
     return '$_temp0';
   }
@@ -34288,7 +34366,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count équipements',
-      one: '1 équipement',
+      one: '$count équipement',
     );
     return '$basis, $from – $to, $currency : $_temp0';
   }
@@ -34312,7 +34390,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count équipements',
-      one: '1 équipement',
+      one: '$count équipement',
     );
     return '$_temp0';
   }
@@ -34934,7 +35012,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Membres de $count lieux choisis',
-      one: 'Membres d\'1 lieu choisi',
+      one: 'Membres d\'$count lieu choisi',
     );
     return '$_temp0';
   }
@@ -35274,7 +35352,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Émettre $count factures',
-      one: 'Émettre 1 facture',
+      one: 'Émettre $count facture',
     );
     return '$_temp0';
   }
@@ -35346,7 +35424,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Envoyer $count relances',
-      one: 'Envoyer 1 relance',
+      one: 'Envoyer $count relance',
     );
     return '$_temp0';
   }
@@ -35925,19 +36003,19 @@ class AppLocalizationsFr extends AppLocalizations {
       settings,
       locale: localeName,
       other: '$settings réglages',
-      one: '1 réglage',
+      one: '$settings réglage',
     );
     String _temp1 = intl.Intl.pluralLogic(
       rows,
       locale: localeName,
       other: '$rows lignes',
-      one: '1 ligne',
+      one: '$rows ligne',
     );
     String _temp2 = intl.Intl.pluralLogic(
       tables,
       locale: localeName,
       other: '$tables tables',
-      one: '1 table',
+      one: '$tables table',
     );
     return 'Configuration : $_temp0, $_temp1 dans $_temp2';
   }
@@ -35992,6 +36070,8 @@ class AppLocalizationsFr extends AppLocalizations {
       other:
           '$count avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
       one: 'Un avoir n’est pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
+      zero:
+          '$count avoirs ne sont pas dans ce fichier : Xero importe les avoirs avec leur propre modèle.',
     );
     return '$_temp0';
   }

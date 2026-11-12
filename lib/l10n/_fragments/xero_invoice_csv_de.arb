@@ -10,6 +10,6 @@
   "xeroInvoiceMonthFirst": "Monat zuerst (12/31/2026)",
   "xeroInvoiceRefusedAccount": "Geben Sie den Code des Erlöskontos ein.",
   "xeroInvoiceRefusedTaxType": "Nennen Sie den Xero-Steuersatz für {rate}.",
-  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.} other{{count} Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.}}",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, one{Eine Gutschrift ist nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.} other{{count} Gutschriften sind nicht in dieser Datei: Xero importiert Gutschriften mit einer eigenen Vorlage.}}",
   "xeroInvoiceImportTaxExclusive": "Wählen Sie beim Import in Xero „Tax exclusive“ (netto) für die Beträge: Die Datei enthält je Steuersatz den Nettobetrag und die auf der Rechnung erfasste Steuer."
 }

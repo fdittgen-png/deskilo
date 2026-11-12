@@ -4,7 +4,7 @@
   "supportHour": "Ultima ora",
   "supportDay": "Ultime 24 ore",
   "supportPrepare": "Prepara anteprima",
-  "supportSize": "Anteprima: {bytes, plural, =1{1 byte} other{{bytes} byte}}",
+  "supportSize": "Anteprima: {bytes, plural, one{1 byte} other{{bytes} byte}}",
   "supportSaved": "Salvato localmente",
   "supportChanged": "Il contesto è cambiato. Prepari una nuova anteprima.",
   "supportFailed": "Impossibile preparare i dettagli. Riprovi.",

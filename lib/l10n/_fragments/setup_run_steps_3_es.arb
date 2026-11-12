@@ -20,7 +20,7 @@
   "setupNotificationsPreviewPlace": "Escritorio 4",
   "setupLimitsSaveFailed": "No se pudieron guardar los límites de reserva. Inténtelo de nuevo.",
   "setupLimitsPerMember": "Una asignación fijada en la página de un miembro prevalece sobre el número de puestos indicado aquí.",
-  "setupLimitsPreviewAhead": "{days, plural, =1{Puede reservar con hasta un día de antelación.} other{Puede reservar con hasta {days} días de antelación.}}",
+  "setupLimitsPreviewAhead": "{days, plural, one{Puede reservar con hasta un día de antelación.} other{Puede reservar con hasta {days} días de antelación.}}",
   "setupLimitsPreviewLength": "Una reserva dura al menos {shortest} y como máximo {longest}.",
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{Puede ocupar un puesto a la vez.} other{Puede ocupar hasta {count} puestos a la vez.}}"
+  "setupLimitsPreviewAtOnce": "{count, plural, one{Puede ocupar un puesto a la vez.} other{Puede ocupar hasta {count} puestos a la vez.}}"
 }

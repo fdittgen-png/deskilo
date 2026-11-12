@@ -55,7 +55,7 @@
   "@overviewOverdueTitle": {
     "description": "#2583 the overview's own figures"
   },
-  "overviewOverdueBasis": "{count, plural, =1{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}",
+  "overviewOverdueBasis": "{count, plural, one{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}",
   "@overviewOverdueBasis": {
     "description": "#2583 the overview's own figures",
     "placeholders": {
@@ -90,7 +90,7 @@
   "@overviewPendingActionsDefinition": {
     "description": "#2580 overview figure definition"
   },
-  "overviewPendingInSpace": "{count, plural, =0{Nothing waits on a decision in the space.} =1{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}",
+  "overviewPendingInSpace": "{count, plural, =0{Nothing waits on a decision in the space.} one{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}",
   "@overviewPendingInSpace": {
     "description": "#2580 overview: how many requests wait in the whole space, beside the list of what waits on this person",
     "placeholders": {

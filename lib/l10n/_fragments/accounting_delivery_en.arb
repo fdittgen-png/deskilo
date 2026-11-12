@@ -18,7 +18,7 @@
   },
   "acctDeliverDone": "Delivered: {delivered} · already there: {unchanged} · to check: {attention}",
   "@acctDeliverDone": {
-    "description": "#2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: delivered, unchanged, attention]",
     "placeholders": {
       "delivered": {
         "type": "int"
@@ -76,7 +76,7 @@
   },
   "acctDeliverStoppedAt": "Stopped at {month}. Delivered before it: {count}.",
   "@acctDeliverStoppedAt": {
-    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "month": {
         "type": "String"
@@ -88,7 +88,7 @@
   },
   "acctDeliverInFlight": "Still being delivered by another run: {count}. Try again in a few minutes.",
   "@acctDeliverInFlight": {
-    "description": "#2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"

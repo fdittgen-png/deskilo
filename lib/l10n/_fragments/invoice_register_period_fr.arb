@@ -4,7 +4,7 @@
   "invoiceRegisterStatus": "Statut",
   "invoiceRegisterPeriodColumn": "Période",
   "invoiceRegisterIntegrity": "Empreinte",
-  "invoiceRegisterDownloadSelected": "{count, plural, =1{Télécharger 1 facture} other{Télécharger {count} factures}}",
+  "invoiceRegisterDownloadSelected": "{count, plural, one{Télécharger {count} facture} other{Télécharger {count} factures}}",
   "invoiceRegisterNumber": "Numéro",
   "invoiceRegisterMember": "Membre",
   "invoiceRegisterCurrency": "Devise"

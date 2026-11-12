@@ -84,7 +84,7 @@
   "settlementVatNote": "Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.",
   "settlementSettledBy": "Raggruppata in un’altra fattura: è quella a essere dovuta e sollecitata.",
   "settlementAction": "Raggruppa in una fattura",
-  "settlementConfirm": "{count, plural, =1{Raggruppare 1 fattura in una da {amount}?} other{Raggruppare {count} fatture in una da {amount}?}}",
+  "settlementConfirm": "{count, plural, one{Raggruppare 1 fattura in una da {amount}?} other{Raggruppare {count} fatture in una da {amount}?}}",
   "settlementDone": "Raggruppate in {number}.",
   "settlementNeedsTwo": "Scelga almeno due fatture aperte dello stesso membro.",
   "@settlementConfirm": {
@@ -133,7 +133,7 @@
   "settlementAnnexTitle": "Allegare le fatture raggruppate?",
   "settlementAnnexAlone": "Solo questa fattura",
   "settlementAnnexWith": "Allegale",
-  "settlementAnnexBody": "{count, plural, =1{La fattura che questa sostituisce può seguirla, su pagine proprie e timbrata come raggruppata.} other{Le {count} fatture che questa sostituisce possono seguirla, ognuna su pagine proprie e timbrata come raggruppata.}}",
+  "settlementAnnexBody": "{count, plural, one{La fattura che questa sostituisce può seguirla, su pagine proprie e timbrata come raggruppata.} other{Le {count} fatture che questa sostituisce possono seguirla, ognuna su pagine proprie e timbrata come raggruppata.}}",
   "@settlementAnnexBody": {
     "placeholders": {
       "count": {

@@ -59,7 +59,7 @@
       }
     }
   },
-  "valuationRows": "{count, plural, =1{1 asset} other{{count} assets}}",
+  "valuationRows": "{count, plural, one{1 asset} other{{count} assets}}",
   "@valuationRows": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -68,7 +68,7 @@
       }
     }
   },
-  "valuationMismatches": "{count, plural, =1{1 row does not balance} other{{count} rows do not balance}}",
+  "valuationMismatches": "{count, plural, one{1 row does not balance} other{{count} rows do not balance}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -148,7 +148,7 @@
   },
   "valuationIssueColumns": "Line {line}: the number of columns is wrong.",
   "@valuationIssueColumns": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -157,7 +157,7 @@
   },
   "valuationIssueAsset": "Line {line}: the asset number is not a whole number from 1.",
   "@valuationIssueAsset": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -166,7 +166,7 @@
   },
   "valuationIssueBasis": "Line {line}: the basis is book or tax.",
   "@valuationIssueBasis": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -175,7 +175,7 @@
   },
   "valuationIssueDate": "Line {line}: a date is not a real day written YYYY-MM-DD.",
   "@valuationIssueDate": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -184,7 +184,7 @@
   },
   "valuationIssuePeriod": "Line {line}: the period ends before it starts.",
   "@valuationIssuePeriod": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -193,7 +193,7 @@
   },
   "valuationIssueCurrency": "Line {line}: the currency is not a three-letter code.",
   "@valuationIssueCurrency": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -202,7 +202,7 @@
   },
   "valuationIssueMinor": "Line {line}: {column} is not a whole number of minor units.",
   "@valuationIssueMinor": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -214,7 +214,7 @@
   },
   "valuationIssueMixed": "Line {line}: a batch has one basis, one period and one currency.",
   "@valuationIssueMixed": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -223,7 +223,7 @@
   },
   "valuationIssueDuplicate": "Line {line}: this asset already appears in the file.",
   "@valuationIssueDuplicate": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -238,7 +238,7 @@
   "@valuationPick": {
     "description": "#2576 accountant valuations"
   },
-  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 asset} other{{count} assets}}",
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, one{1 asset} other{{count} assets}}",
   "@valuationPreview": {
     "description": "#2576 accountant valuations",
     "placeholders": {

@@ -8,7 +8,7 @@
   "@featureConfigurationTransferDesc": {
     "description": "#916 configuration transfer: featureConfigurationTransferDesc"
   },
-  "workspaceXmlImportPreviewConfiguration": "Konfiguration: {settings, plural, =1{1 Einstellung} other{{settings} Einstellungen}}, {rows, plural, =1{1 Zeile} other{{rows} Zeilen}} in {tables, plural, =1{1 Tabelle} other{{tables} Tabellen}}",
+  "workspaceXmlImportPreviewConfiguration": "Konfiguration: {settings, plural, one{1 Einstellung} other{{settings} Einstellungen}}, {rows, plural, one{1 Zeile} other{{rows} Zeilen}} in {tables, plural, one{1 Tabelle} other{{tables} Tabellen}}",
   "@workspaceXmlImportPreviewConfiguration": {
     "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
     "placeholders": {

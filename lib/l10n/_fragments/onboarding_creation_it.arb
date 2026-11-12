@@ -5,7 +5,7 @@
   "onboardingShapeReal": "Uno spazio reale",
   "onboardingShapeRealHint": "Per l'attività reale: le fatture emesse sono dovute.",
   "onboardingShapePair": "Una coppia collegata di prova e reale",
-  "onboardingSummaryCount": "{count, plural, =1{Crea uno spazio} other{Crea {count} spazi}}",
+  "onboardingSummaryCount": "{count, plural, one{Crea uno spazio} other{Crea {count} spazi}}",
   "onboardingSummaryBillingOn": "La fatturazione reale è possibile: le sue fatture sono dovute.",
   "onboardingSummaryBillingOff": "Nessuna fatturazione reale: i documenti sono contrassegnati come prova.",
   "onboardingSummaryServer": "Sul server {host}",

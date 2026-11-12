@@ -49,7 +49,7 @@
   "privacyIncidentOther": "Ein anderer Vorfall",
   "privacyAdminIncidentNote": "Was geschah (optional, höchstens 1000 Zeichen)",
   "privacyAdminIncidentSend": "Erfassen und informieren",
-  "privacyAdminIncidentRecorded": "{count, plural, =0{Erfasst. Niemand hat dieses Recht, daher wurde niemand informiert.} =1{Erfasst. 1 Person wurde informiert.} other{Erfasst. {count} Personen wurden informiert.}}",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Erfasst. Niemand hat dieses Recht, daher wurde niemand informiert.} one{Erfasst. 1 Person wurde informiert.} other{Erfasst. {count} Personen wurden informiert.}}",
   "@privacyAdminIncidentRecorded": {
     "placeholders": {
       "count": {

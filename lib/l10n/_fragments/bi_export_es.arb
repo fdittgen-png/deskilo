@@ -66,7 +66,7 @@
   "@biExportRecallNote": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biExportLeftOut": "{count, plural, =1{1 tarjeta no está en esta exportación: su cifra, sus filtros o su agrupación aún no se pueden exportar.} other{{count} tarjetas no están en esta exportación: su cifra, sus filtros o su agrupación aún no se pueden exportar.}}",
+  "biExportLeftOut": "{count, plural, one{1 tarjeta no está en esta exportación: su cifra, sus filtros o su agrupación aún no se pueden exportar.} other{{count} tarjetas no están en esta exportación: su cifra, sus filtros o su agrupación aún no se pueden exportar.}}",
   "@biExportLeftOut": {
     "description": "#2581 analytical report print layout and exports",
     "placeholders": {

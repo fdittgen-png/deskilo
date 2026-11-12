@@ -3,7 +3,7 @@
   "@handoffTitle": {
     "description": "#1640 accountant_handoff"
   },
-  "handoffIncluded": "{count, plural, =1{1 document in the file} other{{count} documents in the file}}",
+  "handoffIncluded": "{count, plural, one{1 document in the file} other{{count} documents in the file}}",
   "@handoffIncluded": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
@@ -12,7 +12,7 @@
       }
     }
   },
-  "handoffExcludedSettlements": "{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}",
+  "handoffExcludedSettlements": "{count, plural, one{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}",
   "@handoffExcludedSettlements": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
@@ -116,15 +116,15 @@
       }
     }
   },
-  "handoffTransfersQuoted": "The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256",
+  "handoffTransfersQuoted": "The report quotes the Transfers list of the year: {files, plural, one{{files} file} other{{files} files}} handed out and {deliveries, plural, one{{deliveries} document} other{{deliveries} documents}} delivered to a connection, each with its SHA-256",
   "@handoffTransfersQuoted": {
     "description": "#2378 accountant_handoff",
     "placeholders": {
       "files": {
-        "type": "String"
+        "type": "int"
       },
       "deliveries": {
-        "type": "String"
+        "type": "int"
       }
     }
   }

@@ -356,7 +356,7 @@
   },
   "workspaceDeskOpacityValue": "Opacity: {percent}%",
   "@workspaceDeskOpacityValue": {
-    "description": "Live value label of the desk-opacity slider. The number is not a count: it is a percentage.",
+    "description": "Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]",
     "placeholders": {
       "percent": {
         "type": "int"

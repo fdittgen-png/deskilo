@@ -11,7 +11,7 @@
   "@sampleDataFill": {
     "description": "#2872 setup guide: button that creates the sample data"
   },
-  "sampleDataCounts": "This space holds sample data: {members, plural, =1{1 member} other{{members} members}}, {bookings, plural, =1{1 booking} other{{bookings} bookings}}, {payments, plural, =1{1 payment} other{{payments} payments}}.",
+  "sampleDataCounts": "This space holds sample data: {members, plural, one{1 member} other{{members} members}}, {bookings, plural, one{1 booking} other{{bookings} bookings}}, {payments, plural, one{1 payment} other{{payments} payments}}.",
   "@sampleDataCounts": {
     "description": "#2872 setup guide: what the open sample data batch holds",
     "placeholders": {

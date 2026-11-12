@@ -116,7 +116,7 @@
   "@assignPaymentReadFailedInvoices": {
     "description": "#3671: assign a payment to invoices (assignPaymentReadFailedInvoices)"
   },
-  "assignPaymentFull": "{count, plural, =1{1 invoice paid in full} other{{count} invoices paid in full}}",
+  "assignPaymentFull": "{count, plural, one{1 invoice paid in full} other{{count} invoices paid in full}}",
   "@assignPaymentFull": {
     "description": "#3671: assign a payment to invoices (assignPaymentFull)",
     "placeholders": {
@@ -125,7 +125,7 @@
       }
     }
   },
-  "assignPaymentPart": "{count, plural, =1{1 invoice paid in part} other{{count} invoices paid in part}}",
+  "assignPaymentPart": "{count, plural, one{1 invoice paid in part} other{{count} invoices paid in part}}",
   "@assignPaymentPart": {
     "description": "#3671: assign a payment to invoices (assignPaymentPart)",
     "placeholders": {

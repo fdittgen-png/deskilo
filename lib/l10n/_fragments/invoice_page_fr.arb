@@ -238,7 +238,7 @@
   "@invoicePageMatchRefused": {
     "description": "#3587 R1-d when the match after a confirmation is refused and the server gave no words"
   },
-  "invoicePageReminders": "{count, plural, =1{Relances (1)} other{Relances ({count})}}",
+  "invoicePageReminders": "{count, plural, one{Relances ({count})} other{Relances ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {

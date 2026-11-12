@@ -23,7 +23,7 @@
   "@onboardingShapePair": {
     "description": "#1636 onboarding_creation"
   },
-  "onboardingSummaryCount": "{count, plural, =1{Creates one workspace} other{Creates {count} workspaces}}",
+  "onboardingSummaryCount": "{count, plural, one{Creates one workspace} other{Creates {count} workspaces}}",
   "@onboardingSummaryCount": {
     "description": "#1636 onboarding_creation",
     "placeholders": {

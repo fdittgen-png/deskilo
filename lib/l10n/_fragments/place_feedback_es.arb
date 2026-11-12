@@ -15,7 +15,7 @@
   "@placeFeedbackUnfavorite": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackStars": "{n, plural, =1{1 estrella} other{{n} estrellas}}",
+  "placeFeedbackStars": "{n, plural, one{1 estrella} other{{n} estrellas}}",
   "@placeFeedbackStars": {
     "description": "#2185 place feedback",
     "placeholders": {
@@ -28,7 +28,7 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackAverage": "{average} · {count, plural, =1{1 valoración} other{{count} valoraciones}}",
+  "placeFeedbackAverage": "{average} · {count, plural, one{1 valoración} other{{count} valoraciones}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",
     "placeholders": {
@@ -48,6 +48,6 @@
   "@placeFeedbackFailed": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackMine": "Su valoración: {n, plural, =1{1 estrella} other{{n} estrellas}}",
+  "placeFeedbackMine": "Su valoración: {n, plural, one{1 estrella} other{{n} estrellas}}",
   "placeFeedbackMineNone": "No la ha valorado"
 }

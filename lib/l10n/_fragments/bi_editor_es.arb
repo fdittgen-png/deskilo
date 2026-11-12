@@ -307,7 +307,7 @@
       }
     }
   },
-  "biEditorRows": "{count, plural, =1{1 fila} other{{count} filas}}",
+  "biEditorRows": "{count, plural, one{1 fila} other{{count} filas}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {

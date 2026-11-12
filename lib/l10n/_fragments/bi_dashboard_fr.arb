@@ -85,7 +85,7 @@
   "@biProjectionTitle": {
     "description": "Business analytics dashboard: biProjectionTitle"
   },
-  "biProjectionBasis": "Une droite tracée sur {count, plural, =1{la dernière période complète} other{les {count} dernières périodes complètes}}, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
+  "biProjectionBasis": "Une droite tracée sur {count, plural, =0{les {count} dernières périodes complètes} one{la dernière période complète} other{les {count} dernières périodes complètes}}, prolongée. La zone ombrée est la fourchette probable. Une estimation, pas une promesse.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -94,7 +94,7 @@
       }
     }
   },
-  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have, plural, =1{1 période complète} other{{have} périodes complètes}} pour l'instant, {need, plural, =1{1 nécessaire} other{{need} nécessaires}}.",
+  "biProjectionNotEnough": "Pas encore assez d'historique pour projeter : {have, plural, one{{have} période complète} other{{have} périodes complètes}} pour l'instant, {need, plural, one{{need} nécessaire} other{{need} nécessaires}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {

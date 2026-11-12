@@ -15,7 +15,7 @@
   "compareMissing": "Nicht in dieser Vorlage",
   "compareUnknown": "Unbekannt",
   "compareNotCarried": "Nicht übertragen",
-  "compareLimit": "{count, plural, =1{Es kann nur 1 Vorlage verglichen werden. Entfernen Sie zuerst eine.} other{Bis zu {count} Vorlagen können verglichen werden. Entfernen Sie zuerst eine.}}",
+  "compareLimit": "{count, plural, one{Es kann nur 1 Vorlage verglichen werden. Entfernen Sie zuerst eine.} other{Bis zu {count} Vorlagen können verglichen werden. Entfernen Sie zuerst eine.}}",
   "compareOpen": "Vergleichen ({count})",
   "compareAdd": "Zum Vergleich hinzufügen",
   "compareRemove": "Aus dem Vergleich entfernen",

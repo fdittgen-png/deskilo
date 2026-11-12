@@ -105,7 +105,7 @@
       }
     }
   },
-  "invoiceSummaryOpen": "{count, plural, =1{1 offen} other{{count} offen}} · {amount} ausstehend",
+  "invoiceSummaryOpen": "{count, plural, one{1 offen} other{{count} offen}} · {amount} ausstehend",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -124,7 +124,7 @@
       }
     }
   },
-  "invoiceIssuedCount": "{count, plural, =1{1 Rechnung ausgestellt.} other{{count} Rechnungen ausgestellt.}}",
+  "invoiceIssuedCount": "{count, plural, one{1 Rechnung ausgestellt.} other{{count} Rechnungen ausgestellt.}}",
   "@invoiceIssuedCount": {
     "placeholders": {
       "count": {
@@ -172,7 +172,7 @@
   "invoiceMatchPickPayment": "Registrierte Zahlung auswählen",
   "invoiceMatchNoPayments": "Keine registrierte Zahlung zum Abgleich — zuerst erfassen oder bestätigen.",
   "invoiceStatusOpen": "Offen",
-  "invoiceCountShown": "{count, plural, =1{1 Rechnung} other{{count} Rechnungen}}",
+  "invoiceCountShown": "{count, plural, one{1 Rechnung} other{{count} Rechnungen}}",
   "@invoiceCountShown": {
     "placeholders": {
       "count": {
@@ -210,7 +210,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Anhang: {movements, plural, =1{1 Bewegung} other{{movements} Bewegungen}}, {checkIns, plural, =1{1 Check-in} other{{checkIns} Check-ins}}",
+  "invoiceAnnexSummary": "Anhang: {movements, plural, one{1 Bewegung} other{{movements} Bewegungen}}, {checkIns, plural, one{1 Check-in} other{{checkIns} Check-ins}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -223,7 +223,7 @@
   },
   "invoicePickMember": "Ein Mitglied wählen, um zu sehen, was dieser Monat erfasst hat.",
   "invoiceRunningMonth": "Dieser Monat läuft noch — seine Positionen können sich noch ändern, und ein Monat lässt sich nur einmal abrechnen.",
-  "invoiceIssueAllConfirm": "{count, plural, =1{1 Rechnung für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.} other{{count} Rechnungen für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.}}",
+  "invoiceIssueAllConfirm": "{count, plural, one{1 Rechnung für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.} other{{count} Rechnungen für {month} über insgesamt {total} ausstellen? Eine ausgestellte Rechnung lässt sich nicht mehr ändern — ein Fehler wird durch eine Ersatzrechnung korrigiert.}}",
   "@invoiceIssueAllConfirm": {
     "placeholders": {
       "count": {
@@ -237,7 +237,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued, plural, =1{1 ausgestellt} other{{issued} ausgestellt}}, {failed, plural, =1{1 fehlgeschlagen} other{{failed} fehlgeschlagen}}.",
+  "invoiceIssuedPartial": "{issued, plural, one{1 ausgestellt} other{{issued} ausgestellt}}, {failed, plural, one{1 fehlgeschlagen} other{{failed} fehlgeschlagen}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -765,7 +765,7 @@
   },
   "eventTypePriceNegotiation": "Preisverhandlung",
   "eventPriceNegotiationLine": "{actor} schlägt Konditionen für {member} vor: {terms}",
-  "eventPriceNegotiationItems": "{count, plural, =1{1 Artikel} other{{count} Artikel}}",
+  "eventPriceNegotiationItems": "{count, plural, one{1 Artikel} other{{count} Artikel}}",
   "journeyStateDone": "Abgeschlossen",
   "journeyStateCurrent": "Aktueller Schritt",
   "journeyStateUpcoming": "Ausstehend",
@@ -958,7 +958,7 @@
   "journeyStageCollect": "Einzuziehen",
   "journeyStageConfirm": "Zu bestätigen",
   "journeyStageClosed": "Abgeschlossen",
-  "journeyOverdueCount": "{count, plural, =1{1 überfällig} other{{count} überfällig}}",
+  "journeyOverdueCount": "{count, plural, one{1 überfällig} other{{count} überfällig}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {
@@ -1008,7 +1008,7 @@
   "reportDesignerReplaceTitle": "Aktuelles Layout ersetzen?",
   "reportDesignerReplaceBody": "Die Bänder dieses Dokuments werden ersetzt. Rückgängig holt sie zurück.",
   "reportDesignerReplace": "Ersetzen",
-  "reportDesignerPages": "{count, plural, =1{1 Seite} other{{count} Seiten}}",
+  "reportDesignerPages": "{count, plural, one{1 Seite} other{{count} Seiten}}",
   "@reportDesignerPages": {
     "placeholders": {
       "count": {
@@ -1081,7 +1081,7 @@
       }
     }
   },
-  "wizardIssueAll": "{count, plural, =1{1 Rechnung ausstellen} other{{count} Rechnungen ausstellen}}",
+  "wizardIssueAll": "{count, plural, one{1 Rechnung ausstellen} other{{count} Rechnungen ausstellen}}",
   "@wizardIssueAll": {
     "placeholders": {
       "count": {
@@ -1111,7 +1111,7 @@
       }
     }
   },
-  "wizardRemindAll": "{count, plural, =1{1 Mahnung senden} other{{count} Mahnungen senden}}",
+  "wizardRemindAll": "{count, plural, one{1 Mahnung senden} other{{count} Mahnungen senden}}",
   "@wizardRemindAll": {
     "placeholders": {
       "count": {
@@ -1185,7 +1185,7 @@
   "repartitionWeight": "Schlüssel",
   "repartitionPreview": "Anteile",
   "repartitionNoShares": "Niemand trägt einen Anteil — prüfen Sie den Schlüssel.",
-  "repartitionSum": "{count, plural, =1{1 Mitglied · {amount}} other{{count} Mitglieder · {amount}}}",
+  "repartitionSum": "{count, plural, one{1 Mitglied · {amount}} other{{count} Mitglieder · {amount}}}",
   "@repartitionSum": {
     "placeholders": {
       "count": {

@@ -84,7 +84,7 @@
   "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
   "settlementSettledBy": "In eine andere Rechnung zusammengefasst — diese ist das, was geschuldet und angemahnt wird.",
   "settlementAction": "Zu einer Rechnung zusammenfassen",
-  "settlementConfirm": "{count, plural, =1{1 Rechnung zu einer über {amount} zusammenfassen?} other{{count} Rechnungen zu einer über {amount} zusammenfassen?}}",
+  "settlementConfirm": "{count, plural, one{1 Rechnung zu einer über {amount} zusammenfassen?} other{{count} Rechnungen zu einer über {amount} zusammenfassen?}}",
   "settlementDone": "Zusammengefasst in {number}.",
   "settlementNeedsTwo": "Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.",
   "@settlementConfirm": {
@@ -133,7 +133,7 @@
   "settlementAnnexTitle": "Die zusammengefassten Rechnungen anhängen?",
   "settlementAnnexAlone": "Nur diese Rechnung",
   "settlementAnnexWith": "Anhängen",
-  "settlementAnnexBody": "{count, plural, =1{Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.} other{Die {count} Rechnungen, die diese ersetzt, können ihr folgen, jede auf eigenen Seiten und als zusammengefasst gestempelt.}}",
+  "settlementAnnexBody": "{count, plural, one{Die Rechnung, die diese ersetzt, kann ihr folgen, auf eigenen Seiten und als zusammengefasst gestempelt.} other{Die {count} Rechnungen, die diese ersetzt, können ihr folgen, jede auf eigenen Seiten und als zusammengefasst gestempelt.}}",
   "@settlementAnnexBody": {
     "placeholders": {
       "count": {

@@ -68,7 +68,7 @@
   "@mcpConnectStepConnect": {
     "description": "#2145 Connect an assistant: mcpConnectStepConnect"
   },
-  "mcpConnectAccessExpiresSoon": "Approved — expires in {days, plural, =1{1 day} other{{days} days}}. Ask for approval again once it lapses.",
+  "mcpConnectAccessExpiresSoon": "Approved — expires in {days, plural, one{1 day} other{{days} days}}. Ask for approval again once it lapses.",
   "@mcpConnectAccessExpiresSoon": {
     "description": "#2145 Connect an assistant: mcpConnectAccessExpiresSoon",
     "placeholders": {
@@ -77,7 +77,7 @@
       }
     }
   },
-  "mcpConnectAccessExpiresIn": "Approved — {days, plural, =1{1 day} other{{days} days}} left.",
+  "mcpConnectAccessExpiresIn": "Approved — {days, plural, one{1 day} other{{days} days}} left.",
   "@mcpConnectAccessExpiresIn": {
     "description": "#2145 Connect an assistant: mcpConnectAccessExpiresIn",
     "placeholders": {

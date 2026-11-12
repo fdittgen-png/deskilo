@@ -71,7 +71,7 @@
   },
   "inboxRequestsCount": "Requests: {count}",
   "@inboxRequestsCount": {
-    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
