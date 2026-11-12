@@ -15,6 +15,7 @@ import '../page_frame.dart';
 /// The widest a dialog stands on the desk: the 960 column it stood in
 /// before (#3798) less Material's two 40 insets, so a dialog keeps the
 /// width it had now that the column no longer bounds it.
+@visibleForTesting
 const double deskDialogMaxWidth = 880;
 
 /// The desk's page area: the pages under it frame themselves, and a dialog
@@ -33,28 +34,36 @@ class DeskPageFrame extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: deskDialogMaxWidth),
         ),
       ),
-      child: _Mark(child: child),
+      child: _Mark(on: true, child: child),
     );
   }
 }
 
-/// Marks the desk's page area for [framedOnDesk].
+/// Marks the desk's page area for [framedOnDesk]; a framed page marks its
+/// own inside off, so a page of a navigator nested in it is not framed a
+/// second time.
 class _Mark extends InheritedWidget {
-  const _Mark({required super.child});
+  const _Mark({required this.on, required super.child});
 
-  static bool on(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_Mark>() != null;
+  final bool on;
+
+  static bool of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_Mark>()?.on ?? false;
 
   @override
-  bool updateShouldNotify(_Mark old) => false;
+  bool updateShouldNotify(_Mark old) => old.on != on;
 }
 
 /// [child], a route's page, in the measure its address declares when it
 /// stands in the desk's page area; unchanged anywhere else.
 Widget framedOnDesk(Widget child) => Builder(
   builder: (context) {
-    if (!_Mark.on(context)) return child;
-    return framePage(_pathOf(context), child, inside: true);
+    if (!_Mark.of(context)) return child;
+    return framePage(
+      _pathOf(context),
+      _Mark(on: false, child: child),
+      inside: true,
+    );
   },
 );
 
