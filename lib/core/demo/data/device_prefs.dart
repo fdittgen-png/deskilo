@@ -159,6 +159,7 @@ class DemoDevicePrefs {
 
   /// #3603 — the desk's sidebar starts with its labels.
   final InMemoryShellFlagStore deskRailCollapsed = InMemoryShellFlagStore();
+  final InMemoryPaneWidthStore paneWidths = InMemoryPaneWidthStore();
 
   /// #1914 — push opt-out, kept in the demonstration's own memory.
   final InMemoryPushOptOutStore pushOptOut = InMemoryPushOptOutStore();

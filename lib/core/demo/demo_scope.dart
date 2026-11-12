@@ -122,6 +122,7 @@ import '../storage/entry_intent_store.dart';
 import '../storage/help_hint_store.dart';
 import '../storage/note_seen_store.dart';
 import '../storage/notification_filter_store.dart';
+import '../storage/pane_width_store.dart';
 import '../storage/space_prefs_store.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
@@ -396,6 +397,8 @@ List<Override> demoOverrides(DemoFixture fixture) {
       shellBarHiddenStoreProvider.overrideWithValue(fixture.prefs.shellBarHidden),
       shellSwipeCoachStoreProvider.overrideWithValue(fixture.prefs.shellSwipeCoach),
       deskRailCollapsedStoreProvider.overrideWithValue(fixture.prefs.deskRailCollapsed),
+      // #3607 — the record pane's width per list, on the fixture.
+      paneWidthStoreProvider.overrideWithValue(fixture.prefs.paneWidths),
       pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
       webMcpSwitchStoreProvider.overrideWithValue(fixture.prefs.webMcpSwitch),
       frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
