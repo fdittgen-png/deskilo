@@ -88,6 +88,50 @@ final _deviceDay = RegExp(
   caseSensitive: false,
 );
 
+/// #3825 — a test that seeds a time of day on the TEST DAY with the
+/// device's own constructor, `DateTime(kTestNow.year, kTestNow.month,
+/// kTestNow.day, hour)`, reads the wall clock of the machine's zone without
+/// naming `DateTime.now()`: the app decides the day in the business's zone,
+/// so 15:00 on a machine west of Paris is already tomorrow there
+/// (`seat_day_phase_test`: green in UTC CI, red on a Pacific laptop). Seed
+/// through `WorkspaceTime.at(...)` / `WorkspaceCalendar.at(...)` and pin the
+/// clock with `FixedClock`. A date without a time of day is not a clock read.
+/// The files below held such seeds when the rule came, with their count, each
+/// a device-zone seed kept as it was written; a count may only fall, and a
+/// file leaves the list at zero.
+const _deviceZoneSeedFiles = <String, int>{
+  'test/features/me/my_data_hub_test.dart': 1,
+  'test/features/me/personal_overview_test.dart': 1,
+  'test/features/plan/plan_member_photos_test.dart': 2,
+  'test/features/reservations/booking_gate_test.dart': 1,
+  'test/features/reservations/checkin_rides_reservation_test.dart': 1,
+  'test/features/reservations/enforcement_parity_test.dart': 1,
+  'test/features/reservations/my_reservations_across_hosts_test.dart': 1,
+  'test/features/reservations/my_reservations_body_test.dart': 1,
+  'test/features/reservations/my_reservations_rows_test.dart': 1,
+  'test/features/reservations/my_reservations_visits_cache_test.dart': 1,
+  'test/features/reservations/reservation_edges_test.dart': 1,
+  'test/features/reservations/second_client_refresh_test.dart': 1,
+  'test/features/workspace/member_note_flow_test.dart': 2,
+  'test/features/workspace/outside_hours_policy_test.dart': 1,
+  'test/features/workspace/workspace_excel_test.dart': 1,
+};
+
+final _deviceZoneSeed = RegExp(
+  r'DateTime\(\s*[\w.]*kTestNow\.year,\s*[\w.]*kTestNow\.month,'
+  r'\s*[\w.]*kTestNow\.day\s*,',
+);
+
+/// The device-zone time-of-day seeds in [source] (a whole file's text).
+int deviceZoneSeeds(String source) => _deviceZoneSeed
+    .allMatches(
+      source
+          .split('\n')
+          .where((l) => !l.trimLeft().startsWith('//'))
+          .join('\n'),
+    )
+    .length;
+
 /// The device-day reads on the code [lines] of a file.
 int deviceDayReads(Iterable<String> lines) => lines
     .where((l) => !l.trimLeft().startsWith('//'))
@@ -129,6 +173,58 @@ void main() {
         reason: 'a day decided on the device; read the business\'s calendar');
     expect(shrunk, isEmpty,
         reason: 'lower the count in _deviceDayFiles (or remove the file at 0)');
+  });
+
+  test('a device-zone time of day on the test day is seen; a date, a '
+      'workspace-zone time and a comment are not (#3825)', () {
+    // Positive controls: the shape that went red on a Pacific laptop.
+    expect(
+        deviceZoneSeeds(
+            'DateTime(kTestNow.year, kTestNow.month, kTestNow.day, 15);'),
+        1);
+    expect(
+        deviceZoneSeeds('DateTime(\n  k.kTestNow.year,\n  kTestNow.month,\n'
+            '  kTestNow.day,\n  hour);'),
+        1);
+    // Negative controls.
+    expect(
+        deviceZoneSeeds(
+            'DateTime(kTestNow.year, kTestNow.month, kTestNow.day);'),
+        0);
+    expect(
+        deviceZoneSeeds('WorkspaceTime.at(kTestNow.year, kTestNow.month, '
+            'kTestNow.day, 15);'),
+        0);
+    expect(
+        deviceZoneSeeds(
+            '// DateTime(kTestNow.year, kTestNow.month, kTestNow.day, 15)'),
+        0);
+  });
+
+  test('no device-zone time of day is seeded on the test day beyond the '
+      'named files, and none of theirs grows (#3825)', () {
+    final found = <String, int>{
+      for (final f in handWrittenDartFiles('test'))
+        if (!f.path.startsWith('test/lint/'))
+          f.path: deviceZoneSeeds(f.readAsStringSync()),
+    }..removeWhere((_, n) => n == 0);
+    final grown = [
+      for (final MapEntry(key: path, value: n) in found.entries)
+        if (n > (_deviceZoneSeedFiles[path] ?? 0))
+          '$path: $n (allowed ${_deviceZoneSeedFiles[path] ?? 0})',
+    ];
+    final shrunk = [
+      for (final MapEntry(key: path, value: allowed)
+          in _deviceZoneSeedFiles.entries)
+        if ((found[path] ?? 0) < allowed)
+          '$path: ${found[path] ?? 0} (listed $allowed)',
+    ];
+    expect(grown, isEmpty,
+        reason: 'seed through WorkspaceTime.at and pin FixedClock; the '
+            'device\'s zone is not the business\'s');
+    expect(shrunk, isEmpty,
+        reason: 'lower the count in _deviceZoneSeedFiles (or remove the '
+            'file at 0)');
   });
 
   test('no wall-clock reads outside the exempt list', () {
