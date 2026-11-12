@@ -35,6 +35,7 @@ placeFeedback
 planDecor
 planObjectDelete
 pushNotifications
+quickSearch
 regionalFormats
 richMessageRefs
 roleAssignment

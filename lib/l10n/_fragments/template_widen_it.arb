@@ -1,7 +1,7 @@
 {
   "templateWidenTitle": "Rendere questo modello leggibile da: {audience}?",
-  "templateWidenCount": "{count, plural, =1{1 impostazione diventa leggibile, esattamente come il modello la contiene ora.} other{{count} impostazioni diventano leggibili, esattamente come il modello le contiene ora.}}",
-  "templateWidenExcluded": "{count, plural, =1{1 tipo di valore non esce mai con esso (coordinate bancarie, sedi, indirizzi…).} other{{count} tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).}}",
+  "templateWidenCount": "{count, plural, one{1 impostazione diventa leggibile, esattamente come il modello la contiene ora.} other{{count} impostazioni diventano leggibili, esattamente come il modello le contiene ora.}}",
+  "templateWidenExcluded": "{count, plural, one{1 tipo di valore non esce mai con esso (coordinate bancarie, sedi, indirizzi…).} other{{count} tipi di valori non escono mai con esso (coordinate bancarie, sedi, indirizzi…).}}",
   "templateWidenConfirm": "Rendi leggibile",
   "templateProfileFull": "Profilo di configurazione completo",
   "templateProfileSelected": "Gruppi scelti: {chosen} su {total}",

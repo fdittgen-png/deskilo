@@ -14,7 +14,7 @@
   "setupOnlineKeyInstallation": "Défini par l’installation, que ce test ne peut pas lire",
   "setupApprovalsOwnRulesTitle": "Règles propres",
   "setupApprovalsOwnRulesNone": "Chaque demande suit la règle par défaut ci-dessus.",
-  "setupApprovalsOwnRulesShort": "{count, plural, =1{Une règle demande plus d’approbations que les personnes ne peuvent en donner : ses demandes ne sont jamais tranchées. Modifiez-la dans les règles d’approbation.} other{{count} règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.}}",
-  "setupApprovalsRuleReach": "{required, plural, =1{1 approbation} other{{required} approbations}}, {people, plural, =1{1 personne peut approuver} other{{people} personnes peuvent approuver}}",
-  "setupApprovalsRuleShort": "{required, plural, =1{1 approbation} other{{required} approbations}}, mais {people, plural, =0{personne ne peut approuver} =1{seule 1 personne peut approuver} other{seules {people} personnes peuvent approuver}}"
+  "setupApprovalsOwnRulesShort": "{count, plural, =0{{count} règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.} one{Une règle demande plus d’approbations que les personnes ne peuvent en donner : ses demandes ne sont jamais tranchées. Modifiez-la dans les règles d’approbation.} other{{count} règles demandent plus d’approbations que les personnes ne peuvent en donner : leurs demandes ne sont jamais tranchées. Modifiez-les dans les règles d’approbation.}}",
+  "setupApprovalsRuleReach": "{required, plural, one{{required} approbation} other{{required} approbations}}, {people, plural, one{{people} personne peut approuver} other{{people} personnes peuvent approuver}}",
+  "setupApprovalsRuleShort": "{required, plural, one{{required} approbation} other{{required} approbations}}, mais {people, plural, =0{personne ne peut approuver} one{seule 1 personne peut approuver} other{seules {people} personnes peuvent approuver}}"
 }

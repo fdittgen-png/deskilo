@@ -105,7 +105,7 @@
       }
     }
   },
-  "invoiceSummaryOpen": "{count, plural, =1{1 aperta} other{{count} aperte}} · {amount} in sospeso",
+  "invoiceSummaryOpen": "{count, plural, one{1 aperta} other{{count} aperte}} · {amount} in sospeso",
   "@invoiceSummaryOpen": {
     "placeholders": {
       "count": {
@@ -124,7 +124,7 @@
       }
     }
   },
-  "invoiceIssuedCount": "{count, plural, =1{1 fattura emessa.} other{{count} fatture emesse.}}",
+  "invoiceIssuedCount": "{count, plural, one{1 fattura emessa.} other{{count} fatture emesse.}}",
   "@invoiceIssuedCount": {
     "placeholders": {
       "count": {
@@ -172,7 +172,7 @@
   "invoiceMatchPickPayment": "Seleziona il pagamento registrato",
   "invoiceMatchNoPayments": "Nessun pagamento registrato da riconciliare — lo registri o lo confermi prima.",
   "invoiceStatusOpen": "Aperta",
-  "invoiceCountShown": "{count, plural, =1{1 fattura} other{{count} fatture}}",
+  "invoiceCountShown": "{count, plural, one{1 fattura} other{{count} fatture}}",
   "@invoiceCountShown": {
     "placeholders": {
       "count": {
@@ -210,7 +210,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Allegato: {movements, plural, =1{1 movimento} other{{movements} movimenti}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-in}}",
+  "invoiceAnnexSummary": "Allegato: {movements, plural, one{1 movimento} other{{movements} movimenti}}, {checkIns, plural, one{1 check-in} other{{checkIns} check-in}}",
   "@invoiceAnnexSummary": {
     "placeholders": {
       "movements": {
@@ -223,7 +223,7 @@
   },
   "invoicePickMember": "Scelga un membro per vedere cosa ha registrato il suo mese.",
   "invoiceRunningMonth": "Questo mese è ancora in corso — le sue voci possono cambiare, e un mese si fattura una sola volta.",
-  "invoiceIssueAllConfirm": "{count, plural, =1{Emettere 1 fattura per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.} other{Emettere {count} fatture per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.}}",
+  "invoiceIssueAllConfirm": "{count, plural, one{Emettere 1 fattura per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.} other{Emettere {count} fatture per {month}, {total} in totale? Una fattura emessa non si modifica più — un errore si corregge con una sostituzione.}}",
   "@invoiceIssueAllConfirm": {
     "placeholders": {
       "count": {
@@ -237,7 +237,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued, plural, =1{1 emessa} other{{issued} emesse}}, {failed, plural, =1{1 non riuscita} other{{failed} non riuscite}}.",
+  "invoiceIssuedPartial": "{issued, plural, one{1 emessa} other{{issued} emesse}}, {failed, plural, one{1 non riuscita} other{{failed} non riuscite}}.",
   "@invoiceIssuedPartial": {
     "placeholders": {
       "issued": {
@@ -765,7 +765,7 @@
   },
   "eventTypePriceNegotiation": "Negoziazione di prezzo",
   "eventPriceNegotiationLine": "{actor} propone condizioni per {member}: {terms}",
-  "eventPriceNegotiationItems": "{count, plural, =1{1 articolo} other{{count} articoli}}",
+  "eventPriceNegotiationItems": "{count, plural, one{1 articolo} other{{count} articoli}}",
   "journeyStateDone": "Completato",
   "journeyStateCurrent": "Passaggio attuale",
   "journeyStateUpcoming": "Da completare",
@@ -958,7 +958,7 @@
   "journeyStageCollect": "Da incassare",
   "journeyStageConfirm": "Da confermare",
   "journeyStageClosed": "Chiuse",
-  "journeyOverdueCount": "{count, plural, =1{1 in ritardo} other{{count} in ritardo}}",
+  "journeyOverdueCount": "{count, plural, one{1 in ritardo} other{{count} in ritardo}}",
   "@journeyOverdueCount": {
     "placeholders": {
       "count": {
@@ -1008,7 +1008,7 @@
   "reportDesignerReplaceTitle": "Sostituire il layout attuale?",
   "reportDesignerReplaceBody": "Le bande di questo documento vengono sostituite. Annulla le riporta.",
   "reportDesignerReplace": "Sostituisci",
-  "reportDesignerPages": "{count, plural, =1{1 pagina} other{{count} pagine}}",
+  "reportDesignerPages": "{count, plural, one{1 pagina} other{{count} pagine}}",
   "@reportDesignerPages": {
     "placeholders": {
       "count": {
@@ -1081,7 +1081,7 @@
       }
     }
   },
-  "wizardIssueAll": "{count, plural, =1{Emetti 1 fattura} other{Emetti {count} fatture}}",
+  "wizardIssueAll": "{count, plural, one{Emetti 1 fattura} other{Emetti {count} fatture}}",
   "@wizardIssueAll": {
     "placeholders": {
       "count": {
@@ -1111,7 +1111,7 @@
       }
     }
   },
-  "wizardRemindAll": "{count, plural, =1{Invia 1 sollecito} other{Invia {count} solleciti}}",
+  "wizardRemindAll": "{count, plural, one{Invia 1 sollecito} other{Invia {count} solleciti}}",
   "@wizardRemindAll": {
     "placeholders": {
       "count": {
@@ -1185,7 +1185,7 @@
   "repartitionWeight": "Chiave",
   "repartitionPreview": "Quote",
   "repartitionNoShares": "Nessuno porta una quota: controlli la chiave.",
-  "repartitionSum": "{count, plural, =1{1 membro · {amount}} other{{count} membri · {amount}}}",
+  "repartitionSum": "{count, plural, one{1 membro · {amount}} other{{count} membri · {amount}}}",
   "@repartitionSum": {
     "placeholders": {
       "count": {

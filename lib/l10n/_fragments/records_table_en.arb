@@ -3,7 +3,7 @@
   "@recordsFilter": {
     "description": "#3606 records table"
   },
-  "recordsShown": "{count, plural, =1{1 shown} other{{count} shown}}",
+  "recordsShown": "{count, plural, one{1 shown} other{{count} shown}}",
   "@recordsShown": {
     "description": "#3606 records table",
     "placeholders": {
@@ -12,7 +12,7 @@
       }
     }
   },
-  "recordsSelected": "{count, plural, =1{1 selected} other{{count} selected}}",
+  "recordsSelected": "{count, plural, one{1 selected} other{{count} selected}}",
   "@recordsSelected": {
     "description": "#3606 records table",
     "placeholders": {
@@ -21,7 +21,7 @@
       }
     }
   },
-  "recordsSelectShown": "{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}",
+  "recordsSelectShown": "{count, plural, one{Select the 1 shown} other{Select the {count} shown}}",
   "@recordsSelectShown": {
     "description": "#3606 records table",
     "placeholders": {
@@ -42,7 +42,7 @@
   "@recordsTotalOfSelection": {
     "description": "#3606 records table"
   },
-  "recordsPartlyRead": "{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
+  "recordsPartlyRead": "{loaded, plural, one{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
   "@recordsPartlyRead": {
     "description": "#3606 records table",
     "placeholders": {
@@ -51,7 +51,7 @@
       }
     }
   },
-  "recordsDropped": "{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
+  "recordsDropped": "{count, plural, one{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
   "@recordsDropped": {
     "description": "#3606 records table",
     "placeholders": {

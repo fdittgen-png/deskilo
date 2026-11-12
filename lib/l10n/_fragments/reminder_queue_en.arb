@@ -9,14 +9,14 @@
   },
   "reminderQueueLevel": "Reminder {level}",
   "@reminderQueueLevel": {
-    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
       }
     }
   },
-  "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · due today} one{{number} · 1 day late} other{{number} · {days} days late}}",
   "@reminderQueueDetail": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
     "placeholders": {
@@ -53,7 +53,7 @@
   "@reminderQueueFailed": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueFailed)"
   },
-  "reminderQueueResultTitle": "{count, plural, =1{1 reminder shared} other{{count} reminders shared}}",
+  "reminderQueueResultTitle": "{count, plural, one{1 reminder shared} other{{count} reminders shared}}",
   "@reminderQueueResultTitle": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)",
     "placeholders": {

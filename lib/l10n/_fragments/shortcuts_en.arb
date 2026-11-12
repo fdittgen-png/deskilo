@@ -1,0 +1,50 @@
+{
+  "shortcutSearch": "Find a page, an action or a record",
+  "@shortcutSearch": {
+    "description": "#3610 the shortcut list: Ctrl/Cmd+K opens search"
+  },
+  "shortcutFilter": "Filter this list",
+  "@shortcutFilter": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutNew": "New",
+  "@shortcutNew": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutClose": "Close",
+  "@shortcutClose": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutSave": "Save",
+  "@shortcutSave": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutSubmit": "Save or send",
+  "@shortcutSubmit": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutPrint": "This page's document",
+  "@shortcutPrint": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutKeys": "The keys of this page",
+  "@shortcutKeys": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutOpenCalendar": "Open a date field's calendar",
+  "@shortcutOpenCalendar": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutUndo": "Undo",
+  "@shortcutUndo": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutRedo": "Redo",
+  "@shortcutRedo": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutKeysTitle": "Keyboard keys",
+  "@shortcutKeysTitle": {
+    "description": "#3610 the title of the overlay listing the keys of the page"
+  }
+}

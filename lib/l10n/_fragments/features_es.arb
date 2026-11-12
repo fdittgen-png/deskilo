@@ -229,7 +229,7 @@
   "featureOptInBody": "Aún no evaluada como estable: {features}. Puede cambiar y tiene límites conocidos. Actívela solo si este espacio lo acepta.",
   "featureOptInConfirm": "Activar",
   "featureIntakeStoppedNote": "Desactivado: no empieza nada nuevo; lo que ya está abierto aún puede atenderse y cerrarse.",
-  "featureOptInAlsoOn": "{count, plural, =1{También se activa, porque es necesario: {features}} other{También se activan, porque son necesarios ({count}): {features}}}",
+  "featureOptInAlsoOn": "{count, plural, one{También se activa, porque es necesario: {features}} other{También se activan, porque son necesarios ({count}): {features}}}",
   "featureOptInStage": "{feature}: {stage}",
   "featureChangedMeanwhile": "Las funciones cambiaron mientras tanto, así que no se guardó nada. Revise la lista y vuelva a intentarlo.",
   "featureChangeUnconfirmed": "El cambio se envió, pero no se pudieron recargar las funciones para confirmarlo. Vuelva a abrir la pantalla para ver el estado.",
@@ -269,5 +269,7 @@
   "featureReminderEmailTitle": "Recordatorios por correo electrónico",
   "featureReminderEmailDesc": "Un recordatorio de pago también puede enviarse por correo electrónico, desde el servidor, con el remitente de su empresa, en el idioma de los documentos del cliente. Cada nivel se envía una sola vez; la respuesta del proveedor se guarda junto al recordatorio. Desactivado: los recordatorios solo llegan al historial y como notificación.",
   "featureInvoiceEmailTitle": "Facturas por correo",
-  "featureInvoiceEmailDesc": "Una factura emitida puede enviarse por correo desde el servidor, con el remitente de la empresa, a la dirección de contacto del cliente, en el idioma de sus documentos. Cada factura se envía una vez; volver a enviarla es un acto deliberado, con su propio registro. Desactivado: las facturas se comparten o descargan como antes."
+  "featureInvoiceEmailDesc": "Una factura emitida puede enviarse por correo desde el servidor, con el remitente de la empresa, a la dirección de contacto del cliente, en el idioma de sus documentos. Cada factura se envía una vez; volver a enviarla es un acto deliberado, con su propio registro. Desactivado: las facturas se comparten o descargan como antes.",
+  "featureQuickSearchTitle": "Búsqueda y teclas",
+  "featureQuickSearchDesc": "Ctrl+K (⌘K en un Mac) o el botón de búsqueda de la barra encuentra una página, una acción o un registro — un miembro, un cliente, una factura por su número, un proveedor — entre lo que la persona puede abrir; lo reciente primero. ? muestra las teclas de la página. Desactivado: sin botón de búsqueda ni teclas de la aplicación; las teclas propias de una página se mantienen."
 }

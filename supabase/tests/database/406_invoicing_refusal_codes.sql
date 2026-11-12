@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3811 (0740, part of #3657): an invoicing refusal carries its code, as the
+-- #3811 (0742, part of #3657): an invoicing refusal carries its code, as the
 -- booking refusals do since 0739. Structure: every invoicing sentence the app
 -- read by its words carries its code, and the codes exist. The assistant's
 -- outcome reads these codes as "refused" with their reason, as it reads
@@ -32,7 +32,7 @@ select is((select string_agg(proname || ': ' || left(stmt, 80), E'\n') from invo
               and stmt !~ 'errcode'), null,
   'every invoicing refusal the app read by its words carries its code');
 select is((select count(distinct c[1])::int from invoicing_raises, regexp_matches(stmt, 'errcode = ''(DKI0[3-7]|DKD01)''', 'g') c), 6,
-  'the six codes of 0740 are raised');
+  'the six codes of 0742 are raised');
 
 select is(public.mcp_outcome_of('DKI03', 'invoice is voided') ->> 'status',
           public.mcp_outcome_of('P0001', 'invoice is voided') ->> 'status',

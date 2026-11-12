@@ -7,7 +7,7 @@
   "memberMakeMember": "Retirer le rôle Administrateur·rice",
   "memberRoleChangeRequested": "Changement de rôle envoyé pour validation.",
   "eventTypeQuota": "Demi-journées supplémentaires",
-  "eventQuotaRequested": "{actor} demande {halfDays, plural, =1{1 demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
+  "eventQuotaRequested": "{actor} demande {halfDays, plural, one{{halfDays} demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
   "quotaExceededError": "Quota mensuel de demi-journées atteint — demandez des demi-journées supplémentaires depuis Mes finances.",
   "quotaRequestButton": "Demander des demi-journées",
   "quotaRequestTitle": "Demander des demi-journées supplémentaires",

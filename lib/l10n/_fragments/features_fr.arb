@@ -229,7 +229,7 @@
   "featureOptInBody": "Pas encore évaluée comme stable : {features}. Elle peut changer et a des limites connues. N’activez que si cet espace l’accepte.",
   "featureOptInConfirm": "Activer",
   "featureIntakeStoppedNote": "Désactivé : rien de nouveau ne commence ; ce qui est en cours peut encore être traité et clos.",
-  "featureOptInAlsoOn": "{count, plural, =1{Activé aussi, car nécessaire : {features}} other{Activés aussi, car nécessaires ({count}) : {features}}}",
+  "featureOptInAlsoOn": "{count, plural, =0{Activés aussi, car nécessaires ({count}) : {features}} one{Activé aussi, car nécessaire : {features}} other{Activés aussi, car nécessaires ({count}) : {features}}}",
   "featureOptInStage": "{feature} : {stage}",
   "featureChangedMeanwhile": "Les fonctionnalités ont changé entre-temps, rien n'a donc été enregistré. Vérifiez la liste et recommencez.",
   "featureChangeUnconfirmed": "La modification a été envoyée, mais les fonctionnalités n'ont pas pu être rechargées pour la confirmer. Rouvrez l'écran pour voir l'état actuel.",
@@ -269,5 +269,7 @@
   "featureReminderEmailTitle": "Relances par e-mail",
   "featureReminderEmailDesc": "Une relance de paiement peut aussi partir par e-mail, depuis le serveur, avec l'expéditeur de votre entreprise, dans la langue des documents du client. Chaque niveau de relance part une seule fois ; la réponse du prestataire est conservée avec la relance. Désactivé : les relances n'arrivent que dans le fil et par notification.",
   "featureInvoiceEmailTitle": "Factures par e-mail",
-  "featureInvoiceEmailDesc": "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant."
+  "featureInvoiceEmailDesc": "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant.",
+  "featureQuickSearchTitle": "Recherche et touches",
+  "featureQuickSearchDesc": "Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l'application ; les touches propres d'une page restent."
 }

@@ -151,7 +151,7 @@
       }
     }
   },
-  "leaseOccurrencesAfter": "{count, plural, =1{1 Fälligkeit wurde bereits für ein Datum nach dem Ende vorgelegt.} other{{count} Fälligkeiten wurden bereits für ein Datum nach dem Ende vorgelegt.}}",
+  "leaseOccurrencesAfter": "{count, plural, one{1 Fälligkeit wurde bereits für ein Datum nach dem Ende vorgelegt.} other{{count} Fälligkeiten wurden bereits für ein Datum nach dem Ende vorgelegt.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {

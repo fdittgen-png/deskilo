@@ -177,6 +177,7 @@
         "purchases": false,
         "pushNotifications": true,
         "qrBadges": false,
+        "quickSearch": true,
         "recapitulativeStatement": false,
         "recordingPrivacy": false,
         "regionalFormats": true,

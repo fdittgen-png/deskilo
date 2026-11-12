@@ -452,7 +452,13 @@ class AppLocalizationsDe extends AppLocalizations {
       one: 'Ein Beleg protokolliert',
       zero: 'Kein neuer Beleg protokolliert',
     );
-    return '$_temp0, $unchanged unverändert';
+    String _temp1 = intl.Intl.pluralLogic(
+      unchanged,
+      locale: localeName,
+      other: '$unchanged unverändert',
+      one: '$unchanged unverändert',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -2420,7 +2426,13 @@ class AppLocalizationsDe extends AppLocalizations {
       other: '$count Bewegungen',
       one: '1 Bewegung',
     );
-    return '$_temp0, $open offen';
+    String _temp1 = intl.Intl.pluralLogic(
+      open,
+      locale: localeName,
+      other: '$open offen',
+      one: '$open offen',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -11080,6 +11092,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR-Badges';
 
   @override
+  String get featureQuickSearchDesc =>
+      'Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben.';
+
+  @override
+  String get featureQuickSearchTitle => 'Suche und Tasten';
+
+  @override
   String get featureRecapitulativeStatementDesc =>
       'Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.';
 
@@ -12580,8 +12599,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get handoffTitle => 'Vor dem Speichern';
 
   @override
-  String handoffTransfersQuoted(String files, String deliveries) {
-    return 'Der Bericht zitiert die Übertragungsliste des Jahres: $files ausgegebene Datei(en) und $deliveries an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256';
+  String handoffTransfersQuoted(int files, int deliveries) {
+    String _temp0 = intl.Intl.pluralLogic(
+      files,
+      locale: localeName,
+      other: '$files ausgegebene Dateien',
+      one: '$files ausgegebene Datei',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      deliveries,
+      locale: localeName,
+      other: '$deliveries an eine Verbindung übermittelte Dokumente',
+      one: '$deliveries an eine Verbindung übermitteltes Dokument',
+    );
+    return 'Der Bericht zitiert die Übertragungsliste des Jahres: $_temp0 und $_temp1, jeweils mit SHA-256';
   }
 
   @override
@@ -16066,12 +16097,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      level,
-      locale: localeName,
-      other: 'Mahnung $level gesendet',
-    );
-    return '$_temp0';
+    return 'Mahnung $level gesendet';
   }
 
   @override
@@ -27396,6 +27422,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get schemaUpdateTitle => 'Dieser Server muss aktualisiert werden';
 
   @override
+  String get searchActionInvite => 'Mitglied einladen';
+
+  @override
+  String get searchActionNewPurchase => 'Neuer Einkauf';
+
+  @override
+  String get searchHint =>
+      'Eine Seite, eine Aktion, ein Mitglied, eine Rechnung…';
+
+  @override
+  String get searchKindAction => 'Aktion';
+
+  @override
+  String get searchKindMember => 'Mitglied';
+
+  @override
+  String get searchKindPage => 'Seite';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nichts gefunden für „$query“.';
+  }
+
+  @override
+  String get searchRecent => 'Zuletzt geöffnet';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Dieser Eintrag lässt sich nicht öffnen: Es gibt ihn nicht, oder Sie dürfen ihn nicht lesen.';
+
+  @override
   String get seatDayAhead => 'Später';
 
   @override
@@ -28659,12 +28716,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String setupApprovalsTooMany(int required, int people) {
     String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required Freigaben kommen',
+      one: '$required Freigabe kommt',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: 'nur $people Personen können',
       one: 'nur 1 Person kann',
     );
-    return '$required Freigaben kommen nie zusammen: $_temp0 freigeben. Verlangen Sie weniger, oder machen Sie weitere Mitglieder zu Administratoren.';
+    return '$_temp0 nie zusammen: $_temp1 freigeben. Verlangen Sie weniger, oder machen Sie weitere Mitglieder zu Administratoren.';
   }
 
   @override
@@ -30433,6 +30496,42 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.';
+
+  @override
+  String get shortcutClose => 'Schließen';
+
+  @override
+  String get shortcutFilter => 'Diese Liste filtern';
+
+  @override
+  String get shortcutKeys => 'Die Tasten dieser Seite';
+
+  @override
+  String get shortcutKeysTitle => 'Tastaturtasten';
+
+  @override
+  String get shortcutNew => 'Neu';
+
+  @override
+  String get shortcutOpenCalendar => 'Kalender eines Datumsfelds öffnen';
+
+  @override
+  String get shortcutPrint => 'Das Dokument dieser Seite';
+
+  @override
+  String get shortcutRedo => 'Wiederholen';
+
+  @override
+  String get shortcutSave => 'Speichern';
+
+  @override
+  String get shortcutSearch => 'Seite, Aktion oder Eintrag finden';
+
+  @override
+  String get shortcutSubmit => 'Speichern oder senden';
+
+  @override
+  String get shortcutUndo => 'Rückgängig';
 
   @override
   String get siteCity => 'Ort';

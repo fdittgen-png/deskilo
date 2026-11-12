@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "reserveRoomFor": "{count, plural, =1{Salle de réunion · 1 personne} other{Salle de réunion · {count} personnes}}",
+  "reserveRoomFor": "{count, plural, one{Salle de réunion · {count} personne} other{Salle de réunion · {count} personnes}}",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
     "placeholders": {
@@ -17,7 +17,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Réservée par {minutes, plural, =1{créneaux de 1 minute} other{créneaux de {minutes} minutes}}",
+  "reserveSlotMinutes": "Réservée par {minutes, plural, one{créneaux de {minutes} minute} other{créneaux de {minutes} minutes}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {

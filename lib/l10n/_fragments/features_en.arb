@@ -704,7 +704,7 @@
   "@featureIntakeStoppedNote": {
     "description": "#1851 note on a switched-off feature whose existing work stays serviceable"
   },
-  "featureOptInAlsoOn": "{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
+  "featureOptInAlsoOn": "{count, plural, one{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
   "@featureOptInAlsoOn": {
     "description": "#1851 B feature switch consent: featureOptInAlsoOn",
     "placeholders": {
@@ -817,5 +817,13 @@
   "featureInvoiceEmailDesc": "An issued invoice can be sent by e-mail from the server, with the business's own sender, to the customer's contact address, in the customer's document language. Each invoice is e-mailed once; sending it again is a deliberate act, kept with its own record. Off: invoices are shared or downloaded as before.",
   "@featureInvoiceEmailDesc": {
     "description": "#3673 feature switch: featureInvoiceEmailDesc"
+  },
+  "featureQuickSearchTitle": "Search and keys",
+  "@featureQuickSearchTitle": {
+    "description": "#3610 the search-and-keys feature"
+  },
+  "featureQuickSearchDesc": "Ctrl+K (⌘K on a Mac) or the bar's search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page's own keys stay.",
+  "@featureQuickSearchDesc": {
+    "description": "#3610 the search-and-keys feature"
   }
 }

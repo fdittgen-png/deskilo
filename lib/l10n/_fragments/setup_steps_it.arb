@@ -27,7 +27,7 @@
   "setupHoursRange": "{from}–{to}",
   "setupHoursClosed": "Chiuso",
   "setupPlacesEmpty": "Ancora nessun posto. Disegni sale, scrivanie e postazioni nell’editor, oppure parta da un modello.",
-  "setupPlacesCounts": "{rooms, plural, =0{nessuna sala} =1{1 sala} other{{rooms} sale}} · {desks, plural, =0{nessuna scrivania} =1{1 scrivania} other{{desks} scrivanie}} · {seats, plural, =0{nessuna postazione} =1{1 postazione} other{{seats} postazioni}}",
+  "setupPlacesCounts": "{rooms, plural, =0{nessuna sala} one{1 sala} other{{rooms} sale}} · {desks, plural, =0{nessuna scrivania} one{1 scrivania} other{{desks} scrivanie}} · {seats, plural, =0{nessuna postazione} one{1 postazione} other{{seats} postazioni}}",
   "setupPlacesOpenEditor": "Apra l’editor",
   "setupPlacesFromTemplate": "Parta da un modello",
   "setupPlacesPlanLabel": "Pianta di {level}",

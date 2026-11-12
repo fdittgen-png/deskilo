@@ -41,5 +41,5 @@
   "instanceGrant": "Zugang freigeben",
   "instanceGrantTitle": "Assistenten-Zugang für {name} freigeben",
   "instanceGrantReason": "Begründung",
-  "instanceGrantDaysLabel": "Für {days, plural, =1{1 Tag} other{{days} Tage}}"
+  "instanceGrantDaysLabel": "Für {days, plural, one{1 Tag} other{{days} Tage}}"
 }

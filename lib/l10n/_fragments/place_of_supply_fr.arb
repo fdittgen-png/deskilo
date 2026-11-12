@@ -64,7 +64,7 @@
   "featureRecapitulativeStatementDesc": "Les services autoliquidés par des entreprises d'autres pays de l'UE, par numéro de TVA du client et par mois, exportés en CSV à côté des déclarations de TVA : la liste que l'administration attend (DES en France, Zusammenfassende Meldung en Allemagne, modelo 349 en Espagne). La facturation affiche un avis tant qu'une déclaration est due. Désactivé : ni export ni avis.",
   "recapCsv": "Déclaration européenne de services (CSV)",
   "recapEmpty": "Rien n'a été autoliquidé sur cette période.",
-  "recapDue": "Une déclaration européenne de services est due pour {month} : {count, plural, =1{1 facture autoliquidée} other{{count} factures autoliquidées}}. Exportez-la depuis les déclarations de TVA.",
+  "recapDue": "Une déclaration européenne de services est due pour {month} : {count, plural, one{{count} facture autoliquidée} other{{count} factures autoliquidées}}. Exportez-la depuis les déclarations de TVA.",
   "@recapDue": {
     "placeholders": {
       "month": {

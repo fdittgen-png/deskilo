@@ -148,7 +148,7 @@
   "@biRefusedGrouping": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
-  "biRefusedBudget": "{count, plural, =1{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}",
+  "biRefusedBudget": "{count, plural, one{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}",
   "@biRefusedBudget": {
     "description": "#1923 B Web-BI toolbar and module section",
     "placeholders": {
@@ -340,7 +340,7 @@
   "@biViewUnreadable": {
     "description": "#1923 C Web-BI saved views"
   },
-  "biCardsUnavailable": "{count, plural, =1{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
+  "biCardsUnavailable": "{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
     "placeholders": {
@@ -361,7 +361,7 @@
   "@biFinanceCollected": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biFinanceInvoicedBasis": "{count, plural, =1{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}",
+  "biFinanceInvoicedBasis": "{count, plural, one{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}",
   "@biFinanceInvoicedBasis": {
     "description": "#1924 finance KPI / #1923 analyses picker",
     "placeholders": {
@@ -373,7 +373,7 @@
       }
     }
   },
-  "biFinanceCollectedBasis": "{count, plural, =1{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}",
+  "biFinanceCollectedBasis": "{count, plural, one{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}",
   "@biFinanceCollectedBasis": {
     "description": "#1924 finance KPI / #1923 analyses picker",
     "placeholders": {
@@ -440,7 +440,7 @@
   "@biIncompatible": {
     "description": "#2578 a batched figure answered for another version, unit, date basis or coverage of its metric"
   },
-  "biViewCardsIncompatible": "{count, plural, =1{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}",
+  "biViewCardsIncompatible": "{count, plural, one{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}",
   "@biViewCardsIncompatible": {
     "description": "#2578 saved-view cards saved for another metric version",
     "placeholders": {

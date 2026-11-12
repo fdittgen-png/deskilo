@@ -449,7 +449,13 @@ class AppLocalizationsEn extends AppLocalizations {
       one: 'One document logged',
       zero: 'No new document logged',
     );
-    return '$_temp0, $unchanged unchanged';
+    String _temp1 = intl.Intl.pluralLogic(
+      unchanged,
+      locale: localeName,
+      other: '$unchanged unchanged',
+      one: '$unchanged unchanged',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -2399,7 +2405,13 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$count movements',
       one: '1 movement',
     );
-    return '$_temp0, $open to do';
+    String _temp1 = intl.Intl.pluralLogic(
+      open,
+      locale: localeName,
+      other: '$open to do',
+      one: '$open to do',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -10982,6 +10994,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR badges';
 
   @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K on a Mac) or the bar\'s search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page\'s own keys stay.';
+
+  @override
+  String get featureQuickSearchTitle => 'Search and keys';
+
+  @override
   String get featureRecapitulativeStatementDesc =>
       'The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.';
 
@@ -12468,8 +12487,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get handoffTitle => 'Before you save';
 
   @override
-  String handoffTransfersQuoted(String files, String deliveries) {
-    return 'The report quotes the Transfers list of the year: $files file(s) handed out and $deliveries document(s) delivered to a connection, each with its SHA-256';
+  String handoffTransfersQuoted(int files, int deliveries) {
+    String _temp0 = intl.Intl.pluralLogic(
+      files,
+      locale: localeName,
+      other: '$files files',
+      one: '$files file',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      deliveries,
+      locale: localeName,
+      other: '$deliveries documents',
+      one: '$deliveries document',
+    );
+    return 'The report quotes the Transfers list of the year: $_temp0 handed out and $_temp1 delivered to a connection, each with its SHA-256';
   }
 
   @override
@@ -15909,12 +15940,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      level,
-      locale: localeName,
-      other: 'reminder $level sent',
-    );
-    return '$_temp0';
+    return 'reminder $level sent';
   }
 
   @override
@@ -27114,6 +27140,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get schemaUpdateTitle => 'This server needs an update';
 
   @override
+  String get searchActionInvite => 'Invite a member';
+
+  @override
+  String get searchActionNewPurchase => 'New purchase';
+
+  @override
+  String get searchHint => 'A page, an action, a member, an invoice…';
+
+  @override
+  String get searchKindAction => 'Action';
+
+  @override
+  String get searchKindMember => 'Member';
+
+  @override
+  String get searchKindPage => 'Page';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nothing found for “$query”.';
+  }
+
+  @override
+  String get searchRecent => 'Recent';
+
+  @override
+  String get searchRecordUnreadable =>
+      'This record cannot be opened: it does not exist or you may not read it.';
+
+  @override
   String get seatDayAhead => 'Ahead';
 
   @override
@@ -28356,12 +28412,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String setupApprovalsTooMany(int required, int people) {
     String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvals',
+      one: '$required approval',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: 'only $people people',
       one: 'only 1 person',
     );
-    return '$required approvals can never be gathered: $_temp0 can approve. Ask for fewer, or make more members administrators.';
+    return '$_temp0 can never be gathered: $_temp1 can approve. Ask for fewer, or make more members administrators.';
   }
 
   @override
@@ -30105,6 +30167,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.';
+
+  @override
+  String get shortcutClose => 'Close';
+
+  @override
+  String get shortcutFilter => 'Filter this list';
+
+  @override
+  String get shortcutKeys => 'The keys of this page';
+
+  @override
+  String get shortcutKeysTitle => 'Keyboard keys';
+
+  @override
+  String get shortcutNew => 'New';
+
+  @override
+  String get shortcutOpenCalendar => 'Open a date field\'s calendar';
+
+  @override
+  String get shortcutPrint => 'This page\'s document';
+
+  @override
+  String get shortcutRedo => 'Redo';
+
+  @override
+  String get shortcutSave => 'Save';
+
+  @override
+  String get shortcutSearch => 'Find a page, an action or a record';
+
+  @override
+  String get shortcutSubmit => 'Save or send';
+
+  @override
+  String get shortcutUndo => 'Undo';
 
   @override
   String get siteCity => 'City';

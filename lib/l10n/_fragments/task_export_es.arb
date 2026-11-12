@@ -18,7 +18,7 @@
   "taskExportEndInterrupted": "Detenida porque la aplicación se cerró.",
   "taskExportPlatform": "Grabada en: {platform}",
   "taskExportDuration": "Duración: {minutes} min {seconds} s",
-  "taskExportPauses": "{count, plural, =0{Sin pausas} =1{Una pausa} other{{count} pausas}}",
+  "taskExportPauses": "{count, plural, =0{Sin pausas} one{Una pausa} other{{count} pausas}}",
   "taskExportVersion": "Formato de grabación {schema}, contrato de acciones {contract}",
   "taskExportRevision": "Revisión del contenido: {revision}",
   "taskExportPrereqSignedIn": "Ha iniciado sesión.",
@@ -134,7 +134,7 @@
   "taskExportLimitRecreated": "Las ilustraciones se recrean a partir de los datos seguros de la grabación, con nombres de puestos inventados; no son capturas de la pantalla.",
   "taskExportStale": "El guion gráfico corresponde a otra versión de esta grabación. Revíselo antes de exportar.",
   "taskExportWordButton": "Exportar como documento de Word",
-  "taskExportValueRedacted": "no guardado ({length, plural, =1{1 carácter} other{{length} caracteres}})",
+  "taskExportValueRedacted": "no guardado ({length, plural, one{1 carácter} other{{length} caracteres}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {

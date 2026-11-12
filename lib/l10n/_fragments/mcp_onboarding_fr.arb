@@ -41,5 +41,5 @@
   "instanceGrant": "Approuver l'accès",
   "instanceGrantTitle": "Approuver l'accès aux assistants pour {name}",
   "instanceGrantReason": "Raison",
-  "instanceGrantDaysLabel": "Pour {days, plural, =1{1 jour} other{{days} jours}}"
+  "instanceGrantDaysLabel": "Pour {days, plural, one{{days} jour} other{{days} jours}}"
 }

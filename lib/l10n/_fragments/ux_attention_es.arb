@@ -1,4 +1,4 @@
 {
-  "uxAttentionSummary": "{updates, plural, =1{1 novedad} other{{updates} novedades}} · {pending, plural, =1{1 decisión pendiente} other{{pending} decisiones pendientes}}",
+  "uxAttentionSummary": "{updates, plural, one{1 novedad} other{{updates} novedades}} · {pending, plural, one{1 decisión pendiente} other{{pending} decisiones pendientes}}",
   "@uxAttentionSummary": {"placeholders": {"updates": {"type": "int"}, "pending": {"type": "int"}}}
 }

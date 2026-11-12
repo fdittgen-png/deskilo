@@ -9,7 +9,7 @@
       }
     }
   },
-  "reminderQueueEmailAll": "{count, plural, =1{E-mail the 1 reachable} other{E-mail the {count} reachable}}",
+  "reminderQueueEmailAll": "{count, plural, one{E-mail the 1 reachable} other{E-mail the {count} reachable}}",
   "@reminderQueueEmailAll": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
     "placeholders": {
@@ -18,7 +18,7 @@
       }
     }
   },
-  "reminderQueueEmailAllTitle": "{count, plural, =1{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}",
+  "reminderQueueEmailAllTitle": "{count, plural, one{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}",
   "@reminderQueueEmailAllTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
     "placeholders": {
@@ -31,7 +31,7 @@
   "@reminderQueueEmailAllConfirm": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
   },
-  "reminderQueueStaysNoAddress": "{count, plural, =1{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}",
+  "reminderQueueStaysNoAddress": "{count, plural, one{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}",
   "@reminderQueueStaysNoAddress": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
     "placeholders": {
@@ -40,7 +40,7 @@
       }
     }
   },
-  "reminderQueueStaysToDecide": "{count, plural, =1{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}",
+  "reminderQueueStaysToDecide": "{count, plural, one{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}",
   "@reminderQueueStaysToDecide": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
     "placeholders": {
@@ -57,7 +57,7 @@
   "@reminderQueueEmailUnreached": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
   },
-  "reminderQueueResultSentTitle": "{count, plural, =1{1 reminder sent} other{{count} reminders sent}}",
+  "reminderQueueResultSentTitle": "{count, plural, one{1 reminder sent} other{{count} reminders sent}}",
   "@reminderQueueResultSentTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
     "placeholders": {

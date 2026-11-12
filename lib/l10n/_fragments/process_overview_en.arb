@@ -31,9 +31,9 @@
   "@processStateNeedsAttention": {
     "description": "#1327 the process-first overview of the Features screen"
   },
-  "processSubprocessCount": "{active} of {total, plural, =1{1 subprocess active} other{{total} subprocesses active}}",
+  "processSubprocessCount": "{active} of {total, plural, one{1 subprocess active} other{{total} subprocesses active}}",
   "@processSubprocessCount": {
-    "description": "#1327 the process-first overview of the Features screen",
+    "description": "#1327 the process-first overview of the Features screen The number active is the figure before of or a slash, read as a value of a ratio. [not a count: active]",
     "placeholders": {
       "active": {
         "type": "int"
@@ -43,9 +43,9 @@
       }
     }
   },
-  "processFeatureCount": "{enabled} of {total, plural, =1{1 feature on} other{{total} features on}}",
+  "processFeatureCount": "{enabled} of {total, plural, one{1 feature on} other{{total} features on}}",
   "@processFeatureCount": {
-    "description": "#1327 the process-first overview of the Features screen",
+    "description": "#1327 the process-first overview of the Features screen The number enabled is the figure before of or a slash, read as a value of a ratio. [not a count: enabled]",
     "placeholders": {
       "enabled": {
         "type": "int"
@@ -55,7 +55,7 @@
       }
     }
   },
-  "processHeldBack": "{count, plural, =1{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
+  "processHeldBack": "{count, plural, one{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
   "@processHeldBack": {
     "description": "#1327 the process-first overview of the Features screen",
     "placeholders": {
@@ -186,7 +186,7 @@
   "@processKeepDependants": {
     "description": "#1329 the process change preview and apply"
   },
-  "processRemoveDependants": "{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}",
+  "processRemoveDependants": "{count, plural, one{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}",
   "@processRemoveDependants": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -195,7 +195,7 @@
       }
     }
   },
-  "processConfirmOn": "{count, plural, =1{Switch on 1 feature} other{Switch on {count} features}}",
+  "processConfirmOn": "{count, plural, one{Switch on 1 feature} other{Switch on {count} features}}",
   "@processConfirmOn": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -204,7 +204,7 @@
       }
     }
   },
-  "processConfirmOff": "{count, plural, =1{Switch off 1 feature} other{Switch off {count} features}}",
+  "processConfirmOff": "{count, plural, one{Switch off 1 feature} other{Switch off {count} features}}",
   "@processConfirmOff": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -225,7 +225,7 @@
   "@processUnconfirmed": {
     "description": "#1329 the process change preview and apply"
   },
-  "processApplied": "{count, plural, =1{1 feature changed.} other{{count} features changed.}}",
+  "processApplied": "{count, plural, one{1 feature changed.} other{{count} features changed.}}",
   "@processApplied": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {

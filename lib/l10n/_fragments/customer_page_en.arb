@@ -55,7 +55,7 @@
       }
     }
   },
-  "customerStoryReminders": "{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}",
+  "customerStoryReminders": "{count, plural, one{Reminder shared for {number}} other{{count} reminders shared for {number}}}",
   "@customerStoryReminders": {
     "description": "#3587 R1-g: the customer page (customerStoryReminders)",
     "placeholders": {

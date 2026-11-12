@@ -3,7 +3,7 @@
   "biCustomerPaymentBasis": "{onTime} de {settled} facturas saldadas pagadas en su vencimiento",
   "biCustomerPaymentDefinition": "Las facturas que vencen en el periodo, cada una en un solo grupo. Una factura saldada es puntual cuando su último pago se declaró pagado en su vencimiento o antes: la fecha valor del banco cuando una línea conciliada explica el pago, si no la fecha de pago registrada, nunca el día de la conciliación. Los importes son lo que deben las facturas, IVA incluido.",
   "biCustomerDelay": "Días entre el vencimiento y el pago: mediana {median}, percentil 90 {p90}, ponderado por importe {weighted} (negativo: antes)",
-  "biCustomerCohortLine": "{count, plural, =1{{cohort}: 1 factura, {amount}} other{{cohort}: {count} facturas, {amount}}}",
+  "biCustomerCohortLine": "{count, plural, one{{cohort}: 1 factura, {amount}} other{{cohort}: {count} facturas, {amount}}}",
   "biCustomerCohortOnTime": "Pagadas a tiempo",
   "biCustomerCohortLate": "Pagadas con retraso",
   "biCustomerCohortUndated": "Saldadas sin fecha de pago",

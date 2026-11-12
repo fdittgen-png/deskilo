@@ -25,7 +25,7 @@
       }
     }
   },
-  "attentionAdmit": "{count, plural, =1{Admit 1 person asking to join} other{Admit {count} people asking to join}}",
+  "attentionAdmit": "{count, plural, one{Admit 1 person asking to join} other{Admit {count} people asking to join}}",
   "@attentionAdmit": {
     "description": "#2326: attentionAdmit",
     "placeholders": {
@@ -34,7 +34,7 @@
       }
     }
   },
-  "attentionIssue": "{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}",
+  "attentionIssue": "{count, plural, one{Invoice 1 member for the month} other{Invoice {count} members for the month}}",
   "@attentionIssue": {
     "description": "#2326: attentionIssue",
     "placeholders": {
@@ -61,7 +61,7 @@
       }
     }
   },
-  "attentionUnblock": "{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}",
+  "attentionUnblock": "{count, plural, one{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}",
   "@attentionUnblock": {
     "description": "#2332: attentionUnblock",
     "placeholders": {

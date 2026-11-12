@@ -3,9 +3,9 @@
   "directoryLocating": "Localisation de l’adresse publique…",
   "directoryApproximate": "Position approximative de l’adresse",
   "directoryLocationMissing": "Position indisponible. Le propriétaire peut publier des coordonnées précises.",
-  "directoryPinsMissing": "{count, plural, =1{1 lieu n'a pas pu être placé sur la carte ; sa fiche est en dessous.} other{{count} lieux n'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.}}",
-  "directoryPinsNoAddress": "{count, plural, =1{1 n'a pas d'adresse publiée.} other{{count} n'ont pas d'adresse publiée.}}",
-  "directoryPinsLookupFailed": "{count, plural, =1{1 n'a pas pu être recherché.} other{{count} n'ont pas pu être recherchés.}}",
+  "directoryPinsMissing": "{count, plural, one{{count} lieu n'a pas pu être placé sur la carte ; sa fiche est en dessous.} other{{count} lieux n'ont pas pu être placés sur la carte ; leurs fiches sont en dessous.}}",
+  "directoryPinsNoAddress": "{count, plural, one{{count} n'a pas d'adresse publiée.} other{{count} n'ont pas d'adresse publiée.}}",
+  "directoryPinsLookupFailed": "{count, plural, one{{count} n'a pas pu être recherché.} other{{count} n'ont pas pu être recherchés.}}",
   "directoryNothingToPin": "Aucun de ces lieux n'a pu être placé sur la carte.",
   "directoryTilesFailed": "Le fond de carte n'a pas pu être chargé.",
   "directoryMapOpenFailed": "La carte n'a pas pu être ouverte."

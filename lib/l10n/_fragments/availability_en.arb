@@ -60,7 +60,7 @@
   "@availabilityGranularityFullDay": {
     "description": "Radio option: every booking covers the whole day (0032)"
   },
-  "planSlotError": "Bookings must start and end on the {minutes, plural, =1{1-minute grid} other{{minutes}-minute grid}}.",
+  "planSlotError": "Bookings must start and end on the {minutes, plural, one{1-minute grid} other{{minutes}-minute grid}}.",
   "@planSlotError": {
     "description": "Booking error when the server rejects a misaligned window under a minute granularity (0032)",
     "placeholders": {
@@ -107,7 +107,7 @@
   },
   "availabilityHourOption": "{count} h",
   "@availabilityHourOption": {
-    "description": "Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h.",
+    "description": "Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -214,7 +214,7 @@
   "@policyDurationConflict": {
     "description": "#649 - error when the minimum duration exceeds the maximum"
   },
-  "policyDaysValue": "{count, plural, =1{1 day} other{{count} days}}",
+  "policyDaysValue": "{count, plural, one{1 day} other{{count} days}}",
   "@policyDaysValue": {
     "description": "#649 - a day count shown beside the horizon slider",
     "placeholders": {
@@ -223,7 +223,7 @@
       }
     }
   },
-  "policyMinutesValue": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "policyMinutesValue": "{count, plural, one{1 minute} other{{count} minutes}}",
   "@policyMinutesValue": {
     "description": "#649 - a minute count shown beside a duration control",
     "placeholders": {
@@ -232,7 +232,7 @@
       }
     }
   },
-  "policyHoursValue": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "policyHoursValue": "{count, plural, one{1 hour} other{{count} hours}}",
   "@policyHoursValue": {
     "description": "#649 - an hour count shown beside a duration control",
     "placeholders": {

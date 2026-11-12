@@ -229,7 +229,7 @@
   "featureOptInBody": "Noch nicht als stabil bewertet: {features}. Sie kann sich ändern und hat bekannte Grenzen. Nur einschalten, wenn dieser Space das akzeptiert.",
   "featureOptInConfirm": "Einschalten",
   "featureIntakeStoppedNote": "Aus: nichts Neues beginnt; was schon offen ist, kann noch beantwortet und geschlossen werden.",
-  "featureOptInAlsoOn": "{count, plural, =1{Wird ebenfalls eingeschaltet, weil benötigt: {features}} other{Werden ebenfalls eingeschaltet, weil benötigt ({count}): {features}}}",
+  "featureOptInAlsoOn": "{count, plural, one{Wird ebenfalls eingeschaltet, weil benötigt: {features}} other{Werden ebenfalls eingeschaltet, weil benötigt ({count}): {features}}}",
   "featureOptInStage": "{feature}: {stage}",
   "featureChangedMeanwhile": "Die Funktionen haben sich inzwischen geändert, daher wurde nichts gespeichert. Prüfen Sie die Liste und schalten Sie erneut.",
   "featureChangeUnconfirmed": "Die Änderung wurde gesendet, aber die Funktionen konnten zur Bestätigung nicht neu geladen werden. Öffnen Sie den Bildschirm erneut, um den Stand zu sehen.",
@@ -269,5 +269,7 @@
   "featureReminderEmailTitle": "Mahnungen per E-Mail",
   "featureReminderEmailDesc": "Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung.",
   "featureInvoiceEmailTitle": "Rechnungen per E-Mail",
-  "featureInvoiceEmailDesc": "Eine ausgestellte Rechnung kann vom Server per E-Mail mit dem eigenen Absender des Unternehmens an die Kontaktadresse des Kunden gesendet werden, in der Dokumentsprache des Kunden. Jede Rechnung wird einmal versandt; ein erneuter Versand ist eine bewusste Handlung mit eigenem Nachweis. Aus: Rechnungen werden wie bisher geteilt oder heruntergeladen."
+  "featureInvoiceEmailDesc": "Eine ausgestellte Rechnung kann vom Server per E-Mail mit dem eigenen Absender des Unternehmens an die Kontaktadresse des Kunden gesendet werden, in der Dokumentsprache des Kunden. Jede Rechnung wird einmal versandt; ein erneuter Versand ist eine bewusste Handlung mit eigenem Nachweis. Aus: Rechnungen werden wie bisher geteilt oder heruntergeladen.",
+  "featureQuickSearchTitle": "Suche und Tasten",
+  "featureQuickSearchDesc": "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben."
 }

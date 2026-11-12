@@ -350,7 +350,7 @@
   "@acctConnRevoked": {
     "description": "#2370 Snack: a connection was revoked."
   },
-  "acctConnRevokedBefore": "{count, plural, =1{One earlier connection was revoked} other{{count} earlier connections were revoked}}",
+  "acctConnRevokedBefore": "{count, plural, one{One earlier connection was revoked} other{{count} earlier connections were revoked}}",
   "@acctConnRevokedBefore": {
     "description": "#2370 Connection card: earlier connections of this issuer were revoked.",
     "placeholders": {
@@ -442,7 +442,7 @@
   },
   "acctDeliverDone": "Delivered: {delivered} · already there: {unchanged} · to check: {attention}",
   "@acctDeliverDone": {
-    "description": "#2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: delivered, unchanged, attention]",
     "placeholders": {
       "delivered": {
         "type": "int"
@@ -461,7 +461,7 @@
   },
   "acctDeliverInFlight": "Still being delivered by another run: {count}. Try again in a few minutes.",
   "@acctDeliverInFlight": {
-    "description": "#2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2370 Snack: documents another run of the same delivery is still sending; nothing was read back or sent for them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -500,7 +500,7 @@
   },
   "acctDeliverStoppedAt": "Stopped at {month}. Delivered before it: {count}.",
   "@acctDeliverStoppedAt": {
-    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "month": {
         "type": "String"
@@ -526,7 +526,7 @@
   "@acctDeliveryAcknowledged": {
     "description": "#2370 Delivery state: the system received it and said so."
   },
-  "acctDeliveryAttempts": "{count, plural, =1{one attempt} other{{count} attempts}}",
+  "acctDeliveryAttempts": "{count, plural, one{one attempt} other{{count} attempts}}",
   "@acctDeliveryAttempts": {
     "description": "#2370 Transfers list: how many sends a delivery took.",
     "placeholders": {
@@ -601,7 +601,7 @@
       }
     }
   },
-  "acctJournalLogged": "{logged, plural, =0{No new document logged} =1{One document logged} other{{logged} documents logged}}, {unchanged} unchanged",
+  "acctJournalLogged": "{logged, plural, =0{No new document logged} one{One document logged} other{{logged} documents logged}}, {unchanged, plural, one{{unchanged} unchanged} other{{unchanged} unchanged}}",
   "@acctJournalLogged": {
     "description": "#2370 Snack after the generic journal export: how many documents the file delivered and how many it carried unchanged.",
     "placeholders": {
@@ -745,7 +745,7 @@
   "@acctMapTaxKeyHelper": {
     "description": "#2370 Mapping dialog helper: the shape of a tax component key; keep the example unchanged."
   },
-  "acctMapsButton": "{count, plural, =0{Mappings} =1{One mapping} other{{count} mappings}}",
+  "acctMapsButton": "{count, plural, =0{Mappings} one{One mapping} other{{count} mappings}}",
   "@acctMapsButton": {
     "description": "#2370 Button: the mappings of a connection, with their number.",
     "placeholders": {
@@ -945,7 +945,7 @@
       }
     }
   },
-  "acctTransferDocuments": "{count, plural, =1{One document carried} other{{count} documents carried}}",
+  "acctTransferDocuments": "{count, plural, one{One document carried} other{{count} documents carried}}",
   "@acctTransferDocuments": {
     "description": "#2370 Transfers list: the documents a file is the delivery of.",
     "placeholders": {
@@ -969,7 +969,7 @@
       }
     }
   },
-  "acctTransferFileMeta": "{when} by {who} · {documents, plural, =1{one document} other{{documents} documents}}",
+  "acctTransferFileMeta": "{when} by {who} · {documents, plural, one{one document} other{{documents} documents}}",
   "@acctTransferFileMeta": {
     "description": "#2370 Transfers list: when, by whom and how many documents.",
     "placeholders": {
@@ -1189,7 +1189,7 @@
   "@amountFieldRequired": {
     "description": "#3612 desk entry: the typed date and amount fields of the form kit"
   },
-  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} has no decimals.} =1{{currency} has one decimal.} other{{currency} has {digits} decimals.}}",
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} has no decimals.} one{{currency} has one decimal.} other{{currency} has {digits} decimals.}}",
   "@amountFieldTooManyDecimals": {
     "description": "#3612 desk entry: the typed date and amount fields of the form kit",
     "placeholders": {
@@ -1279,7 +1279,7 @@
       }
     }
   },
-  "assignPaymentFull": "{count, plural, =1{1 invoice paid in full} other{{count} invoices paid in full}}",
+  "assignPaymentFull": "{count, plural, one{1 invoice paid in full} other{{count} invoices paid in full}}",
   "@assignPaymentFull": {
     "description": "#3671: assign a payment to invoices (assignPaymentFull)",
     "placeholders": {
@@ -1304,7 +1304,7 @@
   "@assignPaymentOver": {
     "description": "#3671: assign a payment to invoices (assignPaymentOver)"
   },
-  "assignPaymentPart": "{count, plural, =1{1 invoice paid in part} other{{count} invoices paid in part}}",
+  "assignPaymentPart": "{count, plural, one{1 invoice paid in part} other{{count} invoices paid in part}}",
   "@assignPaymentPart": {
     "description": "#3671: assign a payment to invoices (assignPaymentPart)",
     "placeholders": {
@@ -1671,7 +1671,7 @@
   "@assistantSetupTurnOn": {
     "description": "#1827 Assistant setup: assistantSetupTurnOn"
   },
-  "attentionAdmit": "{count, plural, =1{Admit 1 person asking to join} other{Admit {count} people asking to join}}",
+  "attentionAdmit": "{count, plural, one{Admit 1 person asking to join} other{Admit {count} people asking to join}}",
   "@attentionAdmit": {
     "description": "#2326: attentionAdmit",
     "placeholders": {
@@ -1689,7 +1689,7 @@
       }
     }
   },
-  "attentionIssue": "{count, plural, =1{Invoice 1 member for the month} other{Invoice {count} members for the month}}",
+  "attentionIssue": "{count, plural, one{Invoice 1 member for the month} other{Invoice {count} members for the month}}",
   "@attentionIssue": {
     "description": "#2326: attentionIssue",
     "placeholders": {
@@ -1707,7 +1707,7 @@
       }
     }
   },
-  "attentionUnblock": "{count, plural, =1{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}",
+  "attentionUnblock": "{count, plural, one{1 switched-on feature waits for “{feature}”} other{{count} switched-on features wait for “{feature}”}}",
   "@attentionUnblock": {
     "description": "#2332: attentionUnblock",
     "placeholders": {
@@ -2009,7 +2009,7 @@
   },
   "availabilityHourOption": "{count} h",
   "@availabilityHourOption": {
-    "description": "Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h.",
+    "description": "Dropdown option: a number of whole hours (#446). The number is not a count of things: it is a duration shown with the invariant unit symbol h. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -2368,7 +2368,7 @@
   },
   "backendVersionBehind": "Needs an update: this app needs schema {version}",
   "@backendVersionBehind": {
-    "description": "#1309 Server screen. The number is not a count: it is a schema version.",
+    "description": "#1309 Server screen. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -2381,7 +2381,7 @@
   },
   "backendVersionCurrent": "Up to date (schema {version})",
   "@backendVersionCurrent": {
-    "description": "#1309 Server screen. The number is not a count: it is a schema version.",
+    "description": "#1309 Server screen. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -2619,7 +2619,7 @@
   "@bankBasisQrReference": {
     "description": "#2380 Why suggested: the QR reference."
   },
-  "bankConfirmReferences": "{count, plural, =1{Confirm 1 match by reference} other{Confirm {count} matches by reference}}",
+  "bankConfirmReferences": "{count, plural, one{Confirm 1 match by reference} other{Confirm {count} matches by reference}}",
   "@bankConfirmReferences": {
     "description": "#2380 Lines sheet: confirm every match by structured reference.",
     "placeholders": {
@@ -2628,7 +2628,7 @@
       }
     }
   },
-  "bankConfirmedReferences": "{count, plural, =1{1 payment matched.} other{{count} payments matched.}}",
+  "bankConfirmedReferences": "{count, plural, one{1 payment matched.} other{{count} payments matched.}}",
   "@bankConfirmedReferences": {
     "description": "#2380 Snack: how many reference matches were confirmed.",
     "placeholders": {
@@ -2651,7 +2651,7 @@
   },
   "bankCsvColumn": "Column {n} ({first})",
   "@bankCsvColumn": {
-    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number.",
+    "description": "#2380 CSV sheet: a column of a file without a header row, by number and first cell. The number is not a count: it is a column number. [not a count: n]",
     "placeholders": {
       "n": {
         "type": "int"
@@ -2794,9 +2794,9 @@
   "@bankImportRepeated": {
     "description": "#2380 Snack: this very file was imported before."
   },
-  "bankImported": "Imported: {created, plural, =1{1 new entry} other{{created} new entries}}, {known, plural, =1{1 already known} other{{known} already known}}, {review} to review.",
+  "bankImported": "Imported: {created, plural, one{1 new entry} other{{created} new entries}}, {known, plural, one{1 already known} other{{known} already known}}, {review} to review.",
   "@bankImported": {
-    "description": "#2380 Snack: what an import did.",
+    "description": "#2380 Snack: what an import did. The number review is a figure after a comma before an invariable phrase. [not a count: review]",
     "placeholders": {
       "created": {
         "type": "int"
@@ -2994,7 +2994,7 @@
   },
   "bankRefusedAtLine": "{reason} (line {line})",
   "@bankRefusedAtLine": {
-    "description": "#2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number.",
+    "description": "#2380 Refusal: the reason and the line it was found at. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "reason": {
         "type": "String"
@@ -3066,7 +3066,7 @@
   "@bankReviewTitle": {
     "description": "#2380 Review dialog title."
   },
-  "bankStatementCounts": "{count, plural, =1{1 movement} other{{count} movements}}, {open} to do",
+  "bankStatementCounts": "{count, plural, one{1 movement} other{{count} movements}}, {open, plural, one{{open} to do} other{{open} to do}}",
   "@bankStatementCounts": {
     "description": "#2380 Bank statements: the movements of one statement and how many still wait.",
     "placeholders": {
@@ -3180,7 +3180,7 @@
       }
     }
   },
-  "biAllocationConflicts": "{count, plural, =1{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}",
+  "biAllocationConflicts": "{count, plural, one{1 line is claimed by two rules and stays unallocated until one of them goes.} other{{count} lines are claimed by two rules and stay unallocated until one of them goes.}}",
   "@biAllocationConflicts": {
     "description": "#2582 cost allocation",
     "placeholders": {
@@ -3331,7 +3331,7 @@
   "@biCards": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biCardsUnavailable": "{count, plural, =1{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
+  "biCardsUnavailable": "{count, plural, one{1 analysis of this view is not available to you and are left out.} other{{count} analyses of this view are not available to you and are left out.}}",
   "@biCardsUnavailable": {
     "description": "#1923 C Web-BI saved views",
     "placeholders": {
@@ -3344,7 +3344,7 @@
   "@biCashNotBankBalance": {
     "description": "#2582 purchase analytics"
   },
-  "biCashOutflowsBasis": "{count, plural, =1{1 payment} other{{count} payments}}",
+  "biCashOutflowsBasis": "{count, plural, one{1 payment} other{{count} payments}}",
   "@biCashOutflowsBasis": {
     "description": "#2582 purchase analytics",
     "placeholders": {
@@ -3515,7 +3515,7 @@
   "@biCostsOperatingTitle": {
     "description": "#2582 cost figures"
   },
-  "biCostsUnqualified": "{count, plural, =1{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
+  "biCostsUnqualified": "{count, plural, one{1 line whose recoverable tax is not qualified counts at its gross.} other{{count} lines whose recoverable tax is not qualified count at their gross.}}",
   "@biCostsUnqualified": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -3524,7 +3524,7 @@
       }
     }
   },
-  "biCostsUnresolved": "{count, plural, =1{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}",
+  "biCostsUnresolved": "{count, plural, one{1 line nobody classified is left out.} other{{count} lines nobody classified are left out.}}",
   "@biCostsUnresolved": {
     "description": "#2582 cost figures",
     "placeholders": {
@@ -3561,7 +3561,7 @@
   "@biCustomerCohortLate": {
     "description": "#3294 customer analytics"
   },
-  "biCustomerCohortLine": "{count, plural, =1{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}",
+  "biCustomerCohortLine": "{count, plural, one{{cohort}: 1 invoice, {amount}} other{{cohort}: {count} invoices, {amount}}}",
   "@biCustomerCohortLine": {
     "description": "#3294 customer analytics",
     "placeholders": {
@@ -4329,7 +4329,7 @@
   "@biEditorResetSelection": {
     "description": "#2580 BI report editor"
   },
-  "biEditorRows": "{count, plural, =1{1 row} other{{count} rows}}",
+  "biEditorRows": "{count, plural, one{1 row} other{{count} rows}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {
@@ -4554,7 +4554,7 @@
   "@biExportFormatXlsx": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biExportLeftOut": "{count, plural, =1{1 card is not in this export: its figure, filters or grouping is not one an export answers yet.} other{{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.}}",
+  "biExportLeftOut": "{count, plural, one{1 card is not in this export: its figure, filters or grouping is not one an export answers yet.} other{{count} cards are not in this export: their figure, filters or grouping are not ones an export answers yet.}}",
   "@biExportLeftOut": {
     "description": "#2581 analytical report print layout and exports",
     "placeholders": {
@@ -4608,7 +4608,7 @@
   "@biFinanceCollected": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biFinanceCollectedBasis": "{count, plural, =1{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}",
+  "biFinanceCollectedBasis": "{count, plural, one{From 1 payment matched to invoices} other{From {count} payments matched to invoices}}",
   "@biFinanceCollectedBasis": {
     "description": "#1924 finance KPI / #1923 analyses picker",
     "placeholders": {
@@ -4642,7 +4642,7 @@
   "@biFinanceInvoiced": {
     "description": "#1924 finance KPI / #1923 analyses picker"
   },
-  "biFinanceInvoicedBasis": "{count, plural, =1{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}",
+  "biFinanceInvoicedBasis": "{count, plural, one{From 1 invoice; credit notes {credit}, shown apart} other{From {count} invoices; credit notes {credit}, shown apart}}",
   "@biFinanceInvoicedBasis": {
     "description": "#1924 finance KPI / #1923 analyses picker",
     "placeholders": {
@@ -4778,7 +4778,7 @@
   "@biItemProductTitle": {
     "description": "#3294 step 4 items on purchase lines"
   },
-  "biItemUncosted": "{count, plural, =1{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}",
+  "biItemUncosted": "{count, plural, one{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}",
   "@biItemUncosted": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
@@ -4787,7 +4787,7 @@
       }
     }
   },
-  "biItemUnresolved": "{count, plural, =1{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}",
+  "biItemUnresolved": "{count, plural, one{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}",
   "@biItemUnresolved": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
@@ -4796,7 +4796,7 @@
       }
     }
   },
-  "biItemVendorBasis": "{count, plural, =1{1 supplier} other{{count} suppliers}}",
+  "biItemVendorBasis": "{count, plural, one{1 supplier} other{{count} suppliers}}",
   "@biItemVendorBasis": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
@@ -5076,7 +5076,7 @@
   "@biPrintWorkspace": {
     "description": "#2581 analytical report print layout and exports"
   },
-  "biProjectionBasis": "A straight line through {count, plural, =1{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.",
+  "biProjectionBasis": "A straight line through {count, plural, one{the last complete period} other{the last {count} complete periods}}, carried forward. The shaded band is the likely range. An estimate, not a promise.",
   "@biProjectionBasis": {
     "description": "Business analytics dashboard: biProjectionBasis",
     "placeholders": {
@@ -5110,7 +5110,7 @@
       }
     }
   },
-  "biProjectionNotEnough": "Not enough history to project yet: {have, plural, =1{1 complete period} other{{have} complete periods}} so far, {need, plural, =1{1 needed} other{{need} needed}}.",
+  "biProjectionNotEnough": "Not enough history to project yet: {have, plural, one{1 complete period} other{{have} complete periods}} so far, {need, plural, one{1 needed} other{{need} needed}}.",
   "@biProjectionNotEnough": {
     "description": "Business analytics dashboard: biProjectionNotEnough",
     "placeholders": {
@@ -5195,7 +5195,7 @@
   "@biRefresh": {
     "description": "Shown as a tooltip in bi module section (workspace)."
   },
-  "biRefusedBudget": "{count, plural, =1{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}",
+  "biRefusedBudget": "{count, plural, one{There is more than 1 group; choose no grouping.} other{There are more than {count} groups; choose no grouping.}}",
   "@biRefusedBudget": {
     "description": "#1923 B Web-BI toolbar and module section",
     "placeholders": {
@@ -5389,7 +5389,7 @@
   "@biSalesKindTitle": {
     "description": "#3294 step 3 sales analytics"
   },
-  "biSalesNetUnknown": "{count, plural, =1{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}",
+  "biSalesNetUnknown": "{count, plural, one{1 sales line carries no readable VAT rate: its net is unknown and left out of the net} other{{count} sales lines carry no readable VAT rate: their net is unknown and left out of the net}}",
   "@biSalesNetUnknown": {
     "description": "#3294 step 3 sales analytics",
     "placeholders": {
@@ -5450,7 +5450,7 @@
   "@biSalesRoomsOff": {
     "description": "#3294 step 3 sales analytics"
   },
-  "biSalesServiceBasis": "{count, plural, =1{1 service and package} other{{count} services and packages}}",
+  "biSalesServiceBasis": "{count, plural, one{1 service and package} other{{count} services and packages}}",
   "@biSalesServiceBasis": {
     "description": "#3294 step 3 sales analytics",
     "placeholders": {
@@ -5541,7 +5541,7 @@
   "@biUnavailable": {
     "description": "#1923 B Web-BI toolbar and module section"
   },
-  "biVendorCategoryBasis": "{count, plural, =1{1 category} other{{count} categories}}",
+  "biVendorCategoryBasis": "{count, plural, one{1 category} other{{count} categories}}",
   "@biVendorCategoryBasis": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
@@ -5562,7 +5562,7 @@
   "@biVendorCohortLate": {
     "description": "#3294 step 2 vendor analytics"
   },
-  "biVendorCohortLine": "{count, plural, =1{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}",
+  "biVendorCohortLine": "{count, plural, one{{cohort}: 1 bill, {amount}} other{{cohort}: {count} bills, {amount}}}",
   "@biVendorCohortLine": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
@@ -5636,7 +5636,7 @@
       }
     }
   },
-  "biVendorDeliveryCohortLine": "{count, plural, =1{{cohort}: 1 order} other{{cohort}: {count} orders}}",
+  "biVendorDeliveryCohortLine": "{count, plural, one{{cohort}: 1 order} other{{cohort}: {count} orders}}",
   "@biVendorDeliveryCohortLine": {
     "description": "#3294 step 5 vendor delivery analytics",
     "placeholders": {
@@ -5749,7 +5749,7 @@
   "@biVendorLagTitle": {
     "description": "#3294 step 2 vendor analytics"
   },
-  "biVendorLagUndated": "{count, plural, =1{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}",
+  "biVendorLagUndated": "{count, plural, one{1 bill carries no supplier date or no received date and are left out} other{{count} bills carry no supplier date or no received date and are left out}}",
   "@biVendorLagUndated": {
     "description": "#3294 step 2 vendor analytics",
     "placeholders": {
@@ -5839,7 +5839,7 @@
       }
     }
   },
-  "biViewCardsIncompatible": "{count, plural, =1{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}",
+  "biViewCardsIncompatible": "{count, plural, one{1 analysis of this view was saved when its figure meant something else, and is left out rather than shown with another meaning.} other{{count} analyses of this view were saved when their figure meant something else, and are left out rather than shown with another meaning.}}",
   "@biViewCardsIncompatible": {
     "description": "#2578 saved-view cards saved for another metric version",
     "placeholders": {
@@ -5967,7 +5967,7 @@
   "@biViewUnsupported": {
     "description": "#2579 analytical reports"
   },
-  "biViewWithheld": "{count, plural, =1{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}",
+  "biViewWithheld": "{count, plural, one{1 figure of this view is not shown: you may not read it.} other{{count} figures of this view are not shown: you may not read them.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {
@@ -6017,9 +6017,9 @@
   "@billCreditNoteRefunded": {
     "description": "Bill credit-note card: the refund was validated and paid out"
   },
-  "billEntitlement": "{used} of {included, plural, =1{1 half-day} other{{included} half-days}} billed ({openDays, plural, =1{1 day} other{{openDays} days}} open)",
+  "billEntitlement": "{used} of {included, plural, one{1 half-day} other{{included} half-days}} billed ({openDays, plural, one{1 day} other{{openDays} days}} open)",
   "@billEntitlement": {
-    "description": "Entitlement line under the subscription header",
+    "description": "Entitlement line under the subscription header The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]",
     "placeholders": {
       "used": {
         "type": "int"
@@ -6076,7 +6076,7 @@
   },
   "billParticipation": "Participation {pct}%",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -6085,7 +6085,7 @@
   },
   "billParticipationMonth": "{month} {pct}%",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage.",
+    "description": "#1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "month": {
         "type": "String"
@@ -6143,7 +6143,7 @@
   },
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
-    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage.",
+    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -6152,7 +6152,7 @@
   },
   "billSubscriptionMonth": "Subscription {month} {pct}%",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage.",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "month": {
         "type": "String"
@@ -6188,7 +6188,7 @@
   },
   "billingBandFrom": "from {from}%",
   "@billingBandFrom": {
-    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage.",
+    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]",
     "placeholders": {
       "from": {
         "type": "int"
@@ -7000,7 +7000,7 @@
   "@bookingSameDayError": {
     "description": "Shown as a text in booking error text (reservations), and 1 other place."
   },
-  "bookingSeriesTooLong": "{days, plural, =1{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}",
+  "bookingSeriesTooLong": "{days, plural, one{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}",
   "@bookingSeriesTooLong": {
     "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
     "placeholders": {
@@ -7111,7 +7111,7 @@
   "@businessExampleVatRegistered": {
     "description": "#3283 a business example under the setup question vat_registered."
   },
-  "businessKindAndMore": "{count, plural, =1{{list} and 1 more} other{{list} and {count} more}}",
+  "businessKindAndMore": "{count, plural, one{{list} and 1 more} other{{list} and {count} more}}",
   "@businessKindAndMore": {
     "description": "#3550 a shortened list: {list} is the first names, {count} how many more",
     "placeholders": {
@@ -7183,7 +7183,7 @@
   "@businessKindNoChange": {
     "description": "#3550 the proposal of a kind that changes no feature"
   },
-  "businessKindPlacesOff": "{count, plural, =1{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}",
+  "businessKindPlacesOff": "{count, plural, one{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}",
   "@businessKindPlacesOff": {
     "description": "#3550 what a kind without places switches off, in one phrase; {count} features in all",
     "placeholders": {
@@ -7814,7 +7814,7 @@
   "@carnetAdd": {
     "description": "#1279 carnets: carnetAdd"
   },
-  "carnetBalance": "{count, plural, =0{No half-days left} =1{1 half-day left} other{{count} half-days left}}",
+  "carnetBalance": "{count, plural, =0{No half-days left} one{1 half-day left} other{{count} half-days left}}",
   "@carnetBalance": {
     "description": "#1279 carnets: carnetBalance",
     "placeholders": {
@@ -8022,7 +8022,7 @@
   "@coloursRoomsAdd": {
     "description": "#1289 colours screen: the add-a-fill field and button"
   },
-  "coloursRoomsOwn": "{n, plural, =1{1 colour of your own, in order.} other{{n} colours of your own, in order.}}",
+  "coloursRoomsOwn": "{n, plural, one{1 colour of your own, in order.} other{{n} colours of your own, in order.}}",
   "@coloursRoomsOwn": {
     "description": "#1289 colours screen: how many own fills, order matters",
     "placeholders": {
@@ -8035,7 +8035,7 @@
   "@coloursRoomsProduct": {
     "description": "#1289 colours screen: no own fills yet"
   },
-  "coloursRoomsSaved": "{n, plural, =1{1 room colour saved.} other{{n} room colours saved.}}",
+  "coloursRoomsSaved": "{n, plural, one{1 room colour saved.} other{{n} room colours saved.}}",
   "@coloursRoomsSaved": {
     "description": "#1289 colours screen: the fills were stored",
     "placeholders": {
@@ -8052,7 +8052,7 @@
   "@coloursTitle": {
     "description": "#1289 colours screen: the title"
   },
-  "coloursTooMany": "The plan paints at most {most, plural, =1{1 room colour} other{{most} room colours}}.",
+  "coloursTooMany": "The plan paints at most {most, plural, one{1 room colour} other{{most} room colours}}.",
   "@coloursTooMany": {
     "description": "#1289 colours screen: more fills than the plan can use",
     "placeholders": {
@@ -8178,7 +8178,7 @@
   "@compareInherits": {
     "description": "#1660 template_compare"
   },
-  "compareLimit": "{count, plural, =1{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}",
+  "compareLimit": "{count, plural, one{Up to 1 template can be compared. Remove one first.} other{Up to {count} templates can be compared. Remove one first.}}",
   "@compareLimit": {
     "description": "#1660 template_compare",
     "placeholders": {
@@ -8244,7 +8244,7 @@
   "@composerAttach": {
     "description": "Shown as a tooltip in member note composer (workspace)."
   },
-  "composerCharsLeft": "{count, plural, =1{1 character left} other{{count} characters left}}",
+  "composerCharsLeft": "{count, plural, one{1 character left} other{{count} characters left}}",
   "@composerCharsLeft": {
     "description": "Shown as a field counter in member note composer (workspace). Placeholders: {count} (int).",
     "placeholders": {
@@ -8551,7 +8551,7 @@
   "@conversationMarkUnread": {
     "description": "Shown as a title in unified inbox view (directory)."
   },
-  "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
+  "conversationMemberCount": "{count, plural, one{1 member} other{{count} members}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
     "placeholders": {
@@ -9053,7 +9053,7 @@
       }
     }
   },
-  "customerStoryReminders": "{count, plural, =1{Reminder shared for {number}} other{{count} reminders shared for {number}}}",
+  "customerStoryReminders": "{count, plural, one{Reminder shared for {number}} other{{count} reminders shared for {number}}}",
   "@customerStoryReminders": {
     "description": "#3587 R1-g: the customer page (customerStoryReminders)",
     "placeholders": {
@@ -9911,7 +9911,7 @@
   "@directoryHomeUnavailable": {
     "description": "#2561 L3 personal-home endpoint (instance wizard, directory)"
   },
-  "directoryLastSeenDays": "{days, plural, =1{Seen 1 day ago} other{Seen {days} days ago}}",
+  "directoryLastSeenDays": "{days, plural, one{Seen 1 day ago} other{Seen {days} days ago}}",
   "@directoryLastSeenDays": {
     "description": "Directory offline chip: compact relative last-seen, a day or more",
     "placeholders": {
@@ -9920,7 +9920,7 @@
       }
     }
   },
-  "directoryLastSeenHours": "{hours, plural, =1{Seen 1 hour ago} other{Seen {hours} hours ago}}",
+  "directoryLastSeenHours": "{hours, plural, one{Seen 1 hour ago} other{Seen {hours} hours ago}}",
   "@directoryLastSeenHours": {
     "description": "Directory offline chip: compact relative last-seen, under a day",
     "placeholders": {
@@ -9931,7 +9931,7 @@
   },
   "directoryLastSeenMinutes": "Seen {minutes} min ago",
   "@directoryLastSeenMinutes": {
-    "description": "Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "Directory offline chip: compact relative last-seen, under an hour. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: minutes]",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -10010,7 +10010,7 @@
   "@directoryOpenGroup": {
     "description": "Tile above the directory list opening the owner-configured WhatsApp group invite link (#231/#232); shown to every member, hidden when no link is set"
   },
-  "directoryPinsLookupFailed": "{count, plural, =1{1 could not be looked up.} other{{count} could not be looked up.}}",
+  "directoryPinsLookupFailed": "{count, plural, one{1 could not be looked up.} other{{count} could not be looked up.}}",
   "@directoryPinsLookupFailed": {
     "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them the address lookup failed for; a Try again follows. Placeholders: {count} (int).",
     "placeholders": {
@@ -10019,7 +10019,7 @@
       }
     }
   },
-  "directoryPinsMissing": "{count, plural, =1{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}",
+  "directoryPinsMissing": "{count, plural, one{1 place could not be put on the map; its card is below.} other{{count} places could not be put on the map; their cards are below.}}",
   "@directoryPinsMissing": {
     "description": "Shown as a text in directory map (directory). Placeholders: {count} (int).",
     "placeholders": {
@@ -10028,7 +10028,7 @@
       }
     }
   },
-  "directoryPinsNoAddress": "{count, plural, =1{1 has no published address.} other{{count} have no published address.}}",
+  "directoryPinsNoAddress": "{count, plural, one{1 has no published address.} other{{count} have no published address.}}",
   "@directoryPinsNoAddress": {
     "description": "Shown as a text in directory map (directory), after the count of unplaced places: how many of them have no public address. Placeholders: {count} (int).",
     "placeholders": {
@@ -10078,7 +10078,7 @@
   "@discoveryClearSearch": {
     "description": "#3545 Discover: the action under a search with no result."
   },
-  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.",
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, one{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.",
   "@discoveryDirectoriesDidNotAnswer": {
     "description": "#3545 Discover: one line when directories did not answer, beside the results that loaded.",
     "placeholders": {
@@ -10089,7 +10089,7 @@
   },
   "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
   "@discoveryLoadedCount": {
-    "description": "Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: loaded, shown, answered, sources]",
     "placeholders": {
       "loaded": {
         "type": "int"
@@ -10314,7 +10314,7 @@
   },
   "dunningDueChip": "Reminder {level} due",
   "@dunningDueChip": {
-    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -10871,7 +10871,7 @@
   },
   "editorDeskNameNumbered": "Desk {number}",
   "@editorDeskNameNumbered": {
-    "description": "Default name of a new desk: its next position number in a name, not a count, e.g. \"Desk 2\".",
+    "description": "Default name of a new desk: its next position number in a name, not a count, e.g. \"Desk 2\". [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"
@@ -10964,7 +10964,7 @@
   },
   "editorOfficeNameNumbered": "Office {number}",
   "@editorOfficeNameNumbered": {
-    "description": "Default name of a new office: its next position number in a name, not a count, e.g. \"Office 3\".",
+    "description": "Default name of a new office: its next position number in a name, not a count, e.g. \"Office 3\". [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"
@@ -11458,7 +11458,7 @@
   },
   "equipmentHeading": "#{number} {name}",
   "@equipmentHeading": {
-    "description": "#2576 equipment register. The number is not a count: it is an item number.",
+    "description": "#2576 equipment register. The number is not a count: it is an item number. [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"
@@ -11645,7 +11645,7 @@
   "@eventAutoValidated": {
     "description": "Feed marker for a deletion the rule settled itself, with no peer review (#636)"
   },
-  "eventBadgeSecurityAlert": "Badge sign-in paused after {failures, plural, =1{1 failed attempt} other{{failures} failed attempts}} in {minutes, plural, =1{1 minute} other{{minutes} minutes}}. Review the badges and ask members to use email while the lock clears.",
+  "eventBadgeSecurityAlert": "Badge sign-in paused after {failures, plural, one{1 failed attempt} other{{failures} failed attempts}} in {minutes, plural, one{1 minute} other{{minutes} minutes}}. Review the badges and ask members to use email while the lock clears.",
   "@eventBadgeSecurityAlert": {
     "description": "Shown as a text in event lines (events). Placeholders: {failures} (int), {minutes} (int).",
     "placeholders": {
@@ -11682,7 +11682,7 @@
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
   },
-  "eventExpenseRepartitionLine": "{count, plural, =1{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}",
+  "eventExpenseRepartitionLine": "{count, plural, one{{actor} distributes “{title}” — {amount} over 1 member} other{{actor} distributes “{title}” — {amount} over {count} members}}",
   "@eventExpenseRepartitionLine": {
     "description": "Shown as a text in event lines (events). Placeholders: {actor} (String), {title} (String), {amount} (String), {count} (int).",
     "placeholders": {
@@ -11748,7 +11748,7 @@
   },
   "eventInvoiceReminderLine": "Reminder {level}: invoice {number} — {amount} still due",
   "@eventInvoiceReminderLine": {
-    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "number": {
         "type": "String"
@@ -11889,7 +11889,7 @@
       }
     }
   },
-  "eventPriceNegotiationItems": "{count, plural, =1{1 item} other{{count} items}}",
+  "eventPriceNegotiationItems": "{count, plural, one{1 item} other{{count} items}}",
   "@eventPriceNegotiationItems": {
     "description": "Shown as a text in event lines (events). Placeholders: {count} (int).",
     "placeholders": {
@@ -11925,7 +11925,7 @@
       }
     }
   },
-  "eventQuotaRequested": "{actor} requests {halfDays, plural, =1{1 extra half-day} other{{halfDays} extra half-days}} for {period}",
+  "eventQuotaRequested": "{actor} requests {halfDays, plural, one{1 extra half-day} other{{halfDays} extra half-days}} for {period}",
   "@eventQuotaRequested": {
     "description": "Feed line of a quota-extension request event",
     "placeholders": {
@@ -11958,7 +11958,7 @@
   },
   "eventRepeatedMarker": "×{count}",
   "@eventRepeatedMarker": {
-    "description": "#3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "#3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -12074,7 +12074,7 @@
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "@eventServiceChargeTitle": {
-    "description": "Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: quantity]",
     "placeholders": {
       "name": {
         "type": "String"
@@ -12284,7 +12284,7 @@
   },
   "eventValidationStage": "Validation {stage} of {required} requested",
   "@eventValidationStage": {
-    "description": "#848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps.",
+    "description": "#848 - which step of a chained rule is open. The number is not a count: it is a position in a sequence of steps. [not a count: stage, required]",
     "placeholders": {
       "stage": {
         "type": "int"
@@ -12294,9 +12294,9 @@
       }
     }
   },
-  "eventValidations": "{current}/{required, plural, =1{1 validation} other{{required} validations}}",
+  "eventValidations": "{current}/{required, plural, one{1 validation} other{{required} validations}}",
   "@eventValidations": {
-    "description": "Quorum progress on a pending event (#130): accepts so far / accepts required",
+    "description": "Quorum progress on a pending event (#130): accepts so far / accepts required The number current is the figure before of or a slash, read as a value of a ratio. [not a count: current]",
     "placeholders": {
       "current": {
         "type": "int"
@@ -12904,7 +12904,7 @@
       }
     }
   },
-  "exportImportedVia": "{products} {count, plural, =1{imports} other{import}} this file: choose “{format}” below.",
+  "exportImportedVia": "{products} {count, plural, one{imports} other{import}} this file: choose “{format}” below.",
   "@exportImportedVia": {
     "description": "#2373 Accounting export sheet: products of the country (Sage 100 France, Sage 50 Germany) that import one of the offered files, and which one to choose.",
     "placeholders": {
@@ -14265,7 +14265,7 @@
   "@featureOnlinePaymentsDesc": {
     "description": "One-line description under the online-payments switch (0043)"
   },
-  "featureOptInAlsoOn": "{count, plural, =1{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
+  "featureOptInAlsoOn": "{count, plural, one{Also switched on, because it is needed: {features}} other{Also switched on, because they are needed ({count}): {features}}}",
   "@featureOptInAlsoOn": {
     "description": "#1851 B feature switch consent: featureOptInAlsoOn",
     "placeholders": {
@@ -14457,6 +14457,14 @@
   "featureQrBadgesTitle": "QR badges",
   "@featureQrBadgesTitle": {
     "description": "Shown as a text in feature names (workspace)."
+  },
+  "featureQuickSearchDesc": "Ctrl+K (⌘K on a Mac) or the bar's search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page's own keys stay.",
+  "@featureQuickSearchDesc": {
+    "description": "#3610 the search-and-keys feature"
+  },
+  "featureQuickSearchTitle": "Search and keys",
+  "@featureQuickSearchTitle": {
+    "description": "#3610 the search-and-keys feature"
   },
   "featureRecapitulativeStatementDesc": "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.",
   "@featureRecapitulativeStatementDesc": {
@@ -15144,7 +15152,7 @@
       }
     }
   },
-  "fieldProblemTooLong": "{count, plural, =1{At most 1 character.} other{At most {count} characters.}}",
+  "fieldProblemTooLong": "{count, plural, one{At most 1 character.} other{At most {count} characters.}}",
   "@fieldProblemTooLong": {
     "description": "#1288 custom fields: fieldProblemTooLong",
     "placeholders": {
@@ -15153,7 +15161,7 @@
       }
     }
   },
-  "fieldProblemTooShort": "{count, plural, =1{At least 1 character.} other{At least {count} characters.}}",
+  "fieldProblemTooShort": "{count, plural, one{At least 1 character.} other{At least {count} characters.}}",
   "@fieldProblemTooShort": {
     "description": "#1288 custom fields: fieldProblemTooShort",
     "placeholders": {
@@ -15360,7 +15368,7 @@
       }
     }
   },
-  "financesCoverageWorkspace": "{workspace}: {count, plural, =1{1 document} other{{count} documents}}",
+  "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 document} other{{count} documents}}",
   "@financesCoverageWorkspace": {
     "description": "#2557 C4 Me › Finances: coverage, one workspace a host answered for, with its document count.",
     "placeholders": {
@@ -15463,7 +15471,7 @@
   "@financesOutstanding": {
     "description": "Me › Finances"
   },
-  "financesOverdueCount": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "financesOverdueCount": "{count, plural, one{1 overdue} other{{count} overdue}}",
   "@financesOverdueCount": {
     "description": "Me › Finances",
     "placeholders": {
@@ -15513,7 +15521,7 @@
   },
   "financesRemindedTimes": "Reminded ×{count}",
   "@financesRemindedTimes": {
-    "description": "Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Me › Finances. The number is not a count: it is a multiplier written with the times sign, which has no plural. The number count is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -15522,7 +15530,7 @@
   },
   "financesReminderLevel": "Reminder {level}",
   "@financesReminderLevel": {
-    "description": "Me › Finances. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Me › Finances. The number is not a count: it is a reminder level, a position in the escalation. The number level is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -15578,7 +15586,7 @@
   "@formErrorSummaryGoTo": {
     "description": "#3286 form error summary: moves the focus to the first field with a problem"
   },
-  "formErrorSummaryTitle": "{count, plural, =1{1 field needs your attention} other{{count} fields need your attention}}",
+  "formErrorSummaryTitle": "{count, plural, one{1 field needs your attention} other{{count} fields need your attention}}",
   "@formErrorSummaryTitle": {
     "description": "#3286 form error summary: how many fields have a problem",
     "placeholders": {
@@ -15644,7 +15652,7 @@
   "@gettingStartedActionMembership": {
     "description": "#1654 getting started card: gettingStartedActionMembership"
   },
-  "gettingStartedAllowance": "{count, plural, =1{You may hold one booking at a time.} other{You may hold {count} bookings at a time.}}",
+  "gettingStartedAllowance": "{count, plural, one{You may hold one booking at a time.} other{You may hold {count} bookings at a time.}}",
   "@gettingStartedAllowance": {
     "description": "#1654 getting started card: gettingStartedAllowance",
     "placeholders": {
@@ -16199,7 +16207,7 @@
   },
   "guideHostRestore": "Show the guide (step {current} of {total})",
   "@guideHostRestore": {
-    "description": "Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps.",
+    "description": "Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps. [not a count: current, total]",
     "placeholders": {
       "current": {
         "type": "int"
@@ -16243,7 +16251,7 @@
   },
   "guideHostStepOf": "Step {current} of {total}",
   "@guideHostStepOf": {
-    "description": "#1867 live guide host. The number is not a count: it is a position in a sequence of steps.",
+    "description": "#1867 live guide host. The number is not a count: it is a position in a sequence of steps. [not a count: current, total]",
     "placeholders": {
       "current": {
         "type": "int"
@@ -16328,7 +16336,7 @@
       }
     }
   },
-  "handoffExcludedSettlements": "{count, plural, =1{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}",
+  "handoffExcludedSettlements": "{count, plural, one{1 settlement summary left out: its invoices are already listed} other{{count} settlement summaries left out: their invoices are already listed}}",
   "@handoffExcludedSettlements": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
@@ -16337,7 +16345,7 @@
       }
     }
   },
-  "handoffIncluded": "{count, plural, =1{1 document in the file} other{{count} documents in the file}}",
+  "handoffIncluded": "{count, plural, one{1 document in the file} other{{count} documents in the file}}",
   "@handoffIncluded": {
     "description": "#1640 accountant_handoff",
     "placeholders": {
@@ -16406,15 +16414,15 @@
   "@handoffTitle": {
     "description": "#1640 accountant_handoff"
   },
-  "handoffTransfersQuoted": "The report quotes the Transfers list of the year: {files} file(s) handed out and {deliveries} document(s) delivered to a connection, each with its SHA-256",
+  "handoffTransfersQuoted": "The report quotes the Transfers list of the year: {files, plural, one{{files} file} other{{files} files}} handed out and {deliveries, plural, one{{deliveries} document} other{{deliveries} documents}} delivered to a connection, each with its SHA-256",
   "@handoffTransfersQuoted": {
     "description": "#2378 accountant_handoff",
     "placeholders": {
       "files": {
-        "type": "String"
+        "type": "int"
       },
       "deliveries": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -16953,7 +16961,7 @@
   "@holidayImportAction": {
     "description": "#2051 open-data holiday import"
   },
-  "holidayImportConfirm": "{count, plural, =1{Import 1 closure day} other{Import {count} closure days}}",
+  "holidayImportConfirm": "{count, plural, one{Import 1 closure day} other{Import {count} closure days}}",
   "@holidayImportConfirm": {
     "description": "#2051 open-data holiday import",
     "placeholders": {
@@ -17227,7 +17235,7 @@
   },
   "inboxRequestsCount": "Requests: {count}",
   "@inboxRequestsCount": {
-    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2556 inbox header: The labelled count of message requests waiting; tapping it shows them. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -17316,7 +17324,7 @@
   },
   "instanceAttentionPostgres": "It runs Postgres {found}; DesKilo is built for Postgres {supported}.",
   "@instanceAttentionPostgres": {
-    "description": "#1308 instance readiness. The number is not a count: it is a schema version.",
+    "description": "#1308 instance readiness. The number is not a count: it is a schema version. [not a count: found, supported]",
     "placeholders": {
       "found": {
         "type": "int"
@@ -17477,7 +17485,7 @@
   },
   "instanceDeployFunctions": "Deploy the functions: payments, e-invoices, push, badges ({count}).",
   "@instanceDeployFunctions": {
-    "description": "#977 instance wizard: instanceDeployFunctions. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#977 instance wizard: instanceDeployFunctions. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -17557,7 +17565,7 @@
   "@instanceDoctorGuardSecretGrantsTitle": {
     "description": "#3489 Doctor alarm: a table holding secrets grants to an API role."
   },
-  "instanceDoctorHeld": "{workspaces, plural, =1{1 workspace} other{{workspaces} workspaces}}, {members, plural, =1{1 member} other{{members} members}}",
+  "instanceDoctorHeld": "{workspaces, plural, one{1 workspace} other{{workspaces} workspaces}}, {members, plural, one{1 member} other{{members} members}}",
   "@instanceDoctorHeld": {
     "description": "#3489 Instance doctor: what an installation holds, in workspaces and members.",
     "placeholders": {
@@ -17573,7 +17581,7 @@
   "@instanceDoctorIntro": {
     "description": "#1308 instance wizard doctor and token"
   },
-  "instanceDoctorNeedsHuman": "{count, plural, =1{1 finding needs a human.} other{{count} findings need a human.}}",
+  "instanceDoctorNeedsHuman": "{count, plural, one{1 finding needs a human.} other{{count} findings need a human.}}",
   "@instanceDoctorNeedsHuman": {
     "description": "#3489 Instance doctor report footer: how many findings are problems.",
     "placeholders": {
@@ -17582,7 +17590,7 @@
       }
     }
   },
-  "instanceDoctorPassed": "{count, plural, =1{1 check passed} other{{count} checks passed}}",
+  "instanceDoctorPassed": "{count, plural, one{1 check passed} other{{count} checks passed}}",
   "@instanceDoctorPassed": {
     "description": "#1308 instance wizard doctor and token",
     "placeholders": {
@@ -17591,7 +17599,7 @@
       }
     }
   },
-  "instanceDoctorPoliciesMatchDetail": "{count, plural, =1{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}",
+  "instanceDoctorPoliciesMatchDetail": "{count, plural, one{1 policy, exactly the set the migrations create} other{{count} policies, exactly the set the migrations create}}",
   "@instanceDoctorPoliciesMatchDetail": {
     "description": "#3489 Detail: number of policies.",
     "placeholders": {
@@ -17618,7 +17626,7 @@
   },
   "instanceDoctorProbeFailedDetail": "Supabase answered {status}: {message}\n        The other checks ran without it.",
   "@instanceDoctorProbeFailedDetail": {
-    "description": "#3489 Detail of a failed probe. The number is not a count: it is an HTTP status code.",
+    "description": "#3489 Detail of a failed probe. The number is not a count: it is an HTTP status code. [not a count: status]",
     "placeholders": {
       "status": {
         "type": "int"
@@ -17699,9 +17707,9 @@
   "@instanceDoctorRun": {
     "description": "#1308 instance wizard doctor and token"
   },
-  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, =1{1 table exists} other{{tables} tables exist}}, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
+  "instanceDoctorSchemaNoVersionDetail": "{tables, plural, one{1 table exists} other{{tables} tables exist}}, but no schema version: this instance predates migration 0226, so it is behind an app that needs {required}. The install upgrades it from what it recorded.\n        Fix: dart run tool/instance.dart install --ref <ref>\n        If it cannot tell where to resume, first: dart run tool/instance.dart record --ref <ref> --through <NNNN>",
   "@instanceDoctorSchemaNoVersionDetail": {
-    "description": "#3489 Detail: tables exist but no schema version.",
+    "description": "#3489 Detail: tables exist but no schema version. The number required is a schema version. [not a count: required]",
     "placeholders": {
       "tables": {
         "type": "int"
@@ -17715,7 +17723,7 @@
   "@instanceDoctorSchemaNoVersionTitle": {
     "description": "#3489 The schema records no version."
   },
-  "instanceDoctorSignupsNobodyDetail": "{created, plural, =1{1 signed up} other{{created} signed up}}, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.",
+  "instanceDoctorSignupsNobodyDetail": "{created, plural, one{1 signed up} other{{created} signed up}}, 0 confirmed. Sign-up is not merely slow — no one has completed it.\n        Check the Site URL above first: that is what the mail links to.",
   "@instanceDoctorSignupsNobodyDetail": {
     "description": "#3489 Detail: sign-ups but no confirmation.",
     "placeholders": {
@@ -17728,7 +17736,7 @@
   "@instanceDoctorSignupsNobodyTitle": {
     "description": "#3489 Nobody confirmed a sign-up in seven days."
   },
-  "instanceDoctorStorageScopedDetail": "{count, plural, =1{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}",
+  "instanceDoctorStorageScopedDetail": "{count, plural, one{1 read policy, naming the folder that owns the file} other{{count} read policies, each naming the folder that owns the file}}",
   "@instanceDoctorStorageScopedDetail": {
     "description": "#3489 Detail: number of storage read policies.",
     "placeholders": {
@@ -17741,7 +17749,7 @@
   "@instanceDoctorStorageScopedTitle": {
     "description": "#3489 Storage reads are scoped to folders."
   },
-  "instanceDoctorStuckTitle": "{count, plural, =1{1 account cannot get in} other{{count} accounts cannot get in}}",
+  "instanceDoctorStuckTitle": "{count, plural, one{1 account cannot get in} other{{count} accounts cannot get in}}",
   "@instanceDoctorStuckTitle": {
     "description": "#3489 Instance doctor: accounts unconfirmed for over a day.",
     "placeholders": {
@@ -17828,7 +17836,7 @@
   "@instanceGrantDays": {
     "description": "#2145 assistant onboarding: instanceGrantDays"
   },
-  "instanceGrantDaysLabel": "For {days, plural, =1{1 day} other{{days} days}}",
+  "instanceGrantDaysLabel": "For {days, plural, one{1 day} other{{days} days}}",
   "@instanceGrantDaysLabel": {
     "description": "#2145 assistant onboarding: instanceGrantDaysLabel",
     "placeholders": {
@@ -17872,7 +17880,7 @@
   },
   "instanceInstallSchema": "Install the schema: every migration of the app, in order ({count}).",
   "@instanceInstallSchema": {
-    "description": "#977 instance wizard: instanceInstallSchema. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#977 instance wizard: instanceInstallSchema. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -18056,7 +18064,7 @@
   },
   "instanceProgress": "{done} / {total} · {current}",
   "@instanceProgress": {
-    "description": "#977 instance wizard: instanceProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#977 instance wizard: instanceProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: done, total]",
     "placeholders": {
       "done": {
         "type": "int"
@@ -18097,7 +18105,7 @@
   },
   "instanceReadyCurrent": "DesKilo version {version} is installed and current: the schema needs nothing.",
   "@instanceReadyCurrent": {
-    "description": "#1308 instance readiness. The number is not a count: it is a schema version.",
+    "description": "#1308 instance readiness. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -18117,9 +18125,9 @@
       }
     }
   },
-  "instanceReadyUpgrade": "DesKilo version {version} is installed: {pending, plural, =1{only the 1 missing migration will run} other{only the {pending} missing migrations will run}}.",
+  "instanceReadyUpgrade": "DesKilo version {version} is installed: {pending, plural, one{only the 1 missing migration will run} other{only the {pending} missing migrations will run}}.",
   "@instanceReadyUpgrade": {
-    "description": "#1308 instance readiness",
+    "description": "#1308 instance readiness The number version is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -18570,7 +18578,7 @@
   "@invoiceAlreadyInvoiced": {
     "description": "Pinned 0067 error: one active invoice per member+month"
   },
-  "invoiceAnnexSummary": "Annex: {movements, plural, =1{1 movement} other{{movements} movements}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-ins}}",
+  "invoiceAnnexSummary": "Annex: {movements, plural, one{1 movement} other{{movements} movements}}, {checkIns, plural, one{1 check-in} other{{checkIns} check-ins}}",
   "@invoiceAnnexSummary": {
     "description": "Detail sheet: what the snapshotted annex carries (0064)",
     "placeholders": {
@@ -18618,7 +18626,7 @@
   "@invoiceCorrectionReasonR5": {
     "description": "#2440: invoiceCorrectionReasonR5"
   },
-  "invoiceCountShown": "{count, plural, =1{1 invoice} other{{count} invoices}}",
+  "invoiceCountShown": "{count, plural, one{1 invoice} other{{count} invoices}}",
   "@invoiceCountShown": {
     "description": "Archive: how many invoices the current filters show",
     "placeholders": {
@@ -19098,7 +19106,7 @@
   "@invoiceIssueAll": {
     "description": "Sweep button: issue for every listed member"
   },
-  "invoiceIssueAllConfirm": "{count, plural, =1{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}",
+  "invoiceIssueAllConfirm": "{count, plural, one{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}",
   "@invoiceIssueAllConfirm": {
     "description": "Confirm dialog of the invoice-all sweep",
     "placeholders": {
@@ -19141,7 +19149,7 @@
   "@invoiceIssued": {
     "description": "Snackbar after an invoice was issued"
   },
-  "invoiceIssuedCount": "{count, plural, =1{1 invoice issued.} other{{count} invoices issued.}}",
+  "invoiceIssuedCount": "{count, plural, one{1 invoice issued.} other{{count} invoices issued.}}",
   "@invoiceIssuedCount": {
     "description": "Snackbar after the invoice-all sweep",
     "placeholders": {
@@ -19150,7 +19158,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued, plural, =1{1 issued} other{{issued} issued}}, {failed, plural, =1{1 failed} other{{failed} failed}}.",
+  "invoiceIssuedPartial": "{issued, plural, one{1 issued} other{{issued} issued}}, {failed, plural, one{1 failed} other{{failed} failed}}.",
   "@invoiceIssuedPartial": {
     "description": "Sweep result when some members could not be invoiced",
     "placeholders": {
@@ -19502,7 +19510,7 @@
   "@invoiceMonthHeld": {
     "description": "#3587 R1-e: chip on an invoice a validation policy holds"
   },
-  "invoiceMonthIssue": "{count, plural, =0{Issue invoices} =1{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}",
+  "invoiceMonthIssue": "{count, plural, =0{Issue invoices} one{Issue 1 invoice · {amount}} other{Issue {count} invoices · {amount}}}",
   "@invoiceMonthIssue": {
     "description": "#3587 R1-e: the one filled action of the month flow, with the amount it issues",
     "placeholders": {
@@ -19530,7 +19538,7 @@
   "@invoiceMonthNeedsFix": {
     "description": "#3587 R1-e: status of a customer whose details block the invoice"
   },
-  "invoiceMonthNeedsFixCount": "{count, plural, =1{1 needs a fix} other{{count} need a fix}}",
+  "invoiceMonthNeedsFixCount": "{count, plural, one{1 needs a fix} other{{count} need a fix}}",
   "@invoiceMonthNeedsFixCount": {
     "description": "#3587 R1-e: how many listed customers cannot be invoiced until fixed",
     "placeholders": {
@@ -19574,7 +19582,7 @@
   },
   "invoiceMonthResultPartial": "{issued, plural, one{{issued} of {total} invoices issued} other{{issued} of {total} invoices issued}}",
   "@invoiceMonthResultPartial": {
-    "description": "#3587 R1-e: result title when only some invoices were issued",
+    "description": "#3587 R1-e: result title when only some invoices were issued The number total is the denominator of a ratio, read as a value. [not a count: total]",
     "placeholders": {
       "issued": {
         "type": "int"
@@ -19584,7 +19592,7 @@
       }
     }
   },
-  "invoiceMonthResultSubtitle": "{count, plural, =1{The customer sees it in their account now.} other{Each customer sees it in their account now.}}",
+  "invoiceMonthResultSubtitle": "{count, plural, one{The customer sees it in their account now.} other{Each customer sees it in their account now.}}",
   "@invoiceMonthResultSubtitle": {
     "description": "#3587 R1-e: what issuing did: the customer sees it in their account (never e-mail)",
     "placeholders": {
@@ -19593,7 +19601,7 @@
       }
     }
   },
-  "invoiceMonthResultTitle": "{count, plural, =1{1 invoice issued} other{{count} invoices issued}}",
+  "invoiceMonthResultTitle": "{count, plural, one{1 invoice issued} other{{count} invoices issued}}",
   "@invoiceMonthResultTitle": {
     "description": "#3587 R1-e: result page title when something was issued",
     "placeholders": {
@@ -19606,9 +19614,9 @@
   "@invoiceMonthRetry": {
     "description": "#3587 R1-e: retry only the customers the server refused"
   },
-  "invoiceMonthSelected": "{count, plural, =1{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}",
+  "invoiceMonthSelected": "{count, plural, one{1 of {total} selected · {amount}} other{{count} of {total} selected · {amount}}}",
   "@invoiceMonthSelected": {
-    "description": "#3587 R1-e: how many customers are selected of those listed, and their total",
+    "description": "#3587 R1-e: how many customers are selected of those listed, and their total The number total is the denominator of a ratio, read as a value. [not a count: total]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -19831,7 +19839,7 @@
   },
   "invoicePageNowReminder": "Reminder {level} is due",
   "@invoicePageNowReminder": {
-    "description": "#3587 R1-d story's now line. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#3587 R1-d story's now line. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -19892,7 +19900,7 @@
       }
     }
   },
-  "invoicePageReminders": "{count, plural, =1{Reminders (1)} other{Reminders ({count})}}",
+  "invoicePageReminders": "{count, plural, one{Reminders (1)} other{Reminders ({count})}}",
   "@invoicePageReminders": {
     "description": "#3587 R1-d the collapsed reminder history under the story",
     "placeholders": {
@@ -19903,7 +19911,7 @@
   },
   "invoicePageShareReminder": "Share reminder {level}",
   "@invoicePageShareReminder": {
-    "description": "#3587 R1-d bottom bar. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#3587 R1-d bottom bar. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -19933,7 +19941,7 @@
   },
   "invoicePageStoryReminder": "Reminder {level} sent",
   "@invoicePageStoryReminder": {
-    "description": "#3587 R1-d story line. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#3587 R1-d story line. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -20176,7 +20184,7 @@
   "@invoiceRegisterCurrency": {
     "description": "#3606 the register's download of a selection (CSV)"
   },
-  "invoiceRegisterDownloadSelected": "{count, plural, =1{Download 1 invoice} other{Download {count} invoices}}",
+  "invoiceRegisterDownloadSelected": "{count, plural, one{Download 1 invoice} other{Download {count} invoices}}",
   "@invoiceRegisterDownloadSelected": {
     "description": "#3606 the register's download of a selection (CSV)",
     "placeholders": {
@@ -20247,7 +20255,7 @@
   },
   "invoiceRemindedBadge": "Reminded ×{count}",
   "@invoiceRemindedBadge": {
-    "description": "Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -20406,7 +20414,7 @@
   "@invoiceStatusRemainderCancelled": {
     "description": "Partial payments stay open until a validated write-off (#504)"
   },
-  "invoiceSummaryOpen": "{count, plural, =1{1 open} other{{count} open}} · {amount} outstanding",
+  "invoiceSummaryOpen": "{count, plural, one{1 open} other{{count} open}} · {amount} outstanding",
   "@invoiceSummaryOpen": {
     "description": "Summary strip: open count + outstanding amount",
     "placeholders": {
@@ -20420,7 +20428,7 @@
   },
   "invoiceSummaryToInvoice": "{count} to invoice",
   "@invoiceSummaryToInvoice": {
-    "description": "Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -20429,7 +20437,7 @@
   },
   "invoiceSummaryToRefund": "{count} to refund · {amount}",
   "@invoiceSummaryToRefund": {
-    "description": "Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -20457,7 +20465,7 @@
   },
   "invoiceTemplateDocReminder": "Reminder {level}",
   "@invoiceTemplateDocReminder": {
-    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -20621,7 +20629,7 @@
       }
     }
   },
-  "invoicingCustomerCount": "{count, plural, =1{1 customer} other{{count} customers}}",
+  "invoicingCustomerCount": "{count, plural, one{1 customer} other{{count} customers}}",
   "@invoicingCustomerCount": {
     "description": "#3587 how many customers",
     "placeholders": {
@@ -20630,7 +20638,7 @@
       }
     }
   },
-  "invoicingDaysLate": "{days, plural, =1{1 day late} other{{days} days late}}",
+  "invoicingDaysLate": "{days, plural, one{1 day late} other{{days} days late}}",
   "@invoicingDaysLate": {
     "description": "#3587 lateness",
     "placeholders": {
@@ -20639,7 +20647,7 @@
       }
     }
   },
-  "invoicingDueIn": "{days, plural, =1{Due in 1 day} other{Due in {days} days}}",
+  "invoicingDueIn": "{days, plural, one{Due in 1 day} other{Due in {days} days}}",
   "@invoicingDueIn": {
     "description": "#3587 status",
     "placeholders": {
@@ -20685,7 +20693,7 @@
   "@invoicingFilterPaid": {
     "description": "#3587 list filter: paid and closed"
   },
-  "invoicingInvoiceCount": "{count, plural, =1{1 invoice} other{{count} invoices}}",
+  "invoicingInvoiceCount": "{count, plural, one{1 invoice} other{{count} invoices}}",
   "@invoicingInvoiceCount": {
     "description": "#3587 how many invoices",
     "placeholders": {
@@ -20781,9 +20789,9 @@
       }
     }
   },
-  "invoicingReminderLevelSent": "{level, plural, other{reminder {level} sent}}",
+  "invoicingReminderLevelSent": "reminder {level} sent",
   "@invoicingReminderLevelSent": {
-    "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
+    "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness The number level is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -20859,7 +20867,7 @@
   "@invoicingStatusDueToday": {
     "description": "#3587 status"
   },
-  "invoicingStatusEveryReminderSent": "{days, plural, =1{1 day late} other{{days} days late}} · every reminder sent",
+  "invoicingStatusEveryReminderSent": "{days, plural, one{1 day late} other{{days} days late}} · every reminder sent",
   "@invoicingStatusEveryReminderSent": {
     "description": "#3587 status",
     "placeholders": {
@@ -20915,9 +20923,9 @@
   "@invoicingStatusRejected": {
     "description": "#3587 status"
   },
-  "invoicingStatusReminderSent": "{days, plural, =1{1 day late} other{{days} days late}} · reminder {level} sent",
+  "invoicingStatusReminderSent": "{days, plural, one{1 day late} other{{days} days late}} · reminder {level} sent",
   "@invoicingStatusReminderSent": {
-    "description": "#3587 status",
+    "description": "#3587 status The number level is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "days": {
         "type": "int"
@@ -20981,7 +20989,7 @@
   "@invoicingTodoRefunds": {
     "description": "#3587 To do: credit notes owed"
   },
-  "invoicingTodoRejected": "{count, plural, =1{1 e-invoice was rejected} other{{count} e-invoices were rejected}}",
+  "invoicingTodoRejected": "{count, plural, one{1 e-invoice was rejected} other{{count} e-invoices were rejected}}",
   "@invoicingTodoRejected": {
     "description": "#3587 To do: rejected e-invoices",
     "placeholders": {
@@ -21374,7 +21382,7 @@
       }
     }
   },
-  "journeyOverdueCount": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "journeyOverdueCount": "{count, plural, one{1 overdue} other{{count} overdue}}",
   "@journeyOverdueCount": {
     "description": "Shown as a text in invoice stage strip (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -21389,7 +21397,7 @@
   },
   "journeyPrimaryRemind": "Send reminder {level}",
   "@journeyPrimaryRemind": {
-    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -22648,7 +22656,7 @@
   "@leaseNoticeTitle": {
     "description": "#2569 premises lease"
   },
-  "leaseOccurrencesAfter": "{count, plural, =1{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}",
+  "leaseOccurrencesAfter": "{count, plural, one{1 occurrence was already presented for a date after the end.} other{{count} occurrences were already presented for a date after the end.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {
@@ -23057,7 +23065,7 @@
   "@levelSupplementLabel": {
     "description": "Shown as a text in report strings l10n (money), and 1 other place."
   },
-  "libraryAppliedChanges": "{count, plural, =1{1 change applied.} other{{count} changes applied.}}",
+  "libraryAppliedChanges": "{count, plural, one{1 change applied.} other{{count} changes applied.}}",
   "@libraryAppliedChanges": {
     "description": "Template apply preview (#1280): libraryAppliedChanges",
     "placeholders": {
@@ -23066,7 +23074,7 @@
       }
     }
   },
-  "libraryApplyChanges": "{count, plural, =0{Nothing selected} =1{Apply 1 change} other{Apply {count} changes}}",
+  "libraryApplyChanges": "{count, plural, =0{Nothing selected} one{Apply 1 change} other{Apply {count} changes}}",
   "@libraryApplyChanges": {
     "description": "Template apply preview (#1280): libraryApplyChanges",
     "placeholders": {
@@ -23088,7 +23096,7 @@
       }
     }
   },
-  "libraryCounts": "{levels, plural, =1{1 level} other{{levels} levels}} · {desks, plural, =1{1 desk} other{{desks} desks}} · {seats, plural, =1{1 seat} other{{seats} seats}}",
+  "libraryCounts": "{levels, plural, one{1 level} other{{levels} levels}} · {desks, plural, one{1 desk} other{{desks} desks}} · {seats, plural, one{1 seat} other{{seats} seats}}",
   "@libraryCounts": {
     "description": "Shown as the line under a title in onboarding screen (workspace), and 1 other place. Placeholders: {levels} (int), {desks} (int), {seats} (int).",
     "placeholders": {
@@ -23449,7 +23457,7 @@
   "@linkedAccountsUnlink": {
     "description": "Shown as the text in linked accounts screen (auth)."
   },
-  "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
+  "listCoversSeats": "{count, plural, one{1 seat} other{{count} seats}}",
   "@listCoversSeats": {
     "description": "#1825 — what a whole-space reservation includes: its seats",
     "placeholders": {
@@ -23458,7 +23466,7 @@
       }
     }
   },
-  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "listCoversTables": "{count, plural, one{1 table} other{{count} tables}}",
   "@listCoversTables": {
     "description": "#1825 — what a whole-space reservation includes: its tables",
     "placeholders": {
@@ -23805,7 +23813,7 @@
       }
     }
   },
-  "mcpConnectAccessExpiresIn": "Approved — {days, plural, =1{1 day} other{{days} days}} left.",
+  "mcpConnectAccessExpiresIn": "Approved — {days, plural, one{1 day} other{{days} days}} left.",
   "@mcpConnectAccessExpiresIn": {
     "description": "#2145 Connect an assistant: mcpConnectAccessExpiresIn",
     "placeholders": {
@@ -23814,7 +23822,7 @@
       }
     }
   },
-  "mcpConnectAccessExpiresSoon": "Approved — expires in {days, plural, =1{1 day} other{{days} days}}. Ask for approval again once it lapses.",
+  "mcpConnectAccessExpiresSoon": "Approved — expires in {days, plural, one{1 day} other{{days} days}}. Ask for approval again once it lapses.",
   "@mcpConnectAccessExpiresSoon": {
     "description": "#2145 Connect an assistant: mcpConnectAccessExpiresSoon",
     "placeholders": {
@@ -24921,7 +24929,7 @@
   },
   "meDataPersonalSummary": "Conversations: {conversations} · Messages: {messages} · Places named: {workspaces}",
   "@meDataPersonalSummary": {
-    "description": "#2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2557 My data: counts the personal home answered. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: conversations, messages, workspaces]",
     "placeholders": {
       "conversations": {
         "type": "int"
@@ -25234,7 +25242,7 @@
   "@meOverviewAttentionApplicationsUnavailable": {
     "description": "#2554 Overview: my requests could not be read"
   },
-  "meOverviewAttentionConversation": "{count, plural, =1{1 unread message} other{{count} unread messages}}",
+  "meOverviewAttentionConversation": "{count, plural, one{1 unread message} other{{count} unread messages}}",
   "@meOverviewAttentionConversation": {
     "description": "#2554 Overview: unread messages in one conversation",
     "placeholders": {
@@ -25289,7 +25297,7 @@
   "@meOverviewAttentionMessagesUnavailable": {
     "description": "#2554 Overview: my conversations could not be read"
   },
-  "meOverviewAttentionMore": "{count, plural, =1{1 more} other{{count} more}}",
+  "meOverviewAttentionMore": "{count, plural, one{1 more} other{{count} more}}",
   "@meOverviewAttentionMore": {
     "description": "#2554 Overview: how many more items wait beyond the ones shown",
     "placeholders": {
@@ -25460,7 +25468,7 @@
   "@meSpaceLastUsed": {
     "description": "Chip on the space the person used last."
   },
-  "meSpaceNotifications": "{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}",
+  "meSpaceNotifications": "{count, plural, one{1 notification waits here} other{{count} notifications wait here}}",
   "@meSpaceNotifications": {
     "description": "Tooltip of the count on a space side (production or development) on Me › Home: the notifications that belong to it.",
     "placeholders": {
@@ -25493,7 +25501,7 @@
   "@meStartedDone": {
     "description": "#3545 Getting started: the mark of a finished step."
   },
-  "meStartedLeft": "{count, plural, =1{One step left · {next}} other{{count} steps left · {next}}}",
+  "meStartedLeft": "{count, plural, one{One step left · {next}} other{{count} steps left · {next}}}",
   "@meStartedLeft": {
     "description": "#3545 The one line at the end of Home while first steps remain: how many are left and which comes next.",
     "placeholders": {
@@ -25688,7 +25696,7 @@
   "@memberMonthInProgress": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "{count, plural, =1{+1 more} other{+{count} more}}",
+  "memberMoreInvoices": "{count, plural, one{+1 more} other{+{count} more}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -25904,7 +25912,7 @@
   },
   "memberPageWorkspaceDefaultValue": "Workspace default ({count})",
   "@memberPageWorkspaceDefaultValue": {
-    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Shown as the line under a title in member activity tiles (members). Placeholders: {count} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -25943,7 +25951,7 @@
   },
   "memberReservationLimitChip": "max {n}",
   "@memberReservationLimitChip": {
-    "description": "Subtitle chip on a member row whose reservation cap is set. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
+    "description": "Subtitle chip on a member row whose reservation cap is set. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: n]",
     "placeholders": {
       "n": {
         "type": "int"
@@ -26004,7 +26012,7 @@
   },
   "memberSimultaneousLimitChip": "{n} at once",
   "@memberSimultaneousLimitChip": {
-    "description": "#628 - subtitle chip on a member row with an explicit simultaneous allowance. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
+    "description": "#628 - subtitle chip on a member row with an explicit simultaneous allowance. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: n]",
     "placeholders": {
       "n": {
         "type": "int"
@@ -26505,7 +26513,7 @@
   "@moneyDescriptionLabel": {
     "description": "Label of the expense description input"
   },
-  "moneyDueIn": "{days, plural, =1{Due in 1 day} other{Due in {days} days}}",
+  "moneyDueIn": "{days, plural, one{Due in 1 day} other{Due in {days} days}}",
   "@moneyDueIn": {
     "description": "Shown as a text in my invoices list (money). Placeholders: {days} (int).",
     "placeholders": {
@@ -26554,7 +26562,7 @@
   "@moneyNothingOpen": {
     "description": "Shown as a text in invoice overview (money)."
   },
-  "moneyOpenInvoicesSummary": "{count, plural, =1{1 open} other{{count} open}} · {amount} due",
+  "moneyOpenInvoicesSummary": "{count, plural, one{1 open} other{{count} open}} · {amount} due",
   "@moneyOpenInvoicesSummary": {
     "description": "Shown as a text in invoice overview (money). Placeholders: {count} (int), {amount} (String).",
     "placeholders": {
@@ -26570,7 +26578,7 @@
   "@moneyOpenInvoicesTitle": {
     "description": "Shown as a text in invoice overview (money)."
   },
-  "moneyOverage": "{count, plural, =1{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}",
+  "moneyOverage": "{count, plural, one{Overage (1 extra half-day)} other{Overage ({count} extra half-days)}}",
   "@moneyOverage": {
     "description": "Statement line for usage beyond the included quota",
     "placeholders": {
@@ -26579,7 +26587,7 @@
       }
     }
   },
-  "moneyOverdueBanner": "{count, plural, =1{1 overdue} other{{count} overdue}} — {amount} to settle",
+  "moneyOverdueBanner": "{count, plural, one{1 overdue} other{{count} overdue}} — {amount} to settle",
   "@moneyOverdueBanner": {
     "description": "Shown as a text in invoice overview (money), and 1 other place. Placeholders: {count} (int), {amount} (String).",
     "placeholders": {
@@ -26591,7 +26599,7 @@
       }
     }
   },
-  "moneyOverdueBy": "{days, plural, =0{Due today} =1{Overdue by 1 day} other{Overdue by {days} days}}",
+  "moneyOverdueBy": "{days, plural, =0{Due today} one{Overdue by 1 day} other{Overdue by {days} days}}",
   "@moneyOverdueBy": {
     "description": "Shown as a text in my invoices list (money). Placeholders: {days} (int).",
     "placeholders": {
@@ -26622,7 +26630,7 @@
   },
   "moneyRemindedTimes": "Reminded ×{count}",
   "@moneyRemindedTimes": {
-    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Shown as a text in my invoices list (money). Placeholders: {count} (int). The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -26667,16 +26675,16 @@
   },
   "moneySubscriptionPct": "Subscription {pct}%",
   "@moneySubscriptionPct": {
-    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage.",
+    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
       }
     }
   },
-  "moneyUsage": "{used} of {included, plural, =1{1 half-day} other{{included} half-days}} used",
+  "moneyUsage": "{used} of {included, plural, one{1 half-day} other{{included} half-days}} used",
   "@moneyUsage": {
-    "description": "Statement usage line for quota plans",
+    "description": "Statement usage line for quota plans The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]",
     "placeholders": {
       "used": {
         "type": "int"
@@ -26697,7 +26705,7 @@
   },
   "monthFreeCount": "{free}/{total}",
   "@monthFreeCount": {
-    "description": "Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: free, total]",
     "placeholders": {
       "free": {
         "type": "int"
@@ -26965,7 +26973,7 @@
   "@mySpacesAll": {
     "description": "#2554 Overview: link to the full My spaces list"
   },
-  "mySpacesCount": "{count, plural, =0{No place} =1{1 place} other{{count} places}}",
+  "mySpacesCount": "{count, plural, =0{No place} one{1 place} other{{count} places}}",
   "@mySpacesCount": {
     "description": "#2554 My spaces: the number of loaded spaces",
     "placeholders": {
@@ -27036,7 +27044,7 @@
   },
   "mySpacesReviewed": "My review: {stars} of 5",
   "@mySpacesReviewed": {
-    "description": "#2554 My spaces: my own star rating of a space. The number is not a count: it is a rating of five stars, an index on a scale.",
+    "description": "#2554 My spaces: my own star rating of a space. The number is not a count: it is a rating of five stars, an index on a scale. The number stars is a rating of five stars, an index on a scale. [not a count: stars]",
     "placeholders": {
       "stars": {
         "type": "int"
@@ -27150,7 +27158,7 @@
   },
   "negotiationPercent": "{value} %",
   "@negotiationPercent": {
-    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage.",
+    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]",
     "placeholders": {
       "value": {
         "type": "int"
@@ -27247,7 +27255,7 @@
   },
   "newMemberSubscriptionValue": "{percent}%",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage. The number is not a count: it is a percentage.",
+    "description": "#1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]",
     "placeholders": {
       "percent": {
         "type": "int"
@@ -27296,7 +27304,7 @@
   },
   "noteRefFilterCount": "{shown} of {total}",
   "@noteRefFilterCount": {
-    "description": "#842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: shown, total]",
     "placeholders": {
       "shown": {
         "type": "int"
@@ -27376,7 +27384,7 @@
   },
   "notesFilterUnreadCount": "Unread ({unread})",
   "@notesFilterUnreadCount": {
-    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\".",
+    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\". [not a count: unread]",
     "placeholders": {
       "unread": {
         "type": "int"
@@ -27659,7 +27667,7 @@
   "@onboardingSummaryBillingOn": {
     "description": "#1636 onboarding_creation"
   },
-  "onboardingSummaryCount": "{count, plural, =1{Creates one workspace} other{Creates {count} workspaces}}",
+  "onboardingSummaryCount": "{count, plural, one{Creates one workspace} other{Creates {count} workspaces}}",
   "@onboardingSummaryCount": {
     "description": "#1636 onboarding_creation",
     "placeholders": {
@@ -27833,7 +27841,7 @@
   "@overviewNoPinned": {
     "description": "#2583 C2 overview layout"
   },
-  "overviewOverdueBasis": "{count, plural, =1{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}",
+  "overviewOverdueBasis": "{count, plural, one{1 invoice overdue; {unknown} without a proven due date and {held} on hold, apart} other{{count} invoices overdue; {unknown} without a proven due date and {held} on hold, apart}}",
   "@overviewOverdueBasis": {
     "description": "#2583 the overview's own figures",
     "placeholders": {
@@ -27864,7 +27872,7 @@
   "@overviewPendingActionsDefinition": {
     "description": "#2580 overview figure definition"
   },
-  "overviewPendingInSpace": "{count, plural, =0{Nothing waits on a decision in the space.} =1{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}",
+  "overviewPendingInSpace": "{count, plural, =0{Nothing waits on a decision in the space.} one{1 request waits on a decision in the space.} other{{count} requests wait on a decision in the space.}}",
   "@overviewPendingInSpace": {
     "description": "#2580 overview: how many requests wait in the whole space, beside the list of what waits on this person",
     "placeholders": {
@@ -28403,7 +28411,7 @@
   },
   "percentValue": "{value}%",
   "@percentValue": {
-    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage.",
+    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]",
     "placeholders": {
       "value": {
         "type": "int"
@@ -28664,7 +28672,7 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
-  "placeFeedbackAverage": "{average} · {count, plural, =1{1 rating} other{{count} ratings}}",
+  "placeFeedbackAverage": "{average} · {count, plural, one{1 rating} other{{count} ratings}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",
     "placeholders": {
@@ -28684,7 +28692,7 @@
   "@placeFeedbackFavorite": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackMine": "Your rating: {n, plural, =1{1 star} other{{n} stars}}",
+  "placeFeedbackMine": "Your rating: {n, plural, one{1 star} other{{n} stars}}",
   "@placeFeedbackMine": {
     "description": "#3064 the member's own rating, apart from the average",
     "placeholders": {
@@ -28701,7 +28709,7 @@
   "@placeFeedbackNoRating": {
     "description": "#2185 place feedback"
   },
-  "placeFeedbackStars": "{n, plural, =1{1 star} other{{n} stars}}",
+  "placeFeedbackStars": "{n, plural, one{1 star} other{{n} stars}}",
   "@placeFeedbackStars": {
     "description": "#2185 place feedback",
     "placeholders": {
@@ -28981,7 +28989,7 @@
   "@planSendForConfirmation": {
     "description": "Booking-sheet button when booking for another member"
   },
-  "planSlotError": "Bookings must start and end on the {minutes, plural, =1{1-minute grid} other{{minutes}-minute grid}}.",
+  "planSlotError": "Bookings must start and end on the {minutes, plural, one{1-minute grid} other{{minutes}-minute grid}}.",
   "@planSlotError": {
     "description": "Booking error when the server rejects a misaligned window under a minute granularity (0032)",
     "placeholders": {
@@ -29066,7 +29074,7 @@
       }
     }
   },
-  "plansEditorQuota": "{count, plural, =1{1 half-day} other{{count} half-days}}",
+  "plansEditorQuota": "{count, plural, one{1 half-day} other{{count} half-days}}",
   "@plansEditorQuota": {
     "description": "Quota summary",
     "placeholders": {
@@ -29099,7 +29107,7 @@
   "@policyAllowPastTitle": {
     "description": "Shown as a title in availability policies (workspace)."
   },
-  "policyDaysValue": "{count, plural, =1{1 day} other{{count} days}}",
+  "policyDaysValue": "{count, plural, one{1 day} other{{count} days}}",
   "@policyDaysValue": {
     "description": "#649 - a day count shown beside the horizon slider",
     "placeholders": {
@@ -29120,7 +29128,7 @@
   "@policyHorizonTitle": {
     "description": "#649 - advance_horizon_days control title"
   },
-  "policyHoursValue": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "policyHoursValue": "{count, plural, one{1 hour} other{{count} hours}}",
   "@policyHoursValue": {
     "description": "#649 - an hour count shown beside a duration control",
     "placeholders": {
@@ -29149,7 +29157,7 @@
   "@policyMinDurationTitle": {
     "description": "#649 - min_duration_minutes control title"
   },
-  "policyMinutesValue": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "policyMinutesValue": "{count, plural, one{1 minute} other{{count} minutes}}",
   "@policyMinutesValue": {
     "description": "#649 - a minute count shown beside a duration control",
     "placeholders": {
@@ -29272,7 +29280,7 @@
   },
   "portalDirectoryCount": "{name} ({count})",
   "@portalDirectoryCount": {
-    "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "A collapsible section of the new-discussion directory: a workspace or Groups, and how many entries it holds (#2472). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "name": {
         "type": "String"
@@ -29614,7 +29622,7 @@
   "@privacyAdminIncidentNote": {
     "description": "Shown as the label in privacy admin sheets (members)."
   },
-  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} =1{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Recorded. Nobody holds the privacy right, so nobody was told.} one{Recorded. 1 person was told.} other{Recorded. {count} people were told.}}",
   "@privacyAdminIncidentRecorded": {
     "description": "Shown as the message in privacy admin sheets (members). Placeholders: {count} (int).",
     "placeholders": {
@@ -29931,7 +29939,7 @@
       }
     }
   },
-  "processApplied": "{count, plural, =1{1 feature changed.} other{{count} features changed.}}",
+  "processApplied": "{count, plural, one{1 feature changed.} other{{count} features changed.}}",
   "@processApplied": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -29964,7 +29972,7 @@
   "@processChangeFailed": {
     "description": "#1329 the process change preview and apply"
   },
-  "processConfirmOff": "{count, plural, =1{Switch off 1 feature} other{Switch off {count} features}}",
+  "processConfirmOff": "{count, plural, one{Switch off 1 feature} other{Switch off {count} features}}",
   "@processConfirmOff": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -29973,7 +29981,7 @@
       }
     }
   },
-  "processConfirmOn": "{count, plural, =1{Switch on 1 feature} other{Switch on {count} features}}",
+  "processConfirmOn": "{count, plural, one{Switch on 1 feature} other{Switch on {count} features}}",
   "@processConfirmOn": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -30002,9 +30010,9 @@
   "@processDocumentsInformationDesc": {
     "description": "Shown as the text in process names (workspace)."
   },
-  "processFeatureCount": "{enabled} of {total, plural, =1{1 feature on} other{{total} features on}}",
+  "processFeatureCount": "{enabled} of {total, plural, one{1 feature on} other{{total} features on}}",
   "@processFeatureCount": {
-    "description": "#1327 the process-first overview of the Features screen",
+    "description": "#1327 the process-first overview of the Features screen The number enabled is the figure before of or a slash, read as a value of a ratio. [not a count: enabled]",
     "placeholders": {
       "enabled": {
         "type": "int"
@@ -30039,7 +30047,7 @@
   "@processFilterEmpty": {
     "description": "#1327 the process-first overview of the Features screen"
   },
-  "processHeldBack": "{count, plural, =1{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
+  "processHeldBack": "{count, plural, one{1 feature is on but waits for a switched-off prerequisite} other{{count} features are on but wait for a switched-off prerequisite}}",
   "@processHeldBack": {
     "description": "#1327 the process-first overview of the Features screen",
     "placeholders": {
@@ -30107,7 +30115,7 @@
   "@processOperationsDesc": {
     "description": "Shown as the text in process names (workspace)."
   },
-  "processRemoveDependants": "{count, plural, =1{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}",
+  "processRemoveDependants": "{count, plural, one{Also switch off the 1 dependant} other{Also switch off the {count} dependants}}",
   "@processRemoveDependants": {
     "description": "#1329 the process change preview and apply",
     "placeholders": {
@@ -30198,9 +30206,9 @@
   "@processStatePartial": {
     "description": "#1327 the process-first overview of the Features screen"
   },
-  "processSubprocessCount": "{active} of {total, plural, =1{1 subprocess active} other{{total} subprocesses active}}",
+  "processSubprocessCount": "{active} of {total, plural, one{1 subprocess active} other{{total} subprocesses active}}",
   "@processSubprocessCount": {
-    "description": "#1327 the process-first overview of the Features screen",
+    "description": "#1327 the process-first overview of the Features screen The number active is the figure before of or a slash, read as a value of a ratio. [not a count: active]",
     "placeholders": {
       "active": {
         "type": "int"
@@ -30244,7 +30252,7 @@
   },
   "profilePhotoRefused": "The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.",
   "@profilePhotoRefused": {
-    "description": "#3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count.",
+    "description": "#3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count. [not a count: megabytes]",
     "placeholders": {
       "megabytes": {
         "type": "int"
@@ -30411,7 +30419,7 @@
   "@publicHolidaysAction": {
     "description": "#1274 the action that opens the holiday preview"
   },
-  "publicHolidaysConfirm": "{count, plural, =1{Create 1 closure day} other{Create {count} closure days}}",
+  "publicHolidaysConfirm": "{count, plural, one{Create 1 closure day} other{Create {count} closure days}}",
   "@publicHolidaysConfirm": {
     "description": "#1274 confirm creating the previewed days",
     "placeholders": {
@@ -30420,7 +30428,7 @@
       }
     }
   },
-  "publicHolidaysCreated": "{count, plural, =1{1 closure day created} other{{count} closure days created}}",
+  "publicHolidaysCreated": "{count, plural, one{1 closure day created} other{{count} closure days created}}",
   "@publicHolidaysCreated": {
     "description": "#1274 how many closure days were written",
     "placeholders": {
@@ -30917,7 +30925,7 @@
   },
   "purchaseReceiptLine": "Line {number}",
   "@purchaseReceiptLine": {
-    "description": "#2573 purchase lines: place and several-line receipts. The number is not a count: it is a line number.",
+    "description": "#2573 purchase lines: place and several-line receipts. The number is not a count: it is a line number. [not a count: number]",
     "placeholders": {
       "number": {
         "type": "int"
@@ -32058,7 +32066,7 @@
   "@recapCsv": {
     "description": "#2354 recapitulative statement: recapCsv"
   },
-  "recapDue": "An EU sales list is due for {month}: {count, plural, =1{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.",
+  "recapDue": "An EU sales list is due for {month}: {count, plural, one{1 reverse-charged invoice} other{{count} reverse-charged invoices}}. Export it from VAT declarations.",
   "@recapDue": {
     "description": "#2354 recapitulative statement: recapDue",
     "placeholders": {
@@ -32122,7 +32130,7 @@
   "@recordsColumns": {
     "description": "#3606 records table"
   },
-  "recordsDropped": "{count, plural, =1{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
+  "recordsDropped": "{count, plural, one{1 selected row is no longer here and was left out} other{{count} selected rows are no longer here and were left out}}",
   "@recordsDropped": {
     "description": "#3606 records table",
     "placeholders": {
@@ -32189,7 +32197,7 @@
   "@recordsMoreActions": {
     "description": "#3606 records table"
   },
-  "recordsPartlyRead": "{loaded, plural, =1{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
+  "recordsPartlyRead": "{loaded, plural, one{1 loaded — not everything is read yet} other{{loaded} loaded — not everything is read yet}}",
   "@recordsPartlyRead": {
     "description": "#3606 records table",
     "placeholders": {
@@ -32202,7 +32210,7 @@
   "@recordsSelectRow": {
     "description": "#3606 records table"
   },
-  "recordsSelectShown": "{count, plural, =1{Select the 1 shown} other{Select the {count} shown}}",
+  "recordsSelectShown": "{count, plural, one{Select the 1 shown} other{Select the {count} shown}}",
   "@recordsSelectShown": {
     "description": "#3606 records table",
     "placeholders": {
@@ -32211,7 +32219,7 @@
       }
     }
   },
-  "recordsSelected": "{count, plural, =1{1 selected} other{{count} selected}}",
+  "recordsSelected": "{count, plural, one{1 selected} other{{count} selected}}",
   "@recordsSelected": {
     "description": "#3606 records table",
     "placeholders": {
@@ -32220,7 +32228,7 @@
       }
     }
   },
-  "recordsShown": "{count, plural, =1{1 shown} other{{count} shown}}",
+  "recordsShown": "{count, plural, one{1 shown} other{{count} shown}}",
   "@recordsShown": {
     "description": "#3606 records table",
     "placeholders": {
@@ -32307,7 +32315,7 @@
   "@refFilterReset": {
     "description": "Shown as the text in ref picker filters panel (workspace)."
   },
-  "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
+  "refFilterShow": "{count, plural, one{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
     "description": "Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).",
     "placeholders": {
@@ -32573,7 +32581,7 @@
   },
   "reminderHistoryLine": "Reminder {level} · {origin} · {date}",
   "@reminderHistoryLine": {
-    "description": "#1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#1922 reminder evidence: reminderHistoryLine. The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -32661,7 +32669,7 @@
   },
   "reminderPdfTitleLevel": "Reminder {level}",
   "@reminderPdfTitleLevel": {
-    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\". The number is a position, not a count.",
+    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\". The number is a position, not a count. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -32672,7 +32680,7 @@
   "@reminderQueueCheckFirst": {
     "description": "#3587 R1-f: reminder queue (reminderQueueCheckFirst)"
   },
-  "reminderQueueDetail": "{days, plural, =0{{number} · due today} =1{{number} · 1 day late} other{{number} · {days} days late}}",
+  "reminderQueueDetail": "{days, plural, =0{{number} · due today} one{{number} · 1 day late} other{{number} · {days} days late}}",
   "@reminderQueueDetail": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDetail)",
     "placeholders": {
@@ -32692,7 +32700,7 @@
   "@reminderQueueDoneEmpty": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueDoneEmpty)"
   },
-  "reminderQueueEmailAll": "{count, plural, =1{E-mail the 1 reachable} other{E-mail the {count} reachable}}",
+  "reminderQueueEmailAll": "{count, plural, one{E-mail the 1 reachable} other{E-mail the {count} reachable}}",
   "@reminderQueueEmailAll": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
     "placeholders": {
@@ -32705,7 +32713,7 @@
   "@reminderQueueEmailAllConfirm": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
   },
-  "reminderQueueEmailAllTitle": "{count, plural, =1{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}",
+  "reminderQueueEmailAllTitle": "{count, plural, one{Send 1 reminder by e-mail?} other{Send {count} reminders by e-mail?}}",
   "@reminderQueueEmailAllTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
     "placeholders": {
@@ -32737,7 +32745,7 @@
   },
   "reminderQueueLevel": "Reminder {level}",
   "@reminderQueueLevel": {
-    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueLevel). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -32768,7 +32776,7 @@
   "@reminderQueueResultNone": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultNone)"
   },
-  "reminderQueueResultSentTitle": "{count, plural, =1{1 reminder sent} other{{count} reminders sent}}",
+  "reminderQueueResultSentTitle": "{count, plural, one{1 reminder sent} other{{count} reminders sent}}",
   "@reminderQueueResultSentTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
     "placeholders": {
@@ -32781,7 +32789,7 @@
   "@reminderQueueResultSubtitle": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultSubtitle)"
   },
-  "reminderQueueResultTitle": "{count, plural, =1{1 reminder shared} other{{count} reminders shared}}",
+  "reminderQueueResultTitle": "{count, plural, one{1 reminder shared} other{{count} reminders shared}}",
   "@reminderQueueResultTitle": {
     "description": "#3587 R1-f: the by-hand reminder queue (reminderQueueResultTitle)",
     "placeholders": {
@@ -32811,7 +32819,7 @@
   "@reminderQueueSharedNotRecorded": {
     "description": "#3587 R1-f: a reminder left the device but recording its level failed; its action records only"
   },
-  "reminderQueueStaysNoAddress": "{count, plural, =1{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}",
+  "reminderQueueStaysNoAddress": "{count, plural, one{1 line stays for sharing: no e-mail address on file.} other{{count} lines stay for sharing: no e-mail address on file.}}",
   "@reminderQueueStaysNoAddress": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
     "placeholders": {
@@ -32820,7 +32828,7 @@
       }
     }
   },
-  "reminderQueueStaysToDecide": "{count, plural, =1{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}",
+  "reminderQueueStaysToDecide": "{count, plural, one{1 line waits: an earlier e-mail is to be decided first.} other{{count} lines wait: an earlier e-mail is to be decided first.}}",
   "@reminderQueueStaysToDecide": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
     "placeholders": {
@@ -33009,7 +33017,7 @@
   "@repartitionSubmit": {
     "description": "Shown as a text in expense repartition sheet (money)."
   },
-  "repartitionSum": "{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}",
+  "repartitionSum": "{count, plural, one{1 member · {amount}} other{{count} members · {amount}}}",
   "@repartitionSum": {
     "description": "Shown as a text in expense repartition sheet (money). Placeholders: {count} (int), {amount} (String).",
     "placeholders": {
@@ -33206,7 +33214,7 @@
   "@reportDesignerMoveTo": {
     "description": "Shown as a tooltip in report visual editor (money)."
   },
-  "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
+  "reportDesignerPages": "{count, plural, one{1 page} other{{count} pages}}",
   "@reportDesignerPages": {
     "description": "Shown as a text in report page designer (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -34282,7 +34290,7 @@
   "@reservePlanLoading": {
     "description": "#3068 the label of the plan skeleton on Reserve"
   },
-  "reserveRoomFor": "{count, plural, =1{Meeting room · 1 person} other{Meeting room · {count} people}}",
+  "reserveRoomFor": "{count, plural, one{Meeting room · 1 person} other{Meeting room · {count} people}}",
   "@reserveRoomFor": {
     "description": "#2631 resource_reserve: reserveRoomFor",
     "placeholders": {
@@ -34299,7 +34307,7 @@
   "@reserveSlotHour": {
     "description": "#2631 resource_reserve: reserveSlotHour"
   },
-  "reserveSlotMinutes": "Booked in {minutes, plural, =1{1-minute slots} other{{minutes}-minute slots}}",
+  "reserveSlotMinutes": "Booked in {minutes, plural, one{1-minute slots} other{{minutes}-minute slots}}",
   "@reserveSlotMinutes": {
     "description": "#2631 resource_reserve: reserveSlotMinutes",
     "placeholders": {
@@ -34882,7 +34890,7 @@
   "@roomRentAudienceAll": {
     "description": "#2568 rented rooms"
   },
-  "roomRentAudienceNamed": "{count, plural, =1{Open to 1 chosen entry} other{Open to {count} chosen entries}}",
+  "roomRentAudienceNamed": "{count, plural, one{Open to 1 chosen entry} other{Open to {count} chosen entries}}",
   "@roomRentAudienceNamed": {
     "description": "#2568 rented rooms",
     "placeholders": {
@@ -35181,7 +35189,7 @@
   "@sampleDataClear": {
     "description": "#2872 setup guide: button that removes the sample data batch"
   },
-  "sampleDataCounts": "This space holds sample data: {members, plural, =1{1 member} other{{members} members}}, {bookings, plural, =1{1 booking} other{{bookings} bookings}}, {payments, plural, =1{1 payment} other{{payments} payments}}.",
+  "sampleDataCounts": "This space holds sample data: {members, plural, one{1 member} other{{members} members}}, {bookings, plural, one{1 booking} other{{bookings} bookings}}, {payments, plural, one{1 payment} other{{payments} payments}}.",
   "@sampleDataCounts": {
     "description": "#2872 setup guide: what the open sample data batch holds",
     "placeholders": {
@@ -35244,7 +35252,7 @@
   "@scheduleEndsOn": {
     "description": "Shown as a title in schedule supplier field (money)."
   },
-  "scheduleEveryDays": "{count, plural, =1{every day} other{every {count} days}}",
+  "scheduleEveryDays": "{count, plural, one{every day} other{every {count} days}}",
   "@scheduleEveryDays": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -35257,7 +35265,7 @@
   "@scheduleEveryLabel": {
     "description": "Shown as the label of a field in expense schedule sheet (money)."
   },
-  "scheduleEveryMonths": "{count, plural, =1{every month} other{every {count} months}}",
+  "scheduleEveryMonths": "{count, plural, one{every month} other{every {count} months}}",
   "@scheduleEveryMonths": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -35266,7 +35274,7 @@
       }
     }
   },
-  "scheduleEveryWeeks": "{count, plural, =1{every week} other{every {count} weeks}}",
+  "scheduleEveryWeeks": "{count, plural, one{every week} other{every {count} weeks}}",
   "@scheduleEveryWeeks": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -35335,7 +35343,7 @@
   "@scheduleSupplierLabel": {
     "description": "Shown as the label of a field in schedule supplier field (money)."
   },
-  "scheduleTimes": "{count, plural, =1{1 time} other{{count} times}}",
+  "scheduleTimes": "{count, plural, one{1 time} other{{count} times}}",
   "@scheduleTimes": {
     "description": "#3485 Schedule interval or repetition count (ICU plural).",
     "placeholders": {
@@ -35402,7 +35410,7 @@
   },
   "scheduledExpensesFinished": "Ended and rejected ({count})",
   "@scheduledExpensesFinished": {
-    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Header of the collapsed section holding schedules that can never fire again — ended or rejected. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -35419,7 +35427,7 @@
   },
   "schemaUpdateBody": "This app needs version {version} of the DesKilo schema, and the server it connects to runs an older one. Until the server is updated, the app would fail in ways it could not explain, so it stops here.",
   "@schemaUpdateBody": {
-    "description": "#1312 Explanation on the schema-update screen. The number is not a count: it is a schema version.",
+    "description": "#1312 Explanation on the schema-update screen. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -35441,6 +35449,47 @@
   "schemaUpdateTitle": "This server needs an update",
   "@schemaUpdateTitle": {
     "description": "#1312 Title of the screen shown when the server's schema is older than the app needs"
+  },
+  "searchActionInvite": "Invite a member",
+  "@searchActionInvite": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionInvite"
+  },
+  "searchActionNewPurchase": "New purchase",
+  "@searchActionNewPurchase": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionNewPurchase"
+  },
+  "searchHint": "A page, an action, a member, an invoice…",
+  "@searchHint": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchHint"
+  },
+  "searchKindAction": "Action",
+  "@searchKindAction": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindAction"
+  },
+  "searchKindMember": "Member",
+  "@searchKindMember": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindMember"
+  },
+  "searchKindPage": "Page",
+  "@searchKindPage": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindPage"
+  },
+  "searchNothing": "Nothing found for “{query}”.",
+  "@searchNothing": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchNothing",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchRecent": "Recent",
+  "@searchRecent": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchRecent"
+  },
+  "searchRecordUnreadable": "This record cannot be opened: it does not exist or you may not read it.",
+  "@searchRecordUnreadable": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchRecordUnreadable"
   },
   "seatDayAhead": "Ahead",
   "@seatDayAhead": {
@@ -35491,7 +35540,7 @@
       }
     }
   },
-  "seriesBookedCount": "{count, plural, =1{1 booking created} other{{count} bookings created}}",
+  "seriesBookedCount": "{count, plural, one{1 booking created} other{{count} bookings created}}",
   "@seriesBookedCount": {
     "description": "Title of the series result dialog",
     "placeholders": {
@@ -35500,7 +35549,7 @@
       }
     }
   },
-  "seriesPreviewBookOthers": "{count, plural, =1{Book the other date} other{Book the other {count} dates}}",
+  "seriesPreviewBookOthers": "{count, plural, one{Book the other date} other{Book the other {count} dates}}",
   "@seriesPreviewBookOthers": {
     "description": "Shown as the text in series preview dialog (reservations). Placeholders: {count} (int).",
     "placeholders": {
@@ -35592,7 +35641,7 @@
   },
   "serviceStockCount": "{count} in stock",
   "@serviceStockCount": {
-    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Shown as a text in services screen (money), and 1 other place. Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -35631,7 +35680,7 @@
       }
     }
   },
-  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "servicesDurationShort": "{minutes, plural, one{1 min} other{{minutes} min}}",
   "@servicesDurationShort": {
     "description": "#3552 the services list: a duration in minutes, short",
     "placeholders": {
@@ -36667,7 +36716,7 @@
   "@settlementAnnexAlone": {
     "description": "Shown as a text in invoice pdf actions (money)."
   },
-  "settlementAnnexBody": "{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}",
+  "settlementAnnexBody": "{count, plural, one{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}",
   "@settlementAnnexBody": {
     "description": "Shown as the body of a dialog in invoice pdf actions (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -36684,7 +36733,7 @@
   "@settlementAnnexWith": {
     "description": "Shown as a text in invoice pdf actions (money)."
   },
-  "settlementConfirm": "{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}",
+  "settlementConfirm": "{count, plural, one{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}",
   "@settlementConfirm": {
     "description": "Confirm regrouping N invoices into one (#804)",
     "placeholders": {
@@ -36784,7 +36833,7 @@
   "@setupApprovalsFlowOutcome": {
     "description": "#2871 setup run steps: setupApprovalsFlowOutcome"
   },
-  "setupApprovalsFlowOutcomeBody": "{required, plural, =1{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.",
+  "setupApprovalsFlowOutcomeBody": "{required, plural, one{Once one approval is in.} other{Once {required} approvals are in.}} One refusal closes it, and nobody approves their own request.",
   "@setupApprovalsFlowOutcomeBody": {
     "description": "#2871 setup run steps: setupApprovalsFlowOutcomeBody",
     "placeholders": {
@@ -36801,9 +36850,9 @@
   "@setupApprovalsFlowRequestBody": {
     "description": "#2871 setup run steps: setupApprovalsFlowRequestBody"
   },
-  "setupApprovalsFlowValidators": "{required, plural, =1{1 of {people} approves} other{{required} of {people} approve}}",
+  "setupApprovalsFlowValidators": "{required, plural, one{1 of {people} approves} other{{required} of {people} approve}}",
   "@setupApprovalsFlowValidators": {
-    "description": "#2871 setup run steps: setupApprovalsFlowValidators",
+    "description": "#2871 setup run steps: setupApprovalsFlowValidators The number people is the denominator of a ratio, read as a value. [not a count: people]",
     "placeholders": {
       "required": {
         "type": "int"
@@ -36813,7 +36862,7 @@
       }
     }
   },
-  "setupApprovalsFlowWho": "{owners, plural, =1{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} =1{1 administrator} other{{admins} administrators}}",
+  "setupApprovalsFlowWho": "{owners, plural, one{The owner} other{{owners} owners}} and {admins, plural, =0{no administrator} one{1 administrator} other{{admins} administrators}}",
   "@setupApprovalsFlowWho": {
     "description": "#2871 setup run steps: setupApprovalsFlowWho",
     "placeholders": {
@@ -36833,7 +36882,7 @@
   "@setupApprovalsOwnRulesNone": {
     "description": "#2871 setup run steps: setupApprovalsOwnRulesNone"
   },
-  "setupApprovalsOwnRulesShort": "{count, plural, =1{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}",
+  "setupApprovalsOwnRulesShort": "{count, plural, one{One rule asks for more approvals than people can give: its requests are never decided. Change it in the approval rules.} other{{count} rules ask for more approvals than people can give: their requests are never decided. Change them in the approval rules.}}",
   "@setupApprovalsOwnRulesShort": {
     "description": "#2871 setup run steps: setupApprovalsOwnRulesShort",
     "placeholders": {
@@ -36846,7 +36895,7 @@
   "@setupApprovalsOwnRulesTitle": {
     "description": "#2871 setup run steps: setupApprovalsOwnRulesTitle"
   },
-  "setupApprovalsPeople": "{count, plural, =1{1 person can approve.} other{{count} people can approve.}}",
+  "setupApprovalsPeople": "{count, plural, one{1 person can approve.} other{{count} people can approve.}}",
   "@setupApprovalsPeople": {
     "description": "#2871 setup run steps: setupApprovalsPeople",
     "placeholders": {
@@ -36867,7 +36916,7 @@
   "@setupApprovalsPreviewRequest": {
     "description": "#2871 setup run steps: setupApprovalsPreviewRequest"
   },
-  "setupApprovalsPreviewWaiting": "{required, plural, =1{Waiting for 1 approval} other{Waiting for {required} approvals}}",
+  "setupApprovalsPreviewWaiting": "{required, plural, one{Waiting for 1 approval} other{Waiting for {required} approvals}}",
   "@setupApprovalsPreviewWaiting": {
     "description": "#2871 setup run steps: setupApprovalsPreviewWaiting",
     "placeholders": {
@@ -36876,7 +36925,7 @@
       }
     }
   },
-  "setupApprovalsRuleReach": "{required, plural, =1{1 approval} other{{required} approvals}}, {people, plural, =1{1 person can approve} other{{people} people can approve}}",
+  "setupApprovalsRuleReach": "{required, plural, one{1 approval} other{{required} approvals}}, {people, plural, one{1 person can approve} other{{people} people can approve}}",
   "@setupApprovalsRuleReach": {
     "description": "#2871 setup run steps: setupApprovalsRuleReach",
     "placeholders": {
@@ -36888,7 +36937,7 @@
       }
     }
   },
-  "setupApprovalsRuleShort": "{required, plural, =1{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} =1{only 1 person can approve} other{only {people} people can approve}}",
+  "setupApprovalsRuleShort": "{required, plural, one{1 approval} other{{required} approvals}}, but {people, plural, =0{nobody can approve} one{only 1 person can approve} other{only {people} people can approve}}",
   "@setupApprovalsRuleShort": {
     "description": "#2871 setup run steps: setupApprovalsRuleShort",
     "placeholders": {
@@ -36900,7 +36949,7 @@
       }
     }
   },
-  "setupApprovalsTooMany": "{required} approvals can never be gathered: {people, plural, =1{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.",
+  "setupApprovalsTooMany": "{required, plural, one{{required} approval} other{{required} approvals}} can never be gathered: {people, plural, one{only 1 person} other{only {people} people}} can approve. Ask for fewer, or make more members administrators.",
   "@setupApprovalsTooMany": {
     "description": "#2871 setup run steps: setupApprovalsTooMany",
     "placeholders": {
@@ -36987,7 +37036,7 @@
   },
   "setupChoicesSummary": "Settings that will change: {count}",
   "@setupChoicesSummary": {
-    "description": "Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -37381,7 +37430,7 @@
   },
   "setupGuideBanner": "{milestone}: {ready} of {required} done · Next: {step}",
   "@setupGuideBanner": {
-    "description": "#2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#2869 setup guide: setupGuideBanner. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: ready, required]",
     "placeholders": {
       "milestone": {
         "type": "String"
@@ -37407,7 +37456,7 @@
   },
   "setupGuideEstimate": "about {low}–{high} min",
   "@setupGuideEstimate": {
-    "description": "#2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "#2869 setup guide: a step's time as a range (the catalogue estimate to twice it), never a promise. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: low, high]",
     "placeholders": {
       "low": {
         "type": "int"
@@ -37452,7 +37501,7 @@
   },
   "setupGuideProgress": "{ready} of {required} done",
   "@setupGuideProgress": {
-    "description": "#2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#2869 setup guide: setupGuideProgress. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: ready, required]",
     "placeholders": {
       "ready": {
         "type": "int"
@@ -37488,7 +37537,7 @@
   },
   "setupGuideUntil": "About {low}–{high} min until: {milestone}",
   "@setupGuideUntil": {
-    "description": "#2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "#2869 — the time the next milestone still needs, as a range summed from its open steps' estimates. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: low, high]",
     "placeholders": {
       "low": {
         "type": "int"
@@ -37990,7 +38039,7 @@
   "@setupLimitsPerMember": {
     "description": "#2871 setup run steps: setupLimitsPerMember"
   },
-  "setupLimitsPreviewAhead": "{days, plural, =1{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}",
+  "setupLimitsPreviewAhead": "{days, plural, one{You can book up to one day ahead.} other{You can book up to {days} days ahead.}}",
   "@setupLimitsPreviewAhead": {
     "description": "#2871 setup run steps: setupLimitsPreviewAhead",
     "placeholders": {
@@ -37999,7 +38048,7 @@
       }
     }
   },
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}",
+  "setupLimitsPreviewAtOnce": "{count, plural, one{You can hold one place at a time.} other{You can hold up to {count} places at a time.}}",
   "@setupLimitsPreviewAtOnce": {
     "description": "#2871 setup run steps: setupLimitsPreviewAtOnce",
     "placeholders": {
@@ -38100,7 +38149,7 @@
   },
   "setupNewMembersPreviewStart": "A new member starts on a {pct} % subscription ({policy}).",
   "@setupNewMembersPreviewStart": {
-    "description": "#2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage.",
+    "description": "#2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -38349,7 +38398,7 @@
   },
   "setupOverviewRemaining": "Required tasks remaining: {count}",
   "@setupOverviewRemaining": {
-    "description": "Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Workspace configuration guidance and status. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -38380,7 +38429,7 @@
   "@setupPaymentsSaveFailed": {
     "description": "#2871 setup run steps: setupPaymentsSaveFailed"
   },
-  "setupPlacesCounts": "{rooms, plural, =0{no rooms} =1{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} =1{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} =1{1 seat} other{{seats} seats}}",
+  "setupPlacesCounts": "{rooms, plural, =0{no rooms} one{1 room} other{{rooms} rooms}} · {desks, plural, =0{no desks} one{1 desk} other{{desks} desks}} · {seats, plural, =0{no seats} one{1 seat} other{{seats} seats}}",
   "@setupPlacesCounts": {
     "description": "#2870 setup steps: setupPlacesCounts",
     "placeholders": {
@@ -38442,7 +38491,7 @@
   },
   "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
   "@setupPricingBand": {
-    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage.",
+    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]",
     "placeholders": {
       "from": {
         "type": "int"
@@ -38460,14 +38509,14 @@
   },
   "setupPricingLevel": "Membership at {pct} %",
   "@setupPricingLevel": {
-    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage.",
+    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
       }
     }
   },
-  "setupPricingLevelIncludes": "{level}: {count, plural, =1{1 half-day} other{{count} half-days}} included",
+  "setupPricingLevelIncludes": "{level}: {count, plural, one{1 half-day} other{{count} half-days}} included",
   "@setupPricingLevelIncludes": {
     "description": "#3283 setup pricing: the half-days a level includes this month.",
     "placeholders": {
@@ -38479,7 +38528,7 @@
       }
     }
   },
-  "setupPricingLevelsBasis": "A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member's share is charged at the extra rate of their band. This month your space is open {days, plural, =1{1 day} other{{days} days}}:",
+  "setupPricingLevelsBasis": "A level is the share of the half-days your space is open in a month: 100 % is all of them, and a half-day beyond a member's share is charged at the extra rate of their band. This month your space is open {days, plural, one{1 day} other{{days} days}}:",
   "@setupPricingLevelsBasis": {
     "description": "#3283 setup pricing: what a percentage level buys, on this workspace's own open days this month.",
     "placeholders": {
@@ -39104,7 +39153,7 @@
   "@shellBarShownAnnounce": {
     "description": "Screen-reader announcement when the bar comes back (#1173)"
   },
-  "shellPendingDecisions": "{count, plural, =1{1 decision awaits you} other{{count} decisions await you}}",
+  "shellPendingDecisions": "{count, plural, one{1 decision awaits you} other{{count} decisions await you}}",
   "@shellPendingDecisions": {
     "description": "Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)",
     "placeholders": {
@@ -39120,6 +39169,54 @@
   "shellSwipeCoachMark": "Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.",
   "@shellSwipeCoachMark": {
     "description": "One-time hint teaching the swipe-away full-screen view (#1173)"
+  },
+  "shortcutClose": "Close",
+  "@shortcutClose": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutFilter": "Filter this list",
+  "@shortcutFilter": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutKeys": "The keys of this page",
+  "@shortcutKeys": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutKeysTitle": "Keyboard keys",
+  "@shortcutKeysTitle": {
+    "description": "#3610 the title of the overlay listing the keys of the page"
+  },
+  "shortcutNew": "New",
+  "@shortcutNew": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutOpenCalendar": "Open a date field's calendar",
+  "@shortcutOpenCalendar": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutPrint": "This page's document",
+  "@shortcutPrint": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutRedo": "Redo",
+  "@shortcutRedo": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutSave": "Save",
+  "@shortcutSave": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutSearch": "Find a page, an action or a record",
+  "@shortcutSearch": {
+    "description": "#3610 the shortcut list: Ctrl/Cmd+K opens search"
+  },
+  "shortcutSubmit": "Save or send",
+  "@shortcutSubmit": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutUndo": "Undo",
+  "@shortcutUndo": {
+    "description": "#3610 a line of the keys overlay: what the key does"
   },
   "siteCity": "City",
   "@siteCity": {
@@ -40146,7 +40243,7 @@
   "@supportSaved": {
     "description": "Shown as the text in support bundle screen (help)."
   },
-  "supportSize": "Preview: {bytes, plural, =1{1 byte} other{{bytes} bytes}}",
+  "supportSize": "Preview: {bytes, plural, one{1 byte} other{{bytes} bytes}}",
   "@supportSize": {
     "description": "Shown as the text in support bundle screen (help). Placeholders: {bytes} (int).",
     "placeholders": {
@@ -40287,7 +40384,7 @@
   },
   "taskExportDuration": "Duration: {minutes} min {seconds} s",
   "@taskExportDuration": {
-    "description": "#1866 task export (Word document): Duration. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB).",
+    "description": "#1866 task export (Word document): Duration. The number is not a count: it is a duration or size shown with an invariant unit symbol (h, min, s, MB). [not a count: minutes, seconds]",
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -40472,7 +40569,7 @@
   "@taskExportOutcomeUnregistered": {
     "description": "#1866 task export (Word document): OutcomeUnregistered"
   },
-  "taskExportPauses": "{count, plural, =0{No pause} =1{Paused once} other{Paused {count} times}}",
+  "taskExportPauses": "{count, plural, =0{No pause} one{Paused once} other{Paused {count} times}}",
   "@taskExportPauses": {
     "description": "#1866 task export (Word document): Pauses",
     "placeholders": {
@@ -40794,7 +40891,7 @@
   "@taskExportValueQuota": {
     "description": "#1866 task export (Word document): ValueQuota"
   },
-  "taskExportValueRedacted": "not kept ({length, plural, =1{1 character} other{{length} characters}})",
+  "taskExportValueRedacted": "not kept ({length, plural, one{1 character} other{{length} characters}})",
   "@taskExportValueRedacted": {
     "description": "Shown as the text in task export labels (task_recorder), and 1 other place. Placeholders: {length} (int).",
     "placeholders": {
@@ -40833,7 +40930,7 @@
   },
   "taskExportVersion": "Recording format {schema}, action contract {contract}",
   "@taskExportVersion": {
-    "description": "#1866 task export (Word document): Version. The number is not a count: it is a schema version.",
+    "description": "#1866 task export (Word document): Version. The number is not a count: it is a schema version. [not a count: schema, contract]",
     "placeholders": {
       "schema": {
         "type": "int"
@@ -41154,7 +41251,7 @@
   "@taskRecorderDisclosureTitle": {
     "description": "#1865 task recorder: taskRecorderDisclosureTitle"
   },
-  "taskRecorderEditedNote": "{count, plural, =1{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}",
+  "taskRecorderEditedNote": "{count, plural, one{Edited copy: 1 step left out. The recording on this device is unchanged.} other{Edited copy: {count} steps left out. The recording on this device is unchanged.}}",
   "@taskRecorderEditedNote": {
     "description": "#1865 task recorder: taskRecorderEditedNote",
     "placeholders": {
@@ -41231,7 +41328,7 @@
   "@taskRecorderFieldTime": {
     "description": "#1865 task recorder: taskRecorderFieldTime"
   },
-  "taskRecorderIndicator": "{count, plural, =1{Recording a task: 1 step} other{Recording a task: {count} steps}}",
+  "taskRecorderIndicator": "{count, plural, one{Recording a task: 1 step} other{Recording a task: {count} steps}}",
   "@taskRecorderIndicator": {
     "description": "#1865 task recorder: taskRecorderIndicator",
     "placeholders": {
@@ -41244,7 +41341,7 @@
   "@taskRecorderLeaveOut": {
     "description": "#1865 task recorder: taskRecorderLeaveOut"
   },
-  "taskRecorderLimits": "Up to {steps, plural, =1{1 step} other{{steps} steps}} or {minutes, plural, =1{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, =1{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.",
+  "taskRecorderLimits": "Up to {steps, plural, one{1 step} other{{steps} steps}} or {minutes, plural, one{1 minute} other{{minutes} minutes}} per recording. Recordings are deleted from this device after {days, plural, one{1 day} other{{days} days}}; a file you exported is yours and stays where you saved it.",
   "@taskRecorderLimits": {
     "description": "#1865 task recorder: taskRecorderLimits",
     "placeholders": {
@@ -41441,7 +41538,7 @@
   "@taskRecorderStartFailed": {
     "description": "#1865 task recorder: taskRecorderStartFailed"
   },
-  "taskRecorderStepCount": "{count, plural, =1{1 step} other{{count} steps}}",
+  "taskRecorderStepCount": "{count, plural, one{1 step} other{{count} steps}}",
   "@taskRecorderStepCount": {
     "description": "#1865 task recorder: taskRecorderStepCount",
     "placeholders": {
@@ -41820,7 +41917,7 @@
   },
   "taskWorkbenchAccepted": "Accepted: .json and .deskilo-task.zip, up to {megabytes} MB.",
   "@taskWorkbenchAccepted": {
-    "description": "#1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once).",
+    "description": "#1872 task workbench: taskWorkbenchAccepted. The number is not a count: it is a limit shown with an invariant unit or phrase (up to N MB, max N, N at once). [not a count: megabytes]",
     "placeholders": {
       "megabytes": {
         "type": "int"
@@ -42527,7 +42624,7 @@
   "@templateRequirementsReset": {
     "description": "#1660 template_why_match"
   },
-  "templateResultCount": "{count, plural, =0{No template shown} =1{1 template shown} other{{count} templates shown}}",
+  "templateResultCount": "{count, plural, =0{No template shown} one{1 template shown} other{{count} templates shown}}",
   "@templateResultCount": {
     "description": "#1660 library",
     "placeholders": {
@@ -42557,7 +42654,7 @@
   "@templateWidenConfirm": {
     "description": "#1658 template_widen"
   },
-  "templateWidenCount": "{count, plural, =1{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}",
+  "templateWidenCount": "{count, plural, one{1 setting becomes readable, exactly as the template holds it now.} other{{count} settings become readable, exactly as the template holds them now.}}",
   "@templateWidenCount": {
     "description": "#1658 template_widen",
     "placeholders": {
@@ -42566,7 +42663,7 @@
       }
     }
   },
-  "templateWidenExcluded": "{count, plural, =1{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}",
+  "templateWidenExcluded": "{count, plural, one{1 kind of value never leaves with it (bank details, sites, addresses…).} other{{count} kinds of value never leave with it (bank details, sites, addresses…).}}",
   "@templateWidenExcluded": {
     "description": "#1658 template_widen",
     "placeholders": {
@@ -43149,7 +43246,7 @@
   "@usagePrepareAction": {
     "description": "#2590 usage preparation"
   },
-  "usagePrepareBanner": "{count, plural, =1{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}",
+  "usagePrepareBanner": "{count, plural, one{1 booking of this month is not recorded yet, so this list may be incomplete.} other{{count} bookings of this month are not recorded yet, so this list may be incomplete.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {
@@ -43164,7 +43261,7 @@
   },
   "usagePrepared": "Recorded: {count}",
   "@usagePrepared": {
-    "description": "#2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "#2590 usage preparation. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -43241,7 +43338,7 @@
   "@uxAlertsFilterEmpty": {
     "description": "Shown as the text in events screen (events)."
   },
-  "uxAttentionSummary": "{updates, plural, =1{1 new update} other{{updates} new updates}} · {pending, plural, =1{1 awaiting your decision} other{{pending} awaiting your decision}}",
+  "uxAttentionSummary": "{updates, plural, one{1 new update} other{{updates} new updates}} · {pending, plural, one{1 awaiting your decision} other{{pending} awaiting your decision}}",
   "@uxAttentionSummary": {
     "description": "Shown as the text in shell app bar (app), and 1 other place. Placeholders: {updates} (int), {pending} (int).",
     "placeholders": {
@@ -43253,7 +43350,7 @@
       }
     }
   },
-  "uxBookingAllowanceLeft": "{count, plural, =0{No half-days left in your allowance this month} =1{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}",
+  "uxBookingAllowanceLeft": "{count, plural, =0{No half-days left in your allowance this month} one{1 half-day left in your allowance this month} other{{count} half-days left in your allowance this month}}",
   "@uxBookingAllowanceLeft": {
     "description": "Shown as the text in booking review summary (reservations): half-days left in the member's monthly allowance.",
     "placeholders": {
@@ -43574,7 +43671,7 @@
   "@validationStepOwnerToo": {
     "description": "#1221 the validation screen, grouped by the process a rule interrupts"
   },
-  "validationStepQuorum": "{who} — {count, plural, =1{any 1} other{any {count}}}",
+  "validationStepQuorum": "{who} — {count, plural, one{any 1} other{any {count}}}",
   "@validationStepQuorum": {
     "description": "#1221 the middle step: who decides and how many are needed",
     "placeholders": {
@@ -43592,7 +43689,7 @@
   },
   "validationStepSequential": "{who} — {count} in turn",
   "@validationStepSequential": {
-    "description": "#1221 the middle step when the accepts are asked one after another. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "#1221 the middle step when the accepts are asked one after another. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -43610,7 +43707,7 @@
   "@validationTitle": {
     "description": "App-bar title of the owner validation-policy editor and its settings tile (#131)"
   },
-  "validationTrailAwaiting": "{count, plural, =1{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}",
+  "validationTrailAwaiting": "{count, plural, one{Awaiting 1 more validation.} other{Awaiting {count} more validations.}}",
   "@validationTrailAwaiting": {
     "description": "#841 - how many validations the event still owes",
     "placeholders": {
@@ -43625,7 +43722,7 @@
   },
   "validationTrailStep": "Step {order}",
   "@validationTrailStep": {
-    "description": "#841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps.",
+    "description": "#841 - leader of one entry when the rule asks one validation at a time. The number is not a count: it is a position in a sequence of steps. [not a count: order]",
     "placeholders": {
       "order": {
         "type": "int"
@@ -43754,7 +43851,7 @@
   },
   "valuationIssueAsset": "Line {line}: the asset number is not a whole number from 1.",
   "@valuationIssueAsset": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43763,7 +43860,7 @@
   },
   "valuationIssueBasis": "Line {line}: the basis is book or tax.",
   "@valuationIssueBasis": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43772,7 +43869,7 @@
   },
   "valuationIssueColumns": "Line {line}: the number of columns is wrong.",
   "@valuationIssueColumns": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43781,7 +43878,7 @@
   },
   "valuationIssueCurrency": "Line {line}: the currency is not a three-letter code.",
   "@valuationIssueCurrency": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43790,7 +43887,7 @@
   },
   "valuationIssueDate": "Line {line}: a date is not a real day written YYYY-MM-DD.",
   "@valuationIssueDate": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43799,7 +43896,7 @@
   },
   "valuationIssueDuplicate": "Line {line}: this asset already appears in the file.",
   "@valuationIssueDuplicate": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43816,7 +43913,7 @@
   },
   "valuationIssueMinor": "Line {line}: {column} is not a whole number of minor units.",
   "@valuationIssueMinor": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43828,7 +43925,7 @@
   },
   "valuationIssueMixed": "Line {line}: a batch has one basis, one period and one currency.",
   "@valuationIssueMixed": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43837,7 +43934,7 @@
   },
   "valuationIssuePeriod": "Line {line}: the period ends before it starts.",
   "@valuationIssuePeriod": {
-    "description": "#2576 accountant valuations. The number is not a count: it is a line number.",
+    "description": "#2576 accountant valuations. The number is not a count: it is a line number. [not a count: line]",
     "placeholders": {
       "line": {
         "type": "int"
@@ -43921,7 +44018,7 @@
   "@valuationManualUse": {
     "description": "#2576 accountant valuations"
   },
-  "valuationMismatches": "{count, plural, =1{1 row does not balance} other{{count} rows do not balance}}",
+  "valuationMismatches": "{count, plural, one{1 row does not balance} other{{count} rows do not balance}}",
   "@valuationMismatches": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -43950,7 +44047,7 @@
   "@valuationPick": {
     "description": "#2576 accountant valuations"
   },
-  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, =1{1 asset} other{{count} assets}}",
+  "valuationPreview": "{basis}, {from} – {to}, {currency}: {count, plural, one{1 asset} other{{count} assets}}",
   "@valuationPreview": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -43987,7 +44084,7 @@
   "@valuationReplacesNone": {
     "description": "#2576 accountant valuations"
   },
-  "valuationRows": "{count, plural, =1{1 asset} other{{count} assets}}",
+  "valuationRows": "{count, plural, one{1 asset} other{{count} assets}}",
   "@valuationRows": {
     "description": "#2576 accountant valuations",
     "placeholders": {
@@ -44786,7 +44883,7 @@
   "@visibilityBio": {
     "description": "Field label: a short bio."
   },
-  "visibilityChosenCount": "{count, plural, =1{Members of 1 chosen place} other{Members of {count} chosen places}}",
+  "visibilityChosenCount": "{count, plural, one{Members of 1 chosen place} other{Members of {count} chosen places}}",
   "@visibilityChosenCount": {
     "description": "Audience summary for chosen spaces, with how many were chosen.",
     "placeholders": {
@@ -45274,7 +45371,7 @@
   "@wizardFinish": {
     "description": "Shown as a button or chip label in wizard scaffold (core), and 1 other place."
   },
-  "wizardIssueAll": "{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}",
+  "wizardIssueAll": "{count, plural, one{Issue 1 invoice} other{Issue {count} invoices}}",
   "@wizardIssueAll": {
     "description": "Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -45367,7 +45464,7 @@
   "@wizardRefund": {
     "description": "Shown as a text in wizard steps payments (money)."
   },
-  "wizardRemindAll": "{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}",
+  "wizardRemindAll": "{count, plural, one{Send 1 reminder} other{Send {count} reminders}}",
   "@wizardRemindAll": {
     "description": "Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -45382,7 +45479,7 @@
   },
   "wizardRemindLevel": "reminder {level}",
   "@wizardRemindLevel": {
-    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -45451,7 +45548,7 @@
   },
   "wizardSettle": "Regroup {count}",
   "@wizardSettle": {
-    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -45833,7 +45930,7 @@
   },
   "workspaceDeskOpacityValue": "Opacity: {percent}%",
   "@workspaceDeskOpacityValue": {
-    "description": "Live value label of the desk-opacity slider. The number is not a count: it is a percentage.",
+    "description": "Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]",
     "placeholders": {
       "percent": {
         "type": "int"
@@ -46086,14 +46183,14 @@
   },
   "workspaceXmlImportPreviewAccessories": "Accessories: {count}",
   "@workspaceXmlImportPreviewAccessories": {
-    "description": "Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Second summary line in the import preview dialog counting the accessory catalog entries the picked file carries (schema v2, #180); 0 for a v1 file. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
   },
-  "workspaceXmlImportPreviewConfiguration": "Configuration: {settings, plural, =1{1 setting} other{{settings} settings}}, {rows, plural, =1{1 row} other{{rows} rows}} in {tables, plural, =1{1 table} other{{tables} tables}}",
+  "workspaceXmlImportPreviewConfiguration": "Configuration: {settings, plural, one{1 setting} other{{settings} settings}}, {rows, plural, one{1 row} other{{rows} rows}} in {tables, plural, one{1 table} other{{tables} tables}}",
   "@workspaceXmlImportPreviewConfiguration": {
     "description": "#916 configuration transfer: workspaceXmlImportPreviewConfiguration",
     "placeholders": {
@@ -46114,7 +46211,7 @@
   },
   "workspaceXmlImportPreviewCounts": "Levels: {levels} · Offices: {offices} · Desks: {desks} · Seats: {seats}",
   "@workspaceXmlImportPreviewCounts": {
-    "description": "Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with.",
+    "description": "Summary line in the import preview dialog counting what the picked file contains (#165). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: levels, offices, desks, seats]",
     "placeholders": {
       "levels": {
         "type": "int"
@@ -46162,7 +46259,7 @@
   "@xeroInvoiceAccountsTitle": {
     "description": "#2372 - the Xero sales-invoice CSV export"
   },
-  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, one{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
   "@xeroInvoiceCreditNotesLeftOut": {
     "description": "#2372 - the Xero sales-invoice CSV export",
     "placeholders": {

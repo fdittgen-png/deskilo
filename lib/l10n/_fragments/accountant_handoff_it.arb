@@ -1,7 +1,7 @@
 {
   "handoffTitle": "Prima di salvare",
-  "handoffIncluded": "{count, plural, =1{1 documento nel file} other{{count} documenti nel file}}",
-  "handoffExcludedSettlements": "{count, plural, =1{1 riepilogo di saldo escluso: le sue fatture sono già elencate} other{{count} riepiloghi di saldo esclusi: le loro fatture sono già elencate}}",
+  "handoffIncluded": "{count, plural, one{1 documento nel file} other{{count} documenti nel file}}",
+  "handoffExcludedSettlements": "{count, plural, one{1 riepilogo di saldo escluso: le sue fatture sono già elencate} other{{count} riepiloghi di saldo esclusi: le loro fatture sono già elencate}}",
   "handoffIssued": "Emesse",
   "handoffVoided": "Annullate",
   "handoffPayments": "Pagato: {confirmed} confermato, {pending} in attesa",
@@ -15,5 +15,5 @@
   "handoffChanged": "Le fatture sono cambiate durante la revisione. Esporti di nuovo per vedere i conti attuali.",
   "handoffUnsupportedCurrency": "{number}: la sua valuta non ha un numero di decimali verificato",
   "handoffAmountOutOfRange": "{number}: un totale troppo grande per essere trasmesso esattamente",
-  "handoffTransfersQuoted": "Il rapporto riporta l'elenco dei trasferimenti dell'anno: {files} file consegnato/i e {deliveries} documento/i inviato/i a una connessione, ciascuno con il suo SHA-256"
+  "handoffTransfersQuoted": "Il rapporto riporta l'elenco dei trasferimenti dell'anno: {files, plural, one{{files} file consegnato} other{{files} file consegnati}} e {deliveries, plural, one{{deliveries} documento inviato} other{{deliveries} documenti inviati}} a una connessione, ciascuno con il suo SHA-256"
 }

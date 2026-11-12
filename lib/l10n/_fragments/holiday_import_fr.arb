@@ -36,7 +36,7 @@
       }
     }
   },
-  "holidayImportConfirm": "{count, plural, =1{Importer 1 jour de fermeture} other{Importer {count} jours de fermeture}}",
+  "holidayImportConfirm": "{count, plural, one{Importer {count} jour de fermeture} other{Importer {count} jours de fermeture}}",
   "@holidayImportConfirm": {
     "description": "#2051 open-data holiday import",
     "placeholders": {

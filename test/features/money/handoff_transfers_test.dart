@@ -225,7 +225,7 @@ void main() {
   ) async {
     await openPreflight(tester, _report(transfers: _transfers));
     final l10n = await AppLocalizations.delegate.load(const Locale('en'));
-    expect(find.text(l10n.handoffTransfersQuoted('1', '1')), findsOneWidget);
+    expect(find.text(l10n.handoffTransfersQuoted(1, 1)), findsOneWidget);
   });
 
   testWidgets('without a Transfers list the preflight says nothing of it', (

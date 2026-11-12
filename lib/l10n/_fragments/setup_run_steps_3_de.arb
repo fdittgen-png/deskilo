@@ -20,7 +20,7 @@
   "setupNotificationsPreviewPlace": "Schreibtisch 4",
   "setupLimitsSaveFailed": "Die Buchungsgrenzen konnten nicht gespeichert werden. Bitte erneut versuchen.",
   "setupLimitsPerMember": "Ein Kontingent auf der Seite eines Mitglieds geht der Zahl der Plätze hier vor.",
-  "setupLimitsPreviewAhead": "{days, plural, =1{Sie können bis zu einen Tag im Voraus buchen.} other{Sie können bis zu {days} Tage im Voraus buchen.}}",
+  "setupLimitsPreviewAhead": "{days, plural, one{Sie können bis zu einen Tag im Voraus buchen.} other{Sie können bis zu {days} Tage im Voraus buchen.}}",
   "setupLimitsPreviewLength": "Eine Buchung dauert mindestens {shortest} und höchstens {longest}.",
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{Sie können einen Platz gleichzeitig belegen.} other{Sie können bis zu {count} Plätze gleichzeitig belegen.}}"
+  "setupLimitsPreviewAtOnce": "{count, plural, one{Sie können einen Platz gleichzeitig belegen.} other{Sie können bis zu {count} Plätze gleichzeitig belegen.}}"
 }

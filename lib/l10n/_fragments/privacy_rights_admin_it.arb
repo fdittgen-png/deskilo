@@ -49,7 +49,7 @@
   "privacyIncidentOther": "Un altro incidente",
   "privacyAdminIncidentNote": "Cosa è successo (facoltativo, massimo 1000 caratteri)",
   "privacyAdminIncidentSend": "Registra e avvisa",
-  "privacyAdminIncidentRecorded": "{count, plural, =0{Registrato. Nessuno ha questo diritto, quindi nessuno è stato avvisato.} =1{Registrato. È stata avvisata 1 persona.} other{Registrato. Sono state avvisate {count} persone.}}",
+  "privacyAdminIncidentRecorded": "{count, plural, =0{Registrato. Nessuno ha questo diritto, quindi nessuno è stato avvisato.} one{Registrato. È stata avvisata 1 persona.} other{Registrato. Sono state avvisate {count} persone.}}",
   "@privacyAdminIncidentRecorded": {
     "placeholders": {
       "count": {

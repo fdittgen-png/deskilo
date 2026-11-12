@@ -452,7 +452,13 @@ class AppLocalizationsIt extends AppLocalizations {
       one: 'Un documento registrato',
       zero: 'Nessun nuovo documento registrato',
     );
-    return '$_temp0, $unchanged invariati';
+    String _temp1 = intl.Intl.pluralLogic(
+      unchanged,
+      locale: localeName,
+      other: '$unchanged invariati',
+      one: '$unchanged invariato',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -2416,7 +2422,13 @@ class AppLocalizationsIt extends AppLocalizations {
       other: '$count movimenti',
       one: '1 movimento',
     );
-    return '$_temp0, $open da trattare';
+    String _temp1 = intl.Intl.pluralLogic(
+      open,
+      locale: localeName,
+      other: '$open da trattare',
+      one: '$open da trattare',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override
@@ -11062,6 +11074,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureQrBadgesTitle => 'Badge QR';
 
   @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un\'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell\'app; restano i tasti propri di una pagina.';
+
+  @override
+  String get featureQuickSearchTitle => 'Ricerca e tasti';
+
+  @override
   String get featureRecapitulativeStatementDesc =>
       'I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l\'elenco che l\'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.';
 
@@ -12560,8 +12579,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String get handoffTitle => 'Prima di salvare';
 
   @override
-  String handoffTransfersQuoted(String files, String deliveries) {
-    return 'Il rapporto riporta l\'elenco dei trasferimenti dell\'anno: $files file consegnato/i e $deliveries documento/i inviato/i a una connessione, ciascuno con il suo SHA-256';
+  String handoffTransfersQuoted(int files, int deliveries) {
+    String _temp0 = intl.Intl.pluralLogic(
+      files,
+      locale: localeName,
+      other: '$files file consegnati',
+      one: '$files file consegnato',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      deliveries,
+      locale: localeName,
+      other: '$deliveries documenti inviati',
+      one: '$deliveries documento inviato',
+    );
+    return 'Il rapporto riporta l\'elenco dei trasferimenti dell\'anno: $_temp0 e $_temp1 a una connessione, ciascuno con il suo SHA-256';
   }
 
   @override
@@ -16038,12 +16069,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String invoicingReminderLevelSent(int level) {
-    String _temp0 = intl.Intl.pluralLogic(
-      level,
-      locale: localeName,
-      other: 'sollecito $level inviato',
-    );
-    return '$_temp0';
+    return 'sollecito $level inviato';
   }
 
   @override
@@ -27356,6 +27382,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get schemaUpdateTitle => 'Questo server deve essere aggiornato';
 
   @override
+  String get searchActionInvite => 'Invita un membro';
+
+  @override
+  String get searchActionNewPurchase => 'Nuovo acquisto';
+
+  @override
+  String get searchHint => 'Una pagina, un\'azione, un membro, una fattura…';
+
+  @override
+  String get searchKindAction => 'Azione';
+
+  @override
+  String get searchKindMember => 'Membro';
+
+  @override
+  String get searchKindPage => 'Pagina';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nessun risultato per «$query».';
+  }
+
+  @override
+  String get searchRecent => 'Recenti';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Questa scheda non si può aprire: non esiste o non può leggerla.';
+
+  @override
   String get seatDayAhead => 'Più tardi';
 
   @override
@@ -28631,12 +28687,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String setupApprovalsTooMany(int required, int people) {
     String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: '$required approvazioni non potranno mai essere raccolte',
+      one: '$required approvazione non potrà mai essere raccolta',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
       people,
       locale: localeName,
       other: 'solo $people persone possono',
       one: 'solo 1 persona può',
     );
-    return '$required approvazioni non potranno mai essere raccolte: $_temp0 approvare. Ne chieda meno, oppure nomini amministratori altri membri.';
+    return '$_temp0: $_temp1 approvare. Ne chieda meno, oppure nomini amministratori altri membri.';
   }
 
   @override
@@ -30394,6 +30456,42 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.';
+
+  @override
+  String get shortcutClose => 'Chiudi';
+
+  @override
+  String get shortcutFilter => 'Filtra questo elenco';
+
+  @override
+  String get shortcutKeys => 'I tasti di questa pagina';
+
+  @override
+  String get shortcutKeysTitle => 'Tasti della tastiera';
+
+  @override
+  String get shortcutNew => 'Nuovo';
+
+  @override
+  String get shortcutOpenCalendar => 'Apri il calendario di un campo data';
+
+  @override
+  String get shortcutPrint => 'Il documento di questa pagina';
+
+  @override
+  String get shortcutRedo => 'Ripeti';
+
+  @override
+  String get shortcutSave => 'Salva';
+
+  @override
+  String get shortcutSearch => 'Trova una pagina, un\'azione o una scheda';
+
+  @override
+  String get shortcutSubmit => 'Salva o invia';
+
+  @override
+  String get shortcutUndo => 'Annulla';
 
   @override
   String get siteCity => 'Città';

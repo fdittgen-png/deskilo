@@ -15,6 +15,6 @@
   "servicesCategory": "Categoria",
   "servicesPublic": "Mostra sulla nostra pagina pubblica",
   "servicesOtherCategory": "Altri servizi",
-  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "servicesDurationShort": "{minutes, plural, one{1 min} other{{minutes} min}}",
   "servicesSaveFailed": "Non è stato possibile salvare il servizio. Riprovi."
 }

@@ -170,7 +170,7 @@
   "@shellSwipeCoachMark": {
     "description": "One-time hint teaching the swipe-away full-screen view (#1173)"
   },
-  "shellPendingDecisions": "{count, plural, =1{1 decision awaits you} other{{count} decisions await you}}",
+  "shellPendingDecisions": "{count, plural, one{1 decision awaits you} other{{count} decisions await you}}",
   "@shellPendingDecisions": {
     "description": "Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)",
     "placeholders": {

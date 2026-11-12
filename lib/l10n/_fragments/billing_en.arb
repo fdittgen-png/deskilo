@@ -10,7 +10,7 @@
   },
   "billingBandFrom": "from {from}%",
   "@billingBandFrom": {
-    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage.",
+    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]",
     "placeholders": {
       "from": {
         "type": "int"
@@ -79,7 +79,7 @@
   },
   "moneySubscriptionPct": "Subscription {pct}%",
   "@moneySubscriptionPct": {
-    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage.",
+    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
@@ -88,7 +88,7 @@
   },
   "percentValue": "{value}%",
   "@percentValue": {
-    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage.",
+    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]",
     "placeholders": {
       "value": {
         "type": "int"
@@ -332,7 +332,7 @@
   "@settlementAction": {
     "description": "Shown as a text in invoices screen (money), and 2 other places."
   },
-  "settlementConfirm": "{count, plural, =1{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}",
+  "settlementConfirm": "{count, plural, one{Regroup 1 invoice into one of {amount}?} other{Regroup {count} invoices into one of {amount}?}}",
   "settlementDone": "Regrouped into {number}.",
   "settlementNeedsTwo": "Pick at least two open invoices of the same member.",
   "@settlementNeedsTwo": {
@@ -404,7 +404,7 @@
   "@settlementAnnexWith": {
     "description": "Shown as a text in invoice pdf actions (money)."
   },
-  "settlementAnnexBody": "{count, plural, =1{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}",
+  "settlementAnnexBody": "{count, plural, one{The invoice this one replaces can follow it, on its own pages and stamped as regrouped.} other{The {count} invoices this one replaces can follow it, each on its own pages and stamped as regrouped.}}",
   "@settlementAnnexBody": {
     "description": "Shown as the body of a dialog in invoice pdf actions (money). Placeholders: {count} (int).",
     "placeholders": {

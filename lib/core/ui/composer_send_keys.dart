@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+import '../shortcuts/app_shortcuts.dart';
 
 /// Whether an input method is still composing a word in [value] (a
 /// candidate being chosen): no key sends or submits then. The one check for
@@ -31,15 +32,8 @@ class ComposerSendKeys extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CallbackShortcuts(
-    bindings: {
-      for (final key in const [
-        LogicalKeyboardKey.enter,
-        LogicalKeyboardKey.numpadEnter,
-      ]) ...{
-        SingleActivator(key, control: true): _send,
-        SingleActivator(key, meta: true): _send,
-      },
-    },
+    // #3610 — the registry's submit key: Ctrl/Cmd+Enter.
+    bindings: shortcutBindings({AppShortcutId.submit: _send}),
     child: child,
   );
 }

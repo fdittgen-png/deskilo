@@ -47,7 +47,7 @@
       }
     }
   },
-  "refFilterShow": "{count, plural, =1{Show 1 result} other{Show {count} results}}",
+  "refFilterShow": "{count, plural, one{Show 1 result} other{Show {count} results}}",
   "@refFilterShow": {
     "description": "Shown as the text in ref picker filters panel (workspace). Placeholders: {count} (int).",
     "placeholders": {

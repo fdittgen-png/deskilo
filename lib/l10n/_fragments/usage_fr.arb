@@ -18,7 +18,7 @@
   "usageDeleteSubmitted": "Suppression demandée.",
   "usageMember": "Membre",
   "usageMemberAll": "Tout le monde",
-  "usagePrepareBanner": "{count, plural, =1{1 réservation de ce mois n'est pas encore enregistrées : cette liste peut être incomplète.} other{{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.}}",
+  "usagePrepareBanner": "{count, plural, one{{count} réservation de ce mois n'est pas encore enregistrées : cette liste peut être incomplète.} other{{count} réservations de ce mois ne sont pas encore enregistrées : cette liste peut être incomplète.}}",
   "@usagePrepareBanner": {
     "description": "#2590 usage preparation",
     "placeholders": {

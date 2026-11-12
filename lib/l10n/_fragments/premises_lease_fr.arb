@@ -151,7 +151,7 @@
       }
     }
   },
-  "leaseOccurrencesAfter": "{count, plural, =1{1 échéance a déjà été présentées pour une date postérieure à la fin.} other{{count} échéances ont déjà été présentées pour une date postérieure à la fin.}}",
+  "leaseOccurrencesAfter": "{count, plural, one{{count} échéance a déjà été présentées pour une date postérieure à la fin.} other{{count} échéances ont déjà été présentées pour une date postérieure à la fin.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {

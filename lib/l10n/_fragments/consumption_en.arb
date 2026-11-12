@@ -31,7 +31,7 @@
   },
   "eventServiceChargeTitle": "{name} ×{quantity} — {amount}",
   "@eventServiceChargeTitle": {
-    "description": "Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Feed/card line for a service charge, e.g. 'Coffee ×2 — €3.00'; amount is preformatted currency. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: quantity]",
     "placeholders": {
       "name": {
         "type": "String"

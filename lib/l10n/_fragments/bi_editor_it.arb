@@ -307,7 +307,7 @@
       }
     }
   },
-  "biEditorRows": "{count, plural, =1{1 riga} other{{count} righe}}",
+  "biEditorRows": "{count, plural, one{1 riga} other{{count} righe}}",
   "@biEditorRows": {
     "description": "#2580 BI report editor",
     "placeholders": {
