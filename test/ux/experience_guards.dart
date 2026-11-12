@@ -423,3 +423,60 @@ Future<void> writeDeskSheet(
   sheet: module,
   name: '$screen--${width.toInt()}--${brightness.name}',
 );
+
+// ---------------------------------------------------------------------------
+// #3782 — the layout of a form: no field touches another, no helper is cut.
+// ---------------------------------------------------------------------------
+
+/// The rules the form on screen breaks, within [form]: a field's box (its
+/// label, its input and its helper or error line, as its decorator draws
+/// them) touches or overlaps another's, or a helper or error text is cut
+/// (its paragraph ran past its lines). [details] receives what was found.
+Set<String> formLayoutProblems(
+  WidgetTester tester, {
+  required Finder form,
+  List<String>? details,
+}) {
+  final problems = <String>{};
+  final fields = [
+    for (final e in find
+        .descendant(of: form, matching: find.byType(InputDecorator))
+        .evaluate())
+      if (e.renderObject case final RenderBox box
+          when box.hasSize && box.size.height > 0)
+        (rect: box.localToGlobal(Offset.zero) & box.size, label: _labelOf(e)),
+  ];
+  for (var i = 0; i < fields.length; i++) {
+    for (var j = i + 1; j < fields.length; j++) {
+      final a = fields[i].rect;
+      final b = fields[j].rect;
+      // Side by side on one row is a layout, not a crowding: only a field
+      // that stands over another counts, and it must leave a gap.
+      final overlapX = a.left < b.right && b.left < a.right;
+      if (!overlapX) continue;
+      final gap = a.top < b.top ? b.top - a.bottom : a.top - b.bottom;
+      if (gap <= 0.5) {
+        problems.add('fields without a gap');
+        details?.add('"${fields[i].label}" and "${fields[j].label}": $gap');
+      }
+    }
+  }
+  for (final e in find
+      .descendant(
+        of: find.descendant(of: form, matching: find.byType(InputDecorator)),
+        matching: find.byType(RichText),
+      )
+      .evaluate()) {
+    final box = e.renderObject;
+    if (box is RenderParagraph && box.hasSize && box.didExceedMaxLines) {
+      problems.add('helper cut');
+      details?.add('cut: "${box.text.toPlainText()}"');
+    }
+  }
+  return problems;
+}
+
+String _labelOf(Element decorator) {
+  final d = (decorator.widget as InputDecorator).decoration;
+  return d.labelText ?? d.hintText ?? '';
+}

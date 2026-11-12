@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -71,6 +72,8 @@ class _PurchaseCurrencyFieldsState
     if (space == null) return const SizedBox.shrink();
     final l10n = context.l10n;
     return Column(
+      // #3782 — the form kit's gap between every field.
+      spacing: AppSpacing.md,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -161,6 +164,8 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
     if (standIn != null) return standIn;
     final sources = sourcesRead.requireValue;
     return Column(
+      // #3782 — the form kit's gap between every field.
+      spacing: AppSpacing.md,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -189,7 +194,6 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
             },
           ),
         ),
-        const FormGap.small(),
         // A day the field cannot read leaves no rate: the purchase is
         // refused until it can.
         AppDateField(
@@ -341,6 +345,8 @@ class _RateDialogState extends ConsumerState<_RateDialog> {
       title: Text(l10n.purchasesFxTitle),
       content: SingleChildScrollView(
         child: Column(
+          // #3782 — the form kit's gap between every field.
+          spacing: AppSpacing.md,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
