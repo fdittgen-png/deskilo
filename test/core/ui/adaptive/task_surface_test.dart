@@ -387,6 +387,53 @@ void main() {
       expect(question, findsOneWidget);
     });
 
+    testWidgets('a prefilled field, focused and left untouched, then Escape: '
+        'no question', (tester) async {
+      // The false alarm the text follower must never raise: the form opens
+      // with a value, the person clicks into the field and leaves.
+      amount.text = '12.50';
+      code.text = 'kept';
+      await openBody(
+        tester,
+        _desk,
+        (_) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppAmountField(
+              key: const ValueKey('amount'),
+              controller: amount,
+              label: 'Amount',
+              currency: 'EUR',
+              allowNegative: false,
+            ),
+            TextField(key: const ValueKey('raw'), controller: code),
+          ],
+        ),
+      );
+      EditableText editable(String key) => tester.widget<EditableText>(
+        find.descendant(
+          of: find.byKey(ValueKey(key)),
+          matching: find.byType(EditableText),
+        ),
+      );
+      await tester.showKeyboard(find.byKey(const ValueKey('amount')));
+      await tester.pump();
+      expect(editable('amount').focusNode.hasFocus, isTrue);
+      await tester.showKeyboard(find.byKey(const ValueKey('raw')));
+      await tester.pump();
+      expect(editable('raw').focusNode.hasFocus, isTrue);
+      // Moving the caret is not a change of the text either.
+      code.selection = const TextSelection.collapsed(offset: 2);
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      expect(question, findsNothing);
+      expect(find.byKey(const ValueKey('raw')), findsNothing);
+      amount.clear();
+      code.clear();
+    });
+
     for (final (window, way) in [(_desk, 'Escape'), (_phone, 'a drag')]) {
       testWidgets('text put into a raw field, then $way: the question', (
         tester,

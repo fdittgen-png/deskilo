@@ -269,6 +269,10 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     _followed?.removeListener(_textChanged);
     _followed = next;
     if (next == null) return;
+    // The text a field shows when it is first followed is its baseline: a
+    // prefilled field that is focused and left alone is not a change. Text
+    // that code puts into a field WHILE it is focused (a default arriving
+    // late) counts as a change; that errs toward asking.
     _firstText[next] ??= next.text;
     next.addListener(_textChanged);
   }
