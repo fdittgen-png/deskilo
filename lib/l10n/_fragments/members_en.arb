@@ -60,6 +60,10 @@
   "@memberNoteReply": {
     "description": "Reply button on the full-message sheet (#523)"
   },
+  "memberNoteQuote": "Quote",
+  "@memberNoteQuote": {
+    "description": "Menu entry on a message that quotes it into the reply being written (#3611)"
+  },
   "noteRefReservation": "Link a reservation",
   "@noteRefReservation": {
     "description": "Composer chip inserting a reservation reference (#523)"

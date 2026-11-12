@@ -99,7 +99,7 @@ Future<void> _pumpRow(
         pinned: false,
         selected: false,
         onOpen: () {},
-        onMarks: () {},
+        marks: const [],
       ),
     ),
     overrides: _privacy(policy, device: device),
