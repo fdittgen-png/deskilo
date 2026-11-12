@@ -45241,6 +45241,24 @@
   "@webMcpDeviceSwitchHint": {
     "description": "#2504 Me > Account: what the WebMCP device switch does"
   },
+  "weekHalfSlotLabel": "{seat}, {day}, {half, select, morning{morning} other{afternoon}}, {state, select, free{free} mine{your booking} taken{taken} blocked{blocked} other{closed}}",
+  "@weekHalfSlotLabel": {
+    "description": "#3817 what a screen reader says for one half of a Week grid day cell: the seat, the day, morning or afternoon, and its state",
+    "placeholders": {
+      "seat": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "half": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
   "welcomeLinkAction": "What is DesKilo?",
   "@welcomeLinkAction": {
     "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"

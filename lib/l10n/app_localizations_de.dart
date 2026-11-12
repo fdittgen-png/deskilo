@@ -35311,6 +35311,22 @@ class AppLocalizationsDe extends AppLocalizations {
       'Standardmäßig aus. Eingeschaltet kann ein in diesen Browser eingebauter KI-Assistent Ihre Buchungen, Rechnungen und offenen Anfragen in diesem Bereich lesen, solange die Seite geöffnet ist. Die Wahl bleibt auf diesem Gerät.';
 
   @override
+  String weekHalfSlotLabel(String seat, String day, String half, String state) {
+    String _temp0 = intl.Intl.selectLogic(half, {
+      'morning': 'Vormittag',
+      'other': 'Nachmittag',
+    });
+    String _temp1 = intl.Intl.selectLogic(state, {
+      'free': 'frei',
+      'mine': 'Ihre Buchung',
+      'taken': 'belegt',
+      'blocked': 'gesperrt',
+      'other': 'geschlossen',
+    });
+    return '$seat, $day, $_temp0, $_temp1';
+  }
+
+  @override
   String get welcomeLinkAction => 'Was ist DesKilo?';
 
   @override

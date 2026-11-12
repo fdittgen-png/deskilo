@@ -48,6 +48,7 @@ class FloorPlanPainter extends CustomPainter {
     this.semanticLabels,
     this.semanticsDirection = TextDirection.ltr,
     this.onSeatSemanticTap,
+    this.seatTouchSide = 0,
     this.marquee,
     this.marqueeValid = true,
     this.selection,
@@ -56,6 +57,10 @@ class FloorPlanPainter extends CustomPainter {
     this.dropTargets,
     this.singleRoomByLevel = false,
   });
+
+  /// #3817 — the least side, in canvas pixels, of the area a finger opens
+  /// a seat by (48 dp on screen at the current zoom); 0 keeps the drawing.
+  final double seatTouchSide;
 
   /// #1273 — a level's only room carries no name on the canvas (the
   /// singleRoomLevelNames feature). False in the editor, where the owner
@@ -240,7 +245,8 @@ class FloorPlanPainter extends CustomPainter {
       oldDelegate.cellSize != cellSize ||
       oldDelegate.semanticsDirection != semanticsDirection ||
       !mapEquals(oldDelegate.semanticLabels, semanticLabels) ||
-      oldDelegate.onSeatSemanticTap != onSeatSemanticTap;
+      oldDelegate.onSeatSemanticTap != onSeatSemanticTap ||
+      oldDelegate.seatTouchSide != seatTouchSide;
 
   /// One semantics node per seat (#402). Without this, the app's core
   /// surface is a single unlabeled picture to TalkBack/VoiceOver — the
@@ -249,11 +255,14 @@ class FloorPlanPainter extends CustomPainter {
   SemanticsBuilderCallback? get semanticsBuilder {
     final labels = semanticLabels;
     if (labels == null) return null;
+    // #3817 — a seat a finger opens is at least 48 dp on screen, however
+    // far the plan is zoomed out: the touch area grows, the drawing stays.
+    final reach = onSeatSemanticTap == null ? 0.0 : seatTouchSide;
     return (Size size) => [
           for (final seat in plan.seats)
             CustomPainterSemantics(
               key: ValueKey('plan-seat-semantics-${seat.id}'),
-              rect: gridRectToPx(seat.footprint, cellSize),
+              rect: seatTouchRect(gridRectToPx(seat.footprint, cellSize), reach),
               properties: SemanticsProperties(
                 label: labels[seat.id] ?? seat.name,
                 textDirection: semanticsDirection,
@@ -283,3 +292,11 @@ bool _sameSegments(Map<String, List<SeatDaySegment>> a,
   }
   return true;
 }
+
+/// #3817 — [drawn], grown about its centre to at least [side] each way:
+/// the area a finger opens a seat by.
+Rect seatTouchRect(Rect drawn, double side) => Rect.fromCenter(
+      center: drawn.center,
+      width: drawn.width < side ? side : drawn.width,
+      height: drawn.height < side ? side : drawn.height,
+    );

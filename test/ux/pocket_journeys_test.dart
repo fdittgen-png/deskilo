@@ -6,8 +6,9 @@
 //     booking confirmed -- 2 taps, and the reservation exists;
 //   * check in: an own booking running now, its seat, Check in -- 2 taps,
 //     and the booking is checked in;
-//   * cancel: an own booking that has not started, found on the day view --
-//     5 taps (the measured number), and the booking is cancelled.
+//   * cancel: an own booking that has not started, opened from its seat
+//     (#3817) -- 2 taps (the measured number; 5 through the day view
+//     before), and the booking is cancelled.
 // And the kiosk, a shared terminal, on the wall tablet in both orientations:
 //   * a person at the wall needs one touch (the seat); the badge is the
 //     second operation and is not counted, because its time is the
@@ -172,14 +173,15 @@ void main() {
       );
     });
 
-    testWidgets('cancel: 5 taps from the open app, the booking is cancelled', (
+    testWidgets('cancel: 2 taps from its seat, the booking is cancelled', (
       tester,
     ) async {
-      // An upcoming booking is not on the plan's seat (the plan shows the
-      // window now): it is found on the day view -- the view menu, Day, the
-      // booking, Cancel, the confirmation. The budget is the measured number;
-      // lower it when the path gets shorter.
-      const cancelBudget = 5;
+      // #3817 — a booking of the person later today opens from its seat on
+      // the plan (the plan shows the window now, so the seat is drawn
+      // free): the seat, then Cancel. The budget is the measured number
+      // (5 through the day view before); lower it when the path gets
+      // shorter.
+      const cancelBudget = 2;
       final repo = await reserve.pumpHub(
         tester,
         size: _phone,
@@ -187,20 +189,8 @@ void main() {
       );
       final taps = _Touches();
 
-      await taps.on(tester, find.byKey(const ValueKey('reserve-view-switch')));
-      await taps.on(
-        tester,
-        find.byKey(const ValueKey('reserve-view-day')).last,
-      );
-      await taps.on(
-        tester,
-        find.byKey(const ValueKey('timeline-block-res-mine')),
-      );
-      await taps.on(tester, find.byKey(const ValueKey('reservation-cancel')));
-      await taps.on(
-        tester,
-        find.widgetWithText(ListTile, 'Cancel reservation'),
-      );
+      await taps.at(tester, reserve.seatCenter(tester));
+      await taps.on(tester, find.text('Cancel reservation').last);
 
       expect(repo.reservations.single.status, ReservationStatus.cancelled);
       expect(

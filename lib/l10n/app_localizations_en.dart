@@ -34911,6 +34911,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'Off by default. On, an AI assistant built into this browser can read your bookings, invoices and pending requests in this space while the page is open. The choice stays on this device.';
 
   @override
+  String weekHalfSlotLabel(String seat, String day, String half, String state) {
+    String _temp0 = intl.Intl.selectLogic(half, {
+      'morning': 'morning',
+      'other': 'afternoon',
+    });
+    String _temp1 = intl.Intl.selectLogic(state, {
+      'free': 'free',
+      'mine': 'your booking',
+      'taken': 'taken',
+      'blocked': 'blocked',
+      'other': 'closed',
+    });
+    return '$seat, $day, $_temp0, $_temp1';
+  }
+
+  @override
   String get welcomeLinkAction => 'What is DesKilo?';
 
   @override
