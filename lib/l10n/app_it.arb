@@ -4250,6 +4250,77 @@
   "customerPageNothingOwed": "Niente da pagare",
   "customerPageOwes": "Deve",
   "customerPageStory": "Storia",
+  "customerStatementAsOf": "Partite aperte al {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "in attesa di approvazione",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementBalanceDue": "Saldo da pagare",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceNone": "Non è dovuto nulla",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementBalanceOwed": "Saldo a Suo favore",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementDue": "scadenza {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementNothingOpen": "Non c'è nulla di aperto per questo cliente: nessun estratto conto da stampare.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  },
+  "customerStatementOwedToYou": "A Suo favore",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementPart": "Pagamento del {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPickCurrency": "L'estratto conto in quale valuta?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementStillDue": "Ancora dovuto",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementTotalDue": "Totale ancora dovuto",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Non ancora imputato",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementUnapplied": "Pagamenti e crediti non ancora imputati",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
   "customerStoryDeclared": "Dice di aver pagato la fattura {number}",
   "customerStoryIssued": "Fattura {number} emessa",
   "customerStoryNow": "Adesso: {words}",
@@ -15488,6 +15559,10 @@
   },
   "reportDocBadges": "Badge dei membri",
   "reportDocCoa": "Piano dei conti",
+  "reportDocCustomerStatement": "Estratto conto",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
   "reportDocGeneralLedger": "Libro mastro",
   "reportDocJournals": "Giornali",
   "reportDocPayments": "Report dei pagamenti",

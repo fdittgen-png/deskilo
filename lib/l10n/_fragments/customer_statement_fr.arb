@@ -1,0 +1,78 @@
+{
+  "@@locale": "fr",
+  "reportDocCustomerStatement": "Relevé de compte",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
+  "customerStatementAsOf": "Pièces ouvertes au {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementDue": "échéance {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPart": "Paiement du {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "en attente d'approbation",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementStillDue": "Reste dû",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementOwedToYou": "Dû en votre faveur",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementUnapplied": "Paiements et avoirs non encore imputés",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
+  "customerStatementTotalDue": "Total restant dû",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Non encore imputé",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementBalanceDue": "Solde à régler",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceOwed": "Solde en votre faveur",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementBalanceNone": "Rien n'est dû",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementPickCurrency": "Le relevé dans quelle devise ?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementNothingOpen": "Rien n'est ouvert pour ce client : aucun relevé à imprimer.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  }
+}

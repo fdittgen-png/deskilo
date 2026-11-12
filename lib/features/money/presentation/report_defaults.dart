@@ -15,6 +15,7 @@ import 'professional_report_bands.dart';
 // resolving document defaults from one import.
 import 'report_defaults_batch.dart';
 import 'report_defaults_books.dart';
+import 'report_defaults_customer_statement.dart';
 import 'report_defaults_purchase_order.dart';
 import 'vat_declaration_report_defaults.dart';
 
@@ -617,20 +618,19 @@ ReportBands _completeBandsForDoc(String docId, AppLocalizations l10n) =>
       ReportDocSlot(key: 'workspace') => _defaultWorkspaceBands(l10n),
       ReportDocSlot(key: 'status') => _defaultStatusBands(l10n),
       ReportDocSlot(key: 'purchase_order') => purchaseOrderBands(l10n),
+      ReportDocSlot(key: 'customer_statement') => customerStatementBands(l10n),
       ReportDocSlot(key: 'bi_analytics') => analyticsReportBands(l10n.biPdfTitle),
       ReportDocSlot(key: 'workspace_configuration') => configurationReportBands(l10n.workspaceConfigPdfTitle),
       ReportDocSlot(key: 'vat_declaration') => vatDeclarationBandsOf(l10n),
       ReportDocSlot(key: 'vat') => defaultVatBands(l10n),
       ReportDocSlot(key: 'coa') => defaultCoaBands(l10n),
       ReportDocSlot(key: 'bank_reconciliation') => bankReconciliationBands(l10n),
-      ReportDocSlot(key: 'general_ledger' || 'trial_balance' || 'journals') =>
-        bookReportBands(l10n, docId),
+      ReportDocSlot(key: 'general_ledger' || 'trial_balance' || 'journals') => bookReportBands(l10n, docId),
       ReportDocSlot(key: 'badges') => defaultBadgeSheetBands(l10n),
       ReportDocSlot(key: 'space_codes') => defaultSpaceCodesBands(l10n),
       // A doc the registry knows but this ladder does not is a bug to
       // hear about, not a reminder to render.
-      ReportDocSlot(:final key) =>
-        throw StateError('no default bands for report kind $key'),
+      ReportDocSlot(:final key) => throw StateError('no default bands for report kind $key'),
       ReportReminderSlot(:final level) => defaultReminderBands(level, l10n),
       // #1154 — an unknown id used to fall through to reminder level 1.
       null => ReportBands.empty,
