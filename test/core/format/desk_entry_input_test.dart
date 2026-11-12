@@ -206,4 +206,44 @@ void main() {
       });
     }
   });
+
+  group('a prefilled amount', () {
+    test('is written in the reader\'s separator and read back as written', () {
+      for (final locale in _locales) {
+        for (final currency in ['EUR', 'CHF', 'JPY', 'KWD']) {
+          for (final minor in [123400, 123456, 5, 0, -123456]) {
+            final text = amountInputText(
+              minor,
+              currency: currency,
+              locale: locale,
+            );
+            expect(
+              readAmountInput(
+                text,
+                locale: locale,
+                currency: currency,
+                allowNegative: true,
+              ),
+              (minor: minor, problem: null),
+              reason: '$locale $currency $minor -> "$text"',
+            );
+          }
+        }
+      }
+    });
+
+    test('in the separator a person of that locale types', () {
+      String text(String locale, String currency, int minor) =>
+          amountInputText(minor, currency: currency, locale: locale);
+      expect(text('de_DE', 'EUR', 1250), '12,50');
+      expect(text('fr_FR', 'EUR', 1250), '12,50');
+      expect(text('en_GB', 'EUR', 1250), '12.50');
+      expect(text('en_US', 'EUR', 1250), '12.50');
+      expect(text('de_CH', 'CHF', 1250), '12.50');
+      expect(text('de_DE', 'JPY', 1500), '1500');
+      expect(text('de_DE', 'KWD', 1250), '1,250');
+      expect(text('en_US', 'KWD', 1250), '1.250');
+      expect(text('en_GB', 'EUR', 5), '0.05');
+    });
+  });
 }

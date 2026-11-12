@@ -80,7 +80,11 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
         : widget.claim.remainingCents;
     setState(() {
       _invoiceId = open.invoice.id;
-      _amount.text = amountInputText(cents, currency: widget.claim.currency);
+      _amount.text = amountInputText(
+        cents,
+        currency: widget.claim.currency,
+        locale: appFormatOf(context).locale,
+      );
     });
   }
 

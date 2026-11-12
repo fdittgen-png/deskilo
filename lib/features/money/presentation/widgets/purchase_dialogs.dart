@@ -293,6 +293,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               textInputAction: TextInputAction.next,
               onChanged: (d) => _invoiceDate = d,
             ),
+            // Room for the date the field read, under it.
+            const FormGap.small(),
             AppDateField(
               key: const ValueKey('purchase-due-date'),
               label: l10n.purchasesDueDate,

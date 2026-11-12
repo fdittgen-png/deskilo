@@ -48,6 +48,7 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
     text: amountInputText(
       widget.claim.remainingCents,
       currency: widget.claim.currency,
+      locale: appFormatOf(context).locale,
     ),
   );
   final _reference = TextEditingController();

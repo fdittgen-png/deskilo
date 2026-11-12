@@ -46,6 +46,7 @@ class PurchaseOrderSheet {
       order,
       items,
       order?.currency ?? appFormatOf(context).currencyCode,
+      appFormatOf(context).locale,
     );
     return showAppFormSheet(
       context,
@@ -81,7 +82,7 @@ class PurchaseOrderSheet {
 /// The form's state: its controllers, the chosen supplier, date and items,
 /// and the request id the current entries go under.
 class _OrderForm {
-  _OrderForm(this.order, this.items, this.currency)
+  _OrderForm(this.order, this.items, this.currency, String locale)
     : supplierId = order?.supplierId,
       expectedOn = order?.expectedOn,
       lines = order == null ? 1 : order.lines.length,
@@ -98,7 +99,11 @@ class _OrderForm {
           'desc-$i': l.description,
           'qty-$i': _qtyText(l.quantity),
           'unit-$i': l.unit,
-          'price-$i': amountInputText(l.unitPriceCents, currency: currency),
+          'price-$i': amountInputText(
+            l.unitPriceCents,
+            currency: currency,
+            locale: locale,
+          ),
           'vat-$i': l.vatRatePercent == null ? '' : _qtyText(l.vatRatePercent!),
         },
       });

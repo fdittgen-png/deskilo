@@ -49,11 +49,21 @@ AmountRead readAmountInput(
   return (minor: minor, problem: null);
 }
 
-/// [minor] units of [currency] as a field's starting text, at the
-/// currency's own precision with `.` as the decimal (`12.50`, `1500` yen,
-/// `1.250` dinar), which [readAmountInput] reads back in every locale.
-String amountInputText(int minor, {required String currency}) {
+/// [minor] units of [currency] as a field's starting text in the reader's
+/// [locale]: its decimal separator, no grouping, at the currency's own
+/// precision (`12,50` in de_DE, `12.50` in en_GB, `1500` yen everywhere,
+/// `1,250` dinar in de_DE), which [readAmountInput] reads back in the same
+/// locale as the same minor units.
+String amountInputText(
+  int minor, {
+  required String currency,
+  required String locale,
+}) {
+  final digits = Currencies.minorDigits(currency);
   final per = Currencies.minorPerMajor(currency);
-  if (per == 1 || minor % per == 0) return '${minor ~/ per}';
-  return (minor / per).toStringAsFixed(Currencies.minorDigits(currency));
+  final sign = minor < 0 ? '-' : '';
+  final whole = minor.abs() ~/ per;
+  if (digits == 0) return '$sign$whole';
+  final fraction = '${minor.abs() % per}'.padLeft(digits, '0');
+  return '$sign$whole${decimalSeparatorOf(locale)}$fraction';
 }

@@ -65,6 +65,7 @@ class _MatchDialogState extends ConsumerState<_MatchDialog> {
     _amount.text = amountInputText(
       widget.occurrence.remainingCents,
       currency: widget.currencyCode,
+      locale: appFormatOf(context).locale,
     );
   });
 
