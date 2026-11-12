@@ -20,6 +20,8 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../core/files/file_names.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
+import '../../../core/jurisdiction/installed_invoice_rules.dart';
+import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/locale/report_language.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -30,7 +32,6 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/address_window.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -39,20 +40,17 @@ import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference;
-import 'invoice_facturx_xml.dart';
 import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
 import 'period_label.dart';
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
 import 'report_layout_actions.dart';
-import 'report_layout_defaults.dart';
 import 'report_strings_l10n.dart';
 import 'swiss_qr_page.dart';
 
 // #3742 — the documents' policies, read before any of them is drawn.
 export 'document_policies.dart' show readDocumentPolicies;
-export 'invoice_facturx_xml.dart' show facturXmlOf;
 export 'invoice_reminder_letter.dart';
 export 'letter_doc_pdf.dart';
 export 'report_facts_of.dart' show memberCapacityFor, memberTermsFor;
@@ -256,44 +254,6 @@ class InvoicePdfFileOptions {
   final String? memberCapacity;
 }
 
-/// A positioned layout wins over bands. A proforma without a layout of its
-/// own borrows the invoice's, as it borrows its bands. Annexes stay banded
-/// — they are documentation appended behind, and the layout engine renders
-/// one document. Undesigned documents use the enabled letter standard.
-String? _layoutXmlOf(
-  Invoice invoice,
-  InvoicePdfFileOptions options,
-  InvoicePdfTemplate template,
-  Set<WorkspaceFeature> features,
-  AppLocalizations l10n,
-) {
-  final workspace = options.workspace;
-  final letterStandard = features.contains(WorkspaceFeature.letterStandard);
-  if (!features.contains(WorkspaceFeature.reportLayouts) ||
-      options.annexInvoices.isNotEmpty) {
-    return null;
-  }
-  String? standard() => resolveLayoutXmlFor(
-    template: template,
-    kindId: 'invoice',
-    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
-    letterStandard: letterStandard,
-    l10n: l10n,
-  );
-  return options.proforma ? (template.layoutFor('proforma') ?? standard()) : standard();
-}
-
-/// #869 — the envelope window: the template's explicit choice wins,
-/// otherwise the seller's country decides the side. Off entirely when
-/// the workspace has not enabled the feature.
-AddressWindow _addressWindowOf(
-  InvoicePdfFileOptions options,
-  Set<WorkspaceFeature> features,
-) => features.contains(WorkspaceFeature.invoiceAddressWindow)
-    ? (options.template.addressWindow ??
-          addressWindowForCountry(options.workspace?.countryCode ?? ''))
-    : AddressWindow.off;
-
 Future<pw.Font> _asset(String asset) async =>
     pw.Font.ttf(await rootBundle.load(asset));
 
@@ -351,7 +311,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
           '${invoice.number.isEmpty ? '${invoice.clientName} $periodLabel' : invoice.number}',
         )
       : safeFileSlug(invoice.number);
-  final layoutXml = _layoutXmlOf(invoice, options, template, features, l10n);
+  final layoutXml = invoiceLayoutXmlOf(invoice, options, template, features, l10n);
   final dateFormat = DateFormat.yMMMd(
     localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
   );
@@ -401,7 +361,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
-    addressWindow: _addressWindowOf(options, features),
+    addressWindow: invoiceAddressWindowOf(options, features),
     invoice: invoice,
     reportImages: reportImages,
     lineText: (line) => invoiceLineText(words, line,
@@ -423,6 +383,38 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
     boldFont: await _asset('assets/fonts/Roboto-Bold.ttf'),
   ));
   return (bytes: bytes, fileName: '$stem.pdf');
+}
+
+/// FACTUR-X: one PDF that carries the EN 16931 invoice inside it (as CII,
+/// the syntax the format mandates). A human opens it and sees the invoice;
+/// a platform opens it and finds `factur-x.xml`. This is what French and
+/// German small businesses actually hand to their platform.
+/// The structured e-invoice (CII) of [invoice], the XML a Factur-X PDF
+/// embeds: the same positions, due date and terms the PDF prints.
+String facturXmlOf(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  required String iban,
+  required TaxReferenceSet reference,
+}) {
+  final association = ref.read(sellerIsAssociationProvider);
+  final words = reportStringsOf(context.l10n, formatLocale: appFormatOf(context).locale);
+  return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
+    seller: seller,
+    buyer: buyer,
+    iban: iban,
+    lineText: (line) => invoiceLineText(words, line,
+        association: association, period: invoice.period),
+    // #941 — the same due date and terms the PDF prints.
+    dueDate: invoiceDueAt(ref, invoice),
+    // #1916 — an issued invoice states the terms frozen with it.
+    paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
+        memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
+        '',
+    reference: reference));
 }
 
 Future<({List<int> bytes, String fileName})> buildFacturXFile(
