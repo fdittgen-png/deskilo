@@ -3418,6 +3418,7 @@ const Set<String> uiKeys = {
   'symbol-save',
   'task-body',
   'task-dialog',
+  'task-first-text',
   'task-recorder',
   'task-recorder-account-v1',
   'task-recorder-capture-values',
