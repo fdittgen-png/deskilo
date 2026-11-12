@@ -22746,6 +22746,18 @@
       }
     }
   },
+  "leaseSettlementPeriod": "Settlement {from} to {to}",
+  "@leaseSettlementPeriod": {
+    "description": "#3813 a lease settlement term: the period it settles, both dates already formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Since {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",
@@ -35627,6 +35639,15 @@
     "description": "Shown as a text in server label (core). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceChargeSettlementOf": "Service charge settlement — {supplier}",
+  "@serviceChargeSettlementOf": {
+    "description": "#3813 the expense schedule of a service charge settlement, named after its supplier",
+    "placeholders": {
+      "supplier": {
         "type": "String"
       }
     }

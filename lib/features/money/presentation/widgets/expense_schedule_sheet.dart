@@ -24,6 +24,7 @@ import '../../application/schedule_expense.dart';
 import '../../domain/expense_schedule.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/money_providers.dart';
+import '../settlement_texts.dart';
 import 'expense_vat_fields.dart';
 import 'schedule_supplier_field.dart';
 
@@ -117,7 +118,7 @@ Future<void> showExpenseSchedulesSheet(
               ListTile(
                 key: ValueKey('schedule-${s.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(s.title),
+                title: Text(scheduleTitle(l10n, dates.format, s)),
                 subtitle: Text(
                   '${currency.formatMinor(s.amountCents)} · '
                   '${_scheduleRuleText(l10n, s, dates)}'
@@ -175,7 +176,7 @@ Future<void> showExpenseSchedulesSheet(
                     ListTile(
                       key: ValueKey('schedule-${s.id}'),
                       contentPadding: EdgeInsets.zero,
-                      title: Text(s.title),
+                      title: Text(scheduleTitle(l10n, dates.format, s)),
                       subtitle: Text(
                         '${currency.formatMinor(s.amountCents)} · '
                         '${_scheduleRuleText(l10n, s, dates)}\n'

@@ -27861,6 +27861,12 @@ abstract class AppLocalizations {
   /// **'Settled {from} to {to}: {amount} owed, due {due}'**
   String leaseSettlementOwed(String from, String to, String amount, String due);
 
+  /// #3813 a lease settlement term: the period it settles, both dates already formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement {from} to {to}'**
+  String leaseSettlementPeriod(String from, String to);
+
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -44341,6 +44347,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'reference server ({host})'**
   String serverReferenceLabel(String host);
+
+  /// #3813 the expense schedule of a service charge settlement, named after its supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Service charge settlement — {supplier}'**
+  String serviceChargeSettlementOf(String supplier);
 
   /// Shown as a text in services screen (money), and 1 other place.
   ///

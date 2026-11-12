@@ -17427,6 +17427,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String leaseSettlementPeriod(String from, String to) {
+    return 'Conguaglio dal $from al $to';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Dal $date';
   }
@@ -27523,6 +27528,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String serverReferenceLabel(String host) {
     return 'server di riferimento ($host)';
+  }
+
+  @override
+  String serviceChargeSettlementOf(String supplier) {
+    return 'Conguaglio spese — $supplier';
   }
 
   @override

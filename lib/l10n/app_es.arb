@@ -11269,6 +11269,18 @@
       }
     }
   },
+  "leaseSettlementPeriod": "Liquidación del {from} al {to}",
+  "@leaseSettlementPeriod": {
+    "description": "#3813 a lease settlement term: the period it settles, both dates already formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Desde el {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",
@@ -17379,6 +17391,15 @@
   "serverConnectReference": "Servidor de referencia",
   "serverConnectUseHere": "Usar en este dispositivo",
   "serverReferenceLabel": "servidor de referencia ({host})",
+  "serviceChargeSettlementOf": "Liquidación de gastos — {supplier}",
+  "@serviceChargeSettlementOf": {
+    "description": "#3813 the expense schedule of a service charge settlement, named after its supplier",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
   "serviceOutOfStock": "Agotado",
   "serviceStockCount": "{count} en stock",
   "servicesActive": "Activo",
