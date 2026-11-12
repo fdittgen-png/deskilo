@@ -33,7 +33,13 @@ Reservation _r(
 void main() {
   group('myUpcomingOnSeat', () {
     Reservation? pick(List<Reservation> rs, {String? member = 'member-1'}) =>
-        myUpcomingOnSeat(rs, seatId: 'seat-4', memberId: member, now: _now);
+        myUpcomingOnSeat(
+          rs,
+          seatId: 'seat-4',
+          memberId: member,
+          now: _now,
+          dateOf: DateUtils.dateOnly,
+        );
 
     test('the earliest of my own active bookings of the seat later today', () {
       final later = _r('later', from: _now.add(const Duration(hours: 4)));

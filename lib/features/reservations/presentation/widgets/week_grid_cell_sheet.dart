@@ -36,7 +36,7 @@ Future<Reservation?> showWeekGridCellSheet(
   final date = format.dates(DateShape.weekdayMonthDay);
   return showAppSheet<Reservation>(
     context: context,
-    builder: (context) => WeekGridCellSheet(
+    builder: (context) => _WeekGridCellSheet(
       title: '$seatName · ${date.format(day)}',
       items: sorted,
       myMemberId: myMemberId,
@@ -47,9 +47,8 @@ Future<Reservation?> showWeekGridCellSheet(
 
 /// Small occupants sheet of one seat/day cell: one line per reservation,
 /// my own rows popping the tapped reservation for the hub's detail sheet.
-class WeekGridCellSheet extends StatelessWidget {
-  const WeekGridCellSheet({
-    super.key,
+class _WeekGridCellSheet extends StatelessWidget {
+  const _WeekGridCellSheet({
     required this.title,
     required this.items,
     required this.myMemberId,

@@ -337,6 +337,10 @@ class WeekGridHalfSlot extends StatelessWidget {
             ),
     );
     return Semantics(
+      key: ValueKey(
+        'week-half-$seatId-${WeekGrid.dayStampOf(day)}-'
+        '${morning ? 'am' : 'pm'}',
+      ),
       container: true,
       label: weekHalfLabel(
         context,

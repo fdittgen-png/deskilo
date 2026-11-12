@@ -231,13 +231,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
             replace: true,
           );
         }
-      case SeatState.free
-          when isLive &&
-              _myUpcoming(seat, reservations, myMemberId) != null:
-        // #3817 — free now, booked by this person for later today: their
-        // booking opens from its seat.
-        await _mySeatSheet(seat, _myUpcoming(seat, reservations, myMemberId)!);
       case SeatState.free:
+        // #3817 — free now, booked by this person for later today.
+        final later = myUpcomingOnSeat(reservations, seatId: seat.id,
+            memberId: myMemberId, now: ref.read(clockProvider).now(),
+            dateOf: ref.read(readyWorkspaceContextProvider)?.calendar.dateOf ??
+                DateUtils.dateOnly);
+        if (isLive && later != null) return _mySeatSheet(seat, later);
         // #2016 — a live free-seat tap OFFERS the walk-up; the sheet
         // opens on Reserve with its period editable, and checking in
         // now is the member's explicit choice there.
@@ -260,17 +260,6 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
         await _othersBookingTap(seat, other, state);
     }
   }
-
-  Reservation? _myUpcoming(
-    Seat seat,
-    List<Reservation> reservations,
-    String? myMemberId,
-  ) => myUpcomingOnSeat(
-    reservations,
-    seatId: seat.id,
-    memberId: myMemberId,
-    now: ref.read(clockProvider).now(),
-  );
 
   /// Someone else's booking on [seat] — see [_openOthersBooking].
   Future<void> _othersBookingTap(
@@ -298,21 +287,14 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     Seat seat,
     List<Reservation> reservations,
     HalfDayWindow window,
-  ) =>
-      isLive
-          ? reservationOnSeatAt(
-              plan: plan,
-              seat: seat,
-              reservations: reservations,
-              at: ref.read(clockProvider).now(),
-            )
-          : reservationOnSeatInRange(
-              plan: plan,
-              seat: seat,
-              reservations: reservations,
-              from: window.start,
-              to: window.end,
-            );
+  ) => reservationCovering(
+    plan: plan,
+    seat: seat,
+    reservations: reservations,
+    liveAt: isLive ? ref.read(clockProvider).now() : null,
+    from: window.start,
+    to: window.end,
+  );
 
   /// Sheet on a blocked seat for owners/delegated admins (#161):
   /// explains the block and offers to make the seat reservable again.
