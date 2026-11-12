@@ -6857,6 +6857,57 @@ class AppLocalizationsDe extends AppLocalizations {
   String get customerPageStory => 'Verlauf';
 
   @override
+  String customerStatementAsOf(String date) {
+    return 'Offene Posten zum $date';
+  }
+
+  @override
+  String get customerStatementAwaiting => 'wartet auf Freigabe';
+
+  @override
+  String get customerStatementBalanceDue => 'Von Ihnen zu zahlen';
+
+  @override
+  String get customerStatementBalanceNone => 'Es ist nichts offen';
+
+  @override
+  String get customerStatementBalanceOwed => 'Saldo zu Ihren Gunsten';
+
+  @override
+  String customerStatementDue(String date) {
+    return 'fällig $date';
+  }
+
+  @override
+  String get customerStatementNothingOpen =>
+      'Für diesen Kunden ist nichts offen: keine Kontoübersicht zu drucken.';
+
+  @override
+  String get customerStatementOwedToYou => 'Zu Ihren Gunsten';
+
+  @override
+  String customerStatementPart(String date) {
+    return 'Zahlung vom $date';
+  }
+
+  @override
+  String get customerStatementPickCurrency =>
+      'Die Kontoübersicht in welcher Währung?';
+
+  @override
+  String get customerStatementStillDue => 'Noch offen';
+
+  @override
+  String get customerStatementTotalDue => 'Summe noch offen';
+
+  @override
+  String get customerStatementTotalUnapplied => 'Noch nicht zugeordnet';
+
+  @override
+  String get customerStatementUnapplied =>
+      'Noch nicht zugeordnete Zahlungen und Gutschriften';
+
+  @override
   String customerStoryDeclared(String number) {
     return 'Sagt, Rechnung $number bezahlt zu haben';
   }
@@ -25200,6 +25251,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportDocCoa => 'Kontenrahmen';
+
+  @override
+  String get reportDocCustomerStatement => 'Kontoübersicht';
 
   @override
   String get reportDocGeneralLedger => 'Hauptbuch';

@@ -6845,6 +6845,57 @@ class AppLocalizationsIt extends AppLocalizations {
   String get customerPageStory => 'Storia';
 
   @override
+  String customerStatementAsOf(String date) {
+    return 'Partite aperte al $date';
+  }
+
+  @override
+  String get customerStatementAwaiting => 'in attesa di approvazione';
+
+  @override
+  String get customerStatementBalanceDue => 'Saldo da pagare';
+
+  @override
+  String get customerStatementBalanceNone => 'Non è dovuto nulla';
+
+  @override
+  String get customerStatementBalanceOwed => 'Saldo a Suo favore';
+
+  @override
+  String customerStatementDue(String date) {
+    return 'scadenza $date';
+  }
+
+  @override
+  String get customerStatementNothingOpen =>
+      'Non c\'è nulla di aperto per questo cliente: nessun estratto conto da stampare.';
+
+  @override
+  String get customerStatementOwedToYou => 'A Suo favore';
+
+  @override
+  String customerStatementPart(String date) {
+    return 'Pagamento del $date';
+  }
+
+  @override
+  String get customerStatementPickCurrency =>
+      'L\'estratto conto in quale valuta?';
+
+  @override
+  String get customerStatementStillDue => 'Ancora dovuto';
+
+  @override
+  String get customerStatementTotalDue => 'Totale ancora dovuto';
+
+  @override
+  String get customerStatementTotalUnapplied => 'Non ancora imputato';
+
+  @override
+  String get customerStatementUnapplied =>
+      'Pagamenti e crediti non ancora imputati';
+
+  @override
   String customerStoryDeclared(String number) {
     return 'Dice di aver pagato la fattura $number';
   }
@@ -25155,6 +25206,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportDocCoa => 'Piano dei conti';
+
+  @override
+  String get reportDocCustomerStatement => 'Estratto conto';
 
   @override
   String get reportDocGeneralLedger => 'Libro mastro';

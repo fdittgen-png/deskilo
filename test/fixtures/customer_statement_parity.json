@@ -1,0 +1,1 @@
+{"EUR": {"balance_cents": 6500, "credits": {"P": 1000}, "invoices": {"ST-2A": 6000, "ST-2C": 3000, "ST-2D": -1500}, "still_due_cents": 7500, "unapplied_cents": 1000}, "KWD": {"balance_cents": 12345, "credits": {}, "invoices": {"ST-2G": 12345}, "still_due_cents": 12345, "unapplied_cents": 0}}
