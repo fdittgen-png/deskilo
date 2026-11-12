@@ -5,6 +5,7 @@ import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
@@ -341,7 +342,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
-      workspaceFilesRepositoryProvider.overrideWithValue(fixture.files),
+      workspaceFilesRepositoryProvider.overrideWithValue(fixture.files), ...demoKioskOverrides(fixture), // #3675
       workspaceImportRepositoryProvider.overrideWithValue(fixture.imports),
       // #2573 — the demo files no expense request as a purchase document,
       // and the app's opener reads the server: none here.

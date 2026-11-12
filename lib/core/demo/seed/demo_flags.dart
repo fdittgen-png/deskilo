@@ -45,11 +45,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.invoiceEmail:
       'an invoice e-mail leaves from the server through the business\'s own '
       'provider; the Demo sends no e-mail',
-  // #3675 — the front-desk tablet is enrolled with the kiosk's own
-  // enrolment screen, which comes with the kiosk screens of #3675.
-  WorkspaceFeature.kioskEnrolment:
-      'a kiosk is enrolled from its own enrolment screen, which the Demo '
-      'gains with the kiosk screens',
 };
 
 /// ws-1: every feature on, except [demoFeaturesLeftOff] and anything whose

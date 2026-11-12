@@ -313,6 +313,12 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.secrets,
   ),
+  // #3675 — a device credential is answered on this page: never recorded.
+  RouteCoverage(
+    '/badge-kiosks',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.secrets,
+  ),
   RouteCoverage(
     '/payment-config',
     CoverageStatus.excluded,

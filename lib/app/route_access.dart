@@ -88,6 +88,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/assistants': {_P.manageIntegrations},
   '/settings/assistant-setup': {_P.manageIntegrations},
   '/nfc-config': {_P.operateKiosk},
+  '/badge-kiosks': {_P.operateKiosk},
 };
 
 bool _matches(String pattern, String path) {
