@@ -1,0 +1,9 @@
+{
+  "featureKioskEnrolmentTitle": "Enregistrement des kiosques",
+  "featureKioskEnrolmentDesc": "Enregistrer les appareils qui servent de kiosque et décider si la connexion par badge ne fonctionne que sur eux. Chaque appareil enregistré peut être révoqué.",
+  "settingLabelSecurityBadgeSigninWhere": "La connexion par badge fonctionne sur",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks : seulement sur les appareils que l’entreprise a enregistrés comme kiosques, qui accueillent chacun par son nom. any_device : sur tout appareil, où personne n’est nommé avant le PIN.",
+  "eventTypeKioskDevice": "Appareils kiosque",
+  "eventKioskDeviceEnrolled": "{actor} a enregistré le kiosque « {device} »",
+  "eventKioskDeviceRevoked": "{actor} a révoqué le kiosque « {device} »"
+}

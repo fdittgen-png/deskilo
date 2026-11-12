@@ -1,0 +1,9 @@
+{
+  "featureKioskEnrolmentTitle": "Kiosk-Registrierung",
+  "featureKioskEnrolmentDesc": "Registrieren Sie die Geräte, die als Kiosk dienen, und legen Sie fest, ob die Anmeldung per Ausweis nur auf ihnen funktioniert. Jedes registrierte Gerät lässt sich widerrufen.",
+  "settingLabelSecurityBadgeSigninWhere": "Anmeldung per Ausweis funktioniert auf",
+  "settingHintSecurityBadgeSigninWhere": "enrolled_kiosks: nur auf den Geräten, die das Unternehmen als Kiosk registriert hat; sie begrüßen jede Person mit Namen. any_device: auf jedem Gerät, auf dem vor der PIN niemand genannt wird.",
+  "eventTypeKioskDevice": "Kiosk-Geräte",
+  "eventKioskDeviceEnrolled": "{actor} hat den Kiosk „{device}“ registriert",
+  "eventKioskDeviceRevoked": "{actor} hat den Kiosk „{device}“ widerrufen"
+}

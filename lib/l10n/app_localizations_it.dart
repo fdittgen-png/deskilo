@@ -8983,6 +8983,16 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String eventKioskDeviceEnrolled(String actor, String device) {
+    return '$actor ha registrato il chiosco «$device»';
+  }
+
+  @override
+  String eventKioskDeviceRevoked(String actor, String device) {
+    return '$actor ha revocato il chiosco «$device»';
+  }
+
+  @override
   String eventLeaseNoticeLine(String actor, String premises, String date) {
     return '$actor dà disdetta per $premises; la locazione terminerebbe il $date';
   }
@@ -9185,6 +9195,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Annullamento del saldo';
+
+  @override
+  String get eventTypeKioskDevice => 'Dispositivi chiosco';
 
   @override
   String get eventTypeLeaseChange => 'Modifica del contratto di locazione';
@@ -10583,6 +10596,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureInvoicingWizardTitle => 'Assistente di fatturazione';
+
+  @override
+  String get featureKioskEnrolmentDesc =>
+      'Registri i dispositivi usati come chioschi e decida se l’accesso con badge funziona solo su di essi. Ogni dispositivo registrato può essere revocato.';
+
+  @override
+  String get featureKioskEnrolmentTitle => 'Registrazione dei chioschi';
 
   @override
   String get featureKioskMemberPhotosDesc =>
@@ -27511,6 +27531,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il minimo di cifre di un nuovo PIN del badge. I PIN già impostati continuano a funzionare finché non vengono cambiati.';
 
   @override
+  String get settingHintSecurityBadgeSigninWhere =>
+      'enrolled_kiosks: solo sui dispositivi che l’azienda ha registrato come chioschi, che salutano ogni persona per nome. any_device: su qualsiasi dispositivo, dove nessuno viene nominato prima del PIN.';
+
+  @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
       'Badge diversi dello spazio con un PIN errato durante il periodo di blocco prima di sospendere l’accesso e avvisare i proprietari. Un solo badge non lo raggiunge. Il limite può solo essere ridotto.';
 
@@ -27800,6 +27824,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelSecurityBadgePinMinLength =>
       'PIN del badge: lunghezza minima';
+
+  @override
+  String get settingLabelSecurityBadgeSigninWhere =>
+      'L’accesso con badge funziona su';
 
   @override
   String get settingLabelSecurityBadgeWorkspaceFailureLimit =>

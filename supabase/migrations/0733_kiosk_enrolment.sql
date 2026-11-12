@@ -48,6 +48,65 @@ revoke all on public.kiosk_devices from public, anon, authenticated;
 create policy mcp_delegated_deny on public.kiosk_devices as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 
+-- ── the owners' event: kiosk_device ─────────────────────────────────────
+create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
+returns text
+language plpgsql
+as $f$
+declare
+  v_pattern text;
+  v_out text;
+begin
+  if position(p_old in p_def) > 0 then
+    return replace(p_def, p_old, p_new);
+  end if;
+  v_pattern := regexp_replace(btrim(p_old, E' \t\n'), '([.^$*+?()\[\]{}|\\])', '\\\1', 'g');
+  v_pattern := regexp_replace(v_pattern, '\s+', '\\s*', 'g');
+  v_out := regexp_replace(p_def, v_pattern, replace(btrim(p_new, E' \t\n'), '\', '\\'), 'g');
+  return case when v_out = p_def then null else v_out end;
+end
+$f$;
+
+revoke execute on function pg_temp.anchor_replace(text, text, text) from public;
+
+do $migration$
+declare
+  v_def text;
+  r record;
+begin
+  -- the new event type: both type checks, as 0722 did
+  for r in select * from (values
+    ('events','events_type_check','type'),
+    ('validation_policies','validation_policies_event_type_check','event_type')
+  ) as c(table_name,constraint_name,column_name) loop
+    select pg_get_constraintdef(oid) into v_def from pg_constraint
+     where conrelid=('public.'||r.table_name)::regclass and conname=r.constraint_name;
+    if v_def is null or position('CHECK (' in v_def) <> 1 then
+      raise exception 'event type constraint anchor missing: %',r.constraint_name;
+    end if;
+    if position('kiosk_device' in v_def)=0 then
+      execute format('alter table public.%I drop constraint %I',r.table_name,r.constraint_name);
+      execute format('alter table public.%I add constraint %I ',r.table_name,r.constraint_name)
+        || replace(v_def,'CHECK (',format('CHECK (%I = %L OR ',r.column_name,'kiosk_device'));
+    end if;
+  end loop;
+
+  -- who reads it: whoever may change the business's settings (the owners)
+  select pg_get_functiondef('public.event_type_view_permissions(text)'::regprocedure) into v_def;
+  if position('kiosk_device' in v_def) = 0 then
+    v_def := pg_temp.anchor_replace(v_def,
+      $a$when p_type = 'settlement_review'
+      then array['viewFinances']$a$,
+      $a$when p_type = 'settlement_review'
+      then array['viewFinances']
+    when p_type = 'kiosk_device'
+      then array['workspaceSettings']$a$);
+    if v_def is null then raise exception '0733: event_type_view_permissions anchor missing'; end if;
+    execute v_def;
+  end if;
+end
+$migration$;
+
 -- Equality of two sha256 hex digests in a time that does not depend on
 -- where they differ.
 create or replace function public.same_sha256_hex(p_a text, p_b text)
@@ -202,11 +261,23 @@ revoke execute on function public.kiosk_devices_v1(uuid) from public, anon;
 grant execute on function public.kiosk_devices_v1(uuid) to authenticated;
 
 -- ── where badge sign-in works ───────────────────────────────────────────
--- SETTING SEED (generated below)
+-- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
+insert into public.setting_definitions
+  (key, type, default_value, min_value, max_value, unit, group_key, scopes,
+   edit_permission, floor_value, editable, choices, source, note)
+values
+('security.badge_signin_where', 'enum', '"enrolled_kiosks"'::jsonb, null, null, '', 'security', array['workspace'], 'workspaceSettings', null, true, '["enrolled_kiosks","any_device"]'::jsonb, 'badge_auth_verify (#3675)', 'Where badge sign-in works: only on the devices the business enrolled as kiosks, or on any device. On an enrolled kiosk the badge step greets the person by name; elsewhere nobody is named before the PIN. A business that already issued badges stays on any device until its owner switches.')
+on conflict (key) do nothing;
+-- END GENERATED SEED
 
 -- A business that already issued badges keeps today's behaviour until its
 -- owner switches.
--- EXISTING BUSINESSES (below)
+insert into public.setting_values (scope, workspace_id, key, value, note)
+select 'workspace', w.id, 'security.badge_signin_where', '"any_device"'::jsonb,
+       'kept as before by migration 0733 (#3675): badges were issued before kiosks could be enrolled'
+  from public.workspaces w
+ where exists (select 1 from public.member_badges b where b.workspace_id = w.id)
+on conflict do nothing;
 
 -- ── the pause ───────────────────────────────────────────────────────────
 -- Badge sign-in of a business is paused while as many distinct badges of it

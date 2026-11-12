@@ -9001,6 +9001,16 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventKioskDeviceEnrolled(String actor, String device) {
+    return '$actor hat den Kiosk „$device“ registriert';
+  }
+
+  @override
+  String eventKioskDeviceRevoked(String actor, String device) {
+    return '$actor hat den Kiosk „$device“ widerrufen';
+  }
+
+  @override
   String eventLeaseNoticeLine(String actor, String premises, String date) {
     return '$actor kündigt $premises; der Mietvertrag würde am $date enden';
   }
@@ -9203,6 +9213,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeInvoiceWriteoff => 'Restbetrag-Stornierung';
+
+  @override
+  String get eventTypeKioskDevice => 'Kiosk-Geräte';
 
   @override
   String get eventTypeLeaseChange => 'Mietvertragsänderung';
@@ -10600,6 +10613,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureInvoicingWizardTitle => 'Rechnungsassistent';
+
+  @override
+  String get featureKioskEnrolmentDesc =>
+      'Registrieren Sie die Geräte, die als Kiosk dienen, und legen Sie fest, ob die Anmeldung per Ausweis nur auf ihnen funktioniert. Jedes registrierte Gerät lässt sich widerrufen.';
+
+  @override
+  String get featureKioskEnrolmentTitle => 'Kiosk-Registrierung';
 
   @override
   String get featureKioskMemberPhotosDesc =>
@@ -27551,6 +27571,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die wenigsten Ziffern, die eine neue Badge-PIN haben darf. Bereits gesetzte PINs gelten, bis sie geändert werden.';
 
   @override
+  String get settingHintSecurityBadgeSigninWhere =>
+      'enrolled_kiosks: nur auf den Geräten, die das Unternehmen als Kiosk registriert hat; sie begrüßen jede Person mit Namen. any_device: auf jedem Gerät, auf dem vor der PIN niemand genannt wird.';
+
+  @override
   String get settingHintSecurityBadgeWorkspaceFailureLimit =>
       'Verschiedene Badges des Bereichs mit falscher PIN innerhalb des Sperrzeitraums, bevor die Anmeldung gesperrt und die Eigentümer benachrichtigt werden. Ein einzelnes Badge erreicht die Grenze nicht. Die Grenze kann nur gesenkt werden.';
 
@@ -27827,6 +27851,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingLabelSecurityBadgePinMinLength => 'Kürzeste Badge-PIN';
+
+  @override
+  String get settingLabelSecurityBadgeSigninWhere =>
+      'Anmeldung per Ausweis funktioniert auf';
 
   @override
   String get settingLabelSecurityBadgeWorkspaceFailureLimit =>
