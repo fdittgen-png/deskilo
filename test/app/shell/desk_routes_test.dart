@@ -84,6 +84,8 @@ void main() {
     '/bi': 'drawer-bi',
     '/money/accounting': 'drawer-accounting',
     '/member/member-1': 'drawer-members',
+    // Built since #3307 and never shown until it joined its group.
+    '/money/purchase-orders': 'drawer-purchase-orders',
   };
 
   for (final MapEntry(key: path, value: entry) in pages.entries) {

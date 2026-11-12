@@ -80,6 +80,8 @@ List<NavGroup> navGroupsOf(
       {
         'drawer-purchases',
         'drawer-suppliers',
+        // #3603 — built since #3307, never placed in a group until now.
+        'drawer-purchase-orders',
         'drawer-purchase-approvals',
         'drawer-purchases-to-pay',
       },
