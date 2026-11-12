@@ -37,10 +37,12 @@ class AppFormat {
   final ClockPref clock;
   final TimeZoneMode timeZoneMode;
 
-  /// Whatever the tests and the pre-#711 app always assumed.
+  /// Whatever the tests and the pre-#711 app always assumed, except the
+  /// currency: no business, no currency (#3658), so its amounts read
+  /// "Currency unavailable".
   static const fallback = AppFormat(
     locale: SettingDefaults.localeDefaultLocale,
-    currencyCode: SettingDefaults.localeDefaultCurrency,
+    currencyCode: '',
   );
 
   // ── money ────────────────────────────────────────────────────────
@@ -50,6 +52,7 @@ class AppFormat {
   /// `CHF 1'234.56` in `de_CH`; 1250 JPY → `￥1,250`, never `￥12.50`.
   String money(int minor, {String? currency}) {
     final code = currency ?? currencyCode;
+    if (!isCurrencyCode(code)) return currencyUnavailableText(locale);
     final symbol = _symbol(code);
     return spaceAlphabeticSymbol(
       NumberFormat.currency(
@@ -66,6 +69,7 @@ class AppFormat {
   /// their decimals (`12 €`, not `12,00 €`).
   String moneyCompact(int minor, {String? currency}) {
     final code = currency ?? currencyCode;
+    if (!isCurrencyCode(code)) return currencyUnavailableText(locale);
     final digits = Currencies.minorDigits(code);
     final whole = digits > 0 && minor % Currencies.minorPerMajor(code) == 0;
     final symbol = _symbol(code);
@@ -94,8 +98,9 @@ class AppFormat {
   /// reads a missing code as the open business's currency or as the
   /// platform's default: [code] is the record's own, or nothing is shown
   /// beside the number.
-  MoneyFormat moneyNamed(String code) =>
-      MoneyFormat(code, locale: locale, spaceAlphabetic: true, distinct: true);
+  MoneyFormat moneyNamed(String code) => isCurrencyCode(code)
+      ? MoneyFormat(code, locale: locale, spaceAlphabetic: true, distinct: true)
+      : moneyFormat(null, locale: locale);
 
   /// #3484 — plain numbers in the member's format locale: `1 234,5` in
   /// fr_FR; [decimals] fixes the fraction digits.

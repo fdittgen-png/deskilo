@@ -172,6 +172,7 @@ void main() {
       events: events,
       generatedAt: DateTime.utc(2027, 1, 6),
       workspaceName: 'Cowork Lausanne SA',
+      currencyCode: 'CHF',
     );
     expect(csv, contains('archive'));
     expect(csv, contains('Flo Owner'));

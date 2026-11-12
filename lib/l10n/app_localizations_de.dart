@@ -20214,6 +20214,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moneyCredits => 'Zahlungen & Gutschriften';
 
   @override
+  String get moneyCurrencyUnavailable => 'Währung nicht verfügbar';
+
+  @override
   String get moneyDescriptionLabel => 'Beschreibung';
 
   @override

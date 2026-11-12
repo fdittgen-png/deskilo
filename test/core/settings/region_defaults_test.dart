@@ -45,7 +45,7 @@ void main() {
     expect(SettingDefaults.localeDefaultCountry, 'FR');
     expect(SettingDefaults.localeDefaultLocale, 'en_US');
     expect(RegionDefaults.fromSettings(null).currency, 'EUR');
-    expect(AppFormat.fallback.currencyCode, 'EUR');
+    expect(AppFormat.fallback.currencyCode, '', reason: 'no default currency (#3658)');
     expect(AppFormat.fallback.locale, 'en_US');
     WorkspaceCurrency.reset();
     expect(WorkspaceCurrency.code, 'EUR');

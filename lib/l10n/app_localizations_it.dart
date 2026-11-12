@@ -20192,6 +20192,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get moneyCredits => 'Pagamenti e crediti';
 
   @override
+  String get moneyCurrencyUnavailable => 'Valuta non disponibile';
+
+  @override
   String get moneyDescriptionLabel => 'Descrizione';
 
   @override

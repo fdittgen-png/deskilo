@@ -15,7 +15,6 @@ import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
@@ -171,7 +170,7 @@ class _State extends ConsumerState<RepartitionWizardScreen> {
         ..invalidate(workspaceMembersProvider)
         ..invalidate(repartitionRuleProvider),
     );
-    final currency = appFormatOf(context).moneyIn(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(workspace?.currencyCode);
     final rule = _effectiveRule();
     final shares = _shares();
     final total = shares.fold<int>(0, (s, x) => s + x.amountCents);

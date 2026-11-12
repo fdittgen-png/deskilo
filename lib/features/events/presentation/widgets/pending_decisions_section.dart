@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/event_sources.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -80,7 +79,7 @@ class PendingDecisionsSection extends ConsumerWidget {
         const <String, List<EventDecision>>{};
     final policies =
         ref.watch(validationPoliciesProvider).value ?? const <ValidationPolicy>[];
-    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
+    final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final format = ref.watch(appFormatProvider);
     return Column(
       key: const ValueKey('pending-decisions'),

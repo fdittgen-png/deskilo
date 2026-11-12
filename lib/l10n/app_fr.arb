@@ -12440,6 +12440,7 @@
   "moneyAmountLabel": "Montant",
   "moneyBaseFee": "Abonnement de base",
   "moneyCredits": "Paiements et crédits",
+  "moneyCurrencyUnavailable": "Devise indisponible",
   "moneyDescriptionLabel": "Description",
   "moneyDueIn": "{days, plural, =1{Échéance dans 1 jour} other{Échéance dans {days} jours}}",
   "moneyExpenseCategoryLabel": "Catégorie",

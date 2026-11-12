@@ -11,7 +11,6 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -160,7 +159,7 @@ class _SettlementWizardState extends ConsumerState<_SettlementWizard> {
         if (_picked.contains(invoice.id)) invoice,
     ];
     final currency =
-        appFormatOf(context).moneyIn(candidates.isEmpty ? SettingDefaults.localeDefaultCurrency : candidates.first.currency);
+        appFormatOf(context).moneyIn(candidates.firstOrNull?.currency);
     final total = chosen.fold<int>(0, (sum, i) => sum + i.totalCents);
     final steps = <WizardStepSpec>[
       (name: 'pick', label: l10n.settlementStepPick),
