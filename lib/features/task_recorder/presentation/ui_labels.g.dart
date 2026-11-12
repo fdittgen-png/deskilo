@@ -5856,6 +5856,7 @@ Map<String, _Getter> _part16() => {
   'levelPriceLabel': (l) => l.levelPriceLabel,
   'libraryNothingToApply': (l) => l.libraryNothingToApply,
   'libraryYours': (l) => l.libraryYours,
+  'listDetailResize': (l) => l.listDetailResize,
   'localSlotPaymentDetails': (l) => l.localSlotPaymentDetails,
   'mcpAssistantsTitle': (l) => l.mcpAssistantsTitle,
   'mcpAssistantsUnavailable': (l) => l.mcpAssistantsUnavailable,

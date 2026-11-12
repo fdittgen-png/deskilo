@@ -10,4 +10,4 @@
 // demonstration was reaching the real app. The suite reaches them
 // through this import exactly as before.
 export 'package:deskilo/core/demo/data/device_prefs.dart'
-    show InMemoryNavigationStyleStore, InMemoryShellFlagStore;
+    show InMemoryNavigationStyleStore, InMemoryPaneWidthStore, InMemoryShellFlagStore;

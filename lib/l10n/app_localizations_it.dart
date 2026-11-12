@@ -17762,6 +17762,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get listDetailResize => 'Ridimensiona il riquadro della scheda';
+
+  @override
   String get listWholeReservable => 'Prenotabile per intero';
 
   @override

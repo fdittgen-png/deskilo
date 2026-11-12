@@ -101,7 +101,14 @@ class InvoicePage extends ConsumerWidget {
         unreadable: invoice == null && (read.hasError || invoices != null),
       );
     }
-    final receivables = ref.watch(invoicingReaderProvider).read([invoice]);
+    // #3607 — read among every invoice, so a regrouped source names the
+    // settlement it went into (its number is another invoice's); then this
+    // invoice's own receivable.
+    final all = ref.watch(invoicingReaderProvider).read(invoices ?? [invoice]);
+    final receivables = [
+      for (final r in all)
+        if (r.invoiceId == invoice.id) r,
+    ];
     final match = (matchRead.value ?? const {})[invoice.id]; // empty-ok: a failed read is a named source; the page offers no action then
     final lifecycle = invoiceLifecycleOf(invoice, match);
     final replacement = invoices

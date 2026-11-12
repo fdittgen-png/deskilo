@@ -28436,6 +28436,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 table} other{{count} tables}}'**
   String listCoversTables(int count);
 
+  /// #3607 the edge between a list and its open record, dragged to resize the record's pane
+  ///
+  /// In en, this message translates to:
+  /// **'Resize the record pane'**
+  String get listDetailResize;
+
   /// #1825 — reserve list: a header whose space this member can reserve as a whole
   ///
   /// In en, this message translates to:
