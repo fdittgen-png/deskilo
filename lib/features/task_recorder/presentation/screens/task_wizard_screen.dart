@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -32,6 +33,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/stored_guide.dart';
 import '../../domain/stored_recording.dart';
@@ -59,7 +61,13 @@ class TaskWizardScreen extends ConsumerWidget {
     final available = ref.watch(taskRecorderAvailableProvider);
     return Scaffold(
       appBar: AppBar(title: PageTitle(l10n.taskWizardTitle)),
-      body: ListView(
+      // #3818 — a task file dropped on the page goes where the menu's
+      // "add from file" sends a picked one.
+      body: FileDropZone(
+        typeGroup: _taskFileTypes(l10n),
+        enabled: ref.watch(guideStoreProvider) != null,
+        onFile: (file) async => _openTaskFile(context, ref, file),
+        child: ListView(
         key: const ValueKey('task-wizard'),
         padding: AppSpacing.gutterAll,
         children: [
@@ -132,6 +140,7 @@ class TaskWizardScreen extends ConsumerWidget {
             onTap: () => context.push(taskWorkbenchRoute),
           ),
         ],
+      ),
       ),
     );
   }
@@ -306,23 +315,33 @@ Future<void> _makeGuide(
   }
 }
 
+/// What "add from file" takes: the same group for the picker and the drop.
+XTypeGroup _taskFileTypes(AppLocalizations l10n) => XTypeGroup(
+  label: l10n.taskWorkbenchFileType,
+  extensions: workbenchExtensions,
+);
+
 Future<void> _addFromFile(BuildContext context, WidgetRef ref) async {
-  final l10n = context.l10n;
-  final store = ref.read(guideStoreProvider);
-  if (store == null) return;
+  if (ref.read(guideStoreProvider) == null) return;
   final XFile? file;
   try {
-    file = await ref.read(filePickerProvider)(
-      XTypeGroup(
-        label: l10n.taskWorkbenchFileType,
-        extensions: workbenchExtensions,
-      ),
-    );
+    file = await ref.read(filePickerProvider)(_taskFileTypes(context.l10n));
   } on Object catch (e, st) {
     TraceLogger.instance.warn('recorder', 'picker failed', stackTrace: st);
     return;
   }
   if (file == null || !context.mounted) return;
+  await _openTaskFile(context, ref, file);
+}
+
+/// #3818 — what a picked or a dropped task file comes to: a guide draft,
+/// or the reason it is refused.
+Future<void> _openTaskFile(
+  BuildContext context,
+  WidgetRef ref,
+  XFile file,
+) async {
+  final l10n = context.l10n;
   TaskGuide? guide;
   WorkbenchRefusal? refusal;
   try {

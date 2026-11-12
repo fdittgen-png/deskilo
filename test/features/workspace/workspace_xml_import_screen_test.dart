@@ -23,6 +23,7 @@ import 'package:deskilo/features/workspace/providers/workspace_import_providers.
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
@@ -199,6 +200,7 @@ Future<void> pumpWorkspaceSettings(
   required FakeWorkspaceRepository workspaceRepository,
   required CountingFloorPlanRepository floorPlan,
   FakeLocalSetupRepository? localSetup,
+  List<Override> extraOverrides = const [],
 }) async {
   // The settings form outgrew the 800×600 test viewport long ago (#155);
   // the import tile sits below the export tile, keep the form built.
@@ -219,6 +221,7 @@ Future<void> pumpWorkspaceSettings(
           localSetup: localSetup,
         ),
         filePickerProvider.overrideWithValue(picker),
+        ...extraOverrides,
         workspaceImportRepositoryProvider.overrideWithValue(importRepository),
       ],
       child: const DeskiloApp(),
