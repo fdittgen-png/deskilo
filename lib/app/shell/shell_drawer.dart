@@ -141,11 +141,13 @@ class ShellDrawer extends ConsumerWidget {
       context,
       ref,
       permanent: permanent,
-      tabTitles: tabTitles,
-      visibleBranches: visibleBranches,
-      navs: navs,
-      currentIndex: currentIndex,
-      onBranch: onBranch,
+      tabs: (
+        tabTitles: tabTitles,
+        visibleBranches: visibleBranches,
+        navs: navs,
+        currentIndex: currentIndex,
+        onBranch: onBranch,
+      ),
       openToPay: workspace == null
           ? null
           : () => _openToPay(context, workspace.id, perms, permanent: permanent),

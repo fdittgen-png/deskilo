@@ -238,7 +238,12 @@ class _Collector extends RecursiveAstVisitor<void> {
     if (call.name == 'GoRoute' && !_insideRoute(node)) {
       out.routes.addAll(routeTree(node, '', const {}));
     } else if (call.name == 'RouteRule') {
-      final args = call.args.arguments;
+      // The pattern and the class; named arguments (#3603: chrome, place)
+      // say how the route is shown, not what it needs.
+      final args = [
+        for (final a in call.args.arguments)
+          if (a is! NamedArgument) a,
+      ];
       final kind = args.length == 2
           ? RegExp(r'^RouteClass\.(\w+)$').firstMatch(args[1].toSource())
           : null;

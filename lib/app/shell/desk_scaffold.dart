@@ -22,7 +22,7 @@ import 'desk_navigation.dart';
 
 /// Whether [context]'s window shows the desk: the expanded class or wider,
 /// at a text size the sidebar still holds on one line.
-bool showsDesk(BuildContext context) =>
+bool _showsDesk(BuildContext context) =>
     WindowClass.of(context).atLeast(WindowClass.expanded) &&
     MediaQuery.textScalerOf(context).scale(100) <= kWideNavigationMaxTextScale;
 
@@ -35,19 +35,19 @@ bool deskShownAt(
   required bool inBusiness,
 }) =>
     chromeOf(path) == RouteChrome.desk &&
-    showsDesk(context) &&
+    _showsDesk(context) &&
     (!workspaceChromeAccountRoutes.contains(path) || inBusiness);
 
 /// Material's default horizontal inset of a dialog (its own private
 /// `_defaultInsetPadding`), for a theme that sets none.
-const double kMaterialDialogInset = 40;
+const double _materialDialogInset = 40;
 
 /// #3603 — the windows opened over a desk page (dialogs) keep the width
 /// the page's column gave them before the desk took the window: the
 /// column less the dialog's insets on each side.
 ThemeData deskOverlayTheme(ThemeData theme, String path) {
   final inset =
-      theme.dialogTheme.insetPadding?.horizontal ?? 2 * kMaterialDialogInset;
+      theme.dialogTheme.insetPadding?.horizontal ?? 2 * _materialDialogInset;
   return theme.copyWith(
     dialogTheme: theme.dialogTheme.copyWith(
       constraints: BoxConstraints(maxWidth: frameWidthFor(path) - inset),

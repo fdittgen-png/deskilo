@@ -21,6 +21,17 @@ import 'shell_destinations.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_nav_groups.dart';
 
+/// The shell's tabs as the navigation offers them: their titles, the ones
+/// shown, the destination table (#3551), the open one (-1 outside the tabs)
+/// and how one is opened.
+typedef ShellTabs = ({
+  List<String> tabTitles,
+  List<int> visibleBranches,
+  List<ShellNav>? navs,
+  int currentIndex,
+  ValueChanged<int> onBranch,
+});
+
 /// The entries of the navigation, in the groups the drawer shows them in.
 class ShellMenu {
   ShellMenu._({
@@ -37,13 +48,11 @@ class ShellMenu {
     BuildContext context,
     WidgetRef ref, {
     required bool permanent,
-    required List<String> tabTitles,
-    required List<int> visibleBranches,
-    List<ShellNav>? navs,
-    required int currentIndex,
-    required ValueChanged<int> onBranch,
+    required ShellTabs tabs,
     VoidCallback? openToPay,
   }) {
+    final (:tabTitles, :visibleBranches, :navs, :currentIndex, :onBranch) =
+        tabs;
     final state = GoRouterState.of(context);
     final path = state.uri.path;
     final features = ref.watch(enabledFeaturesSyncProvider);

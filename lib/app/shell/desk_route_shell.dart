@@ -38,7 +38,7 @@ List<RouteBase> deskSplit(List<RouteBase> routes) {
     ShellRoute(
       // #2142 — a window opened over a desk page reaches the recording too.
       observers: [RecorderWindowObserver()],
-      builder: (context, state, child) => DeskPage(child: child),
+      builder: (context, state, child) => _DeskPage(child: child),
       routes: [
         for (final r in routes)
           if (onDesk(r)) r,
@@ -58,8 +58,8 @@ String _branchLocation(int branch) => switch (branch) {
 
 /// The desk around [child] where its route is shown on the desk, else
 /// [child] alone.
-class DeskPage extends ConsumerWidget {
-  const DeskPage({required this.child, super.key});
+class _DeskPage extends ConsumerWidget {
+  const _DeskPage({required this.child});
 
   final Widget child;
 
@@ -83,11 +83,13 @@ class DeskPage extends ConsumerWidget {
       context,
       ref,
       permanent: true,
-      tabTitles: tabTitles,
-      visibleBranches: visibleBranches,
-      navs: navs,
-      currentIndex: -1,
-      onBranch: onBranch,
+      tabs: (
+        tabTitles: tabTitles,
+        visibleBranches: visibleBranches,
+        navs: navs,
+        currentIndex: -1,
+        onBranch: onBranch,
+      ),
     ).crumbsOf(path);
     return DeskScaffold(
       navigation: ({required rail}) => ShellDrawer(
@@ -100,7 +102,7 @@ class DeskPage extends ConsumerWidget {
         pendingEvents: pendingEvents,
         onBranch: onBranch,
       ),
-      title: DeskBreadcrumb(crumbs: crumbs),
+      title: _DeskBreadcrumb(crumbs: crumbs),
       place: crumbs.lastOrNull,
       actions: shellBarActions(context, ref, currentIndex: -1),
       body: child,
@@ -111,8 +113,8 @@ class DeskPage extends ConsumerWidget {
 /// The place on screen as the sidebar shows it: "Purchases › Suppliers".
 /// The last part is the page's place; the record shown (a member's name)
 /// comes with the page's own leaf, not here.
-class DeskBreadcrumb extends StatelessWidget {
-  const DeskBreadcrumb({required this.crumbs, super.key});
+class _DeskBreadcrumb extends StatelessWidget {
+  const _DeskBreadcrumb({required this.crumbs});
 
   final List<String> crumbs;
 

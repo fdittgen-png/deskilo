@@ -327,6 +327,5 @@ void main() {
     );
     // 880 on master at 1440 and 1920: the column less the two insets.
     expect(dialog.width, 880);
-    expect(dialog.width, kReadingColumnMaxWidth - 2 * kMaterialDialogInset);
   });
 }
