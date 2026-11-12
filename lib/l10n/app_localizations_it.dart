@@ -7354,11 +7354,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get deskSupplementLabel => 'Prenotazioni di tavolo';
 
   @override
-  String deskWindowTitle(String place, String business) {
-    return '$place — $business';
-  }
-
-  @override
   String get developerClear => 'Svuota registro';
 
   @override
@@ -34641,6 +34636,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String windowTitle(String place, String business, String app) {
+    return '$place — $business — $app';
+  }
+
+  @override
+  String windowTitleNoBusiness(String place, String app) {
+    return '$place — $app';
+  }
 
   @override
   String get wizardBack => 'Indietro';

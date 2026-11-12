@@ -7366,11 +7366,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deskSupplementLabel => 'Réservations de table';
 
   @override
-  String deskWindowTitle(String place, String business) {
-    return '$place — $business';
-  }
-
-  @override
   String get developerClear => 'Vider le journal';
 
   @override
@@ -34711,6 +34706,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get whatsappTitle => 'WhatsApp';
+
+  @override
+  String windowTitle(String place, String business, String app) {
+    return '$place — $business — $app';
+  }
+
+  @override
+  String windowTitleNoBusiness(String place, String app) {
+    return '$place — $app';
+  }
 
   @override
   String get wizardBack => 'Retour';
