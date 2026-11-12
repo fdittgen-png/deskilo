@@ -12,13 +12,18 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/app/shell/desk_scaffold.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/core/ui/adaptive/task_surface.dart';
 import 'package:deskilo/core/ui/app_frame.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
+import 'package:deskilo/features/money/domain/guest_pass.dart';
+import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,12 +31,22 @@ import '../../helpers/mock_providers.dart';
 
 final _en = AppLocalizationsEn();
 
+/// A space without guest passes yet: the screen offers to add one.
+class _NoPasses implements GuestPassRepository {
+  @override
+  Future<List<GuestPassOffer>> offers(String workspaceId) async => const [];
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
 Finder _key(String k) => find.byKey(ValueKey(k));
 
 Future<GoRouter> _pump(
   WidgetTester tester, {
   Size size = const Size(1440, 900),
   Set<WorkspaceFeature> off = const {},
+  List<Override> extra = const [],
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
@@ -49,6 +64,7 @@ Future<GoRouter> _pump(
           ),
         ),
         enabledFeaturesSyncProvider.overrideWithValue(features),
+        ...extra,
       ],
       child: const DeskiloApp(),
     ),
@@ -283,8 +299,9 @@ void main() {
     expect(tester.getRect(find.byType(Scaffold).last).width, 800);
   });
 
-  testWidgets('a sheet and a dialog over a desk page keep their master '
-      'widths (the sheet its own 640, the dialog the column less its insets)', (
+  testWidgets('a form and a dialog over a desk page keep their widths (the '
+      'form a side panel of its named width since #3608, the dialog the '
+      'column less its insets)', (
     tester,
   ) async {
     final router = await _pump(tester);
@@ -309,7 +326,10 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(tester.getRect(find.byType(AppFormSheet)).width, 640);
+    expect(
+      tester.getRect(find.byType(AppFormSheet)).width,
+      TaskSurfaceMetrics.sidePanelWidth,
+    );
     Navigator.of(tester.element(find.byType(AppFormSheet))).pop();
     await tester.pumpAndSettle();
     unawaited(
@@ -386,6 +406,41 @@ void main() {
     Navigator.of(tester.element(find.byType(AppFormSheet))).pop();
     await tester.pumpAndSettle();
     expect(_key('desk-scrim'), findsNothing);
+    await tester.tap(_key('drawer-reserve'));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/reserve');
+  });
+
+  testWidgets('#3608: a form opened by a page at 1440 is a side panel; the '
+      'navigation rests while it is open and answers once it is closed', (
+    tester,
+  ) async {
+    final router = await _pump(
+      tester,
+      extra: [
+        myPermissionsProvider.overrideWithValue(
+          WorkspacePermission.values.toSet(),
+        ),
+        guestPassRepositoryProvider.overrideWithValue(_NoPasses()),
+      ],
+    );
+    await _go(tester, router, '/money/guest-passes');
+    await tester.tap(
+      find.descendant(of: _key('desk-page'), matching: _key('guest-pass-add')),
+    );
+    await tester.pumpAndSettle();
+    expect(_key('task-side-panel'), findsOneWidget);
+    expect(
+      tester.getSize(_key('task-side-panel')).width,
+      TaskSurfaceMetrics.sidePanelWidth,
+    );
+    await tester.tap(_key('drawer-reserve'), warnIfMissed: false);
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/money/guest-passes');
+    expect(_key('task-side-panel'), findsOneWidget);
+    await tester.tap(_key('form-sheet-cancel'));
+    await tester.pumpAndSettle();
+    expect(_key('task-side-panel'), findsNothing);
     await tester.tap(_key('drawer-reserve'));
     await tester.pumpAndSettle();
     expect(router.state.uri.path, '/reserve');

@@ -26,9 +26,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 
 import '../theme/app_spacing.dart';
-import 'app_sheet.dart';
+import 'adaptive/task_surface.dart';
+import 'composer_send_keys.dart';
 import 'form_error_summary.dart';
 import 'inline_banner.dart';
 
@@ -184,6 +186,7 @@ class AppTextField extends StatelessWidget {
         if (scope != null && shown != null && error == null) {
           scope.onEdit(fieldKey!);
         }
+        TaskSession.maybeOf(context)?.markChanged();
         onChanged?.call(value);
       },
       onSubmitted: onSubmitted,
@@ -360,8 +363,53 @@ class _AppFormSheetState extends State<AppFormSheet> {
     });
   }
 
+  /// The text field that has the focus, if one has.
+  static EditableText? _focusedText() => FocusManager
+      .instance
+      .primaryFocus
+      ?.context
+      ?.findAncestorWidgetOfExactType<EditableText>();
+
+  /// #3608: Ctrl/Cmd+Enter submits any form, plain Enter a short task's
+  /// form from a one-line field, both through [_submit] (which runs once
+  /// while busy). A word still being composed, a multi-line field's Return
+  /// and Enter on a button are left to the field and the button; the event
+  /// is consumed here, so no outer scope submits it again.
+  KeyEventResult _onKey(FocusNode node, KeyEvent event) {
+    final key = event.logicalKey;
+    if (key != LogicalKeyboardKey.enter &&
+        key != LogicalKeyboardKey.numpadEnter) {
+      return KeyEventResult.ignored;
+    }
+    final keyboard = HardwareKeyboard.instance;
+    final chord = keyboard.isControlPressed || keyboard.isMetaPressed;
+    final field = _focusedText();
+    if (field != null && isComposingText(field.controller.value)) {
+      return KeyEventResult.ignored;
+    }
+    final short = TaskSession.maybeOf(context)?.size == TaskSize.short;
+    if (!chord && (!short || field == null || field.maxLines != 1)) {
+      return KeyEventResult.ignored;
+    }
+    if (event is KeyUpEvent) return KeyEventResult.ignored;
+    if (event is KeyDownEvent) unawaited(_submit());
+    return KeyEventResult.handled;
+  }
+
+  void _refresh() {
+    TaskSession.maybeOf(context)?.markChanged();
+    setState(() {});
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Focus(
+    canRequestFocus: false,
+    skipTraversal: true,
+    onKeyEvent: _onKey,
+    child: _body(context),
+  );
+
+  Widget _body(BuildContext context) {
     final media = MediaQuery.of(context);
     // The keyboard when it is up, otherwise the system navigation bar.
     final bottom = media.viewInsets.bottom > 0
@@ -403,7 +451,7 @@ class _AppFormSheetState extends State<AppFormSheet> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: widget.builder(context, () => setState(() {})),
+                      children: widget.builder(context, _refresh),
                     ),
                   ),
                 ],
@@ -463,12 +511,12 @@ class _AppFormSheetState extends State<AppFormSheet> {
   }
 }
 
-/// Opens an [AppFormSheet]; true when it was submitted successfully.
+/// Opens an [AppFormSheet] as a standard task (a sheet on a phone, a side
+/// panel at the desk, #3608); true when it was submitted successfully.
 Future<bool> showAppFormSheet(BuildContext context, AppFormSheet sheet) async =>
-    await showAppSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
+    await showTask<bool>(
+      context,
+      size: TaskSize.standard,
       builder: (_) => sheet,
     ) ??
     false;
