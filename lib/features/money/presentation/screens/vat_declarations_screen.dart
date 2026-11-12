@@ -119,7 +119,7 @@ class _VatDeclarationsScreenState
       disclaimer: '${_basisNote(l10n, reference)} '
           '${l10n.vatDeclDisclaimer}',
       statusLabel: _statusLabel(l10n, declaration),
-      rate: (value) => '${appFormatOf(context).numbers().format(value)} %',
+      rate: appFormatOf(context).ratePercent,
       lineNote: (line) => _lineNote(l10n, line),
       money: appFormatOf(context).moneyIn(declaration.currency).formatMinor,
       date: dateFormat.format,

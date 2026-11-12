@@ -1,8 +1,8 @@
 {
   "@@locale": "de",
   "meDataPersonalTitle": "Ihr persönliches Konto",
-  "meDataPersonalScope": "Was Ihr persönliches Zuhause über Sie speichert: Ihr Profil, Ihre Einstellungen, Ihre Unterhaltungen und die Spaces, die Sie nennen. Buchungen und Rechnungen jedes Spaces bleiben bei diesem Space und sind nicht Teil dieser Datei.",
-  "meDataPersonalSummary": "Unterhaltungen: {conversations} · Nachrichten: {messages} · Genannte Spaces: {workspaces}",
+  "meDataPersonalScope": "Was Ihr persönliches Zuhause über Sie speichert: Ihr Profil, Ihre Einstellungen, Ihre Unterhaltungen und die Orte, die Sie nennen. Buchungen und Rechnungen jedes Betriebs bleiben bei diesem Betrieb und sind nicht Teil dieser Datei.",
+  "meDataPersonalSummary": "Unterhaltungen: {conversations} · Nachrichten: {messages} · Genannte Orte: {workspaces}",
   "meDataPersonalExport": "Persönliche Daten exportieren",
   "meDataPersonalUnsupported": "Ihr persönliches Zuhause bietet diesen Export noch nicht an. Es wurde nichts exportiert.",
   "meDataPersonalForbidden": "Diese Sitzung darf Ihre persönlichen Daten nicht lesen. Melden Sie sich erneut in der App an.",

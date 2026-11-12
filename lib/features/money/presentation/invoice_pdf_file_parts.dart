@@ -23,9 +23,9 @@ InvoicePdfStrings invoicePdfStringsOf(
   String? localeName,
 }) {
   final words = l10n ?? context.l10n;
-  final dateFormat = DateFormat.yMMMd(
-    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-  );
+  final printLocale =
+      localeName ?? Localizations.maybeLocaleOf(context)?.toString();
+  final dateFormat = DateFormat.yMMMd(printLocale);
   final voidedAt = invoice.voidedAt;
   final voidedLabel = voidedAt == null
       ? ''
@@ -70,6 +70,7 @@ InvoicePdfStrings invoicePdfStringsOf(
     issuedByNamed: words.invoicePdfIssuedByName('{value}'),
     replacesNumbered: words.invoicePdfReplacesNumber('{value}'),
     vatRated: words.vatPdfVatRate('{value}'),
+    formatLocale: printLocale,
   );
 }
 

@@ -90,7 +90,7 @@
   },
   "notesFilterUnreadCount": "Unread ({unread})",
   "@notesFilterUnreadCount": {
-    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\".",
+    "description": "Filter chip: unread notes with their number as a badge, a number on a label and not a count in a sentence, e.g. \"Unread (3)\". [not a count: unread]",
     "placeholders": {
       "unread": {
         "type": "int"
@@ -117,7 +117,7 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "conversationMemberCount": "{count, plural, =1{1 member} other{{count} members}}",
+  "conversationMemberCount": "{count, plural, one{1 member} other{{count} members}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
     "placeholders": {
@@ -210,7 +210,7 @@
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "{count, plural, =1{+1 more} other{+{count} more}}",
+  "memberMoreInvoices": "{count, plural, one{+1 more} other{+{count} more}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -321,7 +321,7 @@
   "@composerAttach": {
     "description": "Shown as a tooltip in member note composer (workspace)."
   },
-  "composerCharsLeft": "{count, plural, =1{1 character left} other{{count} characters left}}",
+  "composerCharsLeft": "{count, plural, one{1 character left} other{{count} characters left}}",
   "@composerCharsLeft": {
     "description": "Shown as a field counter in member note composer (workspace). Placeholders: {count} (int).",
     "placeholders": {
@@ -344,7 +344,7 @@
   },
   "noteRefFilterCount": "{shown} of {total}",
   "@noteRefFilterCount": {
-    "description": "#842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "#842 - how many candidates the filter is showing. The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: shown, total]",
     "placeholders": {
       "shown": {
         "type": "int"
@@ -414,7 +414,7 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
-  "threadNoRefs": "References are only shared with people of the same workspace.",
+  "threadNoRefs": "References are only shared with people of the same business.",
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
   },

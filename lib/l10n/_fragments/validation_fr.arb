@@ -1,12 +1,12 @@
 {
   "@@locale": "fr",
-  "eventValidations": "{current}/{required, plural, =1{1 validation} other{{required} validations}}",
+  "eventValidations": "{current}/{required, plural, one{{required} validation} other{{required} validations}}",
   "eventValidatedBy": "Validé par {name} · {when}",
   "eventRejectedBy": "Refusé par {name} · {when}",
   "eventSystemDecider": "Système",
   "validationTrailTitle": "Historique de validation",
   "validationTrailNone": "Aucune décision pour le moment.",
   "validationTrailStep": "Étape {order}",
-  "validationTrailAwaiting": "{count, plural, =1{En attente d’une validation de plus.} other{En attente de {count} validations de plus.}}",
+  "validationTrailAwaiting": "{count, plural, =0{En attente de {count} validations de plus.} one{En attente d’une validation de plus.} other{En attente de {count} validations de plus.}}",
   "eventValidationStage": "Validation {stage} sur {required} demandée"
 }

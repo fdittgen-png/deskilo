@@ -95,7 +95,7 @@ Map<String, Object?> _vatReportData(
   final currency = moneyFormat(requireCurrency(workspace?.currencyCode, where: 'VAT report'), locale: appFormatOf(context).locale);
   final locale = Localizations.maybeLocaleOf(context)?.toString();
   final dateFormat = DateFormat.yMMMd(locale);
-  final rate = appFormatOf(context).rate;
+  final rate = appFormatOf(context).ratePercent;
   final periodLabel = '${dateFormat.format(report.periodStart)} – '
       '${dateFormat.format(report.periodEnd)}';
   return <String, Object?>{

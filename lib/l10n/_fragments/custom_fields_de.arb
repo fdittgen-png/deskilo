@@ -20,11 +20,11 @@
   "@attentionDecide": {
     "description": "#2326: attentionDecide"
   },
-  "attentionAdmit": "{count, plural, =1{1 Beitrittsanfrage annehmen} other{{count} Beitrittsanfragen annehmen}}",
+  "attentionAdmit": "{count, plural, one{1 Beitrittsanfrage annehmen} other{{count} Beitrittsanfragen annehmen}}",
   "@attentionAdmit": {
     "description": "#2326: attentionAdmit"
   },
-  "attentionIssue": "{count, plural, =1{Den Monat für 1 Mitglied abrechnen} other{Den Monat für {count} Mitglieder abrechnen}}",
+  "attentionIssue": "{count, plural, one{Den Monat für 1 Mitglied abrechnen} other{Den Monat für {count} Mitglieder abrechnen}}",
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
@@ -36,7 +36,7 @@
   "@attentionSetUp": {
     "description": "#2332: attentionSetUp"
   },
-  "attentionUnblock": "{count, plural, =1{1 eingeschaltete Funktion wartet auf „{feature}“} other{{count} eingeschaltete Funktionen warten auf „{feature}“}}",
+  "attentionUnblock": "{count, plural, one{1 eingeschaltete Funktion wartet auf „{feature}“} other{{count} eingeschaltete Funktionen warten auf „{feature}“}}",
   "@attentionUnblock": {
     "description": "#2332: attentionUnblock"
   },

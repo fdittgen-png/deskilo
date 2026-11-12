@@ -151,7 +151,7 @@
       }
     }
   },
-  "leaseOccurrencesAfter": "{count, plural, =1{È già stata presentata 1 scadenza con data successiva alla fine.} other{Sono già state presentate {count} scadenze con data successiva alla fine.}}",
+  "leaseOccurrencesAfter": "{count, plural, one{È già stata presentata 1 scadenza con data successiva alla fine.} other{Sono già state presentate {count} scadenze con data successiva alla fine.}}",
   "@leaseOccurrencesAfter": {
     "description": "#2569 premises lease",
     "placeholders": {

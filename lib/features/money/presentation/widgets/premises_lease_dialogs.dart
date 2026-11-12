@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/premises_lease.dart';
@@ -41,7 +42,7 @@ class LeaseDateButton extends StatelessWidget {
     return OutlinedButton(
       key: ValueKey(fieldKey),
       onPressed: () async {
-        final d = await showDatePicker(
+        final d = await showAppDatePicker(
           context: context,
           initialDate: value ?? first,
           firstDate: first,

@@ -6,7 +6,7 @@
   "libraryStartFrom": "Partire dalla biblioteca",
   "libraryYours": "I suoi modelli",
   "libraryEmpty": "Ancora niente qui. Salvi questo spazio come modello, o aspetti che qualcuno ne condivida uno con Lei.",
-  "libraryCounts": "{levels, plural, =1{1 livello} other{{levels} livelli}} · {desks, plural, =1{1 scrivania} other{{desks} scrivanie}} · {seats, plural, =1{1 posto} other{{seats} posti}}",
+  "libraryCounts": "{levels, plural, one{1 livello} other{{levels} livelli}} · {desks, plural, one{1 scrivania} other{{desks} scrivanie}} · {seats, plural, one{1 posto} other{{seats} posti}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {
@@ -39,9 +39,9 @@
   "libraryStateMatching": "Già uguale",
   "libraryStateAttention": "Richiede attenzione",
   "libraryReasonFeeSchedule": "La sua scala di commissioni verrebbe sostituita per intero.",
-  "libraryApplyChanges": "{count, plural, =0{Niente selezionato} =1{Applica 1 modifica} other{Applica {count} modifiche}}",
+  "libraryApplyChanges": "{count, plural, =0{Niente selezionato} one{Applica 1 modifica} other{Applica {count} modifiche}}",
   "libraryConfirmSensitive": "Questo modifica: {groups}. Applicare?",
-  "libraryAppliedChanges": "{count, plural, =1{1 modifica applicata.} other{{count} modifiche applicate.}}",
+  "libraryAppliedChanges": "{count, plural, one{1 modifica applicata.} other{{count} modifiche applicate.}}",
   "libraryNotSupported": "Questo modello non può essere applicato qui.",
   "libraryPartial": "Una parte di questo modello non può essere applicata qui e viene esclusa.",
   "libraryNothingToApply": "Tutto ciò che porta questo modello è già qui.",
@@ -123,5 +123,5 @@
   },
   "templatesLoadFailed": "Non è stato possibile caricare i modelli.",
   "onboardingTemplatesFailedEmpty": "Non è stato possibile caricare i modelli, quindi questo spazio partirebbe vuoto. Torni indietro per riprovare.",
-  "templateResultCount": "{count, plural, =0{Nessun modello mostrato} =1{1 modello mostrato} other{{count} modelli mostrati}}"
+  "templateResultCount": "{count, plural, =0{Nessun modello mostrato} one{1 modello mostrato} other{{count} modelli mostrati}}"
 }

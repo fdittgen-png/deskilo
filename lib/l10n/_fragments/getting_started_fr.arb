@@ -20,7 +20,7 @@
   "gettingStartedAvailabilityUnknown": "Les disponibilités n’ont pas pu être chargées. L’aide explique comment la réservation fonctionne ici.",
   "gettingStartedMembershipUnknown": "Votre adhésion n’a pas pu être chargée pour le moment. L’aide explique comment cet espace fonctionne.",
   "gettingStartedBooked": "Votre réservation est {state}. Votre adhésion indique ce qui est compris par ailleurs.",
-  "gettingStartedAllowance": "{count, plural, =1{Vous pouvez tenir une réservation à la fois.} other{Vous pouvez tenir {count} réservations à la fois.}}",
+  "gettingStartedAllowance": "{count, plural, =0{Vous pouvez tenir {count} réservations à la fois.} one{Vous pouvez tenir une réservation à la fois.} other{Vous pouvez tenir {count} réservations à la fois.}}",
   "gettingStartedStateReserved": "réservée",
   "gettingStartedStateCheckedIn": "pointée",
   "gettingStartedStateCompleted": "terminée",

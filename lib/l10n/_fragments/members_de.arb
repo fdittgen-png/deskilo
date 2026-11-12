@@ -73,7 +73,7 @@
   "@messagesEmpty": {
     "description": "#687 - messaging centre"
   },
-  "conversationMemberCount": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}}",
+  "conversationMemberCount": "{count, plural, one{1 Mitglied} other{{count} Mitglieder}}",
   "@conversationMemberCount": {
     "description": "#687 - messaging centre",
     "placeholders": {
@@ -166,7 +166,7 @@
   "@memberMoneySettled": {
     "description": "#704 - the money section of a member profile"
   },
-  "memberMoreInvoices": "{count, plural, =1{+1 weitere} other{+{count} weitere}}",
+  "memberMoreInvoices": "{count, plural, one{+1 weitere} other{+{count} weitere}}",
   "@memberMoreInvoices": {
     "description": "#704 - the money section of a member profile",
     "placeholders": {
@@ -229,7 +229,7 @@
   "conversationLoadEarlier": "Frühere Nachrichten laden",
   "conversationToday": "Heute",
   "composerAttach": "Verweis anhängen",
-  "composerCharsLeft": "{count, plural, =1{1 Zeichen übrig} other{{count} Zeichen übrig}}",
+  "composerCharsLeft": "{count, plural, one{1 Zeichen übrig} other{{count} Zeichen übrig}}",
   "@composerCharsLeft": {
     "placeholders": {
       "count": {
@@ -259,7 +259,7 @@
   "@inboxMessengerDoor": {
     "description": "workspace inbox: door to the Me messenger"
   },
-  "threadNoRefs": "Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.",
+  "threadNoRefs": "Verweise werden nur mit Personen desselben Betriebs geteilt.",
   "@threadNoRefs": {
     "description": "Me thread: why attaching references is unavailable"
   },

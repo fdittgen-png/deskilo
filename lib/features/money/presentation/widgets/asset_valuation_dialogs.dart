@@ -5,6 +5,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -72,16 +73,20 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
 
   void _edit(VoidCallback change) => setState(change);
 
+  XTypeGroup get _types => XTypeGroup(
+    label: context.l10n.valuationFileTypeLabel,
+    extensions: const ['csv'],
+    mimeTypes: const ['text/csv'],
+  );
+
   Future<void> _pick() async {
-    final l10n = context.l10n;
-    final file = await ref.read(filePickerProvider)(
-      XTypeGroup(
-        label: l10n.valuationFileTypeLabel,
-        extensions: const ['csv'],
-        mimeTypes: const ['text/csv'],
-      ),
-    );
+    final file = await ref.read(filePickerProvider)(_types);
     if (file == null) return;
+    await _take(file);
+  }
+
+  /// Reads [file] — picked or dropped alike (#3623).
+  Future<void> _take(XFile file) async {
     // Explicit UTF-8: XFile.readAsString is not UTF-8-safe for data-backed files.
     final content = utf8.decode(await file.readAsBytes());
     _edit(() {
@@ -152,7 +157,10 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
     final file = _file;
     return AlertDialog(
       title: Text(l10n.valuationImport),
-      content: SingleChildScrollView(
+      content: FileDropZone(
+       typeGroup: _types,
+       onFile: _take,
+       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,6 +252,7 @@ class _ImportDialogState extends ConsumerState<_ImportDialog> {
               ),
           ],
         ),
+       ),
       ),
       actions: [
         TextButton(

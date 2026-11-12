@@ -15,6 +15,6 @@
   "servicesCategory": "Catégorie",
   "servicesPublic": "Afficher sur notre page publique",
   "servicesOtherCategory": "Autres prestations",
-  "servicesDurationShort": "{minutes, plural, =1{1 min} other{{minutes} min}}",
+  "servicesDurationShort": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
   "servicesSaveFailed": "La prestation n'a pas pu être enregistrée. Réessayez."
 }

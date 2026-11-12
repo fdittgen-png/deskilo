@@ -1,8 +1,8 @@
 {
   "portalPersonHidden": "Persona",
   "portalDirectoryShowMore": "Mostra altro",
-  "portalDirectoryPartial": "Alcuni dei Suoi spazi non possono essere verificati in questo momento; le loro persone non sono elencate.",
-  "portalDirectoryUnverified": "Questo spazio non può essere verificato in questo momento.",
+  "portalDirectoryPartial": "Alcuni dei Suoi posti non possono essere verificati in questo momento; le loro persone non sono elencate.",
+  "portalDirectoryUnverified": "Questo posto non può essere verificato in questo momento.",
   "settingLabelPersonalMessageDirectoryPageSize": "Voci della rubrica per pagina",
   "settingHintPersonalMessageDirectoryPageSize": "Quanti spazi, persone o gruppi la nuova conversazione elenca alla volta; i successivi arrivano con Mostra altro.",
   "settingLabelPersonalMessageDirectoryQueryLength": "Ricerca più lunga nella rubrica",

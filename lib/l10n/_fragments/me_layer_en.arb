@@ -23,7 +23,7 @@
   "@meHeaderOwned": {
     "description": "Line under the person's name on the Me home: this layer belongs to them alone."
   },
-  "meNoSpaceTitle": "You are not in a space yet",
+  "meNoSpaceTitle": "You have no places yet",
   "@meNoSpaceTitle": {
     "description": "Empty state title on the Me home when the person has no space."
   },
@@ -39,11 +39,11 @@
   "@meJoinSpace": {
     "description": "Button on the Me home: join a space with an invitation code."
   },
-  "meCreateSpace": "Create a space",
+  "meCreateSpace": "Create a business",
   "@meCreateSpace": {
     "description": "Button on the Me home: create a new space."
   },
-  "meManageSpaces": "Manage my spaces",
+  "meManageSpaces": "Manage my places",
   "@meManageSpaces": {
     "description": "Button on the Me home: the detailed list of spaces (default at start, site)."
   },
@@ -51,7 +51,7 @@
   "@meSpacePending": {
     "description": "Subtitle of a space card whose membership awaits approval."
   },
-  "meSpaceNotifications": "{count, plural, =1{1 notification waits here} other{{count} notifications wait here}}",
+  "meSpaceNotifications": "{count, plural, one{1 notification waits here} other{{count} notifications wait here}}",
   "@meSpaceNotifications": {
     "description": "Tooltip of the count on a space side (production or development) on Me › Home: the notifications that belong to it.",
     "placeholders": {
@@ -64,11 +64,11 @@
   "@meSpaceLastUsed": {
     "description": "Chip on the space the person used last."
   },
-  "meLeaveAction": "Leave this space",
+  "meLeaveAction": "Leave this place",
   "@meLeaveAction": {
     "description": "Menu item and confirm button: leave this space."
   },
-  "meLeaveOwner": "Owners hand the space over before leaving",
+  "meLeaveOwner": "Owners hand the business over before leaving",
   "@meLeaveOwner": {
     "description": "Disabled menu item for an owner, who must hand the space over first."
   },
@@ -81,11 +81,11 @@
       }
     }
   },
-  "meLeaveBody": "You stop being a member. Your bookings, invoices and messages stay with the space. To also erase your data, use Privacy.",
+  "meLeaveBody": "You stop being a member. Your bookings, invoices and messages stay with the business. To also erase your data, use Privacy.",
   "@meLeaveBody": {
     "description": "Body of the confirmation before leaving a space."
   },
-  "meLeaveFailed": "Could not leave the space. Please try again.",
+  "meLeaveFailed": "Could not leave the place. Please try again.",
   "@meLeaveFailed": {
     "description": "Error when leaving a space failed."
   },
@@ -98,7 +98,7 @@
       }
     }
   },
-  "meLinkedOpenBody": "This space lives on {host}. It opens here, on that server's own connection; nothing is switched and your own server is not used for it.",
+  "meLinkedOpenBody": "This place lives on {host}. It opens here, on that server's own connection; nothing is switched and your own server is not used for it.",
   "@meLinkedOpenBody": {
     "description": "Explains that a space on another server opens by switching this app to that server.",
     "placeholders": {
@@ -138,7 +138,7 @@
   "@meSectionMine": {
     "description": "Section heading in Me: the person's own history and data."
   },
-  "meWhereSpacesLive": "Where my spaces live",
+  "meWhereSpacesLive": "Where my places live",
   "@meWhereSpacesLive": {
     "description": "Row in Me opening the connected servers."
   },
@@ -182,7 +182,7 @@
   "@visibilityContact": {
     "description": "Visibility field: contact channels."
   },
-  "visibilityPresence": "In the space today",
+  "visibilityPresence": "At the place today",
   "@visibilityPresence": {
     "description": "Visibility field: presence in a space today."
   },
@@ -194,11 +194,11 @@
   "@visibilityNobody": {
     "description": "Audience: nobody."
   },
-  "visibilityMySpaces": "Members of my spaces",
+  "visibilityMySpaces": "Members of my places",
   "@visibilityMySpaces": {
     "description": "Audience: members of the person's spaces."
   },
-  "visibilityChosenSpaces": "Members of chosen spaces",
+  "visibilityChosenSpaces": "Members of chosen places",
   "@visibilityChosenSpaces": {
     "description": "Audience: members of chosen spaces."
   },
@@ -214,7 +214,7 @@
   "@visibilityPreviewTitle": {
     "description": "Heading of the live preview of what others see."
   },
-  "visibilityPreviewMySpaces": "A member of my spaces",
+  "visibilityPreviewMySpaces": "A member of my places",
   "@visibilityPreviewMySpaces": {
     "description": "Preview audience chip: a member of my spaces."
   },
@@ -242,7 +242,7 @@
   "@visibilityPreviewCannotWrite": {
     "description": "Preview line: this audience may not start a conversation."
   },
-  "visibilityChosenCount": "{count, plural, =1{Members of 1 chosen space} other{Members of {count} chosen spaces}}",
+  "visibilityChosenCount": "{count, plural, one{Members of 1 chosen place} other{Members of {count} chosen places}}",
   "@visibilityChosenCount": {
     "description": "Audience summary for chosen spaces, with how many were chosen.",
     "placeholders": {
@@ -295,7 +295,7 @@
   "@visibilityAboutSaveFailed": {
     "description": "Error when saving profession and bio failed."
   },
-  "portalOpenMe": "Me: my account and my spaces",
+  "portalOpenMe": "Me: my account and my places",
   "@portalOpenMe": {
     "description": "Menu item on the account menu (globe) that opens the Me layer."
   }

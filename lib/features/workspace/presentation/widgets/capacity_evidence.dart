@@ -52,9 +52,9 @@ class CapacityEvidence extends StatelessWidget {
         ? l10n.biPastBasis
         : l10n.biCurrentBasis;
     final quality = biQualityLabel(kpi.quality, l10n);
-    final asOf = DateFormat.yMd(locale)
-        .add_Hm()
-        .format(WorkspaceTime.wall(kpi.computedAt));
+    final computedWall = WorkspaceTime.wall(kpi.computedAt);
+    final asOf = '${DateFormat.yMd(locale).format(computedWall)} '
+        '${appFormatOf(context).wallTime(computedWall)}';
     final hours = NumberFormat.decimalPatternDigits(
       locale: locale,
       decimalDigits: 1,

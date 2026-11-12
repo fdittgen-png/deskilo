@@ -84,7 +84,7 @@
   "settlementVatNote": "Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.",
   "settlementSettledBy": "Regroupée dans une autre facture — c’est celle-là qui est due et relancée.",
   "settlementAction": "Regrouper en une facture",
-  "settlementConfirm": "{count, plural, =1{Regrouper 1 facture en une seule de {amount} ?} other{Regrouper {count} factures en une seule de {amount} ?}}",
+  "settlementConfirm": "{count, plural, one{Regrouper {count} facture en une seule de {amount} ?} other{Regrouper {count} factures en une seule de {amount} ?}}",
   "settlementDone": "Regroupées dans {number}.",
   "settlementNeedsTwo": "Choisissez au moins deux factures ouvertes du même membre.",
   "@settlementConfirm": {
@@ -133,7 +133,7 @@
   "settlementAnnexTitle": "Joindre les factures regroupées ?",
   "settlementAnnexAlone": "Cette facture seule",
   "settlementAnnexWith": "Les joindre",
-  "settlementAnnexBody": "{count, plural, =1{La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.} other{Les {count} factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.}}",
+  "settlementAnnexBody": "{count, plural, =0{Les {count} factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.} one{La facture que celle-ci remplace peut la suivre, sur ses propres pages et tamponnée comme regroupée.} other{Les {count} factures que celle-ci remplace peuvent la suivre, chacune sur ses propres pages et tamponnée comme regroupée.}}",
   "@settlementAnnexBody": {
     "placeholders": {
       "count": {

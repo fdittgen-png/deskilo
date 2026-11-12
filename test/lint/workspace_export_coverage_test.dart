@@ -514,6 +514,12 @@ const Map<String, Set<String>> _notExportedColumns = {
     // as one cell of a sheet (0540).
     'source_xml',
   },
+  'ledger_entries': {
+    // A description as frozen facts (#3809): what a document prints in its
+    // own language. The export carries the description itself, the fallback
+    // text that says the same.
+    'text_facts',
+  },
   'profiles': {
     // The hash of a person's badge PIN (#662): a credential, never in a
     // workbook that is shared on.
@@ -522,6 +528,10 @@ const Map<String, Set<String>> _notExportedColumns = {
     // preference, exported by export_my_personal_data_v1, never a fact of
     // the workspace; another installation's id must not travel as data.
     'default_workspace_network_id',
+    // The day a person's weeks start on (#3648): how their own screens draw
+    // a calendar, a display preference like their clock, never a fact of
+    // the workspace.
+    'week_start',
   },
   'workspaces': {
     // The birth record `installation id:local id` (#2561): stamped by the

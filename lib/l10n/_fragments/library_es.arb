@@ -6,7 +6,7 @@
   "libraryStartFrom": "Partir de la biblioteca",
   "libraryYours": "Sus plantillas",
   "libraryEmpty": "Nada aquí todavía. Guarde este espacio como plantilla o espere a que alguien comparta una con usted.",
-  "libraryCounts": "{levels, plural, =1{1 nivel} other{{levels} niveles}} · {desks, plural, =1{1 mesa} other{{desks} mesas}} · {seats, plural, =1{1 plaza} other{{seats} plazas}}",
+  "libraryCounts": "{levels, plural, one{1 nivel} other{{levels} niveles}} · {desks, plural, one{1 mesa} other{{desks} mesas}} · {seats, plural, one{1 plaza} other{{seats} plazas}}",
   "@libraryCounts": {
     "placeholders": {
       "levels": {
@@ -39,9 +39,9 @@
   "libraryStateMatching": "Ya es igual",
   "libraryStateAttention": "Requiere atención",
   "libraryReasonFeeSchedule": "Su escala de comisiones se sustituiría entera.",
-  "libraryApplyChanges": "{count, plural, =0{Nada seleccionado} =1{Aplicar 1 cambio} other{Aplicar {count} cambios}}",
+  "libraryApplyChanges": "{count, plural, =0{Nada seleccionado} one{Aplicar 1 cambio} other{Aplicar {count} cambios}}",
   "libraryConfirmSensitive": "Esto cambia: {groups}. ¿Aplicar?",
-  "libraryAppliedChanges": "{count, plural, =1{1 cambio aplicado.} other{{count} cambios aplicados.}}",
+  "libraryAppliedChanges": "{count, plural, one{1 cambio aplicado.} other{{count} cambios aplicados.}}",
   "libraryNotSupported": "Esta plantilla no puede aplicarse aquí.",
   "libraryPartial": "Una parte de esta plantilla no puede aplicarse aquí y se deja fuera.",
   "libraryNothingToApply": "Todo lo que trae esta plantilla ya está aquí.",
@@ -123,5 +123,5 @@
   },
   "templatesLoadFailed": "No se pudieron cargar las plantillas.",
   "onboardingTemplatesFailedEmpty": "No se pudieron cargar las plantillas, así que este espacio empezaría vacío. Vuelva atrás para intentarlo de nuevo.",
-  "templateResultCount": "{count, plural, =0{Ninguna plantilla mostrada} =1{1 plantilla mostrada} other{{count} plantillas mostradas}}"
+  "templateResultCount": "{count, plural, =0{Ninguna plantilla mostrada} one{1 plantilla mostrada} other{{count} plantillas mostradas}}"
 }

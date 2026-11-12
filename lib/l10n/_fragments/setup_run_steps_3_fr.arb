@@ -20,7 +20,7 @@
   "setupNotificationsPreviewPlace": "Bureau 4",
   "setupLimitsSaveFailed": "Les limites de réservation n’ont pas pu être enregistrées. Réessayez.",
   "setupLimitsPerMember": "Une autorisation fixée sur la page d’un membre passe avant le nombre de places indiqué ici.",
-  "setupLimitsPreviewAhead": "{days, plural, =1{Vous pouvez réserver jusqu’à un jour à l’avance.} other{Vous pouvez réserver jusqu’à {days} jours à l’avance.}}",
+  "setupLimitsPreviewAhead": "{days, plural, =0{Vous pouvez réserver jusqu’à {days} jours à l’avance.} one{Vous pouvez réserver jusqu’à un jour à l’avance.} other{Vous pouvez réserver jusqu’à {days} jours à l’avance.}}",
   "setupLimitsPreviewLength": "Une réservation dure au moins {shortest} et au plus {longest}.",
-  "setupLimitsPreviewAtOnce": "{count, plural, =1{Vous pouvez occuper une place à la fois.} other{Vous pouvez occuper jusqu’à {count} places à la fois.}}"
+  "setupLimitsPreviewAtOnce": "{count, plural, =0{Vous pouvez occuper jusqu’à {count} places à la fois.} one{Vous pouvez occuper une place à la fois.} other{Vous pouvez occuper jusqu’à {count} places à la fois.}}"
 }

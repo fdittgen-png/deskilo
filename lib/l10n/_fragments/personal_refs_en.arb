@@ -1,10 +1,10 @@
 {
   "@@locale": "en",
-  "meRefsTitle": "Workspaces elsewhere",
+  "meRefsTitle": "Places elsewhere",
   "@meRefsTitle": {
     "description": "#2563 Me home: section of workspaces named by reference that this server does not list"
   },
-  "meRefUnnamed": "A workspace on another server",
+  "meRefUnnamed": "A place on another server",
   "@meRefUnnamed": {
     "description": "#2563 Me home: a referenced workspace whose name may not be read here"
   },
@@ -24,7 +24,7 @@
   "@meRefDefault": {
     "description": "#2563 Me home: badge on the default workspace"
   },
-  "meRefsUnavailable": "Your workspaces elsewhere could not be read.",
+  "meRefsUnavailable": "Your places elsewhere could not be read.",
   "@meRefsUnavailable": {
     "description": "#2563 Me home: the references could not be read"
   }

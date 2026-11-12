@@ -365,7 +365,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                 // The MIXED feed (#581): notes and events interleaved,
                 // date-sorted under the user's direction of choice —
                 // optionally folded into groups (#598).
-                for (final group in groupFeed(facts.feed, grouping)) ...[
+                for (final group in groupFeed(facts.feed, grouping, dayOf: ref.watch(businessDateOfProvider))) ...[
                   if (grouping != FeedGrouping.none)
                     _groupHeader(context, l10n, grouping, group, facts.names),
                 for (final item in group.items) _feedRow(context, l10n, item, facts),

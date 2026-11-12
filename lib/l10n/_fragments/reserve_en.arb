@@ -12,7 +12,7 @@
   "@listWholeReservable": {
     "description": "#1825 — reserve list: a header whose space this member can reserve as a whole"
   },
-  "listCoversTables": "{count, plural, =1{1 table} other{{count} tables}}",
+  "listCoversTables": "{count, plural, one{1 table} other{{count} tables}}",
   "@listCoversTables": {
     "description": "#1825 — what a whole-space reservation includes: its tables",
     "placeholders": {
@@ -21,7 +21,7 @@
       }
     }
   },
-  "listCoversSeats": "{count, plural, =1{1 seat} other{{count} seats}}",
+  "listCoversSeats": "{count, plural, one{1 seat} other{{count} seats}}",
   "@listCoversSeats": {
     "description": "#1825 — what a whole-space reservation includes: its seats",
     "placeholders": {
@@ -36,7 +36,7 @@
   },
   "monthFreeCount": "{free}/{total}",
   "@monthFreeCount": {
-    "description": "Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position).",
+    "description": "Free-desks-of-total label in a month calendar cell (#7). The number is not a count: it is a ratio or progress fraction of two numerals (a position). [not a count: free, total]",
     "placeholders": {
       "free": {
         "type": "int"

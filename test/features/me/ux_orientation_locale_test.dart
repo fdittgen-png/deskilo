@@ -43,8 +43,8 @@ void main() {
       await goTo(tester, router, '/me');
       final words = AppLocalizations.of(tester.element(find.byType(MeShell)))!;
       expect(find.text(words.uxOpenWorkspace), findsOneWidget);
-      expect(find.text(words.uxTestSpace), findsOneWidget);
-      expect(find.text(words.uxTestSpaceHint), findsOneWidget);
+      expect(find.text(words.meTestBusiness), findsOneWidget);
+      expect(find.text(words.meTestBusinessHint), findsOneWidget);
       expect(
         tester
             .widget<FilledButton>(find.byKey(const ValueKey('me-space-ws-1')))

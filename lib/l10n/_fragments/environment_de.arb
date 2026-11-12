@@ -12,7 +12,7 @@
   "@environmentLabel": {
     "description": "#917 workspace environment: environmentLabel"
   },
-  "environmentHint": "Ein Entwicklungs-Space sagt das auf jedem Bildschirm und versieht jedes Dokument mit einem Wasserzeichen. Erklären Sie ihn erst dann zur Produktion, wenn die Rechnungen daraus wirklich geschuldet sind.",
+  "environmentHint": "Ein Entwicklungsbetrieb sagt das auf jedem Bildschirm und versieht jedes Dokument mit einem Wasserzeichen. Erklären Sie ihn erst dann zur Produktion, wenn die Rechnungen daraus wirklich geschuldet sind.",
   "@environmentHint": {
     "description": "#917 workspace environment: environmentHint"
   },

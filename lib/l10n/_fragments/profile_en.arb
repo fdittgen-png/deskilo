@@ -90,7 +90,7 @@
   },
   "profilePhotoRefused": "The photo is too large or not an accepted type. Use a JPEG, PNG or WebP photo of up to {megabytes} MB.",
   "@profilePhotoRefused": {
-    "description": "#3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count.",
+    "description": "#3710 Error snackbar when a profile photo is over the size limit or not JPEG, PNG or WebP; names both limits. The number is a limit, not a count. [not a count: megabytes]",
     "placeholders": {
       "megabytes": {
         "type": "int"
@@ -350,7 +350,7 @@
   },
   "backendVersionCurrent": "Up to date (schema {version})",
   "@backendVersionCurrent": {
-    "description": "#1309 Server screen. The number is not a count: it is a schema version.",
+    "description": "#1309 Server screen. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -359,7 +359,7 @@
   },
   "backendVersionBehind": "Needs an update: this app needs schema {version}",
   "@backendVersionBehind": {
-    "description": "#1309 Server screen. The number is not a count: it is a schema version.",
+    "description": "#1309 Server screen. The number is not a count: it is a schema version. [not a count: version]",
     "placeholders": {
       "version": {
         "type": "int"
@@ -502,6 +502,10 @@
   "profilesUnavailable": "Your workspaces could not be loaded.",
   "@profilesUnavailable": {
     "description": "Banner on the Profiles screen when the membership list could not be fetched (#1650); paired with commonRetry"
+  },
+  "mePlacesLoadFailed": "Your places could not be loaded.",
+  "@mePlacesLoadFailed": {
+    "description": "Me, My places: the places could not be loaded (#3555: the profiles screen keeps profilesUnavailable)"
   },
   "consentUnavailable": "Your account could not be loaded, so there is nothing to accept yet.",
   "@consentUnavailable": {

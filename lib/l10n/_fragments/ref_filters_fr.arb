@@ -9,7 +9,7 @@
   "refFilterReset": "Réinitialiser",
   "refFilterAmount": "Montant",
   "refFilterAmountRange": "Montant {low} – {high}",
-  "refFilterShow": "{count, plural, =1{Afficher 1 résultat} other{Afficher {count} résultats}}",
+  "refFilterShow": "{count, plural, one{Afficher {count} résultat} other{Afficher {count} résultats}}",
   "@refFilterShow": {
     "placeholders": {
       "count": {

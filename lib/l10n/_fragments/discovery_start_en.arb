@@ -20,7 +20,7 @@
   "@discoveryClearSearch": {
     "description": "#3545 Discover: the action under a search with no result."
   },
-  "discoveryDirectoriesDidNotAnswer": "{count, plural, =1{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.",
+  "discoveryDirectoriesDidNotAnswer": "{count, plural, one{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.",
   "@discoveryDirectoriesDidNotAnswer": {
     "description": "#3545 Discover: one line when directories did not answer, beside the results that loaded.",
     "placeholders": {

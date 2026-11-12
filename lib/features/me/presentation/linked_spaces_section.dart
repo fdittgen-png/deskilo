@@ -176,7 +176,7 @@ class LinkedSpacesSection extends ConsumerWidget {
       for (final group in pairSides(server.spaces))
         MeWorkspaceRow(
           environmentHint: group.any((s) => s.env.isDevelopment)
-              ? l10n.uxTestSpaceHint : null,
+              ? l10n.meTestBusinessHint : null,
           avatar: const CircleAvatar(child: Icon(Icons.dns_outlined)),
           name: group.first.name,
           detail: group.any((s) => s.standing == MySpaceStanding.pending)
@@ -195,7 +195,7 @@ class LinkedSpacesSection extends ConsumerWidget {
                     onPressed: () => _open(context, ref, server, space),
                     child: Text(space.env.isProduction
                         ? l10n.uxOpenWorkspace
-                        : l10n.uxTestSpace),
+                        : l10n.meTestBusiness),
                   ),
                 ),
               ),

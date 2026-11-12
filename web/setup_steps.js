@@ -76,6 +76,7 @@ const STEPS=[
   selectEl(T('regionCurrency'),'region.currency',REGION_CURRENCIES().map(c=>[c,c]),T('regionCurrencyHint'),null,'identity'),
   selectEl(T('regionCountry'),'region.country',COUNTRIES.map(c=>[c[0],countryName(c[0])]),T('regionCountryHint'),null,'identity'),
   selectEl(T('regionLocale'),'region.locale',FORMAT_LOCALES.map(l=>[l,l]),T('regionLocaleHint'),null,'identity'),
+  selectEl(T('regionWeekStart'),'region.weekStart',opts(WEEK_START),T('regionWeekStartHint'),null,'identity'),
   input(T('mapTiles'),'map.tiles',T('mapTilesHint'),'url','https://tile.openstreetmap.org/{z}/{x}/{y}.png','identity'),
   input(T('mapGeocoder'),'map.geocoder',T('mapGeocoderHint'),'url','https://photon.komoot.io/api/','identity'),
   )),

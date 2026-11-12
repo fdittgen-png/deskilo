@@ -4,7 +4,7 @@
   "invoiceRegisterStatus": "Status",
   "invoiceRegisterPeriodColumn": "Zeitraum",
   "invoiceRegisterIntegrity": "Fingerabdruck",
-  "invoiceRegisterDownloadSelected": "{count, plural, =1{1 Rechnung herunterladen} other{{count} Rechnungen herunterladen}}",
+  "invoiceRegisterDownloadSelected": "{count, plural, one{1 Rechnung herunterladen} other{{count} Rechnungen herunterladen}}",
   "invoiceRegisterNumber": "Nummer",
   "invoiceRegisterMember": "Mitglied",
   "invoiceRegisterCurrency": "Währung"

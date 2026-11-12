@@ -50,7 +50,7 @@
       }
     }
   },
-  "xeroInvoiceCreditNotesLeftOut": "{count, plural, =1{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
+  "xeroInvoiceCreditNotesLeftOut": "{count, plural, one{One credit note is not in this file: Xero imports credit notes with their own template.} other{{count} credit notes are not in this file: Xero imports credit notes with their own template.}}",
   "@xeroInvoiceCreditNotesLeftOut": {
     "description": "#2372 - the Xero sales-invoice CSV export",
     "placeholders": {

@@ -66,7 +66,7 @@
   "@biItemProductDefinition": {
     "description": "#3294 step 4 items on purchase lines"
   },
-  "biItemUncosted": "{count, plural, =1{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}",
+  "biItemUncosted": "{count, plural, one{1 product sold was never bought: it has no cost and are left out of the cost and margin} other{{count} products sold were never bought: they have no cost and are left out of the cost and margin}}",
   "@biItemUncosted": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
@@ -87,7 +87,7 @@
   "@biItemVendorTitle": {
     "description": "#3294 step 4 items on purchase lines"
   },
-  "biItemVendorBasis": "{count, plural, =1{1 supplier} other{{count} suppliers}}",
+  "biItemVendorBasis": "{count, plural, one{1 supplier} other{{count} suppliers}}",
   "@biItemVendorBasis": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {
@@ -100,7 +100,7 @@
   "@biItemVendorDefinition": {
     "description": "#3294 step 4 items on purchase lines"
   },
-  "biItemUnresolved": "{count, plural, =1{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}",
+  "biItemUnresolved": "{count, plural, one{1 purchase line names a supply only by its text: it is not matched to an item and is left out} other{{count} purchase lines name a supply only by its text: they are not matched to an item and are left out}}",
   "@biItemUnresolved": {
     "description": "#3294 step 4 items on purchase lines",
     "placeholders": {

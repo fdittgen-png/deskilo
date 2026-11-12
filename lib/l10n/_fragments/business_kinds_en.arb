@@ -85,7 +85,7 @@
       }
     }
   },
-  "businessKindPlacesOff": "{count, plural, =1{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}",
+  "businessKindPlacesOff": "{count, plural, one{everything about places — seats, floor plan, kiosk, rooms (1 feature)} other{everything about places — seats, floor plan, kiosk, rooms ({count} features)}}",
   "@businessKindPlacesOff": {
     "description": "#3550 what a kind without places switches off, in one phrase; {count} features in all",
     "placeholders": {
@@ -94,7 +94,7 @@
       }
     }
   },
-  "businessKindAndMore": "{count, plural, =1{{list} and 1 more} other{{list} and {count} more}}",
+  "businessKindAndMore": "{count, plural, one{{list} and 1 more} other{{list} and {count} more}}",
   "@businessKindAndMore": {
     "description": "#3550 a shortened list: {list} is the first names, {count} how many more",
     "placeholders": {

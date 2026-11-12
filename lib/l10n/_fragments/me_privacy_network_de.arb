@@ -6,7 +6,7 @@
   "visibilityAskPublic": "Ist mein öffentliches Profil veröffentlicht?",
   "visibilityMoreSharing": "Weitere Freigabeeinstellungen",
   "visibilitySpaceUnverified": "Überprüfung nicht verfügbar",
-  "visibilitySpaceAmbiguous": "Gleicher Name wie ein anderer Space · {source}",
+  "visibilitySpaceAmbiguous": "Gleicher Name wie ein anderer Ort · {source}",
   "visibilitySpaceHere": "in diesem persönlichen Zuhause",
   "visibilitySpaceOnServer": "auf Server {installation}",
   "visibilityWidenAdded": "Hinzugefügt: {spaces}",

@@ -253,7 +253,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Alpha'), findsOneWidget);
     expect(find.byKey(const ValueKey('directory-pins-missing')), findsOneWidget);
-    expect(find.textContaining('1 workspace could not be placed'), findsOneWidget);
+    expect(find.textContaining('1 place could not be put'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -376,7 +376,7 @@ void main() {
         find.byKey(const ValueKey('public-workspace-withdrawn')),
         findsOneWidget,
       );
-      expect(find.text('This workspace is no longer published.'), findsOneWidget);
+      expect(find.text('This place is no longer published.'), findsOneWidget);
       expect(find.byKey(const ValueKey('write-to-hosts')), findsNothing);
       expect(find.text('Ask to join'), findsNothing);
       expect(find.byTooltip('Chat'), findsNothing);

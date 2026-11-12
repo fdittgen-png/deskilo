@@ -18,7 +18,7 @@
   "taskExportEndInterrupted": "Beendet, weil die App beendet wurde.",
   "taskExportPlatform": "Aufgezeichnet auf: {platform}",
   "taskExportDuration": "Dauer: {minutes} min {seconds} s",
-  "taskExportPauses": "{count, plural, =0{Keine Pause} =1{Einmal pausiert} other{{count}-mal pausiert}}",
+  "taskExportPauses": "{count, plural, =0{Keine Pause} one{Einmal pausiert} other{{count}-mal pausiert}}",
   "taskExportVersion": "Aufzeichnungsformat {schema}, Aktionsvertrag {contract}",
   "taskExportRevision": "Inhaltsrevision: {revision}",
   "taskExportPrereqSignedIn": "Sie sind angemeldet.",
@@ -134,7 +134,7 @@
   "taskExportLimitRecreated": "Die Abbildungen sind aus den sicheren Fakten der Aufzeichnung mit erfundenen Platznamen nachgebildet; sie sind keine Bildschirmfotos.",
   "taskExportStale": "Das Storyboard gehört zu einer anderen Version dieser Aufzeichnung. Prüfen Sie es vor dem Export erneut.",
   "taskExportWordButton": "Als Word-Dokument exportieren",
-  "taskExportValueRedacted": "nicht gespeichert ({length, plural, =1{1 Zeichen} other{{length} Zeichen}})",
+  "taskExportValueRedacted": "nicht gespeichert ({length, plural, one{1 Zeichen} other{{length} Zeichen}})",
   "@taskExportValueRedacted": {
     "placeholders": {
       "length": {

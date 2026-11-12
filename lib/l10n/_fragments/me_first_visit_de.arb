@@ -15,5 +15,5 @@
   "meStartedProfile": "Name und Foto ergänzen",
   "meStartedDone": "Erledigt",
   "meStartedNext": "Als Nächstes",
-  "meStartedLeft": "{count, plural, =1{Noch ein Schritt · {next}} other{Noch {count} Schritte · {next}}}"
+  "meStartedLeft": "{count, plural, one{Noch ein Schritt · {next}} other{Noch {count} Schritte · {next}}}"
 }

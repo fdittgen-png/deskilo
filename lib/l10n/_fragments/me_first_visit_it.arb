@@ -15,5 +15,5 @@
   "meStartedProfile": "Aggiunga il suo nome e la sua foto",
   "meStartedDone": "Fatto",
   "meStartedNext": "Prossimo",
-  "meStartedLeft": "{count, plural, =1{Manca un passo · {next}} other{Mancano {count} passi · {next}}}"
+  "meStartedLeft": "{count, plural, one{Manca un passo · {next}} other{Mancano {count} passi · {next}}}"
 }

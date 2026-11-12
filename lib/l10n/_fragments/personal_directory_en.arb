@@ -7,11 +7,11 @@
   "@portalDirectoryShowMore": {
     "description": "#2472 personal directory: Loads the next page of people of one workspace in the new-discussion directory."
   },
-  "portalDirectoryPartial": "Some of your workspaces cannot be verified right now; their people are not listed.",
+  "portalDirectoryPartial": "Some of your places cannot be verified right now; their people are not listed.",
   "@portalDirectoryPartial": {
     "description": "#2472 personal directory: Shown above the new-discussion directory when the personal home holds lapsed membership facts."
   },
-  "portalDirectoryUnverified": "This workspace cannot be verified right now.",
+  "portalDirectoryUnverified": "This place cannot be verified right now.",
   "@portalDirectoryUnverified": {
     "description": "#2472 personal directory: Shown inside one workspace section whose membership fact lapsed."
   },

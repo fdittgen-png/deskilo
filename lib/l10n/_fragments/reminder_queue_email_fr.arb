@@ -9,7 +9,7 @@
       }
     }
   },
-  "reminderQueueEmailAll": "{count, plural, =1{Envoyer l'unique joignable par e-mail} other{Envoyer les {count} joignables par e-mail}}",
+  "reminderQueueEmailAll": "{count, plural, =0{Envoyer les {count} joignables par e-mail} one{Envoyer l'unique joignable par e-mail} other{Envoyer les {count} joignables par e-mail}}",
   "@reminderQueueEmailAll": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAll",
     "placeholders": {
@@ -18,7 +18,7 @@
       }
     }
   },
-  "reminderQueueEmailAllTitle": "{count, plural, =1{Envoyer 1 relance par e-mail ?} other{Envoyer {count} relances par e-mail ?}}",
+  "reminderQueueEmailAllTitle": "{count, plural, one{Envoyer {count} relance par e-mail ?} other{Envoyer {count} relances par e-mail ?}}",
   "@reminderQueueEmailAllTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllTitle",
     "placeholders": {
@@ -31,7 +31,7 @@
   "@reminderQueueEmailAllConfirm": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailAllConfirm"
   },
-  "reminderQueueStaysNoAddress": "{count, plural, =1{1 ligne reste à partager : pas d'adresse e-mail enregistrée.} other{{count} lignes restent à partager : pas d'adresse e-mail enregistrée.}}",
+  "reminderQueueStaysNoAddress": "{count, plural, one{{count} ligne reste à partager : pas d'adresse e-mail enregistrée.} other{{count} lignes restent à partager : pas d'adresse e-mail enregistrée.}}",
   "@reminderQueueStaysNoAddress": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysNoAddress",
     "placeholders": {
@@ -40,7 +40,7 @@
       }
     }
   },
-  "reminderQueueStaysToDecide": "{count, plural, =1{1 ligne attend : un e-mail précédent est d'abord à trancher.} other{{count} lignes attendent : un e-mail précédent est d'abord à trancher.}}",
+  "reminderQueueStaysToDecide": "{count, plural, one{{count} ligne attend : un e-mail précédent est d'abord à trancher.} other{{count} lignes attendent : un e-mail précédent est d'abord à trancher.}}",
   "@reminderQueueStaysToDecide": {
     "description": "#3673 reminder queue by e-mail: reminderQueueStaysToDecide",
     "placeholders": {
@@ -57,7 +57,7 @@
   "@reminderQueueEmailUnreached": {
     "description": "#3673 reminder queue by e-mail: reminderQueueEmailUnreached"
   },
-  "reminderQueueResultSentTitle": "{count, plural, =1{1 relance envoyée} other{{count} relances envoyées}}",
+  "reminderQueueResultSentTitle": "{count, plural, one{{count} relance envoyée} other{{count} relances envoyées}}",
   "@reminderQueueResultSentTitle": {
     "description": "#3673 reminder queue by e-mail: reminderQueueResultSentTitle",
     "placeholders": {

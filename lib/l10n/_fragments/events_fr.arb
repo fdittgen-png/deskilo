@@ -87,7 +87,7 @@
   "eventTypeExpenseSchedule": "Dépense programmée",
   "eventExpenseScheduleLine": "{actor} programme « {title} » — {amount} récurrent",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
-  "eventExpenseRepartitionLine": "{count, plural, =1{{actor} répartit « {title} » — {amount} entre 1 membre} other{{actor} répartit « {title} » — {amount} entre {count} membres}}",
+  "eventExpenseRepartitionLine": "{count, plural, one{{actor} répartit « {title} » — {amount} entre {count} membre} other{{actor} répartit « {title} » — {amount} entre {count} membres}}",
   "@eventExpenseRepartitionLine": {
     "placeholders": {
       "actor": {

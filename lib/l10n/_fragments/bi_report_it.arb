@@ -100,7 +100,7 @@
       }
     }
   },
-  "biViewWithheld": "{count, plural, =1{1 cifra di questa vista non è mostrata: Lei non ha il permesso di leggerla.} other{{count} cifre di questa vista non sono mostrate: Lei non ha il permesso di leggerle.}}",
+  "biViewWithheld": "{count, plural, one{1 cifra di questa vista non è mostrata: Lei non ha il permesso di leggerla.} other{{count} cifre di questa vista non sono mostrate: Lei non ha il permesso di leggerle.}}",
   "@biViewWithheld": {
     "description": "#2579 analytical reports",
     "placeholders": {

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/time/business_day_providers.dart';
 import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../data/supabase_credit_repository.dart';
@@ -82,12 +83,16 @@ final invoicingBusinessProvider = Provider.autoDispose<InvoicingBusiness>((
   ref,
 ) {
   final workspace = ref.watch(currentWorkspaceProvider).value;
+  // #3659 — renewed at the business's midnight, so an open page's "today"
+  // (due, late, this month) moves with no data change.
+  final calendar = ref.watch(readyWorkspaceContextProvider)?.calendar;
+  if (calendar != null) ref.watch(businessTodayProvider(calendar.timezone));
   return (
     id: workspace?.id ?? '',
     currency: workspace?.currencyCode ?? '',
     country: workspace?.countryCode ?? '',
     dayOf:
-        ref.watch(readyWorkspaceContextProvider)?.calendar.dateOf ??
+        calendar?.dateOf ??
         (DateTime d) => DateTime(d.year, d.month, d.day),
   );
 });

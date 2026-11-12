@@ -1,7 +1,7 @@
 {
   "@@locale": "de",
   "billSubscription": "Abo {pct} %",
-  "billEntitlement": "{used} von {included, plural, =1{1 halben Tag} other{{included} halben Tagen}} abgerechnet ({openDays, plural, =1{1 Öffnungstag} other{{openDays} Öffnungstage}})",
+  "billEntitlement": "{used} von {included, plural, one{1 halben Tag} other{{included} halben Tagen}} abgerechnet ({openDays, plural, one{1 Öffnungstag} other{{openDays} Öffnungstage}})",
   "billOverage": "{extra, plural, one{{extra} zusätzlicher halber Tag} other{{extra} zusätzliche halbe Tage}}",
   "billServices": "Bezogene Leistungen",
   "billServicesTotal": "Summe Leistungen",
@@ -186,5 +186,14 @@
   },
   "invoiceExportGenericJournal": "Journal (CSV, für jede Buchhaltungssoftware)",
   "journalNeedsLocalBook": "Das Journal stammt aus einer hier geführten Buchhaltung: richten Sie zuerst den Kontenplan des Ausstellers ein.",
-  "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}"
+  "journalBlocked": "Ordnen Sie zuerst diese Rollen im Kontenplan zu: {roles}",
+  "invoiceLineCancelled": "Storniert: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  }
 }

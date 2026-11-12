@@ -23,6 +23,7 @@ FinanceInvoice invoice(
   String currency = 'EUR',
   int reminders = 0,
 }) => FinanceInvoice(
+  timezone: 'Europe/Paris',
   id: id,
   workspaceId: 'ws-$ws',
   workspaceName: ws,

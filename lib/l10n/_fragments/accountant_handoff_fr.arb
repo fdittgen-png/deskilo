@@ -1,7 +1,7 @@
 {
   "handoffTitle": "Avant d’enregistrer",
-  "handoffIncluded": "{count, plural, =1{1 document dans le fichier} other{{count} documents dans le fichier}}",
-  "handoffExcludedSettlements": "{count, plural, =1{1 récapitulatif de règlement écarté : ses factures figurent déjà} other{{count} récapitulatifs de règlement écartés : leurs factures figurent déjà}}",
+  "handoffIncluded": "{count, plural, one{{count} document dans le fichier} other{{count} documents dans le fichier}}",
+  "handoffExcludedSettlements": "{count, plural, one{{count} récapitulatif de règlement écarté : ses factures figurent déjà} other{{count} récapitulatifs de règlement écartés : leurs factures figurent déjà}}",
   "handoffIssued": "Émises",
   "handoffVoided": "Annulées",
   "handoffPayments": "Payé : {confirmed} confirmé, {pending} en attente",
@@ -15,5 +15,5 @@
   "handoffChanged": "Les factures ont changé pendant votre relecture. Exportez à nouveau pour voir les comptes actuels.",
   "handoffUnsupportedCurrency": "{number} : sa devise n’a pas de nombre de décimales vérifié",
   "handoffAmountOutOfRange": "{number} : un total trop grand pour être transmis exactement",
-  "handoffTransfersQuoted": "Le rapport reprend la liste des transferts de l'année : {files} fichier(s) remis et {deliveries} document(s) transmis à une connexion, chacun avec son SHA-256"
+  "handoffTransfersQuoted": "Le rapport reprend la liste des transferts de l'année : {files, plural, one{{files} fichier remis} other{{files} fichiers remis}} et {deliveries, plural, one{{deliveries} document transmis} other{{deliveries} documents transmis}} à une connexion, chacun avec son SHA-256"
 }

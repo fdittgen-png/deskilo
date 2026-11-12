@@ -217,7 +217,7 @@ void main() {
     await tester.enterText(find.widgetWithText(TextField, 'Price'), '12.00');
     await tester.tap(find.byKey(const ValueKey('vat-rate-field')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Reduced (7 %)').last);
+    await tester.tap(find.text('Reduced (7%)').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
@@ -318,8 +318,8 @@ void main() {
     expect(find.byKey(const ValueKey('vat-rate-label-2')), findsOneWidget);
     expect(find.byKey(const ValueKey('vat-rate-validity-0')), findsOneWidget);
     expect(find.byKey(const ValueKey('vat-rate-validity-2')), findsOneWidget);
-    expect(find.textContaining('until 2026-10-01'), findsOneWidget);
-    expect(find.textContaining('since 2026-10-01'), findsOneWidget);
+    expect(find.textContaining('until Oct 1, 2026'), findsOneWidget);
+    expect(find.textContaining('since Oct 1, 2026'), findsOneWidget);
 
     await tester.ensureVisible(find.byKey(const ValueKey('vat-save')));
     await tester.tap(find.byKey(const ValueKey('vat-save')));
@@ -332,7 +332,7 @@ void main() {
     expect(old.validTo, '2026-10-01');
     expect(old.isDefault, isFalse);
     expect(successor.percent, 21);
-    expect(successor.label, 'Standard 21 %');
+    expect(successor.label, 'Standard 21%');
     expect(successor.validFrom, '2026-10-01');
     expect(successor.isDefault, isTrue);
     expect(successor.groupKey, old.groupKey);

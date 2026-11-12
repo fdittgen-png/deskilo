@@ -1,7 +1,7 @@
 {
   "handoffTitle": "Vor dem Speichern",
-  "handoffIncluded": "{count, plural, =1{1 Beleg in der Datei} other{{count} Belege in der Datei}}",
-  "handoffExcludedSettlements": "{count, plural, =1{1 Sammelabrechnung ausgelassen: ihre Rechnungen stehen bereits in der Datei} other{{count} Sammelabrechnungen ausgelassen: ihre Rechnungen stehen bereits in der Datei}}",
+  "handoffIncluded": "{count, plural, one{1 Beleg in der Datei} other{{count} Belege in der Datei}}",
+  "handoffExcludedSettlements": "{count, plural, one{1 Sammelabrechnung ausgelassen: ihre Rechnungen stehen bereits in der Datei} other{{count} Sammelabrechnungen ausgelassen: ihre Rechnungen stehen bereits in der Datei}}",
   "handoffIssued": "Ausgestellt",
   "handoffVoided": "Storniert",
   "handoffPayments": "Bezahlt: {confirmed} bestätigt, {pending} ausstehend",
@@ -15,5 +15,5 @@
   "handoffChanged": "Die Rechnungen haben sich während Ihrer Prüfung geändert. Exportieren Sie erneut, um den aktuellen Stand zu sehen.",
   "handoffUnsupportedCurrency": "{number}: für ihre Währung ist keine geprüfte Zahl von Nachkommastellen hinterlegt",
   "handoffAmountOutOfRange": "{number}: eine Summe, die zu groß ist, um exakt übertragen zu werden",
-  "handoffTransfersQuoted": "Der Bericht zitiert die Übertragungsliste des Jahres: {files} ausgegebene Datei(en) und {deliveries} an eine Verbindung übermittelte(s) Dokument(e), jeweils mit SHA-256"
+  "handoffTransfersQuoted": "Der Bericht zitiert die Übertragungsliste des Jahres: {files, plural, one{{files} ausgegebene Datei} other{{files} ausgegebene Dateien}} und {deliveries, plural, one{{deliveries} an eine Verbindung übermitteltes Dokument} other{{deliveries} an eine Verbindung übermittelte Dokumente}}, jeweils mit SHA-256"
 }

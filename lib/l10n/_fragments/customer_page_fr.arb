@@ -8,7 +8,7 @@
   "customerStoryIssued": "Facture {number} émise",
   "customerStoryPaid": "Facture {number} payée",
   "customerStoryDeclared": "Dit avoir payé la facture {number}",
-  "customerStoryReminders": "{count, plural, =1{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
+  "customerStoryReminders": "{count, plural, =0{{count} relances partagées pour {number}} one{Relance partagée pour {number}} other{{count} relances partagées pour {number}}}",
   "customerStoryNow": "Maintenant : {words}",
   "customerPageMatch": "Rapprocher le paiement"
 }

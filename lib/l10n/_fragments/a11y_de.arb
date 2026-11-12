@@ -6,6 +6,6 @@
   "a11yZoomIn": "Vergrößern",
   "a11yZoomOut": "Verkleinern",
   "a11yRecentre": "Plan an den Bildschirm anpassen",
-  "formErrorSummaryTitle": "{count, plural, =1{1 Feld braucht Ihre Aufmerksamkeit} other{{count} Felder brauchen Ihre Aufmerksamkeit}}",
+  "formErrorSummaryTitle": "{count, plural, one{1 Feld braucht Ihre Aufmerksamkeit} other{{count} Felder brauchen Ihre Aufmerksamkeit}}",
   "formErrorSummaryGoTo": "Zum ersten Problem"
 }

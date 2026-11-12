@@ -62,7 +62,7 @@ DateTime get _today {
 /// Day [index] (0 = Monday … 6 = Sunday) of today's ISO week — the
 /// columns the Week grid shows when the hub opens.
 DateTime _weekDay(int index) {
-  final monday = WeekGrid.weekStartOf(_today);
+  final monday = WeekGrid.firstDayOf(_today, DateTime.monday);
   return DateTime(monday.year, monday.month, monday.day + index);
 }
 
@@ -79,7 +79,7 @@ Brightness _gridBrightness(WidgetTester tester) => Theme.of(
 
 /// Whether [day]'s ISO week straddles a month boundary.
 bool _weekStraddlesMonth(DateTime day) {
-  final monday = WeekGrid.weekStartOf(day);
+  final monday = WeekGrid.firstDayOf(day, DateTime.monday);
   final sunday = DateTime(monday.year, monday.month, monday.day + 6);
   return monday.month != sunday.month;
 }
@@ -96,11 +96,12 @@ class _LoggingReservationRepository extends FakeReservationRepository {
     required DateTime from,
     required DateTime to,
   }) {
-    if (from.day == 1 &&
-        from.hour == 0 &&
-        from.minute == 0 &&
-        to == DateTime(from.year, from.month + 1)) {
-      monthFetches.add(from);
+    // #3659 — a month is fetched between the business's midnights.
+    final first = WorkspaceTime.dateOf(from);
+    if (first.day == 1 &&
+        WorkspaceTime.wall(from) == first &&
+        WorkspaceTime.dateOf(to) == DateTime(first.year, first.month + 1)) {
+      monthFetches.add(first);
     }
     return super.fetchWindow(workspaceId, from: from, to: to);
   }
@@ -634,7 +635,7 @@ void main() {
     while (!_weekStraddlesMonth(target)) {
       target = DateTime(target.year, target.month, target.day + 1);
     }
-    final monday = WeekGrid.weekStartOf(target);
+    final monday = WeekGrid.firstDayOf(target, DateTime.monday);
     final sunday = DateTime(monday.year, monday.month, monday.day + 6);
     // The week day on the OTHER side of the boundary from [target].
     final crossDay = monday.month == target.month ? sunday : monday;

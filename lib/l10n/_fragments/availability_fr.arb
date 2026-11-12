@@ -15,7 +15,7 @@
   "availabilityGranularity30": "Créneaux de 30 minutes",
   "availabilityGranularity60": "Créneaux d'une heure",
   "availabilityGranularityFullDay": "Journées entières uniquement",
-  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, =1{la grille de 1 minute} other{la grille de {minutes} minutes}}.",
+  "planSlotError": "Les réservations doivent commencer et finir sur {minutes, plural, one{la grille de {minutes} minute} other{la grille de {minutes} minutes}}.",
   "planFullDayError": "Ici, les réservations couvrent la journée entière.",
   "availabilityGranularityHours": "Heures réelles (de–à exact, demi/journées en raccourcis)",
   "availabilityWorkHoursTitle": "Horaires de travail",
@@ -75,7 +75,7 @@
   "@policyDurationConflict": {
     "description": "#649 - error when the minimum duration exceeds the maximum"
   },
-  "policyDaysValue": "{count, plural, =1{1 jour} other{{count} jours}}",
+  "policyDaysValue": "{count, plural, one{{count} jour} other{{count} jours}}",
   "@policyDaysValue": {
     "description": "#649 - a day count shown beside the horizon slider",
     "placeholders": {
@@ -84,7 +84,7 @@
       }
     }
   },
-  "policyMinutesValue": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "policyMinutesValue": "{count, plural, one{{count} minute} other{{count} minutes}}",
   "@policyMinutesValue": {
     "description": "#649 - a minute count shown beside a duration control",
     "placeholders": {
@@ -93,7 +93,7 @@
       }
     }
   },
-  "policyHoursValue": "{count, plural, =1{1 heure} other{{count} heures}}",
+  "policyHoursValue": "{count, plural, one{{count} heure} other{{count} heures}}",
   "@policyHoursValue": {
     "description": "#649 - an hour count shown beside a duration control",
     "placeholders": {

@@ -1,0 +1,10 @@
+{
+  "regionalWeekStart": "La semaine commence le",
+  "@regionalWeekStart": {
+    "description": "#3648 - the Me > Region & formats row that chooses the first day of the week in every calendar, strip and date picker"
+  },
+  "regionalWeekStartAuto": "Selon la région",
+  "@regionalWeekStartAuto": {
+    "description": "#3648 - the week-start choice that follows the format region (the day names of the other choices come from the locale)"
+  }
+}

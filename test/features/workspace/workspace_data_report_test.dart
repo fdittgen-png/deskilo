@@ -68,6 +68,7 @@ final _strings = WorkspaceDataReportStrings(
   day: (d) => d.toIso8601String().substring(0, 10),
   month: (d) => d.toIso8601String().substring(0, 7),
   number: (n) => '$n',
+  percent: (n) => '$n %',
 );
 
 /// The sum of the workbook column [column] of [sheet], in minor units,

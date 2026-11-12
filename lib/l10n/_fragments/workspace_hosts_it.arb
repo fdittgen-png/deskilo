@@ -1,15 +1,15 @@
 {
   "@@locale": "it",
-  "createHostTitle": "Dove deve trovarsi lo spazio?",
+  "createHostTitle": "Dove deve trovarsi l'attività?",
   "createHostHere": "Questo server",
   "createHostHereDetail": "Il server a cui ha effettuato l'accesso",
-  "createHostAvailable": "Accetta nuovi spazi",
-  "createHostNotAccepting": "Non accetta nuovi spazi",
+  "createHostAvailable": "Accetta nuove attività",
+  "createHostNotAccepting": "Non accetta nuove attività",
   "createHostUnverified": "La Sua identità non può essere verificata lì",
   "createHostRevoked": "La Sua casa personale non lo offre più",
   "createHostUnavailable": "Non è stato possibile leggere i server offerti dalla Sua casa personale.",
   "createOnHostBanner": "Questo spazio verrà creato su {host}.",
   "createHostLost": "Il server scelto per questo spazio non è più riservato. Non è stato creato nulla.",
   "createHostChooseAgain": "Scelga un server",
-  "createHostNone": "Nessun server accetta ancora nuovi spazi per la Sua casa personale. Non è stato creato nulla."
+  "createHostNone": "Nessun server accetta ancora nuove attività per la Sua casa personale. Non è stato creato nulla."
 }

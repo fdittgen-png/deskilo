@@ -2,16 +2,16 @@
   "@@locale": "en",
   "billSubscription": "Subscription {pct}%",
   "@billSubscription": {
-    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage.",
+    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]",
     "placeholders": {
       "pct": {
         "type": "int"
       }
     }
   },
-  "billEntitlement": "{used} of {included, plural, =1{1 half-day} other{{included} half-days}} billed ({openDays, plural, =1{1 day} other{{openDays} days}} open)",
+  "billEntitlement": "{used} of {included, plural, one{1 half-day} other{{included} half-days}} billed ({openDays, plural, one{1 day} other{{openDays} days}} open)",
   "@billEntitlement": {
-    "description": "Entitlement line under the subscription header",
+    "description": "Entitlement line under the subscription header The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]",
     "placeholders": {
       "used": {
         "type": "int"
@@ -348,6 +348,15 @@
     "description": "Journal export (#2370): roles the posting engine could not resolve",
     "placeholders": {
       "roles": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceLineCancelled": "Cancelled: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
         "type": "String"
       }
     }

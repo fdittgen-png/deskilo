@@ -1,7 +1,7 @@
 {
   "@@locale": "fr",
   "billSubscription": "Abonnement {pct} %",
-  "billEntitlement": "{used} sur {included, plural, =1{1 demi-journée facturée} other{{included} demi-journées facturées}} ({openDays, plural, =1{1 jour d'ouverture} other{{openDays} jours d'ouverture}})",
+  "billEntitlement": "{used} sur {included, plural, one{{included} demi-journée facturée} other{{included} demi-journées facturées}} ({openDays, plural, one{{openDays} jour d'ouverture} other{{openDays} jours d'ouverture}})",
   "billOverage": "{extra, plural, one{{extra} demi-journée supplémentaire} other{{extra} demi-journées supplémentaires}}",
   "billServices": "Services consommés",
   "billServicesTotal": "Total des services",
@@ -186,5 +186,14 @@
   },
   "invoiceExportGenericJournal": "Journal (CSV, pour tout logiciel comptable)",
   "journalNeedsLocalBook": "Le journal est tiré d'une comptabilité tenue ici : configurez d'abord le plan de comptes de l'émetteur.",
-  "journalBlocked": "Associez d'abord ces rôles dans le plan de comptes : {roles}"
+  "journalBlocked": "Associez d'abord ces rôles dans le plan de comptes : {roles}",
+  "invoiceLineCancelled": "Annulé : {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  }
 }

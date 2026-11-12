@@ -14,7 +14,7 @@
   "setupOnlineKeyInstallation": "Von der Installation festgelegt, die dieser Test nicht lesen kann",
   "setupApprovalsOwnRulesTitle": "Eigene Regeln",
   "setupApprovalsOwnRulesNone": "Jede Anfrage folgt der Standardregel oben.",
-  "setupApprovalsOwnRulesShort": "{count, plural, =1{Eine Regel verlangt mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.} other{{count} Regeln verlangen mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.}}",
-  "setupApprovalsRuleReach": "{required, plural, =1{1 Freigabe} other{{required} Freigaben}}, {people, plural, =1{1 Person kann freigeben} other{{people} Personen können freigeben}}",
-  "setupApprovalsRuleShort": "{required, plural, =1{1 Freigabe} other{{required} Freigaben}}, aber {people, plural, =0{niemand kann freigeben} =1{nur 1 Person kann freigeben} other{nur {people} Personen können freigeben}}"
+  "setupApprovalsOwnRulesShort": "{count, plural, one{Eine Regel verlangt mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.} other{{count} Regeln verlangen mehr Freigaben, als Personen sie geben können: Ihre Anfragen werden nie entschieden. Ändern Sie sie in den Freigaberegeln.}}",
+  "setupApprovalsRuleReach": "{required, plural, one{1 Freigabe} other{{required} Freigaben}}, {people, plural, one{1 Person kann freigeben} other{{people} Personen können freigeben}}",
+  "setupApprovalsRuleShort": "{required, plural, one{1 Freigabe} other{{required} Freigaben}}, aber {people, plural, =0{niemand kann freigeben} one{nur 1 Person kann freigeben} other{nur {people} Personen können freigeben}}"
 }

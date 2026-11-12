@@ -268,7 +268,7 @@
   },
   "invoiceRemindedBadge": "Reminded ×{count}",
   "@invoiceRemindedBadge": {
-    "description": "Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural.",
+    "description": "Archive row badge: reminder count. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -325,14 +325,14 @@
   },
   "invoiceSummaryToInvoice": "{count} to invoice",
   "@invoiceSummaryToInvoice": {
-    "description": "Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Summary strip: pending count. The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
   },
-  "invoiceSummaryOpen": "{count, plural, =1{1 open} other{{count} open}} · {amount} outstanding",
+  "invoiceSummaryOpen": "{count, plural, one{1 open} other{{count} open}} · {amount} outstanding",
   "@invoiceSummaryOpen": {
     "description": "Summary strip: open count + outstanding amount",
     "placeholders": {
@@ -353,7 +353,7 @@
       }
     }
   },
-  "invoiceIssuedCount": "{count, plural, =1{1 invoice issued.} other{{count} invoices issued.}}",
+  "invoiceIssuedCount": "{count, plural, one{1 invoice issued.} other{{count} invoices issued.}}",
   "@invoiceIssuedCount": {
     "description": "Snackbar after the invoice-all sweep",
     "placeholders": {
@@ -444,7 +444,7 @@
   "@invoiceStatusOpen": {
     "description": "Lifecycle chip: issued, still waiting for its payment"
   },
-  "invoiceCountShown": "{count, plural, =1{1 invoice} other{{count} invoices}}",
+  "invoiceCountShown": "{count, plural, one{1 invoice} other{{count} invoices}}",
   "@invoiceCountShown": {
     "description": "Archive: how many invoices the current filters show",
     "placeholders": {
@@ -495,7 +495,7 @@
       }
     }
   },
-  "invoiceAnnexSummary": "Annex: {movements, plural, =1{1 movement} other{{movements} movements}}, {checkIns, plural, =1{1 check-in} other{{checkIns} check-ins}}",
+  "invoiceAnnexSummary": "Annex: {movements, plural, one{1 movement} other{{movements} movements}}, {checkIns, plural, one{1 check-in} other{{checkIns} check-ins}}",
   "@invoiceAnnexSummary": {
     "description": "Detail sheet: what the snapshotted annex carries (0064)",
     "placeholders": {
@@ -515,7 +515,7 @@
   "@invoiceRunningMonth": {
     "description": "Issue sheet warning when the picked month is the current one (0067)"
   },
-  "invoiceIssueAllConfirm": "{count, plural, =1{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}",
+  "invoiceIssueAllConfirm": "{count, plural, one{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}",
   "@invoiceIssueAllConfirm": {
     "description": "Confirm dialog of the invoice-all sweep",
     "placeholders": {
@@ -530,7 +530,7 @@
       }
     }
   },
-  "invoiceIssuedPartial": "{issued, plural, =1{1 issued} other{{issued} issued}}, {failed, plural, =1{1 failed} other{{failed} failed}}.",
+  "invoiceIssuedPartial": "{issued, plural, one{1 issued} other{{issued} issued}}, {failed, plural, one{1 failed} other{{failed} failed}}.",
   "@invoiceIssuedPartial": {
     "description": "Sweep result when some members could not be invoiced",
     "placeholders": {
@@ -1039,7 +1039,7 @@
   },
   "reminderPdfTitleLevel": "Reminder {level}",
   "@reminderPdfTitleLevel": {
-    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\". The number is a position, not a count.",
+    "description": "#3652 Title of a reminder letter of a given level, e.g. \"Reminder 2\". The number is a position, not a count. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1101,7 +1101,7 @@
   },
   "dunningDueChip": "Reminder {level} due",
   "@dunningDueChip": {
-    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1110,7 +1110,7 @@
   },
   "invoiceTemplateDocReminder": "Reminder {level}",
   "@invoiceTemplateDocReminder": {
-    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Mahnwesen / reminder letters (#472). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1471,7 +1471,7 @@
   },
   "invoiceSummaryToRefund": "{count} to refund · {amount}",
   "@invoiceSummaryToRefund": {
-    "description": "Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Summary strip: open credit notes the workspace still owes (#508/#510). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -1499,7 +1499,7 @@
     "description": "#2332: when automatic payment reminders run"
   },
   "@eventInvoiceReminderLine": {
-    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Shown as a text in event lines (events). Placeholders: {number} (String), {level} (int), {amount} (String). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "number": {
         "type": "String"
@@ -1531,7 +1531,7 @@
       }
     }
   },
-  "eventPriceNegotiationItems": "{count, plural, =1{1 item} other{{count} items}}",
+  "eventPriceNegotiationItems": "{count, plural, one{1 item} other{{count} items}}",
   "@eventPriceNegotiationItems": {
     "description": "Shown as a text in event lines (events). Placeholders: {count} (int).",
     "placeholders": {
@@ -1804,7 +1804,7 @@
   "@journeyStageClosed": {
     "description": "Shown as a button or chip label in invoice stage strip (money)."
   },
-  "journeyOverdueCount": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "journeyOverdueCount": "{count, plural, one{1 overdue} other{{count} overdue}}",
   "@journeyOverdueCount": {
     "description": "Shown as a text in invoice stage strip (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -1875,7 +1875,7 @@
   },
   "journeyPrimaryRemind": "Send reminder {level}",
   "@journeyPrimaryRemind": {
-    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Shown as a button or chip label in open invoice card (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
@@ -1935,7 +1935,7 @@
   "@reportDesignerReplace": {
     "description": "Shown as a text in report editor dialogs (money)."
   },
-  "reportDesignerPages": "{count, plural, =1{1 page} other{{count} pages}}",
+  "reportDesignerPages": "{count, plural, one{1 page} other{{count} pages}}",
   "@reportDesignerPages": {
     "description": "Shown as a text in report page designer (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -2135,7 +2135,7 @@
       }
     }
   },
-  "wizardIssueAll": "{count, plural, =1{Issue 1 invoice} other{Issue {count} invoices}}",
+  "wizardIssueAll": "{count, plural, one{Issue 1 invoice} other{Issue {count} invoices}}",
   "@wizardIssueAll": {
     "description": "Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -2179,14 +2179,14 @@
   },
   "wizardRemindLevel": "reminder {level}",
   "@wizardRemindLevel": {
-    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation.",
+    "description": "Shown as the line under a title in wizard steps issue (money). Placeholders: {level} (int). The number is not a count: it is a reminder level, a position in the escalation. [not a count: level]",
     "placeholders": {
       "level": {
         "type": "int"
       }
     }
   },
-  "wizardRemindAll": "{count, plural, =1{Send 1 reminder} other{Send {count} reminders}}",
+  "wizardRemindAll": "{count, plural, one{Send 1 reminder} other{Send {count} reminders}}",
   "@wizardRemindAll": {
     "description": "Shown as a button or chip label in wizard steps issue (money). Placeholders: {count} (int).",
     "placeholders": {
@@ -2250,7 +2250,7 @@
   },
   "wizardSettle": "Regroup {count}",
   "@wizardSettle": {
-    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect.",
+    "description": "Shown as a text in wizard steps payments (money). Placeholders: {count} (int). The number is not a count: it is a bare figure before a phrase that never changes with the number, so the sentence has no noun to inflect. [not a count: count]",
     "placeholders": {
       "count": {
         "type": "int"
@@ -2413,7 +2413,7 @@
   "@repartitionNoShares": {
     "description": "Shown as a text in expense repartition sheet (money)."
   },
-  "repartitionSum": "{count, plural, =1{1 member · {amount}} other{{count} members · {amount}}}",
+  "repartitionSum": "{count, plural, one{1 member · {amount}} other{{count} members · {amount}}}",
   "@repartitionSum": {
     "description": "Shown as a text in expense repartition sheet (money). Placeholders: {count} (int), {amount} (String).",
     "placeholders": {

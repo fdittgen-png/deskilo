@@ -6,7 +6,7 @@
   },
   "guideHostStepOf": "Step {current} of {total}",
   "@guideHostStepOf": {
-    "description": "#1867 live guide host. The number is not a count: it is a position in a sequence of steps.",
+    "description": "#1867 live guide host. The number is not a count: it is a position in a sequence of steps. [not a count: current, total]",
     "placeholders": {
       "current": {
         "type": "int"
@@ -227,7 +227,7 @@
   },
   "guideHostRestore": "Show the guide (step {current} of {total})",
   "@guideHostRestore": {
-    "description": "Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps.",
+    "description": "Task wizard: guideHostRestore. The number is not a count: it is a position in a sequence of steps. [not a count: current, total]",
     "placeholders": {
       "current": {
         "type": "int"

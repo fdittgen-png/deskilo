@@ -250,15 +250,15 @@ void main() {
       final group = find.byKey(const ValueKey('me-space-pair-pair-1'));
       expect(group, findsOneWidget);
       expect(
-        find.descendant(of: group, matching: find.text('Test space')),
+        find.descendant(of: group, matching: find.text('Test business')),
         findsOneWidget,
       );
       expect(
-        find.descendant(of: group, matching: find.text('Open workspace')),
+        find.descendant(of: group, matching: find.text('Open business')),
         findsOneWidget,
       );
-      expect(tester.getCenter(find.text('Test space')).dy,
-          tester.getCenter(find.text('Open workspace')).dy);
+      expect(tester.getCenter(find.text('Test business')).dy,
+          tester.getCenter(find.text('Open business')).dy);
       // A card: the identity and its options on one line, both environments
       // below it — no taller than that at phone width.
       expect(tester.getSize(group).height, lessThan(230));
@@ -277,8 +277,8 @@ void main() {
       for (final width in [320.0, 1200.0]) {
         tester.view.physicalSize = Size(width, 844);
         await tester.pumpAndSettle();
-        expect(tester.getCenter(find.text('Test space')).dy,
-            tester.getCenter(find.text('Open workspace')).dy);
+        expect(tester.getCenter(find.text('Test business')).dy,
+            tester.getCenter(find.text('Open business')).dy);
         expect(tester.takeException(), isNull);
       }
       expect(tester.takeException(), isNull);
@@ -446,7 +446,7 @@ void main() {
       'Privacy',
       'Preferences',
       'Advanced',
-      'My workspaces',
+      'My places',
       'Connected installations',
     ]) {
       final header = find.descendant(of: find.byKey(const ValueKey('me-account-list')), matching: find.text(title)).first;
