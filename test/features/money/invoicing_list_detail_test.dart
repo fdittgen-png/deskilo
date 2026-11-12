@@ -11,7 +11,9 @@
 //   it, and a link to one the reader cannot read says so in words, never an
 //   empty pane.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/ui/kit/filter_chips.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoicing_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,15 +42,12 @@ Future<(GoRouter, String)> _pump(WidgetTester tester, Size size) async {
     ),
   );
   await tester.pumpAndSettle();
-  final router = GoRouter.of(tester.element(find.byType(Scaffold).first));
-  router.go('/invoices');
+  final router = GoRouter.of(tester.element(find.byType(Scaffold).first))
+    ..go('/invoices');
   await tester.pumpAndSettle();
   // The Invoices view: one line per invoice.
   await tester.tap(
-    find.descendant(
-      of: _k('invoicing-view'),
-      matching: find.text('Invoices'),
-    ),
+    find.descendant(of: _k('invoicing-view'), matching: find.text('Invoices')),
   );
   await tester.pumpAndSettle();
   return (router, id);
@@ -56,14 +55,11 @@ Future<(GoRouter, String)> _pump(WidgetTester tester, Size size) async {
 
 String _at(GoRouter r) => r.routeInformationProvider.value.uri.path;
 
-void _resize(WidgetTester tester, Size size) =>
-    tester.view.physicalSize = size;
+void _resize(WidgetTester tester, Size size) => tester.view.physicalSize = size;
 
 void main() {
   testWidgets('an invoice open at 1440 stays open across a resize to 1024 and '
-      'back, at its address, and one Back returns to the list', (
-    tester,
-  ) async {
+      'back, at its address, and one Back returns to the list', (tester) async {
     final (router, id) = await _pump(tester, const Size(1440, 900));
     await tester.tap(_k('invoicing-row-$id'));
     await tester.pumpAndSettle();
@@ -90,6 +86,11 @@ void main() {
   testWidgets('Escape goes to the list\'s address and the list keeps its '
       'filter and its search', (tester) async {
     final (router, id) = await _pump(tester, const Size(1440, 900));
+    // A filter other than the default, and a search.
+    await tester.tap(_k('invoicing-filter-overdue'));
+    await tester.pumpAndSettle();
+    await tester.tap(_k('invoicing-filter-open'));
+    await tester.pumpAndSettle();
     await tester.tap(_k('invoicing-search'));
     await tester.pumpAndSettle();
     await tester.enterText(_k('invoicing-search-field'), 'INV');
@@ -103,9 +104,24 @@ void main() {
     expect(_at(router), '/invoices');
     expect(_k('invoicing-panel-$id'), findsNothing);
     expect(
-      tester.widget<TextField>(_k('invoicing-search-field')).controller?.text,
+      tester
+          .widget<TextField>(
+            find.descendant(
+              of: _k('invoicing-search-field'),
+              matching: find.byType(TextField),
+            ),
+          )
+          .controller
+          ?.text,
       'INV',
       reason: 'the search survives Close',
+    );
+    expect(
+      tester
+          .widget<FilterChips<InvoicingFilter>>(_k('invoicing-filters'))
+          .selected,
+      InvoicingFilter.open,
+      reason: 'the filter survives Close',
     );
     expect(_k('invoicing-row-$id'), findsOneWidget);
   });
