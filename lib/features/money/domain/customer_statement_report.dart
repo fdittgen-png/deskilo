@@ -4,23 +4,21 @@
 // customer in the address window, the cutoff, each open document with its
 // allocated parts under it and what is still due, the credits not yet
 // applied, and the balance. Pure: the words live in the bands
-// (report_defaults_customer_statement.dart) and the formats come in. No
+// (report_defaults_customer_statement.dart), amounts and days are written
+// in the reader's locale. No
 // arithmetic happens here: every figure is the server's
 // (customer_statement_v1).
 library;
 
-import 'customer_statement.dart';
+import 'package:intl/intl.dart';
 
-/// How the document writes an amount (minor units of the statement's
-/// currency) and a day, in the reader's locale.
-typedef CustomerStatementFormats = ({
-  String Function(int minor) money,
-  String Function(DateTime day) date,
-});
+import '../../../core/i18n/money_format.dart';
+import 'customer_statement.dart';
 
 /// The data of [statement] for the `customer_statement` kind, for
 /// [customerName] at [customerAddress], as of [asOf], under [letterhead]
-/// (the space's name and address).
+/// (the space's name and address), with amounts and days written in
+/// [locale] and the statement's own currency.
 ///
 /// `rows` is one flat list, so the bands need no nested loop: a `document`
 /// row, then its `part` rows, then its `due` row; then one `credit` row per
@@ -32,9 +30,13 @@ Map<String, Object?> customerStatementReportData(
   required DateTime asOf,
   required DateTime issued,
   required String issuedBy,
-  required CustomerStatementFormats format,
+  required String locale,
   Map<String, Object?> letterhead = const {},
 }) {
+  final format = (
+    money: moneyFormat(statement.currency, locale: locale).formatMinor,
+    date: DateFormat.yMMMd(locale).format,
+  );
   String day(DateTime? d) => d == null ? '' : format.date(d);
   return {
     ...letterhead,
