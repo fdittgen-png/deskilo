@@ -11,8 +11,6 @@ import '../../../core/backend/context_client_providers.dart';
 import '../../../core/features/enabled_feature_keys.dart';
 import '../../../core/images/emblem_bytes.dart';
 import '../../../core/privacy/recording_privacy.dart';
-import '../../../core/session/session_source.dart';
-import '../../../core/session/task_context.dart';
 import '../../../core/storage/active_workspace_store.dart';
 import '../../../core/storage/note_seen_store.dart';
 import '../../../core/time/work_hours.dart';
@@ -58,16 +56,6 @@ part 'workspace_providers.g.dart';
 /// composition root puts it in its scope's overrides.
 final enabledFeatureKeysFromWorkspace = enabledFeatureKeysProvider.overrideWith(
   (ref) => {for (final f in ref.watch(enabledFeaturesSyncProvider)) f.dbKey},
-);
-
-/// #3608 — the context an open task belongs to: the signed-in person and
-/// the active workspace. A change of either closes the task, unasked
-/// (core/ui/adaptive/task_surface.dart); the composition root and the Demo
-/// put it in their scopes' overrides.
-final taskContextFromWorkspace = taskContextTokenProvider.overrideWith(
-  (ref) =>
-      '${ref.watch(sessionStateProvider).value ?? ''}'
-      '|${ref.watch(activeWorkspaceIdProvider).value ?? ''}',
 );
 
 /// #2564 O1 -- the OPERATIONS half: everything done to the selected
