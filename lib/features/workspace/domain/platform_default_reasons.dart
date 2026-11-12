@@ -74,6 +74,11 @@ const Map<WorkspaceFeature, String> platformDefaultReasons = {
   WorkspaceFeature.kioskMode:
       'The owner explicitly designates a kiosk account; enabling the '
       'feature does not configure a device (#341).',
+  WorkspaceFeature.kioskEnrolment:
+      'Badge sign-in works only on the devices a business enrolled as '
+      'kiosks unless it allows any device; a business that already issued '
+      'badges keeps any device until its owner switches, and turning this '
+      'off lets badge sign-in work from any device (#3675).',
   WorkspaceFeature.nfcBadges:
       'Under the kiosk, authorised registration is explicit and NFC '
       'tapping needs a capable device (#341).',

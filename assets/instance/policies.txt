@@ -190,6 +190,7 @@ public.invoice_transmissions.invoice_transmissions_select
 public.invoice_transmissions.mcp_delegated_deny
 public.invoices.invoices_select
 public.invoices.mcp_delegated_deny
+public.kiosk_devices.mcp_delegated_deny
 public.lease_settlements.lease_settlements_select
 public.lease_settlements.mcp_delegated_deny
 public.lease_terms.lease_terms_select
