@@ -135,3 +135,245 @@ Future<void> loadSheetFonts() async {
         ..addFont(rootBundle.load('assets/fonts/Roboto-Bold.ttf')))
       .load();
 }
+
+// ---------------------------------------------------------------------------
+// #3605 (desk F4) — the guards at desk sizes, through the app's builder.
+// ---------------------------------------------------------------------------
+
+/// The desk's window sizes, beside [guardWidths].
+const List<Size> deskGuardSizes = [
+  Size(1024, 768),
+  Size(1440, 900),
+  Size(1920, 1080),
+];
+
+/// What a page is, for the rules that depend on it (the four page kinds of
+/// the desk epic).
+enum PageKind { records, task, dashboard, document }
+
+/// Who a target is measured for. At the desk a table ROW may be 36 px high,
+/// because every row action is also reached by the keyboard and the row
+/// menu; every other control stays at 48. Where the device reports touch in
+/// the desk posture, rows are 48 too.
+enum TargetPolicy { touch, desk }
+
+/// The narrowest a desk table row may be under [TargetPolicy.desk].
+const double deskRowMinHeight = 36;
+
+/// The widest a block of body text may run outside a table cell.
+const double bodyTextMaxWidth = 760;
+
+/// The share of the window a records page's table takes at 1440 at least.
+const double recordsTableMinShare = 0.6;
+
+/// Pumps the app at [size] and opens [path] through its own builder: the
+/// frame, the desk and the shell are in the tree, as a person sees them.
+Future<void> pumpRoute(
+  WidgetTester tester,
+  Widget app,
+  String path, {
+  required Size size,
+  required void Function(String path) go,
+}) async {
+  tester.view.physicalSize = size;
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
+  await tester.pumpWidget(app);
+  await tester.pumpAndSettle();
+  go(path);
+  await tester.pumpAndSettle();
+}
+
+/// The rects of the table rows on screen: where a [TargetPolicy.desk] target
+/// may be [deskRowMinHeight] high.
+List<Rect> _rowRects(WidgetTester tester, Iterable<Type> rowTypes) => [
+  for (final type in rowTypes)
+    for (final e in find.byType(type).evaluate())
+      if (e.renderObject case final RenderBox box when box.hasSize)
+        box.localToGlobal(Offset.zero) & box.size,
+];
+
+bool _within(Rect inner, Rect outer) =>
+    inner.left >= outer.left - 0.5 &&
+    inner.top >= outer.top - 0.5 &&
+    inner.right <= outer.right + 0.5 &&
+    inner.bottom <= outer.bottom + 0.5;
+
+/// The rules the page on screen breaks at the desk, at [size], as a page of
+/// [kind]. [rowTypes] are the widgets that draw a table row, [tableTypes] the
+/// widgets a records page's table is (their widest decides the share).
+Set<String> deskGuardProblems(
+  WidgetTester tester, {
+  required PageKind kind,
+  required Size size,
+  TargetPolicy policy = TargetPolicy.desk,
+  Iterable<Type> rowTypes = const [],
+  Iterable<Type> tableTypes = const [],
+}) {
+  final problems = <String>{};
+  var thrown = false;
+  while (tester.takeException() != null) {
+    thrown = true;
+  }
+  if (thrown) problems.add('overflow or exception');
+  final rows = _rowRects(tester, rowTypes);
+  // Text: a body block runs at most [bodyTextMaxWidth] outside a table row.
+  for (final e in find.byType(RichText).evaluate()) {
+    final box = e.renderObject as RenderBox?;
+    if (box == null || !box.hasSize) continue;
+    final rect = box.localToGlobal(Offset.zero) & box.size;
+    if (rect.width <= bodyTextMaxWidth) continue;
+    if (rows.any((r) => _within(rect, r))) continue;
+    problems.add('text wider than ${bodyTextMaxWidth.toInt()} px');
+  }
+  // A records page's table takes its share of a 1440 window.
+  if (kind == PageKind.records && size.width >= 1440) {
+    final widest = [
+      for (final type in tableTypes)
+        for (final e in find.byType(type).hitTestable().evaluate())
+          (e.renderObject! as RenderBox).size.width,
+    ].fold<double>(0, (a, b) => a > b ? a : b);
+    if (widest < recordsTableMinShare * size.width) {
+      problems.add('table under ${(recordsTableMinShare * 100).toInt()} %');
+    }
+  }
+  // Targets: hit regions, by the policy.
+  for (final node in tappableRects(tester)) {
+    final row = policy == TargetPolicy.desk &&
+        rows.any((r) => _within(node.rect, r));
+    final minHeight = row ? deskRowMinHeight : 48;
+    final minWidth = row ? 0 : 48;
+    if (node.rect.width < minWidth - 0.5 ||
+        node.rect.height < minHeight - 0.5) {
+      problems.add(row ? 'row under 36 px' : 'target under 48 dp');
+    }
+    if (!node.named) problems.add('unnamed control');
+  }
+  return problems;
+}
+
+/// Every tappable semantics node with its rect on screen and its name.
+List<({Rect rect, bool named})> tappableRects(WidgetTester tester) {
+  // ignore: deprecated_member_use
+  final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
+  final out = <({Rect rect, bool named})>[];
+  void walk(SemanticsNode node, Matrix4 parent) {
+    final transform = node.transform == null
+        ? parent
+        : (parent.clone()..multiply(node.transform!));
+    final data = node.getSemanticsData();
+    if (data.hasAction(SemanticsAction.tap) &&
+        !data.flagsCollection.isHidden &&
+        !node.isInvisible) {
+      out.add((
+        rect: MatrixUtils.transformRect(transform, node.rect),
+        named:
+            data.label.trim().isNotEmpty ||
+            data.value.trim().isNotEmpty ||
+            data.tooltip.trim().isNotEmpty,
+      ));
+    }
+    node.visitChildren((child) {
+      walk(child, transform);
+      return true;
+    });
+  }
+
+  if (root != null) walk(root, Matrix4.identity());
+  return out;
+}
+
+/// The focus nodes a person can reach on screen: enabled, visible, not
+/// excluded. [tabStops]: those the Tab key stops on; else those it skips
+/// (rows inside a composite that arrows move through).
+List<FocusNode> _focusables({required bool tabStops}) => [
+  for (final n in FocusManager.instance.rootScope.descendants)
+    if (n.canRequestFocus &&
+        n.skipTraversal != tabStops &&
+        n.context != null &&
+        n.context!.mounted &&
+        n is! FocusScopeNode &&
+        _onScreen(n))
+      n,
+];
+
+bool _onScreen(FocusNode n) {
+  final box = n.context!.findRenderObject();
+  if (box is! RenderBox || !box.hasSize || !box.attached) return false;
+  return box.size.width > 0 && box.size.height > 0;
+}
+
+/// The keyboard contract: Tab reaches every Tab stop exactly once in a
+/// cycle; a control Tab skips (a row of a composite) is reached by an arrow
+/// key from a Tab stop; nothing is left that no key reaches.
+Future<Set<String>> keyboardProblems(WidgetTester tester) async {
+  final problems = <String>{};
+  final stops = _focusables(tabStops: true).toSet();
+  final skipped = _focusables(tabStops: false).toSet();
+  final seen = <FocusNode>[];
+  for (var i = 0; i < stops.length * 2 + 4; i++) {
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.pump();
+    final now = FocusManager.instance.primaryFocus;
+    if (now == null) continue;
+    if (seen.isNotEmpty && now == seen.first) break;
+    if (seen.contains(now)) problems.add('reached twice by Tab');
+    seen.add(now);
+  }
+  if (stops.difference(seen.toSet()).isNotEmpty) {
+    problems.add('unreachable by Tab');
+  }
+  // From each Tab stop, the arrows walk a composite's rows.
+  final byArrow = <FocusNode>{};
+  for (final stop in seen) {
+    stop.requestFocus();
+    await tester.pump();
+    for (final key in [
+      LogicalKeyboardKey.arrowDown,
+      LogicalKeyboardKey.arrowRight,
+    ]) {
+      for (var i = 0; i < skipped.length + 1; i++) {
+        await tester.sendKeyEvent(key);
+        await tester.pump();
+        final now = FocusManager.instance.primaryFocus;
+        if (now != null && skipped.contains(now)) byArrow.add(now);
+      }
+    }
+  }
+  if (skipped.difference(byArrow).isNotEmpty) {
+    problems.add('unreachable by any key');
+  }
+  return problems;
+}
+
+/// Escape on the surface on top: a clean one closes, a [dirty] one asks
+/// before discarding (one more surface on top, the first still there).
+/// [surfaces] finds the open surfaces.
+Future<Set<String>> escapeProblems(
+  WidgetTester tester, {
+  required Finder surfaces,
+  required bool dirty,
+}) async {
+  final before = surfaces.evaluate().length;
+  await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+  await tester.pumpAndSettle();
+  final after = surfaces.evaluate().length;
+  if (dirty) {
+    return after > before ? {} : {'a dirty surface closed without asking'};
+  }
+  return after < before ? {} : {'Escape did not close the top surface'};
+}
+
+/// With SHEET=1, the page on screen at [width] in [brightness] is written
+/// to `build/sheets/<module>/<screen>--<width>--<light|dark>.png`.
+Future<void> writeDeskSheet(
+  WidgetTester tester, {
+  required String module,
+  required String screen,
+  required double width,
+  required Brightness brightness,
+}) => writeSheet(
+  tester,
+  sheet: module,
+  name: '$screen--${width.toInt()}--${brightness.name}',
+);
