@@ -8,9 +8,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/data/server_error.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/kit/result_page.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_month.dart';
@@ -49,7 +49,7 @@ class MonthResultView extends ConsumerWidget {
   /// The missing essentials DKI01's DETAIL names, a comma-separated list
   /// (none when it names none).
   List<String> _missingIn(Object error) => [
-    for (final key in (serverErrorDetails(error) ?? '').split(','))
+    for (final key in (refusalCodeOf(error).details ?? '').split(','))
       if (_isEssentialKey(key.trim())) key.trim(),
   ];
 
@@ -69,7 +69,7 @@ class MonthResultView extends ConsumerWidget {
       fallback: l10n.invoiceMonthNotIssued,
     );
     // #3811 — DKI01 is the essentials refusal; its DETAIL names them.
-    final missing = serverErrorCode(error) == 'DKI01'
+    final missing = refusalCodeOf(error).code == 'DKI01'
         ? _missingIn(error)
         : const <String>[];
     return (

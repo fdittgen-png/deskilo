@@ -176,7 +176,7 @@ declare
   v_out jsonb;
   v_envelope jsonb;
 begin
-  if auth.uid() is null then raise exception 'not authenticated'; end if;
+  if auth.uid() is null then raise exception 'not authenticated' using errcode = 'P0001'; end if;
   c := public.mcp_authorize(p_installation_id, p_workspace_id, p_operation);
   c.request_id := p_request_id;
   if c.refusal is null and to_regprocedure(

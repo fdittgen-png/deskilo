@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
-import '../../../../core/data/server_error.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -61,9 +61,10 @@ String invoiceRefusalText(
 }) {
   if (error is InvoiceIssueDeclined) return l10n.invoiceIssueDeclined;
   // #3811 — read by the server's codes (0396, 0740), never its sentences.
-  return switch (serverErrorCode(error)) {
+  final refusal = refusalCodeOf(error);
+  return switch (refusal.code) {
     'DKI07' => l10n.invoiceAlreadyInvoiced,
-    'DKI01' when serverErrorDetails(error) == 'invoice_feature_disabled' =>
+    'DKI01' when refusal.details == 'invoice_feature_disabled' =>
       l10n.invoiceFeatureDisabled,
     'DKI01' => l10n.invoiceEssentialsRefused,
     _ => fallback ?? l10n.workspaceGenericError,

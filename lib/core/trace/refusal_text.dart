@@ -136,6 +136,11 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKR01': KnownRefusal.personalHomeHostsNoWorkspace,
 };
 
+/// #3811 — the server's refusal code and its DETAIL, for a screen that reads
+/// a code of its own (presentation never imports `data/`).
+({String? code, String? details}) refusalCodeOf(Object error) =>
+    (code: serverErrorCode(error), details: serverErrorDetails(error));
+
 /// Which family [error] belongs to, or null when it is none of them.
 KnownRefusal? knownRefusalOf(Object error) {
   // #3278 — a 42501 that carries its own words: read before the generic one.
