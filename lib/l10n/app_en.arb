@@ -442,7 +442,7 @@
   },
   "acctDeliverDone": "Delivered: {delivered} · already there: {unchanged} · to check: {attention}",
   "@acctDeliverDone": {
-    "description": "#2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count] [not a count: delivered, unchanged, attention]",
+    "description": "#2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: delivered, unchanged, attention]",
     "placeholders": {
       "delivered": {
         "type": "int"
@@ -496,7 +496,7 @@
   },
   "acctDeliverReasonStoppedAt": "{reason} Stopped at {month}. Delivered before it: {count}.",
   "@acctDeliverReasonStoppedAt": {
-    "description": "#3767 Snack: why a delivery run stopped, followed by the month it stopped at and what the months before it delivered. The number is not a count: it is a figure after a label and a colon, read as a value; the sentence has no noun to agree with.",
+    "description": "#3767 Snack: why a delivery run stopped, followed by the month it stopped at and what the months before it delivered. The number is not a count: it is a figure after a label and a colon, read as a value; the sentence has no noun to agree with. [not a count: count]",
     "placeholders": {
       "reason": {
         "type": "String"

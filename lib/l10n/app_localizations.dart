@@ -638,7 +638,7 @@ abstract class AppLocalizations {
   /// **'The books of this period cannot be posted yet: {subjects}.'**
   String acctDeliverBooksBlocked(String subjects);
 
-  /// #2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count] [not a count: delivered, unchanged, attention]
+  /// #2370 Snack: what a delivery run became. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: delivered, unchanged, attention]
   ///
   /// In en, this message translates to:
   /// **'Delivered: {delivered} · already there: {unchanged} · to check: {attention}'**
@@ -680,7 +680,7 @@ abstract class AppLocalizations {
   /// **'{reason} Nothing was delivered.'**
   String acctDeliverReasonNothingSent(String reason);
 
-  /// #3767 Snack: why a delivery run stopped, followed by the month it stopped at and what the months before it delivered. The number is not a count: it is a figure after a label and a colon, read as a value; the sentence has no noun to agree with.
+  /// #3767 Snack: why a delivery run stopped, followed by the month it stopped at and what the months before it delivered. The number is not a count: it is a figure after a label and a colon, read as a value; the sentence has no noun to agree with. [not a count: count]
   ///
   /// In en, this message translates to:
   /// **'{reason} Stopped at {month}. Delivered before it: {count}.'**
