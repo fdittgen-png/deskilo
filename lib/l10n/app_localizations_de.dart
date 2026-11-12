@@ -879,6 +879,29 @@ class AppLocalizationsDe extends AppLocalizations {
   String get amenityWindow => 'Fensterplatz';
 
   @override
+  String get amountFieldNegative =>
+      'Ein Betrag unter null ist hier nicht erlaubt.';
+
+  @override
+  String get amountFieldNotANumber =>
+      'Kein Betrag. Ziffern und ein Dezimaltrennzeichen verwenden.';
+
+  @override
+  String get amountFieldRequired => 'Bitte einen Betrag eingeben.';
+
+  @override
+  String amountFieldTooManyDecimals(int digits, String currency) {
+    String _temp0 = intl.Intl.pluralLogic(
+      digits,
+      locale: localeName,
+      other: '$currency hat $digits Nachkommastellen.',
+      one: '$currency hat eine Nachkommastelle.',
+      zero: '$currency hat keine Nachkommastellen.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -4887,6 +4910,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get bookEffectiveFromLabel => 'Gültig ab';
+
+  @override
   String get bookExternalOther => 'Anderes…';
 
   @override
@@ -6940,6 +6966,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get dataReportTitle => 'Datenbericht des Spaces';
+
+  @override
+  String get dateFieldImpossible => 'Dieses Datum gibt es nicht.';
+
+  @override
+  String get dateFieldMalformed =>
+      'Kein Datum. Tag, Monat und Jahr in Ihrem Datumsformat mit vierstelligem Jahr eingeben, oder als acht Ziffern.';
+
+  @override
+  String get dateFieldOutOfRange =>
+      'Dieses Datum liegt außerhalb des hier erlaubten Zeitraums.';
+
+  @override
+  String dateFieldReadAs(String date) {
+    return 'Gelesen als $date';
+  }
+
+  @override
+  String get dateFieldRequired => 'Bitte ein Datum eingeben.';
+
+  @override
+  String get dateFieldTwoDigitYear => 'Das Jahr bitte vierstellig eingeben.';
 
   @override
   String get datevAccountLength => 'Sachkontenlänge';

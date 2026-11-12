@@ -3,7 +3,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -81,13 +80,23 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
         : widget.claim.remainingCents;
     setState(() {
       _invoiceId = open.invoice.id;
-      _amount.text = centsToMajor(cents);
+      _amount.text = amountInputText(
+        cents,
+        currency: widget.claim.currency,
+        locale: appFormatOf(context).locale,
+      );
     });
   }
 
   Future<void> _save(List<OpenInvoice> open) async {
     final id = _invoiceId;
-    final cents = appFormatOf(context).parseMinor(_amount.text);
+    final cents = appFormatOf(context)
+        .readAmount(
+          _amount.text,
+          currency: widget.claim.currency,
+          allowNegative: false,
+        )
+        .minor;
     final due = open.where((o) => o.invoice.id == id).firstOrNull?.dueCents;
     if (id == null || due == null || cents == null || cents <= 0) {
       setState(() => _invalid = true);
@@ -172,13 +181,14 @@ class _OffsetDialogState extends ConsumerState<_OffsetDialog> {
                   if (picked.isNotEmpty) _pick(picked.first);
                 },
               ),
-              AppTextField(
+              AppAmountField(
                 key: const ValueKey('offset-amount'),
                 controller: _amount,
                 label: l10n.purchasesPayAmount,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+                currency: widget.claim.currency,
+                allowNegative: false,
+                isRequired: true,
+                showProblem: _invalid,
               ),
             ],
             if (_invalid)

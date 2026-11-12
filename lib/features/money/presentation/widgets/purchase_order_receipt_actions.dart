@@ -78,6 +78,7 @@ class _ReceiptSheet {
     final l10n = context.l10n;
     final today = ref.read(clockProvider).now();
     var day = DateTime(today.year, today.month, today.day);
+    DateRead dayRead = (date: day, problem: null);
     final fields = FormControllers({
       for (final l in order.lines)
         if (l.remaining > 0) 'line-${l.lineNo}': _qty(l.remaining),
@@ -107,7 +108,12 @@ class _ReceiptSheet {
         validate: () {
           // The day cannot be later than today: the picker ends there.
           final problems = draft().problemsOn(ref.read(clockProvider).now());
+          final dayProblem = dayRead.problem;
           return {
+            if (dayProblem != null)
+              'day': dateInputProblemText(l10n, dayProblem)
+            else if (dayRead.date == null)
+              'day': l10n.dateFieldRequired,
             if (problems.contains(PurchaseOrderReceiptProblem.tooMany))
               for (final l in order.lines)
                 'line-${l.lineNo}': l10n.purchaseOrderReceiveTooMany
@@ -131,27 +137,18 @@ class _ReceiptSheet {
           return ok ? null : l10n.purchaseOrderRefused;
         },
         builder: (context, refresh) => [
-          OutlinedButton.icon(
+          AppDateField(
             key: const ValueKey('purchase-order-receive-day'),
-            icon: const Icon(Icons.event_outlined),
-            label: Text(
-              l10n.labelWithValue(
-              l10n.purchaseOrderReceivedOn,
-              MaterialLocalizations.of(context).formatMediumDate(day),
-            ),
-            ),
-            onPressed: () async {
-              final picked = await showDatePicker(
-                context: context,
-                initialDate: day,
-                firstDate: DateTime(2000),
-                lastDate: today,
-                helpText: l10n.purchaseOrderReceivedOn,
-              );
-              if (picked != null) {
-                day = picked;
-                refresh();
-              }
+            fieldKey: 'day',
+            label: l10n.purchaseOrderReceivedOn,
+            value: dayRead.date,
+            first: DateTime(2000),
+            last: today,
+            pickerHelpText: l10n.purchaseOrderReceivedOn,
+            isRequired: true,
+            onChanged: (read) {
+              dayRead = read;
+              if (read.date case final date?) day = date;
             },
           ),
           for (final l in order.lines)

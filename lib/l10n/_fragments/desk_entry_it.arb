@@ -1,0 +1,56 @@
+{
+  "@@locale": "it",
+  "dateFieldReadAs": "Letto come {date}",
+  "@dateFieldReadAs": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFieldMalformed": "Non è una data. Inserisca giorno, mese e anno nel suo formato di data, con l'anno a quattro cifre, oppure come otto cifre.",
+  "@dateFieldMalformed": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldRequired": "Inserisca una data.",
+  "@dateFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldTwoDigitYear": "Inserisca l'anno con quattro cifre.",
+  "@dateFieldTwoDigitYear": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldImpossible": "Questa data non esiste.",
+  "@dateFieldImpossible": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldOutOfRange": "Questa data è fuori dalle date consentite qui.",
+  "@dateFieldOutOfRange": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNotANumber": "Non è un importo. Usi cifre e un solo separatore decimale.",
+  "@amountFieldNotANumber": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldRequired": "Inserisca un importo.",
+  "@amountFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNegative": "Qui non è consentito un importo inferiore a zero.",
+  "@amountFieldNegative": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} non ha decimali.} =1{{currency} ha un decimale.} other{{currency} ha {digits} decimali.}}",
+  "@amountFieldTooManyDecimals": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "digits": {
+        "type": "int"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -1177,6 +1177,30 @@
   "@amenityWindow": {
     "description": "Seat amenity chip"
   },
+  "amountFieldNegative": "An amount below zero is not allowed here.",
+  "@amountFieldNegative": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNotANumber": "Not an amount. Use digits and one decimal separator.",
+  "@amountFieldNotANumber": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldRequired": "Enter an amount.",
+  "@amountFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} has no decimals.} =1{{currency} has one decimal.} other{{currency} has {digits} decimals.}}",
+  "@amountFieldTooManyDecimals": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "digits": {
+        "type": "int"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "@appTitle": {
     "description": "Application name shown in the task switcher and app bar. Brand name — identical in all locales."
@@ -6400,6 +6424,10 @@
       }
     }
   },
+  "bookEffectiveFromLabel": "Takes effect from",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookExternalOther": "Other…",
   "@bookExternalOther": {
     "description": "#2577 the book software picker: a software the catalogue does not list, typed by the person"
@@ -9032,6 +9060,35 @@
   "dataReportTitle": "Workspace data report",
   "@dataReportTitle": {
     "description": "#2862 data report: dataReportTitle"
+  },
+  "dateFieldImpossible": "This date does not exist.",
+  "@dateFieldImpossible": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldMalformed": "Not a date. Type day, month and year in your date format, with a four-digit year, or as eight digits.",
+  "@dateFieldMalformed": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldOutOfRange": "This date is outside the dates allowed here.",
+  "@dateFieldOutOfRange": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldReadAs": "Read as {date}",
+  "@dateFieldReadAs": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFieldRequired": "Enter a date.",
+  "@dateFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldTwoDigitYear": "Type the year with four digits.",
+  "@dateFieldTwoDigitYear": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
   },
   "datevAccountLength": "Account length (Sachkontenlänge)",
   "@datevAccountLength": {

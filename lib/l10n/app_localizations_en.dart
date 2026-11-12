@@ -874,6 +874,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amenityWindow => 'Window seat';
 
   @override
+  String get amountFieldNegative => 'An amount below zero is not allowed here.';
+
+  @override
+  String get amountFieldNotANumber =>
+      'Not an amount. Use digits and one decimal separator.';
+
+  @override
+  String get amountFieldRequired => 'Enter an amount.';
+
+  @override
+  String amountFieldTooManyDecimals(int digits, String currency) {
+    String _temp0 = intl.Intl.pluralLogic(
+      digits,
+      locale: localeName,
+      other: '$currency has $digits decimals.',
+      one: '$currency has one decimal.',
+      zero: '$currency has no decimals.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get appTitle => 'DesKilo';
 
   @override
@@ -4848,6 +4870,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get bookEffectiveFromLabel => 'Takes effect from';
+
+  @override
   String get bookExternalOther => 'Other…';
 
   @override
@@ -6887,6 +6912,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataReportTitle => 'Workspace data report';
+
+  @override
+  String get dateFieldImpossible => 'This date does not exist.';
+
+  @override
+  String get dateFieldMalformed =>
+      'Not a date. Type day, month and year in your date format, with a four-digit year, or as eight digits.';
+
+  @override
+  String get dateFieldOutOfRange =>
+      'This date is outside the dates allowed here.';
+
+  @override
+  String dateFieldReadAs(String date) {
+    return 'Read as $date';
+  }
+
+  @override
+  String get dateFieldRequired => 'Enter a date.';
+
+  @override
+  String get dateFieldTwoDigitYear => 'Type the year with four digits.';
 
   @override
   String get datevAccountLength => 'Account length (Sachkontenlänge)';

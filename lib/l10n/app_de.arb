@@ -372,6 +372,30 @@
   "amenityMonitor": "Monitor",
   "amenityStandingDesk": "Stehpult",
   "amenityWindow": "Fensterplatz",
+  "amountFieldNegative": "Ein Betrag unter null ist hier nicht erlaubt.",
+  "@amountFieldNegative": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldNotANumber": "Kein Betrag. Ziffern und ein Dezimaltrennzeichen verwenden.",
+  "@amountFieldNotANumber": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldRequired": "Bitte einen Betrag eingeben.",
+  "@amountFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "amountFieldTooManyDecimals": "{digits, plural, =0{{currency} hat keine Nachkommastellen.} =1{{currency} hat eine Nachkommastelle.} other{{currency} hat {digits} Nachkommastellen.}}",
+  "@amountFieldTooManyDecimals": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "digits": {
+        "type": "int"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "appTitle": "DesKilo",
   "applicationAcceptedVote": "Hat diese Anfrage genehmigt",
   "@applicationAcceptedVote": {
@@ -2907,6 +2931,10 @@
   "bookChartTitle": "Kontenplan · {site}",
   "bookCurrency": "Buchungswährung",
   "bookEffectiveFrom": "Gültig ab {date}",
+  "bookEffectiveFromLabel": "Gültig ab",
+  "@bookEffectiveFromLabel": {
+    "description": "#3612 the label of the typed or picked date a book takes effect from"
+  },
   "bookExternalOther": "Anderes…",
   "bookExternalSystem": "Maßgebliches System",
   "bookFiscalPreview": "Geschäftsjahr {label}: {start} – {end}",
@@ -4253,6 +4281,35 @@
   "dataReportPartPurchases": "Einkäufe und Lieferanten",
   "dataReportSubtitle": "Mitglieder, Buchungen, Rechnungen, Zahlungen, Einkäufe und der Plan mit seinen Preisen, mit Summen, zum Lesen oder Drucken.",
   "dataReportTitle": "Datenbericht des Spaces",
+  "dateFieldImpossible": "Dieses Datum gibt es nicht.",
+  "@dateFieldImpossible": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldMalformed": "Kein Datum. Tag, Monat und Jahr in Ihrem Datumsformat mit vierstelligem Jahr eingeben, oder als acht Ziffern.",
+  "@dateFieldMalformed": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldOutOfRange": "Dieses Datum liegt außerhalb des hier erlaubten Zeitraums.",
+  "@dateFieldOutOfRange": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldReadAs": "Gelesen als {date}",
+  "@dateFieldReadAs": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateFieldRequired": "Bitte ein Datum eingeben.",
+  "@dateFieldRequired": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
+  "dateFieldTwoDigitYear": "Das Jahr bitte vierstellig eingeben.",
+  "@dateFieldTwoDigitYear": {
+    "description": "#3612 desk entry: the typed date and amount fields of the form kit"
+  },
   "datevAccountLength": "Sachkontenlänge",
   "datevAccountsIntro": "Berater- und Mandantennummer bekommen Sie von Ihrer Steuerberatung. DATEV lehnt eine Datei mit abweichenden Nummern ab — genau das hält sie aus den Büchern der falschen Firma heraus.",
   "@datevAccountsIntro": {

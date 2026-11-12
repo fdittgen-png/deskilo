@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -46,10 +45,14 @@ class _PayDialog extends ConsumerStatefulWidget {
 
 class _PayDialogState extends ConsumerState<_PayDialog> {
   late final _amount = TextEditingController(
-    text: centsToMajor(widget.claim.remainingCents),
+    text: amountInputText(
+      widget.claim.remainingCents,
+      currency: widget.claim.currency,
+      locale: appFormatOf(context).locale,
+    ),
   );
   final _reference = TextEditingController();
-  DateTime? _paidOn;
+  late DateRead _paidOn = (date: _today, problem: null);
   var _method = PaymentMethod.bankTransfer;
   var _invalid = false;
 
@@ -69,8 +72,16 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
   }
 
   ReimbursementCommand? _command() {
-    final cents = appFormatOf(context).parseMinor(_amount.text);
-    if (cents == null ||
+    final cents = appFormatOf(context)
+        .readAmount(
+          _amount.text,
+          currency: widget.claim.currency,
+          allowNegative: false,
+        )
+        .minor;
+    final paidOn = _paidOn.date;
+    if (paidOn == null ||
+        cents == null ||
         cents <= 0 ||
         cents > widget.claim.remainingCents) {
       return null;
@@ -80,7 +91,7 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
       amountCents: cents,
       revision: widget.claim.revision,
       requestId: _requestId,
-      paidOn: _paidOn ?? _today,
+      paidOn: paidOn,
       method: _method,
       reference: _reference.text.trim(),
       creditorKind: widget.claim.creditorKind,
@@ -142,13 +153,14 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.sm),
-            AppTextField(
+            AppAmountField(
               key: const ValueKey('pay-amount'),
               controller: _amount,
               label: l10n.purchasesPayAmount,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
+              currency: widget.claim.currency,
+              allowNegative: false,
+              isRequired: true,
+              showProblem: _invalid,
             ),
             DropdownButtonFormField<PaymentMethod>(
               key: const ValueKey('pay-method'),
@@ -170,24 +182,16 @@ class _PayDialogState extends ConsumerState<_PayDialog> {
               maxLength: 200,
             ),
             const SizedBox(height: AppSpacing.sm),
-            OutlinedButton(
+            AppDateField(
               key: const ValueKey('pay-date'),
-              onPressed: () async {
-                final d = await showDatePicker(
-                  context: context,
-                  initialDate: _paidOn ?? _today,
-                  firstDate: DateTime(2000),
-                  lastDate: _today,
-                  helpText: l10n.purchasesPickDate,
-                );
-                if (d != null) setState(() => _paidOn = d);
-              },
-              child: Text(
-                l10n.labelWithValue(
-                l10n.purchasesPayDate,
-                material.formatMediumDate(_paidOn ?? _today),
-              ),
-              ),
+              label: l10n.purchasesPayDate,
+              value: _paidOn.date,
+              first: DateTime(2000),
+              last: _today,
+              pickerHelpText: l10n.purchasesPickDate,
+              isRequired: true,
+              showProblem: _invalid,
+              onChanged: (read) => _paidOn = read,
             ),
             if (_invalid)
               Padding(

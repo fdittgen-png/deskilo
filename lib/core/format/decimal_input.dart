@@ -38,6 +38,9 @@ final _groupsOfThree = RegExp(r'^[0-9]{1,3}([.,][0-9]{3})+$');
   return (decimal: symbols.DECIMAL_SEP, group: symbols.GROUP_SEP);
 }
 
+/// The decimal separator of [locale], as the reader expects it typed.
+String decimalSeparatorOf(String locale) => _symbolsOf(locale).decimal;
+
 /// The number typed in [raw], or null. [grouping] off reads a percentage,
 /// a weight or a quantity: one separator at most, `.` or `,`, always the
 /// decimal one.
