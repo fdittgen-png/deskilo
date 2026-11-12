@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/providers/accounting_connection_providers.dart';
 import '../../features/money/providers/asset_providers.dart';
-import '../../features/money/providers/asset_valuation_providers.dart';
 import '../../features/money/providers/book_period_providers.dart';
 import '../../features/money/providers/book_profile_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
@@ -42,14 +41,12 @@ import 'demo_purchasing_overrides.dart';
 import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_books_seed.dart';
 import 'seed/demo_city_purchase_seed.dart';
-import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
-import 'seed/demo_valuation_seed.dart';
 
 DemoCapacityKpiRepository demoCapacityKpi(Ref ref, DemoFixture fixture) {
   final id = ref.watch(currentWorkspaceProvider).value?.id;
@@ -140,13 +137,7 @@ List<Override> demoCityCommerceOverrides(
   );
   final londonRooms = FakeRoomRentalRepository(currency: 'GBP');
   final nyRooms = FakeRoomRentalRepository(currency: 'USD');
-  final londonValuations = FakeAssetValuationRepository();
-  final nyValuations = FakeAssetValuationRepository();
-  final londonCommitments = FakeLeaseCommitmentRepository();
-  final nyCommitments = newYorkCommitments(fixture.seededAt);
   final homeRooms = seedDemoRooms(fixture.seededAt);
-  final homeValuations = seedDemoValuations(fixture.seededAt);
-  final homeCommitments = seedDemoCommitments(fixture.seededAt);
   final twin = _twinStores(fixture);
   final orderSpaces = demoPurchaseOrderSpaces(fixture, purchasing, london: londonPurchasing, newYork: nyPurchasing);
   T choose<T>(Ref ref, T home, T london, T ny, T devTwin) =>
@@ -214,52 +205,13 @@ List<Override> demoCityCommerceOverrides(
       ny: nyRooms,
       twin: twin.rooms,
     )),
-    // #2576 — the accountant's valuations of the demo space's equipment.
-    assetValuationRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeValuations, londonValuations, nyValuations, twin.valuations),
-    ),
-    leaseCommitmentRepositoryProvider.overrideWith(
-      (ref) => choose(ref, homeCommitments, londonCommitments, nyCommitments, twin.commitments),
-    ),
     ..._kpiOverrides(fixture, purchasing, londonPurchasing, nyPurchasing, orderSpaces),
-    // #3785 — the cost figures and the cost allocation of every space.
-    ...demoCostAnalysisOverrides(fixture, (
-      home: (
-        purchases: purchasing.purchases,
-        invoices: () => fixture.money.invoices,
-        assets: mainAssets,
-        valuations: homeValuations,
-        commitments: homeCommitments,
-      ),
-      leipzig: (
-        purchases: purchasing.purchases,
-        invoices: () => fixture.secondSpace.money.invoices,
-        assets: mainAssets,
-        valuations: homeValuations,
-        commitments: homeCommitments,
-      ),
-      london: (
-        purchases: londonPurchasing.purchases,
-        invoices: () => fixture.london.money.invoices,
-        assets: londonAssets,
-        valuations: londonValuations,
-        commitments: londonCommitments,
-      ),
-      newYork: (
-        purchases: nyPurchasing.purchases,
-        invoices: () => fixture.newYork.money.invoices,
-        assets: nyAssets,
-        valuations: nyValuations,
-        commitments: nyCommitments,
-      ),
-      twin: (
-        purchases: fixture.twin.purchasing.purchases,
-        invoices: () => fixture.twin.money.invoices,
-        assets: twin.assets,
-        valuations: twin.valuations,
-        commitments: twin.commitments,
-      ),
-    )),
+    ...demoBookFigureOverrides(
+      fixture,
+      (home: purchasing, london: londonPurchasing, newYork: nyPurchasing),
+      (home: mainAssets, london: londonAssets, newYork: nyAssets),
+      (assets: twin.assets, valuations: twin.valuations, commitments: twin.commitments),
+    ),
   ];
 }
 

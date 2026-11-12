@@ -44,14 +44,13 @@ typedef DunningFacts = ({
 /// The resolutions that settle an invoice whatever was paid (0331).
 const _settling = {'exact', 'over_forced', 'over_credit_note', 'refunded'};
 
-/// `invoice_dunning_state_core` (0331) over the Demo's money, as of [today]:
-/// what is still collectible on [invoice] and in which phase.
-DunningFacts dunningFactsOf(
+/// The credit notes that replace [invoice]: what they give back in its
+/// currency, and how many are in another one (0331 `v_credits`, `v_foreign`).
+({int credited, int foreign}) _creditsOf(
   Invoice invoice,
   FakeMoneyRepository money,
-  DateTime today,
 ) {
-  var credits = 0, foreign = 0;
+  var credited = 0, foreign = 0;
   for (final c in money.invoices) {
     if (c.replacesInvoiceId != invoice.id ||
         c.totalCents >= 0 ||
@@ -59,46 +58,59 @@ DunningFacts dunningFactsOf(
       continue;
     }
     if (c.currency == invoice.currency) {
-      credits -= c.totalCents;
+      credited -= c.totalCents;
     } else {
       foreign++;
     }
   }
-  final match = money.invoiceMatchesStore[invoice.id];
-  final confirmed = match != null && !match.pending ? match.paidCents : 0;
-  final pending = match != null && match.pending ? match.paidCents : 0;
-  final writtenOff =
-      match != null && !match.pending && match.writeoffAt != null;
-  final left = invoice.totalCents - confirmed - credits;
-  final collectible =
-      invoice.voidedAt != null ||
-          invoice.settledByInvoiceId != null ||
-          writtenOff ||
-          (match != null &&
-              !match.pending &&
-              _settling.contains(match.resolution))
-      ? 0
-      : (left > 0 ? left : 0);
-  final hold =
-      money.dunningHolds[invoice.id] ??
-      (foreign > 0
-          ? 'mixed_currency'
-          : pending > 0
-          ? 'pending_payment'
-          : null);
-  final due = invoice.dueOn;
+  return (credited: credited, foreign: foreign);
+}
+
+/// What is still collectible on [invoice] (0331 `v_collectible`): nothing
+/// once voided, regrouped, written off or settled by its match; else the
+/// total less the confirmed payment and the credits, never below 0.
+int _collectible(Invoice invoice, InvoiceMatch? match, int credited) {
+  final confirmed = match != null && !match.pending ? match : null;
+  if (invoice.voidedAt != null ||
+      invoice.settledByInvoiceId != null ||
+      confirmed?.writeoffAt != null ||
+      _settling.contains(confirmed?.resolution)) {
+    return 0;
+  }
+  final left = invoice.totalCents - (confirmed?.paidCents ?? 0) - credited;
+  return left > 0 ? left : 0;
+}
+
+/// The phase of an invoice with [collectible] left, due on [due], on
+/// [today] (0331 `v_phase`): the due day itself is overdue.
+DunningPhase _phase(int collectible, DateTime? due, DateTime today) {
+  if (collectible == 0) return DunningPhase.settled;
+  if (due == null) return DunningPhase.unknownMaturity;
   final day = DateTime(today.year, today.month, today.day);
-  final phase = collectible == 0
-      ? DunningPhase.settled
-      : due == null
-      ? DunningPhase.unknownMaturity
-      : day.isBefore(DateTime(due.year, due.month, due.day))
+  return day.isBefore(DateTime(due.year, due.month, due.day))
       ? DunningPhase.preDue
       : DunningPhase.overdue;
+}
+
+/// `invoice_dunning_state_core` (0331) over the Demo's money, as of [today]:
+/// what is still collectible on [invoice], in which phase, and the hold
+/// that keeps it from the reminders (a recorded one, else another
+/// currency's credit, else a payment waiting for its validation).
+DunningFacts dunningFactsOf(
+  Invoice invoice,
+  FakeMoneyRepository money,
+  DateTime today,
+) {
+  final (:credited, :foreign) = _creditsOf(invoice, money);
+  final match = money.invoiceMatchesStore[invoice.id];
+  final collectible = _collectible(invoice, match, credited);
+  final pending = match != null && match.pending && match.paidCents > 0;
   return (
-    phase: phase,
+    phase: _phase(collectible, invoice.dueOn, today),
     collectible: collectible,
-    hold: hold,
+    hold:
+        money.dunningHolds[invoice.id] ??
+        (foreign > 0 ? 'mixed_currency' : (pending ? 'pending_payment' : null)),
     currency: invoice.currency,
   );
 }

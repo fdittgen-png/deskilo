@@ -140,7 +140,6 @@ import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
 import 'data/workspace_asset_repository.dart';
-import 'demo_analysis_overrides.dart';
 import 'demo_city_commerce_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
@@ -348,8 +347,6 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // #1918 — capacity over the demo's own plan and bookings.
       kpiRepositoryProvider.overrideWith((ref) => demoCapacityKpi(ref, fixture)),
       ..._serverOnlyOverrides(),
-      // #3785 — the overview's own figures, from each space's own rows.
-      demoOverviewAnalysisOverride(fixture),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
 
