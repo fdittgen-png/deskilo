@@ -72,6 +72,7 @@ class ContextBubble extends ConsumerWidget {
           );
     final bubble = GestureDetector(
       key: ValueKey('context-bubble-${message.id}'),
+      // parity: context-actions-
       onLongPress: onActions,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),

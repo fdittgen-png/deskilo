@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/row_menu.dart';
 import '../../../directory/domain/message_marks.dart';
 import '../../../directory/presentation/messenger/message_marks.dart';
 import '../../../directory/presentation/messenger/reaction_strip.dart';
@@ -29,6 +30,10 @@ import 'note_check.dart';
 /// #798 — the two swipes everyone already knows from their phone:
 /// RIGHT quotes the message into the composer, LEFT takes it back while
 /// it is still unread.
+///
+/// #3611 — the message menu (⋯ beside the bubble, a right click, a long
+/// press, the context-menu key) holds the same quote and delete the
+/// swipes start, so a mouse and a keyboard reach both.
 class ConversationBubble extends ConsumerWidget {
   const ConversationBubble({
     super.key,
@@ -87,6 +92,39 @@ class ConversationBubble extends ConsumerWidget {
   /// re-checks; this decides what the gesture OFFERS.
   bool get _deletableUnread => mine && note.readAt == null;
 
+  /// The message's actions, once, for the menu and the swipes alike.
+  /// Quoting belongs to the gestures feature; deleting is always offered
+  /// (both sides of a direct conversation may delete, the server
+  /// re-checks); the forward/lock sheet is the last entry when offered.
+  List<RowAction> _actions(BuildContext context, WidgetRef ref,
+      {required bool gestures}) {
+    final l10n = context.l10n;
+    final quote = onQuote;
+    final more = onActions;
+    return [
+      if (gestures && quote != null)
+        RowAction(
+          id: 'quote',
+          label: l10n.memberNoteQuote,
+          icon: Icons.format_quote_outlined,
+          onSelected: () => quote(note),
+        ),
+      RowAction(
+        id: 'delete',
+        label: l10n.memberNoteDelete,
+        icon: Icons.delete_outline,
+        destructive: true,
+        onSelected: () => deleteMemberNoteGuarded(context, ref, note),
+      ),
+      if (more != null)
+        RowAction(
+          id: 'actions',
+          label: l10n.messengerMessageActions,
+          icon: Icons.more_horiz,
+          onSelected: more,
+        ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,8 +133,12 @@ class ConversationBubble extends ConsumerWidget {
     final gestures = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.messageGestures);
-    final bubble = _bubble(context, ref, theme);
+    final actions = _actions(context, ref, gestures: gestures);
+    final bubble = _bubble(context, ref, theme, actions);
     if (!gestures) return bubble;
+    RowAction? action(String id) =>
+        actions.where((a) => a.id == id).firstOrNull;
+    // parity: bubble-actions-
     return Dismissible(
       key: ValueKey('swipe-${note.id}'),
       // Both swipes ACT and put the bubble back — nothing here is a
@@ -129,7 +171,7 @@ class ConversationBubble extends ConsumerWidget {
       ),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          onQuote?.call(note);
+          await action('quote')?.onSelected();
           return false;
         }
         if (!_deletableUnread) {
@@ -144,7 +186,7 @@ class ConversationBubble extends ConsumerWidget {
           );
           return false;
         }
-        await deleteMemberNoteGuarded(context, ref, note);
+        await action('delete')?.onSelected();
         return false;
       },
       child: bubble,
@@ -163,28 +205,15 @@ class ConversationBubble extends ConsumerWidget {
         child: Icon(icon, color: color),
       );
 
-  Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
+  Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme,
+      List<RowAction> actions) {
     final l10n = context.l10n;
     final when = timeOnly
         ? ref.watch(appFormatProvider).time(note.createdAt)
         : appFormatOf(context).datesAndTime(DateShape.monthDay, note.createdAt);
     final split = splitLeadingQuote(note.body);
-    // #1824 — the actions sit BESIDE the bubble, never inside it: the
-    // bubble's long press (delete) must not land on a button's tooltip.
-    final actions = onActions == null
-        ? null
-        : IconButton(
-            key: ValueKey('bubble-actions-${note.id}'),
-            tooltip: l10n.messengerMessageActions,
-            visualDensity: VisualDensity.compact,
-            iconSize: 18,
-            color: theme.colorScheme.onSurfaceVariant,
-            onPressed: onActions,
-            icon: const Icon(Icons.more_horiz),
-          );
-    final core = GestureDetector(
+    final core = KeyedSubtree(
         key: ValueKey('bubble-${note.id}'),
-        onLongPress: () => deleteMemberNoteGuarded(context, ref, note),
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
           padding: const EdgeInsets.symmetric(
@@ -291,18 +320,25 @@ class ConversationBubble extends ConsumerWidget {
           ),
         ),
       );
+    // #1824 — the ⋯ sits BESIDE the bubble, never inside it: the
+    // bubble's long press must not land on a button's tooltip. It shows
+    // at rest where the forward/lock sheet is offered, on hover and focus
+    // otherwise.
     return Align(
       alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
-      child: actions == null
-          ? core
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (mine) actions,
-                Flexible(child: core),
-                if (!mine) actions,
-              ],
-            ),
+      child: RowMenu(
+        actions: actions,
+        keyPrefix: 'bubble-menu-${note.id}',
+        buttonKey: ValueKey('bubble-actions-${note.id}'),
+        tooltip: l10n.messengerMessageActions,
+        button: onActions != null
+            ? RowMenuButton.always
+            : RowMenuButton.onHover,
+        buttonFirst: mine,
+        expand: false,
+        focusable: true,
+        child: core,
+      ),
     );
   }
 }

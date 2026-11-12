@@ -27,6 +27,7 @@
   "@memberNoteReply": {
     "description": "Reply button on the full-message sheet (#523)"
   },
+  "memberNoteQuote": "Citar",
   "noteRefReservation": "Vincular una reserva",
   "@noteRefReservation": {
     "description": "Composer chip inserting a reservation reference (#523)"

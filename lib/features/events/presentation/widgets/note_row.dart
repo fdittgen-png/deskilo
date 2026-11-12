@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/kit/row_menu.dart';
 import '../../../workspace/domain/member_note.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../../workspace/presentation/widgets/member_note_actions.dart';
@@ -23,6 +24,10 @@ import '../../../workspace/presentation/widgets/open_conversation.dart';
 /// explicit confirmation — a received broadcast cannot be deleted (it
 /// would vanish for every admin) and my own notes offer no
 /// reply-to-myself.
+///
+/// #3611 — the same reply and delete open from the row's menu (⋯ on
+/// hover, a right click, a long press, the context-menu key); the swipes
+/// call those very actions.
 class NoteRow extends ConsumerWidget {
   const NoteRow({
     super.key,
@@ -133,6 +138,30 @@ class NoteRow extends ConsumerWidget {
         ));
       },
     );
+    final partner = _counterpartId(sentByMe);
+    final actions = [
+      if (canReply && partner != null)
+        RowAction(
+          id: 'reply',
+          label: l10n.memberNoteReply,
+          icon: Icons.reply,
+          // Replying = opening the conversation (refactor): the whole
+          // exchange in view beats a blank dialog.
+          onSelected: () =>
+              openDirectConversation(context, ref, memberId: partner),
+        ),
+      if (canDelete)
+        RowAction(
+          id: 'delete',
+          label: l10n.memberNoteDelete,
+          icon: Icons.delete_outline,
+          destructive: true,
+          onSelected: () => deleteMemberNoteGuarded(context, ref, note),
+        ),
+    ];
+    RowAction? action(String id) =>
+        actions.where((a) => a.id == id).firstOrNull;
+    // parity: note-menu-
     return Dismissible(
       key: ValueKey('note-dismiss-${note.id}'),
       direction: canDelete || canReply
@@ -144,16 +173,10 @@ class NoteRow extends ConsumerWidget {
       // rebuild) — Dismissible's synchronous-removal contract and an
       // async repository do not mix.
       confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          // Replying = opening the conversation (refactor): the whole
-          // exchange in view beats a blank dialog.
-          final partner = _counterpartId(sentByMe);
-          if (canReply && partner != null) {
-            await openDirectConversation(context, ref, memberId: partner);
-          }
-        } else if (canDelete) {
-          await deleteMemberNoteGuarded(context, ref, note);
-        }
+        await action(direction == DismissDirection.startToEnd
+                ? 'reply'
+                : 'delete')
+            ?.onSelected();
         return false;
       },
       background: Container(
@@ -169,7 +192,12 @@ class NoteRow extends ConsumerWidget {
         child: Icon(Icons.delete_outline,
             color: theme.colorScheme.onError),
       ),
-      child: tile,
+      child: RowMenu(
+        actions: actions,
+        keyPrefix: 'note-menu-${note.id}',
+        button: RowMenuButton.onHover,
+        child: tile,
+      ),
     );
   }
 }

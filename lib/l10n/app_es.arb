@@ -10427,6 +10427,8 @@
   "kioskScanQr": "Escanear la tarjeta QR",
   "kioskTapHint": "Toque un asiento para registrarse",
   "kitActionBusy": "En curso…",
+  "kitScrollBack": "Desplazar hacia atrás",
+  "kitScrollForward": "Desplazar hacia adelante",
   "labelWithValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo está disponible en los idiomas siguientes. En un dispositivo configurado en otro idioma, se muestra en {fallback}.",
   "languageNameCS": "Checo",
@@ -11867,6 +11869,7 @@
   "memberNoteDeleteRead": "Ya leído: este mensaje ya no se puede retirar.",
   "memberNoteDeleted": "Mensaje eliminado.",
   "memberNoteHint": "Su mensaje",
+  "memberNoteQuote": "Citar",
   "memberNoteReceived": "Mensaje de {name}",
   "memberNoteReply": "Responder",
   "@memberNoteReply": {

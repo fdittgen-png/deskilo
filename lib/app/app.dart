@@ -8,6 +8,7 @@ import '../core/demo/presentation/demo_workspace.dart';
 import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
+import '../core/ui/app_scroll_behavior.dart';
 import '../core/ui/system_insets_guard.dart';
 import '../features/profile/providers/personal_appearance_providers.dart';
 import '../features/profile/providers/presence_providers.dart';
@@ -81,6 +82,7 @@ class DeskiloApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
+      scrollBehavior: const AppScrollBehavior(),
       // null keeps the standard system-locale resolution (#147).
       locale: ref.watch(personalLocaleProvider),
       theme: DeskiloTheme.light(animations: animations, brand: brand),
