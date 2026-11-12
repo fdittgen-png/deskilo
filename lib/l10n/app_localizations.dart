@@ -8141,6 +8141,12 @@ abstract class AppLocalizations {
   /// **'Liability'**
   String get bookTypeLiability;
 
+  /// #3810 booking refusal DKK35: an admin may not assign a whole level here
+  ///
+  /// In en, this message translates to:
+  /// **'An admin cannot assign a whole level here.'**
+  String get bookingAdminNoLevel;
+
   /// #663 - check-in confirmation naming the space
   ///
   /// In en, this message translates to:
@@ -8158,6 +8164,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Checked in until {until}.'**
   String bookingCheckedInUntil(String until);
+
+  /// #3810 booking refusal DKK32: a new end in the past
+  ///
+  /// In en, this message translates to:
+  /// **'The new end must be later than now.'**
+  String get bookingEndMustLieAhead;
 
   /// Shown as the text in booking sheet (reservations), and 2 other places.
   ///
@@ -8195,6 +8207,12 @@ abstract class AppLocalizations {
   /// **'This reservation is no longer checked in — it was checked out or closed in the meantime.'**
   String get bookingNoLongerCheckedIn;
 
+  /// #3810 booking refusal DKK36: check-in on a booking no longer reserved
+  ///
+  /// In en, this message translates to:
+  /// **'This booking is no longer reserved, so it cannot be checked in.'**
+  String get bookingNoLongerReserved;
+
   /// Refusal when an RPC answers 'not a member of this workspace' (#1030)
   ///
   /// In en, this message translates to:
@@ -8207,11 +8225,29 @@ abstract class AppLocalizations {
   /// **'You may not make reservations in this space. Ask an owner to let members book.'**
   String get bookingNotAllowedError;
 
+  /// #3810 booking refusal DKK30: the booking can no longer be cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'This booking can no longer be cancelled.'**
+  String get bookingNotCancellable;
+
+  /// #3810 booking refusal DKK29: the booking belongs to someone else
+  ///
+  /// In en, this message translates to:
+  /// **'This booking is not yours.'**
+  String get bookingNotYours;
+
   /// Refusal when the member already holds an overlapping active reservation (#412)
   ///
   /// In en, this message translates to:
   /// **'You already have a booking in that period — one place at a time.'**
   String get bookingOnePlace;
+
+  /// #3810 booking refusal DKK33: only upcoming bookings can be edited
+  ///
+  /// In en, this message translates to:
+  /// **'Only upcoming bookings can be changed.'**
+  String get bookingOnlyUpcoming;
 
   /// Action on the booking success message opening the new reservation's sheet (#1301)
   ///
@@ -8381,11 +8417,23 @@ abstract class AppLocalizations {
   /// **'Reserved: {when}.'**
   String bookingReservedWhen(String when);
 
+  /// #3810 booking refusal DKK31: a running booking cannot move its start
+  ///
+  /// In en, this message translates to:
+  /// **'A booking that has started keeps its start time.'**
+  String get bookingRunningKeepsStart;
+
   /// Shown as a text in booking error text (reservations), and 1 other place.
   ///
   /// In en, this message translates to:
   /// **'A booking ends on the day it starts — book the next day separately.'**
   String get bookingSameDayError;
+
+  /// #3810 booking refusal DKK34: a series longer than the allowed days
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, one{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}'**
+  String bookingSeriesTooLong(int days);
 
   /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period
   ///

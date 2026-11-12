@@ -6,7 +6,7 @@
 -- #3610 (search and keys, first of two files) -- the feature `quickSearch`
 -- (core, default on) in the two generated registries: the feature registry
 -- (dart run tool/build_feature_registry_sql.dart) and the template field
--- registry (dart run tool/build_template_field_registry_sql.dart). 0740
+-- registry (dart run tool/build_template_field_registry_sql.dart). 0741
 -- carries the builtin template and the setup level catalogue. Search reads
 -- only what the person may already read; nothing on the server changes.
 
@@ -618,4 +618,4 @@ as $registry$
 $registry$;
 revoke execute on function public.template_field_registry() from public, anon;
 
-select public.set_deskilo_schema_version(739);
+select public.set_deskilo_schema_version(740);

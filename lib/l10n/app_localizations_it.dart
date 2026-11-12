@@ -5155,6 +5155,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookTypeLiability => 'Passività';
 
   @override
+  String get bookingAdminNoLevel =>
+      'Un amministratore non può assegnare un piano intero qui.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Check-in su $space fino alle $until.';
   }
@@ -5167,6 +5171,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Check-in fatto fino alle $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead =>
+      'La nuova fine deve essere successiva a ora.';
 
   @override
   String get bookingGateBlocked => 'Non prenotabile così';
@@ -5199,6 +5207,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione non è più in corso — è stata chiusa nel frattempo.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'Questa prenotazione non è più riservata; il check-in non è possibile.';
+
+  @override
   String get bookingNotAMember =>
       'Non è più membro di questo spazio — chieda un invito a un amministratore.';
 
@@ -5207,8 +5219,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non può effettuare prenotazioni in questo spazio. Chieda a un proprietario di consentire ai membri di prenotare.';
 
   @override
+  String get bookingNotCancellable =>
+      'Questa prenotazione non può più essere annullata.';
+
+  @override
+  String get bookingNotYours => 'Questa prenotazione non Le appartiene.';
+
+  @override
   String get bookingOnePlace =>
       'Ha già una prenotazione in quel periodo — un posto alla volta.';
+
+  @override
+  String get bookingOnlyUpcoming =>
+      'Solo le prenotazioni future possono essere modificate.';
 
   @override
   String get bookingOpenDetails => 'Dettagli';
@@ -5319,8 +5342,23 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'Una prenotazione in corso mantiene l\'ora di inizio.';
+
+  @override
   String get bookingSameDayError =>
       'Una prenotazione termina il giorno in cui inizia — prenoti il giorno dopo separatamente.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Una serie può coprire al massimo $days giorni.',
+      one: 'Una serie può coprire al massimo 1 giorno.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>

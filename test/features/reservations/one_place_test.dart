@@ -165,8 +165,22 @@ void main() {
   });
 
   group('bookingErrorText maps the new pinned substrings', () {
+    // #3810 — the codes 0739 raises with these refusals.
     String map(String message) => bookingErrorText(
-        englishL10n, PostgrestException(message: message), 'fallback');
+        englishL10n,
+        PostgrestException(
+          message: message,
+          code: message.contains('you already have a reservation')
+              ? 'DKK19'
+              : message.contains('checked in elsewhere')
+                  ? 'DKK20'
+                  : message.contains('not bookable as a whole')
+                      ? 'DKK22'
+                      : message.contains('level booking is not enabled')
+                          ? 'DKK23'
+                          : null,
+        ),
+        'fallback');
 
     test('one place', () {
       expect(map('you already have a reservation in that period'),

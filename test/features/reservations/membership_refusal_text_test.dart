@@ -20,9 +20,17 @@ import 'package:supabase_flutter/supabase_flutter.dart'
 
 const _fallback = 'Could not reserve — the seat may have just been taken.';
 
+/// #3810 — the codes 0739 raises with the membership refusals.
+String? _codeOf(String serverMessage) => serverMessage.contains('not an active member')
+    ? 'DKK27'
+    : serverMessage.contains('not a member of this workspace')
+        ? 'DKK28'
+        : null;
+
 String _map(String serverMessage) => bookingErrorText(
       englishL10n,
-      PostgrestException(message: serverMessage, code: 'P0001'),
+      PostgrestException(
+          message: serverMessage, code: _codeOf(serverMessage) ?? 'P0001'),
       _fallback,
     );
 
