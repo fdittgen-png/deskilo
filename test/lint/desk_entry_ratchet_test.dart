@@ -5,7 +5,7 @@
 // `AppAmountField` (lib/core/ui/amount_field.dart). What has not moved to
 // them yet is counted here, and each count may only FALL:
 //
-//   * a picker-only date: a `showDatePicker(` call outside the date field,
+//   * a picker-only date: a `showAppDatePicker(` call outside the date field,
 //     where a desktop keyboard cannot type the date;
 //   * a numeric keyboard (`TextInputType.number…`) whose field names no
 //     input formatter, so every character a desktop keyboard sends is
@@ -29,7 +29,10 @@ const _amountField = 'lib/core/ui/amount_field.dart';
 /// How far around a keyboard type the field's formatter may stand.
 const _fieldWindow = 10;
 
-final _picker = RegExp(r'\bshowDatePicker\(');
+final _picker = RegExp(r'\bshowAppDatePicker\(');
+
+/// The entry point itself defines the call it is counted by.
+const _pickerEntryPoint = 'lib/core/ui/app_date_picker.dart';
 final _numericKeyboard = RegExp(
   r'TextInputType\.(number\b|numberWithOptions\()',
 );
@@ -47,6 +50,7 @@ List<String> _code(File file) => [
 int _pickerOnlyDates() {
   var n = 0;
   for (final f in _lib(_dateField)) {
+    if (f.path == _pickerEntryPoint) continue;
     for (final line in _code(f)) {
       n += _picker.allMatches(line).length;
     }
@@ -88,7 +92,7 @@ void _ratchet(String what, int count, int ceiling, String use) {
 void main() {
   test('picker-only date fields only ever decrease', () {
     _ratchet(
-      'showDatePicker outside AppDateField',
+      'showAppDatePicker outside AppDateField',
       _pickerOnlyDates(),
       _pickerOnlyDateCeiling,
       'AppDateField (lib/core/ui/date_field.dart)',
@@ -106,7 +110,7 @@ void main() {
   });
 
   test('the two fields themselves are what the counts point to', () {
-    expect(File(_dateField).readAsStringSync(), contains('showDatePicker('));
+    expect(File(_dateField).readAsStringSync(), contains('showAppDatePicker('));
     expect(File(_amountField).readAsStringSync(), contains('inputFormatters'));
   });
 }

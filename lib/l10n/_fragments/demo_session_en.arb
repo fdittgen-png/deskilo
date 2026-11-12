@@ -23,6 +23,10 @@
   "@demoSessionBadgeHint": {
     "description": "#1375 demo session: demoSessionBadgeHint"
   },
+  "meDemoSessionBadgeHint": "You are exploring a demonstration business. Nothing here leaves this device.",
+  "@meDemoSessionBadgeHint": {
+    "description": "Me, a business card: hint of the badge on a demonstration business (#3555: Me says business; the workspace screens keep demoSessionBadgeHint)"
+  },
   "demoSessionViewAs": "View as",
   "@demoSessionViewAs": {
     "description": "#1376 demo personas: demoSessionViewAs"

@@ -21,7 +21,7 @@ class CalendarBookingTitle extends ConsumerWidget {
     final words = context.l10n;
     final id = (item.link! as ReservationLink).id;
     final reservations = ref
-        .watch(reservationsForMonthProvider(monthKeyOf(item.at)))
+        .watch(reservationsForMonthProvider(monthKeyOf(ref.watch(businessDateOfProvider)(item.at))))
         .value;
     final reservation = reservations?.where((r) => r.id == id).firstOrNull;
     final seatId = reservation?.seatId;

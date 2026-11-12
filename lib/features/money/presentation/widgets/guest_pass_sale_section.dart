@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/guest_pass.dart';
@@ -119,7 +120,7 @@ class GuestPassSaleSection extends StatelessWidget {
           subtitle: Text(isoDay(draft.day)),
           trailing: const Icon(Icons.calendar_today_outlined),
           onTap: () async {
-            final picked = await showDatePicker(
+            final picked = await showAppDatePicker(
               context: context,
               initialDate: draft.day,
               firstDate: DateTime(draft.day.year, draft.day.month, draft.day.day - 1),

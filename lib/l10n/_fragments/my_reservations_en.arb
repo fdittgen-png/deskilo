@@ -167,6 +167,10 @@
   "@myReservationsSourceUnnamed": {
     "description": "#2553 C2 My reservations: a workspace host whose spaces have no name the person may read."
   },
+  "meSourceUnnamed": "A place's server",
+  "@meSourceUnnamed": {
+    "description": "Me, upcoming bookings: the name of a server whose place has no name (#3555: the reservations screen keeps myReservationsSourceUnnamed)"
+  },
   "myReservationsSourceReading": "Reading {source}…",
   "@myReservationsSourceReading": {
     "description": "#2553 C2 My reservations: one host's bookings are still being read; source is the names of its spaces.",

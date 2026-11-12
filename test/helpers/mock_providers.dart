@@ -78,6 +78,7 @@ import 'package:deskilo/core/storage/notification_filter_store.dart';
 import 'package:deskilo/core/storage/pane_width_store.dart';
 import 'package:deskilo/core/storage/resume_place_store.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
+import 'package:deskilo/core/time/business_day_providers.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/auth/domain/auth_repository.dart';
 import 'package:deskilo/features/auth/domain/oauth_consent.dart';
@@ -231,6 +232,7 @@ List<Override> formatPinOverrides({String locale = 'en_GB'}) {
     locale: locale,
     currencyCode: 'EUR',
     clock: ClockPref.h24,
+    weekStart: WeekStartPref.monday,
   );
   return [
     appFormatProvider.overrideWithValue(format),
@@ -362,11 +364,11 @@ List<Override> standardTestOverrides({
     // tests pin one.
     if (pinFormats) ...[
       appFormatProvider.overrideWithValue(
-        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode, weekStart: WeekStartPref.monday),
       ),
       // #3647 — a personal surface reads the person's format directly.
       personalFormatProvider.overrideWithValue(
-        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode),
+        AppFormat(locale: 'en_US', currencyCode: 'EUR', clock: ClockPref.h24, timeZoneMode: timeZoneMode, weekStart: WeekStartPref.monday),
       ),
     ],
     // #1303 — a fixed device locale: onboarding seeds its country from it,
@@ -407,6 +409,8 @@ List<Override> standardTestOverrides({
     // The clock is defaulted here rather than per-test so a screen that
     // starts reading it does not quietly re-arm the time bomb.
     clockProvider.overrideWithValue(clock ?? FixedClock(kTestNow)),
+    // #3659 — a pinned clock never reaches a midnight: no real timer.
+    dayBoundarySchedulerProvider.overrideWithValue(const PinnedDayBoundaries()),
 
     authRepositoryProvider
         .overrideWithValue(auth ?? FakeAuthRepository.signedIn()),
@@ -790,4 +794,14 @@ class _NoActionCommands implements InvoiceActionCommands {
     required String requestId,
     String note = '',
   }) => throw UnsupportedError('no settlement in this fake');
+}
+
+/// #3659 — under a pinned clock the business's day never ends: a day
+/// boundary is never scheduled, so no real timer outlives a test. A test of
+/// the midnight itself overrides `dayBoundarySchedulerProvider` with its own.
+final class PinnedDayBoundaries implements DayBoundaryScheduler {
+  const PinnedDayBoundaries();
+
+  @override
+  void Function() at(DateTime instant, void Function() fire) => () {};
 }

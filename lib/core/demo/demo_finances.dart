@@ -18,6 +18,8 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
   // and New York. Each keeps its own currency (euros, pounds, dollars); Me
   // never adds them together (FinanceOverview.owedByCurrency).
   final names = {for (final w in fixture.workspaces.workspaces) w.id: w.name};
+  // #3659 — each invoice carries its business's zone, as 0736 answers it.
+  final zones = {for (final w in fixture.workspaces.workspaces) w.id: w.timezone};
   final parts = [
     for (final money in [
       fixture.money,
@@ -25,7 +27,7 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
       fixture.london.money,
       fixture.newYork.money,
     ])
-      _overviewOf(money, fixture.actor.memberId, names),
+      _overviewOf(money, fixture.actor.memberId, names, zones),
   ];
   return FinanceOverview(
     invoices: [for (final p in parts) ...p.invoices],
@@ -37,6 +39,7 @@ FinanceOverview _overviewOf(
   FakeMoneyRepository money,
   String me,
   Map<String, String> names,
+  Map<String, String> zones,
 ) {
   final invoices = [
     for (final i in money.invoices)
@@ -68,6 +71,7 @@ FinanceOverview _overviewOf(
           : FinanceState.partiallyPaid,
       reminderCount: reminders.length,
       lastReminderAt: reminders.isEmpty ? null : reminders.last,
+      timezone: zones[i.workspaceId],
     );
   }
 

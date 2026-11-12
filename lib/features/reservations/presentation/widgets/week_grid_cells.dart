@@ -21,7 +21,7 @@ import 'week_grid.dart';
 /// Geometry of the Reserve hub's Week grid (#236). Pinned by test — treat
 /// these as part of the visual contract, not free-floating magic numbers.
 abstract final class WeekGridMetrics {
-  /// Columns of the grid: the ISO week, Monday through Sunday.
+  /// Columns of the grid: the reader's week, from its first day.
   static const int daysPerWeek = 7;
 
   /// Fixed width of the leading seat-name column (timeline parity:

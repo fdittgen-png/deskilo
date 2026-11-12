@@ -20,6 +20,7 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/time/business_day.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/private_value.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -188,9 +189,7 @@ class _FinanceDocument extends ConsumerWidget {
     );
     final period = invoice.state.owed && due != null
         ? Text(
-            overdue
-                ? l10n.financesOverdueSince(format.format(due))
-                : l10n.financesDueOn(format.format(due)),
+            _dueText(l10n, invoice, format.format(due), now),
             style: theme.textTheme.bodySmall?.copyWith(
               color: overdue ? scheme.error : scheme.onSurfaceVariant,
             ),
@@ -355,4 +354,21 @@ class _CardAmount extends StatelessWidget {
       child: amount,
     );
   }
+}
+
+/// #3659 — the due line on the issuing business's day: late, due, or its
+/// calendar unknown; the business's zone named when it is not the device's.
+String _dueText(
+  AppLocalizations l10n,
+  FinanceInvoice invoice,
+  String date,
+  DateTime now,
+) {
+  final text = invoice.dueDayUnknownAt(now)
+      ? l10n.financesDueCalendarUnknown(date)
+      : invoice.overdueAt(now)
+      ? l10n.financesOverdueSince(date)
+      : l10n.financesDueOn(date);
+  final zone = zoneToNameAt(now, invoice.timezone);
+  return zone == null ? text : l10n.financesDueInZone(text, zone);
 }

@@ -43,6 +43,7 @@ class _Saver {
 
 FinanceInvoice _dated(String id, DateTime issuedAt, {int total = 10000}) =>
     FinanceInvoice(
+      timezone: 'Europe/Paris',
       id: id,
       workspaceId: 'ws-Office A',
       workspaceName: 'Office A',
@@ -134,6 +135,7 @@ void main() {
       final sorted = newestFirst([
         _dated('1', day),
         FinanceInvoice(
+          timezone: 'Europe/Paris',
           id: '1',
           workspaceId: 'ws-0',
           workspaceName: 'Zero',

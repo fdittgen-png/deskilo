@@ -85,7 +85,7 @@ void main() {
     await _tap(tester, 'linked-visibility-audience-my_spaces');
     // Held, not saved: the server still holds the old audience.
     expect(_subtitle(tester, 'contact_channels'),
-        'Not saved yet: Members of my spaces');
+        'Not saved yet: Members of my places');
     expect(linked.linkedVisibility[_other], isNull);
     // Widening asks first, then the server holds the new audience.
     await _tap(tester, 'legacy-draft-save');
@@ -161,7 +161,7 @@ void main() {
       await _tap(tester, 'legacy-dirty-keep');
       expect(showing(tester, _other), isTrue);
       expect(_subtitle(tester, 'contact_channels'),
-          'Not saved yet: Members of my spaces');
+          'Not saved yet: Members of my places');
       expect(linked.linkedVisibility, isEmpty, reason: 'nothing was written');
     });
 
@@ -216,7 +216,7 @@ void main() {
       );
       expect(showing(tester, _other), isTrue);
       expect(_subtitle(tester, 'contact_channels'),
-          'Not saved yet: Members of my spaces');
+          'Not saved yet: Members of my places');
       expect(linked.linkedVisibility, isEmpty);
     });
   });

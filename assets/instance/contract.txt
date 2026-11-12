@@ -1280,6 +1280,7 @@ constraint profiles.profiles_status_text_check CHECK ((char_length(status_text) 
 constraint profiles.profiles_street_check CHECK ((char_length(street) <= 200))
 constraint profiles.profiles_time_zone_mode_check CHECK ((time_zone_mode = ANY (ARRAY['workspace'::text, 'device'::text])))
 constraint profiles.profiles_vat_id_check CHECK ((char_length(vat_id) <= 20))
+constraint profiles.profiles_week_start_check CHECK ((week_start = ANY (ARRAY['locale'::text, 'monday'::text, 'sunday'::text, 'saturday'::text])))
 constraint profiles.profiles_whatsapp_check CHECK (((whatsapp = ''::text) OR (whatsapp ~ '^\+[0-9]{6,19}$'::text)))
 constraint profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint provenance_envelopes.provenance_envelopes_pkey PRIMARY KEY (result_kind, result_id)
@@ -2866,7 +2867,7 @@ routine public.my_conversations(p_workspace_id uuid, p_include_archived boolean)
 routine public.my_database_capabilities() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4016e23f951e
 routine public.my_directory_person() -> uuid | function | definer | stable | exec:authenticated,service_role | body:48d6f565f410
 routine public.my_favorites(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:96d104d3b59e
-routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d31216bd6ec6
+routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5aaed03da191
 routine public.my_financial_activity(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fe5c08620f64
 routine public.my_group_inbox() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e87b3be0c6a
 routine public.my_guest_participations() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:392d10602309
@@ -3297,7 +3298,7 @@ routine public.set_my_about(p_profession text, p_bio text) -> void | function | 
 routine public.set_number_sequence(p_workspace_id uuid, p_journal text, p_prefix text, p_suffix text, p_date_part text, p_digits integer, p_reset text, p_next_value bigint) -> void | function | definer | volatile | exec:authenticated,service_role | body:f7fcbe42652f
 routine public.set_participant_admin(p_conversation_id uuid, p_member_id uuid, p_admin boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:619987e97aef
 routine public.set_payment_credentials(p_workspace_id uuid, p_provider text, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:dce15a750f5e
-routine public.set_personal_preferences(p_patch jsonb, p_workspace_id uuid, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:169235c99e42
+routine public.set_personal_preferences(p_patch jsonb, p_workspace_id uuid, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:6bb92534836b
 routine public.set_public_profile(p_publish boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:8c68799c6b52
 routine public.set_rating(p_workspace uuid, p_kind text, p_resource uuid, p_stars integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:52f6fe395e15
 routine public.set_repartition_rule(p_workspace_id uuid, p_rule jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:1f0162367d12

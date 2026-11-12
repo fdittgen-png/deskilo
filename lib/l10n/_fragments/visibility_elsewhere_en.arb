@@ -3,7 +3,7 @@
   "@visibilityElsewhereTitle": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereTitle"
   },
-  "visibilityElsewhereIntro": "On a connected server you have that server's own account. People there who share no space with you see what you allow every signed-in person; contact details and presence never leave your spaces.",
+  "visibilityElsewhereIntro": "On a connected server you have that server's own account. People there who share no place with you see what you allow every signed-in person; contact details and presence never leave your places.",
   "@visibilityElsewhereIntro": {
     "description": "#2211 who sees me on a connected server: visibilityElsewhereIntro"
   },

@@ -291,7 +291,7 @@ void main() {
           _event('res-2', t0),
         ],
       );
-      final groups = groupFeed(feed, FeedGrouping.type);
+      final groups = groupFeed(feed, FeedGrouping.type, dayOf: _day);
       expect(groups.map((g) => g.id),
           ['reservations', 'money']); // first-occurrence order
       expect(groups.first.key, NotificationCategory.reservations);
@@ -310,7 +310,7 @@ void main() {
           _event('day1', DateTime.utc(2026, 5, 13, 9)),
         ],
       );
-      final groups = groupFeed(feed, FeedGrouping.date);
+      final groups = groupFeed(feed, FeedGrouping.date, dayOf: _day);
       expect(groups, hasLength(2));
       expect(groups.first.items, hasLength(2));
       final day = groups.first.key as DateTime;
@@ -325,14 +325,14 @@ void main() {
         events: [_event('e', t0)], // actor member-1
         notes: [_note('n', t0.add(const Duration(minutes: 1)))],
       );
-      final groups = groupFeed(feed, FeedGrouping.user);
+      final groups = groupFeed(feed, FeedGrouping.user, dayOf: _day);
       expect(groups.map((g) => g.id), ['member-2', 'member-1']);
       expect(feedItemActor(feed.first), 'member-2');
     });
 
     test('grouping none returns ONE group carrying the flat feed', () {
       final feed = feedOf(events: [_event('e', t0)]);
-      final groups = groupFeed(feed, FeedGrouping.none);
+      final groups = groupFeed(feed, FeedGrouping.none, dayOf: _day);
       expect(groups, hasLength(1));
       expect(groups.single.items, same(feed));
     });
@@ -382,3 +382,7 @@ void main() {
     );
   });
 }
+
+/// The calendar day of [t], on the test's own calendar.
+DateTime _day(DateTime t) =>
+    DateTime(t.toLocal().year, t.toLocal().month, t.toLocal().day);

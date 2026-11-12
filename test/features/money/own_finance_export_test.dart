@@ -118,6 +118,7 @@ void main() {
 
     test('text cells cannot start a formula or break a row', () {
       final evil = FinanceInvoice(
+        timezone: 'Europe/Paris',
         id: 'x',
         workspaceId: 'ws',
         workspaceName: '=HYPERLINK("http://evil")',

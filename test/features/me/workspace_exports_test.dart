@@ -315,7 +315,7 @@ void main() {
       await _tap(tester, 'me-data-workspace-export-${_id(_sourceB)}');
       expect(
         find.text(
-          'This workspace\'s server is not reachable from here. '
+          'This business\'s server is not reachable from here. '
           'Nothing was exported.',
         ),
         findsOneWidget,
@@ -349,13 +349,13 @@ void main() {
       await _tap(tester, 'me-data-workspace-export-${_id(_sourceB)}');
       expect(
         find.text(
-          'This workspace refused: you are not an active member there. '
+          'This business refused: you are not an active member there. '
           'Nothing was exported.',
         ),
         findsOneWidget,
       );
       expect(
-        find.text('This workspace does not offer the data export.'),
+        find.text('This business does not offer the data export.'),
         findsOneWidget,
       );
       expect(_key('me-data-workspace-retry-${_id(_sourceA)}'), findsNothing);
@@ -462,7 +462,7 @@ void main() {
         exports: FakeWorkspaceExportRepository(document: _document),
         sources: const [],
       );
-      expect(find.text('Your account names no workspace yet.'), findsOneWidget);
+      expect(find.text('Your account names no business yet.'), findsOneWidget);
     });
   });
 }

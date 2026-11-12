@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/work_hours.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/generate_public_holidays.dart';
@@ -232,7 +233,7 @@ class AvailabilityActions {
     final l10n = context.l10n;
 
     final now = ref.read(clockProvider).now();
-    final day = await showDatePicker(
+    final day = await showAppDatePicker(
       context: context,
       initialDate: now,
       firstDate: now,

@@ -173,6 +173,7 @@ void main() {
       ..financeOverview = FinanceOverview(
         invoices: [
           FinanceInvoice(
+            timezone: 'Europe/Paris',
             id: 'dev-inv',
             workspaceId: 'ws-2',
             workspaceName: 'Second Space',

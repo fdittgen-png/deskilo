@@ -6737,7 +6737,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get courtesyNone => 'Keine';
 
   @override
-  String get createHostAvailable => 'Nimmt neue Spaces an';
+  String get createHostAvailable => 'Nimmt neue Betriebe an';
 
   @override
   String get createHostChooseAgain => 'Server wählen';
@@ -6754,17 +6754,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get createHostNone =>
-      'Für Ihr persönliches Zuhause nimmt noch kein Server neue Spaces an. Es wurde nichts angelegt.';
+      'Für Ihr persönliches Zuhause nimmt noch kein Server neue Betriebe an. Es wurde nichts angelegt.';
 
   @override
-  String get createHostNotAccepting => 'Nimmt keine neuen Spaces an';
+  String get createHostNotAccepting => 'Nimmt keine neuen Betriebe an';
 
   @override
   String get createHostRevoked =>
       'Wird von Ihrem persönlichen Zuhause nicht mehr angeboten';
 
   @override
-  String get createHostTitle => 'Wo soll der Space liegen?';
+  String get createHostTitle => 'Wo soll der Betrieb liegen?';
 
   @override
   String get createHostUnavailable =>
@@ -7578,11 +7578,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get directoryLinkDone =>
-      'Verbunden. Die Spaces, die er veröffentlicht, sind jetzt unter Entdecken gelistet.';
+      'Verbunden. Die Orte, die er veröffentlicht, sind jetzt unter Entdecken gelistet.';
 
   @override
   String get directoryLinkIntro =>
-      'Das globale Verzeichnis liegt auf dem Referenzserver. Ist ein Server verbunden, wird jeder Space, den er veröffentlicht, für alle unter Entdecken gelistet.';
+      'Das globale Verzeichnis liegt auf dem Referenzserver. Ist ein Server verbunden, wird jeder Ort, den er veröffentlicht, für alle unter Entdecken gelistet.';
 
   @override
   String get directoryLinkNeedsAccount =>
@@ -7590,19 +7590,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get directoryLinkStateDirectory =>
-      'Dies ist der Referenzserver: Die Spaces, die er veröffentlicht, sind immer gelistet.';
+      'Dies ist der Referenzserver: Die Orte, die er veröffentlicht, sind immer gelistet.';
 
   @override
   String get directoryLinkStateLinkable =>
-      'Kann verbunden werden: Er antwortet und veröffentlicht Spaces, die diese App lesen kann.';
+      'Kann verbunden werden: Er antwortet und veröffentlicht Orte, die diese App lesen kann.';
 
   @override
   String get directoryLinkStateLinked =>
-      'Verbunden: Die Spaces, die er veröffentlicht, sind unter Entdecken gelistet.';
+      'Verbunden: Die Orte, die er veröffentlicht, sind unter Entdecken gelistet.';
 
   @override
   String get directoryLinkStateUnreachable =>
-      'Kann noch nicht verbunden werden: Er antwortet nicht, oder seine Version kann keine Spaces veröffentlichen.';
+      'Kann noch nicht verbunden werden: Er antwortet nicht, oder seine Version kann keine Orte veröffentlichen.';
 
   @override
   String get directoryLocate => 'Auf der Karte anzeigen';
@@ -7648,8 +7648,8 @@ class AppLocalizationsDe extends AppLocalizations {
       count,
       locale: localeName,
       other:
-          '$count Arbeitsbereiche konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.',
-      one: '1 Arbeitsbereich konnte nicht auf der Karte platziert werden; seine Karte steht darunter.',
+          '$count Orte konnten nicht auf der Karte platziert werden; ihre Karten stehen darunter.',
+      one: '1 Ort konnte nicht auf der Karte platziert werden; seine Karte steht darunter.',
     );
     return '$_temp0';
   }
@@ -7721,7 +7721,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String discoveryMapDisclosureBody(String tiles, String geocoder) {
-    return 'Die Karte wird von $tiles gezeichnet, Adressen ohne Koordinaten platziert $geocoder. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Bereich: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.';
+    return 'Die Karte wird von $tiles gezeichnet, Adressen ohne Koordinaten platziert $geocoder. Der Kartenanbieter erhält Verbindungsdaten und den angezeigten Kartenausschnitt: die IP-Adresse Ihres Geräts und den Teil der Karte, den Sie ansehen. Ohne Ihr Weiter wird ihm nichts gesendet.';
   }
 
   @override
@@ -7760,7 +7760,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get discoveryNoSaved =>
-      'Auf diesem Gerät ist noch kein Arbeitsraum gespeichert.';
+      'Auf diesem Gerät ist noch kein Ort gespeichert.';
 
   @override
   String get discoveryRemoveBookmark => 'Lesezeichen entfernen';
@@ -8676,7 +8676,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get environmentHint =>
-      'Ein Entwicklungs-Space sagt das auf jedem Bildschirm und versieht jedes Dokument mit einem Wasserzeichen. Erklären Sie ihn erst dann zur Produktion, wenn die Rechnungen daraus wirklich geschuldet sind.';
+      'Ein Entwicklungsbetrieb sagt das auf jedem Bildschirm und versieht jedes Dokument mit einem Wasserzeichen. Erklären Sie ihn erst dann zur Produktion, wenn die Rechnungen daraus wirklich geschuldet sind.';
 
   @override
   String get environmentLabel => 'Art des Space';
@@ -10118,7 +10118,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get favoriteKeptOnDeviceRefused =>
-      'Nur auf diesem Gerät gespeichert: Ihr Konto kann diesen Space nicht speichern.';
+      'Nur auf diesem Gerät gespeichert: Ihr Konto kann diesen Ort nicht speichern.';
 
   @override
   String get favoriteKeptOnDeviceUnreachable =>
@@ -11761,6 +11761,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt';
 
   @override
+  String financesDueCalendarUnknown(String date) {
+    return 'Fällig am $date · Kalender des Unternehmens unbekannt';
+  }
+
+  @override
+  String financesDueInZone(String text, String zone) {
+    return '$text · $zone';
+  }
+
+  @override
   String financesDueOn(String date) {
     return 'Fällig am $date';
   }
@@ -13031,7 +13041,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get identityConnectConfirmApplyBody =>
-      'Sie sind jetzt verbunden. Der Space prüft Ihre Anfrage; sonst wird nichts geteilt.';
+      'Sie sind jetzt verbunden. Der Betrieb prüft Ihre Anfrage; sonst wird nichts geteilt.';
 
   @override
   String get identityConnectContinue => 'Mit Deskilo fortfahren';
@@ -13059,7 +13069,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String identityConnectExplain(String host) {
-    return '$host erfährt über Ihre Deskilo-Identität, dass Sie es sind. Das Verbinden macht Sie weder zum Mitglied, noch gibt es Ihnen eine Rolle oder verbindet einen Assistenten: Über jede Anfrage entscheidet weiterhin der Space.';
+    return '$host erfährt über Ihre Deskilo-Identität, dass Sie es sind. Das Verbinden macht Sie weder zum Mitglied, noch gibt es Ihnen eine Rolle oder verbindet einen Assistenten: Über jede Anfrage entscheidet weiterhin der Betrieb.';
   }
 
   @override
@@ -13190,7 +13200,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get inboxSourceWorkspaces => 'Die Nachrichten Ihrer Spaces';
+  String get inboxSourceWorkspaces => 'Die Nachrichten Ihrer Orte';
 
   @override
   String get instanceAccessTitle => 'Assistenten-Zugang';
@@ -19062,7 +19072,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meBusinessSeesSpace =>
-      'Als Mitglied alle im Bereich: Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihren Status und wann Sie zuletzt da waren nur so, wie Sie es unter Wer mich sieht wählen.';
+      'Als Mitglied alle dort: Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihren Status und wann Sie zuletzt da waren nur so, wie Sie es unter Wer mich sieht wählen.';
 
   @override
   String get meBusinessSeesTitle => 'Was ein Betrieb sieht, dem Sie beitreten';
@@ -19071,7 +19081,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meContextPersonal => 'Persönlich';
 
   @override
-  String get meCreateSpace => 'Space gründen';
+  String get meCreateSpace => 'Betrieb gründen';
 
   @override
   String get meDataPersonalExport => 'Persönliche Daten exportieren';
@@ -19090,7 +19100,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meDataPersonalScope =>
-      'Was Ihr persönliches Zuhause über Sie speichert: Ihr Profil, Ihre Einstellungen, Ihre Unterhaltungen und die Spaces, die Sie nennen. Buchungen und Rechnungen jedes Spaces bleiben bei diesem Space und sind nicht Teil dieser Datei.';
+      'Was Ihr persönliches Zuhause über Sie speichert: Ihr Profil, Ihre Einstellungen, Ihre Unterhaltungen und die Orte, die Sie nennen. Buchungen und Rechnungen jedes Betriebs bleiben bei diesem Betrieb und sind nicht Teil dieser Datei.';
 
   @override
   String meDataPersonalSummary(
@@ -19098,7 +19108,7 @@ class AppLocalizationsDe extends AppLocalizations {
     int messages,
     int workspaces,
   ) {
-    return 'Unterhaltungen: $conversations · Nachrichten: $messages · Genannte Spaces: $workspaces';
+    return 'Unterhaltungen: $conversations · Nachrichten: $messages · Genannte Orte: $workspaces';
   }
 
   @override
@@ -19113,26 +19123,26 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meDataWorkspaceDisabled =>
-      'Dieser Space bietet den Datenexport nicht an.';
+      'Dieser Betrieb bietet den Datenexport nicht an.';
 
   @override
   String get meDataWorkspaceExport => 'Exportieren';
 
   @override
   String get meDataWorkspaceFailed =>
-      'Dieser Space hat nicht geantwortet. Es wurde nichts exportiert.';
+      'Dieser Betrieb hat nicht geantwortet. Es wurde nichts exportiert.';
 
   @override
   String get meDataWorkspaceForbidden =>
-      'Dieser Space hat abgelehnt: Sie sind dort kein aktives Mitglied. Es wurde nichts exportiert.';
+      'Dieser Betrieb hat abgelehnt: Sie sind dort kein aktives Mitglied. Es wurde nichts exportiert.';
 
   @override
   String get meDataWorkspaceHostUnavailable =>
-      'Der Server dieses Spaces ist von hier aus nicht erreichbar. Es wurde nichts exportiert.';
+      'Der Server dieses Betriebs ist von hier aus nicht erreichbar. Es wurde nichts exportiert.';
 
   @override
   String get meDataWorkspaceMalformed =>
-      'Dieser Space hat in einer Form geantwortet, die diese App nicht lesen kann. Es wurde nichts exportiert.';
+      'Dieser Betrieb hat in einer Form geantwortet, die diese App nicht lesen kann. Es wurde nichts exportiert.';
 
   @override
   String get meDataWorkspaceSuperseded =>
@@ -19140,22 +19150,26 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String meDataWorkspaceUnnamed(String id) {
-    return 'Space $id';
+    return 'Betrieb $id';
   }
 
   @override
-  String get meDataWorkspacesEmpty => 'Ihr Konto nennt noch keinen Space.';
+  String get meDataWorkspacesEmpty => 'Ihr Konto nennt noch keinen Betrieb.';
 
   @override
   String get meDataWorkspacesFailed =>
-      'Die Spaces Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.';
+      'Die Betriebe Ihres Kontos konnten nicht gelesen werden. Es wurde nichts exportiert.';
 
   @override
   String get meDataWorkspacesScope =>
-      'Jeder Space exportiert, was er über Sie hält – Mitgliedschaft, Buchungen, Konto und Rechnungen – von seinem eigenen Server, eine Datei je Space. Der Teil Ihres persönlichen Kontos ist die Karte oben.';
+      'Jeder Betrieb exportiert, was er über Sie hält – Mitgliedschaft, Buchungen, Konto und Rechnungen – von seinem eigenen Server, eine Datei je Betrieb. Der Teil Ihres persönlichen Kontos ist die Karte oben.';
 
   @override
-  String get meDataWorkspacesTitle => 'Ihre Daten in jedem Space';
+  String get meDataWorkspacesTitle => 'Ihre Daten in jedem Betrieb';
+
+  @override
+  String get meDemoSessionBadgeHint =>
+      'Sie erkunden einen Demonstrationsbetrieb. Nichts davon verlässt dieses Gerät.';
 
   @override
   String get meFinanceGlanceOwed => 'Zu zahlen:';
@@ -19200,7 +19214,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meGroupDelete => 'Gruppe löschen';
 
   @override
-  String get meGroupEmptyOwn => 'Verschieben Sie Spaces über ihr Menü hierher.';
+  String get meGroupEmptyOwn => 'Verschieben Sie Orte über ihr Menü hierher.';
 
   @override
   String get meGroupFavorites => 'Favoriten';
@@ -19221,7 +19235,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meGroupRename => 'Umbenennen';
 
   @override
-  String get meGroupWorkspaces => 'Meine Arbeitsbereiche';
+  String get meGroupWorkspaces => 'Meine Orte';
 
   @override
   String get meHeaderOwned => 'Ihr Konto · es gehört nur Ihnen';
@@ -19240,11 +19254,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meJoinSpace => 'Mit Code beitreten';
 
   @override
-  String get meLeaveAction => 'Diesen Space verlassen';
+  String get meLeaveAction => 'Diesen Ort verlassen';
 
   @override
   String get meLeaveBody =>
-      'Sie sind dann kein Mitglied mehr. Ihre Buchungen, Rechnungen und Nachrichten bleiben beim Space. Um auch Ihre Daten zu löschen, nutzen Sie Datenschutz.';
+      'Sie sind dann kein Mitglied mehr. Ihre Buchungen, Rechnungen und Nachrichten bleiben beim Betrieb. Um auch Ihre Daten zu löschen, nutzen Sie Datenschutz.';
 
   @override
   String meLeaveDone(String name) {
@@ -19253,11 +19267,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meLeaveFailed =>
-      'Der Space konnte nicht verlassen werden. Bitte versuchen Sie es erneut.';
+      'Der Ort konnte nicht verlassen werden. Bitte versuchen Sie es erneut.';
 
   @override
   String get meLeaveOwner =>
-      'Eigentümer übergeben den Space, bevor sie ihn verlassen';
+      'Eigentümer übergeben den Betrieb, bevor sie ihn verlassen';
 
   @override
   String meLeaveSide(String side) {
@@ -19276,7 +19290,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String meLinkedOpenBody(String host) {
-    return 'Dieser Space liegt auf $host. Er öffnet sich hier über die eigene Verbindung zu diesem Server; nichts wird umgeschaltet und Ihr eigener Server wird dafür nicht verwendet.';
+    return 'Dieser Ort liegt auf $host. Er öffnet sich hier über die eigene Verbindung zu diesem Server; nichts wird umgeschaltet und Ihr eigener Server wird dafür nicht verwendet.';
   }
 
   @override
@@ -19290,7 +19304,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get meManageSpaces => 'Meine Spaces verwalten';
+  String get meManageSpaces => 'Meine Orte verwalten';
 
   @override
   String get meMySpaces => 'Meine Orte';
@@ -19306,7 +19320,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Finden Sie einen in Ihrer Nähe, treten Sie mit einem Einladungscode bei oder gründen Sie Ihren eigenen.';
 
   @override
-  String get meNoSpaceTitle => 'Sie sind noch in keinem Space';
+  String get meNoSpaceTitle => 'Sie haben noch keine Orte';
 
   @override
   String meOverviewAttentionApplication(String name) {
@@ -19424,6 +19438,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mePlaceRequestSent => 'Anfrage gesendet · wartet auf eine Antwort';
 
   @override
+  String get mePlacesLoadFailed => 'Ihre Orte konnten nicht geladen werden.';
+
+  @override
+  String get mePrivacySelfServiceOff =>
+      'Dieser Betrieb bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.';
+
+  @override
+  String get meRealBusiness => 'Betrieb';
+
+  @override
   String get meRefDefault => 'Standard';
 
   @override
@@ -19433,17 +19457,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meRefStale => 'Mitgliedschaft seit einiger Zeit nicht bestätigt';
 
   @override
-  String get meRefUnnamed => 'Ein Space auf einem anderen Server';
+  String get meRefUnnamed => 'Ein Ort auf einem anderen Server';
 
   @override
   String get meRefUnverified => 'Mitgliedschaft noch nicht bestätigt';
 
   @override
-  String get meRefsTitle => 'Spaces anderswo';
+  String get meRefsTitle => 'Orte anderswo';
 
   @override
   String get meRefsUnavailable =>
-      'Ihre Spaces anderswo konnten nicht gelesen werden.';
+      'Ihre Orte anderswo konnten nicht gelesen werden.';
 
   @override
   String get meRunASpace => 'Sie führen selbst ein Geschäft?';
@@ -19470,6 +19494,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meSortTooltip => 'Sortieren';
 
   @override
+  String get meSourceUnnamed => 'Der Server eines Ortes';
+
+  @override
   String get meSpaceException => 'In diesem Space';
 
   @override
@@ -19490,10 +19517,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meSpacePending => 'Wartet auf Freigabe';
 
   @override
-  String get meSpacesNoMatch => 'Kein Space passt.';
+  String get meSpacesNoMatch => 'Kein Ort passt.';
 
   @override
-  String get meSpacesSearch => 'Meine Spaces durchsuchen';
+  String get meSpacesSearch => 'Meine Orte durchsuchen';
 
   @override
   String get meStartedAccount => 'Konto anlegen';
@@ -19546,6 +19573,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get meTabSpacesShort => 'Orte';
 
   @override
+  String get meTestBusiness => 'Testbetrieb';
+
+  @override
+  String get meTestBusinessHint =>
+      'Testbetrieb: Buchungen und Rechnungen zum Ausprobieren';
+
+  @override
   String get meUtilityAccount => 'Privatsphäre und Konto';
 
   @override
@@ -19560,7 +19594,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get meWhereSpacesLive => 'Wo meine Spaces liegen';
+  String get meWhereSpacesLive => 'Wo meine Orte liegen';
 
   @override
   String get memberAccountTitle => 'Mein Konto';
@@ -20086,11 +20120,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get messengerHostsIntro =>
-      'Ihre Nachricht lesen diese Gastgeber des Ortes:';
+      'Ihre Nachricht lesen diese Gastgeber des Betriebs:';
 
   @override
   String get messengerHostsNone =>
-      'An diesem Ort beantwortet gerade niemand Nachrichten.';
+      'In diesem Betrieb beantwortet gerade niemand Nachrichten.';
 
   @override
   String messengerInboxUnavailable(String servers) {
@@ -20154,7 +20188,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get messengerRefusedForwardingOff =>
-      'Dieser Ort erlaubt kein Weiterleiten seiner Nachrichten.';
+      'Dieser Betrieb erlaubt kein Weiterleiten seiner Nachrichten.';
 
   @override
   String get messengerRefusedLimit =>
@@ -20170,7 +20204,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get messengerRefusedUnavailable =>
-      'Dieser Ort nimmt gerade keine Anfragen an.';
+      'Dieser Betrieb nimmt gerade keine Anfragen an.';
 
   @override
   String get messengerStar => 'Markieren';
@@ -20586,22 +20620,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get myReservationsView => 'Ansehen';
 
   @override
-  String get mySpacesAll => 'Alle meine Spaces';
+  String get mySpacesAll => 'Alle meine Orte';
 
   @override
   String mySpacesCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Spaces',
-      one: '1 Space',
-      zero: 'Kein Space',
+      other: '$count Orte',
+      one: '1 Ort',
+      zero: 'Kein Ort',
     );
     return '$_temp0';
   }
 
   @override
-  String get mySpacesDiscover => 'Spaces entdecken';
+  String get mySpacesDiscover => 'Orte entdecken';
 
   @override
   String get mySpacesFilterActive => 'Aktiv';
@@ -20628,16 +20662,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mySpacesLayoutList => 'Als Liste anzeigen';
 
   @override
-  String get mySpacesManage => 'Spaces auf diesem Server verwalten';
+  String get mySpacesManage => 'Betriebe auf diesem Server verwalten';
 
   @override
-  String get mySpacesNoMatch => 'Kein Space passt zu Ihrer Suche.';
+  String get mySpacesNoMatch => 'Kein Ort passt zu Ihrer Suche.';
 
   @override
   String get mySpacesOpen => 'Öffnen';
 
   @override
-  String get mySpacesOpenTest => 'Test-Space öffnen';
+  String get mySpacesOpenTest => 'Testbetrieb öffnen';
 
   @override
   String get mySpacesRequestStatus => 'Status der Anfrage ansehen';
@@ -20651,10 +20685,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get mySpacesTestSpace => 'Test-Space';
+  String get mySpacesTestSpace => 'Testbetrieb';
 
   @override
-  String get mySpacesUnavailable => 'Ihre Spaces konnten nicht gelesen werden.';
+  String get mySpacesUnavailable => 'Ihre Orte konnten nicht gelesen werden.';
 
   @override
   String get mySpacesVerified => 'Mitgliedschaft bestätigt';
@@ -22390,24 +22424,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalDirectoryIncompatible =>
-      'Einige Workspaces benötigen eine neuere Version der App und werden nicht angezeigt.';
+      'Einige Orte benötigen eine neuere Version der App und werden nicht angezeigt.';
 
   @override
   String get portalDirectoryPartial =>
-      'Einige Ihrer Spaces können gerade nicht bestätigt werden; ihre Personen werden nicht angezeigt.';
+      'Einige Ihrer Orte können gerade nicht bestätigt werden; ihre Personen werden nicht angezeigt.';
 
   @override
   String get portalDirectoryShowMore => 'Mehr anzeigen';
 
   @override
   String get portalDirectoryUnverified =>
-      'Dieser Space kann gerade nicht bestätigt werden.';
+      'Dieser Ort kann gerade nicht bestätigt werden.';
 
   @override
   String get portalDisconnect => 'Trennen';
 
   @override
-  String get portalDiscover => 'Arbeitsplatz finden';
+  String get portalDiscover => 'Ort finden';
 
   @override
   String get portalEmail => 'Öffentliche E-Mail';
@@ -22454,10 +22488,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalNoLongerPublished =>
-      'Dieser Workspace ist nicht mehr veröffentlicht.';
+      'Dieser Ort ist nicht mehr veröffentlicht.';
 
   @override
-  String get portalOpenMe => 'Ich: mein Konto und meine Spaces';
+  String get portalOpenMe => 'Ich: mein Konto und meine Orte';
 
   @override
   String get portalOwner => 'Eigentümer';
@@ -22547,7 +22581,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get portalRequestSent =>
-      'Anfrage gesendet. Der Workspace prüft Ihr Profil.';
+      'Anfrage gesendet. Der Betrieb prüft Ihr Profil.';
 
   @override
   String get portalResetAll =>
@@ -22564,7 +22598,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get portalSavePreview => 'Speichern und externe Ansicht öffnen';
 
   @override
-  String get portalSearch => 'Workspaces suchen';
+  String get portalSearch => 'Orte suchen';
 
   @override
   String get portalSendCode => 'Anmeldecode senden';
@@ -23345,7 +23379,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get publicProfilePublishBody =>
-      'Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Spaces bleiben privat.';
+      'Jede Person im Internet, angemeldet oder nicht, kann über Ihren Link Ihren Namen, Ihren Beruf und Ihre Vorstellung lesen. Kontaktdaten, Anwesenheit und Orte bleiben privat.';
 
   @override
   String get publicProfilePublishTitle =>
@@ -24868,6 +24902,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get regionalFormatsTitle => 'Region & Formate';
+
+  @override
+  String get regionalWeekStart => 'Die Woche beginnt am';
+
+  @override
+  String get regionalWeekStartAuto => 'Wie die Region';
 
   @override
   String get registerPaymentAmount => 'Betrag';
@@ -27686,6 +27726,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Format, bevor ein Mitglied oder Arbeitsbereich eines gewählt hat. Die eigene Wahl des Mitglieds gilt immer.';
 
   @override
+  String get settingHintLocaleDefaultWeekStart =>
+      'Der Tag, an dem Wochen in Kalendern beginnen, wenn ein Mitglied keinen gewählt hat: der des Formats oder immer Montag, Sonntag oder Samstag. Die eigene Wahl eines Mitglieds hat immer Vorrang.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minuten, die die Person hat, um eine von einem Assistenten angeforderte Aktion zu bestätigen. Bereits gestellte Anfragen behalten ihre Zeit. Kann nur verkürzt werden.';
 
@@ -27972,6 +28016,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelLocaleDefaultLocale =>
       'Standardformat für Zahlen und Datum';
+
+  @override
+  String get settingLabelLocaleDefaultWeekStart => 'Standard-Wochenbeginn';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>
@@ -33063,7 +33110,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get threadNoRefs =>
-      'Verweise werden nur mit Personen desselben Arbeitsbereichs geteilt.';
+      'Verweise werden nur mit Personen desselben Betriebs geteilt.';
 
   @override
   String get threadRefsIn => 'Verweise in';
@@ -33734,7 +33781,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uxNavWorkspace => 'Workspace einrichten';
 
   @override
-  String get uxOpenWorkspace => 'Arbeitsbereich öffnen';
+  String get uxOpenWorkspace => 'Betrieb öffnen';
 
   @override
   String get uxPreferencesSection => 'Einstellungen';
@@ -34839,14 +34886,14 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Mitglieder von $count ausgewählten Spaces',
-      one: 'Mitglieder von 1 ausgewählten Space',
+      other: 'Mitglieder von $count ausgewählten Orten',
+      one: 'Mitglieder von 1 ausgewähltem Ort',
     );
     return '$_temp0';
   }
 
   @override
-  String get visibilityChosenSpaces => 'Mitglieder ausgewählter Spaces';
+  String get visibilityChosenSpaces => 'Mitglieder ausgewählter Orte';
 
   @override
   String get visibilityConflictKeep => 'Gespeicherte Einstellung behalten';
@@ -34877,7 +34924,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get visibilityElsewhereIntro =>
-      'Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Raum mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Räume.';
+      'Auf einem verbundenen Server haben Sie das Konto dieses Servers. Wer dort keinen Ort mit Ihnen teilt, sieht, was Sie allen angemeldeten Personen erlauben; Kontaktdaten und Anwesenheit verlassen nie Ihre Orte.';
 
   @override
   String get visibilityElsewhereTitle => 'Auf meinen anderen Servern';
@@ -34931,11 +34978,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get visibilityMoreSharing => 'Weitere Freigabeeinstellungen';
 
   @override
-  String get visibilityMySpaces => 'Mitglieder meiner Spaces';
+  String get visibilityMySpaces => 'Mitglieder meiner Orte';
 
   @override
   String get visibilityNoSpaces =>
-      'Sie sind noch in keinem Space. Wählen Sie ein anderes Publikum.';
+      'Sie haben noch keine Orte. Wählen Sie ein anderes Publikum.';
 
   @override
   String get visibilityNobody => 'Niemand';
@@ -34951,7 +34998,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get visibilityPresence => 'Heute im Space';
+  String get visibilityPresence => 'Heute am Ort';
 
   @override
   String get visibilityPreviewCanWrite =>
@@ -34966,7 +35013,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Vorschau konnte nicht geladen werden.';
 
   @override
-  String get visibilityPreviewMySpaces => 'Ein Mitglied meiner Spaces';
+  String get visibilityPreviewMySpaces => 'Ein Mitglied meiner Orte';
 
   @override
   String get visibilityPreviewNobody => 'Nur ich';
@@ -35003,7 +35050,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String visibilitySpaceAmbiguous(String source) {
-    return 'Gleicher Name wie ein anderer Space · $source';
+    return 'Gleicher Name wie ein anderer Ort · $source';
   }
 
   @override
@@ -35016,14 +35063,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get visibilitySpaceUnlisted =>
-      'Ein Space, der nicht mehr aufgeführt ist';
+      'Ein Ort, der nicht mehr aufgeführt ist';
 
   @override
   String get visibilitySpaceUnverified => 'Überprüfung nicht verfügbar';
 
   @override
   String get visibilitySpacesUnavailable =>
-      'Ihre Spaces lassen sich gerade nicht auflisten.';
+      'Ihre Orte lassen sich gerade nicht auflisten.';
 
   @override
   String get visibilityTitle => 'Wer mich sieht';

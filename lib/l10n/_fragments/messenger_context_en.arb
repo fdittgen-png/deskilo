@@ -215,11 +215,11 @@
   "@messengerWriteToHosts": {
     "description": "Button on a published space page, and title of the inquiry sheet (#1824)"
   },
-  "messengerHostsIntro": "Your message is read by these hosts of the space:",
+  "messengerHostsIntro": "Your message is read by these hosts of the business:",
   "@messengerHostsIntro": {
     "description": "Inquiry sheet: who will read the message (#1824)"
   },
-  "messengerHostsNone": "This space has nobody answering messages right now.",
+  "messengerHostsNone": "This business has nobody answering messages right now.",
   "@messengerHostsNone": {
     "description": "Inquiry sheet when the space has no host who answers (#1824)"
   },
@@ -282,7 +282,7 @@
       }
     }
   },
-  "messengerRefusedForwardingOff": "This space does not allow forwarding its messages.",
+  "messengerRefusedForwardingOff": "This business does not allow forwarding its messages.",
   "@messengerRefusedForwardingOff": {
     "description": "Refusal: the source space switched forwarding off (#1824)"
   },
@@ -294,7 +294,7 @@
   "@messengerRefusedClosed": {
     "description": "Refusal: the inquiry was closed (#1824)"
   },
-  "messengerRefusedUnavailable": "This space does not take inquiries right now.",
+  "messengerRefusedUnavailable": "This business does not take inquiries right now.",
   "@messengerRefusedUnavailable": {
     "description": "Refusal: the space takes no inquiries (not published, or switched off) (#1824)"
   },

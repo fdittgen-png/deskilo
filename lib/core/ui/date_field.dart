@@ -15,6 +15,7 @@ import '../i18n/format_controller.dart';
 import '../l10n/context_l10n.dart';
 import '../time/clock.dart';
 import 'adaptive/task_surface.dart';
+import 'app_date_picker.dart';
 import 'form_kit.dart';
 
 export '../format/date_input.dart' show DateInputProblem, DateRead;
@@ -161,7 +162,7 @@ class _AppDateFieldState extends State<AppDateField> {
       now = _first;
     }
     final initial = current ?? now;
-    final picked = await showDatePicker(
+    final picked = await showAppDatePicker(
       context: context,
       initialDate: initial.isBefore(_first)
           ? _first

@@ -1450,6 +1450,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
     ),
   ),
   (
+    since: 'week_start',
+    row: (
+      key: 'locale.default_week_start',
+      type: 'enum',
+      defaultValue: 'locale',
+      min: null,
+      max: null,
+      unit: '',
+      group: 'region',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: ['locale', 'monday', 'sunday', 'saturday'],
+      source: 'RegionDefaults.weekStart (#3648)',
+      note: 'The day a week starts on in calendars and week views where a member chose none: the format locale\'s own first day (locale), or always Monday, Sunday or Saturday. A member\'s own choice always wins.',
+    ),
+  ),
+  (
     since: 'recorded_payments_read',
     row: (
       key: 'bi.detail_page_size',

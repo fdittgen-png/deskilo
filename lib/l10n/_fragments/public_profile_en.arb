@@ -15,7 +15,7 @@
   "@publicProfilePublishTitle": {
     "description": "Shown as the text in public profile tile (me)."
   },
-  "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and spaces stay private.",
+  "publicProfilePublishBody": "Anyone on the internet, signed in or not, will be able to read your name, profession and bio at your link. Your contact details, presence and places stay private.",
   "@publicProfilePublishBody": {
     "description": "Shown as the text in public profile tile (me)."
   },

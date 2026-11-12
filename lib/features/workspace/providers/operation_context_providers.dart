@@ -26,6 +26,8 @@ import '../domain/booking_rules_repository.dart';
 import 'settings_providers.dart';
 import 'workspace_providers.dart';
 
+export 'business_date_provider.dart'; // #3659: the business's day
+
 part 'operation_context_providers.g.dart';
 
 /// Who is signed in at the personal home, or null when nobody is.

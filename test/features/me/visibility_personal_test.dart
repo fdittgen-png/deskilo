@@ -69,7 +69,7 @@ void main() {
     expect(
       find.descendant(
         of: _key('visibility-field-about'),
-        matching: find.text('Members of my spaces'),
+        matching: find.text('Members of my places'),
       ),
       findsOneWidget,
       reason: 'the saved value, not the default "nobody"',
@@ -151,7 +151,7 @@ void main() {
     expect(
       find.descendant(
         of: _key('visibility-field-about'),
-        matching: find.text('Members of my spaces'),
+        matching: find.text('Members of my places'),
       ),
       findsOneWidget,
     );
@@ -176,7 +176,7 @@ void main() {
     expect(
       find.descendant(
         of: _key('visibility-space-$gone'),
-        matching: find.text('A space that is no longer listed'),
+        matching: find.text('A place that is no longer listed'),
       ),
       findsOneWidget,
     );

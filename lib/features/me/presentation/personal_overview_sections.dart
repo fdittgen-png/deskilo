@@ -174,7 +174,7 @@ class _NextBody extends ConsumerWidget {
             key: ValueKey('me-overview-next-failed-${slot.sourceId}'),
             text: l10n.meOverviewNextHostFailed(
               slot.labels.isEmpty
-                  ? l10n.myReservationsSourceUnnamed
+                  ? l10n.meSourceUnnamed
                   : slot.labels.join(', '),
             ),
             onRetry: () => composer.retry(slot.sourceId),

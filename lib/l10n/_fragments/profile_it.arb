@@ -162,6 +162,7 @@
   "backendTestSchemaMissing": "Raggiunto, ma mancano le tabelle DesKilo — esegua prima le migrazioni di supabase/migrations su quel progetto.",
   "backendCopyLink": "Copia",
   "profilesUnavailable": "Impossibile caricare i suoi spazi di lavoro.",
+  "mePlacesLoadFailed": "Impossibile caricare i suoi posti.",
   "consentUnavailable": "Impossibile caricare il suo account, quindi non c’è ancora nulla da accettare.",
   "backendModeDefault": "Usa il servizio DesKilo",
   "backendModeConnect": "Collega un'organizzazione esistente",
