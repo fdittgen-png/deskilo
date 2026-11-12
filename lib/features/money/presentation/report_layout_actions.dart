@@ -11,6 +11,7 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -18,6 +19,8 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/address_window.dart';
+import '../domain/invoice_pdf_template.dart';
 import '../domain/report_layout/layout_render.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
@@ -133,3 +136,43 @@ Future<Uint8List?> layoutImage(WidgetRef ref, String name) async {
 
 /// The name the shipped layouts use for "the workspace's own mark".
 const String _logoRole = 'logo';
+
+// #3673 — moved from invoice_documents.dart (its 500-line budget): the
+// invoice's positioned layout and envelope window, beside the other layouts.
+/// A positioned layout wins over bands. A proforma without a layout of its
+/// own borrows the invoice's, as it borrows its bands. Annexes stay banded
+/// — they are documentation appended behind, and the layout engine renders
+/// one document. Undesigned documents use the enabled letter standard.
+String? invoiceLayoutXmlOf(
+  Invoice invoice,
+  InvoicePdfFileOptions options,
+  InvoicePdfTemplate template,
+  Set<WorkspaceFeature> features,
+  AppLocalizations l10n,
+) {
+  final workspace = options.workspace;
+  final letterStandard = features.contains(WorkspaceFeature.letterStandard);
+  if (!features.contains(WorkspaceFeature.reportLayouts) ||
+      options.annexInvoices.isNotEmpty) {
+    return null;
+  }
+  String? standard() => resolveLayoutXmlFor(
+    template: template,
+    kindId: 'invoice',
+    countryCode: invoice.sellerParty?.country ?? workspace?.countryCode ?? '',
+    letterStandard: letterStandard,
+    l10n: l10n,
+  );
+  return options.proforma ? (template.layoutFor('proforma') ?? standard()) : standard();
+}
+
+/// #869 — the envelope window: the template's explicit choice wins,
+/// otherwise the seller's country decides the side. Off entirely when
+/// the workspace has not enabled the feature.
+AddressWindow invoiceAddressWindowOf(
+  InvoicePdfFileOptions options,
+  Set<WorkspaceFeature> features,
+) => features.contains(WorkspaceFeature.invoiceAddressWindow)
+    ? (options.template.addressWindow ??
+          addressWindowForCountry(options.workspace?.countryCode ?? ''))
+    : AddressWindow.off;

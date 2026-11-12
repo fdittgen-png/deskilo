@@ -10488,6 +10488,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Collochi il destinatario dove lo mostra una busta a finestra, così una fattura stampata può essere piegata e spedita. Il lato segue il paese ed è modificabile.';
 
   @override
+  String get featureInvoiceEmailDesc =>
+      'Una fattura emessa può essere inviata via e-mail dal server, con il mittente dell\'azienda, all\'indirizzo di contatto del cliente, nella lingua dei suoi documenti. Ogni fattura viene inviata una volta; inviarla di nuovo è un atto deliberato, con una propria traccia. Disattivato: le fatture si condividono o si scaricano come prima.';
+
+  @override
+  String get featureInvoiceEmailTitle => 'Fatture via e-mail';
+
+  @override
   String get featureInvoiceJourneyDesc =>
       'Ogni fattura mostra dove si trova — Emessa, Pagamento, Conferma, Chiusa — e a chi tocca: il membro paga, un admin conferma il pagamento dichiarato, l\'emittente lo abbina, i validatori decidono. L\'hub degli emittenti aggiunge una barra delle fasi con i contatori e una spiegazione «Come funziona».';
 
@@ -14263,6 +14270,58 @@ class AppLocalizationsIt extends AppLocalizations {
   String invoiceEInvoiceValidated(String validator) {
     return 'Pronto — non manca nulla di ciò che la EN 16931 richiede, e questo formato supera il validatore ufficiale ($validator).';
   }
+
+  @override
+  String get invoiceEmailFailed =>
+      'Non è stato possibile inviare la fattura via e-mail. Non è stato inviato nulla.';
+
+  @override
+  String get invoiceEmailHeading => 'Via e-mail';
+
+  @override
+  String get invoiceEmailNoLanguage =>
+      'La lingua dei documenti del cliente non è nota, quindi la fattura non è stata inviata via e-mail. Scegli la sua lingua o condividi la fattura.';
+
+  @override
+  String invoiceEmailRefused(String reason) {
+    return 'L\'e-mail è stata rifiutata: $reason. Non è stato inviato nulla.';
+  }
+
+  @override
+  String get invoiceEmailSendAgain => 'Invia di nuovo';
+
+  @override
+  String invoiceEmailSentOn(String recipient, String date) {
+    return 'Inviata via e-mail a $recipient il $date';
+  }
+
+  @override
+  String invoiceEmailTextCredit(String number, String amount) {
+    return 'In allegato la nota di credito $number di $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwed(String number, String amount) {
+    return 'In allegato la fattura $number. Importo ancora dovuto: $amount.';
+  }
+
+  @override
+  String invoiceEmailTextOwedBy(String number, String amount, String due) {
+    return 'In allegato la fattura $number. Importo ancora dovuto: $amount, con scadenza il $due.';
+  }
+
+  @override
+  String invoiceEmailTextPaid(String number, String amount) {
+    return 'In allegato la fattura $number di $amount. È pagata: non è dovuto nulla.';
+  }
+
+  @override
+  String get invoiceEmailUnconfirmed =>
+      'Nessuna risposta confermata. Verifica con il cliente prima di decidere se è arrivata.';
+
+  @override
+  String get invoiceEmailVoided =>
+      'Una fattura annullata non viene inviata via e-mail';
 
   @override
   String get invoiceEssentialsRefused =>

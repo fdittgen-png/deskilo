@@ -459,4 +459,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     requires: WorkspaceFeature.dunning,
     defaultOn: false,
   ),
+  // #3673 — an issued invoice sent by e-mail from the server, with the
+  // business's own sender: the document the customer reads, in their
+  // language. Asked for, under invoicing.
+  WorkspaceFeature.invoiceEmail: FeatureManifestEntry(
+    feature: WorkspaceFeature.invoiceEmail,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.invoicing,
+    defaultOn: false,
+  ),
 };

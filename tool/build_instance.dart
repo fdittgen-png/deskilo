@@ -40,6 +40,9 @@ const Map<String, bool> functionVerifyJwt = {
   // #3307 — a buyer's own session; begin_purchase_order_send_v1 decides
   // who may send before the provider is reached.
   'send-purchase-order': true,
+  // #3673 — an issuer's own session; begin_invoice_email_v1 decides who
+  // may send before the provider is reached.
+  'send-invoice-email': true,
   'send-push': true,
   // #3673 — an issuer's own session; begin_reminder_email_v1 decides who
   // may send before the provider is reached.

@@ -51,7 +51,7 @@ List<Invoice> _regroupedSourcesOf(WidgetRef ref, Invoice invoice) {
 ///
 /// Returns the invoices to append, empty for "this one alone", and null
 /// when the question was dismissed — nothing should be exported then.
-Future<List<Invoice>?> _askRegroupedAnnexes(
+Future<List<Invoice>?> askRegroupedAnnexes(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
@@ -113,6 +113,36 @@ Future<bool> savePdfToDownloads(
 }
 
 
+/// #3673 — what share, download and the invoice e-mail print an invoice
+/// with: one set of options for one builder. [language] '' prints in the
+/// interface's language (share and download, unchanged); the e-mail passes
+/// the customer's document language.
+InvoicePdfFileOptions invoiceShareOptions(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
+  List<Invoice> annexes, {
+  String language = '',
+}) => InvoicePdfFileOptions(
+  reference: requireWorkspaceTaxReference(ref),
+  // #920 — through layoutImage, so the shipped layouts' `logo`
+  // resolves to whatever the owner actually called theirs.
+  reportImage: (String name) => layoutImage(ref, name),
+  memberTerms: memberTermsFor(ref, invoice.memberId),
+  dueAt: invoiceDueAt(ref, invoice),
+  copy: rendersCopy(ref),
+  settledIn: settledStampOf(
+    context,
+    ref,
+    invoice,
+    l10n: language.isEmpty ? null : l10nForLanguage(language),
+  ),
+  annexInvoices: annexes,
+  template: invoicePdfTemplateFor(ref),
+  workspace: ref.read(currentWorkspaceProvider).value,
+  language: language,
+);
+
 Future<void> downloadInvoicePdf(
   BuildContext context,
   WidgetRef ref,
@@ -122,7 +152,7 @@ Future<void> downloadInvoicePdf(
       await readDocumentPolicies(ref);
       if (!context.mounted) return;
     final l10n = context.l10n;
-    final annexes = await _askRegroupedAnnexes(context, ref, invoice);
+    final annexes = await askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return;
     await runGuarded(
       context,
@@ -134,17 +164,7 @@ Future<void> downloadInvoicePdf(
         final pdf = await buildInvoicePdfFile(
           context,
           invoice,
-      InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
-        // #920 — through layoutImage, so the shipped layouts' `logo`
-        // resolves to whatever the owner actually called theirs.
-        reportImage: (String name) => layoutImage(ref, name),
-        memberTerms: memberTermsFor(ref, invoice.memberId),
-          dueAt: invoiceDueAt(ref, invoice),
-          copy: rendersCopy(ref),
-          settledIn: settledStampOf(context, ref, invoice),
-          annexInvoices: annexes,
-          template: invoicePdfTemplateFor(ref),
-          workspace: ref.read(currentWorkspaceProvider).value));
+      invoiceShareOptions(context, ref, invoice, annexes));
         if (!context.mounted) return;
         await savePdfToDownloads(
           context,
@@ -175,7 +195,7 @@ Future<void> quickViewInvoice(
       AppSnack.error(context, l10n.workspaceTaxContextNotReady);
       return;
     }
-    final annexes = await _askRegroupedAnnexes(context, ref, invoice);
+    final annexes = await askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return;
     final template = invoicePdfTemplateFor(ref);
     final data = withOwnerTexts(
@@ -248,7 +268,7 @@ Future<void> shareInvoicePdf(
       await readDocumentPolicies(ref);
       if (!context.mounted) return;
     final l10n = context.l10n;
-    final annexes = await _askRegroupedAnnexes(context, ref, invoice);
+    final annexes = await askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return;
     await runGuarded(
       context,
@@ -260,17 +280,7 @@ Future<void> shareInvoicePdf(
         final pdf = await buildInvoicePdfFile(
           context,
           invoice,
-      InvoicePdfFileOptions(reference: requireWorkspaceTaxReference(ref),
-        // #920 — through layoutImage, so the shipped layouts' `logo`
-        // resolves to whatever the owner actually called theirs.
-        reportImage: (String name) => layoutImage(ref, name),
-        memberTerms: memberTermsFor(ref, invoice.memberId),
-          dueAt: invoiceDueAt(ref, invoice),
-          copy: rendersCopy(ref),
-          settledIn: settledStampOf(context, ref, invoice),
-          annexInvoices: annexes,
-          template: invoicePdfTemplateFor(ref),
-          workspace: ref.read(currentWorkspaceProvider).value));
+      invoiceShareOptions(context, ref, invoice, annexes));
         await ref.read(fileSharerProvider)(
           bytes: Uint8List.fromList(pdf.bytes),
           fileName: pdf.fileName,

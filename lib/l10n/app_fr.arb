@@ -6712,6 +6712,8 @@
   "@featureInvoiceAddressWindowDesc": {
     "description": "Features screen description for the #869 window-envelope address placement flag"
   },
+  "featureInvoiceEmailDesc": "Une facture émise peut être envoyée par e-mail depuis le serveur, avec l'expéditeur de l'entreprise, à l'adresse de contact du client, dans la langue de ses documents. Chaque facture est envoyée une fois ; la renvoyer est un acte délibéré, gardé avec sa propre trace. Désactivé : les factures se partagent ou se téléchargent comme avant.",
+  "featureInvoiceEmailTitle": "Factures par e-mail",
   "featureInvoiceJourneyDesc": "Chaque facture montre où elle en est — Émise, Paiement, Confirmation, Close — et à qui est le tour : le membre paie, un admin confirme le paiement déclaré, l'émetteur le rapproche, les valideurs décident. Le hub des émetteurs ajoute un bandeau d'étapes avec les compteurs et une explication « Comment ça marche ».",
   "featureInvoiceJourneyTitle": "Le parcours d'une facture",
   "featureInvoicePdfTemplate": "Modèle de PDF de facture",
@@ -8630,6 +8632,102 @@
         "type": "String"
       }
     }
+  },
+  "invoiceEmailFailed": "La facture n'a pas pu être envoyée par e-mail. Rien n'a été envoyé.",
+  "@invoiceEmailFailed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailFailed"
+  },
+  "invoiceEmailHeading": "Par e-mail",
+  "@invoiceEmailHeading": {
+    "description": "#3673 invoices by e-mail: invoiceEmailHeading"
+  },
+  "invoiceEmailNoLanguage": "La langue des documents du client n'est pas connue : la facture n'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la facture.",
+  "@invoiceEmailNoLanguage": {
+    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
+  },
+  "invoiceEmailRefused": "L'e-mail a été refusé : {reason}. Rien n'a été envoyé.",
+  "@invoiceEmailRefused": {
+    "description": "#3673 invoices by e-mail: invoiceEmailRefused",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailSendAgain": "Renvoyer",
+  "@invoiceEmailSendAgain": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSendAgain"
+  },
+  "invoiceEmailSentOn": "Envoyée par e-mail à {recipient} le {date}",
+  "@invoiceEmailSentOn": {
+    "description": "#3673 invoices by e-mail: invoiceEmailSentOn",
+    "placeholders": {
+      "recipient": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextCredit": "Veuillez trouver ci-joint l'avoir {number} de {amount}.",
+  "@invoiceEmailTextCredit": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextCredit",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwed": "Veuillez trouver ci-joint la facture {number}. Montant restant dû : {amount}.",
+  "@invoiceEmailTextOwed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwed",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextOwedBy": "Veuillez trouver ci-joint la facture {number}. Montant restant dû : {amount}, à régler au plus tard le {due}.",
+  "@invoiceEmailTextOwedBy": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextOwedBy",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailTextPaid": "Veuillez trouver ci-joint la facture {number} de {amount}. Elle est réglée : rien n'est dû.",
+  "@invoiceEmailTextPaid": {
+    "description": "#3673 invoices by e-mail: invoiceEmailTextPaid",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceEmailUnconfirmed": "Aucune réponse confirmée. Vérifiez auprès du client avant de décider si elle est arrivée.",
+  "@invoiceEmailUnconfirmed": {
+    "description": "#3673 invoices by e-mail: invoiceEmailUnconfirmed"
+  },
+  "invoiceEmailVoided": "Une facture annulée n'est pas envoyée par e-mail",
+  "@invoiceEmailVoided": {
+    "description": "#3673 invoices by e-mail: invoiceEmailVoided"
   },
   "invoiceEssentialsRefused": "La facture n'a pas été émise : des informations obligatoires manquent.",
   "@invoiceEssentialsRefused": {

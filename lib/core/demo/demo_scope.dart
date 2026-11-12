@@ -7,6 +7,7 @@ import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/core/demo/data/money/demo_invoice_mail.dart';
 import 'package:deskilo/core/demo/data/money/demo_reminder_mail.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
@@ -53,6 +54,7 @@ import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/invoice_mail_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_mail_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
@@ -261,6 +263,7 @@ List<Override> _serverOnlyOverrides() => [
   biExportRepositoryProvider.overrideWithValue(const UnavailableBiExportRepository()),
   // #3673 — the Demo sends no e-mail.
   reminderMailProvider.overrideWithValue(const DemoReminderMail()),
+  invoiceMailProvider.overrideWithValue(const DemoInvoiceMail()),
 ];
 
 /// The overrides that turn a scope into the Demo environment.

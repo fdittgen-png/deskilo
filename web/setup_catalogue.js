@@ -622,6 +622,10 @@ window.SETUP_REGISTRY={
   [
    "reminderEmail",
    false
+  ],
+  [
+   "invoiceEmail",
+   false
   ]
  ],
  "requires": {
@@ -728,7 +732,8 @@ window.SETUP_REGISTRY={
   "mtdSubmission": "vatDeclarations",
   "purchaseOrders": "purchases",
   "guestPasses": "invoicing",
-  "reminderEmail": "dunning"
+  "reminderEmail": "dunning",
+  "invoiceEmail": "invoicing"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -1295,7 +1300,8 @@ window.SETUP_PROCESSES=[
      "onlinePayments",
      "dunning",
      "paymentReminders",
-     "reminderEmail"
+     "reminderEmail",
+     "invoiceEmail"
     ]
    },
    {
@@ -1634,7 +1640,8 @@ window.SETUP_LEVELS={
       "settlementFold",
       "carnets",
       "guestPasses",
-      "reminderEmail"
+      "reminderEmail",
+      "invoiceEmail"
      ],
      "needs": {}
     }

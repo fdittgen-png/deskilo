@@ -236,6 +236,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.guestPasses: guestsPassesAssessment,
   WorkspaceFeature.placeBooking: _legacy,
   WorkspaceFeature.reminderEmail: _legacy,
+  WorkspaceFeature.invoiceEmail: _legacy,
 };
 
 /// Keys that were registered once and are gone. They stay here so a
