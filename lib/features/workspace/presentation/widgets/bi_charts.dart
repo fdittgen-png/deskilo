@@ -65,10 +65,13 @@ class BiDeltaChip extends StatelessWidget {
             children: [
               Icon(icon, size: 18, color: color),
               const SizedBox(width: AppSpacing.xs),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: color,
+              // A long change wraps inside the chip on a narrow tile.
+              Flexible(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: color,
+                  ),
                 ),
               ),
             ],

@@ -20,6 +20,8 @@ const List<String> _kWideRoutePrefixes = [
   '/settings/sites', '/me', '/invoicing/wizard',
   // #3587 — the invoicing home keeps an invoice open beside its tables.
   '/invoices',
+  // The dashboards: their grid counts its columns from the width it gets.
+  '/bi', '/workspace-overview',
 ];
 
 /// A prefix names a path or its children — never a longer word that merely

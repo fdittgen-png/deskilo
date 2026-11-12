@@ -6850,6 +6850,15 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get dashboardTrendDown => 'In calo';
+
+  @override
+  String get dashboardTrendFlat => 'Invariato';
+
+  @override
+  String get dashboardTrendUp => 'In aumento';
+
+  @override
   String get dataReportArchived => 'Archiviato';
 
   @override
