@@ -13,8 +13,9 @@
 // open, as for any dialog.
 //
 // While the session holds a change ([TaskSession.markChanged], called by the
-// form kit's fields), leaving it by Escape, the scrim, a drag or the back
-// button first asks whether to discard; unchanged, it closes at once.
+// form kit's fields), Escape and a sheet dragged down first ask whether to
+// discard; unchanged, they close at once. A close the body asks for itself
+// (its Cancel, its Close after a result) is never questioned.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -80,13 +81,13 @@ class TaskSession {
   TaskSession._(this.size);
 
   final TaskSize size;
-  final ValueNotifier<bool> _changed = ValueNotifier(false);
+  bool _changed = false;
 
   /// Whether something in the task was changed since it opened.
-  bool get changed => _changed.value;
+  bool get changed => _changed;
 
-  /// Records a change: leaving the task now asks first.
-  void markChanged() => _changed.value = true;
+  /// Records a change: Escape now asks before the task is left.
+  void markChanged() => _changed = true;
 
   /// The session [context] is part of; null outside a task.
   static TaskSession? maybeOf(BuildContext context) =>
@@ -221,17 +222,21 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     });
   }
 
-  Future<void> _leave(bool didPop, Object? result) async {
-    if (didPop) return;
+  /// Escape or a drag: true when the task was left. Unchanged, it closes as
+  /// any modal does; changed, only after the person chose to discard.
+  Future<bool> _leave() async {
     final navigator = Navigator.of(context);
-    if (await confirmDiscardChanges(context) && navigator.mounted) {
-      navigator.pop(result);
+    if (!_route.session.changed) return navigator.maybePop();
+    if (!await confirmDiscardChanges(context) || !navigator.mounted) {
+      return false;
     }
+    navigator.pop();
+    return true;
   }
 
   /// A sheet dragged down: closes, or (kept after the question) comes back.
   Future<void> _sheetClosing() async {
-    await Navigator.of(context).maybePop();
+    await _leave();
     if (mounted && _route.isActive) {
       await _route.sheetController.forward();
     }
@@ -247,13 +252,12 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     );
     return _TaskSessionScope(
       session: _route.session,
-      child: ValueListenableBuilder<bool>(
-        valueListenable: _route.session._changed,
-        builder: (context, changed, child) => PopScope<Object?>(
-          canPop: !changed,
-          onPopInvokedWithResult: _leave,
-          child: child!,
-        ),
+      child: Actions(
+        actions: {
+          DismissIntent: CallbackAction<DismissIntent>(
+            onInvoke: (_) => _leave(),
+          ),
+        },
         child: switch (container) {
           _TaskContainer.sheet => _sheet(body),
           _TaskContainer.dialog => _dialog(body),

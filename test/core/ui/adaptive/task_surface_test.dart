@@ -248,6 +248,22 @@ void main() {
       expect(probe.routes, hasLength(1));
     });
 
+    testWidgets('a close the body asks for itself is never questioned', (
+      tester,
+    ) async {
+      _window(tester, _desk);
+      final probe = await _open(tester, TaskSize.standard);
+      await tester.enterText(_name, 'Ada');
+      await Navigator.of(tester.element(_name)).maybePop();
+      await tester.pumpAndSettle();
+      expect(
+        find.byKey(const ValueKey('unsaved-changes-dialog')),
+        findsNothing,
+      );
+      expect(_panel, findsNothing);
+      expect(probe.routes, hasLength(1));
+    });
+
     testWidgets('Escape on a changed task asks; keep stays, discard leaves', (
       tester,
     ) async {
