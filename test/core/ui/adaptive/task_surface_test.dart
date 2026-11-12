@@ -55,7 +55,6 @@ class _RouteCounter extends NavigatorObserver {
 Future<_Probe> _open(
   WidgetTester tester,
   TaskSize size, {
-  Listenable? workspace,
   WidgetBuilder? body,
 }) async {
   final probe = _Probe();
@@ -73,7 +72,6 @@ Future<_Probe> _open(
               probe.result = await showTask<bool>(
                 context,
                 size: size,
-                workspace: workspace,
                 builder:
                     body ??
                     (_) => AppFormSheet(
@@ -348,25 +346,24 @@ void main() {
       expect(question, findsOneWidget);
     });
 
-    testWidgets('a change of workspace closes a changed task, unasked', (
-      tester,
-    ) async {
+    testWidgets('a task without a text field, marked changed, asks on '
+        'Escape', (tester) async {
       _window(tester, _desk);
-      final workspace = ValueNotifier('ws-1');
-      addTearDown(workspace.dispose);
-      final probe = await _open(
+      await _open(
         tester,
         TaskSize.standard,
-        workspace: workspace,
+        body: (context) => Material(
+          child: Switch(
+            value: false,
+            onChanged: (_) => TaskSession.maybeOf(context)!.markChanged(),
+          ),
+        ),
       );
-      await tester.enterText(_name, 'Ada');
+      await tester.tap(find.byType(Switch));
       await tester.pump();
-      workspace.value = 'ws-2';
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
       await tester.pumpAndSettle();
-      expect(question, findsNothing);
-      expect(_panel, findsNothing);
-      expect(find.text('Ada'), findsNothing);
-      expect(probe.routes, hasLength(1));
+      expect(question, findsOneWidget);
     });
   });
 }

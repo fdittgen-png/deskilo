@@ -127,6 +127,7 @@ Future<void> main() async {
         sessionSourceFromAuth, // #2495
         captureReaderNameFromProfile, // #2495
         enabledFeatureKeysFromWorkspace, // #2495
+        taskContextFromWorkspace, // #3608
         activeSettingsFromWorkspace, // #2486
         platformSettingsFromWorkspace, // #2553
         audienceRolesFromWorkspace, // #2575

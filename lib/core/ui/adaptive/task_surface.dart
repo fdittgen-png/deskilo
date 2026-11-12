@@ -17,21 +17,20 @@
 // edits a text field inside the task), every way out asks first — Escape,
 // the scrim, a drag, the back button and the body's own Cancel or Close —
 // with the one discard question. Only a completed submit
-// ([TaskSession.completed]) takes the mark away, and a body that no longer
-// shows a text field (it shows the result of what was sent) has nothing
-// typed left to lose.
+// ([TaskSession.completed]) takes the mark away.
 //
-// A task ends with its context: when the signed-in person changes (sign-out,
-// an expired session) or the account or workspace the opener names changes,
-// it is closed at once and without a question. The work was the previous
-// context's; showing it to the next person or business would be the loss.
+// A task ends with its context: when the signed-in person or the workspace
+// changes (sign-out, an expired session, a switch of business —
+// `taskContextTokenProvider`), it is closed at once and without a question.
+// The work was the previous context's; showing it to the next person or
+// business would be the loss.
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../session/session_source.dart';
+import '../../session/task_context.dart';
 import '../kit/kit_metrics.dart';
 import '../unsaved_changes_guard.dart';
 import 'window_class.dart';
@@ -128,16 +127,12 @@ final Map<Object, _TaskRoute<Object?>> _openTasks = {};
 ///
 /// [sessionKey] names the task (for example its account, workspace and
 /// record): while a task under that key is open, the call returns its
-/// result instead of opening another. A notification of [account] or
-/// [workspace] (the opener's context changed) closes the task at once;
-/// a change of the signed-in person does so without being passed.
+/// result instead of opening another.
 Future<T?> showTask<T>(
   BuildContext context, {
   required TaskSize size,
   required WidgetBuilder builder,
   Object? sessionKey,
-  Listenable? account,
-  Listenable? workspace,
 }) {
   final open = sessionKey == null ? null : _openTasks[sessionKey];
   if (open != null && open.isActive) {
@@ -150,7 +145,6 @@ Future<T?> showTask<T>(
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     themes: InheritedTheme.capture(from: context, to: navigator.context),
     container: _containerFor(size, WindowClass.of(context)),
-    context: Listenable.merge([?account, ?workspace]),
   );
   if (sessionKey != null) {
     _openTasks[sessionKey] = route;
@@ -172,11 +166,8 @@ class _TaskRoute<T> extends PopupRoute<T> {
     required this.barrierLabel,
     required this.themes,
     required this.container,
-    required this.context,
   }) : session = TaskSession._(size);
 
-  /// Notifies when the opener's account or workspace changes.
-  final Listenable context;
   final TaskSize size;
   final WidgetBuilder builder;
   final CapturedThemes themes;
@@ -246,34 +237,27 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     });
   }
 
-  ProviderSubscription<AsyncValue<String?>>? _person;
-
-  @override
-  void initState() {
-    super.initState();
-    _route.context.addListener(_contextChanged);
-  }
+  ProviderSubscription<String>? _context;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_person != null) return;
+    if (_context != null) return;
     final ProviderContainer providers;
     try {
       providers = ProviderScope.containerOf(context, listen: false);
     } on StateError {
       return; // A task shown without the app's providers (a bare widget).
     }
-    final opened = providers.read(sessionStateProvider).value;
-    _person = providers.listen(sessionStateProvider, (_, next) {
-      if (next.hasValue && next.value != opened) _contextChanged();
+    final opened = providers.read(taskContextTokenProvider);
+    _context = providers.listen(taskContextTokenProvider, (_, next) {
+      if (next != opened) _contextChanged();
     });
   }
 
   @override
   void dispose() {
-    _route.context.removeListener(_contextChanged);
-    _person?.close();
+    _context?.close();
     super.dispose();
   }
 
@@ -284,30 +268,12 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     if (_route.isActive && navigator != null) navigator.removeRoute(_route);
   });
 
-  /// Whether a text field is still shown in the body: once only a result
-  /// is, nothing typed is left to lose.
-  bool _showsText() {
-    var found = false;
-    void visit(Element element) {
-      if (found) return;
-      if (element.widget is EditableText) {
-        found = true;
-        return;
-      }
-      element.visitChildren(visit);
-    }
-
-    final body = _bodyKey.currentContext;
-    if (body is Element) visit(body);
-    return found;
-  }
-
   /// A way out was refused because the task holds a change: ask, and leave
   /// with what was being popped when the person discards.
   Future<void> _leave(bool didPop, Object? result) async {
     if (didPop) return;
     final navigator = Navigator.of(context);
-    if (!_showsText() || await confirmDiscardChanges(context)) {
+    if (await confirmDiscardChanges(context)) {
       if (navigator.mounted && _route.isActive) navigator.pop(result);
     }
   }

@@ -476,19 +476,10 @@ class _AppFormSheetState extends State<AppFormSheet> {
 
 /// Opens an [AppFormSheet] as a standard task (a sheet on a phone, a side
 /// panel at the desk, #3608); true when it was submitted successfully.
-/// [account] and [workspace] close it when the opener's context changes
-/// ([showTask]).
-Future<bool> showAppFormSheet(
-  BuildContext context,
-  AppFormSheet sheet, {
-  Listenable? account,
-  Listenable? workspace,
-}) async =>
+Future<bool> showAppFormSheet(BuildContext context, AppFormSheet sheet) async =>
     await showTask<bool>(
       context,
       size: TaskSize.standard,
       builder: (_) => sheet,
-      account: account,
-      workspace: workspace,
     ) ??
     false;

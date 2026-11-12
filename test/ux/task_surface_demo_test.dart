@@ -12,6 +12,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/ui/adaptive/task_surface.dart';
 import 'package:deskilo/core/ui/adaptive/window_class.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,9 +70,10 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)))
-          .read(routerProvider)
-          .go('/money/purchases');
+      final app = ProviderScope.containerOf(
+        tester.element(find.byType(DeskiloApp)),
+      );
+      app.read(routerProvider).go('/money/purchases');
       await _settle(tester);
       // The one way in to an outlay; who paid is asked first where the
       // person may also record the space's purchases.
@@ -97,11 +99,28 @@ void main() {
         expect(panel, findsOneWidget);
         expect(tester.getSize(panel).width, TaskSurfaceMetrics.sidePanelWidth);
         // On the right edge of the area the page's navigator has (the
-        // desk's page frame), the page beside it under the scrim.
+        // desk's page frame), the page beside it under the scrim. The desk
+        // frame confines popup routes (see the desk epic #3625): once the
+        // navigator's overlay spans the page area, this is the window edge.
         expect(
           tester.getTopRight(panel).dx,
           tester.getTopRight(find.byType(ModalBarrier).last).dx,
         );
+        // A switch of business under the open, changed form: the form goes
+        // with its context, unasked.
+        await tester.enterText(
+          find.descendant(of: panel, matching: find.byType(EditableText)).first,
+          '12',
+        );
+        await tester.pump();
+        final active = app.read(activeWorkspaceIdProvider).value;
+        final other = journey.fixture.workspaces.workspaces
+            .map((w) => w.id)
+            .firstWhere((id) => id != active);
+        await app.read(activeWorkspaceIdProvider.notifier).select(other);
+        await _settle(tester);
+        expect(panel, findsNothing);
+        expect(_key('unsaved-changes-dialog'), findsNothing);
       }
       // The real time the image took lets reads schedule their retries:
       // they are run out before the test ends.
