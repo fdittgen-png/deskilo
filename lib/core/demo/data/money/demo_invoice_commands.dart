@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../money_repository.dart';
 import 'demo_document_numbering.dart';
@@ -51,7 +52,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
               i.kind == InvoiceKind.full ||
               kind == InvoiceKind.full),
     )) {
-      throw StateError('period already invoiced for this member');
+      throw const PostgrestException(message: 'period already invoiced for this member', code: 'DKI07');
     }
     // #827 — the kind narrows the lines the way invoice_lines_for does.
     final lines = [
@@ -67,7 +68,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       final i = _m.invoices.indexWhere((inv) => inv.id == replacesId);
       if (i < 0) throw StateError('unknown invoice');
       if (_m.invoices.any((inv) => inv.replacesInvoiceId == replacesId)) {
-        throw StateError('invoice already replaced');
+        throw const PostgrestException(message: 'invoice already replaced', code: 'DKI05');
       }
       if (!_m.invoices[i].isVoided) {
         _m.invoices[i] = _m.invoices[i].copyWith(
@@ -156,7 +157,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     if (i < 0) throw StateError('unknown invoice');
     // 0068 — a paid invoice is definitive.
     if (_m.invoiceMatchesStore.containsKey(invoiceId)) {
-      throw StateError('invoice is matched');
+      throw const PostgrestException(message: 'invoice is matched', code: 'DKI04');
     }
     if (_m.invoices[i].isVoided) throw StateError('invoice already voided');
     _m.invoices[i] = _m.invoices[i].copyWith(
@@ -169,7 +170,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
   Future<void> remindInvoice(String invoiceId) async {
     final invoice = _m.invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
-    if (invoice.isVoided) throw StateError('invoice is voided');
+    if (invoice.isVoided) throw const PostgrestException(message: 'invoice is voided', code: 'DKI03');
     // #1913 — the server refuses a held invoice; so does the demo.
     if (_m.dunningHolds.containsKey(invoiceId)) {
       throw StateError('this invoice is on hold');
@@ -183,7 +184,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     if (invoice == null) throw StateError('unknown invoice');
     if (invoice.totalCents >= 0) throw StateError('not a credit note');
     if (_m.invoiceMatchesStore.containsKey(invoiceId)) {
-      throw StateError('invoice already matched');
+      throw const PostgrestException(message: 'invoice already matched', code: 'DKI06');
     }
     final trimmed = note.trim();
     _m.ledger.add(
@@ -309,7 +310,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
   }) async {
     final invoice = _m.invoices.where((i) => i.id == invoiceId).firstOrNull;
     if (invoice == null) throw StateError('unknown invoice');
-    if (invoice.isVoided) throw StateError('invoice is voided');
+    if (invoice.isVoided) throw const PostgrestException(message: 'invoice is voided', code: 'DKI03');
     // #506 — a STANDING partial accepts ADDITIONAL payments against the
     // remaining amount; anything else refuses like before.
     final existing = _m.invoiceMatchesStore[invoiceId];
@@ -319,7 +320,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
         existing.resolution == 'under_accepted' &&
         existing.writeoffAt == null;
     if (existing != null && !additional) {
-      throw StateError('invoice already matched');
+      throw const PostgrestException(message: 'invoice already matched', code: 'DKI06');
     }
     // 0068 — the amount comes FROM the selected registered payment;
     // #512 — account credits (credit-note excess) settle too.

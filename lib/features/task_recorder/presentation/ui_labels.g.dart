@@ -6319,6 +6319,7 @@ Map<String, _Getter> _part17() => {
   'recapEmpty': (l) => l.recapEmpty,
   'refusalBankFileRefused': (l) => l.refusalBankFileRefused,
   'refusalBankMatchSeveralPayments': (l) => l.refusalBankMatchSeveralPayments,
+  'refusalPersonalHomeHostsNoWorkspace': (l) => l.refusalPersonalHomeHostsNoWorkspace,
   'regionalClockAuto': (l) => l.regionalClockAuto,
   'repartitionStepCost': (l) => l.repartitionStepCost,
   'reportDesignImported': (l) => l.reportDesignImported,

@@ -15210,6 +15210,10 @@
     "description": "#2332: refusalMoneyLocaleLocked"
   },
   "refusalPermission": "Non ha il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.",
+  "refusalPersonalHomeHostsNoWorkspace": "Questa installazione è uno spazio personale: non ospita alcuno spazio di lavoro. Crei lo spazio di lavoro su un'installazione che ne ospita.",
+  "@refusalPersonalHomeHostsNoWorkspace": {
+    "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
+  },
   "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
   "refusalVatRateVersioned": "Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.",
   "@refusalVatRateVersioned": {

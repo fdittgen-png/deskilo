@@ -11324,6 +11324,7 @@ const Set<String> uiLabelKeys = {
   'refusalChangedMeanwhile',
   'refusalMoneyLocaleLocked',
   'refusalPermission',
+  'refusalPersonalHomeHostsNoWorkspace',
   'refusalSession',
   'refusalVatRateVersioned',
   'regionalClock',

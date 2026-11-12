@@ -57,7 +57,7 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000019
 select lives_ok($$select public.respond_to_event(current_setting('deskilo.pilot.payment')::uuid,true)$$,
  'operator confirms the members payment');
 select throws_ok($$select public.respond_to_event(current_setting('deskilo.pilot.payment')::uuid,true)$$,
- 'P0001','already decided','retrying the confirmation cannot post a second credit');
+ 'DKD01','already decided','retrying the confirmation cannot post a second credit');  -- #3811: its code
 select is((select count(*)::int from public.ledger_entries where event_id=current_setting('deskilo.pilot.payment')::uuid),1,
  'confirmed command posts exactly one ledger row');
 

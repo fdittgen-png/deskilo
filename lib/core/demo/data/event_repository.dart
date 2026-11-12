@@ -111,12 +111,12 @@ class FakeEventRepository implements EventRepository {
     if (i < 0) throw StateError('unknown event');
     final event = events[i];
     if (event.status != EventStatus.pending) {
-      throw StateError('already decided');
+      throw const PostgrestException(message: 'already decided', code: 'DKD01');
     }
     if (decisions.any(
       (d) => d.eventId == eventId && d.memberId == respondingMemberId,
     )) {
-      throw StateError('you already decided this event');
+      throw const PostgrestException(message: 'you already decided this event', code: 'DKD01');
     }
     final me = decider?.call();
     if (decider != null &&
