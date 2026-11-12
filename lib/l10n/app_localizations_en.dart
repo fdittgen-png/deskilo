@@ -14693,6 +14693,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceLineAdjustment => 'Adjustment';
 
   @override
+  String invoiceLineCancelled(String what) {
+    return 'Cancelled: $what';
+  }
+
+  @override
   String get invoiceMatchAction => 'Mark as paid';
 
   @override

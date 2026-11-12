@@ -23871,6 +23871,12 @@ abstract class AppLocalizations {
   /// **'Adjustment'**
   String get invoiceLineAdjustment;
 
+  /// #3809 invoice line: a charge taken back, followed by what it was (a room and its day)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled: {what}'**
+  String invoiceLineCancelled(String what);
+
   /// Open card button + match dialog title/confirm (0067)
   ///
   /// In en, this message translates to:

@@ -3135,14 +3135,14 @@ routine public.request_subscription_change(p_member_id uuid, p_pct integer) -> j
 routine public.request_usage_correction(p_record_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0c4a3e0488a4
 routine public.request_usage_record_delete(p_record_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:93def0b6dbab
 routine public.require_database_reviewer(p_provision boolean) -> uuid | function | definer | stable | exec:service_role | body:5c81f19c2258
-routine public.reservation_charge_reverse(p_charge uuid) -> void | function | definer | volatile | exec:service_role | body:6d762bafcd8f
+routine public.reservation_charge_reverse(p_charge uuid) -> void | function | definer | volatile | exec:service_role | body:761cd78326af
 routine public.reservation_counts_for_usage(r reservations, rules jsonb, tz text) -> boolean | function | definer | stable | exec:service_role | body:1f58b0c9fd6a
 routine public.reservation_hierarchy_guard() -> trigger | function | definer | volatile | exec:service_role | body:ef4c52c803fb
 routine public.reservation_place_visible(p_workspace uuid, p_member uuid, p_seat uuid, p_desk uuid, p_office uuid, p_level uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:63c62b70d2df
 routine public.reservation_rental_guard() -> trigger | function | definer | volatile | exec:service_role | body:329a5c31b214
 routine public.reservation_request_digest(p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> text | function | invoker | immutable | exec:authenticated,service_role | body:b608096ed673
 routine public.reservation_request_outcome(p_workspace_id uuid, p_client_request_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:63e40a5f99f5
-routine public.reservation_room_charge() -> trigger | function | definer | volatile | exec:service_role | body:dfd05752a520
+routine public.reservation_room_charge() -> trigger | function | definer | volatile | exec:service_role | body:f76bab346af7
 routine public.reservation_room_charge_drop() -> trigger | function | definer | volatile | exec:service_role | body:c08936c14f7a
 routine public.reservation_site(r reservations) -> sites | function | definer | stable | exec:service_role | body:de2e85b69935
 routine public.reservation_uses_seat_quota(r reservations) -> boolean | function | definer | stable | exec:service_role | body:146d5dfa2c7c

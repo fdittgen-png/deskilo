@@ -9114,6 +9114,15 @@
     "description": "Legal invoice mentions (#480)"
   },
   "invoiceLineAdjustment": "Rettifica",
+  "invoiceLineCancelled": "Annullato: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceMatchAction": "Segna come pagata",
   "invoiceMatchCreditMoved": "Questo pagamento è stato spostato a un altro membro, quindi non può saldare questa fattura. Ricarichi e ne scelga un altro.",
   "invoiceMatchCreditNote": "Crea una nota di credito per l'eccedenza",

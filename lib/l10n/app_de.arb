@@ -9114,6 +9114,15 @@
     "description": "Legal invoice mentions (#480)"
   },
   "invoiceLineAdjustment": "Anpassung",
+  "invoiceLineCancelled": "Storniert: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceMatchAction": "Als bezahlt markieren",
   "invoiceMatchCreditMoved": "Diese Zahlung wurde einem anderen Mitglied zugeordnet und kann diese Rechnung nicht begleichen. Neu laden und eine andere wählen.",
   "invoiceMatchCreditNote": "Gutschrift über den Überschuss erstellen",

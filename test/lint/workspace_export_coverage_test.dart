@@ -514,6 +514,12 @@ const Map<String, Set<String>> _notExportedColumns = {
     // as one cell of a sheet (0540).
     'source_xml',
   },
+  'ledger_entries': {
+    // A description as frozen facts (#3809): what a document prints in its
+    // own language. The export carries the description itself, the fallback
+    // text that says the same.
+    'text_facts',
+  },
   'profiles': {
     // The hash of a person's badge PIN (#662): a credential, never in a
     // workbook that is shared on.
