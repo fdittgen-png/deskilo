@@ -11,8 +11,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 void main() {
-  String map(String message) =>
-      bookingErrorText(englishL10n, PostgrestException(message: message), 'fallback');
+  // #3810 — the codes 0739 raises with these refusals.
+  const codes = {
+    'not checked in': 'DKK25',
+    'the level has reservations in that period': 'DKK26',
+  };
+  String map(String message) => bookingErrorText(englishL10n,
+      PostgrestException(message: message, code: codes[message]), 'fallback');
 
   test('the hierarchy guard names the space chain, not the level', () {
     final text = map('that space is already reserved in that period');

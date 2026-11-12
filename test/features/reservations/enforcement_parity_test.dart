@@ -153,7 +153,8 @@ void main() {
         bookingErrorText(
             englishL10n,
             const PostgrestException(
-                message: 'the booking lies entirely in the past'),
+                message: 'the booking lies entirely in the past',
+                code: 'DKK11'),
             'fallback'),
         'This booking lies entirely in the past.',
       );
@@ -161,7 +162,8 @@ void main() {
         bookingErrorText(
             englishL10n,
             const PostgrestException(
-                message: 'a walk-up check-in must start today'),
+                message: 'a walk-up check-in must start today',
+                code: 'DKK12'),
             'fallback'),
         'A walk-up check-in must start today.',
       );
@@ -286,7 +288,8 @@ void main() {
         bookingErrorText(
           englishL10n,
           const PostgrestException(
-              message: 'a booking must end on the day it starts'),
+              message: 'a booking must end on the day it starts',
+              code: 'DKK13'),
           'fallback',
         ),
         contains('ends on the day it starts'),

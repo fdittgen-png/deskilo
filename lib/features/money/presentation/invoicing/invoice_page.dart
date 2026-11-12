@@ -15,6 +15,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
+import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -30,6 +32,7 @@ import '../dunning_hold_actions.dart';
 import '../invoice_email_actions.dart';
 import '../invoice_status.dart';
 import '../widgets/invoice_detail_sheet.dart' show InvoiceApprovals;
+import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
 import '../widgets/reminder_evidence_list.dart';
 import 'invoice_details_section.dart';
 import 'invoice_page_bar.dart';
@@ -85,6 +88,20 @@ class InvoicePage extends ConsumerWidget {
         : const LoadingView(),
   );
 
+  /// #3610 — Ctrl/⌘+P: the page's document, as its card opens it.
+  Map<AppShortcutId, VoidCallback> _keys(
+    BuildContext context,
+    WidgetRef ref,
+    Invoice invoice,
+  ) => {
+    AppShortcutId.print: () => InvoicePageActions.run(
+      context,
+      ref,
+      sheet.InvoiceAction.quickView,
+      invoice,
+    ),
+  };
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
@@ -132,7 +149,9 @@ class InvoicePage extends ConsumerWidget {
     final rules = ref.watch(dunningRulesProvider).value;
     if (rules == null) return readsStandIn(ref, [dunningRulesProvider])!;
     final mode = rules.automatic ? ReminderMode.automatic : ReminderMode.byHand;
-    return Scaffold(
+    return ShortcutScope(
+      handlers: _keys(context, ref, invoice),
+      child: Scaffold(
       key: ValueKey('invoice-page-$invoiceId'),
       appBar: AppBar(
         automaticallyImplyLeading: onClose == null,
@@ -227,6 +246,7 @@ class InvoicePage extends ConsumerWidget {
           InvoicePdfCard(invoice: invoice),
         ],
       ),
+    ),
     );
   }
 

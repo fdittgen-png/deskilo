@@ -630,6 +630,10 @@ window.SETUP_REGISTRY={
   [
    "kioskEnrolment",
    false
+  ],
+  [
+   "quickSearch",
+   true
   ]
  ],
  "requires": {
@@ -1410,6 +1414,7 @@ window.SETUP_PROCESSES=[
      "placeFeedback",
      "taskRecorder",
      "uiAnimations",
+     "quickSearch",
      "regionalFormats",
      "navigationStyle",
      "memberAccountMenu",
@@ -1798,7 +1803,8 @@ window.SETUP_LEVELS={
       "memberAccountMenu",
       "memberGettingStarted",
       "setupGuide",
-      "dataReport"
+      "dataReport",
+      "quickSearch"
      ],
      "needs": {}
     },

@@ -5156,6 +5156,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookTypeLiability => 'Pasivo';
 
   @override
+  String get bookingAdminNoLevel =>
+      'Un administrador no puede asignar una planta entera aquí.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Registrado en $space hasta las $until.';
   }
@@ -5168,6 +5172,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Registrado hasta las $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead =>
+      'El nuevo final debe ser posterior a ahora.';
 
   @override
   String get bookingGateBlocked => 'No reservable así';
@@ -5200,6 +5208,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Esta reserva ya no está registrada — se cerró mientras tanto.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'Esta reserva ya no está reservada; no se puede registrar la llegada.';
+
+  @override
   String get bookingNotAMember =>
       'Ya no es miembro de este espacio — pida una invitación a un administrador.';
 
@@ -5208,8 +5220,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'No puede hacer reservas en este espacio. Pida a un propietario que permita reservar a los miembros.';
 
   @override
+  String get bookingNotCancellable => 'Esta reserva ya no se puede cancelar.';
+
+  @override
+  String get bookingNotYours => 'Esta reserva no es suya.';
+
+  @override
   String get bookingOnePlace =>
       'Ya tiene una reserva en ese periodo — un sitio a la vez.';
+
+  @override
+  String get bookingOnlyUpcoming =>
+      'Solo se pueden modificar las reservas futuras.';
 
   @override
   String get bookingOpenDetails => 'Detalles';
@@ -5320,8 +5342,23 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'Una reserva en curso conserva su hora de inicio.';
+
+  @override
   String get bookingSameDayError =>
       'Una reserva termina el día en que empieza: reserve el día siguiente por separado.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Una serie puede abarcar como máximo $days días.',
+      one: 'Una serie puede abarcar como máximo 1 día.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>
@@ -11029,6 +11066,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureQrBadgesTitle => 'Credenciales QR';
+
+  @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K en un Mac) o el botón de búsqueda de la barra encuentra una página, una acción o un registro — un miembro, un cliente, una factura por su número, un proveedor — entre lo que la persona puede abrir; lo reciente primero. ? muestra las teclas de la página. Desactivado: sin botón de búsqueda ni teclas de la aplicación; las teclas propias de una página se mantienen.';
+
+  @override
+  String get featureQuickSearchTitle => 'Búsqueda y teclas';
 
   @override
   String get featureRecapitulativeStatementDesc =>
@@ -27306,6 +27350,36 @@ class AppLocalizationsEs extends AppLocalizations {
   String get schemaUpdateTitle => 'Este servidor necesita una actualización';
 
   @override
+  String get searchActionInvite => 'Invitar a un miembro';
+
+  @override
+  String get searchActionNewPurchase => 'Nueva compra';
+
+  @override
+  String get searchHint => 'Una página, una acción, un miembro, una factura…';
+
+  @override
+  String get searchKindAction => 'Acción';
+
+  @override
+  String get searchKindMember => 'Miembro';
+
+  @override
+  String get searchKindPage => 'Página';
+
+  @override
+  String searchNothing(String query) {
+    return 'No se encontró nada para «$query».';
+  }
+
+  @override
+  String get searchRecent => 'Recientes';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Este registro no se puede abrir: no existe o no puede leerlo.';
+
+  @override
   String get seatDayAhead => 'Por venir';
 
   @override
@@ -30350,6 +30424,42 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Deslice la barra hacia abajo para la vista de pantalla completa. Deslice hacia arriba, o mantenga pulsado el botón Reservar, para recuperarla.';
+
+  @override
+  String get shortcutClose => 'Cerrar';
+
+  @override
+  String get shortcutFilter => 'Filtrar esta lista';
+
+  @override
+  String get shortcutKeys => 'Las teclas de esta página';
+
+  @override
+  String get shortcutKeysTitle => 'Teclas del teclado';
+
+  @override
+  String get shortcutNew => 'Nuevo';
+
+  @override
+  String get shortcutOpenCalendar => 'Abrir el calendario de un campo de fecha';
+
+  @override
+  String get shortcutPrint => 'El documento de esta página';
+
+  @override
+  String get shortcutRedo => 'Rehacer';
+
+  @override
+  String get shortcutSave => 'Guardar';
+
+  @override
+  String get shortcutSearch => 'Buscar una página, una acción o un registro';
+
+  @override
+  String get shortcutSubmit => 'Guardar o enviar';
+
+  @override
+  String get shortcutUndo => 'Deshacer';
 
   @override
   String get siteCity => 'Ciudad';

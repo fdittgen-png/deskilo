@@ -269,5 +269,7 @@
   "featureReminderEmailTitle": "Mahnungen per E-Mail",
   "featureReminderEmailDesc": "Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung.",
   "featureInvoiceEmailTitle": "Rechnungen per E-Mail",
-  "featureInvoiceEmailDesc": "Eine ausgestellte Rechnung kann vom Server per E-Mail mit dem eigenen Absender des Unternehmens an die Kontaktadresse des Kunden gesendet werden, in der Dokumentsprache des Kunden. Jede Rechnung wird einmal versandt; ein erneuter Versand ist eine bewusste Handlung mit eigenem Nachweis. Aus: Rechnungen werden wie bisher geteilt oder heruntergeladen."
+  "featureInvoiceEmailDesc": "Eine ausgestellte Rechnung kann vom Server per E-Mail mit dem eigenen Absender des Unternehmens an die Kontaktadresse des Kunden gesendet werden, in der Dokumentsprache des Kunden. Jede Rechnung wird einmal versandt; ein erneuter Versand ist eine bewusste Handlung mit eigenem Nachweis. Aus: Rechnungen werden wie bisher geteilt oder heruntergeladen.",
+  "featureQuickSearchTitle": "Suche und Tasten",
+  "featureQuickSearchDesc": "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben."
 }

@@ -5155,6 +5155,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookTypeLiability => 'Passività';
 
   @override
+  String get bookingAdminNoLevel =>
+      'Un amministratore non può assegnare un piano intero qui.';
+
+  @override
   String bookingCheckedInAtUntil(String space, String until) {
     return 'Check-in su $space fino alle $until.';
   }
@@ -5167,6 +5171,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String bookingCheckedInUntil(String until) {
     return 'Check-in fatto fino alle $until.';
   }
+
+  @override
+  String get bookingEndMustLieAhead =>
+      'La nuova fine deve essere successiva a ora.';
 
   @override
   String get bookingGateBlocked => 'Non prenotabile così';
@@ -5199,6 +5207,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione non è più in corso — è stata chiusa nel frattempo.';
 
   @override
+  String get bookingNoLongerReserved =>
+      'Questa prenotazione non è più riservata; il check-in non è possibile.';
+
+  @override
   String get bookingNotAMember =>
       'Non è più membro di questo spazio — chieda un invito a un amministratore.';
 
@@ -5207,8 +5219,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non può effettuare prenotazioni in questo spazio. Chieda a un proprietario di consentire ai membri di prenotare.';
 
   @override
+  String get bookingNotCancellable =>
+      'Questa prenotazione non può più essere annullata.';
+
+  @override
+  String get bookingNotYours => 'Questa prenotazione non Le appartiene.';
+
+  @override
   String get bookingOnePlace =>
       'Ha già una prenotazione in quel periodo — un posto alla volta.';
+
+  @override
+  String get bookingOnlyUpcoming =>
+      'Solo le prenotazioni future possono essere modificate.';
 
   @override
   String get bookingOpenDetails => 'Dettagli';
@@ -5319,8 +5342,23 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get bookingRunningKeepsStart =>
+      'Una prenotazione in corso mantiene l\'ora di inizio.';
+
+  @override
   String get bookingSameDayError =>
       'Una prenotazione termina il giorno in cui inizia — prenoti il giorno dopo separatamente.';
+
+  @override
+  String bookingSeriesTooLong(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Una serie può coprire al massimo $days giorni.',
+      one: 'Una serie può coprire al massimo 1 giorno.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get bookingSpaceChainTaken =>
@@ -11034,6 +11072,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get featureQrBadgesTitle => 'Badge QR';
+
+  @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un\'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell\'app; restano i tasti propri di una pagina.';
+
+  @override
+  String get featureQuickSearchTitle => 'Ricerca e tasti';
 
   @override
   String get featureRecapitulativeStatementDesc =>
@@ -27333,6 +27378,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get schemaUpdateTitle => 'Questo server deve essere aggiornato';
 
   @override
+  String get searchActionInvite => 'Invita un membro';
+
+  @override
+  String get searchActionNewPurchase => 'Nuovo acquisto';
+
+  @override
+  String get searchHint => 'Una pagina, un\'azione, un membro, una fattura…';
+
+  @override
+  String get searchKindAction => 'Azione';
+
+  @override
+  String get searchKindMember => 'Membro';
+
+  @override
+  String get searchKindPage => 'Pagina';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nessun risultato per «$query».';
+  }
+
+  @override
+  String get searchRecent => 'Recenti';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Questa scheda non si può aprire: non esiste o non può leggerla.';
+
+  @override
   String get seatDayAhead => 'Più tardi';
 
   @override
@@ -30377,6 +30452,42 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.';
+
+  @override
+  String get shortcutClose => 'Chiudi';
+
+  @override
+  String get shortcutFilter => 'Filtra questo elenco';
+
+  @override
+  String get shortcutKeys => 'I tasti di questa pagina';
+
+  @override
+  String get shortcutKeysTitle => 'Tasti della tastiera';
+
+  @override
+  String get shortcutNew => 'Nuovo';
+
+  @override
+  String get shortcutOpenCalendar => 'Apri il calendario di un campo data';
+
+  @override
+  String get shortcutPrint => 'Il documento di questa pagina';
+
+  @override
+  String get shortcutRedo => 'Ripeti';
+
+  @override
+  String get shortcutSave => 'Salva';
+
+  @override
+  String get shortcutSearch => 'Trova una pagina, un\'azione o una scheda';
+
+  @override
+  String get shortcutSubmit => 'Salva o invia';
+
+  @override
+  String get shortcutUndo => 'Annulla';
 
   @override
   String get siteCity => 'Città';

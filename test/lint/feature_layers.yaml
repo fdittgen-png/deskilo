@@ -9,5 +9,5 @@
 layers:
   - [auth, help, visits, profile]
   - [workspace]
-  - [calendar, directory, editor, events, kiosk, members, mcp, money, plan, reservations, task_recorder]
+  - [calendar, directory, editor, events, kiosk, members, mcp, money, plan, reservations, search, task_recorder]
   - [me]

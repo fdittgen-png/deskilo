@@ -154,7 +154,8 @@ void main() {
     await pumpAvailabilityPlan(
       tester,
       reservations: ThrowingReservationRepository(
-        const PostgrestException(message: _serverClosedMessage),
+        const PostgrestException(
+            message: _serverClosedMessage, code: 'DKK01'),
       ),
     );
 
@@ -198,7 +199,8 @@ void main() {
       'to the closed-day message', (tester) async {
     final now = kTestNow;
     final reservations = ThrowingReservationRepository(
-      const PostgrestException(message: _serverClosedMessage),
+      const PostgrestException(
+            message: _serverClosedMessage, code: 'DKK01'),
     )..reservations.add(
         Reservation(
           id: 'res-mine',
