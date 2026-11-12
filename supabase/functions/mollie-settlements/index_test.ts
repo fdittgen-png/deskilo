@@ -80,7 +80,7 @@ Deno.test("a paid settlement is recorded as a payout with its period costs, once
     return Promise.resolve(page([settlement(), settlement({ id: "stl_open", status: "open" })]));
   });
   assertEquals(res.status, 200);
-  assertEquals(await res.json(), { imported: 1, unchanged: 0, skipped: 1, refused: [], reviews: [] });
+  assertEquals(await res.json(), { imported: 1, unchanged: 0, skipped: 1, refused: [], complete: true, reviews: [] });
   assertEquals(urls, ["https://api.mollie.com/v2/settlements?limit=50"]);
   assertEquals(f.recorded[0], {
     p_workspace_id: WS, p_provider: "mollie", p_settlement_id: "stl_1", p_amount_cents: 34000, p_currency: "EUR",
@@ -100,7 +100,8 @@ Deno.test("the settlements are read page after page", async () => {
     return Promise.resolve(urls.length === 1 ? page([settlement()], "https://api.mollie.com/v2/settlements?from=stl_1") : page([settlement({ id: "stl_2" })]));
   });
   assertEquals((await res.json()).imported, 2);
-  assertEquals(urls[1], "https://api.mollie.com/v2/settlements?from=stl_1");
+  // Only Mollie's cursor is kept: the next page is asked of our own base.
+  assertEquals(urls[1], "https://api.mollie.com/v2/settlements?limit=50&from=stl_1");
 });
 
 Deno.test("who may ask: a caller without the billing right, with online payments off, signed out", async () => {
@@ -185,6 +186,7 @@ Deno.test("#3510: the answer counts what the recorder decided: new, unchanged, r
     unchanged: 1,
     skipped: 0,
     refused: [{ settlement: "stl_3", reason: "costs_changed" }],
+    complete: true,
     reviews: [],
   });
   assertEquals(f.recorded.length, 3, "a refused settlement does not stop the others");

@@ -8,6 +8,10 @@
 # review {"path":"test/app/shell/desk_routes_test.dart","before":23,"after":27,"invariant":"#3608 a form opened by a real page at 1440 is a side panel: the page opens, the form opens, a rested sidebar tap, the close and a freed tap each settle once before the address or the panel is read","cost":"one test of about 1 s locally"}
 # review {"path":"test/core/ui/adaptive/task_surface_test.dart","before":0,"after":12,"invariant":"#3608 a task opens, is resized across classes, is submitted by a key or left by Escape and its question; each settles once before the container, the route count or the result is read","cost":"14 tests in 3 s locally"}
 # review {"path":"test/core/ui/adaptive/task_surface_test.dart","before":12,"after":14,"invariant":"#3608 the five ways out of a task, with and without a change, a Close after a completed submit, a raw field and a change of workspace: each way and each answer to the question settles once before the route count is read","cost":"24 tests in 11 s locally"}
+# review {"path":"test/core/ui/kit/records_table_test.dart","before":0,"after":20,"invariant":"each behaviour of the records table is a person's step settled before the next is read: a sort, a filter, a chip, a tick, a reload, a menu; the selection is checked to follow its keys across them","cost":"12 tests in 4 s locally"}
+# review {"path":"test/core/ui/kit/records_table_test.dart","before":20,"after":24,"invariant":"the reload under a chip is four person steps (chip, select shown, reload, download) each settled before the bar, footer and file are read","cost":"one test, under 1 s locally"}
+# review {"path":"test/core/ui/kit/records_table_test.dart","before":24,"after":27,"invariant":"#3606 the row's own ⋯ opens the kit's RowMenu: the menu is settled open, an entry chosen and settled, and the menu opened again for the disabled reason","cost":"one test, under 1 s locally"}
+# review {"path":"test/features/money/invoice_register_table_test.dart","before":0,"after":11,"invariant":"the register is opened through the app's router and its selection is downloaded after a filter and after a reload, each settled once","cost":"5 tests in 8 s locally"}
 # review {"path":"test/features/directory/unified_inbox_test.dart","before":41,"after":42,"invariant":"#3611 a mouse alone pins by right click and mutes from the hover menu button of the same row menu","cost":"one settle for the mouse arriving over the inbox; the clicks settle in the mouse helper"}
 # review {"path":"test/features/workspace/member_note_flow_test.dart","before":23,"after":26,"invariant":"#3611 a long press opens the message menu; Delete is chosen from it before the confirmation","cost":"one settle per menu entry tap, three deletions in two tests"}
 # review {"path":"test/features/workspace/member_notes_test.dart","before":12,"after":13,"invariant":"#3611 the long press opens the message menu before Delete asks for confirmation","cost":"one settle for the menu entry tap"}
@@ -22,6 +26,7 @@
 11 test/core/i18n/regional_formats_test.dart
 14 test/core/ui/adaptive/task_surface_test.dart
 10 test/core/ui/canvas_controls_test.dart
+27 test/core/ui/kit/records_table_test.dart
 11 test/features/auth/auth_flow_test.dart
 10 test/features/auth/badge_sign_in_test.dart
 15 test/features/auth/federation_handoff_ui_test.dart
@@ -70,6 +75,7 @@
 11 test/features/money/finance_attention_test.dart
 14 test/features/money/input_vat_test.dart
 11 test/features/money/invoice_journey_test.dart
+11 test/features/money/invoice_register_table_test.dart
 21 test/features/money/invoice_register_test.dart
 11 test/features/money/invoice_template_test.dart
 80 test/features/money/invoices_test.dart

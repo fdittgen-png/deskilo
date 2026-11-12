@@ -28,6 +28,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/demo_analyses.dart';
 import '../../helpers/demo_journey.dart';
 import '../../ux/experience_guards.dart';
 
@@ -172,32 +173,18 @@ double _gridWidth(double window, double padding) {
   return page - 2 * padding;
 }
 
-/// The analyses the Demo cannot compute: their repositories are the
-/// server-only ones of the Demo (`UnavailableOverviewKpiRepository`,
-/// `UnavailableCostKpiRepository`, `UnavailableCostAllocationRepository`
-/// throw `KpiUnavailable('no server in this mode')`). Master's Demo fails the
-/// same ones at the same date; the defect is #3785, and this list empties
-/// with it.
-const _serverOnly = {
-  'assets.acquisitions',
-  'assets.book_depreciation',
-  'finance.contribution_after_depreciation',
-  'finance.cost_allocation',
-  'finance.recorded_contribution',
-  'operations.pending_actions_current',
-  'people.active_memberships_current',
-  'purchases.forecast_outflows',
-  'purchases.operating_costs',
-  'purchases.unbilled_commitments',
-  'sales.overdue_receivables',
-};
-
-/// On the overview, beside those, the figures the Demo answers as unknown
-/// (said "Not available", never 0).
+/// On the overview, the figures the server's own rule leaves unknown in the
+/// Demo's month (said "Not available", never 0), each with that rule's
+/// reason: no confirmed book values tile the month (`kpi_costs_summary`,
+/// 0532), or a share of nothing (no invoice of the month to share among
+/// customers, no bill dated by its supplier, no order delivered yet). They
+/// are answers, not failures: the analysis page shows each as a figure.
 const _overviewUnknown = {
-  'customers.concentration',
-  'vendors.billing_lag',
-  'vendors.delivery',
+  'assets.book_depreciation': 'book_coverage_incomplete',
+  'finance.contribution_after_depreciation': 'book_coverage_incomplete',
+  'customers.concentration': 'nothing_to_share',
+  'vendors.billing_lag': 'nothing_to_share',
+  'vendors.delivery': 'nothing_to_share',
 };
 
 final _overviewFigures = <double, Map<String, String>>{};
@@ -243,9 +230,11 @@ void main() {
         },
         {
           for (final id in shown.keys)
-            if (_serverOnly.contains(id) || _overviewUnknown.contains(id)) id,
+            if (demoServerOnlyAnalyses.contains(id) ||
+                _overviewUnknown.containsKey(id))
+              id,
         },
-        reason: 'only the server-only and unknown figures are unavailable',
+        reason: 'only the figures the rule leaves unknown are unavailable',
       );
       expect(shown, isNotEmpty);
       final workspaceId = container.read(currentWorkspaceProvider).value!.id;
@@ -256,6 +245,14 @@ void main() {
         final read = container.read(
           biModuleResultProvider(workspaceId, id, const BiQueryContext()),
         );
+        expect(
+          read.hasError,
+          demoServerOnlyAnalyses.contains(id),
+          reason: 'the Demo answers $id from its own data',
+        );
+        if (_overviewUnknown[id] case final reason?) {
+          expect(read.value!.total.current.reasons, contains(reason));
+        }
         final result = read.value;
         final known =
             result != null &&
@@ -347,9 +344,9 @@ void main() {
         },
         {
           for (final id in cards.keys)
-            if (_serverOnly.contains(id)) id,
+            if (demoServerOnlyAnalyses.contains(id)) id,
         },
-        reason: 'only the server-only analyses fail in the Demo',
+        reason: 'no analysis fails in the Demo (#3785)',
       );
       expect(shown, isNotEmpty);
       // A narrow page builds fewer analyses in the window: every one built

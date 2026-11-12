@@ -174,12 +174,20 @@ void seedLondonMoney(FakeMoneyRepository money, DateTime now) {
     final vat = (netCents * percent / 100).round();
     final period =
         '${quarter.start.year}-${twoDigits(quarter.start.month + month)}';
+    final issued = DateTime(quarter.start.year, quarter.start.month + month, 10);
     return Invoice(
       id: id,
       workspaceId: demoLondonSpaceId,
       memberId: memberId,
       number: 'CY-${quarter.start.year}-${id.split('-').last}',
-      issuedAt: DateTime(quarter.start.year, quarter.start.month + month, 10),
+      issuedAt: issued,
+      // #3785 — the due date frozen at issue, as the server's trigger does
+      // (0331): the issue day plus the space's first reminder delay.
+      dueOn: DateTime(
+        issued.year,
+        issued.month,
+        issued.day + money.dunningRules.firstAfterDays,
+      ),
       period: period,
       title: period,
       lines: [

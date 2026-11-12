@@ -46,16 +46,6 @@ const List<String> _columns = [
 /// [count] empty cells.
 Iterable<String> _blank(int count) => List.filled(count, '');
 
-/// [minor] units of [currency] as a plain decimal number (`-12.50`).
-String _amount(int minor, String currency) {
-  final digits = Currencies.minorDigits(currency);
-  if (digits == 0) return '$minor';
-  final sign = minor < 0 ? '-' : '';
-  final text = minor.abs().toString().padLeft(digits + 1, '0');
-  final cut = text.length - digits;
-  return '$sign${text.substring(0, cut)}.${text.substring(cut)}';
-}
-
 /// The due date as the host wrote it (a date, no zone to convert).
 String _day(DateTime? on) => on == null ? '' : isoDay(on);
 
@@ -78,7 +68,7 @@ String _paymentRow(AccountActivity p, String source) => [
   csvCell(p.status),
   csvCell(p.currency),
   '',
-  if (p.amountCents case final minor?) _amount(minor, p.currency) else '',
+  if (p.amountCents case final minor?) csvAmount(minor, p.currency) else '',
   ..._blank(3),
   'payment',
   csvCell(source),
@@ -114,9 +104,9 @@ Uint8List ownFinanceCsv(FinanceOverview overview, {OwnPayments? payments}) {
         _day(i.dueOn),
         i.state.wire,
         csvCell(i.currency),
-        _amount(i.totalCents, i.currency),
-        _amount(i.paidCents, i.currency),
-        _amount(i.remainingCents, i.currency),
+        csvAmount(i.totalCents, i.currency),
+        csvAmount(i.paidCents, i.currency),
+        csvAmount(i.remainingCents, i.currency),
         '${i.reminderCount}',
         csvCell(i.id),
         'invoice',

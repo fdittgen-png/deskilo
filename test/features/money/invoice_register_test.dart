@@ -67,7 +67,7 @@ Future<FakeMoneyRepository> _pumpRegister(
 }
 
 double _rowY(WidgetTester tester, String id) =>
-    tester.getTopLeft(find.byKey(ValueKey('invoice-register-$id'))).dy;
+    tester.getTopLeft(find.byKey(ValueKey('records-row-$id'))).dy;
 
 void main() {
   testWidgets(
@@ -76,7 +76,7 @@ void main() {
     final money = await _pumpRegister(tester);
     final ids = money.invoices.map((i) => i.id).toList();
 
-    expect(find.byKey(ValueKey('invoice-register-${ids[0]}')),
+    expect(find.byKey(ValueKey('records-row-${ids[0]}')),
         findsOneWidget);
     expect(_rowY(tester, ids[2]), lessThan(_rowY(tester, ids[0])),
         reason: 'newest first by default');
@@ -84,12 +84,12 @@ void main() {
     // 3 × the fake statement total (150.00 + 16.00).
     expect(
       tester
-          .widget<Text>(find.byKey(const ValueKey('invoice-register-total')))
+          .widget<Text>(find.byKey(const ValueKey('records-total-EUR')))
           .data,
       '€498.00',
     );
 
-    await tester.tap(find.byKey(const ValueKey('invoice-register-sort-date')));
+    await tester.tap(find.byKey(const ValueKey('records-sort-date')));
     await tester.pumpAndSettle();
     expect(_rowY(tester, ids[0]), lessThan(_rowY(tester, ids[2])),
         reason: 'oldest first after the flip');

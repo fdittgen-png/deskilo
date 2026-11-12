@@ -1,4 +1,11 @@
 {
   "invoiceRegisterPeriod": "Période : {from} – {to}",
-  "invoiceRegisterPeriodClear": "Afficher toutes les périodes"
+  "invoiceRegisterPeriodClear": "Afficher toutes les périodes",
+  "invoiceRegisterStatus": "Statut",
+  "invoiceRegisterPeriodColumn": "Période",
+  "invoiceRegisterIntegrity": "Empreinte",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{Télécharger 1 facture} other{Télécharger {count} factures}}",
+  "invoiceRegisterNumber": "Numéro",
+  "invoiceRegisterMember": "Membre",
+  "invoiceRegisterCurrency": "Devise"
 }

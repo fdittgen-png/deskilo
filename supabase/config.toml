@@ -115,6 +115,11 @@ verify_jwt = true
 [functions.mollie-settlements]
 verify_jwt = true
 
+# #3510 — the schedule's side of the Mollie settlements; the database job
+# calls it through the gateway with the anon key and the Vault secret.
+[functions.settlement-poll]
+verify_jwt = true
+
 [functions.send-purchase-order]
 verify_jwt = true
 

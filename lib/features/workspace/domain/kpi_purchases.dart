@@ -327,15 +327,3 @@ abstract interface class CostKpiRepository {
     required String toMonth,
   });
 }
-
-/// No server to read the costs from (the demonstration).
-class UnavailableCostKpiRepository implements CostKpiRepository {
-  const UnavailableCostKpiRepository();
-
-  @override
-  Future<CostSummaryKpi> summary(
-    String workspaceId, {
-    required String fromMonth,
-    required String toMonth,
-  }) async => throw const KpiUnavailable('no server in this mode');
-}

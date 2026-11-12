@@ -53,6 +53,11 @@ enum RowMenuButton {
   /// While a mouse hovers the row or the keyboard focus is inside it. A
   /// phone sees no button; the long press opens the same menu.
   onHover,
+
+  /// Never: the row draws its own ⋯, sized to the row, and calls
+  /// [RowMenuState.open] (a dense desk table, whose rows are 36 high with a
+  /// mouse). Every other way into the menu stays.
+  none,
 }
 
 /// Wraps a row so every way of asking for its actions opens one menu.
@@ -225,6 +230,7 @@ class RowMenuState extends State<RowMenu> {
         final show = switch (widget.button) {
           RowMenuButton.always => true,
           RowMenuButton.onHover => (mouse && _hovered) || _focused,
+          RowMenuButton.none => false,
         };
         if (!show) return kept;
         final body = widget.expand
