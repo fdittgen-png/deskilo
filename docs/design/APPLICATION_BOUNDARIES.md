@@ -20,7 +20,7 @@ A repository read from `presentation/` is **not** a defect by itself. What #1234
 | Workspace configuration | `profile` | 7 |
 | — | `auth` | 4 |
 | — | `events` | 1 |
-| — | `kiosk` | 1 |
+| — | `kiosk` | 3 |
 
 `test/lint/layering_test.dart` holds each feature's number as a ceiling that may only fall.
 
