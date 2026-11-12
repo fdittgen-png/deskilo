@@ -74,7 +74,71 @@ List<String> formSheetCalls() {
   return found;
 }
 
+/// #3608 B1 — a raw choice control (a switch, a checkbox, a radio, a
+/// dropdown, a segmented button, a choice chip) in a task's body changes a
+/// value without text and without the form kit, so the task cannot know
+/// it was changed. Counted in the arguments of each `showTask`,
+/// `showTaskSurface` and `showAppFormSheet` call outside lib/core/ui, and in
+/// the files that declare a widget such a call builds; each region once.
+const int _rawChoiceCeiling = 14;
+
+final _taskCall = RegExp(
+  r'\b(showTask|showTaskSurface|showAppFormSheet)\s*(<[^(]*>)?\s*\(',
+);
+final _rawChoice = RegExp(
+  r'\b(Switch|SwitchListTile|Checkbox|CheckboxListTile|Radio|RadioListTile|'
+  r'DropdownButton|DropdownButtonFormField|DropdownMenu|SegmentedButton|'
+  r'ChoiceChip|FilterChip)\s*(<[^(]*>)?\s*\(',
+);
+
+/// The raw choice controls in task bodies, as `region: n`.
+Map<String, int> rawChoicesInTasks() {
+  final files = handWrittenDartFiles('lib').toList();
+  final code = {for (final f in files) f.path: _code(f)};
+  final declaredIn = <String, String>{
+    for (final e in code.entries)
+      for (final m in _declared.allMatches(e.value)) m.group(1)!: e.key,
+  };
+  final regions = <String, String>{};
+  for (final e in code.entries) {
+    if (e.key.startsWith('lib/core/ui/')) continue;
+    for (final m in _taskCall.allMatches(e.value)) {
+      final args = _arguments(e.value, m.end - 1);
+      regions['${e.key}:${m.start}'] = args;
+      for (final b in _built.allMatches(args)) {
+        final path = declaredIn[b.group(1)];
+        if (path != null && !path.startsWith('lib/core/ui/')) {
+          regions[path] = code[path]!;
+        }
+      }
+    }
+  }
+  return {
+    for (final r in regions.entries)
+      if (_rawChoice.allMatches(r.value).length case final n when n > 0)
+        r.key: n,
+  };
+}
+
 void main() {
+  test('raw choice controls in task bodies only ever fall', () {
+    final found = rawChoicesInTasks();
+    final count = found.values.fold(0, (a, b) => a + b);
+    expect(
+      count,
+      lessThanOrEqualTo(_rawChoiceCeiling),
+      reason:
+          'Raw choice controls in task bodies grew to $count (ceiling '
+          '$_rawChoiceCeiling): use the form kit\'s toggle row or mark the '
+          'task (TaskSession.markChanged) in the change.\n$found',
+    );
+    expect(
+      count,
+      _rawChoiceCeiling,
+      reason: 'The count fell to $count — lower the ceiling in this commit.',
+    );
+  });
+
   test('direct showAppSheet calls that carry a form only ever fall', () {
     final calls = formSheetCalls();
     expect(

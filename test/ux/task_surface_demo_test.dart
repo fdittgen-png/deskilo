@@ -15,6 +15,7 @@ import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -52,39 +53,68 @@ Future<void> _writeWindow(WidgetTester tester, String name) async {
   File('${dir.path}/$name.png').writeAsBytesSync(bytes!.buffer.asUint8List());
 }
 
+/// Opens the Demo in a [window] and the expense form on its purchases page.
+Future<(DemoJourney, ProviderContainer)> _openExpense(
+  WidgetTester tester,
+  Size window,
+) async {
+  tester.view.physicalSize = window;
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  final journey = DemoJourney.start();
+  addTearDown(journey.dispose);
+  await loadSheetFonts();
+  await tester.pumpWidget(
+    UncontrolledProviderScope(
+      container: journey.root,
+      child: const DeskiloRoot(),
+    ),
+  );
+  await tester.pumpAndSettle();
+  final app = ProviderScope.containerOf(
+    tester.element(find.byType(DeskiloApp)),
+  );
+  app.read(routerProvider).go('/money/purchases');
+  await _settle(tester);
+  // The one way in to an outlay; who paid is asked first where the
+  // person may also record the space's purchases.
+  await tester.tap(_key('purchases-hub-own-expense'));
+  await _settle(tester);
+  final mine = _key('add-purchase-me');
+  if (mine.evaluate().isNotEmpty) {
+    await tester.tap(mine);
+    await _settle(tester);
+  }
+  expect(_key('expense-submit'), findsOneWidget);
+  return (journey, app);
+}
+
 void main() {
+  testWidgets('the expense form in a dialog at 800 × 1000: an amount put in, '
+      'then Escape asks', (tester) async {
+    await _openExpense(tester, const Size(800, 1000));
+    final dialog = _key('task-dialog');
+    expect(dialog, findsOneWidget);
+    await tester.enterText(
+      find.descendant(of: dialog, matching: find.byType(EditableText)).first,
+      '12',
+    );
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+    await _settle(tester);
+    expect(_key('unsaved-changes-dialog'), findsOneWidget);
+    expect(dialog, findsOneWidget);
+    tester.takeException();
+    for (var i = 0; i < _retryRounds; i++) {
+      await tester.pump(_retryWait);
+    }
+  });
+
   for (final window in const [Size(390, 844), Size(1440, 900)]) {
     testWidgets('the expense form at ${window.width.toInt()} on the Demo', (
       tester,
     ) async {
-      tester.view.physicalSize = window;
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.reset);
-      final journey = DemoJourney.start();
-      addTearDown(journey.dispose);
-      await loadSheetFonts();
-      await tester.pumpWidget(
-        UncontrolledProviderScope(
-          container: journey.root,
-          child: const DeskiloRoot(),
-        ),
-      );
-      await tester.pumpAndSettle();
-      final app = ProviderScope.containerOf(
-        tester.element(find.byType(DeskiloApp)),
-      );
-      app.read(routerProvider).go('/money/purchases');
-      await _settle(tester);
-      // The one way in to an outlay; who paid is asked first where the
-      // person may also record the space's purchases.
-      await tester.tap(_key('purchases-hub-own-expense'));
-      await _settle(tester);
-      final mine = _key('add-purchase-me');
-      if (mine.evaluate().isNotEmpty) {
-        await tester.tap(mine);
-        await _settle(tester);
-      }
-      expect(_key('expense-submit'), findsOneWidget);
+      final (journey, app) = await _openExpense(tester, window);
       await _writeWindow(tester, '${window.width.toInt()}');
       // The fit is judged in the real fonts the sheet is drawn with; the
       // test font's square glyphs are wider than any real text.

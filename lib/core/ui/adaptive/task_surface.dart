@@ -13,8 +13,10 @@
 // open, as for any dialog.
 //
 // Typed work is never lost without a question. While the session holds a
-// change ([TaskSession.markChanged]: the form kit's fields, and any key that
-// edits a text field inside the task), every way out asks first — Escape,
+// change ([TaskSession.markChanged]: the text of a field inside the task
+// differs from what it showed when first focused, however it arrived — a
+// key, the soft keyboard, dictation, autofill, a paste — or one of the form
+// kit's choices was changed), every way out asks first — Escape,
 // the scrim, a drag, the back button and the body's own Cancel or Close —
 // with the one discard question. Only a completed submit
 // ([TaskSession.completed]) takes the mark away.
@@ -27,7 +29,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../session/task_context.dart';
@@ -127,7 +128,8 @@ final Map<Object, _TaskRoute<Object?>> _openTasks = {};
 ///
 /// [sessionKey] names the task (for example its account, workspace and
 /// record): while a task under that key is open, the call returns its
-/// result instead of opening another.
+/// result instead of opening another — when the type asked for matches
+/// the open one's; otherwise the call resolves with null.
 Future<T?> showTask<T>(
   BuildContext context, {
   required TaskSize size,
@@ -239,6 +241,46 @@ class _TaskPresenterState extends State<_TaskPresenter> {
 
   ProviderSubscription<String>? _context;
 
+  /// The text field followed now: the focused one inside this task.
+  TextEditingController? _followed;
+
+  /// The text each field showed when it was first followed.
+  final Expando<String> _firstText = Expando('task-first-text');
+
+  @override
+  void initState() {
+    super.initState();
+    FocusManager.instance.addListener(_focusMoved);
+  }
+
+  /// The focus moved: follow the text field it is in, when that field is
+  /// part of this task.
+  void _focusMoved() {
+    final focused = FocusManager.instance.primaryFocus?.context;
+    final field = focused?.findAncestorWidgetOfExactType<EditableText>();
+    final mine =
+        field != null &&
+        identical(
+          focused!.findAncestorStateOfType<_TaskPresenterState>(),
+          this,
+        );
+    final next = mine && !field.readOnly ? field.controller : null;
+    if (identical(next, _followed)) return;
+    _followed?.removeListener(_textChanged);
+    _followed = next;
+    if (next == null) return;
+    _firstText[next] ??= next.text;
+    next.addListener(_textChanged);
+  }
+
+  /// The followed field's text differs from what it first showed: a change.
+  void _textChanged() {
+    final field = _followed;
+    if (field != null && field.text != _firstText[field]) {
+      _route.session.markChanged();
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -257,6 +299,8 @@ class _TaskPresenterState extends State<_TaskPresenter> {
 
   @override
   void dispose() {
+    FocusManager.instance.removeListener(_focusMoved);
+    _followed?.removeListener(_textChanged);
     _context?.close();
     super.dispose();
   }
@@ -286,31 +330,6 @@ class _TaskPresenterState extends State<_TaskPresenter> {
     }
   }
 
-  /// A key that edits the focused text field marks the session: the
-  /// fallback for a field that is not the kit's.
-  KeyEventResult _watchKeys(FocusNode node, KeyEvent event) {
-    if (event is KeyUpEvent) return KeyEventResult.ignored;
-    final field = FocusManager.instance.primaryFocus?.context
-        ?.findAncestorWidgetOfExactType<EditableText>();
-    if (field == null || field.readOnly) return KeyEventResult.ignored;
-    final keyboard = HardwareKeyboard.instance;
-    final chord = keyboard.isControlPressed || keyboard.isMetaPressed;
-    final key = event.logicalKey;
-    final typed = event.character;
-    final edits = chord
-        ? key == LogicalKeyboardKey.keyV || key == LogicalKeyboardKey.keyX
-        : key == LogicalKeyboardKey.backspace ||
-              key == LogicalKeyboardKey.delete ||
-              (typed != null &&
-                  typed.isNotEmpty &&
-                  typed.codeUnitAt(0) >= _firstPrintable);
-    if (edits) _route.session.markChanged();
-    return KeyEventResult.ignored;
-  }
-
-  /// The first character code that is text, not a control.
-  static const int _firstPrintable = 0x20;
-
   @override
   Widget build(BuildContext context) {
     final container = _containerFor(_route.size, WindowClass.of(context));
@@ -328,16 +347,11 @@ class _TaskPresenterState extends State<_TaskPresenter> {
           onPopInvokedWithResult: _leave,
           child: child!,
         ),
-        child: Focus(
-          canRequestFocus: false,
-          skipTraversal: true,
-          onKeyEvent: _watchKeys,
-          child: switch (container) {
-            _TaskContainer.sheet => _sheet(body),
-            _TaskContainer.dialog => _dialog(body),
-            _TaskContainer.sidePanel => _sidePanel(body),
-          },
-        ),
+        child: switch (container) {
+          _TaskContainer.sheet => _sheet(body),
+          _TaskContainer.dialog => _dialog(body),
+          _TaskContainer.sidePanel => _sidePanel(body),
+        },
       ),
     );
   }

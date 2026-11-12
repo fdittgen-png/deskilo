@@ -185,7 +185,6 @@ class AppTextField extends StatelessWidget {
         if (scope != null && shown != null && error == null) {
           scope.onEdit(fieldKey!);
         }
-        TaskSession.maybeOf(context)?.markChanged();
         onChanged?.call(value);
       },
       onSubmitted: onSubmitted,

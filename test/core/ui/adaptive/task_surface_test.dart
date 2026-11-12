@@ -9,6 +9,8 @@
 // is dropped and closes an unchanged one at once.
 import 'package:deskilo/core/ui/adaptive/task_surface.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
+import 'package:deskilo/core/ui/help_row.dart';
+import 'package:deskilo/core/ui/master_data_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,6 +23,9 @@ final _sheet = find.byKey(const ValueKey('task-sheet'));
 final _dialog = find.byKey(const ValueKey('task-dialog'));
 final _panel = find.byKey(const ValueKey('task-side-panel'));
 final _name = find.byKey(const ValueKey('name'));
+
+/// A point on a sheet's drag handle, from the sheet's top left.
+const _handle = Offset(40, 12);
 final _note = find.byKey(const ValueKey('note'));
 
 void _window(WidgetTester tester, Size size) {
@@ -254,8 +259,11 @@ void main() {
       'the scrim': (t) => t.tapAt(const Offset(8, 8)),
       'the back button': (t) => t.binding.handlePopRoute(),
       'Cancel': (t) => t.tap(find.byKey(const ValueKey('form-sheet-cancel'))),
-      'a drag': (t) =>
-          t.fling(find.text('New thing'), const Offset(0, 600), 3000),
+      'a drag': (t) => t.flingFrom(
+        t.getTopLeft(_sheet) + _handle,
+        const Offset(0, 600),
+        3000,
+      ),
     };
 
     for (final MapEntry(key: way, value: take) in ways.entries) {
@@ -329,21 +337,153 @@ void main() {
       expect(probe.routes, hasLength(1));
     });
 
-    testWidgets('a letter typed into a raw field marks the task', (
-      tester,
+    /// Opens [body] as a standard task in [window], with a scaffold under
+    /// the fields so the kit's material controls draw.
+    Future<void> openBody(
+      WidgetTester tester,
+      Size window,
+      Widget Function(BuildContext) body,
     ) async {
-      _window(tester, _desk);
+      _window(tester, window);
       await _open(
         tester,
         TaskSize.standard,
-        body: (_) => const Material(child: TextField(key: ValueKey('raw'))),
+        body: (context) => Material(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 48),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [body(context)],
+            ),
+          ),
+        ),
       );
-      await tester.tap(find.byKey(const ValueKey('raw')));
-      await tester.sendKeyEvent(LogicalKeyboardKey.keyA);
+    }
+
+    final amount = TextEditingController();
+    final code = TextEditingController();
+    tearDownAll(amount.dispose);
+    tearDownAll(code.dispose);
+
+    testWidgets('text put into an amount field, then Escape: the question', (
+      tester,
+    ) async {
+      amount.clear();
+      await openBody(
+        tester,
+        _desk,
+        (_) => AppAmountField(
+          key: const ValueKey('amount'),
+          controller: amount,
+          label: 'Amount',
+          currency: 'EUR',
+          allowNegative: false,
+        ),
+      );
+      await tester.enterText(find.byKey(const ValueKey('amount')), '12');
       await tester.pump();
       await tester.sendKeyEvent(LogicalKeyboardKey.escape);
       await tester.pumpAndSettle();
       expect(question, findsOneWidget);
+    });
+
+    for (final (window, way) in [(_desk, 'Escape'), (_phone, 'a drag')]) {
+      testWidgets('text put into a raw field, then $way: the question', (
+        tester,
+      ) async {
+        await openBody(
+          tester,
+          window,
+          (_) => const TextField(key: ValueKey('raw')),
+        );
+        await tester.enterText(find.byKey(const ValueKey('raw')), 'a');
+        await tester.pump();
+        await ways[way]!(tester);
+        await tester.pumpAndSettle();
+        expect(question, findsOneWidget);
+      });
+    }
+
+    testWidgets('a choice picked in the kit\'s list field, then Escape: the '
+        'question', (tester) async {
+      code.clear();
+      await openBody(
+        tester,
+        _desk,
+        (_) => MasterDataField(
+          controller: code,
+          label: 'Country',
+          textKey: const ValueKey('country'),
+          options: const [MasterDataOption(code: 'FR', name: 'France')],
+        ),
+      );
+      await tester.tap(find.byKey(const ValueKey('country')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('France · FR'));
+      await tester.pump();
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(question, findsOneWidget);
+    });
+
+    testWidgets('a kit toggle flipped, then Escape: the question', (
+      tester,
+    ) async {
+      await openBody(
+        tester,
+        _desk,
+        (_) => HelpRow.toggle(
+          key: const ValueKey('toggle'),
+          title: 'Active',
+          value: false,
+          onChanged: (_) {},
+        ),
+      );
+      await tester.tap(find.byKey(const ValueKey('toggle')));
+      await tester.pump();
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect(question, findsOneWidget);
+    });
+
+    testWidgets('Enter in a short form\'s field with its own onSubmitted '
+        'submits once', (tester) async {
+      _window(tester, _desk);
+      var fieldSubmits = 0;
+      final field = TextEditingController();
+      addTearDown(field.dispose);
+      var submits = 0;
+      await _open(
+        tester,
+        TaskSize.short,
+        body: (_) => AppFormSheet(
+          title: 'Short',
+          submitLabel: 'Save',
+          onSubmit: () async {
+            submits++;
+            return null;
+          },
+          builder: (context, refresh) => [
+            AppTextField(
+              key: const ValueKey('one'),
+              controller: field,
+              label: 'One',
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) => fieldSubmits++,
+            ),
+            AppTextField(controller: TextEditingController(), label: 'Two'),
+          ],
+        ),
+      );
+      await tester.enterText(find.byKey(const ValueKey('one')), 'x');
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.pumpAndSettle();
+      expect(submits, 1);
+      expect(fieldSubmits, 0);
+      expect(_dialog, findsNothing);
     });
 
     testWidgets('a task without a text field, marked changed, asks on '
