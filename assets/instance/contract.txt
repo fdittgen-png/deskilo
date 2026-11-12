@@ -2259,9 +2259,10 @@ routine public.asset_actor(p_workspace_id uuid, p_review boolean) -> uuid | func
 routine public.asset_candidate_lines_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:882cf98c43dd
 routine public.asset_valuations_page_v1(p_workspace_id uuid, p_filters jsonb, p_cursor uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:661410992b9b
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:ead38db4d788
-routine public.badge_auth_verify(p_uid text, p_pin text, p_source text, p_device_id uuid, p_device_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:0795241dbdfe
+routine public.badge_auth_verify(p_uid text, p_pin text, p_source text, p_device_id uuid, p_device_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:7b91eaa46228
 routine public.badge_pin_needs_review(p_workspace_id uuid, p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f757e49c3c30
-routine public.badge_signin_paused(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:f78c694667ba
+routine public.badge_signin_kiosks_only(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2cf5709d1972
+routine public.badge_signin_paused(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2a3e7c170c26
 routine public.badge_source_key(p_source text) -> text | function | definer | stable | exec:service_role | body:6af71ea23644
 routine public.badge_token_hash(p_token text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:c8e6d7474786
 routine public.bank_import_actor(p_workspace_id uuid, p_permission text) -> uuid | function | definer | stable | exec:service_role | body:716d86bbf858
@@ -3058,7 +3059,7 @@ routine public.reconcile_workspace(p_workspace_id uuid) -> TABLE("check" text, s
 routine public.record_accounting_delivery(p_connection_id uuid, p_document_kind text, p_document_id uuid, p_event_date date, p_document_number text, p_period_from date, p_period_to date, p_payload_sha256 text, p_status text, p_remote jsonb, p_error text, p_in_flight_seconds integer) -> jsonb | function | definer | volatile | exec:service_role | body:aee4aa329b58
 routine public.record_accounting_revocation(p_connection_id uuid, p_outcome text) -> jsonb | function | definer | volatile | exec:service_role | body:d94ea1290ee8
 routine public.record_applied_event(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid, p_payload jsonb) -> uuid | function | definer | volatile | exec:service_role | body:e0cda8411fab
-routine public.record_badge_auth_failure(p_hash text, p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:a027c881493e
+routine public.record_badge_auth_failure(p_hash text, p_workspace uuid, p_on_kiosk boolean, p_tried_for uuid) -> void | function | definer | volatile | exec:service_role | body:949212769de3
 routine public.record_book_export_v1(p_workspace_id uuid, p_format_id text, p_from date, p_to date, p_sha256 text, p_bytes bigint, p_rows integer, p_documents integer, p_declared jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:58612fa41645
 routine public.record_einvoice_lookup_v1(p_id uuid, p_phase text, p_external_id text, p_receipt jsonb, p_verdict jsonb, p_query_error text) -> jsonb | function | definer | volatile | exec:service_role | body:e27f1c8f6ca7
 routine public.record_einvoice_outcome_v1(p_id uuid, p_generation integer, p_owner uuid, p_phase text, p_external_id text, p_detail text, p_receipt jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:1b0b05630686
