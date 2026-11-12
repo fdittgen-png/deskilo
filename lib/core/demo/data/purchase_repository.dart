@@ -14,17 +14,19 @@ class FakePurchaseRepository
         DemoPurchaseExchangeRates,
         DemoPurchaseMakerTracking
     implements PurchaseRepository {
-  FakePurchaseRepository({String Function()? actor, this.functionalCurrency = 'EUR'}) : actor = actor ?? _defaultActor;
+  FakePurchaseRepository({String Function()? actor, this.functionalCurrency = 'EUR', this.workspaceId}) : actor = actor ?? _defaultActor;
+  /// #3797 — the one space these documents are read for (null: any, a test).
+  final String? workspaceId;
+  bool _holds(String asked) => workspaceId == null || workspaceId == asked;
   static String _defaultActor() => 'member-1';
-  @override
-  final String Function() actor;
+  @override final String Function() actor;
   @override final String functionalCurrency;
   /// The demo space: two approved claims of the demo members, one untouched
   /// and one part-paid, so the To-pay tab, a payment and a reversal can all
   /// be tried exactly as in production. Dated from [today] (#3292): received
   /// three weeks before, the part payment ten days before, never ahead.
-  factory FakePurchaseRepository.demo({String Function()? actor, DateTime? today}) =>
-      FakePurchaseRepository(actor: actor)
+  factory FakePurchaseRepository.demo({String Function()? actor, DateTime? today, String? workspaceId}) =>
+      FakePurchaseRepository(actor: actor, workspaceId: workspaceId)
     ..payables.addAll([
       _demoClaim('demo-claim-1', 'member-2', 12000, 'cleaning supplies', received: today?.subtract(const Duration(days: 21))),
       _demoClaim('demo-claim-3', 'member-1', 5400, 'event catering', received: today?.subtract(const Duration(days: 21))),
@@ -49,8 +51,7 @@ class FakePurchaseRepository
     ])
     ..claimRates.addAll({'p-demo-claim-1': 20, 'p-demo-claim-2': 5.5, 'p-demo-claim-3': 10, 'p-demo-claim-4': 5.5});
 
-  /// Told when an offset settles an invoice, so the demo's invoice stands
-  /// paid as the server's would (the demo wires it to its money).
+  /// Told when an offset settles an invoice: the demo's then stands paid.
   void Function(String invoiceId, int cents)? onOffset;
 
   /// The VAT rate of each claim's receipt (the demo states what the server
@@ -105,7 +106,7 @@ class FakePurchaseRepository
   /// receipts, the demo only keeps what a test or a scenario hands it.
   final List<PayableRow> payables = [];
   @override
-  Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => [
+  Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => !_holds(workspaceId) ? const [] : [
     for (final p in payables)
       if (_doc(p.purchase.id) < 0) p.purchase,
     for (final d in _documents.reversed) d.summary,
@@ -116,6 +117,7 @@ class FakePurchaseRepository
     String workspaceId,
     String purchaseId,
   ) async {
+    if (!_holds(workspaceId)) throw StateError('unknown purchase');
     for (final d in _documents) {
       if (d.summary.id != purchaseId) continue;
       return PurchaseDetail(
@@ -150,7 +152,7 @@ class FakePurchaseRepository
   Future<List<PayableRow>> fetchPayables(
     String workspaceId, {
     CreditorKind? kind,
-  }) async => [
+  }) async => !_holds(workspaceId) ? const [] : [
     for (final p in payables)
       if (kind == null || p.obligation.creditorKind == kind) p,
   ];

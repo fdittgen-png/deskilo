@@ -13,6 +13,7 @@ import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_main_books_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -449,15 +450,17 @@ void main() {
         test('the lease: every matched rent occurrence is a bill of the lessor '
             'that the space holds, its line as the match states it', () async {
           final lease = seedDemoLease(fixture.seededAt).leases.single;
-          final rent = lease.terms
-              .singleWhere((t) => t.kind == LeaseTermKind.rent)
-              .amountCents;
+          // #3794 — the service charge's occurrences too, each at its own
+          // term's amount, matched by the second line of the same bills.
+          final amounts = {for (final t in lease.terms) t.id: t.amountCents};
+          expect(lease.terms.map((t) => t.kind),
+              containsAll([LeaseTermKind.rent, LeaseTermKind.serviceChargeAdvance]));
           final page = await seedDemoCommitments(fixture.seededAt)
               .fetchCommitments('ws-1', lease.id);
           final byId = {for (final d in await details()) d.summary.id: d};
           var matched = 0;
           for (final o in page.occurrences) {
-            expect(o.expectedCents, rent, reason: o.id);
+            expect(o.expectedCents, amounts[o.termId], reason: o.id);
             expect(o.matchedCents, lessThanOrEqualTo(o.expectedCents), reason: o.id);
             for (final CommitmentMatch m in o.matches) {
               matched++;
@@ -474,6 +477,18 @@ void main() {
             }
           }
           expect(matched, greaterThan(0));
+          // The studio's occurrences: each matched by its lessor's bill.
+          final studio = seedDemoRooms(fixture.seededAt).rentals.single;
+          final rented = await seedDemoCommitments(fixture.seededAt)
+              .fetchCommitments('ws-1', studio.id);
+          for (final o in rented.occurrences) {
+            expect(o.expectedCents, studio.costCents, reason: o.id);
+            for (final m in o.matches) {
+              final bill = byId[m.purchaseId];
+              expect(bill?.summary.supplierId, studio.supplierId, reason: o.id);
+              expect(bill!.lines.single.grossCents, m.allocatedCents);
+            }
+          }
         });
 
         test('the equipment register: every asset and candidate is a line of a '

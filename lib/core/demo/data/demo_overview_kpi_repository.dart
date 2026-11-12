@@ -25,6 +25,7 @@ import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
 import '../../../features/workspace/domain/kpi_overview.dart';
 import '../../../features/workspace/domain/member.dart';
+import '../demo_clock.dart';
 import 'event_repository.dart';
 import 'money_repository.dart';
 import 'workspace_repository.dart';
@@ -121,13 +122,20 @@ class DemoOverviewKpiRepository implements OverviewKpiRepository {
     required this.events,
     required this.money,
     required this.now,
+    this.timezoneOf,
   });
 
   /// The space's record and its memberships.
   final FakeWorkspaceRepository workspaces;
   final FakeEventRepository events;
   final FakeMoneyRepository money;
+
+  /// The Demo's clock, an instant.
   final DateTime now;
+
+  /// #3797 — the space's time zone: its month and its day are read on its
+  /// wall clock, as the server reads them. Null: [now] as it is (a test).
+  final String Function(String workspaceId)? timezoneOf;
 
   @override
   Future<OverviewFigure> figure(
@@ -136,7 +144,8 @@ class DemoOverviewKpiRepository implements OverviewKpiRepository {
     required String fromMonth,
     required String toMonth,
   }) async {
-    final month = yearMonth(now.year, now.month);
+    final today = demoWallClockOr(now, timezoneOf?.call(workspaceId));
+    final month = yearMonth(today.year, today.month);
     final current =
         month.compareTo(fromMonth) >= 0 && month.compareTo(toMonth) <= 0;
     final members = [
@@ -160,7 +169,7 @@ class DemoOverviewKpiRepository implements OverviewKpiRepository {
             count((m) => m.status == MemberStatus.pending),
         current,
       ),
-      'sales.overdue_receivables' => _overdue(workspaceId, current),
+      'sales.overdue_receivables' => _overdue(workspaceId, current, today),
       _ => throw KpiUnavailable('no overview figure $kpiId'),
     };
   }
@@ -174,7 +183,7 @@ class DemoOverviewKpiRepository implements OverviewKpiRepository {
     computedAt: now,
   );
 
-  OverviewFigure _overdue(String workspaceId, bool current) {
+  OverviewFigure _overdue(String workspaceId, bool current, DateTime today) {
     final currency =
         workspaces.workspaces
             .where((w) => w.id == workspaceId)
@@ -192,7 +201,7 @@ class DemoOverviewKpiRepository implements OverviewKpiRepository {
           i.totalCents <= 0) {
         continue;
       }
-      final s = _dunningFactsOf(i, money, now);
+      final s = _dunningFactsOf(i, money, today);
       if (s.phase == _DunningPhase.unknownMaturity) unknown++;
       if (s.phase != _DunningPhase.overdue) continue;
       if (s.currency.toUpperCase() != currency) mixed = true;

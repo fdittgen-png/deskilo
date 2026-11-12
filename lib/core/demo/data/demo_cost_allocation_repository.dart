@@ -23,6 +23,7 @@ import '../../../features/money/domain/purchase.dart';
 import '../../../features/workspace/domain/cost_allocation.dart';
 import '../../../features/workspace/domain/cost_allocation_rules.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
+import '../demo_clock.dart';
 import 'demo_cost_kpi_repository.dart';
 import 'floor_plan_repository.dart';
 import 'purchase_repository.dart';
@@ -43,6 +44,7 @@ class DemoCostAllocationRepository implements CostAllocationRepository {
     required this.plan,
     required this.currencyOf,
     required this.now,
+    this.timezoneOf,
     Iterable<AllocationRule> rules = const [],
   }) : _rules = [...rules];
 
@@ -51,7 +53,13 @@ class DemoCostAllocationRepository implements CostAllocationRepository {
 
   /// The space's currency, as its workspace record states it.
   final String Function(String workspaceId) currencyOf;
+
+  /// The Demo's clock, an instant.
   final DateTime now;
+
+  /// #3797 — the space's time zone: its month is read on its wall clock, as
+  /// the server reads it. Null: [now] as it is (a test).
+  final String Function(String workspaceId)? timezoneOf;
   final List<AllocationRule> _rules;
   final Map<String, AllocationRule> _answers = {};
   var _next = 1;
@@ -175,7 +183,9 @@ class DemoCostAllocationRepository implements CostAllocationRepository {
       if (positive == 1) direct += spread;
       if (positive > 1) shared += spread;
     }
-    final partial = toMonth.compareTo(yearMonth(now.year, now.month)) >= 0;
+    final today = demoWallClockOr(now, timezoneOf?.call(workspaceId));
+    final partial =
+        toMonth.compareTo(yearMonth(today.year, today.month)) >= 0;
     return CostAllocationKpi(
       fromMonth: fromMonth,
       toMonth: toMonth,

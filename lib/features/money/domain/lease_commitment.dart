@@ -64,6 +64,7 @@ class CommitmentOccurrence {
     required this.expectedCents,
     required this.matchedCents,
     this.termLabel = '',
+    this.termId,
     this.matches = const [],
   });
 
@@ -75,6 +76,7 @@ class CommitmentOccurrence {
       expectedCents: r.integer('expected_cents'),
       matchedCents: r.integer('matched_cents'),
       termLabel: r.stringOr('term_label'),
+      termId: r.stringOrNull('term_id'),
       matches: [for (final m in r.list('matches')) CommitmentMatch.fromJson(m)],
     );
   }
@@ -84,6 +86,10 @@ class CommitmentOccurrence {
   final int expectedCents;
   final int matchedCents;
   final String termLabel;
+
+  /// #3794 — the lease term the occurrence was generated from; null for a
+  /// rented room's occurrence, whose contract is the room itself.
+  final String? termId;
   final List<CommitmentMatch> matches;
 
   int get remainingCents => expectedCents - matchedCents;

@@ -146,6 +146,7 @@ FakeLeaseCommitmentRepository newYorkCommitments(DateTime now) {
     dueOn: month,
     expectedCents: line.cents,
     matchedCents: line.cents,
+    termId: line.lineNo == 1 ? 'ny-rent' : 'ny-service',
     matches: [
       CommitmentMatch(
         id: line.matchId,

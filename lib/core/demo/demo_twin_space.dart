@@ -86,7 +86,11 @@ class DemoTwinData {
       purchasing: DemoPurchasing(
         suppliers: FakeSupplierRepository(),
         inbox: FakeEInvoiceInboxRepository(),
-        purchases: FakePurchaseRepository.demo(actor: actor),
+        // #3797 — the twin's own purchases, empty: none of production's.
+        purchases: FakePurchaseRepository(
+          actor: actor,
+          workspaceId: demoTwinSpaceId,
+        ),
       ),
     );
     // The roles are configuration, copied once with the rest of it; the

@@ -587,6 +587,63 @@ void main() {
       );
       expect(june(schedules, FakeLeaseCommitmentRepository()).total, 40000);
     });
+
+    // #3794 — the rentals the server keeps no live schedule for (0515
+    // `room_rental_commitment_sync`): back to draft or ended, used per use,
+    // or free. Each varies one thing from the rental above.
+    RoomRental rental({
+      RoomRentalStatus status = RoomRentalStatus.active,
+      String costKind = 'fixed_per_period',
+      int costCents = 40000,
+    }) => RoomRental(
+      id: 'rental-1',
+      revision: 1,
+      officeId: 'office-1',
+      officeName: 'Studio',
+      supplierId: 'lessor',
+      supplierName: 'Lessor',
+      availableFrom: DateTime(2026),
+      availableUntil: DateTime(2026, 12, 31),
+      status: status,
+      costKind: costKind,
+      costCents: costCents,
+    );
+
+    for (final (name, refused) in [
+      ('paused (back to draft)', rental(status: RoomRentalStatus.draft)),
+      ('ended', rental(status: RoomRentalStatus.ended)),
+      ('paid per use', rental(costKind: 'per_use')),
+      ('free', rental(costCents: 0)),
+    ]) {
+      test('a room rented $name is no schedule and expects nothing', () {
+        final schedules = of(FakePremisesLeaseRepository(), rentals: [refused]);
+        expect(schedules, isEmpty);
+        expect(june(schedules, FakeLeaseCommitmentRepository()).total, 0);
+      });
+    }
+
+    test('a rented room\'s generated occurrence moves its schedule on', () {
+      final commitments = FakeLeaseCommitmentRepository(
+        {
+          'rental-1': [
+            CommitmentOccurrence(
+              id: 'occ-may',
+              dueOn: DateTime(2026, 5),
+              expectedCents: 40000,
+              matchedCents: 40000,
+            ),
+          ],
+        },
+        {'occ-may': 'rental-1'},
+      );
+      final schedule = of(
+        FakePremisesLeaseRepository(),
+        commitments: commitments,
+        rentals: [rental()],
+      ).single;
+      expect(schedule.nextDue, DateTime(2026, 6));
+      expect(schedule.done, 1);
+    });
   });
 
   group('the cost allocation (kpi_cost_allocation, 0531)', () {

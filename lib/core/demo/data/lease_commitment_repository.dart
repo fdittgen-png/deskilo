@@ -169,6 +169,7 @@ class FakeLeaseCommitmentRepository implements LeaseCommitmentRepository {
     expectedCents: o.expectedCents,
     matchedCents: matched,
     termLabel: o.termLabel,
+    termId: o.termId,
     matches: matches,
   );
 }
