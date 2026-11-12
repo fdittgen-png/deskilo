@@ -12,7 +12,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -151,19 +150,6 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
     );
   }
 
-  Future<void> _pickDay() async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: _day ?? ref.read(clockProvider).now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      helpText: context.l10n.purchasesFxRateDate,
-    );
-    if (picked == null || !mounted) return;
-    setState(() => _day = picked);
-    _emit();
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -204,17 +190,19 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
           ),
         ),
         const FormGap.small(),
-        OutlinedButton(
+        // A day the field cannot read leaves no rate: the purchase is
+        // refused until it can.
+        AppDateField(
           key: const ValueKey('purchase-fx-date'),
-          onPressed: _pickDay,
-          child: Text(
-            _day == null
-                ? l10n.purchasesFxRateDate
-                : l10n.labelWithValue(
-                    l10n.purchasesFxRateDate,
-                    MaterialLocalizations.of(context).formatMediumDate(_day!),
-                  ),
-          ),
+          label: l10n.purchasesFxRateDate,
+          value: _day,
+          first: DateTime(2000),
+          last: DateTime(2100),
+          pickerHelpText: l10n.purchasesFxRateDate,
+          onChanged: (read) {
+            _day = read.date;
+            _emit();
+          },
         ),
       ],
     );

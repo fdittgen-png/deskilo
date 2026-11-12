@@ -118,9 +118,9 @@ Future<void> showExpenseSheet(
       errorKey: const ValueKey('expense-problem'),
       onDispose: fields.dispose,
       validate: () {
-        final outcome = expenseOutcome(draft());
-        final field = fieldOf(outcome);
-        return field == null ? const {} : {field: reason(outcome)!};
+        final outcome = expenseOutcome(draft()), field = fieldOf(outcome);
+        final amount = _amountErrors(context, fields['amount'].text, currency);
+        return {?field: reason(outcome)!, ...amount};
       },
       onSubmit: () async {
         try {
@@ -139,12 +139,12 @@ Future<void> showExpenseSheet(
         }
       },
       builder: (context, refresh) => [
-        AppTextField(
+        AppAmountField(key: const ValueKey('expense-amount'),
           controller: fields['amount'],
           fieldKey: 'amount',
           label: l10n.moneyAmountLabel,
-          suffixText: currency.currencyName,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          currency: currency.code,
+          allowNegative: false,
           autofocus: true,
         ),
         const FormGap(),
@@ -270,4 +270,25 @@ Future<void> showExpenseSheet(
     l10n.moneyExpensePending,
   );
   ref.invalidate(eventsProvider);
+}
+
+/// Why the typed amount of the space's currency cannot be read (an
+/// exponent, a decimal too many), under the amount field: refused, never
+/// rounded. Empty when it reads.
+FieldErrors _amountErrors(
+  BuildContext context,
+  String text,
+  MoneyFormat currency,
+) {
+  final problem = appFormatOf(
+    context,
+  ).readAmount(text, currency: currency.code, allowNegative: false).problem;
+  return {
+    if (problem != null)
+      'amount': amountInputProblemText(
+        context.l10n,
+        problem,
+        currency: currency.code,
+      ),
+  };
 }

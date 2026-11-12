@@ -9,7 +9,6 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -57,8 +56,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   var _purpose = 'unresolved';
   PurchasePlace? _place;
   PurchaseCurrencyChoice _money = (currency: null, rate: null);
-  DateTime? _invoiceDate;
-  DateTime? _dueDate;
+  DateRead _invoiceDate = (date: null, problem: null);
+  DateRead _dueDate = (date: null, problem: null);
   bool _invalid = false;
 
   // The entries of the last attempt and the id they were sent under.
@@ -73,12 +72,20 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
     super.dispose();
   }
 
+  /// The bill's currency: the one picked for it, else the space's.
+  String get _currency => _money.currency ?? appFormatOf(context).currencyCode;
+
   PurchaseBillDraft? _draft() {
-    final gross = appFormatOf(context).parseMinor(_gross.text);
-    final taxText = _tax.text.trim();
-    final tax = taxText.isEmpty ? null : appFormatOf(context).parseMinor(taxText);
+    final format = appFormatOf(context);
+    final gross = format
+        .readAmount(_gross.text, currency: _currency, allowNegative: false)
+        .minor;
+    final taxRead =
+        format.readAmount(_tax.text, currency: _currency, allowNegative: false);
+    final tax = taxRead.minor;
     if (gross == null || gross <= 0) return null;
-    if (taxText.isNotEmpty && (tax == null || tax > gross)) return null;
+    if (taxRead.problem != null || (tax != null && tax > gross)) return null;
+    if (_invoiceDate.problem != null || _dueDate.problem != null) return null;
     // Another currency than the space's is captured with its rate.
     if (_money.currency != null && _money.rate == null) return null;
     // #3294 — an item is bought in a quantity above zero.
@@ -97,8 +104,8 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       supplierId: _supplierId,
       reference: _reference.text.trim(),
       description: _description.text.trim(),
-      originalDate: _invoiceDate,
-      dueOn: _dueDate,
+      originalDate: _invoiceDate.date,
+      dueOn: _dueDate.date,
       taxCents: tax,
       recognitionKind: _purpose,
       place: _place,
@@ -170,14 +177,6 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       a.dueOn == b.dueOn &&
       a.item == b.item;
 
-  Future<DateTime?> _pick(DateTime? current) => showDatePicker(
-    context: context,
-    initialDate: current ?? ref.read(clockProvider).now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2100),
-    helpText: context.l10n.purchasesPickDate,
-  );
-
   // An order picked below sets the supplier: rebuilt with it.
   Widget _supplierField(AppLocalizations l10n, List<Supplier> suppliers) =>
     KeyedSubtree(
@@ -203,7 +202,6 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final material = MaterialLocalizations.of(context);
     final suppliers = [
       for (final s
           in ref.watch(suppliersProvider(widget.workspaceId)).value ??
@@ -265,59 +263,46 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
             // A bill in another currency, with its rate (when switched on).
             PurchaseCurrencyFields(
               // recorder-key-exempt: a data callback; the fields are keyed.
-              onChanged: (m) => _money = m,
+              onChanged: (m) => setState(() => _money = m),
             ),
-            AppTextField(
+            AppAmountField(
               key: const ValueKey('purchase-gross'),
               controller: _gross,
               label: l10n.purchasesGross,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
+              currency: _currency,
+              allowNegative: false,
+              showProblem: _invalid,
+              textInputAction: TextInputAction.next,
             ),
-            AppTextField(
+            AppAmountField(
               key: const ValueKey('purchase-tax'),
               controller: _tax,
               label: l10n.purchasesTaxField,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
+              currency: _currency,
+              allowNegative: false,
+              showProblem: _invalid,
+              textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: AppSpacing.sm),
-            Wrap(
-              spacing: AppSpacing.sm,
-              children: [
-                OutlinedButton(
-                  key: const ValueKey('purchase-invoice-date'),
-                  onPressed: () async {
-                    final d = await _pick(_invoiceDate);
-                    if (d != null) setState(() => _invoiceDate = d);
-                  },
-                  child: Text(
-                    _invoiceDate == null
-                        ? l10n.purchasesInvoiceDate
-                        : l10n.labelWithValue(
-                            l10n.purchasesInvoiceDate,
-                            material.formatMediumDate(_invoiceDate!),
-                          ),
-                  ),
-                ),
-                OutlinedButton(
-                  key: const ValueKey('purchase-due-date'),
-                  onPressed: () async {
-                    final d = await _pick(_dueDate);
-                    if (d != null) setState(() => _dueDate = d);
-                  },
-                  child: Text(
-                    _dueDate == null
-                        ? l10n.purchasesDueDate
-                        : l10n.labelWithValue(
-                            l10n.purchasesDueDate,
-                            material.formatMediumDate(_dueDate!),
-                          ),
-                  ),
-                ),
-              ],
+            const FormGap.small(),
+            AppDateField(
+              key: const ValueKey('purchase-invoice-date'),
+              label: l10n.purchasesInvoiceDate,
+              value: _invoiceDate.date,
+              pickerHelpText: l10n.purchasesPickDate,
+              showProblem: _invalid,
+              textInputAction: TextInputAction.next,
+              onChanged: (d) => _invoiceDate = d,
+            ),
+            // Room for the date the field read, under it.
+            const FormGap.small(),
+            AppDateField(
+              key: const ValueKey('purchase-due-date'),
+              label: l10n.purchasesDueDate,
+              value: _dueDate.date,
+              pickerHelpText: l10n.purchasesPickDate,
+              showProblem: _invalid,
+              onChanged: (d) => _dueDate = d,
+              onSubmitted: (_) => _save(),
             ),
             if (_invalid)
               Padding(
