@@ -18,6 +18,7 @@
 # review {"path":"test/features/workspace/my_badge_test.dart","before":16,"after":18,"invariant":"#3611 a mouse alone deletes a revoked badge from the menu button and from a right click","cost":"two settles reopening the badge list so it loads the seeded revoked badge"}
 # review {"path":"test/core/navigation/list_detail_route_test.dart","before":0,"after":13,"invariant":"#3607 each history case is a person's step through the router settled before the address, the pane and the focus are read: open, Back, a direct link, Escape, the arrow keys, a phone page","cost":"6 tests in 2 s locally"}
 # review {"path":"test/core/ui/adaptive/task_surface_test.dart","before":14,"after":19,"invariant":"#3608 B1 text entered without key events marks the task (an amount field and a raw field), a kit choice marks it (the list field and the toggle row), and the drag on the compact sheet asks; each settles once for the discard question to open, and the list field once for its options","cost":"five settles of about 0.1 s each; 29 tests in 3 s locally"}
+# review {"path":"test/features/workspace/kiosk_devices_screen_test.dart","before":0,"after":14,"invariant":"#3675 the kiosk devices screen: enrol (name, tap), a refused enrolment, revoke with its confirmation, a failed read and Try again, and the setting's confirmation cancelled then accepted, each settled once before the store or the screen is read","cost":"five tests in about 4 s locally"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -137,6 +138,7 @@
 14 test/features/workspace/holiday_import_flow_test.dart
 17 test/features/workspace/invitation_journey_test.dart
 14 test/features/workspace/invitation_test.dart
+14 test/features/workspace/kiosk_devices_screen_test.dart
 15 test/features/workspace/member_join_validation_test.dart
 26 test/features/workspace/member_note_flow_test.dart
 13 test/features/workspace/member_notes_test.dart

@@ -9,6 +9,7 @@ signed-out on  /assistants/connect -> /auth
 signed-out on  /attention -> /auth
 signed-out on  /auth -> (open)
 signed-out on  /availability -> /auth
+signed-out on  /badge-kiosks -> /auth
 signed-out on  /bi -> /auth
 signed-out on  /bi/report/:id -> /auth
 signed-out on  /billing -> /auth
@@ -143,6 +144,7 @@ signed-out off /assistants/connect -> /auth
 signed-out off /attention -> /auth
 signed-out off /auth -> (open)
 signed-out off /availability -> /auth
+signed-out off /badge-kiosks -> /auth
 signed-out off /bi -> /auth
 signed-out off /bi/report/:id -> /auth
 signed-out off /billing -> /auth
@@ -277,6 +279,7 @@ no-space on  /assistants/connect -> /me
 no-space on  /attention -> /me
 no-space on  /auth -> /me
 no-space on  /availability -> /me
+no-space on  /badge-kiosks -> /me
 no-space on  /bi -> /me
 no-space on  /bi/report/:id -> /me
 no-space on  /billing -> /me
@@ -411,6 +414,7 @@ no-space off /assistants/connect -> /me
 no-space off /attention -> /me
 no-space off /auth -> /me
 no-space off /availability -> /me
+no-space off /badge-kiosks -> /me
 no-space off /bi -> /me
 no-space off /bi/report/:id -> /me
 no-space off /billing -> /me
@@ -545,6 +549,7 @@ member on  /assistants/connect -> /assistants
 member on  /attention -> /calendar
 member on  /auth -> /reserve
 member on  /availability -> /calendar
+member on  /badge-kiosks -> /calendar
 member on  /bi -> /calendar
 member on  /bi/report/:id -> /calendar
 member on  /billing -> /calendar
@@ -679,6 +684,7 @@ member off /assistants/connect -> /assistants
 member off /attention -> /messages
 member off /auth -> /messages
 member off /availability -> /messages
+member off /badge-kiosks -> /messages
 member off /bi -> /messages
 member off /bi/report/:id -> /messages
 member off /billing -> /messages
@@ -813,6 +819,7 @@ admin on  /assistants/connect -> /assistants
 admin on  /attention -> /calendar
 admin on  /auth -> /reserve
 admin on  /availability -> /calendar
+admin on  /badge-kiosks -> (open)
 admin on  /bi -> /calendar
 admin on  /bi/report/:id -> /calendar
 admin on  /billing -> /calendar
@@ -947,6 +954,7 @@ admin off /assistants/connect -> /assistants
 admin off /attention -> /messages
 admin off /auth -> /messages
 admin off /availability -> /messages
+admin off /badge-kiosks -> /messages
 admin off /bi -> /messages
 admin off /bi/report/:id -> /messages
 admin off /billing -> /messages
@@ -1081,6 +1089,7 @@ owner on  /assistants/connect -> /assistants
 owner on  /attention -> /calendar
 owner on  /auth -> /reserve
 owner on  /availability -> (open)
+owner on  /badge-kiosks -> (open)
 owner on  /bi -> /calendar
 owner on  /bi/report/:id -> /calendar
 owner on  /billing -> (open)
@@ -1215,6 +1224,7 @@ owner off /assistants/connect -> /assistants
 owner off /attention -> /messages
 owner off /auth -> /messages
 owner off /availability -> /messages
+owner off /badge-kiosks -> /messages
 owner off /bi -> /messages
 owner off /bi/report/:id -> /messages
 owner off /billing -> /messages

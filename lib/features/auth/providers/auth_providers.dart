@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/auth_callback_guard.dart';
 import '../../../core/backend/context_client_providers.dart';
+import '../../../core/backend/kiosk_credential_store.dart';
 import '../../../core/session/session_source.dart';
 import '../data/supabase_auth_repository.dart';
 import '../data/supabase_identity_binding_repository.dart';
@@ -17,7 +18,8 @@ part 'auth_providers.g.dart';
 
 @Riverpod(keepAlive: true)
 AuthRepository authRepository(Ref ref) =>
-    SupabaseAuthRepository(ref.watch(personalClientProvider), callbackGuard: bootAuthCallbackGuard);
+    SupabaseAuthRepository(ref.watch(personalClientProvider), callbackGuard: bootAuthCallbackGuard,
+        badgeHeaders: () => kioskBadgeHeaders(ref.read(kioskCredentialStoreProvider)));
 
 @Riverpod(keepAlive: true)
 Stream<String?> authState(Ref ref) =>

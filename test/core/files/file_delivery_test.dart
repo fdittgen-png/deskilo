@@ -9,6 +9,7 @@
 import 'package:deskilo/core/files/file_delivery.dart';
 import 'package:deskilo/core/files/file_delivery_notice.dart';
 import 'package:deskilo/core/files/file_saver.dart';
+import 'package:deskilo/core/links/link_launcher.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,12 @@ class _Harness {
   int saves = 0;
   int shares = 0;
   final deliveries = <FileDelivery>[];
+  final opened = <Uri>[];
+
+  Future<bool> open(Uri uri) async {
+    opened.add(uri);
+    return true;
+  }
 
   Future<SaveOutcome> save({
     required Uint8List bytes,
@@ -90,6 +97,7 @@ Future<_Harness> _pump(
       fileDeliveryModeProvider.overrideWithValue(mode),
       typedFileSaverProvider.overrideWithValue(h.save),
       fileSharerProvider.overrideWithValue(h.share),
+      linkLauncherProvider.overrideWithValue(h.open),
     ],
   );
   await tester.pump();
@@ -177,6 +185,76 @@ void main() {
         findsOneWidget,
       );
       expect(h.deliveries.single, isA<LocalSave>());
+    });
+  });
+
+  group('#3613 — a desktop save to a chosen place', () {
+    const chosen = '/Users/me/Exports/invoice.pdf';
+
+    testWidgets('a delivered save says where, with Open and Show in folder; '
+        'each opens what it names', (tester) async {
+      final h = await _pump(tester);
+      h.answer = const SavedFile(chosen, atChosenPlace: true);
+      await _tapAndSettle(tester, 'download');
+      expect(find.text('Saved to $chosen'), findsOneWidget);
+      expect(find.text('Open'), findsOneWidget);
+      expect(find.text('Show in folder'), findsOneWidget);
+      expect(fileHandedOut(h.deliveries.single), isTrue);
+
+      await tester.tap(find.byKey(const ValueKey('file-open')));
+      await tester.pump();
+      expect(h.opened, [Uri.file(chosen)]);
+    });
+
+    testWidgets('Show in folder opens the folder that holds the file', (
+      tester,
+    ) async {
+      final h = await _pump(tester);
+      h.answer = const SavedFile(chosen, atChosenPlace: true);
+      await _tapAndSettle(tester, 'download');
+      await tester.tap(find.byKey(const ValueKey('file-show-in-folder')));
+      await tester.pump();
+      expect(h.opened, [Uri.directory('/Users/me/Exports')]);
+    });
+
+    testWidgets('a file saved without a dialog offers neither action', (
+      tester,
+    ) async {
+      await _pump(tester);
+      await _tapAndSettle(tester, 'download');
+      expect(find.text('Saved to Download/invoice.pdf'), findsOneWidget);
+      expect(find.byKey(const ValueKey('file-open')), findsNothing);
+      expect(find.byKey(const ValueKey('file-show-in-folder')), findsNothing);
+    });
+
+    testWidgets('a closed dialog shows no notice and records nothing', (
+      tester,
+    ) async {
+      final h = await _pump(tester);
+      h.answer = const SaveCancelled();
+      await _tapAndSettle(tester, 'download');
+      expect(find.byType(SnackBar), findsNothing);
+      expect(h.deliveries.single, isA<LocalSave>());
+      expect(fileHandedOut(h.deliveries.single), isFalse);
+      expect(h.opened, isEmpty);
+    });
+
+    testWidgets('a refused place says why and offers neither action', (
+      tester,
+    ) async {
+      final h = await _pump(tester);
+      h.answer = const SaveFailed(SaveFailure.chosenFolderRefused);
+      await _tapAndSettle(tester, 'download');
+      expect(
+        find.text(
+          'Could not save the file: the chosen folder did not accept the '
+          'file.',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Open'), findsNothing);
+      expect(find.text('Show in folder'), findsNothing);
+      expect(fileHandedOut(h.deliveries.single), isFalse);
     });
   });
 
@@ -281,6 +359,7 @@ void main() {
       isTrue,
     );
     expect(fileHandedOut(const LocalSave(SaveFailed())), isFalse);
+    expect(fileHandedOut(const LocalSave(SaveCancelled())), isFalse);
     expect(fileHandedOut(const DeliveryCancelled()), isFalse);
     expect(
       fileHandedOut(const DeliveryFailed(SaveFailure.shareUnavailable)),

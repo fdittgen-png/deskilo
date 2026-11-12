@@ -91,6 +91,18 @@ void main() {
     expect(find.text(l.taskExportSaveFailed), findsOneWidget);
   });
 
+  testWidgets('#3613 — a closed save dialog says nothing', (tester) async {
+    await _pump(
+      tester,
+      ({required bytes, required fileName}) async => const SaveCancelled(),
+    );
+    await tester.scrollUntilVisible(button, 300);
+    await tester.pump();
+    await tester.tap(button);
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(SnackBar), findsNothing);
+  });
+
   testWidgets('a browser download is reported as handed over', (tester) async {
     await _pump(
       tester,

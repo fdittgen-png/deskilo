@@ -10,7 +10,9 @@
 #             scope the pull request names;
 #   behind    how many master commits the head lacks;
 #   gate      the body's "Gate: analyze ok · lint ok · <n> listed tests ok" line;
-#   closes    every closing keyword in the title and body;
+#   closes    every closing keyword in the title and body; an issue the
+#             body closes and the title does not is refused (#3675:
+#             scripts/closing_keywords.sh);
 #   tools     tool or AI lines in the body or in commits since the guard's
 #             cutoff (must be none);
 #   contains  for each --contains <branch>: whether it is an ancestor of the head;
@@ -33,7 +35,9 @@ verdict="OK"
 fail() { if [ "$verdict" = OK ]; then verdict="NOT OK: $1"; fi; }
 
 branch=$(gh pr view "$pr" --repo "$repo" --json headRefName --jq .headRefName)
-body=$(gh pr view "$pr" --repo "$repo" --json title,body --jq '.title + "\n" + .body')
+title=$(gh pr view "$pr" --repo "$repo" --json title --jq .title)
+body_only=$(gh pr view "$pr" --repo "$repo" --json body --jq .body)
+body=$(printf '%s\n%s' "$title" "$body_only")
 git fetch -q origin master "$branch"
 head="origin/$branch"
 
@@ -46,6 +50,10 @@ echo "gate:     ${gate:-missing}"
 [ -n "$gate" ] || fail "no Gate line in the body"
 
 echo "closes:   $(printf '%s\n' "$body" | grep -ioE '(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved) #[0-9]+' | tr '\n' ' ')"
+# shellcheck source=scripts/closing_keywords.sh
+source "$(dirname "$0")/closing_keywords.sh"
+stray=$(stray_closes "$title" "$body_only" | sed 's/^/#/' | tr '\n' ' ' | sed 's/ $//')
+[ -z "$stray" ] || fail "the body closes $stray, the title does not"
 
 # Commits AUTHORED before the tool-line guard's cutoff keep their lines
 # (#3685: the same epoch the guard compares with).

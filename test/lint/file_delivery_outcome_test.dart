@@ -21,6 +21,16 @@ const _allowed = <String>{'lib/core/demo/demo_scope.dart'};
 /// untyped seam. RATCHET: this number only falls.
 const _budget = 13;
 
+/// #3613 — the reads of the untyped seam outside lib/core/files and the
+/// Demo scope, counted where they happen (`ref.read(fileSaverProvider)`,
+/// `ref.watch(fileSaverProvider)`). That seam never asks where: on a
+/// desktop each of these still writes straight into Downloads, without the
+/// save dialog. Each caller that moves to deliverFile lowers this number.
+/// RATCHET: it only falls.
+const _readBudget = 17;
+
+final _read = RegExp(r'\.\s*(?:read|watch)\(\s*fileSaverProvider\s*\)');
+
 void main() {
   test('the files reading the untyped local save only shrink', () {
     final naming = [
@@ -43,6 +53,32 @@ void main() {
       naming.length,
       greaterThanOrEqualTo(_budget),
       reason: 'lower _budget to ${naming.length} (progress is recorded)',
+    );
+  });
+
+  test('#3613 — the reads of the untyped save, which never asks where on a '
+      'desktop, only fall', () {
+    var reads = 0;
+    final where = <String>[];
+    for (final f in handWrittenDartFiles('lib')) {
+      if (_allowed.contains(f.path) || f.path.startsWith('lib/core/files/')) {
+        continue;
+      }
+      final n = _read.allMatches(f.readAsStringSync()).length;
+      if (n == 0) continue;
+      reads += n;
+      where.add('${f.path}: $n');
+    }
+    expect(
+      reads,
+      lessThanOrEqualTo(_readBudget),
+      reason: 'a new save goes through deliverFile, which asks where on a '
+          'desktop. Now $reads:\n${where.join('\n')}',
+    );
+    expect(
+      reads,
+      greaterThanOrEqualTo(_readBudget),
+      reason: 'lower _readBudget to $reads (progress is recorded)',
     );
   });
 }

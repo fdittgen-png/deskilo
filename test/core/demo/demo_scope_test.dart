@@ -376,6 +376,7 @@ const Set<String> demoOverriddenProviders = {
   'messengerRepositoryProvider',
   'deploymentRepositoryProvider',
   'workspaceFilesRepositoryProvider',
+  'kioskDeviceRepositoryProvider',
   'workspaceImportRepositoryProvider',
   'workspaceFieldsRepositoryProvider',
   'workspaceRolesRepositoryProvider',
@@ -422,6 +423,7 @@ const Set<String> demoOverriddenProviders = {
   'defaultPeriodStoreProvider',
   'entryIntentStoreProvider',
   'resumePlaceStoreProvider',
+  'saveFolderStoreProvider', // #3613
   'creationDraftStoreProvider',
   'bookingIntentStoreProvider',
   'notificationFilterStoreProvider',

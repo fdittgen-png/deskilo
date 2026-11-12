@@ -18969,11 +18969,23 @@ abstract class AppLocalizations {
   /// **'Kept inside Deskilo: {fileName}. It is not in Downloads or Files — Share… sends it elsewhere.'**
   String fileKeptInApp(String fileName);
 
+  /// Notice action after a desktop save to a chosen place: open the saved file
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get fileOpenSaved;
+
   /// Error notice with the reason a file could not be saved
   ///
   /// In en, this message translates to:
   /// **'Could not save the file: {reason}.'**
   String fileSaveFailedBecause(String reason);
+
+  /// Reason phrase for fileSaveFailedBecause: the place chosen in the desktop save dialog refused the file
+  ///
+  /// In en, this message translates to:
+  /// **'the chosen folder did not accept the file'**
+  String get fileSaveFailureChosenFolder;
 
   /// Reason phrase for fileSaveFailedBecause: no writable folder on the device
   ///
@@ -18992,6 +19004,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'the device refused the write'**
   String get fileSaveFailureWrite;
+
+  /// Notice action after a desktop save to a chosen place: open the folder that holds the file
+  ///
+  /// In en, this message translates to:
+  /// **'Show in folder'**
+  String get fileShowInFolder;
 
   /// Shown as a button or chip label in my finances parts (money).
   ///
@@ -26799,11 +26817,155 @@ abstract class AppLocalizations {
   /// **'The workspace is closed today — check-in and reservations are not possible.'**
   String get kioskClosedToday;
 
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled by {name} on {date}'**
+  String kioskDeviceEnrolledBy(String name, String date);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled on {date}'**
+  String kioskDeviceEnrolledOn(String date);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used {date}'**
+  String kioskDeviceLastUsed(String date);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Not used yet'**
+  String get kioskDeviceNeverUsed;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke “{name}”? It stops being a kiosk of this business at once; to use it again, enrol it again.'**
+  String kioskDeviceRevokeConfirm(String name);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'“{name}” is revoked.'**
+  String kioskDeviceRevokeDone(String name);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'The device could not be revoked. Try again.'**
+  String get kioskDeviceRevokeFailed;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked on {date}'**
+  String kioskDeviceRevokedOn(String date);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'No device is enrolled yet.'**
+  String get kioskDevicesEmpty;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrol this device, see and revoke the business’s kiosks'**
+  String get kioskDevicesEntryHint;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'The devices this business uses as kiosks. Badge sign-in greets people by name on them, and can be limited to them.'**
+  String get kioskDevicesIntro;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled devices'**
+  String get kioskDevicesListTitle;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Kiosk devices'**
+  String get kioskDevicesTitle;
+
   /// Success snackbar after a kiosk operation; the member is signed out already
   ///
   /// In en, this message translates to:
   /// **'Done — you\'re all set.'**
   String get kioskDone;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrol this device'**
+  String get kioskEnrolAction;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'This device is now a kiosk of the business.'**
+  String get kioskEnrolDone;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'This device could not be enrolled. Try again.'**
+  String get kioskEnrolFailed;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: Front desk tablet'**
+  String get kioskEnrolNameHint;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of this device'**
+  String get kioskEnrolNameLabel;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'The device itself is what is trusted: once enrolled, anyone at it can use badge sign-in as at a kiosk of this business. If the device is lost or given away, revoke it below.'**
+  String get kioskEnrolTrust;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'In a browser, the enrolment is kept in this browser’s storage on this computer. Clearing the browser’s data removes it; revoking it here is the remedy for a lost device.'**
+  String get kioskEnrolTrustBrowser;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'This device is enrolled as “{name}”.'**
+  String kioskEnrolled(String name);
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'This device is enrolled as a kiosk of another business. Enrolling it here replaces that enrolment on this device; the other business keeps its record until it revokes it.'**
+  String get kioskEnrolledElsewhere;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'This device stops being a kiosk here. The business keeps its record of it until it is revoked.'**
+  String get kioskForgetConfirm;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget on this device'**
+  String get kioskForgetHere;
 
   /// Explainer on the kiosk gate: confirmed kiosk mode locks the pad until restart
   ///
@@ -26918,6 +27080,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scan the QR badge'**
   String get kioskScanQr;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Any device'**
+  String get kioskSigninWhereAnyDevice;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'The setting could not be saved. Try again.'**
+  String get kioskSigninWhereFailed;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrolled kiosks only'**
+  String get kioskSigninWhereKiosks;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody can sign in by badge until a kiosk of this business is enrolled. Switch to enrolled kiosks only anyway?'**
+  String get kioskSigninWhereNoDevice;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'No kiosk is enrolled'**
+  String get kioskSigninWhereNoDeviceTitle;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge sign-in works on any device: a badge and its PIN sign in from anywhere. With enrolled kiosks only, only this business’s kiosks sign people in by badge and greet them by name, and a badge tried elsewhere is never locked at its kiosk.'**
+  String get kioskSigninWhereRecommend;
+
+  /// #3675 — the kiosk devices screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch'**
+  String get kioskSigninWhereSwitch;
 
   /// Header hint on the kiosk plan view
   ///

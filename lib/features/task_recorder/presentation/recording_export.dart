@@ -119,5 +119,8 @@ Future<void> saveAndTell(
       );
     case SaveFailed():
       AppSnack.error(context, failed);
+    case SaveCancelled():
+      // #3613 — the person closed the save dialog: nothing to say.
+      break;
   }
 }

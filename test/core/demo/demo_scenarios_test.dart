@@ -20,6 +20,7 @@ import 'package:deskilo/core/demo/data/asset_valuation_repository.dart';
 import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -27,6 +28,7 @@ import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
+import 'package:deskilo/core/demo/demo_dataset.dart' show demoKioskDevice;
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
@@ -283,6 +285,15 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     _kiosk,
     "Ada's badge signs her in",
     (w) => w.f.workspaces.badges.any((b) => b.authEnabled),
+  ),
+  // #3675 — the front-desk tablet is an enrolled kiosk of the business.
+  WorkspaceFeature.kioskEnrolment: _state(
+    _owner,
+    'the front-desk tablet is an enrolled kiosk',
+    (w) => DemoKioskDevices(
+      workspaceId: w.f.workspaces.workspaces.first.id,
+      today: w.f.seededAt,
+    ).held.any((d) => d.name == demoKioskDevice.name && !d.revoked),
   ),
   WorkspaceFeature.spaceQrCodes: _toggle('every place prints its QR code'),
   // ── spaceManagement ──────────────────────────────────────────────────
