@@ -280,6 +280,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               key: const ValueKey('purchase-tax'),
               controller: _tax,
               label: l10n.purchasesTaxField,
+              helper: l10n.purchasesTaxFieldHelper,
               currency: _currency,
               allowNegative: false,
               showProblem: _invalid,

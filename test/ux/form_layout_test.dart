@@ -125,6 +125,39 @@ void main() {
     );
   });
 
+  testWidgets('a value wider than its field fails; a form taller than the '
+      'window fails', (tester) async {
+    await _plant(
+      tester,
+      Align(
+        alignment: AlignmentDirectional.topStart,
+        child: SizedBox(
+          key: const ValueKey('form'),
+          width: 80,
+          child: TextField(
+            controller: TextEditingController(text: '13/05/2026 09:30'),
+          ),
+        ),
+      ),
+    );
+    expect(
+      formLayoutProblems(tester, form: find.byKey(const ValueKey('form'))),
+      contains('value cut'),
+    );
+    await _plant(
+      tester,
+      const OverflowBox(
+        maxHeight: 2000,
+        alignment: Alignment.topCenter,
+        child: SizedBox(key: ValueKey('form'), height: 2000),
+      ),
+    );
+    expect(
+      formLayoutProblems(tester, form: find.byKey(const ValueKey('form'))),
+      contains('form off the window'),
+    );
+  });
+
   testWidgets('a helper cut with an ellipsis fails; spaced fields with a '
       'helper that wraps pass', (tester) async {
     await _plant(
@@ -174,11 +207,16 @@ void main() {
   });
 
   for (final MapEntry(key: name, value: open) in _openers.entries) {
-    for (final width in [390.0, 1440.0]) {
+    for (final size in const [
+      Size(390, 844),
+      Size(1024, 768),
+      Size(1440, 900),
+    ]) {
+      final width = size.width;
       for (final locale in AppLocalizations.supportedLocales) {
         testWidgets('$name at ${width.toInt()} in ${locale.languageCode}: '
             'no field touches another, no helper is cut', (tester) async {
-          tester.view.physicalSize = Size(width, 4000);
+          tester.view.physicalSize = size;
           tester.view.devicePixelRatio = 1.0;
           addTearDown(tester.view.reset);
           await tester.pumpWidget(await _scope(locale));

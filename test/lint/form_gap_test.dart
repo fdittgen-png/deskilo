@@ -15,7 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// The pairs of fields without a gap when #3782 landed.
-const _budget = 9999;
+const _budget = 43;
 
 final _field = RegExp(r'(Field|Fields)$');
 
@@ -98,8 +98,6 @@ Widget g() => Column(spacing: 12, children: [
           f.readAsStringSync(),
         ),
     ];
-    // ignore: avoid_print
-    print('COUNT ${found.length}\n${found.join('\n')}');
     expect(
       found.length,
       lessThanOrEqualTo(_budget),

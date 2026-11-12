@@ -3072,6 +3072,7 @@ Map<String, _Getter> _part8() => {
   'purchasesMethodOther': (l) => l.purchasesMethodOther,
   'purchasesPlaceNone': (l) => l.purchasesPlaceNone,
   'purchasesTaxField': (l) => l.purchasesTaxField,
+  'purchasesTaxFieldHelper': (l) => l.purchasesTaxFieldHelper,
   'pushMessageBody': (l) => l.pushMessageBody,
   'questionEditorPersonal': (l) => l.questionEditorPersonal,
   'questionEditorType': (l) => l.questionEditorType,

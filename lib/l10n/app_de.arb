@@ -14552,10 +14552,11 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTaxField": "Darin enthaltene Steuer (leer, wenn die Rechnung sie nicht ausweist)",
+  "purchasesTaxField": "Darin enthaltene Steuer",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
   },
+  "purchasesTaxFieldHelper": "Leer lassen, wenn die Rechnung sie nicht ausweist",
   "purchasesTaxNotStated": "Steuer nicht ausgewiesen",
   "@purchasesTaxNotStated": {
     "description": "#2573 purchases"

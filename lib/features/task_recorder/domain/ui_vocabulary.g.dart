@@ -10979,6 +10979,7 @@ const Set<String> uiLabelKeys = {
   'purchasesSupplier',
   'purchasesTabDocuments',
   'purchasesTaxField',
+  'purchasesTaxFieldHelper',
   'purchasesTaxNotStated',
   'purchasesTaxPartial',
   'purchasesTitle',

@@ -480,6 +480,49 @@ Set<String> formLayoutProblems(
       details?.add('cut: "${box.text.toPlainText()}" in ${box.size.width}');
     }
   }
+  // A value wider than its field is cut: a date or an amount shows its
+  // whole self.
+  for (final e in find
+      .descendant(of: form, matching: find.byType(EditableText))
+      .evaluate()) {
+    final edit = e.findRenderObject();
+    RenderEditable? editable;
+    void seek(RenderObject o) {
+      if (editable != null) return;
+      if (o is RenderEditable) {
+        editable = o;
+        return;
+      }
+      o.visitChildren(seek);
+    }
+    if (edit != null) seek(edit);
+    final r = editable;
+    if (r == null || !r.hasSize || r.maxLines != 1) continue;
+    final painter = TextPainter(
+      text: r.text,
+      textDirection: r.textDirection,
+      textScaler: r.textScaler,
+      maxLines: 1,
+    )..layout();
+    final wide = painter.width;
+    painter.dispose();
+    if (wide > r.size.width + 0.5) {
+      problems.add('value cut');
+      details?.add('value "${r.text?.toPlainText()}" $wide in ${r.size.width}');
+    }
+  }
+  // The form stands inside the window: nothing of it is off the screen.
+  final window = Offset.zero &
+      (tester.view.physicalSize / tester.view.devicePixelRatio);
+  for (final e in form.evaluate()) {
+    if (e.renderObject case final RenderBox box when box.hasSize) {
+      final rect = box.localToGlobal(Offset.zero) & box.size;
+      if (rect.intersect(window) != rect) {
+        problems.add('form off the window');
+        details?.add('form $rect in $window');
+      }
+    }
+  }
   return problems;
 }
 

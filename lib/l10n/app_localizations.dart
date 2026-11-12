@@ -38405,8 +38405,14 @@ abstract class AppLocalizations {
   /// #2573 purchases
   ///
   /// In en, this message translates to:
-  /// **'Tax included (empty if the bill does not state it)'**
+  /// **'Tax included'**
   String get purchasesTaxField;
+
+  /// #3782 the tax field's helper: the label alone stays short
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty if the bill does not state it'**
+  String get purchasesTaxFieldHelper;
 
   /// #2573 purchases
   ///

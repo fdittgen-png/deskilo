@@ -14552,10 +14552,11 @@
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
   },
-  "purchasesTaxField": "Impuesto incluido (vacío si la factura no lo indica)",
+  "purchasesTaxField": "Impuesto incluido",
   "@purchasesTaxField": {
     "description": "#2573 purchases"
   },
+  "purchasesTaxFieldHelper": "Dejar vacío si la factura no lo indica",
   "purchasesTaxNotStated": "Impuesto no indicado",
   "@purchasesTaxNotStated": {
     "description": "#2573 purchases"
