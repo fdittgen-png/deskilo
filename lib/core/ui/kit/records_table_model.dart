@@ -128,6 +128,7 @@ class RecordsQuery {
 
 /// The rows [query] keeps of [rows], in its order. [searchText] is what a
 /// typed text is looked for in.
+@visibleForTesting
 List<T> queryRows<T>(
   List<T> rows,
   RecordsQuery query, {
@@ -177,7 +178,7 @@ Map<String, int> chipCounts<T>(
 
 /// [selected] kept to the keys still among [present]: a row that left the
 /// data (or the workspace) leaves the selection. [dropped] counts those.
-({Set<String> kept, int dropped}) reconcileSelection(
+({Set<String> kept, int dropped}) _reconcileSelection(
   Set<String> selected,
   Iterable<String> present,
 ) {
@@ -201,4 +202,127 @@ Map<String, int> totalsByCurrency<T>(
     out[a.currency] = (out[a.currency] ?? 0) + a.minor;
   }
   return out;
+}
+
+/// #3606 — a records table's state: the query, the selection (and how many
+/// selected rows a reload dropped), the focused row and the hidden columns.
+/// Every change reconciles the selection with what is SHOWN in one place,
+/// so an action never reaches a row the table does not show.
+class RecordsController<T> extends ChangeNotifier {
+  RecordsController({
+    required this._query,
+    required this.keyOf,
+    required this.searchText,
+    required this._chips,
+    required this._columns,
+  });
+
+  final String Function(T row) keyOf;
+  final String Function(T row) searchText;
+  List<RecordChip<T>> _chips;
+  List<RecordColumn<T>> _columns;
+  List<T> _rows = const [];
+  RecordsQuery _query;
+  Set<String> _selected = {};
+  int _dropped = 0;
+  int _focused = 0;
+  Set<String> _hidden = {};
+  List<T>? _shown;
+
+  RecordsQuery get query => _query;
+  Set<String> get selected => Set.unmodifiable(_selected);
+  int get dropped => _dropped;
+  int get focused => _focused;
+  Set<String> get hidden => Set.unmodifiable(_hidden);
+
+  /// The rows the query keeps, in its order.
+  List<T> get shown => _shown ??= queryRows(
+    _rows,
+    _query,
+    searchText: searchText,
+    chips: _chips,
+    columns: _columns,
+  );
+
+  /// The selection kept to what is shown. [said]: a row that left was
+  /// taken away (a reload), not filtered out by the person.
+  void _reconcile({required bool said}) {
+    _shown = null;
+    final r = _reconcileSelection(_selected, shown.map(keyOf));
+    _selected = r.kept;
+    if (said && r.dropped > 0) _dropped = r.dropped;
+    _focused = shown.isEmpty ? 0 : _focused.clamp(0, shown.length - 1);
+  }
+
+  /// New rows, or new chips or columns: the selection follows what is shown.
+  void rowsChanged(
+    List<T> rows, {
+    required List<RecordChip<T>> chips,
+    required List<RecordColumn<T>> columns,
+  }) {
+    _rows = rows;
+    _chips = chips;
+    _columns = columns;
+    _reconcile(said: true);
+    notifyListeners();
+  }
+
+  void setQuery(RecordsQuery query) {
+    _query = query;
+    _focused = 0;
+    _reconcile(said: false);
+    notifyListeners();
+  }
+
+  /// A click on column [id]: sorts by it, a second reverses.
+  void sortBy(String id) => setQuery(
+    _query.sortColumn == id
+        ? _query.copyWith(ascending: !_query.ascending)
+        : _query.copyWith(sortColumn: () => id, ascending: true),
+  );
+
+  void tick(String key, {required bool on}) {
+    if (on && !shown.map(keyOf).contains(key)) return;
+    _selected = on ? {..._selected, key} : ({..._selected}..remove(key));
+    _dropped = 0;
+    notifyListeners();
+  }
+
+  /// Every shown row, or none of them.
+  void selectShown({required bool on}) {
+    final keys = shown.map(keyOf).toSet();
+    _selected = on ? {..._selected, ...keys} : _selected.difference(keys);
+    _dropped = 0;
+    notifyListeners();
+  }
+
+  void clear() {
+    _selected = {};
+    _dropped = 0;
+    notifyListeners();
+  }
+
+  void move(int by) {
+    if (shown.isEmpty) return;
+    _focused = (_focused + by).clamp(0, shown.length - 1);
+    notifyListeners();
+  }
+
+  void focus(int index) {
+    _focused = index;
+    notifyListeners();
+  }
+
+  void toggleColumn(String id) {
+    _hidden = _hidden.contains(id)
+        ? ({..._hidden}..remove(id))
+        : {..._hidden, id};
+    notifyListeners();
+  }
+
+  /// The hidden columns read back from the device.
+  void restoreHidden(Set<String> hidden) {
+    _hidden = hidden;
+    notifyListeners();
+  }
 }

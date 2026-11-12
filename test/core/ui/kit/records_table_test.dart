@@ -257,6 +257,50 @@ void main() {
     expect(exported, {'a'});
   });
 
+  testWidgets('a reload under a chip: a ticked row the chip now hides leaves '
+      'the selection; bar, footer and action agree, and the drop is said', (
+    tester,
+  ) async {
+    Set<String>? exported;
+    var rows = <_Rec>[_a, _b, _c];
+    late StateSetter set;
+    await pumpApp(
+      tester,
+      Scaffold(
+        body: StatefulBuilder(
+          builder: (context, s) {
+            set = s;
+            return _Host(rows: rows, onBulk: (k) => exported = k);
+          },
+        ),
+      ),
+      size: const Size(1200, 800),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(_k('records-chip-late'));
+    await tester.pumpAndSettle();
+    await tester.tap(_k('records-select-shown'));
+    await tester.pumpAndSettle();
+    expect(find.text('Export 2'), findsOneWidget);
+    // Ada is paid in the reload: still a row, no longer late.
+    set(
+      () => rows = [
+        (id: 'a', name: 'Ada', cents: 1000, currency: 'EUR', late: false),
+        _b,
+        _c,
+      ],
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Export 1'), findsOneWidget);
+    expect(
+      tester.widget<Text>(_k('records-total-EUR')).data,
+      contains('500 EUR'),
+    );
+    expect(_k('records-dropped'), findsOneWidget);
+    await tester.tap(_k('records-bulk-export'));
+    expect(exported, {'c'});
+  });
+
   testWidgets('the keyboard: arrows move, Space ticks, Enter opens, Ctrl+A '
       'selects what is shown', (tester) async {
     _Rec? opened;

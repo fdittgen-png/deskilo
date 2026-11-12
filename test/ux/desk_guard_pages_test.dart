@@ -51,7 +51,7 @@ const _pages = [
 ];
 
 void main() {
-  setUpAll(loadSheetFonts);
+  setUpAll(() => loadSheetFonts(always: true));
 
   for (final (path, kind, module, screen) in _pages) {
     for (final size in deskGuardSizes) {

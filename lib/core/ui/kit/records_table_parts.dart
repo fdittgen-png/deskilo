@@ -25,7 +25,11 @@ Widget _recordCells<T>(
     for (final (i, c) in columns.indexed)
       Expanded(
         flex: c.flex,
-        child: Align(
+        // A gap between neighbours: an end-aligned amount never touches
+        // the column after it.
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+          child: Align(
           alignment: c.numeric
               ? AlignmentDirectional.centerEnd
               : AlignmentDirectional.centerStart,
@@ -37,6 +41,7 @@ Widget _recordCells<T>(
                   child: cells[i],
                 )
               : cells[i],
+          ),
         ),
       ),
     ?trailing,

@@ -92,12 +92,14 @@ class RecordsTable<T> extends StatefulWidget {
 }
 
 class _RecordsTableState<T> extends State<RecordsTable<T>> {
-  late RecordsQuery _query = widget.initialQuery;
-  Set<String> _selected = {};
-  int _dropped = 0;
-  int _focused = 0;
+  late final _c = RecordsController<T>(
+    query: widget.initialQuery,
+    keyOf: widget.keyOf,
+    searchText: widget.searchText,
+    chips: widget.chips,
+    columns: widget.columns,
+  )..rowsChanged(widget.rows, chips: widget.chips, columns: widget.columns);
   bool _touch = false;
-  Set<String> _hidden = {};
   final _filter = TextEditingController();
   final _filterFocus = FocusNode();
   final _rowsFocus = FocusNode();
@@ -112,25 +114,39 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   void initState() {
     super.initState();
     unawaited(
-      _store.read().then((v) {
-        if (!mounted || v == null || v.isEmpty) return;
-        setState(() => _hidden = v.split(',').toSet());
-      }, onError: (Object _) {}),
+      _store.read().then(
+        (v) {
+          if (!mounted || v == null || v.isEmpty) return;
+          _c.restoreHidden(v.split(',').toSet());
+        },
+        // The column choice is a convenience: the table shows every column
+        // when it cannot be read, and says why in the log.
+        onError: (Object e, StackTrace s) => FlutterError.reportError(
+          FlutterErrorDetails(
+            exception: e,
+            stack: s,
+            library: 'records table',
+            context: ErrorDescription('reading the hidden columns'),
+          ),
+        ),
+      ),
     );
   }
 
   @override
   void didUpdateWidget(RecordsTable<T> old) {
     super.didUpdateWidget(old);
-    if (!identical(old.rows, widget.rows)) {
-      final r = reconcileSelection(_selected, widget.rows.map(widget.keyOf));
-      _selected = r.kept;
-      if (r.dropped > 0) _dropped = r.dropped;
+    // New rows, chips or columns: the selection follows what is shown.
+    if (!identical(old.rows, widget.rows) ||
+        !identical(old.chips, widget.chips) ||
+        !identical(old.columns, widget.columns)) {
+      _c.rowsChanged(widget.rows, chips: widget.chips, columns: widget.columns);
     }
   }
 
   @override
   void dispose() {
+    _c.dispose();
     _filter.dispose();
     _filterFocus.dispose();
     _rowsFocus.dispose();
@@ -139,50 +155,13 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
 
   List<RecordColumn<T>> get _columns => [
     for (final c in widget.columns)
-      if (!c.hideable || !_hidden.contains(c.id)) c,
+      if (!c.hideable || !_c.hidden.contains(c.id)) c,
   ];
 
-  List<T> _shown() => queryRows(
-    widget.rows,
-    _query,
-    searchText: widget.searchText,
-    chips: widget.chips,
-    columns: widget.columns,
-  );
-
-  /// The selection kept to what [shown] holds: a filter that hides a row
-  /// takes it out of the selection, so an action never reaches a hidden row.
-  void _setQuery(RecordsQuery q) => setState(() {
-    _query = q;
-    final r = reconcileSelection(_selected, _shown().map(widget.keyOf));
-    _selected = r.kept;
-    _focused = 0;
-  });
-
-  void _sort(String column) => _setQuery(
-    _query.sortColumn == column
-        ? _query.copyWith(ascending: !_query.ascending)
-        : _query.copyWith(sortColumn: () => column, ascending: true),
-  );
-
-  void _tick(String key, bool on) => setState(() {
-    _selected = on ? {..._selected, key} : ({..._selected}..remove(key));
-    _dropped = 0;
-  });
-
-  void _selectShown(List<T> shown, bool on) => setState(() {
-    final keys = shown.map(widget.keyOf).toSet();
-    _selected = on ? {..._selected, ...keys} : _selected.difference(keys);
-    _dropped = 0;
-  });
-
   void _toggleColumn(String id) {
-    setState(() {
-      _hidden = _hidden.contains(id)
-          ? ({..._hidden}..remove(id))
-          : {..._hidden, id};
-    });
-    _store.write(_hidden.isEmpty ? null : _hidden.join(',')).ignore();
+    _c.toggleColumn(id);
+    final hidden = _c.hidden;
+    _store.write(hidden.isEmpty ? null : hidden.join(',')).ignore();
   }
 
   @override
@@ -202,29 +181,34 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
         final touch = e.kind == PointerDeviceKind.touch;
         if (touch != _touch) setState(() => _touch = touch);
       },
-      child: LayoutBuilder(
-        builder: (context, box) {
-          final shown = _shown();
-          return Column(
-            children: [
-              _toolbar(context, shown),
-              if (_selected.isNotEmpty && widget.bulkActions.isNotEmpty)
-                RecordsBulkBar(
-                  count: _selected.length,
-                  actions: widget.bulkActions,
-                  keys: _selected,
-                  onClear: () => setState(() => _selected = {}),
+      child: ListenableBuilder(
+        listenable: _c,
+        builder: (context, _) => LayoutBuilder(
+          builder: (context, box) {
+            final shown = _c.shown;
+            final selected = _c.selected;
+            return Column(
+              children: [
+                _toolbar(context, shown),
+                if (selected.isNotEmpty && widget.bulkActions.isNotEmpty)
+                  RecordsBulkBar(
+                    count: selected.length,
+                    actions: widget.bulkActions,
+                    keys: selected,
+                    onClear: _c.clear,
+                  ),
+                Expanded(
+                  child:
+                      WindowClass.ofWidth(box.maxWidth) == WindowClass.compact
+                      ? _cards(shown)
+                      : _table(context, shown),
                 ),
-              Expanded(
-                child: WindowClass.ofWidth(box.maxWidth) == WindowClass.compact
-                    ? _cards(shown)
-                    : _table(context, shown),
-              ),
-              const Divider(height: 1),
-              _footer(shown),
-            ],
-          );
-        },
+                const Divider(height: 1),
+                _footer(shown),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -252,7 +236,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     final l10n = context.l10n;
     final counts = chipCounts(
       widget.rows,
-      _query.text,
+      _c.query.text,
       searchText: widget.searchText,
       chips: widget.chips,
     );
@@ -279,16 +263,16 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                 hintText: l10n.recordsFilter,
                 isDense: true,
               ),
-              onChanged: (t) => _setQuery(_query.copyWith(text: t)),
+              onChanged: (t) => _c.setQuery(_c.query.copyWith(text: t)),
             ),
           ),
           for (final c in widget.chips)
             FilterChip(
               key: ValueKey('records-chip-${c.id}'),
               label: Text('${c.label} ${counts[c.id] ?? 0}'),
-              selected: _query.chip == c.id,
+              selected: _c.query.chip == c.id,
               onSelected: (on) =>
-                  _setQuery(_query.copyWith(chip: () => on ? c.id : null)),
+                  _c.setQuery(_c.query.copyWith(chip: () => on ? c.id : null)),
             ),
           if (widget.columns.any((c) => c.hideable))
             MenuAnchor(
@@ -297,7 +281,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                   if (c.hideable)
                     CheckboxMenuButton(
                       key: ValueKey('records-column-${c.id}'),
-                      value: !_hidden.contains(c.id),
+                      value: !_c.hidden.contains(c.id),
                       onChanged: (_) => _toggleColumn(c.id),
                       child: Text(c.label),
                     ),
@@ -316,23 +300,19 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
 
   Widget _table(BuildContext context, List<T> shown) {
     final columns = _columns;
+    final selected = _c.selected;
     final selectedShown = shown
-        .where((r) => _selected.contains(widget.keyOf(r)))
+        .where((r) => selected.contains(widget.keyOf(r)))
         .length;
-    void move(int by) {
-      if (shown.isEmpty) return;
-      setState(() => _focused = (_focused + by).clamp(0, shown.length - 1));
-    }
-
     final rowHeight = _touch ? kMinInteractiveDimension : recordRowHeight;
     T? focusedRow() =>
-        shown.isEmpty ? null : shown[_focused.clamp(0, shown.length - 1)];
+        shown.isEmpty ? null : shown[_c.focused.clamp(0, shown.length - 1)];
     return Shortcuts(
       shortcuts: recordsShortcuts,
       child: Actions(
         actions: recordsActions(
           focusFilter: _filterFocus.requestFocus,
-          move: move,
+          move: _c.move,
           open: () {
             if (focusedRow() case final r?) widget.onOpen(r);
           },
@@ -340,11 +320,11 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
             if (!_selectable) return;
             if (focusedRow() case final r?) {
               final k = widget.keyOf(r);
-              _tick(k, !_selected.contains(k));
+              _c.tick(k, on: !selected.contains(k));
             }
           },
           selectShown: () {
-            if (_selectable) _selectShown(shown, true);
+            if (_selectable) _c.selectShown(on: true);
           },
         ),
         child: Focus(
@@ -355,11 +335,11 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
               // The header stays while the rows scroll under it.
               RecordsHeader<T>(
                 columns: columns,
-                query: _query,
-                onSort: _sort,
+                query: _c.query,
+                onSort: _c.sortBy,
                 shown: shown.length,
                 selectedShown: selectedShown,
-                onSelectShown: (on) => _selectShown(shown, on),
+                onSelectShown: (on) => _c.selectShown(on: on),
                 selectable: _selectable,
                 actionsWidth: recordActionsWidth(rowHeight),
                 dense: !_touch,
@@ -380,12 +360,12 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                       onOpen: () {
                         // A clicked row brings the keyboard to the table.
                         _rowsFocus.requestFocus();
-                        setState(() => _focused = i);
+                        _c.focus(i);
                         widget.onOpen(r);
                       },
-                      selected: _selected.contains(key),
-                      onTick: (on) => _tick(key, on),
-                      focused: _rowsFocus.hasFocus && i == _focused,
+                      selected: selected.contains(key),
+                      onTick: (on) => _c.tick(key, on: on),
+                      focused: _rowsFocus.hasFocus && i == _c.focused,
                       minHeight: rowHeight,
                       selectable: _selectable,
                     );
@@ -412,7 +392,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           key: ValueKey('records-card-$key'),
           onTap: () => widget.onOpen(r),
           onLongPress: _selectable
-              ? () => _tick(key, !_selected.contains(key))
+              ? () => _c.tick(key, on: !_c.selected.contains(key))
               : null,
           child: widget.cardBuilder(context, r),
         ),
@@ -422,9 +402,10 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
 
   Widget _footer(List<T> shown) {
     final amountOf = widget.amountOf;
+    final selected = _c.selected;
     final selection = [
       for (final r in shown)
-        if (_selected.contains(widget.keyOf(r))) r,
+        if (selected.contains(widget.keyOf(r))) r,
     ];
     final scope = selection.isEmpty ? TotalScope.shown : TotalScope.selection;
     return RecordsFooter(
@@ -439,7 +420,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
             ),
       scope: scope,
       format: widget.formatAmount ?? (c, m) => '$m $c',
-      dropped: _dropped,
+      dropped: _c.dropped,
     );
   }
 }

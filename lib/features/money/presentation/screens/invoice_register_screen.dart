@@ -332,6 +332,7 @@ class _InvoiceRegisterScreenState
       RecordColumn(
         id: 'date',
         label: l10n.numberSequenceDatePart,
+        flex: 2,
         sortKey: (i) => i.issuedAt,
         cell: (_, i) => Text(view.dateFormat.format(i.issuedAt)),
       ),
@@ -357,6 +358,7 @@ class _InvoiceRegisterScreenState
         id: 'amount',
         label: l10n.invoiceRegisterAmount,
         numeric: true,
+        flex: 2,
         sortKey: (i) => i.totalCents,
         cell: (_, i) =>
             Text(format.moneyIn(i.currency).formatMinor(i.totalCents)),
@@ -373,7 +375,7 @@ class _InvoiceRegisterScreenState
       RecordColumn(
         id: 'integrity',
         label: l10n.invoiceRegisterIntegrity,
-        flex: 2,
+        flex: 3,
         cell: (_, i) => InvoiceIntegrityChip(invoiceId: i.id),
       ),
     ];

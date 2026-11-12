@@ -92,8 +92,6 @@
       "packages/deskilo_tax_reference/lib/src/tax_value.dart": 545
     },
     "setState": {
-      "lib/core/ui/kit/records_table.dart": 9,
-
       "lib/features/auth/presentation/screens/auth_screen.dart": 7,
 
       "lib/features/auth/presentation/widgets/badge_pin_tile.dart": 7,

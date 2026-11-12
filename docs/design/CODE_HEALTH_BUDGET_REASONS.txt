@@ -101,5 +101,4 @@ repositoryInWidgets money // #2494 the money screen's operations are classes now
 repositoryInWidgets profile // #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing
 repositoryInWidgets reservations // #1449 A2 inventory correction (scanner, not growth): the scanner now matches ref.read/watch across line breaks and ignores block comments and strings, which made these pre-existing
 repositoryInWidgets workspace // #2210 the legacy conversation list left lib/
-setState lib/core/ui/kit/records_table.dart // #3606 the records table is one stateful composite: the query, the selection (reconciled on new rows), the focused row, the pointer kind and the hidden columns each change on their own input
 setState lib/features/profile/presentation/screens/settings_screen.dart // A library whose parts were each within 5 before #2386 counted them together.
