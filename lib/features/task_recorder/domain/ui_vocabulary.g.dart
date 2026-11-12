@@ -1403,7 +1403,6 @@ const Set<String> uiKeys = {
   'guide-start',
   'guide-text-field',
   'guide-title-field',
-  'half-day',
   'half-day-hours',
   'handoff-blocked',
   'handoff-included',
