@@ -645,15 +645,6 @@
   "@negotiationItemsHint": {
     "description": "Shown as a text in negotiation card (money)."
   },
-  "negotiationPercent": "{value} %",
-  "@negotiationPercent": {
-    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]",
-    "placeholders": {
-      "value": {
-        "type": "int"
-      }
-    }
-  },
   "negotiationReadOnly": "Read only",
   "@negotiationReadOnly": {
     "description": "Shown as the line under a title in negotiation card (money)."

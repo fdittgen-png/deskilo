@@ -7,6 +7,7 @@
 // amount unknown. The Demo computes the same figures from pgTAP 353's month.
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/vendor_kpi_repository.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
@@ -438,7 +439,8 @@ void main() {
         view.basis(m, l10n, 'en'),
         '1 of 2 received orders arrived by the expected date',
       );
-      final details = view.details(m, l10n, 'en');
+      final details = view.details(
+        m, l10n, const AppFormat(locale: 'en', currencyCode: 'EUR'));
       expect(details, contains('Received on time: 1 order'));
       expect(details, contains('Awaited, overdue: 1 order'));
       expect(

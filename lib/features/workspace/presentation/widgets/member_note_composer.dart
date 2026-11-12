@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/i18n/reference_when.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -154,17 +156,15 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
     Reservation reservation,
     Map<String, String> spaceNames,
     Map<String, String> memberNames,
-    String? localeName,
-  ) {
+    String? localeName, {
+    AppFormat? reader,
+  }) {
     final target = reservation.seatId ??
         reservation.deskId ??
         reservation.officeId ??
         reservation.levelId;
-    final who = memberNames[reservation.memberId] ?? '';
-    final space = spaceNames[target] ?? '';
-    final when = DateFormat.MMMd(localeName)
-        .add_jm()
-        .format(reservation.startsAt.toLocal());
+    final (who, space) = (memberNames[reservation.memberId] ?? '', spaceNames[target] ?? '');
+    final when = referenceWhen(reservation.startsAt, localeName, reader: reader);
     return [who, space, when].where((p) => p.isNotEmpty).join(' · ');
   }
 
@@ -242,7 +242,8 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
           refCandidate(
             id: reservation.id,
             label: _reservationLabel(
-                reservation, spaceNames, memberNames, localeName),
+                reservation, spaceNames, memberNames, localeName,
+                reader: appFormatOf(context)),
             icon: reservation.status == ReservationStatus.checkedIn
                 ? Icons.login_outlined
                 : Icons.event_available_outlined,

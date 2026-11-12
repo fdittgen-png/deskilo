@@ -7,6 +7,9 @@
 // (swipe OR button) always asks for confirmation first. The composer
 // attaches references from pickers.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_controller.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -40,6 +43,7 @@ Reservation _myReservation() => Reservation(
 Future<FakeWorkspaceRepository> _pump(
   WidgetTester tester, {
   List<MemberNote> notes = const [],
+  AppFormat? format,
 }) async {
   tester.view.physicalSize = const Size(800, 2200);
   tester.view.devicePixelRatio = 1;
@@ -95,11 +99,18 @@ Future<FakeWorkspaceRepository> _pump(
     ));
   await tester.pumpWidget(
     ProviderScope(
-      overrides: standardTestOverrides(
-        workspace: workspace,
-        floorPlan: plan,
-        reservations: reservations,
-      ),
+      overrides: [
+        ...standardTestOverrides(
+          workspace: workspace,
+          floorPlan: plan,
+          reservations: reservations,
+          pinFormats: format == null,
+        ),
+        if (format != null) ...[
+          appFormatProvider.overrideWithValue(format),
+          personalFormatProvider.overrideWithValue(format),
+        ],
+      ],
       child: const DeskiloApp(),
     ),
   );
@@ -440,6 +451,43 @@ void main() {
     expect(body, contains('[space:seat:seat-4|A1]'));
     // The label names the participant: who · space · when.
     expect(body, contains('[res:res-ana|Ana · A1 ·'));
+  });
+
+  testWidgets(
+      'the reservation picker reads a time on the person\'s own clock: '
+      '12-hour chosen in a 24-hour locale (#3819)', (tester) async {
+    await _pump(
+      tester,
+      format: const AppFormat(
+        locale: 'de_DE',
+        currencyCode: 'EUR',
+        clock: ClockPref.h12,
+        weekStart: WeekStartPref.monday,
+      ),
+    );
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
+    await tester.tap(find.text('Members & plans'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ana'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Messages'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('composer-attach')));
+    await tester.pumpAndSettle();
+    await tester
+        .tap(find.byKey(const ValueKey('member-note-ref-reservation')));
+    await tester.pumpAndSettle();
+    final row = find.descendant(
+      of: find.byKey(const ValueKey('note-ref-res-res-ana')),
+      matching: find.byType(Text),
+    );
+    final text = [
+      for (final t in tester.widgetList<Text>(row)) t.data ?? '',
+    ].join(' ');
+    expect(text, contains('9:00 AM'));
+    expect(text, isNot(contains('09:00')));
   });
 
   testWidgets(

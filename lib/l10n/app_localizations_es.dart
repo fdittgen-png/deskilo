@@ -4672,13 +4672,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billPackages => 'Paquetes de días';
 
   @override
-  String billParticipation(int pct) {
-    return 'Participación $pct %';
+  String billParticipation(String pct) {
+    return 'Participación $pct';
   }
 
   @override
-  String billParticipationMonth(String month, int pct) {
-    return '$month $pct %';
+  String billParticipationMonth(String month, String pct) {
+    return '$month $pct';
   }
 
   @override
@@ -4713,13 +4713,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billSettled => 'Al día';
 
   @override
-  String billSubscription(int pct) {
-    return 'Suscripción $pct %';
+  String billSubscription(String pct) {
+    return 'Suscripción $pct';
   }
 
   @override
-  String billSubscriptionMonth(String month, int pct) {
-    return 'Suscripción $month $pct %';
+  String billSubscriptionMonth(String month, String pct) {
+    return 'Suscripción $month $pct';
   }
 
   @override
@@ -4741,8 +4741,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get billingBandFee => 'Cuota mensual';
 
   @override
-  String billingBandFrom(int from) {
-    return 'desde $from %';
+  String billingBandFrom(String from) {
+    return 'desde $from';
   }
 
   @override
@@ -20391,8 +20391,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moneySubmitPayment => 'Enviar para confirmación';
 
   @override
-  String moneySubscriptionPct(int pct) {
-    return 'Suscripción $pct %';
+  String moneySubscriptionPct(String pct) {
+    return 'Suscripción $pct';
   }
 
   @override
@@ -20764,11 +20764,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get negotiationPendingBadge => 'pendiente de validación';
 
   @override
-  String negotiationPercent(int value) {
-    return '$value %';
-  }
-
-  @override
   String get negotiationProposeHint =>
       'Deje un campo vacío para mantener la tarifa. Las condiciones pasan por validación antes de aplicarse.';
 
@@ -20841,8 +20836,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get newMemberSubscriptionMore => 'Suscripción más grande';
 
   @override
-  String newMemberSubscriptionValue(int percent) {
-    return '$percent %';
+  String newMemberSubscriptionValue(String percent) {
+    return '$percent';
   }
 
   @override
@@ -21722,11 +21717,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pendingStillWaiting => 'Sigue pendiente de aprobación.';
-
-  @override
-  String percentValue(int value) {
-    return '$value %';
-  }
 
   @override
   String get periodReservationsEmpty => 'Ninguna reserva en estos meses.';
@@ -29502,8 +29492,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Quien pide unirse indica su nombre y su dirección de correo, nada más.';
 
   @override
-  String setupNewMembersPreviewStart(int pct, String policy) {
-    return 'Un nuevo miembro empieza con una suscripción al $pct % ($policy).';
+  String setupNewMembersPreviewStart(String pct, String policy) {
+    return 'Un nuevo miembro empieza con una suscripción al $pct ($policy).';
   }
 
   @override
@@ -29788,13 +29778,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupPresetNameStandard => 'Estándar';
 
   @override
-  String setupPricingBand(int from, int to, String fee, String extra) {
-    return '$from–$to %: $fee al mes, $extra por media jornada adicional';
+  String setupPricingBand(String from, String to, String fee, String extra) {
+    return '$from–$to: $fee al mes, $extra por media jornada adicional';
   }
 
   @override
-  String setupPricingLevel(int pct) {
-    return 'Membresía al $pct %';
+  String setupPricingLevel(String pct) {
+    return 'Membresía al $pct';
   }
 
   @override
@@ -35619,8 +35609,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workspaceDangerZone => 'Zona de peligro';
 
   @override
-  String workspaceDeskOpacityValue(int percent) {
-    return 'Opacidad: $percent %';
+  String workspaceDeskOpacityValue(String percent) {
+    return 'Opacidad: $percent';
   }
 
   @override

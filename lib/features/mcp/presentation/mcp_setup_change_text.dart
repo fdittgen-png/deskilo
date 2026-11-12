@@ -132,7 +132,9 @@ class McpSetupChangeText {
 
   /// A subscription level in the words of the billing and setup screens.
   String _level(Object? percent) =>
-      _l10n.setupPricingLevel(percent is num ? percent.toInt() : 0);
+      _l10n.setupPricingLevel(
+        _format.ratePercent(percent is num ? percent.toInt() : 0),
+      );
 
   String _journal(String journal) => switch (journal) {
     'credit_note' => _l10n.numberSequenceJournalCreditNote,

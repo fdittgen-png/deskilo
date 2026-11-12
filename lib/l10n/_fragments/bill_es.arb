@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "billSubscription": "Suscripción {pct} %",
+  "billSubscription": "Suscripción {pct}",
   "billEntitlement": "{used} de {included, plural, one{1 media jornada facturada} other{{included} medias jornadas facturadas}} ({openDays, plural, one{1 día de apertura} other{{openDays} días de apertura}})",
   "billOverage": "{extra, plural, one{{extra} media jornada extra} other{{extra} medias jornadas extra}}",
   "billServices": "Servicios consumidos",

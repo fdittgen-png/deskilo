@@ -6074,24 +6074,24 @@
   "@billPackages": {
     "description": "Bill section header for day packages bought this period (migration 0042); charge lines render trailing"
   },
-  "billParticipation": "Participation {pct}%",
+  "billParticipation": "Participation {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct}%",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "#1000 the recurring position names its month: billParticipationMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -6141,24 +6141,24 @@
   "@billSettled": {
     "description": "Footer state when the period balance is zero or positive"
   },
-  "billSubscription": "Subscription {pct}%",
+  "billSubscription": "Subscription {pct}",
   "@billSubscription": {
-    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billSubscriptionMonth": "Subscription {month} {pct}%",
+  "billSubscriptionMonth": "Subscription {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -6186,12 +6186,12 @@
   "@billingBandFee": {
     "description": "Label of a band's monthly fee field"
   },
-  "billingBandFrom": "from {from}%",
+  "billingBandFrom": "from {from}",
   "@billingBandFrom": {
-    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]",
+    "description": "Derived lower boundary of a band row (exclusive). The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "from": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -26628,12 +26628,12 @@
   "@moneySubmitPayment": {
     "description": "Submit button — the payment stays pending until the other side confirms (spec §7.4)"
   },
-  "moneySubscriptionPct": "Subscription {pct}%",
+  "moneySubscriptionPct": "Subscription {pct}",
   "@moneySubscriptionPct": {
-    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "Statement line for the band fee of the member's percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -27111,15 +27111,6 @@
   "@negotiationPendingBadge": {
     "description": "Shown as a button or chip label in negotiation card (money)."
   },
-  "negotiationPercent": "{value} %",
-  "@negotiationPercent": {
-    "description": "Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]",
-    "placeholders": {
-      "value": {
-        "type": "int"
-      }
-    }
-  },
   "negotiationProposeHint": "Leave a field empty to keep the tariff. The deal goes through validation before it applies.",
   "@negotiationProposeHint": {
     "description": "Shown as a text in negotiation card (money)."
@@ -27208,12 +27199,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent}%",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]",
+    "description": "#1294 a subscription percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -28363,15 +28354,6 @@
   "pendingStillWaiting": "Still awaiting approval.",
   "@pendingStillWaiting": {
     "description": "Shown as a text in pending approval screen (workspace)."
-  },
-  "percentValue": "{value}%",
-  "@percentValue": {
-    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]",
-    "placeholders": {
-      "value": {
-        "type": "int"
-      }
-    }
   },
   "periodReservationsEmpty": "No booking in these months.",
   "@periodReservationsEmpty": {
@@ -38057,12 +38039,12 @@
   "@setupNewMembersPreviewNoQuestions": {
     "description": "#2871 setup run steps: setupNewMembersPreviewNoQuestions"
   },
-  "setupNewMembersPreviewStart": "A new member starts on a {pct} % subscription ({policy}).",
+  "setupNewMembersPreviewStart": "A new member starts on a {pct} subscription ({policy}).",
   "@setupNewMembersPreviewStart": {
-    "description": "#2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "#2871 setup run steps: setupNewMembersPreviewStart. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       },
       "policy": {
         "type": "String"
@@ -38399,15 +38381,15 @@
   "@setupPresetNameStandard": {
     "description": "#3485 setupPresetName: the label for case 'standard'."
   },
-  "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
+  "setupPricingBand": "{from}–{to}: {fee} a month, {extra} per extra half-day",
   "@setupPricingBand": {
-    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]",
+    "description": "#2871 setup run steps: setupPricingBand. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "from": {
-        "type": "int"
+        "type": "String"
       },
       "to": {
-        "type": "int"
+        "type": "String"
       },
       "fee": {
         "type": "String"
@@ -38417,12 +38399,12 @@
       }
     }
   },
-  "setupPricingLevel": "Membership at {pct} %",
+  "setupPricingLevel": "Membership at {pct}",
   "@setupPricingLevel": {
-    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "#2871 setup run steps: setupPricingLevel. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -45790,12 +45772,12 @@
   "@workspaceDangerZone": {
     "description": "Section header for irreversible owner-only actions in workspace settings."
   },
-  "workspaceDeskOpacityValue": "Opacity: {percent}%",
+  "workspaceDeskOpacityValue": "Opacity: {percent}",
   "@workspaceDeskOpacityValue": {
-    "description": "Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]",
+    "description": "Live value label of the desk-opacity slider. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

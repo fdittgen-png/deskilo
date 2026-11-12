@@ -14,6 +14,7 @@
 # review {"path":"test/features/money/invoice_register_table_test.dart","before":0,"after":11,"invariant":"the register is opened through the app's router and its selection is downloaded after a filter and after a reload, each settled once","cost":"5 tests in 8 s locally"}
 # review {"path":"test/features/directory/unified_inbox_test.dart","before":41,"after":42,"invariant":"#3611 a mouse alone pins by right click and mutes from the hover menu button of the same row menu","cost":"one settle for the mouse arriving over the inbox; the clicks settle in the mouse helper"}
 # review {"path":"test/features/workspace/member_note_flow_test.dart","before":23,"after":26,"invariant":"#3611 a long press opens the message menu; Delete is chosen from it before the confirmation","cost":"one settle per menu entry tap, three deletions in two tests"}
+# review {"path":"test/features/workspace/member_note_flow_test.dart","before":26,"after":32,"invariant":"#3819 the reservation picker shows a time on the person's own clock: the sheet, the attach menu and the picker are each opened and settled before the row is read","cost":"one test, under 3 s locally"}
 # review {"path":"test/features/workspace/member_notes_test.dart","before":12,"after":13,"invariant":"#3611 the long press opens the message menu before Delete asks for confirmation","cost":"one settle for the menu entry tap"}
 # review {"path":"test/features/workspace/my_badge_test.dart","before":16,"after":18,"invariant":"#3611 a mouse alone deletes a revoked badge from the menu button and from a right click","cost":"two settles reopening the badge list so it loads the seeded revoked badge"}
 # review {"path":"test/core/navigation/list_detail_route_test.dart","before":0,"after":13,"invariant":"#3607 each history case is a person's step through the router settled before the address, the pane and the focus are read: open, Back, a direct link, Escape, the arrow keys, a phone page","cost":"6 tests in 2 s locally"}
@@ -143,7 +144,7 @@
 14 test/features/workspace/invitation_test.dart
 14 test/features/workspace/kiosk_devices_screen_test.dart
 15 test/features/workspace/member_join_validation_test.dart
-26 test/features/workspace/member_note_flow_test.dart
+32 test/features/workspace/member_note_flow_test.dart
 13 test/features/workspace/member_notes_test.dart
 18 test/features/workspace/member_roles_card_test.dart
 18 test/features/workspace/my_badge_test.dart

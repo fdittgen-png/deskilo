@@ -40,12 +40,12 @@ void main() {
     expect(d.eventTypePayment, en.eventTypePayment);
     expect(d.paymentsPendingTag, en.paymentsPendingTag);
     expect(d.overage(3), en.overage(3));
-    expect(d.participation(50), en.participation(50));
-    expect(d.subscription(100), en.subscription(100));
-    expect(d.participationMonth('September', 50),
-        en.participationMonth('September', 50));
-    expect(d.subscriptionMonth('September', 100),
-        en.subscriptionMonth('September', 100));
+    expect(d.participation('50%'), en.participation('50%'));
+    expect(d.subscription('100%'), en.subscription('100%'));
+    expect(d.participationMonth('September', '50%'),
+        en.participationMonth('September', '50%'));
+    expect(d.subscriptionMonth('September', '100%'),
+        en.subscriptionMonth('September', '100%'));
     // No bundle means no locale: intl's default, as before the seam.
     expect(d.localeName, isNull);
     expect(en.localeName, 'en');
@@ -76,8 +76,8 @@ void main() {
       (fr.agreementExtraHalfDay, d.agreementExtraHalfDay),
       (fr.paymentsPendingTag, d.paymentsPendingTag),
       (fr.overage(3), d.overage(3)),
-      (fr.participation(50), d.participation(50)),
-      (fr.subscription(100), d.subscription(100)),
+      (fr.participation('50 %'), d.participation('50 %')),
+      (fr.subscription('100 %'), d.subscription('100 %')),
     ]) {
       expect(a, isNot(b), reason: 'French should differ from English: $a');
     }
@@ -91,6 +91,6 @@ void main() {
         kind: 'subscription', label: '100', amountCents: 10000);
     expect(invoiceLineText(const ReportStrings(), line), 'Subscription 100%');
     expect(invoiceLineText(reportStringsOf(AppLocalizationsFr(), formatLocale: null), line),
-        AppLocalizationsFr().billSubscription(100));
+        AppLocalizationsFr().billSubscription('100 %'));
   });
 }

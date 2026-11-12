@@ -328,9 +328,9 @@ void main() {
       ),
     );
     expect(find.text('Offer a new membership plan'), findsOneWidget);
-    expect(find.text('Membership at 30 %'), findsOneWidget);
+    expect(find.text('Membership at 30%'), findsOneWidget);
     expect(
-      find.textContaining('Subscription levels: — → Membership at 30 %'),
+      find.textContaining('Subscription levels: — → Membership at 30%'),
       findsOneWidget,
     );
     expect(find.textContaining('Kraftwerk'), findsOneWidget);
