@@ -9649,6 +9649,20 @@
   "@deskSupplementLabel": {
     "description": "Bill line: sum of whole-desk reservation prices this period (0059)"
   },
+  "deskWindowTitle": "{place} — {business}",
+  "@deskWindowTitle": {
+    "description": "#3773 the desk window's (or browser tab's) title: the place on screen, then the business; a language may order them",
+    "placeholders": {
+      "place": {
+        "type": "String",
+        "example": "Purchases"
+      },
+      "business": {
+        "type": "String",
+        "example": "Atelier du Marché"
+      }
+    }
+  },
   "developerClear": "Clear trace",
   "@developerClear": {
     "description": "App-bar action emptying the trace buffer and file"
@@ -20352,6 +20366,15 @@
     "placeholders": {
       "month": {
         "type": "String"
+      }
+    }
+  },
+  "invoicingReminderLevelSent": "{level, plural, other{reminder {level} sent}}",
+  "@invoicingReminderLevelSent": {
+    "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
+    "placeholders": {
+      "level": {
+        "type": "int"
       }
     }
   },

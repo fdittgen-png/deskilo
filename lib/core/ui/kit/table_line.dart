@@ -9,7 +9,13 @@ import 'package:flutter/material.dart';
 /// column that aligns to the end.
 typedef KitColumns = ({List<int> flex, int endFrom});
 
-Widget _cells(KitColumns columns, List<Widget> cells) => Row(
+/// [cells] in their columns. #3773 — a line's cells stand on its first line:
+/// a cell that takes two lines (a state in parts) grows the row downwards and
+/// the others stay level with its first line.
+Widget _cells(KitColumns columns, List<Widget> cells, {bool top = false}) => Row(
+  crossAxisAlignment: top
+      ? CrossAxisAlignment.start
+      : CrossAxisAlignment.center,
   children: [
     for (final (i, cell) in cells.indexed)
       Expanded(
@@ -70,7 +76,11 @@ class KitTableLine extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 52),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: _cells(columns, cells),
+        // A one-line row sits in the middle of its height as before.
+        child: Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: _cells(columns, cells, top: true),
+        ),
       ),
     ),
   );

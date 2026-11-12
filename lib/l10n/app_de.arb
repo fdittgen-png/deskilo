@@ -4698,6 +4698,7 @@
   "deskNavCollapse": "Menü schmaler",
   "deskNavExpand": "Menü breiter",
   "deskSupplementLabel": "Tisch-Reservierungen",
+  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Protokoll leeren",
   "developerEmpty": "Noch keine Protokolleinträge.",
   "developerExport": "Protokoll exportieren",
@@ -9812,6 +9813,15 @@
     "placeholders": {
       "month": {
         "type": "String"
+      }
+    }
+  },
+  "invoicingReminderLevelSent": "{level, plural, other{Mahnung {level} gesendet}}",
+  "@invoicingReminderLevelSent": {
+    "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
+    "placeholders": {
+      "level": {
+        "type": "int"
       }
     }
   },

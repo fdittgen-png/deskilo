@@ -173,8 +173,9 @@ Future<Finder> invoicingRow(WidgetTester tester, String invoiceId) async {
 }
 
 /// Opens an invoice. An issuer reaches its PAGE from the invoicing home's
-/// line (#3587 R1-d: full screen under 1200 px, a panel beside the list
-/// above); a member opens its DETAIL sheet from their archive's row.
+/// line (#3587 R1-d, #3773: a panel beside the list where both fit,
+/// `invoiceFitsBeside`, full screen otherwise); a member opens its DETAIL
+/// sheet from their archive's row.
 Future<void> openInvoice(WidgetTester tester, String invoiceId) async {
   if (find.byKey(const ValueKey('invoicing-home')).evaluate().isNotEmpty) {
     await closeInvoicePage(tester);

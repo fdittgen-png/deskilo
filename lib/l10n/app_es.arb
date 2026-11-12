@@ -4698,6 +4698,7 @@
   "deskNavCollapse": "Estrechar el menú",
   "deskNavExpand": "Ensanchar el menú",
   "deskSupplementLabel": "Reservas de mesa",
+  "deskWindowTitle": "{place} — {business}",
   "developerClear": "Vaciar registro",
   "developerEmpty": "Aún no hay entradas de registro.",
   "developerExport": "Exportar registro",
@@ -9812,6 +9813,15 @@
     "placeholders": {
       "month": {
         "type": "String"
+      }
+    }
+  },
+  "invoicingReminderLevelSent": "{level, plural, other{recordatorio {level} enviado}}",
+  "@invoicingReminderLevelSent": {
+    "description": "#3773 the reminder part of a late invoice's state, shown as its own piece beside the lateness",
+    "placeholders": {
+      "level": {
+        "type": "int"
       }
     }
   },

@@ -21,7 +21,6 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/navigation_style.dart';
 import '../../../../core/time/clock.dart';
-import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
@@ -39,8 +38,24 @@ import 'invoicing_live_pages.dart';
 import 'invoicing_reads.dart';
 import 'payments_to_match_screen.dart';
 
-/// The width of the invoice panel beside the list on a desk window.
-const double _panelWidth = 440;
+/// The width of the invoice panel beside the list.
+@visibleForTesting
+const double kInvoicingPanelWidth = 440;
+
+/// #3773 — the narrowest the invoice list keeps its table (number, customer,
+/// amount, state) without cutting a word, in the five languages: measured on
+/// the Demo, where 1024 with the rail must still open an invoice over it.
+@visibleForTesting
+const double kInvoicingListMinWidth = 640;
+
+/// The rule between the list and the panel.
+const double _dividerWidth = 1;
+
+/// Whether [width] holds the list and an open invoice beside it: the page
+/// asks whether both fit, not which window class its width falls in.
+@visibleForTesting
+bool invoiceFitsBeside(double width) =>
+    width >= kInvoicingListMinWidth + _dividerWidth + kInvoicingPanelWidth; // content-fit: the list and the open invoice side by side
 
 /// What the screen read: the receivables, the invoices by id, their matches.
 typedef _Read = ({
@@ -131,7 +146,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       ),
       body: LayoutBuilder(
         builder: (context, box) {
-          _desk = WindowClass.ofWidth(box.maxWidth).atLeast(WindowClass.large);
+          _desk = invoiceFitsBeside(box.maxWidth);
           _wide = isWideNavigationWidth(box.maxWidth);
           final home = switch (invoices) {
             AsyncData(:final value) => _home(context, value),
@@ -146,9 +161,9 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             children: [
               Expanded(child: home),
               if (selected != null) ...[
-                const VerticalDivider(width: 1),
+                const VerticalDivider(width: _dividerWidth),
                 SizedBox(
-                  width: _panelWidth,
+                  width: kInvoicingPanelWidth,
                   child: InvoicePage(
                     key: ValueKey('invoicing-panel-$selected'),
                     invoiceId: selected,

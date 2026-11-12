@@ -5,12 +5,14 @@
 // window size; a screen pumped on its own never sees that. Here /invoices
 // is reached through the app itself: the frame gives it the wide width, the
 // customer table shows, and an invoice opens in the panel BESIDE the list,
-// which keeps its table. #3603 — beside the desk's navigation the page has
-// that width at 1920, and at 1440 with the navigation narrowed to the rail;
-// at 1440 with the sidebar open (1167 px) it opens over the list until
-// #3773.
+// which keeps its table. #3773 — the page asks whether the list and the
+// invoice both fit (invoiceFitsBeside), not which window class it has: beside
+// the desk's sidebar at 1440 (1167 px), with the rail, and at 1920; over the
+// list at 1024, where the rail leaves 943.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
+import 'package:deskilo/features/money/presentation/invoicing/invoicing_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,9 +22,15 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 
 void main() {
-  for (final (width, rail) in [(1920.0, false), (1440.0, true)]) {
+  for (final (width, rail, beside) in [
+    (1920.0, false, true),
+    (1440.0, false, true),
+    (1440.0, true, true),
+    (1024.0, true, false),
+  ]) {
   testWidgets('at ${width.toInt()} x 900${rail ? ' on the rail' : ''} an '
-      'invoice opens beside the list, whose table stays', (tester) async {
+      'invoice opens ${beside ? 'beside the list, whose table stays' : 'over '
+      'the list'}', (tester) async {
     tester.view.physicalSize = Size(width, 900);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -60,6 +68,11 @@ void main() {
     await tester.pumpAndSettle();
 
     final panel = find.byKey(ValueKey('invoicing-panel-$id'));
+    if (!beside) {
+      expect(panel, findsNothing, reason: 'the list and the invoice do not fit');
+      expect(find.byType(InvoicePage), findsOneWidget);
+      return;
+    }
     expect(panel, findsOneWidget, reason: 'a desk keeps the invoice beside');
     final list = find.byKey(const ValueKey('invoicing-home'));
     expect(
@@ -71,4 +84,14 @@ void main() {
     expect(find.text('INVOICE'), findsWidgets);
   });
   }
+
+  test('both fit from the list\'s minimum, the rule and the panel, and not '
+      'one pixel before', () {
+    const both = kInvoicingListMinWidth + 1 + kInvoicingPanelWidth;
+    expect(invoiceFitsBeside(both), isTrue);
+    expect(invoiceFitsBeside(both - 1), isFalse);
+    // The desk at 1440 with the sidebar (1167) and at 1024 with the rail (943).
+    expect(invoiceFitsBeside(1167), isTrue);
+    expect(invoiceFitsBeside(943), isFalse);
+  });
 }

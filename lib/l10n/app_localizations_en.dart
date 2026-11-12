@@ -7312,6 +7312,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deskSupplementLabel => 'Desk reservations';
 
   @override
+  String deskWindowTitle(String place, String business) {
+    return '$place — $business';
+  }
+
+  @override
   String get developerClear => 'Clear trace';
 
   @override
@@ -15606,6 +15611,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String invoicingReceivedIn(String month) {
     return 'Received in $month';
+  }
+
+  @override
+  String invoicingReminderLevelSent(int level) {
+    String _temp0 = intl.Intl.pluralLogic(
+      level,
+      locale: localeName,
+      other: 'reminder $level sent',
+    );
+    return '$_temp0';
   }
 
   @override
