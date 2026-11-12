@@ -7,6 +7,7 @@
 // both directions: a route without a class is refused by the policy, a
 // class without a route is a boundary kept alive for nothing.
 import 'package:meta/meta.dart';
+import '../core/ui/adaptive/page_measures.dart';
 import 'schema_gate.dart';
 import 'shell/shell_branch.dart';
 
@@ -43,7 +44,13 @@ enum RouteChrome { desk, kiosk, account, public }
 
 /// One registered route pattern and its class. `:name` matches a segment.
 class RouteRule {
-  const RouteRule(this.pattern, this.kind, {this._chrome, this.place});
+  const RouteRule(
+    this.pattern,
+    this.kind, {
+    this._chrome,
+    this.place,
+    this.measure = PageMeasure.framed,
+  });
   final String pattern;
   final RouteClass kind;
   final RouteChrome? _chrome;
@@ -55,6 +62,11 @@ class RouteRule {
   /// and names it in the breadcrumb and the window title; every desk route
   /// declares one (test/lint/desk_places_test.dart).
   final String? place;
+
+  /// #3604 — the measure the page is drawn in, applied by the frame
+  /// (page_frame.dart): today's frame unless the route declares its own.
+  /// The route table is the only place a page's measure is declared.
+  final PageMeasure measure;
 
   /// The chrome this route is shown in: declared where it differs from
   /// what its class implies (the kiosk's routes), else derived from it.
@@ -197,7 +209,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/nfc-config', RouteClass.workspace, place: 'drawer-nfc-config'),
   RouteRule('/payment-config', RouteClass.workspace, place: 'drawer-payment-config'),
   RouteRule('/billing', RouteClass.workspace, place: 'drawer-billing'),
-  RouteRule('/invoices', RouteClass.workspace, place: 'drawer-invoices'),
+  RouteRule(
+    '/invoices',
+    RouteClass.workspace,
+    place: 'drawer-invoices',
+    measure: PageMeasure.work,
+  ),
   RouteRule('/invoice-register', RouteClass.workspace, place: 'drawer-accounting-export'),
   RouteRule('/einvoice-config', RouteClass.workspace, place: 'drawer-legal-identity'),
   RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents'),
@@ -273,6 +290,10 @@ RouteChrome chromeOf(String path) =>
 
 /// #3603 — the place [path] (no query) declares, or null.
 String? placeOf(String path) => matchRoute(path)?.place;
+
+/// #3604 — the measure [path] (no query) is drawn in.
+PageMeasure measureOf(String path) =>
+    matchRoute(path)?.measure ?? PageMeasure.framed;
 
 /// The class of [path] (no query), or [RouteClass.unknown].
 RouteClass classifyRoute(String path) =>
