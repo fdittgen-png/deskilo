@@ -5811,6 +5811,7 @@
   "eventExpenseScheduleLine": "{actor} plant „{title}“ — {amount} wiederkehrend",
   "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht",
   "eventForSubject": "für {name}",
+  "eventInvoiceIssuedLine": "Neue Rechnung {number}",
   "eventInvoicePaid": "Rechnung {number} bezahlt — {amount}",
   "@eventInvoicePaid": {
     "placeholders": {
@@ -14378,6 +14379,7 @@
   "pushAllowAction": "Erlauben",
   "pushCancelledBody": "Eine Reservierung wurde von einem Admin entfernt.",
   "pushCancelledTitle": "Reservierung entfernt",
+  "pushInvoiceIssuedBody": "Eine neue Rechnung wartet auf Sie.",
   "pushMentionBody": "Sie wurden in einer Unterhaltung erwähnt.",
   "pushMessageBody": "Sie haben eine neue Nachricht.",
   "pushPendingBody": "Jemand wartet auf Ihre Bestätigung.",
@@ -17885,6 +17887,7 @@
   "setupNotificationsChannelsAppPush": "in der App und als Benachrichtigung auf dem Telefon",
   "setupNotificationsChannelsDevice": "als Erinnerung auf dem eigenen Telefon, auch ohne Benachrichtigungen",
   "setupNotificationsEventCheckIn": "Eine Buchung beginnt gleich: Zeit zum Einchecken",
+  "setupNotificationsEventInvoiceIssued": "Eine neue Rechnung",
   "setupNotificationsEventInvoiceReminder": "Eine Zahlungserinnerung",
   "setupNotificationsEventMemberMention": "Jemand erwähnt das Mitglied in einem Gespräch",
   "setupNotificationsEventMemberNote": "Eine Nachricht oder eine Ankündigung",

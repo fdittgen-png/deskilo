@@ -16,6 +16,9 @@ import {
   CONCURRENCY,
   deliverAll,
   dropMuted,
+  eventRecipients,
+  notificationText,
+  SUPPORTED_LOCALES,
   mutedExceptMentioned,
   isUnregistered,
   readAll,
@@ -197,3 +200,28 @@ Deno.test("#2216 — a mention rings through a mute; the rest stays silent", () 
   assertEquals(mutedExceptMentioned(["b", "c"], []), ["b", "c"]);
 });
 
+
+Deno.test("#3672 a new invoice reaches its customer, in their language, even the owner's own", () => {
+  const members = [
+    { id: "m-customer", is_admin: false, is_owner: false },
+    { id: "m-admin", is_admin: true, is_owner: false },
+  ];
+  const ids = (r: { id: string }[]) => r.map((m) => m.id);
+  assertEquals(ids(eventRecipients("invoice_issued", members, "m-customer")), ["m-customer"]);
+  assertEquals(
+    ids(eventRecipients("invoice_issued", members, "m-owner")),
+    ["m-owner"],
+    "the owner who invoiced themselves is the actor, filtered out of members, and still told",
+  );
+  assertEquals(ids(eventRecipients("invoice_reminder", [], "m-owner")), ["m-owner"]);
+  assertEquals(ids(eventRecipients("pending_request", [], "m-owner")), []);
+  assertEquals(
+    eventRecipients("reservation_cancelled", members, "m-customer").map((m) => m.id),
+    ["m-customer", "m-admin"],
+  );
+  for (const locale of SUPPORTED_LOCALES) {
+    const text = notificationText("invoice_issued", locale);
+    assertEquals(text.title, "DesKilo");
+    assertEquals(text.body === notificationText("update", locale).body, false, locale);
+  }
+});

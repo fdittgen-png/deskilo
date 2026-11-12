@@ -36,6 +36,7 @@ Set<WorkspacePermission> eventTypeViewPermissions(String type) {
     'invoice_payment_reversed' ||
     'invoice_writeoff' ||
     'invoice_reminder' ||
+    'invoice_issued' ||
     'invoice_issue' ||
     'invoice_void' ||
     'refund' ||

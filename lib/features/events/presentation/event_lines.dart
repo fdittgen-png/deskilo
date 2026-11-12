@@ -294,6 +294,9 @@ String _noticeOrFallbackLine(
     '${event.payload['kind'] ?? ''}',
     '${event.payload['note'] ?? ''}',
   ),
+  EventType.invoiceIssued => l10n.eventInvoiceIssuedLine(
+    '${event.payload['number'] ?? ''}',
+  ),
   EventType.settlementReview => l10n.eventSettlementReview(
     '${event.payload['settlement_id'] ?? ''}',
     '${event.payload['reason'] ?? ''}',

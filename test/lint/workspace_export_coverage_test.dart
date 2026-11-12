@@ -128,6 +128,9 @@ const Map<String, String> _notExported = {
       'one row per payment reminder and its delivery status (#1922); the '
           'invoices tab already shows reminders, and this is collection '
           'evidence, not data an operator re-imports',
+  'invoice_issue_notices':
+      '#3672 -- whether telling a customer about a new invoice was queued: a delivery '
+          'record of this server; the invoices and their feed events are exported themselves',
   'reminder_attempts':
       'the append-only delivery evidence of each reminder (#1922); as above',
   'workspace_field_value_options':

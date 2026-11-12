@@ -5811,6 +5811,7 @@
   "eventExpenseScheduleLine": "{actor} programma «{title}» — {amount} ricorrente",
   "eventExpenseSubmitted": "{actor} ha inviato una spesa di {amount}",
   "eventForSubject": "per {name}",
+  "eventInvoiceIssuedLine": "Nuova fattura {number}",
   "eventInvoicePaid": "Fattura {number} pagata — {amount}",
   "@eventInvoicePaid": {
     "placeholders": {
@@ -14378,6 +14379,7 @@
   "pushAllowAction": "Consenti",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
+  "pushInvoiceIssuedBody": "La attende una nuova fattura.",
   "pushMentionBody": "È stato menzionato in una conversazione.",
   "pushMessageBody": "Ha un nuovo messaggio.",
   "pushPendingBody": "Qualcuno attende la sua conferma.",
@@ -17885,6 +17887,7 @@
   "setupNotificationsChannelsAppPush": "nell’app e come notifica sul telefono",
   "setupNotificationsChannelsDevice": "come promemoria sul proprio telefono, anche senza notifiche",
   "setupNotificationsEventCheckIn": "Una prenotazione sta per iniziare: è ora del check-in",
+  "setupNotificationsEventInvoiceIssued": "Una nuova fattura",
   "setupNotificationsEventInvoiceReminder": "Un sollecito di pagamento",
   "setupNotificationsEventMemberMention": "Qualcuno lo cita in una conversazione",
   "setupNotificationsEventMemberNote": "Un messaggio o un annuncio",

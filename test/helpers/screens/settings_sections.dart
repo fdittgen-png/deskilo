@@ -50,7 +50,7 @@ Future<void> pumpSettingsAs(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.settings_outlined));
+  await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
   await tester.pumpAndSettle();
   if (manage) await showWorkspaceSettings(tester);
 }
