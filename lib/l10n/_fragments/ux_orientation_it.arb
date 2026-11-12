@@ -1,9 +1,12 @@
 {
-  "uxOpenWorkspace": "Apri spazio",
+  "uxOpenWorkspace": "Apri attività",
   "uxTestSpace": "Spazio di prova",
+  "meTestBusiness": "Attività di prova",
   "uxRealWorkspace": "Spazio reale",
+  "meRealBusiness": "Attività reale",
   "uxRealSpaceHint": "Prenotazioni e fatture reali",
   "uxTestSpaceHint": "Spazio di prova: prenotazioni e fatture di prova",
+  "meTestBusinessHint": "Attività di prova: prenotazioni e fatture di prova",
   "uxProfileAccount": "Profilo e account",
   "uxProfileSection": "Profilo",
   "uxPrivacySection": "Privacy",

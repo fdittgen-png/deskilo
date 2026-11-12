@@ -5,6 +5,7 @@
   "settingLabelPrivacyMemberSelfService": "Les membres exportent et effacent eux-mêmes leurs données",
   "settingHintPrivacyMemberSelfService": "true : un membre peut exporter et effacer ses données depuis l’application. false : il dépose une demande de droits, traitée par l’administrateur des données personnelles. Les propriétaires et l’administrateur des données personnelles ne sont jamais bloqués, et le dépôt d’une demande reste toujours ouvert.",
   "privacySelfServiceOff": "Cet espace traite lui-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.",
+  "mePrivacySelfServiceOff": "Cette entreprise traite elle-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.",
   "@eventPrivacyIncident": {
     "placeholders": {
       "kind": {

@@ -208,7 +208,7 @@ void main() {
       await goTo(tester, router, '/me/data?view=profile');
       expect(_key('me-data-personal-loaded'), findsOneWidget);
       expect(
-        find.text('Conversations: 2 · Messages: 4 · Workspaces named: 1'),
+        find.text('Conversations: 2 · Messages: 4 · Places named: 1'),
         findsOneWidget,
       );
       await tester.tap(_key('me-data-personal-export'));

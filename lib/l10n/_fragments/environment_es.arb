@@ -12,7 +12,7 @@
   "@environmentLabel": {
     "description": "#917 workspace environment: environmentLabel"
   },
-  "environmentHint": "Un espacio de desarrollo lo anuncia en cada pantalla y pone marca de agua en cada documento. Decláre­lo producción solo cuando las facturas que salen de él se deban de verdad.",
+  "environmentHint": "Un negocio de desarrollo lo anuncia en cada pantalla y pone marca de agua en cada documento. Declárelo producción solo cuando las facturas que salen de él se deban de verdad.",
   "@environmentHint": {
     "description": "#917 workspace environment: environmentHint"
   },

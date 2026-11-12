@@ -39,7 +39,7 @@
   "@portalSourceUnavailable": {
     "description": "Shown as the text in account messenger sections (directory), and 5 other places."
   },
-  "portalDiscover": "Find a workspace",
+  "portalDiscover": "Find a place",
   "@portalDiscover": {
     "description": "Shown as the label in auth form sections (auth), and 2 other places."
   },
@@ -127,7 +127,7 @@
   "@portalRequestPending": {
     "description": "Shown on the disabled button of a space offer once the request to join was sent and waits for the space's answer."
   },
-  "portalRequestSent": "Request sent. The workspace will review your profile.",
+  "portalRequestSent": "Request sent. The business will review your profile.",
   "@portalRequestSent": {
     "description": "Shown as the text in public workspace view (directory)."
   },
@@ -139,15 +139,15 @@
   "@portalMap": {
     "description": "Shown as the tooltip in directory screen (directory)."
   },
-  "portalSearch": "Search workspaces",
+  "portalSearch": "Search places",
   "@portalSearch": {
     "description": "Shown as the label of a field in directory screen (directory), and 1 other place."
   },
-  "portalNoLongerPublished": "This workspace is no longer published.",
+  "portalNoLongerPublished": "This place is no longer published.",
   "@portalNoLongerPublished": {
     "description": "Shown as the text in public workspace view (directory)."
   },
-  "portalDirectoryIncompatible": "Some workspaces need a newer version of the app and are not shown.",
+  "portalDirectoryIncompatible": "Some places need a newer version of the app and are not shown.",
   "@portalDirectoryIncompatible": {
     "description": "Shown as the text in discovery list view (directory), and 1 other place."
   },

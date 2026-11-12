@@ -4,7 +4,7 @@
   "discoveryRemoveBookmark": "Rimuovi dai salvati",
   "discoveryView": "Vedi",
   "discoverySavedFilter": "Salvati",
-  "discoveryNoSaved": "Nessuno spazio salvato su questo dispositivo per ora.",
+  "discoveryNoSaved": "Nessun posto salvato su questo dispositivo per ora.",
   "discoveryLoadedCount": "Luoghi caricati: {loaded} · mostrati: {shown} · directory che hanno risposto: {answered} su {sources}",
   "discoveryShowMoreFrom": "Mostra altri da {source}",
   "discoverySourceFailed": "{source} non ha risposto. I luoghi già mostrati restano.",

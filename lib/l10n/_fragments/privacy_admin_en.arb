@@ -30,5 +30,9 @@
   "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
   "@privacySelfServiceOff": {
     "description": "Shown as the text in refusal text (core), and 3 other places."
+  },
+  "mePrivacySelfServiceOff": "This business handles data requests itself. File a rights request and the personal data admin will answer it.",
+  "@mePrivacySelfServiceOff": {
+    "description": "Me, the data export card: the business answers data requests itself (#3555: refusal_text keeps privacySelfServiceOff)"
   }
 }
