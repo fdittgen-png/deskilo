@@ -62,7 +62,7 @@ Future<String?> exportReportLayout(
 }
 
 /// What a layout file is: the same group for the picker and the drop.
-XTypeGroup reportLayoutTypes(AppLocalizations l10n) => XTypeGroup(
+XTypeGroup _reportLayoutTypes(AppLocalizations l10n) => XTypeGroup(
   label: l10n.reportLayoutFileTypeLabel,
   extensions: const ['xml'],
   mimeTypes: const ['application/xml', 'text/xml'],
@@ -84,7 +84,7 @@ class ReportLayoutDropZone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FileDropZone(
-    typeGroup: reportLayoutTypes(context.l10n),
+    typeGroup: _reportLayoutTypes(context.l10n),
     onFile: onFile,
     enabled: enabled,
     child: child,
@@ -103,7 +103,7 @@ Future<ReportLayoutFile?> importReportLayout(
 }) async {
   final l10n = context.l10n;
   final file =
-      dropped ?? await ref.read(filePickerProvider)(reportLayoutTypes(l10n));
+      dropped ?? await ref.read(filePickerProvider)(_reportLayoutTypes(l10n));
   if (file == null) return null; // cancelled
   final content = utf8.decode(await file.readAsBytes());
   try {

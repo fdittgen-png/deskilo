@@ -63,7 +63,7 @@ Future<String?> exportReportDesign(
 }
 
 /// What a design file is: the same group for the picker and the drop.
-XTypeGroup reportDesignTypes(AppLocalizations l10n) => XTypeGroup(
+XTypeGroup _reportDesignTypes(AppLocalizations l10n) => XTypeGroup(
   label: l10n.reportDesignFileTypeLabel,
   extensions: const ['json'],
   mimeTypes: const ['application/json'],
@@ -85,7 +85,7 @@ class ReportDesignDropZone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FileDropZone(
-    typeGroup: reportDesignTypes(context.l10n),
+    typeGroup: _reportDesignTypes(context.l10n),
     onFile: onFile,
     enabled: enabled,
     child: child,
@@ -105,7 +105,7 @@ Future<ReportBands?> importReportDesign(
 }) async {
   final l10n = context.l10n;
   final file =
-      dropped ?? await ref.read(filePickerProvider)(reportDesignTypes(l10n));
+      dropped ?? await ref.read(filePickerProvider)(_reportDesignTypes(l10n));
   if (file == null) return null; // cancelled
   // Explicit UTF-8: XFile.readAsString is not UTF-8-safe for data-backed
   // files, the same reason the workspace XML import decodes by hand.

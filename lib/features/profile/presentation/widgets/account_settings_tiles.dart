@@ -71,16 +71,16 @@ Future<void> _pickPhoto(
     return;
   }
   if (file == null || !context.mounted) return; // cancelled
-  await _uploadPhoto(context, ref, userId, file);
+  await _uploadPhoto(context, file, ref, userId);
 }
 
 /// #3818 — what a picked or a dropped photo comes to: stored, or refused
 /// in words.
 Future<void> _uploadPhoto(
   BuildContext context,
+  XFile file,
   WidgetRef ref,
   String userId,
-  XFile file,
 ) async {
   final l10n = context.l10n;
   try {
@@ -219,7 +219,7 @@ List<Widget> accountSettingsTiles(
     if (profile && myProfile != null)
       FileDropZone(
         typeGroup: _photoTypes(l10n),
-        onFile: (file) => _uploadPhoto(context, ref, myProfile.id, file),
+        onFile: (file) => _uploadPhoto(context, file, ref, myProfile.id),
         child: ListTile(
         key: const ValueKey('settings-photo'),
         leading: MemberAvatar(

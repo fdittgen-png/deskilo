@@ -66,7 +66,7 @@ class TaskWizardScreen extends ConsumerWidget {
       body: FileDropZone(
         typeGroup: _taskFileTypes(l10n),
         enabled: ref.watch(guideStoreProvider) != null,
-        onFile: (file) async => _openTaskFile(context, ref, file),
+        onFile: (file) async => _openTaskFile(context, file, ref),
         child: ListView(
         key: const ValueKey('task-wizard'),
         padding: AppSpacing.gutterAll,
@@ -331,15 +331,15 @@ Future<void> _addFromFile(BuildContext context, WidgetRef ref) async {
     return;
   }
   if (file == null || !context.mounted) return;
-  await _openTaskFile(context, ref, file);
+  await _openTaskFile(context, file, ref);
 }
 
 /// #3818 — what a picked or a dropped task file comes to: a guide draft,
 /// or the reason it is refused.
 Future<void> _openTaskFile(
   BuildContext context,
-  WidgetRef ref,
   XFile file,
+  WidgetRef ref,
 ) async {
   final l10n = context.l10n;
   TaskGuide? guide;
