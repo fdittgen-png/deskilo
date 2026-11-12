@@ -11663,6 +11663,30 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'Le fichier précédent est encore en cours de traitement. Déposez le suivant quand il est terminé.';
+
+  @override
+  String get fileDropFolder =>
+      'Un dossier ne peut pas être déposé ici. Déposez un fichier.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Déposez le fichier ici. Cet endroit accepte $kinds.';
+  }
+
+  @override
+  String get fileDropReadFailed => 'Le fichier déposé n\'a pas pu être lu.';
+
+  @override
+  String get fileDropSeveral => 'Déposez un seul fichier à la fois.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'Cet endroit n\'accepte que les fichiers $kinds. Déposez un autre fichier ou utilisez le bouton.';
+  }
+
+  @override
   String get fileExportKeep => 'Garder dans Deskilo';
 
   @override

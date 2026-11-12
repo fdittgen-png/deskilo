@@ -7466,6 +7466,12 @@
       }
     }
   },
+  "fileDropBusy": "El archivo anterior aún se está procesando. Suelte el siguiente cuando termine.",
+  "fileDropFolder": "Aquí no se puede soltar una carpeta. Suelte un archivo.",
+  "fileDropOverlay": "Suelte el archivo aquí. Aquí se aceptan {kinds}.",
+  "fileDropReadFailed": "No se pudo leer el archivo soltado.",
+  "fileDropSeveral": "Suelte un solo archivo a la vez.",
+  "fileDropWrongKind": "Aquí solo se aceptan archivos {kinds}. Suelte otro archivo o use el botón.",
   "fileExportKeep": "Guardar en Deskilo",
   "@fileExportKeep": {
     "description": "iPhone Export… row: keep a private copy inside the app"

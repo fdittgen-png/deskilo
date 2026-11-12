@@ -18933,6 +18933,42 @@ abstract class AppLocalizations {
   /// **'Download requested: {fileName}. Your browser decides where it goes.'**
   String fileDownloadRequested(String fileName);
 
+  /// Refusal of a second drop while the first file is still being processed (#3623).
+  ///
+  /// In en, this message translates to:
+  /// **'The previous file is still being processed. Drop the next one when it is done.'**
+  String get fileDropBusy;
+
+  /// Refusal when a folder is dropped where a file is taken (#3623).
+  ///
+  /// In en, this message translates to:
+  /// **'A folder cannot be dropped here. Drop one file.'**
+  String get fileDropFolder;
+
+  /// The hint on the area while a file is dragged over a place that takes a file (#3623); {kinds} lists the file endings.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop the file here. This place takes {kinds}.'**
+  String fileDropOverlay(String kinds);
+
+  /// A dropped file could not be read (#3623).
+  ///
+  /// In en, this message translates to:
+  /// **'The dropped file could not be read.'**
+  String get fileDropReadFailed;
+
+  /// Refusal when several files are dropped where one is taken (#3623).
+  ///
+  /// In en, this message translates to:
+  /// **'Drop one file at a time.'**
+  String get fileDropSeveral;
+
+  /// Refusal of a dropped file of another kind than the place takes (#3623).
+  ///
+  /// In en, this message translates to:
+  /// **'This place takes {kinds} files. Drop another file, or use the button.'**
+  String fileDropWrongKind(String kinds);
+
   /// iPhone Export… row: keep a private copy inside the app
   ///
   /// In en, this message translates to:

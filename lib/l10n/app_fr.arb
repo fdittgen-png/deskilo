@@ -7466,6 +7466,12 @@
       }
     }
   },
+  "fileDropBusy": "Le fichier précédent est encore en cours de traitement. Déposez le suivant quand il est terminé.",
+  "fileDropFolder": "Un dossier ne peut pas être déposé ici. Déposez un fichier.",
+  "fileDropOverlay": "Déposez le fichier ici. Cet endroit accepte {kinds}.",
+  "fileDropReadFailed": "Le fichier déposé n'a pas pu être lu.",
+  "fileDropSeveral": "Déposez un seul fichier à la fois.",
+  "fileDropWrongKind": "Cet endroit n'accepte que les fichiers {kinds}. Déposez un autre fichier ou utilisez le bouton.",
   "fileExportKeep": "Garder dans Deskilo",
   "@fileExportKeep": {
     "description": "iPhone Export… row: keep a private copy inside the app"

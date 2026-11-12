@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:file_selector/file_selector.dart' show XTypeGroup;
+import 'package:file_selector/file_selector.dart' show XFile, XTypeGroup;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -36,7 +37,19 @@ class _ReportImageDialog extends ConsumerStatefulWidget {
 class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
   bool _uploading = false;
 
-  Future<void> _upload(BuildContext context, WidgetRef ref) async {
+  XTypeGroup _types(BuildContext context) => XTypeGroup(
+    label: context.l10n.editorToolImage,
+    extensions: const ['jpg', 'jpeg', 'png', 'webp'],
+    mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
+  );
+
+  /// Uploads [dropped] — or, when null, the file the picker returns; the
+  /// two meet the same read, the same name and the same upload (#3623).
+  Future<void> _upload(
+    BuildContext context,
+    WidgetRef ref, {
+    XFile? dropped,
+  }) async {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
@@ -49,11 +62,7 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
       message: 'report image upload failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        final file = await pick(XTypeGroup(
-          label: l10n.editorToolImage,
-          extensions: const ['jpg', 'jpeg', 'png', 'webp'],
-          mimeTypes: const ['image/jpeg', 'image/png', 'image/webp'],
-        ));
+        final file = dropped ?? await pick(_types(context));
         if (file == null || !context.mounted) return;
         final bytes = await file.readAsBytes();
         if (!context.mounted ||
@@ -94,7 +103,11 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
     final images = library.requireValue;
     return AlertDialog(
       title: Text(l10n.reportImagesTitle),
-      content: SizedBox(
+      content: FileDropZone(
+       typeGroup: _types(context),
+       enabled: !_uploading,
+       onFile: (file) => _upload(context, ref, dropped: file),
+       child: SizedBox(
         width: 360,
         child: library.isLoading
             ? const LoadingView()
@@ -160,6 +173,7 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
                     ),
                 ],
               ),
+       ),
       ),
       actions: [
         TextButton.icon(
