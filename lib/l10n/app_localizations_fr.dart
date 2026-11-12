@@ -5378,7 +5378,7 @@ class AppLocalizationsFr extends AppLocalizations {
       days,
       locale: localeName,
       other: 'Une série peut couvrir au plus $days jours.',
-      one: 'Une série peut couvrir au plus 1 jour.',
+      one: 'Une série peut couvrir au plus $days jour.',
     );
     return '$_temp0';
   }

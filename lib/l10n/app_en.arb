@@ -7000,7 +7000,7 @@
   "@bookingSameDayError": {
     "description": "Shown as a text in booking error text (reservations), and 1 other place."
   },
-  "bookingSeriesTooLong": "{days, plural, =1{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}",
+  "bookingSeriesTooLong": "{days, plural, one{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}",
   "@bookingSeriesTooLong": {
     "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
     "placeholders": {

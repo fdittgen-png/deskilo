@@ -20,7 +20,7 @@
   "@bookingOnlyUpcoming": {
     "description": "#3810 booking refusal DKK33: only upcoming bookings can be edited"
   },
-  "bookingSeriesTooLong": "{days, plural, =1{Una serie puede abarcar como máximo 1 día.} other{Una serie puede abarcar como máximo {days} días.}}",
+  "bookingSeriesTooLong": "{days, plural, one{Una serie puede abarcar como máximo 1 día.} other{Una serie puede abarcar como máximo {days} días.}}",
   "@bookingSeriesTooLong": {
     "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
     "placeholders": {

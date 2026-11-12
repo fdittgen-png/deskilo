@@ -8432,7 +8432,7 @@ abstract class AppLocalizations {
   /// #3810 booking refusal DKK34: a series longer than the allowed days
   ///
   /// In en, this message translates to:
-  /// **'{days, plural, =1{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}'**
+  /// **'{days, plural, one{A series can cover at most 1 day.} other{A series can cover at most {days} days.}}'**
   String bookingSeriesTooLong(int days);
 
   /// #1908 — the hierarchy guard refused: the seat/desk/office/level or a space containing it is reserved in that period

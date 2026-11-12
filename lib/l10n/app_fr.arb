@@ -3285,7 +3285,7 @@
     "description": "#3810 booking refusal DKK31: a running booking cannot move its start"
   },
   "bookingSameDayError": "Une réservation se termine le jour où elle commence — réservez le lendemain séparément.",
-  "bookingSeriesTooLong": "{days, plural, =1{Une série peut couvrir au plus 1 jour.} other{Une série peut couvrir au plus {days} jours.}}",
+  "bookingSeriesTooLong": "{days, plural, one{Une série peut couvrir au plus {days} jour.} other{Une série peut couvrir au plus {days} jours.}}",
   "@bookingSeriesTooLong": {
     "description": "#3810 booking refusal DKK34: a series longer than the allowed days",
     "placeholders": {
