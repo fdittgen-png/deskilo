@@ -2259,7 +2259,7 @@ routine public.asset_actor(p_workspace_id uuid, p_review boolean) -> uuid | func
 routine public.asset_candidate_lines_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:882cf98c43dd
 routine public.asset_valuations_page_v1(p_workspace_id uuid, p_filters jsonb, p_cursor uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:661410992b9b
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:ead38db4d788
-routine public.badge_auth_verify(p_uid text, p_pin text, p_source text, p_device_id uuid, p_device_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:064e5f189d28
+routine public.badge_auth_verify(p_uid text, p_pin text, p_source text, p_device_id uuid, p_device_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:98d272ecf850
 routine public.badge_pin_needs_review(p_workspace_id uuid, p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f757e49c3c30
 routine public.badge_signin_kiosks_only(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2cf5709d1972
 routine public.badge_signin_paused(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2085392eadcd

@@ -8,22 +8,24 @@
 -- paused business answers "locked" for every tag; without one, no answer
 -- tells a tag of a business from an unknown tag. Rolled back.
 begin;
-select plan(44);
+select plan(50);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004000' || lpad(n::text,4,'0'))::uuid;
 $$;
 insert into auth.users (id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select pg_temp.u(i),'00000000-0000-0000-0000-000000000000','authenticated','authenticated',
-  'kiosk-enrol-'||i||'@example.test','',now(),now(),now() from generate_series(1,7) i;
+  'kiosk-enrol-'||i||'@example.test','',now(),now(),now() from generate_series(1,10) i;
 update public.profiles set display_name = 'Cy Moreau' where id = pg_temp.u(7);
+update public.profiles set display_name = 'Di Rossi' where id = pg_temp.u(9);
 update public.profiles set display_name = 'Ana Martin' where id = pg_temp.u(2);
 update public.profiles set display_name = 'Bo Lind' where id = pg_temp.u(5);
 -- A and B enrol kiosks; C has kiosk enrolment off.
 insert into public.workspaces (id,name,country_code,currency_code,timezone,created_by,feature_flags) values
  (pg_temp.u(101),'Kiosk A','FR','EUR','Europe/Paris',pg_temp.u(1),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true,"kioskEnrolment":true}'),
  (pg_temp.u(102),'Kiosk B','FR','EUR','Europe/Paris',pg_temp.u(4),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true,"kioskEnrolment":true}'),
- (pg_temp.u(103),'Kiosk C','FR','EUR','Europe/Paris',pg_temp.u(6),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true,"kioskEnrolment":false}');
+ (pg_temp.u(103),'Kiosk C','FR','EUR','Europe/Paris',pg_temp.u(6),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true,"kioskEnrolment":false}'),
+ (pg_temp.u(104),'Kiosk D','FR','EUR','Europe/Paris',pg_temp.u(8),'{"kioskMode":true,"nfcBadges":true,"badgeSignIn":true,"kioskEnrolment":true}');
 insert into public.members (id,workspace_id,user_id,is_owner,is_admin,status) values
  (pg_temp.u(201),pg_temp.u(101),pg_temp.u(1),true,true,'active'),
  (pg_temp.u(202),pg_temp.u(101),pg_temp.u(2),false,false,'active'),
@@ -31,15 +33,20 @@ insert into public.members (id,workspace_id,user_id,is_owner,is_admin,status) va
  (pg_temp.u(204),pg_temp.u(102),pg_temp.u(4),true,true,'active'),
  (pg_temp.u(205),pg_temp.u(102),pg_temp.u(5),false,false,'active'),
  (pg_temp.u(206),pg_temp.u(103),pg_temp.u(6),true,true,'active'),
- (pg_temp.u(207),pg_temp.u(101),pg_temp.u(7),false,false,'active');
+ (pg_temp.u(207),pg_temp.u(101),pg_temp.u(7),false,false,'active'),
+ (pg_temp.u(208),pg_temp.u(104),pg_temp.u(8),true,true,'active'),
+ (pg_temp.u(209),pg_temp.u(104),pg_temp.u(9),false,false,'active'),
+ (pg_temp.u(210),pg_temp.u(104),pg_temp.u(10),false,false,'active');
 insert into public.member_badges (id,workspace_id,member_id,token_hash,auth_enabled) values
  (pg_temp.u(302),pg_temp.u(101),pg_temp.u(202),public.badge_token_hash('4000000000000002'),true),
  (pg_temp.u(303),pg_temp.u(101),pg_temp.u(203),public.badge_token_hash('4000000000000003'),true),
  (pg_temp.u(305),pg_temp.u(102),pg_temp.u(205),public.badge_token_hash('4000000000000005'),true),
  (pg_temp.u(306),pg_temp.u(103),pg_temp.u(206),public.badge_token_hash('4000000000000006'),true),
- (pg_temp.u(307),pg_temp.u(101),pg_temp.u(207),public.badge_token_hash('4000000000000007'),true);
+ (pg_temp.u(307),pg_temp.u(101),pg_temp.u(207),public.badge_token_hash('4000000000000007'),true),
+ (pg_temp.u(309),pg_temp.u(104),pg_temp.u(209),public.badge_token_hash('4000000000000009'),true),
+ (pg_temp.u(310),pg_temp.u(104),pg_temp.u(210),public.badge_token_hash('4000000000000010'),true);
 insert into public.account_badge_pins(user_id,pin_hash)
-select pg_temp.u(i),extensions.crypt('482615',extensions.gen_salt('bf',10)) from generate_series(2,7) i;
+select pg_temp.u(i),extensions.crypt('482615',extensions.gen_salt('bf',10)) from generate_series(2,10) i;
 
 create function pg_temp.as_user(p_user uuid, p_sql text, p_delegated boolean default false)
 returns text language plpgsql as $f$
@@ -156,8 +163,29 @@ select is((select count(*)::int from public.events where workspace_id = pg_temp.
 select is(pg_temp.answers('4000000000000005', current_setting('t.n')::int + 1, 'b'),
           rtrim(repeat('refused ', current_setting('t.n')::int)) || ' locked',
   'failures at its own kiosk still lock there');
-select is(pg_temp.verify('4000000000000005', '000000') ->> 'reason', 'refused',
-  'and only there: off a kiosk it is refused, not locked');
+select is((select count(*)::int from public.badge_auth_attempts where token_hash = public.badge_token_hash('4000000000000005')
+            and step = 'pin' and not succeeded and kiosk_workspace_id is null), current_setting('t.n')::int,
+  'and only there: the failures at its own kiosk never join the pool shared everywhere else (the N from the foreign kiosk are all it holds)');
+
+-- ── no kiosk gives extra guesses ───────────────────────────────────────
+-- Business D signs in on any device and has its own kiosk; A's and B's
+-- kiosks are foreign to its badges.
+select ok(pg_temp.enrol(8, 104, 'Hall', 'd') like '{%', 'business D enrols its own kiosk');
+select public.store_setting(pg_temp.u(104), 'security.badge_signin_where', '"any_device"'::jsonb, 'test', null);
+select pg_temp.answers('4000000000000009', current_setting('t.n')::int, 'a');
+select is(pg_temp.verify('4000000000000009', '482615', 'b') ->> 'reason', 'locked',
+  'wrong PINs at one foreign kiosk exhaust the badge''s one pool: another foreign kiosk is locked too');
+select is(pg_temp.verify('4000000000000009', '482615') ->> 'reason', 'locked', 'and so is any device');
+select is(pg_temp.verify('4000000000000009', '482615', 'd') ->> 'display_name', 'Di Rossi',
+  'at its own kiosk the badge still signs in');
+select pg_temp.answers('4000000000000010', 2);
+select pg_temp.answers('4000444444444444', 2);
+select set_config('t.real', pg_temp.answers('4000000000000010', current_setting('t.n')::int + 1, 'a'), false);
+select set_config('t.unknown', pg_temp.answers('4000444444444444', current_setting('t.n')::int + 1, 'a'), false);
+select is(current_setting('t.real'), current_setting('t.unknown'),
+  'at a foreign kiosk a real and an unknown tag answer alike, with failures already in their pool');
+select is(current_setting('t.real'), rtrim(repeat('refused ', current_setting('t.n')::int - 2)) || ' locked locked locked',
+  'and the two tried off a kiosk count there too: one pool, no extra guesses');
 
 select public.store_setting(pg_temp.u(101), 'security.badge_signin_where', '"any_device"'::jsonb, 'test', null);
 select is(pg_temp.verify('4000000000000003', '482615') ->> 'ok', 'true', 'any device: the right PIN signs in anywhere');
@@ -173,7 +201,7 @@ select is(pg_temp.as_user(pg_temp.u(4), format('select public.revoke_kiosk_devic
 select is((select count(*)::int from public.events where workspace_id = pg_temp.u(102) and type = 'kiosk_device' and payload ->> 'change' = 'revoked'), 1,
   'the owners are told of the revocation');
 select is(pg_temp.verify('4000000000000005', null, 'b'), '{"ok": true}'::jsonb, 'a revoked kiosk names nobody: it is no device');
-select is(pg_temp.verify('4000000000000005', '482615', 'b') ->> 'reason', 'refused', 'and signs nobody in where kiosks are required');
+select ok(not coalesce((pg_temp.verify('4000000000000005', '482615', 'b') ->> 'ok')::boolean, false), 'and signs nobody in where kiosks are required');
 
 -- ── the pause ──────────────────────────────────────────────────────
 select public.store_setting(pg_temp.u(101), 'security.badge_signin_where', '"enrolled_kiosks"'::jsonb, 'test', null);
