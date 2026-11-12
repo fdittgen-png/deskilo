@@ -127,6 +127,13 @@ File? _materialIcons() {
 /// and icons instead of boxes. Without it, nothing happens.
 Future<void> loadSheetFonts() async {
   if (Platform.environment['SHEET'] != '1') return;
+  await loadRealFonts();
+}
+
+/// #3782 — loads Roboto and the icon font: a guard that measures text (a
+/// cut label) measures it in the app's font, not in the test font, whose
+/// every letter is a square.
+Future<void> loadRealFonts() async {
   final icons = _materialIcons();
   if (icons != null) {
     await (FontLoader(
@@ -470,7 +477,7 @@ Set<String> formLayoutProblems(
     final box = e.renderObject;
     if (box is RenderParagraph && box.hasSize && box.didExceedMaxLines) {
       problems.add('helper cut');
-      details?.add('cut: "${box.text.toPlainText()}"');
+      details?.add('cut: "${box.text.toPlainText()}" in ${box.size.width}');
     }
   }
   return problems;

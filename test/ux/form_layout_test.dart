@@ -106,6 +106,8 @@ Future<void> _plant(WidgetTester tester, Widget form) async {
 }
 
 void main() {
+  setUpAll(loadRealFonts);
+
   testWidgets('two fields without a gap fail', (tester) async {
     await _plant(
       tester,
