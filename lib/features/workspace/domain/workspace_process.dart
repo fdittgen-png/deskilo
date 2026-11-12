@@ -256,6 +256,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       // record of how a task is done, not a right anybody holds.
       WorkspaceFeature.taskRecorder,
       WorkspaceFeature.uiAnimations,
+      // #3610 — how the app is found and driven, not a right anybody holds.
+      WorkspaceFeature.quickSearch,
       WorkspaceFeature.regionalFormats,
       WorkspaceFeature.navigationStyle,
       // #1598 — beside navigationStyle, for the same reason: it decides

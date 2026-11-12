@@ -21,6 +21,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -246,17 +247,12 @@ class _BiReportEditorViewState extends ConsumerState<BiReportEditorView> {
     );
   }
 
-  Map<ShortcutActivator, VoidCallback> _shortcuts() => {
-    const SingleActivator(LogicalKeyboardKey.keyZ, control: true): _undo,
-    const SingleActivator(LogicalKeyboardKey.keyZ, meta: true): _undo,
-    const SingleActivator(LogicalKeyboardKey.keyZ, control: true, shift: true):
-        _redo,
-    const SingleActivator(LogicalKeyboardKey.keyZ, meta: true, shift: true):
-        _redo,
-    const SingleActivator(LogicalKeyboardKey.keyY, control: true): _redo,
-    const SingleActivator(LogicalKeyboardKey.keyS, control: true): _save,
-    const SingleActivator(LogicalKeyboardKey.keyS, meta: true): _save,
-  };
+  // #3610 — the registry's editor keys.
+  Map<ShortcutActivator, VoidCallback> _shortcuts() => shortcutBindings({
+    AppShortcutId.undo: _undo,
+    AppShortcutId.redo: _redo,
+    AppShortcutId.save: _save,
+  });
 
   void _undo() {
     _editor.undo();

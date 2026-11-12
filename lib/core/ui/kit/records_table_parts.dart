@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../l10n/context_l10n.dart';
+import '../../shortcuts/app_shortcuts.dart';
 import '../../theme/app_spacing.dart';
 import 'records_table_model.dart';
 import 'row_menu.dart';
@@ -405,7 +406,9 @@ class RecordsFooter extends StatelessWidget {
 /// The keys a table answers to: / filters, ↑ ↓ move, Enter opens, Space
 /// ticks, Ctrl/⌘+A selects what is shown.
 final Map<ShortcutActivator, Intent> recordsShortcuts = {
-  const SingleActivator(LogicalKeyboardKey.slash): const _FocusFilter(),
+  // #3610 — the registry's filter key: the `/` typed, on any layout.
+  for (final a in appShortcut(AppShortcutId.filter).activators)
+    a: const _FocusFilter(),
   const SingleActivator(LogicalKeyboardKey.arrowDown): const _Move(1),
   const SingleActivator(LogicalKeyboardKey.arrowUp): const _Move(-1),
   const SingleActivator(LogicalKeyboardKey.enter): const _Open(),

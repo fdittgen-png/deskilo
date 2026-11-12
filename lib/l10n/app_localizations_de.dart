@@ -11092,6 +11092,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureQrBadgesTitle => 'QR-Badges';
 
   @override
+  String get featureQuickSearchDesc =>
+      'Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben.';
+
+  @override
+  String get featureQuickSearchTitle => 'Suche und Tasten';
+
+  @override
   String get featureRecapitulativeStatementDesc =>
       'Die Leistungen mit Steuerschuldnerschaft von Unternehmen in anderen EU-Ländern, je USt-IdNr. des Kunden und Monat, als CSV neben den Umsatzsteuer-Voranmeldungen exportiert: die Liste, die das Finanzamt erwartet (DES in Frankreich, Zusammenfassende Meldung in Deutschland, Modelo 349 in Spanien). Die Rechnungsstellung zeigt einen Hinweis, solange eine Meldung fällig ist. Aus: kein Export und kein Hinweis.';
 
@@ -27411,6 +27418,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get schemaUpdateTitle => 'Dieser Server muss aktualisiert werden';
 
   @override
+  String get searchActionInvite => 'Mitglied einladen';
+
+  @override
+  String get searchActionNewPurchase => 'Neuer Einkauf';
+
+  @override
+  String get searchHint =>
+      'Eine Seite, eine Aktion, ein Mitglied, eine Rechnung…';
+
+  @override
+  String get searchKindAction => 'Aktion';
+
+  @override
+  String get searchKindMember => 'Mitglied';
+
+  @override
+  String get searchKindPage => 'Seite';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nichts gefunden für „$query“.';
+  }
+
+  @override
+  String get searchRecent => 'Zuletzt geöffnet';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Dieser Eintrag lässt sich nicht öffnen: Es gibt ihn nicht, oder Sie dürfen ihn nicht lesen.';
+
+  @override
   String get seatDayAhead => 'Später';
 
   @override
@@ -30454,6 +30492,42 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.';
+
+  @override
+  String get shortcutClose => 'Schließen';
+
+  @override
+  String get shortcutFilter => 'Diese Liste filtern';
+
+  @override
+  String get shortcutKeys => 'Die Tasten dieser Seite';
+
+  @override
+  String get shortcutKeysTitle => 'Tastaturtasten';
+
+  @override
+  String get shortcutNew => 'Neu';
+
+  @override
+  String get shortcutOpenCalendar => 'Kalender eines Datumsfelds öffnen';
+
+  @override
+  String get shortcutPrint => 'Das Dokument dieser Seite';
+
+  @override
+  String get shortcutRedo => 'Wiederholen';
+
+  @override
+  String get shortcutSave => 'Speichern';
+
+  @override
+  String get shortcutSearch => 'Seite, Aktion oder Eintrag finden';
+
+  @override
+  String get shortcutSubmit => 'Speichern oder senden';
+
+  @override
+  String get shortcutUndo => 'Rückgängig';
 
   @override
   String get siteCity => 'Ort';

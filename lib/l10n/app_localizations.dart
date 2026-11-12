@@ -17991,6 +17991,18 @@ abstract class AppLocalizations {
   /// **'QR badges'**
   String get featureQrBadgesTitle;
 
+  /// #3610 the search-and-keys feature
+  ///
+  /// In en, this message translates to:
+  /// **'Ctrl+K (⌘K on a Mac) or the bar\'s search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page\'s own keys stay.'**
+  String get featureQuickSearchDesc;
+
+  /// #3610 the search-and-keys feature
+  ///
+  /// In en, this message translates to:
+  /// **'Search and keys'**
+  String get featureQuickSearchTitle;
+
   /// #2354 recapitulative statement: featureRecapitulativeStatementDesc
   ///
   /// In en, this message translates to:
@@ -44102,6 +44114,60 @@ abstract class AppLocalizations {
   /// **'This server needs an update'**
   String get schemaUpdateTitle;
 
+  /// #3610 search (Ctrl/Cmd+K): searchActionInvite
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a member'**
+  String get searchActionInvite;
+
+  /// #3610 search (Ctrl/Cmd+K): searchActionNewPurchase
+  ///
+  /// In en, this message translates to:
+  /// **'New purchase'**
+  String get searchActionNewPurchase;
+
+  /// #3610 search (Ctrl/Cmd+K): searchHint
+  ///
+  /// In en, this message translates to:
+  /// **'A page, an action, a member, an invoice…'**
+  String get searchHint;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindAction
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get searchKindAction;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindMember
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get searchKindMember;
+
+  /// #3610 search (Ctrl/Cmd+K): searchKindPage
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get searchKindPage;
+
+  /// #3610 search (Ctrl/Cmd+K): searchNothing
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found for “{query}”.'**
+  String searchNothing(String query);
+
+  /// #3610 search (Ctrl/Cmd+K): searchRecent
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get searchRecent;
+
+  /// #3610 search (Ctrl/Cmd+K): searchRecordUnreadable
+  ///
+  /// In en, this message translates to:
+  /// **'This record cannot be opened: it does not exist or you may not read it.'**
+  String get searchRecordUnreadable;
+
   /// #903 seat day timeline: seatDayAhead
   ///
   /// In en, this message translates to:
@@ -48810,6 +48876,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.'**
   String get shellSwipeCoachMark;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get shortcutClose;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Filter this list'**
+  String get shortcutFilter;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'The keys of this page'**
+  String get shortcutKeys;
+
+  /// #3610 the title of the overlay listing the keys of the page
+  ///
+  /// In en, this message translates to:
+  /// **'Keyboard keys'**
+  String get shortcutKeysTitle;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get shortcutNew;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Open a date field\'s calendar'**
+  String get shortcutOpenCalendar;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'This page\'s document'**
+  String get shortcutPrint;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get shortcutRedo;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get shortcutSave;
+
+  /// #3610 the shortcut list: Ctrl/Cmd+K opens search
+  ///
+  /// In en, this message translates to:
+  /// **'Find a page, an action or a record'**
+  String get shortcutSearch;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Save or send'**
+  String get shortcutSubmit;
+
+  /// #3610 a line of the keys overlay: what the key does
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get shortcutUndo;
 
   /// #945 sites: siteCity
   ///

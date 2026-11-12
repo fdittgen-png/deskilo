@@ -2107,6 +2107,12 @@
       "capabilities": []
     },
     {
+      "key": "quickSearch",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "recapitulativeStatement",
       "maturity": "beta",
       "lifecycle": "active",

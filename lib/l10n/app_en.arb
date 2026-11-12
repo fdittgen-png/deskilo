@@ -14458,6 +14458,14 @@
   "@featureQrBadgesTitle": {
     "description": "Shown as a text in feature names (workspace)."
   },
+  "featureQuickSearchDesc": "Ctrl+K (⌘K on a Mac) or the bar's search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page's own keys stay.",
+  "@featureQuickSearchDesc": {
+    "description": "#3610 the search-and-keys feature"
+  },
+  "featureQuickSearchTitle": "Search and keys",
+  "@featureQuickSearchTitle": {
+    "description": "#3610 the search-and-keys feature"
+  },
   "featureRecapitulativeStatementDesc": "The services reverse-charged to businesses in other EU countries, per customer VAT number and month, exported as a CSV beside the VAT declarations: the list the tax office expects (DES in France, Zusammenfassende Meldung in Germany, modelo 349 in Spain). Invoicing shows a notice while one is due. Off: no export and no notice.",
   "@featureRecapitulativeStatementDesc": {
     "description": "#2354 recapitulative statement: featureRecapitulativeStatementDesc"
@@ -35438,6 +35446,47 @@
   "@schemaUpdateTitle": {
     "description": "#1312 Title of the screen shown when the server's schema is older than the app needs"
   },
+  "searchActionInvite": "Invite a member",
+  "@searchActionInvite": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionInvite"
+  },
+  "searchActionNewPurchase": "New purchase",
+  "@searchActionNewPurchase": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchActionNewPurchase"
+  },
+  "searchHint": "A page, an action, a member, an invoice…",
+  "@searchHint": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchHint"
+  },
+  "searchKindAction": "Action",
+  "@searchKindAction": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindAction"
+  },
+  "searchKindMember": "Member",
+  "@searchKindMember": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindMember"
+  },
+  "searchKindPage": "Page",
+  "@searchKindPage": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchKindPage"
+  },
+  "searchNothing": "Nothing found for “{query}”.",
+  "@searchNothing": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchNothing",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchRecent": "Recent",
+  "@searchRecent": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchRecent"
+  },
+  "searchRecordUnreadable": "This record cannot be opened: it does not exist or you may not read it.",
+  "@searchRecordUnreadable": {
+    "description": "#3610 search (Ctrl/Cmd+K): searchRecordUnreadable"
+  },
   "seatDayAhead": "Ahead",
   "@seatDayAhead": {
     "description": "#903 seat day timeline: seatDayAhead"
@@ -39116,6 +39165,54 @@
   "shellSwipeCoachMark": "Swipe the bar down for a full-screen view. Swipe up, or long-press the Reserve button, to bring it back.",
   "@shellSwipeCoachMark": {
     "description": "One-time hint teaching the swipe-away full-screen view (#1173)"
+  },
+  "shortcutClose": "Close",
+  "@shortcutClose": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutFilter": "Filter this list",
+  "@shortcutFilter": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutKeys": "The keys of this page",
+  "@shortcutKeys": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutKeysTitle": "Keyboard keys",
+  "@shortcutKeysTitle": {
+    "description": "#3610 the title of the overlay listing the keys of the page"
+  },
+  "shortcutNew": "New",
+  "@shortcutNew": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutOpenCalendar": "Open a date field's calendar",
+  "@shortcutOpenCalendar": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutPrint": "This page's document",
+  "@shortcutPrint": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutRedo": "Redo",
+  "@shortcutRedo": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutSave": "Save",
+  "@shortcutSave": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutSearch": "Find a page, an action or a record",
+  "@shortcutSearch": {
+    "description": "#3610 the shortcut list: Ctrl/Cmd+K opens search"
+  },
+  "shortcutSubmit": "Save or send",
+  "@shortcutSubmit": {
+    "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutUndo": "Undo",
+  "@shortcutUndo": {
+    "description": "#3610 a line of the keys overlay: what the key does"
   },
   "siteCity": "City",
   "@siteCity": {

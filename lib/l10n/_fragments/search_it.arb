@@ -1,0 +1,11 @@
+{
+  "searchHint": "Una pagina, un'azione, un membro, una fattura…",
+  "searchRecent": "Recenti",
+  "searchNothing": "Nessun risultato per «{query}».",
+  "searchKindPage": "Pagina",
+  "searchKindAction": "Azione",
+  "searchKindMember": "Membro",
+  "searchActionNewPurchase": "Nuovo acquisto",
+  "searchActionInvite": "Invita un membro",
+  "searchRecordUnreadable": "Questa scheda non si può aprire: non esiste o non può leggerla."
+}

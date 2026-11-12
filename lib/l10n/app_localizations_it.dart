@@ -11074,6 +11074,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureQrBadgesTitle => 'Badge QR';
 
   @override
+  String get featureQuickSearchDesc =>
+      'Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un\'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell\'app; restano i tasti propri di una pagina.';
+
+  @override
+  String get featureQuickSearchTitle => 'Ricerca e tasti';
+
+  @override
   String get featureRecapitulativeStatementDesc =>
       'I servizi in inversione contabile per imprese di altri Paesi UE, per partita IVA del cliente e per mese, esportati in CSV accanto alle dichiarazioni IVA: l\'elenco che l\'amministrazione si aspetta (DES in Francia, Zusammenfassende Meldung in Germania, modelo 349 in Spagna). La fatturazione mostra un avviso finché un elenco è dovuto. Disattivato: né esportazione né avviso.';
 
@@ -27371,6 +27378,36 @@ class AppLocalizationsIt extends AppLocalizations {
   String get schemaUpdateTitle => 'Questo server deve essere aggiornato';
 
   @override
+  String get searchActionInvite => 'Invita un membro';
+
+  @override
+  String get searchActionNewPurchase => 'Nuovo acquisto';
+
+  @override
+  String get searchHint => 'Una pagina, un\'azione, un membro, una fattura…';
+
+  @override
+  String get searchKindAction => 'Azione';
+
+  @override
+  String get searchKindMember => 'Membro';
+
+  @override
+  String get searchKindPage => 'Pagina';
+
+  @override
+  String searchNothing(String query) {
+    return 'Nessun risultato per «$query».';
+  }
+
+  @override
+  String get searchRecent => 'Recenti';
+
+  @override
+  String get searchRecordUnreadable =>
+      'Questa scheda non si può aprire: non esiste o non può leggerla.';
+
+  @override
   String get seatDayAhead => 'Più tardi';
 
   @override
@@ -30415,6 +30452,42 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get shellSwipeCoachMark =>
       'Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.';
+
+  @override
+  String get shortcutClose => 'Chiudi';
+
+  @override
+  String get shortcutFilter => 'Filtra questo elenco';
+
+  @override
+  String get shortcutKeys => 'I tasti di questa pagina';
+
+  @override
+  String get shortcutKeysTitle => 'Tasti della tastiera';
+
+  @override
+  String get shortcutNew => 'Nuovo';
+
+  @override
+  String get shortcutOpenCalendar => 'Apri il calendario di un campo data';
+
+  @override
+  String get shortcutPrint => 'Il documento di questa pagina';
+
+  @override
+  String get shortcutRedo => 'Ripeti';
+
+  @override
+  String get shortcutSave => 'Salva';
+
+  @override
+  String get shortcutSearch => 'Trova una pagina, un\'azione o una scheda';
+
+  @override
+  String get shortcutSubmit => 'Salva o invia';
+
+  @override
+  String get shortcutUndo => 'Annulla';
 
   @override
   String get siteCity => 'Città';

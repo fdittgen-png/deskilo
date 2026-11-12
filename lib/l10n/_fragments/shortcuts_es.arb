@@ -1,0 +1,14 @@
+{
+  "shortcutSearch": "Buscar una página, una acción o un registro",
+  "shortcutFilter": "Filtrar esta lista",
+  "shortcutNew": "Nuevo",
+  "shortcutClose": "Cerrar",
+  "shortcutSave": "Guardar",
+  "shortcutSubmit": "Guardar o enviar",
+  "shortcutPrint": "El documento de esta página",
+  "shortcutKeys": "Las teclas de esta página",
+  "shortcutOpenCalendar": "Abrir el calendario de un campo de fecha",
+  "shortcutUndo": "Deshacer",
+  "shortcutRedo": "Rehacer",
+  "shortcutKeysTitle": "Teclas del teclado"
+}

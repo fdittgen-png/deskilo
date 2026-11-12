@@ -168,6 +168,9 @@ const Set<String> _knownPairs = {
   'plan -> money',
   'reservations -> plan',
   'reservations -> workspace',
+  // #3610 — search's scope is the account, server and workspace the
+  // workspace providers hold.
+  'search -> workspace',
   'workspace -> auth',
   // #1615 — the consent screen lets a person the database has not
   // approved ask for approval: auth owns the identity binding and its

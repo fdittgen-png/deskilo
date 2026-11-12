@@ -8,6 +8,7 @@
 import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Widget _host(List<Widget> children) => MaterialApp(
@@ -90,6 +91,44 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('2/15/2030'), findsOneWidget);
       expect(last, (date: DateTime(2030, 2, 15), problem: null));
+    });
+
+    // #3610 (from #3612) — Alt+Down on the focused field opens the
+    // calendar, and the field has the focus again when it closes.
+    testWidgets('Alt+Down opens the calendar and gives the focus back', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _host([
+          AppDateField(
+            key: const ValueKey('d'),
+            label: 'Day',
+            value: DateTime(2030, 2),
+            first: DateTime(2030),
+            last: DateTime(2030, 12, 31),
+            locale: 'en_US',
+            onChanged: (_) {},
+          ),
+        ]),
+      );
+      await tester.tap(find.byKey(const ValueKey('d')));
+      await tester.pump();
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.altLeft);
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.altLeft);
+      await tester.pumpAndSettle();
+      expect(find.byType(DatePickerDialog), findsOneWidget);
+      await tester.tap(find.text('15'));
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
+      expect(find.text('2/15/2030'), findsOneWidget);
+      final field = tester.widget<TextField>(
+        find.descendant(
+          of: find.byKey(const ValueKey('d')),
+          matching: find.byType(TextField),
+        ),
+      );
+      expect(field.focusNode!.hasFocus, isTrue);
     });
   });
 

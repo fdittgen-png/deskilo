@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../l10n/context_l10n.dart';
+import '../../shortcuts/app_shortcuts.dart';
 import '../../storage/pane_width_store.dart';
 import '../../trace/trace_logger.dart';
 
@@ -206,7 +207,8 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
           // there, so the list's place in the tree never changes.
           bindings: {
             if (selected != null) ...{
-              const SingleActivator(LogicalKeyboardKey.escape): _close,
+              // #3610 — the registry's close key.
+              ...shortcutBindings({AppShortcutId.close: _close}),
               const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
                   _move(-1),
               const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
