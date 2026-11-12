@@ -6858,6 +6858,56 @@ class AppLocalizationsFr extends AppLocalizations {
   String get customerPageStory => 'Historique';
 
   @override
+  String customerStatementAsOf(String date) {
+    return 'Pièces ouvertes au $date';
+  }
+
+  @override
+  String get customerStatementAwaiting => 'en attente d\'approbation';
+
+  @override
+  String get customerStatementBalanceDue => 'Solde à régler';
+
+  @override
+  String get customerStatementBalanceNone => 'Rien n\'est dû';
+
+  @override
+  String get customerStatementBalanceOwed => 'Solde en votre faveur';
+
+  @override
+  String customerStatementDue(String date) {
+    return 'échéance $date';
+  }
+
+  @override
+  String get customerStatementNothingOpen =>
+      'Rien n\'est ouvert pour ce client : aucun relevé à imprimer.';
+
+  @override
+  String get customerStatementOwedToYou => 'Dû en votre faveur';
+
+  @override
+  String customerStatementPart(String date) {
+    return 'Paiement du $date';
+  }
+
+  @override
+  String get customerStatementPickCurrency => 'Le relevé dans quelle devise ?';
+
+  @override
+  String get customerStatementStillDue => 'Reste dû';
+
+  @override
+  String get customerStatementTotalDue => 'Total restant dû';
+
+  @override
+  String get customerStatementTotalUnapplied => 'Non encore imputé';
+
+  @override
+  String get customerStatementUnapplied =>
+      'Paiements et avoirs non encore imputés';
+
+  @override
   String customerStoryDeclared(String number) {
     return 'Dit avoir payé la facture $number';
   }
@@ -15459,7 +15509,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceRegisterAmount => 'Montant';
 
   @override
+  String get invoiceRegisterCurrency => 'Devise';
+
+  @override
+  String invoiceRegisterDownloadSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Télécharger $count factures',
+      one: 'Télécharger 1 facture',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceRegisterIntegrity => 'Empreinte';
+
+  @override
+  String get invoiceRegisterMember => 'Membre';
+
+  @override
   String get invoiceRegisterName => 'Nom';
+
+  @override
+  String get invoiceRegisterNumber => 'Numéro';
 
   @override
   String invoiceRegisterPeriod(String from, String to) {
@@ -15468,6 +15541,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceRegisterPeriodClear => 'Afficher toutes les périodes';
+
+  @override
+  String get invoiceRegisterPeriodColumn => 'Période';
+
+  @override
+  String get invoiceRegisterStatus => 'Statut';
 
   @override
   String get invoiceRegisterTitle => 'Registre des factures';
@@ -24352,6 +24431,29 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible tant que le mode tournage est actif : ce formulaire affiche une personne inventée, et l\'enregistrer écraserait les vraies coordonnées de quelqu\'un. Désactivez d\'abord le mode tournage.';
 
   @override
+  String get recordsClearSelection => 'Effacer la sélection';
+
+  @override
+  String get recordsColumns => 'Colonnes';
+
+  @override
+  String recordsDropped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lignes sélectionnées ne sont plus là et ont été écartées',
+      one: '1 ligne sélectionnée n’est plus là et a été écartée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recordsFailed => 'La liste n’a pas pu être lue.';
+
+  @override
+  String get recordsFilter => 'Filtrer';
+
+  @override
   String get recordsLocationAoNotice =>
       'Une entreprise allemande tient ses livres électroniques en Allemagne ou dans un autre État membre de l\'UE (§ 146 al. 2a AO). Rien ne déclare cette installation dans l\'UE.';
 
@@ -24387,6 +24489,70 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get recordsLocationUndeclared =>
       'Non déclaré par l\'exploitant de cette installation : l\'application n\'indique aucun lieu';
+
+  @override
+  String get recordsMoreActions => 'Plus d’actions';
+
+  @override
+  String recordsPartlyRead(int loaded) {
+    String _temp0 = intl.Intl.pluralLogic(
+      loaded,
+      locale: localeName,
+      other: '$loaded chargés — tout n’est pas encore lu',
+      one: '1 chargé — tout n’est pas encore lu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recordsSelectRow => 'Sélectionner cette ligne';
+
+  @override
+  String recordsSelectShown(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sélectionner les $count affichés',
+      one: 'Sélectionner le seul affiché',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sélectionnés',
+      one: '1 sélectionné',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsShown(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count affichés',
+      one: '1 affiché',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recordsSortBy(String column) {
+    return 'Trier par $column';
+  }
+
+  @override
+  String get recordsTotalOfSelection => 'Total de la sélection';
+
+  @override
+  String get recordsTotalOfShown => 'Total des lignes affichées';
+
+  @override
+  String get recordsTryAgain => 'Réessayer';
 
   @override
   String get refFacetPerson => 'Personne';
@@ -25211,6 +25377,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportDocCoa => 'Plan comptable';
+
+  @override
+  String get reportDocCustomerStatement => 'Relevé de compte';
 
   @override
   String get reportDocGeneralLedger => 'Grand-livre';

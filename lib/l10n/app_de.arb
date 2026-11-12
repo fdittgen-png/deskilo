@@ -4250,6 +4250,77 @@
   "customerPageNothingOwed": "Nichts offen",
   "customerPageOwes": "Schuldet",
   "customerPageStory": "Verlauf",
+  "customerStatementAsOf": "Offene Posten zum {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "wartet auf Freigabe",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementBalanceDue": "Von Ihnen zu zahlen",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceNone": "Es ist nichts offen",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementBalanceOwed": "Saldo zu Ihren Gunsten",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementDue": "fällig {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementNothingOpen": "Für diesen Kunden ist nichts offen: keine Kontoübersicht zu drucken.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  },
+  "customerStatementOwedToYou": "Zu Ihren Gunsten",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementPart": "Zahlung vom {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPickCurrency": "Die Kontoübersicht in welcher Währung?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementStillDue": "Noch offen",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementTotalDue": "Summe noch offen",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Noch nicht zugeordnet",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementUnapplied": "Noch nicht zugeordnete Zahlungen und Gutschriften",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
   "customerStoryDeclared": "Sagt, Rechnung {number} bezahlt zu haben",
   "customerStoryIssued": "Rechnung {number} ausgestellt",
   "customerStoryNow": "Jetzt: {words}",
@@ -9577,9 +9648,16 @@
   },
   "invoiceRegisterAllYears": "Alle Jahre",
   "invoiceRegisterAmount": "Betrag",
+  "invoiceRegisterCurrency": "Währung",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{1 Rechnung herunterladen} other{{count} Rechnungen herunterladen}}",
+  "invoiceRegisterIntegrity": "Fingerabdruck",
+  "invoiceRegisterMember": "Mitglied",
   "invoiceRegisterName": "Name",
+  "invoiceRegisterNumber": "Nummer",
   "invoiceRegisterPeriod": "Zeitraum: {from} – {to}",
   "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen",
+  "invoiceRegisterPeriodColumn": "Zeitraum",
+  "invoiceRegisterStatus": "Status",
   "invoiceRegisterTitle": "Rechnungsregister",
   "invoiceRegisterTotal": "Gesamt",
   "invoiceRemainingLabel": "Restbetrag",
@@ -14912,6 +14990,11 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsClearSelection": "Auswahl aufheben",
+  "recordsColumns": "Spalten",
+  "recordsDropped": "{count, plural, =1{1 ausgewählte Zeile ist nicht mehr da und wurde ausgelassen} other{{count} ausgewählte Zeilen sind nicht mehr da und wurden ausgelassen}}",
+  "recordsFailed": "Die Liste konnte nicht gelesen werden.",
+  "recordsFilter": "Filtern",
   "recordsLocationAoNotice": "Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat (§ 146 Abs. 2a AO). Nichts weist diese Installation dort aus.",
   "recordsLocationAoOutside": "Ein deutsches Unternehmen führt seine elektronischen Bücher in Deutschland oder einem anderen EU-Mitgliedstaat; anderswo nur mit Bewilligung des Finanzamts (§ 146 Abs. 2b AO). Diese Installation ist außerhalb der EU angegeben.",
   "recordsLocationCraNone": "Keine CRA-Genehmigung erfasst. Eine Person mit Abrechnungsrechten erfasst sie in den Einstellungen des Bereichs.",
@@ -14921,6 +15004,16 @@
   "recordsLocationHosted": "Gehostet in {country}, wie der Betreiber dieser Installation es erklärt",
   "recordsLocationTitle": "Wo die Aufzeichnungen aufbewahrt werden",
   "recordsLocationUndeclared": "Vom Betreiber dieser Installation nicht erklärt: Die App nennt keinen Ort",
+  "recordsMoreActions": "Weitere Aktionen",
+  "recordsPartlyRead": "{loaded, plural, =1{1 geladen — noch nicht alles gelesen} other{{loaded} geladen — noch nicht alles gelesen}}",
+  "recordsSelectRow": "Diese Zeile auswählen",
+  "recordsSelectShown": "{count, plural, =1{Den 1 angezeigten auswählen} other{Die {count} angezeigten auswählen}}",
+  "recordsSelected": "{count, plural, =1{1 ausgewählt} other{{count} ausgewählt}}",
+  "recordsShown": "{count, plural, =1{1 angezeigt} other{{count} angezeigt}}",
+  "recordsSortBy": "Nach {column} sortieren",
+  "recordsTotalOfSelection": "Summe der Auswahl",
+  "recordsTotalOfShown": "Summe der angezeigten Zeilen",
+  "recordsTryAgain": "Erneut versuchen",
   "refFacetPerson": "Person",
   "refFacetStatus": "Status",
   "refFacetType": "Art",
@@ -15489,6 +15582,10 @@
   },
   "reportDocBadges": "Mitgliedsausweise",
   "reportDocCoa": "Kontenrahmen",
+  "reportDocCustomerStatement": "Kontoübersicht",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
   "reportDocGeneralLedger": "Hauptbuch",
   "reportDocJournals": "Journale",
   "reportDocPayments": "Zahlungsbericht",

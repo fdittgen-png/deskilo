@@ -7,6 +7,7 @@ import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
 import 'package:deskilo/core/demo/data/money/demo_invoice_mail.dart';
 import 'package:deskilo/core/demo/data/money/demo_reminder_mail.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
@@ -84,17 +85,13 @@ import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/application/template_compare.dart';
 import '../../features/workspace/domain/bi_report_snapshot.dart';
-import '../../features/workspace/domain/cost_allocation_rules.dart';
-import '../../features/workspace/domain/kpi_overview.dart';
 import '../../features/workspace/domain/sample_data.dart';
 import '../../features/workspace/domain/workspace_host.dart';
 import '../../features/workspace/providers/bi_providers.dart';
-import '../../features/workspace/providers/cost_allocation_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
 import '../../features/workspace/providers/instance_providers.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
 import '../../features/workspace/providers/local_setup_providers.dart';
-import '../../features/workspace/providers/overview_kpi_providers.dart';
 import '../../features/workspace/providers/sample_data_providers.dart';
 import '../../features/workspace/providers/template_search_providers.dart';
 import '../../features/workspace/providers/workbook_export_providers.dart' show biExportRepositoryProvider;
@@ -242,17 +239,9 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 
 /// What only a server can answer: Demo offers nothing in its place.
 List<Override> _serverOnlyOverrides() => [
-  // #2582 — the purchase figures are _purchasingOverrides'; the cost
-  // figures of the cities are demo_city_commerce_overrides', and the older
-  // spaces' need the server's ledger of every source.
-  costAllocationRepositoryProvider.overrideWithValue(const UnavailableCostAllocationRepository()),
   // #3550 — the five kinds and their profiles.
   businessKindRepositoryProvider.overrideWith(
     (ref) => DemoBusinessKindRepository(ref.watch(settingsRepositoryProvider)),
-  ),
-  // #2583 — the overview's own figures need the server.
-  overviewKpiRepositoryProvider.overrideWithValue(
-    const UnavailableOverviewKpiRepository(),
   ),
   // #2872 — sample data is made by a server in a test space; Demo is its
   // own sample, so the card offers nothing here.
@@ -317,7 +306,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // holds answers per space (demo_space_routing.dart).
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       ...demoSpaceOverrides(fixture),
-      ...demoGuestPassOverrides(fixture), // #3308
+      ...demoGuestPassOverrides(fixture), demoCustomerStatementOverride(fixture), // #3308, #3673
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354

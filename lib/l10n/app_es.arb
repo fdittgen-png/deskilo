@@ -4250,6 +4250,77 @@
   "customerPageNothingOwed": "Nada pendiente",
   "customerPageOwes": "Debe",
   "customerPageStory": "Historial",
+  "customerStatementAsOf": "Partidas abiertas a {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "pendiente de aprobación",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementBalanceDue": "Saldo a pagar",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceNone": "No se debe nada",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementBalanceOwed": "Saldo a su favor",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementDue": "vence el {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementNothingOpen": "No hay nada abierto para este cliente: ningún estado de cuenta que imprimir.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  },
+  "customerStatementOwedToYou": "A su favor",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementPart": "Pago del {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPickCurrency": "¿El estado de cuenta en qué moneda?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementStillDue": "Pendiente",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementTotalDue": "Total pendiente",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Aún no aplicado",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementUnapplied": "Pagos y créditos aún no aplicados",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
   "customerStoryDeclared": "Dice haber pagado la factura {number}",
   "customerStoryIssued": "Factura {number} emitida",
   "customerStoryNow": "Ahora: {words}",
@@ -9577,9 +9648,16 @@
   },
   "invoiceRegisterAllYears": "Todos los años",
   "invoiceRegisterAmount": "Importe",
+  "invoiceRegisterCurrency": "Moneda",
+  "invoiceRegisterDownloadSelected": "{count, plural, =1{Descargar 1 factura} other{Descargar {count} facturas}}",
+  "invoiceRegisterIntegrity": "Huella",
+  "invoiceRegisterMember": "Miembro",
   "invoiceRegisterName": "Nombre",
+  "invoiceRegisterNumber": "Número",
   "invoiceRegisterPeriod": "Periodo: {from} – {to}",
   "invoiceRegisterPeriodClear": "Mostrar todos los periodos",
+  "invoiceRegisterPeriodColumn": "Periodo",
+  "invoiceRegisterStatus": "Estado",
   "invoiceRegisterTitle": "Registro de facturas",
   "invoiceRegisterTotal": "Total",
   "invoiceRemainingLabel": "Pendiente",
@@ -14912,6 +14990,11 @@
   "@recordingPrivacyWriteRefused": {
     "description": "#1514 recording privacy: recordingPrivacyWriteRefused"
   },
+  "recordsClearSelection": "Borrar la selección",
+  "recordsColumns": "Columnas",
+  "recordsDropped": "{count, plural, =1{1 fila seleccionada ya no está y se ha dejado fuera} other{{count} filas seleccionadas ya no están y se han dejado fuera}}",
+  "recordsFailed": "No se ha podido leer la lista.",
+  "recordsFilter": "Filtrar",
   "recordsLocationAoNotice": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.",
   "recordsLocationAoOutside": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE.",
   "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.",
@@ -14921,6 +15004,16 @@
   "recordsLocationHosted": "Alojado en {country}, según lo declara el operador de esta instalación",
   "recordsLocationTitle": "Dónde se conservan los registros",
   "recordsLocationUndeclared": "No declarado por el operador de esta instalación: la aplicación no indica ningún lugar",
+  "recordsMoreActions": "Más acciones",
+  "recordsPartlyRead": "{loaded, plural, =1{1 cargado — aún no se ha leído todo} other{{loaded} cargados — aún no se ha leído todo}}",
+  "recordsSelectRow": "Seleccionar esta fila",
+  "recordsSelectShown": "{count, plural, =1{Seleccionar el único mostrado} other{Seleccionar los {count} mostrados}}",
+  "recordsSelected": "{count, plural, =1{1 seleccionado} other{{count} seleccionados}}",
+  "recordsShown": "{count, plural, =1{1 mostrado} other{{count} mostrados}}",
+  "recordsSortBy": "Ordenar por {column}",
+  "recordsTotalOfSelection": "Total de la selección",
+  "recordsTotalOfShown": "Total de las filas mostradas",
+  "recordsTryAgain": "Reintentar",
   "refFacetPerson": "Persona",
   "refFacetStatus": "Estado",
   "refFacetType": "Tipo",
@@ -15489,6 +15582,10 @@
   },
   "reportDocBadges": "Tarjetas de socios",
   "reportDocCoa": "Plan de cuentas",
+  "reportDocCustomerStatement": "Estado de cuenta",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
   "reportDocGeneralLedger": "Libro mayor",
   "reportDocJournals": "Diarios",
   "reportDocPayments": "Informe de pagos",

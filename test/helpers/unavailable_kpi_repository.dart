@@ -3,9 +3,11 @@
 // A capacity repository with no server behind it: every read answers
 // `KpiUnavailable`, so a test can prove the tile says so rather than
 // inventing a figure.
+import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';
 import 'package:deskilo/features/workspace/domain/kpi_customers.dart';
 import 'package:deskilo/features/workspace/domain/kpi_items.dart';
+import 'package:deskilo/features/workspace/domain/kpi_purchases.dart';
 import 'package:deskilo/features/workspace/domain/kpi_sales.dart';
 import 'package:deskilo/features/workspace/domain/kpi_vendors.dart';
 
@@ -66,5 +68,42 @@ class UnavailableItemKpiRepository implements ItemKpiRepository {
     String workspaceId, {
     required String fromMonth,
     required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
+}
+
+/// #2582 C2 — no server to read the cost figures from.
+class UnavailableCostKpiRepository implements CostKpiRepository {
+  const UnavailableCostKpiRepository();
+
+  @override
+  Future<CostSummaryKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
+}
+
+/// #2582 C2 — no server to read or keep the cost allocation.
+class UnavailableCostAllocationRepository implements CostAllocationRepository {
+  const UnavailableCostAllocationRepository();
+
+  @override
+  Future<CostAllocationKpi> summary(
+    String workspaceId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => throw const KpiUnavailable('no server in this mode');
+
+  @override
+  Future<List<AllocationRule>> rules(String workspaceId) async =>
+      throw const KpiUnavailable('no server in this mode');
+
+  @override
+  Future<AllocationRule> save(
+    String workspaceId, {
+    required String? ruleId,
+    required int expectedRevision,
+    required AllocationRuleDraft draft,
+    required String requestId,
   }) async => throw const KpiUnavailable('no server in this mode');
 }

@@ -1,0 +1,77 @@
+{
+  "workspace": "Test Space",
+  "workspace_address": "1 place du Marché\n69001 Lyon",
+  "client_name": "Ana Martin",
+  "client_address": "12 rue des Lilas\n75011 Paris",
+  "as_of": "1 oct. 2026",
+  "issued": "1 oct. 2026",
+  "issued_by": "Camille Owner",
+  "currency": "EUR",
+  "rows": [
+    {
+      "kind": "document",
+      "number": "F-2026-0101",
+      "issued": "2 sept. 2026",
+      "due": "2 oct. 2026",
+      "amount": "100,00 €",
+      "state": "partly_paid"
+    },
+    {
+      "kind": "part",
+      "on": "20 sept. 2026",
+      "amount": "40,00 €",
+      "waiting": false
+    },
+    {
+      "kind": "due",
+      "number": "F-2026-0101",
+      "amount": "60,00 €",
+      "state": "partly_paid"
+    },
+    {
+      "kind": "document",
+      "number": "F-2026-0103",
+      "issued": "5 sept. 2026",
+      "due": "",
+      "amount": "30,00 €",
+      "state": "awaiting_approval"
+    },
+    {
+      "kind": "part",
+      "on": "25 sept. 2026",
+      "amount": "30,00 €",
+      "waiting": true
+    },
+    {
+      "kind": "due",
+      "number": "F-2026-0103",
+      "amount": "30,00 €",
+      "state": "awaiting_approval"
+    },
+    {
+      "kind": "document",
+      "number": "AV-2026-0004",
+      "issued": "8 sept. 2026",
+      "due": "",
+      "amount": "-15,00 €",
+      "state": "credit_note"
+    },
+    {
+      "kind": "due",
+      "number": "AV-2026-0004",
+      "amount": "15,00 €",
+      "state": "credit_note"
+    },
+    {
+      "kind": "credit",
+      "label": "Virement septembre",
+      "on": "20 sept. 2026",
+      "amount": "10,00 €"
+    }
+  ],
+  "has_credits": true,
+  "still_due_total": "75,00 €",
+  "unapplied_total": "10,00 €",
+  "balance": "65,00 €",
+  "balance_owed_by": "customer"
+}
