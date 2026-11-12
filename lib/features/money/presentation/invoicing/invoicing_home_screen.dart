@@ -117,26 +117,22 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   @override
   void initState() {
     super.initState();
-    _openLinked(widget.openCustomer);
+    _linked();
   }
 
   @override
   void didUpdateWidget(InvoicingHomeScreen old) {
     super.didUpdateWidget(old);
-    if (widget.openCustomer != old.openCustomer) {
-      _openLinked(widget.openCustomer);
-    }
+    if (widget.openCustomer != old.openCustomer) _linked();
   }
 
-  /// The customer the address names, once its frame is drawn.
-  void _openLinked(String? customer) {
-    if (customer == null) return;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        unawaited(openLinkedCustomer(context, ref, customer, _openCustomer));
-      }
-    });
-  }
+  /// #3610 — the customer the address names, once its frame is drawn.
+  void _linked() => openLinkedCustomerAfterFrame(
+    this,
+    widget.openCustomer,
+    () => ref.read(invoicesProvider.future),
+    _openCustomer,
+  );
 
   @override
   void dispose() {

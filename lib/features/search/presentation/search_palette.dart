@@ -14,6 +14,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/form_kit.dart';
 import '../application/search_run.dart';
 import '../domain/search_result.dart';
 import '../providers/search_providers.dart';
@@ -40,14 +42,13 @@ Future<void> showSearchPalette(
   required ValueChanged<String> openRoute,
 }) => showDialog<void>(
   context: context,
-  builder: (_) => SearchPalette(offers: offers, openRoute: openRoute),
+  builder: (_) => _SearchPalette(offers: offers, openRoute: openRoute),
 );
 
-class SearchPalette extends ConsumerStatefulWidget {
-  const SearchPalette({
+class _SearchPalette extends ConsumerStatefulWidget {
+  const _SearchPalette({
     required this.offers,
     required this.openRoute,
-    super.key,
   });
 
   final SearchOffers Function(BuildContext context, WidgetRef ref) offers;
@@ -56,10 +57,10 @@ class SearchPalette extends ConsumerStatefulWidget {
   final ValueChanged<String> openRoute;
 
   @override
-  ConsumerState<SearchPalette> createState() => _SearchPaletteState();
+  ConsumerState<_SearchPalette> createState() => _SearchPaletteState();
 }
 
-class _SearchPaletteState extends ConsumerState<SearchPalette> {
+class _SearchPaletteState extends ConsumerState<_SearchPalette> {
   final _text = TextEditingController();
   final _run = SearchRun();
   Timer? _wait;
@@ -194,21 +195,19 @@ class _SearchPaletteState extends ConsumerState<SearchPalette> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.gutterAll,
               child: Focus(
                 canRequestFocus: false,
                 skipTraversal: true,
                 onKeyEvent: _onKey,
-                child: TextField(
+                child: AppTextField(
                   key: const ValueKey('search-field'),
                   controller: _text,
                   autofocus: true,
                   textInputAction: TextInputAction.go,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search),
-                    hintText: l10n.searchHint,
-                    labelText: l10n.searchTitle,
-                  ),
+                  prefixIcon: const Icon(Icons.search),
+                  hint: l10n.searchHint,
+                  label: l10n.invoicingSearch,
                   onChanged: _typed,
                   onSubmitted: (_) {
                     if (shown.isNotEmpty) _open(shown[_selected]);
@@ -218,7 +217,7 @@ class _SearchPaletteState extends ConsumerState<SearchPalette> {
             ),
             if (query.isEmpty && shown.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: AppSpacing.gutterH,
                 child: Text(
                   l10n.searchRecent,
                   key: const ValueKey('search-recent'),
@@ -227,7 +226,7 @@ class _SearchPaletteState extends ConsumerState<SearchPalette> {
               ),
             if (query.isNotEmpty && shown.isEmpty)
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: AppSpacing.gutterAll,
                 child: Text(
                   l10n.searchNothing(query),
                   key: const ValueKey('search-nothing'),
@@ -252,7 +251,7 @@ class _SearchPaletteState extends ConsumerState<SearchPalette> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
           ],
         ),
       ),

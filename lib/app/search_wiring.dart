@@ -46,23 +46,28 @@ Future<void> openSearch(
 }) => showSearchPalette(
   context,
   offers: (context, ref) =>
-      searchOffers(context, ref, router, later: later, appRef: appRef),
+      _searchOffers(context, ref, router, later: later, appRef: appRef),
   openRoute: (route) => unawaited(router.push(route)),
 );
 
 /// What [ref]'s person may find now.
-SearchOffers searchOffers(
+SearchOffers _searchOffers(
   BuildContext context,
   WidgetRef ref,
   GoRouter router, {
   required BuildContext? Function() later,
   required WidgetRef appRef,
-}) {
+}) => (
+  fixed: [
+    ..._pages(context, ref, router),
+    ..._actions(context, ref, later: later, appRef: appRef),
+  ],
+  sources: _sources(context, ref),
+);
+
+/// The pages of the business's navigation, as the sidebar offers them.
+List<SearchOffer> _pages(BuildContext context, WidgetRef ref, GoRouter router) {
   final l10n = context.l10n;
-  final features = ref.watch(enabledFeaturesSyncProvider);
-  final perms = ref.watch(myPermissionsProvider);
-  final member = ref.watch(myMemberProvider).value;
-  final workspace = ref.watch(currentWorkspaceProvider).value;
   final path = router.routeInformationProvider.value.uri.path;
   final menu = ShellMenu.of(
     context,
@@ -105,71 +110,88 @@ SearchOffers searchOffers(
   for (final e in menu.account) {
     page(e, null);
   }
+  return fixed;
+}
 
-  void action(String id, String title, void Function(BuildContext) run) =>
-      fixed.add(
-        SearchOffer(
-          SearchResult(
-            id: 'action:$id',
-            kind: SearchKind.action,
-            source: 'actions',
-            title: title,
-            where: l10n.searchKindAction,
-          ),
-          () {
-            final at = later();
-            if (at != null && at.mounted) run(at);
-          },
-        ),
-      );
-  if (features.contains(_F.invoicing) && perms.contains(_P.issueInvoices)) {
-    action(
-      'new-invoice',
-      l10n.searchActionNewInvoice,
-      (at) => unawaited(showInvoiceIssueSheet(at, appRef)),
-    );
-  }
+/// New invoice, New purchase, Invite a member: each where its sheet opens.
+List<SearchOffer> _actions(
+  BuildContext context,
+  WidgetRef ref, {
+  required BuildContext? Function() later,
+  required WidgetRef appRef,
+}) {
+  final l10n = context.l10n;
+  final features = ref.watch(enabledFeaturesSyncProvider);
+  final perms = ref.watch(myPermissionsProvider);
+  final workspace = ref.watch(currentWorkspaceProvider).value;
+  SearchOffer action(
+    String id,
+    String title,
+    void Function(BuildContext) run,
+  ) => SearchOffer(
+    SearchResult(
+      id: 'action:$id',
+      kind: SearchKind.action,
+      source: 'actions',
+      title: title,
+      where: l10n.searchKindAction,
+    ),
+    () {
+      final at = later();
+      if (at != null && at.mounted) run(at);
+    },
+  );
   final wsId = workspace?.id;
-  if (wsId != null &&
-      features.contains(_F.purchases) &&
-      perms.contains(_P.managePurchases)) {
-    action('new-purchase', l10n.searchActionNewPurchase, (at) async {
-      final saved = await showPurchaseBillDialog(at, wsId);
-      if (saved ?? false) appRef.invalidate(purchasesProvider(wsId));
-    });
-  }
-  if (workspace != null &&
-      (perms.contains(_P.manageMembers) ||
-          perms.contains(_P.manageConfiguration))) {
-    action(
-      'invite',
-      l10n.searchActionInvite,
-      (at) => unawaited(
-        showInviteSheet(at, workspace: workspace, role: InviteRole.user),
+  return [
+    if (features.contains(_F.invoicing) && perms.contains(_P.issueInvoices))
+      action(
+        'new-invoice',
+        l10n.invoiceCreate,
+        (at) => unawaited(showInvoiceIssueSheet(at, appRef)),
       ),
-    );
-  }
+    if (wsId != null &&
+        features.contains(_F.purchases) &&
+        perms.contains(_P.managePurchases))
+      action('new-purchase', l10n.searchActionNewPurchase, (at) async {
+        final saved = await showPurchaseBillDialog(at, wsId);
+        if (saved ?? false) appRef.invalidate(purchasesProvider(wsId));
+      }),
+    if (workspace != null &&
+        perms.any({_P.manageMembers, _P.manageConfiguration}.contains))
+      action(
+        'invite',
+        l10n.searchActionInvite,
+        (at) => unawaited(
+          showInviteSheet(at, workspace: workspace, role: InviteRole.user),
+        ),
+      ),
+  ];
+}
 
+/// One source per kind of record the person may read.
+List<SearchSource> _sources(BuildContext context, WidgetRef ref) {
+  final l10n = context.l10n;
+  final features = ref.watch(enabledFeaturesSyncProvider);
+  final perms = ref.watch(myPermissionsProvider);
+  final member = ref.watch(myMemberProvider).value;
+  final wsId = ref.watch(currentWorkspaceProvider).value?.id;
   final money = features.contains(_F.invoicing);
   final readsInvoices = perms.any(
     {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices}.contains,
   );
-  return (
-    fixed: fixed,
-    sources: [
-      if (features.contains(_F.memberPage) &&
-          (perms.contains(_P.manageMembers) || (member?.isAdmin ?? false)))
-        _MemberSource(ref, l10n.searchKindMember),
-      if (money && readsInvoices) _InvoiceSource(ref, l10n.searchKindInvoice),
-      if (money && perms.contains(_P.issueInvoices))
-        _CustomerSource(ref, l10n.searchKindCustomer),
-      if (wsId != null &&
-          features.contains(_F.supplyExpenses) &&
-          features.contains(_F.purchases) &&
-          perms.any({_P.viewFinances, _P.managePurchases}.contains))
-        _SupplierSource(ref, wsId, l10n.searchKindSupplier),
-    ],
-  );
+  return [
+    if (features.contains(_F.memberPage) &&
+        (perms.contains(_P.manageMembers) || (member?.isAdmin ?? false)))
+      _MemberSource(ref, l10n.searchKindMember),
+    if (money && readsInvoices) _InvoiceSource(ref, l10n.invoicingColInvoice),
+    if (money && perms.contains(_P.issueInvoices))
+      _CustomerSource(ref, l10n.invoicingColCustomer),
+    if (wsId != null &&
+        features.contains(_F.supplyExpenses) &&
+        features.contains(_F.purchases) &&
+        perms.any({_P.viewFinances, _P.managePurchases}.contains))
+      _SupplierSource(ref, wsId, l10n.purchasesSupplier),
+  ];
 }
 
 class _MemberSource implements SearchSource {

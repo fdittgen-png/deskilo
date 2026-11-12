@@ -15,7 +15,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/purchase.dart';
 import '../../providers/supplier_providers.dart';
 import '../widgets/purchases_sheet.dart';
@@ -41,6 +40,9 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
   /// nothing for this reader.
   ValueChanged<String>? _openRow;
 
+  /// The workspace at the last build.
+  String? _workspaceId;
+
   @override
   void initState() {
     super.initState();
@@ -64,7 +66,7 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
   }
 
   Future<void> _openLinked(String id) async {
-    final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
+    final workspaceId = _workspaceId;
     var known = false;
     try {
       known = workspaceId != null &&
@@ -104,6 +106,7 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
     final held = MoneyViewData.purchasePermissionNames(ref);
     final canReadBalances = data.purchasesOn &&
         (held.contains('viewFinances') || held.contains(purchaseManagePermission));
+    _workspaceId = workspace?.id;
     _openRow = !canReadBalances || workspace == null
         ? null
         : (supplierId) => unawaited(

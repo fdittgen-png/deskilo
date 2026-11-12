@@ -1,15 +1,10 @@
 {
-  "searchTitle": "Suchen",
   "searchHint": "Eine Seite, eine Aktion, ein Mitglied, eine Rechnung…",
   "searchRecent": "Zuletzt geöffnet",
   "searchNothing": "Nichts gefunden für „{query}“.",
   "searchKindPage": "Seite",
   "searchKindAction": "Aktion",
   "searchKindMember": "Mitglied",
-  "searchKindInvoice": "Rechnung",
-  "searchKindCustomer": "Kunde",
-  "searchKindSupplier": "Lieferant",
-  "searchActionNewInvoice": "Neue Rechnung",
   "searchActionNewPurchase": "Neuer Einkauf",
   "searchActionInvite": "Mitglied einladen",
   "searchRecordUnreadable": "Dieser Eintrag lässt sich nicht öffnen: Es gibt ihn nicht, oder Sie dürfen ihn nicht lesen."

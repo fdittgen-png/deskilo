@@ -23,7 +23,7 @@ final searchScopeProvider = Provider<SearchScope?>((ref) {
 });
 
 /// The most recent items kept.
-const int searchRecentLimit = 8;
+const int _recentLimit = 8;
 
 /// What the reader opened from search lately, newest first.
 class SearchRecents extends Notifier<List<SearchResult>> {
@@ -38,7 +38,7 @@ class SearchRecents extends Notifier<List<SearchResult>> {
   void opened(SearchResult result) => state = [
     result,
     ...state.where((r) => r != result),
-  ].take(searchRecentLimit).toList();
+  ].take(_recentLimit).toList();
 }
 
 final searchRecentsProvider =

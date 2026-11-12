@@ -178,8 +178,7 @@ enum WorkspaceFeature {
   ///
   /// It used to mean the blur of #970, which anonymised a LIVE workspace
   /// for a recording. That was retired in #1380: the recording problem
-  /// is #1514's and has nothing to do with a space full of invented
-  /// people.
+  /// is #1514's and has nothing to do with a space full of invented people.
   demoMode,
 
   /// #977 — the wizard that creates and configures a new instance.
@@ -417,7 +416,6 @@ enum WorkspaceFeature {
   reminderEmail,
   invoiceEmail,
   kioskEnrolment,
-  // #3610 — search (Ctrl/⌘+K, the bar's button) and the app's keys.
   quickSearch;
 
   /// The key of this feature inside `workspaces.feature_flags`.

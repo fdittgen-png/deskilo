@@ -35313,10 +35313,6 @@
   "@searchActionInvite": {
     "description": "#3610 search (Ctrl/Cmd+K): searchActionInvite"
   },
-  "searchActionNewInvoice": "New invoice",
-  "@searchActionNewInvoice": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchActionNewInvoice"
-  },
   "searchActionNewPurchase": "New purchase",
   "@searchActionNewPurchase": {
     "description": "#3610 search (Ctrl/Cmd+K): searchActionNewPurchase"
@@ -35329,14 +35325,6 @@
   "@searchKindAction": {
     "description": "#3610 search (Ctrl/Cmd+K): searchKindAction"
   },
-  "searchKindCustomer": "Customer",
-  "@searchKindCustomer": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchKindCustomer"
-  },
-  "searchKindInvoice": "Invoice",
-  "@searchKindInvoice": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchKindInvoice"
-  },
   "searchKindMember": "Member",
   "@searchKindMember": {
     "description": "#3610 search (Ctrl/Cmd+K): searchKindMember"
@@ -35344,10 +35332,6 @@
   "searchKindPage": "Page",
   "@searchKindPage": {
     "description": "#3610 search (Ctrl/Cmd+K): searchKindPage"
-  },
-  "searchKindSupplier": "Supplier",
-  "@searchKindSupplier": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchKindSupplier"
   },
   "searchNothing": "Nothing found for “{query}”.",
   "@searchNothing": {
@@ -35365,10 +35349,6 @@
   "searchRecordUnreadable": "This record cannot be opened: it does not exist or you may not read it.",
   "@searchRecordUnreadable": {
     "description": "#3610 search (Ctrl/Cmd+K): searchRecordUnreadable"
-  },
-  "searchTitle": "Search",
-  "@searchTitle": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchTitle"
   },
   "seatDayAhead": "Ahead",
   "@seatDayAhead": {

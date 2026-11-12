@@ -14,7 +14,7 @@ import '../l10n/context_l10n.dart';
 import 'app_shortcuts.dart';
 
 /// Whether a text field has the keyboard's focus.
-bool typingInTextField() =>
+bool _typingInTextField() =>
     FocusManager.instance.primaryFocus?.context
         ?.findAncestorWidgetOfExactType<EditableText>() !=
     null;
@@ -38,7 +38,7 @@ KeyEventResult runShortcuts(
 ) {
   final s = _pressed(event, handlers.keys);
   if (s == null) return KeyEventResult.ignored;
-  if (!s.whileTyping && typingInTextField()) return KeyEventResult.ignored;
+  if (!s.whileTyping && _typingInTextField()) return KeyEventResult.ignored;
   if (event is KeyDownEvent) handlers[s.id]!();
   return KeyEventResult.handled;
 }
@@ -111,7 +111,7 @@ class _ShortcutHostState extends State<ShortcutHost> {
     if (at == null) return;
     // A second `?` while the list is open is typed into nothing.
     if (ModalRoute.of(at)?.isCurrent == false) return;
-    showShortcutKeys(at, shown);
+    _showShortcutKeys(at, shown);
   }
 
   KeyEventResult _onKey(FocusNode node, KeyEvent event) {
@@ -194,7 +194,7 @@ class _ShortcutScopeState extends State<ShortcutScope> {
 }
 
 /// The keys overlay: what each of [ids] does and the key that does it.
-void showShortcutKeys(BuildContext context, List<AppShortcutId> ids) {
+void _showShortcutKeys(BuildContext context, List<AppShortcutId> ids) {
   final platform = Theme.of(context).platform;
   unawaited(
     showDialog<void>(

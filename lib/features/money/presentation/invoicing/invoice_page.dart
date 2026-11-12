@@ -88,6 +88,20 @@ class InvoicePage extends ConsumerWidget {
         : const LoadingView(),
   );
 
+  /// #3610 — Ctrl/⌘+P: the page's document, as its card opens it.
+  Map<AppShortcutId, VoidCallback> _keys(
+    BuildContext context,
+    WidgetRef ref,
+    Invoice invoice,
+  ) => {
+    AppShortcutId.print: () => InvoicePageActions.run(
+      context,
+      ref,
+      sheet.InvoiceAction.quickView,
+      invoice,
+    ),
+  };
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
@@ -135,16 +149,8 @@ class InvoicePage extends ConsumerWidget {
     final rules = ref.watch(dunningRulesProvider).value;
     if (rules == null) return readsStandIn(ref, [dunningRulesProvider])!;
     final mode = rules.automatic ? ReminderMode.automatic : ReminderMode.byHand;
-    // #3610 — Ctrl/⌘+P: the page's document, as its card opens it.
     return ShortcutScope(
-      handlers: {
-        AppShortcutId.print: () => InvoicePageActions.run(
-          context,
-          ref,
-          sheet.InvoiceAction.quickView,
-          invoice,
-        ),
-      },
+      handlers: _keys(context, ref, invoice),
       child: Scaffold(
       key: ValueKey('invoice-page-$invoiceId'),
       appBar: AppBar(

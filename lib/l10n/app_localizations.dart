@@ -43964,12 +43964,6 @@ abstract class AppLocalizations {
   /// **'Invite a member'**
   String get searchActionInvite;
 
-  /// #3610 search (Ctrl/Cmd+K): searchActionNewInvoice
-  ///
-  /// In en, this message translates to:
-  /// **'New invoice'**
-  String get searchActionNewInvoice;
-
   /// #3610 search (Ctrl/Cmd+K): searchActionNewPurchase
   ///
   /// In en, this message translates to:
@@ -43988,18 +43982,6 @@ abstract class AppLocalizations {
   /// **'Action'**
   String get searchKindAction;
 
-  /// #3610 search (Ctrl/Cmd+K): searchKindCustomer
-  ///
-  /// In en, this message translates to:
-  /// **'Customer'**
-  String get searchKindCustomer;
-
-  /// #3610 search (Ctrl/Cmd+K): searchKindInvoice
-  ///
-  /// In en, this message translates to:
-  /// **'Invoice'**
-  String get searchKindInvoice;
-
   /// #3610 search (Ctrl/Cmd+K): searchKindMember
   ///
   /// In en, this message translates to:
@@ -44011,12 +43993,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Page'**
   String get searchKindPage;
-
-  /// #3610 search (Ctrl/Cmd+K): searchKindSupplier
-  ///
-  /// In en, this message translates to:
-  /// **'Supplier'**
-  String get searchKindSupplier;
 
   /// #3610 search (Ctrl/Cmd+K): searchNothing
   ///
@@ -44035,12 +44011,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This record cannot be opened: it does not exist or you may not read it.'**
   String get searchRecordUnreadable;
-
-  /// #3610 search (Ctrl/Cmd+K): searchTitle
-  ///
-  /// In en, this message translates to:
-  /// **'Search'**
-  String get searchTitle;
 
   /// #903 seat day timeline: seatDayAhead
   ///

@@ -27294,9 +27294,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get searchActionInvite => 'Mitglied einladen';
 
   @override
-  String get searchActionNewInvoice => 'Neue Rechnung';
-
-  @override
   String get searchActionNewPurchase => 'Neuer Einkauf';
 
   @override
@@ -27307,19 +27304,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get searchKindAction => 'Aktion';
 
   @override
-  String get searchKindCustomer => 'Kunde';
-
-  @override
-  String get searchKindInvoice => 'Rechnung';
-
-  @override
   String get searchKindMember => 'Mitglied';
 
   @override
   String get searchKindPage => 'Seite';
-
-  @override
-  String get searchKindSupplier => 'Lieferant';
 
   @override
   String searchNothing(String query) {
@@ -27332,9 +27320,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get searchRecordUnreadable =>
       'Dieser Eintrag lässt sich nicht öffnen: Es gibt ihn nicht, oder Sie dürfen ihn nicht lesen.';
-
-  @override
-  String get searchTitle => 'Suchen';
 
   @override
   String get seatDayAhead => 'Später';

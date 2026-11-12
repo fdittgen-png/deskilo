@@ -118,7 +118,7 @@ class KeyChord {
   String label(TargetPlatform platform) {
     final c = character;
     if (c != null) return c;
-    final mac = usesCommandKey(platform);
+    final mac = _usesCommandKey(platform);
     final parts = [
       if (control && mac) '⌃' else if (control) 'Ctrl',
       if (primary && mac) '⌘' else if (primary) 'Ctrl',
@@ -138,7 +138,7 @@ String _keyName(LogicalKeyboardKey key) => switch (key) {
 };
 
 /// Whether [platform] writes Ctrl as ⌘ (a Mac, outside a browser).
-bool usesCommandKey(TargetPlatform platform) =>
+bool _usesCommandKey(TargetPlatform platform) =>
     !kIsWeb &&
     (platform == TargetPlatform.macOS || platform == TargetPlatform.iOS);
 

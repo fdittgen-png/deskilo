@@ -119,7 +119,7 @@ class DrawerEntries {
       // #3610 — on a narrow window search is the drawer's first entry: the
       // bar keeps its controls. The desk has its bar's button.
       if (!permanent && features.contains(WorkspaceFeature.quickSearch))
-        DrawerEntry('drawer-search', Icons.search, l10n.searchTitle, () {
+        DrawerEntry('drawer-search', Icons.search, l10n.invoicingSearch, () {
           final open = ShortcutHost.searchOf(context);
           Navigator.of(context).pop();
           open?.call();

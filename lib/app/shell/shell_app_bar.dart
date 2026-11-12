@@ -159,7 +159,7 @@ List<ShellBarControl> shellBarControls(
         id: shellSearchButtonId,
         rank: _ShellBarRank.search,
         icon: Icons.search,
-        label: l10n.searchTitle,
+        label: l10n.invoicingSearch,
         onPressed: () => ShortcutHost.openSearch(context),
       ),
     if (features.contains(WorkspaceFeature.eventsTab))

@@ -1,8 +1,4 @@
 {
-  "searchTitle": "Search",
-  "@searchTitle": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchTitle"
-  },
   "searchHint": "A page, an action, a member, an invoice…",
   "@searchHint": {
     "description": "#3610 search (Ctrl/Cmd+K): searchHint"
@@ -31,22 +27,6 @@
   "searchKindMember": "Member",
   "@searchKindMember": {
     "description": "#3610 search (Ctrl/Cmd+K): searchKindMember"
-  },
-  "searchKindInvoice": "Invoice",
-  "@searchKindInvoice": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchKindInvoice"
-  },
-  "searchKindCustomer": "Customer",
-  "@searchKindCustomer": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchKindCustomer"
-  },
-  "searchKindSupplier": "Supplier",
-  "@searchKindSupplier": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchKindSupplier"
-  },
-  "searchActionNewInvoice": "New invoice",
-  "@searchActionNewInvoice": {
-    "description": "#3610 search (Ctrl/Cmd+K): searchActionNewInvoice"
   },
   "searchActionNewPurchase": "New purchase",
   "@searchActionNewPurchase": {

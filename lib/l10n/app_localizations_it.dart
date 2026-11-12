@@ -27254,9 +27254,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get searchActionInvite => 'Invita un membro';
 
   @override
-  String get searchActionNewInvoice => 'Nuova fattura';
-
-  @override
   String get searchActionNewPurchase => 'Nuovo acquisto';
 
   @override
@@ -27266,19 +27263,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get searchKindAction => 'Azione';
 
   @override
-  String get searchKindCustomer => 'Cliente';
-
-  @override
-  String get searchKindInvoice => 'Fattura';
-
-  @override
   String get searchKindMember => 'Membro';
 
   @override
   String get searchKindPage => 'Pagina';
-
-  @override
-  String get searchKindSupplier => 'Fornitore';
 
   @override
   String searchNothing(String query) {
@@ -27291,9 +27279,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get searchRecordUnreadable =>
       'Questa scheda non si può aprire: non esiste o non può leggerla.';
-
-  @override
-  String get searchTitle => 'Cerca';
 
   @override
   String get seatDayAhead => 'Più tardi';
