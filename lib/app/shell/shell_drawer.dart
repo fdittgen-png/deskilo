@@ -189,9 +189,12 @@ class ShellDrawer extends ConsumerWidget {
         onBackToMe: backToMe,
       );
     }
+    // #3603 — a group is open while it or one of its sub-groups is current.
+    bool current(NavGroup g) =>
+        groupIsCurrent(g.id, g.entries, path) || g.sub.any(current);
     Widget group(NavGroup g) => DrawerGroup(
       id: g.id, title: g.title, icon: g.icon, entries: g.entries,
-      path: path, tile: tile,
+      path: path, tile: tile, active: current(g),
       after: [for (final s in g.sub) if (!s.isEmpty) group(s)],
     );
 

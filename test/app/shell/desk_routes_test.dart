@@ -12,6 +12,8 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/app/shell/desk_scaffold.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/core/ui/app_frame.dart';
+import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
@@ -187,14 +189,142 @@ void main() {
     await _go(tester, router, '/money/purchases');
     final desk = tester.element(find.byType(DeskScaffold));
     final sidebar = tester.element(_key('shell-sidebar'));
+    final at = tester.getTopLeft(_key('desk-navigation'));
     router.go('/money/sales');
     await tester.pump();
     // The page may slide in; the navigation beside it stays put.
     expect(tester.element(find.byType(DeskScaffold)), same(desk));
     expect(tester.element(_key('shell-sidebar')), same(sidebar));
-    expect(tester.getTopLeft(_key('desk-navigation')), Offset.zero);
+    expect(tester.getTopLeft(_key('desk-navigation')), at);
     await tester.pumpAndSettle();
     expect(router.state.uri.path, '/money/sales');
     expect(_selected(tester, 'drawer-sales'), isTrue);
+  });
+
+  testWidgets('a page pushed from the desk that its guard sends to another '
+      'desk page: one desk, no second copy of it', (tester) async {
+    final router = await _pump(tester, off: {WorkspaceFeature.managedProfiles});
+    await _go(tester, router, '/money/purchases');
+    final desk = tester.element(find.byType(DeskScaffold));
+    unawaited(router.push('/members/managed'));
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/members');
+    expect(find.byType(DeskScaffold), findsOneWidget);
+    expect(tester.element(find.byType(DeskScaffold)), same(desk));
+    expect(_selected(tester, 'drawer-members'), isTrue);
+    router.pop();
+    await tester.pumpAndSettle();
+    expect(router.state.uri.path, '/money/purchases');
+    expect(_selected(tester, 'drawer-purchases'), isTrue);
+    expect(tester.takeException(), isNull);
+  });
+
+  /// The page inside the desk's page area: its own scaffold.
+  Rect pageRect(WidgetTester tester) => tester.getRect(
+    find
+        .descendant(
+          of: find.byWidgetPredicate((w) => w is AppFrame && w.inside),
+          matching: find.byType(Scaffold),
+        )
+        .first,
+  );
+
+  for (final (width, rail) in [
+    (1024.0, true),
+    (1440.0, false),
+    (1920.0, false),
+  ]) {
+    testWidgets('at ${width.toInt()} the window is the desk\'s and the reading '
+        'column the page\'s', (tester) async {
+      final router = await _pump(tester, size: Size(width, 900));
+      await _go(tester, router, '/money/purchases');
+      final nav = tester.getRect(_key('desk-navigation'));
+      expect(nav.left, 0);
+      expect(
+        nav.width,
+        rail ? DeskScaffold.railWidth : DeskScaffold.sidebarWidth,
+      );
+      final top = tester.getRect(_key('desk-top-bar'));
+      expect(top.right, width);
+      final area = Rect.fromLTRB(top.left, top.bottom, width, 900);
+      final page = pageRect(tester);
+      expect(page.width, lessThanOrEqualTo(frameWidthFor('/money/purchases')));
+      expect(
+        page.width,
+        area.width < kReadingColumnMaxWidth
+            ? area.width
+            : kReadingColumnMaxWidth,
+      );
+      expect(page.center.dx, closeTo(area.center.dx, 0.5));
+    });
+  }
+
+  testWidgets('a canvas page gets the wide column beside the navigation', (
+    tester,
+  ) async {
+    final router = await _pump(tester, size: const Size(1920, 900));
+    await _go(tester, router, '/invoices');
+    expect(pageRect(tester).width, kAppFrameMaxWidth);
+  });
+
+  testWidgets('a medium window is unchanged: no desk, the page as wide as '
+      'the window', (tester) async {
+    final router = await _pump(tester, size: const Size(800, 900));
+    await _go(tester, router, '/money/purchases');
+    expect(_key('desk-navigation'), findsNothing);
+    expect(tester.getRect(find.byType(Scaffold).last).width, 800);
+  });
+
+  testWidgets('a sheet and a dialog over a desk page keep their master '
+      'widths (the sheet its own 640, the dialog the column less its insets)', (
+    tester,
+  ) async {
+    final router = await _pump(tester);
+    await _go(tester, router, '/money/purchases');
+    final context = tester.element(
+      find
+          .descendant(
+            of: find.byWidgetPredicate((w) => w is AppFrame && w.inside),
+            matching: find.byType(Scaffold),
+          )
+          .first,
+    );
+    unawaited(
+      showAppFormSheet(
+        context,
+        AppFormSheet(
+          title: 'T',
+          submitLabel: 'S',
+          onSubmit: () async => null,
+          builder: (context, refresh) => [const Text('x')],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(tester.getRect(find.byType(AppFormSheet)).width, 640);
+    Navigator.of(tester.element(find.byType(AppFormSheet))).pop();
+    await tester.pumpAndSettle();
+    unawaited(
+      showDialog<void>(
+        context: context,
+        builder: (_) => const AlertDialog(
+          key: ValueKey('desk-dialog'),
+          content: Text(
+            'A sentence long enough to fill the dialog to its '
+            'widest on a desktop window, and then some more words beyond.',
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final dialog = tester.getRect(
+      find
+          .descendant(
+            of: find.byKey(const ValueKey('desk-dialog')),
+            matching: find.byType(Material),
+          )
+          .first,
+    );
+    expect(dialog.width, kReadingColumnMaxWidth - 80);
   });
 }

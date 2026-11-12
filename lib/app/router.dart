@@ -110,9 +110,9 @@ GoRouter router(Ref ref) {
       ...meRoutes(env),
       ...kioskRoutes(env),
       shellRoute(env),
-      // #3603 — every other page, inside the desk where its route is shown
-      // on it (desk_route_shell.dart). No path here overlaps one above.
-      deskRoute([
+      // #3603 — the routes shown on the desk go inside it
+      // (desk_route_shell.dart); every other route stays where it was.
+      ...deskSplit([
         for (final page in openedPages)
           if (chromeOf(page.path) == RouteChrome.desk) page.route(),
         ...workspaceRoutes(env),

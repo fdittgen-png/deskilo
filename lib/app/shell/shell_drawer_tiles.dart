@@ -62,8 +62,13 @@ class DrawerGroup extends StatelessWidget {
     required this.path,
     required this.tile,
     this.after = const [],
+    this.active,
     super.key,
   });
+
+  /// Whether the group is where the person is; by default, one of [entries]
+  /// is current.
+  final bool? active;
 
   /// Widgets after the entries: a sub-group of the group.
   final List<Widget> after;
@@ -77,7 +82,7 @@ class DrawerGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final active = groupIsCurrent(id, entries, path);
+    final active = this.active ?? groupIsCurrent(id, entries, path);
     if (entries.isEmpty && after.isEmpty) return const SizedBox.shrink();
     return ExpansionTile(
       key: PageStorageKey('drawer-group-$id-$active'),

@@ -10,11 +10,14 @@
 // Tab moves through the navigation, then the top bar, then the page.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/ui/adaptive/window_class.dart';
+import '../../core/ui/app_frame.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
 import 'desk_navigation.dart';
 
 /// Whether [context]'s window shows the desk: the expanded class or wider,
@@ -22,6 +25,30 @@ import 'desk_navigation.dart';
 bool showsDesk(BuildContext context) =>
     WindowClass.of(context).atLeast(WindowClass.expanded) &&
     MediaQuery.textScalerOf(context).scale(100) <= kWideNavigationMaxTextScale;
+
+/// Whether the desk is shown around [path] in [context]'s window: a route
+/// shown on the desk, a window that holds it, and for the account's
+/// settings ([workspaceChromeAccountRoutes]) a business selected.
+bool deskShownAt(
+  BuildContext context,
+  String path, {
+  required bool inBusiness,
+}) =>
+    chromeOf(path) == RouteChrome.desk &&
+    showsDesk(context) &&
+    (!workspaceChromeAccountRoutes.contains(path) || inBusiness);
+
+/// #3603 — the windows opened over a desk page (dialogs) keep the width
+/// the page's column gave them before the desk took the window: the
+/// column less the dialog's standard insets on each side.
+ThemeData deskOverlayTheme(ThemeData theme, String path) {
+  const inset = 40.0; // Dialog's default horizontal inset (Material 3).
+  return theme.copyWith(
+    dialogTheme: theme.dialogTheme.copyWith(
+      constraints: BoxConstraints(maxWidth: frameWidthFor(path) - 2 * inset),
+    ),
+  );
+}
 
 /// The desk around one page.
 class DeskScaffold extends ConsumerWidget {
@@ -114,7 +141,18 @@ class DeskScaffold extends ConsumerWidget {
                         order: const NumericFocusOrder(3),
                         child: FocusTraversalGroup(
                           // The page's semantics must not hide the navigation.
-                          child: Semantics(container: true, child: body),
+                          // #3603 — the window is the desk's; the reading
+                        // column (or a canvas's wider one) is the page's.
+                        child: Semantics(
+                          container: true,
+                          child: AppFrame(
+                            inside: true,
+                            maxWidth: frameWidthFor(
+                              GoRouterState.of(context).uri.path,
+                            ),
+                            child: body,
+                          ),
+                        ),
                         ),
                       ),
                     ),

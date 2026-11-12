@@ -21,6 +21,7 @@ import 'active_tax_reference.dart';
 import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
 import 'router.dart';
+import 'shell/desk_scaffold.dart';
 import 'shell/layer_chrome.dart';
 import 'switcher_cover_host.dart';
 import 'theme.dart';
@@ -124,15 +125,33 @@ class DeskiloApp extends ConsumerWidget {
               animations: animations,
               child: BootSplash(child: SystemInsetsGuard(child: ListenableBuilder(
                 listenable: router.routeInformationProvider,
-                builder: (context, _) => AppFrame(
-                  maxWidth: frameWidthFor(
-                    router.routeInformationProvider.value.uri.path,
-                  ),
-                  // #2869 — the way back to the setup guide.
-                  child: SetupReturnBar(
-                    router: router,
-                    child: child ?? const SizedBox.shrink(),
-                  ),
+                builder: (context, _) => Consumer(
+                  builder: (context, ref, _) {
+                    final path = router.routeInformationProvider.value.uri.path;
+                    // #3603 — on the desk the window is the desk's: its
+                    // page area takes the column (desk_scaffold.dart).
+                    final desk = deskShownAt(
+                      context,
+                      path,
+                      inBusiness:
+                          ref.watch(currentWorkspaceProvider).value != null,
+                    );
+                    final framed = AppFrame(
+                      maxWidth:
+                          desk ? double.infinity : frameWidthFor(path),
+                      // #2869 — the way back to the setup guide.
+                      child: SetupReturnBar(
+                        router: router,
+                        child: child ?? const SizedBox.shrink(),
+                      ),
+                    );
+                    return desk
+                        ? Theme(
+                            data: deskOverlayTheme(Theme.of(context), path),
+                            child: framed,
+                          )
+                        : framed;
+                  },
                 ),
               ))),
             ),

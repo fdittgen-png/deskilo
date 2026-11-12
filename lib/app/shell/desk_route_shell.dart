@@ -25,13 +25,27 @@ import 'shell_drawer.dart';
 import 'shell_menu.dart';
 import 'shell_tabs.dart';
 
-/// The routes registered beside the tabs, inside the desk.
-ShellRoute deskRoute(List<RouteBase> routes) => ShellRoute(
-  // #2142 — a window opened over a desk page reaches the recording too.
-  observers: [RecorderWindowObserver()],
-  builder: (context, state, child) => DeskPage(child: child),
-  routes: routes,
-);
+/// [routes] in their order, those shown on the desk moved inside it. Only
+/// they belong there: a push redirected to a route inside a shell that is
+/// already open would be stacked as a second copy of that shell, so the
+/// account's and the public pages a redirect lands on stay outside.
+List<RouteBase> deskSplit(List<RouteBase> routes) {
+  bool onDesk(RouteBase r) =>
+      r is GoRoute && chromeOf(r.path) == RouteChrome.desk;
+  return [
+    for (final r in routes)
+      if (!onDesk(r)) r,
+    ShellRoute(
+      // #2142 — a window opened over a desk page reaches the recording too.
+      observers: [RecorderWindowObserver()],
+      builder: (context, state, child) => DeskPage(child: child),
+      routes: [
+        for (final r in routes)
+          if (onDesk(r)) r,
+      ],
+    ),
+  ];
+}
 
 /// Where each tab opens, for a tab chosen from a page outside the tabs.
 String _branchLocation(int branch) => switch (branch) {
@@ -52,13 +66,9 @@ class DeskPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final path = GoRouterState.of(context).uri.path;
-    final onDesk =
-        chromeOf(path) == RouteChrome.desk &&
-        showsDesk(context) &&
-        // Settings open outside a business too; the desk only inside one.
-        (!workspaceChromeAccountRoutes.contains(path) ||
-            ref.watch(currentWorkspaceProvider).value != null);
-    if (!onDesk) return child;
+    // Settings open outside a business too; the desk only inside one.
+    final inBusiness = ref.watch(currentWorkspaceProvider).value != null;
+    if (!deskShownAt(context, path, inBusiness: inBusiness)) return child;
     final l10n = context.l10n;
     final tabTitles = shellTabTitles(context, l10n);
     final navs = shellNavFor(
