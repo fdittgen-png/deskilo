@@ -20,7 +20,9 @@ import '../../domain/report_template_assembly.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_documents.dart';
 import '../report_defaults.dart';
+import '../report_design_actions.dart' show ReportDesignDropZone;
 import '../report_edit_history.dart';
+import '../report_layout_design_actions.dart' show ReportLayoutDropZone;
 import '../screens/report_editor_screen.dart';
 import 'invoice_template_editor_actions.dart';
 import 'report_editor_dialogs.dart';
@@ -301,12 +303,22 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
         const SizedBox(height: AppSpacing.sm),
         // #488 — markup or WYSIWYG, same underlying bands.
         _modeButton(l10n),
-        editorEditorArea(l10n, sideBySide: wide),
+        // #3818 — a design file dropped on the editor is imported like
+        // the picked one, replace confirmation included.
+        ReportDesignDropZone(
+          enabled: !editorBusy && _designExchangeOn(),
+          onFile: editorImportDesign,
+          child: editorEditorArea(l10n, sideBySide: wide),
+        ),
         const SizedBox(height: AppSpacing.md),
         ..._actionsAndPanels(l10n),
       ],
     );
   }
+
+  bool _designExchangeOn() => ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.reportDesignExchange);
 
   Widget _modeButton(AppLocalizations l10n) =>
       SegmentedButton<bool>(
@@ -364,13 +376,18 @@ class _ReportTemplateEditorState extends ConsumerState<ReportTemplateEditor>
       // below every existing control, and moves none of them.
       if (features.contains(WorkspaceFeature.reportLayouts)) ...[
         const SizedBox(height: AppSpacing.sm),
-        ReportLayoutPanel(
-          hasLayout: editorLayoutOfDoc != null,
-          busy: editorBusy,
-          onExport: editorExportLayout,
-          onImport: editorImportLayout,
-          onRemove: () => editorUpdate(() => editorLayoutDrafts[editorDoc] = ''),
-          onPreview: editorPreviewLayout,
+        ReportLayoutDropZone(
+          enabled: !editorBusy,
+          onFile: editorImportLayout,
+          child: ReportLayoutPanel(
+            hasLayout: editorLayoutOfDoc != null,
+            busy: editorBusy,
+            onExport: editorExportLayout,
+            onImport: editorImportLayout,
+            onRemove: () =>
+                editorUpdate(() => editorLayoutDrafts[editorDoc] = ''),
+            onPreview: editorPreviewLayout,
+          ),
         ),
       ],
       // #880 — the owner's texts, after the layout panel for the same

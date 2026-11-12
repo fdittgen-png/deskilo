@@ -13,6 +13,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/files/file_drop.dart';
 import '../../../core/files/file_picker.dart';
 import '../../../core/files/file_saver.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -61,20 +62,50 @@ Future<String?> exportReportDesign(
   return path;
 }
 
+/// What a design file is: the same group for the picker and the drop.
+XTypeGroup _reportDesignTypes(AppLocalizations l10n) => XTypeGroup(
+  label: l10n.reportDesignFileTypeLabel,
+  extensions: const ['json'],
+  mimeTypes: const ['application/json'],
+);
+
+/// #3818 — [child] also takes a design file dropped onto it, handed to
+/// [onFile]: the editor's import, with its replace confirmation.
+class ReportDesignDropZone extends StatelessWidget {
+  const ReportDesignDropZone({
+    required this.onFile,
+    required this.enabled,
+    required this.child,
+    super.key,
+  });
+
+  final Future<void> Function(XFile file) onFile;
+  final bool enabled;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => FileDropZone(
+    typeGroup: _reportDesignTypes(context.l10n),
+    onFile: onFile,
+    enabled: enabled,
+    child: child,
+  );
+}
+
 /// Asks for a design file and returns its bands, or null when the pick
-/// was cancelled or the file was refused (the reason is shown).
+/// was cancelled or the file was refused (the reason is shown). A file
+/// already in hand ([dropped], #3818) skips the picker and meets the
+/// same checks.
 Future<ReportBands?> importReportDesign(
   BuildContext context,
   WidgetRef ref, {
   required ReportKind kind,
   required int reminderLevels,
+  XFile? dropped,
 }) async {
   final l10n = context.l10n;
-  final file = await ref.read(filePickerProvider)(XTypeGroup(
-    label: l10n.reportDesignFileTypeLabel,
-    extensions: const ['json'],
-    mimeTypes: const ['application/json'],
-  ));
+  final file =
+      dropped ?? await ref.read(filePickerProvider)(_reportDesignTypes(l10n));
   if (file == null) return null; // cancelled
   // Explicit UTF-8: XFile.readAsString is not UTF-8-safe for data-backed
   // files, the same reason the workspace XML import decodes by hand.

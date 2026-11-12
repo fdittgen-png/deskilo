@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/route_classes.dart';
 import '../../../../app/shell/shell_drawer.dart' show navigationDefaultProvider;
 import '../../../../core/country/country_catalog.dart';
+import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_picker.dart';
 import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_anchors.dart';
