@@ -98,7 +98,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     _from = today;
     _to = today;
     _selection = CalendarSelection(view: CalendarView.agenda, anchor: today, firstWeekday: weekStartOf(ref.read(appFormatProvider)));
-    ref.listenManual(appFormatProvider, (_, f) => setState(() => _selection = _selection.withFirstWeekday(weekStartOf(f))));
+    ref.listenManual(appFormatProvider, (_, f) => _selection = _selection.withFirstWeekday(weekStartOf(f)));
     // #3065 — /calendar?view=alerts opens the alerts on reload or a link.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) requestAlertsIfAddressAsks(context, ref);
