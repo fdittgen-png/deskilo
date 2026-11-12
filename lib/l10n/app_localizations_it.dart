@@ -27651,6 +27651,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il formato usato prima che un membro o uno spazio ne scelga uno. La scelta del membro prevale sempre.';
 
   @override
+  String get settingHintLocaleDefaultWeekStart =>
+      'Il giorno in cui iniziano le settimane nei calendari quando un membro non ne ha scelto uno: quello del formato, oppure sempre lunedì, domenica o sabato. La scelta di un membro prevale sempre.';
+
+  @override
   String get settingHintMcpConfirmationExpiryMinutes =>
       'Minuti a disposizione della persona per confermare un\'azione richiesta da un assistente. Le richieste già fatte mantengono il loro tempo. Può solo essere accorciato.';
 
@@ -27947,6 +27951,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelLocaleDefaultLocale =>
       'Formato predefinito di numeri e date';
+
+  @override
+  String get settingLabelLocaleDefaultWeekStart =>
+      'Primo giorno della settimana predefinito';
 
   @override
   String get settingLabelMcpConfirmationExpiryMinutes =>

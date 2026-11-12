@@ -35791,6 +35791,10 @@
   "@settingHintLocaleDefaultLocale": {
     "description": "#2488 settings: Setting hint."
   },
+  "settingHintLocaleDefaultWeekStart": "The day weeks start on in calendars where a member chose none: the format's own, or always Monday, Sunday or Saturday. A member's own choice always wins.",
+  "@settingHintLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting hint."
+  },
   "settingHintMcpConfirmationExpiryMinutes": "Minutes the person has to confirm an action an assistant asked for. Requests already made keep their time. Can only be shortened.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -36102,6 +36106,10 @@
   "settingLabelLocaleDefaultLocale": "Default number and date format",
   "@settingLabelLocaleDefaultLocale": {
     "description": "#2488 settings: Setting label."
+  },
+  "settingLabelLocaleDefaultWeekStart": "Default first day of the week",
+  "@settingLabelLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting label."
   },
   "settingLabelMcpConfirmationExpiryMinutes": "Assistant action confirmation time",
   "@settingLabelMcpConfirmationExpiryMinutes": {

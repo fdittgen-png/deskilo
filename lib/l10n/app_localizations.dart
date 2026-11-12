@@ -44588,6 +44588,12 @@ abstract class AppLocalizations {
   /// **'The format used before a member or workspace has chosen one. A member\'s own choice always wins.'**
   String get settingHintLocaleDefaultLocale;
 
+  /// #3648 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The day weeks start on in calendars where a member chose none: the format\'s own, or always Monday, Sunday or Saturday. A member\'s own choice always wins.'**
+  String get settingHintLocaleDefaultWeekStart;
+
   /// #2485 settings: Setting hint.
   ///
   /// In en, this message translates to:
@@ -45055,6 +45061,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default number and date format'**
   String get settingLabelLocaleDefaultLocale;
+
+  /// #3648 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Default first day of the week'**
+  String get settingLabelLocaleDefaultWeekStart;
 
   /// #2485 settings: Setting label.
   ///

@@ -17479,6 +17479,10 @@
   "settingHintLocaleDefaultCountry": "Womit ein neuer Arbeitsbereich beginnt, wenn die Region des Geräts unbekannt ist. Nur ein Vorschlag; er bestimmt kein Ausstellerland und keine Steuer.",
   "settingHintLocaleDefaultCurrency": "In welcher Währung Beträge angezeigt werden, bevor ein Arbeitsbereich verbunden ist, und womit ein neuer beginnt. Sie ersetzt nie eine fehlende Rechnungswährung.",
   "settingHintLocaleDefaultLocale": "Das Format, bevor ein Mitglied oder Arbeitsbereich eines gewählt hat. Die eigene Wahl des Mitglieds gilt immer.",
+  "settingHintLocaleDefaultWeekStart": "Der Tag, an dem Wochen in Kalendern beginnen, wenn ein Mitglied keinen gewählt hat: der des Formats oder immer Montag, Sonntag oder Samstag. Die eigene Wahl eines Mitglieds hat immer Vorrang.",
+  "@settingHintLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting hint."
+  },
   "settingHintMcpConfirmationExpiryMinutes": "Minuten, die die Person hat, um eine von einem Assistenten angeforderte Aktion zu bestätigen. Bereits gestellte Anfragen behalten ihre Zeit. Kann nur verkürzt werden.",
   "@settingHintMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting hint."
@@ -17668,6 +17672,10 @@
   "settingLabelLocaleDefaultCountry": "Standardland",
   "settingLabelLocaleDefaultCurrency": "Standardwährung",
   "settingLabelLocaleDefaultLocale": "Standardformat für Zahlen und Datum",
+  "settingLabelLocaleDefaultWeekStart": "Standard-Wochenbeginn",
+  "@settingLabelLocaleDefaultWeekStart": {
+    "description": "#3648 settings: Setting label."
+  },
   "settingLabelMcpConfirmationExpiryMinutes": "Bestätigungszeit für Assistenten-Aktionen",
   "@settingLabelMcpConfirmationExpiryMinutes": {
     "description": "#2485 settings: Setting label."
