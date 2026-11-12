@@ -7153,6 +7153,14 @@
   "@businessKindTitle": {
     "description": "#3550 the kind chooser's title, in settings and the setup guide"
   },
+  "businessMailSenderSubtitle": "The sender of your purchase orders and reminders by e-mail",
+  "@businessMailSenderSubtitle": {
+    "description": "#3673 the business's one e-mail sender"
+  },
+  "businessMailSenderWhere": "E-mail sending, in the business settings",
+  "@businessMailSenderWhere": {
+    "description": "#3673 the business's one e-mail sender"
+  },
   "buyPackageButton": "Buy a package",
   "@buyPackageButton": {
     "description": "Money-tab button opening the package buy sheet (package-plan members)"
@@ -14252,6 +14260,14 @@
   "featureRegionalFormatsTitle": "Region & formats",
   "@featureRegionalFormatsTitle": {
     "description": "#711 - globalization"
+  },
+  "featureReminderEmailDesc": "A payment reminder can also be sent by e-mail, from the server, with your business's own sender, in the customer's document language. Each reminder level is sent once; what the provider answered is kept beside the reminder. Off: reminders reach the feed and the push only.",
+  "@featureReminderEmailDesc": {
+    "description": "#3673 the reminders-by-e-mail feature"
+  },
+  "featureReminderEmailTitle": "Reminders by e-mail",
+  "@featureReminderEmailTitle": {
+    "description": "#3673 the reminders-by-e-mail feature"
   },
   "featureReportDesignExchangeDesc": "Every report design can be written out as one self-describing file and read back in. The file carries the design plus what its fields mean, the markup it accepts and the placeholders that exist, so a person or a tool can edit it outside the app and hand it back. A file for another report, or from a newer version, is refused with the reason. Off: designs are only editable in the designer.",
   "@featureReportDesignExchangeDesc": {

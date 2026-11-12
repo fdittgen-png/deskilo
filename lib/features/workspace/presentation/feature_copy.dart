@@ -296,6 +296,7 @@ String _latestDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.purchaseOrders => l10n.featurePurchaseOrdersDesc,
       WorkspaceFeature.guestPasses => l10n.featureGuestPassesDesc,
       WorkspaceFeature.placeBooking => l10n.featurePlaceBookingDesc,
+      WorkspaceFeature.reminderEmail => l10n.featureReminderEmailDesc,
       _ => feature.name,
     };
 

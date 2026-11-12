@@ -3296,6 +3296,8 @@
   "businessKindSwitchesOff": "Schaltet aus: {features}",
   "businessKindSwitchesOn": "Schaltet ein: {features}",
   "businessKindTitle": "Was für ein Unternehmen ist es?",
+  "businessMailSenderSubtitle": "Der Absender Ihrer Bestellungen und Mahnungen per E-Mail",
+  "businessMailSenderWhere": "E-Mail-Versand, in den Unternehmenseinstellungen",
   "buyPackageButton": "Paket kaufen",
   "buyPackageDays": "{days, plural, one{{days} Tag} other{{days} Tage}}",
   "buyPackageDone": "Tage hinzugefügt — viel Spaß.",
@@ -6941,6 +6943,8 @@
   "@featureRegionalFormatsTitle": {
     "description": "#711 - globalization"
   },
+  "featureReminderEmailDesc": "Eine Zahlungserinnerung kann auch per E-Mail versandt werden, vom Server, mit dem Absender Ihres Unternehmens, in der Dokumentsprache des Kunden. Jede Mahnstufe wird einmal versandt; die Antwort des Anbieters wird bei der Mahnung aufbewahrt. Aus: Mahnungen erscheinen nur im Verlauf und als Mitteilung.",
+  "featureReminderEmailTitle": "Mahnungen per E-Mail",
   "featureReportDesignExchangeDesc": "Jede Berichtsvorlage lässt sich als eine selbsterklärende Datei ausgeben und wieder einlesen. Die Datei enthält die Vorlage sowie die Bedeutung ihrer Felder, das erlaubte Markup und die vorhandenen Platzhalter — so kann sie außerhalb der App bearbeitet und zurückgegeben werden. Eine Datei für einen anderen Bericht oder aus einer neueren Version wird mit Begründung abgelehnt. Aus: Vorlagen sind nur im Designer änderbar.",
   "featureReportDesignExchangeTitle": "Berichtsvorlagen exportieren und importieren",
   "featureReportDesignerDesc": "Der Berichtseditor als Vollbild-Designer: Elemente an Ort und Stelle in ihrer echten Typografie bearbeitet, Ziehen zum Umsortieren, eine Einfügepalette, eine durchsuchbare Feldauswahl, Rückgängig und Wiederholen, Bildgröße und -ausrichtung, ein Schutz vor dem Verwerfen, Vorlagen und Zurücksetzen hinter einer Bestätigung, der Vorlagenfehler im Klartext, Entwurf und Vorschau nebeneinander auf breitem Bildschirm. Aus: der Editor als Blatt.",

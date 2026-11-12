@@ -60,7 +60,7 @@ const Map<String, int> _upwardImports = {
   'profile -> workspace': 43,
   'workspace -> directory': 21,
   'workspace -> events': 15,
-  'workspace -> money': 41,
+  'workspace -> money': 40,
   'workspace -> plan': 25,
   'workspace -> reservations': 9,
   'workspace -> task_recorder': 9,

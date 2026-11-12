@@ -105,7 +105,7 @@ const Map<String, Set<WorkspaceFeature>> setupStepTakesIn = {
   },
   'accounting': {_F.accountingPeriods, _F.accountingConnectors, _F.bankImport},
   // The reminder rules and the payment conditions they recall.
-  'reminders': {_F.paymentReminders, _F.memberPaymentTerms},
+  'reminders': {_F.paymentReminders, _F.memberPaymentTerms, _F.reminderEmail},
   // A copy of the space: its data and its configuration.
   'recovery': {_F.dataExport, _F.dataReport, _F.configurationTransfer},
   'assistant': {_F.webMcp},

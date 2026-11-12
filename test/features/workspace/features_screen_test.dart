@@ -76,7 +76,8 @@ void main() {
     // #2470 — mtdSubmission: filing with the tax authority is asked for.
     // #3307 — purchaseOrders: ordering from suppliers is asked for.
     // #3308 — guestPasses: selling passes at the desk is asked for.
-    expect(onCount, featureManifest.length - 54);
+    // #3673 — reminderEmail: reminders by e-mail are asked for.
+    expect(onCount, featureManifest.length - 55);
   });
 
   testWidgets(

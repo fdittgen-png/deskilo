@@ -449,4 +449,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest3 = {
     surface: FeatureSurface.reserve,
     tier: FeatureTier.core,
   ),
+  // #3673 — a payment reminder sent by e-mail too, from the server, with the
+  // business's own sender: a third channel beside the feed and the push.
+  // Asked for, under dunning.
+  WorkspaceFeature.reminderEmail: FeatureManifestEntry(
+    feature: WorkspaceFeature.reminderEmail,
+    surface: FeatureSurface.money,
+    tier: FeatureTier.platform,
+    requires: WorkspaceFeature.dunning,
+    defaultOn: false,
+  ),
 };

@@ -163,6 +163,7 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.onlinePayments,
       WorkspaceFeature.dunning,
       WorkspaceFeature.paymentReminders,
+      WorkspaceFeature.reminderEmail,
     ]),
     WorkspaceSubprocess('expenses', [
       WorkspaceFeature.supplyExpenses,

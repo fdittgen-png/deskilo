@@ -178,6 +178,7 @@
         "recapitulativeStatement": false,
         "recordingPrivacy": false,
         "regionalFormats": true,
+        "reminderEmail": false,
         "reportDesignExchange": false,
         "reportDesigner": false,
         "reportLayouts": false,
