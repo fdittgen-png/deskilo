@@ -230,9 +230,9 @@ Future<bool> _showCreateExpenseScheduleSheet(
   var unit = ScheduleUnit.month;
   final now = ref.read(clockProvider).now();
   var startsOn = now;
-  DateRead starts = (date: startsOn, problem: null);
   DateTime? endsOn;
-  DateRead ends = (date: null, problem: null);
+  DateRead starts = (date: startsOn, problem: null),
+      ends = (date: null, problem: null);
   var invalid = false;
   String? supplierId;
   final topic = l10n.helpTopicScheduledExpenses;
@@ -292,18 +292,13 @@ Future<bool> _showCreateExpenseScheduleSheet(
             onChanged: (v) => setSheetState(() => supplierId = v),
           ),
           const SizedBox(height: 12),
-          AppDateField(
+          ScheduleStartsField(
             key: const ValueKey('schedule-starts'),
-            label: l10n.scheduleStartsOn,
+            now: now,
             value: starts.date,
-            first: now.subtract(const Duration(days: 366)),
-            last: now.add(const Duration(days: 730)),
-            isRequired: true,
             showProblem: invalid,
-            onChanged: (read) => setSheetState(() {
-              starts = read;
-              if (read.date case final date?) startsOn = date;
-            }),
+            onChanged: (read) => setSheetState(
+                () => (starts, startsOn) = (read, read.date ?? startsOn)),
           ),
           Row(children: [
             Expanded(
@@ -346,10 +341,8 @@ Future<bool> _showCreateExpenseScheduleSheet(
             startsOn: startsOn,
             endsOn: endsOn,
             showProblem: invalid,
-            onChanged: (read) => setSheetState(() {
-              ends = read;
-              endsOn = read.date;
-            }),
+            onChanged: (read) =>
+                setSheetState(() => (ends, endsOn) = (read, read.date)),
           ),
           const SizedBox(height: 8),
           Text(
@@ -359,22 +352,10 @@ Future<bool> _showCreateExpenseScheduleSheet(
           const SizedBox(height: 12),
           FilledButton(
             key: const ValueKey('schedule-submit'),
-            onPressed: () {
-              // A date or an amount the fields could not read stays in the
-              // sheet, each saying why under itself.
-              final unread = starts.date == null ||
-                  ends.problem != null ||
-                  appFormatOf(context)
-                          .readAmount(
-                            amount.text,
-                            currency: currency.code,
-                            allowNegative: false,
-                          )
-                          .problem !=
-                      null;
-              if (unread) return setSheetState(() => invalid = true);
-              Navigator.of(context).pop(true);
-            },
+            onPressed: () => submitScheduleEntries(context,
+                starts: starts, ends: ends, amount: amount.text,
+                currency: currency.code,
+                onUnread: () => setSheetState(() => invalid = true)),
             child: Text(l10n.scheduleSubmit),
           ),
         ],

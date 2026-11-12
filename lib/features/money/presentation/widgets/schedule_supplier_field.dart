@@ -3,6 +3,7 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../providers/expense_schedule_providers.dart';
@@ -98,4 +99,53 @@ class ScheduleEndsTile extends StatelessWidget {
       onChanged: onChanged,
     );
   }
+}
+
+/// The first date of a new schedule: from a year back to two years ahead.
+class ScheduleStartsField extends StatelessWidget {
+  const ScheduleStartsField({
+    required this.now,
+    required this.value,
+    required this.showProblem,
+    required this.onChanged,
+    super.key,
+  });
+
+  final DateTime now;
+  final DateTime? value;
+  final bool showProblem;
+  final ValueChanged<DateRead> onChanged;
+
+  @override
+  Widget build(BuildContext context) => AppDateField(
+    label: context.l10n.scheduleStartsOn,
+    value: value,
+    first: now.subtract(const Duration(days: 366)),
+    last: now.add(const Duration(days: 730)),
+    isRequired: true,
+    showProblem: showProblem,
+    // recorder-key-exempt: the sheet keys this field (`schedule-starts`).
+    onChanged: onChanged,
+  );
+}
+
+/// Closes the new-schedule sheet with its entries, unless a date or the
+/// amount could not be read: then [onUnread], and the sheet stays open with
+/// each field saying why under itself.
+void submitScheduleEntries(
+  BuildContext context, {
+  required DateRead starts,
+  required DateRead ends,
+  required String amount,
+  required String currency,
+  required VoidCallback onUnread,
+}) {
+  final unread =
+      starts.date == null ||
+      ends.problem != null ||
+      appFormatOf(context)
+              .readAmount(amount, currency: currency, allowNegative: false)
+              .problem !=
+          null;
+  unread ? onUnread() : Navigator.of(context).pop(true);
 }

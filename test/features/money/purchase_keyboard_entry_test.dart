@@ -45,7 +45,7 @@ Future<void> _tabTo(
     focused?.visitAncestorElements((a) => !(inside = identical(a, element)));
     if (focused != null && (inside || identical(focused, element))) return;
     await tester.sendKeyEvent(LogicalKeyboardKey.tab);
-    await tester.pumpAndSettle();
+    await tester.pump();
   }
   fail('Tab never reached $target');
 }
@@ -98,7 +98,7 @@ void main() {
     final gross = find.byKey(const ValueKey('purchase-gross'));
     await _tabTo(tester, gross);
     tester.testTextInput.enterText('120.50');
-    await tester.pumpAndSettle();
+    await tester.pump();
 
     // The invoice date as eight digits in the order of the person's format.
     final invoice = find.byKey(const ValueKey('purchase-invoice-date'));
@@ -107,7 +107,7 @@ void main() {
     final day = DateTime(2030, 2);
     final monthFirst = DateFormat.yMd(locale).pattern!.startsWith('M');
     tester.testTextInput.enterText(monthFirst ? '02012030' : '01022030');
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(
       find.descendant(
         of: invoice,
@@ -122,7 +122,7 @@ void main() {
     final due = find.byKey(const ValueKey('purchase-due-date'));
     await _tabTo(tester, due);
     tester.testTextInput.enterText(monthFirst ? '03/01/2030' : '01/03/2030');
-    await tester.pumpAndSettle();
+    await tester.pump();
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
 
