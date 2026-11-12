@@ -6,12 +6,11 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/settings/setting_defaults.g.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/kit/records_table.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -52,8 +51,6 @@ class InvoiceRegisterScreen extends ConsumerStatefulWidget {
 
 class _InvoiceRegisterScreenState
     extends ConsumerState<InvoiceRegisterScreen> {
-  bool _newestFirst = true;
-
   /// The window the register was opened on; cleared by the chip.
   late RegisterPeriod? _period = RegisterPeriod.parse(widget.from, widget.to);
 
@@ -101,7 +98,6 @@ class _InvoiceRegisterScreenState
           .matches,
     };
     final reminders = remindersAsync.value ?? const {}; // empty-ok: the table waits for `statuses`
-    final workspace = ref.watch(currentWorkspaceProvider).value;
     final me = ref.watch(myMemberProvider).value;
     final permissions = ref.watch(myPermissionsProvider);
     // #2137 — the matrix decides, as on the invoices screen; it already
@@ -113,7 +109,6 @@ class _InvoiceRegisterScreenState
     // #2365 — the accountant: reads the finances and exports, issues nothing.
     final canExport = permissions.contains(WorkspacePermission.exportData) &&
         (canIssue || permissions.contains(WorkspacePermission.viewFinances));
-    final currency = appFormatOf(context).moneyIn(workspace?.currencyCode ?? SettingDefaults.localeDefaultCurrency);
     final dateFormat = appFormatOf(context).dates(DateShape.numeric);
 
     return Scaffold(
@@ -167,10 +162,10 @@ class _InvoiceRegisterScreenState
                 ..sort((a, b) => b.compareTo(a)),
               matches: matches,
               reminders: reminders,
-              currency: currency,
               dateFormat: dateFormat,
               showMemberNames: showMemberNames,
               canIssue: canIssue,
+              canExport: canExport,
             ),
           ),
         ),
@@ -229,26 +224,26 @@ class _InvoiceRegisterScreenState
     required List<int> years,
     required Map<String, InvoiceMatch> matches,
     required Map<String, ({int count, DateTime last})> reminders,
-    required MoneyFormat currency,
     required DateFormat dateFormat,
     required bool showMemberNames,
     required bool canIssue,
+    required bool canExport,
   }) {
-    if (invoices.isEmpty) {
-      return EmptyState(
-        icon: Icons.receipt_long_outlined,
-        title: l10n.invoicesEmpty,
-      );
-    }
-    final rows = [...invoices]..sort(
-        (a, b) => _newestFirst
-            ? b.issuedAt.compareTo(a.issuedAt)
-            : a.issuedAt.compareTo(b.issuedAt),
-      );
-    final total = rows.fold(0, (sum, invoice) => sum + invoice.totalCents);
+    final format = appFormatOf(context);
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-
+    String money(String currency, int minor) =>
+        format.moneyIn(currency).formatMinor(minor);
+    // The name that means something to THIS reader.
+    String name(Invoice i) => showMemberNames ? i.memberName : i.number;
+    void open(Invoice i) => _open(
+      i,
+      match: matches[i.id],
+      reminder: reminders[i.id],
+      canIssue: canIssue,
+      showMemberName: showMemberNames,
+    );
+    final byId = {for (final i in invoices) i.id: i};
     return Column(children: [
       if (years.length > 1)
         Padding(
@@ -277,144 +272,107 @@ class _InvoiceRegisterScreenState
             ),
           ),
         ),
-      // Header — the date column is the sort control, both directions.
-      Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg,
-          AppSpacing.md,
-          AppSpacing.lg,
-          AppSpacing.sm,
-        ),
-        child: Row(children: [
-          SizedBox(
-            width: 96,
-            child: InkWell(
-              key: const ValueKey('invoice-register-sort-date'),
-              onTap: () => setState(() => _newestFirst = !_newestFirst),
-              child: Row(children: [
-                Text(
-                  l10n.numberSequenceDatePart,
-                  style: theme.textTheme.labelMedium?.copyWith(color: muted),
-                ),
-                Icon(
-                  _newestFirst ? Icons.arrow_downward : Icons.arrow_upward,
-                  size: 14,
-                  color: muted,
-                ),
-              ]),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              l10n.invoiceRegisterName,
-              style: theme.textTheme.labelMedium?.copyWith(color: muted),
-            ),
-          ),
-          SizedBox(
-            width: 86,
-            child: Text(
-              l10n.invoiceRegisterAmount,
-              textAlign: TextAlign.right,
-              style: theme.textTheme.labelMedium?.copyWith(color: muted),
-            ),
-          ),
-        ]),
-      ),
-      const Divider(height: 1),
+      // #3606 — the register is a records table: sorted, filtered,
+      // selected; one total per currency, never one sum across them.
       Expanded(
-        child: ListView.separated(
-          itemCount: rows.length,
-          separatorBuilder: (context, _) => const Divider(height: 1),
-          itemBuilder: (context, index) {
-            final invoice = rows[index];
-            final status = invoiceLifecycleOf(invoice, matches[invoice.id]);
-            return InkWell(
-              key: ValueKey('invoice-register-${invoice.id}'),
-              onTap: () => _open(
-                invoice,
-                match: matches[invoice.id],
-                reminder: reminders[invoice.id],
-                canIssue: canIssue,
-                showMemberName: showMemberNames,
+        child: RecordsTable<Invoice>(
+          tableId: 'invoice-register',
+          rows: invoices,
+          keyOf: (i) => i.id,
+          initialQuery: const RecordsQuery(
+            sortColumn: 'date',
+            ascending: false,
+          ),
+          searchText: (i) =>
+              '${i.memberName} ${i.number} ${invoicePeriodLabel(context, i)}',
+          onOpen: open,
+          empty: EmptyState(
+            icon: Icons.receipt_long_outlined,
+            title: l10n.invoicesEmpty,
+          ),
+          amountOf: (i) => (currency: i.currency, minor: i.totalCents),
+          formatAmount: money,
+          columns: [
+            RecordColumn(
+              id: 'date',
+              label: l10n.numberSequenceDatePart,
+              sortKey: (i) => i.issuedAt,
+              cell: (_, i) => Text(dateFormat.format(i.issuedAt)),
+            ),
+            RecordColumn(
+              id: 'name',
+              label: l10n.invoiceRegisterName,
+              flex: 3,
+              hideable: false,
+              sortKey: (i) => name(i).toLowerCase(),
+              cell: (_, i) => Text(name(i), overflow: TextOverflow.ellipsis),
+            ),
+            RecordColumn(
+              id: 'period',
+              label: l10n.invoiceRegisterPeriodColumn,
+              flex: 2,
+              cell: (context, i) => Text(
+                invoicePeriodLabel(context, i),
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: muted),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg,
-                  vertical: AppSpacing.md,
+            ),
+            RecordColumn(
+              id: 'amount',
+              label: l10n.invoiceRegisterAmount,
+              numeric: true,
+              sortKey: (i) => i.totalCents,
+              cell: (_, i) => Text(money(i.currency, i.totalCents)),
+            ),
+            RecordColumn(
+              id: 'status',
+              label: l10n.invoiceRegisterStatus,
+              flex: 2,
+              cell: (_, i) => InvoiceStatusChip(
+                status: invoiceLifecycleOf(i, matches[i.id]),
+              ),
+            ),
+            // #956 — the fingerprint, checked on demand.
+            RecordColumn(
+              id: 'integrity',
+              label: l10n.invoiceRegisterIntegrity,
+              flex: 2,
+              cell: (_, i) => InvoiceIntegrityChip(invoiceId: i.id),
+            ),
+          ],
+          bulkActions: [
+            if (canExport)
+              RecordBulkAction(
+                id: 'export',
+                label: l10n.invoiceRegisterExportSelected,
+                icon: Icons.plagiarism_outlined,
+                // Exactly the selected invoices, nothing the filter hides.
+                onRun: (keys) => _export(
+                  [for (final k in keys) ?byId[k]],
+                  label: l10n.invoiceRegisterExportSelected(keys.length),
                 ),
-                child: Row(children: [
-                  SizedBox(
-                    width: 96,
-                    child: Text(
-                      dateFormat.format(invoice.issuedAt),
-                      style: theme.textTheme.bodySmall,
-                    ),
-                  ),
-                  // The name that means something to THIS reader.
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          showMemberNames
-                              ? invoice.memberName
-                              : invoice.number,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                        Text(
-                          invoicePeriodLabel(context, invoice),
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodySmall
-                              ?.copyWith(color: muted),
-                        ),
-                        // #956 — the fingerprint, checked on demand.
-                        InvoiceIntegrityChip(invoiceId: invoice.id),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.sm),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        currency.formatMinor(invoice.totalCents),
-                        style: theme.textTheme.bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      InvoiceStatusChip(status: status),
-                    ],
-                  ),
-                ]),
               ),
-            );
-          },
-        ),
-      ),
-      const Divider(height: 1),
-      // What the register adds up to — the reason to look at a register.
-      Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg,
-          AppSpacing.md,
-          AppSpacing.lg,
-          AppSpacing.lg,
-        ),
-        child: Row(children: [
-          Expanded(
-            child: Text(
-              l10n.invoiceRegisterTotal,
-              style: theme.textTheme.titleSmall,
+          ],
+          cardBuilder: (context, i) => Card(
+            child: ListTile(
+              title: Text(name(i), overflow: TextOverflow.ellipsis),
+              subtitle: Text(
+                '${dateFormat.format(i.issuedAt)} · '
+                '${invoicePeriodLabel(context, i)}',
+              ),
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(money(i.currency, i.totalCents)),
+                  InvoiceStatusChip(
+                    status: invoiceLifecycleOf(i, matches[i.id]),
+                  ),
+                ],
+              ),
             ),
           ),
-          Text(
-            currency.formatMinor(total),
-            key: const ValueKey('invoice-register-total'),
-            style: theme.textTheme.titleSmall
-                ?.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ]),
+        ),
       ),
     ]);
   }

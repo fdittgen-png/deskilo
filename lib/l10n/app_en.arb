@@ -19793,6 +19793,19 @@
   "@invoiceRegisterAmount": {
     "description": "Register column header"
   },
+  "invoiceRegisterExportSelected": "{count, plural, =1{Export 1 invoice} other{Export {count} invoices}}",
+  "@invoiceRegisterExportSelected": {
+    "description": "#3606 the invoice register as a records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceRegisterIntegrity": "Fingerprint",
+  "@invoiceRegisterIntegrity": {
+    "description": "#3606 the invoice register as a records table"
+  },
   "invoiceRegisterName": "Name",
   "@invoiceRegisterName": {
     "description": "Register column header: the member for an issuer, the invoice number for a member"
@@ -19812,6 +19825,14 @@
   "invoiceRegisterPeriodClear": "Show all periods",
   "@invoiceRegisterPeriodClear": {
     "description": "Register filter chip: removes the period and shows every invoice"
+  },
+  "invoiceRegisterPeriodColumn": "Period",
+  "@invoiceRegisterPeriodColumn": {
+    "description": "#3606 the invoice register as a records table"
+  },
+  "invoiceRegisterStatus": "Status",
+  "@invoiceRegisterStatus": {
+    "description": "#3606 the invoice register as a records table"
   },
   "invoiceRegisterTitle": "Invoice register",
   "@invoiceRegisterTitle": {

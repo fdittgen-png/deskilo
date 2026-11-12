@@ -24639,6 +24639,18 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get invoiceRegisterAmount;
 
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Export 1 invoice} other{Export {count} invoices}}'**
+  String invoiceRegisterExportSelected(int count);
+
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'Fingerprint'**
+  String get invoiceRegisterIntegrity;
+
   /// Register column header: the member for an issuer, the invoice number for a member
   ///
   /// In en, this message translates to:
@@ -24656,6 +24668,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show all periods'**
   String get invoiceRegisterPeriodClear;
+
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get invoiceRegisterPeriodColumn;
+
+  /// #3606 the invoice register as a records table
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get invoiceRegisterStatus;
 
   /// Screen title of the sortable invoice register (0072)
   ///

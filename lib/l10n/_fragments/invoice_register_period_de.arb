@@ -1,4 +1,8 @@
 {
   "invoiceRegisterPeriod": "Zeitraum: {from} – {to}",
-  "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen"
+  "invoiceRegisterPeriodClear": "Alle Zeiträume anzeigen",
+  "invoiceRegisterExportSelected": "{count, plural, =1{1 Rechnung exportieren} other{{count} Rechnungen exportieren}}",
+  "invoiceRegisterStatus": "Status",
+  "invoiceRegisterPeriodColumn": "Zeitraum",
+  "invoiceRegisterIntegrity": "Fingerabdruck"
 }

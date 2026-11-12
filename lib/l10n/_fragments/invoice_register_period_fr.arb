@@ -1,4 +1,8 @@
 {
   "invoiceRegisterPeriod": "Période : {from} – {to}",
-  "invoiceRegisterPeriodClear": "Afficher toutes les périodes"
+  "invoiceRegisterPeriodClear": "Afficher toutes les périodes",
+  "invoiceRegisterExportSelected": "{count, plural, =1{Exporter 1 facture} other{Exporter {count} factures}}",
+  "invoiceRegisterStatus": "Statut",
+  "invoiceRegisterPeriodColumn": "Période",
+  "invoiceRegisterIntegrity": "Empreinte"
 }

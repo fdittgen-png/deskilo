@@ -14,5 +14,26 @@
   "invoiceRegisterPeriodClear": "Show all periods",
   "@invoiceRegisterPeriodClear": {
     "description": "Register filter chip: removes the period and shows every invoice"
+  },
+  "invoiceRegisterExportSelected": "{count, plural, =1{Export 1 invoice} other{Export {count} invoices}}",
+  "@invoiceRegisterExportSelected": {
+    "description": "#3606 the invoice register as a records table",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceRegisterStatus": "Status",
+  "@invoiceRegisterStatus": {
+    "description": "#3606 the invoice register as a records table"
+  },
+  "invoiceRegisterPeriodColumn": "Period",
+  "@invoiceRegisterPeriodColumn": {
+    "description": "#3606 the invoice register as a records table"
+  },
+  "invoiceRegisterIntegrity": "Fingerprint",
+  "@invoiceRegisterIntegrity": {
+    "description": "#3606 the invoice register as a records table"
   }
 }

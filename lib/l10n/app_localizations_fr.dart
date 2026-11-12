@@ -15347,6 +15347,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceRegisterAmount => 'Montant';
 
   @override
+  String invoiceRegisterExportSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Exporter $count factures',
+      one: 'Exporter 1 facture',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get invoiceRegisterIntegrity => 'Empreinte';
+
+  @override
   String get invoiceRegisterName => 'Nom';
 
   @override
@@ -15356,6 +15370,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceRegisterPeriodClear => 'Afficher toutes les périodes';
+
+  @override
+  String get invoiceRegisterPeriodColumn => 'Période';
+
+  @override
+  String get invoiceRegisterStatus => 'Statut';
 
   @override
   String get invoiceRegisterTitle => 'Registre des factures';

@@ -48,8 +48,12 @@ class RecordsTable<T> extends StatefulWidget {
     this.rowActions,
     this.bulkActions = const [],
     this.columnStore,
+    this.initialQuery = const RecordsQuery(),
     super.key,
   });
+
+  /// The query the table opens with (its default sort).
+  final RecordsQuery initialQuery;
 
   /// Names the table, for the column choice kept on the device.
   final String tableId;
@@ -88,7 +92,7 @@ class RecordsTable<T> extends StatefulWidget {
 }
 
 class _RecordsTableState<T> extends State<RecordsTable<T>> {
-  RecordsQuery _query = const RecordsQuery();
+  late RecordsQuery _query = widget.initialQuery;
   Set<String> _selected = {};
   int _dropped = 0;
   int _focused = 0;
