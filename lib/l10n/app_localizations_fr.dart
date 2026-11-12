@@ -17749,9 +17749,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get listDetailClose => 'Fermer la fiche';
-
-  @override
   String get listDetailResize => 'Redimensionner le volet de la fiche';
 
   @override

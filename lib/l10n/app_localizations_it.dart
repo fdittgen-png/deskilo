@@ -17713,9 +17713,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get listDetailClose => 'Chiudi la scheda';
-
-  @override
   String get listDetailResize => 'Ridimensiona il riquadro della scheda';
 
   @override

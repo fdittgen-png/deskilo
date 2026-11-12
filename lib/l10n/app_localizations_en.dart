@@ -17576,9 +17576,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get listDetailClose => 'Close the record';
-
-  @override
   String get listDetailResize => 'Resize the record pane';
 
   @override

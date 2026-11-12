@@ -11446,7 +11446,6 @@
   "linkedAccountsUnlink": "Scollega",
   "listCoversSeats": "{count, plural, =1{1 posto} other{{count} posti}}",
   "listCoversTables": "{count, plural, =1{1 tavolo} other{{count} tavoli}}",
-  "listDetailClose": "Chiudi la scheda",
   "listDetailResize": "Ridimensiona il riquadro della scheda",
   "listWholeReservable": "Prenotabile per intero",
   "localGapsTitle": "Per completare la configurazione di questo spazio",

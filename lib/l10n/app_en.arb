@@ -23123,10 +23123,6 @@
       }
     }
   },
-  "listDetailClose": "Close the record",
-  "@listDetailClose": {
-    "description": "#3607 closes the record beside a list and returns to the list's address"
-  },
   "listDetailResize": "Resize the record pane",
   "@listDetailResize": {
     "description": "#3607 the edge between a list and its open record, dragged to resize the record's pane"

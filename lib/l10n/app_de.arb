@@ -11446,7 +11446,6 @@
   "linkedAccountsUnlink": "Trennen",
   "listCoversSeats": "{count, plural, =1{1 Platz} other{{count} Plätze}}",
   "listCoversTables": "{count, plural, =1{1 Tisch} other{{count} Tische}}",
-  "listDetailClose": "Eintrag schließen",
   "listDetailResize": "Bereich des Eintrags in der Breite ändern",
   "listWholeReservable": "Als Ganzes reservierbar",
   "localGapsTitle": "Um diesen Arbeitsbereich fertig einzurichten",
