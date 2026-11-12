@@ -38,14 +38,19 @@ bool deskShownAt(
     showsDesk(context) &&
     (!workspaceChromeAccountRoutes.contains(path) || inBusiness);
 
+/// Material's default horizontal inset of a dialog (its own private
+/// `_defaultInsetPadding`), for a theme that sets none.
+const double kMaterialDialogInset = 40;
+
 /// #3603 — the windows opened over a desk page (dialogs) keep the width
 /// the page's column gave them before the desk took the window: the
-/// column less the dialog's standard insets on each side.
+/// column less the dialog's insets on each side.
 ThemeData deskOverlayTheme(ThemeData theme, String path) {
-  const inset = 40.0; // Dialog's default horizontal inset (Material 3).
+  final inset =
+      theme.dialogTheme.insetPadding?.horizontal ?? 2 * kMaterialDialogInset;
   return theme.copyWith(
     dialogTheme: theme.dialogTheme.copyWith(
-      constraints: BoxConstraints(maxWidth: frameWidthFor(path) - 2 * inset),
+      constraints: BoxConstraints(maxWidth: frameWidthFor(path) - inset),
     ),
   );
 }
