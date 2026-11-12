@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/i18n/rate_format.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
@@ -231,8 +232,8 @@ Map<String, Object?> _invoiceLegalMentionData(
 /// else the frozen company (#910).
 String clientNameOf(Invoice invoice) => invoice.clientName;
 
-String _rateText(double percent) =>
-    '${percent == percent.roundToDouble() ? percent.toStringAsFixed(0) : percent} %';
+String _rateText(ReportStrings strings, double percent) =>
+    ratePercentText(percent, locale: strings.formatLocale);
 
 /// One position of the invoice as the placeholders of a design read it.
 Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
@@ -256,7 +257,7 @@ Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
     'unit_price': currency
         .formatMinor(line.quantity > 1 ? quoted ~/ line.quantity : quoted),
     'vat_rate': line.vatPercent > 0 && !invoice.isSalesTax
-        ? _rateText(line.vatPercent)
+        ? _rateText(strings, line.vatPercent)
         : '',
     'net': currency.formatMinor(invoice.isSalesTax
         ? quoted
@@ -360,7 +361,7 @@ Map<String, Object?> invoiceReportData(
         // its own base: GST 5 % 50.00, QST 9,975 % 99.75.
         if (t.components.isEmpty)
           {
-            'rate': _rateText(t.percent),
+            'rate': _rateText(strings, t.percent),
             'net': currency.formatMinor(t.netCents),
             'amount': currency.formatMinor(t.vatCents),
           }
@@ -369,7 +370,7 @@ Map<String, Object?> invoiceReportData(
             {
               // #2362 -- a sales tax goes by the jurisdiction that levies it.
               'rate': '${c.name.isNotEmpty ? c.name : taxSchemeName(c.scheme, strings.localeName ?? '')} '
-                  '${_rateText(c.percent)}',
+                  '${_rateText(strings, c.percent)}',
               'net': currency.formatMinor(c.baseCents),
               'amount': currency.formatMinor(c.taxCents),
             },

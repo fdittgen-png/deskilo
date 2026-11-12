@@ -44,7 +44,7 @@ Future<void> _pickRate(WidgetTester tester, String prefix) async {
   await tester.ensureVisible(_key('$prefix-vat-rate'));
   await tester.tap(_key('$prefix-vat-rate'));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('8.1 %').last);
+  await tester.tap(find.text('8.1%').last);
   await tester.pumpAndSettle();
 }
 

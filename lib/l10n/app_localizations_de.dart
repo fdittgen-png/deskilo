@@ -11649,6 +11649,31 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'Die vorige Datei wird noch verarbeitet. Legen Sie die nächste ab, wenn sie fertig ist.';
+
+  @override
+  String get fileDropFolder =>
+      'Ein Ordner kann hier nicht abgelegt werden. Legen Sie eine Datei ab.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Datei hier ablegen. Hier werden $kinds angenommen.';
+  }
+
+  @override
+  String get fileDropReadFailed =>
+      'Die abgelegte Datei konnte nicht gelesen werden.';
+
+  @override
+  String get fileDropSeveral => 'Bitte nur eine Datei auf einmal ablegen.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'Hier werden nur Dateien vom Typ $kinds angenommen. Legen Sie eine andere Datei ab oder nutzen Sie die Schaltfläche.';
+  }
+
+  @override
   String get fileExportKeep => 'In Deskilo behalten';
 
   @override
@@ -14845,6 +14870,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceLineAdjustment => 'Anpassung';
+
+  @override
+  String invoiceLineCancelled(String what) {
+    return 'Storniert: $what';
+  }
 
   @override
   String get invoiceMatchAction => 'Als bezahlt markieren';

@@ -6,6 +6,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/i18n/rate_format.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../l10n/dictionary_labels.dart';
 import '../domain/workspace_data_report_pdf.dart';
@@ -74,5 +75,6 @@ WorkspaceDataReportStrings workspaceDataReportStrings(
     day: DateFormat.yMMMd(locale).format,
     month: DateFormat.yMMMM(locale).format,
     number: numbers.format,
+    percent: (p) => ratePercentText(p, locale: locale),
   );
 }

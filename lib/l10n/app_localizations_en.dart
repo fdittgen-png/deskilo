@@ -11551,6 +11551,30 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'The previous file is still being processed. Drop the next one when it is done.';
+
+  @override
+  String get fileDropFolder =>
+      'A folder cannot be dropped here. Drop one file.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Drop the file here. This place takes $kinds.';
+  }
+
+  @override
+  String get fileDropReadFailed => 'The dropped file could not be read.';
+
+  @override
+  String get fileDropSeveral => 'Drop one file at a time.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'This place takes $kinds files. Drop another file, or use the button.';
+  }
+
+  @override
   String get fileExportKeep => 'Keep in Deskilo';
 
   @override
@@ -14701,6 +14725,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceLineAdjustment => 'Adjustment';
+
+  @override
+  String invoiceLineCancelled(String what) {
+    return 'Cancelled: $what';
+  }
 
   @override
   String get invoiceMatchAction => 'Mark as paid';

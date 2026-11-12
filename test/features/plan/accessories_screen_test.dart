@@ -235,15 +235,15 @@ void main() {
     await pumpAccessories(tester,
         accessories: accessories, workspace: workspace, money: money);
 
-    expect(find.textContaining('incl. VAT 20 %'), findsOneWidget);
-    expect(find.textContaining('incl. VAT 5.5 %'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 20%'), findsOneWidget);
+    expect(find.textContaining('incl. VAT 5.5%'), findsOneWidget);
 
     // Re-rate the Monitor to the reduced rate through the edit sheet.
     await tester.tap(find.text('Monitor'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('vat-rate-field')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Reduced (5.5 %)').last);
+    await tester.tap(find.text('Reduced (5.5%)').last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
@@ -254,7 +254,7 @@ void main() {
           .vatRateId,
       'vat-2',
     );
-    expect(find.textContaining('incl. VAT 5.5 %'), findsNWidgets(2));
-    expect(find.textContaining('incl. VAT 20 %'), findsNothing);
+    expect(find.textContaining('incl. VAT 5.5%'), findsNWidgets(2));
+    expect(find.textContaining('incl. VAT 20%'), findsNothing);
   });
 }

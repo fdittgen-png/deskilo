@@ -7466,6 +7466,12 @@
       }
     }
   },
+  "fileDropBusy": "Le fichier précédent est encore en cours de traitement. Déposez le suivant quand il est terminé.",
+  "fileDropFolder": "Un dossier ne peut pas être déposé ici. Déposez un fichier.",
+  "fileDropOverlay": "Déposez le fichier ici. Cet endroit accepte {kinds}.",
+  "fileDropReadFailed": "Le fichier déposé n'a pas pu être lu.",
+  "fileDropSeveral": "Déposez un seul fichier à la fois.",
+  "fileDropWrongKind": "Cet endroit n'accepte que les fichiers {kinds}. Déposez un autre fichier ou utilisez le bouton.",
   "fileExportKeep": "Garder dans Deskilo",
   "@fileExportKeep": {
     "description": "iPhone Export… row: keep a private copy inside the app"
@@ -9135,6 +9141,15 @@
     "description": "Legal invoice mentions (#480)"
   },
   "invoiceLineAdjustment": "Ajustement",
+  "invoiceLineCancelled": "Annulé : {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceMatchAction": "Marquer comme payée",
   "invoiceMatchCreditMoved": "Ce paiement a été déplacé vers un autre membre : il ne peut pas régler cette facture. Rechargez et choisissez-en un autre.",
   "invoiceMatchCreditNote": "Créer un avoir pour l'excédent",

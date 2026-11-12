@@ -11635,6 +11635,31 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get fileDropBusy =>
+      'Il file precedente è ancora in elaborazione. Trascini il successivo quando ha finito.';
+
+  @override
+  String get fileDropFolder =>
+      'Qui non si può trascinare una cartella. Trascini un file.';
+
+  @override
+  String fileDropOverlay(String kinds) {
+    return 'Trascini qui il file. Qui sono accettati $kinds.';
+  }
+
+  @override
+  String get fileDropReadFailed =>
+      'Non è stato possibile leggere il file trascinato.';
+
+  @override
+  String get fileDropSeveral => 'Trascini un solo file alla volta.';
+
+  @override
+  String fileDropWrongKind(String kinds) {
+    return 'Qui sono accettati solo file $kinds. Trascini un altro file o usi il pulsante.';
+  }
+
+  @override
   String get fileExportKeep => 'Conserva in Deskilo';
 
   @override
@@ -14817,6 +14842,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invoiceLineAdjustment => 'Rettifica';
+
+  @override
+  String invoiceLineCancelled(String what) {
+    return 'Annullato: $what';
+  }
 
   @override
   String get invoiceMatchAction => 'Segna come pagata';

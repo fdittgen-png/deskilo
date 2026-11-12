@@ -46,6 +46,7 @@ ReportStrings reportStringsOf(
     participationMonth: l10n.billParticipationMonth,
     subscriptionMonth: l10n.billSubscriptionMonth,
     nameDashLabel: l10n.titleDashDetail('{name}', '{label}'),
+    cancelledLine: l10n.invoiceLineCancelled,
   );
 }
 

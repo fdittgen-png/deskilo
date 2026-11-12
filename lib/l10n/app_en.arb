@@ -15151,6 +15151,40 @@
       }
     }
   },
+  "fileDropBusy": "The previous file is still being processed. Drop the next one when it is done.",
+  "@fileDropBusy": {
+    "description": "Refusal of a second drop while the first file is still being processed (#3623)."
+  },
+  "fileDropFolder": "A folder cannot be dropped here. Drop one file.",
+  "@fileDropFolder": {
+    "description": "Refusal when a folder is dropped where a file is taken (#3623)."
+  },
+  "fileDropOverlay": "Drop the file here. This place takes {kinds}.",
+  "@fileDropOverlay": {
+    "description": "The hint on the area while a file is dragged over a place that takes a file (#3623); {kinds} lists the file endings.",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "fileDropReadFailed": "The dropped file could not be read.",
+  "@fileDropReadFailed": {
+    "description": "A dropped file could not be read (#3623)."
+  },
+  "fileDropSeveral": "Drop one file at a time.",
+  "@fileDropSeveral": {
+    "description": "Refusal when several files are dropped where one is taken (#3623)."
+  },
+  "fileDropWrongKind": "This place takes {kinds} files. Drop another file, or use the button.",
+  "@fileDropWrongKind": {
+    "description": "Refusal of a dropped file of another kind than the place takes (#3623).",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
   "fileExportKeep": "Keep in Deskilo",
   "@fileExportKeep": {
     "description": "iPhone Export… row: keep a private copy inside the app"
@@ -19210,6 +19244,15 @@
   "invoiceLineAdjustment": "Adjustment",
   "@invoiceLineAdjustment": {
     "description": "Fallback label of an adjustment position without a description"
+  },
+  "invoiceLineCancelled": "Cancelled: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
   },
   "invoiceMatchAction": "Mark as paid",
   "@invoiceMatchAction": {

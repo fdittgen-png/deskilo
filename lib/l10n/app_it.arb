@@ -7466,6 +7466,12 @@
       }
     }
   },
+  "fileDropBusy": "Il file precedente è ancora in elaborazione. Trascini il successivo quando ha finito.",
+  "fileDropFolder": "Qui non si può trascinare una cartella. Trascini un file.",
+  "fileDropOverlay": "Trascini qui il file. Qui sono accettati {kinds}.",
+  "fileDropReadFailed": "Non è stato possibile leggere il file trascinato.",
+  "fileDropSeveral": "Trascini un solo file alla volta.",
+  "fileDropWrongKind": "Qui sono accettati solo file {kinds}. Trascini un altro file o usi il pulsante.",
   "fileExportKeep": "Conserva in Deskilo",
   "@fileExportKeep": {
     "description": "iPhone Export… row: keep a private copy inside the app"
@@ -9135,6 +9141,15 @@
     "description": "Legal invoice mentions (#480)"
   },
   "invoiceLineAdjustment": "Rettifica",
+  "invoiceLineCancelled": "Annullato: {what}",
+  "@invoiceLineCancelled": {
+    "description": "#3809 invoice line: a charge taken back, followed by what it was (a room and its day)",
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceMatchAction": "Segna come pagata",
   "invoiceMatchCreditMoved": "Questo pagamento è stato spostato a un altro membro, quindi non può saldare questa fattura. Ricarichi e ne scelga un altro.",
   "invoiceMatchCreditNote": "Crea una nota di credito per l'eccedenza",
