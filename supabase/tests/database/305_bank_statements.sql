@@ -265,7 +265,7 @@ select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L
           'DKB01', 'a movement already settling an invoice is refused');
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T5'), pg_temp.v('ia'))) ->> 'refused',
-          'P0001', 'a second movement against the settled invoice is refused by the match');
+          'DKI06', 'a second movement against the settled invoice is refused by the match');  -- #3811: its code
 select is(pg_temp.as_json('owner', format($q$select public.match_bank_line_v1(%L, %L, 'exact', '')$q$,
             pg_temp.line('T5'), pg_temp.v('ie'))) ->> 'refused',
           'DKB02', 'an invoice in another currency is refused');
