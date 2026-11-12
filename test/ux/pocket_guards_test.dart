@@ -36,16 +36,7 @@ const List<Size> _phones = [Size(320, 640), Size(390, 844)];
 const List<Size> _tablets = [Size(1280, 800), Size(800, 1280)];
 
 /// What is still wrong: case -> rules. Only falls (#3620).
-const Map<String, Set<String>> _known = {
-  // A seat drawn on the plan is 59 x 39 dp at 320 px: the canvas scales the
-  // floor to the window, and a seat is a few cells of it. The seat list
-  // (the view switch beside it) is the touch-sized way to the same seat.
-  'reserve · plan': {'target under 48 dp'},
-  'reserve · first-run card': {'target under 48 dp'},
-  // The week grid at 320 px draws each day 18 dp wide: its day headers are
-  // 38 x 34 and its slot cells are 18 x 29 and carry no name.
-  'reserve · week': {'target under 48 dp', 'unnamed control'},
-};
+const Map<String, Set<String>> _known = {};
 
 /// Opens one surface at [size] with the platform set to the cell's text
 /// scale and theme; the test then reads the guards off the tree.
