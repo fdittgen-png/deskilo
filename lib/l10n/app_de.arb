@@ -4250,6 +4250,77 @@
   "customerPageNothingOwed": "Nichts offen",
   "customerPageOwes": "Schuldet",
   "customerPageStory": "Verlauf",
+  "customerStatementAsOf": "Offene Posten zum {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "wartet auf Freigabe",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementBalanceDue": "Von Ihnen zu zahlen",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceNone": "Es ist nichts offen",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementBalanceOwed": "Saldo zu Ihren Gunsten",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementDue": "fällig {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementNothingOpen": "Für diesen Kunden ist nichts offen: keine Kontoübersicht zu drucken.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  },
+  "customerStatementOwedToYou": "Zu Ihren Gunsten",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementPart": "Zahlung vom {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPickCurrency": "Die Kontoübersicht in welcher Währung?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementStillDue": "Noch offen",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementTotalDue": "Summe noch offen",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Noch nicht zugeordnet",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementUnapplied": "Noch nicht zugeordnete Zahlungen und Gutschriften",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
   "customerStoryDeclared": "Sagt, Rechnung {number} bezahlt zu haben",
   "customerStoryIssued": "Rechnung {number} ausgestellt",
   "customerStoryNow": "Jetzt: {words}",
@@ -15510,6 +15581,10 @@
   },
   "reportDocBadges": "Mitgliedsausweise",
   "reportDocCoa": "Kontenrahmen",
+  "reportDocCustomerStatement": "Kontoübersicht",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
   "reportDocGeneralLedger": "Hauptbuch",
   "reportDocJournals": "Journale",
   "reportDocPayments": "Zahlungsbericht",

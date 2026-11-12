@@ -1,0 +1,78 @@
+{
+  "@@locale": "de",
+  "reportDocCustomerStatement": "Kontoübersicht",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
+  "customerStatementAsOf": "Offene Posten zum {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementDue": "fällig {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPart": "Zahlung vom {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "wartet auf Freigabe",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementStillDue": "Noch offen",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementOwedToYou": "Zu Ihren Gunsten",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementUnapplied": "Noch nicht zugeordnete Zahlungen und Gutschriften",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
+  "customerStatementTotalDue": "Summe noch offen",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Noch nicht zugeordnet",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementBalanceDue": "Von Ihnen zu zahlen",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceOwed": "Saldo zu Ihren Gunsten",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementBalanceNone": "Es ist nichts offen",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementPickCurrency": "Die Kontoübersicht in welcher Währung?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementNothingOpen": "Für diesen Kunden ist nichts offen: keine Kontoübersicht zu drucken.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  }
+}

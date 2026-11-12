@@ -102,6 +102,8 @@ const List<ReportKind> fixedReportKinds = [
       numbersFirstPage: true),
   // #3307 — the order the space sends its supplier.
   ReportKind(id: 'purchase_order', slot: ReportDocSlot('purchase_order')),
+  // #3673 — a customer's open items as of a date, one currency each.
+  ReportKind(id: 'customer_statement', slot: ReportDocSlot('customer_statement')),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];

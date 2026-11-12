@@ -1,0 +1,78 @@
+{
+  "@@locale": "it",
+  "reportDocCustomerStatement": "Estratto conto",
+  "@reportDocCustomerStatement": {
+    "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
+  "customerStatementAsOf": "Partite aperte al {date}",
+  "@customerStatementAsOf": {
+    "description": "#3673 customer statement: customerStatementAsOf",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementDue": "scadenza {date}",
+  "@customerStatementDue": {
+    "description": "#3673 customer statement: customerStatementDue",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementPart": "Pagamento del {date}",
+  "@customerStatementPart": {
+    "description": "#3673 customer statement: customerStatementPart",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "customerStatementAwaiting": "in attesa di approvazione",
+  "@customerStatementAwaiting": {
+    "description": "#3673 customer statement: customerStatementAwaiting"
+  },
+  "customerStatementStillDue": "Ancora dovuto",
+  "@customerStatementStillDue": {
+    "description": "#3673 customer statement: customerStatementStillDue"
+  },
+  "customerStatementOwedToYou": "A Suo favore",
+  "@customerStatementOwedToYou": {
+    "description": "#3673 customer statement: customerStatementOwedToYou"
+  },
+  "customerStatementUnapplied": "Pagamenti e crediti non ancora imputati",
+  "@customerStatementUnapplied": {
+    "description": "#3673 customer statement: customerStatementUnapplied"
+  },
+  "customerStatementTotalDue": "Totale ancora dovuto",
+  "@customerStatementTotalDue": {
+    "description": "#3673 customer statement: customerStatementTotalDue"
+  },
+  "customerStatementTotalUnapplied": "Non ancora imputato",
+  "@customerStatementTotalUnapplied": {
+    "description": "#3673 customer statement: customerStatementTotalUnapplied"
+  },
+  "customerStatementBalanceDue": "Saldo da pagare",
+  "@customerStatementBalanceDue": {
+    "description": "#3673 customer statement: customerStatementBalanceDue"
+  },
+  "customerStatementBalanceOwed": "Saldo a Suo favore",
+  "@customerStatementBalanceOwed": {
+    "description": "#3673 customer statement: customerStatementBalanceOwed"
+  },
+  "customerStatementBalanceNone": "Non è dovuto nulla",
+  "@customerStatementBalanceNone": {
+    "description": "#3673 customer statement: customerStatementBalanceNone"
+  },
+  "customerStatementPickCurrency": "L'estratto conto in quale valuta?",
+  "@customerStatementPickCurrency": {
+    "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementNothingOpen": "Non c'è nulla di aperto per questo cliente: nessun estratto conto da stampare.",
+  "@customerStatementNothingOpen": {
+    "description": "#3673 customer statement: customerStatementNothingOpen"
+  }
+}

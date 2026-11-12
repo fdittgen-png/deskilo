@@ -7,6 +7,7 @@ import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
+import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
 import 'package:deskilo/core/demo/data/money/demo_invoice_mail.dart';
 import 'package:deskilo/core/demo/data/money/demo_reminder_mail.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
@@ -317,7 +318,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // holds answers per space (demo_space_routing.dart).
       workspaceListRepositoryProvider.overrideWithValue(fixture.workspaces),
       ...demoSpaceOverrides(fixture),
-      ...demoGuestPassOverrides(fixture), // #3308
+      ...demoGuestPassOverrides(fixture), demoCustomerStatementOverride(fixture), // #3308, #3673
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354

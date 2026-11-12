@@ -6858,6 +6858,56 @@ class AppLocalizationsFr extends AppLocalizations {
   String get customerPageStory => 'Historique';
 
   @override
+  String customerStatementAsOf(String date) {
+    return 'Pièces ouvertes au $date';
+  }
+
+  @override
+  String get customerStatementAwaiting => 'en attente d\'approbation';
+
+  @override
+  String get customerStatementBalanceDue => 'Solde à régler';
+
+  @override
+  String get customerStatementBalanceNone => 'Rien n\'est dû';
+
+  @override
+  String get customerStatementBalanceOwed => 'Solde en votre faveur';
+
+  @override
+  String customerStatementDue(String date) {
+    return 'échéance $date';
+  }
+
+  @override
+  String get customerStatementNothingOpen =>
+      'Rien n\'est ouvert pour ce client : aucun relevé à imprimer.';
+
+  @override
+  String get customerStatementOwedToYou => 'Dû en votre faveur';
+
+  @override
+  String customerStatementPart(String date) {
+    return 'Paiement du $date';
+  }
+
+  @override
+  String get customerStatementPickCurrency => 'Le relevé dans quelle devise ?';
+
+  @override
+  String get customerStatementStillDue => 'Reste dû';
+
+  @override
+  String get customerStatementTotalDue => 'Total restant dû';
+
+  @override
+  String get customerStatementTotalUnapplied => 'Non encore imputé';
+
+  @override
+  String get customerStatementUnapplied =>
+      'Paiements et avoirs non encore imputés';
+
+  @override
   String customerStoryDeclared(String number) {
     return 'Dit avoir payé la facture $number';
   }
@@ -25324,6 +25374,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportDocCoa => 'Plan comptable';
+
+  @override
+  String get reportDocCustomerStatement => 'Relevé de compte';
 
   @override
   String get reportDocGeneralLedger => 'Grand-livre';
