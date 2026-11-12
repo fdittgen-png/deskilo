@@ -100,7 +100,7 @@ void main() {
         expect(tester.getSize(panel).width, TaskSurfaceMetrics.sidePanelWidth);
         // On the right edge of the area the page's navigator has (the
         // desk's page frame), the page beside it under the scrim. The desk
-        // frame confines popup routes (see the desk epic #3625): once the
+        // frame confines popup routes (#3798): once the
         // navigator's overlay spans the page area, this is the window edge.
         expect(
           tester.getTopRight(panel).dx,
