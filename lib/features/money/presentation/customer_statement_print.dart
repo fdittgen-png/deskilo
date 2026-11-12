@@ -75,16 +75,18 @@ class CustomerStatementPrint {
     final l10n = language.isEmpty ? context.l10n : l10nForLanguage(language);
     final data = customerStatementReportData(
       one,
-      customerName: customer?.memberName ?? '',
-      customerAddress: customer?.memberAddress ?? '',
+      StatementLetter(
+        customerName: customer?.memberName ?? '',
+        customerAddress: customer?.memberAddress ?? '',
+        issued: now,
+        issuedBy: space?.issuerName ?? '',
+        letterhead: {
+          'workspace': space?.workspaceName ?? '',
+          'workspace_address': space?.workspaceAddress ?? '',
+        },
+      ),
       asOf: statement.asOf,
-      issued: now,
-      issuedBy: space?.issuerName ?? '',
       locale: language.isEmpty ? l10n.localeName : language,
-      letterhead: {
-        'workspace': space?.workspaceName ?? '',
-        'workspace_address': space?.workspaceAddress ?? '',
-      },
     );
     final rendered = renderLetterDoc(
       context,
@@ -93,9 +95,11 @@ class CustomerStatementPrint {
       data: data,
       language: language,
     );
-    final title =
-        '${l10n.reportDocCustomerStatement} ${customer?.memberName ?? ''}'
-            .trim();
+    final name = customer?.memberName ?? '';
+    final title = [
+      l10n.reportDocCustomerStatement,
+      if (name.isNotEmpty) name,
+    ].join(' · ');
     await runReportActions(
       context,
       ref,

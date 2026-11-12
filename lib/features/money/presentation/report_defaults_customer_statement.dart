@@ -10,34 +10,43 @@ import '../domain/invoice_pdf_template.dart';
 
 ReportBands customerStatementBands(AppLocalizations l10n) {
   final title = l10n.reportDocCustomerStatement;
+  // Each element is one independent line of the band (a label and its
+  // value, or a heading): the lines are joined, never a sentence's pieces.
   return ReportBands(
-    header:
-        '# {{ workspace }}\n> {{ workspace_address }}\n---\n'
-        '{{ client_name }}\n> {{ client_address }}\n---\n'
-        '# $title\n> ${l10n.customerStatementAsOf('{{ as_of }}')} · {{ currency }}',
+    header: [
+      '# {{ workspace }}',
+      '> {{ workspace_address }}',
+      '---',
+      '{{ client_name }}',
+      '> {{ client_address }}',
+      '---',
+      '# $title',
+      '> ${l10n.customerStatementAsOf('{{ as_of }}')} · {{ currency }}',
+    ].join('\n'),
     continuation: '{{ workspace }} — $title — {{ client_name }}\n---',
-    body:
-        '{% for row in rows %}'
-        '{% if row.kind == "document" %}**{{ row.number }}** · '
-        '${l10n.invoicePdfIssuedOnDate('{{ row.issued }}')}'
-        '{% if row.due != "" %} · ${l10n.customerStatementDue('{{ row.due }}')}{% endif %}'
-        ' | {{ row.amount }}\n{% endif %}'
-        '{% if row.kind == "part" %}> ${l10n.customerStatementPart('{{ row.on }}')}'
-        '{% if row.waiting %} (${l10n.customerStatementAwaiting}){% endif %} | − {{ row.amount }}\n{% endif %}'
-        '{% if row.kind == "due" %}'
-        '{% if row.state == "credit_note" %}${l10n.customerStatementOwedToYou}'
-        '{% else %}${l10n.customerStatementStillDue}{% endif %} | {{ row.amount }}\n---\n{% endif %}'
-        '{% endfor %}'
-        '{% if has_credits %}## ${l10n.customerStatementUnapplied}\n'
-        '{% for row in rows %}{% if row.kind == "credit" %}'
-        '{{ row.label }} · {{ row.on }} | − {{ row.amount }}\n'
-        '{% endif %}{% endfor %}---\n{% endif %}'
-        '${l10n.customerStatementTotalDue} | {{ still_due_total }}\n'
-        '${l10n.customerStatementTotalUnapplied} | − {{ unapplied_total }}\n'
-        '{% if balance_owed_by == "customer" %}**${l10n.customerStatementBalanceDue}**'
-        '{% endif %}{% if balance_owed_by == "business" %}**${l10n.customerStatementBalanceOwed}**'
-        '{% endif %}{% if balance_owed_by == "none" %}**${l10n.customerStatementBalanceNone}**'
-        '{% endif %} | **{{ balance }}**',
+    body: [
+      '{% for row in rows %}'
+          '{% if row.kind == "document" %}**{{ row.number }}** · '
+          '${l10n.invoicePdfIssuedOnDate('{{ row.issued }}')}'
+          '{% if row.due != "" %} · ${l10n.customerStatementDue('{{ row.due }}')}{% endif %}'
+          ' | {{ row.amount }}\n{% endif %}'
+          '{% if row.kind == "part" %}> ${l10n.customerStatementPart('{{ row.on }}')}'
+          '{% if row.waiting %} (${l10n.customerStatementAwaiting}){% endif %} | − {{ row.amount }}\n{% endif %}'
+          '{% if row.kind == "due" %}'
+          '{% if row.state == "credit_note" %}${l10n.customerStatementOwedToYou}'
+          '{% else %}${l10n.customerStatementStillDue}{% endif %} | {{ row.amount }}\n---\n{% endif %}'
+          '{% endfor %}'
+          '{% if has_credits %}## ${l10n.customerStatementUnapplied}\n'
+          '{% for row in rows %}{% if row.kind == "credit" %}'
+          '{{ row.label }} · {{ row.on }} | − {{ row.amount }}\n'
+          '{% endif %}{% endfor %}---\n{% endif %}',
+      '${l10n.customerStatementTotalDue} | {{ still_due_total }}',
+      '${l10n.customerStatementTotalUnapplied} | − {{ unapplied_total }}',
+      '{% if balance_owed_by == "customer" %}**${l10n.customerStatementBalanceDue}**'
+          '{% endif %}{% if balance_owed_by == "business" %}**${l10n.customerStatementBalanceOwed}**'
+          '{% endif %}{% if balance_owed_by == "none" %}**${l10n.customerStatementBalanceNone}**'
+          '{% endif %} | **{{ balance }}**',
+    ].join('\n'),
     footer: '> {{ workspace }} · {{ issued_by }} · {{ issued }}',
   );
 }
