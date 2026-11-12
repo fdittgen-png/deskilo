@@ -12,7 +12,10 @@ part 'kiosk_device_providers.g.dart';
 KioskDeviceRepository kioskDeviceRepository(Ref ref) =>
     SupabaseKioskDevices(ref.watch(selectedWorkspaceClientProvider));
 
-/// The devices of [workspaceId], newest first.
-@riverpod
+Duration? _noRetry(int count, Object error) => null;
+
+/// The devices of [workspaceId], newest first. A read that failed is said
+/// at once, with Try again (#3742): no automatic retries.
+@Riverpod(retry: _noRetry)
 Future<List<KioskDevice>> kioskDevices(Ref ref, String workspaceId) =>
     ref.watch(kioskDeviceRepositoryProvider).list(workspaceId);

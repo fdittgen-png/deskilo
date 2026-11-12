@@ -41,7 +41,12 @@ class _KioskDevicesScreenState extends ConsumerState<KioskDevicesScreen> {
   Future<KioskCredential?> _readHeld() =>
       ref.read(kioskCredentialStoreProvider).read();
 
-  void _heldChanged() => setState(() => _held = _readHeld());
+  void _heldChanged() {
+    final next = _readHeld();
+    setState(() {
+      _held = next;
+    });
+  }
 
   Future<void> _revoke(String workspaceId, KioskDevice device) async {
     final l10n = context.l10n;

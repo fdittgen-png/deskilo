@@ -5,6 +5,7 @@
 // device the visitor holds is not the tablet: its enrolment store starts
 // empty and lives in memory, so enrolling it in the Demo writes nothing to
 // the platform's secure storage.
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../../features/kiosk/domain/kiosk_device.dart';
@@ -34,6 +35,10 @@ class DemoKioskDevices implements KioskDeviceRepository {
   /// The Demo's day: what is enrolled or revoked now happens on it.
   final DateTime today;
   final List<KioskDevice> _devices;
+
+  /// What the Demo holds now, for the Demo's own checks.
+  @visibleForTesting
+  List<KioskDevice> get held => List.unmodifiable(_devices);
 
   @override
   Future<List<KioskDevice>> list(String workspaceId) async => [
