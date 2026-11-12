@@ -9,9 +9,13 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:deskilo/app/app.dart';
+import 'package:deskilo/app/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
 /// The widths the guards walk: two phones and a wide window.
@@ -166,21 +170,25 @@ const double bodyTextMaxWidth = 760;
 /// The share of the window a records page's table takes at 1440 at least.
 const double recordsTableMinShare = 0.6;
 
-/// Pumps the app at [size] and opens [path] through its own builder: the
-/// frame, the desk and the shell are in the tree, as a person sees them.
+/// Pumps the app with [overrides] at [size] and opens [path] through its
+/// own builder: the frame, the desk and the shell are in the tree, as a
+/// person sees them.
 Future<void> pumpRoute(
   WidgetTester tester,
-  Widget app,
   String path, {
   required Size size,
-  required void Function(String path) go,
+  required List<Override> overrides,
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(app);
+  await tester.pumpWidget(
+    ProviderScope(overrides: overrides, child: const DeskiloApp()),
+  );
   await tester.pumpAndSettle();
-  go(path);
+  ProviderScope.containerOf(
+    tester.element(find.byType(DeskiloApp)),
+  ).read(routerProvider).go(path);
   await tester.pumpAndSettle();
 }
 

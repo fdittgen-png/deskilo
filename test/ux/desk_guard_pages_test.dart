@@ -4,14 +4,11 @@
 // builder at 1024, 1440 and 1920: /invoices, a records page, and the Me
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
-import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/fake_money_repository.dart';
@@ -27,7 +24,10 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     memberId: 'member-1',
     period: kTestPeriod,
   );
-  final app = ProviderScope(
+  await pumpRoute(
+    tester,
+    path,
+    size: size,
     overrides: [
       ...standardTestOverrides(
         money: money,
@@ -37,17 +37,6 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
     ],
-    child: const DeskiloApp(),
-  );
-  await pumpRoute(
-    tester,
-    app,
-    path,
-    size: size,
-    go: (p) =>
-        ProviderScope.containerOf(tester.element(find.byType(DeskiloApp)))
-            .read(routerProvider)
-            .go(p),
   );
 }
 
