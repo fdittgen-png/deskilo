@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../l10n/context_l10n.dart';
+import '../motion/motion.dart';
+import 'app_scroll_behavior.dart';
+import 'mouse_presence.dart';
+
 /// A horizontally scrolling row that SAYS it scrolls (#1184).
 ///
 /// Four screens ended a filter row on a chip sliced in half by the
@@ -16,6 +21,10 @@ import 'package:flutter/material.dart';
 /// The fade appears only on a side that actually has more — no fade at
 /// rest on a row that fits, and none at the end once you have scrolled
 /// there — so its presence is information rather than decoration.
+///
+/// #3611 — with a mouse, a fading side also carries an arrow that pages
+/// the strip that way (a wheel scrolls a page down, not a strip
+/// sideways), and the strip can be dragged.
 class EdgeFadeScroll extends StatefulWidget {
   const EdgeFadeScroll({
     super.key,
@@ -49,6 +58,10 @@ class EdgeFadeScroll extends StatefulWidget {
   /// How wide the dissolve is. Narrow enough not to grey a whole chip,
   /// wide enough to read as a fade rather than a hard crop.
   static const double fadeWidth = 24;
+
+  /// The share of the visible width one arrow press moves the strip:
+  /// most of a view, so the chip cut at the edge stays in sight.
+  static const double arrowPage = 0.8;
 
   @override
   State<EdgeFadeScroll> createState() => _EdgeFadeScrollState();
@@ -92,8 +105,62 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
     }
   }
 
+  /// One arrow press: most of a view towards [forward], gently unless
+  /// the person turned motion off.
+  void _page({required bool forward}) {
+    if (!_controller.hasClients) return;
+    final position = _controller.position;
+    final step = position.viewportDimension * EdgeFadeScroll.arrowPage;
+    final target = (position.pixels + (forward ? step : -step))
+        .clamp(position.minScrollExtent, position.maxScrollExtent);
+    final duration = motionDuration(context, MotionTokens.standard);
+    if (duration == Duration.zero) {
+      _controller.jumpTo(target);
+    } else {
+      _controller.animateTo(target,
+          duration: duration, curve: MotionTokens.ease);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final faded = _faded(context);
+    return MousePresence(builder: (context, mouse, _) {
+      final l10n = context.l10n;
+      // The strip keeps its own constraints: the arrows lie over it,
+      // they never resize or re-centre it. The Stack is there with or
+      // without a mouse, so plugging one in keeps the strip's place.
+      return Stack(
+        fit: StackFit.passthrough,
+        alignment: AlignmentDirectional.centerStart,
+        children: [
+          faded,
+          if (mouse && _before)
+            PositionedDirectional(
+              start: 0,
+              child: _Arrow(
+                key: const ValueKey('edge-fade-back'),
+                icon: Icons.chevron_left,
+                tooltip: l10n.kitScrollBack,
+                onPressed: () => _page(forward: false),
+              ),
+            ),
+          if (mouse && _more)
+            PositionedDirectional(
+              end: 0,
+              child: _Arrow(
+                key: const ValueKey('edge-fade-forward'),
+                icon: Icons.chevron_right,
+                tooltip: l10n.kitScrollForward,
+                onPressed: () => _page(forward: true),
+              ),
+            ),
+        ],
+      );
+    });
+  }
+
+  Widget _faded(BuildContext context) {
     final scroll = NotificationListener<ScrollMetricsNotification>(
       // Fires when the CONTENT changes size — a filter that removes
       // chips can end the overflow without anybody scrolling.
@@ -101,13 +168,16 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
         WidgetsBinding.instance.addPostFrameCallback((_) => _sync());
         return false;
       },
-      child: widget.builder?.call(context, _controller) ??
-          SingleChildScrollView(
-            controller: _controller,
-            scrollDirection: Axis.horizontal,
-            padding: widget.padding,
-            child: widget.child,
-          ),
+      // A strip is the one place a mouse may drag (#3611).
+      child: MouseDragStrip(
+        child: widget.builder?.call(context, _controller) ??
+            SingleChildScrollView(
+              controller: _controller,
+              scrollDirection: Axis.horizontal,
+              padding: widget.padding,
+              child: widget.child,
+            ),
+      ),
     );
     if (!_more && !_before) return scroll;
     const fade = EdgeFadeScroll.fadeWidth;
@@ -135,6 +205,36 @@ class _EdgeFadeScrollState extends State<EdgeFadeScroll> {
         ).createShader(bounds);
       },
       child: scroll,
+    );
+  }
+}
+
+/// A small round arrow over a fading edge, on the strip's own surface so
+/// it reads above the chips it covers.
+class _Arrow extends StatelessWidget {
+  const _Arrow({
+    super.key,
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return IconButton.filledTonal(
+      tooltip: tooltip,
+      visualDensity: VisualDensity.compact,
+      style: IconButton.styleFrom(
+        backgroundColor: scheme.surfaceContainerHighest,
+        foregroundColor: scheme.onSurface,
+      ),
+      onPressed: onPressed,
+      icon: Icon(icon),
     );
   }
 }

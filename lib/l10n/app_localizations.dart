@@ -26817,6 +26817,18 @@ abstract class AppLocalizations {
   /// **'Working…'**
   String get kitActionBusy;
 
+  /// Tooltip of the arrow on a sideways strip that pages it back towards its start; shown only while a mouse is the pointer.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll back'**
+  String get kitScrollBack;
+
+  /// Tooltip of the arrow on a sideways strip that pages it on towards its end; shown only while a mouse is the pointer.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll forward'**
+  String get kitScrollForward;
+
   /// #3652 A label with its value on one line, e.g. "Total: 12.00". One message so the language places the colon (French has a space before it).
   ///
   /// In en, this message translates to:
@@ -31225,6 +31237,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your message'**
   String get memberNoteHint;
+
+  /// Menu entry on a message that quotes it into the reply being written (#3611)
+  ///
+  /// In en, this message translates to:
+  /// **'Quote'**
+  String get memberNoteQuote;
 
   /// Member notes (#456)
   ///

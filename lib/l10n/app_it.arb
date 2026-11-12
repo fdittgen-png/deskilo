@@ -10591,6 +10591,8 @@
   "kioskScanQr": "Scansiona il badge QR",
   "kioskTapHint": "Tocchi un posto per fare check-in",
   "kitActionBusy": "In corso…",
+  "kitScrollBack": "Scorri indietro",
+  "kitScrollForward": "Scorri avanti",
   "labelWithValue": "{label}: {value}",
   "languageAvailableHint": "DesKilo è disponibile nelle lingue seguenti. Su un dispositivo impostato in un'altra lingua, viene mostrato in {fallback}.",
   "languageNameCS": "Ceco",
@@ -12031,6 +12033,7 @@
   "memberNoteDeleteRead": "Già letto: questo messaggio non può più essere ritirato.",
   "memberNoteDeleted": "Messaggio eliminato.",
   "memberNoteHint": "Il suo messaggio",
+  "memberNoteQuote": "Cita",
   "memberNoteReceived": "Messaggio da {name}",
   "memberNoteReply": "Rispondi",
   "@memberNoteReply": {

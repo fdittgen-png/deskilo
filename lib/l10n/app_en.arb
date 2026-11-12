@@ -21840,6 +21840,14 @@
   "@kitActionBusy": {
     "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
   },
+  "kitScrollBack": "Scroll back",
+  "@kitScrollBack": {
+    "description": "Tooltip of the arrow on a sideways strip that pages it back towards its start; shown only while a mouse is the pointer."
+  },
+  "kitScrollForward": "Scroll forward",
+  "@kitScrollForward": {
+    "description": "Tooltip of the arrow on a sideways strip that pages it on towards its end; shown only while a mouse is the pointer."
+  },
   "labelWithValue": "{label}: {value}",
   "@labelWithValue": {
     "description": "#3652 A label with its value on one line, e.g. \"Total: 12.00\". One message so the language places the colon (French has a space before it).",
@@ -25310,6 +25318,10 @@
   "memberNoteHint": "Your message",
   "@memberNoteHint": {
     "description": "Member notes (#456)"
+  },
+  "memberNoteQuote": "Quote",
+  "@memberNoteQuote": {
+    "description": "Menu entry on a message that quotes it into the reply being written (#3611)"
   },
   "memberNoteReceived": "Message from {name}",
   "@memberNoteReceived": {
