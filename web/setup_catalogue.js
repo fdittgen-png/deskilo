@@ -1633,7 +1633,8 @@ window.SETUP_LEVELS={
       "invoicingWizard",
       "settlementFold",
       "carnets",
-      "guestPasses"
+      "guestPasses",
+      "reminderEmail"
      ],
      "needs": {}
     }

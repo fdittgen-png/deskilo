@@ -3280,7 +3280,7 @@ routine public.setup_current_levels(p_flags jsonb) -> jsonb | function | invoker
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
-routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:8a839a06267a
+routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:32341ffd5fd8
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
 routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
