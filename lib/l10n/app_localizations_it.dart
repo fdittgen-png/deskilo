@@ -24894,6 +24894,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non ha il permesso per farlo. Un proprietario dello spazio può concederlo in Gestione dei ruoli.';
 
   @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'Questa installazione è uno spazio personale: non ospita alcuno spazio di lavoro. Crei lo spazio di lavoro su un\'installazione che ne ospita.';
+
+  @override
   String get refusalSession =>
       'La sua sessione è scaduta. Acceda di nuovo, poi riprovi.';
 

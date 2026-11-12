@@ -40136,6 +40136,12 @@ abstract class AppLocalizations {
   /// **'You do not have the permission for this. An owner of the space can grant it in Role management.'**
   String get refusalPermission;
 
+  /// #3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home
+  ///
+  /// In en, this message translates to:
+  /// **'This installation is a personal home: it hosts no workspace. Create the workspace on an installation that hosts workspaces.'**
+  String get refusalPersonalHomeHostsNoWorkspace;
+
   /// #1305 Shown when the session expired during an action
   ///
   /// In en, this message translates to:

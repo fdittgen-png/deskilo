@@ -187,8 +187,6 @@ void main() {
       for (final s in [
         ...permissionRefusalSubstrings,
         ...sessionRefusalSubstrings,
-        ...alreadyDecidedSubstrings,
-        ...changedMeanwhileSubstrings,
         ...privacySelfServiceOffSubstrings,
       ])
         if (!postgresOwn.contains(s) && !sql.contains(s)) s,

@@ -24682,6 +24682,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'You do not have the permission for this. An owner of the space can grant it in Role management.';
 
   @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'This installation is a personal home: it hosts no workspace. Create the workspace on an installation that hosts workspaces.';
+
+  @override
   String get refusalSession =>
       'Your session has ended. Sign in again, then retry.';
 

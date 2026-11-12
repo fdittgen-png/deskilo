@@ -24941,6 +24941,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous n\'avez pas l\'autorisation pour cela. Un propriétaire de l\'espace peut l\'accorder dans Gestion des rôles.';
 
   @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'Cette installation est un espace personnel : elle n\'héberge aucun espace de travail. Créez l\'espace de travail sur une installation qui en héberge.';
+
+  @override
   String get refusalSession =>
       'Votre session a expiré. Reconnectez-vous, puis réessayez.';
 

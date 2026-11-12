@@ -24934,6 +24934,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.';
 
   @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'Diese Installation ist ein persönliches Zuhause und beherbergt keinen Arbeitsbereich. Legen Sie den Arbeitsbereich auf einer Installation an, die Arbeitsbereiche beherbergt.';
+
+  @override
   String get refusalSession =>
       'Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.';
 
