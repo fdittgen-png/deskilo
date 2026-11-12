@@ -4,14 +4,17 @@
 // sort controls and the select-shown box), a row (its cells, its tick, its
 // first action on hover or focus and the rest behind ⋯), the bar of actions
 // on the selection and the footer (count, totals per currency with their
-// scope, and whether everything is read). The row menu is the plain ⋯ menu
-// until RowMenu (#3611) takes the same declared actions.
+// scope, and whether everything is read). A row's actions open in the kit's
+// RowMenu (#3611).
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
 import 'records_table_model.dart';
+import 'row_menu.dart';
 
 /// The cells of a row (or the header) in their columns.
 Widget _recordCells<T>(
@@ -30,17 +33,17 @@ Widget _recordCells<T>(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
           child: Align(
-          alignment: c.numeric
-              ? AlignmentDirectional.centerEnd
-              : AlignmentDirectional.centerStart,
-          child: c.numeric
-              ? DefaultTextStyle.merge(
-                  style: const TextStyle(
-                    fontFeatures: [FontFeature.tabularFigures()],
-                  ),
-                  child: cells[i],
-                )
-              : cells[i],
+            alignment: c.numeric
+                ? AlignmentDirectional.centerEnd
+                : AlignmentDirectional.centerStart,
+            child: c.numeric
+                ? DefaultTextStyle.merge(
+                    style: const TextStyle(
+                      fontFeatures: [FontFeature.tabularFigures()],
+                    ),
+                    child: cells[i],
+                  )
+                : cells[i],
           ),
         ),
       ),
@@ -159,13 +162,22 @@ class RecordRow<T> extends StatefulWidget {
 }
 
 class _RecordRowState<T> extends State<RecordRow<T>> {
-  final _menu = MenuController();
+  final _menu = GlobalKey<RowMenuState>();
   bool _hover = false;
 
-  void _openMenu([Offset? at]) {
-    if (widget.actions.isEmpty) return;
-    _menu.open(position: at);
-  }
+  /// The row's actions in the kit's one menu (#3611): the ⋯ button, a
+  /// secondary click, a long press, the context-menu key and Shift+F10.
+  List<RowAction> get _rowActions => [
+    for (final a in widget.actions)
+      RowAction(
+        id: a.id,
+        label: a.label,
+        icon: a.icon,
+        destructive: a.destructive,
+        disabledReason: a.unavailable,
+        onSelected: () => a.onRun(widget.row),
+      ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -188,81 +200,61 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
-      child: GestureDetector(
-        onSecondaryTapDown: (d) => _openMenu(d.localPosition),
-        onLongPressStart: (d) => _openMenu(d.localPosition),
-        child: MenuAnchor(
-          controller: _menu,
-          menuChildren: [
-            for (final a in widget.actions)
-              MenuItemButton(
-                key: ValueKey('records-action-${a.id}'),
-                leadingIcon: Icon(a.icon),
-                onPressed: a.unavailable == null
-                    ? () => a.onRun(widget.row)
-                    : null,
-                child: Tooltip(
-                  message: a.unavailable ?? '',
-                  child: Text(
-                    a.label,
-                    style: a.destructive
-                        ? TextStyle(color: theme.colorScheme.error)
-                        : null,
-                  ),
-                ),
-              ),
-          ],
-          child: Material(
-            color: widget.selected
-                ? theme.colorScheme.secondaryContainer
-                : widget.focused
-                ? theme.colorScheme.surfaceContainerHighest
-                : Colors.transparent,
-            child: InkWell(
-              onTap: widget.onOpen,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: widget.minHeight),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md,
-                  ),
-                  child: _recordCells(
-                    widget.columns,
-                    [
-                      for (final c in widget.columns)
-                        c.cell(context, widget.row),
-                    ],
-                    leading: widget.selectable
-                        ? Checkbox(
-                            visualDensity: _rowDensity(side),
-                            semanticLabel: l10n.recordsSelectRow,
-                            value: widget.selected,
-                            onChanged: (v) => widget.onTick(v ?? false),
-                          )
-                        : null,
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (showFirst && first.unavailable == null)
-                          IconButton(
-                            style: buttonStyle,
-                            tooltip: first.label,
-                            icon: Icon(first.icon),
-                            onPressed: () => first.onRun(widget.row),
-                          )
-                        else
-                          SizedBox(width: side),
-                        if (widget.actions.isNotEmpty)
-                          IconButton(
+      child: RowMenu(
+        key: _menu,
+        actions: _rowActions,
+        keyPrefix: 'records-action',
+        button: RowMenuButton.none,
+        child: Material(
+          color: widget.selected
+              ? theme.colorScheme.secondaryContainer
+              : widget.focused
+              ? theme.colorScheme.surfaceContainerHighest
+              : Colors.transparent,
+          child: InkWell(
+            onTap: widget.onOpen,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: widget.minHeight),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                child: _recordCells(
+                  widget.columns,
+                  [for (final c in widget.columns) c.cell(context, widget.row)],
+                  leading: widget.selectable
+                      ? Checkbox(
+                          visualDensity: _rowDensity(side),
+                          semanticLabel: l10n.recordsSelectRow,
+                          value: widget.selected,
+                          onChanged: (v) => widget.onTick(v ?? false),
+                        )
+                      : null,
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (showFirst && first.unavailable == null)
+                        IconButton(
+                          style: buttonStyle,
+                          tooltip: first.label,
+                          icon: Icon(first.icon),
+                          onPressed: () => first.onRun(widget.row),
+                        )
+                      else
+                        SizedBox(width: side),
+                      if (widget.actions.isNotEmpty)
+                        Builder(
+                          builder: (anchor) => IconButton(
+                            key: const ValueKey('records-action-more'),
                             style: buttonStyle,
                             tooltip: l10n.recordsMoreActions,
                             icon: const Icon(Icons.more_horiz),
-                            onPressed: _openMenu,
-                          )
-                        else
-                          SizedBox(width: side),
-                      ],
-                    ),
+                            onPressed: () => unawaited(
+                              _menu.currentState?.open(anchor: anchor),
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox(width: side),
+                    ],
                   ),
                 ),
               ),

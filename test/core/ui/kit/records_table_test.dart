@@ -5,9 +5,12 @@
 // stable keys (a sort, a new row, a filter, a reload never move it to
 // another record), the bulk bar, the keyboard, the row's actions on the
 // secondary click, the three states, and cards on a phone.
+import 'dart:async';
+
 import 'package:deskilo/core/storage/prefs_stores.dart';
 import 'package:deskilo/core/ui/kit/records_table.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
+import 'package:deskilo/core/ui/kit/row_menu.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -334,12 +337,41 @@ void main() {
     await tester.pumpAndSettle();
     expect(_k('records-action-remind'), findsOneWidget);
     expect(
-      tester.widget<MenuItemButton>(_k('records-action-void')).onPressed,
-      isNull,
+      tester
+          .widget<PopupMenuItem<RowAction>>(_k('records-action-void'))
+          .enabled,
+      isFalse,
     );
+    expect(_k('records-action-void-reason'), findsOneWidget);
     await tester.tap(_k('records-action-remind'));
     await tester.pumpAndSettle();
     expect(reminded, _a);
+  });
+
+  testWidgets('the row\'s own ⋯ opens the kit\'s RowMenu, the one every '
+      'other way opens; the row stays 36 high', (tester) async {
+    _Rec? reminded;
+    await _pump(
+      tester,
+      _Host(rows: const [_a, _b], onAction: (r) => reminded = r),
+    );
+    final more = find.descendant(
+      of: _k('records-row-b'),
+      matching: _k('records-action-more'),
+    );
+    expect(tester.getSize(_k('records-row-b')).height, closeTo(36, 0.5));
+    await tester.tap(more);
+    await tester.pumpAndSettle();
+    await tester.tap(_k('records-action-remind'));
+    await tester.pumpAndSettle();
+    expect(reminded, _b);
+    final state = tester.state<RowMenuState>(
+      find.descendant(of: _k('records-row-a'), matching: find.byType(RowMenu)),
+    );
+    // The menu's future ends when it closes: opened, not awaited.
+    unawaited(state.open());
+    await tester.pumpAndSettle();
+    expect(_k('records-action-void-reason'), findsOneWidget);
   });
 
   testWidgets('loading, failed with Try again, and empty with its sentence', (

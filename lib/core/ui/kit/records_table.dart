@@ -386,16 +386,30 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     itemBuilder: (context, i) {
       final r = shown[i];
       final key = widget.keyOf(r);
-      // The card's words name its tap.
-      return MergeSemantics(
+      final selected = _c.selected.contains(key);
+      // The card's words name its tap; its tick is a visible box beside it.
+      final card = MergeSemantics(
         child: InkWell(
           key: ValueKey('records-card-$key'),
           onTap: () => widget.onOpen(r),
+          // parity: records-card-tick
           onLongPress: _selectable
-              ? () => _c.tick(key, on: !_c.selected.contains(key))
+              ? () => _c.tick(key, on: !selected)
               : null,
           child: widget.cardBuilder(context, r),
         ),
+      );
+      if (!_selectable) return card;
+      return Row(
+        children: [
+          Checkbox(
+            key: ValueKey('records-card-tick-$key'),
+            semanticLabel: context.l10n.recordsSelectRow,
+            value: selected,
+            onChanged: (v) => _c.tick(key, on: v ?? false),
+          ),
+          Expanded(child: card),
+        ],
       );
     },
   );

@@ -7,6 +7,7 @@
 # review {"path":"test/app/shell/desk_routes_test.dart","before":10,"after":23,"invariant":"the desk drawn around the navigator is checked through the real router: one desk across a tab, a push and a go; a window open over the page rests the navigation and freeing it lets a tap through; a cold start on an address; the breadcrumb and the selected entry lead back; each step settles once before the address or a rect is read","cost":"24 tests in 10 s locally"}
 # review {"path":"test/core/ui/kit/records_table_test.dart","before":0,"after":20,"invariant":"each behaviour of the records table is a person's step settled before the next is read: a sort, a filter, a chip, a tick, a reload, a menu; the selection is checked to follow its keys across them","cost":"12 tests in 4 s locally"}
 # review {"path":"test/core/ui/kit/records_table_test.dart","before":20,"after":24,"invariant":"the reload under a chip is four person steps (chip, select shown, reload, download) each settled before the bar, footer and file are read","cost":"one test, under 1 s locally"}
+# review {"path":"test/core/ui/kit/records_table_test.dart","before":24,"after":27,"invariant":"#3606 the row's own ⋯ opens the kit's RowMenu: the menu is settled open, an entry chosen and settled, and the menu opened again for the disabled reason","cost":"one test, under 1 s locally"}
 # review {"path":"test/features/money/invoice_register_table_test.dart","before":0,"after":11,"invariant":"the register is opened through the app's router and its selection is downloaded after a filter and after a reload, each settled once","cost":"5 tests in 8 s locally"}
 # review {"path":"test/features/directory/unified_inbox_test.dart","before":41,"after":42,"invariant":"#3611 a mouse alone pins by right click and mutes from the hover menu button of the same row menu","cost":"one settle for the mouse arriving over the inbox; the clicks settle in the mouse helper"}
 # review {"path":"test/features/workspace/member_note_flow_test.dart","before":23,"after":26,"invariant":"#3611 a long press opens the message menu; Delete is chosen from it before the confirmation","cost":"one settle per menu entry tap, three deletions in two tests"}
@@ -21,7 +22,7 @@
 17 test/core/help/help_hint_test.dart
 11 test/core/i18n/regional_formats_test.dart
 10 test/core/ui/canvas_controls_test.dart
-24 test/core/ui/kit/records_table_test.dart
+27 test/core/ui/kit/records_table_test.dart
 11 test/features/auth/auth_flow_test.dart
 10 test/features/auth/badge_sign_in_test.dart
 15 test/features/auth/federation_handoff_ui_test.dart
