@@ -2,7 +2,6 @@
 //
 // Who may send an e-invoice: the owner, or an active member who holds
 // issueInvoices; an administrator without it is not offered Send.
-import 'package:deskilo/features/money/application/einvoice_send_authority.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,18 +20,17 @@ void main() {
   const issue = {WorkspacePermission.issueInvoices};
 
   test('an administrator sends only with the right to issue invoices', () {
-    expect(maySendEInvoices(_m(admin: true), const {}), isFalse);
-    expect(maySendEInvoices(_m(admin: true), issue), isTrue);
+    expect(_m(admin: true).maySendEInvoices(const {}), isFalse);
+    expect(_m(admin: true).maySendEInvoices(issue), isTrue);
   });
 
   test('a member given the right by a role sends; one without does not', () {
-    expect(maySendEInvoices(_m(), issue), isTrue);
-    expect(maySendEInvoices(_m(), const {}), isFalse);
+    expect(_m().maySendEInvoices(issue), isTrue);
+    expect(_m().maySendEInvoices(const {}), isFalse);
   });
 
-  test('the owner sends; nobody inactive or absent does', () {
-    expect(maySendEInvoices(_m(owner: true), const {}), isTrue);
-    expect(maySendEInvoices(_m(status: MemberStatus.paused), issue), isFalse);
-    expect(maySendEInvoices(null, issue), isFalse);
+  test('the owner sends; nobody inactive does', () {
+    expect(_m(owner: true).maySendEInvoices(const {}), isTrue);
+    expect(_m(status: MemberStatus.paused).maySendEInvoices(issue), isFalse);
   });
 }

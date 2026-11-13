@@ -27,7 +27,6 @@ import '../../../core/ui/print_or_retry.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/channel_einvoice_xml.dart';
-import '../application/einvoice_send_authority.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/einvoice_gateway.dart';
@@ -252,12 +251,12 @@ typedef _EInvoiceSubject = ({
 });
 
 /// Who may fix the identity (the owner) and who may send
-/// ([maySendEInvoices], the send function's own rule).
+/// (`Member.maySendEInvoices`, the send function's own rule).
 ({bool owner, bool issuer}) _eInvoiceRoles(WidgetRef ref) {
   final me = ref.read(myMemberProvider).value;
   return (
     owner: me?.actsAsOwner ?? false,
-    issuer: maySendEInvoices(me, ref.read(myPermissionsProvider)),
+    issuer: me?.maySendEInvoices(ref.read(myPermissionsProvider)) ?? false,
   );
 }
 
