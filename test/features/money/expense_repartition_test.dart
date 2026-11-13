@@ -8,15 +8,19 @@
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/presentation/screens/money_hubs_screen.dart';
 import 'package:deskilo/features/money/presentation/widgets/expense_repartition_sheet.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/navigation.dart';
+import '../../helpers/pump_app.dart';
 import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
 
 Future<FakeMoneyRepository> _pumpSheet(
@@ -209,24 +213,53 @@ void main() {
     expect(find.textContaining('Awaiting validation'), findsOneWidget);
   });
 
-  testWidgets('the Invoices header offers the distribution behind its flag',
+  testWidgets('the purchases page offers the distribution behind its flag '
+      'and the issue right (#3597)', (tester) async {
+    await pumpApp(
+      tester,
+      const PurchasesHubScreen(),
+      overrides: [
+        ...standardTestOverrides(money: await seededMoney()),
+        enabledFeaturesSyncProvider
+            .overrideWithValue({WorkspaceFeature.expenseRepartition}),
+        myPermissionsProvider
+            .overrideWithValue({WorkspacePermission.issueInvoices}),
+      ],
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('invoice-distribute-button')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('repartition-title')), findsOneWidget);
+  });
+
+  testWidgets('Invoices More no longer carries the distribution (#3597)',
       (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
     await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoice-distribute-button')),
-        findsOneWidget);
-    await tapInvoicingTool(tester, 'invoice-distribute-button');
-    expect(find.byKey(const ValueKey('repartition-title')), findsOneWidget);
+        findsNothing);
   });
 
-  testWidgets('flag off: no distribution button', (tester) async {
-    await pumpInvoices(
-      tester,
-      money: await seededMoney(),
-      workspace: FakeWorkspaceRepository.withWorkspace(
-          featureFlags: const {'expenseRepartition': false}),
-    );
+  testWidgets('flag off or no issue right: no distribution button',
+      (tester) async {
+    Future<void> pump(Set<WorkspaceFeature> f, Set<WorkspacePermission> r) async {
+      await pumpApp(
+        tester,
+        const PurchasesHubScreen(),
+        overrides: [
+          ...standardTestOverrides(money: await seededMoney()),
+          enabledFeaturesSyncProvider.overrideWithValue(f),
+          myPermissionsProvider.overrideWithValue(r),
+        ],
+      );
+      await tester.pumpAndSettle();
+    }
+
+    await pump(const {}, {WorkspacePermission.issueInvoices});
+    expect(find.byKey(const ValueKey('invoice-distribute-button')),
+        findsNothing);
+    await pump({WorkspaceFeature.expenseRepartition}, const {});
     expect(find.byKey(const ValueKey('invoice-distribute-button')),
         findsNothing);
   });
