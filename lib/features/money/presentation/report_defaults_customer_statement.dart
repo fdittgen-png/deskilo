@@ -5,9 +5,12 @@
 // payment parts under it and what is still due, the payments and credits
 // not yet applied, then the totals and the balance with who owes it. The
 // data is customerStatementReportData's; its rows are one flat list.
+import 'package:meta/meta.dart';
+
 import '../../../l10n/app_localizations.dart';
 import '../domain/invoice_pdf_template.dart';
 
+@visibleForTesting
 ReportBands customerStatementBands(AppLocalizations l10n) {
   final title = l10n.reportDocCustomerStatement;
   // Each element is one independent line of the band (a label and its
@@ -69,6 +72,7 @@ ReportBands customerStatementBandsFor(AppLocalizations l10n, String key) =>
 /// balance (below zero when the business owes it). A period without a movement and a period before
 /// the match history each say so in one line. The data is
 /// customerStatementPeriodReportData's.
+@visibleForTesting
 ReportBands customerStatementPeriodBands(AppLocalizations l10n) {
   final title = l10n.reportDocCustomerStatementPeriod;
   final words = {
