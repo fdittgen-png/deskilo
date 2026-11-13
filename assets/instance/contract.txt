@@ -1310,6 +1310,7 @@ constraint profiles.profiles_time_zone_mode_check CHECK ((time_zone_mode = ANY (
 constraint profiles.profiles_vat_id_check CHECK ((char_length(vat_id) <= 20))
 constraint profiles.profiles_week_start_check CHECK ((week_start = ANY (ARRAY['locale'::text, 'monday'::text, 'sunday'::text, 'saturday'::text])))
 constraint profiles.profiles_whatsapp_check CHECK (((whatsapp = ''::text) OR (whatsapp ~ '^\+[0-9]{6,19}$'::text)))
+constraint profiles.profiles_whatsapp_typed_check CHECK ((char_length(whatsapp_typed) <= 40))
 constraint profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint provenance_envelopes.provenance_envelopes_pkey PRIMARY KEY (result_kind, result_id)
 constraint provenance_envelopes.provenance_envelopes_result_kind_check CHECK ((result_kind = ANY (ARRAY['invoice'::text, 'book_export'::text, 'file_delivery'::text, 'accounting_delivery'::text, 'transmission'::text])))
@@ -2539,7 +2540,7 @@ routine public.ensure_personal_data_admin_role(p_workspace_id uuid) -> uuid | fu
 routine public.ensure_system_columns(p_table text) -> void | function | invoker | volatile | exec:service_role | body:b82cfcf514ba
 routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integer | function | definer | volatile | exec:service_role | body:b8c745441adc
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
-routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c8909f7334c8
+routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dce8db716541
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:70e8dbf78578

@@ -15,6 +15,7 @@ void main() {
         'id': 'user-1',
         'display_name': 'Ada',
         'whatsapp': '+33612345678',
+        'whatsapp_typed': '06 12 34 56 78',
         'status_text': 'In a call · back at 14:00',
         'address': '12 Rue des Halles, 34120 Pézenas',
         // 0069 — the two facts an e-invoice needs about the customer.
@@ -90,24 +91,30 @@ void main() {
     });
   });
 
-  group('normalizeWhatsapp', () {
-    test('strips spacing and punctuation down to + and digits', () {
-      expect(normalizeWhatsapp('+33 6 12-34.56.78'), '+33612345678');
-      expect(normalizeWhatsapp('(+49) 151 / 2345 6789'), '+4915123456789');
+  // #3650 — the stored number is read as an international number: a valid
+  // one opens its chat, a legacy one that is not (a national number stored
+  // with a + in front) is shown, flagged for correction, and opens nothing.
+  group('the WhatsApp number, validated on read', () {
+    test('a valid international number opens its chat, as typed beside it', () {
+      const p = Profile(id: 'u', whatsapp: '+33612345678', whatsappTyped: '06 12 34 56 78');
+      expect(p.whatsappEntry.e164, '+33612345678');
+      expect(p.whatsappEntry.typed, '06 12 34 56 78');
+      expect(p.whatsappNeedsCorrection, isFalse);
+      expect(p.whatsappUri, Uri.parse('https://wa.me/33612345678'));
     });
 
-    test('folds the 00 international dialing prefix into +', () {
-      expect(normalizeWhatsapp('0033612345678'), '+33612345678');
+    test('a legacy number that is not valid is shown, flagged, and opens nothing', () {
+      const p = Profile(id: 'u', whatsapp: '+0612345678');
+      expect(p.sharesWhatsapp, isTrue);
+      expect(p.whatsappEntry.typed, '+0612345678');
+      expect(p.whatsappNeedsCorrection, isTrue);
+      expect(p.whatsappUri, isNull);
     });
 
-    test('prepends + when the input had none', () {
-      expect(normalizeWhatsapp('33612345678'), '+33612345678');
-    });
-
-    test('blank or digit-less input normalizes to empty (clears)', () {
-      expect(normalizeWhatsapp(''), '');
-      expect(normalizeWhatsapp('   '), '');
-      expect(normalizeWhatsapp('none'), '');
+    test('the typed form travels with the row', () {
+      final p = Profile.fromDb({'id': 'u', 'whatsapp': '+33612345678', 'whatsapp_typed': '06 12 34 56 78'});
+      expect(p.whatsappTyped, '06 12 34 56 78');
+      expect(p.toDb()['whatsapp_typed'], '06 12 34 56 78');
     });
   });
 

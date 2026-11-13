@@ -1,0 +1,9 @@
+{
+  "@@locale": "de",
+  "phoneCountryLabel": "Land der Nummer",
+  "phoneNoCountry": "Wählen Sie das Land dieser Nummer oder geben Sie sie mit ihrer +-Vorwahl ein.",
+  "phoneNotANumber": "Geben Sie nur Ziffern ein, mit einer Durchwahl am Ende, falls vorhanden.",
+  "phoneNotValidForCountry": "Dies kann keine Telefonnummer des gewählten Landes sein.",
+  "phoneNeedsCorrection": "Diese Nummer wurde vor der Prüfung der Nummern gespeichert: Bestätigen oder korrigieren Sie sie, dann öffnet sie wieder Anrufe und Nachrichten.",
+  "phoneExtensionNoMessage": "Eine Nummer mit Durchwahl kann keine Nachrichten empfangen: Lassen Sie die Durchwahl weg."
+}

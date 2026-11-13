@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/phone_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_info.dart';
 import '../courtesy_words.dart';
@@ -66,6 +68,11 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   late final TextEditingController _postal;
   late final TextEditingController _city;
   late final TextEditingController _phone;
+
+  /// #3650 — the country the phone is read in: the person's own, never
+  /// the workspace's.
+  late final TextEditingController _phoneCountry;
+  String? _phoneError;
   late final TextEditingController _email;
   late final TextEditingController _vat;
   late final TextEditingController _legal;
@@ -85,6 +92,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     _postal = TextEditingController(text: i.postalCode);
     _city = TextEditingController(text: i.city);
     _phone = TextEditingController(text: i.phone);
+    _phoneCountry = TextEditingController(text: i.countryCode);
     _email = TextEditingController(text: i.email);
     _vat = TextEditingController(text: i.vatId);
     _legal = TextEditingController(text: i.legalId);
@@ -119,7 +127,21 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     for (final c in _controllers) {
       c.dispose();
     }
+    _phoneCountry.dispose();
     super.dispose();
+  }
+
+  /// #3650 — an edited phone is saved only once it is a number of its
+  /// country; one kept as it was saves as before.
+  Future<void> _save() async {
+    if (_phone.text.trim() != widget.initial.phone.trim()) {
+      final problem = phoneProblemText(context.l10n, phoneEntryOf(_phone, _phoneCountry));
+      if (problem != null) {
+        setState(() => _phoneError = problem);
+        return;
+      }
+    }
+    await widget.onSave(_value);
   }
 
   PersonalInfo get _value => PersonalInfo(
@@ -159,6 +181,30 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         labelText: label,
         border: const OutlineInputBorder(),
       ),
+    ),
+  );
+
+  /// #3650 — the identity phone in the form kit's phone field, read in the
+  /// person's own country. A number kept from before is not refused: it
+  /// says what it is missing until it is edited.
+  Widget _phoneField(AppLocalizations l10n) => Padding(
+    padding: const EdgeInsets.only(bottom: AppSpacing.md),
+    child: PhoneField(
+      number: _phone,
+      country: _phoneCountry,
+      label: l10n.personalInfoPhone,
+      fieldKey: 'personal-info-phone',
+      helper: _phone.text.trim() == widget.initial.phone.trim()
+          ? phoneProblemText(
+              l10n,
+              parsePhone(widget.initial.phone, country: widget.initial.countryCode),
+            )
+          : null,
+      error: _phoneError,
+      enabled: !widget.saving,
+      onChanged: () {
+        if (_phoneError != null) setState(() => _phoneError = null);
+      },
     ),
   );
 
@@ -301,15 +347,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 : (v) => setState(() => _country = v),
           ),
         ),
-        _field(
-          _phone,
-          'phone',
-          l10n.personalInfoPhone,
-          type: TextInputType.phone,
-          capitalization: TextCapitalization.none,
-          autocorrect: false,
-          autofill: const [AutofillHints.telephoneNumber],
-        ),
+        _phoneField(l10n),
         _field(
           _email,
           'email',
@@ -354,7 +392,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         const SizedBox(height: AppSpacing.lg),
         FilledButton(
           key: const ValueKey('personal-info-save'),
-          onPressed: widget.saving ? null : () => widget.onSave(_value),
+          onPressed: widget.saving ? null : _save,
           child: Text(l10n.commonSave),
         ),
       ],
