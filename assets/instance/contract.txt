@@ -2483,7 +2483,11 @@ routine public.create_workspace_once(p_client_request_id uuid, p_name text, p_co
 routine public.create_workspace_twin(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:df10fe1153d4
 routine public.currency_minor_digits(p_currency text) -> integer | function | invoker | immutable | exec:authenticated,service_role | body:01dad38d3031
 routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
-routine public.customer_statement_v1(p_workspace_id uuid, p_member_id uuid, p_as_of date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:98d372bd3d3e
+routine public.customer_statement_items(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> TABLE(currency text, kind text, item_id uuid, amount_cents bigint, sort_at timestamp with time zone, sort_key text, line jsonb) | function | definer | stable | exec:service_role | body:c1e6a8333070
+routine public.customer_statement_items_keyed(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> jsonb | function | definer | stable | exec:service_role | body:9766143b001c
+routine public.customer_statement_moves(p_workspace_id uuid, p_member_id uuid, p_prev jsonb, p_next jsonb, p_at timestamp with time zone, p_tz text) -> jsonb | function | definer | stable | exec:service_role | body:36a8d370d095
+routine public.customer_statement_period_v1(p_workspace_id uuid, p_member_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:aac4832d7782
+routine public.customer_statement_v1(p_workspace_id uuid, p_member_id uuid, p_as_of date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:03afcf2f0b4c
 routine public.database_administrator_deleted() -> trigger | function | definer | volatile | exec:service_role | body:0c760eddc629
 routine public.database_authority_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:4df85237f376
 routine public.decide_asset_v1(p_workspace_id uuid, p_asset_id uuid, p_revision integer, p_decision text, p_basis text, p_available_for_use_on date, p_site_id uuid, p_custodian_member_id uuid, p_external_asset_id text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e2f3cd833f95
@@ -2666,11 +2670,14 @@ routine public.invoice_match_event_status_at(p_event_id uuid, p_cutoff timestamp
 routine public.invoice_match_history_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:1234672ab8da
 routine public.invoice_match_history_event() -> trigger | function | definer | volatile | exec:service_role | body:79f3c4054d1d
 routine public.invoice_match_history_from(p_workspace_id uuid) -> timestamp with time zone | function | definer | stable | exec:service_role | body:48821fd0e287
+routine public.invoice_match_history_function_of(p_query text) -> text | function | invoker | immutable | exec:service_role | body:bc401b903271
 routine public.invoice_match_history_rows() -> trigger | function | definer | volatile | exec:service_role | body:d2f331d85844
-routine public.invoice_match_history_write(p_workspace_id uuid, p_subject text, p_subject_id uuid, p_invoice_id uuid, p_op text, p_image jsonb) -> void | function | definer | volatile | exec:service_role | body:24d65192f58e
+routine public.invoice_match_history_write(p_workspace_id uuid, p_subject text, p_subject_id uuid, p_invoice_id uuid, p_op text, p_image jsonb) -> void | function | definer | volatile | exec:service_role | body:e30ed490125d
 routine public.invoice_match_payments_at(p_workspace_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_match_payments | function | definer | stable | exec:service_role | body:05004552654d
 routine public.invoice_matches_at(p_workspace_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_matches | function | definer | stable | exec:service_role | body:fcc2be17fd32
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
+routine public.invoice_member_match_payments_at(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_match_payments | function | definer | stable | exec:service_role | body:17d3198d31d7
+routine public.invoice_member_matches_at(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_matches | function | definer | stable | exec:service_role | body:baa2177b8137
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e

@@ -41,6 +41,14 @@ class _Reader implements CustomerStatementReader {
       currencies: currencies,
     );
   }
+
+  @override
+  Future<CustomerStatementPeriod> period(
+    String workspaceId,
+    String memberId,
+    DateTime from,
+    DateTime to,
+  ) async => CustomerStatementPeriod(memberId: memberId, from: from, to: to);
 }
 
 StatementCurrency _in(String currency) => StatementCurrency(
