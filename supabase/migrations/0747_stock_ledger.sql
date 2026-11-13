@@ -83,6 +83,16 @@ create policy mcp_delegated_deny on public.stock_location_kinds as restrictive f
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
 create policy mcp_delegated_deny on public.stock_reasons as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+-- No workspace of their own: a personal surface, read only by a native session.
+create policy personal_native_session on public.stock_units as restrictive for all to public
+  using ((select public.personal_native_session()))
+  with check ((select public.personal_native_session()));
+create policy personal_native_session on public.stock_location_kinds as restrictive for all to public
+  using ((select public.personal_native_session()))
+  with check ((select public.personal_native_session()));
+create policy personal_native_session on public.stock_reasons as restrictive for all to public
+  using ((select public.personal_native_session()))
+  with check ((select public.personal_native_session()));
 
 -- ── the item ────────────────────────────────────────────────────────────
 alter table public.services
