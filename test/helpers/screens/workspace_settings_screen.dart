@@ -9,6 +9,7 @@ import 'package:deskilo/features/workspace/presentation/screens/workspace_settin
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fake_floor_plan_repository.dart';
 import '../fake_money_repository.dart';
@@ -39,6 +40,9 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
+  // #3617 — the reports are a records table at the desk, and a records
+  // table reads its saved columns from the device's preferences.
+  if (reports) SharedPreferences.setMockInitialValues({});
   final workspace = repository ?? FakeWorkspaceRepository.withWorkspace();
   await tester.pumpWidget(
     ProviderScope(
@@ -80,16 +84,22 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     await tester.pumpAndSettle();
     await tester.tap(reportsLink);
     await tester.pumpAndSettle();
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('workspace-section-documents')),
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('workspace-section-documents')));
-    await tester.pumpAndSettle();
-    expect(
-      find.byKey(const ValueKey('workspace-section-documents')).hitTestable(),
-      findsOneWidget,
-    );
+    final documents = find.byKey(const ValueKey('workspace-section-documents'));
+    if (documents.evaluate().isEmpty) {
+      // #3617 — at the desk the reports are a table, and the document tools
+      // sit under it: open them, so the same content is measured.
+      final tools = find.byKey(const ValueKey('reports-tools'));
+      await tester.ensureVisible(tools);
+      await tester.pumpAndSettle();
+      await tester.tap(tools);
+      await tester.pumpAndSettle();
+    } else {
+      await tester.ensureVisible(documents);
+      await tester.pumpAndSettle();
+      await tester.tap(documents);
+      await tester.pumpAndSettle();
+      expect(documents.hitTestable(), findsOneWidget);
+    }
   } else {
     expect(find.byType(WorkspaceSettingsScreen), findsOneWidget);
     if (expand) await openWorkspaceSettingsGroups(tester);

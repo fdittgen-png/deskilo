@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/demo/presentation/demo_workspace.dart' show DemoEnvironment;
+import '../../../../core/demo/presentation/demo_environment.dart' show DemoEnvironment;
 import '../../../../core/help/guide_site.dart';
 import '../../../../core/help/help_arbiter.dart';
 import '../../../../core/help/help_hint.dart';

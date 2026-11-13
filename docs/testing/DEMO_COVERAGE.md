@@ -72,6 +72,7 @@ none: it is read as reassurance.
 | A new discussion is not empty: the directory lists the active cast of both spaces, the persona left out and Ada and Bruno under both, the cast's group follows, and one letter suggests from it (#2472) | `test/core/demo/demo_reachable_test.dart` |
 | The cast is a whole person on screen — a name, an e-mail, a number that could reach nobody — so a guide image can be shot here instead of in a real space (#1514) | `test/core/demo/demo_identity_test.dart` |
 | Reset to baseline, and the fence against an in-flight write | `test/core/demo/demo_session_test.dart` |
+| The Demo's library is fetched when the Demo is entered: the loading state, a failed fetch said with a retry, and the Demo once it is there; nothing in the first download imports the Demo directly (#3848) | `test/core/demo/demo_loader_test.dart`, `test/lint/demo_deferred_seam_test.dart` |
 | Personas resolve through the real permission model, and a persona is who ACTS: bookings, decisions and requests follow it, while membership edits survive it (#1565) | `test/core/demo/demo_persona_test.dart` |
 | The bar: where it mounts, 360 dp, reduced motion, the persona ring | `test/core/demo/demo_bar_mount_test.dart` |
 | The bar and the Reset control, driven | `test/core/demo/demo_workspace_test.dart` |

@@ -96,7 +96,7 @@ class BiToolbar extends StatelessWidget {
           key: ValueKey('bi-$fieldKey'),
           value: value,
           isExpanded: true,
-          isDense: true,
+          // #3617 — a whole 48 dp target: the guard measured 24 at the desk.
           items: items,
           onChanged: enabled
               ? (v) {
