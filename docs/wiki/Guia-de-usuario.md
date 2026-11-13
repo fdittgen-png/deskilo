@@ -4778,7 +4778,7 @@ Quiere que los miembros paguen en línea una factura pendiente, en su propia cue
 
 Las claves proceden del propio panel del proveedor: **Client ID**, **Secreto**, **Entorno**, **ID de webhook** y **URL de retorno** para PayPal; **Clave secreta**, **Secreto de firma del webhook** y **URL de retorno** para Stripe; **Clave API** y **URL de retorno** para Mollie y Wero. Mantenga separadas las claves de prueba y las reales: todas las claves que introduzca deben pertenecer al mismo modo.
 
-Un espacio de producción cobra solo con claves reales: con claves de prueba, el pago en línea de un miembro se rechaza. Para Stripe, el punto de conexión del webhook también escucha **charge.dispute.created** y **charge.refunded**: un pago que el proveedor revierte (un reembolso o una disputa) queda marcado como revertido, y usted corrige el saldo del miembro.
+Un espacio de producción cobra solo con claves reales: con claves de prueba, el pago en línea de un miembro se rechaza. Para Stripe, el punto de conexión del webhook también escucha **charge.dispute.created** y **charge.refunded**: un pago que el proveedor revierte (un reembolso o una disputa) queda marcado como revertido, y usted corrige el saldo del miembro. Mientras nadie que vea las finanzas la marque como **Revisado** en **Revertidos por el proveedor** en la pantalla de pagos, el resumen indica cuántas reversiones esperan.
 
 Una instalación que solo ensaya los pagos puede definir `DESKILO_ALLOW_TEST_PAYMENTS=true` en el entorno de sus funciones: los pedidos se abren entonces con claves de prueba y se procesan los eventos en modo de prueba; nunca debe definirse en una instalación que cobra pagos reales.
 

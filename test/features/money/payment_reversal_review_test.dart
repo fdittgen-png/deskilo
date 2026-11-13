@@ -9,6 +9,7 @@ import 'package:deskilo/features/money/domain/account_activity.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/presentation/screens/account_activity_screen.dart';
 import 'package:deskilo/features/money/presentation/screens/recorded_payments_screen.dart';
+import 'package:deskilo/features/money/presentation/widgets/online_payment_status_card.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/attention_providers.dart';
@@ -137,8 +138,8 @@ void main() {
       find.byKey(const ValueKey('payment-reversal-reviewed-pi-1')),
     );
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('payment-reversals')), findsNothing);
     expect(money.paymentIntents.single.reversalReviewedAt, isNotNull);
+    expect(find.byKey(const ValueKey('payment-reversals')), findsNothing);
   });
 
   testWidgets('the member\'s own history labels a reversed payment', (
@@ -174,5 +175,22 @@ void main() {
     await tester.tap(find.text('Payments').last);
     await tester.pumpAndSettle();
     expect(find.textContaining('Online payment reversed'), findsWidgets);
+  });
+
+  testWidgets('the member\'s bill names the part the provider reversed', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      Scaffold(
+        body: OnlinePaymentStatusCard(
+          intents: [_reversed()],
+          currencyCode: 'EUR',
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.textContaining('the provider reversed'), findsOneWidget);
+    expect(find.textContaining('5.00'), findsOneWidget);
   });
 }

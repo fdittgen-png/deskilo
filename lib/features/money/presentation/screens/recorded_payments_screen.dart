@@ -305,7 +305,10 @@ class _ReversalsState extends ConsumerState<_Reversals> {
           .read(paymentGatewayRepositoryProvider)
           .reviewPaymentReversal(intent.id),
     );
-    if (mounted) setState(() => _waiting = _read());
+    if (!mounted) return;
+    setState(() {
+      _waiting = _read();
+    });
   }
 
   @override
