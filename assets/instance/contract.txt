@@ -2527,7 +2527,7 @@ routine public.document_language_chosen(p_country text, p_on date) -> boolean | 
 routine public.document_language_facts(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:2cc8b378753f
 routine public.document_language_supported(p_language text) -> boolean | function | invoker | immutable | exec:service_role | body:2d66eb676151
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
-routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:42537c6febc6
+routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:668fc497e209
 routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void | function | definer | volatile | exec:authenticated,service_role | body:ecca59e978a3
 routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7541cf6a1fbe
 routine public.einvoice_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:7b9035a41e2d

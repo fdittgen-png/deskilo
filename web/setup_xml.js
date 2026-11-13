@@ -163,7 +163,7 @@ function workspaceConfig(){
  // names). Written only while the page asks for it; a role row REPLACES
  // the app's defaults for that role, which is why the page offers all of them.
  if(on('roleManagement'))ws.role_permissions=Object.fromEntries(Object.keys(PERM_DEFAULTS).map(role=>[role,PERMS.filter(p=>(S.perms[role]||[]).includes(p))]));
- if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
+ if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),...(S.reminders.firstDaysStated?{first_after_days:int(S.reminders.firstDays,14)}:{}),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
  return ws;
 }
 // #2331 — the two series the page asks for (only while invoicing as a
