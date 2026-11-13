@@ -329,18 +329,7 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const AccountingHubScreen(),
     ),
-    // #3906 — an accounting target's sign-in, completed by the signed-in
-    // person; the router took its code and state out of the address.
-    GoRoute(
-      path: accountingSignInReturnPath,
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.accountingConnectors],
-          to: '/money/accounting',
-        ),
-      ),
-      builder: (context, state) => const AccountingSignInReturnScreen(),
-    ),
+    _accountingSignInRoute(env),
     // #3616 — the files handed to the accountant, as records.
     GoRoute(
       path: '/money/accounting/exports',
@@ -467,4 +456,26 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
           MyFinancesScreen(workspaceId: state.uri.queryParameters['workspace']),
     ),
   ];
+}
+
+/// #3906 — an accounting target's sign-in, completed by the signed-in person;
+/// the router took its code and state out of the address. Until the
+/// workspace's switches are read (right after a sign-in) the page stays: the
+/// defaults would send it away with the sign-in uncompleted, and the server
+/// checks the switch and the right on completion anyway.
+GoRoute _accountingSignInRoute(RouteEnv env) {
+  final guard = env.guard(
+    const RouteAccess(
+      features: [WorkspaceFeature.accountingConnectors],
+      to: '/money/accounting',
+    ),
+  );
+  return GoRoute(
+    path: accountingSignInReturnPath,
+    redirect: (context, state) =>
+        env.ref.read(enabledFeaturesProvider).hasValue
+            ? guard(context, state)
+            : null,
+    builder: (context, state) => const AccountingSignInReturnScreen(),
+  );
 }
