@@ -17,6 +17,7 @@ import 'demo_space_pick.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
+import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
 String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
@@ -24,12 +25,16 @@ String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).va
   demoTwinSpaceId => demoTwinSpaceId,
   demoLondonSpaceId => demoLondonSpaceId,
   demoNewYorkSpaceId => demoNewYorkSpaceId,
+  demoZurichSpaceId => demoZurichSpaceId,
+  demoMilanSpaceId => demoMilanSpaceId,
   _ => '__unavailable__',
 };
 
 String _approvalCurrency(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
   demoLondonSpaceId => 'GBP',
   demoNewYorkSpaceId => 'USD',
+  demoZurichSpaceId => demoZurich.currency,
+  demoMilanSpaceId => demoMilan.currency,
   _ => 'EUR',
 };
 
@@ -40,6 +45,8 @@ List<Override> demoPurchasingOverrides(
   DemoPurchasing? leipzig,
   DemoPurchasing? london,
   DemoPurchasing? newYork,
+  DemoPurchasing? zurich,
+  DemoPurchasing? milan,
   DemoPurchasing? twin,
 }) {
   final DemoSpaces<DemoPurchasing> spaces = (
@@ -47,6 +54,8 @@ List<Override> demoPurchasingOverrides(
     leipzig: leipzig ?? purchasing,
     london: london ?? purchasing,
     newYork: newYork ?? purchasing,
+    zurich: zurich ?? purchasing,
+    milan: milan ?? purchasing,
     twin: twin ?? purchasing,
   );
   return [

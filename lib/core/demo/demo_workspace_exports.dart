@@ -9,6 +9,7 @@ import 'demo_fixture.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
 /// #2557 C3 — each demo space's own-data export: the persona's membership
@@ -22,6 +23,8 @@ FakeWorkspaceExportRepository demoWorkspaceExports(DemoFixture fixture) =>
           demoSecondSpaceId => fixture.secondSpace.reservations,
           demoLondonSpaceId => fixture.london.reservations,
           demoNewYorkSpaceId => fixture.newYork.reservations,
+          demoZurichSpaceId => fixture.zurich.reservations,
+          demoMilanSpaceId => fixture.milan.reservations,
           demoTwinSpaceId => fixture.twin.reservations,
           _ => fixture.reservations,
         };

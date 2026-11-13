@@ -3887,6 +3887,8 @@ const Set<String> uiKeys = {
   'ws-2',
   'ws-3',
   'ws-4',
+  'ws-5',
+  'ws-6',
   'x-deskilo-kiosk',
   'x-deskilo-operation',
   'xero-account-code',

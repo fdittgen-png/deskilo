@@ -47,6 +47,7 @@ import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
+import 'demo_trade_city_space.dart';
 import 'demo_twin_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
@@ -64,6 +65,7 @@ import 'seed/demo_resource_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_space_seed.dart';
+import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 import 'seed/demo_year_seed.dart';
 
@@ -117,6 +119,8 @@ class DemoFixture {
     required this.secondSpace,
     required this.london,
     required this.newYork,
+    required this.zurich,
+    required this.milan,
     required this.twin,
   });
 
@@ -213,6 +217,8 @@ class DemoFixture {
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final zurich = DemoTradeCityData.build(city: demoZurich, home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final milan = DemoTradeCityData.build(city: demoMilan, home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, productionRoles: roles, actor: () => actor.memberId, now: today)
       ..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
@@ -230,6 +236,9 @@ class DemoFixture {
         money: secondSpace.money,
       ),
       ..._validateCityFixtures(london, newYork),
+      for (final city in [zurich, milan])
+        ...validateDemoFixture(workspaces: city.workspaces, plan: city.floorPlan,
+          reservations: city.reservations, money: city.money),
     ];
     if (problems.isNotEmpty) {
       // Fails closed, and says what is wrong: a session that points at a
@@ -251,7 +260,7 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       chargingStations: chargingStations,
-      profiles: _profilesForSpaces(london, newYork, today),
+      profiles: _profilesForSpaces(london, newYork, [zurich, milan], today),
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
@@ -277,6 +286,8 @@ class DemoFixture {
       secondSpace: secondSpace,
       london: london,
       newYork: newYork,
+      zurich: zurich,
+      milan: milan,
       twin: twin,
     );
   }
@@ -335,6 +346,10 @@ class DemoFixture {
   final DemoLondonData london;
   final DemoNewYorkData newYork;
 
+  /// #3832 — the trade cities: Zurich (francs) and Milan (euros).
+  final DemoTradeCityData zurich;
+  final DemoTradeCityData milan;
+
   /// #3302 — the main space's development twin, with stores of its own.
   final DemoTwinData twin;
 
@@ -359,12 +374,14 @@ class DemoFixture {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
     // #3293 — a self-assignment is refused for whoever the persona is.
-    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, twin.roles]) {
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, zurich.roles, milan.roles, twin.roles]) {
       r.callerMemberId = persona.memberId;
     }
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);
+    zurich.viewAs(persona.memberId, workspaces);
+    milan.viewAs(persona.memberId, workspaces);
     twin.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
@@ -381,12 +398,14 @@ List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny) =>
       reservations: ny.reservations, money: ny.money),
 ];
 
-FakeProfileRepository _profilesForSpaces(
-        DemoLondonData london, DemoNewYorkData ny, DateTime today) =>
+FakeProfileRepository _profilesForSpaces(DemoLondonData london,
+        DemoNewYorkData ny, List<DemoTradeCityData> trade, DateTime today) =>
     demoProfiles(today: today)..profiles.addAll([
       for (final p in demoSecondCast)
         if (p.userId.startsWith('user-de-'))
           Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
       ...demoCityProfiles(london.workspaces, 'uk'),
       ...demoCityProfiles(ny.workspaces, 'ny'),
+      for (final city in trade)
+        ...demoCityProfiles(city.workspaces, city.city.prefix),
     ]);

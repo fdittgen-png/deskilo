@@ -224,6 +224,15 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         money: fixture.newYork.money,
         events: fixture.newYork.events,
       ),
+      // #3832 — the trade cities' guides read their own stores.
+      for (final city in [fixture.zurich, fixture.milan])
+        city.city.id: DemoSetupSources(
+          space: city.workspaces,
+          plan: city.floorPlan,
+          reservations: city.reservations,
+          money: city.money,
+          events: city.events,
+        ),
       // #3302 — the twin's guide reads its own (copied) plan and its own,
       // empty activity: what a development side holds before a rehearsal.
       demoTwinSpaceId: DemoSetupSources(
@@ -240,6 +249,13 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
+
+/// #3832 - the persona's own history, derived from the spaces' records.
+FakeAccountActivityRepository _demoActivity(DemoFixture fixture) =>
+    FakeAccountActivityRepository(
+      derive: () => demoFinanceOverview(fixture),
+      deriveRows: (kind) => demoAccountActivity(fixture, kind),
+    );
 
 /// What only a server can answer: Demo offers nothing in its place.
 List<Override> _serverOnlyOverrides() => [
@@ -340,7 +356,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           source.isEmpty || source == kDemoServerOrigin
               ? fixture.messenger
               : FakeMessengerRepository()),
-      accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), // #2327; no connected host in Demo
+      accountActivityRepositoryProvider.overrideWithValue(_demoActivity(fixture)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(_demoActivity(fixture)), // #2327; no connected host in Demo
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),

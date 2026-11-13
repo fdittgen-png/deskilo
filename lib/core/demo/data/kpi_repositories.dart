@@ -152,37 +152,53 @@ class DemoPurchaseKpiRepository implements PurchaseKpiRepository {
       return month.compareTo(fromMonth) >= 0 && month.compareTo(toMonth) <= 0;
     }
 
+    // #3832 - a document or a payable in another currency is never added to
+    // the space's own: the figure it would enter is unknown (`currency_mix`),
+    // as the vendor figures already answer it.
+    bool foreign(String c) => c.isNotEmpty && c != currency;
     var supplierDue = 0, memberDue = 0, outflows = 0, outflowCount = 0;
+    var apMixed = false, memberMixed = false, outflowMixed = false;
     for (final row in purchases.payables) {
       final o = row.obligation;
+      final other = foreign(o.currency);
       if (o.creditorKind == CreditorKind.supplier) {
         supplierDue += o.remainingCents;
+        apMixed |= other && o.remainingCents > 0;
       } else {
         memberDue += o.remainingCents;
+        memberMixed |= other && o.remainingCents > 0;
       }
       for (final a in o.allocations) {
         if (a.isReversal || a.reversed || !inRange(a.paidOn)) continue;
         outflows += a.amountCents;
         outflowCount++;
+        outflowMixed |= other;
       }
     }
     final pending = [
       for (final p in await purchases.fetchPurchases(workspaceId))
         if (p.state == PurchaseState.pending) p,
     ];
+    final pendingMixed = pending.any((p) => foreign(p.currency));
+    final mixed = apMixed || memberMixed || outflowMixed || pendingMixed;
     final partial = toMonth.compareTo(yearMonth(now.year, now.month)) >= 0;
     return PurchaseSummaryKpi(
       fromMonth: fromMonth,
       toMonth: toMonth,
       currency: currency,
-      apOutstandingMinor: supplierDue,
-      memberDueMinor: memberDue,
+      apOutstandingMinor: apMixed ? null : supplierDue,
+      memberDueMinor: memberMixed ? null : memberDue,
       pendingCount: pending.length,
-      pendingMinor: pending.fold<int>(0, (s, p) => s + p.grossCents),
-      outflowsMinor: outflows,
+      pendingMinor: pendingMixed
+          ? null
+          : pending.fold<int>(0, (s, p) => s + p.grossCents),
+      outflowsMinor: outflowMixed ? null : outflows,
       outflows: outflowCount,
-      quality: {if (partial) KpiQuality.partial},
-      reasons: [if (partial) 'period_not_over'],
+      quality: {
+        if (mixed) KpiQuality.unavailable,
+        if (partial) KpiQuality.partial,
+      },
+      reasons: [if (mixed) 'currency_mix', if (partial) 'period_not_over'],
       computedAt: now,
     );
   }
