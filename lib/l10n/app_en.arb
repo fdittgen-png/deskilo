@@ -1857,7 +1857,7 @@
   "@authPasswordLabel": {
     "description": "Label of the password input field"
   },
-  "authPasswordTooShort": "At least {length} characters",
+  "authPasswordTooShort": "{length, plural, one{At least {length} character} other{At least {length} characters}}",
   "@authPasswordTooShort": {
     "description": "Validation message for a too-short new password; {length} is the minimum length (#3904).",
     "placeholders": {
@@ -17953,7 +17953,7 @@
   "@instanceDoctorAttention": {
     "description": "#1308 instance wizard doctor and token"
   },
-  "instanceDoctorAuthBaselineDetail": "codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{codes last at most an hour, passwords have at least {length} character, a password change asks to sign in again} other{codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again}}",
   "@instanceDoctorAuthBaselineDetail": {
     "description": "#3904 Detail: {length} is the minimum password length.",
     "placeholders": {
@@ -17982,7 +17982,7 @@
       }
     }
   },
-  "instanceDoctorAuthPasswordShortTitle": "Passwords may be shorter than {length} characters",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Passwords may be shorter than {length} character} other{Passwords may be shorter than {length} characters}}",
   "@instanceDoctorAuthPasswordShortTitle": {
     "description": "#3904 Doctor warning: {length} is the minimum password length the builder sets.",
     "placeholders": {

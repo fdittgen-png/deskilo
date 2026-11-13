@@ -1426,7 +1426,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String authPasswordTooShort(int length) {
-    return 'Almeno $length caratteri';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Almeno $length caratteri',
+      one: 'Almeno $length carattere',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -13770,7 +13776,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String instanceDoctorAuthBaselineDetail(int length) {
-    return 'i codici durano al massimo un\'ora, le password hanno almeno $length caratteri, un cambio di password chiede di accedere di nuovo';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'i codici durano al massimo un\'ora, le password hanno almeno $length caratteri, un cambio di password chiede di accedere di nuovo',
+      one:
+          'i codici durano al massimo un\'ora, le password hanno almeno $length carattere, un cambio di password chiede di accedere di nuovo',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -13787,7 +13801,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String instanceDoctorAuthPasswordShortTitle(int length) {
-    return 'Le password possono avere meno di $length caratteri';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Le password possono avere meno di $length caratteri',
+      one: 'Le password possono avere meno di $length carattere',
+    );
+    return '$_temp0';
   }
 
   @override

@@ -2303,7 +2303,7 @@ abstract class AppLocalizations {
   /// Validation message for a too-short new password; {length} is the minimum length (#3904).
   ///
   /// In en, this message translates to:
-  /// **'At least {length} characters'**
+  /// **'{length, plural, one{At least {length} character} other{At least {length} characters}}'**
   String authPasswordTooShort(int length);
 
   /// Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side
@@ -22294,7 +22294,7 @@ abstract class AppLocalizations {
   /// #3904 Detail: {length} is the minimum password length.
   ///
   /// In en, this message translates to:
-  /// **'codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again'**
+  /// **'{length, plural, one{codes last at most an hour, passwords have at least {length} character, a password change asks to sign in again} other{codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again}}'**
   String instanceDoctorAuthBaselineDetail(int length);
 
   /// #3904 Doctor ok: the sign-in settings meet the baseline.
@@ -22318,7 +22318,7 @@ abstract class AppLocalizations {
   /// #3904 Doctor warning: {length} is the minimum password length the builder sets.
   ///
   /// In en, this message translates to:
-  /// **'Passwords may be shorter than {length} characters'**
+  /// **'{length, plural, one{Passwords may be shorter than {length} character} other{Passwords may be shorter than {length} characters}}'**
   String instanceDoctorAuthPasswordShortTitle(int length);
 
   /// #3904 Doctor warning: changing a password does not ask the person to sign in again.

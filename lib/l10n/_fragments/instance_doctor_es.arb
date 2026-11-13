@@ -43,9 +43,9 @@
   "instanceDoctorPushForeignTitle": "Las llamadas de notificación y de liquidación van a otro proyecto",
   "instanceDoctorPushForeignDetail": "{host}\n        Solución: dart run tool/instance.dart push --ref <ref>, o apunte push_config a este proyecto.",
   "instanceDoctorAuthBaselineTitle": "Base de inicio de sesión",
-  "instanceDoctorAuthBaselineDetail": "los códigos duran como máximo una hora, las contraseñas tienen al menos {length} caracteres, un cambio de contraseña pide volver a iniciar sesión",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} carácter, un cambio de contraseña pide volver a iniciar sesión} other{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} caracteres, un cambio de contraseña pide volver a iniciar sesión}}",
   "instanceDoctorAuthCodesLongTitle": "Los códigos de inicio de sesión duran más de una hora",
-  "instanceDoctorAuthPasswordShortTitle": "Las contraseñas pueden tener menos de {length} caracteres",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Las contraseñas pueden tener menos de {length} carácter} other{Las contraseñas pueden tener menos de {length} caracteres}}",
   "instanceDoctorAuthReauthOffTitle": "Un cambio de contraseña no pide volver a iniciar sesión",
   "instanceDoctorAuthFixDetail": "valor  {value}\n        Solución: {command}"
 }

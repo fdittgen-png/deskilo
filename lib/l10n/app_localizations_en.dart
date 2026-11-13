@@ -1416,7 +1416,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String authPasswordTooShort(int length) {
-    return 'At least $length characters';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'At least $length characters',
+      one: 'At least $length character',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -13664,7 +13670,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String instanceDoctorAuthBaselineDetail(int length) {
-    return 'codes last at most an hour, passwords have at least $length characters, a password change asks to sign in again';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'codes last at most an hour, passwords have at least $length characters, a password change asks to sign in again',
+      one:
+          'codes last at most an hour, passwords have at least $length character, a password change asks to sign in again',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -13681,7 +13695,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String instanceDoctorAuthPasswordShortTitle(int length) {
-    return 'Passwords may be shorter than $length characters';
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Passwords may be shorter than $length characters',
+      one: 'Passwords may be shorter than $length character',
+    );
+    return '$_temp0';
   }
 
   @override

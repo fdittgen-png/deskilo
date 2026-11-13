@@ -21,7 +21,7 @@
   "authSignUpButton": "Crear cuenta",
   "authToggleToSignUp": "¿Es nuevo aquí? Cree una cuenta",
   "authToggleToSignIn": "¿Ya tiene cuenta? Inicie sesión",
-  "authPasswordTooShort": "Al menos {length} caracteres",
+  "authPasswordTooShort": "{length, plural, one{Al menos {length} carácter} other{Al menos {length} caracteres}}",
   "authGenericError": "Error de autenticación. Compruebe sus credenciales e inténtelo de nuevo.",
   "authSignOut": "Cerrar sesión",
   "authNetworkError": "No se pudo contactar con el servidor. Compruebe su conexión e inténtelo de nuevo.",

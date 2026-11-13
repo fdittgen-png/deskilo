@@ -21,7 +21,7 @@
   "authSignUpButton": "Crea account",
   "authToggleToSignUp": "Nuovo qui? Crea un account",
   "authToggleToSignIn": "Ha già un account? Accedi",
-  "authPasswordTooShort": "Almeno {length} caratteri",
+  "authPasswordTooShort": "{length, plural, one{Almeno {length} carattere} other{Almeno {length} caratteri}}",
   "authGenericError": "Autenticazione non riuscita. Controlli le credenziali e riprovi.",
   "authSignOut": "Esci",
   "authNetworkError": "Impossibile raggiungere il server. Controlli la connessione e riprovi.",

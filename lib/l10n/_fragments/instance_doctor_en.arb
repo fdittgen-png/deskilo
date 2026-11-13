@@ -274,7 +274,7 @@
   "@instanceDoctorAuthBaselineTitle": {
     "description": "#3904 Doctor ok: the sign-in settings meet the baseline."
   },
-  "instanceDoctorAuthBaselineDetail": "codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{codes last at most an hour, passwords have at least {length} character, a password change asks to sign in again} other{codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again}}",
   "@instanceDoctorAuthBaselineDetail": {
     "description": "#3904 Detail: {length} is the minimum password length.",
     "placeholders": {
@@ -287,7 +287,7 @@
   "@instanceDoctorAuthCodesLongTitle": {
     "description": "#3904 Doctor warning: e-mailed sign-in codes stay valid longer than an hour."
   },
-  "instanceDoctorAuthPasswordShortTitle": "Passwords may be shorter than {length} characters",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Passwords may be shorter than {length} character} other{Passwords may be shorter than {length} characters}}",
   "@instanceDoctorAuthPasswordShortTitle": {
     "description": "#3904 Doctor warning: {length} is the minimum password length the builder sets.",
     "placeholders": {

@@ -84,7 +84,7 @@
   "@authToggleToSignIn": {
     "description": "Link switching the auth screen to sign-in mode"
   },
-  "authPasswordTooShort": "At least {length} characters",
+  "authPasswordTooShort": "{length, plural, one{At least {length} character} other{At least {length} characters}}",
   "@authPasswordTooShort": {
     "description": "Validation message for a too-short new password; {length} is the minimum length (#3904).",
     "placeholders": {

@@ -43,9 +43,9 @@
   "instanceDoctorPushForeignTitle": "Les appels de notification et de règlement vont à un autre projet",
   "instanceDoctorPushForeignDetail": "{host}\n        Correctif : dart run tool/instance.dart push --ref <ref>, ou faites pointer push_config vers ce projet.",
   "instanceDoctorAuthBaselineTitle": "Socle de connexion",
-  "instanceDoctorAuthBaselineDetail": "les codes durent au plus une heure, les mots de passe ont au moins {length} caractères, un changement de mot de passe demande de se reconnecter",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{les codes durent au plus une heure, les mots de passe ont au moins {length} caractère, un changement de mot de passe demande de se reconnecter} other{les codes durent au plus une heure, les mots de passe ont au moins {length} caractères, un changement de mot de passe demande de se reconnecter}}",
   "instanceDoctorAuthCodesLongTitle": "Les codes de connexion durent plus d'une heure",
-  "instanceDoctorAuthPasswordShortTitle": "Les mots de passe peuvent avoir moins de {length} caractères",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Les mots de passe peuvent avoir moins de {length} caractère} other{Les mots de passe peuvent avoir moins de {length} caractères}}",
   "instanceDoctorAuthReauthOffTitle": "Un changement de mot de passe ne demande pas de se reconnecter",
   "instanceDoctorAuthFixDetail": "valeur  {value}\n        Correctif : {command}"
 }

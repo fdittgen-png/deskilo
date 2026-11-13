@@ -43,9 +43,9 @@
   "instanceDoctorPushForeignTitle": "Le chiamate di notifica e di regolamento vanno a un altro progetto",
   "instanceDoctorPushForeignDetail": "{host}\n        Rimedio: dart run tool/instance.dart push --ref <ref>, oppure imposti push_config su questo progetto.",
   "instanceDoctorAuthBaselineTitle": "Base di accesso",
-  "instanceDoctorAuthBaselineDetail": "i codici durano al massimo un'ora, le password hanno almeno {length} caratteri, un cambio di password chiede di accedere di nuovo",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{i codici durano al massimo un'ora, le password hanno almeno {length} carattere, un cambio di password chiede di accedere di nuovo} other{i codici durano al massimo un'ora, le password hanno almeno {length} caratteri, un cambio di password chiede di accedere di nuovo}}",
   "instanceDoctorAuthCodesLongTitle": "I codici di accesso durano più di un'ora",
-  "instanceDoctorAuthPasswordShortTitle": "Le password possono avere meno di {length} caratteri",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Le password possono avere meno di {length} carattere} other{Le password possono avere meno di {length} caratteri}}",
   "instanceDoctorAuthReauthOffTitle": "Un cambio di password non chiede di accedere di nuovo",
   "instanceDoctorAuthFixDetail": "valore  {value}\n        Rimedio: {command}"
 }
