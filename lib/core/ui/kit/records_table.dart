@@ -119,6 +119,10 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   bool _touch = !MousePresence.connected;
   final _scroll = ScrollController();
   final _menus = <String, GlobalKey<RowMenuState>>{};
+
+  /// #3619 — each built row, by its key: the arrows reveal it by its own
+  /// context, whatever its height.
+  final _rowKeys = <String, GlobalKey>{};
   final _filter = TextEditingController();
   final _filterFocus = FocusNode();
   final _rowsFocus = FocusNode();
@@ -337,7 +341,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           focusFilter: _filterFocus.requestFocus,
           move: (by) {
             _c.move(by);
-            _reveal(shown.length, rowHeight);
+            _reveal(shown, rowHeight, down: by > 0);
           },
           rowMenu: () {
             if (focusedRow() case final r?) {
@@ -384,23 +388,26 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                   itemBuilder: (context, i) {
                     final r = shown[i];
                     final key = widget.keyOf(r);
-                    return RecordRow<T>(
-                      key: ValueKey('records-row-$key'),
-                      row: r,
-                      columns: columns,
-                      actions: widget.rowActions?.call(r) ?? const [],
-                      onOpen: () {
-                        // A clicked row brings the keyboard to the table.
-                        _rowsFocus.requestFocus();
-                        _c.focus(i);
-                        widget.onOpen(r);
-                      },
-                      selected: selected.contains(key),
-                      onTick: (on) => _c.tick(key, on: on),
-                      focused: _rowsFocus.hasFocus && i == _c.focused,
-                      minHeight: rowHeight,
-                      selectable: _selectable,
-                      menuKey: _menus.putIfAbsent(key, GlobalKey.new),
+                    return KeyedSubtree(
+                      key: _rowKeys.putIfAbsent(key, GlobalKey.new),
+                      child: RecordRow<T>(
+                        key: ValueKey('records-row-$key'),
+                        row: r,
+                        columns: columns,
+                        actions: widget.rowActions?.call(r) ?? const [],
+                        onOpen: () {
+                          // A clicked row brings the keyboard to the table.
+                          _rowsFocus.requestFocus();
+                          _c.focus(i);
+                          widget.onOpen(r);
+                        },
+                        selected: selected.contains(key),
+                        onTick: (on) => _c.tick(key, on: on),
+                        focused: _rowsFocus.hasFocus && i == _c.focused,
+                        minHeight: rowHeight,
+                        selectable: _selectable,
+                        menuKey: _menus.putIfAbsent(key, GlobalKey.new),
+                      ),
                     );
                   },
                 ),
@@ -412,17 +419,54 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     );
   }
 
-  /// The row the arrows stand on stays in view: rows are a fixed height.
-  void _reveal(int count, double rowHeight) {
-    if (!_scroll.hasClients || count == 0) return;
-    final extent = rowHeight + 1; // content-fit: a row and its divider
-    final top = _c.focused.clamp(0, count - 1) * extent;
+  /// The row the arrows stand on stays in view. A row has a minimum height,
+  /// not a fixed one (a name on two lines, a larger text scale), so the row
+  /// is revealed by its own context once built. A row not built yet (a jump
+  /// past the lazily built ones) is first estimated at the minimum height,
+  /// then looked for again after each frame, one viewport further in the
+  /// direction of travel, a few frames at most.
+  void _reveal(List<T> shown, double rowHeight, {required bool down}) {
+    if (!_scroll.hasClients || shown.isEmpty) return;
+    final index = _c.focused.clamp(0, shown.length - 1);
+    final key = widget.keyOf(shown[index]);
+    if (_revealBuilt(key, down: down)) return;
     final p = _scroll.position;
-    if (top < p.pixels) {
-      _scroll.jumpTo(top);
-    } else if (top + extent > p.pixels + p.viewportDimension) {
-      _scroll.jumpTo(top + extent - p.viewportDimension);
-    }
+    final extent = rowHeight + 1; // content-fit: a row and its divider
+    _scroll.jumpTo(
+      (index * extent).clamp(p.minScrollExtent, p.maxScrollExtent),
+    );
+    _revealAfterFrame(key, down: down, tries: _revealTries);
+  }
+
+  /// How many frames a jump looks for its row before giving up.
+  static const int _revealTries = 6;
+
+  /// Brings the built row of [key] into view; false while it is not built.
+  bool _revealBuilt(String key, {required bool down}) {
+    final target = _rowKeys[key]?.currentContext;
+    if (target == null || !target.mounted) return false;
+    unawaited(
+      Scrollable.ensureVisible(
+        target,
+        alignmentPolicy: down
+            ? ScrollPositionAlignmentPolicy.keepVisibleAtEnd
+            : ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+      ),
+    );
+    return true;
+  }
+
+  void _revealAfterFrame(String key, {required bool down, required int tries}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scroll.hasClients) return;
+      if (_revealBuilt(key, down: down) || tries <= 0) return;
+      final p = _scroll.position;
+      final step = down ? p.viewportDimension : -p.viewportDimension;
+      _scroll.jumpTo(
+        (p.pixels + step).clamp(p.minScrollExtent, p.maxScrollExtent),
+      );
+      _revealAfterFrame(key, down: down, tries: tries - 1);
+    });
   }
 
   Widget _cards(List<T> shown) => ListView.separated(
