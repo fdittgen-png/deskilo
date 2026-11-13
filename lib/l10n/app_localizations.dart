@@ -8819,6 +8819,126 @@ abstract class AppLocalizations {
   /// **'Nothing on this day.'**
   String get calendarDayEmpty;
 
+  /// #3626 The desk calendar's filter choice that keeps everything (every level, kind, member or state)
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get calendarDeskAll;
+
+  /// #3626 Title of the pane that shows one booking beside the desk calendar
+  ///
+  /// In en, this message translates to:
+  /// **'Booking details'**
+  String get calendarDeskBooking;
+
+  /// #3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan
+  ///
+  /// In en, this message translates to:
+  /// **'Change, cancel or show on plan'**
+  String get calendarDeskBookingActions;
+
+  /// #3626 Column title of the bookings table: when a booking starts
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get calendarDeskColumnFrom;
+
+  /// #3626 Column and filter title: the member a booking is for
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get calendarDeskColumnMember;
+
+  /// #3626 Column and field title: the place a booking is on
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get calendarDeskColumnPlace;
+
+  /// #3626 Column and filter title: where a booking stands (reserved, checked in, completed...)
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get calendarDeskColumnState;
+
+  /// #3626 Column title of the bookings table: when a booking ends
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get calendarDeskColumnTo;
+
+  /// #3626 Button of the desk calendar: export the bookings of the period as a file
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get calendarDeskExport;
+
+  /// #3626 The desk calendar's filter by kind of place (seat, meeting room, parking slot)
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of place'**
+  String get calendarDeskFilterKind;
+
+  /// #3626 The desk calendar's filter by level
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get calendarDeskFilterLevel;
+
+  /// #3626 Accessibility label of a free day cell of a place in the week grid: a click opens New booking. Placeholders: {place}, {day} (a date)
+  ///
+  /// In en, this message translates to:
+  /// **'{place}: free on {day}, new booking'**
+  String calendarDeskFreeDay(String place, String day);
+
+  /// #3626 Accessibility label of a free stretch of a place in the day grid: a click opens New booking. Placeholders: {place}, {from} and {to} (times)
+  ///
+  /// In en, this message translates to:
+  /// **'{place}: free from {from} to {to}, new booking'**
+  String calendarDeskFreeSlot(String place, String from, String to);
+
+  /// #3626 Accessibility label of the mark where the day grid skips an hour that does not exist (the clocks went forward). Placeholders: {from} and {to} (times)
+  ///
+  /// In en, this message translates to:
+  /// **'The clocks go forward: {from} to {to} does not exist on this day'**
+  String calendarDeskMissingHour(String from, String to);
+
+  /// #3626 Choice of the desk calendar: all bookings of the period as a table
+  ///
+  /// In en, this message translates to:
+  /// **'All bookings'**
+  String get calendarDeskModeTable;
+
+  /// #3626 A month cell's line when it cannot list every booking of the day. Placeholders: {count} (int), the bookings left out
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} more} other{{count} more}}'**
+  String calendarDeskMore(int count);
+
+  /// #3626 The desk calendar's button that opens New booking beside the grid
+  ///
+  /// In en, this message translates to:
+  /// **'New booking'**
+  String get calendarDeskNew;
+
+  /// #3626 Accessibility label of an hour mark of the day grid that is the second time the clock shows that hour (the clocks went back). Placeholders: {time}
+  ///
+  /// In en, this message translates to:
+  /// **'{time}, second time: the clocks went back'**
+  String calendarDeskRepeatedHour(String time);
+
+  /// #3626 Tooltip of the button that widens the hours of the day grid
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom in'**
+  String get calendarDeskZoomIn;
+
+  /// #3626 Tooltip of the button that narrows the hours of the day grid
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out'**
+  String get calendarDeskZoomOut;
+
   /// Shown as a text in calendar item row (calendar). Placeholders: {number} (String).
   ///
   /// In en, this message translates to:
@@ -49379,11 +49499,23 @@ abstract class AppLocalizations {
   /// **'New'**
   String get shortcutNew;
 
+  /// #3626 a line of the keys overlay: what the calendar key does
+  ///
+  /// In en, this message translates to:
+  /// **'Next day, week or month'**
+  String get shortcutNextPeriod;
+
   /// #3610 a line of the keys overlay: what the key does
   ///
   /// In en, this message translates to:
   /// **'Open a date field\'s calendar'**
   String get shortcutOpenCalendar;
+
+  /// #3626 a line of the keys overlay: what the calendar key does
+  ///
+  /// In en, this message translates to:
+  /// **'Previous day, week or month'**
+  String get shortcutPreviousPeriod;
 
   /// #3610 a line of the keys overlay: what the key does
   ///
@@ -49415,11 +49547,35 @@ abstract class AppLocalizations {
   /// **'Save or send'**
   String get shortcutSubmit;
 
+  /// #3626 a line of the keys overlay: what the calendar key does
+  ///
+  /// In en, this message translates to:
+  /// **'Go to today'**
+  String get shortcutToday;
+
   /// #3610 a line of the keys overlay: what the key does
   ///
   /// In en, this message translates to:
   /// **'Undo'**
   String get shortcutUndo;
+
+  /// #3626 a line of the keys overlay: what the calendar key does
+  ///
+  /// In en, this message translates to:
+  /// **'Show a day'**
+  String get shortcutViewDay;
+
+  /// #3626 a line of the keys overlay: what the calendar key does
+  ///
+  /// In en, this message translates to:
+  /// **'Show a month'**
+  String get shortcutViewMonth;
+
+  /// #3626 a line of the keys overlay: what the calendar key does
+  ///
+  /// In en, this message translates to:
+  /// **'Show a week'**
+  String get shortcutViewWeek;
 
   /// #945 sites: siteCity
   ///

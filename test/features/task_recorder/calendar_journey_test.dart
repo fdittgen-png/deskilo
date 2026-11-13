@@ -63,7 +63,9 @@ Future<ProviderContainer> _pump(
   FakeCalendarRepository? calendar,
   FakeEventRepository? events,
 }) async {
-  tester.view.physicalSize = const Size(1080, 2400);
+  // #3626 — the hub's journeys are the phone's: from 840 dp the calendar is
+  // the desk's grid.
+  tester.view.physicalSize = const Size(540, 2400);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final workspace = FakeWorkspaceRepository.withWorkspace(featureFlags: flags)

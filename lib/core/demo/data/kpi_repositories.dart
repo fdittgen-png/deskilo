@@ -140,6 +140,54 @@ class DemoPurchaseKpiRepository implements PurchaseKpiRepository {
   /// The space's currency: a US space does not read in euros.
   final String currency;
 
+  /// #3832 - a document or a payable in another currency is never added to
+  /// the space's own: the figure it would enter is unknown (`currency_mix`),
+  /// as the vendor figures already answer it.
+  bool _foreign(String c) => c.isNotEmpty && c != currency;
+
+  /// What the payables owe and have been paid in [inRange], and whether one
+  /// of them is in another currency than the space's.
+  ({
+    int supplierDue,
+    int memberDue,
+    int outflows,
+    int outflowCount,
+    bool apMixed,
+    bool memberMixed,
+    bool outflowMixed,
+  })
+  _payableFigures(bool Function(DateTime? d) inRange) {
+    var supplierDue = 0, memberDue = 0, outflows = 0, outflowCount = 0;
+    var apMixed = false, memberMixed = false, outflowMixed = false;
+    for (final row in purchases.payables) {
+      final o = row.obligation;
+      final other = _foreign(o.currency);
+      final open = other && o.remainingCents > 0;
+      if (o.creditorKind == CreditorKind.supplier) {
+        supplierDue += o.remainingCents;
+        apMixed |= open;
+      } else {
+        memberDue += o.remainingCents;
+        memberMixed |= open;
+      }
+      for (final a in o.allocations) {
+        if (a.isReversal || a.reversed || !inRange(a.paidOn)) continue;
+        outflows += a.amountCents;
+        outflowCount++;
+        outflowMixed |= other;
+      }
+    }
+    return (
+      supplierDue: supplierDue,
+      memberDue: memberDue,
+      outflows: outflows,
+      outflowCount: outflowCount,
+      apMixed: apMixed,
+      memberMixed: memberMixed,
+      outflowMixed: outflowMixed,
+    );
+  }
+
   @override
   Future<PurchaseSummaryKpi> summary(
     String workspaceId, {
@@ -152,37 +200,31 @@ class DemoPurchaseKpiRepository implements PurchaseKpiRepository {
       return month.compareTo(fromMonth) >= 0 && month.compareTo(toMonth) <= 0;
     }
 
-    var supplierDue = 0, memberDue = 0, outflows = 0, outflowCount = 0;
-    for (final row in purchases.payables) {
-      final o = row.obligation;
-      if (o.creditorKind == CreditorKind.supplier) {
-        supplierDue += o.remainingCents;
-      } else {
-        memberDue += o.remainingCents;
-      }
-      for (final a in o.allocations) {
-        if (a.isReversal || a.reversed || !inRange(a.paidOn)) continue;
-        outflows += a.amountCents;
-        outflowCount++;
-      }
-    }
+    final f = _payableFigures(inRange);
     final pending = [
       for (final p in await purchases.fetchPurchases(workspaceId))
         if (p.state == PurchaseState.pending) p,
     ];
+    final pendingMixed = pending.any((p) => _foreign(p.currency));
+    final mixed = f.apMixed || f.memberMixed || f.outflowMixed || pendingMixed;
     final partial = toMonth.compareTo(yearMonth(now.year, now.month)) >= 0;
     return PurchaseSummaryKpi(
       fromMonth: fromMonth,
       toMonth: toMonth,
       currency: currency,
-      apOutstandingMinor: supplierDue,
-      memberDueMinor: memberDue,
+      apOutstandingMinor: f.apMixed ? null : f.supplierDue,
+      memberDueMinor: f.memberMixed ? null : f.memberDue,
       pendingCount: pending.length,
-      pendingMinor: pending.fold<int>(0, (s, p) => s + p.grossCents),
-      outflowsMinor: outflows,
-      outflows: outflowCount,
-      quality: {if (partial) KpiQuality.partial},
-      reasons: [if (partial) 'period_not_over'],
+      pendingMinor: pendingMixed
+          ? null
+          : pending.fold<int>(0, (s, p) => s + p.grossCents),
+      outflowsMinor: f.outflowMixed ? null : f.outflows,
+      outflows: f.outflowCount,
+      quality: {
+        if (mixed) KpiQuality.unavailable,
+        if (partial) KpiQuality.partial,
+      },
+      reasons: [if (mixed) 'currency_mix', if (partial) 'period_not_over'],
       computedAt: now,
     );
   }

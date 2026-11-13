@@ -14,10 +14,10 @@ Rows marked ✓ are asserted by `test/core/demo/demo_persona_accountability_test
 
 ## People and memberships
 
-| persona | Pézenas (`ws-1`) | Leipzig | London / New York |
+| persona | Pézenas (`ws-1`) | Leipzig | London / New York / Zurich / Milan |
 |---|---|---|---|
 | owner — Ada (`member-1`) | owner | co-owner (active) | member of each city cast |
-| member — Bruno (`member-2`) | member | member | as seeded per city |
+| member — Bruno (`member-2`) | member | member | as seeded per city; member in Zurich and Milan |
 | admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city |
 | kiosk — front desk tablet (`member-kiosk`) | kiosk device | none | none |
 

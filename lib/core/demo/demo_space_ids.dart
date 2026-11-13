@@ -9,3 +9,5 @@ const demoFirstSpaceId = 'ws-1';
 const demoSecondSpaceId = 'ws-2';
 const demoLondonSpaceId = 'ws-3';
 const demoNewYorkSpaceId = 'ws-4';
+const demoZurichSpaceId = 'ws-5';
+const demoMilanSpaceId = 'ws-6';

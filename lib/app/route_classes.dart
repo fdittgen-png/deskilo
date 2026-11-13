@@ -194,7 +194,13 @@ const List<RouteRule> routeRules = [
   // A membership still pending reaches no destination: no desk.
   RouteRule('/pending', RouteClass.workspace, chrome: RouteChrome.account),
   RouteRule('/messages', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.messages}'),
-  RouteRule('/calendar', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.calendar}'),
+  RouteRule(
+    '/calendar',
+    RouteClass.workspace,
+    place: 'drawer-tab-${ShellBranch.calendar}',
+    // #3626 — the desk calendar: places and days fill the whole work area.
+    measure: PageMeasure.work,
+  ),
   RouteRule('/directory', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.directory}'),
   RouteRule('/money', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/reserve', RouteClass.workspace, place: 'drawer-reserve'),
