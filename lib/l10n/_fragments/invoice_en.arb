@@ -1397,10 +1397,6 @@
   "@reportTemplateLangDefault": {
     "description": "Report language resolution + per-language templates (#496)"
   },
-  "reportLanguageAmbiguous": "This country has several languages — set the workspace language in Workspace settings first.",
-  "@reportLanguageAmbiguous": {
-    "description": "Report language resolution + per-language templates (#496)"
-  },
   "reportDesignEmpty": "Empty band — add an element below.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"

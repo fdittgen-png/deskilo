@@ -24,10 +24,10 @@ import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
+import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
-import 'report_strings_l10n.dart';
 import 'widgets/report_preview.dart';
 
 /// #837 — the invoices [invoice] regrouped, resolved from the archive in
@@ -114,16 +114,14 @@ Future<bool> savePdfToDownloads(
 
 
 /// #3673 — what share, download and the invoice e-mail print an invoice
-/// with: one set of options for one builder. [language] '' prints in the
-/// interface's language (share and download, unchanged); the e-mail passes
-/// the customer's document language.
+/// with: one set of options for one builder, in the invoice's own document
+/// language (#3850).
 InvoicePdfFileOptions invoiceShareOptions(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
-  List<Invoice> annexes, {
-  String language = '',
-}) => InvoicePdfFileOptions(
+  List<Invoice> annexes,
+) => InvoicePdfFileOptions(
   reference: requireWorkspaceTaxReference(ref),
   // #920 — through layoutImage, so the shipped layouts' `logo`
   // resolves to whatever the owner actually called theirs.
@@ -135,12 +133,11 @@ InvoicePdfFileOptions invoiceShareOptions(
     context,
     ref,
     invoice,
-    l10n: language.isEmpty ? null : l10nForLanguage(language),
+    l10n: l10nForLanguage(invoiceDocumentLocale(ref, invoice).language),
   ),
   annexInvoices: annexes,
   template: invoicePdfTemplateFor(ref),
   workspace: ref.read(currentWorkspaceProvider).value,
-  language: language,
 );
 
 Future<void> downloadInvoicePdf(
@@ -197,10 +194,13 @@ Future<void> quickViewInvoice(
     }
     final annexes = await askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return;
-    final template = invoicePdfTemplateFor(ref);
+    // #3850 — the document's own language and conventions, as it prints.
+    final locale = invoiceDocumentLocale(ref, invoice);
+    final words = l10nForLanguage(locale.language);
+    final template = invoicePdfTemplateFor(ref).forLocale(locale.language);
     final data = withOwnerTexts(
       invoiceReportData(
-        reportStringsFor(context),
+        documentStringsOf(locale),
         invoice,
         memberTerms: memberTermsFor(ref, invoice.memberId),
         proforma: proforma,
@@ -213,7 +213,7 @@ Future<void> quickViewInvoice(
     var bands = proforma
         ? (template.proformaBands ?? template.invoiceBands)
         : template.invoiceBands;
-    if (!bands.hasBands) bands = defaultBandsForDoc('invoice', l10n);
+    if (!bands.hasBands) bands = defaultBandsForDoc('invoice', words);
     final report = renderReportBands(bands: bands, data: data);
     if (report == null) {
       AppSnack.error(
@@ -224,15 +224,14 @@ Future<void> quickViewInvoice(
     }
     // #837 — the regrouped invoices as further sheets, same stamp as the
     // PDF, each below the one before it.
-    final stamp =
-        l10n.invoicePdfSettledIn(invoice.number);
+    final stamp = words.invoicePdfSettledIn(invoice.number);
     final annexReports = <QuickPreviewAnnex>[];
     for (final source in annexes) {
       final sourceReport = renderReportBands(
         bands: bands,
         data: withOwnerTexts(
           invoiceReportData(
-            reportStringsFor(context),
+            documentStringsOf(locale),
             source,
             memberTerms: memberTermsFor(ref, source.memberId),
             proforma: false,

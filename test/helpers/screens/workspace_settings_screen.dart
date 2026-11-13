@@ -4,6 +4,7 @@
 // importing that test file (#2601). Moved verbatim.
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/workspace/presentation/screens/workspace_settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   FakeFloorPlanRepository? floorPlan,
   FakeWorkspaceRepository? repository,
   FakeMoneyRepository? money,
+  FakeDirectoryRepository? directory,
   bool settle = true,
   bool expand = true,
   bool reports = false,
@@ -51,6 +53,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
           workspace: workspace,
           floorPlan: floorPlan,
           money: money,
+          directory: directory,
           deviceLocale: deviceLocale,
         ),
         if (saver != null) fileSaverProvider.overrideWithValue(saver),

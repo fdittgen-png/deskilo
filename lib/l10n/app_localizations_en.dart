@@ -1320,6 +1320,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get attentionConfirmDocumentLanguage =>
+      'Confirm the language of the documents';
+
+  @override
   String attentionDecide(String subject) {
     return 'Decide: $subject';
   }
@@ -11940,6 +11944,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesCoverageNoDocuments => 'no documents';
 
   @override
+  String get financesCoverageOlderSettled =>
+      'Older paid documents are not listed; everything still to pay is.';
+
+  @override
   String financesCoverageReading(String host) {
     return 'Reading $host…';
   }
@@ -14671,10 +14679,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceEmailHeading => 'By e-mail';
-
-  @override
-  String get invoiceEmailNoLanguage =>
-      'The customer\'s document language is not known, so the invoice was not e-mailed. Choose their language, or share the invoice.';
 
   @override
   String invoiceEmailRefused(String reason) {
@@ -25478,10 +25482,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'This customer has no e-mail address on file';
 
   @override
-  String get reminderEmailNoLanguage =>
-      'The customer\'s document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.';
-
-  @override
   String get reminderEmailNoSender =>
       'The business\'s e-mail sender is not set up yet';
 
@@ -26567,10 +26567,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportInsertImage => 'Insert image';
-
-  @override
-  String get reportLanguageAmbiguous =>
-      'This country has several languages — set the workspace language in Workspace settings first.';
 
   @override
   String get reportLayoutActive => 'Layout active';
@@ -33274,6 +33270,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefCurrency => 'Currency (ISO code)';
 
   @override
+  String get taxRefCustomerLanguage =>
+      'An invoice may be in its customer\'s language';
+
+  @override
   String get taxRefDomainAccountMap => 'Export accounts and codes';
 
   @override
@@ -33281,6 +33281,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefDomainCountry => 'Country (creation catalogue)';
+
+  @override
+  String get taxRefDomainDocumentLanguage => 'Document languages';
 
   @override
   String get taxRefDomainEuMember => 'EU members';
@@ -33373,11 +33376,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists';
 
   @override
+  String get taxRefInvalidLanguages =>
+      'Two-letter language codes separated by commas, such as fr, de';
+
+  @override
   String get taxRefInvalidNumber => 'Enter a number from 0 to 99.999';
 
   @override
   String get taxRefInvalidRateComponents =>
       'One tax per line as scheme, authority, percent; together they must equal the combined rate';
+
+  @override
+  String get taxRefInvalidRequiredLanguages =>
+      'A region code, an equals sign and a language code, such as QC=fr';
 
   @override
   String get taxRefInvalidState => 'Enter the two-letter state code';
@@ -33391,6 +33402,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefLabel => 'Label';
+
+  @override
+  String get taxRefLanguages =>
+      'Official languages (ISO 639-1, usual one first)';
 
   @override
   String get taxRefLoadFailed => 'The reference data could not be loaded.';
@@ -33434,6 +33449,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taxRefRequired => 'Required';
+
+  @override
+  String get taxRefRequiredLanguages =>
+      'Language a region requires (QC=fr, comma separated)';
 
   @override
   String get taxRefRequiresTaxNumber => 'Tax number required';

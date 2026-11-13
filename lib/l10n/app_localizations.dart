@@ -2174,6 +2174,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{Admit 1 person asking to join} other{Admit {count} people asking to join}}'**
   String attentionAdmit(int count);
 
+  /// #3850 the to-do of a business whose document language waits for confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the language of the documents'**
+  String get attentionConfirmDocumentLanguage;
+
   /// #2326: attentionDecide
   ///
   /// In en, this message translates to:
@@ -19539,6 +19545,12 @@ abstract class AppLocalizations {
   /// **'no documents'**
   String get financesCoverageNoDocuments;
 
+  /// #3878 the coverage line when an answer left older settled documents out
+  ///
+  /// In en, this message translates to:
+  /// **'Older paid documents are not listed; everything still to pay is.'**
+  String get financesCoverageOlderSettled;
+
   /// #2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.
   ///
   /// In en, this message translates to:
@@ -23736,12 +23748,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By e-mail'**
   String get invoiceEmailHeading;
-
-  /// #3673 invoices by e-mail: invoiceEmailNoLanguage
-  ///
-  /// In en, this message translates to:
-  /// **'The customer\'s document language is not known, so the invoice was not e-mailed. Choose their language, or share the invoice.'**
-  String get invoiceEmailNoLanguage;
 
   /// #3673 invoices by e-mail: invoiceEmailRefused
   ///
@@ -41286,12 +41292,6 @@ abstract class AppLocalizations {
   /// **'This customer has no e-mail address on file'**
   String get reminderEmailNoAddress;
 
-  /// #3673 reminders by e-mail: reminderEmailNoLanguage
-  ///
-  /// In en, this message translates to:
-  /// **'The customer\'s document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.'**
-  String get reminderEmailNoLanguage;
-
   /// #3673 reminders by e-mail: reminderEmailNoSender
   ///
   /// In en, this message translates to:
@@ -43097,12 +43097,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Insert image'**
   String get reportInsertImage;
-
-  /// Report language resolution + per-language templates (#496)
-  ///
-  /// In en, this message translates to:
-  /// **'This country has several languages — set the workspace language in Workspace settings first.'**
-  String get reportLanguageAmbiguous;
 
   /// Chip: this document is drawn by its positioned layout (#875)
   ///
@@ -54053,6 +54047,12 @@ abstract class AppLocalizations {
   /// **'Currency (ISO code)'**
   String get taxRefCurrency;
 
+  /// #3850 document languages: taxRefCustomerLanguage
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice may be in its customer\'s language'**
+  String get taxRefCustomerLanguage;
+
   /// #2481 tax reference: Tab: the accounts and tax codes accounting exports propose.
   ///
   /// In en, this message translates to:
@@ -54070,6 +54070,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Country (creation catalogue)'**
   String get taxRefDomainCountry;
+
+  /// #3850 document languages: taxRefDomainDocumentLanguage
+  ///
+  /// In en, this message translates to:
+  /// **'Document languages'**
+  String get taxRefDomainDocumentLanguage;
 
   /// #2477 tax reference: Domain filter: EU member states.
   ///
@@ -54245,6 +54251,12 @@ abstract class AppLocalizations {
   /// **'Name known fiscal groups (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), none in both lists'**
   String get taxRefInvalidGroups;
 
+  /// #3850 document languages: taxRefInvalidLanguages
+  ///
+  /// In en, this message translates to:
+  /// **'Two-letter language codes separated by commas, such as fr, de'**
+  String get taxRefInvalidLanguages;
+
   /// #2477 tax reference: Validation: percentage.
   ///
   /// In en, this message translates to:
@@ -54256,6 +54268,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One tax per line as scheme, authority, percent; together they must equal the combined rate'**
   String get taxRefInvalidRateComponents;
+
+  /// #3850 document languages: taxRefInvalidRequiredLanguages
+  ///
+  /// In en, this message translates to:
+  /// **'A region code, an equals sign and a language code, such as QC=fr'**
+  String get taxRefInvalidRequiredLanguages;
 
   /// #2362 sales tax: taxRefInvalidState
   ///
@@ -54280,6 +54298,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Label'**
   String get taxRefLabel;
+
+  /// #3850 document languages: taxRefLanguages
+  ///
+  /// In en, this message translates to:
+  /// **'Official languages (ISO 639-1, usual one first)'**
+  String get taxRefLanguages;
 
   /// #2477 tax reference: error text when the list cannot load.
   ///
@@ -54358,6 +54382,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Required'**
   String get taxRefRequired;
+
+  /// #3850 document languages: taxRefRequiredLanguages
+  ///
+  /// In en, this message translates to:
+  /// **'Language a region requires (QC=fr, comma separated)'**
+  String get taxRefRequiredLanguages;
 
   /// #2479 tax reference: Switch: the seller must state a VAT or tax number.
   ///

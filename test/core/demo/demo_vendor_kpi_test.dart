@@ -8,6 +8,7 @@
 // late payments and arrival days.
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/features/workspace/domain/kpi_vendors.dart';
 import 'package:deskilo/features/workspace/providers/vendor_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -18,14 +19,14 @@ String _month(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
 
 void main() {
   final fixture = DemoFixture.build(now: DateTime.utc(2026, 11, 2, 10));
-  for (final (name, id, currency, workspaces, city) in [
-    ('Pézenas', 'ws-1', 'EUR', fixture.workspaces, false),
-    ('Leipzig', 'ws-2', 'EUR', fixture.secondSpace.workspaces, false),
-    ('London', 'ws-3', 'GBP', fixture.london.workspaces, true),
-    ('New York', 'ws-4', 'USD', fixture.newYork.workspaces, true),
-  ]) {
+  for (final key in DemoSpaceKey.values) {
+    final (name, id, currency) = (key.label, key.id, key.currency);
+    // London and New York carry months of bills, orders and receipts; the
+    // trade cities bills only; Leipzig and the twin nothing yet.
+    final city = key == DemoSpaceKey.london || key == DemoSpaceKey.newYork;
+    final bills = city || key == DemoSpaceKey.home || key == DemoSpaceKey.zurich || key == DemoSpaceKey.milan;
     test('$name reads its suppliers in $currency', () async {
-      final workspace = workspaces.workspaces.firstWhere((w) => w.id == id);
+      final workspace = fixture.spaceWorkspaces.at(key).workspaces.firstWhere((w) => w.id == id);
       final container = ProviderContainer(
         overrides: [
           ...demoOverrides(fixture),
@@ -43,9 +44,10 @@ void main() {
           .quality(workspace.id, fromMonth: from, toMonth: to);
       expect(k.currency, currency);
       expect(k.reasons, isNot(contains('currency_mix')));
-      if (id == 'ws-2') {
-        // #3797 — Leipzig reads its own purchases and orders: it has bought
-        // and ordered nothing yet, and never reads the main space's.
+      if (!bills) {
+        // #3797 — Leipzig and the twin read their own purchases and orders:
+        // they have bought and ordered nothing yet, and never read the main
+        // space's.
         expect(k.costMinor, 0);
         expect(k.vendors, isEmpty);
         expect(k.deliveryOrders, 0);
@@ -81,6 +83,11 @@ void main() {
         k.deliveryOrders,
         reason: 'each order is in exactly one cohort',
       );
+      if (!city && key != DemoSpaceKey.home) {
+        // #3832 -- the trade cities order nothing yet: bills only.
+        expect(k.deliveryOrders, 0, reason: '$name sent no orders yet');
+        return;
+      }
       expect(k.deliveryOrders, greaterThan(0), reason: '$name sent orders');
       expect(
         k.deliveries.fold<int>(0, (s, d) => s + d.orders),

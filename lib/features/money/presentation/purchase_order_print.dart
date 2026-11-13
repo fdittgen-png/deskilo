@@ -19,6 +19,7 @@ import '../domain/invoice_report.dart';
 import '../domain/purchase_order.dart';
 import '../domain/purchase_order_report.dart';
 import '../providers/supplier_providers.dart';
+import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
 import 'report_actions.dart';
 import 'report_layout_actions.dart';
@@ -30,6 +31,8 @@ class PurchaseOrderPrint {
   final BuildContext context;
   final WidgetRef ref;
 
+  DocumentLocale get _locale => businessDocumentLocale(ref);
+
   /// The data and the rendered bands of [order] under [letterhead]; null
   /// once the screen is gone.
   Future<({Map<String, Object?> data, InvoiceReport rendered, String title})?>
@@ -38,14 +41,17 @@ class PurchaseOrderPrint {
     PurchaseOrder order,
     ({String name, String address}) letterhead,
   ) async {
-    final l10n = context.l10n;
     await readDocumentPolicies(ref); // #3742 — the template and rules, read
     final suppliers = await ref.read(suppliersProvider(workspaceId).future);
     if (!context.mounted) return null;
-    final locale = Localizations.localeOf(context).toString();
-    final money = moneyFormat(order.currency, locale: locale);
-    final day = DateFormat.yMMMd(locale);
-    final quantity = NumberFormat.decimalPattern(locale);
+    // #3850 — a supplier has no language: the order is written in the
+    // business's document language and its country's conventions, whoever
+    // prints it.
+    final locale = _locale;
+    final l10n = l10nForLanguage(locale.language);
+    final money = moneyFormat(order.currency, locale: locale.formatLocale);
+    final day = DateFormat.yMMMd(locale.language);
+    final quantity = NumberFormat.decimalPattern(locale.formatLocale);
     final data = purchaseOrderReportData(
       order,
       supplier: suppliers.where((s) => s.id == order.supplierId).firstOrNull,
@@ -68,6 +74,7 @@ class PurchaseOrderPrint {
         ref,
         docId: 'purchase_order',
         data: data,
+        language: locale.language,
       ),
       title: l10n.reportDocPurchaseOrderTitle(order.reference),
     );
@@ -77,13 +84,17 @@ class PurchaseOrderPrint {
     PurchaseOrder order,
     ({Map<String, Object?> data, InvoiceReport rendered, String title}) doc,
   ) async {
-    final pdf = await letterDocPdf(
-      context,
+    final pdf = await letterPdfOf(
       ref,
-      report: doc.rendered,
-      title: doc.title,
-      layoutXml: letterLayoutXml(ref, docId: 'purchase_order'),
-      data: doc.data,
+      (
+        report: doc.rendered,
+        title: doc.title,
+        layoutXml: letterLayoutXml(ref, docId: 'purchase_order'),
+        data: doc.data,
+        images: const {},
+      ),
+      pageLabel: l10nForLanguage(_locale.language).invoicePdfPage,
+      watermark: developmentMark(context, ref),
     );
     return (
       bytes: pdf.bytes,

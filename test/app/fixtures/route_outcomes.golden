@@ -1276,7 +1276,7 @@ owner on  /settings/colours -> /settings
 owner on  /settings/number-sequences -> /settings
 owner on  /settings/payment-terms -> (open)
 owner on  /settings/personal-info -> (open)
-owner on  /settings/public-page -> /profiles
+owner on  /settings/public-page -> (open)
 owner on  /settings/questions -> /settings
 owner on  /settings/roles-of-this-space -> /settings
 owner on  /settings/sites -> /settings
@@ -1421,7 +1421,7 @@ owner off /settings/colours -> /settings
 owner off /settings/number-sequences -> /settings
 owner off /settings/payment-terms -> /settings
 owner off /settings/personal-info -> /settings
-owner off /settings/public-page -> /profiles
+owner off /settings/public-page -> (open)
 owner off /settings/questions -> /settings
 owner off /settings/roles-of-this-space -> /settings
 owner off /settings/sites -> /settings

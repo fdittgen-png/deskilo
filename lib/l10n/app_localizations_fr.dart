@@ -1338,6 +1338,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get attentionConfirmDocumentLanguage =>
+      'Confirmer la langue des documents';
+
+  @override
   String attentionDecide(String subject) {
     return 'À décider : $subject';
   }
@@ -12084,6 +12088,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get financesCoverageNoDocuments => 'aucun document';
 
   @override
+  String get financesCoverageOlderSettled =>
+      'Les documents payés plus anciens ne sont pas listés ; tout ce qui reste à payer l\'est.';
+
+  @override
   String financesCoverageReading(String host) {
     return 'Lecture de $host…';
   }
@@ -14848,10 +14856,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceEmailHeading => 'Par e-mail';
-
-  @override
-  String get invoiceEmailNoLanguage =>
-      'La langue des documents du client n\'est pas connue : la facture n\'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la facture.';
 
   @override
   String invoiceEmailRefused(String reason) {
@@ -25777,10 +25781,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce client n\'a pas d\'adresse e-mail enregistrée';
 
   @override
-  String get reminderEmailNoLanguage =>
-      'La langue des documents du client n\'est pas connue : la relance n\'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la lettre.';
-
-  @override
   String get reminderEmailNoSender =>
       'L\'expéditeur e-mail de l\'entreprise n\'est pas encore configuré';
 
@@ -26883,10 +26883,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportInsertImage => 'Insérer une image';
-
-  @override
-  String get reportLanguageAmbiguous =>
-      'Ce pays a plusieurs langues — définissez d\'abord la langue de l\'espace dans les Réglages de l\'espace.';
 
   @override
   String get reportLayoutActive => 'Maquette active';
@@ -33714,6 +33710,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefCurrency => 'Devise (code ISO)';
 
   @override
+  String get taxRefCustomerLanguage =>
+      'Une facture peut être dans la langue de son client';
+
+  @override
   String get taxRefDomainAccountMap => 'Comptes et codes d\'export';
 
   @override
@@ -33721,6 +33721,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefDomainCountry => 'Pays (catalogue de création)';
+
+  @override
+  String get taxRefDomainDocumentLanguage => 'Langues des documents';
 
   @override
   String get taxRefDomainEuMember => 'Membres de l\'UE';
@@ -33816,11 +33819,19 @@ class AppLocalizationsFr extends AppLocalizations {
       'Indiquez des groupes fiscaux connus (standard, intermediate, reduced, super_reduced, zero, exempt, not_subject, deposit, excise), aucun dans les deux listes';
 
   @override
+  String get taxRefInvalidLanguages =>
+      'Des codes de langue à deux lettres séparés par des virgules, par exemple fr, de';
+
+  @override
   String get taxRefInvalidNumber => 'Saisissez un nombre de 0 à 99,999';
 
   @override
   String get taxRefInvalidRateComponents =>
       'Une taxe par ligne : régime, autorité, pourcentage ; leur somme doit égaler le taux combiné';
+
+  @override
+  String get taxRefInvalidRequiredLanguages =>
+      'Un code de région, un signe égal et un code de langue, par exemple QC=fr';
 
   @override
   String get taxRefInvalidState =>
@@ -33835,6 +33846,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefLabel => 'Libellé';
+
+  @override
+  String get taxRefLanguages =>
+      'Langues officielles (ISO 639-1, l\'usuelle en premier)';
 
   @override
   String get taxRefLoadFailed =>
@@ -33879,6 +33894,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get taxRefRequired => 'Obligatoire';
+
+  @override
+  String get taxRefRequiredLanguages =>
+      'Langue qu\'une région impose (QC=fr, séparées par des virgules)';
 
   @override
   String get taxRefRequiresTaxNumber => 'Numéro fiscal obligatoire';

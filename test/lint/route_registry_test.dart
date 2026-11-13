@@ -41,6 +41,9 @@ const Map<String, String> _structural = {
       'narrows assistant exposure; not behind mcpAccess (#1826)',
   '/settings/assistant-setup':
       'turns assistants on; not behind mcpAccess (#1827)',
+  '/settings/public-page':
+      'owner only: withdrawing the page switches publicListings off, and '
+      'its editor is where the next publication is prepared (#3870)',
 };
 
 /// The structural routes a deep link never stays on: the alias resolves

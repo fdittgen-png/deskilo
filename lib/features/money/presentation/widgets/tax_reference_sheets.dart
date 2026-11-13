@@ -20,6 +20,7 @@ import '../../domain/einvoice_mandates.dart';
 import 'tax_reference_component_fields.dart';
 import 'tax_reference_gate_fields.dart';
 import 'tax_reference_labels.dart';
+import 'tax_reference_language_fields.dart';
 import 'tax_reference_sales_fields.dart';
 
 export 'tax_reference_labels.dart';
@@ -46,15 +47,14 @@ class _VersionForm {
             AccountMapValue(:final account) => account,
             _ => '',
           },
-          'state': from?.value is SalesTaxValue
-              ? (from!.value as SalesTaxValue).state
-              : '',
+          'state': from?.value is SalesTaxValue ? (from!.value as SalesTaxValue).state : '',
           'components': switch (from?.value) {
             SalesTaxValue v => salesTaxComponentsText(v),
             RateComponentValue v => rateComponentsText(v),
             _ => '',
           },
           ...taxReferenceExtraTexts(from?.value),
+          ...documentLanguageTexts(from?.value),
           'tax_code': switch (from?.value) {
             AccountMapValue(:final taxCode) => taxCode,
             _ => '',
@@ -65,24 +65,16 @@ class _VersionForm {
             RateComponentValue(:final percent) => percentText(percent),
             _ => '',
           },
-          'reason': from?.value is RateValue
-              ? (from!.value as RateValue).exemptionReason
-              : '',
+          'reason': from?.value is RateValue ? (from!.value as RateValue).exemptionReason : '',
           'position': switch (from?.value) {
             RateValue(:final position) => '$position',
             GroupExampleValue(:final position) => '$position',
             CountryValue(:final position) => '$position',
             _ => '0',
           },
-          'regime': from?.value is ExemptionTextValue
-              ? (from!.value as ExemptionTextValue).regime
-              : '',
-          'text': from?.value is ExemptionTextValue
-              ? (from!.value as ExemptionTextValue).text
-              : '',
-          'pattern': from?.value is VatIdPatternValue
-              ? (from!.value as VatIdPatternValue).pattern
-              : '',
+          'regime': from?.value is ExemptionTextValue ? (from!.value as ExemptionTextValue).regime : '',
+          'text': from?.value is ExemptionTextValue ? (from!.value as ExemptionTextValue).text : '',
+          'pattern': from?.value is VatIdPatternValue ? (from!.value as VatIdPatternValue).pattern : '',
           'years': from?.value is RetentionValue ? '${(from!.value as RetentionValue).years}' : '',
           'cents': switch (from?.value) {
             ThresholdValue(:final cents) => '$cents',
@@ -99,9 +91,7 @@ class _VersionForm {
             MandateValue(:final from) => from,
             _ => '',
           },
-          'alias_of': from?.value is EuMemberValue
-              ? (from!.value as EuMemberValue).aliasOf
-              : '',
+          'alias_of': from?.value is EuMemberValue ? (from!.value as EuMemberValue).aliasOf : '',
           'note': switch (from?.value) {
             CatalogueNoteValue(:final text) => text,
             GroupExampleValue(:final text) => text,
@@ -137,6 +127,7 @@ class _VersionForm {
         'requires_tax_number': v is IssuingGateValue && v.requiresTaxNumber,
         'national_channel_required':
             v is IssuingGateValue && v.nationalChannelRequired,
+        'customer_language': v is DocumentLanguageValue && v.customerLanguage,
       };
 
   List<String> _groupList(String k) => [
@@ -162,6 +153,7 @@ class _VersionForm {
   TaxValue _pairedValue() => switch (domain) {
         TaxDomain.mandate => MandateValue(duty: choice['duty']!, from: fields.text('from')),
         TaxDomain.country => countryValueOf(fields, choice),
+        TaxDomain.documentLanguage => documentLanguageValueOf(fields, flag),
         _ => RetentionValue(years: int.tryParse(fields.text('years')) ?? 0, from: choice['start']!),
       };
 
@@ -186,7 +178,7 @@ class _VersionForm {
             cashOption: flag['cash_option']!,
             cashBackstop: choice['cash_backstop']!,
           ),
-        TaxDomain.mandate || TaxDomain.retention || TaxDomain.country => _pairedValue(),
+        TaxDomain.mandate || TaxDomain.retention || TaxDomain.country || TaxDomain.documentLanguage => _pairedValue(),
         TaxDomain.issuingGate => IssuingGateValue(
             supported: flag['supported']!,
             requiresTaxNumber: flag['requires_tax_number']!,
@@ -268,6 +260,7 @@ class _VersionForm {
       if (domain == TaxDomain.retention && (int.tryParse(fields.text('years')) ?? 0) < 1)
         'years': l10n.taxRefInvalidNumber,
       if (domain == TaxDomain.country) ...countryFieldErrors(l10n, fields),
+      if (domain == TaxDomain.documentLanguage) ...documentLanguageFieldErrors(l10n, fields),
       if (domain == TaxDomain.mandate &&
           !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
         'from': l10n.taxRefInvalidDate,
@@ -394,6 +387,8 @@ class _VersionForm {
             _pick('banking_scheme', l10n.taxRefBankingScheme, bankingSchemeNames),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
           ],
+        TaxDomain.documentLanguage => [_text('languages', l10n.taxRefLanguages),
+            _switch('customer_language', l10n.taxRefCustomerLanguage, refresh), _text('required_languages', l10n.taxRefRequiredLanguages)],
         TaxDomain.rateComponent => [
             _text('percent', l10n.taxRefPercent, type: TextInputType.number),
             Padding(
