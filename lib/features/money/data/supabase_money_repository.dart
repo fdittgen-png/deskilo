@@ -11,6 +11,7 @@ import '../domain/document_numbering.dart';
 import '../domain/dunning.dart';
 import '../domain/dunning_repository.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/einvoice_test_document.dart';
 import '../domain/einvoice_transmissions.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/expense_repository.dart';
@@ -202,6 +203,8 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<void> setEInvoiceCredentials(String workspaceId, Map<String, String> config) => _eInvoices.setEInvoiceCredentials(workspaceId, config);
   @override Future<void> clearEInvoiceCredentials(String workspaceId) => _eInvoices.clearEInvoiceCredentials(workspaceId);
   @override Future<EInvoiceProviderStatus> fetchEInvoiceStatus(String workspaceId) => _eInvoices.fetchEInvoiceStatus(workspaceId);
+  @override Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) => _eInvoices.fetchEInvoiceTest(workspaceId);
+  @override Future<EInvoiceTestSent> sendEInvoiceTest({required String workspaceId, required String fileName, required List<int> bytes}) => _eInvoices.sendEInvoiceTest(workspaceId: workspaceId, fileName: fileName, bytes: bytes);
   @override Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) => _payments.fetchPaymentConfig(workspaceId);
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _payments.createPaymentOrder(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
   @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => _payments.fetchPaymentGatewayStatus(workspaceId);

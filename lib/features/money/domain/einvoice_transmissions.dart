@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'einvoice_gateway.dart';
+import 'einvoice_test_document.dart';
 
 /// #2591 — sending an issued invoice through an e-invoicing channel, its
 /// receipts, and the owner's channel credentials.
@@ -68,4 +69,17 @@ abstract interface class EInvoiceTransmissions {
 
   /// Owner-only: forget the platform entirely.
   Future<void> clearEInvoiceCredentials(String workspaceId);
+
+  /// #3883 — the latest sandbox test document of the national channel, for
+  /// whoever manages the integrations; [EInvoiceTestState.unavailable] when
+  /// the function is not deployed.
+  Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId);
+
+  /// #3883 — sends a sandbox test document the app built (no invoice): the
+  /// function sends it to the channel's sandbox only, one at a time.
+  Future<EInvoiceTestSent> sendEInvoiceTest({
+    required String workspaceId,
+    required String fileName,
+    required List<int> bytes,
+  });
 }

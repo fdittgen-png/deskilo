@@ -37,6 +37,8 @@ export interface TransmissionRow {
   receipt: Record<string, unknown>;
   /** #3883 -- 'invoice', or 'test' for a sandbox test document. */
   kind?: string;
+  /** #3883 -- the platform's verdict on the document, as stored. */
+  verdict?: Record<string, unknown>;
 }
 
 /** #3883 -- a sandbox test document: no invoice, the sandbox and the
@@ -128,6 +130,8 @@ export interface TransmissionStore {
   expire(workspaceId: string): Promise<void>;
   prepare(input: PrepareInput): Promise<PrepareResult>;
   prepareTest(input: PrepareTestInput): Promise<PrepareTestResult>;
+  /** #3883 -- the workspace's latest sandbox test document, if any. */
+  latestTest(workspaceId: string): Promise<TransmissionRow | null>;
   artifact(id: string): Promise<Artifact | null>;
   claim(id: string, owner: string, windowSeconds: number): Promise<ClaimResult>;
   record(
@@ -271,6 +275,15 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
         p_bytes: toHex(i.bytes),
         p_declared: i.declared,
       });
+    },
+    async latestTest(workspaceId) {
+      const { data } = await admin.from("invoice_transmissions")
+        .select(
+          "id, workspace_id, provider, phase, external_id, detail, " +
+            "environment, destination, format, receipt, kind, verdict",
+        ).eq("workspace_id", workspaceId).eq("kind", "test")
+        .order("sent_at", { ascending: false }).limit(1).maybeSingle();
+      return (data as TransmissionRow | null) ?? null;
     },
     prepareTest(i) {
       return rpc<PrepareTestResult>("prepare_einvoice_test_v1", {

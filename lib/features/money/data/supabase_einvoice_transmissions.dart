@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/einvoice_test_document.dart';
 import '../domain/einvoice_transmissions.dart';
 import '../domain/payment_provider.dart';
 import '../domain/renderer_declaration.dart';
@@ -235,6 +236,49 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
     await _client.rpc<void>(
       'clear_einvoice_credentials',
       params: {'p_workspace_id': workspaceId},
+    );
+  }
+
+  @override
+  Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'action': 'test_state',
+    });
+    return data == null
+        ? EInvoiceTestState.unavailable
+        : EInvoiceTestState.fromWire(data);
+  }
+
+  @override
+  Future<EInvoiceTestSent> sendEInvoiceTest({
+    required String workspaceId,
+    required String fileName,
+    required List<int> bytes,
+  }) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'action': 'test',
+      'file_name': fileName,
+      'mime_type': 'application/xml',
+      'format': 'fatturaPa',
+      'content_base64': base64Encode(bytes),
+    });
+    if (data == null) {
+      return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.unavailable);
+    }
+    final error = data['error'] as String?;
+    final phase = data['phase'] as String?;
+    return EInvoiceTestSent(
+      refusal: error != null
+          ? EInvoiceTestRefusal.fromWire(error)
+          : phase == 'rejected' || phase == 'failed'
+          ? EInvoiceTestRefusal.failed
+          : EInvoiceTestRefusal.none,
+      missing: [
+        for (final field in (data['missing'] as List? ?? const []))
+          '$field',
+      ],
     );
   }
 

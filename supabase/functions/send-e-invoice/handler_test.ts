@@ -154,6 +154,12 @@ class FakeStore implements TransmissionStore {
     });
     return Promise.resolve({ outcome: "prepared", id, phase: "prepared" });
   }
+  latestTest(workspaceId: string) {
+    const tests = [...this.rows.values()].filter((r) =>
+      r.kind === "test" && r.workspace_id === workspaceId
+    );
+    return Promise.resolve(tests.at(-1) ?? null);
+  }
   /** 0762: one test at a time; a rejected or failed one is sent again. */
   prepareTest(i: PrepareTestInput): Promise<PrepareTestResult> {
     const pending = [...this.rows.values()].find((r) =>
@@ -1520,4 +1526,21 @@ Deno.test("#3883 a test's verdict is read from the documented sandbox only", asy
   assertEquals(asked.status, 409);
   assertEquals(asked.body.error, "sandbox_not_documented");
   assertEquals(test.verdict, {});
+});
+
+Deno.test("#3883 the latest test's state, for whoever manages the integrations", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  const none = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
+  assertEquals(none.body, { available: true, test: null });
+  await call(s, p.fetchImpl, testBody);
+  const test = [...s.rows.values()][0];
+  const waiting = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
+  assertEquals(waiting.body.test, { transmission_id: test.id, phase: "accepted", document_status: "unknown" });
+  test.verdict = { status: "accepted" };
+  const accepted = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
+  assertEquals(accepted.body.test.document_status, "accepted");
+  s.grants.clear();
+  const refused = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
+  assertEquals(refused.status, 403);
 });

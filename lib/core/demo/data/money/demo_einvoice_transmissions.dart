@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
+import 'package:deskilo/features/money/domain/einvoice_test_document.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
 
 import '../money_repository.dart';
@@ -139,4 +140,34 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
   @override
   Future<void> clearEInvoiceCredentials(String workspaceId) async =>
       _m.einvoiceConfig.clear();
+
+  /// #3883 — offered where the configured channel is the SdI, the one whose
+  /// verdict opens an issuing gate; the demo's test awaits until a test
+  /// settles it.
+  @override
+  Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) async =>
+      _m.einvoiceGateway.provider == 'it_sdi'
+      ? EInvoiceTestState(
+          available: true,
+          transmissionId: _m.einvoiceTestId,
+          verdict: _m.einvoiceTestVerdict,
+        )
+      : EInvoiceTestState.unavailable;
+
+  @override
+  Future<EInvoiceTestSent> sendEInvoiceTest({
+    required String workspaceId,
+    required String fileName,
+    required List<int> bytes,
+  }) async {
+    if (_m.einvoiceGateway.provider != 'it_sdi') {
+      return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.unavailable);
+    }
+    if (_m.einvoiceTestVerdict == EInvoiceTestVerdict.awaiting) {
+      return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.pending);
+    }
+    _m.einvoiceTestId = 'demo-test-${++_m.einvoiceTests}';
+    _m.einvoiceTestVerdict = EInvoiceTestVerdict.awaiting;
+    return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.none);
+  }
 }
