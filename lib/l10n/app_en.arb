@@ -7344,6 +7344,123 @@
   "@calendarDayEmpty": {
     "description": "Shown as a text in calendar hub screen (calendar), and 1 other place."
   },
+  "calendarDeskAll": "All",
+  "@calendarDeskAll": {
+    "description": "#3626 The desk calendar's filter choice that keeps everything (every level, kind, member or state)"
+  },
+  "calendarDeskBooking": "Booking details",
+  "@calendarDeskBooking": {
+    "description": "#3626 Title of the pane that shows one booking beside the desk calendar"
+  },
+  "calendarDeskBookingActions": "Change, cancel or show on plan",
+  "@calendarDeskBookingActions": {
+    "description": "#3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan"
+  },
+  "calendarDeskColumnFrom": "From",
+  "@calendarDeskColumnFrom": {
+    "description": "#3626 Column title of the bookings table: when a booking starts"
+  },
+  "calendarDeskColumnMember": "Member",
+  "@calendarDeskColumnMember": {
+    "description": "#3626 Column and filter title: the member a booking is for"
+  },
+  "calendarDeskColumnPlace": "Place",
+  "@calendarDeskColumnPlace": {
+    "description": "#3626 Column and field title: the place a booking is on"
+  },
+  "calendarDeskColumnState": "State",
+  "@calendarDeskColumnState": {
+    "description": "#3626 Column and filter title: where a booking stands (reserved, checked in, completed...)"
+  },
+  "calendarDeskColumnTo": "To",
+  "@calendarDeskColumnTo": {
+    "description": "#3626 Column title of the bookings table: when a booking ends"
+  },
+  "calendarDeskExport": "Export",
+  "@calendarDeskExport": {
+    "description": "#3626 Button of the desk calendar: export the bookings of the period as a file"
+  },
+  "calendarDeskFilterKind": "Kind of place",
+  "@calendarDeskFilterKind": {
+    "description": "#3626 The desk calendar's filter by kind of place (seat, meeting room, parking slot)"
+  },
+  "calendarDeskFilterLevel": "Level",
+  "@calendarDeskFilterLevel": {
+    "description": "#3626 The desk calendar's filter by level"
+  },
+  "calendarDeskFreeDay": "{place}: free on {day}, new booking",
+  "@calendarDeskFreeDay": {
+    "description": "#3626 Accessibility label of a free day cell of a place in the week grid: a click opens New booking. Placeholders: {place}, {day} (a date)",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarDeskFreeSlot": "{place}: free from {from} to {to}, new booking",
+  "@calendarDeskFreeSlot": {
+    "description": "#3626 Accessibility label of a free stretch of a place in the day grid: a click opens New booking. Placeholders: {place}, {from} and {to} (times)",
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarDeskMissingHour": "The clocks go forward: {from} to {to} does not exist on this day",
+  "@calendarDeskMissingHour": {
+    "description": "#3626 Accessibility label of the mark where the day grid skips an hour that does not exist (the clocks went forward). Placeholders: {from} and {to} (times)",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarDeskModeTable": "All bookings",
+  "@calendarDeskModeTable": {
+    "description": "#3626 Choice of the desk calendar: all bookings of the period as a table"
+  },
+  "calendarDeskMore": "{count, plural, one{{count} more} other{{count} more}}",
+  "@calendarDeskMore": {
+    "description": "#3626 A month cell's line when it cannot list every booking of the day. Placeholders: {count} (int), the bookings left out",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "calendarDeskNew": "New booking",
+  "@calendarDeskNew": {
+    "description": "#3626 The desk calendar's button that opens New booking beside the grid"
+  },
+  "calendarDeskRepeatedHour": "{time}, second time: the clocks went back",
+  "@calendarDeskRepeatedHour": {
+    "description": "#3626 Accessibility label of an hour mark of the day grid that is the second time the clock shows that hour (the clocks went back). Placeholders: {time}",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarDeskZoomIn": "Zoom in",
+  "@calendarDeskZoomIn": {
+    "description": "#3626 Tooltip of the button that widens the hours of the day grid"
+  },
+  "calendarDeskZoomOut": "Zoom out",
+  "@calendarDeskZoomOut": {
+    "description": "#3626 Tooltip of the button that narrows the hours of the day grid"
+  },
   "calendarDueTitle": "Payment due · {number}",
   "@calendarDueTitle": {
     "description": "Shown as a text in calendar item row (calendar). Placeholders: {number} (String).",
@@ -39648,9 +39765,17 @@
   "@shortcutNew": {
     "description": "#3610 a line of the keys overlay: what the key does"
   },
+  "shortcutNextPeriod": "Next day, week or month",
+  "@shortcutNextPeriod": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
   "shortcutOpenCalendar": "Open a date field's calendar",
   "@shortcutOpenCalendar": {
     "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutPreviousPeriod": "Previous day, week or month",
+  "@shortcutPreviousPeriod": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
   },
   "shortcutPrint": "This page's document",
   "@shortcutPrint": {
@@ -39672,9 +39797,25 @@
   "@shortcutSubmit": {
     "description": "#3610 a line of the keys overlay: what the key does"
   },
+  "shortcutToday": "Go to today",
+  "@shortcutToday": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
   "shortcutUndo": "Undo",
   "@shortcutUndo": {
     "description": "#3610 a line of the keys overlay: what the key does"
+  },
+  "shortcutViewDay": "Show a day",
+  "@shortcutViewDay": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutViewMonth": "Show a month",
+  "@shortcutViewMonth": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutViewWeek": "Show a week",
+  "@shortcutViewWeek": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
   },
   "siteCity": "City",
   "@siteCity": {

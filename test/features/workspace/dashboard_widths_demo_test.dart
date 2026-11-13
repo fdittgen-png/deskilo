@@ -177,9 +177,14 @@ double _gridWidth(double window, double padding) {
 /// Demo's month (said "Not available", never 0), each with that rule's
 /// reason: no confirmed book values tile the month (`kpi_costs_summary`,
 /// 0532), or a share of nothing (no invoice of the month to share among
-/// customers, no bill dated by its supplier, no order delivered yet). They
-/// are answers, not failures: the analysis page shows each as a figure.
+/// customers, no bill dated by its supplier, no order delivered yet), or
+/// payables in more than one currency, which the rule never sums (0527,
+/// `currency_mix`: the space holds a licence bill in Swiss francs, #3832).
+/// They are answers, not failures: the analysis page shows each as a figure.
 const _overviewUnknown = {
+  'purchases.ap_outstanding': 'currency_mix',
+  'purchases.member_reimbursements_due': 'currency_mix',
+  'cash.recorded_outflows': 'currency_mix',
   'assets.book_depreciation': 'book_coverage_incomplete',
   'finance.contribution_after_depreciation': 'book_coverage_incomplete',
   'customers.concentration': 'nothing_to_share',

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
-import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
@@ -224,6 +223,15 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         money: fixture.newYork.money,
         events: fixture.newYork.events,
       ),
+      // #3832 — the trade cities' guides read their own stores.
+      for (final city in [fixture.zurich, fixture.milan])
+        city.city.id: DemoSetupSources(
+          space: city.workspaces,
+          plan: city.floorPlan,
+          reservations: city.reservations,
+          money: city.money,
+          events: city.events,
+        ),
       // #3302 — the twin's guide reads its own (copied) plan and its own,
       // empty activity: what a development side holds before a rehearsal.
       demoTwinSpaceId: DemoSetupSources(
@@ -340,7 +348,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           source.isEmpty || source == kDemoServerOrigin
               ? fixture.messenger
               : FakeMessengerRepository()),
-      accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), // #2327; no connected host in Demo
+      accountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), // #2327; no connected host in Demo
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
