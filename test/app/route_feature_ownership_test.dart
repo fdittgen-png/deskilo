@@ -30,6 +30,7 @@ const _owned = <(String, WorkspaceFeature)>[
   ('/money/settlement', WorkspaceFeature.invoiceSettlement),
   ('/payment-methods', WorkspaceFeature.moneyTab),
   ('/billing', WorkspaceFeature.moneyTab),
+  ('/accounting/connected', WorkspaceFeature.accountingConnectors),
 ];
 
 Map<String, dynamic> _on(WorkspaceFeature owner) => {

@@ -250,6 +250,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingSignInBack => 'Back to Accounting';
+
+  @override
+  String get accountingSignInCompleting => 'Completing the sign-in…';
+
+  @override
+  String get accountingSignInConnected =>
+      'The connection is made. Its state is shown in Accounting.';
+
+  @override
+  String get accountingSignInExpired =>
+      'This sign-in link has expired or was already used. Start again from Accounting.';
+
+  @override
+  String get accountingSignInFailed =>
+      'The sign-in was not completed. The reason is shown on the connection in Accounting.';
+
+  @override
+  String get accountingSignInNotYours =>
+      'This sign-in was started by someone else. Start again from Accounting.';
+
+  @override
+  String get accountingSignInRefused =>
+      'You may not manage this connection, so the sign-in was not completed.';
+
+  @override
   String get accountingSourceRefused =>
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 

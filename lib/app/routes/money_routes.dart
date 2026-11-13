@@ -7,10 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/list_detail_route.dart';
+import '../../features/money/application/arrived_accounting_sign_in.dart';
+import '../../features/money/domain/accounting_sign_in_return.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
 import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
 import '../../features/money/presentation/screens/accounting_exports_screen.dart';
+import '../../features/money/presentation/screens/accounting_sign_in_return_screen.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -327,6 +330,7 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const AccountingHubScreen(),
     ),
+    _accountingSignInRoute(env),
     // #3616 — the files handed to the accountant, as records.
     GoRoute(
       path: '/money/accounting/exports',
@@ -453,4 +457,26 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
           MyFinancesScreen(workspaceId: state.uri.queryParameters['workspace']),
     ),
   ];
+}
+
+/// #3906 — an accounting target's sign-in, completed by the signed-in person;
+/// the router took its code and state out of the address. While a return
+/// waits to be completed the page stays — right after a sign-in the switches
+/// may still be the defaults — and the server decides switch and right on
+/// completion; with none waiting the guard applies.
+GoRoute _accountingSignInRoute(RouteEnv env) {
+  final guard = env.guard(
+    const RouteAccess(
+      features: [WorkspaceFeature.accountingConnectors],
+      to: '/money/accounting',
+    ),
+  );
+  return GoRoute(
+    path: accountingSignInReturnPath,
+    redirect: (context, state) =>
+        env.ref.read(arrivedAccountingSignInProvider).holds
+            ? null
+            : guard(context, state),
+    builder: (context, state) => const AccountingSignInReturnScreen(),
+  );
 }

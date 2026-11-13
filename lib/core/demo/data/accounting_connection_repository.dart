@@ -209,6 +209,17 @@ class FakeAccountingConnectionRepository
     String? connectionId,
   }) async => const SignInNotConfigured();
 
+  /// #3906 — how a completed sign-in ends here (tests set it), and the
+  /// returns asked to complete.
+  SignInCompletion completion = SignInCompletion.connected;
+  final List<SignInReturn> completed = [];
+
+  @override
+  Future<SignInCompletion> completeSignIn(SignInReturn back) async {
+    completed.add(back);
+    return completion;
+  }
+
   @override
   Future<void> refresh(String connectionId) async {
     _index(connectionId);
