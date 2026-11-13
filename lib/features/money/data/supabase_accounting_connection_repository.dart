@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/accounting_delivery_run.dart';
 import '../domain/accounting_target.dart';
@@ -163,6 +164,41 @@ class SupabaseAccountingConnectionRepository
     } on FunctionException catch (e, st) {
       if (e.status == _notConfigured) return const SignInNotConfigured();
       Error.throwWithStackTrace(e, st);
+    }
+  }
+
+  /// #3906 — the code and the state go to the function only; a refusal is
+  /// read from its status and error key, never from the request.
+  @override
+  Future<SignInCompletion> completeSignIn(SignInReturn back) async {
+    try {
+      await _client.functions.invoke(
+        'accounting-connect',
+        body: {
+          'action': 'complete',
+          'state': back.state,
+          'code': back.code,
+          if (back.error.isNotEmpty) 'error': back.error,
+          if (back.tenant.isNotEmpty) 'tenant': back.tenant,
+        },
+      );
+      return SignInCompletion.connected;
+    } on FunctionException catch (e, st) {
+      final key = e.details is Map ? '${(e.details as Map)['error']}' : '';
+      // The status and the function's error key only: the request carried
+      // a one-time credential.
+      TraceLogger.instance.warn(
+        'money',
+        'accounting sign-in not completed: ${e.status} $key\n$st',
+      );
+      return switch (e.status) {
+        403 when key == 'started_by_someone_else' =>
+          SignInCompletion.startedBySomeoneElse,
+        403 => SignInCompletion.refused,
+        400 when key == 'state_invalid' || key == 'state_expired' =>
+          SignInCompletion.expired,
+        _ => SignInCompletion.failed,
+      };
     }
   }
 

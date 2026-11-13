@@ -168,6 +168,8 @@ function world(opts: {
     ...opts.env,
   };
   const deps: Deps = {
+    userOf: (authorization: string) =>
+      Promise.resolve(authorization === "Bearer someone-else" ? "user-2" : "user-1"),
     caller: () => ({
       ...answer("caller"),
       from: () => ({

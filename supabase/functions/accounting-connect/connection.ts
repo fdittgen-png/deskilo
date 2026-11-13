@@ -57,6 +57,9 @@ export type Deps = {
   caller: (authorization: string) => CallerDb;
   /** The service role: Vault reads and writes, and the delivery log. */
   service: () => Db;
+  /** #3906 — the user a bearer token belongs to, as Auth verifies it, or
+   * null when it does not. */
+  userOf: (authorization: string) => Promise<string | null>;
   env: (name: string) => string | undefined;
   /** Where the target sends the person back: this function's URL. */
   redirectUri: string;
