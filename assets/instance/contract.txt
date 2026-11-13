@@ -1310,6 +1310,7 @@ constraint profiles.profiles_time_zone_mode_check CHECK ((time_zone_mode = ANY (
 constraint profiles.profiles_vat_id_check CHECK ((char_length(vat_id) <= 20))
 constraint profiles.profiles_week_start_check CHECK ((week_start = ANY (ARRAY['locale'::text, 'monday'::text, 'sunday'::text, 'saturday'::text])))
 constraint profiles.profiles_whatsapp_check CHECK (((whatsapp = ''::text) OR (whatsapp ~ '^\+[0-9]{6,19}$'::text)))
+constraint profiles.profiles_whatsapp_typed_check CHECK ((char_length(whatsapp_typed) <= 40))
 constraint profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint provenance_envelopes.provenance_envelopes_pkey PRIMARY KEY (result_kind, result_id)
 constraint provenance_envelopes.provenance_envelopes_result_kind_check CHECK ((result_kind = ANY (ARRAY['invoice'::text, 'book_export'::text, 'file_delivery'::text, 'accounting_delivery'::text, 'transmission'::text])))
