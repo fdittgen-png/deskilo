@@ -6879,13 +6879,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get customerStatementBalanceOwed => 'Balance in your favour';
 
   @override
+  String get customerStatementClosing => 'Closing balance';
+
+  @override
+  String customerStatementDatedApart(String day) {
+    return 'dated $day';
+  }
+
+  @override
   String customerStatementDue(String date) {
     return 'due $date';
   }
 
   @override
+  String get customerStatementMoveAllocated => 'Payment allocated';
+
+  @override
+  String get customerStatementMoveApplied => 'Credit applied to an invoice';
+
+  @override
+  String get customerStatementMoveCredit => 'Credit';
+
+  @override
+  String get customerStatementMoveCreditNote => 'Credit note';
+
+  @override
+  String get customerStatementMoveFreed => 'Payment released';
+
+  @override
+  String get customerStatementMoveMoved => 'Credit moved to another account';
+
+  @override
+  String get customerStatementMovePaid => 'Paid';
+
+  @override
+  String get customerStatementMovePayment => 'Payment received';
+
+  @override
+  String get customerStatementMoveReopened => 'Open again';
+
+  @override
+  String get customerStatementMoveSettled => 'Taken over by a later invoice';
+
+  @override
+  String get customerStatementMoveVoided => 'Cancelled';
+
+  @override
+  String get customerStatementMoveWrittenOff => 'Remainder written off';
+
+  @override
+  String get customerStatementNoMovement =>
+      'No movement in this period: the balance stayed the same.';
+
+  @override
   String get customerStatementNothingOpen =>
       'Nothing is open for this customer: no statement to print.';
+
+  @override
+  String get customerStatementOpening => 'Opening balance';
 
   @override
   String get customerStatementOwedToYou => 'Owed to you';
@@ -6896,8 +6947,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String customerStatementPeriodRange(String from, String to) {
+    return 'From $from to $to';
+  }
+
+  @override
   String get customerStatementPickCurrency =>
       'The statement in which currency?';
+
+  @override
+  String customerStatementReconstructed(String day) {
+    return 'Balances before $day are reconstructed from today\'s records.';
+  }
 
   @override
   String get customerStatementStillDue => 'Still due';
@@ -25667,6 +25728,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportDocCustomerStatement => 'Statement of account';
+
+  @override
+  String get reportDocCustomerStatementPeriod => 'Statement for a period';
 
   @override
   String get reportDocGeneralLedger => 'General ledger';

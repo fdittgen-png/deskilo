@@ -1,0 +1,22 @@
+{
+  "@@locale": "es",
+  "reportDocCustomerStatementPeriod": "Extracto de un periodo",
+  "customerStatementPeriodRange": "Del {from} al {to}",
+  "customerStatementOpening": "Saldo inicial",
+  "customerStatementClosing": "Saldo final",
+  "customerStatementNoMovement": "Ningún movimiento en este periodo: el saldo no ha cambiado.",
+  "customerStatementReconstructed": "Los saldos anteriores al {day} se reconstruyen a partir de los registros actuales.",
+  "customerStatementDatedApart": "con fecha {day}",
+  "customerStatementMoveCreditNote": "Nota de abono",
+  "customerStatementMoveVoided": "Anulada",
+  "customerStatementMoveSettled": "Recogida en una factura posterior",
+  "customerStatementMoveReopened": "Abierta de nuevo",
+  "customerStatementMoveWrittenOff": "Resto cancelado",
+  "customerStatementMovePaid": "Pagada",
+  "customerStatementMovePayment": "Pago recibido",
+  "customerStatementMoveCredit": "Crédito",
+  "customerStatementMoveMoved": "Crédito trasladado a otra cuenta",
+  "customerStatementMoveApplied": "Crédito aplicado a una factura",
+  "customerStatementMoveFreed": "Pago liberado",
+  "customerStatementMoveAllocated": "Pago imputado"
+}

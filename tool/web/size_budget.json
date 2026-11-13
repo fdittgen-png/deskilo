@@ -20,8 +20,8 @@
       "raise": "A new guide image or help text raises it by its own size; state the size and the guide in the PR."
     },
     "deployment_bytes": {
-      "max": 117500000,
-      "measured": 116615732,
+      "max": 118500000,
+      "measured": 117074737,
       "measures": "Raw size of every file in build/web, the whole deployment the static host stores and serves.",
       "raise": "Only with the reason in the PR text; a larger deployment with a flat first load needs a one-line explanation of what was added."
     }

@@ -4307,6 +4307,8 @@
   "@customerStatementBalanceOwed": {
     "description": "#3673 customer statement: customerStatementBalanceOwed"
   },
+  "customerStatementClosing": "Saldo finale",
+  "customerStatementDatedApart": "del {day}",
   "customerStatementDue": "scadenza {date}",
   "@customerStatementDue": {
     "description": "#3673 customer statement: customerStatementDue",
@@ -4316,10 +4318,24 @@
       }
     }
   },
+  "customerStatementMoveAllocated": "Pagamento imputato",
+  "customerStatementMoveApplied": "Credito imputato a una fattura",
+  "customerStatementMoveCredit": "Credito",
+  "customerStatementMoveCreditNote": "Nota di credito",
+  "customerStatementMoveFreed": "Pagamento liberato",
+  "customerStatementMoveMoved": "Credito trasferito su un altro conto",
+  "customerStatementMovePaid": "Pagata",
+  "customerStatementMovePayment": "Pagamento ricevuto",
+  "customerStatementMoveReopened": "Di nuovo aperta",
+  "customerStatementMoveSettled": "Ripresa in una fattura successiva",
+  "customerStatementMoveVoided": "Annullata",
+  "customerStatementMoveWrittenOff": "Residuo stralciato",
+  "customerStatementNoMovement": "Nessun movimento in questo periodo: il saldo è rimasto lo stesso.",
   "customerStatementNothingOpen": "Non c'è nulla di aperto per questo cliente: nessun estratto conto da stampare.",
   "@customerStatementNothingOpen": {
     "description": "#3673 customer statement: customerStatementNothingOpen"
   },
+  "customerStatementOpening": "Saldo iniziale",
   "customerStatementOwedToYou": "A Suo favore",
   "@customerStatementOwedToYou": {
     "description": "#3673 customer statement: customerStatementOwedToYou"
@@ -4333,10 +4349,12 @@
       }
     }
   },
+  "customerStatementPeriodRange": "Dal {from} al {to}",
   "customerStatementPickCurrency": "L'estratto conto in quale valuta?",
   "@customerStatementPickCurrency": {
     "description": "#3673 customer statement: customerStatementPickCurrency"
   },
+  "customerStatementReconstructed": "I saldi precedenti al {day} sono ricostruiti dalle registrazioni attuali.",
   "customerStatementStillDue": "Ancora dovuto",
   "@customerStatementStillDue": {
     "description": "#3673 customer statement: customerStatementStillDue"
@@ -15786,6 +15804,7 @@
   "@reportDocCustomerStatement": {
     "description": "#3673 customer statement: reportDocCustomerStatement"
   },
+  "reportDocCustomerStatementPeriod": "Estratto conto di un periodo",
   "reportDocGeneralLedger": "Libro mastro",
   "reportDocJournals": "Giornali",
   "reportDocPayments": "Report dei pagamenti",

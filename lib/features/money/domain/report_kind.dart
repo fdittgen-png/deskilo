@@ -104,6 +104,8 @@ const List<ReportKind> fixedReportKinds = [
   ReportKind(id: 'purchase_order', slot: ReportDocSlot('purchase_order')),
   // #3673 — a customer's open items as of a date, one currency each.
   ReportKind(id: 'customer_statement', slot: ReportDocSlot('customer_statement')),
+  // #3839 — a customer's statement for a period, one currency each.
+  ReportKind(id: 'customer_statement_period', slot: ReportDocSlot('customer_statement_period')),
   ReportKind(id: 'badges', slot: ReportDocSlot('badges')),
   ReportKind(id: 'space_codes', slot: ReportDocSlot('space_codes')),
 ];
