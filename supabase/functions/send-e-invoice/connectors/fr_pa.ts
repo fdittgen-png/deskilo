@@ -18,6 +18,7 @@ import {
   ConnectorDocument,
   Fetch,
   join,
+  noVerdictYet,
   parseJson,
   refused,
   Submission,
@@ -107,9 +108,11 @@ export async function statusFrPa(
     },
   );
   if (!res.ok) return refused(res);
+  // #3881 -- the flow's outcome fields are not named from a real platform's
+  // answer yet: a readable answer is stored, and is no verdict.
   const text = await res.text();
   const body = parseJson(text);
-  return accepted(flowId, text, {
+  return noVerdictYet(flowId, text, {
     flowId,
     flowStatus: body.flowStatus ?? body.status ?? "",
     lifecycle: body.acknowledgement ?? body.lifecycle ?? null,

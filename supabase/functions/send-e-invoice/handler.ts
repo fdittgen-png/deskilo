@@ -23,6 +23,8 @@ import {
   status as askStatus,
   type Submission,
   submit,
+  SANDBOX,
+  takesTestDocument,
 } from "./connectors.ts";
 import { clientDetail, safeFetch } from "./connectors/safe_fetch.ts";
 import type { Phase, TransmissionStore } from "./store.ts";
@@ -230,7 +232,15 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   // permission matrix: from the base role or a role of the space).
   const mayIssue = !!me && me.status === "active" &&
     (me.is_owner || await store.hasPermission(me.id, "issueInvoices"));
-  if (!me || !mayIssue) {
+  // #3883 -- a sandbox test document issues nothing: it is sent, and asked
+  // about, by whoever manages the integrations (the credentials' right).
+  const testing = payload.action === "test" || payload.action === "status";
+  const mayManage = testing && !!me && me.status === "active" &&
+    (me.is_owner || await store.hasPermission(me.id, "manageIntegrations"));
+  if (!me || (!mayIssue && !mayManage)) {
+    return json({ error: "not allowed to issue invoices in this workspace" }, 403);
+  }
+  if (payload.action !== "test" && payload.action !== "status" && !mayIssue) {
     return json({ error: "not allowed to issue invoices in this workspace" }, 403);
   }
 
@@ -307,11 +317,26 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     console.error("send-e-invoice: expiry sweep failed", error);
   }
 
+  // ── #3883: a sandbox test document of the national channel ─────────
+  if (payload.action === "test") {
+    return await sendTestDocument(
+      store,
+      fetchImpl,
+      payload,
+      { workspaceId, userId, mayManage, credentials },
+    );
+  }
+
   // ── what became of an earlier submission ────────────────────────────
   if (payload.action === "status") {
     const sent = await store.transmission(payload.transmission_id ?? "");
     if (!sent || sent.workspace_id !== workspaceId) {
       return json({ error: "unknown transmission" }, 404);
+    }
+    // #3883 -- whoever manages the integrations asks about a test document
+    // only; an invoice's transmission is the issuer's.
+    if (!mayIssue && sent.kind !== "test") {
+      return json({ error: "not allowed to issue invoices in this workspace" }, 403);
     }
     // Only a recorded upload can be asked about, and never by a resend.
     if (
@@ -331,6 +356,17 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       fullCfg,
       sent.destination as Destination,
     );
+    // #3883 -- a test's verdict opens the gate: it is read from the
+    // connector's documented sandbox only, as the test was sent there.
+    if (
+      sent.kind === "test" &&
+      !onDocumentedSandbox(
+        configFor(sentCfg, "uat", sent.provider),
+        SANDBOX[sent.provider] ?? {},
+      )
+    ) {
+      return json({ error: "sandbox_not_documented", provider: sent.provider }, 409);
+    }
     const asked = await askStatus(
       sent.provider,
       configFor(sentCfg, sent.environment as Environment, sent.provider),
@@ -340,6 +376,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     // A document verdict is something the connector READ from a successful
     // answer; a refused or failed query is a query error, never a verdict.
     const isVerdict = asked.httpStatus === undefined &&
+      !asked.pending &&
       (asked.status === "accepted" || asked.status === "rejected") &&
       Object.keys(asked.receipt).length > 0;
     if (isVerdict) {
@@ -352,6 +389,19 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
           status: asked.status,
           detail: clientDetail(asked.status, asked.detail),
         },
+        "",
+      );
+    } else if (asked.httpStatus === undefined && asked.pending) {
+      // #3881 -- a readable answer with no verdict yet: the provider holds
+      // the upload (an uncertain upload settles accepted) and what it said
+      // is kept; the document has no verdict and no query error.
+      console.log("send-e-invoice: no document verdict yet");
+      await store.lookup(
+        sent.id,
+        sent.phase === "uncertain" ? "accepted" : null,
+        sent.external_id,
+        Object.keys(asked.receipt).length > 0 ? asked.receipt : null,
+        null,
         "",
       );
     } else {
@@ -493,6 +543,54 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     );
   }
 
+  return dispatchPrepared(store, fetchImpl, {
+    id,
+    hash,
+    provider,
+    cfg,
+    environment,
+    destination,
+    fileName,
+    mimeType,
+    format,
+    number: invoice.number,
+  });
+}
+
+/** What a prepared transmission needs to leave: its record, the stored
+ * artifact's hash, and where it goes. */
+interface Dispatch {
+  id: string;
+  hash: string;
+  provider: string;
+  cfg: Config;
+  environment: Environment;
+  destination: Destination;
+  fileName: string;
+  mimeType: string;
+  format: string;
+  number: string;
+}
+
+/** Steps 2-5 of a send, for an invoice's document and a sandbox test
+ * document alike (#3883): verify the stored artifact, claim the dispatch,
+ * post it, record the outcome. */
+async function dispatchPrepared(
+  store: TransmissionStore,
+  fetchImpl: typeof fetch,
+  d: Dispatch,
+): Promise<Response> {
+  const {
+    id,
+    hash,
+    provider,
+    cfg,
+    environment,
+    destination,
+    fileName,
+    mimeType,
+    format,
+  } = d;
   // 2. VERIFY the stored artifact before it can leave (O1).
   let artifact;
   try {
@@ -537,7 +635,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       mimeType: artifact.mimeType || mimeType,
       bytes: artifact.bytes,
       format,
-      number: invoice.number,
+      number: d.number,
       receiver: artifact.receiverId
         ? { scheme: artifact.receiverScheme, id: artifact.receiverId }
         : undefined,
@@ -590,4 +688,122 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     environment,
     destination,
   );
+}
+
+/** #3883 -- whether every address the connector documents for its sandbox
+ * is the one [scoped] (the sandbox credentials) points at, host for host. */
+function onDocumentedSandbox(scoped: Config, sandbox: Config): boolean {
+  const host = (url: string): string | null => {
+    try {
+      const u = new URL(url);
+      return u.protocol === "https:" ? u.host : null;
+    } catch {
+      return null;
+    }
+  };
+  const keys = Object.keys(sandbox);
+  return keys.length > 0 &&
+    keys.every((k) => {
+      const want = host(sandbox[k]);
+      return want !== null && host(scoped[k] ?? "") === want;
+    });
+}
+
+/** #3883 -- why a second test waits, in a sentence a person can act on. */
+const TEST_PENDING_DETAIL =
+  "A test document is still waiting for the platform's verdict. Ask the " +
+  "platform about it before sending another.";
+
+/** #3883 -- sends a sandbox test document through the national channel: the
+ * holder of the integrations' right only, a connector whose verdict opens the
+ * channel's gate only, the sandbox credentials only (never the live ones,
+ * never a fallback), one test at a time. It is no invoice: nothing is issued,
+ * numbered or booked. */
+async function sendTestDocument(
+  store: TransmissionStore,
+  fetchImpl: typeof fetch,
+  payload: {
+    content_base64?: string;
+    file_name?: string;
+    mime_type?: string;
+    format?: string;
+    declared?: unknown;
+  },
+  ctx: {
+    workspaceId: string;
+    userId: string;
+    mayManage: boolean;
+    credentials: { provider: string; config: Record<string, string> } | null;
+  },
+): Promise<Response> {
+  if (!ctx.mayManage) {
+    return json({
+      error: "not allowed to manage the integrations of this workspace",
+    }, 403);
+  }
+  const provider = ctx.credentials?.provider ?? "generic";
+  if (!takesTestDocument(provider)) {
+    return json({ error: "test_unavailable", provider }, 409);
+  }
+  const cfg = configForDestination(
+    (ctx.credentials?.config ?? {}) as Config,
+    "government",
+  );
+  const missing = missingFor(cfg, "uat", provider);
+  if (missing.length > 0) {
+    return json({ error: "sandbox_credentials_missing", missing }, 409);
+  }
+  // Its verdict opens the gate, so a test goes only to the connector's
+  // documented sandbox: the platform's own answer, never another host's.
+  if (!onDocumentedSandbox(configFor(cfg, "uat", provider), SANDBOX[provider] ?? {})) {
+    return json({ error: "sandbox_not_documented", provider }, 409);
+  }
+  const content = payload.content_base64 ?? "";
+  if (!content) return json({ error: "content_base64 required" }, 400);
+  if (content.length > 14_000_000) {
+    return json({ error: "document_too_large" }, 413);
+  }
+  const bytes = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));
+  const hash = await sha256(bytes);
+  const fileName = payload.file_name || "test.xml";
+  const mimeType = payload.mime_type || "application/xml";
+  const format = payload.format || "fatturaPa";
+  let prepared;
+  try {
+    prepared = await store.prepareTest({
+      workspaceId: ctx.workspaceId,
+      provider,
+      actor: ctx.userId,
+      byName: await store.profileName(ctx.userId),
+      format,
+      hash,
+      fileName,
+      mimeType,
+      bytes,
+      declared: clipDeclared(payload.declared),
+    });
+  } catch (error) {
+    console.error("send-e-invoice: test prepare failed", error);
+    return json({ error: "prepare_failed" }, 500);
+  }
+  if (prepared.outcome === "test_pending" || !prepared.id) {
+    return json({
+      error: "test_pending",
+      transmission_id: prepared.id ?? "",
+      phase: prepared.phase ?? "",
+      detail: TEST_PENDING_DETAIL,
+    }, 409);
+  }
+  return await dispatchPrepared(store, fetchImpl, {
+    id: prepared.id,
+    hash,
+    provider,
+    cfg,
+    environment: "uat",
+    destination: "government",
+    fileName,
+    mimeType,
+    format,
+    number: fileName,
+  });
 }

@@ -5145,6 +5145,7 @@
   "@eInvoiceContactPhoneField": {
     "description": "#2358 field: seller contact telephone"
   },
+  "eInvoiceDocumentUnconfirmed": "La plateforme n'a pas encore confirmé ce document. Interrogez-la de nouveau plus tard.",
   "eInvoiceEndpointIdField": "Adresse électronique",
   "@eInvoiceEndpointIdField": {
     "description": "#2358 field: the electronic address"
@@ -7291,7 +7292,7 @@
   "featureStockManagementTitle": "Gestion des stocks",
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
   "featureSubscriptionInvoicesTitle": "Factures d'abonnement",
-  "featureSupplyClassificationDesc": "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.",
+  "featureSupplyClassificationDesc": "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît, sauf dans une activité qui ne réserve aucun espace, dont les nouveaux services commencent comme prestations générales.",
   "featureSupplyClassificationTitle": "Lieu de prestation par service",
   "featureSupplyExpensesDesc": "Une dépense peut être une fourniture pour l'espace (capsules, sacs d'aspirateur…) : validée, elle réapprovisionne ou crée un service consommable avec un prix unitaire ; les consommations décomptent le stock.",
   "featureSupplyExpensesTitle": "Fournitures via les dépenses",
@@ -19700,9 +19701,11 @@
     "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Prestation générale (non rattachée aux locaux)",
+  "supplyClassGeneralMeaning": "Imposé selon la règle générale : un client professionnel d'un autre État membre acquitte la TVA.",
   "supplyClassHelper": "Un poste, un bureau ou une salle est imposé là où se trouve l'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d'un autre pays de l'UE autoliquide alors la TVA.",
   "supplyClassLabel": "Lieu de prestation",
   "supplyClassProperty": "Rattaché aux locaux",
+  "supplyClassPropertyMeaning": "Imposé là où se trouvent les locaux.",
   "supportChanged": "Le contexte a changé. Préparez un nouvel aperçu.",
   "supportDay": "Dernières 24 heures",
   "supportDemo": "Démo : contexte local simulé",

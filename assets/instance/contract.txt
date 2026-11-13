@@ -759,6 +759,8 @@ constraint invoice_transmissions.invoice_transmissions_destination_check CHECK (
 constraint invoice_transmissions.invoice_transmissions_environment_check CHECK ((environment = ANY (ARRAY['prod'::text, 'uat'::text, 'dev'::text])))
 constraint invoice_transmissions.invoice_transmissions_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
 constraint invoice_transmissions.invoice_transmissions_invoice_id_same_workspace FOREIGN KEY (workspace_id, invoice_id) REFERENCES invoices(workspace_id, id) ON DELETE CASCADE
+constraint invoice_transmissions.invoice_transmissions_kind_check CHECK ((kind = ANY (ARRAY['invoice'::text, 'test'::text])))
+constraint invoice_transmissions.invoice_transmissions_kind_invoice_check CHECK ((((kind = 'invoice'::text) = (invoice_id IS NOT NULL)) AND ((kind = 'invoice'::text) OR ((environment = 'uat'::text) AND (destination = 'government'::text)))))
 constraint invoice_transmissions.invoice_transmissions_phase_check CHECK ((phase = ANY (ARRAY['prepared'::text, 'sent'::text, 'accepted'::text, 'rejected'::text, 'failed'::text, 'uncertain'::text])))
 constraint invoice_transmissions.invoice_transmissions_pkey PRIMARY KEY (id)
 constraint invoice_transmissions.invoice_transmissions_status_check CHECK ((status = ANY (ARRAY['accepted'::text, 'rejected'::text, 'failed'::text])))
@@ -2535,6 +2537,7 @@ routine public.einvoice_match_candidates(p_inbox_id uuid) -> TABLE(event_id uuid
 routine public.einvoice_secret_name(p_workspace_id uuid, p_key text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:45f8d16fc252
 routine public.einvoice_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c4dc793a01e2
 routine public.einvoice_store_secret(p_workspace_id uuid, p_key text, p_value text) -> jsonb | function | definer | volatile | exec:service_role | body:2634c7338831
+routine public.einvoice_test_pending(p_phase text, p_verdict jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:a10c00592fd7
 routine public.end_tax_exemption_certificate(p_id uuid, p_on date) -> void | function | definer | volatile | exec:authenticated,service_role | body:78807893a3d2
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean) -> void | function | definer | stable | exec:service_role | body:7e6d1de2b0ae
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean, p_seat_id uuid) -> void | function | definer | stable | exec:service_role | body:1fec2279936b
@@ -2827,7 +2830,7 @@ routine public.mcp_member_outcome(p_status text, p_data jsonb, p_member_id uuid)
 routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:8d9cb5a3eddd
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
 routine public.mcp_op_add_closure_days(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ae1061a4785e
-routine public.mcp_op_apply_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:0f3eb5eabfa4
+routine public.mcp_op_apply_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:dc393f595dfa
 routine public.mcp_op_cancel_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3750646c95fe
 routine public.mcp_op_check_in(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:31473771b784
 routine public.mcp_op_check_out(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3d30234d6be4
@@ -2840,13 +2843,13 @@ routine public.mcp_op_get_capabilities(c mcp_call_context, p_args jsonb) -> json
 routine public.mcp_op_get_member_statement(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:841067649fe5
 routine public.mcp_op_get_my_statement(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:5fc3df2ca3c6
 routine public.mcp_op_get_place(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:70380d90b3bb
-routine public.mcp_op_get_setup_status(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:9d2b8d680b04
+routine public.mcp_op_get_setup_status(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:a0e47cdc8ffc
 routine public.mcp_op_get_validation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:f6374a1f86f5
 routine public.mcp_op_list_my_favorites(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d7499ca9384e
 routine public.mcp_op_list_my_invoices(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:493917fb1749
 routine public.mcp_op_list_my_reservations(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:2b2e5924064e
 routine public.mcp_op_list_pending_validations(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:7dce789802fb
-routine public.mcp_op_list_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:870438e55cf6
+routine public.mcp_op_list_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:0a7fb5b9eb1f
 routine public.mcp_op_mark_setup_step(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:cf816718e658
 routine public.mcp_op_preview_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:44baf20596db
 routine public.mcp_op_rate_place(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:08cc81c40eb4
@@ -3088,6 +3091,7 @@ routine public.posting_parties(p_workspace_id uuid, p_document_ids uuid[]) -> js
 routine public.posting_rate_group(p_country text, p_percent numeric, p_category text, p_day date) -> text | function | definer | stable | exec:service_role | body:851fb12021ea
 routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:46bdf4c532bf
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1
+routine public.prepare_einvoice_test_v1(p_workspace_id uuid, p_provider text, p_actor uuid, p_by_name text, p_format text, p_hash text, p_file_name text, p_mime_type text, p_bytes bytea, p_declared jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:15e2568b2c89
 routine public.prepare_einvoice_v1(p_workspace_id uuid, p_invoice_id uuid, p_provider text, p_destination text, p_environment text, p_actor uuid, p_by_name text, p_format text, p_hash text, p_file_name text, p_mime_type text, p_receiver_scheme text, p_receiver_id text, p_bytes bytea, p_declared jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:e515fbc2c686
 routine public.prepare_usage_period_v1(p_workspace_id uuid, p_period text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8125fde2440
 routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:704ad1f8deb8
@@ -3469,13 +3473,13 @@ routine public.settlement_poll_finish_v1(p_workspace_id uuid, p_provider text, p
 routine public.settlement_poll_tick() -> text | function | definer | volatile | exec:service_role | body:e04f60df2f29
 routine public.setup_basics_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:759386ccda27
 routine public.setup_closure_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:29a10771479f
-routine public.setup_current_levels(p_flags jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:b6d27e138549
+routine public.setup_current_levels(p_flags jsonb, p_country text) -> jsonb | function | invoker | stable | exec:service_role | body:d35de9383c8c
 routine public.setup_hours_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4f359045c81a
 routine public.setup_invitation_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:5852379a5e56
 routine public.setup_level_arguments() -> text[] | function | invoker | immutable | exec:service_role | body:7f746fc5ea32
 routine public.setup_level_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:ce9de7373adf
 routine public.setup_level_rank(p_process text, p_level text) -> integer | function | invoker | immutable | exec:service_role | body:a54edb860b1c
-routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:e6938ac89e2d
+routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c01c658a9993
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
 routine public.setup_numbering_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c64909ab9fba
 routine public.setup_step_acknowledge(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:service_role | body:54d48a072d2e
@@ -3488,7 +3492,7 @@ routine public.setup_step_timings_no_person() -> trigger | function | invoker | 
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
 routine public.shared_workspaces_with(p_user uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:ab5de07c3a62
 routine public.shares_workspace_with(other uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:e85ad0fc6fb5
-routine public.space_host_roster(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:639107c0162d
+routine public.space_host_roster(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d97723637de
 routine public.stage_asset_valuations_v1(p_workspace_id uuid, p_request_id uuid, p_metadata jsonb, p_rows jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:aafe660685fe
 routine public.stamp_accessory_supplements_since() -> trigger | function | invoker | volatile | exec:service_role | body:3f79931d6627
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564

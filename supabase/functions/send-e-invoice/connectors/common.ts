@@ -22,6 +22,9 @@ export interface Submission {
    * Peppol evidence, the SdI notification, the KSeF number and UPO
    * reference, the ANAF download id. Stored with the transmission. */
   receipt: Record<string, unknown>;
+  /** #3881 -- the platform holds the upload but has no verdict on the
+   * document yet: [receipt] is what it said, and it decides nothing. */
+  pending?: boolean;
 }
 
 /** One provider, declared where it is implemented (#3337). The registry in
@@ -36,6 +39,9 @@ export interface Connector {
   acceptedFormats: string[];
   /** The documented test environment the owner starts from. */
   sandbox: Config;
+  /** #3883 -- a sandbox test document opens the national channel's issuing
+   * gate: the connector reads the platform's own verdict on a document. */
+  testDocument?: boolean;
   submit(
     cfg: Config,
     doc: ConnectorDocument,
@@ -106,6 +112,15 @@ export const accepted = (
   detail: clip(detail),
   receipt,
 });
+
+/** #3881 -- the platform answered and holds the upload, but has no verdict on
+ * the document yet: the handler stores [receipt] and records no verdict and
+ * no query error. */
+export const noVerdictYet = (
+  externalId: string,
+  detail: string,
+  receipt: Record<string, unknown> = {},
+): Submission => ({ ...accepted(externalId, detail, receipt), pending: true });
 
 export function toBase64(bytes: Uint8Array): string {
   let binary = "";

@@ -11,7 +11,7 @@
 -- context; a screen capture is announced unless the space switched the
 -- protection off; the event table is never read directly.
 begin;
-select plan(51);
+select plan(52);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 select ('00000000-0000-4000-8000-0000001824'||suffix)::uuid,'00000000-0000-0000-0000-000000000000',
@@ -77,6 +77,8 @@ update public.workspaces set feature_flags = feature_flags || '{"spaceInquiries"
 set local role authenticated;
 -- #1851: off stops NEW inquiries; an open one stays answerable (110).
 select throws_ok($$select public.start_space_inquiry('00000000-0000-4000-8000-0000001824b1','Again?')$$,'P0001','inquiries unavailable','inquiries off refuses a new inquiry');
+-- #3868: and its page lists nobody to write to before anything is written.
+select is(public.space_host_roster('00000000-0000-4000-8000-0000001824b1'),'[]'::jsonb,'inquiries off: the roster names nobody');
 reset role;
 update public.workspaces set feature_flags = feature_flags || '{"spaceInquiries":true}' where id='00000000-0000-4000-8000-0000001824b1';
 -- a4 lets anyone signed in write to them, so a5 can open a personal thread.
