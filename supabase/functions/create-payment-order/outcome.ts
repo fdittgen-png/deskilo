@@ -13,9 +13,14 @@ export class ProviderRefusal extends Error {
 
 /** #2014 — `failed` only for a definitive refusal (4xx); a timeout, a lost
  * connection or a provider 5xx is UNKNOWN: the order may exist, so the
- * intent stays pending for reconciliation instead of being declared failed. */
+ * intent stays pending for reconciliation instead of being declared failed.
+ * A 4xx that asks to wait or repeat (408 timeout, 409 conflict, 425 too
+ * early, 429 too many requests) is not definitive either. */
+const NOT_DEFINITIVE = [408, 409, 425, 429];
+
 export const failureOutcome = (e: unknown): "failed" | "unknown" =>
-  e instanceof ProviderRefusal && e.status >= 400 && e.status < 500
+  e instanceof ProviderRefusal && e.status >= 400 && e.status < 500 &&
+    !NOT_DEFINITIVE.includes(e.status)
     ? "failed"
     : "unknown";
 

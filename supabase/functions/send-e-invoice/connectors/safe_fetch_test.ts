@@ -122,3 +122,30 @@ Deno.test("the client reads a fixed key, never the provider's words", () => {
     "destination_not_allowed",
   );
 });
+
+Deno.test("an https destination on a port other than 443 is refused", async () => {
+  const resolve = resolver({ "example.org": ["93.184.216.34"] });
+  await assertRejects(
+    () => assertPublicUrl("https://example.org:8443/", resolve),
+    DestinationRefused,
+    "destination_not_allowed",
+  );
+  await assertPublicUrl("https://example.org:443/", resolve);
+  await assertPublicUrl("https://example.org/", resolve);
+});
+
+Deno.test("a call without its own signal carries a time limit; a caller's signal is kept", async () => {
+  const signals: (AbortSignal | null | undefined)[] = [];
+  const guarded = safeFetch(
+    (_input, init) => {
+      signals.push(init?.signal);
+      return Promise.resolve(new Response("ok"));
+    },
+    resolver({ "api.example.com": ["93.184.216.34"] }),
+  );
+  await guarded("https://api.example.com/x");
+  assert(signals[0] instanceof AbortSignal);
+  const own = new AbortController().signal;
+  await guarded("https://api.example.com/x", { signal: own });
+  assertEquals(signals[1], own);
+});
