@@ -699,6 +699,12 @@ constraint invoice_issue_notices.invoice_issue_notices_push_outcome_check CHECK 
 constraint invoice_issue_notices.invoice_issue_notices_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint invoice_issue_notices.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint invoice_issue_notices.system_company_present CHECK ((company_id IS NOT NULL))
+constraint invoice_match_history.invoice_match_history_op_check CHECK ((op = ANY (ARRAY['insert'::text, 'update'::text, 'delete'::text, 'status'::text, 'start'::text])))
+constraint invoice_match_history.invoice_match_history_pkey PRIMARY KEY (id)
+constraint invoice_match_history.invoice_match_history_subject_check CHECK ((subject = ANY (ARRAY['match'::text, 'part'::text, 'event'::text, 'history'::text])))
+constraint invoice_match_history.invoice_match_history_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint invoice_match_history.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint invoice_match_history.system_company_present CHECK ((company_id IS NOT NULL))
 constraint invoice_match_payments.invoice_match_payments_amount_cents_check CHECK ((amount_cents >= 0))
 constraint invoice_match_payments.invoice_match_payments_credit_ledger_id_fkey FOREIGN KEY (credit_ledger_id) REFERENCES ledger_entries(id) ON DELETE SET NULL
 constraint invoice_match_payments.invoice_match_payments_credit_ledger_id_same_workspace FOREIGN KEY (workspace_id, credit_ledger_id) REFERENCES ledger_entries(workspace_id, id) ON DELETE SET NULL (credit_ledger_id)
@@ -2477,7 +2483,7 @@ routine public.create_workspace_once(p_client_request_id uuid, p_name text, p_co
 routine public.create_workspace_twin(p_workspace_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:df10fe1153d4
 routine public.currency_minor_digits(p_currency text) -> integer | function | invoker | immutable | exec:authenticated,service_role | body:01dad38d3031
 routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
-routine public.customer_statement_v1(p_workspace_id uuid, p_member_id uuid, p_as_of date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0f9100446606
+routine public.customer_statement_v1(p_workspace_id uuid, p_member_id uuid, p_as_of date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:98d372bd3d3e
 routine public.database_administrator_deleted() -> trigger | function | definer | volatile | exec:service_role | body:0c760eddc629
 routine public.database_authority_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:4df85237f376
 routine public.decide_asset_v1(p_workspace_id uuid, p_asset_id uuid, p_revision integer, p_decision text, p_basis text, p_available_for_use_on date, p_site_id uuid, p_custodian_member_id uuid, p_external_asset_id text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e2f3cd833f95
@@ -2656,6 +2662,14 @@ routine public.invoice_legal_freeze() -> trigger | function | definer | volatile
 routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ec3dc4acff5e
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:3eb9323ff091
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:service_role | body:4ab86eeb0aaa
+routine public.invoice_match_event_status_at(p_event_id uuid, p_cutoff timestamp with time zone) -> text | function | definer | stable | exec:service_role | body:3b256535288c
+routine public.invoice_match_history_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:1234672ab8da
+routine public.invoice_match_history_event() -> trigger | function | definer | volatile | exec:service_role | body:79f3c4054d1d
+routine public.invoice_match_history_from(p_workspace_id uuid) -> timestamp with time zone | function | definer | stable | exec:service_role | body:48821fd0e287
+routine public.invoice_match_history_rows() -> trigger | function | definer | volatile | exec:service_role | body:d2f331d85844
+routine public.invoice_match_history_write(p_workspace_id uuid, p_subject text, p_subject_id uuid, p_invoice_id uuid, p_op text, p_image jsonb) -> void | function | definer | volatile | exec:service_role | body:24d65192f58e
+routine public.invoice_match_payments_at(p_workspace_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_match_payments | function | definer | stable | exec:service_role | body:05004552654d
+routine public.invoice_matches_at(p_workspace_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_matches | function | definer | stable | exec:service_role | body:fcc2be17fd32
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
@@ -3270,6 +3284,7 @@ routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_
 routine public.review_bank_line_v1(p_line_id uuid, p_duplicate boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6386a82bf7d4
 routine public.revoke_accounting_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad7fded4fe08
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
+routine public.revoke_guest_pass(p_workspace_id uuid, p_pass_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8f32c8e57c8c
 routine public.revoke_handover(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:49d76bb89b5d
 routine public.revoke_hmrc_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:83fa286451e9
 routine public.revoke_kiosk_device_v1(p_device_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:b5503efd3f4e
@@ -3714,6 +3729,7 @@ trigger events.events_apply_stock CREATE TRIGGER events_apply_stock AFTER UPDATE
 trigger events.events_apply_usage CREATE TRIGGER events_apply_usage AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_usage_decision()
 trigger events.events_apply_validated_0181 CREATE TRIGGER events_apply_validated_0181 AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION apply_validated_decision_0181()
 trigger events.events_commitment_variance_apply CREATE TRIGGER events_commitment_variance_apply AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION commitment_variance_apply()
+trigger events.events_invoice_match_history CREATE TRIGGER events_invoice_match_history AFTER UPDATE OF status ON public.events FOR EACH ROW WHEN ((old.status IS DISTINCT FROM new.status)) EXECUTE FUNCTION invoice_match_history_event()
 trigger events.events_lease_change_apply CREATE TRIGGER events_lease_change_apply AFTER UPDATE ON public.events FOR EACH ROW EXECUTE FUNCTION lease_change_apply()
 trigger events.events_notify_pending CREATE TRIGGER events_notify_pending AFTER INSERT OR UPDATE OF status, actor_member_id ON public.events FOR EACH ROW EXECUTE FUNCTION notify_pending_event()
 trigger events.events_recheck_invoice_payment_part CREATE TRIGGER events_recheck_invoice_payment_part AFTER UPDATE OF status ON public.events FOR EACH ROW WHEN (((new.type = 'invoice_payment'::text) AND (old.status = 'pending'::text) AND (new.status = 'confirmed'::text))) EXECUTE FUNCTION recheck_invoice_payment_part()
@@ -3763,10 +3779,14 @@ trigger invitations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_sta
 trigger invoice_dunning_holds.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_dunning_holds FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_email_sends.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_email_sends FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_issue_notices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_issue_notices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_match_history.invoice_match_history_append_only CREATE TRIGGER invoice_match_history_append_only BEFORE DELETE OR UPDATE ON public.invoice_match_history FOR EACH ROW EXECUTE FUNCTION invoice_match_history_append_only()
+trigger invoice_match_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_match_payments.invoice_match_payments_allocation_sum CREATE TRIGGER invoice_match_payments_allocation_sum BEFORE INSERT OR UPDATE OF amount_cents, payment_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION guard_payment_allocation_sum()
+trigger invoice_match_payments.invoice_match_payments_history CREATE TRIGGER invoice_match_payments_history AFTER INSERT OR DELETE OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION invoice_match_history_rows()
 trigger invoice_match_payments.invoice_match_payments_refuse_moved CREATE TRIGGER invoice_match_payments_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_match_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_match_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_matches.book_period_match_guard CREATE TRIGGER book_period_match_guard BEFORE INSERT OR DELETE OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION book_period_match_guard()
+trigger invoice_matches.invoice_matches_history CREATE TRIGGER invoice_matches_history AFTER INSERT OR DELETE OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION invoice_match_history_rows()
 trigger invoice_matches.invoice_matches_refuse_moved CREATE TRIGGER invoice_matches_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

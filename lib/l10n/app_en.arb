@@ -16193,6 +16193,66 @@
   "@guestPassProblemNoSeat": {
     "description": "#3308 guest passes sold at the desk"
   },
+  "guestPassRevokeCancelled": "{count, plural, =0{No booking cancelled} one{{count} booking cancelled} other{{count} bookings cancelled}}",
+  "@guestPassRevokeCancelled": {
+    "description": "what a revoked pass cancelled (#3829)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guestPassRevokeConfirmBody": "Their bookings not started yet are cancelled; the days already started stay. No money moves: correct the invoice on its page, by a credit note or a cancellation.",
+  "@guestPassRevokeConfirmBody": {
+    "description": "the confirmation's text (#3829)"
+  },
+  "guestPassRevokeConfirmTitle": "{count, plural, one{Revoke {count} pass?} other{Revoke these {count} passes?}}",
+  "@guestPassRevokeConfirmTitle": {
+    "description": "the confirmation's title (#3829)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guestPassRevokeFailed": "The server did not revoke it.",
+  "@guestPassRevokeFailed": {
+    "description": "a refusal without words of its own (#3829)"
+  },
+  "guestPassRevokeNotDone": "Not revoked",
+  "@guestPassRevokeNotDone": {
+    "description": "the heading of the passes the server refused (#3829)"
+  },
+  "guestPassRevokeResultSubtitle": "If a guest is owed money back, correct their invoice on its page.",
+  "@guestPassRevokeResultSubtitle": {
+    "description": "the result's subtitle (#3829)"
+  },
+  "guestPassRevokeResultTitle": "{count, plural, =0{No pass revoked} one{{count} pass revoked} other{{count} passes revoked}}",
+  "@guestPassRevokeResultTitle": {
+    "description": "the result's title (#3829)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guestPassRevokeSelected": "{count, plural, one{Revoke {count} pass} other{Revoke {count} passes}}",
+  "@guestPassRevokeSelected": {
+    "description": "the bulk action on the selected guest passes (#3829)",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guestPassRevokeStays": "These passes stand as they were, with their bookings.",
+  "@guestPassRevokeStays": {
+    "description": "where the refused passes stay (#3829)"
+  },
+  "guestPassRevoked": "Revoked",
+  "@guestPassRevoked": {
+    "description": "a revoked pass's state in the records table (#3829)"
+  },
   "guestPassSaleFailed": "The pass could not be sold. The place may be taken, or the window outside the opening hours.",
   "@guestPassSaleFailed": {
     "description": "#3308 guest passes sold at the desk"
@@ -16224,6 +16284,10 @@
         "type": "String"
       }
     }
+  },
+  "guestPassState": "State",
+  "@guestPassState": {
+    "description": "the records table's state column (#3829)"
   },
   "guestPassTo": "To",
   "@guestPassTo": {

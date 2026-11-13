@@ -167,6 +167,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
                 workspaceId: workspace.id,
                 offers: list,
                 currency: currency,
+                canRevoke: held.contains('issueInvoices'),
               ),
             ),
           ],
