@@ -13562,6 +13562,12 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "phoneCountryLabel": "Pays du numéro",
+  "phoneExtensionNoMessage": "Un numéro avec un poste ne peut pas recevoir de messages : retirez le poste.",
+  "phoneNeedsCorrection": "Ce numéro a été enregistré avant la vérification des numéros : confirmez-le ou corrigez-le, et il ouvrira de nouveau appels et messages.",
+  "phoneNoCountry": "Choisissez le pays de ce numéro, ou saisissez-le avec son indicatif +.",
+  "phoneNotANumber": "Saisissez uniquement des chiffres, avec un poste à la fin s'il y en a un.",
+  "phoneNotValidForCountry": "Ce ne peut pas être un numéro de téléphone du pays choisi.",
   "placeFeedbackAverage": "{average} · {count, plural, one{{count} note} other{{count} notes}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",
@@ -15766,6 +15772,10 @@
   "@reportColUnitPrice": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "reportCoversAnalysis": "Occupation, ventes, achats et trésorerie sur une période, comparés et regroupés.",
+  "reportCoversOverview": "Ce qui vous attend, puis les chiffres que vous pouvez lire.",
+  "reportCoversRegister": "Chaque facture sur une ligne : date, nom, montant et statut.",
+  "reportCoversVat": "Les déclarations de TVA de chaque période, préparées à partir des factures émises.",
   "reportDesignEmpty": "Bande vide — ajoutez un élément ci-dessous.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
@@ -15978,6 +15988,10 @@
   "reportFieldMeaningCreditNote": "Vrai sur un avoir",
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
+  },
+  "reportFieldMeaningCurrency": "Le code ISO de la devise, par exemple EUR ou CAD",
+  "@reportFieldMeaningCurrency": {
+    "description": "#3851 report guide: meaning of currency"
   },
   "reportFieldMeaningDeclarationNote": "La mise en garde de la déclaration : vérifier avant de déposer",
   "reportFieldMeaningDueDate": "La date d'échéance",
@@ -16551,6 +16565,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportsColumnCovers": "Ce qu’il couvre",
+  "reportsColumnName": "Rapport",
+  "reportsTools": "Outils",
   "requestAccept": "Accepter",
   "requestBlock": "Bloquer",
   "requestIgnore": "Ignorer",

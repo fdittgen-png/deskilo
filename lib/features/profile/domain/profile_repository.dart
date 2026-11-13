@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import '../../../core/i18n/format_prefs.dart';
+import '../../../core/phone/phone_entry.dart';
 import 'personal_info.dart';
 import 'privacy_notice.dart';
 import 'profile.dart';
@@ -26,7 +27,10 @@ abstract class ProfileRepository {
 
   /// Writes my WhatsApp number, already normalized by
   /// [normalizeWhatsapp]; '' clears it. Throws [StateError] signed out.
-  Future<void> updateWhatsapp(String whatsapp);
+  /// #3650 — [number]'s validated international form and what was typed;
+  /// an empty [number] clears it. A number without a validated form is
+  /// never saved: the form refuses it first.
+  Future<void> updateWhatsapp(PhoneEntry number);
 
   /// Writes my preferred DOCUMENT language (0098, #496); '' clears it.
   Future<void> setPreferredLocale(String locale);

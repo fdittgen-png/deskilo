@@ -299,7 +299,7 @@ List<Widget> accountSettingsTiles(
  anchor: HelpAnchor.profileWhatsapp,
         subtitle: Text(
           (myProfile?.sharesWhatsapp ?? false)
-              ? myProfile!.whatsapp
+              ? phoneDisplay(myProfile!.whatsappEntry)
               : (l10n.whatsappNotShared),
         ),
         onTap: () => showDialog<void>(

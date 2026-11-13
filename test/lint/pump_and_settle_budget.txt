@@ -22,10 +22,13 @@
 # review {"path":"test/features/workspace/kiosk_devices_screen_test.dart","before":0,"after":14,"invariant":"#3675 the kiosk devices screen: enrol (name, tap), a refused enrolment, revoke with its confirmation, a failed read and Try again, and the setting's confirmation cancelled then accepted, each settled once before the store or the screen is read","cost":"five tests in about 4 s locally"}
 # review {"path":"test/features/money/invoicing_list_detail_test.dart","before":0,"after":16,"invariant":"#3789 each list-detail behaviour is a person's step through the app settled before the address, the pane and the list are read: open, resize, Back, search, Escape, a filter, a direct link","cost":"3 tests in 6 s locally"}
 # review {"path":"test/features/search/search_palette_test.dart","before":0,"after":17,"invariant":"#3610 each search is a person's step through the app settled before the window, the address and the results are read: Ctrl+K, typing after the debounce, a result opened, a drawer, a permission or a workspace changed","cost":"8 tests in 7 s locally"}
+# review {"path":"test/features/search/search_palette_test.dart","before":16,"after":17,"invariant":"#3617 every report the person may open is found by its name: one search settled per report before its result is read","cost":"1 test, about 1 s locally"}
 # review {"path":"test/features/task_recorder/ui_capture_test.dart","before":14,"after":16,"invariant":"#3789 the same screen recorded at 390 and at 1440: the app settles, the screen is pushed and settles, before the recording is read","cost":"one test, about 2 s locally"}
 # review {"path":"test/features/workspace/workspace_xml_import_screen_test.dart","before":10,"after":14,"invariant":"#3818 a file dropped on the restore tool opens the same preview and destructive confirmation as a picked one: the settings page settles, the drop is delivered and settles, the confirmation is read, then accepted, cancelled or refused, each settled once before the repository is read","cost":"three tests in about 5 s locally"}
 # review {"path":"test/core/ui/adaptive/long_task_page_test.dart","before":0,"after":17,"invariant":"#3608 the long task page: it is opened, resized across classes, closed by Escape, the close button or Back, submitted and ended by a change of person; each settles once for the route, the dialog or the layout to be there before the confirm button, the summary or the focus is read","cost":"15 tests in 7 s locally"}
 # review {"path":"test/features/money/guest_passes_screen_test.dart","before":0,"after":12,"invariant":"#3829 a selection revoked from the records table: the tick, the bulk action, the confirmation and the result page each settle once before the outcome or the table is read","cost":"two tests, about 1 s locally"}
+# review {"path":"test/features/profile/whatsapp_edit_test.dart","before":0,"after":13,"invariant":"#3650 the WhatsApp number in the phone field: the dialog opens, a national number in the owner's country is saved, one with no country is refused in words, a legacy number asks to be confirmed; each step settles once before the stored number or the words are read","cost":"six tests, about 3 s locally"}
+# review {"path":"test/features/workspace/invitation_test.dart","before":14,"after":16,"invariant":"#3650 a number that cannot be validated is refused before any code is minted, and an extension cannot receive a text: the send settles once before nothing launched is read","cost":"three tests, under 1 s each locally"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -120,6 +123,7 @@
 12 test/features/profile/developer_screen_test.dart
 10 test/features/profile/new_instance_wizard_test.dart
 10 test/features/profile/status_text_edit_test.dart
+13 test/features/profile/whatsapp_edit_test.dart
 12 test/features/reservations/booking_gate_test.dart
 13 test/features/reservations/calendar_file_button_test.dart
 13 test/features/reservations/checkin_rides_reservation_test.dart
@@ -129,7 +133,7 @@
 55 test/features/reservations/reserve_hub_test.dart
 11 test/features/reservations/seat_list_booking_actions_test.dart
 30 test/features/reservations/space_scan_test.dart
-16 test/features/search/search_palette_test.dart
+17 test/features/search/search_palette_test.dart
 10 test/features/task_recorder/admin_journey_test.dart
 10 test/features/task_recorder/booking_journey_test.dart
 18 test/features/task_recorder/calendar_journey_test.dart
@@ -148,7 +152,7 @@
 10 test/features/workspace/environment_banner_test.dart
 14 test/features/workspace/holiday_import_flow_test.dart
 17 test/features/workspace/invitation_journey_test.dart
-14 test/features/workspace/invitation_test.dart
+16 test/features/workspace/invitation_test.dart
 14 test/features/workspace/kiosk_devices_screen_test.dart
 15 test/features/workspace/member_join_validation_test.dart
 32 test/features/workspace/member_note_flow_test.dart

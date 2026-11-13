@@ -22343,6 +22343,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get personalInfoVatId => 'Partita IVA (facoltativo)';
 
   @override
+  String get phoneCountryLabel => 'Paese del numero';
+
+  @override
+  String get phoneExtensionNoMessage =>
+      'Un numero con interno non può ricevere messaggi: togli l\'interno.';
+
+  @override
+  String get phoneNeedsCorrection =>
+      'Questo numero è stato salvato prima del controllo dei numeri: confermalo o correggilo e riaprirà chiamate e messaggi.';
+
+  @override
+  String get phoneNoCountry =>
+      'Scegli il paese di questo numero o scrivilo con il suo prefisso +.';
+
+  @override
+  String get phoneNotANumber =>
+      'Scrivi solo cifre, con un interno alla fine se c\'è.';
+
+  @override
+  String get phoneNotValidForCountry =>
+      'Questo non può essere un numero di telefono del paese scelto.';
+
+  @override
   String placeFeedbackAverage(String average, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -25940,6 +25963,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reportColUnitPrice => 'Prezzo unit.';
 
   @override
+  String get reportCoversAnalysis =>
+      'Occupazione, vendite, acquisti e cassa in un periodo, confrontati e raggruppati.';
+
+  @override
+  String get reportCoversOverview =>
+      'Ciò che la attende, poi le cifre che può leggere.';
+
+  @override
+  String get reportCoversRegister =>
+      'Ogni fattura su una riga: data, nome, importo e stato.';
+
+  @override
+  String get reportCoversVat =>
+      'Le dichiarazioni IVA di ogni periodo, preparate dalle fatture emesse.';
+
+  @override
   String get reportDesignEmpty => 'Banda vuota — aggiunga un elemento sotto.';
 
   @override
@@ -26223,6 +26262,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Vero su una nota di credito';
+
+  @override
+  String get reportFieldMeaningCurrency =>
+      'Il codice ISO della valuta, ad esempio EUR o CAD';
 
   @override
   String get reportFieldMeaningDeclarationNote =>
@@ -26740,6 +26783,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportVisualAddLine => 'Aggiungi riga';
+
+  @override
+  String get reportsColumnCovers => 'Cosa copre';
+
+  @override
+  String get reportsColumnName => 'Rapporto';
+
+  @override
+  String get reportsTools => 'Strumenti';
 
   @override
   String get requestAccept => 'Accetta';

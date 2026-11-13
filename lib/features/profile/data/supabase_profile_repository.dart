@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/i18n/format_prefs.dart';
+import '../../../core/phone/phone_entry.dart';
 import '../domain/personal_info.dart';
 import '../domain/privacy_notice.dart';
 import '../domain/profile.dart';
@@ -62,16 +63,23 @@ class SupabaseProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> updateWhatsapp(String whatsapp) async {
+  Future<void> updateWhatsapp(PhoneEntry number) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) {
       throw StateError('cannot update the profile while signed out');
     }
+    if (!number.isEmpty && !number.isValidated) {
+      throw StateError('a WhatsApp number is saved validated or not at all');
+    }
     // Direct row update — profiles_update RLS (0002) restricts it to
     // self, and the 0028 column check re-validates the '+digits' shape.
+    // #3650 — the validated form, and what was typed beside it (0752).
     await _client
         .from('profiles')
-        .update({'whatsapp': whatsapp})
+        .update({
+          'whatsapp': number.e164 ?? '',
+          'whatsapp_typed': number.isEmpty ? '' : number.typed.trim(),
+        })
         .eq('id', userId);
   }
 

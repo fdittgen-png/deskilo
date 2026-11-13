@@ -8,6 +8,7 @@
   "issued_by": "Test Space",
   "replaces": "",
   "total": "€127.00",
+  "currency": "EUR",
   "net_total": "€195.00",
   "vat_total": "€0.00",
   "charges": "€195.00",
